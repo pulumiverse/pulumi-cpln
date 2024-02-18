@@ -1,0 +1,4649 @@
+{
+    "name": "cpln",
+    "description": "A Pulumi package for creating and managing cpln cloud resources.",
+    "keywords": [
+        "pulumi",
+        "cpln",
+        "category/cloud"
+    ],
+    "homepage": "https://www.pulumi.com",
+    "license": "Apache-2.0",
+    "attribution": "This Pulumi package is based on the [`cpln` Terraform Provider](https://github.com/controlplane-com/terraform-provider-cpln).",
+    "repository": "https://github.com/pulumiverse/pulumi-cpln",
+    "pluginDownloadURL": "github://api.github.com/pulumiverse",
+    "publisher": "pulumiverse",
+    "meta": {
+        "moduleFormat": "(.*)(?:/[^/]*)"
+    },
+    "language": {
+        "csharp": {
+            "packageReferences": {
+                "Pulumi": "3.*"
+            },
+            "compatibility": "tfbridge20",
+            "rootNamespace": "Pulumiverse"
+        },
+        "go": {
+            "importBasePath": "github.com/pulumiverse/pulumi-cpln/sdk/go/cpln",
+            "generateResourceContainerTypes": true,
+            "generateExtraInputTypes": true
+        },
+        "nodejs": {
+            "packageName": "@pulumiverse/cpln",
+            "packageDescription": "A Pulumi package for creating and managing cpln cloud resources.",
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/controlplane-com/terraform-provider-cpln)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-cpln` repo](https://github.com/pulumiverse/pulumi-cpln/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-cpln` repo](https://github.com/controlplane-com/terraform-provider-cpln/issues).",
+            "dependencies": {
+                "@pulumi/pulumi": "^3.0.0"
+            },
+            "devDependencies": {
+                "@types/mime": "^2.0.0",
+                "@types/node": "^10.0.0"
+            },
+            "compatibility": "tfbridge20",
+            "disableUnionOutputTypes": true
+        },
+        "python": {
+            "packageName": "pulumiverse_cpln",
+            "requires": {
+                "pulumi": "\u003e=3.0.0,\u003c4.0.0"
+            },
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/controlplane-com/terraform-provider-cpln)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-cpln` repo](https://github.com/pulumiverse/pulumi-cpln/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-cpln` repo](https://github.com/controlplane-com/terraform-provider-cpln/issues).",
+            "compatibility": "tfbridge20",
+            "pyproject": {}
+        }
+    },
+    "config": {
+        "variables": {
+            "endpoint": {
+                "type": "string"
+            },
+            "org": {
+                "type": "string"
+            },
+            "profile": {
+                "type": "string"
+            },
+            "refreshToken": {
+                "type": "string"
+            },
+            "token": {
+                "type": "string"
+            }
+        },
+        "defaults": [
+            "org"
+        ]
+    },
+    "types": {
+        "cpln:index/CloudAccountAws:CloudAccountAws": {
+            "properties": {
+                "roleArn": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "roleArn"
+            ]
+        },
+        "cpln:index/CloudAccountAzure:CloudAccountAzure": {
+            "properties": {
+                "secretLink": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "secretLink"
+            ]
+        },
+        "cpln:index/CloudAccountGcp:CloudAccountGcp": {
+            "properties": {
+                "projectId": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "projectId"
+            ]
+        },
+        "cpln:index/CloudAccountNgs:CloudAccountNgs": {
+            "properties": {
+                "secretLink": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "secretLink"
+            ]
+        },
+        "cpln:index/DomainSpec:DomainSpec": {
+            "properties": {
+                "acceptAllHosts": {
+                    "type": "boolean"
+                },
+                "dnsMode": {
+                    "type": "string"
+                },
+                "gvcLink": {
+                    "type": "string"
+                },
+                "ports": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/DomainSpecPort:DomainSpecPort"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "ports"
+            ]
+        },
+        "cpln:index/DomainSpecPort:DomainSpecPort": {
+            "properties": {
+                "cors": {
+                    "$ref": "#/types/cpln:index/DomainSpecPortCors:DomainSpecPortCors"
+                },
+                "number": {
+                    "type": "integer"
+                },
+                "protocol": {
+                    "type": "string"
+                },
+                "tls": {
+                    "$ref": "#/types/cpln:index/DomainSpecPortTls:DomainSpecPortTls"
+                }
+            },
+            "type": "object",
+            "required": [
+                "tls"
+            ]
+        },
+        "cpln:index/DomainSpecPortCors:DomainSpecPortCors": {
+            "properties": {
+                "allowCredentials": {
+                    "type": "boolean"
+                },
+                "allowHeaders": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "allowMethods": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "allowOrigins": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/DomainSpecPortCorsAllowOrigin:DomainSpecPortCorsAllowOrigin"
+                    }
+                },
+                "exposeHeaders": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "maxAge": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/DomainSpecPortCorsAllowOrigin:DomainSpecPortCorsAllowOrigin": {
+            "properties": {
+                "exact": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "exact"
+            ]
+        },
+        "cpln:index/DomainSpecPortTls:DomainSpecPortTls": {
+            "properties": {
+                "cipherSuites": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "clientCertificate": {
+                    "$ref": "#/types/cpln:index/DomainSpecPortTlsClientCertificate:DomainSpecPortTlsClientCertificate"
+                },
+                "minProtocolVersion": {
+                    "type": "string"
+                },
+                "serverCertificate": {
+                    "$ref": "#/types/cpln:index/DomainSpecPortTlsServerCertificate:DomainSpecPortTlsServerCertificate"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/DomainSpecPortTlsClientCertificate:DomainSpecPortTlsClientCertificate": {
+            "properties": {
+                "secretLink": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/DomainSpecPortTlsServerCertificate:DomainSpecPortTlsServerCertificate": {
+            "properties": {
+                "secretLink": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/DomainStatus:DomainStatus": {
+            "properties": {
+                "dnsConfigs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/DomainStatusDnsConfig:DomainStatusDnsConfig"
+                    }
+                },
+                "endpoints": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/DomainStatusEndpoint:DomainStatusEndpoint"
+                    }
+                },
+                "fingerprint": {
+                    "type": "string"
+                },
+                "locations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/DomainStatusLocation:DomainStatusLocation"
+                    }
+                },
+                "status": {
+                    "type": "string"
+                },
+                "warning": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/DomainStatusDnsConfig:DomainStatusDnsConfig": {
+            "properties": {
+                "host": {
+                    "type": "string"
+                },
+                "ttl": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/DomainStatusEndpoint:DomainStatusEndpoint": {
+            "properties": {
+                "url": {
+                    "type": "string"
+                },
+                "workloadLink": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/DomainStatusLocation:DomainStatusLocation": {
+            "properties": {
+                "certificateStatus": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/GroupIdentityMatcher:GroupIdentityMatcher": {
+            "properties": {
+                "expression": {
+                    "type": "string"
+                },
+                "language": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "expression"
+            ]
+        },
+        "cpln:index/GroupMemberQuery:GroupMemberQuery": {
+            "properties": {
+                "fetch": {
+                    "type": "string"
+                },
+                "spec": {
+                    "$ref": "#/types/cpln:index/GroupMemberQuerySpec:GroupMemberQuerySpec"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/GroupMemberQuerySpec:GroupMemberQuerySpec": {
+            "properties": {
+                "match": {
+                    "type": "string"
+                },
+                "terms": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/GroupMemberQuerySpecTerm:GroupMemberQuerySpecTerm"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/GroupMemberQuerySpecTerm:GroupMemberQuerySpecTerm": {
+            "properties": {
+                "op": {
+                    "type": "string"
+                },
+                "property": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/GvcControlplaneTracing:GvcControlplaneTracing": {
+            "properties": {
+                "customTags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "sampling": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "sampling"
+            ]
+        },
+        "cpln:index/GvcLightstepTracing:GvcLightstepTracing": {
+            "properties": {
+                "credentials": {
+                    "type": "string"
+                },
+                "customTags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "endpoint": {
+                    "type": "string"
+                },
+                "sampling": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "endpoint",
+                "sampling"
+            ]
+        },
+        "cpln:index/GvcLoadBalancer:GvcLoadBalancer": {
+            "properties": {
+                "dedicated": {
+                    "type": "boolean"
+                },
+                "trustedProxies": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "dedicated"
+            ]
+        },
+        "cpln:index/GvcOtelTracing:GvcOtelTracing": {
+            "properties": {
+                "customTags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "endpoint": {
+                    "type": "string"
+                },
+                "sampling": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "endpoint",
+                "sampling"
+            ]
+        },
+        "cpln:index/GvcSidecar:GvcSidecar": {
+            "properties": {
+                "envoy": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "envoy"
+            ]
+        },
+        "cpln:index/IdentityAwsAccessPolicy:IdentityAwsAccessPolicy": {
+            "properties": {
+                "cloudAccountLink": {
+                    "type": "string"
+                },
+                "policyRefs": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "roleName": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "cloudAccountLink"
+            ]
+        },
+        "cpln:index/IdentityAzureAccessPolicy:IdentityAzureAccessPolicy": {
+            "properties": {
+                "cloudAccountLink": {
+                    "type": "string"
+                },
+                "roleAssignments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/IdentityAzureAccessPolicyRoleAssignment:IdentityAzureAccessPolicyRoleAssignment"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "cloudAccountLink"
+            ]
+        },
+        "cpln:index/IdentityAzureAccessPolicyRoleAssignment:IdentityAzureAccessPolicyRoleAssignment": {
+            "properties": {
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "scope": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/IdentityGcpAccessPolicy:IdentityGcpAccessPolicy": {
+            "properties": {
+                "bindings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/IdentityGcpAccessPolicyBinding:IdentityGcpAccessPolicyBinding"
+                    }
+                },
+                "cloudAccountLink": {
+                    "type": "string"
+                },
+                "scopes": {
+                    "type": "string"
+                },
+                "serviceAccount": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "cloudAccountLink"
+            ]
+        },
+        "cpln:index/IdentityGcpAccessPolicyBinding:IdentityGcpAccessPolicyBinding": {
+            "properties": {
+                "resource": {
+                    "type": "string"
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/IdentityNativeNetworkResource:IdentityNativeNetworkResource": {
+            "properties": {
+                "awsPrivateLink": {
+                    "$ref": "#/types/cpln:index/IdentityNativeNetworkResourceAwsPrivateLink:IdentityNativeNetworkResourceAwsPrivateLink"
+                },
+                "fqdn": {
+                    "type": "string"
+                },
+                "gcpServiceConnect": {
+                    "$ref": "#/types/cpln:index/IdentityNativeNetworkResourceGcpServiceConnect:IdentityNativeNetworkResourceGcpServiceConnect"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "ports": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "fqdn",
+                "name",
+                "ports"
+            ]
+        },
+        "cpln:index/IdentityNativeNetworkResourceAwsPrivateLink:IdentityNativeNetworkResourceAwsPrivateLink": {
+            "properties": {
+                "endpointServiceName": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "endpointServiceName"
+            ]
+        },
+        "cpln:index/IdentityNativeNetworkResourceGcpServiceConnect:IdentityNativeNetworkResourceGcpServiceConnect": {
+            "properties": {
+                "targetService": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "targetService"
+            ]
+        },
+        "cpln:index/IdentityNetworkResource:IdentityNetworkResource": {
+            "properties": {
+                "agentLink": {
+                    "type": "string"
+                },
+                "fqdn": {
+                    "type": "string"
+                },
+                "ips": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "ports": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "resolverIp": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "agentLink",
+                "name"
+            ]
+        },
+        "cpln:index/IdentityNgsAccessPolicy:IdentityNgsAccessPolicy": {
+            "properties": {
+                "cloudAccountLink": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "integer"
+                },
+                "payload": {
+                    "type": "integer"
+                },
+                "pub": {
+                    "$ref": "#/types/cpln:index/IdentityNgsAccessPolicyPub:IdentityNgsAccessPolicyPub"
+                },
+                "resp": {
+                    "$ref": "#/types/cpln:index/IdentityNgsAccessPolicyResp:IdentityNgsAccessPolicyResp"
+                },
+                "sub": {
+                    "$ref": "#/types/cpln:index/IdentityNgsAccessPolicySub:IdentityNgsAccessPolicySub"
+                },
+                "subs": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "cloudAccountLink"
+            ]
+        },
+        "cpln:index/IdentityNgsAccessPolicyPub:IdentityNgsAccessPolicyPub": {
+            "properties": {
+                "allows": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "denies": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/IdentityNgsAccessPolicyResp:IdentityNgsAccessPolicyResp": {
+            "properties": {
+                "max": {
+                    "type": "integer"
+                },
+                "ttl": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/IdentityNgsAccessPolicySub:IdentityNgsAccessPolicySub": {
+            "properties": {
+                "allows": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "denies": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/OrgAuthConfig:OrgAuthConfig": {
+            "properties": {
+                "domainAutoMembers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "samlOnly": {
+                    "type": "boolean"
+                }
+            },
+            "type": "object",
+            "required": [
+                "domainAutoMembers"
+            ]
+        },
+        "cpln:index/OrgLoggingCoralogixLogging:OrgLoggingCoralogixLogging": {
+            "properties": {
+                "app": {
+                    "type": "string"
+                },
+                "cluster": {
+                    "type": "string"
+                },
+                "credentials": {
+                    "type": "string"
+                },
+                "subsystem": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "app",
+                "cluster",
+                "credentials",
+                "subsystem"
+            ]
+        },
+        "cpln:index/OrgLoggingDatadogLogging:OrgLoggingDatadogLogging": {
+            "properties": {
+                "credentials": {
+                    "type": "string"
+                },
+                "host": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "credentials",
+                "host"
+            ]
+        },
+        "cpln:index/OrgLoggingElasticLogging:OrgLoggingElasticLogging": {
+            "properties": {
+                "aws": {
+                    "$ref": "#/types/cpln:index/OrgLoggingElasticLoggingAws:OrgLoggingElasticLoggingAws"
+                },
+                "elasticCloud": {
+                    "$ref": "#/types/cpln:index/OrgLoggingElasticLoggingElasticCloud:OrgLoggingElasticLoggingElasticCloud"
+                },
+                "generic": {
+                    "$ref": "#/types/cpln:index/OrgLoggingElasticLoggingGeneric:OrgLoggingElasticLoggingGeneric"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/OrgLoggingElasticLoggingAws:OrgLoggingElasticLoggingAws": {
+            "properties": {
+                "credentials": {
+                    "type": "string"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "index": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "credentials",
+                "host",
+                "index",
+                "port",
+                "region",
+                "type"
+            ]
+        },
+        "cpln:index/OrgLoggingElasticLoggingElasticCloud:OrgLoggingElasticLoggingElasticCloud": {
+            "properties": {
+                "cloudId": {
+                    "type": "string"
+                },
+                "credentials": {
+                    "type": "string"
+                },
+                "index": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "cloudId",
+                "credentials",
+                "index",
+                "type"
+            ]
+        },
+        "cpln:index/OrgLoggingElasticLoggingGeneric:OrgLoggingElasticLoggingGeneric": {
+            "properties": {
+                "credentials": {
+                    "type": "string"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "index": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "credentials",
+                "host",
+                "index",
+                "path",
+                "port",
+                "type"
+            ]
+        },
+        "cpln:index/OrgLoggingLogzioLogging:OrgLoggingLogzioLogging": {
+            "properties": {
+                "credentials": {
+                    "type": "string"
+                },
+                "listenerHost": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "credentials",
+                "listenerHost"
+            ]
+        },
+        "cpln:index/OrgLoggingS3Logging:OrgLoggingS3Logging": {
+            "properties": {
+                "bucket": {
+                    "type": "string"
+                },
+                "credentials": {
+                    "type": "string"
+                },
+                "prefix": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "bucket",
+                "credentials",
+                "region"
+            ]
+        },
+        "cpln:index/OrgObservability:OrgObservability": {
+            "properties": {
+                "logsRetentionDays": {
+                    "type": "integer"
+                },
+                "metricsRetentionDays": {
+                    "type": "integer"
+                },
+                "tracesRetentionDays": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/OrgStatus:OrgStatus": {
+            "properties": {
+                "accountLink": {
+                    "type": "string"
+                },
+                "active": {
+                    "type": "boolean"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/OrgTracingControlplaneTracing:OrgTracingControlplaneTracing": {
+            "properties": {
+                "customTags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "sampling": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "sampling"
+            ]
+        },
+        "cpln:index/OrgTracingLightstepTracing:OrgTracingLightstepTracing": {
+            "properties": {
+                "credentials": {
+                    "type": "string"
+                },
+                "customTags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "endpoint": {
+                    "type": "string"
+                },
+                "sampling": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "endpoint",
+                "sampling"
+            ]
+        },
+        "cpln:index/OrgTracingOtelTracing:OrgTracingOtelTracing": {
+            "properties": {
+                "customTags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "endpoint": {
+                    "type": "string"
+                },
+                "sampling": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "endpoint",
+                "sampling"
+            ]
+        },
+        "cpln:index/PolicyBinding:PolicyBinding": {
+            "properties": {
+                "permissions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "principalLinks": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "permissions",
+                "principalLinks"
+            ]
+        },
+        "cpln:index/PolicyTargetQuery:PolicyTargetQuery": {
+            "properties": {
+                "fetch": {
+                    "type": "string"
+                },
+                "spec": {
+                    "$ref": "#/types/cpln:index/PolicyTargetQuerySpec:PolicyTargetQuerySpec"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/PolicyTargetQuerySpec:PolicyTargetQuerySpec": {
+            "properties": {
+                "match": {
+                    "type": "string"
+                },
+                "terms": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/PolicyTargetQuerySpecTerm:PolicyTargetQuerySpecTerm"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/PolicyTargetQuerySpecTerm:PolicyTargetQuerySpecTerm": {
+            "properties": {
+                "op": {
+                    "type": "string"
+                },
+                "property": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/SecretAws:SecretAws": {
+            "properties": {
+                "accessKey": {
+                    "type": "string",
+                    "secret": true
+                },
+                "roleArn": {
+                    "type": "string"
+                },
+                "secretKey": {
+                    "type": "string",
+                    "secret": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "accessKey",
+                "secretKey"
+            ]
+        },
+        "cpln:index/SecretAzureConnector:SecretAzureConnector": {
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "secret": true
+                },
+                "url": {
+                    "type": "string",
+                    "secret": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "code",
+                "url"
+            ]
+        },
+        "cpln:index/SecretEcr:SecretEcr": {
+            "properties": {
+                "accessKey": {
+                    "type": "string"
+                },
+                "externalId": {
+                    "type": "string"
+                },
+                "repos": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "roleArn": {
+                    "type": "string"
+                },
+                "secretKey": {
+                    "type": "string",
+                    "secret": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "accessKey",
+                "repos",
+                "secretKey"
+            ]
+        },
+        "cpln:index/SecretKeypair:SecretKeypair": {
+            "properties": {
+                "passphrase": {
+                    "type": "string",
+                    "secret": true
+                },
+                "publicKey": {
+                    "type": "string"
+                },
+                "secretKey": {
+                    "type": "string",
+                    "secret": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "secretKey"
+            ]
+        },
+        "cpln:index/SecretNatsAccount:SecretNatsAccount": {
+            "properties": {
+                "accountId": {
+                    "type": "string"
+                },
+                "privateKey": {
+                    "type": "string",
+                    "secret": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "accountId",
+                "privateKey"
+            ]
+        },
+        "cpln:index/SecretOpaque:SecretOpaque": {
+            "properties": {
+                "encoding": {
+                    "type": "string"
+                },
+                "payload": {
+                    "type": "string",
+                    "secret": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "payload"
+            ]
+        },
+        "cpln:index/SecretTls:SecretTls": {
+            "properties": {
+                "cert": {
+                    "type": "string"
+                },
+                "chain": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string",
+                    "secret": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "cert",
+                "key"
+            ]
+        },
+        "cpln:index/SecretUserpass:SecretUserpass": {
+            "properties": {
+                "encoding": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "secret": true
+                },
+                "username": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ]
+        },
+        "cpln:index/VolumeSetAutoscaling:VolumeSetAutoscaling": {
+            "properties": {
+                "maxCapacity": {
+                    "type": "integer"
+                },
+                "minFreePercentage": {
+                    "type": "integer"
+                },
+                "scalingFactor": {
+                    "type": "number"
+                }
+            },
+            "type": "object",
+            "required": [
+                "maxCapacity",
+                "minFreePercentage",
+                "scalingFactor"
+            ]
+        },
+        "cpln:index/VolumeSetSnapshots:VolumeSetSnapshots": {
+            "properties": {
+                "createFinalSnapshot": {
+                    "type": "boolean"
+                },
+                "retentionDuration": {
+                    "type": "string"
+                },
+                "schedule": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/VolumeSetStatus:VolumeSetStatus": {
+            "properties": {
+                "bindingId": {
+                    "type": "string"
+                },
+                "locations": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "parentId": {
+                    "type": "string"
+                },
+                "usedByWorkload": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "bindingId",
+                        "locations",
+                        "parentId",
+                        "usedByWorkload"
+                    ]
+                }
+            }
+        },
+        "cpln:index/WorkloadContainer:WorkloadContainer": {
+            "properties": {
+                "args": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "command": {
+                    "type": "string"
+                },
+                "cpu": {
+                    "type": "string"
+                },
+                "env": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "gpuNvidia": {
+                    "$ref": "#/types/cpln:index/WorkloadContainerGpuNvidia:WorkloadContainerGpuNvidia"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "inheritEnv": {
+                    "type": "boolean"
+                },
+                "lifecycle": {
+                    "$ref": "#/types/cpln:index/WorkloadContainerLifecycle:WorkloadContainerLifecycle"
+                },
+                "livenessProbe": {
+                    "$ref": "#/types/cpln:index/WorkloadContainerLivenessProbe:WorkloadContainerLivenessProbe"
+                },
+                "memory": {
+                    "type": "string"
+                },
+                "metrics": {
+                    "$ref": "#/types/cpln:index/WorkloadContainerMetrics:WorkloadContainerMetrics"
+                },
+                "minCpu": {
+                    "type": "string"
+                },
+                "minMemory": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer",
+                    "deprecationMessage": "The 'port' attribute will be deprecated in the next major version. Use the 'ports' attribute instead."
+                },
+                "ports": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadContainerPort:WorkloadContainerPort"
+                    }
+                },
+                "readinessProbe": {
+                    "$ref": "#/types/cpln:index/WorkloadContainerReadinessProbe:WorkloadContainerReadinessProbe"
+                },
+                "volumes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadContainerVolume:WorkloadContainerVolume"
+                    }
+                },
+                "workingDirectory": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "image",
+                "name"
+            ]
+        },
+        "cpln:index/WorkloadContainerGpuNvidia:WorkloadContainerGpuNvidia": {
+            "properties": {
+                "model": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "model",
+                "quantity"
+            ]
+        },
+        "cpln:index/WorkloadContainerLifecycle:WorkloadContainerLifecycle": {
+            "properties": {
+                "postStart": {
+                    "$ref": "#/types/cpln:index/WorkloadContainerLifecyclePostStart:WorkloadContainerLifecyclePostStart"
+                },
+                "preStop": {
+                    "$ref": "#/types/cpln:index/WorkloadContainerLifecyclePreStop:WorkloadContainerLifecyclePreStop"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadContainerLifecyclePostStart:WorkloadContainerLifecyclePostStart": {
+            "properties": {
+                "exec": {
+                    "$ref": "#/types/cpln:index/WorkloadContainerLifecyclePostStartExec:WorkloadContainerLifecyclePostStartExec"
+                }
+            },
+            "type": "object",
+            "required": [
+                "exec"
+            ]
+        },
+        "cpln:index/WorkloadContainerLifecyclePostStartExec:WorkloadContainerLifecyclePostStartExec": {
+            "properties": {
+                "commands": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "commands"
+            ]
+        },
+        "cpln:index/WorkloadContainerLifecyclePreStop:WorkloadContainerLifecyclePreStop": {
+            "properties": {
+                "exec": {
+                    "$ref": "#/types/cpln:index/WorkloadContainerLifecyclePreStopExec:WorkloadContainerLifecyclePreStopExec"
+                }
+            },
+            "type": "object",
+            "required": [
+                "exec"
+            ]
+        },
+        "cpln:index/WorkloadContainerLifecyclePreStopExec:WorkloadContainerLifecyclePreStopExec": {
+            "properties": {
+                "commands": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "commands"
+            ]
+        },
+        "cpln:index/WorkloadContainerLivenessProbe:WorkloadContainerLivenessProbe": {
+            "properties": {
+                "exec": {
+                    "$ref": "#/types/cpln:index/WorkloadContainerLivenessProbeExec:WorkloadContainerLivenessProbeExec"
+                },
+                "failureThreshold": {
+                    "type": "integer"
+                },
+                "grpc": {
+                    "$ref": "#/types/cpln:index/WorkloadContainerLivenessProbeGrpc:WorkloadContainerLivenessProbeGrpc"
+                },
+                "httpGet": {
+                    "$ref": "#/types/cpln:index/WorkloadContainerLivenessProbeHttpGet:WorkloadContainerLivenessProbeHttpGet"
+                },
+                "initialDelaySeconds": {
+                    "type": "integer"
+                },
+                "periodSeconds": {
+                    "type": "integer"
+                },
+                "successThreshold": {
+                    "type": "integer"
+                },
+                "tcpSocket": {
+                    "$ref": "#/types/cpln:index/WorkloadContainerLivenessProbeTcpSocket:WorkloadContainerLivenessProbeTcpSocket"
+                },
+                "timeoutSeconds": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadContainerLivenessProbeExec:WorkloadContainerLivenessProbeExec": {
+            "properties": {
+                "commands": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "commands"
+            ]
+        },
+        "cpln:index/WorkloadContainerLivenessProbeGrpc:WorkloadContainerLivenessProbeGrpc": {
+            "properties": {
+                "port": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadContainerLivenessProbeHttpGet:WorkloadContainerLivenessProbeHttpGet": {
+            "properties": {
+                "httpHeaders": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "path": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "scheme": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadContainerLivenessProbeTcpSocket:WorkloadContainerLivenessProbeTcpSocket": {
+            "properties": {
+                "port": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadContainerMetrics:WorkloadContainerMetrics": {
+            "properties": {
+                "path": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "path",
+                "port"
+            ]
+        },
+        "cpln:index/WorkloadContainerPort:WorkloadContainerPort": {
+            "properties": {
+                "number": {
+                    "type": "integer"
+                },
+                "protocol": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "number"
+            ]
+        },
+        "cpln:index/WorkloadContainerReadinessProbe:WorkloadContainerReadinessProbe": {
+            "properties": {
+                "exec": {
+                    "$ref": "#/types/cpln:index/WorkloadContainerReadinessProbeExec:WorkloadContainerReadinessProbeExec"
+                },
+                "failureThreshold": {
+                    "type": "integer"
+                },
+                "grpc": {
+                    "$ref": "#/types/cpln:index/WorkloadContainerReadinessProbeGrpc:WorkloadContainerReadinessProbeGrpc"
+                },
+                "httpGet": {
+                    "$ref": "#/types/cpln:index/WorkloadContainerReadinessProbeHttpGet:WorkloadContainerReadinessProbeHttpGet"
+                },
+                "initialDelaySeconds": {
+                    "type": "integer"
+                },
+                "periodSeconds": {
+                    "type": "integer"
+                },
+                "successThreshold": {
+                    "type": "integer"
+                },
+                "tcpSocket": {
+                    "$ref": "#/types/cpln:index/WorkloadContainerReadinessProbeTcpSocket:WorkloadContainerReadinessProbeTcpSocket"
+                },
+                "timeoutSeconds": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadContainerReadinessProbeExec:WorkloadContainerReadinessProbeExec": {
+            "properties": {
+                "commands": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "commands"
+            ]
+        },
+        "cpln:index/WorkloadContainerReadinessProbeGrpc:WorkloadContainerReadinessProbeGrpc": {
+            "properties": {
+                "port": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadContainerReadinessProbeHttpGet:WorkloadContainerReadinessProbeHttpGet": {
+            "properties": {
+                "httpHeaders": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "path": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "scheme": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadContainerReadinessProbeTcpSocket:WorkloadContainerReadinessProbeTcpSocket": {
+            "properties": {
+                "port": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadContainerVolume:WorkloadContainerVolume": {
+            "properties": {
+                "path": {
+                    "type": "string"
+                },
+                "recoveryPolicy": {
+                    "type": "string"
+                },
+                "uri": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "path",
+                "uri"
+            ]
+        },
+        "cpln:index/WorkloadFirewallSpec:WorkloadFirewallSpec": {
+            "properties": {
+                "external": {
+                    "$ref": "#/types/cpln:index/WorkloadFirewallSpecExternal:WorkloadFirewallSpecExternal"
+                },
+                "internal": {
+                    "$ref": "#/types/cpln:index/WorkloadFirewallSpecInternal:WorkloadFirewallSpecInternal"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadFirewallSpecExternal:WorkloadFirewallSpecExternal": {
+            "properties": {
+                "inboundAllowCidrs": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "outboundAllowCidrs": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "outboundAllowHostnames": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "outboundAllowPorts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadFirewallSpecExternalOutboundAllowPort:WorkloadFirewallSpecExternalOutboundAllowPort"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadFirewallSpecExternalOutboundAllowPort:WorkloadFirewallSpecExternalOutboundAllowPort": {
+            "properties": {
+                "number": {
+                    "type": "integer"
+                },
+                "protocol": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "number",
+                "protocol"
+            ]
+        },
+        "cpln:index/WorkloadFirewallSpecInternal:WorkloadFirewallSpecInternal": {
+            "properties": {
+                "inboundAllowType": {
+                    "type": "string"
+                },
+                "inboundAllowWorkloads": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadJob:WorkloadJob": {
+            "properties": {
+                "activeDeadlineSeconds": {
+                    "type": "integer"
+                },
+                "concurrencyPolicy": {
+                    "type": "string"
+                },
+                "historyLimit": {
+                    "type": "integer"
+                },
+                "restartPolicy": {
+                    "type": "string"
+                },
+                "schedule": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "schedule"
+            ]
+        },
+        "cpln:index/WorkloadLocalOption:WorkloadLocalOption": {
+            "properties": {
+                "autoscaling": {
+                    "$ref": "#/types/cpln:index/WorkloadLocalOptionAutoscaling:WorkloadLocalOptionAutoscaling"
+                },
+                "capacityAi": {
+                    "type": "boolean"
+                },
+                "debug": {
+                    "type": "boolean"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "suspend": {
+                    "type": "boolean"
+                },
+                "timeoutSeconds": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "autoscaling",
+                "location"
+            ]
+        },
+        "cpln:index/WorkloadLocalOptionAutoscaling:WorkloadLocalOptionAutoscaling": {
+            "properties": {
+                "maxConcurrency": {
+                    "type": "integer"
+                },
+                "maxScale": {
+                    "type": "integer"
+                },
+                "metric": {
+                    "type": "string"
+                },
+                "metricPercentile": {
+                    "type": "string"
+                },
+                "minScale": {
+                    "type": "integer"
+                },
+                "scaleToZeroDelay": {
+                    "type": "integer"
+                },
+                "target": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadOptions:WorkloadOptions": {
+            "properties": {
+                "autoscaling": {
+                    "$ref": "#/types/cpln:index/WorkloadOptionsAutoscaling:WorkloadOptionsAutoscaling"
+                },
+                "capacityAi": {
+                    "type": "boolean"
+                },
+                "debug": {
+                    "type": "boolean"
+                },
+                "suspend": {
+                    "type": "boolean"
+                },
+                "timeoutSeconds": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "autoscaling"
+            ]
+        },
+        "cpln:index/WorkloadOptionsAutoscaling:WorkloadOptionsAutoscaling": {
+            "properties": {
+                "maxConcurrency": {
+                    "type": "integer"
+                },
+                "maxScale": {
+                    "type": "integer"
+                },
+                "metric": {
+                    "type": "string"
+                },
+                "metricPercentile": {
+                    "type": "string"
+                },
+                "minScale": {
+                    "type": "integer"
+                },
+                "scaleToZeroDelay": {
+                    "type": "integer"
+                },
+                "target": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadRolloutOptions:WorkloadRolloutOptions": {
+            "properties": {
+                "maxSurgeReplicas": {
+                    "type": "string"
+                },
+                "maxUnavailableReplicas": {
+                    "type": "string"
+                },
+                "minReadySeconds": {
+                    "type": "integer"
+                },
+                "scalingPolicy": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadSecurityOptions:WorkloadSecurityOptions": {
+            "properties": {
+                "fileSystemGroupId": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "fileSystemGroupId"
+            ]
+        },
+        "cpln:index/WorkloadSidecar:WorkloadSidecar": {
+            "properties": {
+                "envoy": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "envoy"
+            ]
+        },
+        "cpln:index/WorkloadStatus:WorkloadStatus": {
+            "properties": {
+                "canonicalEndpoint": {
+                    "type": "string"
+                },
+                "currentReplicaCount": {
+                    "type": "integer"
+                },
+                "endpoint": {
+                    "type": "string"
+                },
+                "healthChecks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadStatusHealthCheck:WorkloadStatusHealthCheck"
+                    }
+                },
+                "internalName": {
+                    "type": "string"
+                },
+                "parentId": {
+                    "type": "string"
+                },
+                "resolvedImages": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadStatusResolvedImage:WorkloadStatusResolvedImage"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadStatusHealthCheck:WorkloadStatusHealthCheck": {
+            "properties": {
+                "active": {
+                    "type": "boolean"
+                },
+                "code": {
+                    "type": "integer"
+                },
+                "failures": {
+                    "type": "integer"
+                },
+                "lastChecked": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "success": {
+                    "type": "boolean"
+                },
+                "successes": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "active"
+            ]
+        },
+        "cpln:index/WorkloadStatusResolvedImage:WorkloadStatusResolvedImage": {
+            "properties": {
+                "images": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadStatusResolvedImageImage:WorkloadStatusResolvedImageImage"
+                    }
+                },
+                "resolvedAt": {
+                    "type": "string"
+                },
+                "resolvedForVersion": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadStatusResolvedImageImage:WorkloadStatusResolvedImageImage": {
+            "properties": {
+                "digest": {
+                    "type": "string"
+                },
+                "manifests": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadStatusResolvedImageImageManifest:WorkloadStatusResolvedImageImageManifest"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadStatusResolvedImageImageManifest:WorkloadStatusResolvedImageImageManifest": {
+            "properties": {
+                "digest": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "mediaType": {
+                    "type": "string"
+                },
+                "platform": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/getGvcControlplaneTracing:getGvcControlplaneTracing": {
+            "properties": {
+                "customTags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "sampling": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "sampling"
+            ]
+        },
+        "cpln:index/getGvcLightstepTracing:getGvcLightstepTracing": {
+            "properties": {
+                "credentials": {
+                    "type": "string"
+                },
+                "customTags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "endpoint": {
+                    "type": "string"
+                },
+                "sampling": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "endpoint",
+                "sampling"
+            ]
+        },
+        "cpln:index/getGvcLoadBalancer:getGvcLoadBalancer": {
+            "properties": {
+                "dedicated": {
+                    "type": "boolean"
+                },
+                "trustedProxies": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "dedicated"
+            ]
+        },
+        "cpln:index/getGvcOtelTracing:getGvcOtelTracing": {
+            "properties": {
+                "customTags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "endpoint": {
+                    "type": "string"
+                },
+                "sampling": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "endpoint",
+                "sampling"
+            ]
+        },
+        "cpln:index/getGvcSidecar:getGvcSidecar": {
+            "properties": {
+                "envoy": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "envoy"
+            ]
+        },
+        "cpln:index/getLocationGeo:getLocationGeo": {
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "continent": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "lat": {
+                    "type": "number"
+                },
+                "lon": {
+                    "type": "number"
+                },
+                "state": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/getLocationsLocation:getLocationsLocation": {
+            "properties": {
+                "cloudProvider": {
+                    "type": "string"
+                },
+                "cplnId": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "geos": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/getLocationsLocationGeo:getLocationsLocationGeo"
+                    }
+                },
+                "ipRanges": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "selfLink": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "cloudProvider",
+                "cplnId",
+                "description",
+                "enabled",
+                "geos",
+                "ipRanges",
+                "name",
+                "region",
+                "selfLink",
+                "tags"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "cpln:index/getLocationsLocationGeo:getLocationsLocationGeo": {
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "continent": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "lat": {
+                    "type": "number"
+                },
+                "lon": {
+                    "type": "number"
+                },
+                "state": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "provider": {
+        "description": "The provider type for the cpln package. By default, resources use package-wide configuration\nsettings, however an explicit `Provider` instance may be created and passed during resource\nconstruction to achieve fine-grained programmatic control over provider settings. See the\n[documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.\n",
+        "properties": {
+            "endpoint": {
+                "type": "string"
+            },
+            "org": {
+                "type": "string"
+            },
+            "profile": {
+                "type": "string"
+            },
+            "refreshToken": {
+                "type": "string"
+            },
+            "token": {
+                "type": "string"
+            }
+        },
+        "required": [
+            "org"
+        ],
+        "inputProperties": {
+            "endpoint": {
+                "type": "string"
+            },
+            "org": {
+                "type": "string"
+            },
+            "profile": {
+                "type": "string"
+            },
+            "refreshToken": {
+                "type": "string"
+            },
+            "token": {
+                "type": "string"
+            }
+        },
+        "requiredInputs": [
+            "org"
+        ]
+    },
+    "resources": {
+        "cpln:index/agent:Agent": {
+            "properties": {
+                "cplnId": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "selfLink": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "userData": {
+                    "type": "string",
+                    "secret": true
+                }
+            },
+            "required": [
+                "cplnId",
+                "name",
+                "selfLink",
+                "userData"
+            ],
+            "inputProperties": {
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Agent resources.\n",
+                "properties": {
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "selfLink": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "userData": {
+                        "type": "string",
+                        "secret": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "cpln:index/auditContext:AuditContext": {
+            "properties": {
+                "cplnId": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "selfLink": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "cplnId",
+                "name",
+                "selfLink"
+            ],
+            "inputProperties": {
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering AuditContext resources.\n",
+                "properties": {
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "selfLink": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "cpln:index/cloudAccount:CloudAccount": {
+            "properties": {
+                "aws": {
+                    "$ref": "#/types/cpln:index/CloudAccountAws:CloudAccountAws"
+                },
+                "azure": {
+                    "$ref": "#/types/cpln:index/CloudAccountAzure:CloudAccountAzure"
+                },
+                "cplnId": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "gcp": {
+                    "$ref": "#/types/cpln:index/CloudAccountGcp:CloudAccountGcp"
+                },
+                "gcpRoles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "gcpServiceAccountName": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "ngs": {
+                    "$ref": "#/types/cpln:index/CloudAccountNgs:CloudAccountNgs"
+                },
+                "selfLink": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "cplnId",
+                "gcpRoles",
+                "gcpServiceAccountName",
+                "name",
+                "selfLink"
+            ],
+            "inputProperties": {
+                "aws": {
+                    "$ref": "#/types/cpln:index/CloudAccountAws:CloudAccountAws"
+                },
+                "azure": {
+                    "$ref": "#/types/cpln:index/CloudAccountAzure:CloudAccountAzure"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "gcp": {
+                    "$ref": "#/types/cpln:index/CloudAccountGcp:CloudAccountGcp"
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "ngs": {
+                    "$ref": "#/types/cpln:index/CloudAccountNgs:CloudAccountNgs"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering CloudAccount resources.\n",
+                "properties": {
+                    "aws": {
+                        "$ref": "#/types/cpln:index/CloudAccountAws:CloudAccountAws"
+                    },
+                    "azure": {
+                        "$ref": "#/types/cpln:index/CloudAccountAzure:CloudAccountAzure"
+                    },
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "gcp": {
+                        "$ref": "#/types/cpln:index/CloudAccountGcp:CloudAccountGcp"
+                    },
+                    "gcpRoles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "gcpServiceAccountName": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "ngs": {
+                        "$ref": "#/types/cpln:index/CloudAccountNgs:CloudAccountNgs"
+                    },
+                    "selfLink": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "cpln:index/domain:Domain": {
+            "properties": {
+                "cplnId": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "selfLink": {
+                    "type": "string"
+                },
+                "spec": {
+                    "$ref": "#/types/cpln:index/DomainSpec:DomainSpec"
+                },
+                "statuses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/DomainStatus:DomainStatus"
+                    }
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "cplnId",
+                "name",
+                "selfLink",
+                "spec",
+                "statuses"
+            ],
+            "inputProperties": {
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "spec": {
+                    "$ref": "#/types/cpln:index/DomainSpec:DomainSpec"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "requiredInputs": [
+                "spec"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Domain resources.\n",
+                "properties": {
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "selfLink": {
+                        "type": "string"
+                    },
+                    "spec": {
+                        "$ref": "#/types/cpln:index/DomainSpec:DomainSpec"
+                    },
+                    "statuses": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/DomainStatus:DomainStatus"
+                        }
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "cpln:index/domainRoute:DomainRoute": {
+            "properties": {
+                "domainLink": {
+                    "type": "string"
+                },
+                "domainPort": {
+                    "type": "integer"
+                },
+                "hostPrefix": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "prefix": {
+                    "type": "string"
+                },
+                "replacePrefix": {
+                    "type": "string"
+                },
+                "workloadLink": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "domainLink",
+                "prefix",
+                "workloadLink"
+            ],
+            "inputProperties": {
+                "domainLink": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "domainPort": {
+                    "type": "integer",
+                    "willReplaceOnChanges": true
+                },
+                "hostPrefix": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "prefix": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "replacePrefix": {
+                    "type": "string"
+                },
+                "workloadLink": {
+                    "type": "string"
+                }
+            },
+            "requiredInputs": [
+                "domainLink",
+                "prefix",
+                "workloadLink"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering DomainRoute resources.\n",
+                "properties": {
+                    "domainLink": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "domainPort": {
+                        "type": "integer",
+                        "willReplaceOnChanges": true
+                    },
+                    "hostPrefix": {
+                        "type": "string"
+                    },
+                    "port": {
+                        "type": "integer"
+                    },
+                    "prefix": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "replacePrefix": {
+                        "type": "string"
+                    },
+                    "workloadLink": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "cpln:index/group:Group": {
+            "properties": {
+                "cplnId": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "identityMatcher": {
+                    "$ref": "#/types/cpln:index/GroupIdentityMatcher:GroupIdentityMatcher"
+                },
+                "memberQuery": {
+                    "$ref": "#/types/cpln:index/GroupMemberQuery:GroupMemberQuery"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "origin": {
+                    "type": "string"
+                },
+                "selfLink": {
+                    "type": "string"
+                },
+                "serviceAccounts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "userIdsAndEmails": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "cplnId",
+                "name",
+                "origin",
+                "selfLink"
+            ],
+            "inputProperties": {
+                "description": {
+                    "type": "string"
+                },
+                "identityMatcher": {
+                    "$ref": "#/types/cpln:index/GroupIdentityMatcher:GroupIdentityMatcher"
+                },
+                "memberQuery": {
+                    "$ref": "#/types/cpln:index/GroupMemberQuery:GroupMemberQuery"
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "serviceAccounts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "userIdsAndEmails": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Group resources.\n",
+                "properties": {
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "identityMatcher": {
+                        "$ref": "#/types/cpln:index/GroupIdentityMatcher:GroupIdentityMatcher"
+                    },
+                    "memberQuery": {
+                        "$ref": "#/types/cpln:index/GroupMemberQuery:GroupMemberQuery"
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "origin": {
+                        "type": "string"
+                    },
+                    "selfLink": {
+                        "type": "string"
+                    },
+                    "serviceAccounts": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "userIdsAndEmails": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "cpln:index/gvc:Gvc": {
+            "properties": {
+                "alias": {
+                    "type": "string"
+                },
+                "controlplaneTracing": {
+                    "$ref": "#/types/cpln:index/GvcControlplaneTracing:GvcControlplaneTracing"
+                },
+                "cplnId": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "domain": {
+                    "type": "string",
+                    "deprecationMessage": "Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead."
+                },
+                "env": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "lightstepTracing": {
+                    "$ref": "#/types/cpln:index/GvcLightstepTracing:GvcLightstepTracing"
+                },
+                "loadBalancer": {
+                    "$ref": "#/types/cpln:index/GvcLoadBalancer:GvcLoadBalancer"
+                },
+                "locations": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "otelTracing": {
+                    "$ref": "#/types/cpln:index/GvcOtelTracing:GvcOtelTracing"
+                },
+                "pullSecrets": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "selfLink": {
+                    "type": "string"
+                },
+                "sidecar": {
+                    "$ref": "#/types/cpln:index/GvcSidecar:GvcSidecar"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "alias",
+                "cplnId",
+                "name",
+                "selfLink"
+            ],
+            "inputProperties": {
+                "controlplaneTracing": {
+                    "$ref": "#/types/cpln:index/GvcControlplaneTracing:GvcControlplaneTracing"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "domain": {
+                    "type": "string",
+                    "deprecationMessage": "Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead."
+                },
+                "env": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "lightstepTracing": {
+                    "$ref": "#/types/cpln:index/GvcLightstepTracing:GvcLightstepTracing"
+                },
+                "loadBalancer": {
+                    "$ref": "#/types/cpln:index/GvcLoadBalancer:GvcLoadBalancer"
+                },
+                "locations": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "otelTracing": {
+                    "$ref": "#/types/cpln:index/GvcOtelTracing:GvcOtelTracing"
+                },
+                "pullSecrets": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "sidecar": {
+                    "$ref": "#/types/cpln:index/GvcSidecar:GvcSidecar"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Gvc resources.\n",
+                "properties": {
+                    "alias": {
+                        "type": "string"
+                    },
+                    "controlplaneTracing": {
+                        "$ref": "#/types/cpln:index/GvcControlplaneTracing:GvcControlplaneTracing"
+                    },
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "domain": {
+                        "type": "string",
+                        "deprecationMessage": "Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead."
+                    },
+                    "env": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "lightstepTracing": {
+                        "$ref": "#/types/cpln:index/GvcLightstepTracing:GvcLightstepTracing"
+                    },
+                    "loadBalancer": {
+                        "$ref": "#/types/cpln:index/GvcLoadBalancer:GvcLoadBalancer"
+                    },
+                    "locations": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "otelTracing": {
+                        "$ref": "#/types/cpln:index/GvcOtelTracing:GvcOtelTracing"
+                    },
+                    "pullSecrets": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "selfLink": {
+                        "type": "string"
+                    },
+                    "sidecar": {
+                        "$ref": "#/types/cpln:index/GvcSidecar:GvcSidecar"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "cpln:index/identity:Identity": {
+            "properties": {
+                "awsAccessPolicy": {
+                    "$ref": "#/types/cpln:index/IdentityAwsAccessPolicy:IdentityAwsAccessPolicy"
+                },
+                "azureAccessPolicy": {
+                    "$ref": "#/types/cpln:index/IdentityAzureAccessPolicy:IdentityAzureAccessPolicy"
+                },
+                "cplnId": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "gcpAccessPolicy": {
+                    "$ref": "#/types/cpln:index/IdentityGcpAccessPolicy:IdentityGcpAccessPolicy"
+                },
+                "gvc": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "nativeNetworkResources": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/IdentityNativeNetworkResource:IdentityNativeNetworkResource"
+                    }
+                },
+                "networkResources": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/IdentityNetworkResource:IdentityNetworkResource"
+                    }
+                },
+                "ngsAccessPolicy": {
+                    "$ref": "#/types/cpln:index/IdentityNgsAccessPolicy:IdentityNgsAccessPolicy"
+                },
+                "selfLink": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "cplnId",
+                "gvc",
+                "name",
+                "selfLink",
+                "status"
+            ],
+            "inputProperties": {
+                "awsAccessPolicy": {
+                    "$ref": "#/types/cpln:index/IdentityAwsAccessPolicy:IdentityAwsAccessPolicy"
+                },
+                "azureAccessPolicy": {
+                    "$ref": "#/types/cpln:index/IdentityAzureAccessPolicy:IdentityAzureAccessPolicy"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "gcpAccessPolicy": {
+                    "$ref": "#/types/cpln:index/IdentityGcpAccessPolicy:IdentityGcpAccessPolicy"
+                },
+                "gvc": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "nativeNetworkResources": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/IdentityNativeNetworkResource:IdentityNativeNetworkResource"
+                    }
+                },
+                "networkResources": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/IdentityNetworkResource:IdentityNetworkResource"
+                    }
+                },
+                "ngsAccessPolicy": {
+                    "$ref": "#/types/cpln:index/IdentityNgsAccessPolicy:IdentityNgsAccessPolicy"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "requiredInputs": [
+                "gvc"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Identity resources.\n",
+                "properties": {
+                    "awsAccessPolicy": {
+                        "$ref": "#/types/cpln:index/IdentityAwsAccessPolicy:IdentityAwsAccessPolicy"
+                    },
+                    "azureAccessPolicy": {
+                        "$ref": "#/types/cpln:index/IdentityAzureAccessPolicy:IdentityAzureAccessPolicy"
+                    },
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "gcpAccessPolicy": {
+                        "$ref": "#/types/cpln:index/IdentityGcpAccessPolicy:IdentityGcpAccessPolicy"
+                    },
+                    "gvc": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "nativeNetworkResources": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/IdentityNativeNetworkResource:IdentityNativeNetworkResource"
+                        }
+                    },
+                    "networkResources": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/IdentityNetworkResource:IdentityNetworkResource"
+                        }
+                    },
+                    "ngsAccessPolicy": {
+                        "$ref": "#/types/cpln:index/IdentityNgsAccessPolicy:IdentityNgsAccessPolicy"
+                    },
+                    "selfLink": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "cpln:index/org:Org": {
+            "properties": {
+                "accountId": {
+                    "type": "string"
+                },
+                "authConfig": {
+                    "$ref": "#/types/cpln:index/OrgAuthConfig:OrgAuthConfig"
+                },
+                "cplnId": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "invitees": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "observability": {
+                    "$ref": "#/types/cpln:index/OrgObservability:OrgObservability"
+                },
+                "selfLink": {
+                    "type": "string"
+                },
+                "sessionTimeoutSeconds": {
+                    "type": "integer"
+                },
+                "statuses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgStatus:OrgStatus"
+                    }
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "cplnId",
+                "name",
+                "observability",
+                "selfLink",
+                "statuses"
+            ],
+            "inputProperties": {
+                "accountId": {
+                    "type": "string"
+                },
+                "authConfig": {
+                    "$ref": "#/types/cpln:index/OrgAuthConfig:OrgAuthConfig"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "invitees": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "observability": {
+                    "$ref": "#/types/cpln:index/OrgObservability:OrgObservability"
+                },
+                "sessionTimeoutSeconds": {
+                    "type": "integer"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "requiredInputs": [
+                "observability"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Org resources.\n",
+                "properties": {
+                    "accountId": {
+                        "type": "string"
+                    },
+                    "authConfig": {
+                        "$ref": "#/types/cpln:index/OrgAuthConfig:OrgAuthConfig"
+                    },
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "invitees": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "observability": {
+                        "$ref": "#/types/cpln:index/OrgObservability:OrgObservability"
+                    },
+                    "selfLink": {
+                        "type": "string"
+                    },
+                    "sessionTimeoutSeconds": {
+                        "type": "integer"
+                    },
+                    "statuses": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/OrgStatus:OrgStatus"
+                        }
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "cpln:index/orgLogging:OrgLogging": {
+            "properties": {
+                "coralogixLoggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingCoralogixLogging:OrgLoggingCoralogixLogging"
+                    }
+                },
+                "cplnId": {
+                    "type": "string"
+                },
+                "datadogLoggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingDatadogLogging:OrgLoggingDatadogLogging"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "elasticLoggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingElasticLogging:OrgLoggingElasticLogging"
+                    }
+                },
+                "logzioLoggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingLogzioLogging:OrgLoggingLogzioLogging"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "s3Loggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingS3Logging:OrgLoggingS3Logging"
+                    }
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "cplnId",
+                "description",
+                "name",
+                "tags"
+            ],
+            "inputProperties": {
+                "coralogixLoggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingCoralogixLogging:OrgLoggingCoralogixLogging"
+                    }
+                },
+                "datadogLoggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingDatadogLogging:OrgLoggingDatadogLogging"
+                    }
+                },
+                "elasticLoggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingElasticLogging:OrgLoggingElasticLogging"
+                    }
+                },
+                "logzioLoggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingLogzioLogging:OrgLoggingLogzioLogging"
+                    }
+                },
+                "s3Loggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingS3Logging:OrgLoggingS3Logging"
+                    }
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering OrgLogging resources.\n",
+                "properties": {
+                    "coralogixLoggings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/OrgLoggingCoralogixLogging:OrgLoggingCoralogixLogging"
+                        }
+                    },
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "datadogLoggings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/OrgLoggingDatadogLogging:OrgLoggingDatadogLogging"
+                        }
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "elasticLoggings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/OrgLoggingElasticLogging:OrgLoggingElasticLogging"
+                        }
+                    },
+                    "logzioLoggings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/OrgLoggingLogzioLogging:OrgLoggingLogzioLogging"
+                        }
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "s3Loggings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/OrgLoggingS3Logging:OrgLoggingS3Logging"
+                        }
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "cpln:index/orgTracing:OrgTracing": {
+            "properties": {
+                "controlplaneTracing": {
+                    "$ref": "#/types/cpln:index/OrgTracingControlplaneTracing:OrgTracingControlplaneTracing"
+                },
+                "cplnId": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "lightstepTracing": {
+                    "$ref": "#/types/cpln:index/OrgTracingLightstepTracing:OrgTracingLightstepTracing"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "otelTracing": {
+                    "$ref": "#/types/cpln:index/OrgTracingOtelTracing:OrgTracingOtelTracing"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "cplnId",
+                "description",
+                "name",
+                "tags"
+            ],
+            "inputProperties": {
+                "controlplaneTracing": {
+                    "$ref": "#/types/cpln:index/OrgTracingControlplaneTracing:OrgTracingControlplaneTracing"
+                },
+                "lightstepTracing": {
+                    "$ref": "#/types/cpln:index/OrgTracingLightstepTracing:OrgTracingLightstepTracing"
+                },
+                "otelTracing": {
+                    "$ref": "#/types/cpln:index/OrgTracingOtelTracing:OrgTracingOtelTracing"
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering OrgTracing resources.\n",
+                "properties": {
+                    "controlplaneTracing": {
+                        "$ref": "#/types/cpln:index/OrgTracingControlplaneTracing:OrgTracingControlplaneTracing"
+                    },
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "lightstepTracing": {
+                        "$ref": "#/types/cpln:index/OrgTracingLightstepTracing:OrgTracingLightstepTracing"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "otelTracing": {
+                        "$ref": "#/types/cpln:index/OrgTracingOtelTracing:OrgTracingOtelTracing"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "cpln:index/policy:Policy": {
+            "properties": {
+                "bindings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/PolicyBinding:PolicyBinding"
+                    }
+                },
+                "cplnId": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "gvc": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "origin": {
+                    "type": "string"
+                },
+                "selfLink": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "target": {
+                    "type": "string"
+                },
+                "targetKind": {
+                    "type": "string"
+                },
+                "targetLinks": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "targetQuery": {
+                    "$ref": "#/types/cpln:index/PolicyTargetQuery:PolicyTargetQuery"
+                }
+            },
+            "required": [
+                "cplnId",
+                "name",
+                "origin",
+                "selfLink",
+                "targetKind"
+            ],
+            "inputProperties": {
+                "bindings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/PolicyBinding:PolicyBinding"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "gvc": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "origin": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "target": {
+                    "type": "string"
+                },
+                "targetKind": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "targetLinks": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "targetQuery": {
+                    "$ref": "#/types/cpln:index/PolicyTargetQuery:PolicyTargetQuery"
+                }
+            },
+            "requiredInputs": [
+                "targetKind"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Policy resources.\n",
+                "properties": {
+                    "bindings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/PolicyBinding:PolicyBinding"
+                        }
+                    },
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "gvc": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "origin": {
+                        "type": "string"
+                    },
+                    "selfLink": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "target": {
+                        "type": "string"
+                    },
+                    "targetKind": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "targetLinks": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "targetQuery": {
+                        "$ref": "#/types/cpln:index/PolicyTargetQuery:PolicyTargetQuery"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "cpln:index/secret:Secret": {
+            "properties": {
+                "aws": {
+                    "$ref": "#/types/cpln:index/SecretAws:SecretAws"
+                },
+                "azureConnector": {
+                    "$ref": "#/types/cpln:index/SecretAzureConnector:SecretAzureConnector"
+                },
+                "azureSdk": {
+                    "type": "string",
+                    "secret": true
+                },
+                "cplnId": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "dictionary": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "dictionaryAsEnvs": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "pulumi.json#/Any"
+                    }
+                },
+                "docker": {
+                    "type": "string",
+                    "secret": true
+                },
+                "ecr": {
+                    "$ref": "#/types/cpln:index/SecretEcr:SecretEcr"
+                },
+                "gcp": {
+                    "type": "string",
+                    "secret": true
+                },
+                "keypair": {
+                    "$ref": "#/types/cpln:index/SecretKeypair:SecretKeypair"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "natsAccount": {
+                    "$ref": "#/types/cpln:index/SecretNatsAccount:SecretNatsAccount"
+                },
+                "opaque": {
+                    "$ref": "#/types/cpln:index/SecretOpaque:SecretOpaque"
+                },
+                "selfLink": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "tls": {
+                    "$ref": "#/types/cpln:index/SecretTls:SecretTls"
+                },
+                "userpass": {
+                    "$ref": "#/types/cpln:index/SecretUserpass:SecretUserpass"
+                }
+            },
+            "required": [
+                "cplnId",
+                "dictionaryAsEnvs",
+                "name",
+                "selfLink"
+            ],
+            "inputProperties": {
+                "aws": {
+                    "$ref": "#/types/cpln:index/SecretAws:SecretAws"
+                },
+                "azureConnector": {
+                    "$ref": "#/types/cpln:index/SecretAzureConnector:SecretAzureConnector"
+                },
+                "azureSdk": {
+                    "type": "string",
+                    "secret": true
+                },
+                "description": {
+                    "type": "string"
+                },
+                "dictionary": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "docker": {
+                    "type": "string",
+                    "secret": true
+                },
+                "ecr": {
+                    "$ref": "#/types/cpln:index/SecretEcr:SecretEcr"
+                },
+                "gcp": {
+                    "type": "string",
+                    "secret": true
+                },
+                "keypair": {
+                    "$ref": "#/types/cpln:index/SecretKeypair:SecretKeypair"
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "natsAccount": {
+                    "$ref": "#/types/cpln:index/SecretNatsAccount:SecretNatsAccount"
+                },
+                "opaque": {
+                    "$ref": "#/types/cpln:index/SecretOpaque:SecretOpaque"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "tls": {
+                    "$ref": "#/types/cpln:index/SecretTls:SecretTls"
+                },
+                "userpass": {
+                    "$ref": "#/types/cpln:index/SecretUserpass:SecretUserpass"
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Secret resources.\n",
+                "properties": {
+                    "aws": {
+                        "$ref": "#/types/cpln:index/SecretAws:SecretAws"
+                    },
+                    "azureConnector": {
+                        "$ref": "#/types/cpln:index/SecretAzureConnector:SecretAzureConnector"
+                    },
+                    "azureSdk": {
+                        "type": "string",
+                        "secret": true
+                    },
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "dictionary": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "dictionaryAsEnvs": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "pulumi.json#/Any"
+                        }
+                    },
+                    "docker": {
+                        "type": "string",
+                        "secret": true
+                    },
+                    "ecr": {
+                        "$ref": "#/types/cpln:index/SecretEcr:SecretEcr"
+                    },
+                    "gcp": {
+                        "type": "string",
+                        "secret": true
+                    },
+                    "keypair": {
+                        "$ref": "#/types/cpln:index/SecretKeypair:SecretKeypair"
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "natsAccount": {
+                        "$ref": "#/types/cpln:index/SecretNatsAccount:SecretNatsAccount"
+                    },
+                    "opaque": {
+                        "$ref": "#/types/cpln:index/SecretOpaque:SecretOpaque"
+                    },
+                    "selfLink": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "tls": {
+                        "$ref": "#/types/cpln:index/SecretTls:SecretTls"
+                    },
+                    "userpass": {
+                        "$ref": "#/types/cpln:index/SecretUserpass:SecretUserpass"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "cpln:index/serviceAccount:ServiceAccount": {
+            "properties": {
+                "cplnId": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "origin": {
+                    "type": "string"
+                },
+                "selfLink": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "cplnId",
+                "name",
+                "origin",
+                "selfLink"
+            ],
+            "inputProperties": {
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering ServiceAccount resources.\n",
+                "properties": {
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "origin": {
+                        "type": "string"
+                    },
+                    "selfLink": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "cpln:index/serviceAccountKey:ServiceAccountKey": {
+            "properties": {
+                "created": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string",
+                    "secret": true
+                },
+                "name": {
+                    "type": "string"
+                },
+                "serviceAccountName": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "created",
+                "description",
+                "key",
+                "name",
+                "serviceAccountName"
+            ],
+            "inputProperties": {
+                "description": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "serviceAccountName": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "requiredInputs": [
+                "description",
+                "serviceAccountName"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering ServiceAccountKey resources.\n",
+                "properties": {
+                    "created": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "key": {
+                        "type": "string",
+                        "secret": true
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "serviceAccountName": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "cpln:index/volumeSet:VolumeSet": {
+            "properties": {
+                "autoscaling": {
+                    "$ref": "#/types/cpln:index/VolumeSetAutoscaling:VolumeSetAutoscaling"
+                },
+                "cplnId": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "fileSystemType": {
+                    "type": "string"
+                },
+                "gvc": {
+                    "type": "string"
+                },
+                "initialCapacity": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "performanceClass": {
+                    "type": "string"
+                },
+                "selfLink": {
+                    "type": "string"
+                },
+                "snapshots": {
+                    "$ref": "#/types/cpln:index/VolumeSetSnapshots:VolumeSetSnapshots"
+                },
+                "statuses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/VolumeSetStatus:VolumeSetStatus"
+                    }
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "cplnId",
+                "gvc",
+                "initialCapacity",
+                "name",
+                "performanceClass",
+                "selfLink",
+                "statuses"
+            ],
+            "inputProperties": {
+                "autoscaling": {
+                    "$ref": "#/types/cpln:index/VolumeSetAutoscaling:VolumeSetAutoscaling"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "fileSystemType": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "gvc": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "initialCapacity": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "performanceClass": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "snapshots": {
+                    "$ref": "#/types/cpln:index/VolumeSetSnapshots:VolumeSetSnapshots"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "requiredInputs": [
+                "gvc",
+                "initialCapacity",
+                "performanceClass"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering VolumeSet resources.\n",
+                "properties": {
+                    "autoscaling": {
+                        "$ref": "#/types/cpln:index/VolumeSetAutoscaling:VolumeSetAutoscaling"
+                    },
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "fileSystemType": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "gvc": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "initialCapacity": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "performanceClass": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "selfLink": {
+                        "type": "string"
+                    },
+                    "snapshots": {
+                        "$ref": "#/types/cpln:index/VolumeSetSnapshots:VolumeSetSnapshots"
+                    },
+                    "statuses": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/VolumeSetStatus:VolumeSetStatus"
+                        }
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "cpln:index/workload:Workload": {
+            "properties": {
+                "containers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadContainer:WorkloadContainer"
+                    }
+                },
+                "cplnId": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "firewallSpec": {
+                    "$ref": "#/types/cpln:index/WorkloadFirewallSpec:WorkloadFirewallSpec"
+                },
+                "gvc": {
+                    "type": "string"
+                },
+                "identityLink": {
+                    "type": "string"
+                },
+                "job": {
+                    "$ref": "#/types/cpln:index/WorkloadJob:WorkloadJob"
+                },
+                "localOptions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadLocalOption:WorkloadLocalOption"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "options": {
+                    "$ref": "#/types/cpln:index/WorkloadOptions:WorkloadOptions"
+                },
+                "rolloutOptions": {
+                    "$ref": "#/types/cpln:index/WorkloadRolloutOptions:WorkloadRolloutOptions"
+                },
+                "securityOptions": {
+                    "$ref": "#/types/cpln:index/WorkloadSecurityOptions:WorkloadSecurityOptions"
+                },
+                "selfLink": {
+                    "type": "string"
+                },
+                "sidecar": {
+                    "$ref": "#/types/cpln:index/WorkloadSidecar:WorkloadSidecar"
+                },
+                "statuses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadStatus:WorkloadStatus"
+                    }
+                },
+                "supportDynamicTags": {
+                    "type": "boolean"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "containers",
+                "cplnId",
+                "gvc",
+                "name",
+                "options",
+                "selfLink",
+                "statuses",
+                "type"
+            ],
+            "inputProperties": {
+                "containers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadContainer:WorkloadContainer"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "firewallSpec": {
+                    "$ref": "#/types/cpln:index/WorkloadFirewallSpec:WorkloadFirewallSpec"
+                },
+                "gvc": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "identityLink": {
+                    "type": "string"
+                },
+                "job": {
+                    "$ref": "#/types/cpln:index/WorkloadJob:WorkloadJob"
+                },
+                "localOptions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadLocalOption:WorkloadLocalOption"
+                    }
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "options": {
+                    "$ref": "#/types/cpln:index/WorkloadOptions:WorkloadOptions"
+                },
+                "rolloutOptions": {
+                    "$ref": "#/types/cpln:index/WorkloadRolloutOptions:WorkloadRolloutOptions"
+                },
+                "securityOptions": {
+                    "$ref": "#/types/cpln:index/WorkloadSecurityOptions:WorkloadSecurityOptions"
+                },
+                "sidecar": {
+                    "$ref": "#/types/cpln:index/WorkloadSidecar:WorkloadSidecar"
+                },
+                "supportDynamicTags": {
+                    "type": "boolean"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "type": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "requiredInputs": [
+                "containers",
+                "gvc",
+                "options",
+                "type"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Workload resources.\n",
+                "properties": {
+                    "containers": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/WorkloadContainer:WorkloadContainer"
+                        }
+                    },
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "firewallSpec": {
+                        "$ref": "#/types/cpln:index/WorkloadFirewallSpec:WorkloadFirewallSpec"
+                    },
+                    "gvc": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "identityLink": {
+                        "type": "string"
+                    },
+                    "job": {
+                        "$ref": "#/types/cpln:index/WorkloadJob:WorkloadJob"
+                    },
+                    "localOptions": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/WorkloadLocalOption:WorkloadLocalOption"
+                        }
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "options": {
+                        "$ref": "#/types/cpln:index/WorkloadOptions:WorkloadOptions"
+                    },
+                    "rolloutOptions": {
+                        "$ref": "#/types/cpln:index/WorkloadRolloutOptions:WorkloadRolloutOptions"
+                    },
+                    "securityOptions": {
+                        "$ref": "#/types/cpln:index/WorkloadSecurityOptions:WorkloadSecurityOptions"
+                    },
+                    "selfLink": {
+                        "type": "string"
+                    },
+                    "sidecar": {
+                        "$ref": "#/types/cpln:index/WorkloadSidecar:WorkloadSidecar"
+                    },
+                    "statuses": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/WorkloadStatus:WorkloadStatus"
+                        }
+                    },
+                    "supportDynamicTags": {
+                        "type": "boolean"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "type": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "functions": {
+        "cpln:index/getCloudAccount:getCloudAccount": {
+            "description": "Use this data source to access information about an existing [Cloud Account](https://docs.controlplane.com/reference/cloudaccount) within Control Plane.\n\n## Outputs\n\n- **aws_identifiers** (String)\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumi/cpln\";\n\nconst this = cpln.getCloudAccount({});\nexport const cloudAccount = _this.then(_this =\u003e _this.awsIdentifiers);\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\nthis = cpln.get_cloud_account()\npulumi.export(\"cloudAccount\", this.aws_identifiers)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var @this = Cpln.GetCloudAccount.Invoke();\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"cloudAccount\"] = @this.Apply(@this =\u003e @this.Apply(getCloudAccountResult =\u003e getCloudAccountResult.AwsIdentifiers)),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tthis, err := cpln.LookupCloudAccount(ctx, nil, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"cloudAccount\", this.AwsIdentifiers)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var this = CplnFunctions.getCloudAccount();\n\n        ctx.export(\"cloudAccount\", this_.awsIdentifiers());\n    }\n}\n```\n```yaml\nvariables:\n  this:\n    fn::invoke:\n      Function: cpln:getCloudAccount\n      Arguments: {}\noutputs:\n  cloudAccount: ${this.awsIdentifiers}\n```\n{{% /example %}}\n{{% /examples %}}",
+            "outputs": {
+                "description": "A collection of values returned by getCloudAccount.\n",
+                "properties": {
+                    "awsIdentifiers": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "awsIdentifiers",
+                    "id"
+                ]
+            }
+        },
+        "cpln:index/getGvc:getGvc": {
+            "description": "Use this data source to access information about an existing [Global Virtual Cloud (GVC)](https://docs.controlplane.com/reference/gvc) within Control Plane. \n\n## Required\n\n- **name** (String) Name of the GVC.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the GVC.\n- **name** (String) Name of the GVC.\n- **locations** (List of String) A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.\n- **description** (String) Description of the GVC.\n- **domain** (String) Custom domain name used by associated workloads.\n- **pull_secrets** (List of String) A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.\n- **tags** (Map of String) Key-value map of resource tags.\n- **lightstep_tracing** (Block List, Max: 1) (see below).\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n\n\u003ca id=\"nestedblock--lightstep_tracing\"\u003e\u003c/a\u003e\n### `lightstep_tracing`\n\n- **sampling** (Int) Sampling percentage.\n- **endpoint** (String) Tracing Endpoint Workload. Either the canonical endpoint or the internal endpoint.\n- **credentials** (String) Full link to referenced Opaque Secret.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumi/cpln\";\n\nconst gvc = cpln.getGvc({});\nexport const gvcId = gvc.then(gvc =\u003e gvc.id);\nexport const gvcLocations = gvc.then(gvc =\u003e gvc.locations);\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\ngvc = cpln.get_gvc()\npulumi.export(\"gvcId\", gvc.id)\npulumi.export(\"gvcLocations\", gvc.locations)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var gvc = Cpln.GetGvc.Invoke();\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"gvcId\"] = gvc.Apply(getGvcResult =\u003e getGvcResult.Id),\n        [\"gvcLocations\"] = gvc.Apply(getGvcResult =\u003e getGvcResult.Locations),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tgvc, err := cpln.LookupGvc(ctx, nil, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"gvcId\", gvc.Id)\n\t\tctx.Export(\"gvcLocations\", gvc.Locations)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport com.pulumi.cpln.inputs.GetGvcArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var gvc = CplnFunctions.getGvc();\n\n        ctx.export(\"gvcId\", gvc.applyValue(getGvcResult -\u003e getGvcResult.id()));\n        ctx.export(\"gvcLocations\", gvc.applyValue(getGvcResult -\u003e getGvcResult.locations()));\n    }\n}\n```\n```yaml\nvariables:\n  gvc:\n    fn::invoke:\n      Function: cpln:getGvc\n      Arguments: {}\noutputs:\n  gvcId: ${gvc.id}\n  gvcLocations: ${gvc.locations}\n```\n{{% /example %}}\n{{% /examples %}}",
+            "inputs": {
+                "description": "A collection of arguments for invoking getGvc.\n",
+                "properties": {
+                    "controlplaneTracing": {
+                        "$ref": "#/types/cpln:index/getGvcControlplaneTracing:getGvcControlplaneTracing"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "domain": {
+                        "type": "string",
+                        "deprecationMessage": "Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead."
+                    },
+                    "env": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "lightstepTracing": {
+                        "$ref": "#/types/cpln:index/getGvcLightstepTracing:getGvcLightstepTracing"
+                    },
+                    "loadBalancer": {
+                        "$ref": "#/types/cpln:index/getGvcLoadBalancer:getGvcLoadBalancer"
+                    },
+                    "locations": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "otelTracing": {
+                        "$ref": "#/types/cpln:index/getGvcOtelTracing:getGvcOtelTracing"
+                    },
+                    "pullSecrets": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "sidecar": {
+                        "$ref": "#/types/cpln:index/getGvcSidecar:getGvcSidecar"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getGvc.\n",
+                "properties": {
+                    "alias": {
+                        "type": "string"
+                    },
+                    "controlplaneTracing": {
+                        "$ref": "#/types/cpln:index/getGvcControlplaneTracing:getGvcControlplaneTracing"
+                    },
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "domain": {
+                        "type": "string",
+                        "deprecationMessage": "Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead."
+                    },
+                    "env": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "lightstepTracing": {
+                        "$ref": "#/types/cpln:index/getGvcLightstepTracing:getGvcLightstepTracing"
+                    },
+                    "loadBalancer": {
+                        "$ref": "#/types/cpln:index/getGvcLoadBalancer:getGvcLoadBalancer"
+                    },
+                    "locations": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "otelTracing": {
+                        "$ref": "#/types/cpln:index/getGvcOtelTracing:getGvcOtelTracing"
+                    },
+                    "pullSecrets": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "selfLink": {
+                        "type": "string"
+                    },
+                    "sidecar": {
+                        "$ref": "#/types/cpln:index/getGvcSidecar:getGvcSidecar"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "alias",
+                    "cplnId",
+                    "name",
+                    "selfLink",
+                    "id"
+                ]
+            }
+        },
+        "cpln:index/getLocation:getLocation": {
+            "description": "Use this data source to access information about a [Location](https://docs.controlplane.com/reference/location) within Control Plane.\n\n## Required\n\n- **name** (String) Name of the location (i.e. `aws-us-west-2`).\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the location.\n- **name** (String) Name of the location.\n- **description** (String) Description of the location.\n- **tags** (Map of String) Key-value map of resource tags.\n- **cloud_provider** (String) Cloud Provider of the location.\n- **region** (String) Region of the location.\n- **enabled** (Boolean) Indication if location is enabled.\n- **geo** (Block List, Max: 1) (see below)\n- **ip_ranges** (List of String) A list of IP ranges of the location.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n\n\u003ca id=\"nestedblock--geo\"\u003e\u003c/a\u003e\n\n### `geo`\n\nLocation geographical details\n\n- **lat** (Number) Latitude.\n- **lon** (Number) Longitude.\n- **country** (String) Country.\n- **state** (String) State.\n- **city** (String) City.\n- **continent** (String) Continent.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumi/cpln\";\n\nconst locationLocation = cpln.getLocation({\n    name: \"aws-us-west-2\",\n});\nexport const location = locationLocation;\nexport const locationEnabled = locationLocation.then(locationLocation =\u003e locationLocation.enabled);\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\nlocation_location = cpln.get_location(name=\"aws-us-west-2\")\npulumi.export(\"location\", location_location)\npulumi.export(\"locationEnabled\", location_location.enabled)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var locationLocation = Cpln.GetLocation.Invoke(new()\n    {\n        Name = \"aws-us-west-2\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"location\"] = locationLocation,\n        [\"locationEnabled\"] = locationLocation.Apply(getLocationResult =\u003e getLocationResult.Enabled),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tlocationLocation, err := cpln.GetLocation(ctx, \u0026cpln.GetLocationArgs{\n\t\t\tName: \"aws-us-west-2\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"location\", locationLocation)\n\t\tctx.Export(\"locationEnabled\", locationLocation.Enabled)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport com.pulumi.cpln.inputs.GetLocationArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var locationLocation = CplnFunctions.getLocation(GetLocationArgs.builder()\n            .name(\"aws-us-west-2\")\n            .build());\n\n        ctx.export(\"location\", locationLocation.applyValue(getLocationResult -\u003e getLocationResult));\n        ctx.export(\"locationEnabled\", locationLocation.applyValue(getLocationResult -\u003e getLocationResult.enabled()));\n    }\n}\n```\n```yaml\nvariables:\n  locationLocation:\n    fn::invoke:\n      Function: cpln:getLocation\n      Arguments:\n        name: aws-us-west-2\noutputs:\n  location: ${locationLocation}\n  locationEnabled: ${locationLocation.enabled}\n```\n{{% /example %}}\n{{% /examples %}}",
+            "inputs": {
+                "description": "A collection of arguments for invoking getLocation.\n",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getLocation.\n",
+                "properties": {
+                    "cloudProvider": {
+                        "type": "string"
+                    },
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "enabled": {
+                        "type": "boolean"
+                    },
+                    "geos": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/getLocationGeo:getLocationGeo"
+                        }
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "ipRanges": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "region": {
+                        "type": "string"
+                    },
+                    "selfLink": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "cloudProvider",
+                    "cplnId",
+                    "description",
+                    "enabled",
+                    "geos",
+                    "ipRanges",
+                    "name",
+                    "region",
+                    "selfLink",
+                    "tags",
+                    "id"
+                ]
+            }
+        },
+        "cpln:index/getLocations:getLocations": {
+            "description": "Use this data source to access information about all [Locations](https://docs.controlplane.com/reference/location) within Control Plane.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **locations** (Block List, Max: 1) (see below).\n\n\u003ca id=\"nestedblock--locations\"\u003e\u003c/a\u003e\n\n### `locations`\n\n- **cpln_id** (String) The ID, in GUID format, of the location.\n- **name** (String) Name of the location.\n- **description** (String) Description of the location.\n- **tags** (Map of String) Key-value map of resource tags.\n- **cloud_provider** (String) Cloud Provider of the location.\n- **region** (String) Region of the location.\n- **enabled** (Boolean) Indication if location is enabled.\n- **geo** (Block List, Max: 1) (see below)\n- **ip_ranges** (List of String) A list of IP ranges of the location.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n\n\u003ca id=\"nestedblock--geo\"\u003e\u003c/a\u003e\n\n### `geo`\n\nLocation geographical details\n\n- **lat** (Number) Latitude.\n- **lon** (Number) Longitude.\n- **country** (String) Country.\n- **state** (String) State.\n- **city** (String) City.\n- **continent** (String) Continent.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumi/cpln\";\n\nconst locationsLocations = cpln.getLocations({});\nexport const locations = locationsLocations.then(locationsLocations =\u003e locationsLocations.locations);\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\nlocations_locations = cpln.get_locations()\npulumi.export(\"locations\", locations_locations.locations)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var locationsLocations = Cpln.GetLocations.Invoke();\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"locations\"] = locationsLocations.Apply(getLocationsResult =\u003e getLocationsResult.Locations),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tlocationsLocations, err := cpln.GetLocations(ctx, nil, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"locations\", locationsLocations.Locations)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var locationsLocations = CplnFunctions.getLocations();\n\n        ctx.export(\"locations\", locationsLocations.applyValue(getLocationsResult -\u003e getLocationsResult.locations()));\n    }\n}\n```\n```yaml\nvariables:\n  locationsLocations:\n    fn::invoke:\n      Function: cpln:getLocations\n      Arguments: {}\noutputs:\n  locations: ${locationsLocations.locations}\n```\n{{% /example %}}\n{{% /examples %}}",
+            "outputs": {
+                "description": "A collection of values returned by getLocations.\n",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "locations": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/getLocationsLocation:getLocationsLocation"
+                        }
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "locations",
+                    "id"
+                ]
+            }
+        },
+        "cpln:index/getOrg:getOrg": {
+            "description": "Output the ID and name of the current [org](https://docs.controlplane.com/reference/org). \n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the Org.\n- **name** (String) The name of Org.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumi/cpln\";\n\nconst org = cpln.getOrg({});\nexport const orgId = org.then(org =\u003e org.id);\nexport const orgName = org.then(org =\u003e org.name);\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\norg = cpln.get_org()\npulumi.export(\"orgId\", org.id)\npulumi.export(\"orgName\", org.name)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var org = Cpln.GetOrg.Invoke();\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"orgId\"] = org.Apply(getOrgResult =\u003e getOrgResult.Id),\n        [\"orgName\"] = org.Apply(getOrgResult =\u003e getOrgResult.Name),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\torg, err := cpln.LookupOrg(ctx, nil, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"orgId\", org.Id)\n\t\tctx.Export(\"orgName\", org.Name)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var org = CplnFunctions.getOrg();\n\n        ctx.export(\"orgId\", org.applyValue(getOrgResult -\u003e getOrgResult.id()));\n        ctx.export(\"orgName\", org.applyValue(getOrgResult -\u003e getOrgResult.name()));\n    }\n}\n```\n```yaml\nvariables:\n  org:\n    fn::invoke:\n      Function: cpln:getOrg\n      Arguments: {}\noutputs:\n  orgId: ${org.id}\n  orgName: ${org.name}\n```\n{{% /example %}}\n{{% /examples %}}",
+            "outputs": {
+                "description": "A collection of values returned by getOrg.\n",
+                "properties": {
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "cplnId",
+                    "name",
+                    "id"
+                ]
+            }
+        }
+    }
+}

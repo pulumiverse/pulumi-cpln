@@ -40,7 +40,7 @@ jobs:
       id: version
       uses: mapped/action-vtl@latest
       with:
-        baseVersion: 0.1.3
+        baseVersion: 0.0.1
         gitHubToken: ${{ secrets.GITHUB_TOKEN }}
         # No need to create VERSION file
         versionFile: "" 
@@ -142,7 +142,7 @@ jobs:
           - dotnet
           - go
         nodeversion:
-          - 14.x
+          - 20.x
         pythonversion:
           - "3.9"
 

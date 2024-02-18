@@ -51,7 +51,7 @@ jobs:
         shell: bash
       - name: Run upgrade-provider
         run: |
-          upgrade-provider "$REPO" --kind="provider" --pr-reviewers="vavsab"
+          upgrade-provider "$REPO" --kind="provider" --pr-reviewers="vavsab,jvassev,emaildanwilson,MajidAbuRmila"
         shell: bash
         env:
           GH_TOKEN: ${{ env.GH_TOKEN }}
