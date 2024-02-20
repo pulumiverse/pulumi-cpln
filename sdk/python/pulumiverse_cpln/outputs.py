@@ -3134,6 +3134,8 @@ class SecretAws(dict):
             suggest = "access_key"
         elif key == "secretKey":
             suggest = "secret_key"
+        elif key == "externalId":
+            suggest = "external_id"
         elif key == "roleArn":
             suggest = "role_arn"
 
@@ -3151,11 +3153,13 @@ class SecretAws(dict):
     def __init__(__self__, *,
                  access_key: str,
                  secret_key: str,
+                 external_id: Optional[str] = None,
                  role_arn: Optional[str] = None):
         SecretAws._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             access_key=access_key,
             secret_key=secret_key,
+            external_id=external_id,
             role_arn=role_arn,
         )
     @staticmethod
@@ -3163,6 +3167,7 @@ class SecretAws(dict):
              _setter: Callable[[Any, Any], None],
              access_key: str,
              secret_key: str,
+             external_id: Optional[str] = None,
              role_arn: Optional[str] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -3170,11 +3175,15 @@ class SecretAws(dict):
             access_key = kwargs['accessKey']
         if 'secretKey' in kwargs:
             secret_key = kwargs['secretKey']
+        if 'externalId' in kwargs:
+            external_id = kwargs['externalId']
         if 'roleArn' in kwargs:
             role_arn = kwargs['roleArn']
 
         _setter("access_key", access_key)
         _setter("secret_key", secret_key)
+        if external_id is not None:
+            _setter("external_id", external_id)
         if role_arn is not None:
             _setter("role_arn", role_arn)
 
@@ -3187,6 +3196,11 @@ class SecretAws(dict):
     @pulumi.getter(name="secretKey")
     def secret_key(self) -> str:
         return pulumi.get(self, "secret_key")
+
+    @property
+    @pulumi.getter(name="externalId")
+    def external_id(self) -> Optional[str]:
+        return pulumi.get(self, "external_id")
 
     @property
     @pulumi.getter(name="roleArn")

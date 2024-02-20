@@ -3138,11 +3138,13 @@ class SecretAwsArgs:
     def __init__(__self__, *,
                  access_key: pulumi.Input[str],
                  secret_key: pulumi.Input[str],
+                 external_id: Optional[pulumi.Input[str]] = None,
                  role_arn: Optional[pulumi.Input[str]] = None):
         SecretAwsArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             access_key=access_key,
             secret_key=secret_key,
+            external_id=external_id,
             role_arn=role_arn,
         )
     @staticmethod
@@ -3150,6 +3152,7 @@ class SecretAwsArgs:
              _setter: Callable[[Any, Any], None],
              access_key: pulumi.Input[str],
              secret_key: pulumi.Input[str],
+             external_id: Optional[pulumi.Input[str]] = None,
              role_arn: Optional[pulumi.Input[str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -3157,11 +3160,15 @@ class SecretAwsArgs:
             access_key = kwargs['accessKey']
         if 'secretKey' in kwargs:
             secret_key = kwargs['secretKey']
+        if 'externalId' in kwargs:
+            external_id = kwargs['externalId']
         if 'roleArn' in kwargs:
             role_arn = kwargs['roleArn']
 
         _setter("access_key", access_key)
         _setter("secret_key", secret_key)
+        if external_id is not None:
+            _setter("external_id", external_id)
         if role_arn is not None:
             _setter("role_arn", role_arn)
 
@@ -3182,6 +3189,15 @@ class SecretAwsArgs:
     @secret_key.setter
     def secret_key(self, value: pulumi.Input[str]):
         pulumi.set(self, "secret_key", value)
+
+    @property
+    @pulumi.getter(name="externalId")
+    def external_id(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "external_id")
+
+    @external_id.setter
+    def external_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "external_id", value)
 
     @property
     @pulumi.getter(name="roleArn")

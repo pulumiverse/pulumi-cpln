@@ -15,6 +15,7 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class SecretAws
     {
         public readonly string AccessKey;
+        public readonly string? ExternalId;
         public readonly string? RoleArn;
         public readonly string SecretKey;
 
@@ -22,11 +23,14 @@ namespace Pulumiverse.Cpln.Outputs
         private SecretAws(
             string accessKey,
 
+            string? externalId,
+
             string? roleArn,
 
             string secretKey)
         {
             AccessKey = accessKey;
+            ExternalId = externalId;
             RoleArn = roleArn;
             SecretKey = secretKey;
         }

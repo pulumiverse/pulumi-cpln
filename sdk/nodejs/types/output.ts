@@ -387,6 +387,7 @@ export interface PolicyTargetQuerySpecTerm {
 
 export interface SecretAws {
     accessKey: string;
+    externalId?: string;
     roleArn?: string;
     secretKey: string;
 }

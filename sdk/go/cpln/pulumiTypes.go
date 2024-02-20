@@ -8942,9 +8942,10 @@ func (o PolicyTargetQuerySpecTermArrayOutput) Index(i pulumi.IntInput) PolicyTar
 }
 
 type SecretAws struct {
-	AccessKey string  `pulumi:"accessKey"`
-	RoleArn   *string `pulumi:"roleArn"`
-	SecretKey string  `pulumi:"secretKey"`
+	AccessKey  string  `pulumi:"accessKey"`
+	ExternalId *string `pulumi:"externalId"`
+	RoleArn    *string `pulumi:"roleArn"`
+	SecretKey  string  `pulumi:"secretKey"`
 }
 
 // SecretAwsInput is an input type that accepts SecretAwsArgs and SecretAwsOutput values.
@@ -8959,9 +8960,10 @@ type SecretAwsInput interface {
 }
 
 type SecretAwsArgs struct {
-	AccessKey pulumi.StringInput    `pulumi:"accessKey"`
-	RoleArn   pulumi.StringPtrInput `pulumi:"roleArn"`
-	SecretKey pulumi.StringInput    `pulumi:"secretKey"`
+	AccessKey  pulumi.StringInput    `pulumi:"accessKey"`
+	ExternalId pulumi.StringPtrInput `pulumi:"externalId"`
+	RoleArn    pulumi.StringPtrInput `pulumi:"roleArn"`
+	SecretKey  pulumi.StringInput    `pulumi:"secretKey"`
 }
 
 func (SecretAwsArgs) ElementType() reflect.Type {
@@ -9063,6 +9065,10 @@ func (o SecretAwsOutput) AccessKey() pulumi.StringOutput {
 	return o.ApplyT(func(v SecretAws) string { return v.AccessKey }).(pulumi.StringOutput)
 }
 
+func (o SecretAwsOutput) ExternalId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SecretAws) *string { return v.ExternalId }).(pulumi.StringPtrOutput)
+}
+
 func (o SecretAwsOutput) RoleArn() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v SecretAws) *string { return v.RoleArn }).(pulumi.StringPtrOutput)
 }
@@ -9107,6 +9113,15 @@ func (o SecretAwsPtrOutput) AccessKey() pulumi.StringPtrOutput {
 			return nil
 		}
 		return &v.AccessKey
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o SecretAwsPtrOutput) ExternalId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SecretAws) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ExternalId
 	}).(pulumi.StringPtrOutput)
 }
 
