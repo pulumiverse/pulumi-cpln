@@ -25,6 +25,9 @@ namespace Pulumiverse.Cpln.Inputs
             }
         }
 
+        [Input("externalId")]
+        public Input<string>? ExternalId { get; set; }
+
         [Input("roleArn")]
         public Input<string>? RoleArn { get; set; }
 

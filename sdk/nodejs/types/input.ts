@@ -383,6 +383,7 @@ export interface PolicyTargetQuerySpecTerm {
 
 export interface SecretAws {
     accessKey: pulumi.Input<string>;
+    externalId?: pulumi.Input<string>;
     roleArn?: pulumi.Input<string>;
     secretKey: pulumi.Input<string>;
 }

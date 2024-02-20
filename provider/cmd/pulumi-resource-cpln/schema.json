@@ -1054,6 +1054,9 @@
                     "type": "string",
                     "secret": true
                 },
+                "externalId": {
+                    "type": "string"
+                },
                 "roleArn": {
                     "type": "string"
                 },
