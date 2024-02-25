@@ -20,10 +20,10 @@ def readme():
 setup(name='pulumiverse_cpln',
       python_requires='>=3.7',
       version=VERSION,
-      description="A Pulumi package for creating and managing cpln cloud resources.",
+      description="A Pulumi package for creating and managing Control Plane (cpln) resources.",
       long_description=readme(),
       long_description_content_type='text/markdown',
-      keywords='pulumi cpln category/cloud',
+      keywords='pulumi cpln category/infrastructure',
       url='https://www.pulumi.com',
       project_urls={
           'Repository': 'https://github.com/pulumiverse/pulumi-cpln'

@@ -4,7 +4,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>pulumiverse</Authors>
     <Company>pulumiverse</Company>
-    <Description>A Pulumi package for creating and managing cpln cloud resources.</Description>
+    <Description>A Pulumi package for creating and managing Control Plane (cpln) resources.</Description>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://www.pulumi.com</PackageProjectUrl>
     <RepositoryUrl>https://github.com/pulumiverse/pulumi-cpln</RepositoryUrl>

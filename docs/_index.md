@@ -1,11 +1,10 @@
 ---
-title: cpln
-meta_desc: Provides an overview of the cpln Provider for Pulumi.
+title: Control Plane (cpln)
+meta_desc: Provides an overview of the Control Plane (cpln) Provider for Pulumi.
 layout: overview
 ---
 
-The cpln provider for Pulumi can be used to provision any of the cloud resources available in [Control Plane](https://controlplane.com/).
-The cpln provider must be configured with credentials to deploy and update resources in cpln.
+The Control Plane (cpln) pulumi provider enables the scaffolding of any Control Plane(https://controlplane.com/) object as cose. It enables infrastructure as code with all the added benefit of the global virtual cloud (GVC). You can build your VPCs, subnets, databases, queues, caches, etc. and overlay them with a multi-cloud/multi-region universal compute workloads that span regions and clouds. Nearly everything you can do using the Control Plane CLI, UI or API is available using Pulumi.
 
 ## Example
 
@@ -14,8 +13,9 @@ The cpln provider must be configured with credentials to deploy and update resou
 
 ```typescript
 import * as cpln from "@pulumiverse/cpln";
-const db = new cpln.Org("example", {
-    name: "example",
+
+const location = new cpln.Location("example", {
+	name: "aws-us-west-2"
 });
 ```
 
@@ -25,8 +25,8 @@ const db = new cpln.Org("example", {
 ```python
 import pulumiverse_cpln as cpln
 
-db = cpln.Database("example",
-    name="example"
+db = cpln.Location("example",
+    name="aws-us-west-2"
 )
 ```
 
@@ -43,14 +43,14 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 
-		org, err := cpln.NewOrg(ctx, "example", &cpln.OrgArgs{
-            Name: pulumi.String("example"),
+		location, err := cpln.NewLocation(ctx, "example", &cpln.LocationArgs{
+            Name: pulumi.String("aws-us-west-2"),
 		})
 		if err != nil {
-			return fmt.Errorf("error creating org: %v", err)
+			return fmt.Errorf("error creating location: %v", err)
 		}
 
-		ctx.Export("orgId", org.Id)
+		ctx.Export("location.enabled", location.enabled)
 
 		return nil
 	})
@@ -68,7 +68,7 @@ class cpln : Stack
 {
     public cpln()
     {
-        var org = new Org("example", new OrgArgs{
+        var location = new Location("example", new LocationArgs{
             Name: "example"
         });
     }
