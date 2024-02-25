@@ -1,11 +1,11 @@
 {
     "name": "@pulumiverse/cpln",
     "version": "${VERSION}",
-    "description": "A Pulumi package for creating and managing cpln cloud resources.",
+    "description": "A Pulumi package for creating and managing Control Plane (cpln) resources.",
     "keywords": [
         "pulumi",
         "cpln",
-        "category/cloud"
+        "category/infrastructure"
     ],
     "homepage": "https://www.pulumi.com",
     "repository": "https://github.com/pulumiverse/pulumi-cpln",

@@ -66,16 +66,16 @@ func Provider() tfbridge.ProviderInfo {
 		//
 		// You may host a logo on a domain you control or add an SVG logo for your package
 		// in your repository and use the raw content URL for that file as your logo URL.
-		LogoURL: "",
+		LogoURL: "https://raw.githubusercontent.com/pulumiverse/pulumi-cpln/main/docs/logo.png",
 		// PluginDownloadURL is an optional URL used to download the Provider
 		// for use in Pulumi programs
 		// e.g https://github.com/org/pulumi-provider-name/releases/
 		PluginDownloadURL: "github://api.github.com/pulumiverse",
-		Description:       "A Pulumi package for creating and managing cpln cloud resources.",
+		Description:       "A Pulumi package for creating and managing Control Plane (cpln) resources.",
 		// category/cloud tag helps with categorizing the package in the Pulumi Registry.
 		// For all available categories, see `Keywords` in
 		// https://www.pulumi.com/docs/guides/pulumi-packages/schema/#package.
-		Keywords:   []string{"pulumi", "cpln", "category/cloud"},
+		Keywords:   []string{"pulumi", "cpln", "category/infrastructure"},
 		License:    "Apache-2.0",
 		Homepage:   "https://www.pulumi.com",
 		Repository: "https://github.com/pulumiverse/pulumi-cpln",
