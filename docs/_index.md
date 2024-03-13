@@ -1,7 +1,7 @@
 ---
 title: Control Plane (cpln)
 meta_desc: Provides an overview of the Control Plane (cpln) Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
 The Control Plane (cpln) pulumi provider enables the scaffolding of any Control Plane(https://controlplane.com/) object as cose. It enables infrastructure as code with all the added benefit of the global virtual cloud (GVC). You can build your VPCs, subnets, databases, queues, caches, etc. and overlay them with a multi-cloud/multi-region universal compute workloads that span regions and clouds. Nearly everything you can do using the Control Plane CLI, UI or API is available using Pulumi.
