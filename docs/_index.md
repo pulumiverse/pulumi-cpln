@@ -1,10 +1,10 @@
 ---
 title: Control Plane (cpln)
 meta_desc: Provides an overview of the Control Plane (cpln) Provider for Pulumi.
-layout: overview
+layout: package
 ---
 
-The Control Plane (cpln) pulumi provider enables the scaffolding of any Control Plane(https://controlplane.com/) object as cose. It enables infrastructure as code with all the added benefit of the global virtual cloud (GVC). You can build your VPCs, subnets, databases, queues, caches, etc. and overlay them with a multi-cloud/multi-region universal compute workloads that span regions and clouds. Nearly everything you can do using the Control Plane CLI, UI or API is available using Pulumi.
+The Control Plane (cpln) Pulumi provider enables the scaffolding of any Control Plane (https://controlplane.com/) object as code. It enables infrastructure as code with all the added benefit of the global virtual cloud (GVC). You can build your VPCs, subnets, databases, queues, caches, etc., and overlay them with a multi-cloud/multi-region universal compute workloads that span regions and clouds. Nearly everything you can do using the Control Plane CLI, UI or API is available using Pulumi.
 
 ## Example
 
@@ -15,7 +15,7 @@ The Control Plane (cpln) pulumi provider enables the scaffolding of any Control 
 import * as cpln from "@pulumiverse/cpln";
 
 const location = new cpln.Location("example", {
-	name: "aws-us-west-2"
+    name: "aws-us-west-2"
 });
 ```
 
@@ -44,7 +44,7 @@ func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 
 		location, err := cpln.NewLocation(ctx, "example", &cpln.LocationArgs{
-            Name: pulumi.String("aws-us-west-2"),
+			Name: pulumi.String("aws-us-west-2"),
 		})
 		if err != nil {
 			return fmt.Errorf("error creating location: %v", err)
