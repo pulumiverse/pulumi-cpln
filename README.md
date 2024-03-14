@@ -48,12 +48,11 @@ dotnet add package Pulumiverse.cpln
 
 The following configuration points are available for the `cpln` provider:
 
-- `cpln:domain` - domain used to connect to the cpln instance
-- `cpln:insecure` - use insecure connection
-- `cpln:jwtProfileFile` - path to the file containing credentials to connect to cpln. Either `jwtProfileFile` or `jwtProfileJson`
-- `cpln:jwtProfileJson` - JSON value of credentials to connect to cpln. Either `jwtProfileFile` or `jwtProfileJson` is required
-- `cpln:port` - used port if not the default ports 80 or 443 are configured
-- `cpln:token` - path to the file containing credentials to connect to cpln
+- `cpln:org` - The Control Plane org that this provider will perform actions against
+- `cpln:endpoint` - The Control Plane Data Service API endpoint
+- `cpln:profile` - The user/service account profile that this provider will use to authenticate to the data service
+- `cpln:token` - A generated token that can be used to authenticate to the data service API
+- `cpln:refreshToken` - A generated token that can be used to authenticate to the data service API
 
 ## Reference
 
