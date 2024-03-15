@@ -1,5 +1,6 @@
 {
     "name": "cpln",
+    "displayName": "Control Plane",
     "description": "A Pulumi package for creating and managing Control Plane (cpln) resources.",
     "keywords": [
         "pulumi",
