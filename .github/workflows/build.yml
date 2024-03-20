@@ -14,13 +14,13 @@ jobs:
     uses: pulumiverse/infra/.github/workflows/provider-prerequisites.yaml@actions-workflows-v0.0.4
     with:
       provider: cpln
-      goversion: 1.21.x
+      goversion: 1.22.x
   build:
     needs: prerequisites
     uses: pulumiverse/infra/.github/workflows/provider-build-sdk.yaml@actions-workflows-v0.0.4
     with:
       provider: cpln
-      goversion: 1.21.x
+      goversion: 1.22.x
       dotnetversion: 6.0.300
       nodeversion: 20.x
       pythonversion: 3.9
