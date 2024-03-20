@@ -1,6 +1,6 @@
-# cpln Resource Provider
+# Control Plane (cpln) Resource Provider
 
-The cpln Resource Provider lets you manage [Control Plane](https://controlplane.com/) resources.
+The Control Plane Resource Provider lets you manage [Control Plane](https://controlplane.com/) resources.
 
 ## Installing
 

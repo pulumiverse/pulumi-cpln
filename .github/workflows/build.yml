@@ -1,9 +1,9 @@
-name: main
+name: build
 
 on:
   push:
     branches-ignore:
-      # release workflow will build main anyway
+      # release workflow will build main anyway. No need to do it twice.
       - 'main'
   workflow_dispatch:
 
