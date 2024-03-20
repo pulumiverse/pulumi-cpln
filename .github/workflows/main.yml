@@ -2,6 +2,9 @@ name: main
 
 on:
   push:
+    branches-ignore:
+      # release workflow will build main anyway
+      - 'main'
   workflow_dispatch:
 
 jobs:
