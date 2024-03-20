@@ -25,7 +25,7 @@ yarn add @pulumiverse/cpln
 To use from Python, install using `pip`:
 
 ```bash
-pip install pulumi_cpln
+pip install pulumiverse-cpln
 ```
 
 ### Go
