@@ -115,6 +115,8 @@ func Provider() tfbridge.ProviderInfo {
 		DataSources: map[string]*tfbridge.DataSourceInfo{
 			"cpln_cloud_account": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getCloudAccount")},
 			"cpln_gvc":           {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getGvc")},
+			"cpln_image":         {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getImage")},
+			"cpln_images":        {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getImages")},
 			"cpln_location":      {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getLocation")},
 			"cpln_locations":     {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getLocations")},
 			"cpln_org":           {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getOrg")},
