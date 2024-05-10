@@ -32,12 +32,35 @@ export class DomainRoute extends pulumi.CustomResource {
         return obj['__pulumiType'] === DomainRoute.__pulumiType;
     }
 
+    /**
+     * The self link of the domain to add the route to.
+     */
     public readonly domainLink!: pulumi.Output<string>;
+    /**
+     * The port the route corresponds to. Default: 443
+     */
     public readonly domainPort!: pulumi.Output<number | undefined>;
+    /**
+     * This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+     * target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+     * Slack or at support@controlplane.com for additional details.
+     */
     public readonly hostPrefix!: pulumi.Output<string | undefined>;
+    /**
+     * For the linked workload, the port to route traffic to.
+     */
     public readonly port!: pulumi.Output<number | undefined>;
+    /**
+     * The path will match any unmatched path prefixes for the subdomain.
+     */
     public readonly prefix!: pulumi.Output<string>;
+    /**
+     * A path prefix can be configured to be replaced when forwarding the request to the Workload.
+     */
     public readonly replacePrefix!: pulumi.Output<string | undefined>;
+    /**
+     * The link of the workload to map the prefix to.
+     */
     public readonly workloadLink!: pulumi.Output<string>;
 
     /**
@@ -88,12 +111,35 @@ export class DomainRoute extends pulumi.CustomResource {
  * Input properties used for looking up and filtering DomainRoute resources.
  */
 export interface DomainRouteState {
+    /**
+     * The self link of the domain to add the route to.
+     */
     domainLink?: pulumi.Input<string>;
+    /**
+     * The port the route corresponds to. Default: 443
+     */
     domainPort?: pulumi.Input<number>;
+    /**
+     * This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+     * target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+     * Slack or at support@controlplane.com for additional details.
+     */
     hostPrefix?: pulumi.Input<string>;
+    /**
+     * For the linked workload, the port to route traffic to.
+     */
     port?: pulumi.Input<number>;
+    /**
+     * The path will match any unmatched path prefixes for the subdomain.
+     */
     prefix?: pulumi.Input<string>;
+    /**
+     * A path prefix can be configured to be replaced when forwarding the request to the Workload.
+     */
     replacePrefix?: pulumi.Input<string>;
+    /**
+     * The link of the workload to map the prefix to.
+     */
     workloadLink?: pulumi.Input<string>;
 }
 
@@ -101,11 +147,34 @@ export interface DomainRouteState {
  * The set of arguments for constructing a DomainRoute resource.
  */
 export interface DomainRouteArgs {
+    /**
+     * The self link of the domain to add the route to.
+     */
     domainLink: pulumi.Input<string>;
+    /**
+     * The port the route corresponds to. Default: 443
+     */
     domainPort?: pulumi.Input<number>;
+    /**
+     * This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+     * target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+     * Slack or at support@controlplane.com for additional details.
+     */
     hostPrefix?: pulumi.Input<string>;
+    /**
+     * For the linked workload, the port to route traffic to.
+     */
     port?: pulumi.Input<number>;
+    /**
+     * The path will match any unmatched path prefixes for the subdomain.
+     */
     prefix: pulumi.Input<string>;
+    /**
+     * A path prefix can be configured to be replaced when forwarding the request to the Workload.
+     */
     replacePrefix?: pulumi.Input<string>;
+    /**
+     * The link of the workload to map the prefix to.
+     */
     workloadLink: pulumi.Input<string>;
 }

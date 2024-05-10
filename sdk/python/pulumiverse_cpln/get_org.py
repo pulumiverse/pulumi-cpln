@@ -70,8 +70,8 @@ def get_org(opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetOrgResul
 
     The following attributes are exported:
 
-    - **cpln_id** (String) The ID, in GUID format, of the Org.
-    - **name** (String) The name of Org.
+    - **cpln_id** (String) The ID, in GUID format, of the org.
+    - **name** (String) The name of org.
 
     ## Example Usage
 
@@ -103,8 +103,8 @@ def get_org_output(opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output
 
     The following attributes are exported:
 
-    - **cpln_id** (String) The ID, in GUID format, of the Org.
-    - **name** (String) The name of Org.
+    - **cpln_id** (String) The ID, in GUID format, of the org.
+    - **name** (String) The name of org.
 
     ## Example Usage
 

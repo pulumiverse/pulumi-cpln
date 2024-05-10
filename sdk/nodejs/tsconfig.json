@@ -22,6 +22,8 @@
         "domainRoute.ts",
         "getCloudAccount.ts",
         "getGvc.ts",
+        "getImage.ts",
+        "getImages.ts",
         "getLocation.ts",
         "getLocations.ts",
         "getOrg.ts",

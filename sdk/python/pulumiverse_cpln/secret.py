@@ -33,6 +33,21 @@ class SecretArgs:
                  userpass: Optional[pulumi.Input['SecretUserpassArgs']] = None):
         """
         The set of arguments for constructing a Secret resource.
+        :param pulumi.Input['SecretAwsArgs'] aws: [Reference Page](https://docs.controlplane.com/reference/secret#aws).
+        :param pulumi.Input['SecretAzureConnectorArgs'] azure_connector: [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
+        :param pulumi.Input[str] azure_sdk: JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
+        :param pulumi.Input[str] description: Description of the Secret.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] dictionary: List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
+        :param pulumi.Input[str] docker: JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
+        :param pulumi.Input['SecretEcrArgs'] ecr: [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
+        :param pulumi.Input[str] gcp: JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
+        :param pulumi.Input['SecretKeypairArgs'] keypair: [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
+        :param pulumi.Input[str] name: Name of the secret.
+        :param pulumi.Input['SecretNatsAccountArgs'] nats_account: [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
+        :param pulumi.Input['SecretOpaqueArgs'] opaque: [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
+        :param pulumi.Input['SecretTlsArgs'] tls: [Reference Page](https://docs.controlplane.com/reference/secret#tls).
+        :param pulumi.Input['SecretUserpassArgs'] userpass: [Reference Page](https://docs.controlplane.com/reference/secret#username).
         """
         SecretArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -113,6 +128,9 @@ class SecretArgs:
     @property
     @pulumi.getter
     def aws(self) -> Optional[pulumi.Input['SecretAwsArgs']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#aws).
+        """
         return pulumi.get(self, "aws")
 
     @aws.setter
@@ -122,6 +140,9 @@ class SecretArgs:
     @property
     @pulumi.getter(name="azureConnector")
     def azure_connector(self) -> Optional[pulumi.Input['SecretAzureConnectorArgs']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
+        """
         return pulumi.get(self, "azure_connector")
 
     @azure_connector.setter
@@ -131,6 +152,9 @@ class SecretArgs:
     @property
     @pulumi.getter(name="azureSdk")
     def azure_sdk(self) -> Optional[pulumi.Input[str]]:
+        """
+        JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
+        """
         return pulumi.get(self, "azure_sdk")
 
     @azure_sdk.setter
@@ -140,6 +164,9 @@ class SecretArgs:
     @property
     @pulumi.getter
     def description(self) -> Optional[pulumi.Input[str]]:
+        """
+        Description of the Secret.
+        """
         return pulumi.get(self, "description")
 
     @description.setter
@@ -149,6 +176,9 @@ class SecretArgs:
     @property
     @pulumi.getter
     def dictionary(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
+        """
         return pulumi.get(self, "dictionary")
 
     @dictionary.setter
@@ -158,6 +188,9 @@ class SecretArgs:
     @property
     @pulumi.getter
     def docker(self) -> Optional[pulumi.Input[str]]:
+        """
+        JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
+        """
         return pulumi.get(self, "docker")
 
     @docker.setter
@@ -167,6 +200,9 @@ class SecretArgs:
     @property
     @pulumi.getter
     def ecr(self) -> Optional[pulumi.Input['SecretEcrArgs']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
+        """
         return pulumi.get(self, "ecr")
 
     @ecr.setter
@@ -176,6 +212,9 @@ class SecretArgs:
     @property
     @pulumi.getter
     def gcp(self) -> Optional[pulumi.Input[str]]:
+        """
+        JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
+        """
         return pulumi.get(self, "gcp")
 
     @gcp.setter
@@ -185,6 +224,9 @@ class SecretArgs:
     @property
     @pulumi.getter
     def keypair(self) -> Optional[pulumi.Input['SecretKeypairArgs']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
+        """
         return pulumi.get(self, "keypair")
 
     @keypair.setter
@@ -194,6 +236,9 @@ class SecretArgs:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the secret.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -203,6 +248,9 @@ class SecretArgs:
     @property
     @pulumi.getter(name="natsAccount")
     def nats_account(self) -> Optional[pulumi.Input['SecretNatsAccountArgs']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
+        """
         return pulumi.get(self, "nats_account")
 
     @nats_account.setter
@@ -212,6 +260,9 @@ class SecretArgs:
     @property
     @pulumi.getter
     def opaque(self) -> Optional[pulumi.Input['SecretOpaqueArgs']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
+        """
         return pulumi.get(self, "opaque")
 
     @opaque.setter
@@ -221,6 +272,9 @@ class SecretArgs:
     @property
     @pulumi.getter
     def tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of resource tags.
+        """
         return pulumi.get(self, "tags")
 
     @tags.setter
@@ -230,6 +284,9 @@ class SecretArgs:
     @property
     @pulumi.getter
     def tls(self) -> Optional[pulumi.Input['SecretTlsArgs']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#tls).
+        """
         return pulumi.get(self, "tls")
 
     @tls.setter
@@ -239,6 +296,9 @@ class SecretArgs:
     @property
     @pulumi.getter
     def userpass(self) -> Optional[pulumi.Input['SecretUserpassArgs']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#username).
+        """
         return pulumi.get(self, "userpass")
 
     @userpass.setter
@@ -263,12 +323,33 @@ class _SecretState:
                  name: Optional[pulumi.Input[str]] = None,
                  nats_account: Optional[pulumi.Input['SecretNatsAccountArgs']] = None,
                  opaque: Optional[pulumi.Input['SecretOpaqueArgs']] = None,
+                 secret_link: Optional[pulumi.Input[str]] = None,
                  self_link: Optional[pulumi.Input[str]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  tls: Optional[pulumi.Input['SecretTlsArgs']] = None,
                  userpass: Optional[pulumi.Input['SecretUserpassArgs']] = None):
         """
         Input properties used for looking up and filtering Secret resources.
+        :param pulumi.Input['SecretAwsArgs'] aws: [Reference Page](https://docs.controlplane.com/reference/secret#aws).
+        :param pulumi.Input['SecretAzureConnectorArgs'] azure_connector: [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
+        :param pulumi.Input[str] azure_sdk: JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
+        :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Secret.
+        :param pulumi.Input[str] description: Description of the Secret.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] dictionary: List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
+        :param pulumi.Input[Mapping[str, Any]] dictionary_as_envs: If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
+               cpln://secret/SECRET_NAME.key`.
+        :param pulumi.Input[str] docker: JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
+        :param pulumi.Input['SecretEcrArgs'] ecr: [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
+        :param pulumi.Input[str] gcp: JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
+        :param pulumi.Input['SecretKeypairArgs'] keypair: [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
+        :param pulumi.Input[str] name: Name of the secret.
+        :param pulumi.Input['SecretNatsAccountArgs'] nats_account: [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
+        :param pulumi.Input['SecretOpaqueArgs'] opaque: [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
+        :param pulumi.Input[str] secret_link: Output used when linking a secret to an environment variable or volume.
+        :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
+        :param pulumi.Input['SecretTlsArgs'] tls: [Reference Page](https://docs.controlplane.com/reference/secret#tls).
+        :param pulumi.Input['SecretUserpassArgs'] userpass: [Reference Page](https://docs.controlplane.com/reference/secret#username).
         """
         _SecretState._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -286,6 +367,7 @@ class _SecretState:
             name=name,
             nats_account=nats_account,
             opaque=opaque,
+            secret_link=secret_link,
             self_link=self_link,
             tags=tags,
             tls=tls,
@@ -308,6 +390,7 @@ class _SecretState:
              name: Optional[pulumi.Input[str]] = None,
              nats_account: Optional[pulumi.Input['SecretNatsAccountArgs']] = None,
              opaque: Optional[pulumi.Input['SecretOpaqueArgs']] = None,
+             secret_link: Optional[pulumi.Input[str]] = None,
              self_link: Optional[pulumi.Input[str]] = None,
              tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
              tls: Optional[pulumi.Input['SecretTlsArgs']] = None,
@@ -324,6 +407,8 @@ class _SecretState:
             dictionary_as_envs = kwargs['dictionaryAsEnvs']
         if 'natsAccount' in kwargs:
             nats_account = kwargs['natsAccount']
+        if 'secretLink' in kwargs:
+            secret_link = kwargs['secretLink']
         if 'selfLink' in kwargs:
             self_link = kwargs['selfLink']
 
@@ -355,6 +440,8 @@ class _SecretState:
             _setter("nats_account", nats_account)
         if opaque is not None:
             _setter("opaque", opaque)
+        if secret_link is not None:
+            _setter("secret_link", secret_link)
         if self_link is not None:
             _setter("self_link", self_link)
         if tags is not None:
@@ -367,6 +454,9 @@ class _SecretState:
     @property
     @pulumi.getter
     def aws(self) -> Optional[pulumi.Input['SecretAwsArgs']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#aws).
+        """
         return pulumi.get(self, "aws")
 
     @aws.setter
@@ -376,6 +466,9 @@ class _SecretState:
     @property
     @pulumi.getter(name="azureConnector")
     def azure_connector(self) -> Optional[pulumi.Input['SecretAzureConnectorArgs']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
+        """
         return pulumi.get(self, "azure_connector")
 
     @azure_connector.setter
@@ -385,6 +478,9 @@ class _SecretState:
     @property
     @pulumi.getter(name="azureSdk")
     def azure_sdk(self) -> Optional[pulumi.Input[str]]:
+        """
+        JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
+        """
         return pulumi.get(self, "azure_sdk")
 
     @azure_sdk.setter
@@ -394,6 +490,9 @@ class _SecretState:
     @property
     @pulumi.getter(name="cplnId")
     def cpln_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID, in GUID format, of the Secret.
+        """
         return pulumi.get(self, "cpln_id")
 
     @cpln_id.setter
@@ -403,6 +502,9 @@ class _SecretState:
     @property
     @pulumi.getter
     def description(self) -> Optional[pulumi.Input[str]]:
+        """
+        Description of the Secret.
+        """
         return pulumi.get(self, "description")
 
     @description.setter
@@ -412,6 +514,9 @@ class _SecretState:
     @property
     @pulumi.getter
     def dictionary(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
+        """
         return pulumi.get(self, "dictionary")
 
     @dictionary.setter
@@ -421,6 +526,10 @@ class _SecretState:
     @property
     @pulumi.getter(name="dictionaryAsEnvs")
     def dictionary_as_envs(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+        """
+        If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
+        cpln://secret/SECRET_NAME.key`.
+        """
         return pulumi.get(self, "dictionary_as_envs")
 
     @dictionary_as_envs.setter
@@ -430,6 +539,9 @@ class _SecretState:
     @property
     @pulumi.getter
     def docker(self) -> Optional[pulumi.Input[str]]:
+        """
+        JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
+        """
         return pulumi.get(self, "docker")
 
     @docker.setter
@@ -439,6 +551,9 @@ class _SecretState:
     @property
     @pulumi.getter
     def ecr(self) -> Optional[pulumi.Input['SecretEcrArgs']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
+        """
         return pulumi.get(self, "ecr")
 
     @ecr.setter
@@ -448,6 +563,9 @@ class _SecretState:
     @property
     @pulumi.getter
     def gcp(self) -> Optional[pulumi.Input[str]]:
+        """
+        JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
+        """
         return pulumi.get(self, "gcp")
 
     @gcp.setter
@@ -457,6 +575,9 @@ class _SecretState:
     @property
     @pulumi.getter
     def keypair(self) -> Optional[pulumi.Input['SecretKeypairArgs']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
+        """
         return pulumi.get(self, "keypair")
 
     @keypair.setter
@@ -466,6 +587,9 @@ class _SecretState:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the secret.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -475,6 +599,9 @@ class _SecretState:
     @property
     @pulumi.getter(name="natsAccount")
     def nats_account(self) -> Optional[pulumi.Input['SecretNatsAccountArgs']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
+        """
         return pulumi.get(self, "nats_account")
 
     @nats_account.setter
@@ -484,6 +611,9 @@ class _SecretState:
     @property
     @pulumi.getter
     def opaque(self) -> Optional[pulumi.Input['SecretOpaqueArgs']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
+        """
         return pulumi.get(self, "opaque")
 
     @opaque.setter
@@ -491,8 +621,23 @@ class _SecretState:
         pulumi.set(self, "opaque", value)
 
     @property
+    @pulumi.getter(name="secretLink")
+    def secret_link(self) -> Optional[pulumi.Input[str]]:
+        """
+        Output used when linking a secret to an environment variable or volume.
+        """
+        return pulumi.get(self, "secret_link")
+
+    @secret_link.setter
+    def secret_link(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "secret_link", value)
+
+    @property
     @pulumi.getter(name="selfLink")
     def self_link(self) -> Optional[pulumi.Input[str]]:
+        """
+        Full link to this resource. Can be referenced by other resources.
+        """
         return pulumi.get(self, "self_link")
 
     @self_link.setter
@@ -502,6 +647,9 @@ class _SecretState:
     @property
     @pulumi.getter
     def tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of resource tags.
+        """
         return pulumi.get(self, "tags")
 
     @tags.setter
@@ -511,6 +659,9 @@ class _SecretState:
     @property
     @pulumi.getter
     def tls(self) -> Optional[pulumi.Input['SecretTlsArgs']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#tls).
+        """
         return pulumi.get(self, "tls")
 
     @tls.setter
@@ -520,6 +671,9 @@ class _SecretState:
     @property
     @pulumi.getter
     def userpass(self) -> Optional[pulumi.Input['SecretUserpassArgs']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#username).
+        """
         return pulumi.get(self, "userpass")
 
     @userpass.setter
@@ -552,6 +706,21 @@ class Secret(pulumi.CustomResource):
         Create a Secret resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[pulumi.InputType['SecretAwsArgs']] aws: [Reference Page](https://docs.controlplane.com/reference/secret#aws).
+        :param pulumi.Input[pulumi.InputType['SecretAzureConnectorArgs']] azure_connector: [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
+        :param pulumi.Input[str] azure_sdk: JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
+        :param pulumi.Input[str] description: Description of the Secret.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] dictionary: List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
+        :param pulumi.Input[str] docker: JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
+        :param pulumi.Input[pulumi.InputType['SecretEcrArgs']] ecr: [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
+        :param pulumi.Input[str] gcp: JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
+        :param pulumi.Input[pulumi.InputType['SecretKeypairArgs']] keypair: [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
+        :param pulumi.Input[str] name: Name of the secret.
+        :param pulumi.Input[pulumi.InputType['SecretNatsAccountArgs']] nats_account: [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
+        :param pulumi.Input[pulumi.InputType['SecretOpaqueArgs']] opaque: [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
+        :param pulumi.Input[pulumi.InputType['SecretTlsArgs']] tls: [Reference Page](https://docs.controlplane.com/reference/secret#tls).
+        :param pulumi.Input[pulumi.InputType['SecretUserpassArgs']] userpass: [Reference Page](https://docs.controlplane.com/reference/secret#username).
         """
         ...
     @overload
@@ -661,6 +830,7 @@ class Secret(pulumi.CustomResource):
             __props__.__dict__["userpass"] = userpass
             __props__.__dict__["cpln_id"] = None
             __props__.__dict__["dictionary_as_envs"] = None
+            __props__.__dict__["secret_link"] = None
             __props__.__dict__["self_link"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["azureSdk", "docker", "gcp"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
@@ -688,6 +858,7 @@ class Secret(pulumi.CustomResource):
             name: Optional[pulumi.Input[str]] = None,
             nats_account: Optional[pulumi.Input[pulumi.InputType['SecretNatsAccountArgs']]] = None,
             opaque: Optional[pulumi.Input[pulumi.InputType['SecretOpaqueArgs']]] = None,
+            secret_link: Optional[pulumi.Input[str]] = None,
             self_link: Optional[pulumi.Input[str]] = None,
             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             tls: Optional[pulumi.Input[pulumi.InputType['SecretTlsArgs']]] = None,
@@ -699,6 +870,26 @@ class Secret(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[pulumi.InputType['SecretAwsArgs']] aws: [Reference Page](https://docs.controlplane.com/reference/secret#aws).
+        :param pulumi.Input[pulumi.InputType['SecretAzureConnectorArgs']] azure_connector: [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
+        :param pulumi.Input[str] azure_sdk: JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
+        :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Secret.
+        :param pulumi.Input[str] description: Description of the Secret.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] dictionary: List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
+        :param pulumi.Input[Mapping[str, Any]] dictionary_as_envs: If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
+               cpln://secret/SECRET_NAME.key`.
+        :param pulumi.Input[str] docker: JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
+        :param pulumi.Input[pulumi.InputType['SecretEcrArgs']] ecr: [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
+        :param pulumi.Input[str] gcp: JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
+        :param pulumi.Input[pulumi.InputType['SecretKeypairArgs']] keypair: [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
+        :param pulumi.Input[str] name: Name of the secret.
+        :param pulumi.Input[pulumi.InputType['SecretNatsAccountArgs']] nats_account: [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
+        :param pulumi.Input[pulumi.InputType['SecretOpaqueArgs']] opaque: [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
+        :param pulumi.Input[str] secret_link: Output used when linking a secret to an environment variable or volume.
+        :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
+        :param pulumi.Input[pulumi.InputType['SecretTlsArgs']] tls: [Reference Page](https://docs.controlplane.com/reference/secret#tls).
+        :param pulumi.Input[pulumi.InputType['SecretUserpassArgs']] userpass: [Reference Page](https://docs.controlplane.com/reference/secret#username).
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -718,6 +909,7 @@ class Secret(pulumi.CustomResource):
         __props__.__dict__["name"] = name
         __props__.__dict__["nats_account"] = nats_account
         __props__.__dict__["opaque"] = opaque
+        __props__.__dict__["secret_link"] = secret_link
         __props__.__dict__["self_link"] = self_link
         __props__.__dict__["tags"] = tags
         __props__.__dict__["tls"] = tls
@@ -727,90 +919,153 @@ class Secret(pulumi.CustomResource):
     @property
     @pulumi.getter
     def aws(self) -> pulumi.Output[Optional['outputs.SecretAws']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#aws).
+        """
         return pulumi.get(self, "aws")
 
     @property
     @pulumi.getter(name="azureConnector")
     def azure_connector(self) -> pulumi.Output[Optional['outputs.SecretAzureConnector']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
+        """
         return pulumi.get(self, "azure_connector")
 
     @property
     @pulumi.getter(name="azureSdk")
     def azure_sdk(self) -> pulumi.Output[Optional[str]]:
+        """
+        JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
+        """
         return pulumi.get(self, "azure_sdk")
 
     @property
     @pulumi.getter(name="cplnId")
     def cpln_id(self) -> pulumi.Output[str]:
+        """
+        The ID, in GUID format, of the Secret.
+        """
         return pulumi.get(self, "cpln_id")
 
     @property
     @pulumi.getter
     def description(self) -> pulumi.Output[Optional[str]]:
+        """
+        Description of the Secret.
+        """
         return pulumi.get(self, "description")
 
     @property
     @pulumi.getter
     def dictionary(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
+        """
+        List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
+        """
         return pulumi.get(self, "dictionary")
 
     @property
     @pulumi.getter(name="dictionaryAsEnvs")
     def dictionary_as_envs(self) -> pulumi.Output[Mapping[str, Any]]:
+        """
+        If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
+        cpln://secret/SECRET_NAME.key`.
+        """
         return pulumi.get(self, "dictionary_as_envs")
 
     @property
     @pulumi.getter
     def docker(self) -> pulumi.Output[Optional[str]]:
+        """
+        JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
+        """
         return pulumi.get(self, "docker")
 
     @property
     @pulumi.getter
     def ecr(self) -> pulumi.Output[Optional['outputs.SecretEcr']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
+        """
         return pulumi.get(self, "ecr")
 
     @property
     @pulumi.getter
     def gcp(self) -> pulumi.Output[Optional[str]]:
+        """
+        JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
+        """
         return pulumi.get(self, "gcp")
 
     @property
     @pulumi.getter
     def keypair(self) -> pulumi.Output[Optional['outputs.SecretKeypair']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
+        """
         return pulumi.get(self, "keypair")
 
     @property
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
+        """
+        Name of the secret.
+        """
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter(name="natsAccount")
     def nats_account(self) -> pulumi.Output[Optional['outputs.SecretNatsAccount']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
+        """
         return pulumi.get(self, "nats_account")
 
     @property
     @pulumi.getter
     def opaque(self) -> pulumi.Output[Optional['outputs.SecretOpaque']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
+        """
         return pulumi.get(self, "opaque")
+
+    @property
+    @pulumi.getter(name="secretLink")
+    def secret_link(self) -> pulumi.Output[str]:
+        """
+        Output used when linking a secret to an environment variable or volume.
+        """
+        return pulumi.get(self, "secret_link")
 
     @property
     @pulumi.getter(name="selfLink")
     def self_link(self) -> pulumi.Output[str]:
+        """
+        Full link to this resource. Can be referenced by other resources.
+        """
         return pulumi.get(self, "self_link")
 
     @property
     @pulumi.getter
     def tags(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
+        """
+        Key-value map of resource tags.
+        """
         return pulumi.get(self, "tags")
 
     @property
     @pulumi.getter
     def tls(self) -> pulumi.Output[Optional['outputs.SecretTls']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#tls).
+        """
         return pulumi.get(self, "tls")
 
     @property
     @pulumi.getter
     def userpass(self) -> pulumi.Output[Optional['outputs.SecretUserpass']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/secret#username).
+        """
         return pulumi.get(self, "userpass")
 

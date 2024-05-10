@@ -16,33 +16,64 @@ namespace Pulumiverse.Cpln
         [Output("bindings")]
         public Output<ImmutableArray<Outputs.PolicyBinding>> Bindings { get; private set; } = null!;
 
+        /// <summary>
+        /// The ID, in GUID format, of the Policy.
+        /// </summary>
         [Output("cplnId")]
         public Output<string> CplnId { get; private set; } = null!;
 
+        /// <summary>
+        /// Description of the Policy.
+        /// </summary>
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
 
+        /// <summary>
+        /// The GVC for `identity`, `workload` and `volumeset` target kinds only.
+        /// </summary>
         [Output("gvc")]
         public Output<string?> Gvc { get; private set; } = null!;
 
+        /// <summary>
+        /// Name of the Policy.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Origin of the Policy. Either `builtin` or `default`.
+        /// </summary>
         [Output("origin")]
         public Output<string> Origin { get; private set; } = null!;
 
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         [Output("selfLink")]
         public Output<string> SelfLink { get; private set; } = null!;
 
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         [Output("tags")]
         public Output<ImmutableDictionary<string, string>?> Tags { get; private set; } = null!;
 
+        /// <summary>
+        /// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
+        /// do not include the attribute.
+        /// </summary>
         [Output("target")]
         public Output<string?> Target { get; private set; } = null!;
 
+        /// <summary>
+        /// The kind of resource to target (e.g., gvc, serviceaccount, etc.).
+        /// </summary>
         [Output("targetKind")]
         public Output<string> TargetKind { get; private set; } = null!;
 
+        /// <summary>
+        /// List of the targets this policy will be applied to. Not used if `target` is set to `all`.
+        /// </summary>
         [Output("targetLinks")]
         public Output<ImmutableArray<string>> TargetLinks { get; private set; } = null!;
 
@@ -104,34 +135,55 @@ namespace Pulumiverse.Cpln
             set => _bindings = value;
         }
 
+        /// <summary>
+        /// Description of the Policy.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// The GVC for `identity`, `workload` and `volumeset` target kinds only.
+        /// </summary>
         [Input("gvc")]
         public Input<string>? Gvc { get; set; }
 
+        /// <summary>
+        /// Name of the Policy.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
-        [Input("origin")]
-        public Input<string>? Origin { get; set; }
-
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());
             set => _tags = value;
         }
 
+        /// <summary>
+        /// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
+        /// do not include the attribute.
+        /// </summary>
         [Input("target")]
         public Input<string>? Target { get; set; }
 
+        /// <summary>
+        /// The kind of resource to target (e.g., gvc, serviceaccount, etc.).
+        /// </summary>
         [Input("targetKind", required: true)]
         public Input<string> TargetKind { get; set; } = null!;
 
         [Input("targetLinks")]
         private InputList<string>? _targetLinks;
+
+        /// <summary>
+        /// List of the targets this policy will be applied to. Not used if `target` is set to `all`.
+        /// </summary>
         public InputList<string> TargetLinks
         {
             get => _targetLinks ?? (_targetLinks = new InputList<string>());
@@ -157,40 +209,73 @@ namespace Pulumiverse.Cpln
             set => _bindings = value;
         }
 
+        /// <summary>
+        /// The ID, in GUID format, of the Policy.
+        /// </summary>
         [Input("cplnId")]
         public Input<string>? CplnId { get; set; }
 
+        /// <summary>
+        /// Description of the Policy.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// The GVC for `identity`, `workload` and `volumeset` target kinds only.
+        /// </summary>
         [Input("gvc")]
         public Input<string>? Gvc { get; set; }
 
+        /// <summary>
+        /// Name of the Policy.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Origin of the Policy. Either `builtin` or `default`.
+        /// </summary>
         [Input("origin")]
         public Input<string>? Origin { get; set; }
 
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         [Input("selfLink")]
         public Input<string>? SelfLink { get; set; }
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());
             set => _tags = value;
         }
 
+        /// <summary>
+        /// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
+        /// do not include the attribute.
+        /// </summary>
         [Input("target")]
         public Input<string>? Target { get; set; }
 
+        /// <summary>
+        /// The kind of resource to target (e.g., gvc, serviceaccount, etc.).
+        /// </summary>
         [Input("targetKind")]
         public Input<string>? TargetKind { get; set; }
 
         [Input("targetLinks")]
         private InputList<string>? _targetLinks;
+
+        /// <summary>
+        /// List of the targets this policy will be applied to. Not used if `target` is set to `all`.
+        /// </summary>
         public InputList<string> TargetLinks
         {
             get => _targetLinks ?? (_targetLinks = new InputList<string>());

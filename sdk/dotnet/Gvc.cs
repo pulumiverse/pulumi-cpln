@@ -13,21 +13,36 @@ namespace Pulumiverse.Cpln
     [CplnResourceType("cpln:index/gvc:Gvc")]
     public partial class Gvc : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The alias name of the GVC.
+        /// </summary>
         [Output("alias")]
         public Output<string> Alias { get; private set; } = null!;
 
         [Output("controlplaneTracing")]
         public Output<Outputs.GvcControlplaneTracing?> ControlplaneTracing { get; private set; } = null!;
 
+        /// <summary>
+        /// The ID, in GUID format, of the GVC.
+        /// </summary>
         [Output("cplnId")]
         public Output<string> CplnId { get; private set; } = null!;
 
+        /// <summary>
+        /// Description of the GVC.
+        /// </summary>
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
 
+        /// <summary>
+        /// Custom domain name used by associated workloads.
+        /// </summary>
         [Output("domain")]
         public Output<string?> Domain { get; private set; } = null!;
 
+        /// <summary>
+        /// Key-value array of resource env variables.
+        /// </summary>
         [Output("env")]
         public Output<ImmutableDictionary<string, string>?> Env { get; private set; } = null!;
 
@@ -37,24 +52,40 @@ namespace Pulumiverse.Cpln
         [Output("loadBalancer")]
         public Output<Outputs.GvcLoadBalancer?> LoadBalancer { get; private set; } = null!;
 
+        /// <summary>
+        /// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
+        /// </summary>
         [Output("locations")]
         public Output<ImmutableArray<string>> Locations { get; private set; } = null!;
 
+        /// <summary>
+        /// Name of the GVC.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
         [Output("otelTracing")]
         public Output<Outputs.GvcOtelTracing?> OtelTracing { get; private set; } = null!;
 
+        /// <summary>
+        /// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
+        /// private image repository referenced by Workloads within the GVC.
+        /// </summary>
         [Output("pullSecrets")]
         public Output<ImmutableArray<string>> PullSecrets { get; private set; } = null!;
 
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         [Output("selfLink")]
         public Output<string> SelfLink { get; private set; } = null!;
 
         [Output("sidecar")]
         public Output<Outputs.GvcSidecar?> Sidecar { get; private set; } = null!;
 
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         [Output("tags")]
         public Output<ImmutableDictionary<string, string>?> Tags { get; private set; } = null!;
 
@@ -108,14 +139,24 @@ namespace Pulumiverse.Cpln
         [Input("controlplaneTracing")]
         public Input<Inputs.GvcControlplaneTracingArgs>? ControlplaneTracing { get; set; }
 
+        /// <summary>
+        /// Description of the GVC.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// Custom domain name used by associated workloads.
+        /// </summary>
         [Input("domain")]
         public Input<string>? Domain { get; set; }
 
         [Input("env")]
         private InputMap<string>? _env;
+
+        /// <summary>
+        /// Key-value array of resource env variables.
+        /// </summary>
         public InputMap<string> Env
         {
             get => _env ?? (_env = new InputMap<string>());
@@ -130,12 +171,19 @@ namespace Pulumiverse.Cpln
 
         [Input("locations")]
         private InputList<string>? _locations;
+
+        /// <summary>
+        /// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
+        /// </summary>
         public InputList<string> Locations
         {
             get => _locations ?? (_locations = new InputList<string>());
             set => _locations = value;
         }
 
+        /// <summary>
+        /// Name of the GVC.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
@@ -144,6 +192,11 @@ namespace Pulumiverse.Cpln
 
         [Input("pullSecrets")]
         private InputList<string>? _pullSecrets;
+
+        /// <summary>
+        /// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
+        /// private image repository referenced by Workloads within the GVC.
+        /// </summary>
         public InputList<string> PullSecrets
         {
             get => _pullSecrets ?? (_pullSecrets = new InputList<string>());
@@ -155,6 +208,10 @@ namespace Pulumiverse.Cpln
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());
@@ -169,23 +226,39 @@ namespace Pulumiverse.Cpln
 
     public sealed class GvcState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The alias name of the GVC.
+        /// </summary>
         [Input("alias")]
         public Input<string>? Alias { get; set; }
 
         [Input("controlplaneTracing")]
         public Input<Inputs.GvcControlplaneTracingGetArgs>? ControlplaneTracing { get; set; }
 
+        /// <summary>
+        /// The ID, in GUID format, of the GVC.
+        /// </summary>
         [Input("cplnId")]
         public Input<string>? CplnId { get; set; }
 
+        /// <summary>
+        /// Description of the GVC.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// Custom domain name used by associated workloads.
+        /// </summary>
         [Input("domain")]
         public Input<string>? Domain { get; set; }
 
         [Input("env")]
         private InputMap<string>? _env;
+
+        /// <summary>
+        /// Key-value array of resource env variables.
+        /// </summary>
         public InputMap<string> Env
         {
             get => _env ?? (_env = new InputMap<string>());
@@ -200,12 +273,19 @@ namespace Pulumiverse.Cpln
 
         [Input("locations")]
         private InputList<string>? _locations;
+
+        /// <summary>
+        /// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
+        /// </summary>
         public InputList<string> Locations
         {
             get => _locations ?? (_locations = new InputList<string>());
             set => _locations = value;
         }
 
+        /// <summary>
+        /// Name of the GVC.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
@@ -214,12 +294,20 @@ namespace Pulumiverse.Cpln
 
         [Input("pullSecrets")]
         private InputList<string>? _pullSecrets;
+
+        /// <summary>
+        /// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
+        /// private image repository referenced by Workloads within the GVC.
+        /// </summary>
         public InputList<string> PullSecrets
         {
             get => _pullSecrets ?? (_pullSecrets = new InputList<string>());
             set => _pullSecrets = value;
         }
 
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         [Input("selfLink")]
         public Input<string>? SelfLink { get; set; }
 
@@ -228,6 +316,10 @@ namespace Pulumiverse.Cpln
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());

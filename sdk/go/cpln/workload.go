@@ -16,24 +16,38 @@ import (
 type Workload struct {
 	pulumi.CustomResourceState
 
-	Containers         WorkloadContainerArrayOutput     `pulumi:"containers"`
-	CplnId             pulumi.StringOutput              `pulumi:"cplnId"`
-	Description        pulumi.StringPtrOutput           `pulumi:"description"`
-	FirewallSpec       WorkloadFirewallSpecPtrOutput    `pulumi:"firewallSpec"`
-	Gvc                pulumi.StringOutput              `pulumi:"gvc"`
-	IdentityLink       pulumi.StringPtrOutput           `pulumi:"identityLink"`
-	Job                WorkloadJobPtrOutput             `pulumi:"job"`
-	LocalOptions       WorkloadLocalOptionArrayOutput   `pulumi:"localOptions"`
-	Name               pulumi.StringOutput              `pulumi:"name"`
-	Options            WorkloadOptionsOutput            `pulumi:"options"`
-	RolloutOptions     WorkloadRolloutOptionsPtrOutput  `pulumi:"rolloutOptions"`
-	SecurityOptions    WorkloadSecurityOptionsPtrOutput `pulumi:"securityOptions"`
-	SelfLink           pulumi.StringOutput              `pulumi:"selfLink"`
-	Sidecar            WorkloadSidecarPtrOutput         `pulumi:"sidecar"`
-	Statuses           WorkloadStatusArrayOutput        `pulumi:"statuses"`
-	SupportDynamicTags pulumi.BoolPtrOutput             `pulumi:"supportDynamicTags"`
-	Tags               pulumi.StringMapOutput           `pulumi:"tags"`
-	Type               pulumi.StringOutput              `pulumi:"type"`
+	Containers WorkloadContainerArrayOutput `pulumi:"containers"`
+	// The ID, in GUID format, of the Workload.
+	CplnId pulumi.StringOutput `pulumi:"cplnId"`
+	// Description of the Workload.
+	Description pulumi.StringPtrOutput `pulumi:"description"`
+	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+	// Access is restricted by default.
+	FirewallSpec WorkloadFirewallSpecPtrOutput `pulumi:"firewallSpec"`
+	// Name of the associated GVC.
+	Gvc pulumi.StringOutput `pulumi:"gvc"`
+	// Full link to an Identity.
+	IdentityLink pulumi.StringPtrOutput `pulumi:"identityLink"`
+	// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+	Job          WorkloadJobPtrOutput           `pulumi:"job"`
+	LocalOptions WorkloadLocalOptionArrayOutput `pulumi:"localOptions"`
+	// Name of the Workload.
+	Name            pulumi.StringOutput              `pulumi:"name"`
+	Options         WorkloadOptionsOutput            `pulumi:"options"`
+	RolloutOptions  WorkloadRolloutOptionsPtrOutput  `pulumi:"rolloutOptions"`
+	SecurityOptions WorkloadSecurityOptionsPtrOutput `pulumi:"securityOptions"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringOutput      `pulumi:"selfLink"`
+	Sidecar  WorkloadSidecarPtrOutput `pulumi:"sidecar"`
+	// Status of the workload.
+	Statuses WorkloadStatusArrayOutput `pulumi:"statuses"`
+	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+	// false.
+	SupportDynamicTags pulumi.BoolPtrOutput `pulumi:"supportDynamicTags"`
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapOutput `pulumi:"tags"`
+	// Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+	Type pulumi.StringOutput `pulumi:"type"`
 }
 
 // NewWorkload registers a new resource with the given unique name, arguments, and options.
@@ -78,45 +92,73 @@ func GetWorkload(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Workload resources.
 type workloadState struct {
-	Containers         []WorkloadContainer      `pulumi:"containers"`
-	CplnId             *string                  `pulumi:"cplnId"`
-	Description        *string                  `pulumi:"description"`
-	FirewallSpec       *WorkloadFirewallSpec    `pulumi:"firewallSpec"`
-	Gvc                *string                  `pulumi:"gvc"`
-	IdentityLink       *string                  `pulumi:"identityLink"`
-	Job                *WorkloadJob             `pulumi:"job"`
-	LocalOptions       []WorkloadLocalOption    `pulumi:"localOptions"`
-	Name               *string                  `pulumi:"name"`
-	Options            *WorkloadOptions         `pulumi:"options"`
-	RolloutOptions     *WorkloadRolloutOptions  `pulumi:"rolloutOptions"`
-	SecurityOptions    *WorkloadSecurityOptions `pulumi:"securityOptions"`
-	SelfLink           *string                  `pulumi:"selfLink"`
-	Sidecar            *WorkloadSidecar         `pulumi:"sidecar"`
-	Statuses           []WorkloadStatus         `pulumi:"statuses"`
-	SupportDynamicTags *bool                    `pulumi:"supportDynamicTags"`
-	Tags               map[string]string        `pulumi:"tags"`
-	Type               *string                  `pulumi:"type"`
+	Containers []WorkloadContainer `pulumi:"containers"`
+	// The ID, in GUID format, of the Workload.
+	CplnId *string `pulumi:"cplnId"`
+	// Description of the Workload.
+	Description *string `pulumi:"description"`
+	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+	// Access is restricted by default.
+	FirewallSpec *WorkloadFirewallSpec `pulumi:"firewallSpec"`
+	// Name of the associated GVC.
+	Gvc *string `pulumi:"gvc"`
+	// Full link to an Identity.
+	IdentityLink *string `pulumi:"identityLink"`
+	// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+	Job          *WorkloadJob          `pulumi:"job"`
+	LocalOptions []WorkloadLocalOption `pulumi:"localOptions"`
+	// Name of the Workload.
+	Name            *string                  `pulumi:"name"`
+	Options         *WorkloadOptions         `pulumi:"options"`
+	RolloutOptions  *WorkloadRolloutOptions  `pulumi:"rolloutOptions"`
+	SecurityOptions *WorkloadSecurityOptions `pulumi:"securityOptions"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink *string          `pulumi:"selfLink"`
+	Sidecar  *WorkloadSidecar `pulumi:"sidecar"`
+	// Status of the workload.
+	Statuses []WorkloadStatus `pulumi:"statuses"`
+	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+	// false.
+	SupportDynamicTags *bool `pulumi:"supportDynamicTags"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
+	// Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+	Type *string `pulumi:"type"`
 }
 
 type WorkloadState struct {
-	Containers         WorkloadContainerArrayInput
-	CplnId             pulumi.StringPtrInput
-	Description        pulumi.StringPtrInput
-	FirewallSpec       WorkloadFirewallSpecPtrInput
-	Gvc                pulumi.StringPtrInput
-	IdentityLink       pulumi.StringPtrInput
-	Job                WorkloadJobPtrInput
-	LocalOptions       WorkloadLocalOptionArrayInput
-	Name               pulumi.StringPtrInput
-	Options            WorkloadOptionsPtrInput
-	RolloutOptions     WorkloadRolloutOptionsPtrInput
-	SecurityOptions    WorkloadSecurityOptionsPtrInput
-	SelfLink           pulumi.StringPtrInput
-	Sidecar            WorkloadSidecarPtrInput
-	Statuses           WorkloadStatusArrayInput
+	Containers WorkloadContainerArrayInput
+	// The ID, in GUID format, of the Workload.
+	CplnId pulumi.StringPtrInput
+	// Description of the Workload.
+	Description pulumi.StringPtrInput
+	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+	// Access is restricted by default.
+	FirewallSpec WorkloadFirewallSpecPtrInput
+	// Name of the associated GVC.
+	Gvc pulumi.StringPtrInput
+	// Full link to an Identity.
+	IdentityLink pulumi.StringPtrInput
+	// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+	Job          WorkloadJobPtrInput
+	LocalOptions WorkloadLocalOptionArrayInput
+	// Name of the Workload.
+	Name            pulumi.StringPtrInput
+	Options         WorkloadOptionsPtrInput
+	RolloutOptions  WorkloadRolloutOptionsPtrInput
+	SecurityOptions WorkloadSecurityOptionsPtrInput
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringPtrInput
+	Sidecar  WorkloadSidecarPtrInput
+	// Status of the workload.
+	Statuses WorkloadStatusArrayInput
+	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+	// false.
 	SupportDynamicTags pulumi.BoolPtrInput
-	Tags               pulumi.StringMapInput
-	Type               pulumi.StringPtrInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
+	// Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+	Type pulumi.StringPtrInput
 }
 
 func (WorkloadState) ElementType() reflect.Type {
@@ -124,40 +166,62 @@ func (WorkloadState) ElementType() reflect.Type {
 }
 
 type workloadArgs struct {
-	Containers         []WorkloadContainer      `pulumi:"containers"`
-	Description        *string                  `pulumi:"description"`
-	FirewallSpec       *WorkloadFirewallSpec    `pulumi:"firewallSpec"`
-	Gvc                string                   `pulumi:"gvc"`
-	IdentityLink       *string                  `pulumi:"identityLink"`
-	Job                *WorkloadJob             `pulumi:"job"`
-	LocalOptions       []WorkloadLocalOption    `pulumi:"localOptions"`
-	Name               *string                  `pulumi:"name"`
-	Options            WorkloadOptions          `pulumi:"options"`
-	RolloutOptions     *WorkloadRolloutOptions  `pulumi:"rolloutOptions"`
-	SecurityOptions    *WorkloadSecurityOptions `pulumi:"securityOptions"`
-	Sidecar            *WorkloadSidecar         `pulumi:"sidecar"`
-	SupportDynamicTags *bool                    `pulumi:"supportDynamicTags"`
-	Tags               map[string]string        `pulumi:"tags"`
-	Type               string                   `pulumi:"type"`
+	Containers []WorkloadContainer `pulumi:"containers"`
+	// Description of the Workload.
+	Description *string `pulumi:"description"`
+	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+	// Access is restricted by default.
+	FirewallSpec *WorkloadFirewallSpec `pulumi:"firewallSpec"`
+	// Name of the associated GVC.
+	Gvc string `pulumi:"gvc"`
+	// Full link to an Identity.
+	IdentityLink *string `pulumi:"identityLink"`
+	// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+	Job          *WorkloadJob          `pulumi:"job"`
+	LocalOptions []WorkloadLocalOption `pulumi:"localOptions"`
+	// Name of the Workload.
+	Name            *string                  `pulumi:"name"`
+	Options         WorkloadOptions          `pulumi:"options"`
+	RolloutOptions  *WorkloadRolloutOptions  `pulumi:"rolloutOptions"`
+	SecurityOptions *WorkloadSecurityOptions `pulumi:"securityOptions"`
+	Sidecar         *WorkloadSidecar         `pulumi:"sidecar"`
+	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+	// false.
+	SupportDynamicTags *bool `pulumi:"supportDynamicTags"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
+	// Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+	Type string `pulumi:"type"`
 }
 
 // The set of arguments for constructing a Workload resource.
 type WorkloadArgs struct {
-	Containers         WorkloadContainerArrayInput
-	Description        pulumi.StringPtrInput
-	FirewallSpec       WorkloadFirewallSpecPtrInput
-	Gvc                pulumi.StringInput
-	IdentityLink       pulumi.StringPtrInput
-	Job                WorkloadJobPtrInput
-	LocalOptions       WorkloadLocalOptionArrayInput
-	Name               pulumi.StringPtrInput
-	Options            WorkloadOptionsInput
-	RolloutOptions     WorkloadRolloutOptionsPtrInput
-	SecurityOptions    WorkloadSecurityOptionsPtrInput
-	Sidecar            WorkloadSidecarPtrInput
+	Containers WorkloadContainerArrayInput
+	// Description of the Workload.
+	Description pulumi.StringPtrInput
+	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+	// Access is restricted by default.
+	FirewallSpec WorkloadFirewallSpecPtrInput
+	// Name of the associated GVC.
+	Gvc pulumi.StringInput
+	// Full link to an Identity.
+	IdentityLink pulumi.StringPtrInput
+	// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+	Job          WorkloadJobPtrInput
+	LocalOptions WorkloadLocalOptionArrayInput
+	// Name of the Workload.
+	Name            pulumi.StringPtrInput
+	Options         WorkloadOptionsInput
+	RolloutOptions  WorkloadRolloutOptionsPtrInput
+	SecurityOptions WorkloadSecurityOptionsPtrInput
+	Sidecar         WorkloadSidecarPtrInput
+	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+	// false.
 	SupportDynamicTags pulumi.BoolPtrInput
-	Tags               pulumi.StringMapInput
-	Type               pulumi.StringInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
+	// Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+	Type pulumi.StringInput
 }
 
 func (WorkloadArgs) ElementType() reflect.Type {
@@ -275,26 +339,33 @@ func (o WorkloadOutput) Containers() WorkloadContainerArrayOutput {
 	return o.ApplyT(func(v *Workload) WorkloadContainerArrayOutput { return v.Containers }).(WorkloadContainerArrayOutput)
 }
 
+// The ID, in GUID format, of the Workload.
 func (o WorkloadOutput) CplnId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringOutput { return v.CplnId }).(pulumi.StringOutput)
 }
 
+// Description of the Workload.
 func (o WorkloadOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
+// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+// Access is restricted by default.
 func (o WorkloadOutput) FirewallSpec() WorkloadFirewallSpecPtrOutput {
 	return o.ApplyT(func(v *Workload) WorkloadFirewallSpecPtrOutput { return v.FirewallSpec }).(WorkloadFirewallSpecPtrOutput)
 }
 
+// Name of the associated GVC.
 func (o WorkloadOutput) Gvc() pulumi.StringOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringOutput { return v.Gvc }).(pulumi.StringOutput)
 }
 
+// Full link to an Identity.
 func (o WorkloadOutput) IdentityLink() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringPtrOutput { return v.IdentityLink }).(pulumi.StringPtrOutput)
 }
 
+// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
 func (o WorkloadOutput) Job() WorkloadJobPtrOutput {
 	return o.ApplyT(func(v *Workload) WorkloadJobPtrOutput { return v.Job }).(WorkloadJobPtrOutput)
 }
@@ -303,6 +374,7 @@ func (o WorkloadOutput) LocalOptions() WorkloadLocalOptionArrayOutput {
 	return o.ApplyT(func(v *Workload) WorkloadLocalOptionArrayOutput { return v.LocalOptions }).(WorkloadLocalOptionArrayOutput)
 }
 
+// Name of the Workload.
 func (o WorkloadOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
@@ -319,6 +391,7 @@ func (o WorkloadOutput) SecurityOptions() WorkloadSecurityOptionsPtrOutput {
 	return o.ApplyT(func(v *Workload) WorkloadSecurityOptionsPtrOutput { return v.SecurityOptions }).(WorkloadSecurityOptionsPtrOutput)
 }
 
+// Full link to this resource. Can be referenced by other resources.
 func (o WorkloadOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
 }
@@ -327,18 +400,23 @@ func (o WorkloadOutput) Sidecar() WorkloadSidecarPtrOutput {
 	return o.ApplyT(func(v *Workload) WorkloadSidecarPtrOutput { return v.Sidecar }).(WorkloadSidecarPtrOutput)
 }
 
+// Status of the workload.
 func (o WorkloadOutput) Statuses() WorkloadStatusArrayOutput {
 	return o.ApplyT(func(v *Workload) WorkloadStatusArrayOutput { return v.Statuses }).(WorkloadStatusArrayOutput)
 }
 
+// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+// false.
 func (o WorkloadOutput) SupportDynamicTags() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Workload) pulumi.BoolPtrOutput { return v.SupportDynamicTags }).(pulumi.BoolPtrOutput)
 }
 
+// Key-value map of resource tags.
 func (o WorkloadOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
 }
 
+// Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
 func (o WorkloadOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringOutput { return v.Type }).(pulumi.StringOutput)
 }

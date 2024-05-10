@@ -16,21 +16,33 @@ namespace Pulumiverse.Cpln
         [Output("controlplaneTracing")]
         public Output<Outputs.OrgTracingControlplaneTracing?> ControlplaneTracing { get; private set; } = null!;
 
+        /// <summary>
+        /// The ID, in GUID format, of the org.
+        /// </summary>
         [Output("cplnId")]
         public Output<string> CplnId { get; private set; } = null!;
 
+        /// <summary>
+        /// The description of org.
+        /// </summary>
         [Output("description")]
         public Output<string> Description { get; private set; } = null!;
 
         [Output("lightstepTracing")]
         public Output<Outputs.OrgTracingLightstepTracing?> LightstepTracing { get; private set; } = null!;
 
+        /// <summary>
+        /// The name of the org.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
         [Output("otelTracing")]
         public Output<Outputs.OrgTracingOtelTracing?> OtelTracing { get; private set; } = null!;
 
+        /// <summary>
+        /// Key-value map of the org's tags.
+        /// </summary>
         [Output("tags")]
         public Output<ImmutableDictionary<string, string>> Tags { get; private set; } = null!;
 
@@ -101,15 +113,24 @@ namespace Pulumiverse.Cpln
         [Input("controlplaneTracing")]
         public Input<Inputs.OrgTracingControlplaneTracingGetArgs>? ControlplaneTracing { get; set; }
 
+        /// <summary>
+        /// The ID, in GUID format, of the org.
+        /// </summary>
         [Input("cplnId")]
         public Input<string>? CplnId { get; set; }
 
+        /// <summary>
+        /// The description of org.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
         [Input("lightstepTracing")]
         public Input<Inputs.OrgTracingLightstepTracingGetArgs>? LightstepTracing { get; set; }
 
+        /// <summary>
+        /// The name of the org.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
@@ -118,6 +139,10 @@ namespace Pulumiverse.Cpln
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of the org's tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());

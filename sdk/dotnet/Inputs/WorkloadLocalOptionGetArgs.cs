@@ -13,8 +13,8 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadLocalOptionGetArgs : global::Pulumi.ResourceArgs
     {
-        [Input("autoscaling", required: true)]
-        public Input<Inputs.WorkloadLocalOptionAutoscalingGetArgs> Autoscaling { get; set; } = null!;
+        [Input("autoscaling")]
+        public Input<Inputs.WorkloadLocalOptionAutoscalingGetArgs>? Autoscaling { get; set; }
 
         [Input("capacityAi")]
         public Input<bool>? CapacityAi { get; set; }

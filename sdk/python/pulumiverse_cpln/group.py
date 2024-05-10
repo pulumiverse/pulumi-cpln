@@ -25,6 +25,13 @@ class GroupArgs:
                  user_ids_and_emails: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a Group resource.
+        :param pulumi.Input[str] description: Description of Group.
+        :param pulumi.Input[str] name: Name of the Group.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] service_accounts: List of service accounts that exists within the configured org. Group membership will fail if the service account does
+               not exits within the org.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] user_ids_and_emails: List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+               if the user ID / email does not exist within the org.
         """
         GroupArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -75,6 +82,9 @@ class GroupArgs:
     @property
     @pulumi.getter
     def description(self) -> Optional[pulumi.Input[str]]:
+        """
+        Description of Group.
+        """
         return pulumi.get(self, "description")
 
     @description.setter
@@ -102,6 +112,9 @@ class GroupArgs:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the Group.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -111,6 +124,10 @@ class GroupArgs:
     @property
     @pulumi.getter(name="serviceAccounts")
     def service_accounts(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of service accounts that exists within the configured org. Group membership will fail if the service account does
+        not exits within the org.
+        """
         return pulumi.get(self, "service_accounts")
 
     @service_accounts.setter
@@ -120,6 +137,9 @@ class GroupArgs:
     @property
     @pulumi.getter
     def tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of resource tags.
+        """
         return pulumi.get(self, "tags")
 
     @tags.setter
@@ -129,6 +149,10 @@ class GroupArgs:
     @property
     @pulumi.getter(name="userIdsAndEmails")
     def user_ids_and_emails(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+        if the user ID / email does not exist within the org.
+        """
         return pulumi.get(self, "user_ids_and_emails")
 
     @user_ids_and_emails.setter
@@ -151,6 +175,15 @@ class _GroupState:
                  user_ids_and_emails: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         Input properties used for looking up and filtering Group resources.
+        :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Group.
+        :param pulumi.Input[str] description: Description of Group.
+        :param pulumi.Input[str] name: Name of the Group.
+        :param pulumi.Input[str] origin: Origin of the service account. Either `builtin` or `default`.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] service_accounts: List of service accounts that exists within the configured org. Group membership will fail if the service account does
+               not exits within the org.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] user_ids_and_emails: List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+               if the user ID / email does not exist within the org.
         """
         _GroupState._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -217,6 +250,9 @@ class _GroupState:
     @property
     @pulumi.getter(name="cplnId")
     def cpln_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID, in GUID format, of the Group.
+        """
         return pulumi.get(self, "cpln_id")
 
     @cpln_id.setter
@@ -226,6 +262,9 @@ class _GroupState:
     @property
     @pulumi.getter
     def description(self) -> Optional[pulumi.Input[str]]:
+        """
+        Description of Group.
+        """
         return pulumi.get(self, "description")
 
     @description.setter
@@ -253,6 +292,9 @@ class _GroupState:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the Group.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -262,6 +304,9 @@ class _GroupState:
     @property
     @pulumi.getter
     def origin(self) -> Optional[pulumi.Input[str]]:
+        """
+        Origin of the service account. Either `builtin` or `default`.
+        """
         return pulumi.get(self, "origin")
 
     @origin.setter
@@ -280,6 +325,10 @@ class _GroupState:
     @property
     @pulumi.getter(name="serviceAccounts")
     def service_accounts(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of service accounts that exists within the configured org. Group membership will fail if the service account does
+        not exits within the org.
+        """
         return pulumi.get(self, "service_accounts")
 
     @service_accounts.setter
@@ -289,6 +338,9 @@ class _GroupState:
     @property
     @pulumi.getter
     def tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of resource tags.
+        """
         return pulumi.get(self, "tags")
 
     @tags.setter
@@ -298,6 +350,10 @@ class _GroupState:
     @property
     @pulumi.getter(name="userIdsAndEmails")
     def user_ids_and_emails(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+        if the user ID / email does not exist within the org.
+        """
         return pulumi.get(self, "user_ids_and_emails")
 
     @user_ids_and_emails.setter
@@ -322,6 +378,13 @@ class Group(pulumi.CustomResource):
         Create a Group resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] description: Description of Group.
+        :param pulumi.Input[str] name: Name of the Group.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] service_accounts: List of service accounts that exists within the configured org. Group membership will fail if the service account does
+               not exits within the org.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] user_ids_and_emails: List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+               if the user ID / email does not exist within the org.
         """
         ...
     @overload
@@ -413,6 +476,15 @@ class Group(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Group.
+        :param pulumi.Input[str] description: Description of Group.
+        :param pulumi.Input[str] name: Name of the Group.
+        :param pulumi.Input[str] origin: Origin of the service account. Either `builtin` or `default`.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] service_accounts: List of service accounts that exists within the configured org. Group membership will fail if the service account does
+               not exits within the org.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] user_ids_and_emails: List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+               if the user ID / email does not exist within the org.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -433,11 +505,17 @@ class Group(pulumi.CustomResource):
     @property
     @pulumi.getter(name="cplnId")
     def cpln_id(self) -> pulumi.Output[str]:
+        """
+        The ID, in GUID format, of the Group.
+        """
         return pulumi.get(self, "cpln_id")
 
     @property
     @pulumi.getter
     def description(self) -> pulumi.Output[Optional[str]]:
+        """
+        Description of Group.
+        """
         return pulumi.get(self, "description")
 
     @property
@@ -453,11 +531,17 @@ class Group(pulumi.CustomResource):
     @property
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
+        """
+        Name of the Group.
+        """
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter
     def origin(self) -> pulumi.Output[str]:
+        """
+        Origin of the service account. Either `builtin` or `default`.
+        """
         return pulumi.get(self, "origin")
 
     @property
@@ -468,15 +552,26 @@ class Group(pulumi.CustomResource):
     @property
     @pulumi.getter(name="serviceAccounts")
     def service_accounts(self) -> pulumi.Output[Optional[Sequence[str]]]:
+        """
+        List of service accounts that exists within the configured org. Group membership will fail if the service account does
+        not exits within the org.
+        """
         return pulumi.get(self, "service_accounts")
 
     @property
     @pulumi.getter
     def tags(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
+        """
+        Key-value map of resource tags.
+        """
         return pulumi.get(self, "tags")
 
     @property
     @pulumi.getter(name="userIdsAndEmails")
     def user_ids_and_emails(self) -> pulumi.Output[Optional[Sequence[str]]]:
+        """
+        List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+        if the user ID / email does not exist within the org.
+        """
         return pulumi.get(self, "user_ids_and_emails")
 

@@ -16,17 +16,29 @@ import (
 type Org struct {
 	pulumi.CustomResourceState
 
-	AccountId             pulumi.StringPtrOutput   `pulumi:"accountId"`
-	AuthConfig            OrgAuthConfigPtrOutput   `pulumi:"authConfig"`
-	CplnId                pulumi.StringOutput      `pulumi:"cplnId"`
-	Description           pulumi.StringPtrOutput   `pulumi:"description"`
-	Invitees              pulumi.StringArrayOutput `pulumi:"invitees"`
-	Name                  pulumi.StringOutput      `pulumi:"name"`
-	Observability         OrgObservabilityOutput   `pulumi:"observability"`
-	SelfLink              pulumi.StringOutput      `pulumi:"selfLink"`
-	SessionTimeoutSeconds pulumi.IntPtrOutput      `pulumi:"sessionTimeoutSeconds"`
-	Statuses              OrgStatusArrayOutput     `pulumi:"statuses"`
-	Tags                  pulumi.StringMapOutput   `pulumi:"tags"`
+	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
+	// obtained from the `Org Management & Billing` page.
+	AccountId  pulumi.StringPtrOutput `pulumi:"accountId"`
+	AuthConfig OrgAuthConfigPtrOutput `pulumi:"authConfig"`
+	// The ID, in GUID format, of the org.
+	CplnId pulumi.StringOutput `pulumi:"cplnId"`
+	// The description of org.
+	Description pulumi.StringPtrOutput `pulumi:"description"`
+	// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
+	// the `superusers` group. The user account used when creating the org will be included in this list.
+	Invitees pulumi.StringArrayOutput `pulumi:"invitees"`
+	// The name of the org.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
+	Observability OrgObservabilityOutput `pulumi:"observability"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
+	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+	SessionTimeoutSeconds pulumi.IntPtrOutput `pulumi:"sessionTimeoutSeconds"`
+	// Status of the org.
+	Statuses OrgStatusArrayOutput `pulumi:"statuses"`
+	// Key-value map of the org's tags.
+	Tags pulumi.StringMapOutput `pulumi:"tags"`
 }
 
 // NewOrg registers a new resource with the given unique name, arguments, and options.
@@ -62,31 +74,55 @@ func GetOrg(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Org resources.
 type orgState struct {
-	AccountId             *string           `pulumi:"accountId"`
-	AuthConfig            *OrgAuthConfig    `pulumi:"authConfig"`
-	CplnId                *string           `pulumi:"cplnId"`
-	Description           *string           `pulumi:"description"`
-	Invitees              []string          `pulumi:"invitees"`
-	Name                  *string           `pulumi:"name"`
-	Observability         *OrgObservability `pulumi:"observability"`
-	SelfLink              *string           `pulumi:"selfLink"`
-	SessionTimeoutSeconds *int              `pulumi:"sessionTimeoutSeconds"`
-	Statuses              []OrgStatus       `pulumi:"statuses"`
-	Tags                  map[string]string `pulumi:"tags"`
+	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
+	// obtained from the `Org Management & Billing` page.
+	AccountId  *string        `pulumi:"accountId"`
+	AuthConfig *OrgAuthConfig `pulumi:"authConfig"`
+	// The ID, in GUID format, of the org.
+	CplnId *string `pulumi:"cplnId"`
+	// The description of org.
+	Description *string `pulumi:"description"`
+	// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
+	// the `superusers` group. The user account used when creating the org will be included in this list.
+	Invitees []string `pulumi:"invitees"`
+	// The name of the org.
+	Name *string `pulumi:"name"`
+	// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
+	Observability *OrgObservability `pulumi:"observability"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink *string `pulumi:"selfLink"`
+	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+	SessionTimeoutSeconds *int `pulumi:"sessionTimeoutSeconds"`
+	// Status of the org.
+	Statuses []OrgStatus `pulumi:"statuses"`
+	// Key-value map of the org's tags.
+	Tags map[string]string `pulumi:"tags"`
 }
 
 type OrgState struct {
-	AccountId             pulumi.StringPtrInput
-	AuthConfig            OrgAuthConfigPtrInput
-	CplnId                pulumi.StringPtrInput
-	Description           pulumi.StringPtrInput
-	Invitees              pulumi.StringArrayInput
-	Name                  pulumi.StringPtrInput
-	Observability         OrgObservabilityPtrInput
-	SelfLink              pulumi.StringPtrInput
+	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
+	// obtained from the `Org Management & Billing` page.
+	AccountId  pulumi.StringPtrInput
+	AuthConfig OrgAuthConfigPtrInput
+	// The ID, in GUID format, of the org.
+	CplnId pulumi.StringPtrInput
+	// The description of org.
+	Description pulumi.StringPtrInput
+	// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
+	// the `superusers` group. The user account used when creating the org will be included in this list.
+	Invitees pulumi.StringArrayInput
+	// The name of the org.
+	Name pulumi.StringPtrInput
+	// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
+	Observability OrgObservabilityPtrInput
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringPtrInput
+	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
 	SessionTimeoutSeconds pulumi.IntPtrInput
-	Statuses              OrgStatusArrayInput
-	Tags                  pulumi.StringMapInput
+	// Status of the org.
+	Statuses OrgStatusArrayInput
+	// Key-value map of the org's tags.
+	Tags pulumi.StringMapInput
 }
 
 func (OrgState) ElementType() reflect.Type {
@@ -94,24 +130,40 @@ func (OrgState) ElementType() reflect.Type {
 }
 
 type orgArgs struct {
-	AccountId             *string           `pulumi:"accountId"`
-	AuthConfig            *OrgAuthConfig    `pulumi:"authConfig"`
-	Description           *string           `pulumi:"description"`
-	Invitees              []string          `pulumi:"invitees"`
-	Observability         OrgObservability  `pulumi:"observability"`
-	SessionTimeoutSeconds *int              `pulumi:"sessionTimeoutSeconds"`
-	Tags                  map[string]string `pulumi:"tags"`
+	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
+	// obtained from the `Org Management & Billing` page.
+	AccountId  *string        `pulumi:"accountId"`
+	AuthConfig *OrgAuthConfig `pulumi:"authConfig"`
+	// The description of org.
+	Description *string `pulumi:"description"`
+	// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
+	// the `superusers` group. The user account used when creating the org will be included in this list.
+	Invitees []string `pulumi:"invitees"`
+	// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
+	Observability OrgObservability `pulumi:"observability"`
+	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+	SessionTimeoutSeconds *int `pulumi:"sessionTimeoutSeconds"`
+	// Key-value map of the org's tags.
+	Tags map[string]string `pulumi:"tags"`
 }
 
 // The set of arguments for constructing a Org resource.
 type OrgArgs struct {
-	AccountId             pulumi.StringPtrInput
-	AuthConfig            OrgAuthConfigPtrInput
-	Description           pulumi.StringPtrInput
-	Invitees              pulumi.StringArrayInput
-	Observability         OrgObservabilityInput
+	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
+	// obtained from the `Org Management & Billing` page.
+	AccountId  pulumi.StringPtrInput
+	AuthConfig OrgAuthConfigPtrInput
+	// The description of org.
+	Description pulumi.StringPtrInput
+	// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
+	// the `superusers` group. The user account used when creating the org will be included in this list.
+	Invitees pulumi.StringArrayInput
+	// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
+	Observability OrgObservabilityInput
+	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
 	SessionTimeoutSeconds pulumi.IntPtrInput
-	Tags                  pulumi.StringMapInput
+	// Key-value map of the org's tags.
+	Tags pulumi.StringMapInput
 }
 
 func (OrgArgs) ElementType() reflect.Type {
@@ -225,6 +277,8 @@ func (o OrgOutput) ToOutput(ctx context.Context) pulumix.Output[*Org] {
 	}
 }
 
+// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
+// obtained from the `Org Management & Billing` page.
 func (o OrgOutput) AccountId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Org) pulumi.StringPtrOutput { return v.AccountId }).(pulumi.StringPtrOutput)
 }
@@ -233,38 +287,48 @@ func (o OrgOutput) AuthConfig() OrgAuthConfigPtrOutput {
 	return o.ApplyT(func(v *Org) OrgAuthConfigPtrOutput { return v.AuthConfig }).(OrgAuthConfigPtrOutput)
 }
 
+// The ID, in GUID format, of the org.
 func (o OrgOutput) CplnId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Org) pulumi.StringOutput { return v.CplnId }).(pulumi.StringOutput)
 }
 
+// The description of org.
 func (o OrgOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Org) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
+// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
+// the `superusers` group. The user account used when creating the org will be included in this list.
 func (o OrgOutput) Invitees() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Org) pulumi.StringArrayOutput { return v.Invitees }).(pulumi.StringArrayOutput)
 }
 
+// The name of the org.
 func (o OrgOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Org) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
 func (o OrgOutput) Observability() OrgObservabilityOutput {
 	return o.ApplyT(func(v *Org) OrgObservabilityOutput { return v.Observability }).(OrgObservabilityOutput)
 }
 
+// Full link to this resource. Can be referenced by other resources.
 func (o OrgOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *Org) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
 }
 
+// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
 func (o OrgOutput) SessionTimeoutSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *Org) pulumi.IntPtrOutput { return v.SessionTimeoutSeconds }).(pulumi.IntPtrOutput)
 }
 
+// Status of the org.
 func (o OrgOutput) Statuses() OrgStatusArrayOutput {
 	return o.ApplyT(func(v *Org) OrgStatusArrayOutput { return v.Statuses }).(OrgStatusArrayOutput)
 }
 
+// Key-value map of the org's tags.
 func (o OrgOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Org) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
 }

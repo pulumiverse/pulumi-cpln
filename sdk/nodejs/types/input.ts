@@ -143,6 +143,40 @@ export interface GetGvcSidecarArgs {
     envoy: pulumi.Input<string>;
 }
 
+export interface GetImagesQuery {
+    fetch?: string;
+    spec?: inputs.GetImagesQuerySpec;
+}
+
+export interface GetImagesQueryArgs {
+    fetch?: pulumi.Input<string>;
+    spec?: pulumi.Input<inputs.GetImagesQuerySpecArgs>;
+}
+
+export interface GetImagesQuerySpec {
+    match?: string;
+    terms?: inputs.GetImagesQuerySpecTerm[];
+}
+
+export interface GetImagesQuerySpecArgs {
+    match?: pulumi.Input<string>;
+    terms?: pulumi.Input<pulumi.Input<inputs.GetImagesQuerySpecTermArgs>[]>;
+}
+
+export interface GetImagesQuerySpecTerm {
+    op?: string;
+    property?: string;
+    tag?: string;
+    value?: string;
+}
+
+export interface GetImagesQuerySpecTermArgs {
+    op?: pulumi.Input<string>;
+    property?: pulumi.Input<string>;
+    tag?: pulumi.Input<string>;
+    value?: pulumi.Input<string>;
+}
+
 export interface GroupIdentityMatcher {
     expression: pulumi.Input<string>;
     language?: pulumi.Input<string>;
@@ -275,6 +309,14 @@ export interface OrgAuthConfig {
     samlOnly?: pulumi.Input<boolean>;
 }
 
+export interface OrgLoggingCloudWatchLogging {
+    credentials: pulumi.Input<string>;
+    groupName: pulumi.Input<string>;
+    region: pulumi.Input<string>;
+    retentionDays?: pulumi.Input<number>;
+    streamName: pulumi.Input<string>;
+}
+
 export interface OrgLoggingCoralogixLogging {
     app: pulumi.Input<string>;
     cluster: pulumi.Input<string>;
@@ -318,6 +360,11 @@ export interface OrgLoggingElasticLoggingGeneric {
     type: pulumi.Input<string>;
 }
 
+export interface OrgLoggingFluentdLogging {
+    host: pulumi.Input<string>;
+    port?: pulumi.Input<number>;
+}
+
 export interface OrgLoggingLogzioLogging {
     credentials: pulumi.Input<string>;
     listenerHost: pulumi.Input<string>;
@@ -328,6 +375,11 @@ export interface OrgLoggingS3Logging {
     credentials: pulumi.Input<string>;
     prefix?: pulumi.Input<string>;
     region: pulumi.Input<string>;
+}
+
+export interface OrgLoggingStackdriverLogging {
+    credentials: pulumi.Input<string>;
+    location: pulumi.Input<string>;
 }
 
 export interface OrgObservability {
@@ -608,7 +660,7 @@ export interface WorkloadJob {
 }
 
 export interface WorkloadLocalOption {
-    autoscaling: pulumi.Input<inputs.WorkloadLocalOptionAutoscaling>;
+    autoscaling?: pulumi.Input<inputs.WorkloadLocalOptionAutoscaling>;
     capacityAi?: pulumi.Input<boolean>;
     debug?: pulumi.Input<boolean>;
     location: pulumi.Input<string>;
@@ -627,7 +679,7 @@ export interface WorkloadLocalOptionAutoscaling {
 }
 
 export interface WorkloadOptions {
-    autoscaling: pulumi.Input<inputs.WorkloadOptionsAutoscaling>;
+    autoscaling?: pulumi.Input<inputs.WorkloadOptionsAutoscaling>;
     capacityAi?: pulumi.Input<boolean>;
     debug?: pulumi.Input<boolean>;
     suspend?: pulumi.Input<boolean>;

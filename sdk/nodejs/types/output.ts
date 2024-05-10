@@ -116,6 +116,72 @@ export interface GetGvcSidecar {
     envoy: string;
 }
 
+export interface GetImageManifest {
+    configs: outputs.GetImageManifestConfig[];
+    layers: outputs.GetImageManifestLayer[];
+    mediaType: string;
+    schemaVersion: number;
+}
+
+export interface GetImageManifestConfig {
+    digest: string;
+    mediaType: string;
+    size: number;
+}
+
+export interface GetImageManifestLayer {
+    digest: string;
+    mediaType: string;
+    size: number;
+}
+
+export interface GetImagesImage {
+    cplnId: string;
+    digest: string;
+    manifests: outputs.GetImagesImageManifest[];
+    name: string;
+    repository: string;
+    selfLink: string;
+    tag: string;
+    tags: {[key: string]: string};
+}
+
+export interface GetImagesImageManifest {
+    configs: outputs.GetImagesImageManifestConfig[];
+    layers: outputs.GetImagesImageManifestLayer[];
+    mediaType: string;
+    schemaVersion: number;
+}
+
+export interface GetImagesImageManifestConfig {
+    digest: string;
+    mediaType: string;
+    size: number;
+}
+
+export interface GetImagesImageManifestLayer {
+    digest: string;
+    mediaType: string;
+    size: number;
+}
+
+export interface GetImagesQuery {
+    fetch?: string;
+    spec?: outputs.GetImagesQuerySpec;
+}
+
+export interface GetImagesQuerySpec {
+    match?: string;
+    terms?: outputs.GetImagesQuerySpecTerm[];
+}
+
+export interface GetImagesQuerySpecTerm {
+    op?: string;
+    property?: string;
+    tag?: string;
+    value?: string;
+}
+
 export interface GetLocationGeo {
     city?: string;
     continent?: string;
@@ -279,6 +345,14 @@ export interface OrgAuthConfig {
     samlOnly?: boolean;
 }
 
+export interface OrgLoggingCloudWatchLogging {
+    credentials: string;
+    groupName: string;
+    region: string;
+    retentionDays?: number;
+    streamName: string;
+}
+
 export interface OrgLoggingCoralogixLogging {
     app: string;
     cluster: string;
@@ -322,6 +396,11 @@ export interface OrgLoggingElasticLoggingGeneric {
     type: string;
 }
 
+export interface OrgLoggingFluentdLogging {
+    host: string;
+    port?: number;
+}
+
 export interface OrgLoggingLogzioLogging {
     credentials: string;
     listenerHost: string;
@@ -332,6 +411,11 @@ export interface OrgLoggingS3Logging {
     credentials: string;
     prefix?: string;
     region: string;
+}
+
+export interface OrgLoggingStackdriverLogging {
+    credentials: string;
+    location: string;
 }
 
 export interface OrgObservability {
@@ -612,7 +696,7 @@ export interface WorkloadJob {
 }
 
 export interface WorkloadLocalOption {
-    autoscaling: outputs.WorkloadLocalOptionAutoscaling;
+    autoscaling?: outputs.WorkloadLocalOptionAutoscaling;
     capacityAi?: boolean;
     debug?: boolean;
     location: string;
@@ -631,7 +715,7 @@ export interface WorkloadLocalOptionAutoscaling {
 }
 
 export interface WorkloadOptions {
-    autoscaling: outputs.WorkloadOptionsAutoscaling;
+    autoscaling?: outputs.WorkloadOptionsAutoscaling;
     capacityAi?: boolean;
     debug?: boolean;
     suspend?: boolean;

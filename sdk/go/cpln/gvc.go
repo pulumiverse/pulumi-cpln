@@ -15,22 +15,34 @@ import (
 type Gvc struct {
 	pulumi.CustomResourceState
 
+	// The alias name of the GVC.
 	Alias               pulumi.StringOutput             `pulumi:"alias"`
 	ControlplaneTracing GvcControlplaneTracingPtrOutput `pulumi:"controlplaneTracing"`
-	CplnId              pulumi.StringOutput             `pulumi:"cplnId"`
-	Description         pulumi.StringPtrOutput          `pulumi:"description"`
+	// The ID, in GUID format, of the GVC.
+	CplnId pulumi.StringOutput `pulumi:"cplnId"`
+	// Description of the GVC.
+	Description pulumi.StringPtrOutput `pulumi:"description"`
+	// Custom domain name used by associated workloads.
+	//
 	// Deprecated: Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.
-	Domain           pulumi.StringPtrOutput       `pulumi:"domain"`
+	Domain pulumi.StringPtrOutput `pulumi:"domain"`
+	// Key-value array of resource env variables.
 	Env              pulumi.StringMapOutput       `pulumi:"env"`
 	LightstepTracing GvcLightstepTracingPtrOutput `pulumi:"lightstepTracing"`
 	LoadBalancer     GvcLoadBalancerPtrOutput     `pulumi:"loadBalancer"`
-	Locations        pulumi.StringArrayOutput     `pulumi:"locations"`
-	Name             pulumi.StringOutput          `pulumi:"name"`
-	OtelTracing      GvcOtelTracingPtrOutput      `pulumi:"otelTracing"`
-	PullSecrets      pulumi.StringArrayOutput     `pulumi:"pullSecrets"`
-	SelfLink         pulumi.StringOutput          `pulumi:"selfLink"`
-	Sidecar          GvcSidecarPtrOutput          `pulumi:"sidecar"`
-	Tags             pulumi.StringMapOutput       `pulumi:"tags"`
+	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
+	Locations pulumi.StringArrayOutput `pulumi:"locations"`
+	// Name of the GVC.
+	Name        pulumi.StringOutput     `pulumi:"name"`
+	OtelTracing GvcOtelTracingPtrOutput `pulumi:"otelTracing"`
+	// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
+	// private image repository referenced by Workloads within the GVC.
+	PullSecrets pulumi.StringArrayOutput `pulumi:"pullSecrets"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
+	Sidecar  GvcSidecarPtrOutput `pulumi:"sidecar"`
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapOutput `pulumi:"tags"`
 }
 
 // NewGvc registers a new resource with the given unique name, arguments, and options.
@@ -63,41 +75,65 @@ func GetGvc(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Gvc resources.
 type gvcState struct {
+	// The alias name of the GVC.
 	Alias               *string                 `pulumi:"alias"`
 	ControlplaneTracing *GvcControlplaneTracing `pulumi:"controlplaneTracing"`
-	CplnId              *string                 `pulumi:"cplnId"`
-	Description         *string                 `pulumi:"description"`
+	// The ID, in GUID format, of the GVC.
+	CplnId *string `pulumi:"cplnId"`
+	// Description of the GVC.
+	Description *string `pulumi:"description"`
+	// Custom domain name used by associated workloads.
+	//
 	// Deprecated: Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.
-	Domain           *string              `pulumi:"domain"`
+	Domain *string `pulumi:"domain"`
+	// Key-value array of resource env variables.
 	Env              map[string]string    `pulumi:"env"`
 	LightstepTracing *GvcLightstepTracing `pulumi:"lightstepTracing"`
 	LoadBalancer     *GvcLoadBalancer     `pulumi:"loadBalancer"`
-	Locations        []string             `pulumi:"locations"`
-	Name             *string              `pulumi:"name"`
-	OtelTracing      *GvcOtelTracing      `pulumi:"otelTracing"`
-	PullSecrets      []string             `pulumi:"pullSecrets"`
-	SelfLink         *string              `pulumi:"selfLink"`
-	Sidecar          *GvcSidecar          `pulumi:"sidecar"`
-	Tags             map[string]string    `pulumi:"tags"`
+	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
+	Locations []string `pulumi:"locations"`
+	// Name of the GVC.
+	Name        *string         `pulumi:"name"`
+	OtelTracing *GvcOtelTracing `pulumi:"otelTracing"`
+	// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
+	// private image repository referenced by Workloads within the GVC.
+	PullSecrets []string `pulumi:"pullSecrets"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink *string     `pulumi:"selfLink"`
+	Sidecar  *GvcSidecar `pulumi:"sidecar"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
 }
 
 type GvcState struct {
+	// The alias name of the GVC.
 	Alias               pulumi.StringPtrInput
 	ControlplaneTracing GvcControlplaneTracingPtrInput
-	CplnId              pulumi.StringPtrInput
-	Description         pulumi.StringPtrInput
+	// The ID, in GUID format, of the GVC.
+	CplnId pulumi.StringPtrInput
+	// Description of the GVC.
+	Description pulumi.StringPtrInput
+	// Custom domain name used by associated workloads.
+	//
 	// Deprecated: Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.
-	Domain           pulumi.StringPtrInput
+	Domain pulumi.StringPtrInput
+	// Key-value array of resource env variables.
 	Env              pulumi.StringMapInput
 	LightstepTracing GvcLightstepTracingPtrInput
 	LoadBalancer     GvcLoadBalancerPtrInput
-	Locations        pulumi.StringArrayInput
-	Name             pulumi.StringPtrInput
-	OtelTracing      GvcOtelTracingPtrInput
-	PullSecrets      pulumi.StringArrayInput
-	SelfLink         pulumi.StringPtrInput
-	Sidecar          GvcSidecarPtrInput
-	Tags             pulumi.StringMapInput
+	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
+	Locations pulumi.StringArrayInput
+	// Name of the GVC.
+	Name        pulumi.StringPtrInput
+	OtelTracing GvcOtelTracingPtrInput
+	// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
+	// private image repository referenced by Workloads within the GVC.
+	PullSecrets pulumi.StringArrayInput
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringPtrInput
+	Sidecar  GvcSidecarPtrInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
 }
 
 func (GvcState) ElementType() reflect.Type {
@@ -106,35 +142,53 @@ func (GvcState) ElementType() reflect.Type {
 
 type gvcArgs struct {
 	ControlplaneTracing *GvcControlplaneTracing `pulumi:"controlplaneTracing"`
-	Description         *string                 `pulumi:"description"`
+	// Description of the GVC.
+	Description *string `pulumi:"description"`
+	// Custom domain name used by associated workloads.
+	//
 	// Deprecated: Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.
-	Domain           *string              `pulumi:"domain"`
+	Domain *string `pulumi:"domain"`
+	// Key-value array of resource env variables.
 	Env              map[string]string    `pulumi:"env"`
 	LightstepTracing *GvcLightstepTracing `pulumi:"lightstepTracing"`
 	LoadBalancer     *GvcLoadBalancer     `pulumi:"loadBalancer"`
-	Locations        []string             `pulumi:"locations"`
-	Name             *string              `pulumi:"name"`
-	OtelTracing      *GvcOtelTracing      `pulumi:"otelTracing"`
-	PullSecrets      []string             `pulumi:"pullSecrets"`
-	Sidecar          *GvcSidecar          `pulumi:"sidecar"`
-	Tags             map[string]string    `pulumi:"tags"`
+	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
+	Locations []string `pulumi:"locations"`
+	// Name of the GVC.
+	Name        *string         `pulumi:"name"`
+	OtelTracing *GvcOtelTracing `pulumi:"otelTracing"`
+	// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
+	// private image repository referenced by Workloads within the GVC.
+	PullSecrets []string    `pulumi:"pullSecrets"`
+	Sidecar     *GvcSidecar `pulumi:"sidecar"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
 }
 
 // The set of arguments for constructing a Gvc resource.
 type GvcArgs struct {
 	ControlplaneTracing GvcControlplaneTracingPtrInput
-	Description         pulumi.StringPtrInput
+	// Description of the GVC.
+	Description pulumi.StringPtrInput
+	// Custom domain name used by associated workloads.
+	//
 	// Deprecated: Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.
-	Domain           pulumi.StringPtrInput
+	Domain pulumi.StringPtrInput
+	// Key-value array of resource env variables.
 	Env              pulumi.StringMapInput
 	LightstepTracing GvcLightstepTracingPtrInput
 	LoadBalancer     GvcLoadBalancerPtrInput
-	Locations        pulumi.StringArrayInput
-	Name             pulumi.StringPtrInput
-	OtelTracing      GvcOtelTracingPtrInput
-	PullSecrets      pulumi.StringArrayInput
-	Sidecar          GvcSidecarPtrInput
-	Tags             pulumi.StringMapInput
+	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
+	Locations pulumi.StringArrayInput
+	// Name of the GVC.
+	Name        pulumi.StringPtrInput
+	OtelTracing GvcOtelTracingPtrInput
+	// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
+	// private image repository referenced by Workloads within the GVC.
+	PullSecrets pulumi.StringArrayInput
+	Sidecar     GvcSidecarPtrInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
 }
 
 func (GvcArgs) ElementType() reflect.Type {
@@ -248,6 +302,7 @@ func (o GvcOutput) ToOutput(ctx context.Context) pulumix.Output[*Gvc] {
 	}
 }
 
+// The alias name of the GVC.
 func (o GvcOutput) Alias() pulumi.StringOutput {
 	return o.ApplyT(func(v *Gvc) pulumi.StringOutput { return v.Alias }).(pulumi.StringOutput)
 }
@@ -256,19 +311,24 @@ func (o GvcOutput) ControlplaneTracing() GvcControlplaneTracingPtrOutput {
 	return o.ApplyT(func(v *Gvc) GvcControlplaneTracingPtrOutput { return v.ControlplaneTracing }).(GvcControlplaneTracingPtrOutput)
 }
 
+// The ID, in GUID format, of the GVC.
 func (o GvcOutput) CplnId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Gvc) pulumi.StringOutput { return v.CplnId }).(pulumi.StringOutput)
 }
 
+// Description of the GVC.
 func (o GvcOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Gvc) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
+// Custom domain name used by associated workloads.
+//
 // Deprecated: Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.
 func (o GvcOutput) Domain() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Gvc) pulumi.StringPtrOutput { return v.Domain }).(pulumi.StringPtrOutput)
 }
 
+// Key-value array of resource env variables.
 func (o GvcOutput) Env() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Gvc) pulumi.StringMapOutput { return v.Env }).(pulumi.StringMapOutput)
 }
@@ -281,10 +341,12 @@ func (o GvcOutput) LoadBalancer() GvcLoadBalancerPtrOutput {
 	return o.ApplyT(func(v *Gvc) GvcLoadBalancerPtrOutput { return v.LoadBalancer }).(GvcLoadBalancerPtrOutput)
 }
 
+// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
 func (o GvcOutput) Locations() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Gvc) pulumi.StringArrayOutput { return v.Locations }).(pulumi.StringArrayOutput)
 }
 
+// Name of the GVC.
 func (o GvcOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Gvc) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
@@ -293,10 +355,13 @@ func (o GvcOutput) OtelTracing() GvcOtelTracingPtrOutput {
 	return o.ApplyT(func(v *Gvc) GvcOtelTracingPtrOutput { return v.OtelTracing }).(GvcOtelTracingPtrOutput)
 }
 
+// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
+// private image repository referenced by Workloads within the GVC.
 func (o GvcOutput) PullSecrets() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Gvc) pulumi.StringArrayOutput { return v.PullSecrets }).(pulumi.StringArrayOutput)
 }
 
+// Full link to this resource. Can be referenced by other resources.
 func (o GvcOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *Gvc) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
 }
@@ -305,6 +370,7 @@ func (o GvcOutput) Sidecar() GvcSidecarPtrOutput {
 	return o.ApplyT(func(v *Gvc) GvcSidecarPtrOutput { return v.Sidecar }).(GvcSidecarPtrOutput)
 }
 
+// Key-value map of resource tags.
 func (o GvcOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Gvc) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
 }

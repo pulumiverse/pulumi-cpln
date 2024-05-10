@@ -13,18 +13,33 @@ namespace Pulumiverse.Cpln
     [CplnResourceType("cpln:index/auditContext:AuditContext")]
     public partial class AuditContext : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The ID, in GUID format, of the Audit Context.
+        /// </summary>
         [Output("cplnId")]
         public Output<string> CplnId { get; private set; } = null!;
 
+        /// <summary>
+        /// Description of the Audit Context.
+        /// </summary>
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
 
+        /// <summary>
+        /// Name of the Audit Context.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         [Output("selfLink")]
         public Output<string> SelfLink { get; private set; } = null!;
 
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         [Output("tags")]
         public Output<ImmutableDictionary<string, string>?> Tags { get; private set; } = null!;
 
@@ -75,14 +90,24 @@ namespace Pulumiverse.Cpln
 
     public sealed class AuditContextArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Description of the Audit Context.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// Name of the Audit Context.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());
@@ -97,20 +122,36 @@ namespace Pulumiverse.Cpln
 
     public sealed class AuditContextState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The ID, in GUID format, of the Audit Context.
+        /// </summary>
         [Input("cplnId")]
         public Input<string>? CplnId { get; set; }
 
+        /// <summary>
+        /// Description of the Audit Context.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// Name of the Audit Context.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         [Input("selfLink")]
         public Input<string>? SelfLink { get; set; }
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());

@@ -16,13 +16,22 @@ import (
 type DomainRoute struct {
 	pulumi.CustomResourceState
 
-	DomainLink    pulumi.StringOutput    `pulumi:"domainLink"`
-	DomainPort    pulumi.IntPtrOutput    `pulumi:"domainPort"`
-	HostPrefix    pulumi.StringPtrOutput `pulumi:"hostPrefix"`
-	Port          pulumi.IntPtrOutput    `pulumi:"port"`
-	Prefix        pulumi.StringOutput    `pulumi:"prefix"`
+	// The self link of the domain to add the route to.
+	DomainLink pulumi.StringOutput `pulumi:"domainLink"`
+	// The port the route corresponds to. Default: 443
+	DomainPort pulumi.IntPtrOutput `pulumi:"domainPort"`
+	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+	// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+	// Slack or at support@controlplane.com for additional details.
+	HostPrefix pulumi.StringPtrOutput `pulumi:"hostPrefix"`
+	// For the linked workload, the port to route traffic to.
+	Port pulumi.IntPtrOutput `pulumi:"port"`
+	// The path will match any unmatched path prefixes for the subdomain.
+	Prefix pulumi.StringOutput `pulumi:"prefix"`
+	// A path prefix can be configured to be replaced when forwarding the request to the Workload.
 	ReplacePrefix pulumi.StringPtrOutput `pulumi:"replacePrefix"`
-	WorkloadLink  pulumi.StringOutput    `pulumi:"workloadLink"`
+	// The link of the workload to map the prefix to.
+	WorkloadLink pulumi.StringOutput `pulumi:"workloadLink"`
 }
 
 // NewDomainRoute registers a new resource with the given unique name, arguments, and options.
@@ -64,23 +73,41 @@ func GetDomainRoute(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering DomainRoute resources.
 type domainRouteState struct {
-	DomainLink    *string `pulumi:"domainLink"`
-	DomainPort    *int    `pulumi:"domainPort"`
-	HostPrefix    *string `pulumi:"hostPrefix"`
-	Port          *int    `pulumi:"port"`
-	Prefix        *string `pulumi:"prefix"`
+	// The self link of the domain to add the route to.
+	DomainLink *string `pulumi:"domainLink"`
+	// The port the route corresponds to. Default: 443
+	DomainPort *int `pulumi:"domainPort"`
+	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+	// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+	// Slack or at support@controlplane.com for additional details.
+	HostPrefix *string `pulumi:"hostPrefix"`
+	// For the linked workload, the port to route traffic to.
+	Port *int `pulumi:"port"`
+	// The path will match any unmatched path prefixes for the subdomain.
+	Prefix *string `pulumi:"prefix"`
+	// A path prefix can be configured to be replaced when forwarding the request to the Workload.
 	ReplacePrefix *string `pulumi:"replacePrefix"`
-	WorkloadLink  *string `pulumi:"workloadLink"`
+	// The link of the workload to map the prefix to.
+	WorkloadLink *string `pulumi:"workloadLink"`
 }
 
 type DomainRouteState struct {
-	DomainLink    pulumi.StringPtrInput
-	DomainPort    pulumi.IntPtrInput
-	HostPrefix    pulumi.StringPtrInput
-	Port          pulumi.IntPtrInput
-	Prefix        pulumi.StringPtrInput
+	// The self link of the domain to add the route to.
+	DomainLink pulumi.StringPtrInput
+	// The port the route corresponds to. Default: 443
+	DomainPort pulumi.IntPtrInput
+	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+	// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+	// Slack or at support@controlplane.com for additional details.
+	HostPrefix pulumi.StringPtrInput
+	// For the linked workload, the port to route traffic to.
+	Port pulumi.IntPtrInput
+	// The path will match any unmatched path prefixes for the subdomain.
+	Prefix pulumi.StringPtrInput
+	// A path prefix can be configured to be replaced when forwarding the request to the Workload.
 	ReplacePrefix pulumi.StringPtrInput
-	WorkloadLink  pulumi.StringPtrInput
+	// The link of the workload to map the prefix to.
+	WorkloadLink pulumi.StringPtrInput
 }
 
 func (DomainRouteState) ElementType() reflect.Type {
@@ -88,24 +115,42 @@ func (DomainRouteState) ElementType() reflect.Type {
 }
 
 type domainRouteArgs struct {
-	DomainLink    string  `pulumi:"domainLink"`
-	DomainPort    *int    `pulumi:"domainPort"`
-	HostPrefix    *string `pulumi:"hostPrefix"`
-	Port          *int    `pulumi:"port"`
-	Prefix        string  `pulumi:"prefix"`
+	// The self link of the domain to add the route to.
+	DomainLink string `pulumi:"domainLink"`
+	// The port the route corresponds to. Default: 443
+	DomainPort *int `pulumi:"domainPort"`
+	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+	// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+	// Slack or at support@controlplane.com for additional details.
+	HostPrefix *string `pulumi:"hostPrefix"`
+	// For the linked workload, the port to route traffic to.
+	Port *int `pulumi:"port"`
+	// The path will match any unmatched path prefixes for the subdomain.
+	Prefix string `pulumi:"prefix"`
+	// A path prefix can be configured to be replaced when forwarding the request to the Workload.
 	ReplacePrefix *string `pulumi:"replacePrefix"`
-	WorkloadLink  string  `pulumi:"workloadLink"`
+	// The link of the workload to map the prefix to.
+	WorkloadLink string `pulumi:"workloadLink"`
 }
 
 // The set of arguments for constructing a DomainRoute resource.
 type DomainRouteArgs struct {
-	DomainLink    pulumi.StringInput
-	DomainPort    pulumi.IntPtrInput
-	HostPrefix    pulumi.StringPtrInput
-	Port          pulumi.IntPtrInput
-	Prefix        pulumi.StringInput
+	// The self link of the domain to add the route to.
+	DomainLink pulumi.StringInput
+	// The port the route corresponds to. Default: 443
+	DomainPort pulumi.IntPtrInput
+	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+	// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+	// Slack or at support@controlplane.com for additional details.
+	HostPrefix pulumi.StringPtrInput
+	// For the linked workload, the port to route traffic to.
+	Port pulumi.IntPtrInput
+	// The path will match any unmatched path prefixes for the subdomain.
+	Prefix pulumi.StringInput
+	// A path prefix can be configured to be replaced when forwarding the request to the Workload.
 	ReplacePrefix pulumi.StringPtrInput
-	WorkloadLink  pulumi.StringInput
+	// The link of the workload to map the prefix to.
+	WorkloadLink pulumi.StringInput
 }
 
 func (DomainRouteArgs) ElementType() reflect.Type {
@@ -219,30 +264,39 @@ func (o DomainRouteOutput) ToOutput(ctx context.Context) pulumix.Output[*DomainR
 	}
 }
 
+// The self link of the domain to add the route to.
 func (o DomainRouteOutput) DomainLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *DomainRoute) pulumi.StringOutput { return v.DomainLink }).(pulumi.StringOutput)
 }
 
+// The port the route corresponds to. Default: 443
 func (o DomainRouteOutput) DomainPort() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *DomainRoute) pulumi.IntPtrOutput { return v.DomainPort }).(pulumi.IntPtrOutput)
 }
 
+// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+// Slack or at support@controlplane.com for additional details.
 func (o DomainRouteOutput) HostPrefix() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *DomainRoute) pulumi.StringPtrOutput { return v.HostPrefix }).(pulumi.StringPtrOutput)
 }
 
+// For the linked workload, the port to route traffic to.
 func (o DomainRouteOutput) Port() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *DomainRoute) pulumi.IntPtrOutput { return v.Port }).(pulumi.IntPtrOutput)
 }
 
+// The path will match any unmatched path prefixes for the subdomain.
 func (o DomainRouteOutput) Prefix() pulumi.StringOutput {
 	return o.ApplyT(func(v *DomainRoute) pulumi.StringOutput { return v.Prefix }).(pulumi.StringOutput)
 }
 
+// A path prefix can be configured to be replaced when forwarding the request to the Workload.
 func (o DomainRouteOutput) ReplacePrefix() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *DomainRoute) pulumi.StringPtrOutput { return v.ReplacePrefix }).(pulumi.StringPtrOutput)
 }
 
+// The link of the workload to map the prefix to.
 func (o DomainRouteOutput) WorkloadLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *DomainRoute) pulumi.StringOutput { return v.WorkloadLink }).(pulumi.StringOutput)
 }

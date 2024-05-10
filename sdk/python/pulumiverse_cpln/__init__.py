@@ -12,6 +12,8 @@ from .domain import *
 from .domain_route import *
 from .get_cloud_account import *
 from .get_gvc import *
+from .get_image import *
+from .get_images import *
 from .get_location import *
 from .get_locations import *
 from .get_org import *

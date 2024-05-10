@@ -32,10 +32,25 @@ export class ServiceAccountKey extends pulumi.CustomResource {
         return obj['__pulumiType'] === ServiceAccountKey.__pulumiType;
     }
 
+    /**
+     * The timestamp, in UTC, when the key was created.
+     */
     public /*out*/ readonly created!: pulumi.Output<string>;
+    /**
+     * Description of the Service Account Key.
+     */
     public readonly description!: pulumi.Output<string>;
+    /**
+     * The generated key.
+     */
     public /*out*/ readonly key!: pulumi.Output<string>;
+    /**
+     * The generated name of the key.
+     */
     public /*out*/ readonly name!: pulumi.Output<string>;
+    /**
+     * The name of an existing Service Account this key will belong to.
+     */
     public readonly serviceAccountName!: pulumi.Output<string>;
 
     /**
@@ -81,10 +96,25 @@ export class ServiceAccountKey extends pulumi.CustomResource {
  * Input properties used for looking up and filtering ServiceAccountKey resources.
  */
 export interface ServiceAccountKeyState {
+    /**
+     * The timestamp, in UTC, when the key was created.
+     */
     created?: pulumi.Input<string>;
+    /**
+     * Description of the Service Account Key.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * The generated key.
+     */
     key?: pulumi.Input<string>;
+    /**
+     * The generated name of the key.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * The name of an existing Service Account this key will belong to.
+     */
     serviceAccountName?: pulumi.Input<string>;
 }
 
@@ -92,6 +122,12 @@ export interface ServiceAccountKeyState {
  * The set of arguments for constructing a ServiceAccountKey resource.
  */
 export interface ServiceAccountKeyArgs {
+    /**
+     * Description of the Service Account Key.
+     */
     description: pulumi.Input<string>;
+    /**
+     * The name of an existing Service Account this key will belong to.
+     */
     serviceAccountName: pulumi.Input<string>;
 }

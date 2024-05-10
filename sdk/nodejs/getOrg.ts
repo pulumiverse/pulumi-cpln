@@ -11,8 +11,8 @@ import * as utilities from "./utilities";
  *
  * The following attributes are exported:
  *
- * - **cpln_id** (String) The ID, in GUID format, of the Org.
- * - **name** (String) The name of Org.
+ * - **cpln_id** (String) The ID, in GUID format, of the org.
+ * - **name** (String) The name of org.
  *
  * ## Example Usage
  *
@@ -50,8 +50,8 @@ export interface GetOrgResult {
  *
  * The following attributes are exported:
  *
- * - **cpln_id** (String) The ID, in GUID format, of the Org.
- * - **name** (String) The name of Org.
+ * - **cpln_id** (String) The ID, in GUID format, of the org.
+ * - **name** (String) The name of org.
  *
  * ## Example Usage
  *

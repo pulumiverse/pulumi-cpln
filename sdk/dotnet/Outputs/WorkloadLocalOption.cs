@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadLocalOption
     {
-        public readonly Outputs.WorkloadLocalOptionAutoscaling Autoscaling;
+        public readonly Outputs.WorkloadLocalOptionAutoscaling? Autoscaling;
         public readonly bool? CapacityAi;
         public readonly bool? Debug;
         public readonly string Location;
@@ -23,7 +23,7 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private WorkloadLocalOption(
-            Outputs.WorkloadLocalOptionAutoscaling autoscaling,
+            Outputs.WorkloadLocalOptionAutoscaling? autoscaling,
 
             bool? capacityAi,
 

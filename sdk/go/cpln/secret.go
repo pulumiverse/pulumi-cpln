@@ -15,24 +15,45 @@ import (
 type Secret struct {
 	pulumi.CustomResourceState
 
-	Aws              SecretAwsPtrOutput            `pulumi:"aws"`
-	AzureConnector   SecretAzureConnectorPtrOutput `pulumi:"azureConnector"`
-	AzureSdk         pulumi.StringPtrOutput        `pulumi:"azureSdk"`
-	CplnId           pulumi.StringOutput           `pulumi:"cplnId"`
-	Description      pulumi.StringPtrOutput        `pulumi:"description"`
-	Dictionary       pulumi.StringMapOutput        `pulumi:"dictionary"`
-	DictionaryAsEnvs pulumi.MapOutput              `pulumi:"dictionaryAsEnvs"`
-	Docker           pulumi.StringPtrOutput        `pulumi:"docker"`
-	Ecr              SecretEcrPtrOutput            `pulumi:"ecr"`
-	Gcp              pulumi.StringPtrOutput        `pulumi:"gcp"`
-	Keypair          SecretKeypairPtrOutput        `pulumi:"keypair"`
-	Name             pulumi.StringOutput           `pulumi:"name"`
-	NatsAccount      SecretNatsAccountPtrOutput    `pulumi:"natsAccount"`
-	Opaque           SecretOpaquePtrOutput         `pulumi:"opaque"`
-	SelfLink         pulumi.StringOutput           `pulumi:"selfLink"`
-	Tags             pulumi.StringMapOutput        `pulumi:"tags"`
-	Tls              SecretTlsPtrOutput            `pulumi:"tls"`
-	Userpass         SecretUserpassPtrOutput       `pulumi:"userpass"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#aws).
+	Aws SecretAwsPtrOutput `pulumi:"aws"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
+	AzureConnector SecretAzureConnectorPtrOutput `pulumi:"azureConnector"`
+	// JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
+	AzureSdk pulumi.StringPtrOutput `pulumi:"azureSdk"`
+	// The ID, in GUID format, of the Secret.
+	CplnId pulumi.StringOutput `pulumi:"cplnId"`
+	// Description of the Secret.
+	Description pulumi.StringPtrOutput `pulumi:"description"`
+	// List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
+	Dictionary pulumi.StringMapOutput `pulumi:"dictionary"`
+	// If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
+	// cpln://secret/SECRET_NAME.key`.
+	DictionaryAsEnvs pulumi.MapOutput `pulumi:"dictionaryAsEnvs"`
+	// JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
+	Docker pulumi.StringPtrOutput `pulumi:"docker"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
+	Ecr SecretEcrPtrOutput `pulumi:"ecr"`
+	// JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
+	Gcp pulumi.StringPtrOutput `pulumi:"gcp"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
+	Keypair SecretKeypairPtrOutput `pulumi:"keypair"`
+	// Name of the secret.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
+	NatsAccount SecretNatsAccountPtrOutput `pulumi:"natsAccount"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
+	Opaque SecretOpaquePtrOutput `pulumi:"opaque"`
+	// Output used when linking a secret to an environment variable or volume.
+	SecretLink pulumi.StringOutput `pulumi:"secretLink"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapOutput `pulumi:"tags"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#tls).
+	Tls SecretTlsPtrOutput `pulumi:"tls"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#username).
+	Userpass SecretUserpassPtrOutput `pulumi:"userpass"`
 }
 
 // NewSecret registers a new resource with the given unique name, arguments, and options.
@@ -80,45 +101,87 @@ func GetSecret(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Secret resources.
 type secretState struct {
-	Aws              *SecretAws             `pulumi:"aws"`
-	AzureConnector   *SecretAzureConnector  `pulumi:"azureConnector"`
-	AzureSdk         *string                `pulumi:"azureSdk"`
-	CplnId           *string                `pulumi:"cplnId"`
-	Description      *string                `pulumi:"description"`
-	Dictionary       map[string]string      `pulumi:"dictionary"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#aws).
+	Aws *SecretAws `pulumi:"aws"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
+	AzureConnector *SecretAzureConnector `pulumi:"azureConnector"`
+	// JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
+	AzureSdk *string `pulumi:"azureSdk"`
+	// The ID, in GUID format, of the Secret.
+	CplnId *string `pulumi:"cplnId"`
+	// Description of the Secret.
+	Description *string `pulumi:"description"`
+	// List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
+	Dictionary map[string]string `pulumi:"dictionary"`
+	// If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
+	// cpln://secret/SECRET_NAME.key`.
 	DictionaryAsEnvs map[string]interface{} `pulumi:"dictionaryAsEnvs"`
-	Docker           *string                `pulumi:"docker"`
-	Ecr              *SecretEcr             `pulumi:"ecr"`
-	Gcp              *string                `pulumi:"gcp"`
-	Keypair          *SecretKeypair         `pulumi:"keypair"`
-	Name             *string                `pulumi:"name"`
-	NatsAccount      *SecretNatsAccount     `pulumi:"natsAccount"`
-	Opaque           *SecretOpaque          `pulumi:"opaque"`
-	SelfLink         *string                `pulumi:"selfLink"`
-	Tags             map[string]string      `pulumi:"tags"`
-	Tls              *SecretTls             `pulumi:"tls"`
-	Userpass         *SecretUserpass        `pulumi:"userpass"`
+	// JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
+	Docker *string `pulumi:"docker"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
+	Ecr *SecretEcr `pulumi:"ecr"`
+	// JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
+	Gcp *string `pulumi:"gcp"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
+	Keypair *SecretKeypair `pulumi:"keypair"`
+	// Name of the secret.
+	Name *string `pulumi:"name"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
+	NatsAccount *SecretNatsAccount `pulumi:"natsAccount"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
+	Opaque *SecretOpaque `pulumi:"opaque"`
+	// Output used when linking a secret to an environment variable or volume.
+	SecretLink *string `pulumi:"secretLink"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink *string `pulumi:"selfLink"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#tls).
+	Tls *SecretTls `pulumi:"tls"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#username).
+	Userpass *SecretUserpass `pulumi:"userpass"`
 }
 
 type SecretState struct {
-	Aws              SecretAwsPtrInput
-	AzureConnector   SecretAzureConnectorPtrInput
-	AzureSdk         pulumi.StringPtrInput
-	CplnId           pulumi.StringPtrInput
-	Description      pulumi.StringPtrInput
-	Dictionary       pulumi.StringMapInput
+	// [Reference Page](https://docs.controlplane.com/reference/secret#aws).
+	Aws SecretAwsPtrInput
+	// [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
+	AzureConnector SecretAzureConnectorPtrInput
+	// JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
+	AzureSdk pulumi.StringPtrInput
+	// The ID, in GUID format, of the Secret.
+	CplnId pulumi.StringPtrInput
+	// Description of the Secret.
+	Description pulumi.StringPtrInput
+	// List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
+	Dictionary pulumi.StringMapInput
+	// If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
+	// cpln://secret/SECRET_NAME.key`.
 	DictionaryAsEnvs pulumi.MapInput
-	Docker           pulumi.StringPtrInput
-	Ecr              SecretEcrPtrInput
-	Gcp              pulumi.StringPtrInput
-	Keypair          SecretKeypairPtrInput
-	Name             pulumi.StringPtrInput
-	NatsAccount      SecretNatsAccountPtrInput
-	Opaque           SecretOpaquePtrInput
-	SelfLink         pulumi.StringPtrInput
-	Tags             pulumi.StringMapInput
-	Tls              SecretTlsPtrInput
-	Userpass         SecretUserpassPtrInput
+	// JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
+	Docker pulumi.StringPtrInput
+	// [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
+	Ecr SecretEcrPtrInput
+	// JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
+	Gcp pulumi.StringPtrInput
+	// [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
+	Keypair SecretKeypairPtrInput
+	// Name of the secret.
+	Name pulumi.StringPtrInput
+	// [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
+	NatsAccount SecretNatsAccountPtrInput
+	// [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
+	Opaque SecretOpaquePtrInput
+	// Output used when linking a secret to an environment variable or volume.
+	SecretLink pulumi.StringPtrInput
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringPtrInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
+	// [Reference Page](https://docs.controlplane.com/reference/secret#tls).
+	Tls SecretTlsPtrInput
+	// [Reference Page](https://docs.controlplane.com/reference/secret#username).
+	Userpass SecretUserpassPtrInput
 }
 
 func (SecretState) ElementType() reflect.Type {
@@ -126,40 +189,70 @@ func (SecretState) ElementType() reflect.Type {
 }
 
 type secretArgs struct {
-	Aws            *SecretAws            `pulumi:"aws"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#aws).
+	Aws *SecretAws `pulumi:"aws"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
 	AzureConnector *SecretAzureConnector `pulumi:"azureConnector"`
-	AzureSdk       *string               `pulumi:"azureSdk"`
-	Description    *string               `pulumi:"description"`
-	Dictionary     map[string]string     `pulumi:"dictionary"`
-	Docker         *string               `pulumi:"docker"`
-	Ecr            *SecretEcr            `pulumi:"ecr"`
-	Gcp            *string               `pulumi:"gcp"`
-	Keypair        *SecretKeypair        `pulumi:"keypair"`
-	Name           *string               `pulumi:"name"`
-	NatsAccount    *SecretNatsAccount    `pulumi:"natsAccount"`
-	Opaque         *SecretOpaque         `pulumi:"opaque"`
-	Tags           map[string]string     `pulumi:"tags"`
-	Tls            *SecretTls            `pulumi:"tls"`
-	Userpass       *SecretUserpass       `pulumi:"userpass"`
+	// JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
+	AzureSdk *string `pulumi:"azureSdk"`
+	// Description of the Secret.
+	Description *string `pulumi:"description"`
+	// List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
+	Dictionary map[string]string `pulumi:"dictionary"`
+	// JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
+	Docker *string `pulumi:"docker"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
+	Ecr *SecretEcr `pulumi:"ecr"`
+	// JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
+	Gcp *string `pulumi:"gcp"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
+	Keypair *SecretKeypair `pulumi:"keypair"`
+	// Name of the secret.
+	Name *string `pulumi:"name"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
+	NatsAccount *SecretNatsAccount `pulumi:"natsAccount"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
+	Opaque *SecretOpaque `pulumi:"opaque"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#tls).
+	Tls *SecretTls `pulumi:"tls"`
+	// [Reference Page](https://docs.controlplane.com/reference/secret#username).
+	Userpass *SecretUserpass `pulumi:"userpass"`
 }
 
 // The set of arguments for constructing a Secret resource.
 type SecretArgs struct {
-	Aws            SecretAwsPtrInput
+	// [Reference Page](https://docs.controlplane.com/reference/secret#aws).
+	Aws SecretAwsPtrInput
+	// [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
 	AzureConnector SecretAzureConnectorPtrInput
-	AzureSdk       pulumi.StringPtrInput
-	Description    pulumi.StringPtrInput
-	Dictionary     pulumi.StringMapInput
-	Docker         pulumi.StringPtrInput
-	Ecr            SecretEcrPtrInput
-	Gcp            pulumi.StringPtrInput
-	Keypair        SecretKeypairPtrInput
-	Name           pulumi.StringPtrInput
-	NatsAccount    SecretNatsAccountPtrInput
-	Opaque         SecretOpaquePtrInput
-	Tags           pulumi.StringMapInput
-	Tls            SecretTlsPtrInput
-	Userpass       SecretUserpassPtrInput
+	// JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
+	AzureSdk pulumi.StringPtrInput
+	// Description of the Secret.
+	Description pulumi.StringPtrInput
+	// List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
+	Dictionary pulumi.StringMapInput
+	// JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
+	Docker pulumi.StringPtrInput
+	// [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
+	Ecr SecretEcrPtrInput
+	// JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
+	Gcp pulumi.StringPtrInput
+	// [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
+	Keypair SecretKeypairPtrInput
+	// Name of the secret.
+	Name pulumi.StringPtrInput
+	// [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
+	NatsAccount SecretNatsAccountPtrInput
+	// [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
+	Opaque SecretOpaquePtrInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
+	// [Reference Page](https://docs.controlplane.com/reference/secret#tls).
+	Tls SecretTlsPtrInput
+	// [Reference Page](https://docs.controlplane.com/reference/secret#username).
+	Userpass SecretUserpassPtrInput
 }
 
 func (SecretArgs) ElementType() reflect.Type {
@@ -273,74 +366,98 @@ func (o SecretOutput) ToOutput(ctx context.Context) pulumix.Output[*Secret] {
 	}
 }
 
+// [Reference Page](https://docs.controlplane.com/reference/secret#aws).
 func (o SecretOutput) Aws() SecretAwsPtrOutput {
 	return o.ApplyT(func(v *Secret) SecretAwsPtrOutput { return v.Aws }).(SecretAwsPtrOutput)
 }
 
+// [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
 func (o SecretOutput) AzureConnector() SecretAzureConnectorPtrOutput {
 	return o.ApplyT(func(v *Secret) SecretAzureConnectorPtrOutput { return v.AzureConnector }).(SecretAzureConnectorPtrOutput)
 }
 
+// JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
 func (o SecretOutput) AzureSdk() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Secret) pulumi.StringPtrOutput { return v.AzureSdk }).(pulumi.StringPtrOutput)
 }
 
+// The ID, in GUID format, of the Secret.
 func (o SecretOutput) CplnId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Secret) pulumi.StringOutput { return v.CplnId }).(pulumi.StringOutput)
 }
 
+// Description of the Secret.
 func (o SecretOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Secret) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
+// List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
 func (o SecretOutput) Dictionary() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Secret) pulumi.StringMapOutput { return v.Dictionary }).(pulumi.StringMapOutput)
 }
 
+// If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
+// cpln://secret/SECRET_NAME.key`.
 func (o SecretOutput) DictionaryAsEnvs() pulumi.MapOutput {
 	return o.ApplyT(func(v *Secret) pulumi.MapOutput { return v.DictionaryAsEnvs }).(pulumi.MapOutput)
 }
 
+// JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
 func (o SecretOutput) Docker() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Secret) pulumi.StringPtrOutput { return v.Docker }).(pulumi.StringPtrOutput)
 }
 
+// [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
 func (o SecretOutput) Ecr() SecretEcrPtrOutput {
 	return o.ApplyT(func(v *Secret) SecretEcrPtrOutput { return v.Ecr }).(SecretEcrPtrOutput)
 }
 
+// JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
 func (o SecretOutput) Gcp() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Secret) pulumi.StringPtrOutput { return v.Gcp }).(pulumi.StringPtrOutput)
 }
 
+// [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
 func (o SecretOutput) Keypair() SecretKeypairPtrOutput {
 	return o.ApplyT(func(v *Secret) SecretKeypairPtrOutput { return v.Keypair }).(SecretKeypairPtrOutput)
 }
 
+// Name of the secret.
 func (o SecretOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Secret) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
 func (o SecretOutput) NatsAccount() SecretNatsAccountPtrOutput {
 	return o.ApplyT(func(v *Secret) SecretNatsAccountPtrOutput { return v.NatsAccount }).(SecretNatsAccountPtrOutput)
 }
 
+// [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
 func (o SecretOutput) Opaque() SecretOpaquePtrOutput {
 	return o.ApplyT(func(v *Secret) SecretOpaquePtrOutput { return v.Opaque }).(SecretOpaquePtrOutput)
 }
 
+// Output used when linking a secret to an environment variable or volume.
+func (o SecretOutput) SecretLink() pulumi.StringOutput {
+	return o.ApplyT(func(v *Secret) pulumi.StringOutput { return v.SecretLink }).(pulumi.StringOutput)
+}
+
+// Full link to this resource. Can be referenced by other resources.
 func (o SecretOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *Secret) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
 }
 
+// Key-value map of resource tags.
 func (o SecretOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Secret) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
 }
 
+// [Reference Page](https://docs.controlplane.com/reference/secret#tls).
 func (o SecretOutput) Tls() SecretTlsPtrOutput {
 	return o.ApplyT(func(v *Secret) SecretTlsPtrOutput { return v.Tls }).(SecretTlsPtrOutput)
 }
 
+// [Reference Page](https://docs.controlplane.com/reference/secret#username).
 func (o SecretOutput) Userpass() SecretUserpassPtrOutput {
 	return o.ApplyT(func(v *Secret) SecretUserpassPtrOutput { return v.Userpass }).(SecretUserpassPtrOutput)
 }

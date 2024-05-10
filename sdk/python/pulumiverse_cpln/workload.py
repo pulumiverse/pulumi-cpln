@@ -33,6 +33,17 @@ class WorkloadArgs:
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a Workload resource.
+        :param pulumi.Input[str] gvc: Name of the associated GVC.
+        :param pulumi.Input[str] type: Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+        :param pulumi.Input[str] description: Description of the Workload.
+        :param pulumi.Input['WorkloadFirewallSpecArgs'] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+               Access is restricted by default.
+        :param pulumi.Input[str] identity_link: Full link to an Identity.
+        :param pulumi.Input['WorkloadJobArgs'] job: [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+        :param pulumi.Input[str] name: Name of the Workload.
+        :param pulumi.Input[bool] support_dynamic_tags: Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+               false.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         WorkloadArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -124,6 +135,9 @@ class WorkloadArgs:
     @property
     @pulumi.getter
     def gvc(self) -> pulumi.Input[str]:
+        """
+        Name of the associated GVC.
+        """
         return pulumi.get(self, "gvc")
 
     @gvc.setter
@@ -142,6 +156,9 @@ class WorkloadArgs:
     @property
     @pulumi.getter
     def type(self) -> pulumi.Input[str]:
+        """
+        Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+        """
         return pulumi.get(self, "type")
 
     @type.setter
@@ -151,6 +168,9 @@ class WorkloadArgs:
     @property
     @pulumi.getter
     def description(self) -> Optional[pulumi.Input[str]]:
+        """
+        Description of the Workload.
+        """
         return pulumi.get(self, "description")
 
     @description.setter
@@ -160,6 +180,10 @@ class WorkloadArgs:
     @property
     @pulumi.getter(name="firewallSpec")
     def firewall_spec(self) -> Optional[pulumi.Input['WorkloadFirewallSpecArgs']]:
+        """
+        Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+        Access is restricted by default.
+        """
         return pulumi.get(self, "firewall_spec")
 
     @firewall_spec.setter
@@ -169,6 +193,9 @@ class WorkloadArgs:
     @property
     @pulumi.getter(name="identityLink")
     def identity_link(self) -> Optional[pulumi.Input[str]]:
+        """
+        Full link to an Identity.
+        """
         return pulumi.get(self, "identity_link")
 
     @identity_link.setter
@@ -178,6 +205,9 @@ class WorkloadArgs:
     @property
     @pulumi.getter
     def job(self) -> Optional[pulumi.Input['WorkloadJobArgs']]:
+        """
+        [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+        """
         return pulumi.get(self, "job")
 
     @job.setter
@@ -196,6 +226,9 @@ class WorkloadArgs:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the Workload.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -232,6 +265,10 @@ class WorkloadArgs:
     @property
     @pulumi.getter(name="supportDynamicTags")
     def support_dynamic_tags(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+        false.
+        """
         return pulumi.get(self, "support_dynamic_tags")
 
     @support_dynamic_tags.setter
@@ -241,6 +278,9 @@ class WorkloadArgs:
     @property
     @pulumi.getter
     def tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of resource tags.
+        """
         return pulumi.get(self, "tags")
 
     @tags.setter
@@ -271,6 +311,20 @@ class _WorkloadState:
                  type: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Workload resources.
+        :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Workload.
+        :param pulumi.Input[str] description: Description of the Workload.
+        :param pulumi.Input['WorkloadFirewallSpecArgs'] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+               Access is restricted by default.
+        :param pulumi.Input[str] gvc: Name of the associated GVC.
+        :param pulumi.Input[str] identity_link: Full link to an Identity.
+        :param pulumi.Input['WorkloadJobArgs'] job: [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+        :param pulumi.Input[str] name: Name of the Workload.
+        :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
+        :param pulumi.Input[Sequence[pulumi.Input['WorkloadStatusArgs']]] statuses: Status of the workload.
+        :param pulumi.Input[bool] support_dynamic_tags: Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+               false.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
+        :param pulumi.Input[str] type: Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
         """
         _WorkloadState._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -382,6 +436,9 @@ class _WorkloadState:
     @property
     @pulumi.getter(name="cplnId")
     def cpln_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID, in GUID format, of the Workload.
+        """
         return pulumi.get(self, "cpln_id")
 
     @cpln_id.setter
@@ -391,6 +448,9 @@ class _WorkloadState:
     @property
     @pulumi.getter
     def description(self) -> Optional[pulumi.Input[str]]:
+        """
+        Description of the Workload.
+        """
         return pulumi.get(self, "description")
 
     @description.setter
@@ -400,6 +460,10 @@ class _WorkloadState:
     @property
     @pulumi.getter(name="firewallSpec")
     def firewall_spec(self) -> Optional[pulumi.Input['WorkloadFirewallSpecArgs']]:
+        """
+        Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+        Access is restricted by default.
+        """
         return pulumi.get(self, "firewall_spec")
 
     @firewall_spec.setter
@@ -409,6 +473,9 @@ class _WorkloadState:
     @property
     @pulumi.getter
     def gvc(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the associated GVC.
+        """
         return pulumi.get(self, "gvc")
 
     @gvc.setter
@@ -418,6 +485,9 @@ class _WorkloadState:
     @property
     @pulumi.getter(name="identityLink")
     def identity_link(self) -> Optional[pulumi.Input[str]]:
+        """
+        Full link to an Identity.
+        """
         return pulumi.get(self, "identity_link")
 
     @identity_link.setter
@@ -427,6 +497,9 @@ class _WorkloadState:
     @property
     @pulumi.getter
     def job(self) -> Optional[pulumi.Input['WorkloadJobArgs']]:
+        """
+        [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+        """
         return pulumi.get(self, "job")
 
     @job.setter
@@ -445,6 +518,9 @@ class _WorkloadState:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the Workload.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -481,6 +557,9 @@ class _WorkloadState:
     @property
     @pulumi.getter(name="selfLink")
     def self_link(self) -> Optional[pulumi.Input[str]]:
+        """
+        Full link to this resource. Can be referenced by other resources.
+        """
         return pulumi.get(self, "self_link")
 
     @self_link.setter
@@ -499,6 +578,9 @@ class _WorkloadState:
     @property
     @pulumi.getter
     def statuses(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusArgs']]]]:
+        """
+        Status of the workload.
+        """
         return pulumi.get(self, "statuses")
 
     @statuses.setter
@@ -508,6 +590,10 @@ class _WorkloadState:
     @property
     @pulumi.getter(name="supportDynamicTags")
     def support_dynamic_tags(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+        false.
+        """
         return pulumi.get(self, "support_dynamic_tags")
 
     @support_dynamic_tags.setter
@@ -517,6 +603,9 @@ class _WorkloadState:
     @property
     @pulumi.getter
     def tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of resource tags.
+        """
         return pulumi.get(self, "tags")
 
     @tags.setter
@@ -526,6 +615,9 @@ class _WorkloadState:
     @property
     @pulumi.getter
     def type(self) -> Optional[pulumi.Input[str]]:
+        """
+        Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+        """
         return pulumi.get(self, "type")
 
     @type.setter
@@ -558,6 +650,17 @@ class Workload(pulumi.CustomResource):
         Create a Workload resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] description: Description of the Workload.
+        :param pulumi.Input[pulumi.InputType['WorkloadFirewallSpecArgs']] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+               Access is restricted by default.
+        :param pulumi.Input[str] gvc: Name of the associated GVC.
+        :param pulumi.Input[str] identity_link: Full link to an Identity.
+        :param pulumi.Input[pulumi.InputType['WorkloadJobArgs']] job: [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+        :param pulumi.Input[str] name: Name of the Workload.
+        :param pulumi.Input[bool] support_dynamic_tags: Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+               false.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
+        :param pulumi.Input[str] type: Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
         """
         ...
     @overload
@@ -701,6 +804,20 @@ class Workload(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Workload.
+        :param pulumi.Input[str] description: Description of the Workload.
+        :param pulumi.Input[pulumi.InputType['WorkloadFirewallSpecArgs']] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+               Access is restricted by default.
+        :param pulumi.Input[str] gvc: Name of the associated GVC.
+        :param pulumi.Input[str] identity_link: Full link to an Identity.
+        :param pulumi.Input[pulumi.InputType['WorkloadJobArgs']] job: [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+        :param pulumi.Input[str] name: Name of the Workload.
+        :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['WorkloadStatusArgs']]]] statuses: Status of the workload.
+        :param pulumi.Input[bool] support_dynamic_tags: Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+               false.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
+        :param pulumi.Input[str] type: Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -734,31 +851,50 @@ class Workload(pulumi.CustomResource):
     @property
     @pulumi.getter(name="cplnId")
     def cpln_id(self) -> pulumi.Output[str]:
+        """
+        The ID, in GUID format, of the Workload.
+        """
         return pulumi.get(self, "cpln_id")
 
     @property
     @pulumi.getter
     def description(self) -> pulumi.Output[Optional[str]]:
+        """
+        Description of the Workload.
+        """
         return pulumi.get(self, "description")
 
     @property
     @pulumi.getter(name="firewallSpec")
     def firewall_spec(self) -> pulumi.Output[Optional['outputs.WorkloadFirewallSpec']]:
+        """
+        Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+        Access is restricted by default.
+        """
         return pulumi.get(self, "firewall_spec")
 
     @property
     @pulumi.getter
     def gvc(self) -> pulumi.Output[str]:
+        """
+        Name of the associated GVC.
+        """
         return pulumi.get(self, "gvc")
 
     @property
     @pulumi.getter(name="identityLink")
     def identity_link(self) -> pulumi.Output[Optional[str]]:
+        """
+        Full link to an Identity.
+        """
         return pulumi.get(self, "identity_link")
 
     @property
     @pulumi.getter
     def job(self) -> pulumi.Output[Optional['outputs.WorkloadJob']]:
+        """
+        [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+        """
         return pulumi.get(self, "job")
 
     @property
@@ -769,6 +905,9 @@ class Workload(pulumi.CustomResource):
     @property
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
+        """
+        Name of the Workload.
+        """
         return pulumi.get(self, "name")
 
     @property
@@ -789,6 +928,9 @@ class Workload(pulumi.CustomResource):
     @property
     @pulumi.getter(name="selfLink")
     def self_link(self) -> pulumi.Output[str]:
+        """
+        Full link to this resource. Can be referenced by other resources.
+        """
         return pulumi.get(self, "self_link")
 
     @property
@@ -799,20 +941,33 @@ class Workload(pulumi.CustomResource):
     @property
     @pulumi.getter
     def statuses(self) -> pulumi.Output[Sequence['outputs.WorkloadStatus']]:
+        """
+        Status of the workload.
+        """
         return pulumi.get(self, "statuses")
 
     @property
     @pulumi.getter(name="supportDynamicTags")
     def support_dynamic_tags(self) -> pulumi.Output[Optional[bool]]:
+        """
+        Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+        false.
+        """
         return pulumi.get(self, "support_dynamic_tags")
 
     @property
     @pulumi.getter
     def tags(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
+        """
+        Key-value map of resource tags.
+        """
         return pulumi.get(self, "tags")
 
     @property
     @pulumi.getter
     def type(self) -> pulumi.Output[str]:
+        """
+        Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+        """
         return pulumi.get(self, "type")
 

@@ -34,14 +34,41 @@ export class OrgLogging extends pulumi.CustomResource {
         return obj['__pulumiType'] === OrgLogging.__pulumiType;
     }
 
+    public readonly cloudWatchLoggings!: pulumi.Output<outputs.OrgLoggingCloudWatchLogging[] | undefined>;
+    /**
+     * [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
+     */
     public readonly coralogixLoggings!: pulumi.Output<outputs.OrgLoggingCoralogixLogging[] | undefined>;
+    /**
+     * The ID, in GUID format, of the org.
+     */
     public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    /**
+     * [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+     */
     public readonly datadogLoggings!: pulumi.Output<outputs.OrgLoggingDatadogLogging[] | undefined>;
+    /**
+     * The description of org.
+     */
     public /*out*/ readonly description!: pulumi.Output<string>;
     public readonly elasticLoggings!: pulumi.Output<outputs.OrgLoggingElasticLogging[] | undefined>;
+    public readonly fluentdLoggings!: pulumi.Output<outputs.OrgLoggingFluentdLogging[] | undefined>;
+    /**
+     * [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+     */
     public readonly logzioLoggings!: pulumi.Output<outputs.OrgLoggingLogzioLogging[] | undefined>;
+    /**
+     * The name of the org.
+     */
     public /*out*/ readonly name!: pulumi.Output<string>;
+    /**
+     * [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
+     */
     public readonly s3Loggings!: pulumi.Output<outputs.OrgLoggingS3Logging[] | undefined>;
+    public readonly stackdriverLoggings!: pulumi.Output<outputs.OrgLoggingStackdriverLogging[] | undefined>;
+    /**
+     * Key-value map of the org's tags.
+     */
     public /*out*/ readonly tags!: pulumi.Output<{[key: string]: string}>;
 
     /**
@@ -57,22 +84,28 @@ export class OrgLogging extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as OrgLoggingState | undefined;
+            resourceInputs["cloudWatchLoggings"] = state ? state.cloudWatchLoggings : undefined;
             resourceInputs["coralogixLoggings"] = state ? state.coralogixLoggings : undefined;
             resourceInputs["cplnId"] = state ? state.cplnId : undefined;
             resourceInputs["datadogLoggings"] = state ? state.datadogLoggings : undefined;
             resourceInputs["description"] = state ? state.description : undefined;
             resourceInputs["elasticLoggings"] = state ? state.elasticLoggings : undefined;
+            resourceInputs["fluentdLoggings"] = state ? state.fluentdLoggings : undefined;
             resourceInputs["logzioLoggings"] = state ? state.logzioLoggings : undefined;
             resourceInputs["name"] = state ? state.name : undefined;
             resourceInputs["s3Loggings"] = state ? state.s3Loggings : undefined;
+            resourceInputs["stackdriverLoggings"] = state ? state.stackdriverLoggings : undefined;
             resourceInputs["tags"] = state ? state.tags : undefined;
         } else {
             const args = argsOrState as OrgLoggingArgs | undefined;
+            resourceInputs["cloudWatchLoggings"] = args ? args.cloudWatchLoggings : undefined;
             resourceInputs["coralogixLoggings"] = args ? args.coralogixLoggings : undefined;
             resourceInputs["datadogLoggings"] = args ? args.datadogLoggings : undefined;
             resourceInputs["elasticLoggings"] = args ? args.elasticLoggings : undefined;
+            resourceInputs["fluentdLoggings"] = args ? args.fluentdLoggings : undefined;
             resourceInputs["logzioLoggings"] = args ? args.logzioLoggings : undefined;
             resourceInputs["s3Loggings"] = args ? args.s3Loggings : undefined;
+            resourceInputs["stackdriverLoggings"] = args ? args.stackdriverLoggings : undefined;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["description"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;
@@ -87,14 +120,41 @@ export class OrgLogging extends pulumi.CustomResource {
  * Input properties used for looking up and filtering OrgLogging resources.
  */
 export interface OrgLoggingState {
+    cloudWatchLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingCloudWatchLogging>[]>;
+    /**
+     * [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
+     */
     coralogixLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingCoralogixLogging>[]>;
+    /**
+     * The ID, in GUID format, of the org.
+     */
     cplnId?: pulumi.Input<string>;
+    /**
+     * [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+     */
     datadogLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingDatadogLogging>[]>;
+    /**
+     * The description of org.
+     */
     description?: pulumi.Input<string>;
     elasticLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingElasticLogging>[]>;
+    fluentdLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingFluentdLogging>[]>;
+    /**
+     * [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+     */
     logzioLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingLogzioLogging>[]>;
+    /**
+     * The name of the org.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
+     */
     s3Loggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingS3Logging>[]>;
+    stackdriverLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingStackdriverLogging>[]>;
+    /**
+     * Key-value map of the org's tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }
 
@@ -102,9 +162,24 @@ export interface OrgLoggingState {
  * The set of arguments for constructing a OrgLogging resource.
  */
 export interface OrgLoggingArgs {
+    cloudWatchLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingCloudWatchLogging>[]>;
+    /**
+     * [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
+     */
     coralogixLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingCoralogixLogging>[]>;
+    /**
+     * [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+     */
     datadogLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingDatadogLogging>[]>;
     elasticLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingElasticLogging>[]>;
+    fluentdLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingFluentdLogging>[]>;
+    /**
+     * [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+     */
     logzioLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingLogzioLogging>[]>;
+    /**
+     * [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
+     */
     s3Loggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingS3Logging>[]>;
+    stackdriverLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingStackdriverLogging>[]>;
 }

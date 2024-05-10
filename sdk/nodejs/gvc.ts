@@ -34,23 +34,53 @@ export class Gvc extends pulumi.CustomResource {
         return obj['__pulumiType'] === Gvc.__pulumiType;
     }
 
+    /**
+     * The alias name of the GVC.
+     */
     public /*out*/ readonly alias!: pulumi.Output<string>;
     public readonly controlplaneTracing!: pulumi.Output<outputs.GvcControlplaneTracing | undefined>;
+    /**
+     * The ID, in GUID format, of the GVC.
+     */
     public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    /**
+     * Description of the GVC.
+     */
     public readonly description!: pulumi.Output<string | undefined>;
     /**
+     * Custom domain name used by associated workloads.
+     *
      * @deprecated Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.
      */
     public readonly domain!: pulumi.Output<string | undefined>;
+    /**
+     * Key-value array of resource env variables.
+     */
     public readonly env!: pulumi.Output<{[key: string]: string} | undefined>;
     public readonly lightstepTracing!: pulumi.Output<outputs.GvcLightstepTracing | undefined>;
     public readonly loadBalancer!: pulumi.Output<outputs.GvcLoadBalancer | undefined>;
+    /**
+     * A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
+     */
     public readonly locations!: pulumi.Output<string[] | undefined>;
+    /**
+     * Name of the GVC.
+     */
     public readonly name!: pulumi.Output<string>;
     public readonly otelTracing!: pulumi.Output<outputs.GvcOtelTracing | undefined>;
+    /**
+     * A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
+     * private image repository referenced by Workloads within the GVC.
+     */
     public readonly pullSecrets!: pulumi.Output<string[] | undefined>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     public /*out*/ readonly selfLink!: pulumi.Output<string>;
     public readonly sidecar!: pulumi.Output<outputs.GvcSidecar | undefined>;
+    /**
+     * Key-value map of resource tags.
+     */
     public readonly tags!: pulumi.Output<{[key: string]: string} | undefined>;
 
     /**
@@ -108,23 +138,53 @@ export class Gvc extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Gvc resources.
  */
 export interface GvcState {
+    /**
+     * The alias name of the GVC.
+     */
     alias?: pulumi.Input<string>;
     controlplaneTracing?: pulumi.Input<inputs.GvcControlplaneTracing>;
+    /**
+     * The ID, in GUID format, of the GVC.
+     */
     cplnId?: pulumi.Input<string>;
+    /**
+     * Description of the GVC.
+     */
     description?: pulumi.Input<string>;
     /**
+     * Custom domain name used by associated workloads.
+     *
      * @deprecated Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.
      */
     domain?: pulumi.Input<string>;
+    /**
+     * Key-value array of resource env variables.
+     */
     env?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     lightstepTracing?: pulumi.Input<inputs.GvcLightstepTracing>;
     loadBalancer?: pulumi.Input<inputs.GvcLoadBalancer>;
+    /**
+     * A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
+     */
     locations?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Name of the GVC.
+     */
     name?: pulumi.Input<string>;
     otelTracing?: pulumi.Input<inputs.GvcOtelTracing>;
+    /**
+     * A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
+     * private image repository referenced by Workloads within the GVC.
+     */
     pullSecrets?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     selfLink?: pulumi.Input<string>;
     sidecar?: pulumi.Input<inputs.GvcSidecar>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }
 
@@ -133,18 +193,39 @@ export interface GvcState {
  */
 export interface GvcArgs {
     controlplaneTracing?: pulumi.Input<inputs.GvcControlplaneTracing>;
+    /**
+     * Description of the GVC.
+     */
     description?: pulumi.Input<string>;
     /**
+     * Custom domain name used by associated workloads.
+     *
      * @deprecated Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.
      */
     domain?: pulumi.Input<string>;
+    /**
+     * Key-value array of resource env variables.
+     */
     env?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     lightstepTracing?: pulumi.Input<inputs.GvcLightstepTracing>;
     loadBalancer?: pulumi.Input<inputs.GvcLoadBalancer>;
+    /**
+     * A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
+     */
     locations?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Name of the GVC.
+     */
     name?: pulumi.Input<string>;
     otelTracing?: pulumi.Input<inputs.GvcOtelTracing>;
+    /**
+     * A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
+     * private image repository referenced by Workloads within the GVC.
+     */
     pullSecrets?: pulumi.Input<pulumi.Input<string>[]>;
     sidecar?: pulumi.Input<inputs.GvcSidecar>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }

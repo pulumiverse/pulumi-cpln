@@ -13,21 +13,39 @@ namespace Pulumiverse.Cpln
     [CplnResourceType("cpln:index/serviceAccount:ServiceAccount")]
     public partial class ServiceAccount : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The ID, in GUID format, of the Service Account.
+        /// </summary>
         [Output("cplnId")]
         public Output<string> CplnId { get; private set; } = null!;
 
+        /// <summary>
+        /// Description of the Service Account.
+        /// </summary>
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
 
+        /// <summary>
+        /// Name of the Service Account.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Origin of the Policy. Either `builtin` or `default`.
+        /// </summary>
         [Output("origin")]
         public Output<string> Origin { get; private set; } = null!;
 
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         [Output("selfLink")]
         public Output<string> SelfLink { get; private set; } = null!;
 
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         [Output("tags")]
         public Output<ImmutableDictionary<string, string>?> Tags { get; private set; } = null!;
 
@@ -78,14 +96,24 @@ namespace Pulumiverse.Cpln
 
     public sealed class ServiceAccountArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Description of the Service Account.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// Name of the Service Account.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());
@@ -100,23 +128,42 @@ namespace Pulumiverse.Cpln
 
     public sealed class ServiceAccountState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The ID, in GUID format, of the Service Account.
+        /// </summary>
         [Input("cplnId")]
         public Input<string>? CplnId { get; set; }
 
+        /// <summary>
+        /// Description of the Service Account.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// Name of the Service Account.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Origin of the Policy. Either `builtin` or `default`.
+        /// </summary>
         [Input("origin")]
         public Input<string>? Origin { get; set; }
 
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         [Input("selfLink")]
         public Input<string>? SelfLink { get; set; }
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());

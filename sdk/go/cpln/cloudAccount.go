@@ -15,17 +15,22 @@ import (
 type CloudAccount struct {
 	pulumi.CustomResourceState
 
-	Aws                   CloudAccountAwsPtrOutput   `pulumi:"aws"`
-	Azure                 CloudAccountAzurePtrOutput `pulumi:"azure"`
-	CplnId                pulumi.StringOutput        `pulumi:"cplnId"`
-	Description           pulumi.StringPtrOutput     `pulumi:"description"`
-	Gcp                   CloudAccountGcpPtrOutput   `pulumi:"gcp"`
-	GcpRoles              pulumi.StringArrayOutput   `pulumi:"gcpRoles"`
-	GcpServiceAccountName pulumi.StringOutput        `pulumi:"gcpServiceAccountName"`
-	Name                  pulumi.StringOutput        `pulumi:"name"`
-	Ngs                   CloudAccountNgsPtrOutput   `pulumi:"ngs"`
-	SelfLink              pulumi.StringOutput        `pulumi:"selfLink"`
-	Tags                  pulumi.StringMapOutput     `pulumi:"tags"`
+	Aws   CloudAccountAwsPtrOutput   `pulumi:"aws"`
+	Azure CloudAccountAzurePtrOutput `pulumi:"azure"`
+	// The ID, in GUID format, of the Cloud Account.
+	CplnId pulumi.StringOutput `pulumi:"cplnId"`
+	// Description of the Cloud Account.
+	Description pulumi.StringPtrOutput   `pulumi:"description"`
+	Gcp         CloudAccountGcpPtrOutput `pulumi:"gcp"`
+	GcpRoles    pulumi.StringArrayOutput `pulumi:"gcpRoles"`
+	// GCP service account name used during the configuration of the cloud account at GCP.
+	GcpServiceAccountName pulumi.StringOutput `pulumi:"gcpServiceAccountName"`
+	// Name of the Cloud Account.
+	Name     pulumi.StringOutput      `pulumi:"name"`
+	Ngs      CloudAccountNgsPtrOutput `pulumi:"ngs"`
+	SelfLink pulumi.StringOutput      `pulumi:"selfLink"`
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapOutput `pulumi:"tags"`
 }
 
 // NewCloudAccount registers a new resource with the given unique name, arguments, and options.
@@ -58,31 +63,41 @@ func GetCloudAccount(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering CloudAccount resources.
 type cloudAccountState struct {
-	Aws                   *CloudAccountAws   `pulumi:"aws"`
-	Azure                 *CloudAccountAzure `pulumi:"azure"`
-	CplnId                *string            `pulumi:"cplnId"`
-	Description           *string            `pulumi:"description"`
-	Gcp                   *CloudAccountGcp   `pulumi:"gcp"`
-	GcpRoles              []string           `pulumi:"gcpRoles"`
-	GcpServiceAccountName *string            `pulumi:"gcpServiceAccountName"`
-	Name                  *string            `pulumi:"name"`
-	Ngs                   *CloudAccountNgs   `pulumi:"ngs"`
-	SelfLink              *string            `pulumi:"selfLink"`
-	Tags                  map[string]string  `pulumi:"tags"`
+	Aws   *CloudAccountAws   `pulumi:"aws"`
+	Azure *CloudAccountAzure `pulumi:"azure"`
+	// The ID, in GUID format, of the Cloud Account.
+	CplnId *string `pulumi:"cplnId"`
+	// Description of the Cloud Account.
+	Description *string          `pulumi:"description"`
+	Gcp         *CloudAccountGcp `pulumi:"gcp"`
+	GcpRoles    []string         `pulumi:"gcpRoles"`
+	// GCP service account name used during the configuration of the cloud account at GCP.
+	GcpServiceAccountName *string `pulumi:"gcpServiceAccountName"`
+	// Name of the Cloud Account.
+	Name     *string          `pulumi:"name"`
+	Ngs      *CloudAccountNgs `pulumi:"ngs"`
+	SelfLink *string          `pulumi:"selfLink"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
 }
 
 type CloudAccountState struct {
-	Aws                   CloudAccountAwsPtrInput
-	Azure                 CloudAccountAzurePtrInput
-	CplnId                pulumi.StringPtrInput
-	Description           pulumi.StringPtrInput
-	Gcp                   CloudAccountGcpPtrInput
-	GcpRoles              pulumi.StringArrayInput
+	Aws   CloudAccountAwsPtrInput
+	Azure CloudAccountAzurePtrInput
+	// The ID, in GUID format, of the Cloud Account.
+	CplnId pulumi.StringPtrInput
+	// Description of the Cloud Account.
+	Description pulumi.StringPtrInput
+	Gcp         CloudAccountGcpPtrInput
+	GcpRoles    pulumi.StringArrayInput
+	// GCP service account name used during the configuration of the cloud account at GCP.
 	GcpServiceAccountName pulumi.StringPtrInput
-	Name                  pulumi.StringPtrInput
-	Ngs                   CloudAccountNgsPtrInput
-	SelfLink              pulumi.StringPtrInput
-	Tags                  pulumi.StringMapInput
+	// Name of the Cloud Account.
+	Name     pulumi.StringPtrInput
+	Ngs      CloudAccountNgsPtrInput
+	SelfLink pulumi.StringPtrInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
 }
 
 func (CloudAccountState) ElementType() reflect.Type {
@@ -90,24 +105,30 @@ func (CloudAccountState) ElementType() reflect.Type {
 }
 
 type cloudAccountArgs struct {
-	Aws         *CloudAccountAws   `pulumi:"aws"`
-	Azure       *CloudAccountAzure `pulumi:"azure"`
-	Description *string            `pulumi:"description"`
-	Gcp         *CloudAccountGcp   `pulumi:"gcp"`
-	Name        *string            `pulumi:"name"`
-	Ngs         *CloudAccountNgs   `pulumi:"ngs"`
-	Tags        map[string]string  `pulumi:"tags"`
+	Aws   *CloudAccountAws   `pulumi:"aws"`
+	Azure *CloudAccountAzure `pulumi:"azure"`
+	// Description of the Cloud Account.
+	Description *string          `pulumi:"description"`
+	Gcp         *CloudAccountGcp `pulumi:"gcp"`
+	// Name of the Cloud Account.
+	Name *string          `pulumi:"name"`
+	Ngs  *CloudAccountNgs `pulumi:"ngs"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
 }
 
 // The set of arguments for constructing a CloudAccount resource.
 type CloudAccountArgs struct {
-	Aws         CloudAccountAwsPtrInput
-	Azure       CloudAccountAzurePtrInput
+	Aws   CloudAccountAwsPtrInput
+	Azure CloudAccountAzurePtrInput
+	// Description of the Cloud Account.
 	Description pulumi.StringPtrInput
 	Gcp         CloudAccountGcpPtrInput
-	Name        pulumi.StringPtrInput
-	Ngs         CloudAccountNgsPtrInput
-	Tags        pulumi.StringMapInput
+	// Name of the Cloud Account.
+	Name pulumi.StringPtrInput
+	Ngs  CloudAccountNgsPtrInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
 }
 
 func (CloudAccountArgs) ElementType() reflect.Type {
@@ -229,10 +250,12 @@ func (o CloudAccountOutput) Azure() CloudAccountAzurePtrOutput {
 	return o.ApplyT(func(v *CloudAccount) CloudAccountAzurePtrOutput { return v.Azure }).(CloudAccountAzurePtrOutput)
 }
 
+// The ID, in GUID format, of the Cloud Account.
 func (o CloudAccountOutput) CplnId() pulumi.StringOutput {
 	return o.ApplyT(func(v *CloudAccount) pulumi.StringOutput { return v.CplnId }).(pulumi.StringOutput)
 }
 
+// Description of the Cloud Account.
 func (o CloudAccountOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *CloudAccount) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
@@ -245,10 +268,12 @@ func (o CloudAccountOutput) GcpRoles() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *CloudAccount) pulumi.StringArrayOutput { return v.GcpRoles }).(pulumi.StringArrayOutput)
 }
 
+// GCP service account name used during the configuration of the cloud account at GCP.
 func (o CloudAccountOutput) GcpServiceAccountName() pulumi.StringOutput {
 	return o.ApplyT(func(v *CloudAccount) pulumi.StringOutput { return v.GcpServiceAccountName }).(pulumi.StringOutput)
 }
 
+// Name of the Cloud Account.
 func (o CloudAccountOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *CloudAccount) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
@@ -261,6 +286,7 @@ func (o CloudAccountOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *CloudAccount) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
 }
 
+// Key-value map of resource tags.
 func (o CloudAccountOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *CloudAccount) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
 }

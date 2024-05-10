@@ -16,16 +16,27 @@ import (
 type Policy struct {
 	pulumi.CustomResourceState
 
-	Bindings    PolicyBindingArrayOutput   `pulumi:"bindings"`
-	CplnId      pulumi.StringOutput        `pulumi:"cplnId"`
-	Description pulumi.StringPtrOutput     `pulumi:"description"`
-	Gvc         pulumi.StringPtrOutput     `pulumi:"gvc"`
-	Name        pulumi.StringOutput        `pulumi:"name"`
-	Origin      pulumi.StringOutput        `pulumi:"origin"`
-	SelfLink    pulumi.StringOutput        `pulumi:"selfLink"`
-	Tags        pulumi.StringMapOutput     `pulumi:"tags"`
-	Target      pulumi.StringPtrOutput     `pulumi:"target"`
-	TargetKind  pulumi.StringOutput        `pulumi:"targetKind"`
+	Bindings PolicyBindingArrayOutput `pulumi:"bindings"`
+	// The ID, in GUID format, of the Policy.
+	CplnId pulumi.StringOutput `pulumi:"cplnId"`
+	// Description of the Policy.
+	Description pulumi.StringPtrOutput `pulumi:"description"`
+	// The GVC for `identity`, `workload` and `volumeset` target kinds only.
+	Gvc pulumi.StringPtrOutput `pulumi:"gvc"`
+	// Name of the Policy.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Origin of the Policy. Either `builtin` or `default`.
+	Origin pulumi.StringOutput `pulumi:"origin"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapOutput `pulumi:"tags"`
+	// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
+	// do not include the attribute.
+	Target pulumi.StringPtrOutput `pulumi:"target"`
+	// The kind of resource to target (e.g., gvc, serviceaccount, etc.).
+	TargetKind pulumi.StringOutput `pulumi:"targetKind"`
+	// List of the targets this policy will be applied to. Not used if `target` is set to `all`.
 	TargetLinks pulumi.StringArrayOutput   `pulumi:"targetLinks"`
 	TargetQuery PolicyTargetQueryPtrOutput `pulumi:"targetQuery"`
 }
@@ -63,31 +74,53 @@ func GetPolicy(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Policy resources.
 type policyState struct {
-	Bindings    []PolicyBinding    `pulumi:"bindings"`
-	CplnId      *string            `pulumi:"cplnId"`
-	Description *string            `pulumi:"description"`
-	Gvc         *string            `pulumi:"gvc"`
-	Name        *string            `pulumi:"name"`
-	Origin      *string            `pulumi:"origin"`
-	SelfLink    *string            `pulumi:"selfLink"`
-	Tags        map[string]string  `pulumi:"tags"`
-	Target      *string            `pulumi:"target"`
-	TargetKind  *string            `pulumi:"targetKind"`
+	Bindings []PolicyBinding `pulumi:"bindings"`
+	// The ID, in GUID format, of the Policy.
+	CplnId *string `pulumi:"cplnId"`
+	// Description of the Policy.
+	Description *string `pulumi:"description"`
+	// The GVC for `identity`, `workload` and `volumeset` target kinds only.
+	Gvc *string `pulumi:"gvc"`
+	// Name of the Policy.
+	Name *string `pulumi:"name"`
+	// Origin of the Policy. Either `builtin` or `default`.
+	Origin *string `pulumi:"origin"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink *string `pulumi:"selfLink"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
+	// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
+	// do not include the attribute.
+	Target *string `pulumi:"target"`
+	// The kind of resource to target (e.g., gvc, serviceaccount, etc.).
+	TargetKind *string `pulumi:"targetKind"`
+	// List of the targets this policy will be applied to. Not used if `target` is set to `all`.
 	TargetLinks []string           `pulumi:"targetLinks"`
 	TargetQuery *PolicyTargetQuery `pulumi:"targetQuery"`
 }
 
 type PolicyState struct {
-	Bindings    PolicyBindingArrayInput
-	CplnId      pulumi.StringPtrInput
+	Bindings PolicyBindingArrayInput
+	// The ID, in GUID format, of the Policy.
+	CplnId pulumi.StringPtrInput
+	// Description of the Policy.
 	Description pulumi.StringPtrInput
-	Gvc         pulumi.StringPtrInput
-	Name        pulumi.StringPtrInput
-	Origin      pulumi.StringPtrInput
-	SelfLink    pulumi.StringPtrInput
-	Tags        pulumi.StringMapInput
-	Target      pulumi.StringPtrInput
-	TargetKind  pulumi.StringPtrInput
+	// The GVC for `identity`, `workload` and `volumeset` target kinds only.
+	Gvc pulumi.StringPtrInput
+	// Name of the Policy.
+	Name pulumi.StringPtrInput
+	// Origin of the Policy. Either `builtin` or `default`.
+	Origin pulumi.StringPtrInput
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringPtrInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
+	// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
+	// do not include the attribute.
+	Target pulumi.StringPtrInput
+	// The kind of resource to target (e.g., gvc, serviceaccount, etc.).
+	TargetKind pulumi.StringPtrInput
+	// List of the targets this policy will be applied to. Not used if `target` is set to `all`.
 	TargetLinks pulumi.StringArrayInput
 	TargetQuery PolicyTargetQueryPtrInput
 }
@@ -97,28 +130,42 @@ func (PolicyState) ElementType() reflect.Type {
 }
 
 type policyArgs struct {
-	Bindings    []PolicyBinding    `pulumi:"bindings"`
-	Description *string            `pulumi:"description"`
-	Gvc         *string            `pulumi:"gvc"`
-	Name        *string            `pulumi:"name"`
-	Origin      *string            `pulumi:"origin"`
-	Tags        map[string]string  `pulumi:"tags"`
-	Target      *string            `pulumi:"target"`
-	TargetKind  string             `pulumi:"targetKind"`
+	Bindings []PolicyBinding `pulumi:"bindings"`
+	// Description of the Policy.
+	Description *string `pulumi:"description"`
+	// The GVC for `identity`, `workload` and `volumeset` target kinds only.
+	Gvc *string `pulumi:"gvc"`
+	// Name of the Policy.
+	Name *string `pulumi:"name"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
+	// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
+	// do not include the attribute.
+	Target *string `pulumi:"target"`
+	// The kind of resource to target (e.g., gvc, serviceaccount, etc.).
+	TargetKind string `pulumi:"targetKind"`
+	// List of the targets this policy will be applied to. Not used if `target` is set to `all`.
 	TargetLinks []string           `pulumi:"targetLinks"`
 	TargetQuery *PolicyTargetQuery `pulumi:"targetQuery"`
 }
 
 // The set of arguments for constructing a Policy resource.
 type PolicyArgs struct {
-	Bindings    PolicyBindingArrayInput
+	Bindings PolicyBindingArrayInput
+	// Description of the Policy.
 	Description pulumi.StringPtrInput
-	Gvc         pulumi.StringPtrInput
-	Name        pulumi.StringPtrInput
-	Origin      pulumi.StringPtrInput
-	Tags        pulumi.StringMapInput
-	Target      pulumi.StringPtrInput
-	TargetKind  pulumi.StringInput
+	// The GVC for `identity`, `workload` and `volumeset` target kinds only.
+	Gvc pulumi.StringPtrInput
+	// Name of the Policy.
+	Name pulumi.StringPtrInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
+	// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
+	// do not include the attribute.
+	Target pulumi.StringPtrInput
+	// The kind of resource to target (e.g., gvc, serviceaccount, etc.).
+	TargetKind pulumi.StringInput
+	// List of the targets this policy will be applied to. Not used if `target` is set to `all`.
 	TargetLinks pulumi.StringArrayInput
 	TargetQuery PolicyTargetQueryPtrInput
 }
@@ -238,42 +285,53 @@ func (o PolicyOutput) Bindings() PolicyBindingArrayOutput {
 	return o.ApplyT(func(v *Policy) PolicyBindingArrayOutput { return v.Bindings }).(PolicyBindingArrayOutput)
 }
 
+// The ID, in GUID format, of the Policy.
 func (o PolicyOutput) CplnId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Policy) pulumi.StringOutput { return v.CplnId }).(pulumi.StringOutput)
 }
 
+// Description of the Policy.
 func (o PolicyOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Policy) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
+// The GVC for `identity`, `workload` and `volumeset` target kinds only.
 func (o PolicyOutput) Gvc() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Policy) pulumi.StringPtrOutput { return v.Gvc }).(pulumi.StringPtrOutput)
 }
 
+// Name of the Policy.
 func (o PolicyOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Policy) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Origin of the Policy. Either `builtin` or `default`.
 func (o PolicyOutput) Origin() pulumi.StringOutput {
 	return o.ApplyT(func(v *Policy) pulumi.StringOutput { return v.Origin }).(pulumi.StringOutput)
 }
 
+// Full link to this resource. Can be referenced by other resources.
 func (o PolicyOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *Policy) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
 }
 
+// Key-value map of resource tags.
 func (o PolicyOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Policy) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
 }
 
+// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
+// do not include the attribute.
 func (o PolicyOutput) Target() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Policy) pulumi.StringPtrOutput { return v.Target }).(pulumi.StringPtrOutput)
 }
 
+// The kind of resource to target (e.g., gvc, serviceaccount, etc.).
 func (o PolicyOutput) TargetKind() pulumi.StringOutput {
 	return o.ApplyT(func(v *Policy) pulumi.StringOutput { return v.TargetKind }).(pulumi.StringOutput)
 }
 
+// List of the targets this policy will be applied to. Not used if `target` is set to `all`.
 func (o PolicyOutput) TargetLinks() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Policy) pulumi.StringArrayOutput { return v.TargetLinks }).(pulumi.StringArrayOutput)
 }

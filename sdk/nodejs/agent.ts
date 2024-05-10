@@ -32,11 +32,29 @@ export class Agent extends pulumi.CustomResource {
         return obj['__pulumiType'] === Agent.__pulumiType;
     }
 
+    /**
+     * The ID, in GUID format, of the Agent.
+     */
     public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    /**
+     * Description of the Agent.
+     */
     public readonly description!: pulumi.Output<string | undefined>;
+    /**
+     * Name of the Agent.
+     */
     public readonly name!: pulumi.Output<string>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    /**
+     * Key-value map of resource tags.
+     */
     public readonly tags!: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
+     * The JSON output needed when [creating an agent](https://docs.controlplane.com/guides/agent).
+     */
     public /*out*/ readonly userData!: pulumi.Output<string>;
 
     /**
@@ -78,11 +96,29 @@ export class Agent extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Agent resources.
  */
 export interface AgentState {
+    /**
+     * The ID, in GUID format, of the Agent.
+     */
     cplnId?: pulumi.Input<string>;
+    /**
+     * Description of the Agent.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * Name of the Agent.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     selfLink?: pulumi.Input<string>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The JSON output needed when [creating an agent](https://docs.controlplane.com/guides/agent).
+     */
     userData?: pulumi.Input<string>;
 }
 
@@ -90,7 +126,16 @@ export interface AgentState {
  * The set of arguments for constructing a Agent resource.
  */
 export interface AgentArgs {
+    /**
+     * Description of the Agent.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * Name of the Agent.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }

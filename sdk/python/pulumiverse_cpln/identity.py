@@ -28,6 +28,14 @@ class IdentityArgs:
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a Identity resource.
+        :param pulumi.Input[str] gvc: Name of the GVC.
+        :param pulumi.Input[str] description: Description of the Identity.
+        :param pulumi.Input['IdentityGcpAccessPolicyArgs'] gcp_access_policy: The GCP access policy can either contain an existing service_account or multiple bindings.
+        :param pulumi.Input[str] name: Name of the Identity.
+        :param pulumi.Input[Sequence[pulumi.Input['IdentityNativeNetworkResourceArgs']]] native_network_resources: ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        :param pulumi.Input[Sequence[pulumi.Input['IdentityNetworkResourceArgs']]] network_resources: A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+               ports. - IP's and ports.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         IdentityArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -93,6 +101,9 @@ class IdentityArgs:
     @property
     @pulumi.getter
     def gvc(self) -> pulumi.Input[str]:
+        """
+        Name of the GVC.
+        """
         return pulumi.get(self, "gvc")
 
     @gvc.setter
@@ -120,6 +131,9 @@ class IdentityArgs:
     @property
     @pulumi.getter
     def description(self) -> Optional[pulumi.Input[str]]:
+        """
+        Description of the Identity.
+        """
         return pulumi.get(self, "description")
 
     @description.setter
@@ -129,6 +143,9 @@ class IdentityArgs:
     @property
     @pulumi.getter(name="gcpAccessPolicy")
     def gcp_access_policy(self) -> Optional[pulumi.Input['IdentityGcpAccessPolicyArgs']]:
+        """
+        The GCP access policy can either contain an existing service_account or multiple bindings.
+        """
         return pulumi.get(self, "gcp_access_policy")
 
     @gcp_access_policy.setter
@@ -138,6 +155,9 @@ class IdentityArgs:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the Identity.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -147,6 +167,9 @@ class IdentityArgs:
     @property
     @pulumi.getter(name="nativeNetworkResources")
     def native_network_resources(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['IdentityNativeNetworkResourceArgs']]]]:
+        """
+        ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        """
         return pulumi.get(self, "native_network_resources")
 
     @native_network_resources.setter
@@ -156,6 +179,10 @@ class IdentityArgs:
     @property
     @pulumi.getter(name="networkResources")
     def network_resources(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['IdentityNetworkResourceArgs']]]]:
+        """
+        A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+        ports. - IP's and ports.
+        """
         return pulumi.get(self, "network_resources")
 
     @network_resources.setter
@@ -174,6 +201,9 @@ class IdentityArgs:
     @property
     @pulumi.getter
     def tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of resource tags.
+        """
         return pulumi.get(self, "tags")
 
     @tags.setter
@@ -199,6 +229,17 @@ class _IdentityState:
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         Input properties used for looking up and filtering Identity resources.
+        :param pulumi.Input[str] cpln_id: ID, in GUID format, of the Identity.
+        :param pulumi.Input[str] description: Description of the Identity.
+        :param pulumi.Input['IdentityGcpAccessPolicyArgs'] gcp_access_policy: The GCP access policy can either contain an existing service_account or multiple bindings.
+        :param pulumi.Input[str] gvc: Name of the GVC.
+        :param pulumi.Input[str] name: Name of the Identity.
+        :param pulumi.Input[Sequence[pulumi.Input['IdentityNativeNetworkResourceArgs']]] native_network_resources: ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        :param pulumi.Input[Sequence[pulumi.Input['IdentityNetworkResourceArgs']]] network_resources: A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+               ports. - IP's and ports.
+        :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] status: Key-value map of identity status. Available fields: `objectName`.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         _IdentityState._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -299,6 +340,9 @@ class _IdentityState:
     @property
     @pulumi.getter(name="cplnId")
     def cpln_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        ID, in GUID format, of the Identity.
+        """
         return pulumi.get(self, "cpln_id")
 
     @cpln_id.setter
@@ -308,6 +352,9 @@ class _IdentityState:
     @property
     @pulumi.getter
     def description(self) -> Optional[pulumi.Input[str]]:
+        """
+        Description of the Identity.
+        """
         return pulumi.get(self, "description")
 
     @description.setter
@@ -317,6 +364,9 @@ class _IdentityState:
     @property
     @pulumi.getter(name="gcpAccessPolicy")
     def gcp_access_policy(self) -> Optional[pulumi.Input['IdentityGcpAccessPolicyArgs']]:
+        """
+        The GCP access policy can either contain an existing service_account or multiple bindings.
+        """
         return pulumi.get(self, "gcp_access_policy")
 
     @gcp_access_policy.setter
@@ -326,6 +376,9 @@ class _IdentityState:
     @property
     @pulumi.getter
     def gvc(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the GVC.
+        """
         return pulumi.get(self, "gvc")
 
     @gvc.setter
@@ -335,6 +388,9 @@ class _IdentityState:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the Identity.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -344,6 +400,9 @@ class _IdentityState:
     @property
     @pulumi.getter(name="nativeNetworkResources")
     def native_network_resources(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['IdentityNativeNetworkResourceArgs']]]]:
+        """
+        ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        """
         return pulumi.get(self, "native_network_resources")
 
     @native_network_resources.setter
@@ -353,6 +412,10 @@ class _IdentityState:
     @property
     @pulumi.getter(name="networkResources")
     def network_resources(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['IdentityNetworkResourceArgs']]]]:
+        """
+        A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+        ports. - IP's and ports.
+        """
         return pulumi.get(self, "network_resources")
 
     @network_resources.setter
@@ -371,6 +434,9 @@ class _IdentityState:
     @property
     @pulumi.getter(name="selfLink")
     def self_link(self) -> Optional[pulumi.Input[str]]:
+        """
+        Full link to this resource. Can be referenced by other resources.
+        """
         return pulumi.get(self, "self_link")
 
     @self_link.setter
@@ -380,6 +446,9 @@ class _IdentityState:
     @property
     @pulumi.getter
     def status(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of identity status. Available fields: `objectName`.
+        """
         return pulumi.get(self, "status")
 
     @status.setter
@@ -389,6 +458,9 @@ class _IdentityState:
     @property
     @pulumi.getter
     def tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of resource tags.
+        """
         return pulumi.get(self, "tags")
 
     @tags.setter
@@ -416,6 +488,14 @@ class Identity(pulumi.CustomResource):
         Create a Identity resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] description: Description of the Identity.
+        :param pulumi.Input[pulumi.InputType['IdentityGcpAccessPolicyArgs']] gcp_access_policy: The GCP access policy can either contain an existing service_account or multiple bindings.
+        :param pulumi.Input[str] gvc: Name of the GVC.
+        :param pulumi.Input[str] name: Name of the Identity.
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IdentityNativeNetworkResourceArgs']]]] native_network_resources: ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IdentityNetworkResourceArgs']]]] network_resources: A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+               ports. - IP's and ports.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         ...
     @overload
@@ -528,6 +608,17 @@ class Identity(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] cpln_id: ID, in GUID format, of the Identity.
+        :param pulumi.Input[str] description: Description of the Identity.
+        :param pulumi.Input[pulumi.InputType['IdentityGcpAccessPolicyArgs']] gcp_access_policy: The GCP access policy can either contain an existing service_account or multiple bindings.
+        :param pulumi.Input[str] gvc: Name of the GVC.
+        :param pulumi.Input[str] name: Name of the Identity.
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IdentityNativeNetworkResourceArgs']]]] native_network_resources: ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IdentityNetworkResourceArgs']]]] network_resources: A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+               ports. - IP's and ports.
+        :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] status: Key-value map of identity status. Available fields: `objectName`.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -561,36 +652,58 @@ class Identity(pulumi.CustomResource):
     @property
     @pulumi.getter(name="cplnId")
     def cpln_id(self) -> pulumi.Output[str]:
+        """
+        ID, in GUID format, of the Identity.
+        """
         return pulumi.get(self, "cpln_id")
 
     @property
     @pulumi.getter
     def description(self) -> pulumi.Output[Optional[str]]:
+        """
+        Description of the Identity.
+        """
         return pulumi.get(self, "description")
 
     @property
     @pulumi.getter(name="gcpAccessPolicy")
     def gcp_access_policy(self) -> pulumi.Output[Optional['outputs.IdentityGcpAccessPolicy']]:
+        """
+        The GCP access policy can either contain an existing service_account or multiple bindings.
+        """
         return pulumi.get(self, "gcp_access_policy")
 
     @property
     @pulumi.getter
     def gvc(self) -> pulumi.Output[str]:
+        """
+        Name of the GVC.
+        """
         return pulumi.get(self, "gvc")
 
     @property
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
+        """
+        Name of the Identity.
+        """
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter(name="nativeNetworkResources")
     def native_network_resources(self) -> pulumi.Output[Optional[Sequence['outputs.IdentityNativeNetworkResource']]]:
+        """
+        ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        """
         return pulumi.get(self, "native_network_resources")
 
     @property
     @pulumi.getter(name="networkResources")
     def network_resources(self) -> pulumi.Output[Optional[Sequence['outputs.IdentityNetworkResource']]]:
+        """
+        A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+        ports. - IP's and ports.
+        """
         return pulumi.get(self, "network_resources")
 
     @property
@@ -601,15 +714,24 @@ class Identity(pulumi.CustomResource):
     @property
     @pulumi.getter(name="selfLink")
     def self_link(self) -> pulumi.Output[str]:
+        """
+        Full link to this resource. Can be referenced by other resources.
+        """
         return pulumi.get(self, "self_link")
 
     @property
     @pulumi.getter
     def status(self) -> pulumi.Output[Mapping[str, str]]:
+        """
+        Key-value map of identity status. Available fields: `objectName`.
+        """
         return pulumi.get(self, "status")
 
     @property
     @pulumi.getter
     def tags(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
+        """
+        Key-value map of resource tags.
+        """
         return pulumi.get(self, "tags")
 

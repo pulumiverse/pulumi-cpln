@@ -16,10 +16,15 @@ import (
 type ServiceAccountKey struct {
 	pulumi.CustomResourceState
 
-	Created            pulumi.StringOutput `pulumi:"created"`
-	Description        pulumi.StringOutput `pulumi:"description"`
-	Key                pulumi.StringOutput `pulumi:"key"`
-	Name               pulumi.StringOutput `pulumi:"name"`
+	// The timestamp, in UTC, when the key was created.
+	Created pulumi.StringOutput `pulumi:"created"`
+	// Description of the Service Account Key.
+	Description pulumi.StringOutput `pulumi:"description"`
+	// The generated key.
+	Key pulumi.StringOutput `pulumi:"key"`
+	// The generated name of the key.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// The name of an existing Service Account this key will belong to.
 	ServiceAccountName pulumi.StringOutput `pulumi:"serviceAccountName"`
 }
 
@@ -63,18 +68,28 @@ func GetServiceAccountKey(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering ServiceAccountKey resources.
 type serviceAccountKeyState struct {
-	Created            *string `pulumi:"created"`
-	Description        *string `pulumi:"description"`
-	Key                *string `pulumi:"key"`
-	Name               *string `pulumi:"name"`
+	// The timestamp, in UTC, when the key was created.
+	Created *string `pulumi:"created"`
+	// Description of the Service Account Key.
+	Description *string `pulumi:"description"`
+	// The generated key.
+	Key *string `pulumi:"key"`
+	// The generated name of the key.
+	Name *string `pulumi:"name"`
+	// The name of an existing Service Account this key will belong to.
 	ServiceAccountName *string `pulumi:"serviceAccountName"`
 }
 
 type ServiceAccountKeyState struct {
-	Created            pulumi.StringPtrInput
-	Description        pulumi.StringPtrInput
-	Key                pulumi.StringPtrInput
-	Name               pulumi.StringPtrInput
+	// The timestamp, in UTC, when the key was created.
+	Created pulumi.StringPtrInput
+	// Description of the Service Account Key.
+	Description pulumi.StringPtrInput
+	// The generated key.
+	Key pulumi.StringPtrInput
+	// The generated name of the key.
+	Name pulumi.StringPtrInput
+	// The name of an existing Service Account this key will belong to.
 	ServiceAccountName pulumi.StringPtrInput
 }
 
@@ -83,13 +98,17 @@ func (ServiceAccountKeyState) ElementType() reflect.Type {
 }
 
 type serviceAccountKeyArgs struct {
-	Description        string `pulumi:"description"`
+	// Description of the Service Account Key.
+	Description string `pulumi:"description"`
+	// The name of an existing Service Account this key will belong to.
 	ServiceAccountName string `pulumi:"serviceAccountName"`
 }
 
 // The set of arguments for constructing a ServiceAccountKey resource.
 type ServiceAccountKeyArgs struct {
-	Description        pulumi.StringInput
+	// Description of the Service Account Key.
+	Description pulumi.StringInput
+	// The name of an existing Service Account this key will belong to.
 	ServiceAccountName pulumi.StringInput
 }
 
@@ -204,22 +223,27 @@ func (o ServiceAccountKeyOutput) ToOutput(ctx context.Context) pulumix.Output[*S
 	}
 }
 
+// The timestamp, in UTC, when the key was created.
 func (o ServiceAccountKeyOutput) Created() pulumi.StringOutput {
 	return o.ApplyT(func(v *ServiceAccountKey) pulumi.StringOutput { return v.Created }).(pulumi.StringOutput)
 }
 
+// Description of the Service Account Key.
 func (o ServiceAccountKeyOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v *ServiceAccountKey) pulumi.StringOutput { return v.Description }).(pulumi.StringOutput)
 }
 
+// The generated key.
 func (o ServiceAccountKeyOutput) Key() pulumi.StringOutput {
 	return o.ApplyT(func(v *ServiceAccountKey) pulumi.StringOutput { return v.Key }).(pulumi.StringOutput)
 }
 
+// The generated name of the key.
 func (o ServiceAccountKeyOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *ServiceAccountKey) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// The name of an existing Service Account this key will belong to.
 func (o ServiceAccountKeyOutput) ServiceAccountName() pulumi.StringOutput {
 	return o.ApplyT(func(v *ServiceAccountKey) pulumi.StringOutput { return v.ServiceAccountName }).(pulumi.StringOutput)
 }

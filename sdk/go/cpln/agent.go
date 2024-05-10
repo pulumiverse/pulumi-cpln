@@ -15,12 +15,18 @@ import (
 type Agent struct {
 	pulumi.CustomResourceState
 
-	CplnId      pulumi.StringOutput    `pulumi:"cplnId"`
+	// The ID, in GUID format, of the Agent.
+	CplnId pulumi.StringOutput `pulumi:"cplnId"`
+	// Description of the Agent.
 	Description pulumi.StringPtrOutput `pulumi:"description"`
-	Name        pulumi.StringOutput    `pulumi:"name"`
-	SelfLink    pulumi.StringOutput    `pulumi:"selfLink"`
-	Tags        pulumi.StringMapOutput `pulumi:"tags"`
-	UserData    pulumi.StringOutput    `pulumi:"userData"`
+	// Name of the Agent.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapOutput `pulumi:"tags"`
+	// The JSON output needed when [creating an agent](https://docs.controlplane.com/guides/agent).
+	UserData pulumi.StringOutput `pulumi:"userData"`
 }
 
 // NewAgent registers a new resource with the given unique name, arguments, and options.
@@ -57,21 +63,33 @@ func GetAgent(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Agent resources.
 type agentState struct {
-	CplnId      *string           `pulumi:"cplnId"`
-	Description *string           `pulumi:"description"`
-	Name        *string           `pulumi:"name"`
-	SelfLink    *string           `pulumi:"selfLink"`
-	Tags        map[string]string `pulumi:"tags"`
-	UserData    *string           `pulumi:"userData"`
+	// The ID, in GUID format, of the Agent.
+	CplnId *string `pulumi:"cplnId"`
+	// Description of the Agent.
+	Description *string `pulumi:"description"`
+	// Name of the Agent.
+	Name *string `pulumi:"name"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink *string `pulumi:"selfLink"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
+	// The JSON output needed when [creating an agent](https://docs.controlplane.com/guides/agent).
+	UserData *string `pulumi:"userData"`
 }
 
 type AgentState struct {
-	CplnId      pulumi.StringPtrInput
+	// The ID, in GUID format, of the Agent.
+	CplnId pulumi.StringPtrInput
+	// Description of the Agent.
 	Description pulumi.StringPtrInput
-	Name        pulumi.StringPtrInput
-	SelfLink    pulumi.StringPtrInput
-	Tags        pulumi.StringMapInput
-	UserData    pulumi.StringPtrInput
+	// Name of the Agent.
+	Name pulumi.StringPtrInput
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringPtrInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
+	// The JSON output needed when [creating an agent](https://docs.controlplane.com/guides/agent).
+	UserData pulumi.StringPtrInput
 }
 
 func (AgentState) ElementType() reflect.Type {
@@ -79,16 +97,22 @@ func (AgentState) ElementType() reflect.Type {
 }
 
 type agentArgs struct {
-	Description *string           `pulumi:"description"`
-	Name        *string           `pulumi:"name"`
-	Tags        map[string]string `pulumi:"tags"`
+	// Description of the Agent.
+	Description *string `pulumi:"description"`
+	// Name of the Agent.
+	Name *string `pulumi:"name"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
 }
 
 // The set of arguments for constructing a Agent resource.
 type AgentArgs struct {
+	// Description of the Agent.
 	Description pulumi.StringPtrInput
-	Name        pulumi.StringPtrInput
-	Tags        pulumi.StringMapInput
+	// Name of the Agent.
+	Name pulumi.StringPtrInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
 }
 
 func (AgentArgs) ElementType() reflect.Type {
@@ -202,26 +226,32 @@ func (o AgentOutput) ToOutput(ctx context.Context) pulumix.Output[*Agent] {
 	}
 }
 
+// The ID, in GUID format, of the Agent.
 func (o AgentOutput) CplnId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Agent) pulumi.StringOutput { return v.CplnId }).(pulumi.StringOutput)
 }
 
+// Description of the Agent.
 func (o AgentOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Agent) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
+// Name of the Agent.
 func (o AgentOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Agent) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Full link to this resource. Can be referenced by other resources.
 func (o AgentOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *Agent) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
 }
 
+// Key-value map of resource tags.
 func (o AgentOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Agent) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
 }
 
+// The JSON output needed when [creating an agent](https://docs.controlplane.com/guides/agent).
 func (o AgentOutput) UserData() pulumi.StringOutput {
 	return o.ApplyT(func(v *Agent) pulumi.StringOutput { return v.UserData }).(pulumi.StringOutput)
 }

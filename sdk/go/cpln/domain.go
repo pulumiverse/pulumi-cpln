@@ -16,13 +16,19 @@ import (
 type Domain struct {
 	pulumi.CustomResourceState
 
-	CplnId      pulumi.StringOutput     `pulumi:"cplnId"`
-	Description pulumi.StringPtrOutput  `pulumi:"description"`
-	Name        pulumi.StringOutput     `pulumi:"name"`
-	SelfLink    pulumi.StringOutput     `pulumi:"selfLink"`
-	Spec        DomainSpecOutput        `pulumi:"spec"`
-	Statuses    DomainStatusArrayOutput `pulumi:"statuses"`
-	Tags        pulumi.StringMapOutput  `pulumi:"tags"`
+	// The ID, in GUID format, of the Domain.
+	CplnId pulumi.StringOutput `pulumi:"cplnId"`
+	// Description of the domain name.
+	Description pulumi.StringPtrOutput `pulumi:"description"`
+	// Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with
+	// DNS. Create and Update will fail if the required DNS entries cannot be validated.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringOutput     `pulumi:"selfLink"`
+	Spec     DomainSpecOutput        `pulumi:"spec"`
+	Statuses DomainStatusArrayOutput `pulumi:"statuses"`
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapOutput `pulumi:"tags"`
 }
 
 // NewDomain registers a new resource with the given unique name, arguments, and options.
@@ -58,23 +64,35 @@ func GetDomain(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Domain resources.
 type domainState struct {
-	CplnId      *string           `pulumi:"cplnId"`
-	Description *string           `pulumi:"description"`
-	Name        *string           `pulumi:"name"`
-	SelfLink    *string           `pulumi:"selfLink"`
-	Spec        *DomainSpec       `pulumi:"spec"`
-	Statuses    []DomainStatus    `pulumi:"statuses"`
-	Tags        map[string]string `pulumi:"tags"`
+	// The ID, in GUID format, of the Domain.
+	CplnId *string `pulumi:"cplnId"`
+	// Description of the domain name.
+	Description *string `pulumi:"description"`
+	// Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with
+	// DNS. Create and Update will fail if the required DNS entries cannot be validated.
+	Name *string `pulumi:"name"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink *string        `pulumi:"selfLink"`
+	Spec     *DomainSpec    `pulumi:"spec"`
+	Statuses []DomainStatus `pulumi:"statuses"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
 }
 
 type DomainState struct {
-	CplnId      pulumi.StringPtrInput
+	// The ID, in GUID format, of the Domain.
+	CplnId pulumi.StringPtrInput
+	// Description of the domain name.
 	Description pulumi.StringPtrInput
-	Name        pulumi.StringPtrInput
-	SelfLink    pulumi.StringPtrInput
-	Spec        DomainSpecPtrInput
-	Statuses    DomainStatusArrayInput
-	Tags        pulumi.StringMapInput
+	// Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with
+	// DNS. Create and Update will fail if the required DNS entries cannot be validated.
+	Name pulumi.StringPtrInput
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringPtrInput
+	Spec     DomainSpecPtrInput
+	Statuses DomainStatusArrayInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
 }
 
 func (DomainState) ElementType() reflect.Type {
@@ -82,18 +100,26 @@ func (DomainState) ElementType() reflect.Type {
 }
 
 type domainArgs struct {
-	Description *string           `pulumi:"description"`
-	Name        *string           `pulumi:"name"`
-	Spec        DomainSpec        `pulumi:"spec"`
-	Tags        map[string]string `pulumi:"tags"`
+	// Description of the domain name.
+	Description *string `pulumi:"description"`
+	// Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with
+	// DNS. Create and Update will fail if the required DNS entries cannot be validated.
+	Name *string    `pulumi:"name"`
+	Spec DomainSpec `pulumi:"spec"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
 }
 
 // The set of arguments for constructing a Domain resource.
 type DomainArgs struct {
+	// Description of the domain name.
 	Description pulumi.StringPtrInput
-	Name        pulumi.StringPtrInput
-	Spec        DomainSpecInput
-	Tags        pulumi.StringMapInput
+	// Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with
+	// DNS. Create and Update will fail if the required DNS entries cannot be validated.
+	Name pulumi.StringPtrInput
+	Spec DomainSpecInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
 }
 
 func (DomainArgs) ElementType() reflect.Type {
@@ -207,18 +233,23 @@ func (o DomainOutput) ToOutput(ctx context.Context) pulumix.Output[*Domain] {
 	}
 }
 
+// The ID, in GUID format, of the Domain.
 func (o DomainOutput) CplnId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Domain) pulumi.StringOutput { return v.CplnId }).(pulumi.StringOutput)
 }
 
+// Description of the domain name.
 func (o DomainOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Domain) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
+// Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with
+// DNS. Create and Update will fail if the required DNS entries cannot be validated.
 func (o DomainOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Domain) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Full link to this resource. Can be referenced by other resources.
 func (o DomainOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *Domain) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
 }
@@ -231,6 +262,7 @@ func (o DomainOutput) Statuses() DomainStatusArrayOutput {
 	return o.ApplyT(func(v *Domain) DomainStatusArrayOutput { return v.Statuses }).(DomainStatusArrayOutput)
 }
 
+// Key-value map of resource tags.
 func (o DomainOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Domain) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
 }

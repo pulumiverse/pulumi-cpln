@@ -19,36 +19,67 @@ namespace Pulumiverse.Cpln
         [Output("azureAccessPolicy")]
         public Output<Outputs.IdentityAzureAccessPolicy?> AzureAccessPolicy { get; private set; } = null!;
 
+        /// <summary>
+        /// ID, in GUID format, of the Identity.
+        /// </summary>
         [Output("cplnId")]
         public Output<string> CplnId { get; private set; } = null!;
 
+        /// <summary>
+        /// Description of the Identity.
+        /// </summary>
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
 
+        /// <summary>
+        /// The GCP access policy can either contain an existing service_account or multiple bindings.
+        /// </summary>
         [Output("gcpAccessPolicy")]
         public Output<Outputs.IdentityGcpAccessPolicy?> GcpAccessPolicy { get; private set; } = null!;
 
+        /// <summary>
+        /// Name of the GVC.
+        /// </summary>
         [Output("gvc")]
         public Output<string> Gvc { get; private set; } = null!;
 
+        /// <summary>
+        /// Name of the Identity.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// ~&gt; **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        /// </summary>
         [Output("nativeNetworkResources")]
         public Output<ImmutableArray<Outputs.IdentityNativeNetworkResource>> NativeNetworkResources { get; private set; } = null!;
 
+        /// <summary>
+        /// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+        /// ports. - IP's and ports.
+        /// </summary>
         [Output("networkResources")]
         public Output<ImmutableArray<Outputs.IdentityNetworkResource>> NetworkResources { get; private set; } = null!;
 
         [Output("ngsAccessPolicy")]
         public Output<Outputs.IdentityNgsAccessPolicy?> NgsAccessPolicy { get; private set; } = null!;
 
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         [Output("selfLink")]
         public Output<string> SelfLink { get; private set; } = null!;
 
+        /// <summary>
+        /// Key-value map of identity status. Available fields: `objectName`.
+        /// </summary>
         [Output("status")]
         public Output<ImmutableDictionary<string, string>> Status { get; private set; } = null!;
 
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         [Output("tags")]
         public Output<ImmutableDictionary<string, string>?> Tags { get; private set; } = null!;
 
@@ -105,20 +136,36 @@ namespace Pulumiverse.Cpln
         [Input("azureAccessPolicy")]
         public Input<Inputs.IdentityAzureAccessPolicyArgs>? AzureAccessPolicy { get; set; }
 
+        /// <summary>
+        /// Description of the Identity.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// The GCP access policy can either contain an existing service_account or multiple bindings.
+        /// </summary>
         [Input("gcpAccessPolicy")]
         public Input<Inputs.IdentityGcpAccessPolicyArgs>? GcpAccessPolicy { get; set; }
 
+        /// <summary>
+        /// Name of the GVC.
+        /// </summary>
         [Input("gvc", required: true)]
         public Input<string> Gvc { get; set; } = null!;
 
+        /// <summary>
+        /// Name of the Identity.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
         [Input("nativeNetworkResources")]
         private InputList<Inputs.IdentityNativeNetworkResourceArgs>? _nativeNetworkResources;
+
+        /// <summary>
+        /// ~&gt; **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        /// </summary>
         public InputList<Inputs.IdentityNativeNetworkResourceArgs> NativeNetworkResources
         {
             get => _nativeNetworkResources ?? (_nativeNetworkResources = new InputList<Inputs.IdentityNativeNetworkResourceArgs>());
@@ -127,6 +174,11 @@ namespace Pulumiverse.Cpln
 
         [Input("networkResources")]
         private InputList<Inputs.IdentityNetworkResourceArgs>? _networkResources;
+
+        /// <summary>
+        /// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+        /// ports. - IP's and ports.
+        /// </summary>
         public InputList<Inputs.IdentityNetworkResourceArgs> NetworkResources
         {
             get => _networkResources ?? (_networkResources = new InputList<Inputs.IdentityNetworkResourceArgs>());
@@ -138,6 +190,10 @@ namespace Pulumiverse.Cpln
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());
@@ -158,23 +214,42 @@ namespace Pulumiverse.Cpln
         [Input("azureAccessPolicy")]
         public Input<Inputs.IdentityAzureAccessPolicyGetArgs>? AzureAccessPolicy { get; set; }
 
+        /// <summary>
+        /// ID, in GUID format, of the Identity.
+        /// </summary>
         [Input("cplnId")]
         public Input<string>? CplnId { get; set; }
 
+        /// <summary>
+        /// Description of the Identity.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// The GCP access policy can either contain an existing service_account or multiple bindings.
+        /// </summary>
         [Input("gcpAccessPolicy")]
         public Input<Inputs.IdentityGcpAccessPolicyGetArgs>? GcpAccessPolicy { get; set; }
 
+        /// <summary>
+        /// Name of the GVC.
+        /// </summary>
         [Input("gvc")]
         public Input<string>? Gvc { get; set; }
 
+        /// <summary>
+        /// Name of the Identity.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
         [Input("nativeNetworkResources")]
         private InputList<Inputs.IdentityNativeNetworkResourceGetArgs>? _nativeNetworkResources;
+
+        /// <summary>
+        /// ~&gt; **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        /// </summary>
         public InputList<Inputs.IdentityNativeNetworkResourceGetArgs> NativeNetworkResources
         {
             get => _nativeNetworkResources ?? (_nativeNetworkResources = new InputList<Inputs.IdentityNativeNetworkResourceGetArgs>());
@@ -183,6 +258,11 @@ namespace Pulumiverse.Cpln
 
         [Input("networkResources")]
         private InputList<Inputs.IdentityNetworkResourceGetArgs>? _networkResources;
+
+        /// <summary>
+        /// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+        /// ports. - IP's and ports.
+        /// </summary>
         public InputList<Inputs.IdentityNetworkResourceGetArgs> NetworkResources
         {
             get => _networkResources ?? (_networkResources = new InputList<Inputs.IdentityNetworkResourceGetArgs>());
@@ -192,11 +272,18 @@ namespace Pulumiverse.Cpln
         [Input("ngsAccessPolicy")]
         public Input<Inputs.IdentityNgsAccessPolicyGetArgs>? NgsAccessPolicy { get; set; }
 
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         [Input("selfLink")]
         public Input<string>? SelfLink { get; set; }
 
         [Input("status")]
         private InputMap<string>? _status;
+
+        /// <summary>
+        /// Key-value map of identity status. Available fields: `objectName`.
+        /// </summary>
         public InputMap<string> Status
         {
             get => _status ?? (_status = new InputMap<string>());
@@ -205,6 +292,10 @@ namespace Pulumiverse.Cpln
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());

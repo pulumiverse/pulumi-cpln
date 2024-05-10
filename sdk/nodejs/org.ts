@@ -34,16 +34,48 @@ export class Org extends pulumi.CustomResource {
         return obj['__pulumiType'] === Org.__pulumiType;
     }
 
+    /**
+     * The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
+     * obtained from the `Org Management & Billing` page.
+     */
     public readonly accountId!: pulumi.Output<string | undefined>;
     public readonly authConfig!: pulumi.Output<outputs.OrgAuthConfig | undefined>;
+    /**
+     * The ID, in GUID format, of the org.
+     */
     public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    /**
+     * The description of org.
+     */
     public readonly description!: pulumi.Output<string | undefined>;
+    /**
+     * When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
+     * the `superusers` group. The user account used when creating the org will be included in this list.
+     */
     public readonly invitees!: pulumi.Output<string[] | undefined>;
+    /**
+     * The name of the org.
+     */
     public /*out*/ readonly name!: pulumi.Output<string>;
+    /**
+     * The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
+     */
     public readonly observability!: pulumi.Output<outputs.OrgObservability>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    /**
+     * The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+     */
     public readonly sessionTimeoutSeconds!: pulumi.Output<number | undefined>;
+    /**
+     * Status of the org.
+     */
     public /*out*/ readonly statuses!: pulumi.Output<outputs.OrgStatus[]>;
+    /**
+     * Key-value map of the org's tags.
+     */
     public readonly tags!: pulumi.Output<{[key: string]: string} | undefined>;
 
     /**
@@ -96,16 +128,48 @@ export class Org extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Org resources.
  */
 export interface OrgState {
+    /**
+     * The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
+     * obtained from the `Org Management & Billing` page.
+     */
     accountId?: pulumi.Input<string>;
     authConfig?: pulumi.Input<inputs.OrgAuthConfig>;
+    /**
+     * The ID, in GUID format, of the org.
+     */
     cplnId?: pulumi.Input<string>;
+    /**
+     * The description of org.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
+     * the `superusers` group. The user account used when creating the org will be included in this list.
+     */
     invitees?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The name of the org.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
+     */
     observability?: pulumi.Input<inputs.OrgObservability>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     selfLink?: pulumi.Input<string>;
+    /**
+     * The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+     */
     sessionTimeoutSeconds?: pulumi.Input<number>;
+    /**
+     * Status of the org.
+     */
     statuses?: pulumi.Input<pulumi.Input<inputs.OrgStatus>[]>;
+    /**
+     * Key-value map of the org's tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }
 
@@ -113,11 +177,31 @@ export interface OrgState {
  * The set of arguments for constructing a Org resource.
  */
 export interface OrgArgs {
+    /**
+     * The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
+     * obtained from the `Org Management & Billing` page.
+     */
     accountId?: pulumi.Input<string>;
     authConfig?: pulumi.Input<inputs.OrgAuthConfig>;
+    /**
+     * The description of org.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
+     * the `superusers` group. The user account used when creating the org will be included in this list.
+     */
     invitees?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
+     */
     observability: pulumi.Input<inputs.OrgObservability>;
+    /**
+     * The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+     */
     sessionTimeoutSeconds?: pulumi.Input<number>;
+    /**
+     * Key-value map of the org's tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }

@@ -16,18 +16,35 @@ import (
 type VolumeSet struct {
 	pulumi.CustomResourceState
 
-	Autoscaling      VolumeSetAutoscalingPtrOutput `pulumi:"autoscaling"`
-	CplnId           pulumi.StringOutput           `pulumi:"cplnId"`
-	Description      pulumi.StringPtrOutput        `pulumi:"description"`
-	FileSystemType   pulumi.StringPtrOutput        `pulumi:"fileSystemType"`
-	Gvc              pulumi.StringOutput           `pulumi:"gvc"`
-	InitialCapacity  pulumi.IntOutput              `pulumi:"initialCapacity"`
-	Name             pulumi.StringOutput           `pulumi:"name"`
-	PerformanceClass pulumi.StringOutput           `pulumi:"performanceClass"`
-	SelfLink         pulumi.StringOutput           `pulumi:"selfLink"`
-	Snapshots        VolumeSetSnapshotsPtrOutput   `pulumi:"snapshots"`
-	Statuses         VolumeSetStatusArrayOutput    `pulumi:"statuses"`
-	Tags             pulumi.StringMapOutput        `pulumi:"tags"`
+	Autoscaling VolumeSetAutoscalingPtrOutput `pulumi:"autoscaling"`
+	// ID, in GUID format, of the Volume Set.
+	CplnId pulumi.StringOutput `pulumi:"cplnId"`
+	// Description of the Volume Set.
+	Description pulumi.StringPtrOutput `pulumi:"description"`
+	// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
+	FileSystemType pulumi.StringPtrOutput `pulumi:"fileSystemType"`
+	// Name of the associated GVC.
+	Gvc pulumi.StringOutput `pulumi:"gvc"`
+	// The initial size in GB of volumes in this set. Minimum value: `10`.
+	InitialCapacity pulumi.IntOutput `pulumi:"initialCapacity"`
+	// Name of the Volume Set.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
+	// `high-throughput-ssd`
+	PerformanceClass pulumi.StringOutput `pulumi:"performanceClass"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink  pulumi.StringOutput         `pulumi:"selfLink"`
+	Snapshots VolumeSetSnapshotsPtrOutput `pulumi:"snapshots"`
+	// Status of the Volume Set.
+	Statuses VolumeSetStatusArrayOutput `pulumi:"statuses"`
+	// For self-hosted locations only. The storage class used for volumes in this set will be
+	// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
+	// {performanceClass}-{fileSystemType}
+	StorageClassSuffix pulumi.StringPtrOutput `pulumi:"storageClassSuffix"`
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapOutput `pulumi:"tags"`
+	// Output used when linking a volume set to a workload.
+	VolumesetLink pulumi.StringOutput `pulumi:"volumesetLink"`
 }
 
 // NewVolumeSet registers a new resource with the given unique name, arguments, and options.
@@ -69,33 +86,67 @@ func GetVolumeSet(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering VolumeSet resources.
 type volumeSetState struct {
-	Autoscaling      *VolumeSetAutoscaling `pulumi:"autoscaling"`
-	CplnId           *string               `pulumi:"cplnId"`
-	Description      *string               `pulumi:"description"`
-	FileSystemType   *string               `pulumi:"fileSystemType"`
-	Gvc              *string               `pulumi:"gvc"`
-	InitialCapacity  *int                  `pulumi:"initialCapacity"`
-	Name             *string               `pulumi:"name"`
-	PerformanceClass *string               `pulumi:"performanceClass"`
-	SelfLink         *string               `pulumi:"selfLink"`
-	Snapshots        *VolumeSetSnapshots   `pulumi:"snapshots"`
-	Statuses         []VolumeSetStatus     `pulumi:"statuses"`
-	Tags             map[string]string     `pulumi:"tags"`
+	Autoscaling *VolumeSetAutoscaling `pulumi:"autoscaling"`
+	// ID, in GUID format, of the Volume Set.
+	CplnId *string `pulumi:"cplnId"`
+	// Description of the Volume Set.
+	Description *string `pulumi:"description"`
+	// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
+	FileSystemType *string `pulumi:"fileSystemType"`
+	// Name of the associated GVC.
+	Gvc *string `pulumi:"gvc"`
+	// The initial size in GB of volumes in this set. Minimum value: `10`.
+	InitialCapacity *int `pulumi:"initialCapacity"`
+	// Name of the Volume Set.
+	Name *string `pulumi:"name"`
+	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
+	// `high-throughput-ssd`
+	PerformanceClass *string `pulumi:"performanceClass"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink  *string             `pulumi:"selfLink"`
+	Snapshots *VolumeSetSnapshots `pulumi:"snapshots"`
+	// Status of the Volume Set.
+	Statuses []VolumeSetStatus `pulumi:"statuses"`
+	// For self-hosted locations only. The storage class used for volumes in this set will be
+	// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
+	// {performanceClass}-{fileSystemType}
+	StorageClassSuffix *string `pulumi:"storageClassSuffix"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
+	// Output used when linking a volume set to a workload.
+	VolumesetLink *string `pulumi:"volumesetLink"`
 }
 
 type VolumeSetState struct {
-	Autoscaling      VolumeSetAutoscalingPtrInput
-	CplnId           pulumi.StringPtrInput
-	Description      pulumi.StringPtrInput
-	FileSystemType   pulumi.StringPtrInput
-	Gvc              pulumi.StringPtrInput
-	InitialCapacity  pulumi.IntPtrInput
-	Name             pulumi.StringPtrInput
+	Autoscaling VolumeSetAutoscalingPtrInput
+	// ID, in GUID format, of the Volume Set.
+	CplnId pulumi.StringPtrInput
+	// Description of the Volume Set.
+	Description pulumi.StringPtrInput
+	// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
+	FileSystemType pulumi.StringPtrInput
+	// Name of the associated GVC.
+	Gvc pulumi.StringPtrInput
+	// The initial size in GB of volumes in this set. Minimum value: `10`.
+	InitialCapacity pulumi.IntPtrInput
+	// Name of the Volume Set.
+	Name pulumi.StringPtrInput
+	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
+	// `high-throughput-ssd`
 	PerformanceClass pulumi.StringPtrInput
-	SelfLink         pulumi.StringPtrInput
-	Snapshots        VolumeSetSnapshotsPtrInput
-	Statuses         VolumeSetStatusArrayInput
-	Tags             pulumi.StringMapInput
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink  pulumi.StringPtrInput
+	Snapshots VolumeSetSnapshotsPtrInput
+	// Status of the Volume Set.
+	Statuses VolumeSetStatusArrayInput
+	// For self-hosted locations only. The storage class used for volumes in this set will be
+	// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
+	// {performanceClass}-{fileSystemType}
+	StorageClassSuffix pulumi.StringPtrInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
+	// Output used when linking a volume set to a workload.
+	VolumesetLink pulumi.StringPtrInput
 }
 
 func (VolumeSetState) ElementType() reflect.Type {
@@ -103,28 +154,52 @@ func (VolumeSetState) ElementType() reflect.Type {
 }
 
 type volumeSetArgs struct {
-	Autoscaling      *VolumeSetAutoscaling `pulumi:"autoscaling"`
-	Description      *string               `pulumi:"description"`
-	FileSystemType   *string               `pulumi:"fileSystemType"`
-	Gvc              string                `pulumi:"gvc"`
-	InitialCapacity  int                   `pulumi:"initialCapacity"`
-	Name             *string               `pulumi:"name"`
-	PerformanceClass string                `pulumi:"performanceClass"`
-	Snapshots        *VolumeSetSnapshots   `pulumi:"snapshots"`
-	Tags             map[string]string     `pulumi:"tags"`
+	Autoscaling *VolumeSetAutoscaling `pulumi:"autoscaling"`
+	// Description of the Volume Set.
+	Description *string `pulumi:"description"`
+	// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
+	FileSystemType *string `pulumi:"fileSystemType"`
+	// Name of the associated GVC.
+	Gvc string `pulumi:"gvc"`
+	// The initial size in GB of volumes in this set. Minimum value: `10`.
+	InitialCapacity int `pulumi:"initialCapacity"`
+	// Name of the Volume Set.
+	Name *string `pulumi:"name"`
+	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
+	// `high-throughput-ssd`
+	PerformanceClass string              `pulumi:"performanceClass"`
+	Snapshots        *VolumeSetSnapshots `pulumi:"snapshots"`
+	// For self-hosted locations only. The storage class used for volumes in this set will be
+	// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
+	// {performanceClass}-{fileSystemType}
+	StorageClassSuffix *string `pulumi:"storageClassSuffix"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
 }
 
 // The set of arguments for constructing a VolumeSet resource.
 type VolumeSetArgs struct {
-	Autoscaling      VolumeSetAutoscalingPtrInput
-	Description      pulumi.StringPtrInput
-	FileSystemType   pulumi.StringPtrInput
-	Gvc              pulumi.StringInput
-	InitialCapacity  pulumi.IntInput
-	Name             pulumi.StringPtrInput
+	Autoscaling VolumeSetAutoscalingPtrInput
+	// Description of the Volume Set.
+	Description pulumi.StringPtrInput
+	// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
+	FileSystemType pulumi.StringPtrInput
+	// Name of the associated GVC.
+	Gvc pulumi.StringInput
+	// The initial size in GB of volumes in this set. Minimum value: `10`.
+	InitialCapacity pulumi.IntInput
+	// Name of the Volume Set.
+	Name pulumi.StringPtrInput
+	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
+	// `high-throughput-ssd`
 	PerformanceClass pulumi.StringInput
 	Snapshots        VolumeSetSnapshotsPtrInput
-	Tags             pulumi.StringMapInput
+	// For self-hosted locations only. The storage class used for volumes in this set will be
+	// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
+	// {performanceClass}-{fileSystemType}
+	StorageClassSuffix pulumi.StringPtrInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
 }
 
 func (VolumeSetArgs) ElementType() reflect.Type {
@@ -242,34 +317,43 @@ func (o VolumeSetOutput) Autoscaling() VolumeSetAutoscalingPtrOutput {
 	return o.ApplyT(func(v *VolumeSet) VolumeSetAutoscalingPtrOutput { return v.Autoscaling }).(VolumeSetAutoscalingPtrOutput)
 }
 
+// ID, in GUID format, of the Volume Set.
 func (o VolumeSetOutput) CplnId() pulumi.StringOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringOutput { return v.CplnId }).(pulumi.StringOutput)
 }
 
+// Description of the Volume Set.
 func (o VolumeSetOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
+// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
 func (o VolumeSetOutput) FileSystemType() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringPtrOutput { return v.FileSystemType }).(pulumi.StringPtrOutput)
 }
 
+// Name of the associated GVC.
 func (o VolumeSetOutput) Gvc() pulumi.StringOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringOutput { return v.Gvc }).(pulumi.StringOutput)
 }
 
+// The initial size in GB of volumes in this set. Minimum value: `10`.
 func (o VolumeSetOutput) InitialCapacity() pulumi.IntOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.IntOutput { return v.InitialCapacity }).(pulumi.IntOutput)
 }
 
+// Name of the Volume Set.
 func (o VolumeSetOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
+// `high-throughput-ssd`
 func (o VolumeSetOutput) PerformanceClass() pulumi.StringOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringOutput { return v.PerformanceClass }).(pulumi.StringOutput)
 }
 
+// Full link to this resource. Can be referenced by other resources.
 func (o VolumeSetOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
 }
@@ -278,12 +362,26 @@ func (o VolumeSetOutput) Snapshots() VolumeSetSnapshotsPtrOutput {
 	return o.ApplyT(func(v *VolumeSet) VolumeSetSnapshotsPtrOutput { return v.Snapshots }).(VolumeSetSnapshotsPtrOutput)
 }
 
+// Status of the Volume Set.
 func (o VolumeSetOutput) Statuses() VolumeSetStatusArrayOutput {
 	return o.ApplyT(func(v *VolumeSet) VolumeSetStatusArrayOutput { return v.Statuses }).(VolumeSetStatusArrayOutput)
 }
 
+// For self-hosted locations only. The storage class used for volumes in this set will be
+// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
+// {performanceClass}-{fileSystemType}
+func (o VolumeSetOutput) StorageClassSuffix() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *VolumeSet) pulumi.StringPtrOutput { return v.StorageClassSuffix }).(pulumi.StringPtrOutput)
+}
+
+// Key-value map of resource tags.
 func (o VolumeSetOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
+}
+
+// Output used when linking a volume set to a workload.
+func (o VolumeSetOutput) VolumesetLink() pulumi.StringOutput {
+	return o.ApplyT(func(v *VolumeSet) pulumi.StringOutput { return v.VolumesetLink }).(pulumi.StringOutput)
 }
 
 type VolumeSetArrayOutput struct{ *pulumi.OutputState }
