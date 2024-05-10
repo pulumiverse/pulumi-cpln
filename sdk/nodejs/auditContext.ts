@@ -32,10 +32,25 @@ export class AuditContext extends pulumi.CustomResource {
         return obj['__pulumiType'] === AuditContext.__pulumiType;
     }
 
+    /**
+     * The ID, in GUID format, of the Audit Context.
+     */
     public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    /**
+     * Description of the Audit Context.
+     */
     public readonly description!: pulumi.Output<string | undefined>;
+    /**
+     * Name of the Audit Context.
+     */
     public readonly name!: pulumi.Output<string>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    /**
+     * Key-value map of resource tags.
+     */
     public readonly tags!: pulumi.Output<{[key: string]: string} | undefined>;
 
     /**
@@ -73,10 +88,25 @@ export class AuditContext extends pulumi.CustomResource {
  * Input properties used for looking up and filtering AuditContext resources.
  */
 export interface AuditContextState {
+    /**
+     * The ID, in GUID format, of the Audit Context.
+     */
     cplnId?: pulumi.Input<string>;
+    /**
+     * Description of the Audit Context.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * Name of the Audit Context.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     selfLink?: pulumi.Input<string>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }
 
@@ -84,7 +114,16 @@ export interface AuditContextState {
  * The set of arguments for constructing a AuditContext resource.
  */
 export interface AuditContextArgs {
+    /**
+     * Description of the Audit Context.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * Name of the Audit Context.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }

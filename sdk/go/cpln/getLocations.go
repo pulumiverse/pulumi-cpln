@@ -18,7 +18,7 @@ import (
 //
 // The following attributes are exported:
 //
-// - **locations** (Block List, Max: 1) (see below).
+// - **locations** (Block List) (see below).
 //
 // <a id="nestedblock--locations"></a>
 //

@@ -36,16 +36,47 @@ export class Identity extends pulumi.CustomResource {
 
     public readonly awsAccessPolicy!: pulumi.Output<outputs.IdentityAwsAccessPolicy | undefined>;
     public readonly azureAccessPolicy!: pulumi.Output<outputs.IdentityAzureAccessPolicy | undefined>;
+    /**
+     * ID, in GUID format, of the Identity.
+     */
     public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    /**
+     * Description of the Identity.
+     */
     public readonly description!: pulumi.Output<string | undefined>;
+    /**
+     * The GCP access policy can either contain an existing service_account or multiple bindings.
+     */
     public readonly gcpAccessPolicy!: pulumi.Output<outputs.IdentityGcpAccessPolicy | undefined>;
+    /**
+     * Name of the GVC.
+     */
     public readonly gvc!: pulumi.Output<string>;
+    /**
+     * Name of the Identity.
+     */
     public readonly name!: pulumi.Output<string>;
+    /**
+     * ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+     */
     public readonly nativeNetworkResources!: pulumi.Output<outputs.IdentityNativeNetworkResource[] | undefined>;
+    /**
+     * A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+     * ports. - IP's and ports.
+     */
     public readonly networkResources!: pulumi.Output<outputs.IdentityNetworkResource[] | undefined>;
     public readonly ngsAccessPolicy!: pulumi.Output<outputs.IdentityNgsAccessPolicy | undefined>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    /**
+     * Key-value map of identity status. Available fields: `objectName`.
+     */
     public /*out*/ readonly status!: pulumi.Output<{[key: string]: string}>;
+    /**
+     * Key-value map of resource tags.
+     */
     public readonly tags!: pulumi.Output<{[key: string]: string} | undefined>;
 
     /**
@@ -104,16 +135,47 @@ export class Identity extends pulumi.CustomResource {
 export interface IdentityState {
     awsAccessPolicy?: pulumi.Input<inputs.IdentityAwsAccessPolicy>;
     azureAccessPolicy?: pulumi.Input<inputs.IdentityAzureAccessPolicy>;
+    /**
+     * ID, in GUID format, of the Identity.
+     */
     cplnId?: pulumi.Input<string>;
+    /**
+     * Description of the Identity.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * The GCP access policy can either contain an existing service_account or multiple bindings.
+     */
     gcpAccessPolicy?: pulumi.Input<inputs.IdentityGcpAccessPolicy>;
+    /**
+     * Name of the GVC.
+     */
     gvc?: pulumi.Input<string>;
+    /**
+     * Name of the Identity.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+     */
     nativeNetworkResources?: pulumi.Input<pulumi.Input<inputs.IdentityNativeNetworkResource>[]>;
+    /**
+     * A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+     * ports. - IP's and ports.
+     */
     networkResources?: pulumi.Input<pulumi.Input<inputs.IdentityNetworkResource>[]>;
     ngsAccessPolicy?: pulumi.Input<inputs.IdentityNgsAccessPolicy>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     selfLink?: pulumi.Input<string>;
+    /**
+     * Key-value map of identity status. Available fields: `objectName`.
+     */
     status?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }
 
@@ -123,12 +185,34 @@ export interface IdentityState {
 export interface IdentityArgs {
     awsAccessPolicy?: pulumi.Input<inputs.IdentityAwsAccessPolicy>;
     azureAccessPolicy?: pulumi.Input<inputs.IdentityAzureAccessPolicy>;
+    /**
+     * Description of the Identity.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * The GCP access policy can either contain an existing service_account or multiple bindings.
+     */
     gcpAccessPolicy?: pulumi.Input<inputs.IdentityGcpAccessPolicy>;
+    /**
+     * Name of the GVC.
+     */
     gvc: pulumi.Input<string>;
+    /**
+     * Name of the Identity.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+     */
     nativeNetworkResources?: pulumi.Input<pulumi.Input<inputs.IdentityNativeNetworkResource>[]>;
+    /**
+     * A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+     * ports. - IP's and ports.
+     */
     networkResources?: pulumi.Input<pulumi.Input<inputs.IdentityNetworkResource>[]>;
     ngsAccessPolicy?: pulumi.Input<inputs.IdentityNgsAccessPolicy>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }

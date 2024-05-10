@@ -23,6 +23,15 @@ class DomainRouteArgs:
                  replace_prefix: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a DomainRoute resource.
+        :param pulumi.Input[str] domain_link: The self link of the domain to add the route to.
+        :param pulumi.Input[str] prefix: The path will match any unmatched path prefixes for the subdomain.
+        :param pulumi.Input[str] workload_link: The link of the workload to map the prefix to.
+        :param pulumi.Input[int] domain_port: The port the route corresponds to. Default: 443
+        :param pulumi.Input[str] host_prefix: This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+               target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+               Slack or at support@controlplane.com for additional details.
+        :param pulumi.Input[int] port: For the linked workload, the port to route traffic to.
+        :param pulumi.Input[str] replace_prefix: A path prefix can be configured to be replaced when forwarding the request to the Workload.
         """
         DomainRouteArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -72,6 +81,9 @@ class DomainRouteArgs:
     @property
     @pulumi.getter(name="domainLink")
     def domain_link(self) -> pulumi.Input[str]:
+        """
+        The self link of the domain to add the route to.
+        """
         return pulumi.get(self, "domain_link")
 
     @domain_link.setter
@@ -81,6 +93,9 @@ class DomainRouteArgs:
     @property
     @pulumi.getter
     def prefix(self) -> pulumi.Input[str]:
+        """
+        The path will match any unmatched path prefixes for the subdomain.
+        """
         return pulumi.get(self, "prefix")
 
     @prefix.setter
@@ -90,6 +105,9 @@ class DomainRouteArgs:
     @property
     @pulumi.getter(name="workloadLink")
     def workload_link(self) -> pulumi.Input[str]:
+        """
+        The link of the workload to map the prefix to.
+        """
         return pulumi.get(self, "workload_link")
 
     @workload_link.setter
@@ -99,6 +117,9 @@ class DomainRouteArgs:
     @property
     @pulumi.getter(name="domainPort")
     def domain_port(self) -> Optional[pulumi.Input[int]]:
+        """
+        The port the route corresponds to. Default: 443
+        """
         return pulumi.get(self, "domain_port")
 
     @domain_port.setter
@@ -108,6 +129,11 @@ class DomainRouteArgs:
     @property
     @pulumi.getter(name="hostPrefix")
     def host_prefix(self) -> Optional[pulumi.Input[str]]:
+        """
+        This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+        target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+        Slack or at support@controlplane.com for additional details.
+        """
         return pulumi.get(self, "host_prefix")
 
     @host_prefix.setter
@@ -117,6 +143,9 @@ class DomainRouteArgs:
     @property
     @pulumi.getter
     def port(self) -> Optional[pulumi.Input[int]]:
+        """
+        For the linked workload, the port to route traffic to.
+        """
         return pulumi.get(self, "port")
 
     @port.setter
@@ -126,6 +155,9 @@ class DomainRouteArgs:
     @property
     @pulumi.getter(name="replacePrefix")
     def replace_prefix(self) -> Optional[pulumi.Input[str]]:
+        """
+        A path prefix can be configured to be replaced when forwarding the request to the Workload.
+        """
         return pulumi.get(self, "replace_prefix")
 
     @replace_prefix.setter
@@ -145,6 +177,15 @@ class _DomainRouteState:
                  workload_link: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering DomainRoute resources.
+        :param pulumi.Input[str] domain_link: The self link of the domain to add the route to.
+        :param pulumi.Input[int] domain_port: The port the route corresponds to. Default: 443
+        :param pulumi.Input[str] host_prefix: This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+               target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+               Slack or at support@controlplane.com for additional details.
+        :param pulumi.Input[int] port: For the linked workload, the port to route traffic to.
+        :param pulumi.Input[str] prefix: The path will match any unmatched path prefixes for the subdomain.
+        :param pulumi.Input[str] replace_prefix: A path prefix can be configured to be replaced when forwarding the request to the Workload.
+        :param pulumi.Input[str] workload_link: The link of the workload to map the prefix to.
         """
         _DomainRouteState._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -197,6 +238,9 @@ class _DomainRouteState:
     @property
     @pulumi.getter(name="domainLink")
     def domain_link(self) -> Optional[pulumi.Input[str]]:
+        """
+        The self link of the domain to add the route to.
+        """
         return pulumi.get(self, "domain_link")
 
     @domain_link.setter
@@ -206,6 +250,9 @@ class _DomainRouteState:
     @property
     @pulumi.getter(name="domainPort")
     def domain_port(self) -> Optional[pulumi.Input[int]]:
+        """
+        The port the route corresponds to. Default: 443
+        """
         return pulumi.get(self, "domain_port")
 
     @domain_port.setter
@@ -215,6 +262,11 @@ class _DomainRouteState:
     @property
     @pulumi.getter(name="hostPrefix")
     def host_prefix(self) -> Optional[pulumi.Input[str]]:
+        """
+        This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+        target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+        Slack or at support@controlplane.com for additional details.
+        """
         return pulumi.get(self, "host_prefix")
 
     @host_prefix.setter
@@ -224,6 +276,9 @@ class _DomainRouteState:
     @property
     @pulumi.getter
     def port(self) -> Optional[pulumi.Input[int]]:
+        """
+        For the linked workload, the port to route traffic to.
+        """
         return pulumi.get(self, "port")
 
     @port.setter
@@ -233,6 +288,9 @@ class _DomainRouteState:
     @property
     @pulumi.getter
     def prefix(self) -> Optional[pulumi.Input[str]]:
+        """
+        The path will match any unmatched path prefixes for the subdomain.
+        """
         return pulumi.get(self, "prefix")
 
     @prefix.setter
@@ -242,6 +300,9 @@ class _DomainRouteState:
     @property
     @pulumi.getter(name="replacePrefix")
     def replace_prefix(self) -> Optional[pulumi.Input[str]]:
+        """
+        A path prefix can be configured to be replaced when forwarding the request to the Workload.
+        """
         return pulumi.get(self, "replace_prefix")
 
     @replace_prefix.setter
@@ -251,6 +312,9 @@ class _DomainRouteState:
     @property
     @pulumi.getter(name="workloadLink")
     def workload_link(self) -> Optional[pulumi.Input[str]]:
+        """
+        The link of the workload to map the prefix to.
+        """
         return pulumi.get(self, "workload_link")
 
     @workload_link.setter
@@ -275,6 +339,15 @@ class DomainRoute(pulumi.CustomResource):
         Create a DomainRoute resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] domain_link: The self link of the domain to add the route to.
+        :param pulumi.Input[int] domain_port: The port the route corresponds to. Default: 443
+        :param pulumi.Input[str] host_prefix: This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+               target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+               Slack or at support@controlplane.com for additional details.
+        :param pulumi.Input[int] port: For the linked workload, the port to route traffic to.
+        :param pulumi.Input[str] prefix: The path will match any unmatched path prefixes for the subdomain.
+        :param pulumi.Input[str] replace_prefix: A path prefix can be configured to be replaced when forwarding the request to the Workload.
+        :param pulumi.Input[str] workload_link: The link of the workload to map the prefix to.
         """
         ...
     @overload
@@ -356,6 +429,15 @@ class DomainRoute(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] domain_link: The self link of the domain to add the route to.
+        :param pulumi.Input[int] domain_port: The port the route corresponds to. Default: 443
+        :param pulumi.Input[str] host_prefix: This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+               target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+               Slack or at support@controlplane.com for additional details.
+        :param pulumi.Input[int] port: For the linked workload, the port to route traffic to.
+        :param pulumi.Input[str] prefix: The path will match any unmatched path prefixes for the subdomain.
+        :param pulumi.Input[str] replace_prefix: A path prefix can be configured to be replaced when forwarding the request to the Workload.
+        :param pulumi.Input[str] workload_link: The link of the workload to map the prefix to.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -373,35 +455,58 @@ class DomainRoute(pulumi.CustomResource):
     @property
     @pulumi.getter(name="domainLink")
     def domain_link(self) -> pulumi.Output[str]:
+        """
+        The self link of the domain to add the route to.
+        """
         return pulumi.get(self, "domain_link")
 
     @property
     @pulumi.getter(name="domainPort")
     def domain_port(self) -> pulumi.Output[Optional[int]]:
+        """
+        The port the route corresponds to. Default: 443
+        """
         return pulumi.get(self, "domain_port")
 
     @property
     @pulumi.getter(name="hostPrefix")
     def host_prefix(self) -> pulumi.Output[Optional[str]]:
+        """
+        This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+        target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+        Slack or at support@controlplane.com for additional details.
+        """
         return pulumi.get(self, "host_prefix")
 
     @property
     @pulumi.getter
     def port(self) -> pulumi.Output[Optional[int]]:
+        """
+        For the linked workload, the port to route traffic to.
+        """
         return pulumi.get(self, "port")
 
     @property
     @pulumi.getter
     def prefix(self) -> pulumi.Output[str]:
+        """
+        The path will match any unmatched path prefixes for the subdomain.
+        """
         return pulumi.get(self, "prefix")
 
     @property
     @pulumi.getter(name="replacePrefix")
     def replace_prefix(self) -> pulumi.Output[Optional[str]]:
+        """
+        A path prefix can be configured to be replaced when forwarding the request to the Workload.
+        """
         return pulumi.get(self, "replace_prefix")
 
     @property
     @pulumi.getter(name="workloadLink")
     def workload_link(self) -> pulumi.Output[str]:
+        """
+        The link of the workload to map the prefix to.
+        """
         return pulumi.get(self, "workload_link")
 

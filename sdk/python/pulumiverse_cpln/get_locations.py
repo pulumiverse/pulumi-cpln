@@ -62,7 +62,7 @@ def get_locations(opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetLo
 
     The following attributes are exported:
 
-    - **locations** (Block List, Max: 1) (see below).
+    - **locations** (Block List) (see below).
 
     <a id="nestedblock--locations"></a>
 
@@ -120,7 +120,7 @@ def get_locations_output(opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.
 
     The following attributes are exported:
 
-    - **locations** (Block List, Max: 1) (see below).
+    - **locations** (Block List) (see below).
 
     <a id="nestedblock--locations"></a>
 

@@ -13,18 +13,33 @@ namespace Pulumiverse.Cpln
     [CplnResourceType("cpln:index/serviceAccountKey:ServiceAccountKey")]
     public partial class ServiceAccountKey : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The timestamp, in UTC, when the key was created.
+        /// </summary>
         [Output("created")]
         public Output<string> Created { get; private set; } = null!;
 
+        /// <summary>
+        /// Description of the Service Account Key.
+        /// </summary>
         [Output("description")]
         public Output<string> Description { get; private set; } = null!;
 
+        /// <summary>
+        /// The generated key.
+        /// </summary>
         [Output("key")]
         public Output<string> Key { get; private set; } = null!;
 
+        /// <summary>
+        /// The generated name of the key.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// The name of an existing Service Account this key will belong to.
+        /// </summary>
         [Output("serviceAccountName")]
         public Output<string> ServiceAccountName { get; private set; } = null!;
 
@@ -79,9 +94,15 @@ namespace Pulumiverse.Cpln
 
     public sealed class ServiceAccountKeyArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Description of the Service Account Key.
+        /// </summary>
         [Input("description", required: true)]
         public Input<string> Description { get; set; } = null!;
 
+        /// <summary>
+        /// The name of an existing Service Account this key will belong to.
+        /// </summary>
         [Input("serviceAccountName", required: true)]
         public Input<string> ServiceAccountName { get; set; } = null!;
 
@@ -93,14 +114,24 @@ namespace Pulumiverse.Cpln
 
     public sealed class ServiceAccountKeyState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The timestamp, in UTC, when the key was created.
+        /// </summary>
         [Input("created")]
         public Input<string>? Created { get; set; }
 
+        /// <summary>
+        /// Description of the Service Account Key.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
         [Input("key")]
         private Input<string>? _key;
+
+        /// <summary>
+        /// The generated key.
+        /// </summary>
         public Input<string>? Key
         {
             get => _key;
@@ -111,9 +142,15 @@ namespace Pulumiverse.Cpln
             }
         }
 
+        /// <summary>
+        /// The generated name of the key.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// The name of an existing Service Account this key will belong to.
+        /// </summary>
         [Input("serviceAccountName")]
         public Input<string>? ServiceAccountName { get; set; }
 

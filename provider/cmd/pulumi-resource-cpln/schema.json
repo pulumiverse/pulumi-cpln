@@ -726,6 +726,32 @@
                 "domainAutoMembers"
             ]
         },
+        "cpln:index/OrgLoggingCloudWatchLogging:OrgLoggingCloudWatchLogging": {
+            "properties": {
+                "credentials": {
+                    "type": "string"
+                },
+                "groupName": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "retentionDays": {
+                    "type": "integer"
+                },
+                "streamName": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "credentials",
+                "groupName",
+                "region",
+                "streamName"
+            ]
+        },
         "cpln:index/OrgLoggingCoralogixLogging:OrgLoggingCoralogixLogging": {
             "properties": {
                 "app": {
@@ -863,6 +889,20 @@
                 "type"
             ]
         },
+        "cpln:index/OrgLoggingFluentdLogging:OrgLoggingFluentdLogging": {
+            "properties": {
+                "host": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "host"
+            ]
+        },
         "cpln:index/OrgLoggingLogzioLogging:OrgLoggingLogzioLogging": {
             "properties": {
                 "credentials": {
@@ -898,6 +938,21 @@
                 "bucket",
                 "credentials",
                 "region"
+            ]
+        },
+        "cpln:index/OrgLoggingStackdriverLogging:OrgLoggingStackdriverLogging": {
+            "properties": {
+                "credentials": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "credentials",
+                "location"
             ]
         },
         "cpln:index/OrgObservability:OrgObservability": {
@@ -1751,7 +1806,6 @@
             },
             "type": "object",
             "required": [
-                "autoscaling",
                 "location"
             ]
         },
@@ -1799,10 +1853,7 @@
                     "type": "integer"
                 }
             },
-            "type": "object",
-            "required": [
-                "autoscaling"
-            ]
+            "type": "object"
         },
         "cpln:index/WorkloadOptionsAutoscaling:WorkloadOptionsAutoscaling": {
             "properties": {
@@ -2068,6 +2119,262 @@
                 "envoy"
             ]
         },
+        "cpln:index/getImageManifest:getImageManifest": {
+            "properties": {
+                "configs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/getImageManifestConfig:getImageManifestConfig"
+                    }
+                },
+                "layers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/getImageManifestLayer:getImageManifestLayer"
+                    }
+                },
+                "mediaType": {
+                    "type": "string"
+                },
+                "schemaVersion": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "configs",
+                "layers",
+                "mediaType",
+                "schemaVersion"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "cpln:index/getImageManifestConfig:getImageManifestConfig": {
+            "properties": {
+                "digest": {
+                    "type": "string"
+                },
+                "mediaType": {
+                    "type": "string"
+                },
+                "size": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "digest",
+                "mediaType",
+                "size"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "cpln:index/getImageManifestLayer:getImageManifestLayer": {
+            "properties": {
+                "digest": {
+                    "type": "string"
+                },
+                "mediaType": {
+                    "type": "string"
+                },
+                "size": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "digest",
+                "mediaType",
+                "size"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "cpln:index/getImagesImage:getImagesImage": {
+            "properties": {
+                "cplnId": {
+                    "type": "string"
+                },
+                "digest": {
+                    "type": "string"
+                },
+                "manifests": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/getImagesImageManifest:getImagesImageManifest"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "repository": {
+                    "type": "string"
+                },
+                "selfLink": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "cplnId",
+                "digest",
+                "manifests",
+                "name",
+                "repository",
+                "selfLink",
+                "tag",
+                "tags"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "cpln:index/getImagesImageManifest:getImagesImageManifest": {
+            "properties": {
+                "configs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/getImagesImageManifestConfig:getImagesImageManifestConfig"
+                    }
+                },
+                "layers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/getImagesImageManifestLayer:getImagesImageManifestLayer"
+                    }
+                },
+                "mediaType": {
+                    "type": "string"
+                },
+                "schemaVersion": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "configs",
+                "layers",
+                "mediaType",
+                "schemaVersion"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "cpln:index/getImagesImageManifestConfig:getImagesImageManifestConfig": {
+            "properties": {
+                "digest": {
+                    "type": "string"
+                },
+                "mediaType": {
+                    "type": "string"
+                },
+                "size": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "digest",
+                "mediaType",
+                "size"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "cpln:index/getImagesImageManifestLayer:getImagesImageManifestLayer": {
+            "properties": {
+                "digest": {
+                    "type": "string"
+                },
+                "mediaType": {
+                    "type": "string"
+                },
+                "size": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "digest",
+                "mediaType",
+                "size"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "cpln:index/getImagesQuery:getImagesQuery": {
+            "properties": {
+                "fetch": {
+                    "type": "string"
+                },
+                "spec": {
+                    "$ref": "#/types/cpln:index/getImagesQuerySpec:getImagesQuerySpec"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/getImagesQuerySpec:getImagesQuerySpec": {
+            "properties": {
+                "match": {
+                    "type": "string"
+                },
+                "terms": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/getImagesQuerySpecTerm:getImagesQuerySpecTerm"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/getImagesQuerySpecTerm:getImagesQuerySpecTerm": {
+            "properties": {
+                "op": {
+                    "type": "string"
+                },
+                "property": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
         "cpln:index/getLocationGeo:getLocationGeo": {
             "properties": {
                 "city": {
@@ -2223,25 +2530,31 @@
         "cpln:index/agent:Agent": {
             "properties": {
                 "cplnId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID, in GUID format, of the Agent.\n"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Agent.\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of the Agent.\n"
                 },
                 "selfLink": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Full link to this resource. Can be referenced by other resources.\n"
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 },
                 "userData": {
                     "type": "string",
+                    "description": "The JSON output needed when [creating an agent](https://docs.controlplane.com/guides/agent).\n",
                     "secret": true
                 }
             },
@@ -2253,43 +2566,52 @@
             ],
             "inputProperties": {
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Agent.\n"
                 },
                 "name": {
                     "type": "string",
+                    "description": "Name of the Agent.\n",
                     "willReplaceOnChanges": true
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 }
             },
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Agent resources.\n",
                 "properties": {
                     "cplnId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID, in GUID format, of the Agent.\n"
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Description of the Agent.\n"
                     },
                     "name": {
                         "type": "string",
+                        "description": "Name of the Agent.\n",
                         "willReplaceOnChanges": true
                     },
                     "selfLink": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Full link to this resource. Can be referenced by other resources.\n"
                     },
                     "tags": {
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Key-value map of resource tags.\n"
                     },
                     "userData": {
                         "type": "string",
+                        "description": "The JSON output needed when [creating an agent](https://docs.controlplane.com/guides/agent).\n",
                         "secret": true
                     }
                 },
@@ -2299,22 +2621,27 @@
         "cpln:index/auditContext:AuditContext": {
             "properties": {
                 "cplnId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID, in GUID format, of the Audit Context.\n"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Audit Context.\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of the Audit Context.\n"
                 },
                 "selfLink": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Full link to this resource. Can be referenced by other resources.\n"
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 }
             },
             "required": [
@@ -2324,40 +2651,48 @@
             ],
             "inputProperties": {
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Audit Context.\n"
                 },
                 "name": {
                     "type": "string",
+                    "description": "Name of the Audit Context.\n",
                     "willReplaceOnChanges": true
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 }
             },
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering AuditContext resources.\n",
                 "properties": {
                     "cplnId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID, in GUID format, of the Audit Context.\n"
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Description of the Audit Context.\n"
                     },
                     "name": {
                         "type": "string",
+                        "description": "Name of the Audit Context.\n",
                         "willReplaceOnChanges": true
                     },
                     "selfLink": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Full link to this resource. Can be referenced by other resources.\n"
                     },
                     "tags": {
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Key-value map of resource tags.\n"
                     }
                 },
                 "type": "object"
@@ -2372,10 +2707,12 @@
                     "$ref": "#/types/cpln:index/CloudAccountAzure:CloudAccountAzure"
                 },
                 "cplnId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID, in GUID format, of the Cloud Account.\n"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Cloud Account.\n"
                 },
                 "gcp": {
                     "$ref": "#/types/cpln:index/CloudAccountGcp:CloudAccountGcp"
@@ -2387,10 +2724,12 @@
                     }
                 },
                 "gcpServiceAccountName": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "GCP service account name used during the configuration of the cloud account at GCP.\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of the Cloud Account.\n"
                 },
                 "ngs": {
                     "$ref": "#/types/cpln:index/CloudAccountNgs:CloudAccountNgs"
@@ -2402,7 +2741,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 }
             },
             "required": [
@@ -2420,13 +2760,15 @@
                     "$ref": "#/types/cpln:index/CloudAccountAzure:CloudAccountAzure"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Cloud Account.\n"
                 },
                 "gcp": {
                     "$ref": "#/types/cpln:index/CloudAccountGcp:CloudAccountGcp"
                 },
                 "name": {
                     "type": "string",
+                    "description": "Name of the Cloud Account.\n",
                     "willReplaceOnChanges": true
                 },
                 "ngs": {
@@ -2436,7 +2778,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 }
             },
             "stateInputs": {
@@ -2449,10 +2792,12 @@
                         "$ref": "#/types/cpln:index/CloudAccountAzure:CloudAccountAzure"
                     },
                     "cplnId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID, in GUID format, of the Cloud Account.\n"
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Description of the Cloud Account.\n"
                     },
                     "gcp": {
                         "$ref": "#/types/cpln:index/CloudAccountGcp:CloudAccountGcp"
@@ -2464,10 +2809,12 @@
                         }
                     },
                     "gcpServiceAccountName": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "GCP service account name used during the configuration of the cloud account at GCP.\n"
                     },
                     "name": {
                         "type": "string",
+                        "description": "Name of the Cloud Account.\n",
                         "willReplaceOnChanges": true
                     },
                     "ngs": {
@@ -2480,7 +2827,8 @@
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Key-value map of resource tags.\n"
                     }
                 },
                 "type": "object"
@@ -2489,16 +2837,20 @@
         "cpln:index/domain:Domain": {
             "properties": {
                 "cplnId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID, in GUID format, of the Domain.\n"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the domain name.\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with\nDNS. Create and Update will fail if the required DNS entries cannot be validated.\n"
                 },
                 "selfLink": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Full link to this resource. Can be referenced by other resources.\n"
                 },
                 "spec": {
                     "$ref": "#/types/cpln:index/DomainSpec:DomainSpec"
@@ -2513,7 +2865,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 }
             },
             "required": [
@@ -2525,10 +2878,12 @@
             ],
             "inputProperties": {
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the domain name.\n"
                 },
                 "name": {
                     "type": "string",
+                    "description": "Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with\nDNS. Create and Update will fail if the required DNS entries cannot be validated.\n",
                     "willReplaceOnChanges": true
                 },
                 "spec": {
@@ -2538,7 +2893,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 }
             },
             "requiredInputs": [
@@ -2548,17 +2904,21 @@
                 "description": "Input properties used for looking up and filtering Domain resources.\n",
                 "properties": {
                     "cplnId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID, in GUID format, of the Domain.\n"
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Description of the domain name.\n"
                     },
                     "name": {
                         "type": "string",
+                        "description": "Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with\nDNS. Create and Update will fail if the required DNS entries cannot be validated.\n",
                         "willReplaceOnChanges": true
                     },
                     "selfLink": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Full link to this resource. Can be referenced by other resources.\n"
                     },
                     "spec": {
                         "$ref": "#/types/cpln:index/DomainSpec:DomainSpec"
@@ -2573,7 +2933,8 @@
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Key-value map of resource tags.\n"
                     }
                 },
                 "type": "object"
@@ -2582,25 +2943,32 @@
         "cpln:index/domainRoute:DomainRoute": {
             "properties": {
                 "domainLink": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The self link of the domain to add the route to.\n"
                 },
                 "domainPort": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The port the route corresponds to. Default: 443\n"
                 },
                 "hostPrefix": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "This option allows forwarding traffic for different host headers to different workloads. This will only be used when the\ntarget GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on\nSlack or at support@controlplane.com for additional details.\n"
                 },
                 "port": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "For the linked workload, the port to route traffic to.\n"
                 },
                 "prefix": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The path will match any unmatched path prefixes for the subdomain.\n"
                 },
                 "replacePrefix": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "A path prefix can be configured to be replaced when forwarding the request to the Workload.\n"
                 },
                 "workloadLink": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The link of the workload to map the prefix to.\n"
                 }
             },
             "required": [
@@ -2611,27 +2979,34 @@
             "inputProperties": {
                 "domainLink": {
                     "type": "string",
+                    "description": "The self link of the domain to add the route to.\n",
                     "willReplaceOnChanges": true
                 },
                 "domainPort": {
                     "type": "integer",
+                    "description": "The port the route corresponds to. Default: 443\n",
                     "willReplaceOnChanges": true
                 },
                 "hostPrefix": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "This option allows forwarding traffic for different host headers to different workloads. This will only be used when the\ntarget GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on\nSlack or at support@controlplane.com for additional details.\n"
                 },
                 "port": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "For the linked workload, the port to route traffic to.\n"
                 },
                 "prefix": {
                     "type": "string",
+                    "description": "The path will match any unmatched path prefixes for the subdomain.\n",
                     "willReplaceOnChanges": true
                 },
                 "replacePrefix": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "A path prefix can be configured to be replaced when forwarding the request to the Workload.\n"
                 },
                 "workloadLink": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The link of the workload to map the prefix to.\n"
                 }
             },
             "requiredInputs": [
@@ -2644,27 +3019,34 @@
                 "properties": {
                     "domainLink": {
                         "type": "string",
+                        "description": "The self link of the domain to add the route to.\n",
                         "willReplaceOnChanges": true
                     },
                     "domainPort": {
                         "type": "integer",
+                        "description": "The port the route corresponds to. Default: 443\n",
                         "willReplaceOnChanges": true
                     },
                     "hostPrefix": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "This option allows forwarding traffic for different host headers to different workloads. This will only be used when the\ntarget GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on\nSlack or at support@controlplane.com for additional details.\n"
                     },
                     "port": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "For the linked workload, the port to route traffic to.\n"
                     },
                     "prefix": {
                         "type": "string",
+                        "description": "The path will match any unmatched path prefixes for the subdomain.\n",
                         "willReplaceOnChanges": true
                     },
                     "replacePrefix": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "A path prefix can be configured to be replaced when forwarding the request to the Workload.\n"
                     },
                     "workloadLink": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The link of the workload to map the prefix to.\n"
                     }
                 },
                 "type": "object"
@@ -2673,10 +3055,12 @@
         "cpln:index/group:Group": {
             "properties": {
                 "cplnId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID, in GUID format, of the Group.\n"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of Group.\n"
                 },
                 "identityMatcher": {
                     "$ref": "#/types/cpln:index/GroupIdentityMatcher:GroupIdentityMatcher"
@@ -2685,10 +3069,12 @@
                     "$ref": "#/types/cpln:index/GroupMemberQuery:GroupMemberQuery"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of the Group.\n"
                 },
                 "origin": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Origin of the service account. Either `builtin` or `default`.\n"
                 },
                 "selfLink": {
                     "type": "string"
@@ -2697,19 +3083,22 @@
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "List of service accounts that exists within the configured org. Group membership will fail if the service account does\nnot exits within the org.\n"
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 },
                 "userIdsAndEmails": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "List of either the user ID or email address for a user that exists within the configured org. Group membership will fail\nif the user ID / email does not exist within the org.\n"
                 }
             },
             "required": [
@@ -2720,7 +3109,8 @@
             ],
             "inputProperties": {
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of Group.\n"
                 },
                 "identityMatcher": {
                     "$ref": "#/types/cpln:index/GroupIdentityMatcher:GroupIdentityMatcher"
@@ -2730,35 +3120,41 @@
                 },
                 "name": {
                     "type": "string",
+                    "description": "Name of the Group.\n",
                     "willReplaceOnChanges": true
                 },
                 "serviceAccounts": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "List of service accounts that exists within the configured org. Group membership will fail if the service account does\nnot exits within the org.\n"
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 },
                 "userIdsAndEmails": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "List of either the user ID or email address for a user that exists within the configured org. Group membership will fail\nif the user ID / email does not exist within the org.\n"
                 }
             },
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Group resources.\n",
                 "properties": {
                     "cplnId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID, in GUID format, of the Group.\n"
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Description of Group.\n"
                     },
                     "identityMatcher": {
                         "$ref": "#/types/cpln:index/GroupIdentityMatcher:GroupIdentityMatcher"
@@ -2768,10 +3164,12 @@
                     },
                     "name": {
                         "type": "string",
+                        "description": "Name of the Group.\n",
                         "willReplaceOnChanges": true
                     },
                     "origin": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Origin of the service account. Either `builtin` or `default`.\n"
                     },
                     "selfLink": {
                         "type": "string"
@@ -2780,19 +3178,22 @@
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "List of service accounts that exists within the configured org. Group membership will fail if the service account does\nnot exits within the org.\n"
                     },
                     "tags": {
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Key-value map of resource tags.\n"
                     },
                     "userIdsAndEmails": {
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "List of either the user ID or email address for a user that exists within the configured org. Group membership will fail\nif the user ID / email does not exist within the org.\n"
                     }
                 },
                 "type": "object"
@@ -2801,26 +3202,31 @@
         "cpln:index/gvc:Gvc": {
             "properties": {
                 "alias": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The alias name of the GVC.\n"
                 },
                 "controlplaneTracing": {
                     "$ref": "#/types/cpln:index/GvcControlplaneTracing:GvcControlplaneTracing"
                 },
                 "cplnId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID, in GUID format, of the GVC.\n"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the GVC.\n"
                 },
                 "domain": {
                     "type": "string",
+                    "description": "Custom domain name used by associated workloads.\n",
                     "deprecationMessage": "Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead."
                 },
                 "env": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value array of resource env variables.\n"
                 },
                 "lightstepTracing": {
                     "$ref": "#/types/cpln:index/GvcLightstepTracing:GvcLightstepTracing"
@@ -2832,10 +3238,12 @@
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of the GVC.\n"
                 },
                 "otelTracing": {
                     "$ref": "#/types/cpln:index/GvcOtelTracing:GvcOtelTracing"
@@ -2844,10 +3252,12 @@
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any\nprivate image repository referenced by Workloads within the GVC.\n"
                 },
                 "selfLink": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Full link to this resource. Can be referenced by other resources.\n"
                 },
                 "sidecar": {
                     "$ref": "#/types/cpln:index/GvcSidecar:GvcSidecar"
@@ -2856,7 +3266,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 }
             },
             "required": [
@@ -2870,17 +3281,20 @@
                     "$ref": "#/types/cpln:index/GvcControlplaneTracing:GvcControlplaneTracing"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the GVC.\n"
                 },
                 "domain": {
                     "type": "string",
+                    "description": "Custom domain name used by associated workloads.\n",
                     "deprecationMessage": "Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead."
                 },
                 "env": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value array of resource env variables.\n"
                 },
                 "lightstepTracing": {
                     "$ref": "#/types/cpln:index/GvcLightstepTracing:GvcLightstepTracing"
@@ -2892,10 +3306,12 @@
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.\n"
                 },
                 "name": {
                     "type": "string",
+                    "description": "Name of the GVC.\n",
                     "willReplaceOnChanges": true
                 },
                 "otelTracing": {
@@ -2905,7 +3321,8 @@
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any\nprivate image repository referenced by Workloads within the GVC.\n"
                 },
                 "sidecar": {
                     "$ref": "#/types/cpln:index/GvcSidecar:GvcSidecar"
@@ -2914,33 +3331,39 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 }
             },
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Gvc resources.\n",
                 "properties": {
                     "alias": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The alias name of the GVC.\n"
                     },
                     "controlplaneTracing": {
                         "$ref": "#/types/cpln:index/GvcControlplaneTracing:GvcControlplaneTracing"
                     },
                     "cplnId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID, in GUID format, of the GVC.\n"
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Description of the GVC.\n"
                     },
                     "domain": {
                         "type": "string",
+                        "description": "Custom domain name used by associated workloads.\n",
                         "deprecationMessage": "Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead."
                     },
                     "env": {
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Key-value array of resource env variables.\n"
                     },
                     "lightstepTracing": {
                         "$ref": "#/types/cpln:index/GvcLightstepTracing:GvcLightstepTracing"
@@ -2952,10 +3375,12 @@
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.\n"
                     },
                     "name": {
                         "type": "string",
+                        "description": "Name of the GVC.\n",
                         "willReplaceOnChanges": true
                     },
                     "otelTracing": {
@@ -2965,10 +3390,12 @@
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any\nprivate image repository referenced by Workloads within the GVC.\n"
                     },
                     "selfLink": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Full link to this resource. Can be referenced by other resources.\n"
                     },
                     "sidecar": {
                         "$ref": "#/types/cpln:index/GvcSidecar:GvcSidecar"
@@ -2977,7 +3404,8 @@
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Key-value map of resource tags.\n"
                     }
                 },
                 "type": "object"
@@ -2992,49 +3420,59 @@
                     "$ref": "#/types/cpln:index/IdentityAzureAccessPolicy:IdentityAzureAccessPolicy"
                 },
                 "cplnId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "ID, in GUID format, of the Identity.\n"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Identity.\n"
                 },
                 "gcpAccessPolicy": {
-                    "$ref": "#/types/cpln:index/IdentityGcpAccessPolicy:IdentityGcpAccessPolicy"
+                    "$ref": "#/types/cpln:index/IdentityGcpAccessPolicy:IdentityGcpAccessPolicy",
+                    "description": "The GCP access policy can either contain an existing service_account or multiple bindings.\n"
                 },
                 "gvc": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of the GVC.\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of the Identity.\n"
                 },
                 "nativeNetworkResources": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/IdentityNativeNetworkResource:IdentityNativeNetworkResource"
-                    }
+                    },
+                    "description": "~\u003e **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.\n"
                 },
                 "networkResources": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/IdentityNetworkResource:IdentityNetworkResource"
-                    }
+                    },
+                    "description": "A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and\nports. - IP's and ports.\n"
                 },
                 "ngsAccessPolicy": {
                     "$ref": "#/types/cpln:index/IdentityNgsAccessPolicy:IdentityNgsAccessPolicy"
                 },
                 "selfLink": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Full link to this resource. Can be referenced by other resources.\n"
                 },
                 "status": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of identity status. Available fields: `objectName`.\n"
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 }
             },
             "required": [
@@ -3052,30 +3490,36 @@
                     "$ref": "#/types/cpln:index/IdentityAzureAccessPolicy:IdentityAzureAccessPolicy"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Identity.\n"
                 },
                 "gcpAccessPolicy": {
-                    "$ref": "#/types/cpln:index/IdentityGcpAccessPolicy:IdentityGcpAccessPolicy"
+                    "$ref": "#/types/cpln:index/IdentityGcpAccessPolicy:IdentityGcpAccessPolicy",
+                    "description": "The GCP access policy can either contain an existing service_account or multiple bindings.\n"
                 },
                 "gvc": {
                     "type": "string",
+                    "description": "Name of the GVC.\n",
                     "willReplaceOnChanges": true
                 },
                 "name": {
                     "type": "string",
+                    "description": "Name of the Identity.\n",
                     "willReplaceOnChanges": true
                 },
                 "nativeNetworkResources": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/IdentityNativeNetworkResource:IdentityNativeNetworkResource"
-                    }
+                    },
+                    "description": "~\u003e **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.\n"
                 },
                 "networkResources": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/IdentityNetworkResource:IdentityNetworkResource"
-                    }
+                    },
+                    "description": "A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and\nports. - IP's and ports.\n"
                 },
                 "ngsAccessPolicy": {
                     "$ref": "#/types/cpln:index/IdentityNgsAccessPolicy:IdentityNgsAccessPolicy"
@@ -3084,7 +3528,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 }
             },
             "requiredInputs": [
@@ -3100,51 +3545,61 @@
                         "$ref": "#/types/cpln:index/IdentityAzureAccessPolicy:IdentityAzureAccessPolicy"
                     },
                     "cplnId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "ID, in GUID format, of the Identity.\n"
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Description of the Identity.\n"
                     },
                     "gcpAccessPolicy": {
-                        "$ref": "#/types/cpln:index/IdentityGcpAccessPolicy:IdentityGcpAccessPolicy"
+                        "$ref": "#/types/cpln:index/IdentityGcpAccessPolicy:IdentityGcpAccessPolicy",
+                        "description": "The GCP access policy can either contain an existing service_account or multiple bindings.\n"
                     },
                     "gvc": {
                         "type": "string",
+                        "description": "Name of the GVC.\n",
                         "willReplaceOnChanges": true
                     },
                     "name": {
                         "type": "string",
+                        "description": "Name of the Identity.\n",
                         "willReplaceOnChanges": true
                     },
                     "nativeNetworkResources": {
                         "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/IdentityNativeNetworkResource:IdentityNativeNetworkResource"
-                        }
+                        },
+                        "description": "~\u003e **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.\n"
                     },
                     "networkResources": {
                         "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/IdentityNetworkResource:IdentityNetworkResource"
-                        }
+                        },
+                        "description": "A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and\nports. - IP's and ports.\n"
                     },
                     "ngsAccessPolicy": {
                         "$ref": "#/types/cpln:index/IdentityNgsAccessPolicy:IdentityNgsAccessPolicy"
                     },
                     "selfLink": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Full link to this resource. Can be referenced by other resources.\n"
                     },
                     "status": {
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Key-value map of identity status. Available fields: `objectName`.\n"
                     },
                     "tags": {
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Key-value map of resource tags.\n"
                     }
                 },
                 "type": "object"
@@ -3153,46 +3608,56 @@
         "cpln:index/org:Org": {
             "properties": {
                 "accountId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be\nobtained from the `Org Management \u0026 Billing` page.\n"
                 },
                 "authConfig": {
                     "$ref": "#/types/cpln:index/OrgAuthConfig:OrgAuthConfig"
                 },
                 "cplnId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID, in GUID format, of the org.\n"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The description of org.\n"
                 },
                 "invitees": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to\nthe `superusers` group. The user account used when creating the org will be included in this list.\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the org.\n"
                 },
                 "observability": {
-                    "$ref": "#/types/cpln:index/OrgObservability:OrgObservability"
+                    "$ref": "#/types/cpln:index/OrgObservability:OrgObservability",
+                    "description": "The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.\n"
                 },
                 "selfLink": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Full link to this resource. Can be referenced by other resources.\n"
                 },
                 "sessionTimeoutSeconds": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)\n"
                 },
                 "statuses": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/OrgStatus:OrgStatus"
-                    }
+                    },
+                    "description": "Status of the org.\n"
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of the org's tags.\n"
                 }
             },
             "required": [
@@ -3204,31 +3669,37 @@
             ],
             "inputProperties": {
                 "accountId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be\nobtained from the `Org Management \u0026 Billing` page.\n"
                 },
                 "authConfig": {
                     "$ref": "#/types/cpln:index/OrgAuthConfig:OrgAuthConfig"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The description of org.\n"
                 },
                 "invitees": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to\nthe `superusers` group. The user account used when creating the org will be included in this list.\n"
                 },
                 "observability": {
-                    "$ref": "#/types/cpln:index/OrgObservability:OrgObservability"
+                    "$ref": "#/types/cpln:index/OrgObservability:OrgObservability",
+                    "description": "The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.\n"
                 },
                 "sessionTimeoutSeconds": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)\n"
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of the org's tags.\n"
                 }
             },
             "requiredInputs": [
@@ -3238,46 +3709,56 @@
                 "description": "Input properties used for looking up and filtering Org resources.\n",
                 "properties": {
                     "accountId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be\nobtained from the `Org Management \u0026 Billing` page.\n"
                     },
                     "authConfig": {
                         "$ref": "#/types/cpln:index/OrgAuthConfig:OrgAuthConfig"
                     },
                     "cplnId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID, in GUID format, of the org.\n"
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The description of org.\n"
                     },
                     "invitees": {
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to\nthe `superusers` group. The user account used when creating the org will be included in this list.\n"
                     },
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The name of the org.\n"
                     },
                     "observability": {
-                        "$ref": "#/types/cpln:index/OrgObservability:OrgObservability"
+                        "$ref": "#/types/cpln:index/OrgObservability:OrgObservability",
+                        "description": "The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.\n"
                     },
                     "selfLink": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Full link to this resource. Can be referenced by other resources.\n"
                     },
                     "sessionTimeoutSeconds": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)\n"
                     },
                     "statuses": {
                         "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/OrgStatus:OrgStatus"
-                        }
+                        },
+                        "description": "Status of the org.\n"
                     },
                     "tags": {
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Key-value map of the org's tags.\n"
                     }
                 },
                 "type": "object"
@@ -3285,23 +3766,33 @@
         },
         "cpln:index/orgLogging:OrgLogging": {
             "properties": {
+                "cloudWatchLoggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingCloudWatchLogging:OrgLoggingCloudWatchLogging"
+                    }
+                },
                 "coralogixLoggings": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/OrgLoggingCoralogixLogging:OrgLoggingCoralogixLogging"
-                    }
+                    },
+                    "description": "[Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)\n"
                 },
                 "cplnId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID, in GUID format, of the org.\n"
                 },
                 "datadogLoggings": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/OrgLoggingDatadogLogging:OrgLoggingDatadogLogging"
-                    }
+                    },
+                    "description": "[Documentation Reference](https://docs.controlplane.com/external-logging/datadog)\n"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The description of org.\n"
                 },
                 "elasticLoggings": {
                     "type": "array",
@@ -3309,26 +3800,42 @@
                         "$ref": "#/types/cpln:index/OrgLoggingElasticLogging:OrgLoggingElasticLogging"
                     }
                 },
+                "fluentdLoggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingFluentdLogging:OrgLoggingFluentdLogging"
+                    }
+                },
                 "logzioLoggings": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/OrgLoggingLogzioLogging:OrgLoggingLogzioLogging"
-                    }
+                    },
+                    "description": "[Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the org.\n"
                 },
                 "s3Loggings": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/OrgLoggingS3Logging:OrgLoggingS3Logging"
+                    },
+                    "description": "[Documentation Reference](https://docs.controlplane.com/external-logging/s3)\n"
+                },
+                "stackdriverLoggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingStackdriverLogging:OrgLoggingStackdriverLogging"
                     }
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of the org's tags.\n"
                 }
             },
             "required": [
@@ -3338,17 +3845,25 @@
                 "tags"
             ],
             "inputProperties": {
+                "cloudWatchLoggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingCloudWatchLogging:OrgLoggingCloudWatchLogging"
+                    }
+                },
                 "coralogixLoggings": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/OrgLoggingCoralogixLogging:OrgLoggingCoralogixLogging"
-                    }
+                    },
+                    "description": "[Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)\n"
                 },
                 "datadogLoggings": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/OrgLoggingDatadogLogging:OrgLoggingDatadogLogging"
-                    }
+                    },
+                    "description": "[Documentation Reference](https://docs.controlplane.com/external-logging/datadog)\n"
                 },
                 "elasticLoggings": {
                     "type": "array",
@@ -3356,39 +3871,63 @@
                         "$ref": "#/types/cpln:index/OrgLoggingElasticLogging:OrgLoggingElasticLogging"
                     }
                 },
+                "fluentdLoggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingFluentdLogging:OrgLoggingFluentdLogging"
+                    }
+                },
                 "logzioLoggings": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/OrgLoggingLogzioLogging:OrgLoggingLogzioLogging"
-                    }
+                    },
+                    "description": "[Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)\n"
                 },
                 "s3Loggings": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/OrgLoggingS3Logging:OrgLoggingS3Logging"
+                    },
+                    "description": "[Documentation Reference](https://docs.controlplane.com/external-logging/s3)\n"
+                },
+                "stackdriverLoggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingStackdriverLogging:OrgLoggingStackdriverLogging"
                     }
                 }
             },
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering OrgLogging resources.\n",
                 "properties": {
+                    "cloudWatchLoggings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/OrgLoggingCloudWatchLogging:OrgLoggingCloudWatchLogging"
+                        }
+                    },
                     "coralogixLoggings": {
                         "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/OrgLoggingCoralogixLogging:OrgLoggingCoralogixLogging"
-                        }
+                        },
+                        "description": "[Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)\n"
                     },
                     "cplnId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID, in GUID format, of the org.\n"
                     },
                     "datadogLoggings": {
                         "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/OrgLoggingDatadogLogging:OrgLoggingDatadogLogging"
-                        }
+                        },
+                        "description": "[Documentation Reference](https://docs.controlplane.com/external-logging/datadog)\n"
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The description of org.\n"
                     },
                     "elasticLoggings": {
                         "type": "array",
@@ -3396,26 +3935,42 @@
                             "$ref": "#/types/cpln:index/OrgLoggingElasticLogging:OrgLoggingElasticLogging"
                         }
                     },
+                    "fluentdLoggings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/OrgLoggingFluentdLogging:OrgLoggingFluentdLogging"
+                        }
+                    },
                     "logzioLoggings": {
                         "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/OrgLoggingLogzioLogging:OrgLoggingLogzioLogging"
-                        }
+                        },
+                        "description": "[Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)\n"
                     },
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The name of the org.\n"
                     },
                     "s3Loggings": {
                         "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/OrgLoggingS3Logging:OrgLoggingS3Logging"
+                        },
+                        "description": "[Documentation Reference](https://docs.controlplane.com/external-logging/s3)\n"
+                    },
+                    "stackdriverLoggings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/OrgLoggingStackdriverLogging:OrgLoggingStackdriverLogging"
                         }
                     },
                     "tags": {
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Key-value map of the org's tags.\n"
                     }
                 },
                 "type": "object"
@@ -3427,16 +3982,19 @@
                     "$ref": "#/types/cpln:index/OrgTracingControlplaneTracing:OrgTracingControlplaneTracing"
                 },
                 "cplnId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID, in GUID format, of the org.\n"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The description of org.\n"
                 },
                 "lightstepTracing": {
                     "$ref": "#/types/cpln:index/OrgTracingLightstepTracing:OrgTracingLightstepTracing"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the org.\n"
                 },
                 "otelTracing": {
                     "$ref": "#/types/cpln:index/OrgTracingOtelTracing:OrgTracingOtelTracing"
@@ -3445,7 +4003,8 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of the org's tags.\n"
                 }
             },
             "required": [
@@ -3472,16 +4031,19 @@
                         "$ref": "#/types/cpln:index/OrgTracingControlplaneTracing:OrgTracingControlplaneTracing"
                     },
                     "cplnId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID, in GUID format, of the org.\n"
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The description of org.\n"
                     },
                     "lightstepTracing": {
                         "$ref": "#/types/cpln:index/OrgTracingLightstepTracing:OrgTracingLightstepTracing"
                     },
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The name of the org.\n"
                     },
                     "otelTracing": {
                         "$ref": "#/types/cpln:index/OrgTracingOtelTracing:OrgTracingOtelTracing"
@@ -3490,7 +4052,8 @@
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Key-value map of the org's tags.\n"
                     }
                 },
                 "type": "object"
@@ -3505,40 +4068,50 @@
                     }
                 },
                 "cplnId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID, in GUID format, of the Policy.\n"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Policy.\n"
                 },
                 "gvc": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The GVC for `identity`, `workload` and `volumeset` target kinds only.\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of the Policy.\n"
                 },
                 "origin": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Origin of the Policy. Either `builtin` or `default`.\n"
                 },
                 "selfLink": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Full link to this resource. Can be referenced by other resources.\n"
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 },
                 "target": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,\ndo not include the attribute.\n"
                 },
                 "targetKind": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The kind of resource to target (e.g., gvc, serviceaccount, etc.).\n"
                 },
                 "targetLinks": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "List of the targets this policy will be applied to. Not used if `target` is set to `all`.\n"
                 },
                 "targetQuery": {
                     "$ref": "#/types/cpln:index/PolicyTargetQuery:PolicyTargetQuery"
@@ -3559,36 +4132,40 @@
                     }
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Policy.\n"
                 },
                 "gvc": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The GVC for `identity`, `workload` and `volumeset` target kinds only.\n"
                 },
                 "name": {
                     "type": "string",
+                    "description": "Name of the Policy.\n",
                     "willReplaceOnChanges": true
-                },
-                "origin": {
-                    "type": "string"
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 },
                 "target": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,\ndo not include the attribute.\n"
                 },
                 "targetKind": {
                     "type": "string",
+                    "description": "The kind of resource to target (e.g., gvc, serviceaccount, etc.).\n",
                     "willReplaceOnChanges": true
                 },
                 "targetLinks": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "List of the targets this policy will be applied to. Not used if `target` is set to `all`.\n"
                 },
                 "targetQuery": {
                     "$ref": "#/types/cpln:index/PolicyTargetQuery:PolicyTargetQuery"
@@ -3607,42 +4184,52 @@
                         }
                     },
                     "cplnId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID, in GUID format, of the Policy.\n"
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Description of the Policy.\n"
                     },
                     "gvc": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The GVC for `identity`, `workload` and `volumeset` target kinds only.\n"
                     },
                     "name": {
                         "type": "string",
+                        "description": "Name of the Policy.\n",
                         "willReplaceOnChanges": true
                     },
                     "origin": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Origin of the Policy. Either `builtin` or `default`.\n"
                     },
                     "selfLink": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Full link to this resource. Can be referenced by other resources.\n"
                     },
                     "tags": {
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Key-value map of resource tags.\n"
                     },
                     "target": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,\ndo not include the attribute.\n"
                     },
                     "targetKind": {
                         "type": "string",
+                        "description": "The kind of resource to target (e.g., gvc, serviceaccount, etc.).\n",
                         "willReplaceOnChanges": true
                     },
                     "targetLinks": {
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "List of the targets this policy will be applied to. Not used if `target` is set to `all`.\n"
                     },
                     "targetQuery": {
                         "$ref": "#/types/cpln:index/PolicyTargetQuery:PolicyTargetQuery"
@@ -3654,204 +4241,264 @@
         "cpln:index/secret:Secret": {
             "properties": {
                 "aws": {
-                    "$ref": "#/types/cpln:index/SecretAws:SecretAws"
+                    "$ref": "#/types/cpln:index/SecretAws:SecretAws",
+                    "description": "[Reference Page](https://docs.controlplane.com/reference/secret#aws).\n"
                 },
                 "azureConnector": {
-                    "$ref": "#/types/cpln:index/SecretAzureConnector:SecretAzureConnector"
+                    "$ref": "#/types/cpln:index/SecretAzureConnector:SecretAzureConnector",
+                    "description": "[Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).\n"
                 },
                 "azureSdk": {
                     "type": "string",
+                    "description": "JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).\n",
                     "secret": true
                 },
                 "cplnId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID, in GUID format, of the Secret.\n"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Secret.\n"
                 },
                 "dictionary": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).\n"
                 },
                 "dictionaryAsEnvs": {
                     "type": "object",
                     "additionalProperties": {
                         "$ref": "pulumi.json#/Any"
-                    }
+                    },
+                    "description": "If a dictionary secret is defined, this output will be a key-value map in the following format: `key =\ncpln://secret/SECRET_NAME.key`.\n"
                 },
                 "docker": {
                     "type": "string",
+                    "description": "JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).\n",
                     "secret": true
                 },
                 "ecr": {
-                    "$ref": "#/types/cpln:index/SecretEcr:SecretEcr"
+                    "$ref": "#/types/cpln:index/SecretEcr:SecretEcr",
+                    "description": "[Reference Page](https://docs.controlplane.com/reference/secret#ecr)\n"
                 },
                 "gcp": {
                     "type": "string",
+                    "description": "JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)\n",
                     "secret": true
                 },
                 "keypair": {
-                    "$ref": "#/types/cpln:index/SecretKeypair:SecretKeypair"
+                    "$ref": "#/types/cpln:index/SecretKeypair:SecretKeypair",
+                    "description": "[Reference Page](https://docs.controlplane.com/reference/secret#keypair).\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of the secret.\n"
                 },
                 "natsAccount": {
-                    "$ref": "#/types/cpln:index/SecretNatsAccount:SecretNatsAccount"
+                    "$ref": "#/types/cpln:index/SecretNatsAccount:SecretNatsAccount",
+                    "description": "[Reference Page](https://docs.controlplane.com/reference/secret#nats-account).\n"
                 },
                 "opaque": {
-                    "$ref": "#/types/cpln:index/SecretOpaque:SecretOpaque"
+                    "$ref": "#/types/cpln:index/SecretOpaque:SecretOpaque",
+                    "description": "[Reference Page](https://docs.controlplane.com/reference/secret#opaque).\n"
+                },
+                "secretLink": {
+                    "type": "string",
+                    "description": "Output used when linking a secret to an environment variable or volume.\n"
                 },
                 "selfLink": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Full link to this resource. Can be referenced by other resources.\n"
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 },
                 "tls": {
-                    "$ref": "#/types/cpln:index/SecretTls:SecretTls"
+                    "$ref": "#/types/cpln:index/SecretTls:SecretTls",
+                    "description": "[Reference Page](https://docs.controlplane.com/reference/secret#tls).\n"
                 },
                 "userpass": {
-                    "$ref": "#/types/cpln:index/SecretUserpass:SecretUserpass"
+                    "$ref": "#/types/cpln:index/SecretUserpass:SecretUserpass",
+                    "description": "[Reference Page](https://docs.controlplane.com/reference/secret#username).\n"
                 }
             },
             "required": [
                 "cplnId",
                 "dictionaryAsEnvs",
                 "name",
+                "secretLink",
                 "selfLink"
             ],
             "inputProperties": {
                 "aws": {
-                    "$ref": "#/types/cpln:index/SecretAws:SecretAws"
+                    "$ref": "#/types/cpln:index/SecretAws:SecretAws",
+                    "description": "[Reference Page](https://docs.controlplane.com/reference/secret#aws).\n"
                 },
                 "azureConnector": {
-                    "$ref": "#/types/cpln:index/SecretAzureConnector:SecretAzureConnector"
+                    "$ref": "#/types/cpln:index/SecretAzureConnector:SecretAzureConnector",
+                    "description": "[Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).\n"
                 },
                 "azureSdk": {
                     "type": "string",
+                    "description": "JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).\n",
                     "secret": true
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Secret.\n"
                 },
                 "dictionary": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).\n"
                 },
                 "docker": {
                     "type": "string",
+                    "description": "JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).\n",
                     "secret": true
                 },
                 "ecr": {
-                    "$ref": "#/types/cpln:index/SecretEcr:SecretEcr"
+                    "$ref": "#/types/cpln:index/SecretEcr:SecretEcr",
+                    "description": "[Reference Page](https://docs.controlplane.com/reference/secret#ecr)\n"
                 },
                 "gcp": {
                     "type": "string",
+                    "description": "JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)\n",
                     "secret": true
                 },
                 "keypair": {
-                    "$ref": "#/types/cpln:index/SecretKeypair:SecretKeypair"
+                    "$ref": "#/types/cpln:index/SecretKeypair:SecretKeypair",
+                    "description": "[Reference Page](https://docs.controlplane.com/reference/secret#keypair).\n"
                 },
                 "name": {
                     "type": "string",
+                    "description": "Name of the secret.\n",
                     "willReplaceOnChanges": true
                 },
                 "natsAccount": {
-                    "$ref": "#/types/cpln:index/SecretNatsAccount:SecretNatsAccount"
+                    "$ref": "#/types/cpln:index/SecretNatsAccount:SecretNatsAccount",
+                    "description": "[Reference Page](https://docs.controlplane.com/reference/secret#nats-account).\n"
                 },
                 "opaque": {
-                    "$ref": "#/types/cpln:index/SecretOpaque:SecretOpaque"
+                    "$ref": "#/types/cpln:index/SecretOpaque:SecretOpaque",
+                    "description": "[Reference Page](https://docs.controlplane.com/reference/secret#opaque).\n"
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 },
                 "tls": {
-                    "$ref": "#/types/cpln:index/SecretTls:SecretTls"
+                    "$ref": "#/types/cpln:index/SecretTls:SecretTls",
+                    "description": "[Reference Page](https://docs.controlplane.com/reference/secret#tls).\n"
                 },
                 "userpass": {
-                    "$ref": "#/types/cpln:index/SecretUserpass:SecretUserpass"
+                    "$ref": "#/types/cpln:index/SecretUserpass:SecretUserpass",
+                    "description": "[Reference Page](https://docs.controlplane.com/reference/secret#username).\n"
                 }
             },
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Secret resources.\n",
                 "properties": {
                     "aws": {
-                        "$ref": "#/types/cpln:index/SecretAws:SecretAws"
+                        "$ref": "#/types/cpln:index/SecretAws:SecretAws",
+                        "description": "[Reference Page](https://docs.controlplane.com/reference/secret#aws).\n"
                     },
                     "azureConnector": {
-                        "$ref": "#/types/cpln:index/SecretAzureConnector:SecretAzureConnector"
+                        "$ref": "#/types/cpln:index/SecretAzureConnector:SecretAzureConnector",
+                        "description": "[Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).\n"
                     },
                     "azureSdk": {
                         "type": "string",
+                        "description": "JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).\n",
                         "secret": true
                     },
                     "cplnId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID, in GUID format, of the Secret.\n"
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Description of the Secret.\n"
                     },
                     "dictionary": {
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).\n"
                     },
                     "dictionaryAsEnvs": {
                         "type": "object",
                         "additionalProperties": {
                             "$ref": "pulumi.json#/Any"
-                        }
+                        },
+                        "description": "If a dictionary secret is defined, this output will be a key-value map in the following format: `key =\ncpln://secret/SECRET_NAME.key`.\n"
                     },
                     "docker": {
                         "type": "string",
+                        "description": "JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).\n",
                         "secret": true
                     },
                     "ecr": {
-                        "$ref": "#/types/cpln:index/SecretEcr:SecretEcr"
+                        "$ref": "#/types/cpln:index/SecretEcr:SecretEcr",
+                        "description": "[Reference Page](https://docs.controlplane.com/reference/secret#ecr)\n"
                     },
                     "gcp": {
                         "type": "string",
+                        "description": "JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)\n",
                         "secret": true
                     },
                     "keypair": {
-                        "$ref": "#/types/cpln:index/SecretKeypair:SecretKeypair"
+                        "$ref": "#/types/cpln:index/SecretKeypair:SecretKeypair",
+                        "description": "[Reference Page](https://docs.controlplane.com/reference/secret#keypair).\n"
                     },
                     "name": {
                         "type": "string",
+                        "description": "Name of the secret.\n",
                         "willReplaceOnChanges": true
                     },
                     "natsAccount": {
-                        "$ref": "#/types/cpln:index/SecretNatsAccount:SecretNatsAccount"
+                        "$ref": "#/types/cpln:index/SecretNatsAccount:SecretNatsAccount",
+                        "description": "[Reference Page](https://docs.controlplane.com/reference/secret#nats-account).\n"
                     },
                     "opaque": {
-                        "$ref": "#/types/cpln:index/SecretOpaque:SecretOpaque"
+                        "$ref": "#/types/cpln:index/SecretOpaque:SecretOpaque",
+                        "description": "[Reference Page](https://docs.controlplane.com/reference/secret#opaque).\n"
+                    },
+                    "secretLink": {
+                        "type": "string",
+                        "description": "Output used when linking a secret to an environment variable or volume.\n"
                     },
                     "selfLink": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Full link to this resource. Can be referenced by other resources.\n"
                     },
                     "tags": {
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Key-value map of resource tags.\n"
                     },
                     "tls": {
-                        "$ref": "#/types/cpln:index/SecretTls:SecretTls"
+                        "$ref": "#/types/cpln:index/SecretTls:SecretTls",
+                        "description": "[Reference Page](https://docs.controlplane.com/reference/secret#tls).\n"
                     },
                     "userpass": {
-                        "$ref": "#/types/cpln:index/SecretUserpass:SecretUserpass"
+                        "$ref": "#/types/cpln:index/SecretUserpass:SecretUserpass",
+                        "description": "[Reference Page](https://docs.controlplane.com/reference/secret#username).\n"
                     }
                 },
                 "type": "object"
@@ -3860,25 +4507,31 @@
         "cpln:index/serviceAccount:ServiceAccount": {
             "properties": {
                 "cplnId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID, in GUID format, of the Service Account.\n"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Service Account.\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of the Service Account.\n"
                 },
                 "origin": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Origin of the Policy. Either `builtin` or `default`.\n"
                 },
                 "selfLink": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Full link to this resource. Can be referenced by other resources.\n"
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 }
             },
             "required": [
@@ -3889,43 +4542,52 @@
             ],
             "inputProperties": {
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Service Account.\n"
                 },
                 "name": {
                     "type": "string",
+                    "description": "Name of the Service Account.\n",
                     "willReplaceOnChanges": true
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 }
             },
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering ServiceAccount resources.\n",
                 "properties": {
                     "cplnId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID, in GUID format, of the Service Account.\n"
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Description of the Service Account.\n"
                     },
                     "name": {
                         "type": "string",
+                        "description": "Name of the Service Account.\n",
                         "willReplaceOnChanges": true
                     },
                     "origin": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Origin of the Policy. Either `builtin` or `default`.\n"
                     },
                     "selfLink": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Full link to this resource. Can be referenced by other resources.\n"
                     },
                     "tags": {
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Key-value map of resource tags.\n"
                     }
                 },
                 "type": "object"
@@ -3934,20 +4596,25 @@
         "cpln:index/serviceAccountKey:ServiceAccountKey": {
             "properties": {
                 "created": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The timestamp, in UTC, when the key was created.\n"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Service Account Key.\n"
                 },
                 "key": {
                     "type": "string",
+                    "description": "The generated key.\n",
                     "secret": true
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The generated name of the key.\n"
                 },
                 "serviceAccountName": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of an existing Service Account this key will belong to.\n"
                 }
             },
             "required": [
@@ -3960,10 +4627,12 @@
             "inputProperties": {
                 "description": {
                     "type": "string",
+                    "description": "Description of the Service Account Key.\n",
                     "willReplaceOnChanges": true
                 },
                 "serviceAccountName": {
                     "type": "string",
+                    "description": "The name of an existing Service Account this key will belong to.\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -3975,21 +4644,26 @@
                 "description": "Input properties used for looking up and filtering ServiceAccountKey resources.\n",
                 "properties": {
                     "created": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The timestamp, in UTC, when the key was created.\n"
                     },
                     "description": {
                         "type": "string",
+                        "description": "Description of the Service Account Key.\n",
                         "willReplaceOnChanges": true
                     },
                     "key": {
                         "type": "string",
+                        "description": "The generated key.\n",
                         "secret": true
                     },
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The generated name of the key.\n"
                     },
                     "serviceAccountName": {
                         "type": "string",
+                        "description": "The name of an existing Service Account this key will belong to.\n",
                         "willReplaceOnChanges": true
                     }
                 },
@@ -4002,28 +4676,36 @@
                     "$ref": "#/types/cpln:index/VolumeSetAutoscaling:VolumeSetAutoscaling"
                 },
                 "cplnId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "ID, in GUID format, of the Volume Set.\n"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Volume Set.\n"
                 },
                 "fileSystemType": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`\n"
                 },
                 "gvc": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of the associated GVC.\n"
                 },
                 "initialCapacity": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The initial size in GB of volumes in this set. Minimum value: `10`.\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of the Volume Set.\n"
                 },
                 "performanceClass": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or\n`high-throughput-ssd`\n"
                 },
                 "selfLink": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Full link to this resource. Can be referenced by other resources.\n"
                 },
                 "snapshots": {
                     "$ref": "#/types/cpln:index/VolumeSetSnapshots:VolumeSetSnapshots"
@@ -4032,13 +4714,23 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/VolumeSetStatus:VolumeSetStatus"
-                    }
+                    },
+                    "description": "Status of the Volume Set.\n"
+                },
+                "storageClassSuffix": {
+                    "type": "string",
+                    "description": "For self-hosted locations only. The storage class used for volumes in this set will be\n{performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be\n{performanceClass}-{fileSystemType}\n"
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
+                },
+                "volumesetLink": {
+                    "type": "string",
+                    "description": "Output used when linking a volume set to a workload.\n"
                 }
             },
             "required": [
@@ -4048,42 +4740,54 @@
                 "name",
                 "performanceClass",
                 "selfLink",
-                "statuses"
+                "statuses",
+                "volumesetLink"
             ],
             "inputProperties": {
                 "autoscaling": {
                     "$ref": "#/types/cpln:index/VolumeSetAutoscaling:VolumeSetAutoscaling"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Volume Set.\n"
                 },
                 "fileSystemType": {
                     "type": "string",
+                    "description": "Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`\n",
                     "willReplaceOnChanges": true
                 },
                 "gvc": {
                     "type": "string",
+                    "description": "Name of the associated GVC.\n",
                     "willReplaceOnChanges": true
                 },
                 "initialCapacity": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The initial size in GB of volumes in this set. Minimum value: `10`.\n"
                 },
                 "name": {
                     "type": "string",
+                    "description": "Name of the Volume Set.\n",
                     "willReplaceOnChanges": true
                 },
                 "performanceClass": {
                     "type": "string",
+                    "description": "Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or\n`high-throughput-ssd`\n",
                     "willReplaceOnChanges": true
                 },
                 "snapshots": {
                     "$ref": "#/types/cpln:index/VolumeSetSnapshots:VolumeSetSnapshots"
                 },
+                "storageClassSuffix": {
+                    "type": "string",
+                    "description": "For self-hosted locations only. The storage class used for volumes in this set will be\n{performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be\n{performanceClass}-{fileSystemType}\n"
+                },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 }
             },
             "requiredInputs": [
@@ -4098,32 +4802,40 @@
                         "$ref": "#/types/cpln:index/VolumeSetAutoscaling:VolumeSetAutoscaling"
                     },
                     "cplnId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "ID, in GUID format, of the Volume Set.\n"
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Description of the Volume Set.\n"
                     },
                     "fileSystemType": {
                         "type": "string",
+                        "description": "Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`\n",
                         "willReplaceOnChanges": true
                     },
                     "gvc": {
                         "type": "string",
+                        "description": "Name of the associated GVC.\n",
                         "willReplaceOnChanges": true
                     },
                     "initialCapacity": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The initial size in GB of volumes in this set. Minimum value: `10`.\n"
                     },
                     "name": {
                         "type": "string",
+                        "description": "Name of the Volume Set.\n",
                         "willReplaceOnChanges": true
                     },
                     "performanceClass": {
                         "type": "string",
+                        "description": "Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or\n`high-throughput-ssd`\n",
                         "willReplaceOnChanges": true
                     },
                     "selfLink": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Full link to this resource. Can be referenced by other resources.\n"
                     },
                     "snapshots": {
                         "$ref": "#/types/cpln:index/VolumeSetSnapshots:VolumeSetSnapshots"
@@ -4132,13 +4844,23 @@
                         "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/VolumeSetStatus:VolumeSetStatus"
-                        }
+                        },
+                        "description": "Status of the Volume Set.\n"
+                    },
+                    "storageClassSuffix": {
+                        "type": "string",
+                        "description": "For self-hosted locations only. The storage class used for volumes in this set will be\n{performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be\n{performanceClass}-{fileSystemType}\n"
                     },
                     "tags": {
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Key-value map of resource tags.\n"
+                    },
+                    "volumesetLink": {
+                        "type": "string",
+                        "description": "Output used when linking a volume set to a workload.\n"
                     }
                 },
                 "type": "object"
@@ -4153,22 +4875,28 @@
                     }
                 },
                 "cplnId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID, in GUID format, of the Workload.\n"
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Workload.\n"
                 },
                 "firewallSpec": {
-                    "$ref": "#/types/cpln:index/WorkloadFirewallSpec:WorkloadFirewallSpec"
+                    "$ref": "#/types/cpln:index/WorkloadFirewallSpec:WorkloadFirewallSpec",
+                    "description": "Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.\nAccess is restricted by default.\n"
                 },
                 "gvc": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of the associated GVC.\n"
                 },
                 "identityLink": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Full link to an Identity.\n"
                 },
                 "job": {
-                    "$ref": "#/types/cpln:index/WorkloadJob:WorkloadJob"
+                    "$ref": "#/types/cpln:index/WorkloadJob:WorkloadJob",
+                    "description": "[Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).\n"
                 },
                 "localOptions": {
                     "type": "array",
@@ -4177,7 +4905,8 @@
                     }
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of the Workload.\n"
                 },
                 "options": {
                     "$ref": "#/types/cpln:index/WorkloadOptions:WorkloadOptions"
@@ -4189,7 +4918,8 @@
                     "$ref": "#/types/cpln:index/WorkloadSecurityOptions:WorkloadSecurityOptions"
                 },
                 "selfLink": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Full link to this resource. Can be referenced by other resources.\n"
                 },
                 "sidecar": {
                     "$ref": "#/types/cpln:index/WorkloadSidecar:WorkloadSidecar"
@@ -4198,19 +4928,23 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/WorkloadStatus:WorkloadStatus"
-                    }
+                    },
+                    "description": "Status of the workload.\n"
                 },
                 "supportDynamicTags": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Workload will automatically redeploy when one of the container images is updated in the container registry. Default:\nfalse.\n"
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 },
                 "type": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.\n"
                 }
             },
             "required": [
@@ -4231,20 +4965,25 @@
                     }
                 },
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of the Workload.\n"
                 },
                 "firewallSpec": {
-                    "$ref": "#/types/cpln:index/WorkloadFirewallSpec:WorkloadFirewallSpec"
+                    "$ref": "#/types/cpln:index/WorkloadFirewallSpec:WorkloadFirewallSpec",
+                    "description": "Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.\nAccess is restricted by default.\n"
                 },
                 "gvc": {
                     "type": "string",
+                    "description": "Name of the associated GVC.\n",
                     "willReplaceOnChanges": true
                 },
                 "identityLink": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Full link to an Identity.\n"
                 },
                 "job": {
-                    "$ref": "#/types/cpln:index/WorkloadJob:WorkloadJob"
+                    "$ref": "#/types/cpln:index/WorkloadJob:WorkloadJob",
+                    "description": "[Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).\n"
                 },
                 "localOptions": {
                     "type": "array",
@@ -4254,6 +4993,7 @@
                 },
                 "name": {
                     "type": "string",
+                    "description": "Name of the Workload.\n",
                     "willReplaceOnChanges": true
                 },
                 "options": {
@@ -4269,16 +5009,19 @@
                     "$ref": "#/types/cpln:index/WorkloadSidecar:WorkloadSidecar"
                 },
                 "supportDynamicTags": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Workload will automatically redeploy when one of the container images is updated in the container registry. Default:\nfalse.\n"
                 },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    }
+                    },
+                    "description": "Key-value map of resource tags.\n"
                 },
                 "type": {
                     "type": "string",
+                    "description": "Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -4298,23 +5041,29 @@
                         }
                     },
                     "cplnId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID, in GUID format, of the Workload.\n"
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Description of the Workload.\n"
                     },
                     "firewallSpec": {
-                        "$ref": "#/types/cpln:index/WorkloadFirewallSpec:WorkloadFirewallSpec"
+                        "$ref": "#/types/cpln:index/WorkloadFirewallSpec:WorkloadFirewallSpec",
+                        "description": "Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.\nAccess is restricted by default.\n"
                     },
                     "gvc": {
                         "type": "string",
+                        "description": "Name of the associated GVC.\n",
                         "willReplaceOnChanges": true
                     },
                     "identityLink": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Full link to an Identity.\n"
                     },
                     "job": {
-                        "$ref": "#/types/cpln:index/WorkloadJob:WorkloadJob"
+                        "$ref": "#/types/cpln:index/WorkloadJob:WorkloadJob",
+                        "description": "[Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).\n"
                     },
                     "localOptions": {
                         "type": "array",
@@ -4324,6 +5073,7 @@
                     },
                     "name": {
                         "type": "string",
+                        "description": "Name of the Workload.\n",
                         "willReplaceOnChanges": true
                     },
                     "options": {
@@ -4336,7 +5086,8 @@
                         "$ref": "#/types/cpln:index/WorkloadSecurityOptions:WorkloadSecurityOptions"
                     },
                     "selfLink": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Full link to this resource. Can be referenced by other resources.\n"
                     },
                     "sidecar": {
                         "$ref": "#/types/cpln:index/WorkloadSidecar:WorkloadSidecar"
@@ -4345,19 +5096,23 @@
                         "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/WorkloadStatus:WorkloadStatus"
-                        }
+                        },
+                        "description": "Status of the workload.\n"
                     },
                     "supportDynamicTags": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "description": "Workload will automatically redeploy when one of the container images is updated in the container registry. Default:\nfalse.\n"
                     },
                     "tags": {
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "description": "Key-value map of resource tags.\n"
                     },
                     "type": {
                         "type": "string",
+                        "description": "Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.\n",
                         "willReplaceOnChanges": true
                     }
                 },
@@ -4390,7 +5145,7 @@
             }
         },
         "cpln:index/getGvc:getGvc": {
-            "description": "Use this data source to access information about an existing [Global Virtual Cloud (GVC)](https://docs.controlplane.com/reference/gvc) within Control Plane. \n\n## Required\n\n- **name** (String) Name of the GVC.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the GVC.\n- **name** (String) Name of the GVC.\n- **locations** (List of String) A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.\n- **description** (String) Description of the GVC.\n- **domain** (String) Custom domain name used by associated workloads.\n- **pull_secrets** (List of String) A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.\n- **tags** (Map of String) Key-value map of resource tags.\n- **lightstep_tracing** (Block List, Max: 1) (see below).\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n\n\u003ca id=\"nestedblock--lightstep_tracing\"\u003e\u003c/a\u003e\n### `lightstep_tracing`\n\n- **sampling** (Int) Sampling percentage.\n- **endpoint** (String) Tracing Endpoint Workload. Either the canonical endpoint or the internal endpoint.\n- **credentials** (String) Full link to referenced Opaque Secret.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumi/cpln\";\n\nconst gvc = cpln.getGvc({});\nexport const gvcId = gvc.then(gvc =\u003e gvc.id);\nexport const gvcLocations = gvc.then(gvc =\u003e gvc.locations);\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\ngvc = cpln.get_gvc()\npulumi.export(\"gvcId\", gvc.id)\npulumi.export(\"gvcLocations\", gvc.locations)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var gvc = Cpln.GetGvc.Invoke();\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"gvcId\"] = gvc.Apply(getGvcResult =\u003e getGvcResult.Id),\n        [\"gvcLocations\"] = gvc.Apply(getGvcResult =\u003e getGvcResult.Locations),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tgvc, err := cpln.LookupGvc(ctx, nil, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"gvcId\", gvc.Id)\n\t\tctx.Export(\"gvcLocations\", gvc.Locations)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport com.pulumi.cpln.inputs.GetGvcArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var gvc = CplnFunctions.getGvc();\n\n        ctx.export(\"gvcId\", gvc.applyValue(getGvcResult -\u003e getGvcResult.id()));\n        ctx.export(\"gvcLocations\", gvc.applyValue(getGvcResult -\u003e getGvcResult.locations()));\n    }\n}\n```\n```yaml\nvariables:\n  gvc:\n    fn::invoke:\n      Function: cpln:getGvc\n      Arguments: {}\noutputs:\n  gvcId: ${gvc.id}\n  gvcLocations: ${gvc.locations}\n```\n{{% /example %}}\n{{% /examples %}}",
+            "description": "Use this data source to access information about an existing [Global Virtual Cloud (GVC)](https://docs.controlplane.com/reference/gvc) within Control Plane. \n\n## Required\n\n- **name** (String) Name of the GVC.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the GVC.\n- **name** (String) Name of the GVC.\n- **alias** (String) The alias name of the GVC.\n- **description** (String) Description of the GVC.\n- **tags** (Map of String) Key-value map of resource tags.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n- **domain** (String) Custom domain name used by associated workloads.\n- **locations** (List of String) A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.\n- **pull_secrets** (List of String) A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.\n- **lightstep_tracing** (Block List, Max: 1) (see below).\n- **otel_tracing** (Block List, Max: 1) (see below).\n- **controlplane_tracing** (Block List, Max: 1) (see below).\n- **load_balancer** (Block List, Max: 1) (see below).\n\n\u003ca id=\"nestedblock--lightstep_tracing\"\u003e\u003c/a\u003e\n\n### `lightstep_tracing`\n\n- **sampling** (Int) Sampling percentage.\n- **endpoint** (String) Tracing Endpoint Workload. Either the canonical endpoint or the internal endpoint.\n- **credentials** (String) Full link to referenced Opaque Secret.\n\n\u003ca id=\"nestedblock--otel_tracing\"\u003e\u003c/a\u003e\n\n### `otel_tracing`\n\n- **sampling** (Int) Determines what percentage of requests should be traced.\n- **endpoint** (String) Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.\n- **custom_tags** (Map of String) Key-value map of custom tags.\n\n\u003ca id=\"nestedblock--controlplane_tracing\"\u003e\u003c/a\u003e\n\n### `controlplane_tracing`\n\n- **sampling** (Int) Determines what percentage of requests should be traced.\n- **custom_tags** (Map of String) Key-value map of custom tags.\n\n\u003ca id=\"nestedblock--load_balancer\"\u003e\u003c/a\u003e\n\n### `load_balancer`\n\n- **dedicated** (Boolean) Creates a dedicated load balancer in each location and enables additional Domain features: custom ports, protocols and wildcard hostnames. Charges apply for each location.\n\n- **trusted_proxies** (Int) Controls the address used for request logging and for setting the X-Envoy-External-Address header. If set to 1, then the last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If set to 2, then the second to last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If the XFF header does not have at least two addresses or does not exist then the source client IP address will be used instead.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumi/cpln\";\n\nconst gvc = cpln.getGvc({\n    name: \"gvc-example\",\n});\nexport const gvcId = gvc.then(gvc =\u003e gvc.id);\nexport const gvcLocations = gvc.then(gvc =\u003e gvc.locations);\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\ngvc = cpln.get_gvc(name=\"gvc-example\")\npulumi.export(\"gvcId\", gvc.id)\npulumi.export(\"gvcLocations\", gvc.locations)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var gvc = Cpln.GetGvc.Invoke(new()\n    {\n        Name = \"gvc-example\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"gvcId\"] = gvc.Apply(getGvcResult =\u003e getGvcResult.Id),\n        [\"gvcLocations\"] = gvc.Apply(getGvcResult =\u003e getGvcResult.Locations),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tgvc, err := cpln.LookupGvc(ctx, \u0026cpln.LookupGvcArgs{\n\t\t\tName: \"gvc-example\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"gvcId\", gvc.Id)\n\t\tctx.Export(\"gvcLocations\", gvc.Locations)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport com.pulumi.cpln.inputs.GetGvcArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var gvc = CplnFunctions.getGvc(GetGvcArgs.builder()\n            .name(\"gvc-example\")\n            .build());\n\n        ctx.export(\"gvcId\", gvc.applyValue(getGvcResult -\u003e getGvcResult.id()));\n        ctx.export(\"gvcLocations\", gvc.applyValue(getGvcResult -\u003e getGvcResult.locations()));\n    }\n}\n```\n```yaml\nvariables:\n  gvc:\n    fn::invoke:\n      Function: cpln:getGvc\n      Arguments:\n        name: gvc-example\noutputs:\n  gvcId: ${gvc.id}\n  gvcLocations: ${gvc.locations}\n```\n{{% /example %}}\n{{% /examples %}}",
             "inputs": {
                 "description": "A collection of arguments for invoking getGvc.\n",
                 "properties": {
@@ -4526,6 +5281,107 @@
                 ]
             }
         },
+        "cpln:index/getImage:getImage": {
+            "description": "Use this data source to access information about an [Image](https://docs.controlplane.com/reference/image) within Control Plane.\n\n## Required\n\n- **name** (String) Name of the image. If the tag of the image is not specified, the latest image will be fetched for this data source.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the Image.\n- **name** (String) Name of the Image.\n- **tags** (Map of String) Key-value map of resource tags.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n- **tag** (String) Tag of the image.\n- **repository** (String) Respository name of the image.\n- **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.\n- **manifest** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--manifest\"\u003e\u003c/a\u003e\n\n### `manifest`\n\n The manifest provides configuration and layers information about the image. It plays a crucial role in the Docker image distribution system, enabling image creation, verification, and replication in a consistent and secure manner.\n\n- **config** (Block List, Max: 1) (see below).\n- **layers** (Block List) (see below).\n- **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.\n- **schema_version** (Number) The version of the Docker Image Manifest format.\n\n\u003ca id=\"nestedblock--config--layers\"\u003e\u003c/a\u003e\n\n### `config` and `layers`\n\nThe config is a JSON blob that contains the image configuration data which includes environment variables, default command to run, and other settings necessary to run the container based on this image.\n\nLayers lists the digests of the image's layers. These layers are filesystem changes or additions made in each step of the Docker image's creation process. The layers are stored separately and pulled as needed, which allows for efficient storage and transfer of images. Each layer is represented by a SHA256 digest, ensuring the integrity and authenticity of the image.\n\n- **size** (Number) The size of the image or layer in bytes. This helps in estimating the space required and the download time.\n- **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.\n- **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumi/cpln\";\n\nconst image-name-only = cpln.getImage({\n    name: \"IMAGE_NAME\",\n});\nconst image-name-with-tag = cpln.getImage({\n    name: \"IMAGE_NAME:TAG\",\n});\nexport const latestImage = image_name_only;\nexport const specificImage = image_name_with_tag;\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\nimage_name_only = cpln.get_image(name=\"IMAGE_NAME\")\nimage_name_with_tag = cpln.get_image(name=\"IMAGE_NAME:TAG\")\npulumi.export(\"latestImage\", image_name_only)\npulumi.export(\"specificImage\", image_name_with_tag)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var image_name_only = Cpln.GetImage.Invoke(new()\n    {\n        Name = \"IMAGE_NAME\",\n    });\n\n    var image_name_with_tag = Cpln.GetImage.Invoke(new()\n    {\n        Name = \"IMAGE_NAME:TAG\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"latestImage\"] = image_name_only,\n        [\"specificImage\"] = image_name_with_tag,\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\timage_name_only, err := cpln.GetImage(ctx, \u0026cpln.GetImageArgs{\n\t\t\tName: \"IMAGE_NAME\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\timage_name_with_tag, err := cpln.GetImage(ctx, \u0026cpln.GetImageArgs{\n\t\t\tName: \"IMAGE_NAME:TAG\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"latestImage\", image_name_only)\n\t\tctx.Export(\"specificImage\", image_name_with_tag)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport com.pulumi.cpln.inputs.GetImageArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var image-name-only = CplnFunctions.getImage(GetImageArgs.builder()\n            .name(\"IMAGE_NAME\")\n            .build());\n\n        final var image-name-with-tag = CplnFunctions.getImage(GetImageArgs.builder()\n            .name(\"IMAGE_NAME:TAG\")\n            .build());\n\n        ctx.export(\"latestImage\", image_name_only);\n        ctx.export(\"specificImage\", image_name_with_tag);\n    }\n}\n```\n```yaml\nvariables:\n  image-name-only:\n    fn::invoke:\n      Function: cpln:getImage\n      Arguments:\n        name: IMAGE_NAME\n  image-name-with-tag:\n    fn::invoke:\n      Function: cpln:getImage\n      Arguments:\n        name: IMAGE_NAME:TAG\noutputs:\n  latestImage: ${[\"image-name-only\"]}\n  specificImage: ${[\"image-name-with-tag\"]}\n```\n{{% /example %}}\n{{% /examples %}}",
+            "inputs": {
+                "description": "A collection of arguments for invoking getImage.\n",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getImage.\n",
+                "properties": {
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "digest": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "manifests": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/getImageManifest:getImageManifest"
+                        }
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "repository": {
+                        "type": "string"
+                    },
+                    "selfLink": {
+                        "type": "string"
+                    },
+                    "tag": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "cplnId",
+                    "digest",
+                    "manifests",
+                    "name",
+                    "repository",
+                    "selfLink",
+                    "tag",
+                    "tags",
+                    "id"
+                ]
+            }
+        },
+        "cpln:index/getImages:getImages": {
+            "description": "Use this data source to access information about all [Images](https://docs.controlplane.com/reference/image) within Control Plane.\n\n## Optional\n\n- **query** (Block List, Max: 1) (see below).\n\n\u003ca id=\"nestedblock--query\"\u003e\u003c/a\u003e\n\n### `query`\n\nOptional:\n\n- **fetch** (String) Type of fetch. Specify either: `links` or `items`. Default: `items`.\n- **spec** (Block List, Max: 1) (see below).\n\n\u003ca id=\"nestedblock--query--spec\"\u003e\u003c/a\u003e\n\n### `query.spec`\n\nOptional:\n\n- **match** (String) Type of match. Available values: `all`, `any`, `none`. Default: `all`.\n- **terms** (Block List) (see below).\n\n\u003ca id=\"nestedblock--query--spec--terms\"\u003e\u003c/a\u003e\n\n### `query.spec.terms`\n\n\u003c!-- Terms can only contain one of the following attributes: `property`, `rel`, `tag`. --\u003e\n\nTerms can only contain one of the following attributes: `property`, `tag`.\n\nOptional:\n\n- **op** (String) Type of query operation. Available values: `=`, `\u003e`, `\u003e=`, `\u003c`, `\u003c=`, `!=`, `exists`, `!exists`. Default: `=`.\n\n- **property** (String) Property to use for query evaluation.\n\u003c!-- - **rel** (String) Rel to use use for query evaluation. --\u003e\n- **tag** (String) Tag key to use for query evaluation.\n- **value** (String) Testing value for query evaluation.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **images** (Block List) (see below).\n\n\u003ca id=\"nestedblock--images\"\u003e\u003c/a\u003e\n\n### `images`\n\n- **cpln_id** (String) The ID, in GUID format, of the Image.\n- **name** (String) Name of the Image.\n- **tags** (Map of String) Key-value map of resource tags.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n- **tag** (String) Tag of the image.\n- **repository** (String) Respository name of the image.\n- **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.\n- **manifest** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--manifest\"\u003e\u003c/a\u003e\n\n### `manifest`\n\n The manifest provides configuration and layers information about the image. It plays a crucial role in the Docker image distribution system, enabling image creation, verification, and replication in a consistent and secure manner.\n\n- **config** (Block List, Max: 1) (see below).\n- **layers** (Block List) (see below).\n- **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.\n- **schema_version** (Number) The version of the Docker Image Manifest format.\n\n\u003ca id=\"nestedblock--config--layers\"\u003e\u003c/a\u003e\n\n### `config` and `layers`\n\nThe config is a JSON blob that contains the image configuration data which includes environment variables, default command to run, and other settings necessary to run the container based on this image.\n\nLayers lists the digests of the image's layers. These layers are filesystem changes or additions made in each step of the Docker image's creation process. The layers are stored separately and pulled as needed, which allows for efficient storage and transfer of images. Each layer is represented by a SHA256 digest, ensuring the integrity and authenticity of the image.\n\n- **size** (Number) The size of the image or layer in bytes. This helps in estimating the space required and the download time.\n- **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.\n- **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking getImages.\n",
+                "properties": {
+                    "query": {
+                        "$ref": "#/types/cpln:index/getImagesQuery:getImagesQuery"
+                    }
+                },
+                "type": "object"
+            },
+            "outputs": {
+                "description": "A collection of values returned by getImages.\n",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "images": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/getImagesImage:getImagesImage"
+                        }
+                    },
+                    "query": {
+                        "$ref": "#/types/cpln:index/getImagesQuery:getImagesQuery"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "images",
+                    "id"
+                ]
+            }
+        },
         "cpln:index/getLocation:getLocation": {
             "description": "Use this data source to access information about a [Location](https://docs.controlplane.com/reference/location) within Control Plane.\n\n## Required\n\n- **name** (String) Name of the location (i.e. `aws-us-west-2`).\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the location.\n- **name** (String) Name of the location.\n- **description** (String) Description of the location.\n- **tags** (Map of String) Key-value map of resource tags.\n- **cloud_provider** (String) Cloud Provider of the location.\n- **region** (String) Region of the location.\n- **enabled** (Boolean) Indication if location is enabled.\n- **geo** (Block List, Max: 1) (see below)\n- **ip_ranges** (List of String) A list of IP ranges of the location.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n\n\u003ca id=\"nestedblock--geo\"\u003e\u003c/a\u003e\n\n### `geo`\n\nLocation geographical details\n\n- **lat** (Number) Latitude.\n- **lon** (Number) Longitude.\n- **country** (String) Country.\n- **state** (String) State.\n- **city** (String) City.\n- **continent** (String) Continent.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumi/cpln\";\n\nconst locationLocation = cpln.getLocation({\n    name: \"aws-us-west-2\",\n});\nexport const location = locationLocation;\nexport const locationEnabled = locationLocation.then(locationLocation =\u003e locationLocation.enabled);\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\nlocation_location = cpln.get_location(name=\"aws-us-west-2\")\npulumi.export(\"location\", location_location)\npulumi.export(\"locationEnabled\", location_location.enabled)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var locationLocation = Cpln.GetLocation.Invoke(new()\n    {\n        Name = \"aws-us-west-2\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"location\"] = locationLocation,\n        [\"locationEnabled\"] = locationLocation.Apply(getLocationResult =\u003e getLocationResult.Enabled),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tlocationLocation, err := cpln.GetLocation(ctx, \u0026cpln.GetLocationArgs{\n\t\t\tName: \"aws-us-west-2\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"location\", locationLocation)\n\t\tctx.Export(\"locationEnabled\", locationLocation.Enabled)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport com.pulumi.cpln.inputs.GetLocationArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var locationLocation = CplnFunctions.getLocation(GetLocationArgs.builder()\n            .name(\"aws-us-west-2\")\n            .build());\n\n        ctx.export(\"location\", locationLocation.applyValue(getLocationResult -\u003e getLocationResult));\n        ctx.export(\"locationEnabled\", locationLocation.applyValue(getLocationResult -\u003e getLocationResult.enabled()));\n    }\n}\n```\n```yaml\nvariables:\n  locationLocation:\n    fn::invoke:\n      Function: cpln:getLocation\n      Arguments:\n        name: aws-us-west-2\noutputs:\n  location: ${locationLocation}\n  locationEnabled: ${locationLocation.enabled}\n```\n{{% /example %}}\n{{% /examples %}}",
             "inputs": {
@@ -4604,7 +5460,7 @@
             }
         },
         "cpln:index/getLocations:getLocations": {
-            "description": "Use this data source to access information about all [Locations](https://docs.controlplane.com/reference/location) within Control Plane.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **locations** (Block List, Max: 1) (see below).\n\n\u003ca id=\"nestedblock--locations\"\u003e\u003c/a\u003e\n\n### `locations`\n\n- **cpln_id** (String) The ID, in GUID format, of the location.\n- **name** (String) Name of the location.\n- **description** (String) Description of the location.\n- **tags** (Map of String) Key-value map of resource tags.\n- **cloud_provider** (String) Cloud Provider of the location.\n- **region** (String) Region of the location.\n- **enabled** (Boolean) Indication if location is enabled.\n- **geo** (Block List, Max: 1) (see below)\n- **ip_ranges** (List of String) A list of IP ranges of the location.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n\n\u003ca id=\"nestedblock--geo\"\u003e\u003c/a\u003e\n\n### `geo`\n\nLocation geographical details\n\n- **lat** (Number) Latitude.\n- **lon** (Number) Longitude.\n- **country** (String) Country.\n- **state** (String) State.\n- **city** (String) City.\n- **continent** (String) Continent.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumi/cpln\";\n\nconst locationsLocations = cpln.getLocations({});\nexport const locations = locationsLocations.then(locationsLocations =\u003e locationsLocations.locations);\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\nlocations_locations = cpln.get_locations()\npulumi.export(\"locations\", locations_locations.locations)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var locationsLocations = Cpln.GetLocations.Invoke();\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"locations\"] = locationsLocations.Apply(getLocationsResult =\u003e getLocationsResult.Locations),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tlocationsLocations, err := cpln.GetLocations(ctx, nil, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"locations\", locationsLocations.Locations)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var locationsLocations = CplnFunctions.getLocations();\n\n        ctx.export(\"locations\", locationsLocations.applyValue(getLocationsResult -\u003e getLocationsResult.locations()));\n    }\n}\n```\n```yaml\nvariables:\n  locationsLocations:\n    fn::invoke:\n      Function: cpln:getLocations\n      Arguments: {}\noutputs:\n  locations: ${locationsLocations.locations}\n```\n{{% /example %}}\n{{% /examples %}}",
+            "description": "Use this data source to access information about all [Locations](https://docs.controlplane.com/reference/location) within Control Plane.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **locations** (Block List) (see below).\n\n\u003ca id=\"nestedblock--locations\"\u003e\u003c/a\u003e\n\n### `locations`\n\n- **cpln_id** (String) The ID, in GUID format, of the location.\n- **name** (String) Name of the location.\n- **description** (String) Description of the location.\n- **tags** (Map of String) Key-value map of resource tags.\n- **cloud_provider** (String) Cloud Provider of the location.\n- **region** (String) Region of the location.\n- **enabled** (Boolean) Indication if location is enabled.\n- **geo** (Block List, Max: 1) (see below)\n- **ip_ranges** (List of String) A list of IP ranges of the location.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n\n\u003ca id=\"nestedblock--geo\"\u003e\u003c/a\u003e\n\n### `geo`\n\nLocation geographical details\n\n- **lat** (Number) Latitude.\n- **lon** (Number) Longitude.\n- **country** (String) Country.\n- **state** (String) State.\n- **city** (String) City.\n- **continent** (String) Continent.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumi/cpln\";\n\nconst locationsLocations = cpln.getLocations({});\nexport const locations = locationsLocations.then(locationsLocations =\u003e locationsLocations.locations);\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\nlocations_locations = cpln.get_locations()\npulumi.export(\"locations\", locations_locations.locations)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var locationsLocations = Cpln.GetLocations.Invoke();\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"locations\"] = locationsLocations.Apply(getLocationsResult =\u003e getLocationsResult.Locations),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tlocationsLocations, err := cpln.GetLocations(ctx, nil, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"locations\", locationsLocations.Locations)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var locationsLocations = CplnFunctions.getLocations();\n\n        ctx.export(\"locations\", locationsLocations.applyValue(getLocationsResult -\u003e getLocationsResult.locations()));\n    }\n}\n```\n```yaml\nvariables:\n  locationsLocations:\n    fn::invoke:\n      Function: cpln:getLocations\n      Arguments: {}\noutputs:\n  locations: ${locationsLocations.locations}\n```\n{{% /example %}}\n{{% /examples %}}",
             "outputs": {
                 "description": "A collection of values returned by getLocations.\n",
                 "properties": {
@@ -4627,7 +5483,7 @@
             }
         },
         "cpln:index/getOrg:getOrg": {
-            "description": "Output the ID and name of the current [org](https://docs.controlplane.com/reference/org). \n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the Org.\n- **name** (String) The name of Org.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumi/cpln\";\n\nconst org = cpln.getOrg({});\nexport const orgId = org.then(org =\u003e org.id);\nexport const orgName = org.then(org =\u003e org.name);\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\norg = cpln.get_org()\npulumi.export(\"orgId\", org.id)\npulumi.export(\"orgName\", org.name)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var org = Cpln.GetOrg.Invoke();\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"orgId\"] = org.Apply(getOrgResult =\u003e getOrgResult.Id),\n        [\"orgName\"] = org.Apply(getOrgResult =\u003e getOrgResult.Name),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\torg, err := cpln.LookupOrg(ctx, nil, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"orgId\", org.Id)\n\t\tctx.Export(\"orgName\", org.Name)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var org = CplnFunctions.getOrg();\n\n        ctx.export(\"orgId\", org.applyValue(getOrgResult -\u003e getOrgResult.id()));\n        ctx.export(\"orgName\", org.applyValue(getOrgResult -\u003e getOrgResult.name()));\n    }\n}\n```\n```yaml\nvariables:\n  org:\n    fn::invoke:\n      Function: cpln:getOrg\n      Arguments: {}\noutputs:\n  orgId: ${org.id}\n  orgName: ${org.name}\n```\n{{% /example %}}\n{{% /examples %}}",
+            "description": "Output the ID and name of the current [org](https://docs.controlplane.com/reference/org). \n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the org.\n- **name** (String) The name of org.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumi/cpln\";\n\nconst org = cpln.getOrg({});\nexport const orgId = org.then(org =\u003e org.id);\nexport const orgName = org.then(org =\u003e org.name);\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\norg = cpln.get_org()\npulumi.export(\"orgId\", org.id)\npulumi.export(\"orgName\", org.name)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var org = Cpln.GetOrg.Invoke();\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"orgId\"] = org.Apply(getOrgResult =\u003e getOrgResult.Id),\n        [\"orgName\"] = org.Apply(getOrgResult =\u003e getOrgResult.Name),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\torg, err := cpln.LookupOrg(ctx, nil, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"orgId\", org.Id)\n\t\tctx.Export(\"orgName\", org.Name)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var org = CplnFunctions.getOrg();\n\n        ctx.export(\"orgId\", org.applyValue(getOrgResult -\u003e getOrgResult.id()));\n        ctx.export(\"orgName\", org.applyValue(getOrgResult -\u003e getOrgResult.name()));\n    }\n}\n```\n```yaml\nvariables:\n  org:\n    fn::invoke:\n      Function: cpln:getOrg\n      Arguments: {}\noutputs:\n  orgId: ${org.id}\n  orgName: ${org.name}\n```\n{{% /example %}}\n{{% /examples %}}",
             "outputs": {
                 "description": "A collection of values returned by getOrg.\n",
                 "properties": {

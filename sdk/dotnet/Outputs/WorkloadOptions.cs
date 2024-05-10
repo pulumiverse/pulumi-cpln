@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadOptions
     {
-        public readonly Outputs.WorkloadOptionsAutoscaling Autoscaling;
+        public readonly Outputs.WorkloadOptionsAutoscaling? Autoscaling;
         public readonly bool? CapacityAi;
         public readonly bool? Debug;
         public readonly bool? Suspend;
@@ -22,7 +22,7 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private WorkloadOptions(
-            Outputs.WorkloadOptionsAutoscaling autoscaling,
+            Outputs.WorkloadOptionsAutoscaling? autoscaling,
 
             bool? capacityAi,
 

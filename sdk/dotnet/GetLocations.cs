@@ -19,7 +19,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// The following attributes are exported:
         /// 
-        /// - **locations** (Block List, Max: 1) (see below).
+        /// - **locations** (Block List) (see below).
         /// 
         /// &lt;a id="nestedblock--locations"&gt;&lt;/a&gt;
         /// 
@@ -82,7 +82,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// The following attributes are exported:
         /// 
-        /// - **locations** (Block List, Max: 1) (see below).
+        /// - **locations** (Block List) (see below).
         /// 
         /// &lt;a id="nestedblock--locations"&gt;&lt;/a&gt;
         /// 

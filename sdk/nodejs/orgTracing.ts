@@ -35,11 +35,23 @@ export class OrgTracing extends pulumi.CustomResource {
     }
 
     public readonly controlplaneTracing!: pulumi.Output<outputs.OrgTracingControlplaneTracing | undefined>;
+    /**
+     * The ID, in GUID format, of the org.
+     */
     public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    /**
+     * The description of org.
+     */
     public /*out*/ readonly description!: pulumi.Output<string>;
     public readonly lightstepTracing!: pulumi.Output<outputs.OrgTracingLightstepTracing | undefined>;
+    /**
+     * The name of the org.
+     */
     public /*out*/ readonly name!: pulumi.Output<string>;
     public readonly otelTracing!: pulumi.Output<outputs.OrgTracingOtelTracing | undefined>;
+    /**
+     * Key-value map of the org's tags.
+     */
     public /*out*/ readonly tags!: pulumi.Output<{[key: string]: string}>;
 
     /**
@@ -82,11 +94,23 @@ export class OrgTracing extends pulumi.CustomResource {
  */
 export interface OrgTracingState {
     controlplaneTracing?: pulumi.Input<inputs.OrgTracingControlplaneTracing>;
+    /**
+     * The ID, in GUID format, of the org.
+     */
     cplnId?: pulumi.Input<string>;
+    /**
+     * The description of org.
+     */
     description?: pulumi.Input<string>;
     lightstepTracing?: pulumi.Input<inputs.OrgTracingLightstepTracing>;
+    /**
+     * The name of the org.
+     */
     name?: pulumi.Input<string>;
     otelTracing?: pulumi.Input<inputs.OrgTracingOtelTracing>;
+    /**
+     * Key-value map of the org's tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }
 

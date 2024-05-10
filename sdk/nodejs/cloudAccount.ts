@@ -36,14 +36,29 @@ export class CloudAccount extends pulumi.CustomResource {
 
     public readonly aws!: pulumi.Output<outputs.CloudAccountAws | undefined>;
     public readonly azure!: pulumi.Output<outputs.CloudAccountAzure | undefined>;
+    /**
+     * The ID, in GUID format, of the Cloud Account.
+     */
     public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    /**
+     * Description of the Cloud Account.
+     */
     public readonly description!: pulumi.Output<string | undefined>;
     public readonly gcp!: pulumi.Output<outputs.CloudAccountGcp | undefined>;
     public /*out*/ readonly gcpRoles!: pulumi.Output<string[]>;
+    /**
+     * GCP service account name used during the configuration of the cloud account at GCP.
+     */
     public /*out*/ readonly gcpServiceAccountName!: pulumi.Output<string>;
+    /**
+     * Name of the Cloud Account.
+     */
     public readonly name!: pulumi.Output<string>;
     public readonly ngs!: pulumi.Output<outputs.CloudAccountNgs | undefined>;
     public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    /**
+     * Key-value map of resource tags.
+     */
     public readonly tags!: pulumi.Output<{[key: string]: string} | undefined>;
 
     /**
@@ -95,14 +110,29 @@ export class CloudAccount extends pulumi.CustomResource {
 export interface CloudAccountState {
     aws?: pulumi.Input<inputs.CloudAccountAws>;
     azure?: pulumi.Input<inputs.CloudAccountAzure>;
+    /**
+     * The ID, in GUID format, of the Cloud Account.
+     */
     cplnId?: pulumi.Input<string>;
+    /**
+     * Description of the Cloud Account.
+     */
     description?: pulumi.Input<string>;
     gcp?: pulumi.Input<inputs.CloudAccountGcp>;
     gcpRoles?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * GCP service account name used during the configuration of the cloud account at GCP.
+     */
     gcpServiceAccountName?: pulumi.Input<string>;
+    /**
+     * Name of the Cloud Account.
+     */
     name?: pulumi.Input<string>;
     ngs?: pulumi.Input<inputs.CloudAccountNgs>;
     selfLink?: pulumi.Input<string>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }
 
@@ -112,9 +142,18 @@ export interface CloudAccountState {
 export interface CloudAccountArgs {
     aws?: pulumi.Input<inputs.CloudAccountAws>;
     azure?: pulumi.Input<inputs.CloudAccountAzure>;
+    /**
+     * Description of the Cloud Account.
+     */
     description?: pulumi.Input<string>;
     gcp?: pulumi.Input<inputs.CloudAccountGcp>;
+    /**
+     * Name of the Cloud Account.
+     */
     name?: pulumi.Input<string>;
     ngs?: pulumi.Input<inputs.CloudAccountNgs>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }

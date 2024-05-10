@@ -6149,6 +6149,148 @@ func (o OrgAuthConfigPtrOutput) SamlOnly() pulumi.BoolPtrOutput {
 	}).(pulumi.BoolPtrOutput)
 }
 
+type OrgLoggingCloudWatchLogging struct {
+	Credentials   string `pulumi:"credentials"`
+	GroupName     string `pulumi:"groupName"`
+	Region        string `pulumi:"region"`
+	RetentionDays *int   `pulumi:"retentionDays"`
+	StreamName    string `pulumi:"streamName"`
+}
+
+// OrgLoggingCloudWatchLoggingInput is an input type that accepts OrgLoggingCloudWatchLoggingArgs and OrgLoggingCloudWatchLoggingOutput values.
+// You can construct a concrete instance of `OrgLoggingCloudWatchLoggingInput` via:
+//
+//	OrgLoggingCloudWatchLoggingArgs{...}
+type OrgLoggingCloudWatchLoggingInput interface {
+	pulumi.Input
+
+	ToOrgLoggingCloudWatchLoggingOutput() OrgLoggingCloudWatchLoggingOutput
+	ToOrgLoggingCloudWatchLoggingOutputWithContext(context.Context) OrgLoggingCloudWatchLoggingOutput
+}
+
+type OrgLoggingCloudWatchLoggingArgs struct {
+	Credentials   pulumi.StringInput `pulumi:"credentials"`
+	GroupName     pulumi.StringInput `pulumi:"groupName"`
+	Region        pulumi.StringInput `pulumi:"region"`
+	RetentionDays pulumi.IntPtrInput `pulumi:"retentionDays"`
+	StreamName    pulumi.StringInput `pulumi:"streamName"`
+}
+
+func (OrgLoggingCloudWatchLoggingArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrgLoggingCloudWatchLogging)(nil)).Elem()
+}
+
+func (i OrgLoggingCloudWatchLoggingArgs) ToOrgLoggingCloudWatchLoggingOutput() OrgLoggingCloudWatchLoggingOutput {
+	return i.ToOrgLoggingCloudWatchLoggingOutputWithContext(context.Background())
+}
+
+func (i OrgLoggingCloudWatchLoggingArgs) ToOrgLoggingCloudWatchLoggingOutputWithContext(ctx context.Context) OrgLoggingCloudWatchLoggingOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgLoggingCloudWatchLoggingOutput)
+}
+
+func (i OrgLoggingCloudWatchLoggingArgs) ToOutput(ctx context.Context) pulumix.Output[OrgLoggingCloudWatchLogging] {
+	return pulumix.Output[OrgLoggingCloudWatchLogging]{
+		OutputState: i.ToOrgLoggingCloudWatchLoggingOutputWithContext(ctx).OutputState,
+	}
+}
+
+// OrgLoggingCloudWatchLoggingArrayInput is an input type that accepts OrgLoggingCloudWatchLoggingArray and OrgLoggingCloudWatchLoggingArrayOutput values.
+// You can construct a concrete instance of `OrgLoggingCloudWatchLoggingArrayInput` via:
+//
+//	OrgLoggingCloudWatchLoggingArray{ OrgLoggingCloudWatchLoggingArgs{...} }
+type OrgLoggingCloudWatchLoggingArrayInput interface {
+	pulumi.Input
+
+	ToOrgLoggingCloudWatchLoggingArrayOutput() OrgLoggingCloudWatchLoggingArrayOutput
+	ToOrgLoggingCloudWatchLoggingArrayOutputWithContext(context.Context) OrgLoggingCloudWatchLoggingArrayOutput
+}
+
+type OrgLoggingCloudWatchLoggingArray []OrgLoggingCloudWatchLoggingInput
+
+func (OrgLoggingCloudWatchLoggingArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]OrgLoggingCloudWatchLogging)(nil)).Elem()
+}
+
+func (i OrgLoggingCloudWatchLoggingArray) ToOrgLoggingCloudWatchLoggingArrayOutput() OrgLoggingCloudWatchLoggingArrayOutput {
+	return i.ToOrgLoggingCloudWatchLoggingArrayOutputWithContext(context.Background())
+}
+
+func (i OrgLoggingCloudWatchLoggingArray) ToOrgLoggingCloudWatchLoggingArrayOutputWithContext(ctx context.Context) OrgLoggingCloudWatchLoggingArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgLoggingCloudWatchLoggingArrayOutput)
+}
+
+func (i OrgLoggingCloudWatchLoggingArray) ToOutput(ctx context.Context) pulumix.Output[[]OrgLoggingCloudWatchLogging] {
+	return pulumix.Output[[]OrgLoggingCloudWatchLogging]{
+		OutputState: i.ToOrgLoggingCloudWatchLoggingArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type OrgLoggingCloudWatchLoggingOutput struct{ *pulumi.OutputState }
+
+func (OrgLoggingCloudWatchLoggingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrgLoggingCloudWatchLogging)(nil)).Elem()
+}
+
+func (o OrgLoggingCloudWatchLoggingOutput) ToOrgLoggingCloudWatchLoggingOutput() OrgLoggingCloudWatchLoggingOutput {
+	return o
+}
+
+func (o OrgLoggingCloudWatchLoggingOutput) ToOrgLoggingCloudWatchLoggingOutputWithContext(ctx context.Context) OrgLoggingCloudWatchLoggingOutput {
+	return o
+}
+
+func (o OrgLoggingCloudWatchLoggingOutput) ToOutput(ctx context.Context) pulumix.Output[OrgLoggingCloudWatchLogging] {
+	return pulumix.Output[OrgLoggingCloudWatchLogging]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o OrgLoggingCloudWatchLoggingOutput) Credentials() pulumi.StringOutput {
+	return o.ApplyT(func(v OrgLoggingCloudWatchLogging) string { return v.Credentials }).(pulumi.StringOutput)
+}
+
+func (o OrgLoggingCloudWatchLoggingOutput) GroupName() pulumi.StringOutput {
+	return o.ApplyT(func(v OrgLoggingCloudWatchLogging) string { return v.GroupName }).(pulumi.StringOutput)
+}
+
+func (o OrgLoggingCloudWatchLoggingOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v OrgLoggingCloudWatchLogging) string { return v.Region }).(pulumi.StringOutput)
+}
+
+func (o OrgLoggingCloudWatchLoggingOutput) RetentionDays() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v OrgLoggingCloudWatchLogging) *int { return v.RetentionDays }).(pulumi.IntPtrOutput)
+}
+
+func (o OrgLoggingCloudWatchLoggingOutput) StreamName() pulumi.StringOutput {
+	return o.ApplyT(func(v OrgLoggingCloudWatchLogging) string { return v.StreamName }).(pulumi.StringOutput)
+}
+
+type OrgLoggingCloudWatchLoggingArrayOutput struct{ *pulumi.OutputState }
+
+func (OrgLoggingCloudWatchLoggingArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]OrgLoggingCloudWatchLogging)(nil)).Elem()
+}
+
+func (o OrgLoggingCloudWatchLoggingArrayOutput) ToOrgLoggingCloudWatchLoggingArrayOutput() OrgLoggingCloudWatchLoggingArrayOutput {
+	return o
+}
+
+func (o OrgLoggingCloudWatchLoggingArrayOutput) ToOrgLoggingCloudWatchLoggingArrayOutputWithContext(ctx context.Context) OrgLoggingCloudWatchLoggingArrayOutput {
+	return o
+}
+
+func (o OrgLoggingCloudWatchLoggingArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]OrgLoggingCloudWatchLogging] {
+	return pulumix.Output[[]OrgLoggingCloudWatchLogging]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o OrgLoggingCloudWatchLoggingArrayOutput) Index(i pulumi.IntInput) OrgLoggingCloudWatchLoggingOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) OrgLoggingCloudWatchLogging {
+		return vs[0].([]OrgLoggingCloudWatchLogging)[vs[1].(int)]
+	}).(OrgLoggingCloudWatchLoggingOutput)
+}
+
 type OrgLoggingCoralogixLogging struct {
 	App         string `pulumi:"app"`
 	Cluster     string `pulumi:"cluster"`
@@ -7205,6 +7347,130 @@ func (o OrgLoggingElasticLoggingGenericPtrOutput) Type() pulumi.StringPtrOutput 
 	}).(pulumi.StringPtrOutput)
 }
 
+type OrgLoggingFluentdLogging struct {
+	Host string `pulumi:"host"`
+	Port *int   `pulumi:"port"`
+}
+
+// OrgLoggingFluentdLoggingInput is an input type that accepts OrgLoggingFluentdLoggingArgs and OrgLoggingFluentdLoggingOutput values.
+// You can construct a concrete instance of `OrgLoggingFluentdLoggingInput` via:
+//
+//	OrgLoggingFluentdLoggingArgs{...}
+type OrgLoggingFluentdLoggingInput interface {
+	pulumi.Input
+
+	ToOrgLoggingFluentdLoggingOutput() OrgLoggingFluentdLoggingOutput
+	ToOrgLoggingFluentdLoggingOutputWithContext(context.Context) OrgLoggingFluentdLoggingOutput
+}
+
+type OrgLoggingFluentdLoggingArgs struct {
+	Host pulumi.StringInput `pulumi:"host"`
+	Port pulumi.IntPtrInput `pulumi:"port"`
+}
+
+func (OrgLoggingFluentdLoggingArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrgLoggingFluentdLogging)(nil)).Elem()
+}
+
+func (i OrgLoggingFluentdLoggingArgs) ToOrgLoggingFluentdLoggingOutput() OrgLoggingFluentdLoggingOutput {
+	return i.ToOrgLoggingFluentdLoggingOutputWithContext(context.Background())
+}
+
+func (i OrgLoggingFluentdLoggingArgs) ToOrgLoggingFluentdLoggingOutputWithContext(ctx context.Context) OrgLoggingFluentdLoggingOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgLoggingFluentdLoggingOutput)
+}
+
+func (i OrgLoggingFluentdLoggingArgs) ToOutput(ctx context.Context) pulumix.Output[OrgLoggingFluentdLogging] {
+	return pulumix.Output[OrgLoggingFluentdLogging]{
+		OutputState: i.ToOrgLoggingFluentdLoggingOutputWithContext(ctx).OutputState,
+	}
+}
+
+// OrgLoggingFluentdLoggingArrayInput is an input type that accepts OrgLoggingFluentdLoggingArray and OrgLoggingFluentdLoggingArrayOutput values.
+// You can construct a concrete instance of `OrgLoggingFluentdLoggingArrayInput` via:
+//
+//	OrgLoggingFluentdLoggingArray{ OrgLoggingFluentdLoggingArgs{...} }
+type OrgLoggingFluentdLoggingArrayInput interface {
+	pulumi.Input
+
+	ToOrgLoggingFluentdLoggingArrayOutput() OrgLoggingFluentdLoggingArrayOutput
+	ToOrgLoggingFluentdLoggingArrayOutputWithContext(context.Context) OrgLoggingFluentdLoggingArrayOutput
+}
+
+type OrgLoggingFluentdLoggingArray []OrgLoggingFluentdLoggingInput
+
+func (OrgLoggingFluentdLoggingArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]OrgLoggingFluentdLogging)(nil)).Elem()
+}
+
+func (i OrgLoggingFluentdLoggingArray) ToOrgLoggingFluentdLoggingArrayOutput() OrgLoggingFluentdLoggingArrayOutput {
+	return i.ToOrgLoggingFluentdLoggingArrayOutputWithContext(context.Background())
+}
+
+func (i OrgLoggingFluentdLoggingArray) ToOrgLoggingFluentdLoggingArrayOutputWithContext(ctx context.Context) OrgLoggingFluentdLoggingArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgLoggingFluentdLoggingArrayOutput)
+}
+
+func (i OrgLoggingFluentdLoggingArray) ToOutput(ctx context.Context) pulumix.Output[[]OrgLoggingFluentdLogging] {
+	return pulumix.Output[[]OrgLoggingFluentdLogging]{
+		OutputState: i.ToOrgLoggingFluentdLoggingArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type OrgLoggingFluentdLoggingOutput struct{ *pulumi.OutputState }
+
+func (OrgLoggingFluentdLoggingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrgLoggingFluentdLogging)(nil)).Elem()
+}
+
+func (o OrgLoggingFluentdLoggingOutput) ToOrgLoggingFluentdLoggingOutput() OrgLoggingFluentdLoggingOutput {
+	return o
+}
+
+func (o OrgLoggingFluentdLoggingOutput) ToOrgLoggingFluentdLoggingOutputWithContext(ctx context.Context) OrgLoggingFluentdLoggingOutput {
+	return o
+}
+
+func (o OrgLoggingFluentdLoggingOutput) ToOutput(ctx context.Context) pulumix.Output[OrgLoggingFluentdLogging] {
+	return pulumix.Output[OrgLoggingFluentdLogging]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o OrgLoggingFluentdLoggingOutput) Host() pulumi.StringOutput {
+	return o.ApplyT(func(v OrgLoggingFluentdLogging) string { return v.Host }).(pulumi.StringOutput)
+}
+
+func (o OrgLoggingFluentdLoggingOutput) Port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v OrgLoggingFluentdLogging) *int { return v.Port }).(pulumi.IntPtrOutput)
+}
+
+type OrgLoggingFluentdLoggingArrayOutput struct{ *pulumi.OutputState }
+
+func (OrgLoggingFluentdLoggingArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]OrgLoggingFluentdLogging)(nil)).Elem()
+}
+
+func (o OrgLoggingFluentdLoggingArrayOutput) ToOrgLoggingFluentdLoggingArrayOutput() OrgLoggingFluentdLoggingArrayOutput {
+	return o
+}
+
+func (o OrgLoggingFluentdLoggingArrayOutput) ToOrgLoggingFluentdLoggingArrayOutputWithContext(ctx context.Context) OrgLoggingFluentdLoggingArrayOutput {
+	return o
+}
+
+func (o OrgLoggingFluentdLoggingArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]OrgLoggingFluentdLogging] {
+	return pulumix.Output[[]OrgLoggingFluentdLogging]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o OrgLoggingFluentdLoggingArrayOutput) Index(i pulumi.IntInput) OrgLoggingFluentdLoggingOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) OrgLoggingFluentdLogging {
+		return vs[0].([]OrgLoggingFluentdLogging)[vs[1].(int)]
+	}).(OrgLoggingFluentdLoggingOutput)
+}
+
 type OrgLoggingLogzioLogging struct {
 	Credentials  string `pulumi:"credentials"`
 	ListenerHost string `pulumi:"listenerHost"`
@@ -7463,6 +7729,130 @@ func (o OrgLoggingS3LoggingArrayOutput) Index(i pulumi.IntInput) OrgLoggingS3Log
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) OrgLoggingS3Logging {
 		return vs[0].([]OrgLoggingS3Logging)[vs[1].(int)]
 	}).(OrgLoggingS3LoggingOutput)
+}
+
+type OrgLoggingStackdriverLogging struct {
+	Credentials string `pulumi:"credentials"`
+	Location    string `pulumi:"location"`
+}
+
+// OrgLoggingStackdriverLoggingInput is an input type that accepts OrgLoggingStackdriverLoggingArgs and OrgLoggingStackdriverLoggingOutput values.
+// You can construct a concrete instance of `OrgLoggingStackdriverLoggingInput` via:
+//
+//	OrgLoggingStackdriverLoggingArgs{...}
+type OrgLoggingStackdriverLoggingInput interface {
+	pulumi.Input
+
+	ToOrgLoggingStackdriverLoggingOutput() OrgLoggingStackdriverLoggingOutput
+	ToOrgLoggingStackdriverLoggingOutputWithContext(context.Context) OrgLoggingStackdriverLoggingOutput
+}
+
+type OrgLoggingStackdriverLoggingArgs struct {
+	Credentials pulumi.StringInput `pulumi:"credentials"`
+	Location    pulumi.StringInput `pulumi:"location"`
+}
+
+func (OrgLoggingStackdriverLoggingArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrgLoggingStackdriverLogging)(nil)).Elem()
+}
+
+func (i OrgLoggingStackdriverLoggingArgs) ToOrgLoggingStackdriverLoggingOutput() OrgLoggingStackdriverLoggingOutput {
+	return i.ToOrgLoggingStackdriverLoggingOutputWithContext(context.Background())
+}
+
+func (i OrgLoggingStackdriverLoggingArgs) ToOrgLoggingStackdriverLoggingOutputWithContext(ctx context.Context) OrgLoggingStackdriverLoggingOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgLoggingStackdriverLoggingOutput)
+}
+
+func (i OrgLoggingStackdriverLoggingArgs) ToOutput(ctx context.Context) pulumix.Output[OrgLoggingStackdriverLogging] {
+	return pulumix.Output[OrgLoggingStackdriverLogging]{
+		OutputState: i.ToOrgLoggingStackdriverLoggingOutputWithContext(ctx).OutputState,
+	}
+}
+
+// OrgLoggingStackdriverLoggingArrayInput is an input type that accepts OrgLoggingStackdriverLoggingArray and OrgLoggingStackdriverLoggingArrayOutput values.
+// You can construct a concrete instance of `OrgLoggingStackdriverLoggingArrayInput` via:
+//
+//	OrgLoggingStackdriverLoggingArray{ OrgLoggingStackdriverLoggingArgs{...} }
+type OrgLoggingStackdriverLoggingArrayInput interface {
+	pulumi.Input
+
+	ToOrgLoggingStackdriverLoggingArrayOutput() OrgLoggingStackdriverLoggingArrayOutput
+	ToOrgLoggingStackdriverLoggingArrayOutputWithContext(context.Context) OrgLoggingStackdriverLoggingArrayOutput
+}
+
+type OrgLoggingStackdriverLoggingArray []OrgLoggingStackdriverLoggingInput
+
+func (OrgLoggingStackdriverLoggingArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]OrgLoggingStackdriverLogging)(nil)).Elem()
+}
+
+func (i OrgLoggingStackdriverLoggingArray) ToOrgLoggingStackdriverLoggingArrayOutput() OrgLoggingStackdriverLoggingArrayOutput {
+	return i.ToOrgLoggingStackdriverLoggingArrayOutputWithContext(context.Background())
+}
+
+func (i OrgLoggingStackdriverLoggingArray) ToOrgLoggingStackdriverLoggingArrayOutputWithContext(ctx context.Context) OrgLoggingStackdriverLoggingArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgLoggingStackdriverLoggingArrayOutput)
+}
+
+func (i OrgLoggingStackdriverLoggingArray) ToOutput(ctx context.Context) pulumix.Output[[]OrgLoggingStackdriverLogging] {
+	return pulumix.Output[[]OrgLoggingStackdriverLogging]{
+		OutputState: i.ToOrgLoggingStackdriverLoggingArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type OrgLoggingStackdriverLoggingOutput struct{ *pulumi.OutputState }
+
+func (OrgLoggingStackdriverLoggingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrgLoggingStackdriverLogging)(nil)).Elem()
+}
+
+func (o OrgLoggingStackdriverLoggingOutput) ToOrgLoggingStackdriverLoggingOutput() OrgLoggingStackdriverLoggingOutput {
+	return o
+}
+
+func (o OrgLoggingStackdriverLoggingOutput) ToOrgLoggingStackdriverLoggingOutputWithContext(ctx context.Context) OrgLoggingStackdriverLoggingOutput {
+	return o
+}
+
+func (o OrgLoggingStackdriverLoggingOutput) ToOutput(ctx context.Context) pulumix.Output[OrgLoggingStackdriverLogging] {
+	return pulumix.Output[OrgLoggingStackdriverLogging]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o OrgLoggingStackdriverLoggingOutput) Credentials() pulumi.StringOutput {
+	return o.ApplyT(func(v OrgLoggingStackdriverLogging) string { return v.Credentials }).(pulumi.StringOutput)
+}
+
+func (o OrgLoggingStackdriverLoggingOutput) Location() pulumi.StringOutput {
+	return o.ApplyT(func(v OrgLoggingStackdriverLogging) string { return v.Location }).(pulumi.StringOutput)
+}
+
+type OrgLoggingStackdriverLoggingArrayOutput struct{ *pulumi.OutputState }
+
+func (OrgLoggingStackdriverLoggingArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]OrgLoggingStackdriverLogging)(nil)).Elem()
+}
+
+func (o OrgLoggingStackdriverLoggingArrayOutput) ToOrgLoggingStackdriverLoggingArrayOutput() OrgLoggingStackdriverLoggingArrayOutput {
+	return o
+}
+
+func (o OrgLoggingStackdriverLoggingArrayOutput) ToOrgLoggingStackdriverLoggingArrayOutputWithContext(ctx context.Context) OrgLoggingStackdriverLoggingArrayOutput {
+	return o
+}
+
+func (o OrgLoggingStackdriverLoggingArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]OrgLoggingStackdriverLogging] {
+	return pulumix.Output[[]OrgLoggingStackdriverLogging]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o OrgLoggingStackdriverLoggingArrayOutput) Index(i pulumi.IntInput) OrgLoggingStackdriverLoggingOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) OrgLoggingStackdriverLogging {
+		return vs[0].([]OrgLoggingStackdriverLogging)[vs[1].(int)]
+	}).(OrgLoggingStackdriverLoggingOutput)
 }
 
 type OrgObservability struct {
@@ -15364,12 +15754,12 @@ func (o WorkloadJobPtrOutput) Schedule() pulumi.StringPtrOutput {
 }
 
 type WorkloadLocalOption struct {
-	Autoscaling    WorkloadLocalOptionAutoscaling `pulumi:"autoscaling"`
-	CapacityAi     *bool                          `pulumi:"capacityAi"`
-	Debug          *bool                          `pulumi:"debug"`
-	Location       string                         `pulumi:"location"`
-	Suspend        *bool                          `pulumi:"suspend"`
-	TimeoutSeconds *int                           `pulumi:"timeoutSeconds"`
+	Autoscaling    *WorkloadLocalOptionAutoscaling `pulumi:"autoscaling"`
+	CapacityAi     *bool                           `pulumi:"capacityAi"`
+	Debug          *bool                           `pulumi:"debug"`
+	Location       string                          `pulumi:"location"`
+	Suspend        *bool                           `pulumi:"suspend"`
+	TimeoutSeconds *int                            `pulumi:"timeoutSeconds"`
 }
 
 // WorkloadLocalOptionInput is an input type that accepts WorkloadLocalOptionArgs and WorkloadLocalOptionOutput values.
@@ -15384,12 +15774,12 @@ type WorkloadLocalOptionInput interface {
 }
 
 type WorkloadLocalOptionArgs struct {
-	Autoscaling    WorkloadLocalOptionAutoscalingInput `pulumi:"autoscaling"`
-	CapacityAi     pulumi.BoolPtrInput                 `pulumi:"capacityAi"`
-	Debug          pulumi.BoolPtrInput                 `pulumi:"debug"`
-	Location       pulumi.StringInput                  `pulumi:"location"`
-	Suspend        pulumi.BoolPtrInput                 `pulumi:"suspend"`
-	TimeoutSeconds pulumi.IntPtrInput                  `pulumi:"timeoutSeconds"`
+	Autoscaling    WorkloadLocalOptionAutoscalingPtrInput `pulumi:"autoscaling"`
+	CapacityAi     pulumi.BoolPtrInput                    `pulumi:"capacityAi"`
+	Debug          pulumi.BoolPtrInput                    `pulumi:"debug"`
+	Location       pulumi.StringInput                     `pulumi:"location"`
+	Suspend        pulumi.BoolPtrInput                    `pulumi:"suspend"`
+	TimeoutSeconds pulumi.IntPtrInput                     `pulumi:"timeoutSeconds"`
 }
 
 func (WorkloadLocalOptionArgs) ElementType() reflect.Type {
@@ -15461,8 +15851,8 @@ func (o WorkloadLocalOptionOutput) ToOutput(ctx context.Context) pulumix.Output[
 	}
 }
 
-func (o WorkloadLocalOptionOutput) Autoscaling() WorkloadLocalOptionAutoscalingOutput {
-	return o.ApplyT(func(v WorkloadLocalOption) WorkloadLocalOptionAutoscaling { return v.Autoscaling }).(WorkloadLocalOptionAutoscalingOutput)
+func (o WorkloadLocalOptionOutput) Autoscaling() WorkloadLocalOptionAutoscalingPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOption) *WorkloadLocalOptionAutoscaling { return v.Autoscaling }).(WorkloadLocalOptionAutoscalingPtrOutput)
 }
 
 func (o WorkloadLocalOptionOutput) CapacityAi() pulumi.BoolPtrOutput {
@@ -15560,6 +15950,53 @@ func (i WorkloadLocalOptionAutoscalingArgs) ToOutput(ctx context.Context) pulumi
 	}
 }
 
+func (i WorkloadLocalOptionAutoscalingArgs) ToWorkloadLocalOptionAutoscalingPtrOutput() WorkloadLocalOptionAutoscalingPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingArgs) ToWorkloadLocalOptionAutoscalingPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingOutput).ToWorkloadLocalOptionAutoscalingPtrOutputWithContext(ctx)
+}
+
+// WorkloadLocalOptionAutoscalingPtrInput is an input type that accepts WorkloadLocalOptionAutoscalingArgs, WorkloadLocalOptionAutoscalingPtr and WorkloadLocalOptionAutoscalingPtrOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingPtrInput` via:
+//
+//	        WorkloadLocalOptionAutoscalingArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadLocalOptionAutoscalingPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingPtrOutput() WorkloadLocalOptionAutoscalingPtrOutput
+	ToWorkloadLocalOptionAutoscalingPtrOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingPtrOutput
+}
+
+type workloadLocalOptionAutoscalingPtrType WorkloadLocalOptionAutoscalingArgs
+
+func WorkloadLocalOptionAutoscalingPtr(v *WorkloadLocalOptionAutoscalingArgs) WorkloadLocalOptionAutoscalingPtrInput {
+	return (*workloadLocalOptionAutoscalingPtrType)(v)
+}
+
+func (*workloadLocalOptionAutoscalingPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscaling)(nil)).Elem()
+}
+
+func (i *workloadLocalOptionAutoscalingPtrType) ToWorkloadLocalOptionAutoscalingPtrOutput() WorkloadLocalOptionAutoscalingPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadLocalOptionAutoscalingPtrType) ToWorkloadLocalOptionAutoscalingPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingPtrOutput)
+}
+
+func (i *workloadLocalOptionAutoscalingPtrType) ToOutput(ctx context.Context) pulumix.Output[*WorkloadLocalOptionAutoscaling] {
+	return pulumix.Output[*WorkloadLocalOptionAutoscaling]{
+		OutputState: i.ToWorkloadLocalOptionAutoscalingPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
 type WorkloadLocalOptionAutoscalingOutput struct{ *pulumi.OutputState }
 
 func (WorkloadLocalOptionAutoscalingOutput) ElementType() reflect.Type {
@@ -15572,6 +16009,16 @@ func (o WorkloadLocalOptionAutoscalingOutput) ToWorkloadLocalOptionAutoscalingOu
 
 func (o WorkloadLocalOptionAutoscalingOutput) ToWorkloadLocalOptionAutoscalingOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingOutput {
 	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingOutput) ToWorkloadLocalOptionAutoscalingPtrOutput() WorkloadLocalOptionAutoscalingPtrOutput {
+	return o.ToWorkloadLocalOptionAutoscalingPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadLocalOptionAutoscalingOutput) ToWorkloadLocalOptionAutoscalingPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadLocalOptionAutoscaling) *WorkloadLocalOptionAutoscaling {
+		return &v
+	}).(WorkloadLocalOptionAutoscalingPtrOutput)
 }
 
 func (o WorkloadLocalOptionAutoscalingOutput) ToOutput(ctx context.Context) pulumix.Output[WorkloadLocalOptionAutoscaling] {
@@ -15608,12 +16055,105 @@ func (o WorkloadLocalOptionAutoscalingOutput) Target() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadLocalOptionAutoscaling) *int { return v.Target }).(pulumi.IntPtrOutput)
 }
 
+type WorkloadLocalOptionAutoscalingPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscaling)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingPtrOutput) ToWorkloadLocalOptionAutoscalingPtrOutput() WorkloadLocalOptionAutoscalingPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingPtrOutput) ToWorkloadLocalOptionAutoscalingPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*WorkloadLocalOptionAutoscaling] {
+	return pulumix.Output[*WorkloadLocalOptionAutoscaling]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadLocalOptionAutoscalingPtrOutput) Elem() WorkloadLocalOptionAutoscalingOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscaling) WorkloadLocalOptionAutoscaling {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadLocalOptionAutoscaling
+		return ret
+	}).(WorkloadLocalOptionAutoscalingOutput)
+}
+
+func (o WorkloadLocalOptionAutoscalingPtrOutput) MaxConcurrency() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscaling) *int {
+		if v == nil {
+			return nil
+		}
+		return v.MaxConcurrency
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o WorkloadLocalOptionAutoscalingPtrOutput) MaxScale() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscaling) *int {
+		if v == nil {
+			return nil
+		}
+		return v.MaxScale
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o WorkloadLocalOptionAutoscalingPtrOutput) Metric() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscaling) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Metric
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadLocalOptionAutoscalingPtrOutput) MetricPercentile() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscaling) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MetricPercentile
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadLocalOptionAutoscalingPtrOutput) MinScale() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscaling) *int {
+		if v == nil {
+			return nil
+		}
+		return v.MinScale
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o WorkloadLocalOptionAutoscalingPtrOutput) ScaleToZeroDelay() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscaling) *int {
+		if v == nil {
+			return nil
+		}
+		return v.ScaleToZeroDelay
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o WorkloadLocalOptionAutoscalingPtrOutput) Target() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscaling) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Target
+	}).(pulumi.IntPtrOutput)
+}
+
 type WorkloadOptions struct {
-	Autoscaling    WorkloadOptionsAutoscaling `pulumi:"autoscaling"`
-	CapacityAi     *bool                      `pulumi:"capacityAi"`
-	Debug          *bool                      `pulumi:"debug"`
-	Suspend        *bool                      `pulumi:"suspend"`
-	TimeoutSeconds *int                       `pulumi:"timeoutSeconds"`
+	Autoscaling    *WorkloadOptionsAutoscaling `pulumi:"autoscaling"`
+	CapacityAi     *bool                       `pulumi:"capacityAi"`
+	Debug          *bool                       `pulumi:"debug"`
+	Suspend        *bool                       `pulumi:"suspend"`
+	TimeoutSeconds *int                        `pulumi:"timeoutSeconds"`
 }
 
 // WorkloadOptionsInput is an input type that accepts WorkloadOptionsArgs and WorkloadOptionsOutput values.
@@ -15628,11 +16168,11 @@ type WorkloadOptionsInput interface {
 }
 
 type WorkloadOptionsArgs struct {
-	Autoscaling    WorkloadOptionsAutoscalingInput `pulumi:"autoscaling"`
-	CapacityAi     pulumi.BoolPtrInput             `pulumi:"capacityAi"`
-	Debug          pulumi.BoolPtrInput             `pulumi:"debug"`
-	Suspend        pulumi.BoolPtrInput             `pulumi:"suspend"`
-	TimeoutSeconds pulumi.IntPtrInput              `pulumi:"timeoutSeconds"`
+	Autoscaling    WorkloadOptionsAutoscalingPtrInput `pulumi:"autoscaling"`
+	CapacityAi     pulumi.BoolPtrInput                `pulumi:"capacityAi"`
+	Debug          pulumi.BoolPtrInput                `pulumi:"debug"`
+	Suspend        pulumi.BoolPtrInput                `pulumi:"suspend"`
+	TimeoutSeconds pulumi.IntPtrInput                 `pulumi:"timeoutSeconds"`
 }
 
 func (WorkloadOptionsArgs) ElementType() reflect.Type {
@@ -15730,8 +16270,8 @@ func (o WorkloadOptionsOutput) ToOutput(ctx context.Context) pulumix.Output[Work
 	}
 }
 
-func (o WorkloadOptionsOutput) Autoscaling() WorkloadOptionsAutoscalingOutput {
-	return o.ApplyT(func(v WorkloadOptions) WorkloadOptionsAutoscaling { return v.Autoscaling }).(WorkloadOptionsAutoscalingOutput)
+func (o WorkloadOptionsOutput) Autoscaling() WorkloadOptionsAutoscalingPtrOutput {
+	return o.ApplyT(func(v WorkloadOptions) *WorkloadOptionsAutoscaling { return v.Autoscaling }).(WorkloadOptionsAutoscalingPtrOutput)
 }
 
 func (o WorkloadOptionsOutput) CapacityAi() pulumi.BoolPtrOutput {
@@ -15785,7 +16325,7 @@ func (o WorkloadOptionsPtrOutput) Autoscaling() WorkloadOptionsAutoscalingPtrOut
 		if v == nil {
 			return nil
 		}
-		return &v.Autoscaling
+		return v.Autoscaling
 	}).(WorkloadOptionsAutoscalingPtrOutput)
 }
 
@@ -18178,6 +18718,1438 @@ func (o GetGvcSidecarPtrOutput) Envoy() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+type GetImageManifest struct {
+	Configs       []GetImageManifestConfig `pulumi:"configs"`
+	Layers        []GetImageManifestLayer  `pulumi:"layers"`
+	MediaType     string                   `pulumi:"mediaType"`
+	SchemaVersion int                      `pulumi:"schemaVersion"`
+}
+
+// GetImageManifestInput is an input type that accepts GetImageManifestArgs and GetImageManifestOutput values.
+// You can construct a concrete instance of `GetImageManifestInput` via:
+//
+//	GetImageManifestArgs{...}
+type GetImageManifestInput interface {
+	pulumi.Input
+
+	ToGetImageManifestOutput() GetImageManifestOutput
+	ToGetImageManifestOutputWithContext(context.Context) GetImageManifestOutput
+}
+
+type GetImageManifestArgs struct {
+	Configs       GetImageManifestConfigArrayInput `pulumi:"configs"`
+	Layers        GetImageManifestLayerArrayInput  `pulumi:"layers"`
+	MediaType     pulumi.StringInput               `pulumi:"mediaType"`
+	SchemaVersion pulumi.IntInput                  `pulumi:"schemaVersion"`
+}
+
+func (GetImageManifestArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImageManifest)(nil)).Elem()
+}
+
+func (i GetImageManifestArgs) ToGetImageManifestOutput() GetImageManifestOutput {
+	return i.ToGetImageManifestOutputWithContext(context.Background())
+}
+
+func (i GetImageManifestArgs) ToGetImageManifestOutputWithContext(ctx context.Context) GetImageManifestOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImageManifestOutput)
+}
+
+func (i GetImageManifestArgs) ToOutput(ctx context.Context) pulumix.Output[GetImageManifest] {
+	return pulumix.Output[GetImageManifest]{
+		OutputState: i.ToGetImageManifestOutputWithContext(ctx).OutputState,
+	}
+}
+
+// GetImageManifestArrayInput is an input type that accepts GetImageManifestArray and GetImageManifestArrayOutput values.
+// You can construct a concrete instance of `GetImageManifestArrayInput` via:
+//
+//	GetImageManifestArray{ GetImageManifestArgs{...} }
+type GetImageManifestArrayInput interface {
+	pulumi.Input
+
+	ToGetImageManifestArrayOutput() GetImageManifestArrayOutput
+	ToGetImageManifestArrayOutputWithContext(context.Context) GetImageManifestArrayOutput
+}
+
+type GetImageManifestArray []GetImageManifestInput
+
+func (GetImageManifestArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetImageManifest)(nil)).Elem()
+}
+
+func (i GetImageManifestArray) ToGetImageManifestArrayOutput() GetImageManifestArrayOutput {
+	return i.ToGetImageManifestArrayOutputWithContext(context.Background())
+}
+
+func (i GetImageManifestArray) ToGetImageManifestArrayOutputWithContext(ctx context.Context) GetImageManifestArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImageManifestArrayOutput)
+}
+
+func (i GetImageManifestArray) ToOutput(ctx context.Context) pulumix.Output[[]GetImageManifest] {
+	return pulumix.Output[[]GetImageManifest]{
+		OutputState: i.ToGetImageManifestArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetImageManifestOutput struct{ *pulumi.OutputState }
+
+func (GetImageManifestOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImageManifest)(nil)).Elem()
+}
+
+func (o GetImageManifestOutput) ToGetImageManifestOutput() GetImageManifestOutput {
+	return o
+}
+
+func (o GetImageManifestOutput) ToGetImageManifestOutputWithContext(ctx context.Context) GetImageManifestOutput {
+	return o
+}
+
+func (o GetImageManifestOutput) ToOutput(ctx context.Context) pulumix.Output[GetImageManifest] {
+	return pulumix.Output[GetImageManifest]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImageManifestOutput) Configs() GetImageManifestConfigArrayOutput {
+	return o.ApplyT(func(v GetImageManifest) []GetImageManifestConfig { return v.Configs }).(GetImageManifestConfigArrayOutput)
+}
+
+func (o GetImageManifestOutput) Layers() GetImageManifestLayerArrayOutput {
+	return o.ApplyT(func(v GetImageManifest) []GetImageManifestLayer { return v.Layers }).(GetImageManifestLayerArrayOutput)
+}
+
+func (o GetImageManifestOutput) MediaType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageManifest) string { return v.MediaType }).(pulumi.StringOutput)
+}
+
+func (o GetImageManifestOutput) SchemaVersion() pulumi.IntOutput {
+	return o.ApplyT(func(v GetImageManifest) int { return v.SchemaVersion }).(pulumi.IntOutput)
+}
+
+type GetImageManifestArrayOutput struct{ *pulumi.OutputState }
+
+func (GetImageManifestArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetImageManifest)(nil)).Elem()
+}
+
+func (o GetImageManifestArrayOutput) ToGetImageManifestArrayOutput() GetImageManifestArrayOutput {
+	return o
+}
+
+func (o GetImageManifestArrayOutput) ToGetImageManifestArrayOutputWithContext(ctx context.Context) GetImageManifestArrayOutput {
+	return o
+}
+
+func (o GetImageManifestArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]GetImageManifest] {
+	return pulumix.Output[[]GetImageManifest]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImageManifestArrayOutput) Index(i pulumi.IntInput) GetImageManifestOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetImageManifest {
+		return vs[0].([]GetImageManifest)[vs[1].(int)]
+	}).(GetImageManifestOutput)
+}
+
+type GetImageManifestConfig struct {
+	Digest    string `pulumi:"digest"`
+	MediaType string `pulumi:"mediaType"`
+	Size      int    `pulumi:"size"`
+}
+
+// GetImageManifestConfigInput is an input type that accepts GetImageManifestConfigArgs and GetImageManifestConfigOutput values.
+// You can construct a concrete instance of `GetImageManifestConfigInput` via:
+//
+//	GetImageManifestConfigArgs{...}
+type GetImageManifestConfigInput interface {
+	pulumi.Input
+
+	ToGetImageManifestConfigOutput() GetImageManifestConfigOutput
+	ToGetImageManifestConfigOutputWithContext(context.Context) GetImageManifestConfigOutput
+}
+
+type GetImageManifestConfigArgs struct {
+	Digest    pulumi.StringInput `pulumi:"digest"`
+	MediaType pulumi.StringInput `pulumi:"mediaType"`
+	Size      pulumi.IntInput    `pulumi:"size"`
+}
+
+func (GetImageManifestConfigArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImageManifestConfig)(nil)).Elem()
+}
+
+func (i GetImageManifestConfigArgs) ToGetImageManifestConfigOutput() GetImageManifestConfigOutput {
+	return i.ToGetImageManifestConfigOutputWithContext(context.Background())
+}
+
+func (i GetImageManifestConfigArgs) ToGetImageManifestConfigOutputWithContext(ctx context.Context) GetImageManifestConfigOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImageManifestConfigOutput)
+}
+
+func (i GetImageManifestConfigArgs) ToOutput(ctx context.Context) pulumix.Output[GetImageManifestConfig] {
+	return pulumix.Output[GetImageManifestConfig]{
+		OutputState: i.ToGetImageManifestConfigOutputWithContext(ctx).OutputState,
+	}
+}
+
+// GetImageManifestConfigArrayInput is an input type that accepts GetImageManifestConfigArray and GetImageManifestConfigArrayOutput values.
+// You can construct a concrete instance of `GetImageManifestConfigArrayInput` via:
+//
+//	GetImageManifestConfigArray{ GetImageManifestConfigArgs{...} }
+type GetImageManifestConfigArrayInput interface {
+	pulumi.Input
+
+	ToGetImageManifestConfigArrayOutput() GetImageManifestConfigArrayOutput
+	ToGetImageManifestConfigArrayOutputWithContext(context.Context) GetImageManifestConfigArrayOutput
+}
+
+type GetImageManifestConfigArray []GetImageManifestConfigInput
+
+func (GetImageManifestConfigArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetImageManifestConfig)(nil)).Elem()
+}
+
+func (i GetImageManifestConfigArray) ToGetImageManifestConfigArrayOutput() GetImageManifestConfigArrayOutput {
+	return i.ToGetImageManifestConfigArrayOutputWithContext(context.Background())
+}
+
+func (i GetImageManifestConfigArray) ToGetImageManifestConfigArrayOutputWithContext(ctx context.Context) GetImageManifestConfigArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImageManifestConfigArrayOutput)
+}
+
+func (i GetImageManifestConfigArray) ToOutput(ctx context.Context) pulumix.Output[[]GetImageManifestConfig] {
+	return pulumix.Output[[]GetImageManifestConfig]{
+		OutputState: i.ToGetImageManifestConfigArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetImageManifestConfigOutput struct{ *pulumi.OutputState }
+
+func (GetImageManifestConfigOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImageManifestConfig)(nil)).Elem()
+}
+
+func (o GetImageManifestConfigOutput) ToGetImageManifestConfigOutput() GetImageManifestConfigOutput {
+	return o
+}
+
+func (o GetImageManifestConfigOutput) ToGetImageManifestConfigOutputWithContext(ctx context.Context) GetImageManifestConfigOutput {
+	return o
+}
+
+func (o GetImageManifestConfigOutput) ToOutput(ctx context.Context) pulumix.Output[GetImageManifestConfig] {
+	return pulumix.Output[GetImageManifestConfig]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImageManifestConfigOutput) Digest() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageManifestConfig) string { return v.Digest }).(pulumi.StringOutput)
+}
+
+func (o GetImageManifestConfigOutput) MediaType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageManifestConfig) string { return v.MediaType }).(pulumi.StringOutput)
+}
+
+func (o GetImageManifestConfigOutput) Size() pulumi.IntOutput {
+	return o.ApplyT(func(v GetImageManifestConfig) int { return v.Size }).(pulumi.IntOutput)
+}
+
+type GetImageManifestConfigArrayOutput struct{ *pulumi.OutputState }
+
+func (GetImageManifestConfigArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetImageManifestConfig)(nil)).Elem()
+}
+
+func (o GetImageManifestConfigArrayOutput) ToGetImageManifestConfigArrayOutput() GetImageManifestConfigArrayOutput {
+	return o
+}
+
+func (o GetImageManifestConfigArrayOutput) ToGetImageManifestConfigArrayOutputWithContext(ctx context.Context) GetImageManifestConfigArrayOutput {
+	return o
+}
+
+func (o GetImageManifestConfigArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]GetImageManifestConfig] {
+	return pulumix.Output[[]GetImageManifestConfig]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImageManifestConfigArrayOutput) Index(i pulumi.IntInput) GetImageManifestConfigOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetImageManifestConfig {
+		return vs[0].([]GetImageManifestConfig)[vs[1].(int)]
+	}).(GetImageManifestConfigOutput)
+}
+
+type GetImageManifestLayer struct {
+	Digest    string `pulumi:"digest"`
+	MediaType string `pulumi:"mediaType"`
+	Size      int    `pulumi:"size"`
+}
+
+// GetImageManifestLayerInput is an input type that accepts GetImageManifestLayerArgs and GetImageManifestLayerOutput values.
+// You can construct a concrete instance of `GetImageManifestLayerInput` via:
+//
+//	GetImageManifestLayerArgs{...}
+type GetImageManifestLayerInput interface {
+	pulumi.Input
+
+	ToGetImageManifestLayerOutput() GetImageManifestLayerOutput
+	ToGetImageManifestLayerOutputWithContext(context.Context) GetImageManifestLayerOutput
+}
+
+type GetImageManifestLayerArgs struct {
+	Digest    pulumi.StringInput `pulumi:"digest"`
+	MediaType pulumi.StringInput `pulumi:"mediaType"`
+	Size      pulumi.IntInput    `pulumi:"size"`
+}
+
+func (GetImageManifestLayerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImageManifestLayer)(nil)).Elem()
+}
+
+func (i GetImageManifestLayerArgs) ToGetImageManifestLayerOutput() GetImageManifestLayerOutput {
+	return i.ToGetImageManifestLayerOutputWithContext(context.Background())
+}
+
+func (i GetImageManifestLayerArgs) ToGetImageManifestLayerOutputWithContext(ctx context.Context) GetImageManifestLayerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImageManifestLayerOutput)
+}
+
+func (i GetImageManifestLayerArgs) ToOutput(ctx context.Context) pulumix.Output[GetImageManifestLayer] {
+	return pulumix.Output[GetImageManifestLayer]{
+		OutputState: i.ToGetImageManifestLayerOutputWithContext(ctx).OutputState,
+	}
+}
+
+// GetImageManifestLayerArrayInput is an input type that accepts GetImageManifestLayerArray and GetImageManifestLayerArrayOutput values.
+// You can construct a concrete instance of `GetImageManifestLayerArrayInput` via:
+//
+//	GetImageManifestLayerArray{ GetImageManifestLayerArgs{...} }
+type GetImageManifestLayerArrayInput interface {
+	pulumi.Input
+
+	ToGetImageManifestLayerArrayOutput() GetImageManifestLayerArrayOutput
+	ToGetImageManifestLayerArrayOutputWithContext(context.Context) GetImageManifestLayerArrayOutput
+}
+
+type GetImageManifestLayerArray []GetImageManifestLayerInput
+
+func (GetImageManifestLayerArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetImageManifestLayer)(nil)).Elem()
+}
+
+func (i GetImageManifestLayerArray) ToGetImageManifestLayerArrayOutput() GetImageManifestLayerArrayOutput {
+	return i.ToGetImageManifestLayerArrayOutputWithContext(context.Background())
+}
+
+func (i GetImageManifestLayerArray) ToGetImageManifestLayerArrayOutputWithContext(ctx context.Context) GetImageManifestLayerArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImageManifestLayerArrayOutput)
+}
+
+func (i GetImageManifestLayerArray) ToOutput(ctx context.Context) pulumix.Output[[]GetImageManifestLayer] {
+	return pulumix.Output[[]GetImageManifestLayer]{
+		OutputState: i.ToGetImageManifestLayerArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetImageManifestLayerOutput struct{ *pulumi.OutputState }
+
+func (GetImageManifestLayerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImageManifestLayer)(nil)).Elem()
+}
+
+func (o GetImageManifestLayerOutput) ToGetImageManifestLayerOutput() GetImageManifestLayerOutput {
+	return o
+}
+
+func (o GetImageManifestLayerOutput) ToGetImageManifestLayerOutputWithContext(ctx context.Context) GetImageManifestLayerOutput {
+	return o
+}
+
+func (o GetImageManifestLayerOutput) ToOutput(ctx context.Context) pulumix.Output[GetImageManifestLayer] {
+	return pulumix.Output[GetImageManifestLayer]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImageManifestLayerOutput) Digest() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageManifestLayer) string { return v.Digest }).(pulumi.StringOutput)
+}
+
+func (o GetImageManifestLayerOutput) MediaType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageManifestLayer) string { return v.MediaType }).(pulumi.StringOutput)
+}
+
+func (o GetImageManifestLayerOutput) Size() pulumi.IntOutput {
+	return o.ApplyT(func(v GetImageManifestLayer) int { return v.Size }).(pulumi.IntOutput)
+}
+
+type GetImageManifestLayerArrayOutput struct{ *pulumi.OutputState }
+
+func (GetImageManifestLayerArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetImageManifestLayer)(nil)).Elem()
+}
+
+func (o GetImageManifestLayerArrayOutput) ToGetImageManifestLayerArrayOutput() GetImageManifestLayerArrayOutput {
+	return o
+}
+
+func (o GetImageManifestLayerArrayOutput) ToGetImageManifestLayerArrayOutputWithContext(ctx context.Context) GetImageManifestLayerArrayOutput {
+	return o
+}
+
+func (o GetImageManifestLayerArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]GetImageManifestLayer] {
+	return pulumix.Output[[]GetImageManifestLayer]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImageManifestLayerArrayOutput) Index(i pulumi.IntInput) GetImageManifestLayerOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetImageManifestLayer {
+		return vs[0].([]GetImageManifestLayer)[vs[1].(int)]
+	}).(GetImageManifestLayerOutput)
+}
+
+type GetImagesImage struct {
+	CplnId     string                   `pulumi:"cplnId"`
+	Digest     string                   `pulumi:"digest"`
+	Manifests  []GetImagesImageManifest `pulumi:"manifests"`
+	Name       string                   `pulumi:"name"`
+	Repository string                   `pulumi:"repository"`
+	SelfLink   string                   `pulumi:"selfLink"`
+	Tag        string                   `pulumi:"tag"`
+	Tags       map[string]string        `pulumi:"tags"`
+}
+
+// GetImagesImageInput is an input type that accepts GetImagesImageArgs and GetImagesImageOutput values.
+// You can construct a concrete instance of `GetImagesImageInput` via:
+//
+//	GetImagesImageArgs{...}
+type GetImagesImageInput interface {
+	pulumi.Input
+
+	ToGetImagesImageOutput() GetImagesImageOutput
+	ToGetImagesImageOutputWithContext(context.Context) GetImagesImageOutput
+}
+
+type GetImagesImageArgs struct {
+	CplnId     pulumi.StringInput               `pulumi:"cplnId"`
+	Digest     pulumi.StringInput               `pulumi:"digest"`
+	Manifests  GetImagesImageManifestArrayInput `pulumi:"manifests"`
+	Name       pulumi.StringInput               `pulumi:"name"`
+	Repository pulumi.StringInput               `pulumi:"repository"`
+	SelfLink   pulumi.StringInput               `pulumi:"selfLink"`
+	Tag        pulumi.StringInput               `pulumi:"tag"`
+	Tags       pulumi.StringMapInput            `pulumi:"tags"`
+}
+
+func (GetImagesImageArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImagesImage)(nil)).Elem()
+}
+
+func (i GetImagesImageArgs) ToGetImagesImageOutput() GetImagesImageOutput {
+	return i.ToGetImagesImageOutputWithContext(context.Background())
+}
+
+func (i GetImagesImageArgs) ToGetImagesImageOutputWithContext(ctx context.Context) GetImagesImageOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImagesImageOutput)
+}
+
+func (i GetImagesImageArgs) ToOutput(ctx context.Context) pulumix.Output[GetImagesImage] {
+	return pulumix.Output[GetImagesImage]{
+		OutputState: i.ToGetImagesImageOutputWithContext(ctx).OutputState,
+	}
+}
+
+// GetImagesImageArrayInput is an input type that accepts GetImagesImageArray and GetImagesImageArrayOutput values.
+// You can construct a concrete instance of `GetImagesImageArrayInput` via:
+//
+//	GetImagesImageArray{ GetImagesImageArgs{...} }
+type GetImagesImageArrayInput interface {
+	pulumi.Input
+
+	ToGetImagesImageArrayOutput() GetImagesImageArrayOutput
+	ToGetImagesImageArrayOutputWithContext(context.Context) GetImagesImageArrayOutput
+}
+
+type GetImagesImageArray []GetImagesImageInput
+
+func (GetImagesImageArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetImagesImage)(nil)).Elem()
+}
+
+func (i GetImagesImageArray) ToGetImagesImageArrayOutput() GetImagesImageArrayOutput {
+	return i.ToGetImagesImageArrayOutputWithContext(context.Background())
+}
+
+func (i GetImagesImageArray) ToGetImagesImageArrayOutputWithContext(ctx context.Context) GetImagesImageArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImagesImageArrayOutput)
+}
+
+func (i GetImagesImageArray) ToOutput(ctx context.Context) pulumix.Output[[]GetImagesImage] {
+	return pulumix.Output[[]GetImagesImage]{
+		OutputState: i.ToGetImagesImageArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetImagesImageOutput struct{ *pulumi.OutputState }
+
+func (GetImagesImageOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImagesImage)(nil)).Elem()
+}
+
+func (o GetImagesImageOutput) ToGetImagesImageOutput() GetImagesImageOutput {
+	return o
+}
+
+func (o GetImagesImageOutput) ToGetImagesImageOutputWithContext(ctx context.Context) GetImagesImageOutput {
+	return o
+}
+
+func (o GetImagesImageOutput) ToOutput(ctx context.Context) pulumix.Output[GetImagesImage] {
+	return pulumix.Output[GetImagesImage]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImagesImageOutput) CplnId() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImagesImage) string { return v.CplnId }).(pulumi.StringOutput)
+}
+
+func (o GetImagesImageOutput) Digest() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImagesImage) string { return v.Digest }).(pulumi.StringOutput)
+}
+
+func (o GetImagesImageOutput) Manifests() GetImagesImageManifestArrayOutput {
+	return o.ApplyT(func(v GetImagesImage) []GetImagesImageManifest { return v.Manifests }).(GetImagesImageManifestArrayOutput)
+}
+
+func (o GetImagesImageOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImagesImage) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o GetImagesImageOutput) Repository() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImagesImage) string { return v.Repository }).(pulumi.StringOutput)
+}
+
+func (o GetImagesImageOutput) SelfLink() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImagesImage) string { return v.SelfLink }).(pulumi.StringOutput)
+}
+
+func (o GetImagesImageOutput) Tag() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImagesImage) string { return v.Tag }).(pulumi.StringOutput)
+}
+
+func (o GetImagesImageOutput) Tags() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetImagesImage) map[string]string { return v.Tags }).(pulumi.StringMapOutput)
+}
+
+type GetImagesImageArrayOutput struct{ *pulumi.OutputState }
+
+func (GetImagesImageArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetImagesImage)(nil)).Elem()
+}
+
+func (o GetImagesImageArrayOutput) ToGetImagesImageArrayOutput() GetImagesImageArrayOutput {
+	return o
+}
+
+func (o GetImagesImageArrayOutput) ToGetImagesImageArrayOutputWithContext(ctx context.Context) GetImagesImageArrayOutput {
+	return o
+}
+
+func (o GetImagesImageArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]GetImagesImage] {
+	return pulumix.Output[[]GetImagesImage]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImagesImageArrayOutput) Index(i pulumi.IntInput) GetImagesImageOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetImagesImage {
+		return vs[0].([]GetImagesImage)[vs[1].(int)]
+	}).(GetImagesImageOutput)
+}
+
+type GetImagesImageManifest struct {
+	Configs       []GetImagesImageManifestConfig `pulumi:"configs"`
+	Layers        []GetImagesImageManifestLayer  `pulumi:"layers"`
+	MediaType     string                         `pulumi:"mediaType"`
+	SchemaVersion int                            `pulumi:"schemaVersion"`
+}
+
+// GetImagesImageManifestInput is an input type that accepts GetImagesImageManifestArgs and GetImagesImageManifestOutput values.
+// You can construct a concrete instance of `GetImagesImageManifestInput` via:
+//
+//	GetImagesImageManifestArgs{...}
+type GetImagesImageManifestInput interface {
+	pulumi.Input
+
+	ToGetImagesImageManifestOutput() GetImagesImageManifestOutput
+	ToGetImagesImageManifestOutputWithContext(context.Context) GetImagesImageManifestOutput
+}
+
+type GetImagesImageManifestArgs struct {
+	Configs       GetImagesImageManifestConfigArrayInput `pulumi:"configs"`
+	Layers        GetImagesImageManifestLayerArrayInput  `pulumi:"layers"`
+	MediaType     pulumi.StringInput                     `pulumi:"mediaType"`
+	SchemaVersion pulumi.IntInput                        `pulumi:"schemaVersion"`
+}
+
+func (GetImagesImageManifestArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImagesImageManifest)(nil)).Elem()
+}
+
+func (i GetImagesImageManifestArgs) ToGetImagesImageManifestOutput() GetImagesImageManifestOutput {
+	return i.ToGetImagesImageManifestOutputWithContext(context.Background())
+}
+
+func (i GetImagesImageManifestArgs) ToGetImagesImageManifestOutputWithContext(ctx context.Context) GetImagesImageManifestOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImagesImageManifestOutput)
+}
+
+func (i GetImagesImageManifestArgs) ToOutput(ctx context.Context) pulumix.Output[GetImagesImageManifest] {
+	return pulumix.Output[GetImagesImageManifest]{
+		OutputState: i.ToGetImagesImageManifestOutputWithContext(ctx).OutputState,
+	}
+}
+
+// GetImagesImageManifestArrayInput is an input type that accepts GetImagesImageManifestArray and GetImagesImageManifestArrayOutput values.
+// You can construct a concrete instance of `GetImagesImageManifestArrayInput` via:
+//
+//	GetImagesImageManifestArray{ GetImagesImageManifestArgs{...} }
+type GetImagesImageManifestArrayInput interface {
+	pulumi.Input
+
+	ToGetImagesImageManifestArrayOutput() GetImagesImageManifestArrayOutput
+	ToGetImagesImageManifestArrayOutputWithContext(context.Context) GetImagesImageManifestArrayOutput
+}
+
+type GetImagesImageManifestArray []GetImagesImageManifestInput
+
+func (GetImagesImageManifestArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetImagesImageManifest)(nil)).Elem()
+}
+
+func (i GetImagesImageManifestArray) ToGetImagesImageManifestArrayOutput() GetImagesImageManifestArrayOutput {
+	return i.ToGetImagesImageManifestArrayOutputWithContext(context.Background())
+}
+
+func (i GetImagesImageManifestArray) ToGetImagesImageManifestArrayOutputWithContext(ctx context.Context) GetImagesImageManifestArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImagesImageManifestArrayOutput)
+}
+
+func (i GetImagesImageManifestArray) ToOutput(ctx context.Context) pulumix.Output[[]GetImagesImageManifest] {
+	return pulumix.Output[[]GetImagesImageManifest]{
+		OutputState: i.ToGetImagesImageManifestArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetImagesImageManifestOutput struct{ *pulumi.OutputState }
+
+func (GetImagesImageManifestOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImagesImageManifest)(nil)).Elem()
+}
+
+func (o GetImagesImageManifestOutput) ToGetImagesImageManifestOutput() GetImagesImageManifestOutput {
+	return o
+}
+
+func (o GetImagesImageManifestOutput) ToGetImagesImageManifestOutputWithContext(ctx context.Context) GetImagesImageManifestOutput {
+	return o
+}
+
+func (o GetImagesImageManifestOutput) ToOutput(ctx context.Context) pulumix.Output[GetImagesImageManifest] {
+	return pulumix.Output[GetImagesImageManifest]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImagesImageManifestOutput) Configs() GetImagesImageManifestConfigArrayOutput {
+	return o.ApplyT(func(v GetImagesImageManifest) []GetImagesImageManifestConfig { return v.Configs }).(GetImagesImageManifestConfigArrayOutput)
+}
+
+func (o GetImagesImageManifestOutput) Layers() GetImagesImageManifestLayerArrayOutput {
+	return o.ApplyT(func(v GetImagesImageManifest) []GetImagesImageManifestLayer { return v.Layers }).(GetImagesImageManifestLayerArrayOutput)
+}
+
+func (o GetImagesImageManifestOutput) MediaType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImagesImageManifest) string { return v.MediaType }).(pulumi.StringOutput)
+}
+
+func (o GetImagesImageManifestOutput) SchemaVersion() pulumi.IntOutput {
+	return o.ApplyT(func(v GetImagesImageManifest) int { return v.SchemaVersion }).(pulumi.IntOutput)
+}
+
+type GetImagesImageManifestArrayOutput struct{ *pulumi.OutputState }
+
+func (GetImagesImageManifestArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetImagesImageManifest)(nil)).Elem()
+}
+
+func (o GetImagesImageManifestArrayOutput) ToGetImagesImageManifestArrayOutput() GetImagesImageManifestArrayOutput {
+	return o
+}
+
+func (o GetImagesImageManifestArrayOutput) ToGetImagesImageManifestArrayOutputWithContext(ctx context.Context) GetImagesImageManifestArrayOutput {
+	return o
+}
+
+func (o GetImagesImageManifestArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]GetImagesImageManifest] {
+	return pulumix.Output[[]GetImagesImageManifest]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImagesImageManifestArrayOutput) Index(i pulumi.IntInput) GetImagesImageManifestOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetImagesImageManifest {
+		return vs[0].([]GetImagesImageManifest)[vs[1].(int)]
+	}).(GetImagesImageManifestOutput)
+}
+
+type GetImagesImageManifestConfig struct {
+	Digest    string `pulumi:"digest"`
+	MediaType string `pulumi:"mediaType"`
+	Size      int    `pulumi:"size"`
+}
+
+// GetImagesImageManifestConfigInput is an input type that accepts GetImagesImageManifestConfigArgs and GetImagesImageManifestConfigOutput values.
+// You can construct a concrete instance of `GetImagesImageManifestConfigInput` via:
+//
+//	GetImagesImageManifestConfigArgs{...}
+type GetImagesImageManifestConfigInput interface {
+	pulumi.Input
+
+	ToGetImagesImageManifestConfigOutput() GetImagesImageManifestConfigOutput
+	ToGetImagesImageManifestConfigOutputWithContext(context.Context) GetImagesImageManifestConfigOutput
+}
+
+type GetImagesImageManifestConfigArgs struct {
+	Digest    pulumi.StringInput `pulumi:"digest"`
+	MediaType pulumi.StringInput `pulumi:"mediaType"`
+	Size      pulumi.IntInput    `pulumi:"size"`
+}
+
+func (GetImagesImageManifestConfigArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImagesImageManifestConfig)(nil)).Elem()
+}
+
+func (i GetImagesImageManifestConfigArgs) ToGetImagesImageManifestConfigOutput() GetImagesImageManifestConfigOutput {
+	return i.ToGetImagesImageManifestConfigOutputWithContext(context.Background())
+}
+
+func (i GetImagesImageManifestConfigArgs) ToGetImagesImageManifestConfigOutputWithContext(ctx context.Context) GetImagesImageManifestConfigOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImagesImageManifestConfigOutput)
+}
+
+func (i GetImagesImageManifestConfigArgs) ToOutput(ctx context.Context) pulumix.Output[GetImagesImageManifestConfig] {
+	return pulumix.Output[GetImagesImageManifestConfig]{
+		OutputState: i.ToGetImagesImageManifestConfigOutputWithContext(ctx).OutputState,
+	}
+}
+
+// GetImagesImageManifestConfigArrayInput is an input type that accepts GetImagesImageManifestConfigArray and GetImagesImageManifestConfigArrayOutput values.
+// You can construct a concrete instance of `GetImagesImageManifestConfigArrayInput` via:
+//
+//	GetImagesImageManifestConfigArray{ GetImagesImageManifestConfigArgs{...} }
+type GetImagesImageManifestConfigArrayInput interface {
+	pulumi.Input
+
+	ToGetImagesImageManifestConfigArrayOutput() GetImagesImageManifestConfigArrayOutput
+	ToGetImagesImageManifestConfigArrayOutputWithContext(context.Context) GetImagesImageManifestConfigArrayOutput
+}
+
+type GetImagesImageManifestConfigArray []GetImagesImageManifestConfigInput
+
+func (GetImagesImageManifestConfigArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetImagesImageManifestConfig)(nil)).Elem()
+}
+
+func (i GetImagesImageManifestConfigArray) ToGetImagesImageManifestConfigArrayOutput() GetImagesImageManifestConfigArrayOutput {
+	return i.ToGetImagesImageManifestConfigArrayOutputWithContext(context.Background())
+}
+
+func (i GetImagesImageManifestConfigArray) ToGetImagesImageManifestConfigArrayOutputWithContext(ctx context.Context) GetImagesImageManifestConfigArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImagesImageManifestConfigArrayOutput)
+}
+
+func (i GetImagesImageManifestConfigArray) ToOutput(ctx context.Context) pulumix.Output[[]GetImagesImageManifestConfig] {
+	return pulumix.Output[[]GetImagesImageManifestConfig]{
+		OutputState: i.ToGetImagesImageManifestConfigArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetImagesImageManifestConfigOutput struct{ *pulumi.OutputState }
+
+func (GetImagesImageManifestConfigOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImagesImageManifestConfig)(nil)).Elem()
+}
+
+func (o GetImagesImageManifestConfigOutput) ToGetImagesImageManifestConfigOutput() GetImagesImageManifestConfigOutput {
+	return o
+}
+
+func (o GetImagesImageManifestConfigOutput) ToGetImagesImageManifestConfigOutputWithContext(ctx context.Context) GetImagesImageManifestConfigOutput {
+	return o
+}
+
+func (o GetImagesImageManifestConfigOutput) ToOutput(ctx context.Context) pulumix.Output[GetImagesImageManifestConfig] {
+	return pulumix.Output[GetImagesImageManifestConfig]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImagesImageManifestConfigOutput) Digest() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImagesImageManifestConfig) string { return v.Digest }).(pulumi.StringOutput)
+}
+
+func (o GetImagesImageManifestConfigOutput) MediaType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImagesImageManifestConfig) string { return v.MediaType }).(pulumi.StringOutput)
+}
+
+func (o GetImagesImageManifestConfigOutput) Size() pulumi.IntOutput {
+	return o.ApplyT(func(v GetImagesImageManifestConfig) int { return v.Size }).(pulumi.IntOutput)
+}
+
+type GetImagesImageManifestConfigArrayOutput struct{ *pulumi.OutputState }
+
+func (GetImagesImageManifestConfigArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetImagesImageManifestConfig)(nil)).Elem()
+}
+
+func (o GetImagesImageManifestConfigArrayOutput) ToGetImagesImageManifestConfigArrayOutput() GetImagesImageManifestConfigArrayOutput {
+	return o
+}
+
+func (o GetImagesImageManifestConfigArrayOutput) ToGetImagesImageManifestConfigArrayOutputWithContext(ctx context.Context) GetImagesImageManifestConfigArrayOutput {
+	return o
+}
+
+func (o GetImagesImageManifestConfigArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]GetImagesImageManifestConfig] {
+	return pulumix.Output[[]GetImagesImageManifestConfig]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImagesImageManifestConfigArrayOutput) Index(i pulumi.IntInput) GetImagesImageManifestConfigOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetImagesImageManifestConfig {
+		return vs[0].([]GetImagesImageManifestConfig)[vs[1].(int)]
+	}).(GetImagesImageManifestConfigOutput)
+}
+
+type GetImagesImageManifestLayer struct {
+	Digest    string `pulumi:"digest"`
+	MediaType string `pulumi:"mediaType"`
+	Size      int    `pulumi:"size"`
+}
+
+// GetImagesImageManifestLayerInput is an input type that accepts GetImagesImageManifestLayerArgs and GetImagesImageManifestLayerOutput values.
+// You can construct a concrete instance of `GetImagesImageManifestLayerInput` via:
+//
+//	GetImagesImageManifestLayerArgs{...}
+type GetImagesImageManifestLayerInput interface {
+	pulumi.Input
+
+	ToGetImagesImageManifestLayerOutput() GetImagesImageManifestLayerOutput
+	ToGetImagesImageManifestLayerOutputWithContext(context.Context) GetImagesImageManifestLayerOutput
+}
+
+type GetImagesImageManifestLayerArgs struct {
+	Digest    pulumi.StringInput `pulumi:"digest"`
+	MediaType pulumi.StringInput `pulumi:"mediaType"`
+	Size      pulumi.IntInput    `pulumi:"size"`
+}
+
+func (GetImagesImageManifestLayerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImagesImageManifestLayer)(nil)).Elem()
+}
+
+func (i GetImagesImageManifestLayerArgs) ToGetImagesImageManifestLayerOutput() GetImagesImageManifestLayerOutput {
+	return i.ToGetImagesImageManifestLayerOutputWithContext(context.Background())
+}
+
+func (i GetImagesImageManifestLayerArgs) ToGetImagesImageManifestLayerOutputWithContext(ctx context.Context) GetImagesImageManifestLayerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImagesImageManifestLayerOutput)
+}
+
+func (i GetImagesImageManifestLayerArgs) ToOutput(ctx context.Context) pulumix.Output[GetImagesImageManifestLayer] {
+	return pulumix.Output[GetImagesImageManifestLayer]{
+		OutputState: i.ToGetImagesImageManifestLayerOutputWithContext(ctx).OutputState,
+	}
+}
+
+// GetImagesImageManifestLayerArrayInput is an input type that accepts GetImagesImageManifestLayerArray and GetImagesImageManifestLayerArrayOutput values.
+// You can construct a concrete instance of `GetImagesImageManifestLayerArrayInput` via:
+//
+//	GetImagesImageManifestLayerArray{ GetImagesImageManifestLayerArgs{...} }
+type GetImagesImageManifestLayerArrayInput interface {
+	pulumi.Input
+
+	ToGetImagesImageManifestLayerArrayOutput() GetImagesImageManifestLayerArrayOutput
+	ToGetImagesImageManifestLayerArrayOutputWithContext(context.Context) GetImagesImageManifestLayerArrayOutput
+}
+
+type GetImagesImageManifestLayerArray []GetImagesImageManifestLayerInput
+
+func (GetImagesImageManifestLayerArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetImagesImageManifestLayer)(nil)).Elem()
+}
+
+func (i GetImagesImageManifestLayerArray) ToGetImagesImageManifestLayerArrayOutput() GetImagesImageManifestLayerArrayOutput {
+	return i.ToGetImagesImageManifestLayerArrayOutputWithContext(context.Background())
+}
+
+func (i GetImagesImageManifestLayerArray) ToGetImagesImageManifestLayerArrayOutputWithContext(ctx context.Context) GetImagesImageManifestLayerArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImagesImageManifestLayerArrayOutput)
+}
+
+func (i GetImagesImageManifestLayerArray) ToOutput(ctx context.Context) pulumix.Output[[]GetImagesImageManifestLayer] {
+	return pulumix.Output[[]GetImagesImageManifestLayer]{
+		OutputState: i.ToGetImagesImageManifestLayerArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetImagesImageManifestLayerOutput struct{ *pulumi.OutputState }
+
+func (GetImagesImageManifestLayerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImagesImageManifestLayer)(nil)).Elem()
+}
+
+func (o GetImagesImageManifestLayerOutput) ToGetImagesImageManifestLayerOutput() GetImagesImageManifestLayerOutput {
+	return o
+}
+
+func (o GetImagesImageManifestLayerOutput) ToGetImagesImageManifestLayerOutputWithContext(ctx context.Context) GetImagesImageManifestLayerOutput {
+	return o
+}
+
+func (o GetImagesImageManifestLayerOutput) ToOutput(ctx context.Context) pulumix.Output[GetImagesImageManifestLayer] {
+	return pulumix.Output[GetImagesImageManifestLayer]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImagesImageManifestLayerOutput) Digest() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImagesImageManifestLayer) string { return v.Digest }).(pulumi.StringOutput)
+}
+
+func (o GetImagesImageManifestLayerOutput) MediaType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImagesImageManifestLayer) string { return v.MediaType }).(pulumi.StringOutput)
+}
+
+func (o GetImagesImageManifestLayerOutput) Size() pulumi.IntOutput {
+	return o.ApplyT(func(v GetImagesImageManifestLayer) int { return v.Size }).(pulumi.IntOutput)
+}
+
+type GetImagesImageManifestLayerArrayOutput struct{ *pulumi.OutputState }
+
+func (GetImagesImageManifestLayerArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetImagesImageManifestLayer)(nil)).Elem()
+}
+
+func (o GetImagesImageManifestLayerArrayOutput) ToGetImagesImageManifestLayerArrayOutput() GetImagesImageManifestLayerArrayOutput {
+	return o
+}
+
+func (o GetImagesImageManifestLayerArrayOutput) ToGetImagesImageManifestLayerArrayOutputWithContext(ctx context.Context) GetImagesImageManifestLayerArrayOutput {
+	return o
+}
+
+func (o GetImagesImageManifestLayerArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]GetImagesImageManifestLayer] {
+	return pulumix.Output[[]GetImagesImageManifestLayer]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImagesImageManifestLayerArrayOutput) Index(i pulumi.IntInput) GetImagesImageManifestLayerOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetImagesImageManifestLayer {
+		return vs[0].([]GetImagesImageManifestLayer)[vs[1].(int)]
+	}).(GetImagesImageManifestLayerOutput)
+}
+
+type GetImagesQuery struct {
+	Fetch *string             `pulumi:"fetch"`
+	Spec  *GetImagesQuerySpec `pulumi:"spec"`
+}
+
+// GetImagesQueryInput is an input type that accepts GetImagesQueryArgs and GetImagesQueryOutput values.
+// You can construct a concrete instance of `GetImagesQueryInput` via:
+//
+//	GetImagesQueryArgs{...}
+type GetImagesQueryInput interface {
+	pulumi.Input
+
+	ToGetImagesQueryOutput() GetImagesQueryOutput
+	ToGetImagesQueryOutputWithContext(context.Context) GetImagesQueryOutput
+}
+
+type GetImagesQueryArgs struct {
+	Fetch pulumi.StringPtrInput      `pulumi:"fetch"`
+	Spec  GetImagesQuerySpecPtrInput `pulumi:"spec"`
+}
+
+func (GetImagesQueryArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImagesQuery)(nil)).Elem()
+}
+
+func (i GetImagesQueryArgs) ToGetImagesQueryOutput() GetImagesQueryOutput {
+	return i.ToGetImagesQueryOutputWithContext(context.Background())
+}
+
+func (i GetImagesQueryArgs) ToGetImagesQueryOutputWithContext(ctx context.Context) GetImagesQueryOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImagesQueryOutput)
+}
+
+func (i GetImagesQueryArgs) ToOutput(ctx context.Context) pulumix.Output[GetImagesQuery] {
+	return pulumix.Output[GetImagesQuery]{
+		OutputState: i.ToGetImagesQueryOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i GetImagesQueryArgs) ToGetImagesQueryPtrOutput() GetImagesQueryPtrOutput {
+	return i.ToGetImagesQueryPtrOutputWithContext(context.Background())
+}
+
+func (i GetImagesQueryArgs) ToGetImagesQueryPtrOutputWithContext(ctx context.Context) GetImagesQueryPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImagesQueryOutput).ToGetImagesQueryPtrOutputWithContext(ctx)
+}
+
+// GetImagesQueryPtrInput is an input type that accepts GetImagesQueryArgs, GetImagesQueryPtr and GetImagesQueryPtrOutput values.
+// You can construct a concrete instance of `GetImagesQueryPtrInput` via:
+//
+//	        GetImagesQueryArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetImagesQueryPtrInput interface {
+	pulumi.Input
+
+	ToGetImagesQueryPtrOutput() GetImagesQueryPtrOutput
+	ToGetImagesQueryPtrOutputWithContext(context.Context) GetImagesQueryPtrOutput
+}
+
+type getImagesQueryPtrType GetImagesQueryArgs
+
+func GetImagesQueryPtr(v *GetImagesQueryArgs) GetImagesQueryPtrInput {
+	return (*getImagesQueryPtrType)(v)
+}
+
+func (*getImagesQueryPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetImagesQuery)(nil)).Elem()
+}
+
+func (i *getImagesQueryPtrType) ToGetImagesQueryPtrOutput() GetImagesQueryPtrOutput {
+	return i.ToGetImagesQueryPtrOutputWithContext(context.Background())
+}
+
+func (i *getImagesQueryPtrType) ToGetImagesQueryPtrOutputWithContext(ctx context.Context) GetImagesQueryPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImagesQueryPtrOutput)
+}
+
+func (i *getImagesQueryPtrType) ToOutput(ctx context.Context) pulumix.Output[*GetImagesQuery] {
+	return pulumix.Output[*GetImagesQuery]{
+		OutputState: i.ToGetImagesQueryPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetImagesQueryOutput struct{ *pulumi.OutputState }
+
+func (GetImagesQueryOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImagesQuery)(nil)).Elem()
+}
+
+func (o GetImagesQueryOutput) ToGetImagesQueryOutput() GetImagesQueryOutput {
+	return o
+}
+
+func (o GetImagesQueryOutput) ToGetImagesQueryOutputWithContext(ctx context.Context) GetImagesQueryOutput {
+	return o
+}
+
+func (o GetImagesQueryOutput) ToGetImagesQueryPtrOutput() GetImagesQueryPtrOutput {
+	return o.ToGetImagesQueryPtrOutputWithContext(context.Background())
+}
+
+func (o GetImagesQueryOutput) ToGetImagesQueryPtrOutputWithContext(ctx context.Context) GetImagesQueryPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetImagesQuery) *GetImagesQuery {
+		return &v
+	}).(GetImagesQueryPtrOutput)
+}
+
+func (o GetImagesQueryOutput) ToOutput(ctx context.Context) pulumix.Output[GetImagesQuery] {
+	return pulumix.Output[GetImagesQuery]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImagesQueryOutput) Fetch() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetImagesQuery) *string { return v.Fetch }).(pulumi.StringPtrOutput)
+}
+
+func (o GetImagesQueryOutput) Spec() GetImagesQuerySpecPtrOutput {
+	return o.ApplyT(func(v GetImagesQuery) *GetImagesQuerySpec { return v.Spec }).(GetImagesQuerySpecPtrOutput)
+}
+
+type GetImagesQueryPtrOutput struct{ *pulumi.OutputState }
+
+func (GetImagesQueryPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetImagesQuery)(nil)).Elem()
+}
+
+func (o GetImagesQueryPtrOutput) ToGetImagesQueryPtrOutput() GetImagesQueryPtrOutput {
+	return o
+}
+
+func (o GetImagesQueryPtrOutput) ToGetImagesQueryPtrOutputWithContext(ctx context.Context) GetImagesQueryPtrOutput {
+	return o
+}
+
+func (o GetImagesQueryPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*GetImagesQuery] {
+	return pulumix.Output[*GetImagesQuery]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImagesQueryPtrOutput) Elem() GetImagesQueryOutput {
+	return o.ApplyT(func(v *GetImagesQuery) GetImagesQuery {
+		if v != nil {
+			return *v
+		}
+		var ret GetImagesQuery
+		return ret
+	}).(GetImagesQueryOutput)
+}
+
+func (o GetImagesQueryPtrOutput) Fetch() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetImagesQuery) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Fetch
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o GetImagesQueryPtrOutput) Spec() GetImagesQuerySpecPtrOutput {
+	return o.ApplyT(func(v *GetImagesQuery) *GetImagesQuerySpec {
+		if v == nil {
+			return nil
+		}
+		return v.Spec
+	}).(GetImagesQuerySpecPtrOutput)
+}
+
+type GetImagesQuerySpec struct {
+	Match *string                  `pulumi:"match"`
+	Terms []GetImagesQuerySpecTerm `pulumi:"terms"`
+}
+
+// GetImagesQuerySpecInput is an input type that accepts GetImagesQuerySpecArgs and GetImagesQuerySpecOutput values.
+// You can construct a concrete instance of `GetImagesQuerySpecInput` via:
+//
+//	GetImagesQuerySpecArgs{...}
+type GetImagesQuerySpecInput interface {
+	pulumi.Input
+
+	ToGetImagesQuerySpecOutput() GetImagesQuerySpecOutput
+	ToGetImagesQuerySpecOutputWithContext(context.Context) GetImagesQuerySpecOutput
+}
+
+type GetImagesQuerySpecArgs struct {
+	Match pulumi.StringPtrInput            `pulumi:"match"`
+	Terms GetImagesQuerySpecTermArrayInput `pulumi:"terms"`
+}
+
+func (GetImagesQuerySpecArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImagesQuerySpec)(nil)).Elem()
+}
+
+func (i GetImagesQuerySpecArgs) ToGetImagesQuerySpecOutput() GetImagesQuerySpecOutput {
+	return i.ToGetImagesQuerySpecOutputWithContext(context.Background())
+}
+
+func (i GetImagesQuerySpecArgs) ToGetImagesQuerySpecOutputWithContext(ctx context.Context) GetImagesQuerySpecOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImagesQuerySpecOutput)
+}
+
+func (i GetImagesQuerySpecArgs) ToOutput(ctx context.Context) pulumix.Output[GetImagesQuerySpec] {
+	return pulumix.Output[GetImagesQuerySpec]{
+		OutputState: i.ToGetImagesQuerySpecOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i GetImagesQuerySpecArgs) ToGetImagesQuerySpecPtrOutput() GetImagesQuerySpecPtrOutput {
+	return i.ToGetImagesQuerySpecPtrOutputWithContext(context.Background())
+}
+
+func (i GetImagesQuerySpecArgs) ToGetImagesQuerySpecPtrOutputWithContext(ctx context.Context) GetImagesQuerySpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImagesQuerySpecOutput).ToGetImagesQuerySpecPtrOutputWithContext(ctx)
+}
+
+// GetImagesQuerySpecPtrInput is an input type that accepts GetImagesQuerySpecArgs, GetImagesQuerySpecPtr and GetImagesQuerySpecPtrOutput values.
+// You can construct a concrete instance of `GetImagesQuerySpecPtrInput` via:
+//
+//	        GetImagesQuerySpecArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetImagesQuerySpecPtrInput interface {
+	pulumi.Input
+
+	ToGetImagesQuerySpecPtrOutput() GetImagesQuerySpecPtrOutput
+	ToGetImagesQuerySpecPtrOutputWithContext(context.Context) GetImagesQuerySpecPtrOutput
+}
+
+type getImagesQuerySpecPtrType GetImagesQuerySpecArgs
+
+func GetImagesQuerySpecPtr(v *GetImagesQuerySpecArgs) GetImagesQuerySpecPtrInput {
+	return (*getImagesQuerySpecPtrType)(v)
+}
+
+func (*getImagesQuerySpecPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetImagesQuerySpec)(nil)).Elem()
+}
+
+func (i *getImagesQuerySpecPtrType) ToGetImagesQuerySpecPtrOutput() GetImagesQuerySpecPtrOutput {
+	return i.ToGetImagesQuerySpecPtrOutputWithContext(context.Background())
+}
+
+func (i *getImagesQuerySpecPtrType) ToGetImagesQuerySpecPtrOutputWithContext(ctx context.Context) GetImagesQuerySpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImagesQuerySpecPtrOutput)
+}
+
+func (i *getImagesQuerySpecPtrType) ToOutput(ctx context.Context) pulumix.Output[*GetImagesQuerySpec] {
+	return pulumix.Output[*GetImagesQuerySpec]{
+		OutputState: i.ToGetImagesQuerySpecPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetImagesQuerySpecOutput struct{ *pulumi.OutputState }
+
+func (GetImagesQuerySpecOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImagesQuerySpec)(nil)).Elem()
+}
+
+func (o GetImagesQuerySpecOutput) ToGetImagesQuerySpecOutput() GetImagesQuerySpecOutput {
+	return o
+}
+
+func (o GetImagesQuerySpecOutput) ToGetImagesQuerySpecOutputWithContext(ctx context.Context) GetImagesQuerySpecOutput {
+	return o
+}
+
+func (o GetImagesQuerySpecOutput) ToGetImagesQuerySpecPtrOutput() GetImagesQuerySpecPtrOutput {
+	return o.ToGetImagesQuerySpecPtrOutputWithContext(context.Background())
+}
+
+func (o GetImagesQuerySpecOutput) ToGetImagesQuerySpecPtrOutputWithContext(ctx context.Context) GetImagesQuerySpecPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetImagesQuerySpec) *GetImagesQuerySpec {
+		return &v
+	}).(GetImagesQuerySpecPtrOutput)
+}
+
+func (o GetImagesQuerySpecOutput) ToOutput(ctx context.Context) pulumix.Output[GetImagesQuerySpec] {
+	return pulumix.Output[GetImagesQuerySpec]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImagesQuerySpecOutput) Match() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetImagesQuerySpec) *string { return v.Match }).(pulumi.StringPtrOutput)
+}
+
+func (o GetImagesQuerySpecOutput) Terms() GetImagesQuerySpecTermArrayOutput {
+	return o.ApplyT(func(v GetImagesQuerySpec) []GetImagesQuerySpecTerm { return v.Terms }).(GetImagesQuerySpecTermArrayOutput)
+}
+
+type GetImagesQuerySpecPtrOutput struct{ *pulumi.OutputState }
+
+func (GetImagesQuerySpecPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetImagesQuerySpec)(nil)).Elem()
+}
+
+func (o GetImagesQuerySpecPtrOutput) ToGetImagesQuerySpecPtrOutput() GetImagesQuerySpecPtrOutput {
+	return o
+}
+
+func (o GetImagesQuerySpecPtrOutput) ToGetImagesQuerySpecPtrOutputWithContext(ctx context.Context) GetImagesQuerySpecPtrOutput {
+	return o
+}
+
+func (o GetImagesQuerySpecPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*GetImagesQuerySpec] {
+	return pulumix.Output[*GetImagesQuerySpec]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImagesQuerySpecPtrOutput) Elem() GetImagesQuerySpecOutput {
+	return o.ApplyT(func(v *GetImagesQuerySpec) GetImagesQuerySpec {
+		if v != nil {
+			return *v
+		}
+		var ret GetImagesQuerySpec
+		return ret
+	}).(GetImagesQuerySpecOutput)
+}
+
+func (o GetImagesQuerySpecPtrOutput) Match() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetImagesQuerySpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Match
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o GetImagesQuerySpecPtrOutput) Terms() GetImagesQuerySpecTermArrayOutput {
+	return o.ApplyT(func(v *GetImagesQuerySpec) []GetImagesQuerySpecTerm {
+		if v == nil {
+			return nil
+		}
+		return v.Terms
+	}).(GetImagesQuerySpecTermArrayOutput)
+}
+
+type GetImagesQuerySpecTerm struct {
+	Op       *string `pulumi:"op"`
+	Property *string `pulumi:"property"`
+	Tag      *string `pulumi:"tag"`
+	Value    *string `pulumi:"value"`
+}
+
+// GetImagesQuerySpecTermInput is an input type that accepts GetImagesQuerySpecTermArgs and GetImagesQuerySpecTermOutput values.
+// You can construct a concrete instance of `GetImagesQuerySpecTermInput` via:
+//
+//	GetImagesQuerySpecTermArgs{...}
+type GetImagesQuerySpecTermInput interface {
+	pulumi.Input
+
+	ToGetImagesQuerySpecTermOutput() GetImagesQuerySpecTermOutput
+	ToGetImagesQuerySpecTermOutputWithContext(context.Context) GetImagesQuerySpecTermOutput
+}
+
+type GetImagesQuerySpecTermArgs struct {
+	Op       pulumi.StringPtrInput `pulumi:"op"`
+	Property pulumi.StringPtrInput `pulumi:"property"`
+	Tag      pulumi.StringPtrInput `pulumi:"tag"`
+	Value    pulumi.StringPtrInput `pulumi:"value"`
+}
+
+func (GetImagesQuerySpecTermArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImagesQuerySpecTerm)(nil)).Elem()
+}
+
+func (i GetImagesQuerySpecTermArgs) ToGetImagesQuerySpecTermOutput() GetImagesQuerySpecTermOutput {
+	return i.ToGetImagesQuerySpecTermOutputWithContext(context.Background())
+}
+
+func (i GetImagesQuerySpecTermArgs) ToGetImagesQuerySpecTermOutputWithContext(ctx context.Context) GetImagesQuerySpecTermOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImagesQuerySpecTermOutput)
+}
+
+func (i GetImagesQuerySpecTermArgs) ToOutput(ctx context.Context) pulumix.Output[GetImagesQuerySpecTerm] {
+	return pulumix.Output[GetImagesQuerySpecTerm]{
+		OutputState: i.ToGetImagesQuerySpecTermOutputWithContext(ctx).OutputState,
+	}
+}
+
+// GetImagesQuerySpecTermArrayInput is an input type that accepts GetImagesQuerySpecTermArray and GetImagesQuerySpecTermArrayOutput values.
+// You can construct a concrete instance of `GetImagesQuerySpecTermArrayInput` via:
+//
+//	GetImagesQuerySpecTermArray{ GetImagesQuerySpecTermArgs{...} }
+type GetImagesQuerySpecTermArrayInput interface {
+	pulumi.Input
+
+	ToGetImagesQuerySpecTermArrayOutput() GetImagesQuerySpecTermArrayOutput
+	ToGetImagesQuerySpecTermArrayOutputWithContext(context.Context) GetImagesQuerySpecTermArrayOutput
+}
+
+type GetImagesQuerySpecTermArray []GetImagesQuerySpecTermInput
+
+func (GetImagesQuerySpecTermArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetImagesQuerySpecTerm)(nil)).Elem()
+}
+
+func (i GetImagesQuerySpecTermArray) ToGetImagesQuerySpecTermArrayOutput() GetImagesQuerySpecTermArrayOutput {
+	return i.ToGetImagesQuerySpecTermArrayOutputWithContext(context.Background())
+}
+
+func (i GetImagesQuerySpecTermArray) ToGetImagesQuerySpecTermArrayOutputWithContext(ctx context.Context) GetImagesQuerySpecTermArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImagesQuerySpecTermArrayOutput)
+}
+
+func (i GetImagesQuerySpecTermArray) ToOutput(ctx context.Context) pulumix.Output[[]GetImagesQuerySpecTerm] {
+	return pulumix.Output[[]GetImagesQuerySpecTerm]{
+		OutputState: i.ToGetImagesQuerySpecTermArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetImagesQuerySpecTermOutput struct{ *pulumi.OutputState }
+
+func (GetImagesQuerySpecTermOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImagesQuerySpecTerm)(nil)).Elem()
+}
+
+func (o GetImagesQuerySpecTermOutput) ToGetImagesQuerySpecTermOutput() GetImagesQuerySpecTermOutput {
+	return o
+}
+
+func (o GetImagesQuerySpecTermOutput) ToGetImagesQuerySpecTermOutputWithContext(ctx context.Context) GetImagesQuerySpecTermOutput {
+	return o
+}
+
+func (o GetImagesQuerySpecTermOutput) ToOutput(ctx context.Context) pulumix.Output[GetImagesQuerySpecTerm] {
+	return pulumix.Output[GetImagesQuerySpecTerm]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImagesQuerySpecTermOutput) Op() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetImagesQuerySpecTerm) *string { return v.Op }).(pulumi.StringPtrOutput)
+}
+
+func (o GetImagesQuerySpecTermOutput) Property() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetImagesQuerySpecTerm) *string { return v.Property }).(pulumi.StringPtrOutput)
+}
+
+func (o GetImagesQuerySpecTermOutput) Tag() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetImagesQuerySpecTerm) *string { return v.Tag }).(pulumi.StringPtrOutput)
+}
+
+func (o GetImagesQuerySpecTermOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetImagesQuerySpecTerm) *string { return v.Value }).(pulumi.StringPtrOutput)
+}
+
+type GetImagesQuerySpecTermArrayOutput struct{ *pulumi.OutputState }
+
+func (GetImagesQuerySpecTermArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetImagesQuerySpecTerm)(nil)).Elem()
+}
+
+func (o GetImagesQuerySpecTermArrayOutput) ToGetImagesQuerySpecTermArrayOutput() GetImagesQuerySpecTermArrayOutput {
+	return o
+}
+
+func (o GetImagesQuerySpecTermArrayOutput) ToGetImagesQuerySpecTermArrayOutputWithContext(ctx context.Context) GetImagesQuerySpecTermArrayOutput {
+	return o
+}
+
+func (o GetImagesQuerySpecTermArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]GetImagesQuerySpecTerm] {
+	return pulumix.Output[[]GetImagesQuerySpecTerm]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetImagesQuerySpecTermArrayOutput) Index(i pulumi.IntInput) GetImagesQuerySpecTermOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetImagesQuerySpecTerm {
+		return vs[0].([]GetImagesQuerySpecTerm)[vs[1].(int)]
+	}).(GetImagesQuerySpecTermOutput)
+}
+
 type GetLocationGeo struct {
 	City      *string  `pulumi:"city"`
 	Continent *string  `pulumi:"continent"`
@@ -18722,6 +20694,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*IdentityNgsAccessPolicySubPtrInput)(nil)).Elem(), IdentityNgsAccessPolicySubArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgAuthConfigInput)(nil)).Elem(), OrgAuthConfigArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgAuthConfigPtrInput)(nil)).Elem(), OrgAuthConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingCloudWatchLoggingInput)(nil)).Elem(), OrgLoggingCloudWatchLoggingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingCloudWatchLoggingArrayInput)(nil)).Elem(), OrgLoggingCloudWatchLoggingArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingCoralogixLoggingInput)(nil)).Elem(), OrgLoggingCoralogixLoggingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingCoralogixLoggingArrayInput)(nil)).Elem(), OrgLoggingCoralogixLoggingArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingDatadogLoggingInput)(nil)).Elem(), OrgLoggingDatadogLoggingArgs{})
@@ -18734,10 +20708,14 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingElasticLoggingElasticCloudPtrInput)(nil)).Elem(), OrgLoggingElasticLoggingElasticCloudArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingElasticLoggingGenericInput)(nil)).Elem(), OrgLoggingElasticLoggingGenericArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingElasticLoggingGenericPtrInput)(nil)).Elem(), OrgLoggingElasticLoggingGenericArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingFluentdLoggingInput)(nil)).Elem(), OrgLoggingFluentdLoggingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingFluentdLoggingArrayInput)(nil)).Elem(), OrgLoggingFluentdLoggingArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingLogzioLoggingInput)(nil)).Elem(), OrgLoggingLogzioLoggingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingLogzioLoggingArrayInput)(nil)).Elem(), OrgLoggingLogzioLoggingArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingS3LoggingInput)(nil)).Elem(), OrgLoggingS3LoggingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingS3LoggingArrayInput)(nil)).Elem(), OrgLoggingS3LoggingArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingStackdriverLoggingInput)(nil)).Elem(), OrgLoggingStackdriverLoggingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingStackdriverLoggingArrayInput)(nil)).Elem(), OrgLoggingStackdriverLoggingArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgObservabilityInput)(nil)).Elem(), OrgObservabilityArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgObservabilityPtrInput)(nil)).Elem(), OrgObservabilityArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgStatusInput)(nil)).Elem(), OrgStatusArgs{})
@@ -18831,6 +20809,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionInput)(nil)).Elem(), WorkloadLocalOptionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionArrayInput)(nil)).Elem(), WorkloadLocalOptionArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingPtrInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsInput)(nil)).Elem(), WorkloadOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsPtrInput)(nil)).Elem(), WorkloadOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingInput)(nil)).Elem(), WorkloadOptionsAutoscalingArgs{})
@@ -18861,6 +20840,26 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcOtelTracingPtrInput)(nil)).Elem(), GetGvcOtelTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcSidecarInput)(nil)).Elem(), GetGvcSidecarArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcSidecarPtrInput)(nil)).Elem(), GetGvcSidecarArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImageManifestInput)(nil)).Elem(), GetImageManifestArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImageManifestArrayInput)(nil)).Elem(), GetImageManifestArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImageManifestConfigInput)(nil)).Elem(), GetImageManifestConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImageManifestConfigArrayInput)(nil)).Elem(), GetImageManifestConfigArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImageManifestLayerInput)(nil)).Elem(), GetImageManifestLayerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImageManifestLayerArrayInput)(nil)).Elem(), GetImageManifestLayerArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImagesImageInput)(nil)).Elem(), GetImagesImageArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImagesImageArrayInput)(nil)).Elem(), GetImagesImageArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImagesImageManifestInput)(nil)).Elem(), GetImagesImageManifestArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImagesImageManifestArrayInput)(nil)).Elem(), GetImagesImageManifestArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImagesImageManifestConfigInput)(nil)).Elem(), GetImagesImageManifestConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImagesImageManifestConfigArrayInput)(nil)).Elem(), GetImagesImageManifestConfigArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImagesImageManifestLayerInput)(nil)).Elem(), GetImagesImageManifestLayerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImagesImageManifestLayerArrayInput)(nil)).Elem(), GetImagesImageManifestLayerArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImagesQueryInput)(nil)).Elem(), GetImagesQueryArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImagesQueryPtrInput)(nil)).Elem(), GetImagesQueryArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImagesQuerySpecInput)(nil)).Elem(), GetImagesQuerySpecArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImagesQuerySpecPtrInput)(nil)).Elem(), GetImagesQuerySpecArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImagesQuerySpecTermInput)(nil)).Elem(), GetImagesQuerySpecTermArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImagesQuerySpecTermArrayInput)(nil)).Elem(), GetImagesQuerySpecTermArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetLocationGeoInput)(nil)).Elem(), GetLocationGeoArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetLocationGeoArrayInput)(nil)).Elem(), GetLocationGeoArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetLocationsLocationInput)(nil)).Elem(), GetLocationsLocationArgs{})
@@ -18942,6 +20941,8 @@ func init() {
 	pulumi.RegisterOutputType(IdentityNgsAccessPolicySubPtrOutput{})
 	pulumi.RegisterOutputType(OrgAuthConfigOutput{})
 	pulumi.RegisterOutputType(OrgAuthConfigPtrOutput{})
+	pulumi.RegisterOutputType(OrgLoggingCloudWatchLoggingOutput{})
+	pulumi.RegisterOutputType(OrgLoggingCloudWatchLoggingArrayOutput{})
 	pulumi.RegisterOutputType(OrgLoggingCoralogixLoggingOutput{})
 	pulumi.RegisterOutputType(OrgLoggingCoralogixLoggingArrayOutput{})
 	pulumi.RegisterOutputType(OrgLoggingDatadogLoggingOutput{})
@@ -18954,10 +20955,14 @@ func init() {
 	pulumi.RegisterOutputType(OrgLoggingElasticLoggingElasticCloudPtrOutput{})
 	pulumi.RegisterOutputType(OrgLoggingElasticLoggingGenericOutput{})
 	pulumi.RegisterOutputType(OrgLoggingElasticLoggingGenericPtrOutput{})
+	pulumi.RegisterOutputType(OrgLoggingFluentdLoggingOutput{})
+	pulumi.RegisterOutputType(OrgLoggingFluentdLoggingArrayOutput{})
 	pulumi.RegisterOutputType(OrgLoggingLogzioLoggingOutput{})
 	pulumi.RegisterOutputType(OrgLoggingLogzioLoggingArrayOutput{})
 	pulumi.RegisterOutputType(OrgLoggingS3LoggingOutput{})
 	pulumi.RegisterOutputType(OrgLoggingS3LoggingArrayOutput{})
+	pulumi.RegisterOutputType(OrgLoggingStackdriverLoggingOutput{})
+	pulumi.RegisterOutputType(OrgLoggingStackdriverLoggingArrayOutput{})
 	pulumi.RegisterOutputType(OrgObservabilityOutput{})
 	pulumi.RegisterOutputType(OrgObservabilityPtrOutput{})
 	pulumi.RegisterOutputType(OrgStatusOutput{})
@@ -19051,6 +21056,7 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadLocalOptionOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingOutput{})
@@ -19081,6 +21087,26 @@ func init() {
 	pulumi.RegisterOutputType(GetGvcOtelTracingPtrOutput{})
 	pulumi.RegisterOutputType(GetGvcSidecarOutput{})
 	pulumi.RegisterOutputType(GetGvcSidecarPtrOutput{})
+	pulumi.RegisterOutputType(GetImageManifestOutput{})
+	pulumi.RegisterOutputType(GetImageManifestArrayOutput{})
+	pulumi.RegisterOutputType(GetImageManifestConfigOutput{})
+	pulumi.RegisterOutputType(GetImageManifestConfigArrayOutput{})
+	pulumi.RegisterOutputType(GetImageManifestLayerOutput{})
+	pulumi.RegisterOutputType(GetImageManifestLayerArrayOutput{})
+	pulumi.RegisterOutputType(GetImagesImageOutput{})
+	pulumi.RegisterOutputType(GetImagesImageArrayOutput{})
+	pulumi.RegisterOutputType(GetImagesImageManifestOutput{})
+	pulumi.RegisterOutputType(GetImagesImageManifestArrayOutput{})
+	pulumi.RegisterOutputType(GetImagesImageManifestConfigOutput{})
+	pulumi.RegisterOutputType(GetImagesImageManifestConfigArrayOutput{})
+	pulumi.RegisterOutputType(GetImagesImageManifestLayerOutput{})
+	pulumi.RegisterOutputType(GetImagesImageManifestLayerArrayOutput{})
+	pulumi.RegisterOutputType(GetImagesQueryOutput{})
+	pulumi.RegisterOutputType(GetImagesQueryPtrOutput{})
+	pulumi.RegisterOutputType(GetImagesQuerySpecOutput{})
+	pulumi.RegisterOutputType(GetImagesQuerySpecPtrOutput{})
+	pulumi.RegisterOutputType(GetImagesQuerySpecTermOutput{})
+	pulumi.RegisterOutputType(GetImagesQuerySpecTermArrayOutput{})
 	pulumi.RegisterOutputType(GetLocationGeoOutput{})
 	pulumi.RegisterOutputType(GetLocationGeoArrayOutput{})
 	pulumi.RegisterOutputType(GetLocationsLocationOutput{})

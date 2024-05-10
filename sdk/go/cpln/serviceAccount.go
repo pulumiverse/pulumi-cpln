@@ -15,12 +15,18 @@ import (
 type ServiceAccount struct {
 	pulumi.CustomResourceState
 
-	CplnId      pulumi.StringOutput    `pulumi:"cplnId"`
+	// The ID, in GUID format, of the Service Account.
+	CplnId pulumi.StringOutput `pulumi:"cplnId"`
+	// Description of the Service Account.
 	Description pulumi.StringPtrOutput `pulumi:"description"`
-	Name        pulumi.StringOutput    `pulumi:"name"`
-	Origin      pulumi.StringOutput    `pulumi:"origin"`
-	SelfLink    pulumi.StringOutput    `pulumi:"selfLink"`
-	Tags        pulumi.StringMapOutput `pulumi:"tags"`
+	// Name of the Service Account.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Origin of the Policy. Either `builtin` or `default`.
+	Origin pulumi.StringOutput `pulumi:"origin"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapOutput `pulumi:"tags"`
 }
 
 // NewServiceAccount registers a new resource with the given unique name, arguments, and options.
@@ -53,21 +59,33 @@ func GetServiceAccount(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering ServiceAccount resources.
 type serviceAccountState struct {
-	CplnId      *string           `pulumi:"cplnId"`
-	Description *string           `pulumi:"description"`
-	Name        *string           `pulumi:"name"`
-	Origin      *string           `pulumi:"origin"`
-	SelfLink    *string           `pulumi:"selfLink"`
-	Tags        map[string]string `pulumi:"tags"`
+	// The ID, in GUID format, of the Service Account.
+	CplnId *string `pulumi:"cplnId"`
+	// Description of the Service Account.
+	Description *string `pulumi:"description"`
+	// Name of the Service Account.
+	Name *string `pulumi:"name"`
+	// Origin of the Policy. Either `builtin` or `default`.
+	Origin *string `pulumi:"origin"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink *string `pulumi:"selfLink"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
 }
 
 type ServiceAccountState struct {
-	CplnId      pulumi.StringPtrInput
+	// The ID, in GUID format, of the Service Account.
+	CplnId pulumi.StringPtrInput
+	// Description of the Service Account.
 	Description pulumi.StringPtrInput
-	Name        pulumi.StringPtrInput
-	Origin      pulumi.StringPtrInput
-	SelfLink    pulumi.StringPtrInput
-	Tags        pulumi.StringMapInput
+	// Name of the Service Account.
+	Name pulumi.StringPtrInput
+	// Origin of the Policy. Either `builtin` or `default`.
+	Origin pulumi.StringPtrInput
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringPtrInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
 }
 
 func (ServiceAccountState) ElementType() reflect.Type {
@@ -75,16 +93,22 @@ func (ServiceAccountState) ElementType() reflect.Type {
 }
 
 type serviceAccountArgs struct {
-	Description *string           `pulumi:"description"`
-	Name        *string           `pulumi:"name"`
-	Tags        map[string]string `pulumi:"tags"`
+	// Description of the Service Account.
+	Description *string `pulumi:"description"`
+	// Name of the Service Account.
+	Name *string `pulumi:"name"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
 }
 
 // The set of arguments for constructing a ServiceAccount resource.
 type ServiceAccountArgs struct {
+	// Description of the Service Account.
 	Description pulumi.StringPtrInput
-	Name        pulumi.StringPtrInput
-	Tags        pulumi.StringMapInput
+	// Name of the Service Account.
+	Name pulumi.StringPtrInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
 }
 
 func (ServiceAccountArgs) ElementType() reflect.Type {
@@ -198,26 +222,32 @@ func (o ServiceAccountOutput) ToOutput(ctx context.Context) pulumix.Output[*Serv
 	}
 }
 
+// The ID, in GUID format, of the Service Account.
 func (o ServiceAccountOutput) CplnId() pulumi.StringOutput {
 	return o.ApplyT(func(v *ServiceAccount) pulumi.StringOutput { return v.CplnId }).(pulumi.StringOutput)
 }
 
+// Description of the Service Account.
 func (o ServiceAccountOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *ServiceAccount) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
+// Name of the Service Account.
 func (o ServiceAccountOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *ServiceAccount) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Origin of the Policy. Either `builtin` or `default`.
 func (o ServiceAccountOutput) Origin() pulumi.StringOutput {
 	return o.ApplyT(func(v *ServiceAccount) pulumi.StringOutput { return v.Origin }).(pulumi.StringOutput)
 }
 
+// Full link to this resource. Can be referenced by other resources.
 func (o ServiceAccountOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *ServiceAccount) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
 }
 
+// Key-value map of resource tags.
 func (o ServiceAccountOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *ServiceAccount) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
 }

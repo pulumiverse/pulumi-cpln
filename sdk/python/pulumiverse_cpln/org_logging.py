@@ -16,57 +16,94 @@ __all__ = ['OrgLoggingArgs', 'OrgLogging']
 @pulumi.input_type
 class OrgLoggingArgs:
     def __init__(__self__, *,
+                 cloud_watch_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingCloudWatchLoggingArgs']]]] = None,
                  coralogix_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingCoralogixLoggingArgs']]]] = None,
                  datadog_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingDatadogLoggingArgs']]]] = None,
                  elastic_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingElasticLoggingArgs']]]] = None,
+                 fluentd_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingFluentdLoggingArgs']]]] = None,
                  logzio_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingLogzioLoggingArgs']]]] = None,
-                 s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]]] = None):
+                 s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]]] = None,
+                 stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingStackdriverLoggingArgs']]]] = None):
         """
         The set of arguments for constructing a OrgLogging resource.
+        :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingCoralogixLoggingArgs']]] coralogix_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
+        :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingDatadogLoggingArgs']]] datadog_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+        :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingLogzioLoggingArgs']]] logzio_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+        :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]] s3_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
         """
         OrgLoggingArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            cloud_watch_loggings=cloud_watch_loggings,
             coralogix_loggings=coralogix_loggings,
             datadog_loggings=datadog_loggings,
             elastic_loggings=elastic_loggings,
+            fluentd_loggings=fluentd_loggings,
             logzio_loggings=logzio_loggings,
             s3_loggings=s3_loggings,
+            stackdriver_loggings=stackdriver_loggings,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             cloud_watch_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingCloudWatchLoggingArgs']]]] = None,
              coralogix_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingCoralogixLoggingArgs']]]] = None,
              datadog_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingDatadogLoggingArgs']]]] = None,
              elastic_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingElasticLoggingArgs']]]] = None,
+             fluentd_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingFluentdLoggingArgs']]]] = None,
              logzio_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingLogzioLoggingArgs']]]] = None,
              s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]]] = None,
+             stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingStackdriverLoggingArgs']]]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
+        if 'cloudWatchLoggings' in kwargs:
+            cloud_watch_loggings = kwargs['cloudWatchLoggings']
         if 'coralogixLoggings' in kwargs:
             coralogix_loggings = kwargs['coralogixLoggings']
         if 'datadogLoggings' in kwargs:
             datadog_loggings = kwargs['datadogLoggings']
         if 'elasticLoggings' in kwargs:
             elastic_loggings = kwargs['elasticLoggings']
+        if 'fluentdLoggings' in kwargs:
+            fluentd_loggings = kwargs['fluentdLoggings']
         if 'logzioLoggings' in kwargs:
             logzio_loggings = kwargs['logzioLoggings']
         if 's3Loggings' in kwargs:
             s3_loggings = kwargs['s3Loggings']
+        if 'stackdriverLoggings' in kwargs:
+            stackdriver_loggings = kwargs['stackdriverLoggings']
 
+        if cloud_watch_loggings is not None:
+            _setter("cloud_watch_loggings", cloud_watch_loggings)
         if coralogix_loggings is not None:
             _setter("coralogix_loggings", coralogix_loggings)
         if datadog_loggings is not None:
             _setter("datadog_loggings", datadog_loggings)
         if elastic_loggings is not None:
             _setter("elastic_loggings", elastic_loggings)
+        if fluentd_loggings is not None:
+            _setter("fluentd_loggings", fluentd_loggings)
         if logzio_loggings is not None:
             _setter("logzio_loggings", logzio_loggings)
         if s3_loggings is not None:
             _setter("s3_loggings", s3_loggings)
+        if stackdriver_loggings is not None:
+            _setter("stackdriver_loggings", stackdriver_loggings)
+
+    @property
+    @pulumi.getter(name="cloudWatchLoggings")
+    def cloud_watch_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingCloudWatchLoggingArgs']]]]:
+        return pulumi.get(self, "cloud_watch_loggings")
+
+    @cloud_watch_loggings.setter
+    def cloud_watch_loggings(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingCloudWatchLoggingArgs']]]]):
+        pulumi.set(self, "cloud_watch_loggings", value)
 
     @property
     @pulumi.getter(name="coralogixLoggings")
     def coralogix_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingCoralogixLoggingArgs']]]]:
+        """
+        [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
+        """
         return pulumi.get(self, "coralogix_loggings")
 
     @coralogix_loggings.setter
@@ -76,6 +113,9 @@ class OrgLoggingArgs:
     @property
     @pulumi.getter(name="datadogLoggings")
     def datadog_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingDatadogLoggingArgs']]]]:
+        """
+        [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+        """
         return pulumi.get(self, "datadog_loggings")
 
     @datadog_loggings.setter
@@ -92,8 +132,20 @@ class OrgLoggingArgs:
         pulumi.set(self, "elastic_loggings", value)
 
     @property
+    @pulumi.getter(name="fluentdLoggings")
+    def fluentd_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingFluentdLoggingArgs']]]]:
+        return pulumi.get(self, "fluentd_loggings")
+
+    @fluentd_loggings.setter
+    def fluentd_loggings(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingFluentdLoggingArgs']]]]):
+        pulumi.set(self, "fluentd_loggings", value)
+
+    @property
     @pulumi.getter(name="logzioLoggings")
     def logzio_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingLogzioLoggingArgs']]]]:
+        """
+        [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+        """
         return pulumi.get(self, "logzio_loggings")
 
     @logzio_loggings.setter
@@ -103,54 +155,85 @@ class OrgLoggingArgs:
     @property
     @pulumi.getter(name="s3Loggings")
     def s3_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]]]:
+        """
+        [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
+        """
         return pulumi.get(self, "s3_loggings")
 
     @s3_loggings.setter
     def s3_loggings(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]]]):
         pulumi.set(self, "s3_loggings", value)
 
+    @property
+    @pulumi.getter(name="stackdriverLoggings")
+    def stackdriver_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingStackdriverLoggingArgs']]]]:
+        return pulumi.get(self, "stackdriver_loggings")
+
+    @stackdriver_loggings.setter
+    def stackdriver_loggings(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingStackdriverLoggingArgs']]]]):
+        pulumi.set(self, "stackdriver_loggings", value)
+
 
 @pulumi.input_type
 class _OrgLoggingState:
     def __init__(__self__, *,
+                 cloud_watch_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingCloudWatchLoggingArgs']]]] = None,
                  coralogix_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingCoralogixLoggingArgs']]]] = None,
                  cpln_id: Optional[pulumi.Input[str]] = None,
                  datadog_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingDatadogLoggingArgs']]]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  elastic_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingElasticLoggingArgs']]]] = None,
+                 fluentd_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingFluentdLoggingArgs']]]] = None,
                  logzio_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingLogzioLoggingArgs']]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]]] = None,
+                 stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingStackdriverLoggingArgs']]]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         Input properties used for looking up and filtering OrgLogging resources.
+        :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingCoralogixLoggingArgs']]] coralogix_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
+        :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the org.
+        :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingDatadogLoggingArgs']]] datadog_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+        :param pulumi.Input[str] description: The description of org.
+        :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingLogzioLoggingArgs']]] logzio_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+        :param pulumi.Input[str] name: The name of the org.
+        :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]] s3_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of the org's tags.
         """
         _OrgLoggingState._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            cloud_watch_loggings=cloud_watch_loggings,
             coralogix_loggings=coralogix_loggings,
             cpln_id=cpln_id,
             datadog_loggings=datadog_loggings,
             description=description,
             elastic_loggings=elastic_loggings,
+            fluentd_loggings=fluentd_loggings,
             logzio_loggings=logzio_loggings,
             name=name,
             s3_loggings=s3_loggings,
+            stackdriver_loggings=stackdriver_loggings,
             tags=tags,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             cloud_watch_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingCloudWatchLoggingArgs']]]] = None,
              coralogix_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingCoralogixLoggingArgs']]]] = None,
              cpln_id: Optional[pulumi.Input[str]] = None,
              datadog_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingDatadogLoggingArgs']]]] = None,
              description: Optional[pulumi.Input[str]] = None,
              elastic_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingElasticLoggingArgs']]]] = None,
+             fluentd_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingFluentdLoggingArgs']]]] = None,
              logzio_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingLogzioLoggingArgs']]]] = None,
              name: Optional[pulumi.Input[str]] = None,
              s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]]] = None,
+             stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingStackdriverLoggingArgs']]]] = None,
              tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
+        if 'cloudWatchLoggings' in kwargs:
+            cloud_watch_loggings = kwargs['cloudWatchLoggings']
         if 'coralogixLoggings' in kwargs:
             coralogix_loggings = kwargs['coralogixLoggings']
         if 'cplnId' in kwargs:
@@ -159,11 +242,17 @@ class _OrgLoggingState:
             datadog_loggings = kwargs['datadogLoggings']
         if 'elasticLoggings' in kwargs:
             elastic_loggings = kwargs['elasticLoggings']
+        if 'fluentdLoggings' in kwargs:
+            fluentd_loggings = kwargs['fluentdLoggings']
         if 'logzioLoggings' in kwargs:
             logzio_loggings = kwargs['logzioLoggings']
         if 's3Loggings' in kwargs:
             s3_loggings = kwargs['s3Loggings']
+        if 'stackdriverLoggings' in kwargs:
+            stackdriver_loggings = kwargs['stackdriverLoggings']
 
+        if cloud_watch_loggings is not None:
+            _setter("cloud_watch_loggings", cloud_watch_loggings)
         if coralogix_loggings is not None:
             _setter("coralogix_loggings", coralogix_loggings)
         if cpln_id is not None:
@@ -174,18 +263,34 @@ class _OrgLoggingState:
             _setter("description", description)
         if elastic_loggings is not None:
             _setter("elastic_loggings", elastic_loggings)
+        if fluentd_loggings is not None:
+            _setter("fluentd_loggings", fluentd_loggings)
         if logzio_loggings is not None:
             _setter("logzio_loggings", logzio_loggings)
         if name is not None:
             _setter("name", name)
         if s3_loggings is not None:
             _setter("s3_loggings", s3_loggings)
+        if stackdriver_loggings is not None:
+            _setter("stackdriver_loggings", stackdriver_loggings)
         if tags is not None:
             _setter("tags", tags)
 
     @property
+    @pulumi.getter(name="cloudWatchLoggings")
+    def cloud_watch_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingCloudWatchLoggingArgs']]]]:
+        return pulumi.get(self, "cloud_watch_loggings")
+
+    @cloud_watch_loggings.setter
+    def cloud_watch_loggings(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingCloudWatchLoggingArgs']]]]):
+        pulumi.set(self, "cloud_watch_loggings", value)
+
+    @property
     @pulumi.getter(name="coralogixLoggings")
     def coralogix_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingCoralogixLoggingArgs']]]]:
+        """
+        [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
+        """
         return pulumi.get(self, "coralogix_loggings")
 
     @coralogix_loggings.setter
@@ -195,6 +300,9 @@ class _OrgLoggingState:
     @property
     @pulumi.getter(name="cplnId")
     def cpln_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID, in GUID format, of the org.
+        """
         return pulumi.get(self, "cpln_id")
 
     @cpln_id.setter
@@ -204,6 +312,9 @@ class _OrgLoggingState:
     @property
     @pulumi.getter(name="datadogLoggings")
     def datadog_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingDatadogLoggingArgs']]]]:
+        """
+        [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+        """
         return pulumi.get(self, "datadog_loggings")
 
     @datadog_loggings.setter
@@ -213,6 +324,9 @@ class _OrgLoggingState:
     @property
     @pulumi.getter
     def description(self) -> Optional[pulumi.Input[str]]:
+        """
+        The description of org.
+        """
         return pulumi.get(self, "description")
 
     @description.setter
@@ -229,8 +343,20 @@ class _OrgLoggingState:
         pulumi.set(self, "elastic_loggings", value)
 
     @property
+    @pulumi.getter(name="fluentdLoggings")
+    def fluentd_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingFluentdLoggingArgs']]]]:
+        return pulumi.get(self, "fluentd_loggings")
+
+    @fluentd_loggings.setter
+    def fluentd_loggings(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingFluentdLoggingArgs']]]]):
+        pulumi.set(self, "fluentd_loggings", value)
+
+    @property
     @pulumi.getter(name="logzioLoggings")
     def logzio_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingLogzioLoggingArgs']]]]:
+        """
+        [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+        """
         return pulumi.get(self, "logzio_loggings")
 
     @logzio_loggings.setter
@@ -240,6 +366,9 @@ class _OrgLoggingState:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the org.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -249,6 +378,9 @@ class _OrgLoggingState:
     @property
     @pulumi.getter(name="s3Loggings")
     def s3_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]]]:
+        """
+        [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
+        """
         return pulumi.get(self, "s3_loggings")
 
     @s3_loggings.setter
@@ -256,8 +388,20 @@ class _OrgLoggingState:
         pulumi.set(self, "s3_loggings", value)
 
     @property
+    @pulumi.getter(name="stackdriverLoggings")
+    def stackdriver_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingStackdriverLoggingArgs']]]]:
+        return pulumi.get(self, "stackdriver_loggings")
+
+    @stackdriver_loggings.setter
+    def stackdriver_loggings(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingStackdriverLoggingArgs']]]]):
+        pulumi.set(self, "stackdriver_loggings", value)
+
+    @property
     @pulumi.getter
     def tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of the org's tags.
+        """
         return pulumi.get(self, "tags")
 
     @tags.setter
@@ -270,16 +414,23 @@ class OrgLogging(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 cloud_watch_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingCloudWatchLoggingArgs']]]]] = None,
                  coralogix_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingCoralogixLoggingArgs']]]]] = None,
                  datadog_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingDatadogLoggingArgs']]]]] = None,
                  elastic_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingElasticLoggingArgs']]]]] = None,
+                 fluentd_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingFluentdLoggingArgs']]]]] = None,
                  logzio_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingLogzioLoggingArgs']]]]] = None,
                  s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingS3LoggingArgs']]]]] = None,
+                 stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingStackdriverLoggingArgs']]]]] = None,
                  __props__=None):
         """
         Create a OrgLogging resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingCoralogixLoggingArgs']]]] coralogix_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingDatadogLoggingArgs']]]] datadog_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingLogzioLoggingArgs']]]] logzio_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingS3LoggingArgs']]]] s3_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
         """
         ...
     @overload
@@ -308,11 +459,14 @@ class OrgLogging(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 cloud_watch_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingCloudWatchLoggingArgs']]]]] = None,
                  coralogix_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingCoralogixLoggingArgs']]]]] = None,
                  datadog_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingDatadogLoggingArgs']]]]] = None,
                  elastic_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingElasticLoggingArgs']]]]] = None,
+                 fluentd_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingFluentdLoggingArgs']]]]] = None,
                  logzio_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingLogzioLoggingArgs']]]]] = None,
                  s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingS3LoggingArgs']]]]] = None,
+                 stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingStackdriverLoggingArgs']]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -322,11 +476,14 @@ class OrgLogging(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = OrgLoggingArgs.__new__(OrgLoggingArgs)
 
+            __props__.__dict__["cloud_watch_loggings"] = cloud_watch_loggings
             __props__.__dict__["coralogix_loggings"] = coralogix_loggings
             __props__.__dict__["datadog_loggings"] = datadog_loggings
             __props__.__dict__["elastic_loggings"] = elastic_loggings
+            __props__.__dict__["fluentd_loggings"] = fluentd_loggings
             __props__.__dict__["logzio_loggings"] = logzio_loggings
             __props__.__dict__["s3_loggings"] = s3_loggings
+            __props__.__dict__["stackdriver_loggings"] = stackdriver_loggings
             __props__.__dict__["cpln_id"] = None
             __props__.__dict__["description"] = None
             __props__.__dict__["name"] = None
@@ -341,14 +498,17 @@ class OrgLogging(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
+            cloud_watch_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingCloudWatchLoggingArgs']]]]] = None,
             coralogix_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingCoralogixLoggingArgs']]]]] = None,
             cpln_id: Optional[pulumi.Input[str]] = None,
             datadog_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingDatadogLoggingArgs']]]]] = None,
             description: Optional[pulumi.Input[str]] = None,
             elastic_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingElasticLoggingArgs']]]]] = None,
+            fluentd_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingFluentdLoggingArgs']]]]] = None,
             logzio_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingLogzioLoggingArgs']]]]] = None,
             name: Optional[pulumi.Input[str]] = None,
             s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingS3LoggingArgs']]]]] = None,
+            stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingStackdriverLoggingArgs']]]]] = None,
             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None) -> 'OrgLogging':
         """
         Get an existing OrgLogging resource's state with the given name, id, and optional extra
@@ -357,40 +517,68 @@ class OrgLogging(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingCoralogixLoggingArgs']]]] coralogix_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
+        :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the org.
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingDatadogLoggingArgs']]]] datadog_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+        :param pulumi.Input[str] description: The description of org.
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingLogzioLoggingArgs']]]] logzio_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+        :param pulumi.Input[str] name: The name of the org.
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingS3LoggingArgs']]]] s3_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of the org's tags.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
         __props__ = _OrgLoggingState.__new__(_OrgLoggingState)
 
+        __props__.__dict__["cloud_watch_loggings"] = cloud_watch_loggings
         __props__.__dict__["coralogix_loggings"] = coralogix_loggings
         __props__.__dict__["cpln_id"] = cpln_id
         __props__.__dict__["datadog_loggings"] = datadog_loggings
         __props__.__dict__["description"] = description
         __props__.__dict__["elastic_loggings"] = elastic_loggings
+        __props__.__dict__["fluentd_loggings"] = fluentd_loggings
         __props__.__dict__["logzio_loggings"] = logzio_loggings
         __props__.__dict__["name"] = name
         __props__.__dict__["s3_loggings"] = s3_loggings
+        __props__.__dict__["stackdriver_loggings"] = stackdriver_loggings
         __props__.__dict__["tags"] = tags
         return OrgLogging(resource_name, opts=opts, __props__=__props__)
 
     @property
+    @pulumi.getter(name="cloudWatchLoggings")
+    def cloud_watch_loggings(self) -> pulumi.Output[Optional[Sequence['outputs.OrgLoggingCloudWatchLogging']]]:
+        return pulumi.get(self, "cloud_watch_loggings")
+
+    @property
     @pulumi.getter(name="coralogixLoggings")
     def coralogix_loggings(self) -> pulumi.Output[Optional[Sequence['outputs.OrgLoggingCoralogixLogging']]]:
+        """
+        [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
+        """
         return pulumi.get(self, "coralogix_loggings")
 
     @property
     @pulumi.getter(name="cplnId")
     def cpln_id(self) -> pulumi.Output[str]:
+        """
+        The ID, in GUID format, of the org.
+        """
         return pulumi.get(self, "cpln_id")
 
     @property
     @pulumi.getter(name="datadogLoggings")
     def datadog_loggings(self) -> pulumi.Output[Optional[Sequence['outputs.OrgLoggingDatadogLogging']]]:
+        """
+        [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+        """
         return pulumi.get(self, "datadog_loggings")
 
     @property
     @pulumi.getter
     def description(self) -> pulumi.Output[str]:
+        """
+        The description of org.
+        """
         return pulumi.get(self, "description")
 
     @property
@@ -399,22 +587,44 @@ class OrgLogging(pulumi.CustomResource):
         return pulumi.get(self, "elastic_loggings")
 
     @property
+    @pulumi.getter(name="fluentdLoggings")
+    def fluentd_loggings(self) -> pulumi.Output[Optional[Sequence['outputs.OrgLoggingFluentdLogging']]]:
+        return pulumi.get(self, "fluentd_loggings")
+
+    @property
     @pulumi.getter(name="logzioLoggings")
     def logzio_loggings(self) -> pulumi.Output[Optional[Sequence['outputs.OrgLoggingLogzioLogging']]]:
+        """
+        [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+        """
         return pulumi.get(self, "logzio_loggings")
 
     @property
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
+        """
+        The name of the org.
+        """
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter(name="s3Loggings")
     def s3_loggings(self) -> pulumi.Output[Optional[Sequence['outputs.OrgLoggingS3Logging']]]:
+        """
+        [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
+        """
         return pulumi.get(self, "s3_loggings")
+
+    @property
+    @pulumi.getter(name="stackdriverLoggings")
+    def stackdriver_loggings(self) -> pulumi.Output[Optional[Sequence['outputs.OrgLoggingStackdriverLogging']]]:
+        return pulumi.get(self, "stackdriver_loggings")
 
     @property
     @pulumi.getter
     def tags(self) -> pulumi.Output[Mapping[str, str]]:
+        """
+        Key-value map of the org's tags.
+        """
         return pulumi.get(self, "tags")
 

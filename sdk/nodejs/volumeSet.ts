@@ -35,17 +35,58 @@ export class VolumeSet extends pulumi.CustomResource {
     }
 
     public readonly autoscaling!: pulumi.Output<outputs.VolumeSetAutoscaling | undefined>;
+    /**
+     * ID, in GUID format, of the Volume Set.
+     */
     public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    /**
+     * Description of the Volume Set.
+     */
     public readonly description!: pulumi.Output<string | undefined>;
+    /**
+     * Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
+     */
     public readonly fileSystemType!: pulumi.Output<string | undefined>;
+    /**
+     * Name of the associated GVC.
+     */
     public readonly gvc!: pulumi.Output<string>;
+    /**
+     * The initial size in GB of volumes in this set. Minimum value: `10`.
+     */
     public readonly initialCapacity!: pulumi.Output<number>;
+    /**
+     * Name of the Volume Set.
+     */
     public readonly name!: pulumi.Output<string>;
+    /**
+     * Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
+     * `high-throughput-ssd`
+     */
     public readonly performanceClass!: pulumi.Output<string>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     public /*out*/ readonly selfLink!: pulumi.Output<string>;
     public readonly snapshots!: pulumi.Output<outputs.VolumeSetSnapshots | undefined>;
+    /**
+     * Status of the Volume Set.
+     */
     public /*out*/ readonly statuses!: pulumi.Output<outputs.VolumeSetStatus[]>;
+    /**
+     * For self-hosted locations only. The storage class used for volumes in this set will be
+     * {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
+     * {performanceClass}-{fileSystemType}
+     */
+    public readonly storageClassSuffix!: pulumi.Output<string | undefined>;
+    /**
+     * Key-value map of resource tags.
+     */
     public readonly tags!: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
+     * Output used when linking a volume set to a workload.
+     */
+    public /*out*/ readonly volumesetLink!: pulumi.Output<string>;
 
     /**
      * Create a VolumeSet resource with the given unique name, arguments, and options.
@@ -71,7 +112,9 @@ export class VolumeSet extends pulumi.CustomResource {
             resourceInputs["selfLink"] = state ? state.selfLink : undefined;
             resourceInputs["snapshots"] = state ? state.snapshots : undefined;
             resourceInputs["statuses"] = state ? state.statuses : undefined;
+            resourceInputs["storageClassSuffix"] = state ? state.storageClassSuffix : undefined;
             resourceInputs["tags"] = state ? state.tags : undefined;
+            resourceInputs["volumesetLink"] = state ? state.volumesetLink : undefined;
         } else {
             const args = argsOrState as VolumeSetArgs | undefined;
             if ((!args || args.gvc === undefined) && !opts.urn) {
@@ -91,10 +134,12 @@ export class VolumeSet extends pulumi.CustomResource {
             resourceInputs["name"] = args ? args.name : undefined;
             resourceInputs["performanceClass"] = args ? args.performanceClass : undefined;
             resourceInputs["snapshots"] = args ? args.snapshots : undefined;
+            resourceInputs["storageClassSuffix"] = args ? args.storageClassSuffix : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
             resourceInputs["statuses"] = undefined /*out*/;
+            resourceInputs["volumesetLink"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(VolumeSet.__pulumiType, name, resourceInputs, opts);
@@ -106,17 +151,58 @@ export class VolumeSet extends pulumi.CustomResource {
  */
 export interface VolumeSetState {
     autoscaling?: pulumi.Input<inputs.VolumeSetAutoscaling>;
+    /**
+     * ID, in GUID format, of the Volume Set.
+     */
     cplnId?: pulumi.Input<string>;
+    /**
+     * Description of the Volume Set.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
+     */
     fileSystemType?: pulumi.Input<string>;
+    /**
+     * Name of the associated GVC.
+     */
     gvc?: pulumi.Input<string>;
+    /**
+     * The initial size in GB of volumes in this set. Minimum value: `10`.
+     */
     initialCapacity?: pulumi.Input<number>;
+    /**
+     * Name of the Volume Set.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
+     * `high-throughput-ssd`
+     */
     performanceClass?: pulumi.Input<string>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     selfLink?: pulumi.Input<string>;
     snapshots?: pulumi.Input<inputs.VolumeSetSnapshots>;
+    /**
+     * Status of the Volume Set.
+     */
     statuses?: pulumi.Input<pulumi.Input<inputs.VolumeSetStatus>[]>;
+    /**
+     * For self-hosted locations only. The storage class used for volumes in this set will be
+     * {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
+     * {performanceClass}-{fileSystemType}
+     */
+    storageClassSuffix?: pulumi.Input<string>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Output used when linking a volume set to a workload.
+     */
+    volumesetLink?: pulumi.Input<string>;
 }
 
 /**
@@ -124,12 +210,40 @@ export interface VolumeSetState {
  */
 export interface VolumeSetArgs {
     autoscaling?: pulumi.Input<inputs.VolumeSetAutoscaling>;
+    /**
+     * Description of the Volume Set.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
+     */
     fileSystemType?: pulumi.Input<string>;
+    /**
+     * Name of the associated GVC.
+     */
     gvc: pulumi.Input<string>;
+    /**
+     * The initial size in GB of volumes in this set. Minimum value: `10`.
+     */
     initialCapacity: pulumi.Input<number>;
+    /**
+     * Name of the Volume Set.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
+     * `high-throughput-ssd`
+     */
     performanceClass: pulumi.Input<string>;
     snapshots?: pulumi.Input<inputs.VolumeSetSnapshots>;
+    /**
+     * For self-hosted locations only. The storage class used for volumes in this set will be
+     * {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
+     * {performanceClass}-{fileSystemType}
+     */
+    storageClassSuffix?: pulumi.Input<string>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }

@@ -13,7 +13,7 @@ import * as utilities from "./utilities";
  *
  * The following attributes are exported:
  *
- * - **locations** (Block List, Max: 1) (see below).
+ * - **locations** (Block List) (see below).
  *
  * <a id="nestedblock--locations"></a>
  *
@@ -77,7 +77,7 @@ export interface GetLocationsResult {
  *
  * The following attributes are exported:
  *
- * - **locations** (Block List, Max: 1) (see below).
+ * - **locations** (Block List) (see below).
  *
  * <a id="nestedblock--locations"></a>
  *

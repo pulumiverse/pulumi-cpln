@@ -13,30 +13,63 @@ namespace Pulumiverse.Cpln
     [CplnResourceType("cpln:index/orgLogging:OrgLogging")]
     public partial class OrgLogging : global::Pulumi.CustomResource
     {
+        [Output("cloudWatchLoggings")]
+        public Output<ImmutableArray<Outputs.OrgLoggingCloudWatchLogging>> CloudWatchLoggings { get; private set; } = null!;
+
+        /// <summary>
+        /// [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
+        /// </summary>
         [Output("coralogixLoggings")]
         public Output<ImmutableArray<Outputs.OrgLoggingCoralogixLogging>> CoralogixLoggings { get; private set; } = null!;
 
+        /// <summary>
+        /// The ID, in GUID format, of the org.
+        /// </summary>
         [Output("cplnId")]
         public Output<string> CplnId { get; private set; } = null!;
 
+        /// <summary>
+        /// [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+        /// </summary>
         [Output("datadogLoggings")]
         public Output<ImmutableArray<Outputs.OrgLoggingDatadogLogging>> DatadogLoggings { get; private set; } = null!;
 
+        /// <summary>
+        /// The description of org.
+        /// </summary>
         [Output("description")]
         public Output<string> Description { get; private set; } = null!;
 
         [Output("elasticLoggings")]
         public Output<ImmutableArray<Outputs.OrgLoggingElasticLogging>> ElasticLoggings { get; private set; } = null!;
 
+        [Output("fluentdLoggings")]
+        public Output<ImmutableArray<Outputs.OrgLoggingFluentdLogging>> FluentdLoggings { get; private set; } = null!;
+
+        /// <summary>
+        /// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+        /// </summary>
         [Output("logzioLoggings")]
         public Output<ImmutableArray<Outputs.OrgLoggingLogzioLogging>> LogzioLoggings { get; private set; } = null!;
 
+        /// <summary>
+        /// The name of the org.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
+        /// </summary>
         [Output("s3Loggings")]
         public Output<ImmutableArray<Outputs.OrgLoggingS3Logging>> S3Loggings { get; private set; } = null!;
 
+        [Output("stackdriverLoggings")]
+        public Output<ImmutableArray<Outputs.OrgLoggingStackdriverLogging>> StackdriverLoggings { get; private set; } = null!;
+
+        /// <summary>
+        /// Key-value map of the org's tags.
+        /// </summary>
         [Output("tags")]
         public Output<ImmutableDictionary<string, string>> Tags { get; private set; } = null!;
 
@@ -87,8 +120,20 @@ namespace Pulumiverse.Cpln
 
     public sealed class OrgLoggingArgs : global::Pulumi.ResourceArgs
     {
+        [Input("cloudWatchLoggings")]
+        private InputList<Inputs.OrgLoggingCloudWatchLoggingArgs>? _cloudWatchLoggings;
+        public InputList<Inputs.OrgLoggingCloudWatchLoggingArgs> CloudWatchLoggings
+        {
+            get => _cloudWatchLoggings ?? (_cloudWatchLoggings = new InputList<Inputs.OrgLoggingCloudWatchLoggingArgs>());
+            set => _cloudWatchLoggings = value;
+        }
+
         [Input("coralogixLoggings")]
         private InputList<Inputs.OrgLoggingCoralogixLoggingArgs>? _coralogixLoggings;
+
+        /// <summary>
+        /// [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
+        /// </summary>
         public InputList<Inputs.OrgLoggingCoralogixLoggingArgs> CoralogixLoggings
         {
             get => _coralogixLoggings ?? (_coralogixLoggings = new InputList<Inputs.OrgLoggingCoralogixLoggingArgs>());
@@ -97,6 +142,10 @@ namespace Pulumiverse.Cpln
 
         [Input("datadogLoggings")]
         private InputList<Inputs.OrgLoggingDatadogLoggingArgs>? _datadogLoggings;
+
+        /// <summary>
+        /// [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+        /// </summary>
         public InputList<Inputs.OrgLoggingDatadogLoggingArgs> DatadogLoggings
         {
             get => _datadogLoggings ?? (_datadogLoggings = new InputList<Inputs.OrgLoggingDatadogLoggingArgs>());
@@ -111,8 +160,20 @@ namespace Pulumiverse.Cpln
             set => _elasticLoggings = value;
         }
 
+        [Input("fluentdLoggings")]
+        private InputList<Inputs.OrgLoggingFluentdLoggingArgs>? _fluentdLoggings;
+        public InputList<Inputs.OrgLoggingFluentdLoggingArgs> FluentdLoggings
+        {
+            get => _fluentdLoggings ?? (_fluentdLoggings = new InputList<Inputs.OrgLoggingFluentdLoggingArgs>());
+            set => _fluentdLoggings = value;
+        }
+
         [Input("logzioLoggings")]
         private InputList<Inputs.OrgLoggingLogzioLoggingArgs>? _logzioLoggings;
+
+        /// <summary>
+        /// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+        /// </summary>
         public InputList<Inputs.OrgLoggingLogzioLoggingArgs> LogzioLoggings
         {
             get => _logzioLoggings ?? (_logzioLoggings = new InputList<Inputs.OrgLoggingLogzioLoggingArgs>());
@@ -121,10 +182,22 @@ namespace Pulumiverse.Cpln
 
         [Input("s3Loggings")]
         private InputList<Inputs.OrgLoggingS3LoggingArgs>? _s3Loggings;
+
+        /// <summary>
+        /// [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
+        /// </summary>
         public InputList<Inputs.OrgLoggingS3LoggingArgs> S3Loggings
         {
             get => _s3Loggings ?? (_s3Loggings = new InputList<Inputs.OrgLoggingS3LoggingArgs>());
             set => _s3Loggings = value;
+        }
+
+        [Input("stackdriverLoggings")]
+        private InputList<Inputs.OrgLoggingStackdriverLoggingArgs>? _stackdriverLoggings;
+        public InputList<Inputs.OrgLoggingStackdriverLoggingArgs> StackdriverLoggings
+        {
+            get => _stackdriverLoggings ?? (_stackdriverLoggings = new InputList<Inputs.OrgLoggingStackdriverLoggingArgs>());
+            set => _stackdriverLoggings = value;
         }
 
         public OrgLoggingArgs()
@@ -135,25 +208,47 @@ namespace Pulumiverse.Cpln
 
     public sealed class OrgLoggingState : global::Pulumi.ResourceArgs
     {
+        [Input("cloudWatchLoggings")]
+        private InputList<Inputs.OrgLoggingCloudWatchLoggingGetArgs>? _cloudWatchLoggings;
+        public InputList<Inputs.OrgLoggingCloudWatchLoggingGetArgs> CloudWatchLoggings
+        {
+            get => _cloudWatchLoggings ?? (_cloudWatchLoggings = new InputList<Inputs.OrgLoggingCloudWatchLoggingGetArgs>());
+            set => _cloudWatchLoggings = value;
+        }
+
         [Input("coralogixLoggings")]
         private InputList<Inputs.OrgLoggingCoralogixLoggingGetArgs>? _coralogixLoggings;
+
+        /// <summary>
+        /// [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
+        /// </summary>
         public InputList<Inputs.OrgLoggingCoralogixLoggingGetArgs> CoralogixLoggings
         {
             get => _coralogixLoggings ?? (_coralogixLoggings = new InputList<Inputs.OrgLoggingCoralogixLoggingGetArgs>());
             set => _coralogixLoggings = value;
         }
 
+        /// <summary>
+        /// The ID, in GUID format, of the org.
+        /// </summary>
         [Input("cplnId")]
         public Input<string>? CplnId { get; set; }
 
         [Input("datadogLoggings")]
         private InputList<Inputs.OrgLoggingDatadogLoggingGetArgs>? _datadogLoggings;
+
+        /// <summary>
+        /// [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+        /// </summary>
         public InputList<Inputs.OrgLoggingDatadogLoggingGetArgs> DatadogLoggings
         {
             get => _datadogLoggings ?? (_datadogLoggings = new InputList<Inputs.OrgLoggingDatadogLoggingGetArgs>());
             set => _datadogLoggings = value;
         }
 
+        /// <summary>
+        /// The description of org.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
@@ -165,27 +260,58 @@ namespace Pulumiverse.Cpln
             set => _elasticLoggings = value;
         }
 
+        [Input("fluentdLoggings")]
+        private InputList<Inputs.OrgLoggingFluentdLoggingGetArgs>? _fluentdLoggings;
+        public InputList<Inputs.OrgLoggingFluentdLoggingGetArgs> FluentdLoggings
+        {
+            get => _fluentdLoggings ?? (_fluentdLoggings = new InputList<Inputs.OrgLoggingFluentdLoggingGetArgs>());
+            set => _fluentdLoggings = value;
+        }
+
         [Input("logzioLoggings")]
         private InputList<Inputs.OrgLoggingLogzioLoggingGetArgs>? _logzioLoggings;
+
+        /// <summary>
+        /// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+        /// </summary>
         public InputList<Inputs.OrgLoggingLogzioLoggingGetArgs> LogzioLoggings
         {
             get => _logzioLoggings ?? (_logzioLoggings = new InputList<Inputs.OrgLoggingLogzioLoggingGetArgs>());
             set => _logzioLoggings = value;
         }
 
+        /// <summary>
+        /// The name of the org.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
         [Input("s3Loggings")]
         private InputList<Inputs.OrgLoggingS3LoggingGetArgs>? _s3Loggings;
+
+        /// <summary>
+        /// [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
+        /// </summary>
         public InputList<Inputs.OrgLoggingS3LoggingGetArgs> S3Loggings
         {
             get => _s3Loggings ?? (_s3Loggings = new InputList<Inputs.OrgLoggingS3LoggingGetArgs>());
             set => _s3Loggings = value;
         }
 
+        [Input("stackdriverLoggings")]
+        private InputList<Inputs.OrgLoggingStackdriverLoggingGetArgs>? _stackdriverLoggings;
+        public InputList<Inputs.OrgLoggingStackdriverLoggingGetArgs> StackdriverLoggings
+        {
+            get => _stackdriverLoggings ?? (_stackdriverLoggings = new InputList<Inputs.OrgLoggingStackdriverLoggingGetArgs>());
+            set => _stackdriverLoggings = value;
+        }
+
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of the org's tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());

@@ -15,11 +15,16 @@ import (
 type AuditContext struct {
 	pulumi.CustomResourceState
 
-	CplnId      pulumi.StringOutput    `pulumi:"cplnId"`
+	// The ID, in GUID format, of the Audit Context.
+	CplnId pulumi.StringOutput `pulumi:"cplnId"`
+	// Description of the Audit Context.
 	Description pulumi.StringPtrOutput `pulumi:"description"`
-	Name        pulumi.StringOutput    `pulumi:"name"`
-	SelfLink    pulumi.StringOutput    `pulumi:"selfLink"`
-	Tags        pulumi.StringMapOutput `pulumi:"tags"`
+	// Name of the Audit Context.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapOutput `pulumi:"tags"`
 }
 
 // NewAuditContext registers a new resource with the given unique name, arguments, and options.
@@ -52,19 +57,29 @@ func GetAuditContext(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering AuditContext resources.
 type auditContextState struct {
-	CplnId      *string           `pulumi:"cplnId"`
-	Description *string           `pulumi:"description"`
-	Name        *string           `pulumi:"name"`
-	SelfLink    *string           `pulumi:"selfLink"`
-	Tags        map[string]string `pulumi:"tags"`
+	// The ID, in GUID format, of the Audit Context.
+	CplnId *string `pulumi:"cplnId"`
+	// Description of the Audit Context.
+	Description *string `pulumi:"description"`
+	// Name of the Audit Context.
+	Name *string `pulumi:"name"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink *string `pulumi:"selfLink"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
 }
 
 type AuditContextState struct {
-	CplnId      pulumi.StringPtrInput
+	// The ID, in GUID format, of the Audit Context.
+	CplnId pulumi.StringPtrInput
+	// Description of the Audit Context.
 	Description pulumi.StringPtrInput
-	Name        pulumi.StringPtrInput
-	SelfLink    pulumi.StringPtrInput
-	Tags        pulumi.StringMapInput
+	// Name of the Audit Context.
+	Name pulumi.StringPtrInput
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringPtrInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
 }
 
 func (AuditContextState) ElementType() reflect.Type {
@@ -72,16 +87,22 @@ func (AuditContextState) ElementType() reflect.Type {
 }
 
 type auditContextArgs struct {
-	Description *string           `pulumi:"description"`
-	Name        *string           `pulumi:"name"`
-	Tags        map[string]string `pulumi:"tags"`
+	// Description of the Audit Context.
+	Description *string `pulumi:"description"`
+	// Name of the Audit Context.
+	Name *string `pulumi:"name"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
 }
 
 // The set of arguments for constructing a AuditContext resource.
 type AuditContextArgs struct {
+	// Description of the Audit Context.
 	Description pulumi.StringPtrInput
-	Name        pulumi.StringPtrInput
-	Tags        pulumi.StringMapInput
+	// Name of the Audit Context.
+	Name pulumi.StringPtrInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
 }
 
 func (AuditContextArgs) ElementType() reflect.Type {
@@ -195,22 +216,27 @@ func (o AuditContextOutput) ToOutput(ctx context.Context) pulumix.Output[*AuditC
 	}
 }
 
+// The ID, in GUID format, of the Audit Context.
 func (o AuditContextOutput) CplnId() pulumi.StringOutput {
 	return o.ApplyT(func(v *AuditContext) pulumi.StringOutput { return v.CplnId }).(pulumi.StringOutput)
 }
 
+// Description of the Audit Context.
 func (o AuditContextOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *AuditContext) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
+// Name of the Audit Context.
 func (o AuditContextOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *AuditContext) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Full link to this resource. Can be referenced by other resources.
 func (o AuditContextOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *AuditContext) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
 }
 
+// Key-value map of resource tags.
 func (o AuditContextOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *AuditContext) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
 }

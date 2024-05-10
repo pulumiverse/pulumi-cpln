@@ -16,27 +16,49 @@ namespace Pulumiverse.Cpln
         [Output("containers")]
         public Output<ImmutableArray<Outputs.WorkloadContainer>> Containers { get; private set; } = null!;
 
+        /// <summary>
+        /// The ID, in GUID format, of the Workload.
+        /// </summary>
         [Output("cplnId")]
         public Output<string> CplnId { get; private set; } = null!;
 
+        /// <summary>
+        /// Description of the Workload.
+        /// </summary>
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
 
+        /// <summary>
+        /// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+        /// Access is restricted by default.
+        /// </summary>
         [Output("firewallSpec")]
         public Output<Outputs.WorkloadFirewallSpec?> FirewallSpec { get; private set; } = null!;
 
+        /// <summary>
+        /// Name of the associated GVC.
+        /// </summary>
         [Output("gvc")]
         public Output<string> Gvc { get; private set; } = null!;
 
+        /// <summary>
+        /// Full link to an Identity.
+        /// </summary>
         [Output("identityLink")]
         public Output<string?> IdentityLink { get; private set; } = null!;
 
+        /// <summary>
+        /// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+        /// </summary>
         [Output("job")]
         public Output<Outputs.WorkloadJob?> Job { get; private set; } = null!;
 
         [Output("localOptions")]
         public Output<ImmutableArray<Outputs.WorkloadLocalOption>> LocalOptions { get; private set; } = null!;
 
+        /// <summary>
+        /// Name of the Workload.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
@@ -49,21 +71,37 @@ namespace Pulumiverse.Cpln
         [Output("securityOptions")]
         public Output<Outputs.WorkloadSecurityOptions?> SecurityOptions { get; private set; } = null!;
 
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         [Output("selfLink")]
         public Output<string> SelfLink { get; private set; } = null!;
 
         [Output("sidecar")]
         public Output<Outputs.WorkloadSidecar?> Sidecar { get; private set; } = null!;
 
+        /// <summary>
+        /// Status of the workload.
+        /// </summary>
         [Output("statuses")]
         public Output<ImmutableArray<Outputs.WorkloadStatus>> Statuses { get; private set; } = null!;
 
+        /// <summary>
+        /// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+        /// false.
+        /// </summary>
         [Output("supportDynamicTags")]
         public Output<bool?> SupportDynamicTags { get; private set; } = null!;
 
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         [Output("tags")]
         public Output<ImmutableDictionary<string, string>?> Tags { get; private set; } = null!;
 
+        /// <summary>
+        /// Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+        /// </summary>
         [Output("type")]
         public Output<string> Type { get; private set; } = null!;
 
@@ -122,18 +160,34 @@ namespace Pulumiverse.Cpln
             set => _containers = value;
         }
 
+        /// <summary>
+        /// Description of the Workload.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+        /// Access is restricted by default.
+        /// </summary>
         [Input("firewallSpec")]
         public Input<Inputs.WorkloadFirewallSpecArgs>? FirewallSpec { get; set; }
 
+        /// <summary>
+        /// Name of the associated GVC.
+        /// </summary>
         [Input("gvc", required: true)]
         public Input<string> Gvc { get; set; } = null!;
 
+        /// <summary>
+        /// Full link to an Identity.
+        /// </summary>
         [Input("identityLink")]
         public Input<string>? IdentityLink { get; set; }
 
+        /// <summary>
+        /// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+        /// </summary>
         [Input("job")]
         public Input<Inputs.WorkloadJobArgs>? Job { get; set; }
 
@@ -145,6 +199,9 @@ namespace Pulumiverse.Cpln
             set => _localOptions = value;
         }
 
+        /// <summary>
+        /// Name of the Workload.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
@@ -160,17 +217,28 @@ namespace Pulumiverse.Cpln
         [Input("sidecar")]
         public Input<Inputs.WorkloadSidecarArgs>? Sidecar { get; set; }
 
+        /// <summary>
+        /// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+        /// false.
+        /// </summary>
         [Input("supportDynamicTags")]
         public Input<bool>? SupportDynamicTags { get; set; }
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());
             set => _tags = value;
         }
 
+        /// <summary>
+        /// Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+        /// </summary>
         [Input("type", required: true)]
         public Input<string> Type { get; set; } = null!;
 
@@ -190,21 +258,40 @@ namespace Pulumiverse.Cpln
             set => _containers = value;
         }
 
+        /// <summary>
+        /// The ID, in GUID format, of the Workload.
+        /// </summary>
         [Input("cplnId")]
         public Input<string>? CplnId { get; set; }
 
+        /// <summary>
+        /// Description of the Workload.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+        /// Access is restricted by default.
+        /// </summary>
         [Input("firewallSpec")]
         public Input<Inputs.WorkloadFirewallSpecGetArgs>? FirewallSpec { get; set; }
 
+        /// <summary>
+        /// Name of the associated GVC.
+        /// </summary>
         [Input("gvc")]
         public Input<string>? Gvc { get; set; }
 
+        /// <summary>
+        /// Full link to an Identity.
+        /// </summary>
         [Input("identityLink")]
         public Input<string>? IdentityLink { get; set; }
 
+        /// <summary>
+        /// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+        /// </summary>
         [Input("job")]
         public Input<Inputs.WorkloadJobGetArgs>? Job { get; set; }
 
@@ -216,6 +303,9 @@ namespace Pulumiverse.Cpln
             set => _localOptions = value;
         }
 
+        /// <summary>
+        /// Name of the Workload.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
@@ -228,6 +318,9 @@ namespace Pulumiverse.Cpln
         [Input("securityOptions")]
         public Input<Inputs.WorkloadSecurityOptionsGetArgs>? SecurityOptions { get; set; }
 
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         [Input("selfLink")]
         public Input<string>? SelfLink { get; set; }
 
@@ -236,23 +329,38 @@ namespace Pulumiverse.Cpln
 
         [Input("statuses")]
         private InputList<Inputs.WorkloadStatusGetArgs>? _statuses;
+
+        /// <summary>
+        /// Status of the workload.
+        /// </summary>
         public InputList<Inputs.WorkloadStatusGetArgs> Statuses
         {
             get => _statuses ?? (_statuses = new InputList<Inputs.WorkloadStatusGetArgs>());
             set => _statuses = value;
         }
 
+        /// <summary>
+        /// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+        /// false.
+        /// </summary>
         [Input("supportDynamicTags")]
         public Input<bool>? SupportDynamicTags { get; set; }
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());
             set => _tags = value;
         }
 
+        /// <summary>
+        /// Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+        /// </summary>
         [Input("type")]
         public Input<string>? Type { get; set; }
 

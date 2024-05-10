@@ -16,38 +16,83 @@ namespace Pulumiverse.Cpln
         [Output("autoscaling")]
         public Output<Outputs.VolumeSetAutoscaling?> Autoscaling { get; private set; } = null!;
 
+        /// <summary>
+        /// ID, in GUID format, of the Volume Set.
+        /// </summary>
         [Output("cplnId")]
         public Output<string> CplnId { get; private set; } = null!;
 
+        /// <summary>
+        /// Description of the Volume Set.
+        /// </summary>
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
 
+        /// <summary>
+        /// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
+        /// </summary>
         [Output("fileSystemType")]
         public Output<string?> FileSystemType { get; private set; } = null!;
 
+        /// <summary>
+        /// Name of the associated GVC.
+        /// </summary>
         [Output("gvc")]
         public Output<string> Gvc { get; private set; } = null!;
 
+        /// <summary>
+        /// The initial size in GB of volumes in this set. Minimum value: `10`.
+        /// </summary>
         [Output("initialCapacity")]
         public Output<int> InitialCapacity { get; private set; } = null!;
 
+        /// <summary>
+        /// Name of the Volume Set.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
+        /// `high-throughput-ssd`
+        /// </summary>
         [Output("performanceClass")]
         public Output<string> PerformanceClass { get; private set; } = null!;
 
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         [Output("selfLink")]
         public Output<string> SelfLink { get; private set; } = null!;
 
         [Output("snapshots")]
         public Output<Outputs.VolumeSetSnapshots?> Snapshots { get; private set; } = null!;
 
+        /// <summary>
+        /// Status of the Volume Set.
+        /// </summary>
         [Output("statuses")]
         public Output<ImmutableArray<Outputs.VolumeSetStatus>> Statuses { get; private set; } = null!;
 
+        /// <summary>
+        /// For self-hosted locations only. The storage class used for volumes in this set will be
+        /// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
+        /// {performanceClass}-{fileSystemType}
+        /// </summary>
+        [Output("storageClassSuffix")]
+        public Output<string?> StorageClassSuffix { get; private set; } = null!;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         [Output("tags")]
         public Output<ImmutableDictionary<string, string>?> Tags { get; private set; } = null!;
+
+        /// <summary>
+        /// Output used when linking a volume set to a workload.
+        /// </summary>
+        [Output("volumesetLink")]
+        public Output<string> VolumesetLink { get; private set; } = null!;
 
 
         /// <summary>
@@ -99,29 +144,60 @@ namespace Pulumiverse.Cpln
         [Input("autoscaling")]
         public Input<Inputs.VolumeSetAutoscalingArgs>? Autoscaling { get; set; }
 
+        /// <summary>
+        /// Description of the Volume Set.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
+        /// </summary>
         [Input("fileSystemType")]
         public Input<string>? FileSystemType { get; set; }
 
+        /// <summary>
+        /// Name of the associated GVC.
+        /// </summary>
         [Input("gvc", required: true)]
         public Input<string> Gvc { get; set; } = null!;
 
+        /// <summary>
+        /// The initial size in GB of volumes in this set. Minimum value: `10`.
+        /// </summary>
         [Input("initialCapacity", required: true)]
         public Input<int> InitialCapacity { get; set; } = null!;
 
+        /// <summary>
+        /// Name of the Volume Set.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
+        /// `high-throughput-ssd`
+        /// </summary>
         [Input("performanceClass", required: true)]
         public Input<string> PerformanceClass { get; set; } = null!;
 
         [Input("snapshots")]
         public Input<Inputs.VolumeSetSnapshotsArgs>? Snapshots { get; set; }
 
+        /// <summary>
+        /// For self-hosted locations only. The storage class used for volumes in this set will be
+        /// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
+        /// {performanceClass}-{fileSystemType}
+        /// </summary>
+        [Input("storageClassSuffix")]
+        public Input<string>? StorageClassSuffix { get; set; }
+
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());
@@ -139,27 +215,52 @@ namespace Pulumiverse.Cpln
         [Input("autoscaling")]
         public Input<Inputs.VolumeSetAutoscalingGetArgs>? Autoscaling { get; set; }
 
+        /// <summary>
+        /// ID, in GUID format, of the Volume Set.
+        /// </summary>
         [Input("cplnId")]
         public Input<string>? CplnId { get; set; }
 
+        /// <summary>
+        /// Description of the Volume Set.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
+        /// </summary>
         [Input("fileSystemType")]
         public Input<string>? FileSystemType { get; set; }
 
+        /// <summary>
+        /// Name of the associated GVC.
+        /// </summary>
         [Input("gvc")]
         public Input<string>? Gvc { get; set; }
 
+        /// <summary>
+        /// The initial size in GB of volumes in this set. Minimum value: `10`.
+        /// </summary>
         [Input("initialCapacity")]
         public Input<int>? InitialCapacity { get; set; }
 
+        /// <summary>
+        /// Name of the Volume Set.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
+        /// `high-throughput-ssd`
+        /// </summary>
         [Input("performanceClass")]
         public Input<string>? PerformanceClass { get; set; }
 
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         [Input("selfLink")]
         public Input<string>? SelfLink { get; set; }
 
@@ -168,19 +269,41 @@ namespace Pulumiverse.Cpln
 
         [Input("statuses")]
         private InputList<Inputs.VolumeSetStatusGetArgs>? _statuses;
+
+        /// <summary>
+        /// Status of the Volume Set.
+        /// </summary>
         public InputList<Inputs.VolumeSetStatusGetArgs> Statuses
         {
             get => _statuses ?? (_statuses = new InputList<Inputs.VolumeSetStatusGetArgs>());
             set => _statuses = value;
         }
 
+        /// <summary>
+        /// For self-hosted locations only. The storage class used for volumes in this set will be
+        /// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
+        /// {performanceClass}-{fileSystemType}
+        /// </summary>
+        [Input("storageClassSuffix")]
+        public Input<string>? StorageClassSuffix { get; set; }
+
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());
             set => _tags = value;
         }
+
+        /// <summary>
+        /// Output used when linking a volume set to a workload.
+        /// </summary>
+        [Input("volumesetLink")]
+        public Input<string>? VolumesetLink { get; set; }
 
         public VolumeSetState()
         {

@@ -34,12 +34,28 @@ export class Domain extends pulumi.CustomResource {
         return obj['__pulumiType'] === Domain.__pulumiType;
     }
 
+    /**
+     * The ID, in GUID format, of the Domain.
+     */
     public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    /**
+     * Description of the domain name.
+     */
     public readonly description!: pulumi.Output<string | undefined>;
+    /**
+     * Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with
+     * DNS. Create and Update will fail if the required DNS entries cannot be validated.
+     */
     public readonly name!: pulumi.Output<string>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     public /*out*/ readonly selfLink!: pulumi.Output<string>;
     public readonly spec!: pulumi.Output<outputs.DomainSpec>;
     public /*out*/ readonly statuses!: pulumi.Output<outputs.DomainStatus[]>;
+    /**
+     * Key-value map of resource tags.
+     */
     public readonly tags!: pulumi.Output<{[key: string]: string} | undefined>;
 
     /**
@@ -84,12 +100,28 @@ export class Domain extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Domain resources.
  */
 export interface DomainState {
+    /**
+     * The ID, in GUID format, of the Domain.
+     */
     cplnId?: pulumi.Input<string>;
+    /**
+     * Description of the domain name.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with
+     * DNS. Create and Update will fail if the required DNS entries cannot be validated.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     selfLink?: pulumi.Input<string>;
     spec?: pulumi.Input<inputs.DomainSpec>;
     statuses?: pulumi.Input<pulumi.Input<inputs.DomainStatus>[]>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }
 
@@ -97,8 +129,18 @@ export interface DomainState {
  * The set of arguments for constructing a Domain resource.
  */
 export interface DomainArgs {
+    /**
+     * Description of the domain name.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with
+     * DNS. Create and Update will fail if the required DNS entries cannot be validated.
+     */
     name?: pulumi.Input<string>;
     spec: pulumi.Input<inputs.DomainSpec>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }

@@ -48,14 +48,17 @@ __all__ = [
     'IdentityNgsAccessPolicyRespArgs',
     'IdentityNgsAccessPolicySubArgs',
     'OrgAuthConfigArgs',
+    'OrgLoggingCloudWatchLoggingArgs',
     'OrgLoggingCoralogixLoggingArgs',
     'OrgLoggingDatadogLoggingArgs',
     'OrgLoggingElasticLoggingArgs',
     'OrgLoggingElasticLoggingAwsArgs',
     'OrgLoggingElasticLoggingElasticCloudArgs',
     'OrgLoggingElasticLoggingGenericArgs',
+    'OrgLoggingFluentdLoggingArgs',
     'OrgLoggingLogzioLoggingArgs',
     'OrgLoggingS3LoggingArgs',
+    'OrgLoggingStackdriverLoggingArgs',
     'OrgObservabilityArgs',
     'OrgStatusArgs',
     'OrgTracingControlplaneTracingArgs',
@@ -118,6 +121,9 @@ __all__ = [
     'GetGvcLoadBalancerArgs',
     'GetGvcOtelTracingArgs',
     'GetGvcSidecarArgs',
+    'GetImagesQueryArgs',
+    'GetImagesQuerySpecArgs',
+    'GetImagesQuerySpecTermArgs',
 ]
 
 @pulumi.input_type
@@ -2138,6 +2144,92 @@ class OrgAuthConfigArgs:
 
 
 @pulumi.input_type
+class OrgLoggingCloudWatchLoggingArgs:
+    def __init__(__self__, *,
+                 credentials: pulumi.Input[str],
+                 group_name: pulumi.Input[str],
+                 region: pulumi.Input[str],
+                 stream_name: pulumi.Input[str],
+                 retention_days: Optional[pulumi.Input[int]] = None):
+        OrgLoggingCloudWatchLoggingArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            credentials=credentials,
+            group_name=group_name,
+            region=region,
+            stream_name=stream_name,
+            retention_days=retention_days,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             credentials: pulumi.Input[str],
+             group_name: pulumi.Input[str],
+             region: pulumi.Input[str],
+             stream_name: pulumi.Input[str],
+             retention_days: Optional[pulumi.Input[int]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'groupName' in kwargs:
+            group_name = kwargs['groupName']
+        if 'streamName' in kwargs:
+            stream_name = kwargs['streamName']
+        if 'retentionDays' in kwargs:
+            retention_days = kwargs['retentionDays']
+
+        _setter("credentials", credentials)
+        _setter("group_name", group_name)
+        _setter("region", region)
+        _setter("stream_name", stream_name)
+        if retention_days is not None:
+            _setter("retention_days", retention_days)
+
+    @property
+    @pulumi.getter
+    def credentials(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "credentials")
+
+    @credentials.setter
+    def credentials(self, value: pulumi.Input[str]):
+        pulumi.set(self, "credentials", value)
+
+    @property
+    @pulumi.getter(name="groupName")
+    def group_name(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "group_name")
+
+    @group_name.setter
+    def group_name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "group_name", value)
+
+    @property
+    @pulumi.getter
+    def region(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: pulumi.Input[str]):
+        pulumi.set(self, "region", value)
+
+    @property
+    @pulumi.getter(name="streamName")
+    def stream_name(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "stream_name")
+
+    @stream_name.setter
+    def stream_name(self, value: pulumi.Input[str]):
+        pulumi.set(self, "stream_name", value)
+
+    @property
+    @pulumi.getter(name="retentionDays")
+    def retention_days(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "retention_days")
+
+    @retention_days.setter
+    def retention_days(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "retention_days", value)
+
+
+@pulumi.input_type
 class OrgLoggingCoralogixLoggingArgs:
     def __init__(__self__, *,
                  app: pulumi.Input[str],
@@ -2554,6 +2646,47 @@ class OrgLoggingElasticLoggingGenericArgs:
 
 
 @pulumi.input_type
+class OrgLoggingFluentdLoggingArgs:
+    def __init__(__self__, *,
+                 host: pulumi.Input[str],
+                 port: Optional[pulumi.Input[int]] = None):
+        OrgLoggingFluentdLoggingArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            host=host,
+            port=port,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             host: pulumi.Input[str],
+             port: Optional[pulumi.Input[int]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("host", host)
+        if port is not None:
+            _setter("port", port)
+
+    @property
+    @pulumi.getter
+    def host(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: pulumi.Input[str]):
+        pulumi.set(self, "host", value)
+
+    @property
+    @pulumi.getter
+    def port(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "port", value)
+
+
+@pulumi.input_type
 class OrgLoggingLogzioLoggingArgs:
     def __init__(__self__, *,
                  credentials: pulumi.Input[str],
@@ -2660,6 +2793,46 @@ class OrgLoggingS3LoggingArgs:
     @prefix.setter
     def prefix(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "prefix", value)
+
+
+@pulumi.input_type
+class OrgLoggingStackdriverLoggingArgs:
+    def __init__(__self__, *,
+                 credentials: pulumi.Input[str],
+                 location: pulumi.Input[str]):
+        OrgLoggingStackdriverLoggingArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            credentials=credentials,
+            location=location,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             credentials: pulumi.Input[str],
+             location: pulumi.Input[str],
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("credentials", credentials)
+        _setter("location", location)
+
+    @property
+    @pulumi.getter
+    def credentials(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "credentials")
+
+    @credentials.setter
+    def credentials(self, value: pulumi.Input[str]):
+        pulumi.set(self, "credentials", value)
+
+    @property
+    @pulumi.getter
+    def location(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "location")
+
+    @location.setter
+    def location(self, value: pulumi.Input[str]):
+        pulumi.set(self, "location", value)
 
 
 @pulumi.input_type
@@ -5340,16 +5513,16 @@ class WorkloadJobArgs:
 @pulumi.input_type
 class WorkloadLocalOptionArgs:
     def __init__(__self__, *,
-                 autoscaling: pulumi.Input['WorkloadLocalOptionAutoscalingArgs'],
                  location: pulumi.Input[str],
+                 autoscaling: Optional[pulumi.Input['WorkloadLocalOptionAutoscalingArgs']] = None,
                  capacity_ai: Optional[pulumi.Input[bool]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
                  suspend: Optional[pulumi.Input[bool]] = None,
                  timeout_seconds: Optional[pulumi.Input[int]] = None):
         WorkloadLocalOptionArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
-            autoscaling=autoscaling,
             location=location,
+            autoscaling=autoscaling,
             capacity_ai=capacity_ai,
             debug=debug,
             suspend=suspend,
@@ -5358,8 +5531,8 @@ class WorkloadLocalOptionArgs:
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
-             autoscaling: pulumi.Input['WorkloadLocalOptionAutoscalingArgs'],
              location: pulumi.Input[str],
+             autoscaling: Optional[pulumi.Input['WorkloadLocalOptionAutoscalingArgs']] = None,
              capacity_ai: Optional[pulumi.Input[bool]] = None,
              debug: Optional[pulumi.Input[bool]] = None,
              suspend: Optional[pulumi.Input[bool]] = None,
@@ -5371,8 +5544,9 @@ class WorkloadLocalOptionArgs:
         if 'timeoutSeconds' in kwargs:
             timeout_seconds = kwargs['timeoutSeconds']
 
-        _setter("autoscaling", autoscaling)
         _setter("location", location)
+        if autoscaling is not None:
+            _setter("autoscaling", autoscaling)
         if capacity_ai is not None:
             _setter("capacity_ai", capacity_ai)
         if debug is not None:
@@ -5384,21 +5558,21 @@ class WorkloadLocalOptionArgs:
 
     @property
     @pulumi.getter
-    def autoscaling(self) -> pulumi.Input['WorkloadLocalOptionAutoscalingArgs']:
-        return pulumi.get(self, "autoscaling")
-
-    @autoscaling.setter
-    def autoscaling(self, value: pulumi.Input['WorkloadLocalOptionAutoscalingArgs']):
-        pulumi.set(self, "autoscaling", value)
-
-    @property
-    @pulumi.getter
     def location(self) -> pulumi.Input[str]:
         return pulumi.get(self, "location")
 
     @location.setter
     def location(self, value: pulumi.Input[str]):
         pulumi.set(self, "location", value)
+
+    @property
+    @pulumi.getter
+    def autoscaling(self) -> Optional[pulumi.Input['WorkloadLocalOptionAutoscalingArgs']]:
+        return pulumi.get(self, "autoscaling")
+
+    @autoscaling.setter
+    def autoscaling(self, value: Optional[pulumi.Input['WorkloadLocalOptionAutoscalingArgs']]):
+        pulumi.set(self, "autoscaling", value)
 
     @property
     @pulumi.getter(name="capacityAi")
@@ -5562,7 +5736,7 @@ class WorkloadLocalOptionAutoscalingArgs:
 @pulumi.input_type
 class WorkloadOptionsArgs:
     def __init__(__self__, *,
-                 autoscaling: pulumi.Input['WorkloadOptionsAutoscalingArgs'],
+                 autoscaling: Optional[pulumi.Input['WorkloadOptionsAutoscalingArgs']] = None,
                  capacity_ai: Optional[pulumi.Input[bool]] = None,
                  debug: Optional[pulumi.Input[bool]] = None,
                  suspend: Optional[pulumi.Input[bool]] = None,
@@ -5578,7 +5752,7 @@ class WorkloadOptionsArgs:
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
-             autoscaling: pulumi.Input['WorkloadOptionsAutoscalingArgs'],
+             autoscaling: Optional[pulumi.Input['WorkloadOptionsAutoscalingArgs']] = None,
              capacity_ai: Optional[pulumi.Input[bool]] = None,
              debug: Optional[pulumi.Input[bool]] = None,
              suspend: Optional[pulumi.Input[bool]] = None,
@@ -5590,7 +5764,8 @@ class WorkloadOptionsArgs:
         if 'timeoutSeconds' in kwargs:
             timeout_seconds = kwargs['timeoutSeconds']
 
-        _setter("autoscaling", autoscaling)
+        if autoscaling is not None:
+            _setter("autoscaling", autoscaling)
         if capacity_ai is not None:
             _setter("capacity_ai", capacity_ai)
         if debug is not None:
@@ -5602,11 +5777,11 @@ class WorkloadOptionsArgs:
 
     @property
     @pulumi.getter
-    def autoscaling(self) -> pulumi.Input['WorkloadOptionsAutoscalingArgs']:
+    def autoscaling(self) -> Optional[pulumi.Input['WorkloadOptionsAutoscalingArgs']]:
         return pulumi.get(self, "autoscaling")
 
     @autoscaling.setter
-    def autoscaling(self, value: pulumi.Input['WorkloadOptionsAutoscalingArgs']):
+    def autoscaling(self, value: Optional[pulumi.Input['WorkloadOptionsAutoscalingArgs']]):
         pulumi.set(self, "autoscaling", value)
 
     @property
@@ -6550,5 +6725,159 @@ class GetGvcSidecarArgs:
     @envoy.setter
     def envoy(self, value: str):
         pulumi.set(self, "envoy", value)
+
+
+@pulumi.input_type
+class GetImagesQueryArgs:
+    def __init__(__self__, *,
+                 fetch: Optional[str] = None,
+                 spec: Optional['GetImagesQuerySpecArgs'] = None):
+        GetImagesQueryArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            fetch=fetch,
+            spec=spec,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             fetch: Optional[str] = None,
+             spec: Optional['GetImagesQuerySpecArgs'] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if fetch is not None:
+            _setter("fetch", fetch)
+        if spec is not None:
+            _setter("spec", spec)
+
+    @property
+    @pulumi.getter
+    def fetch(self) -> Optional[str]:
+        return pulumi.get(self, "fetch")
+
+    @fetch.setter
+    def fetch(self, value: Optional[str]):
+        pulumi.set(self, "fetch", value)
+
+    @property
+    @pulumi.getter
+    def spec(self) -> Optional['GetImagesQuerySpecArgs']:
+        return pulumi.get(self, "spec")
+
+    @spec.setter
+    def spec(self, value: Optional['GetImagesQuerySpecArgs']):
+        pulumi.set(self, "spec", value)
+
+
+@pulumi.input_type
+class GetImagesQuerySpecArgs:
+    def __init__(__self__, *,
+                 match: Optional[str] = None,
+                 terms: Optional[Sequence['GetImagesQuerySpecTermArgs']] = None):
+        GetImagesQuerySpecArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            match=match,
+            terms=terms,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             match: Optional[str] = None,
+             terms: Optional[Sequence['GetImagesQuerySpecTermArgs']] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if match is not None:
+            _setter("match", match)
+        if terms is not None:
+            _setter("terms", terms)
+
+    @property
+    @pulumi.getter
+    def match(self) -> Optional[str]:
+        return pulumi.get(self, "match")
+
+    @match.setter
+    def match(self, value: Optional[str]):
+        pulumi.set(self, "match", value)
+
+    @property
+    @pulumi.getter
+    def terms(self) -> Optional[Sequence['GetImagesQuerySpecTermArgs']]:
+        return pulumi.get(self, "terms")
+
+    @terms.setter
+    def terms(self, value: Optional[Sequence['GetImagesQuerySpecTermArgs']]):
+        pulumi.set(self, "terms", value)
+
+
+@pulumi.input_type
+class GetImagesQuerySpecTermArgs:
+    def __init__(__self__, *,
+                 op: Optional[str] = None,
+                 property: Optional[str] = None,
+                 tag: Optional[str] = None,
+                 value: Optional[str] = None):
+        GetImagesQuerySpecTermArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            op=op,
+            property=property,
+            tag=tag,
+            value=value,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             op: Optional[str] = None,
+             property: Optional[str] = None,
+             tag: Optional[str] = None,
+             value: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if op is not None:
+            _setter("op", op)
+        if property is not None:
+            _setter("property", property)
+        if tag is not None:
+            _setter("tag", tag)
+        if value is not None:
+            _setter("value", value)
+
+    @property
+    @pulumi.getter
+    def op(self) -> Optional[str]:
+        return pulumi.get(self, "op")
+
+    @op.setter
+    def op(self, value: Optional[str]):
+        pulumi.set(self, "op", value)
+
+    @property
+    @pulumi.getter
+    def tag(self) -> Optional[str]:
+        return pulumi.get(self, "tag")
+
+    @tag.setter
+    def tag(self, value: Optional[str]):
+        pulumi.set(self, "tag", value)
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: Optional[str]):
+        pulumi.set(self, "value", value)
+
+    @property
+    @pulumi.getter
+    def property(self) -> Optional[str]:
+        return pulumi.get(self, "property")
+
+    @property.setter
+    def property(self, value: Optional[str]):
+        pulumi.set(self, "property", value)
 
 

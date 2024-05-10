@@ -13,36 +13,68 @@ namespace Pulumiverse.Cpln
     [CplnResourceType("cpln:index/org:Org")]
     public partial class Org : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
+        /// obtained from the `Org Management &amp; Billing` page.
+        /// </summary>
         [Output("accountId")]
         public Output<string?> AccountId { get; private set; } = null!;
 
         [Output("authConfig")]
         public Output<Outputs.OrgAuthConfig?> AuthConfig { get; private set; } = null!;
 
+        /// <summary>
+        /// The ID, in GUID format, of the org.
+        /// </summary>
         [Output("cplnId")]
         public Output<string> CplnId { get; private set; } = null!;
 
+        /// <summary>
+        /// The description of org.
+        /// </summary>
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
 
+        /// <summary>
+        /// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
+        /// the `superusers` group. The user account used when creating the org will be included in this list.
+        /// </summary>
         [Output("invitees")]
         public Output<ImmutableArray<string>> Invitees { get; private set; } = null!;
 
+        /// <summary>
+        /// The name of the org.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
+        /// </summary>
         [Output("observability")]
         public Output<Outputs.OrgObservability> Observability { get; private set; } = null!;
 
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         [Output("selfLink")]
         public Output<string> SelfLink { get; private set; } = null!;
 
+        /// <summary>
+        /// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+        /// </summary>
         [Output("sessionTimeoutSeconds")]
         public Output<int?> SessionTimeoutSeconds { get; private set; } = null!;
 
+        /// <summary>
+        /// Status of the org.
+        /// </summary>
         [Output("statuses")]
         public Output<ImmutableArray<Outputs.OrgStatus>> Statuses { get; private set; } = null!;
 
+        /// <summary>
+        /// Key-value map of the org's tags.
+        /// </summary>
         [Output("tags")]
         public Output<ImmutableDictionary<string, string>?> Tags { get; private set; } = null!;
 
@@ -93,31 +125,53 @@ namespace Pulumiverse.Cpln
 
     public sealed class OrgArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
+        /// obtained from the `Org Management &amp; Billing` page.
+        /// </summary>
         [Input("accountId")]
         public Input<string>? AccountId { get; set; }
 
         [Input("authConfig")]
         public Input<Inputs.OrgAuthConfigArgs>? AuthConfig { get; set; }
 
+        /// <summary>
+        /// The description of org.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
         [Input("invitees")]
         private InputList<string>? _invitees;
+
+        /// <summary>
+        /// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
+        /// the `superusers` group. The user account used when creating the org will be included in this list.
+        /// </summary>
         public InputList<string> Invitees
         {
             get => _invitees ?? (_invitees = new InputList<string>());
             set => _invitees = value;
         }
 
+        /// <summary>
+        /// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
+        /// </summary>
         [Input("observability", required: true)]
         public Input<Inputs.OrgObservabilityArgs> Observability { get; set; } = null!;
 
+        /// <summary>
+        /// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+        /// </summary>
         [Input("sessionTimeoutSeconds")]
         public Input<int>? SessionTimeoutSeconds { get; set; }
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of the org's tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());
@@ -132,40 +186,71 @@ namespace Pulumiverse.Cpln
 
     public sealed class OrgState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
+        /// obtained from the `Org Management &amp; Billing` page.
+        /// </summary>
         [Input("accountId")]
         public Input<string>? AccountId { get; set; }
 
         [Input("authConfig")]
         public Input<Inputs.OrgAuthConfigGetArgs>? AuthConfig { get; set; }
 
+        /// <summary>
+        /// The ID, in GUID format, of the org.
+        /// </summary>
         [Input("cplnId")]
         public Input<string>? CplnId { get; set; }
 
+        /// <summary>
+        /// The description of org.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
         [Input("invitees")]
         private InputList<string>? _invitees;
+
+        /// <summary>
+        /// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
+        /// the `superusers` group. The user account used when creating the org will be included in this list.
+        /// </summary>
         public InputList<string> Invitees
         {
             get => _invitees ?? (_invitees = new InputList<string>());
             set => _invitees = value;
         }
 
+        /// <summary>
+        /// The name of the org.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
+        /// </summary>
         [Input("observability")]
         public Input<Inputs.OrgObservabilityGetArgs>? Observability { get; set; }
 
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         [Input("selfLink")]
         public Input<string>? SelfLink { get; set; }
 
+        /// <summary>
+        /// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+        /// </summary>
         [Input("sessionTimeoutSeconds")]
         public Input<int>? SessionTimeoutSeconds { get; set; }
 
         [Input("statuses")]
         private InputList<Inputs.OrgStatusGetArgs>? _statuses;
+
+        /// <summary>
+        /// Status of the org.
+        /// </summary>
         public InputList<Inputs.OrgStatusGetArgs> Statuses
         {
             get => _statuses ?? (_statuses = new InputList<Inputs.OrgStatusGetArgs>());
@@ -174,6 +259,10 @@ namespace Pulumiverse.Cpln
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of the org's tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());

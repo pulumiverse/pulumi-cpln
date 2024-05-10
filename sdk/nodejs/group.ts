@@ -34,15 +34,38 @@ export class Group extends pulumi.CustomResource {
         return obj['__pulumiType'] === Group.__pulumiType;
     }
 
+    /**
+     * The ID, in GUID format, of the Group.
+     */
     public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    /**
+     * Description of Group.
+     */
     public readonly description!: pulumi.Output<string | undefined>;
     public readonly identityMatcher!: pulumi.Output<outputs.GroupIdentityMatcher | undefined>;
     public readonly memberQuery!: pulumi.Output<outputs.GroupMemberQuery | undefined>;
+    /**
+     * Name of the Group.
+     */
     public readonly name!: pulumi.Output<string>;
+    /**
+     * Origin of the service account. Either `builtin` or `default`.
+     */
     public /*out*/ readonly origin!: pulumi.Output<string>;
     public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    /**
+     * List of service accounts that exists within the configured org. Group membership will fail if the service account does
+     * not exits within the org.
+     */
     public readonly serviceAccounts!: pulumi.Output<string[] | undefined>;
+    /**
+     * Key-value map of resource tags.
+     */
     public readonly tags!: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
+     * List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+     * if the user ID / email does not exist within the org.
+     */
     public readonly userIdsAndEmails!: pulumi.Output<string[] | undefined>;
 
     /**
@@ -90,15 +113,38 @@ export class Group extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Group resources.
  */
 export interface GroupState {
+    /**
+     * The ID, in GUID format, of the Group.
+     */
     cplnId?: pulumi.Input<string>;
+    /**
+     * Description of Group.
+     */
     description?: pulumi.Input<string>;
     identityMatcher?: pulumi.Input<inputs.GroupIdentityMatcher>;
     memberQuery?: pulumi.Input<inputs.GroupMemberQuery>;
+    /**
+     * Name of the Group.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * Origin of the service account. Either `builtin` or `default`.
+     */
     origin?: pulumi.Input<string>;
     selfLink?: pulumi.Input<string>;
+    /**
+     * List of service accounts that exists within the configured org. Group membership will fail if the service account does
+     * not exits within the org.
+     */
     serviceAccounts?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+     * if the user ID / email does not exist within the org.
+     */
     userIdsAndEmails?: pulumi.Input<pulumi.Input<string>[]>;
 }
 
@@ -106,11 +152,28 @@ export interface GroupState {
  * The set of arguments for constructing a Group resource.
  */
 export interface GroupArgs {
+    /**
+     * Description of Group.
+     */
     description?: pulumi.Input<string>;
     identityMatcher?: pulumi.Input<inputs.GroupIdentityMatcher>;
     memberQuery?: pulumi.Input<inputs.GroupMemberQuery>;
+    /**
+     * Name of the Group.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * List of service accounts that exists within the configured org. Group membership will fail if the service account does
+     * not exits within the org.
+     */
     serviceAccounts?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+     * if the user ID / email does not exist within the org.
+     */
     userIdsAndEmails?: pulumi.Input<pulumi.Input<string>[]>;
 }

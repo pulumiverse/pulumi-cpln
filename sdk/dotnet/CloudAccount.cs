@@ -19,9 +19,15 @@ namespace Pulumiverse.Cpln
         [Output("azure")]
         public Output<Outputs.CloudAccountAzure?> Azure { get; private set; } = null!;
 
+        /// <summary>
+        /// The ID, in GUID format, of the Cloud Account.
+        /// </summary>
         [Output("cplnId")]
         public Output<string> CplnId { get; private set; } = null!;
 
+        /// <summary>
+        /// Description of the Cloud Account.
+        /// </summary>
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
 
@@ -31,9 +37,15 @@ namespace Pulumiverse.Cpln
         [Output("gcpRoles")]
         public Output<ImmutableArray<string>> GcpRoles { get; private set; } = null!;
 
+        /// <summary>
+        /// GCP service account name used during the configuration of the cloud account at GCP.
+        /// </summary>
         [Output("gcpServiceAccountName")]
         public Output<string> GcpServiceAccountName { get; private set; } = null!;
 
+        /// <summary>
+        /// Name of the Cloud Account.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
@@ -43,6 +55,9 @@ namespace Pulumiverse.Cpln
         [Output("selfLink")]
         public Output<string> SelfLink { get; private set; } = null!;
 
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         [Output("tags")]
         public Output<ImmutableDictionary<string, string>?> Tags { get; private set; } = null!;
 
@@ -99,12 +114,18 @@ namespace Pulumiverse.Cpln
         [Input("azure")]
         public Input<Inputs.CloudAccountAzureArgs>? Azure { get; set; }
 
+        /// <summary>
+        /// Description of the Cloud Account.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
         [Input("gcp")]
         public Input<Inputs.CloudAccountGcpArgs>? Gcp { get; set; }
 
+        /// <summary>
+        /// Name of the Cloud Account.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
@@ -113,6 +134,10 @@ namespace Pulumiverse.Cpln
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());
@@ -133,9 +158,15 @@ namespace Pulumiverse.Cpln
         [Input("azure")]
         public Input<Inputs.CloudAccountAzureGetArgs>? Azure { get; set; }
 
+        /// <summary>
+        /// The ID, in GUID format, of the Cloud Account.
+        /// </summary>
         [Input("cplnId")]
         public Input<string>? CplnId { get; set; }
 
+        /// <summary>
+        /// Description of the Cloud Account.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
@@ -150,9 +181,15 @@ namespace Pulumiverse.Cpln
             set => _gcpRoles = value;
         }
 
+        /// <summary>
+        /// GCP service account name used during the configuration of the cloud account at GCP.
+        /// </summary>
         [Input("gcpServiceAccountName")]
         public Input<string>? GcpServiceAccountName { get; set; }
 
+        /// <summary>
+        /// Name of the Cloud Account.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
@@ -164,6 +201,10 @@ namespace Pulumiverse.Cpln
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());

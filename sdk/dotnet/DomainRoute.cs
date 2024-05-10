@@ -13,24 +13,47 @@ namespace Pulumiverse.Cpln
     [CplnResourceType("cpln:index/domainRoute:DomainRoute")]
     public partial class DomainRoute : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The self link of the domain to add the route to.
+        /// </summary>
         [Output("domainLink")]
         public Output<string> DomainLink { get; private set; } = null!;
 
+        /// <summary>
+        /// The port the route corresponds to. Default: 443
+        /// </summary>
         [Output("domainPort")]
         public Output<int?> DomainPort { get; private set; } = null!;
 
+        /// <summary>
+        /// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+        /// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+        /// Slack or at support@controlplane.com for additional details.
+        /// </summary>
         [Output("hostPrefix")]
         public Output<string?> HostPrefix { get; private set; } = null!;
 
+        /// <summary>
+        /// For the linked workload, the port to route traffic to.
+        /// </summary>
         [Output("port")]
         public Output<int?> Port { get; private set; } = null!;
 
+        /// <summary>
+        /// The path will match any unmatched path prefixes for the subdomain.
+        /// </summary>
         [Output("prefix")]
         public Output<string> Prefix { get; private set; } = null!;
 
+        /// <summary>
+        /// A path prefix can be configured to be replaced when forwarding the request to the Workload.
+        /// </summary>
         [Output("replacePrefix")]
         public Output<string?> ReplacePrefix { get; private set; } = null!;
 
+        /// <summary>
+        /// The link of the workload to map the prefix to.
+        /// </summary>
         [Output("workloadLink")]
         public Output<string> WorkloadLink { get; private set; } = null!;
 
@@ -81,24 +104,47 @@ namespace Pulumiverse.Cpln
 
     public sealed class DomainRouteArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The self link of the domain to add the route to.
+        /// </summary>
         [Input("domainLink", required: true)]
         public Input<string> DomainLink { get; set; } = null!;
 
+        /// <summary>
+        /// The port the route corresponds to. Default: 443
+        /// </summary>
         [Input("domainPort")]
         public Input<int>? DomainPort { get; set; }
 
+        /// <summary>
+        /// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+        /// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+        /// Slack or at support@controlplane.com for additional details.
+        /// </summary>
         [Input("hostPrefix")]
         public Input<string>? HostPrefix { get; set; }
 
+        /// <summary>
+        /// For the linked workload, the port to route traffic to.
+        /// </summary>
         [Input("port")]
         public Input<int>? Port { get; set; }
 
+        /// <summary>
+        /// The path will match any unmatched path prefixes for the subdomain.
+        /// </summary>
         [Input("prefix", required: true)]
         public Input<string> Prefix { get; set; } = null!;
 
+        /// <summary>
+        /// A path prefix can be configured to be replaced when forwarding the request to the Workload.
+        /// </summary>
         [Input("replacePrefix")]
         public Input<string>? ReplacePrefix { get; set; }
 
+        /// <summary>
+        /// The link of the workload to map the prefix to.
+        /// </summary>
         [Input("workloadLink", required: true)]
         public Input<string> WorkloadLink { get; set; } = null!;
 
@@ -110,24 +156,47 @@ namespace Pulumiverse.Cpln
 
     public sealed class DomainRouteState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The self link of the domain to add the route to.
+        /// </summary>
         [Input("domainLink")]
         public Input<string>? DomainLink { get; set; }
 
+        /// <summary>
+        /// The port the route corresponds to. Default: 443
+        /// </summary>
         [Input("domainPort")]
         public Input<int>? DomainPort { get; set; }
 
+        /// <summary>
+        /// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
+        /// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
+        /// Slack or at support@controlplane.com for additional details.
+        /// </summary>
         [Input("hostPrefix")]
         public Input<string>? HostPrefix { get; set; }
 
+        /// <summary>
+        /// For the linked workload, the port to route traffic to.
+        /// </summary>
         [Input("port")]
         public Input<int>? Port { get; set; }
 
+        /// <summary>
+        /// The path will match any unmatched path prefixes for the subdomain.
+        /// </summary>
         [Input("prefix")]
         public Input<string>? Prefix { get; set; }
 
+        /// <summary>
+        /// A path prefix can be configured to be replaced when forwarding the request to the Workload.
+        /// </summary>
         [Input("replacePrefix")]
         public Input<string>? ReplacePrefix { get; set; }
 
+        /// <summary>
+        /// The link of the workload to map the prefix to.
+        /// </summary>
         [Input("workloadLink")]
         public Input<string>? WorkloadLink { get; set; }
 

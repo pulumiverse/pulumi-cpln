@@ -15,15 +15,26 @@ import (
 type OrgLogging struct {
 	pulumi.CustomResourceState
 
+	CloudWatchLoggings OrgLoggingCloudWatchLoggingArrayOutput `pulumi:"cloudWatchLoggings"`
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
 	CoralogixLoggings OrgLoggingCoralogixLoggingArrayOutput `pulumi:"coralogixLoggings"`
-	CplnId            pulumi.StringOutput                   `pulumi:"cplnId"`
-	DatadogLoggings   OrgLoggingDatadogLoggingArrayOutput   `pulumi:"datadogLoggings"`
-	Description       pulumi.StringOutput                   `pulumi:"description"`
-	ElasticLoggings   OrgLoggingElasticLoggingArrayOutput   `pulumi:"elasticLoggings"`
-	LogzioLoggings    OrgLoggingLogzioLoggingArrayOutput    `pulumi:"logzioLoggings"`
-	Name              pulumi.StringOutput                   `pulumi:"name"`
-	S3Loggings        OrgLoggingS3LoggingArrayOutput        `pulumi:"s3Loggings"`
-	Tags              pulumi.StringMapOutput                `pulumi:"tags"`
+	// The ID, in GUID format, of the org.
+	CplnId pulumi.StringOutput `pulumi:"cplnId"`
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+	DatadogLoggings OrgLoggingDatadogLoggingArrayOutput `pulumi:"datadogLoggings"`
+	// The description of org.
+	Description     pulumi.StringOutput                 `pulumi:"description"`
+	ElasticLoggings OrgLoggingElasticLoggingArrayOutput `pulumi:"elasticLoggings"`
+	FluentdLoggings OrgLoggingFluentdLoggingArrayOutput `pulumi:"fluentdLoggings"`
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+	LogzioLoggings OrgLoggingLogzioLoggingArrayOutput `pulumi:"logzioLoggings"`
+	// The name of the org.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
+	S3Loggings          OrgLoggingS3LoggingArrayOutput          `pulumi:"s3Loggings"`
+	StackdriverLoggings OrgLoggingStackdriverLoggingArrayOutput `pulumi:"stackdriverLoggings"`
+	// Key-value map of the org's tags.
+	Tags pulumi.StringMapOutput `pulumi:"tags"`
 }
 
 // NewOrgLogging registers a new resource with the given unique name, arguments, and options.
@@ -56,27 +67,49 @@ func GetOrgLogging(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering OrgLogging resources.
 type orgLoggingState struct {
+	CloudWatchLoggings []OrgLoggingCloudWatchLogging `pulumi:"cloudWatchLoggings"`
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
 	CoralogixLoggings []OrgLoggingCoralogixLogging `pulumi:"coralogixLoggings"`
-	CplnId            *string                      `pulumi:"cplnId"`
-	DatadogLoggings   []OrgLoggingDatadogLogging   `pulumi:"datadogLoggings"`
-	Description       *string                      `pulumi:"description"`
-	ElasticLoggings   []OrgLoggingElasticLogging   `pulumi:"elasticLoggings"`
-	LogzioLoggings    []OrgLoggingLogzioLogging    `pulumi:"logzioLoggings"`
-	Name              *string                      `pulumi:"name"`
-	S3Loggings        []OrgLoggingS3Logging        `pulumi:"s3Loggings"`
-	Tags              map[string]string            `pulumi:"tags"`
+	// The ID, in GUID format, of the org.
+	CplnId *string `pulumi:"cplnId"`
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+	DatadogLoggings []OrgLoggingDatadogLogging `pulumi:"datadogLoggings"`
+	// The description of org.
+	Description     *string                    `pulumi:"description"`
+	ElasticLoggings []OrgLoggingElasticLogging `pulumi:"elasticLoggings"`
+	FluentdLoggings []OrgLoggingFluentdLogging `pulumi:"fluentdLoggings"`
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+	LogzioLoggings []OrgLoggingLogzioLogging `pulumi:"logzioLoggings"`
+	// The name of the org.
+	Name *string `pulumi:"name"`
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
+	S3Loggings          []OrgLoggingS3Logging          `pulumi:"s3Loggings"`
+	StackdriverLoggings []OrgLoggingStackdriverLogging `pulumi:"stackdriverLoggings"`
+	// Key-value map of the org's tags.
+	Tags map[string]string `pulumi:"tags"`
 }
 
 type OrgLoggingState struct {
+	CloudWatchLoggings OrgLoggingCloudWatchLoggingArrayInput
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
 	CoralogixLoggings OrgLoggingCoralogixLoggingArrayInput
-	CplnId            pulumi.StringPtrInput
-	DatadogLoggings   OrgLoggingDatadogLoggingArrayInput
-	Description       pulumi.StringPtrInput
-	ElasticLoggings   OrgLoggingElasticLoggingArrayInput
-	LogzioLoggings    OrgLoggingLogzioLoggingArrayInput
-	Name              pulumi.StringPtrInput
-	S3Loggings        OrgLoggingS3LoggingArrayInput
-	Tags              pulumi.StringMapInput
+	// The ID, in GUID format, of the org.
+	CplnId pulumi.StringPtrInput
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+	DatadogLoggings OrgLoggingDatadogLoggingArrayInput
+	// The description of org.
+	Description     pulumi.StringPtrInput
+	ElasticLoggings OrgLoggingElasticLoggingArrayInput
+	FluentdLoggings OrgLoggingFluentdLoggingArrayInput
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+	LogzioLoggings OrgLoggingLogzioLoggingArrayInput
+	// The name of the org.
+	Name pulumi.StringPtrInput
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
+	S3Loggings          OrgLoggingS3LoggingArrayInput
+	StackdriverLoggings OrgLoggingStackdriverLoggingArrayInput
+	// Key-value map of the org's tags.
+	Tags pulumi.StringMapInput
 }
 
 func (OrgLoggingState) ElementType() reflect.Type {
@@ -84,20 +117,34 @@ func (OrgLoggingState) ElementType() reflect.Type {
 }
 
 type orgLoggingArgs struct {
+	CloudWatchLoggings []OrgLoggingCloudWatchLogging `pulumi:"cloudWatchLoggings"`
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
 	CoralogixLoggings []OrgLoggingCoralogixLogging `pulumi:"coralogixLoggings"`
-	DatadogLoggings   []OrgLoggingDatadogLogging   `pulumi:"datadogLoggings"`
-	ElasticLoggings   []OrgLoggingElasticLogging   `pulumi:"elasticLoggings"`
-	LogzioLoggings    []OrgLoggingLogzioLogging    `pulumi:"logzioLoggings"`
-	S3Loggings        []OrgLoggingS3Logging        `pulumi:"s3Loggings"`
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+	DatadogLoggings []OrgLoggingDatadogLogging `pulumi:"datadogLoggings"`
+	ElasticLoggings []OrgLoggingElasticLogging `pulumi:"elasticLoggings"`
+	FluentdLoggings []OrgLoggingFluentdLogging `pulumi:"fluentdLoggings"`
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+	LogzioLoggings []OrgLoggingLogzioLogging `pulumi:"logzioLoggings"`
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
+	S3Loggings          []OrgLoggingS3Logging          `pulumi:"s3Loggings"`
+	StackdriverLoggings []OrgLoggingStackdriverLogging `pulumi:"stackdriverLoggings"`
 }
 
 // The set of arguments for constructing a OrgLogging resource.
 type OrgLoggingArgs struct {
+	CloudWatchLoggings OrgLoggingCloudWatchLoggingArrayInput
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
 	CoralogixLoggings OrgLoggingCoralogixLoggingArrayInput
-	DatadogLoggings   OrgLoggingDatadogLoggingArrayInput
-	ElasticLoggings   OrgLoggingElasticLoggingArrayInput
-	LogzioLoggings    OrgLoggingLogzioLoggingArrayInput
-	S3Loggings        OrgLoggingS3LoggingArrayInput
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+	DatadogLoggings OrgLoggingDatadogLoggingArrayInput
+	ElasticLoggings OrgLoggingElasticLoggingArrayInput
+	FluentdLoggings OrgLoggingFluentdLoggingArrayInput
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+	LogzioLoggings OrgLoggingLogzioLoggingArrayInput
+	// [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
+	S3Loggings          OrgLoggingS3LoggingArrayInput
+	StackdriverLoggings OrgLoggingStackdriverLoggingArrayInput
 }
 
 func (OrgLoggingArgs) ElementType() reflect.Type {
@@ -211,18 +258,26 @@ func (o OrgLoggingOutput) ToOutput(ctx context.Context) pulumix.Output[*OrgLoggi
 	}
 }
 
+func (o OrgLoggingOutput) CloudWatchLoggings() OrgLoggingCloudWatchLoggingArrayOutput {
+	return o.ApplyT(func(v *OrgLogging) OrgLoggingCloudWatchLoggingArrayOutput { return v.CloudWatchLoggings }).(OrgLoggingCloudWatchLoggingArrayOutput)
+}
+
+// [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
 func (o OrgLoggingOutput) CoralogixLoggings() OrgLoggingCoralogixLoggingArrayOutput {
 	return o.ApplyT(func(v *OrgLogging) OrgLoggingCoralogixLoggingArrayOutput { return v.CoralogixLoggings }).(OrgLoggingCoralogixLoggingArrayOutput)
 }
 
+// The ID, in GUID format, of the org.
 func (o OrgLoggingOutput) CplnId() pulumi.StringOutput {
 	return o.ApplyT(func(v *OrgLogging) pulumi.StringOutput { return v.CplnId }).(pulumi.StringOutput)
 }
 
+// [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
 func (o OrgLoggingOutput) DatadogLoggings() OrgLoggingDatadogLoggingArrayOutput {
 	return o.ApplyT(func(v *OrgLogging) OrgLoggingDatadogLoggingArrayOutput { return v.DatadogLoggings }).(OrgLoggingDatadogLoggingArrayOutput)
 }
 
+// The description of org.
 func (o OrgLoggingOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v *OrgLogging) pulumi.StringOutput { return v.Description }).(pulumi.StringOutput)
 }
@@ -231,18 +286,30 @@ func (o OrgLoggingOutput) ElasticLoggings() OrgLoggingElasticLoggingArrayOutput 
 	return o.ApplyT(func(v *OrgLogging) OrgLoggingElasticLoggingArrayOutput { return v.ElasticLoggings }).(OrgLoggingElasticLoggingArrayOutput)
 }
 
+func (o OrgLoggingOutput) FluentdLoggings() OrgLoggingFluentdLoggingArrayOutput {
+	return o.ApplyT(func(v *OrgLogging) OrgLoggingFluentdLoggingArrayOutput { return v.FluentdLoggings }).(OrgLoggingFluentdLoggingArrayOutput)
+}
+
+// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
 func (o OrgLoggingOutput) LogzioLoggings() OrgLoggingLogzioLoggingArrayOutput {
 	return o.ApplyT(func(v *OrgLogging) OrgLoggingLogzioLoggingArrayOutput { return v.LogzioLoggings }).(OrgLoggingLogzioLoggingArrayOutput)
 }
 
+// The name of the org.
 func (o OrgLoggingOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *OrgLogging) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
 func (o OrgLoggingOutput) S3Loggings() OrgLoggingS3LoggingArrayOutput {
 	return o.ApplyT(func(v *OrgLogging) OrgLoggingS3LoggingArrayOutput { return v.S3Loggings }).(OrgLoggingS3LoggingArrayOutput)
 }
 
+func (o OrgLoggingOutput) StackdriverLoggings() OrgLoggingStackdriverLoggingArrayOutput {
+	return o.ApplyT(func(v *OrgLogging) OrgLoggingStackdriverLoggingArrayOutput { return v.StackdriverLoggings }).(OrgLoggingStackdriverLoggingArrayOutput)
+}
+
+// Key-value map of the org's tags.
 func (o OrgLoggingOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *OrgLogging) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
 }

@@ -25,6 +25,9 @@ class CloudAccountArgs:
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a CloudAccount resource.
+        :param pulumi.Input[str] description: Description of the Cloud Account.
+        :param pulumi.Input[str] name: Name of the Cloud Account.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         CloudAccountArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -85,6 +88,9 @@ class CloudAccountArgs:
     @property
     @pulumi.getter
     def description(self) -> Optional[pulumi.Input[str]]:
+        """
+        Description of the Cloud Account.
+        """
         return pulumi.get(self, "description")
 
     @description.setter
@@ -103,6 +109,9 @@ class CloudAccountArgs:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the Cloud Account.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -121,6 +130,9 @@ class CloudAccountArgs:
     @property
     @pulumi.getter
     def tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of resource tags.
+        """
         return pulumi.get(self, "tags")
 
     @tags.setter
@@ -144,6 +156,11 @@ class _CloudAccountState:
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         Input properties used for looking up and filtering CloudAccount resources.
+        :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Cloud Account.
+        :param pulumi.Input[str] description: Description of the Cloud Account.
+        :param pulumi.Input[str] gcp_service_account_name: GCP service account name used during the configuration of the cloud account at GCP.
+        :param pulumi.Input[str] name: Name of the Cloud Account.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         _CloudAccountState._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -228,6 +245,9 @@ class _CloudAccountState:
     @property
     @pulumi.getter(name="cplnId")
     def cpln_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID, in GUID format, of the Cloud Account.
+        """
         return pulumi.get(self, "cpln_id")
 
     @cpln_id.setter
@@ -237,6 +257,9 @@ class _CloudAccountState:
     @property
     @pulumi.getter
     def description(self) -> Optional[pulumi.Input[str]]:
+        """
+        Description of the Cloud Account.
+        """
         return pulumi.get(self, "description")
 
     @description.setter
@@ -264,6 +287,9 @@ class _CloudAccountState:
     @property
     @pulumi.getter(name="gcpServiceAccountName")
     def gcp_service_account_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        GCP service account name used during the configuration of the cloud account at GCP.
+        """
         return pulumi.get(self, "gcp_service_account_name")
 
     @gcp_service_account_name.setter
@@ -273,6 +299,9 @@ class _CloudAccountState:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of the Cloud Account.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -300,6 +329,9 @@ class _CloudAccountState:
     @property
     @pulumi.getter
     def tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of resource tags.
+        """
         return pulumi.get(self, "tags")
 
     @tags.setter
@@ -324,6 +356,9 @@ class CloudAccount(pulumi.CustomResource):
         Create a CloudAccount resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] description: Description of the Cloud Account.
+        :param pulumi.Input[str] name: Name of the Cloud Account.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         ...
     @overload
@@ -427,6 +462,11 @@ class CloudAccount(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Cloud Account.
+        :param pulumi.Input[str] description: Description of the Cloud Account.
+        :param pulumi.Input[str] gcp_service_account_name: GCP service account name used during the configuration of the cloud account at GCP.
+        :param pulumi.Input[str] name: Name of the Cloud Account.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -458,11 +498,17 @@ class CloudAccount(pulumi.CustomResource):
     @property
     @pulumi.getter(name="cplnId")
     def cpln_id(self) -> pulumi.Output[str]:
+        """
+        The ID, in GUID format, of the Cloud Account.
+        """
         return pulumi.get(self, "cpln_id")
 
     @property
     @pulumi.getter
     def description(self) -> pulumi.Output[Optional[str]]:
+        """
+        Description of the Cloud Account.
+        """
         return pulumi.get(self, "description")
 
     @property
@@ -478,11 +524,17 @@ class CloudAccount(pulumi.CustomResource):
     @property
     @pulumi.getter(name="gcpServiceAccountName")
     def gcp_service_account_name(self) -> pulumi.Output[str]:
+        """
+        GCP service account name used during the configuration of the cloud account at GCP.
+        """
         return pulumi.get(self, "gcp_service_account_name")
 
     @property
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
+        """
+        Name of the Cloud Account.
+        """
         return pulumi.get(self, "name")
 
     @property
@@ -498,5 +550,8 @@ class CloudAccount(pulumi.CustomResource):
     @property
     @pulumi.getter
     def tags(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
+        """
+        Key-value map of resource tags.
+        """
         return pulumi.get(self, "tags")
 

@@ -35,15 +35,46 @@ export class Policy extends pulumi.CustomResource {
     }
 
     public readonly bindings!: pulumi.Output<outputs.PolicyBinding[] | undefined>;
+    /**
+     * The ID, in GUID format, of the Policy.
+     */
     public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    /**
+     * Description of the Policy.
+     */
     public readonly description!: pulumi.Output<string | undefined>;
+    /**
+     * The GVC for `identity`, `workload` and `volumeset` target kinds only.
+     */
     public readonly gvc!: pulumi.Output<string | undefined>;
+    /**
+     * Name of the Policy.
+     */
     public readonly name!: pulumi.Output<string>;
-    public readonly origin!: pulumi.Output<string>;
+    /**
+     * Origin of the Policy. Either `builtin` or `default`.
+     */
+    public /*out*/ readonly origin!: pulumi.Output<string>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    /**
+     * Key-value map of resource tags.
+     */
     public readonly tags!: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
+     * Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
+     * do not include the attribute.
+     */
     public readonly target!: pulumi.Output<string | undefined>;
+    /**
+     * The kind of resource to target (e.g., gvc, serviceaccount, etc.).
+     */
     public readonly targetKind!: pulumi.Output<string>;
+    /**
+     * List of the targets this policy will be applied to. Not used if `target` is set to `all`.
+     */
     public readonly targetLinks!: pulumi.Output<string[] | undefined>;
     public readonly targetQuery!: pulumi.Output<outputs.PolicyTargetQuery | undefined>;
 
@@ -81,13 +112,13 @@ export class Policy extends pulumi.CustomResource {
             resourceInputs["description"] = args ? args.description : undefined;
             resourceInputs["gvc"] = args ? args.gvc : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["origin"] = args ? args.origin : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["target"] = args ? args.target : undefined;
             resourceInputs["targetKind"] = args ? args.targetKind : undefined;
             resourceInputs["targetLinks"] = args ? args.targetLinks : undefined;
             resourceInputs["targetQuery"] = args ? args.targetQuery : undefined;
             resourceInputs["cplnId"] = undefined /*out*/;
+            resourceInputs["origin"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -100,15 +131,46 @@ export class Policy extends pulumi.CustomResource {
  */
 export interface PolicyState {
     bindings?: pulumi.Input<pulumi.Input<inputs.PolicyBinding>[]>;
+    /**
+     * The ID, in GUID format, of the Policy.
+     */
     cplnId?: pulumi.Input<string>;
+    /**
+     * Description of the Policy.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * The GVC for `identity`, `workload` and `volumeset` target kinds only.
+     */
     gvc?: pulumi.Input<string>;
+    /**
+     * Name of the Policy.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * Origin of the Policy. Either `builtin` or `default`.
+     */
     origin?: pulumi.Input<string>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     selfLink?: pulumi.Input<string>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
+     * do not include the attribute.
+     */
     target?: pulumi.Input<string>;
+    /**
+     * The kind of resource to target (e.g., gvc, serviceaccount, etc.).
+     */
     targetKind?: pulumi.Input<string>;
+    /**
+     * List of the targets this policy will be applied to. Not used if `target` is set to `all`.
+     */
     targetLinks?: pulumi.Input<pulumi.Input<string>[]>;
     targetQuery?: pulumi.Input<inputs.PolicyTargetQuery>;
 }
@@ -118,13 +180,34 @@ export interface PolicyState {
  */
 export interface PolicyArgs {
     bindings?: pulumi.Input<pulumi.Input<inputs.PolicyBinding>[]>;
+    /**
+     * Description of the Policy.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * The GVC for `identity`, `workload` and `volumeset` target kinds only.
+     */
     gvc?: pulumi.Input<string>;
+    /**
+     * Name of the Policy.
+     */
     name?: pulumi.Input<string>;
-    origin?: pulumi.Input<string>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
+     * do not include the attribute.
+     */
     target?: pulumi.Input<string>;
+    /**
+     * The kind of resource to target (e.g., gvc, serviceaccount, etc.).
+     */
     targetKind: pulumi.Input<string>;
+    /**
+     * List of the targets this policy will be applied to. Not used if `target` is set to `all`.
+     */
     targetLinks?: pulumi.Input<pulumi.Input<string>[]>;
     targetQuery?: pulumi.Input<inputs.PolicyTargetQuery>;
 }

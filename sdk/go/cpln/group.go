@@ -15,16 +15,25 @@ import (
 type Group struct {
 	pulumi.CustomResourceState
 
-	CplnId           pulumi.StringOutput           `pulumi:"cplnId"`
-	Description      pulumi.StringPtrOutput        `pulumi:"description"`
-	IdentityMatcher  GroupIdentityMatcherPtrOutput `pulumi:"identityMatcher"`
-	MemberQuery      GroupMemberQueryPtrOutput     `pulumi:"memberQuery"`
-	Name             pulumi.StringOutput           `pulumi:"name"`
-	Origin           pulumi.StringOutput           `pulumi:"origin"`
-	SelfLink         pulumi.StringOutput           `pulumi:"selfLink"`
-	ServiceAccounts  pulumi.StringArrayOutput      `pulumi:"serviceAccounts"`
-	Tags             pulumi.StringMapOutput        `pulumi:"tags"`
-	UserIdsAndEmails pulumi.StringArrayOutput      `pulumi:"userIdsAndEmails"`
+	// The ID, in GUID format, of the Group.
+	CplnId pulumi.StringOutput `pulumi:"cplnId"`
+	// Description of Group.
+	Description     pulumi.StringPtrOutput        `pulumi:"description"`
+	IdentityMatcher GroupIdentityMatcherPtrOutput `pulumi:"identityMatcher"`
+	MemberQuery     GroupMemberQueryPtrOutput     `pulumi:"memberQuery"`
+	// Name of the Group.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Origin of the service account. Either `builtin` or `default`.
+	Origin   pulumi.StringOutput `pulumi:"origin"`
+	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
+	// List of service accounts that exists within the configured org. Group membership will fail if the service account does
+	// not exits within the org.
+	ServiceAccounts pulumi.StringArrayOutput `pulumi:"serviceAccounts"`
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapOutput `pulumi:"tags"`
+	// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+	// if the user ID / email does not exist within the org.
+	UserIdsAndEmails pulumi.StringArrayOutput `pulumi:"userIdsAndEmails"`
 }
 
 // NewGroup registers a new resource with the given unique name, arguments, and options.
@@ -57,28 +66,46 @@ func GetGroup(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Group resources.
 type groupState struct {
-	CplnId           *string               `pulumi:"cplnId"`
-	Description      *string               `pulumi:"description"`
-	IdentityMatcher  *GroupIdentityMatcher `pulumi:"identityMatcher"`
-	MemberQuery      *GroupMemberQuery     `pulumi:"memberQuery"`
-	Name             *string               `pulumi:"name"`
-	Origin           *string               `pulumi:"origin"`
-	SelfLink         *string               `pulumi:"selfLink"`
-	ServiceAccounts  []string              `pulumi:"serviceAccounts"`
-	Tags             map[string]string     `pulumi:"tags"`
-	UserIdsAndEmails []string              `pulumi:"userIdsAndEmails"`
+	// The ID, in GUID format, of the Group.
+	CplnId *string `pulumi:"cplnId"`
+	// Description of Group.
+	Description     *string               `pulumi:"description"`
+	IdentityMatcher *GroupIdentityMatcher `pulumi:"identityMatcher"`
+	MemberQuery     *GroupMemberQuery     `pulumi:"memberQuery"`
+	// Name of the Group.
+	Name *string `pulumi:"name"`
+	// Origin of the service account. Either `builtin` or `default`.
+	Origin   *string `pulumi:"origin"`
+	SelfLink *string `pulumi:"selfLink"`
+	// List of service accounts that exists within the configured org. Group membership will fail if the service account does
+	// not exits within the org.
+	ServiceAccounts []string `pulumi:"serviceAccounts"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
+	// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+	// if the user ID / email does not exist within the org.
+	UserIdsAndEmails []string `pulumi:"userIdsAndEmails"`
 }
 
 type GroupState struct {
-	CplnId           pulumi.StringPtrInput
-	Description      pulumi.StringPtrInput
-	IdentityMatcher  GroupIdentityMatcherPtrInput
-	MemberQuery      GroupMemberQueryPtrInput
-	Name             pulumi.StringPtrInput
-	Origin           pulumi.StringPtrInput
-	SelfLink         pulumi.StringPtrInput
-	ServiceAccounts  pulumi.StringArrayInput
-	Tags             pulumi.StringMapInput
+	// The ID, in GUID format, of the Group.
+	CplnId pulumi.StringPtrInput
+	// Description of Group.
+	Description     pulumi.StringPtrInput
+	IdentityMatcher GroupIdentityMatcherPtrInput
+	MemberQuery     GroupMemberQueryPtrInput
+	// Name of the Group.
+	Name pulumi.StringPtrInput
+	// Origin of the service account. Either `builtin` or `default`.
+	Origin   pulumi.StringPtrInput
+	SelfLink pulumi.StringPtrInput
+	// List of service accounts that exists within the configured org. Group membership will fail if the service account does
+	// not exits within the org.
+	ServiceAccounts pulumi.StringArrayInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
+	// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+	// if the user ID / email does not exist within the org.
 	UserIdsAndEmails pulumi.StringArrayInput
 }
 
@@ -87,23 +114,37 @@ func (GroupState) ElementType() reflect.Type {
 }
 
 type groupArgs struct {
-	Description      *string               `pulumi:"description"`
-	IdentityMatcher  *GroupIdentityMatcher `pulumi:"identityMatcher"`
-	MemberQuery      *GroupMemberQuery     `pulumi:"memberQuery"`
-	Name             *string               `pulumi:"name"`
-	ServiceAccounts  []string              `pulumi:"serviceAccounts"`
-	Tags             map[string]string     `pulumi:"tags"`
-	UserIdsAndEmails []string              `pulumi:"userIdsAndEmails"`
+	// Description of Group.
+	Description     *string               `pulumi:"description"`
+	IdentityMatcher *GroupIdentityMatcher `pulumi:"identityMatcher"`
+	MemberQuery     *GroupMemberQuery     `pulumi:"memberQuery"`
+	// Name of the Group.
+	Name *string `pulumi:"name"`
+	// List of service accounts that exists within the configured org. Group membership will fail if the service account does
+	// not exits within the org.
+	ServiceAccounts []string `pulumi:"serviceAccounts"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
+	// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+	// if the user ID / email does not exist within the org.
+	UserIdsAndEmails []string `pulumi:"userIdsAndEmails"`
 }
 
 // The set of arguments for constructing a Group resource.
 type GroupArgs struct {
-	Description      pulumi.StringPtrInput
-	IdentityMatcher  GroupIdentityMatcherPtrInput
-	MemberQuery      GroupMemberQueryPtrInput
-	Name             pulumi.StringPtrInput
-	ServiceAccounts  pulumi.StringArrayInput
-	Tags             pulumi.StringMapInput
+	// Description of Group.
+	Description     pulumi.StringPtrInput
+	IdentityMatcher GroupIdentityMatcherPtrInput
+	MemberQuery     GroupMemberQueryPtrInput
+	// Name of the Group.
+	Name pulumi.StringPtrInput
+	// List of service accounts that exists within the configured org. Group membership will fail if the service account does
+	// not exits within the org.
+	ServiceAccounts pulumi.StringArrayInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
+	// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+	// if the user ID / email does not exist within the org.
 	UserIdsAndEmails pulumi.StringArrayInput
 }
 
@@ -218,10 +259,12 @@ func (o GroupOutput) ToOutput(ctx context.Context) pulumix.Output[*Group] {
 	}
 }
 
+// The ID, in GUID format, of the Group.
 func (o GroupOutput) CplnId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Group) pulumi.StringOutput { return v.CplnId }).(pulumi.StringOutput)
 }
 
+// Description of Group.
 func (o GroupOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Group) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
@@ -234,10 +277,12 @@ func (o GroupOutput) MemberQuery() GroupMemberQueryPtrOutput {
 	return o.ApplyT(func(v *Group) GroupMemberQueryPtrOutput { return v.MemberQuery }).(GroupMemberQueryPtrOutput)
 }
 
+// Name of the Group.
 func (o GroupOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Group) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Origin of the service account. Either `builtin` or `default`.
 func (o GroupOutput) Origin() pulumi.StringOutput {
 	return o.ApplyT(func(v *Group) pulumi.StringOutput { return v.Origin }).(pulumi.StringOutput)
 }
@@ -246,14 +291,19 @@ func (o GroupOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *Group) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
 }
 
+// List of service accounts that exists within the configured org. Group membership will fail if the service account does
+// not exits within the org.
 func (o GroupOutput) ServiceAccounts() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Group) pulumi.StringArrayOutput { return v.ServiceAccounts }).(pulumi.StringArrayOutput)
 }
 
+// Key-value map of resource tags.
 func (o GroupOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Group) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
 }
 
+// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+// if the user ID / email does not exist within the org.
 func (o GroupOutput) UserIdsAndEmails() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Group) pulumi.StringArrayOutput { return v.UserIdsAndEmails }).(pulumi.StringArrayOutput)
 }

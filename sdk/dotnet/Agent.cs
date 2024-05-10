@@ -13,21 +13,39 @@ namespace Pulumiverse.Cpln
     [CplnResourceType("cpln:index/agent:Agent")]
     public partial class Agent : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The ID, in GUID format, of the Agent.
+        /// </summary>
         [Output("cplnId")]
         public Output<string> CplnId { get; private set; } = null!;
 
+        /// <summary>
+        /// Description of the Agent.
+        /// </summary>
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
 
+        /// <summary>
+        /// Name of the Agent.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         [Output("selfLink")]
         public Output<string> SelfLink { get; private set; } = null!;
 
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         [Output("tags")]
         public Output<ImmutableDictionary<string, string>?> Tags { get; private set; } = null!;
 
+        /// <summary>
+        /// The JSON output needed when [creating an agent](https://docs.controlplane.com/guides/agent).
+        /// </summary>
         [Output("userData")]
         public Output<string> UserData { get; private set; } = null!;
 
@@ -82,14 +100,24 @@ namespace Pulumiverse.Cpln
 
     public sealed class AgentArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Description of the Agent.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// Name of the Agent.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());
@@ -104,20 +132,36 @@ namespace Pulumiverse.Cpln
 
     public sealed class AgentState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The ID, in GUID format, of the Agent.
+        /// </summary>
         [Input("cplnId")]
         public Input<string>? CplnId { get; set; }
 
+        /// <summary>
+        /// Description of the Agent.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// Name of the Agent.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         [Input("selfLink")]
         public Input<string>? SelfLink { get; set; }
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());
@@ -126,6 +170,10 @@ namespace Pulumiverse.Cpln
 
         [Input("userData")]
         private Input<string>? _userData;
+
+        /// <summary>
+        /// The JSON output needed when [creating an agent](https://docs.controlplane.com/guides/agent).
+        /// </summary>
         public Input<string>? UserData
         {
             get => _userData;

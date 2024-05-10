@@ -34,23 +34,82 @@ export class Secret extends pulumi.CustomResource {
         return obj['__pulumiType'] === Secret.__pulumiType;
     }
 
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#aws).
+     */
     public readonly aws!: pulumi.Output<outputs.SecretAws | undefined>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
+     */
     public readonly azureConnector!: pulumi.Output<outputs.SecretAzureConnector | undefined>;
+    /**
+     * JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
+     */
     public readonly azureSdk!: pulumi.Output<string | undefined>;
+    /**
+     * The ID, in GUID format, of the Secret.
+     */
     public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    /**
+     * Description of the Secret.
+     */
     public readonly description!: pulumi.Output<string | undefined>;
+    /**
+     * List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
+     */
     public readonly dictionary!: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
+     * If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
+     * cpln://secret/SECRET_NAME.key`.
+     */
     public /*out*/ readonly dictionaryAsEnvs!: pulumi.Output<{[key: string]: any}>;
+    /**
+     * JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
+     */
     public readonly docker!: pulumi.Output<string | undefined>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
+     */
     public readonly ecr!: pulumi.Output<outputs.SecretEcr | undefined>;
+    /**
+     * JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
+     */
     public readonly gcp!: pulumi.Output<string | undefined>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
+     */
     public readonly keypair!: pulumi.Output<outputs.SecretKeypair | undefined>;
+    /**
+     * Name of the secret.
+     */
     public readonly name!: pulumi.Output<string>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
+     */
     public readonly natsAccount!: pulumi.Output<outputs.SecretNatsAccount | undefined>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
+     */
     public readonly opaque!: pulumi.Output<outputs.SecretOpaque | undefined>;
+    /**
+     * Output used when linking a secret to an environment variable or volume.
+     */
+    public /*out*/ readonly secretLink!: pulumi.Output<string>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    /**
+     * Key-value map of resource tags.
+     */
     public readonly tags!: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#tls).
+     */
     public readonly tls!: pulumi.Output<outputs.SecretTls | undefined>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#username).
+     */
     public readonly userpass!: pulumi.Output<outputs.SecretUserpass | undefined>;
 
     /**
@@ -80,6 +139,7 @@ export class Secret extends pulumi.CustomResource {
             resourceInputs["name"] = state ? state.name : undefined;
             resourceInputs["natsAccount"] = state ? state.natsAccount : undefined;
             resourceInputs["opaque"] = state ? state.opaque : undefined;
+            resourceInputs["secretLink"] = state ? state.secretLink : undefined;
             resourceInputs["selfLink"] = state ? state.selfLink : undefined;
             resourceInputs["tags"] = state ? state.tags : undefined;
             resourceInputs["tls"] = state ? state.tls : undefined;
@@ -103,6 +163,7 @@ export class Secret extends pulumi.CustomResource {
             resourceInputs["userpass"] = args ? args.userpass : undefined;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["dictionaryAsEnvs"] = undefined /*out*/;
+            resourceInputs["secretLink"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -116,23 +177,82 @@ export class Secret extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Secret resources.
  */
 export interface SecretState {
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#aws).
+     */
     aws?: pulumi.Input<inputs.SecretAws>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
+     */
     azureConnector?: pulumi.Input<inputs.SecretAzureConnector>;
+    /**
+     * JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
+     */
     azureSdk?: pulumi.Input<string>;
+    /**
+     * The ID, in GUID format, of the Secret.
+     */
     cplnId?: pulumi.Input<string>;
+    /**
+     * Description of the Secret.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
+     */
     dictionary?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
+     * cpln://secret/SECRET_NAME.key`.
+     */
     dictionaryAsEnvs?: pulumi.Input<{[key: string]: any}>;
+    /**
+     * JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
+     */
     docker?: pulumi.Input<string>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
+     */
     ecr?: pulumi.Input<inputs.SecretEcr>;
+    /**
+     * JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
+     */
     gcp?: pulumi.Input<string>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
+     */
     keypair?: pulumi.Input<inputs.SecretKeypair>;
+    /**
+     * Name of the secret.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
+     */
     natsAccount?: pulumi.Input<inputs.SecretNatsAccount>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
+     */
     opaque?: pulumi.Input<inputs.SecretOpaque>;
+    /**
+     * Output used when linking a secret to an environment variable or volume.
+     */
+    secretLink?: pulumi.Input<string>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     selfLink?: pulumi.Input<string>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#tls).
+     */
     tls?: pulumi.Input<inputs.SecretTls>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#username).
+     */
     userpass?: pulumi.Input<inputs.SecretUserpass>;
 }
 
@@ -140,19 +260,64 @@ export interface SecretState {
  * The set of arguments for constructing a Secret resource.
  */
 export interface SecretArgs {
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#aws).
+     */
     aws?: pulumi.Input<inputs.SecretAws>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
+     */
     azureConnector?: pulumi.Input<inputs.SecretAzureConnector>;
+    /**
+     * JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
+     */
     azureSdk?: pulumi.Input<string>;
+    /**
+     * Description of the Secret.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
+     */
     dictionary?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
+     */
     docker?: pulumi.Input<string>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
+     */
     ecr?: pulumi.Input<inputs.SecretEcr>;
+    /**
+     * JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
+     */
     gcp?: pulumi.Input<string>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
+     */
     keypair?: pulumi.Input<inputs.SecretKeypair>;
+    /**
+     * Name of the secret.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
+     */
     natsAccount?: pulumi.Input<inputs.SecretNatsAccount>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
+     */
     opaque?: pulumi.Input<inputs.SecretOpaque>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#tls).
+     */
     tls?: pulumi.Input<inputs.SecretTls>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/secret#username).
+     */
     userpass?: pulumi.Input<inputs.SecretUserpass>;
 }

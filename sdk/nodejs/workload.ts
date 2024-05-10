@@ -35,22 +35,60 @@ export class Workload extends pulumi.CustomResource {
     }
 
     public readonly containers!: pulumi.Output<outputs.WorkloadContainer[]>;
+    /**
+     * The ID, in GUID format, of the Workload.
+     */
     public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    /**
+     * Description of the Workload.
+     */
     public readonly description!: pulumi.Output<string | undefined>;
+    /**
+     * Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+     * Access is restricted by default.
+     */
     public readonly firewallSpec!: pulumi.Output<outputs.WorkloadFirewallSpec | undefined>;
+    /**
+     * Name of the associated GVC.
+     */
     public readonly gvc!: pulumi.Output<string>;
+    /**
+     * Full link to an Identity.
+     */
     public readonly identityLink!: pulumi.Output<string | undefined>;
+    /**
+     * [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+     */
     public readonly job!: pulumi.Output<outputs.WorkloadJob | undefined>;
     public readonly localOptions!: pulumi.Output<outputs.WorkloadLocalOption[] | undefined>;
+    /**
+     * Name of the Workload.
+     */
     public readonly name!: pulumi.Output<string>;
     public readonly options!: pulumi.Output<outputs.WorkloadOptions>;
     public readonly rolloutOptions!: pulumi.Output<outputs.WorkloadRolloutOptions | undefined>;
     public readonly securityOptions!: pulumi.Output<outputs.WorkloadSecurityOptions | undefined>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     public /*out*/ readonly selfLink!: pulumi.Output<string>;
     public readonly sidecar!: pulumi.Output<outputs.WorkloadSidecar | undefined>;
+    /**
+     * Status of the workload.
+     */
     public /*out*/ readonly statuses!: pulumi.Output<outputs.WorkloadStatus[]>;
+    /**
+     * Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+     * false.
+     */
     public readonly supportDynamicTags!: pulumi.Output<boolean | undefined>;
+    /**
+     * Key-value map of resource tags.
+     */
     public readonly tags!: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
+     * Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+     */
     public readonly type!: pulumi.Output<string>;
 
     /**
@@ -127,22 +165,60 @@ export class Workload extends pulumi.CustomResource {
  */
 export interface WorkloadState {
     containers?: pulumi.Input<pulumi.Input<inputs.WorkloadContainer>[]>;
+    /**
+     * The ID, in GUID format, of the Workload.
+     */
     cplnId?: pulumi.Input<string>;
+    /**
+     * Description of the Workload.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+     * Access is restricted by default.
+     */
     firewallSpec?: pulumi.Input<inputs.WorkloadFirewallSpec>;
+    /**
+     * Name of the associated GVC.
+     */
     gvc?: pulumi.Input<string>;
+    /**
+     * Full link to an Identity.
+     */
     identityLink?: pulumi.Input<string>;
+    /**
+     * [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+     */
     job?: pulumi.Input<inputs.WorkloadJob>;
     localOptions?: pulumi.Input<pulumi.Input<inputs.WorkloadLocalOption>[]>;
+    /**
+     * Name of the Workload.
+     */
     name?: pulumi.Input<string>;
     options?: pulumi.Input<inputs.WorkloadOptions>;
     rolloutOptions?: pulumi.Input<inputs.WorkloadRolloutOptions>;
     securityOptions?: pulumi.Input<inputs.WorkloadSecurityOptions>;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     selfLink?: pulumi.Input<string>;
     sidecar?: pulumi.Input<inputs.WorkloadSidecar>;
+    /**
+     * Status of the workload.
+     */
     statuses?: pulumi.Input<pulumi.Input<inputs.WorkloadStatus>[]>;
+    /**
+     * Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+     * false.
+     */
     supportDynamicTags?: pulumi.Input<boolean>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+     */
     type?: pulumi.Input<string>;
 }
 
@@ -151,18 +227,47 @@ export interface WorkloadState {
  */
 export interface WorkloadArgs {
     containers: pulumi.Input<pulumi.Input<inputs.WorkloadContainer>[]>;
+    /**
+     * Description of the Workload.
+     */
     description?: pulumi.Input<string>;
+    /**
+     * Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+     * Access is restricted by default.
+     */
     firewallSpec?: pulumi.Input<inputs.WorkloadFirewallSpec>;
+    /**
+     * Name of the associated GVC.
+     */
     gvc: pulumi.Input<string>;
+    /**
+     * Full link to an Identity.
+     */
     identityLink?: pulumi.Input<string>;
+    /**
+     * [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+     */
     job?: pulumi.Input<inputs.WorkloadJob>;
     localOptions?: pulumi.Input<pulumi.Input<inputs.WorkloadLocalOption>[]>;
+    /**
+     * Name of the Workload.
+     */
     name?: pulumi.Input<string>;
     options: pulumi.Input<inputs.WorkloadOptions>;
     rolloutOptions?: pulumi.Input<inputs.WorkloadRolloutOptions>;
     securityOptions?: pulumi.Input<inputs.WorkloadSecurityOptions>;
     sidecar?: pulumi.Input<inputs.WorkloadSidecar>;
+    /**
+     * Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
+     * false.
+     */
     supportDynamicTags?: pulumi.Input<boolean>;
+    /**
+     * Key-value map of resource tags.
+     */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+     */
     type: pulumi.Input<string>;
 }

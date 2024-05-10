@@ -16,12 +16,16 @@ type OrgTracing struct {
 	pulumi.CustomResourceState
 
 	ControlplaneTracing OrgTracingControlplaneTracingPtrOutput `pulumi:"controlplaneTracing"`
-	CplnId              pulumi.StringOutput                    `pulumi:"cplnId"`
-	Description         pulumi.StringOutput                    `pulumi:"description"`
-	LightstepTracing    OrgTracingLightstepTracingPtrOutput    `pulumi:"lightstepTracing"`
-	Name                pulumi.StringOutput                    `pulumi:"name"`
-	OtelTracing         OrgTracingOtelTracingPtrOutput         `pulumi:"otelTracing"`
-	Tags                pulumi.StringMapOutput                 `pulumi:"tags"`
+	// The ID, in GUID format, of the org.
+	CplnId pulumi.StringOutput `pulumi:"cplnId"`
+	// The description of org.
+	Description      pulumi.StringOutput                 `pulumi:"description"`
+	LightstepTracing OrgTracingLightstepTracingPtrOutput `pulumi:"lightstepTracing"`
+	// The name of the org.
+	Name        pulumi.StringOutput            `pulumi:"name"`
+	OtelTracing OrgTracingOtelTracingPtrOutput `pulumi:"otelTracing"`
+	// Key-value map of the org's tags.
+	Tags pulumi.StringMapOutput `pulumi:"tags"`
 }
 
 // NewOrgTracing registers a new resource with the given unique name, arguments, and options.
@@ -55,22 +59,30 @@ func GetOrgTracing(ctx *pulumi.Context,
 // Input properties used for looking up and filtering OrgTracing resources.
 type orgTracingState struct {
 	ControlplaneTracing *OrgTracingControlplaneTracing `pulumi:"controlplaneTracing"`
-	CplnId              *string                        `pulumi:"cplnId"`
-	Description         *string                        `pulumi:"description"`
-	LightstepTracing    *OrgTracingLightstepTracing    `pulumi:"lightstepTracing"`
-	Name                *string                        `pulumi:"name"`
-	OtelTracing         *OrgTracingOtelTracing         `pulumi:"otelTracing"`
-	Tags                map[string]string              `pulumi:"tags"`
+	// The ID, in GUID format, of the org.
+	CplnId *string `pulumi:"cplnId"`
+	// The description of org.
+	Description      *string                     `pulumi:"description"`
+	LightstepTracing *OrgTracingLightstepTracing `pulumi:"lightstepTracing"`
+	// The name of the org.
+	Name        *string                `pulumi:"name"`
+	OtelTracing *OrgTracingOtelTracing `pulumi:"otelTracing"`
+	// Key-value map of the org's tags.
+	Tags map[string]string `pulumi:"tags"`
 }
 
 type OrgTracingState struct {
 	ControlplaneTracing OrgTracingControlplaneTracingPtrInput
-	CplnId              pulumi.StringPtrInput
-	Description         pulumi.StringPtrInput
-	LightstepTracing    OrgTracingLightstepTracingPtrInput
-	Name                pulumi.StringPtrInput
-	OtelTracing         OrgTracingOtelTracingPtrInput
-	Tags                pulumi.StringMapInput
+	// The ID, in GUID format, of the org.
+	CplnId pulumi.StringPtrInput
+	// The description of org.
+	Description      pulumi.StringPtrInput
+	LightstepTracing OrgTracingLightstepTracingPtrInput
+	// The name of the org.
+	Name        pulumi.StringPtrInput
+	OtelTracing OrgTracingOtelTracingPtrInput
+	// Key-value map of the org's tags.
+	Tags pulumi.StringMapInput
 }
 
 func (OrgTracingState) ElementType() reflect.Type {
@@ -205,10 +217,12 @@ func (o OrgTracingOutput) ControlplaneTracing() OrgTracingControlplaneTracingPtr
 	return o.ApplyT(func(v *OrgTracing) OrgTracingControlplaneTracingPtrOutput { return v.ControlplaneTracing }).(OrgTracingControlplaneTracingPtrOutput)
 }
 
+// The ID, in GUID format, of the org.
 func (o OrgTracingOutput) CplnId() pulumi.StringOutput {
 	return o.ApplyT(func(v *OrgTracing) pulumi.StringOutput { return v.CplnId }).(pulumi.StringOutput)
 }
 
+// The description of org.
 func (o OrgTracingOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v *OrgTracing) pulumi.StringOutput { return v.Description }).(pulumi.StringOutput)
 }
@@ -217,6 +231,7 @@ func (o OrgTracingOutput) LightstepTracing() OrgTracingLightstepTracingPtrOutput
 	return o.ApplyT(func(v *OrgTracing) OrgTracingLightstepTracingPtrOutput { return v.LightstepTracing }).(OrgTracingLightstepTracingPtrOutput)
 }
 
+// The name of the org.
 func (o OrgTracingOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *OrgTracing) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
@@ -225,6 +240,7 @@ func (o OrgTracingOutput) OtelTracing() OrgTracingOtelTracingPtrOutput {
 	return o.ApplyT(func(v *OrgTracing) OrgTracingOtelTracingPtrOutput { return v.OtelTracing }).(OrgTracingOtelTracingPtrOutput)
 }
 
+// Key-value map of the org's tags.
 func (o OrgTracingOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *OrgTracing) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
 }

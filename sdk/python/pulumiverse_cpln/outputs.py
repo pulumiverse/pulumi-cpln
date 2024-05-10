@@ -49,14 +49,17 @@ __all__ = [
     'IdentityNgsAccessPolicyResp',
     'IdentityNgsAccessPolicySub',
     'OrgAuthConfig',
+    'OrgLoggingCloudWatchLogging',
     'OrgLoggingCoralogixLogging',
     'OrgLoggingDatadogLogging',
     'OrgLoggingElasticLogging',
     'OrgLoggingElasticLoggingAws',
     'OrgLoggingElasticLoggingElasticCloud',
     'OrgLoggingElasticLoggingGeneric',
+    'OrgLoggingFluentdLogging',
     'OrgLoggingLogzioLogging',
     'OrgLoggingS3Logging',
+    'OrgLoggingStackdriverLogging',
     'OrgObservability',
     'OrgStatus',
     'OrgTracingControlplaneTracing',
@@ -119,6 +122,16 @@ __all__ = [
     'GetGvcLoadBalancerResult',
     'GetGvcOtelTracingResult',
     'GetGvcSidecarResult',
+    'GetImageManifestResult',
+    'GetImageManifestConfigResult',
+    'GetImageManifestLayerResult',
+    'GetImagesImageResult',
+    'GetImagesImageManifestResult',
+    'GetImagesImageManifestConfigResult',
+    'GetImagesImageManifestLayerResult',
+    'GetImagesQueryResult',
+    'GetImagesQuerySpecResult',
+    'GetImagesQuerySpecTermResult',
     'GetLocationGeoResult',
     'GetLocationsLocationResult',
     'GetLocationsLocationGeoResult',
@@ -2193,6 +2206,93 @@ class OrgAuthConfig(dict):
 
 
 @pulumi.output_type
+class OrgLoggingCloudWatchLogging(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "groupName":
+            suggest = "group_name"
+        elif key == "streamName":
+            suggest = "stream_name"
+        elif key == "retentionDays":
+            suggest = "retention_days"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in OrgLoggingCloudWatchLogging. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        OrgLoggingCloudWatchLogging.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        OrgLoggingCloudWatchLogging.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 credentials: str,
+                 group_name: str,
+                 region: str,
+                 stream_name: str,
+                 retention_days: Optional[int] = None):
+        OrgLoggingCloudWatchLogging._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            credentials=credentials,
+            group_name=group_name,
+            region=region,
+            stream_name=stream_name,
+            retention_days=retention_days,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             credentials: str,
+             group_name: str,
+             region: str,
+             stream_name: str,
+             retention_days: Optional[int] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'groupName' in kwargs:
+            group_name = kwargs['groupName']
+        if 'streamName' in kwargs:
+            stream_name = kwargs['streamName']
+        if 'retentionDays' in kwargs:
+            retention_days = kwargs['retentionDays']
+
+        _setter("credentials", credentials)
+        _setter("group_name", group_name)
+        _setter("region", region)
+        _setter("stream_name", stream_name)
+        if retention_days is not None:
+            _setter("retention_days", retention_days)
+
+    @property
+    @pulumi.getter
+    def credentials(self) -> str:
+        return pulumi.get(self, "credentials")
+
+    @property
+    @pulumi.getter(name="groupName")
+    def group_name(self) -> str:
+        return pulumi.get(self, "group_name")
+
+    @property
+    @pulumi.getter
+    def region(self) -> str:
+        return pulumi.get(self, "region")
+
+    @property
+    @pulumi.getter(name="streamName")
+    def stream_name(self) -> str:
+        return pulumi.get(self, "stream_name")
+
+    @property
+    @pulumi.getter(name="retentionDays")
+    def retention_days(self) -> Optional[int]:
+        return pulumi.get(self, "retention_days")
+
+
+@pulumi.output_type
 class OrgLoggingCoralogixLogging(dict):
     def __init__(__self__, *,
                  app: str,
@@ -2543,6 +2643,39 @@ class OrgLoggingElasticLoggingGeneric(dict):
 
 
 @pulumi.output_type
+class OrgLoggingFluentdLogging(dict):
+    def __init__(__self__, *,
+                 host: str,
+                 port: Optional[int] = None):
+        OrgLoggingFluentdLogging._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            host=host,
+            port=port,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             host: str,
+             port: Optional[int] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("host", host)
+        if port is not None:
+            _setter("port", port)
+
+    @property
+    @pulumi.getter
+    def host(self) -> str:
+        return pulumi.get(self, "host")
+
+    @property
+    @pulumi.getter
+    def port(self) -> Optional[int]:
+        return pulumi.get(self, "port")
+
+
+@pulumi.output_type
 class OrgLoggingLogzioLogging(dict):
     @staticmethod
     def __key_warning(key: str):
@@ -2642,6 +2775,38 @@ class OrgLoggingS3Logging(dict):
     @pulumi.getter
     def prefix(self) -> Optional[str]:
         return pulumi.get(self, "prefix")
+
+
+@pulumi.output_type
+class OrgLoggingStackdriverLogging(dict):
+    def __init__(__self__, *,
+                 credentials: str,
+                 location: str):
+        OrgLoggingStackdriverLogging._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            credentials=credentials,
+            location=location,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             credentials: str,
+             location: str,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("credentials", credentials)
+        _setter("location", location)
+
+    @property
+    @pulumi.getter
+    def credentials(self) -> str:
+        return pulumi.get(self, "credentials")
+
+    @property
+    @pulumi.getter
+    def location(self) -> str:
+        return pulumi.get(self, "location")
 
 
 @pulumi.output_type
@@ -5293,16 +5458,16 @@ class WorkloadLocalOption(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 autoscaling: 'outputs.WorkloadLocalOptionAutoscaling',
                  location: str,
+                 autoscaling: Optional['outputs.WorkloadLocalOptionAutoscaling'] = None,
                  capacity_ai: Optional[bool] = None,
                  debug: Optional[bool] = None,
                  suspend: Optional[bool] = None,
                  timeout_seconds: Optional[int] = None):
         WorkloadLocalOption._configure(
             lambda key, value: pulumi.set(__self__, key, value),
-            autoscaling=autoscaling,
             location=location,
+            autoscaling=autoscaling,
             capacity_ai=capacity_ai,
             debug=debug,
             suspend=suspend,
@@ -5311,8 +5476,8 @@ class WorkloadLocalOption(dict):
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
-             autoscaling: 'outputs.WorkloadLocalOptionAutoscaling',
              location: str,
+             autoscaling: Optional['outputs.WorkloadLocalOptionAutoscaling'] = None,
              capacity_ai: Optional[bool] = None,
              debug: Optional[bool] = None,
              suspend: Optional[bool] = None,
@@ -5324,8 +5489,9 @@ class WorkloadLocalOption(dict):
         if 'timeoutSeconds' in kwargs:
             timeout_seconds = kwargs['timeoutSeconds']
 
-        _setter("autoscaling", autoscaling)
         _setter("location", location)
+        if autoscaling is not None:
+            _setter("autoscaling", autoscaling)
         if capacity_ai is not None:
             _setter("capacity_ai", capacity_ai)
         if debug is not None:
@@ -5337,13 +5503,13 @@ class WorkloadLocalOption(dict):
 
     @property
     @pulumi.getter
-    def autoscaling(self) -> 'outputs.WorkloadLocalOptionAutoscaling':
-        return pulumi.get(self, "autoscaling")
+    def location(self) -> str:
+        return pulumi.get(self, "location")
 
     @property
     @pulumi.getter
-    def location(self) -> str:
-        return pulumi.get(self, "location")
+    def autoscaling(self) -> Optional['outputs.WorkloadLocalOptionAutoscaling']:
+        return pulumi.get(self, "autoscaling")
 
     @property
     @pulumi.getter(name="capacityAi")
@@ -5507,7 +5673,7 @@ class WorkloadOptions(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 autoscaling: 'outputs.WorkloadOptionsAutoscaling',
+                 autoscaling: Optional['outputs.WorkloadOptionsAutoscaling'] = None,
                  capacity_ai: Optional[bool] = None,
                  debug: Optional[bool] = None,
                  suspend: Optional[bool] = None,
@@ -5523,7 +5689,7 @@ class WorkloadOptions(dict):
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
-             autoscaling: 'outputs.WorkloadOptionsAutoscaling',
+             autoscaling: Optional['outputs.WorkloadOptionsAutoscaling'] = None,
              capacity_ai: Optional[bool] = None,
              debug: Optional[bool] = None,
              suspend: Optional[bool] = None,
@@ -5535,7 +5701,8 @@ class WorkloadOptions(dict):
         if 'timeoutSeconds' in kwargs:
             timeout_seconds = kwargs['timeoutSeconds']
 
-        _setter("autoscaling", autoscaling)
+        if autoscaling is not None:
+            _setter("autoscaling", autoscaling)
         if capacity_ai is not None:
             _setter("capacity_ai", capacity_ai)
         if debug is not None:
@@ -5547,7 +5714,7 @@ class WorkloadOptions(dict):
 
     @property
     @pulumi.getter
-    def autoscaling(self) -> 'outputs.WorkloadOptionsAutoscaling':
+    def autoscaling(self) -> Optional['outputs.WorkloadOptionsAutoscaling']:
         return pulumi.get(self, "autoscaling")
 
     @property
@@ -6428,6 +6595,498 @@ class GetGvcSidecarResult(dict):
     @pulumi.getter
     def envoy(self) -> str:
         return pulumi.get(self, "envoy")
+
+
+@pulumi.output_type
+class GetImageManifestResult(dict):
+    def __init__(__self__, *,
+                 configs: Sequence['outputs.GetImageManifestConfigResult'],
+                 layers: Sequence['outputs.GetImageManifestLayerResult'],
+                 media_type: str,
+                 schema_version: int):
+        GetImageManifestResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            configs=configs,
+            layers=layers,
+            media_type=media_type,
+            schema_version=schema_version,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             configs: Sequence['outputs.GetImageManifestConfigResult'],
+             layers: Sequence['outputs.GetImageManifestLayerResult'],
+             media_type: str,
+             schema_version: int,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'mediaType' in kwargs:
+            media_type = kwargs['mediaType']
+        if 'schemaVersion' in kwargs:
+            schema_version = kwargs['schemaVersion']
+
+        _setter("configs", configs)
+        _setter("layers", layers)
+        _setter("media_type", media_type)
+        _setter("schema_version", schema_version)
+
+    @property
+    @pulumi.getter
+    def configs(self) -> Sequence['outputs.GetImageManifestConfigResult']:
+        return pulumi.get(self, "configs")
+
+    @property
+    @pulumi.getter
+    def layers(self) -> Sequence['outputs.GetImageManifestLayerResult']:
+        return pulumi.get(self, "layers")
+
+    @property
+    @pulumi.getter(name="mediaType")
+    def media_type(self) -> str:
+        return pulumi.get(self, "media_type")
+
+    @property
+    @pulumi.getter(name="schemaVersion")
+    def schema_version(self) -> int:
+        return pulumi.get(self, "schema_version")
+
+
+@pulumi.output_type
+class GetImageManifestConfigResult(dict):
+    def __init__(__self__, *,
+                 digest: str,
+                 media_type: str,
+                 size: int):
+        GetImageManifestConfigResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            digest=digest,
+            media_type=media_type,
+            size=size,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             digest: str,
+             media_type: str,
+             size: int,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'mediaType' in kwargs:
+            media_type = kwargs['mediaType']
+
+        _setter("digest", digest)
+        _setter("media_type", media_type)
+        _setter("size", size)
+
+    @property
+    @pulumi.getter
+    def digest(self) -> str:
+        return pulumi.get(self, "digest")
+
+    @property
+    @pulumi.getter(name="mediaType")
+    def media_type(self) -> str:
+        return pulumi.get(self, "media_type")
+
+    @property
+    @pulumi.getter
+    def size(self) -> int:
+        return pulumi.get(self, "size")
+
+
+@pulumi.output_type
+class GetImageManifestLayerResult(dict):
+    def __init__(__self__, *,
+                 digest: str,
+                 media_type: str,
+                 size: int):
+        GetImageManifestLayerResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            digest=digest,
+            media_type=media_type,
+            size=size,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             digest: str,
+             media_type: str,
+             size: int,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'mediaType' in kwargs:
+            media_type = kwargs['mediaType']
+
+        _setter("digest", digest)
+        _setter("media_type", media_type)
+        _setter("size", size)
+
+    @property
+    @pulumi.getter
+    def digest(self) -> str:
+        return pulumi.get(self, "digest")
+
+    @property
+    @pulumi.getter(name="mediaType")
+    def media_type(self) -> str:
+        return pulumi.get(self, "media_type")
+
+    @property
+    @pulumi.getter
+    def size(self) -> int:
+        return pulumi.get(self, "size")
+
+
+@pulumi.output_type
+class GetImagesImageResult(dict):
+    def __init__(__self__, *,
+                 cpln_id: str,
+                 digest: str,
+                 manifests: Sequence['outputs.GetImagesImageManifestResult'],
+                 name: str,
+                 repository: str,
+                 self_link: str,
+                 tag: str,
+                 tags: Mapping[str, str]):
+        GetImagesImageResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            cpln_id=cpln_id,
+            digest=digest,
+            manifests=manifests,
+            name=name,
+            repository=repository,
+            self_link=self_link,
+            tag=tag,
+            tags=tags,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             cpln_id: str,
+             digest: str,
+             manifests: Sequence['outputs.GetImagesImageManifestResult'],
+             name: str,
+             repository: str,
+             self_link: str,
+             tag: str,
+             tags: Mapping[str, str],
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'cplnId' in kwargs:
+            cpln_id = kwargs['cplnId']
+        if 'selfLink' in kwargs:
+            self_link = kwargs['selfLink']
+
+        _setter("cpln_id", cpln_id)
+        _setter("digest", digest)
+        _setter("manifests", manifests)
+        _setter("name", name)
+        _setter("repository", repository)
+        _setter("self_link", self_link)
+        _setter("tag", tag)
+        _setter("tags", tags)
+
+    @property
+    @pulumi.getter(name="cplnId")
+    def cpln_id(self) -> str:
+        return pulumi.get(self, "cpln_id")
+
+    @property
+    @pulumi.getter
+    def digest(self) -> str:
+        return pulumi.get(self, "digest")
+
+    @property
+    @pulumi.getter
+    def manifests(self) -> Sequence['outputs.GetImagesImageManifestResult']:
+        return pulumi.get(self, "manifests")
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def repository(self) -> str:
+        return pulumi.get(self, "repository")
+
+    @property
+    @pulumi.getter(name="selfLink")
+    def self_link(self) -> str:
+        return pulumi.get(self, "self_link")
+
+    @property
+    @pulumi.getter
+    def tag(self) -> str:
+        return pulumi.get(self, "tag")
+
+    @property
+    @pulumi.getter
+    def tags(self) -> Mapping[str, str]:
+        return pulumi.get(self, "tags")
+
+
+@pulumi.output_type
+class GetImagesImageManifestResult(dict):
+    def __init__(__self__, *,
+                 configs: Sequence['outputs.GetImagesImageManifestConfigResult'],
+                 layers: Sequence['outputs.GetImagesImageManifestLayerResult'],
+                 media_type: str,
+                 schema_version: int):
+        GetImagesImageManifestResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            configs=configs,
+            layers=layers,
+            media_type=media_type,
+            schema_version=schema_version,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             configs: Sequence['outputs.GetImagesImageManifestConfigResult'],
+             layers: Sequence['outputs.GetImagesImageManifestLayerResult'],
+             media_type: str,
+             schema_version: int,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'mediaType' in kwargs:
+            media_type = kwargs['mediaType']
+        if 'schemaVersion' in kwargs:
+            schema_version = kwargs['schemaVersion']
+
+        _setter("configs", configs)
+        _setter("layers", layers)
+        _setter("media_type", media_type)
+        _setter("schema_version", schema_version)
+
+    @property
+    @pulumi.getter
+    def configs(self) -> Sequence['outputs.GetImagesImageManifestConfigResult']:
+        return pulumi.get(self, "configs")
+
+    @property
+    @pulumi.getter
+    def layers(self) -> Sequence['outputs.GetImagesImageManifestLayerResult']:
+        return pulumi.get(self, "layers")
+
+    @property
+    @pulumi.getter(name="mediaType")
+    def media_type(self) -> str:
+        return pulumi.get(self, "media_type")
+
+    @property
+    @pulumi.getter(name="schemaVersion")
+    def schema_version(self) -> int:
+        return pulumi.get(self, "schema_version")
+
+
+@pulumi.output_type
+class GetImagesImageManifestConfigResult(dict):
+    def __init__(__self__, *,
+                 digest: str,
+                 media_type: str,
+                 size: int):
+        GetImagesImageManifestConfigResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            digest=digest,
+            media_type=media_type,
+            size=size,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             digest: str,
+             media_type: str,
+             size: int,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'mediaType' in kwargs:
+            media_type = kwargs['mediaType']
+
+        _setter("digest", digest)
+        _setter("media_type", media_type)
+        _setter("size", size)
+
+    @property
+    @pulumi.getter
+    def digest(self) -> str:
+        return pulumi.get(self, "digest")
+
+    @property
+    @pulumi.getter(name="mediaType")
+    def media_type(self) -> str:
+        return pulumi.get(self, "media_type")
+
+    @property
+    @pulumi.getter
+    def size(self) -> int:
+        return pulumi.get(self, "size")
+
+
+@pulumi.output_type
+class GetImagesImageManifestLayerResult(dict):
+    def __init__(__self__, *,
+                 digest: str,
+                 media_type: str,
+                 size: int):
+        GetImagesImageManifestLayerResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            digest=digest,
+            media_type=media_type,
+            size=size,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             digest: str,
+             media_type: str,
+             size: int,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'mediaType' in kwargs:
+            media_type = kwargs['mediaType']
+
+        _setter("digest", digest)
+        _setter("media_type", media_type)
+        _setter("size", size)
+
+    @property
+    @pulumi.getter
+    def digest(self) -> str:
+        return pulumi.get(self, "digest")
+
+    @property
+    @pulumi.getter(name="mediaType")
+    def media_type(self) -> str:
+        return pulumi.get(self, "media_type")
+
+    @property
+    @pulumi.getter
+    def size(self) -> int:
+        return pulumi.get(self, "size")
+
+
+@pulumi.output_type
+class GetImagesQueryResult(dict):
+    def __init__(__self__, *,
+                 fetch: Optional[str] = None,
+                 spec: Optional['outputs.GetImagesQuerySpecResult'] = None):
+        GetImagesQueryResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            fetch=fetch,
+            spec=spec,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             fetch: Optional[str] = None,
+             spec: Optional['outputs.GetImagesQuerySpecResult'] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if fetch is not None:
+            _setter("fetch", fetch)
+        if spec is not None:
+            _setter("spec", spec)
+
+    @property
+    @pulumi.getter
+    def fetch(self) -> Optional[str]:
+        return pulumi.get(self, "fetch")
+
+    @property
+    @pulumi.getter
+    def spec(self) -> Optional['outputs.GetImagesQuerySpecResult']:
+        return pulumi.get(self, "spec")
+
+
+@pulumi.output_type
+class GetImagesQuerySpecResult(dict):
+    def __init__(__self__, *,
+                 match: Optional[str] = None,
+                 terms: Optional[Sequence['outputs.GetImagesQuerySpecTermResult']] = None):
+        GetImagesQuerySpecResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            match=match,
+            terms=terms,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             match: Optional[str] = None,
+             terms: Optional[Sequence['outputs.GetImagesQuerySpecTermResult']] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if match is not None:
+            _setter("match", match)
+        if terms is not None:
+            _setter("terms", terms)
+
+    @property
+    @pulumi.getter
+    def match(self) -> Optional[str]:
+        return pulumi.get(self, "match")
+
+    @property
+    @pulumi.getter
+    def terms(self) -> Optional[Sequence['outputs.GetImagesQuerySpecTermResult']]:
+        return pulumi.get(self, "terms")
+
+
+@pulumi.output_type
+class GetImagesQuerySpecTermResult(dict):
+    def __init__(__self__, *,
+                 op: Optional[str] = None,
+                 property: Optional[str] = None,
+                 tag: Optional[str] = None,
+                 value: Optional[str] = None):
+        GetImagesQuerySpecTermResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            op=op,
+            property=property,
+            tag=tag,
+            value=value,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             op: Optional[str] = None,
+             property: Optional[str] = None,
+             tag: Optional[str] = None,
+             value: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if op is not None:
+            _setter("op", op)
+        if property is not None:
+            _setter("property", property)
+        if tag is not None:
+            _setter("tag", tag)
+        if value is not None:
+            _setter("value", value)
+
+    @property
+    @pulumi.getter
+    def op(self) -> Optional[str]:
+        return pulumi.get(self, "op")
+
+    @property
+    @pulumi.getter
+    def tag(self) -> Optional[str]:
+        return pulumi.get(self, "tag")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        return pulumi.get(self, "value")
+
+    @property
+    @pulumi.getter
+    def property(self) -> Optional[str]:
+        return pulumi.get(self, "property")
 
 
 @pulumi.output_type

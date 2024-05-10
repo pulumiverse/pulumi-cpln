@@ -16,19 +16,30 @@ import (
 type Identity struct {
 	pulumi.CustomResourceState
 
-	AwsAccessPolicy        IdentityAwsAccessPolicyPtrOutput         `pulumi:"awsAccessPolicy"`
-	AzureAccessPolicy      IdentityAzureAccessPolicyPtrOutput       `pulumi:"azureAccessPolicy"`
-	CplnId                 pulumi.StringOutput                      `pulumi:"cplnId"`
-	Description            pulumi.StringPtrOutput                   `pulumi:"description"`
-	GcpAccessPolicy        IdentityGcpAccessPolicyPtrOutput         `pulumi:"gcpAccessPolicy"`
-	Gvc                    pulumi.StringOutput                      `pulumi:"gvc"`
-	Name                   pulumi.StringOutput                      `pulumi:"name"`
+	AwsAccessPolicy   IdentityAwsAccessPolicyPtrOutput   `pulumi:"awsAccessPolicy"`
+	AzureAccessPolicy IdentityAzureAccessPolicyPtrOutput `pulumi:"azureAccessPolicy"`
+	// ID, in GUID format, of the Identity.
+	CplnId pulumi.StringOutput `pulumi:"cplnId"`
+	// Description of the Identity.
+	Description pulumi.StringPtrOutput `pulumi:"description"`
+	// The GCP access policy can either contain an existing service_account or multiple bindings.
+	GcpAccessPolicy IdentityGcpAccessPolicyPtrOutput `pulumi:"gcpAccessPolicy"`
+	// Name of the GVC.
+	Gvc pulumi.StringOutput `pulumi:"gvc"`
+	// Name of the Identity.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
 	NativeNetworkResources IdentityNativeNetworkResourceArrayOutput `pulumi:"nativeNetworkResources"`
-	NetworkResources       IdentityNetworkResourceArrayOutput       `pulumi:"networkResources"`
-	NgsAccessPolicy        IdentityNgsAccessPolicyPtrOutput         `pulumi:"ngsAccessPolicy"`
-	SelfLink               pulumi.StringOutput                      `pulumi:"selfLink"`
-	Status                 pulumi.StringMapOutput                   `pulumi:"status"`
-	Tags                   pulumi.StringMapOutput                   `pulumi:"tags"`
+	// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+	// ports. - IP's and ports.
+	NetworkResources IdentityNetworkResourceArrayOutput `pulumi:"networkResources"`
+	NgsAccessPolicy  IdentityNgsAccessPolicyPtrOutput   `pulumi:"ngsAccessPolicy"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
+	// Key-value map of identity status. Available fields: `objectName`.
+	Status pulumi.StringMapOutput `pulumi:"status"`
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapOutput `pulumi:"tags"`
 }
 
 // NewIdentity registers a new resource with the given unique name, arguments, and options.
@@ -64,35 +75,57 @@ func GetIdentity(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Identity resources.
 type identityState struct {
-	AwsAccessPolicy        *IdentityAwsAccessPolicy        `pulumi:"awsAccessPolicy"`
-	AzureAccessPolicy      *IdentityAzureAccessPolicy      `pulumi:"azureAccessPolicy"`
-	CplnId                 *string                         `pulumi:"cplnId"`
-	Description            *string                         `pulumi:"description"`
-	GcpAccessPolicy        *IdentityGcpAccessPolicy        `pulumi:"gcpAccessPolicy"`
-	Gvc                    *string                         `pulumi:"gvc"`
-	Name                   *string                         `pulumi:"name"`
+	AwsAccessPolicy   *IdentityAwsAccessPolicy   `pulumi:"awsAccessPolicy"`
+	AzureAccessPolicy *IdentityAzureAccessPolicy `pulumi:"azureAccessPolicy"`
+	// ID, in GUID format, of the Identity.
+	CplnId *string `pulumi:"cplnId"`
+	// Description of the Identity.
+	Description *string `pulumi:"description"`
+	// The GCP access policy can either contain an existing service_account or multiple bindings.
+	GcpAccessPolicy *IdentityGcpAccessPolicy `pulumi:"gcpAccessPolicy"`
+	// Name of the GVC.
+	Gvc *string `pulumi:"gvc"`
+	// Name of the Identity.
+	Name *string `pulumi:"name"`
+	// ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
 	NativeNetworkResources []IdentityNativeNetworkResource `pulumi:"nativeNetworkResources"`
-	NetworkResources       []IdentityNetworkResource       `pulumi:"networkResources"`
-	NgsAccessPolicy        *IdentityNgsAccessPolicy        `pulumi:"ngsAccessPolicy"`
-	SelfLink               *string                         `pulumi:"selfLink"`
-	Status                 map[string]string               `pulumi:"status"`
-	Tags                   map[string]string               `pulumi:"tags"`
+	// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+	// ports. - IP's and ports.
+	NetworkResources []IdentityNetworkResource `pulumi:"networkResources"`
+	NgsAccessPolicy  *IdentityNgsAccessPolicy  `pulumi:"ngsAccessPolicy"`
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink *string `pulumi:"selfLink"`
+	// Key-value map of identity status. Available fields: `objectName`.
+	Status map[string]string `pulumi:"status"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
 }
 
 type IdentityState struct {
-	AwsAccessPolicy        IdentityAwsAccessPolicyPtrInput
-	AzureAccessPolicy      IdentityAzureAccessPolicyPtrInput
-	CplnId                 pulumi.StringPtrInput
-	Description            pulumi.StringPtrInput
-	GcpAccessPolicy        IdentityGcpAccessPolicyPtrInput
-	Gvc                    pulumi.StringPtrInput
-	Name                   pulumi.StringPtrInput
+	AwsAccessPolicy   IdentityAwsAccessPolicyPtrInput
+	AzureAccessPolicy IdentityAzureAccessPolicyPtrInput
+	// ID, in GUID format, of the Identity.
+	CplnId pulumi.StringPtrInput
+	// Description of the Identity.
+	Description pulumi.StringPtrInput
+	// The GCP access policy can either contain an existing service_account or multiple bindings.
+	GcpAccessPolicy IdentityGcpAccessPolicyPtrInput
+	// Name of the GVC.
+	Gvc pulumi.StringPtrInput
+	// Name of the Identity.
+	Name pulumi.StringPtrInput
+	// ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
 	NativeNetworkResources IdentityNativeNetworkResourceArrayInput
-	NetworkResources       IdentityNetworkResourceArrayInput
-	NgsAccessPolicy        IdentityNgsAccessPolicyPtrInput
-	SelfLink               pulumi.StringPtrInput
-	Status                 pulumi.StringMapInput
-	Tags                   pulumi.StringMapInput
+	// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+	// ports. - IP's and ports.
+	NetworkResources IdentityNetworkResourceArrayInput
+	NgsAccessPolicy  IdentityNgsAccessPolicyPtrInput
+	// Full link to this resource. Can be referenced by other resources.
+	SelfLink pulumi.StringPtrInput
+	// Key-value map of identity status. Available fields: `objectName`.
+	Status pulumi.StringMapInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
 }
 
 func (IdentityState) ElementType() reflect.Type {
@@ -100,30 +133,46 @@ func (IdentityState) ElementType() reflect.Type {
 }
 
 type identityArgs struct {
-	AwsAccessPolicy        *IdentityAwsAccessPolicy        `pulumi:"awsAccessPolicy"`
-	AzureAccessPolicy      *IdentityAzureAccessPolicy      `pulumi:"azureAccessPolicy"`
-	Description            *string                         `pulumi:"description"`
-	GcpAccessPolicy        *IdentityGcpAccessPolicy        `pulumi:"gcpAccessPolicy"`
-	Gvc                    string                          `pulumi:"gvc"`
-	Name                   *string                         `pulumi:"name"`
+	AwsAccessPolicy   *IdentityAwsAccessPolicy   `pulumi:"awsAccessPolicy"`
+	AzureAccessPolicy *IdentityAzureAccessPolicy `pulumi:"azureAccessPolicy"`
+	// Description of the Identity.
+	Description *string `pulumi:"description"`
+	// The GCP access policy can either contain an existing service_account or multiple bindings.
+	GcpAccessPolicy *IdentityGcpAccessPolicy `pulumi:"gcpAccessPolicy"`
+	// Name of the GVC.
+	Gvc string `pulumi:"gvc"`
+	// Name of the Identity.
+	Name *string `pulumi:"name"`
+	// ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
 	NativeNetworkResources []IdentityNativeNetworkResource `pulumi:"nativeNetworkResources"`
-	NetworkResources       []IdentityNetworkResource       `pulumi:"networkResources"`
-	NgsAccessPolicy        *IdentityNgsAccessPolicy        `pulumi:"ngsAccessPolicy"`
-	Tags                   map[string]string               `pulumi:"tags"`
+	// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+	// ports. - IP's and ports.
+	NetworkResources []IdentityNetworkResource `pulumi:"networkResources"`
+	NgsAccessPolicy  *IdentityNgsAccessPolicy  `pulumi:"ngsAccessPolicy"`
+	// Key-value map of resource tags.
+	Tags map[string]string `pulumi:"tags"`
 }
 
 // The set of arguments for constructing a Identity resource.
 type IdentityArgs struct {
-	AwsAccessPolicy        IdentityAwsAccessPolicyPtrInput
-	AzureAccessPolicy      IdentityAzureAccessPolicyPtrInput
-	Description            pulumi.StringPtrInput
-	GcpAccessPolicy        IdentityGcpAccessPolicyPtrInput
-	Gvc                    pulumi.StringInput
-	Name                   pulumi.StringPtrInput
+	AwsAccessPolicy   IdentityAwsAccessPolicyPtrInput
+	AzureAccessPolicy IdentityAzureAccessPolicyPtrInput
+	// Description of the Identity.
+	Description pulumi.StringPtrInput
+	// The GCP access policy can either contain an existing service_account or multiple bindings.
+	GcpAccessPolicy IdentityGcpAccessPolicyPtrInput
+	// Name of the GVC.
+	Gvc pulumi.StringInput
+	// Name of the Identity.
+	Name pulumi.StringPtrInput
+	// ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
 	NativeNetworkResources IdentityNativeNetworkResourceArrayInput
-	NetworkResources       IdentityNetworkResourceArrayInput
-	NgsAccessPolicy        IdentityNgsAccessPolicyPtrInput
-	Tags                   pulumi.StringMapInput
+	// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+	// ports. - IP's and ports.
+	NetworkResources IdentityNetworkResourceArrayInput
+	NgsAccessPolicy  IdentityNgsAccessPolicyPtrInput
+	// Key-value map of resource tags.
+	Tags pulumi.StringMapInput
 }
 
 func (IdentityArgs) ElementType() reflect.Type {
@@ -245,30 +294,38 @@ func (o IdentityOutput) AzureAccessPolicy() IdentityAzureAccessPolicyPtrOutput {
 	return o.ApplyT(func(v *Identity) IdentityAzureAccessPolicyPtrOutput { return v.AzureAccessPolicy }).(IdentityAzureAccessPolicyPtrOutput)
 }
 
+// ID, in GUID format, of the Identity.
 func (o IdentityOutput) CplnId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Identity) pulumi.StringOutput { return v.CplnId }).(pulumi.StringOutput)
 }
 
+// Description of the Identity.
 func (o IdentityOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Identity) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
+// The GCP access policy can either contain an existing service_account or multiple bindings.
 func (o IdentityOutput) GcpAccessPolicy() IdentityGcpAccessPolicyPtrOutput {
 	return o.ApplyT(func(v *Identity) IdentityGcpAccessPolicyPtrOutput { return v.GcpAccessPolicy }).(IdentityGcpAccessPolicyPtrOutput)
 }
 
+// Name of the GVC.
 func (o IdentityOutput) Gvc() pulumi.StringOutput {
 	return o.ApplyT(func(v *Identity) pulumi.StringOutput { return v.Gvc }).(pulumi.StringOutput)
 }
 
+// Name of the Identity.
 func (o IdentityOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Identity) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
 func (o IdentityOutput) NativeNetworkResources() IdentityNativeNetworkResourceArrayOutput {
 	return o.ApplyT(func(v *Identity) IdentityNativeNetworkResourceArrayOutput { return v.NativeNetworkResources }).(IdentityNativeNetworkResourceArrayOutput)
 }
 
+// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+// ports. - IP's and ports.
 func (o IdentityOutput) NetworkResources() IdentityNetworkResourceArrayOutput {
 	return o.ApplyT(func(v *Identity) IdentityNetworkResourceArrayOutput { return v.NetworkResources }).(IdentityNetworkResourceArrayOutput)
 }
@@ -277,14 +334,17 @@ func (o IdentityOutput) NgsAccessPolicy() IdentityNgsAccessPolicyPtrOutput {
 	return o.ApplyT(func(v *Identity) IdentityNgsAccessPolicyPtrOutput { return v.NgsAccessPolicy }).(IdentityNgsAccessPolicyPtrOutput)
 }
 
+// Full link to this resource. Can be referenced by other resources.
 func (o IdentityOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *Identity) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
 }
 
+// Key-value map of identity status. Available fields: `objectName`.
 func (o IdentityOutput) Status() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Identity) pulumi.StringMapOutput { return v.Status }).(pulumi.StringMapOutput)
 }
 
+// Key-value map of resource tags.
 func (o IdentityOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Identity) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
 }

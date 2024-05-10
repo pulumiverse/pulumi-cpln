@@ -13,9 +13,15 @@ namespace Pulumiverse.Cpln
     [CplnResourceType("cpln:index/group:Group")]
     public partial class Group : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The ID, in GUID format, of the Group.
+        /// </summary>
         [Output("cplnId")]
         public Output<string> CplnId { get; private set; } = null!;
 
+        /// <summary>
+        /// Description of Group.
+        /// </summary>
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
 
@@ -25,21 +31,38 @@ namespace Pulumiverse.Cpln
         [Output("memberQuery")]
         public Output<Outputs.GroupMemberQuery?> MemberQuery { get; private set; } = null!;
 
+        /// <summary>
+        /// Name of the Group.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Origin of the service account. Either `builtin` or `default`.
+        /// </summary>
         [Output("origin")]
         public Output<string> Origin { get; private set; } = null!;
 
         [Output("selfLink")]
         public Output<string> SelfLink { get; private set; } = null!;
 
+        /// <summary>
+        /// List of service accounts that exists within the configured org. Group membership will fail if the service account does
+        /// not exits within the org.
+        /// </summary>
         [Output("serviceAccounts")]
         public Output<ImmutableArray<string>> ServiceAccounts { get; private set; } = null!;
 
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         [Output("tags")]
         public Output<ImmutableDictionary<string, string>?> Tags { get; private set; } = null!;
 
+        /// <summary>
+        /// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+        /// if the user ID / email does not exist within the org.
+        /// </summary>
         [Output("userIdsAndEmails")]
         public Output<ImmutableArray<string>> UserIdsAndEmails { get; private set; } = null!;
 
@@ -90,6 +113,9 @@ namespace Pulumiverse.Cpln
 
     public sealed class GroupArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Description of Group.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
@@ -99,11 +125,19 @@ namespace Pulumiverse.Cpln
         [Input("memberQuery")]
         public Input<Inputs.GroupMemberQueryArgs>? MemberQuery { get; set; }
 
+        /// <summary>
+        /// Name of the Group.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
         [Input("serviceAccounts")]
         private InputList<string>? _serviceAccounts;
+
+        /// <summary>
+        /// List of service accounts that exists within the configured org. Group membership will fail if the service account does
+        /// not exits within the org.
+        /// </summary>
         public InputList<string> ServiceAccounts
         {
             get => _serviceAccounts ?? (_serviceAccounts = new InputList<string>());
@@ -112,6 +146,10 @@ namespace Pulumiverse.Cpln
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());
@@ -120,6 +158,11 @@ namespace Pulumiverse.Cpln
 
         [Input("userIdsAndEmails")]
         private InputList<string>? _userIdsAndEmails;
+
+        /// <summary>
+        /// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+        /// if the user ID / email does not exist within the org.
+        /// </summary>
         public InputList<string> UserIdsAndEmails
         {
             get => _userIdsAndEmails ?? (_userIdsAndEmails = new InputList<string>());
@@ -134,9 +177,15 @@ namespace Pulumiverse.Cpln
 
     public sealed class GroupState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The ID, in GUID format, of the Group.
+        /// </summary>
         [Input("cplnId")]
         public Input<string>? CplnId { get; set; }
 
+        /// <summary>
+        /// Description of Group.
+        /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
@@ -146,9 +195,15 @@ namespace Pulumiverse.Cpln
         [Input("memberQuery")]
         public Input<Inputs.GroupMemberQueryGetArgs>? MemberQuery { get; set; }
 
+        /// <summary>
+        /// Name of the Group.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Origin of the service account. Either `builtin` or `default`.
+        /// </summary>
         [Input("origin")]
         public Input<string>? Origin { get; set; }
 
@@ -157,6 +212,11 @@ namespace Pulumiverse.Cpln
 
         [Input("serviceAccounts")]
         private InputList<string>? _serviceAccounts;
+
+        /// <summary>
+        /// List of service accounts that exists within the configured org. Group membership will fail if the service account does
+        /// not exits within the org.
+        /// </summary>
         public InputList<string> ServiceAccounts
         {
             get => _serviceAccounts ?? (_serviceAccounts = new InputList<string>());
@@ -165,6 +225,10 @@ namespace Pulumiverse.Cpln
 
         [Input("tags")]
         private InputMap<string>? _tags;
+
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public InputMap<string> Tags
         {
             get => _tags ?? (_tags = new InputMap<string>());
@@ -173,6 +237,11 @@ namespace Pulumiverse.Cpln
 
         [Input("userIdsAndEmails")]
         private InputList<string>? _userIdsAndEmails;
+
+        /// <summary>
+        /// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
+        /// if the user ID / email does not exist within the org.
+        /// </summary>
         public InputList<string> UserIdsAndEmails
         {
             get => _userIdsAndEmails ?? (_userIdsAndEmails = new InputList<string>());

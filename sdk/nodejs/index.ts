@@ -40,6 +40,16 @@ export const getGvc: typeof import("./getGvc").getGvc = null as any;
 export const getGvcOutput: typeof import("./getGvc").getGvcOutput = null as any;
 utilities.lazyLoad(exports, ["getGvc","getGvcOutput"], () => require("./getGvc"));
 
+export { GetImageArgs, GetImageResult, GetImageOutputArgs } from "./getImage";
+export const getImage: typeof import("./getImage").getImage = null as any;
+export const getImageOutput: typeof import("./getImage").getImageOutput = null as any;
+utilities.lazyLoad(exports, ["getImage","getImageOutput"], () => require("./getImage"));
+
+export { GetImagesArgs, GetImagesResult, GetImagesOutputArgs } from "./getImages";
+export const getImages: typeof import("./getImages").getImages = null as any;
+export const getImagesOutput: typeof import("./getImages").getImagesOutput = null as any;
+utilities.lazyLoad(exports, ["getImages","getImagesOutput"], () => require("./getImages"));
+
 export { GetLocationArgs, GetLocationResult, GetLocationOutputArgs } from "./getLocation";
 export const getLocation: typeof import("./getLocation").getLocation = null as any;
 export const getLocationOutput: typeof import("./getLocation").getLocationOutput = null as any;
