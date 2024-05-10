@@ -22,3 +22,5 @@ jobs:
           # Upgrading all libs increases the chance of the build to fail.
           # So, we upgrade only provider to reduce the number of human interventions.
           kind: provider
+          username: pulumi-bot
+          email: bot@pulumi.com
