@@ -31,6 +31,8 @@
         "gvc.ts",
         "identity.ts",
         "index.ts",
+        "location.ts",
+        "mk8s.ts",
         "org.ts",
         "orgLogging.ts",
         "orgTracing.ts",

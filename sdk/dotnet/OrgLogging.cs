@@ -67,6 +67,9 @@ namespace Pulumiverse.Cpln
         [Output("stackdriverLoggings")]
         public Output<ImmutableArray<Outputs.OrgLoggingStackdriverLogging>> StackdriverLoggings { get; private set; } = null!;
 
+        [Output("syslogLoggings")]
+        public Output<ImmutableArray<Outputs.OrgLoggingSyslogLogging>> SyslogLoggings { get; private set; } = null!;
+
         /// <summary>
         /// Key-value map of the org's tags.
         /// </summary>
@@ -200,6 +203,14 @@ namespace Pulumiverse.Cpln
             set => _stackdriverLoggings = value;
         }
 
+        [Input("syslogLoggings")]
+        private InputList<Inputs.OrgLoggingSyslogLoggingArgs>? _syslogLoggings;
+        public InputList<Inputs.OrgLoggingSyslogLoggingArgs> SyslogLoggings
+        {
+            get => _syslogLoggings ?? (_syslogLoggings = new InputList<Inputs.OrgLoggingSyslogLoggingArgs>());
+            set => _syslogLoggings = value;
+        }
+
         public OrgLoggingArgs()
         {
         }
@@ -304,6 +315,14 @@ namespace Pulumiverse.Cpln
         {
             get => _stackdriverLoggings ?? (_stackdriverLoggings = new InputList<Inputs.OrgLoggingStackdriverLoggingGetArgs>());
             set => _stackdriverLoggings = value;
+        }
+
+        [Input("syslogLoggings")]
+        private InputList<Inputs.OrgLoggingSyslogLoggingGetArgs>? _syslogLoggings;
+        public InputList<Inputs.OrgLoggingSyslogLoggingGetArgs> SyslogLoggings
+        {
+            get => _syslogLoggings ?? (_syslogLoggings = new InputList<Inputs.OrgLoggingSyslogLoggingGetArgs>());
+            set => _syslogLoggings = value;
         }
 
         [Input("tags")]

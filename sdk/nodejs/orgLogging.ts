@@ -66,6 +66,7 @@ export class OrgLogging extends pulumi.CustomResource {
      */
     public readonly s3Loggings!: pulumi.Output<outputs.OrgLoggingS3Logging[] | undefined>;
     public readonly stackdriverLoggings!: pulumi.Output<outputs.OrgLoggingStackdriverLogging[] | undefined>;
+    public readonly syslogLoggings!: pulumi.Output<outputs.OrgLoggingSyslogLogging[] | undefined>;
     /**
      * Key-value map of the org's tags.
      */
@@ -95,6 +96,7 @@ export class OrgLogging extends pulumi.CustomResource {
             resourceInputs["name"] = state ? state.name : undefined;
             resourceInputs["s3Loggings"] = state ? state.s3Loggings : undefined;
             resourceInputs["stackdriverLoggings"] = state ? state.stackdriverLoggings : undefined;
+            resourceInputs["syslogLoggings"] = state ? state.syslogLoggings : undefined;
             resourceInputs["tags"] = state ? state.tags : undefined;
         } else {
             const args = argsOrState as OrgLoggingArgs | undefined;
@@ -106,6 +108,7 @@ export class OrgLogging extends pulumi.CustomResource {
             resourceInputs["logzioLoggings"] = args ? args.logzioLoggings : undefined;
             resourceInputs["s3Loggings"] = args ? args.s3Loggings : undefined;
             resourceInputs["stackdriverLoggings"] = args ? args.stackdriverLoggings : undefined;
+            resourceInputs["syslogLoggings"] = args ? args.syslogLoggings : undefined;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["description"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;
@@ -152,6 +155,7 @@ export interface OrgLoggingState {
      */
     s3Loggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingS3Logging>[]>;
     stackdriverLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingStackdriverLogging>[]>;
+    syslogLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingSyslogLogging>[]>;
     /**
      * Key-value map of the org's tags.
      */
@@ -182,4 +186,5 @@ export interface OrgLoggingArgs {
      */
     s3Loggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingS3Logging>[]>;
     stackdriverLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingStackdriverLogging>[]>;
+    syslogLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingSyslogLogging>[]>;
 }

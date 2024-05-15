@@ -20,6 +20,8 @@ from .get_org import *
 from .group import *
 from .gvc import *
 from .identity import *
+from .location import *
+from .mk8s import *
 from .org import *
 from .org_logging import *
 from .org_tracing import *
@@ -105,6 +107,22 @@ _utilities.register(
   "fqn": "pulumiverse_cpln",
   "classes": {
    "cpln:index/identity:Identity": "Identity"
+  }
+ },
+ {
+  "pkg": "cpln",
+  "mod": "index/location",
+  "fqn": "pulumiverse_cpln",
+  "classes": {
+   "cpln:index/location:Location": "Location"
+  }
+ },
+ {
+  "pkg": "cpln",
+  "mod": "index/mk8s",
+  "fqn": "pulumiverse_cpln",
+  "classes": {
+   "cpln:index/mk8s:Mk8s": "Mk8s"
   }
  },
  {

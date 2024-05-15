@@ -60,7 +60,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			locationLocation, err := cpln.GetLocation(ctx, &cpln.GetLocationArgs{
+//			locationLocation, err := cpln.LookupLocation(ctx, &cpln.LookupLocationArgs{
 //				Name: "aws-us-west-2",
 //			}, nil)
 //			if err != nil {
@@ -73,9 +73,9 @@ import (
 //	}
 //
 // ```
-func GetLocation(ctx *pulumi.Context, args *GetLocationArgs, opts ...pulumi.InvokeOption) (*GetLocationResult, error) {
+func LookupLocation(ctx *pulumi.Context, args *LookupLocationArgs, opts ...pulumi.InvokeOption) (*LookupLocationResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
-	var rv GetLocationResult
+	var rv LookupLocationResult
 	err := ctx.Invoke("cpln:index/getLocation:getLocation", args, &rv, opts...)
 	if err != nil {
 		return nil, err
@@ -84,12 +84,12 @@ func GetLocation(ctx *pulumi.Context, args *GetLocationArgs, opts ...pulumi.Invo
 }
 
 // A collection of arguments for invoking getLocation.
-type GetLocationArgs struct {
+type LookupLocationArgs struct {
 	Name string `pulumi:"name"`
 }
 
 // A collection of values returned by getLocation.
-type GetLocationResult struct {
+type LookupLocationResult struct {
 	CloudProvider string           `pulumi:"cloudProvider"`
 	CplnId        string           `pulumi:"cplnId"`
 	Description   string           `pulumi:"description"`
@@ -104,94 +104,94 @@ type GetLocationResult struct {
 	Tags     map[string]string `pulumi:"tags"`
 }
 
-func GetLocationOutput(ctx *pulumi.Context, args GetLocationOutputArgs, opts ...pulumi.InvokeOption) GetLocationResultOutput {
+func LookupLocationOutput(ctx *pulumi.Context, args LookupLocationOutputArgs, opts ...pulumi.InvokeOption) LookupLocationResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetLocationResult, error) {
-			args := v.(GetLocationArgs)
-			r, err := GetLocation(ctx, &args, opts...)
-			var s GetLocationResult
+		ApplyT(func(v interface{}) (LookupLocationResult, error) {
+			args := v.(LookupLocationArgs)
+			r, err := LookupLocation(ctx, &args, opts...)
+			var s LookupLocationResult
 			if r != nil {
 				s = *r
 			}
 			return s, err
-		}).(GetLocationResultOutput)
+		}).(LookupLocationResultOutput)
 }
 
 // A collection of arguments for invoking getLocation.
-type GetLocationOutputArgs struct {
+type LookupLocationOutputArgs struct {
 	Name pulumi.StringInput `pulumi:"name"`
 }
 
-func (GetLocationOutputArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*GetLocationArgs)(nil)).Elem()
+func (LookupLocationOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*LookupLocationArgs)(nil)).Elem()
 }
 
 // A collection of values returned by getLocation.
-type GetLocationResultOutput struct{ *pulumi.OutputState }
+type LookupLocationResultOutput struct{ *pulumi.OutputState }
 
-func (GetLocationResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*GetLocationResult)(nil)).Elem()
+func (LookupLocationResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*LookupLocationResult)(nil)).Elem()
 }
 
-func (o GetLocationResultOutput) ToGetLocationResultOutput() GetLocationResultOutput {
+func (o LookupLocationResultOutput) ToLookupLocationResultOutput() LookupLocationResultOutput {
 	return o
 }
 
-func (o GetLocationResultOutput) ToGetLocationResultOutputWithContext(ctx context.Context) GetLocationResultOutput {
+func (o LookupLocationResultOutput) ToLookupLocationResultOutputWithContext(ctx context.Context) LookupLocationResultOutput {
 	return o
 }
 
-func (o GetLocationResultOutput) ToOutput(ctx context.Context) pulumix.Output[GetLocationResult] {
-	return pulumix.Output[GetLocationResult]{
+func (o LookupLocationResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupLocationResult] {
+	return pulumix.Output[LookupLocationResult]{
 		OutputState: o.OutputState,
 	}
 }
 
-func (o GetLocationResultOutput) CloudProvider() pulumi.StringOutput {
-	return o.ApplyT(func(v GetLocationResult) string { return v.CloudProvider }).(pulumi.StringOutput)
+func (o LookupLocationResultOutput) CloudProvider() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupLocationResult) string { return v.CloudProvider }).(pulumi.StringOutput)
 }
 
-func (o GetLocationResultOutput) CplnId() pulumi.StringOutput {
-	return o.ApplyT(func(v GetLocationResult) string { return v.CplnId }).(pulumi.StringOutput)
+func (o LookupLocationResultOutput) CplnId() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupLocationResult) string { return v.CplnId }).(pulumi.StringOutput)
 }
 
-func (o GetLocationResultOutput) Description() pulumi.StringOutput {
-	return o.ApplyT(func(v GetLocationResult) string { return v.Description }).(pulumi.StringOutput)
+func (o LookupLocationResultOutput) Description() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupLocationResult) string { return v.Description }).(pulumi.StringOutput)
 }
 
-func (o GetLocationResultOutput) Enabled() pulumi.BoolOutput {
-	return o.ApplyT(func(v GetLocationResult) bool { return v.Enabled }).(pulumi.BoolOutput)
+func (o LookupLocationResultOutput) Enabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v LookupLocationResult) bool { return v.Enabled }).(pulumi.BoolOutput)
 }
 
-func (o GetLocationResultOutput) Geos() GetLocationGeoArrayOutput {
-	return o.ApplyT(func(v GetLocationResult) []GetLocationGeo { return v.Geos }).(GetLocationGeoArrayOutput)
+func (o LookupLocationResultOutput) Geos() GetLocationGeoArrayOutput {
+	return o.ApplyT(func(v LookupLocationResult) []GetLocationGeo { return v.Geos }).(GetLocationGeoArrayOutput)
 }
 
 // The provider-assigned unique ID for this managed resource.
-func (o GetLocationResultOutput) Id() pulumi.StringOutput {
-	return o.ApplyT(func(v GetLocationResult) string { return v.Id }).(pulumi.StringOutput)
+func (o LookupLocationResultOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupLocationResult) string { return v.Id }).(pulumi.StringOutput)
 }
 
-func (o GetLocationResultOutput) IpRanges() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v GetLocationResult) []string { return v.IpRanges }).(pulumi.StringArrayOutput)
+func (o LookupLocationResultOutput) IpRanges() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v LookupLocationResult) []string { return v.IpRanges }).(pulumi.StringArrayOutput)
 }
 
-func (o GetLocationResultOutput) Name() pulumi.StringOutput {
-	return o.ApplyT(func(v GetLocationResult) string { return v.Name }).(pulumi.StringOutput)
+func (o LookupLocationResultOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupLocationResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
-func (o GetLocationResultOutput) Region() pulumi.StringOutput {
-	return o.ApplyT(func(v GetLocationResult) string { return v.Region }).(pulumi.StringOutput)
+func (o LookupLocationResultOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupLocationResult) string { return v.Region }).(pulumi.StringOutput)
 }
 
-func (o GetLocationResultOutput) SelfLink() pulumi.StringOutput {
-	return o.ApplyT(func(v GetLocationResult) string { return v.SelfLink }).(pulumi.StringOutput)
+func (o LookupLocationResultOutput) SelfLink() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupLocationResult) string { return v.SelfLink }).(pulumi.StringOutput)
 }
 
-func (o GetLocationResultOutput) Tags() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetLocationResult) map[string]string { return v.Tags }).(pulumi.StringMapOutput)
+func (o LookupLocationResultOutput) Tags() pulumi.StringMapOutput {
+	return o.ApplyT(func(v LookupLocationResult) map[string]string { return v.Tags }).(pulumi.StringMapOutput)
 }
 
 func init() {
-	pulumi.RegisterOutputType(GetLocationResultOutput{})
+	pulumi.RegisterOutputType(LookupLocationResultOutput{})
 }
