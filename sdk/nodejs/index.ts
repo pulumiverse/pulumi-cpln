@@ -80,6 +80,16 @@ export type Identity = import("./identity").Identity;
 export const Identity: typeof import("./identity").Identity = null as any;
 utilities.lazyLoad(exports, ["Identity"], () => require("./identity"));
 
+export { LocationArgs, LocationState } from "./location";
+export type Location = import("./location").Location;
+export const Location: typeof import("./location").Location = null as any;
+utilities.lazyLoad(exports, ["Location"], () => require("./location"));
+
+export { Mk8sArgs, Mk8sState } from "./mk8s";
+export type Mk8s = import("./mk8s").Mk8s;
+export const Mk8s: typeof import("./mk8s").Mk8s = null as any;
+utilities.lazyLoad(exports, ["Mk8s"], () => require("./mk8s"));
+
 export { OrgArgs, OrgState } from "./org";
 export type Org = import("./org").Org;
 export const Org: typeof import("./org").Org = null as any;
@@ -160,6 +170,10 @@ const _module = {
                 return new Gvc(name, <any>undefined, { urn })
             case "cpln:index/identity:Identity":
                 return new Identity(name, <any>undefined, { urn })
+            case "cpln:index/location:Location":
+                return new Location(name, <any>undefined, { urn })
+            case "cpln:index/mk8s:Mk8s":
+                return new Mk8s(name, <any>undefined, { urn })
             case "cpln:index/org:Org":
                 return new Org(name, <any>undefined, { urn })
             case "cpln:index/orgLogging:OrgLogging":
@@ -191,6 +205,8 @@ pulumi.runtime.registerResourceModule("cpln", "index/domainRoute", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/group", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/gvc", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/identity", _module)
+pulumi.runtime.registerResourceModule("cpln", "index/location", _module)
+pulumi.runtime.registerResourceModule("cpln", "index/mk8s", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/org", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/orgLogging", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/orgTracing", _module)

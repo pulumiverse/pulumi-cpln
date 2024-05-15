@@ -48,6 +48,46 @@ __all__ = [
     'IdentityNgsAccessPolicyPub',
     'IdentityNgsAccessPolicyResp',
     'IdentityNgsAccessPolicySub',
+    'LocationGeo',
+    'Mk8sAddOns',
+    'Mk8sAddOnsAwsEcr',
+    'Mk8sAddOnsAwsEfs',
+    'Mk8sAddOnsAwsElb',
+    'Mk8sAddOnsAzureAcr',
+    'Mk8sAddOnsAzureWorkloadIdentity',
+    'Mk8sAddOnsLogs',
+    'Mk8sAddOnsMetrics',
+    'Mk8sAddOnsMetricsScrapeAnnotated',
+    'Mk8sAddOnsNvidia',
+    'Mk8sAwsProvider',
+    'Mk8sAwsProviderAutoscaler',
+    'Mk8sAwsProviderImage',
+    'Mk8sAwsProviderNetworking',
+    'Mk8sAwsProviderNodePool',
+    'Mk8sAwsProviderNodePoolOverrideImage',
+    'Mk8sAwsProviderNodePoolTaint',
+    'Mk8sFirewall',
+    'Mk8sGenericProvider',
+    'Mk8sGenericProviderNetworking',
+    'Mk8sGenericProviderNodePool',
+    'Mk8sGenericProviderNodePoolTaint',
+    'Mk8sHetznerProvider',
+    'Mk8sHetznerProviderAutoscaler',
+    'Mk8sHetznerProviderDedicatedServerNodePool',
+    'Mk8sHetznerProviderDedicatedServerNodePoolTaint',
+    'Mk8sHetznerProviderNetworking',
+    'Mk8sHetznerProviderNodePool',
+    'Mk8sHetznerProviderNodePoolTaint',
+    'Mk8sStatus',
+    'Mk8sStatusAddOn',
+    'Mk8sStatusAddOnAwsEcr',
+    'Mk8sStatusAddOnAwsEf',
+    'Mk8sStatusAddOnAwsElb',
+    'Mk8sStatusAddOnAwsWorkloadIdentity',
+    'Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig',
+    'Mk8sStatusAddOnDashboard',
+    'Mk8sStatusAddOnLog',
+    'Mk8sStatusAddOnMetric',
     'OrgAuthConfig',
     'OrgLoggingCloudWatchLogging',
     'OrgLoggingCoralogixLogging',
@@ -60,6 +100,7 @@ __all__ = [
     'OrgLoggingLogzioLogging',
     'OrgLoggingS3Logging',
     'OrgLoggingStackdriverLogging',
+    'OrgLoggingSyslogLogging',
     'OrgObservability',
     'OrgStatus',
     'OrgTracingControlplaneTracing',
@@ -2150,6 +2191,2761 @@ class IdentityNgsAccessPolicySub(dict):
 
 
 @pulumi.output_type
+class LocationGeo(dict):
+    def __init__(__self__, *,
+                 city: Optional[str] = None,
+                 continent: Optional[str] = None,
+                 country: Optional[str] = None,
+                 lat: Optional[float] = None,
+                 lon: Optional[float] = None,
+                 state: Optional[str] = None):
+        LocationGeo._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            city=city,
+            continent=continent,
+            country=country,
+            lat=lat,
+            lon=lon,
+            state=state,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             city: Optional[str] = None,
+             continent: Optional[str] = None,
+             country: Optional[str] = None,
+             lat: Optional[float] = None,
+             lon: Optional[float] = None,
+             state: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if city is not None:
+            _setter("city", city)
+        if continent is not None:
+            _setter("continent", continent)
+        if country is not None:
+            _setter("country", country)
+        if lat is not None:
+            _setter("lat", lat)
+        if lon is not None:
+            _setter("lon", lon)
+        if state is not None:
+            _setter("state", state)
+
+    @property
+    @pulumi.getter
+    def city(self) -> Optional[str]:
+        return pulumi.get(self, "city")
+
+    @property
+    @pulumi.getter
+    def continent(self) -> Optional[str]:
+        return pulumi.get(self, "continent")
+
+    @property
+    @pulumi.getter
+    def country(self) -> Optional[str]:
+        return pulumi.get(self, "country")
+
+    @property
+    @pulumi.getter
+    def lat(self) -> Optional[float]:
+        return pulumi.get(self, "lat")
+
+    @property
+    @pulumi.getter
+    def lon(self) -> Optional[float]:
+        return pulumi.get(self, "lon")
+
+    @property
+    @pulumi.getter
+    def state(self) -> Optional[str]:
+        return pulumi.get(self, "state")
+
+
+@pulumi.output_type
+class Mk8sAddOns(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "awsEcr":
+            suggest = "aws_ecr"
+        elif key == "awsEfs":
+            suggest = "aws_efs"
+        elif key == "awsElb":
+            suggest = "aws_elb"
+        elif key == "awsWorkloadIdentity":
+            suggest = "aws_workload_identity"
+        elif key == "azureAcr":
+            suggest = "azure_acr"
+        elif key == "azureWorkloadIdentity":
+            suggest = "azure_workload_identity"
+        elif key == "localPathStorage":
+            suggest = "local_path_storage"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOns. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAddOns.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAddOns.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 aws_ecr: Optional['outputs.Mk8sAddOnsAwsEcr'] = None,
+                 aws_efs: Optional['outputs.Mk8sAddOnsAwsEfs'] = None,
+                 aws_elb: Optional['outputs.Mk8sAddOnsAwsElb'] = None,
+                 aws_workload_identity: Optional[bool] = None,
+                 azure_acr: Optional['outputs.Mk8sAddOnsAzureAcr'] = None,
+                 azure_workload_identity: Optional['outputs.Mk8sAddOnsAzureWorkloadIdentity'] = None,
+                 dashboard: Optional[bool] = None,
+                 local_path_storage: Optional[bool] = None,
+                 logs: Optional['outputs.Mk8sAddOnsLogs'] = None,
+                 metrics: Optional['outputs.Mk8sAddOnsMetrics'] = None,
+                 nvidia: Optional['outputs.Mk8sAddOnsNvidia'] = None):
+        Mk8sAddOns._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            aws_ecr=aws_ecr,
+            aws_efs=aws_efs,
+            aws_elb=aws_elb,
+            aws_workload_identity=aws_workload_identity,
+            azure_acr=azure_acr,
+            azure_workload_identity=azure_workload_identity,
+            dashboard=dashboard,
+            local_path_storage=local_path_storage,
+            logs=logs,
+            metrics=metrics,
+            nvidia=nvidia,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             aws_ecr: Optional['outputs.Mk8sAddOnsAwsEcr'] = None,
+             aws_efs: Optional['outputs.Mk8sAddOnsAwsEfs'] = None,
+             aws_elb: Optional['outputs.Mk8sAddOnsAwsElb'] = None,
+             aws_workload_identity: Optional[bool] = None,
+             azure_acr: Optional['outputs.Mk8sAddOnsAzureAcr'] = None,
+             azure_workload_identity: Optional['outputs.Mk8sAddOnsAzureWorkloadIdentity'] = None,
+             dashboard: Optional[bool] = None,
+             local_path_storage: Optional[bool] = None,
+             logs: Optional['outputs.Mk8sAddOnsLogs'] = None,
+             metrics: Optional['outputs.Mk8sAddOnsMetrics'] = None,
+             nvidia: Optional['outputs.Mk8sAddOnsNvidia'] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'awsEcr' in kwargs:
+            aws_ecr = kwargs['awsEcr']
+        if 'awsEfs' in kwargs:
+            aws_efs = kwargs['awsEfs']
+        if 'awsElb' in kwargs:
+            aws_elb = kwargs['awsElb']
+        if 'awsWorkloadIdentity' in kwargs:
+            aws_workload_identity = kwargs['awsWorkloadIdentity']
+        if 'azureAcr' in kwargs:
+            azure_acr = kwargs['azureAcr']
+        if 'azureWorkloadIdentity' in kwargs:
+            azure_workload_identity = kwargs['azureWorkloadIdentity']
+        if 'localPathStorage' in kwargs:
+            local_path_storage = kwargs['localPathStorage']
+
+        if aws_ecr is not None:
+            _setter("aws_ecr", aws_ecr)
+        if aws_efs is not None:
+            _setter("aws_efs", aws_efs)
+        if aws_elb is not None:
+            _setter("aws_elb", aws_elb)
+        if aws_workload_identity is not None:
+            _setter("aws_workload_identity", aws_workload_identity)
+        if azure_acr is not None:
+            _setter("azure_acr", azure_acr)
+        if azure_workload_identity is not None:
+            _setter("azure_workload_identity", azure_workload_identity)
+        if dashboard is not None:
+            _setter("dashboard", dashboard)
+        if local_path_storage is not None:
+            _setter("local_path_storage", local_path_storage)
+        if logs is not None:
+            _setter("logs", logs)
+        if metrics is not None:
+            _setter("metrics", metrics)
+        if nvidia is not None:
+            _setter("nvidia", nvidia)
+
+    @property
+    @pulumi.getter(name="awsEcr")
+    def aws_ecr(self) -> Optional['outputs.Mk8sAddOnsAwsEcr']:
+        return pulumi.get(self, "aws_ecr")
+
+    @property
+    @pulumi.getter(name="awsEfs")
+    def aws_efs(self) -> Optional['outputs.Mk8sAddOnsAwsEfs']:
+        return pulumi.get(self, "aws_efs")
+
+    @property
+    @pulumi.getter(name="awsElb")
+    def aws_elb(self) -> Optional['outputs.Mk8sAddOnsAwsElb']:
+        return pulumi.get(self, "aws_elb")
+
+    @property
+    @pulumi.getter(name="awsWorkloadIdentity")
+    def aws_workload_identity(self) -> Optional[bool]:
+        return pulumi.get(self, "aws_workload_identity")
+
+    @property
+    @pulumi.getter(name="azureAcr")
+    def azure_acr(self) -> Optional['outputs.Mk8sAddOnsAzureAcr']:
+        return pulumi.get(self, "azure_acr")
+
+    @property
+    @pulumi.getter(name="azureWorkloadIdentity")
+    def azure_workload_identity(self) -> Optional['outputs.Mk8sAddOnsAzureWorkloadIdentity']:
+        return pulumi.get(self, "azure_workload_identity")
+
+    @property
+    @pulumi.getter
+    def dashboard(self) -> Optional[bool]:
+        return pulumi.get(self, "dashboard")
+
+    @property
+    @pulumi.getter(name="localPathStorage")
+    def local_path_storage(self) -> Optional[bool]:
+        return pulumi.get(self, "local_path_storage")
+
+    @property
+    @pulumi.getter
+    def logs(self) -> Optional['outputs.Mk8sAddOnsLogs']:
+        return pulumi.get(self, "logs")
+
+    @property
+    @pulumi.getter
+    def metrics(self) -> Optional['outputs.Mk8sAddOnsMetrics']:
+        return pulumi.get(self, "metrics")
+
+    @property
+    @pulumi.getter
+    def nvidia(self) -> Optional['outputs.Mk8sAddOnsNvidia']:
+        return pulumi.get(self, "nvidia")
+
+
+@pulumi.output_type
+class Mk8sAddOnsAwsEcr(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "roleArn":
+            suggest = "role_arn"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOnsAwsEcr. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAddOnsAwsEcr.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAddOnsAwsEcr.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 role_arn: str):
+        Mk8sAddOnsAwsEcr._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            role_arn=role_arn,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             role_arn: str,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'roleArn' in kwargs:
+            role_arn = kwargs['roleArn']
+
+        _setter("role_arn", role_arn)
+
+    @property
+    @pulumi.getter(name="roleArn")
+    def role_arn(self) -> str:
+        return pulumi.get(self, "role_arn")
+
+
+@pulumi.output_type
+class Mk8sAddOnsAwsEfs(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "roleArn":
+            suggest = "role_arn"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOnsAwsEfs. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAddOnsAwsEfs.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAddOnsAwsEfs.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 role_arn: str):
+        Mk8sAddOnsAwsEfs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            role_arn=role_arn,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             role_arn: str,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'roleArn' in kwargs:
+            role_arn = kwargs['roleArn']
+
+        _setter("role_arn", role_arn)
+
+    @property
+    @pulumi.getter(name="roleArn")
+    def role_arn(self) -> str:
+        return pulumi.get(self, "role_arn")
+
+
+@pulumi.output_type
+class Mk8sAddOnsAwsElb(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "roleArn":
+            suggest = "role_arn"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOnsAwsElb. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAddOnsAwsElb.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAddOnsAwsElb.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 role_arn: str):
+        Mk8sAddOnsAwsElb._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            role_arn=role_arn,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             role_arn: str,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'roleArn' in kwargs:
+            role_arn = kwargs['roleArn']
+
+        _setter("role_arn", role_arn)
+
+    @property
+    @pulumi.getter(name="roleArn")
+    def role_arn(self) -> str:
+        return pulumi.get(self, "role_arn")
+
+
+@pulumi.output_type
+class Mk8sAddOnsAzureAcr(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "clientId":
+            suggest = "client_id"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOnsAzureAcr. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAddOnsAzureAcr.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAddOnsAzureAcr.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 client_id: str):
+        Mk8sAddOnsAzureAcr._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            client_id=client_id,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             client_id: str,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'clientId' in kwargs:
+            client_id = kwargs['clientId']
+
+        _setter("client_id", client_id)
+
+    @property
+    @pulumi.getter(name="clientId")
+    def client_id(self) -> str:
+        return pulumi.get(self, "client_id")
+
+
+@pulumi.output_type
+class Mk8sAddOnsAzureWorkloadIdentity(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "tenantId":
+            suggest = "tenant_id"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOnsAzureWorkloadIdentity. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAddOnsAzureWorkloadIdentity.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAddOnsAzureWorkloadIdentity.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 tenant_id: str):
+        Mk8sAddOnsAzureWorkloadIdentity._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            tenant_id=tenant_id,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             tenant_id: str,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'tenantId' in kwargs:
+            tenant_id = kwargs['tenantId']
+
+        _setter("tenant_id", tenant_id)
+
+    @property
+    @pulumi.getter(name="tenantId")
+    def tenant_id(self) -> str:
+        return pulumi.get(self, "tenant_id")
+
+
+@pulumi.output_type
+class Mk8sAddOnsLogs(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "auditEnabled":
+            suggest = "audit_enabled"
+        elif key == "excludeNamespaces":
+            suggest = "exclude_namespaces"
+        elif key == "includeNamespaces":
+            suggest = "include_namespaces"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOnsLogs. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAddOnsLogs.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAddOnsLogs.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 audit_enabled: Optional[bool] = None,
+                 exclude_namespaces: Optional[str] = None,
+                 include_namespaces: Optional[str] = None):
+        Mk8sAddOnsLogs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            audit_enabled=audit_enabled,
+            exclude_namespaces=exclude_namespaces,
+            include_namespaces=include_namespaces,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             audit_enabled: Optional[bool] = None,
+             exclude_namespaces: Optional[str] = None,
+             include_namespaces: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'auditEnabled' in kwargs:
+            audit_enabled = kwargs['auditEnabled']
+        if 'excludeNamespaces' in kwargs:
+            exclude_namespaces = kwargs['excludeNamespaces']
+        if 'includeNamespaces' in kwargs:
+            include_namespaces = kwargs['includeNamespaces']
+
+        if audit_enabled is not None:
+            _setter("audit_enabled", audit_enabled)
+        if exclude_namespaces is not None:
+            _setter("exclude_namespaces", exclude_namespaces)
+        if include_namespaces is not None:
+            _setter("include_namespaces", include_namespaces)
+
+    @property
+    @pulumi.getter(name="auditEnabled")
+    def audit_enabled(self) -> Optional[bool]:
+        return pulumi.get(self, "audit_enabled")
+
+    @property
+    @pulumi.getter(name="excludeNamespaces")
+    def exclude_namespaces(self) -> Optional[str]:
+        return pulumi.get(self, "exclude_namespaces")
+
+    @property
+    @pulumi.getter(name="includeNamespaces")
+    def include_namespaces(self) -> Optional[str]:
+        return pulumi.get(self, "include_namespaces")
+
+
+@pulumi.output_type
+class Mk8sAddOnsMetrics(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "apiServer":
+            suggest = "api_server"
+        elif key == "coreDns":
+            suggest = "core_dns"
+        elif key == "kubeState":
+            suggest = "kube_state"
+        elif key == "nodeExporter":
+            suggest = "node_exporter"
+        elif key == "scrapeAnnotated":
+            suggest = "scrape_annotated"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOnsMetrics. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAddOnsMetrics.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAddOnsMetrics.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 api_server: Optional[bool] = None,
+                 cadvisor: Optional[bool] = None,
+                 core_dns: Optional[bool] = None,
+                 kube_state: Optional[bool] = None,
+                 kubelet: Optional[bool] = None,
+                 node_exporter: Optional[bool] = None,
+                 scrape_annotated: Optional['outputs.Mk8sAddOnsMetricsScrapeAnnotated'] = None):
+        Mk8sAddOnsMetrics._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            api_server=api_server,
+            cadvisor=cadvisor,
+            core_dns=core_dns,
+            kube_state=kube_state,
+            kubelet=kubelet,
+            node_exporter=node_exporter,
+            scrape_annotated=scrape_annotated,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             api_server: Optional[bool] = None,
+             cadvisor: Optional[bool] = None,
+             core_dns: Optional[bool] = None,
+             kube_state: Optional[bool] = None,
+             kubelet: Optional[bool] = None,
+             node_exporter: Optional[bool] = None,
+             scrape_annotated: Optional['outputs.Mk8sAddOnsMetricsScrapeAnnotated'] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'apiServer' in kwargs:
+            api_server = kwargs['apiServer']
+        if 'coreDns' in kwargs:
+            core_dns = kwargs['coreDns']
+        if 'kubeState' in kwargs:
+            kube_state = kwargs['kubeState']
+        if 'nodeExporter' in kwargs:
+            node_exporter = kwargs['nodeExporter']
+        if 'scrapeAnnotated' in kwargs:
+            scrape_annotated = kwargs['scrapeAnnotated']
+
+        if api_server is not None:
+            _setter("api_server", api_server)
+        if cadvisor is not None:
+            _setter("cadvisor", cadvisor)
+        if core_dns is not None:
+            _setter("core_dns", core_dns)
+        if kube_state is not None:
+            _setter("kube_state", kube_state)
+        if kubelet is not None:
+            _setter("kubelet", kubelet)
+        if node_exporter is not None:
+            _setter("node_exporter", node_exporter)
+        if scrape_annotated is not None:
+            _setter("scrape_annotated", scrape_annotated)
+
+    @property
+    @pulumi.getter(name="apiServer")
+    def api_server(self) -> Optional[bool]:
+        return pulumi.get(self, "api_server")
+
+    @property
+    @pulumi.getter
+    def cadvisor(self) -> Optional[bool]:
+        return pulumi.get(self, "cadvisor")
+
+    @property
+    @pulumi.getter(name="coreDns")
+    def core_dns(self) -> Optional[bool]:
+        return pulumi.get(self, "core_dns")
+
+    @property
+    @pulumi.getter(name="kubeState")
+    def kube_state(self) -> Optional[bool]:
+        return pulumi.get(self, "kube_state")
+
+    @property
+    @pulumi.getter
+    def kubelet(self) -> Optional[bool]:
+        return pulumi.get(self, "kubelet")
+
+    @property
+    @pulumi.getter(name="nodeExporter")
+    def node_exporter(self) -> Optional[bool]:
+        return pulumi.get(self, "node_exporter")
+
+    @property
+    @pulumi.getter(name="scrapeAnnotated")
+    def scrape_annotated(self) -> Optional['outputs.Mk8sAddOnsMetricsScrapeAnnotated']:
+        return pulumi.get(self, "scrape_annotated")
+
+
+@pulumi.output_type
+class Mk8sAddOnsMetricsScrapeAnnotated(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "excludeNamespaces":
+            suggest = "exclude_namespaces"
+        elif key == "includeNamespaces":
+            suggest = "include_namespaces"
+        elif key == "intervalSeconds":
+            suggest = "interval_seconds"
+        elif key == "retainLabels":
+            suggest = "retain_labels"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOnsMetricsScrapeAnnotated. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAddOnsMetricsScrapeAnnotated.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAddOnsMetricsScrapeAnnotated.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 exclude_namespaces: Optional[str] = None,
+                 include_namespaces: Optional[str] = None,
+                 interval_seconds: Optional[int] = None,
+                 retain_labels: Optional[str] = None):
+        Mk8sAddOnsMetricsScrapeAnnotated._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            exclude_namespaces=exclude_namespaces,
+            include_namespaces=include_namespaces,
+            interval_seconds=interval_seconds,
+            retain_labels=retain_labels,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             exclude_namespaces: Optional[str] = None,
+             include_namespaces: Optional[str] = None,
+             interval_seconds: Optional[int] = None,
+             retain_labels: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'excludeNamespaces' in kwargs:
+            exclude_namespaces = kwargs['excludeNamespaces']
+        if 'includeNamespaces' in kwargs:
+            include_namespaces = kwargs['includeNamespaces']
+        if 'intervalSeconds' in kwargs:
+            interval_seconds = kwargs['intervalSeconds']
+        if 'retainLabels' in kwargs:
+            retain_labels = kwargs['retainLabels']
+
+        if exclude_namespaces is not None:
+            _setter("exclude_namespaces", exclude_namespaces)
+        if include_namespaces is not None:
+            _setter("include_namespaces", include_namespaces)
+        if interval_seconds is not None:
+            _setter("interval_seconds", interval_seconds)
+        if retain_labels is not None:
+            _setter("retain_labels", retain_labels)
+
+    @property
+    @pulumi.getter(name="excludeNamespaces")
+    def exclude_namespaces(self) -> Optional[str]:
+        return pulumi.get(self, "exclude_namespaces")
+
+    @property
+    @pulumi.getter(name="includeNamespaces")
+    def include_namespaces(self) -> Optional[str]:
+        return pulumi.get(self, "include_namespaces")
+
+    @property
+    @pulumi.getter(name="intervalSeconds")
+    def interval_seconds(self) -> Optional[int]:
+        return pulumi.get(self, "interval_seconds")
+
+    @property
+    @pulumi.getter(name="retainLabels")
+    def retain_labels(self) -> Optional[str]:
+        return pulumi.get(self, "retain_labels")
+
+
+@pulumi.output_type
+class Mk8sAddOnsNvidia(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "taintGpuNodes":
+            suggest = "taint_gpu_nodes"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOnsNvidia. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAddOnsNvidia.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAddOnsNvidia.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 taint_gpu_nodes: bool):
+        Mk8sAddOnsNvidia._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            taint_gpu_nodes=taint_gpu_nodes,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             taint_gpu_nodes: bool,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'taintGpuNodes' in kwargs:
+            taint_gpu_nodes = kwargs['taintGpuNodes']
+
+        _setter("taint_gpu_nodes", taint_gpu_nodes)
+
+    @property
+    @pulumi.getter(name="taintGpuNodes")
+    def taint_gpu_nodes(self) -> bool:
+        return pulumi.get(self, "taint_gpu_nodes")
+
+
+@pulumi.output_type
+class Mk8sAwsProvider(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "deployRoleArn":
+            suggest = "deploy_role_arn"
+        elif key == "vpcId":
+            suggest = "vpc_id"
+        elif key == "diskEncryptionKeyArn":
+            suggest = "disk_encryption_key_arn"
+        elif key == "keyPair":
+            suggest = "key_pair"
+        elif key == "nodePools":
+            suggest = "node_pools"
+        elif key == "preInstallScript":
+            suggest = "pre_install_script"
+        elif key == "securityGroupIds":
+            suggest = "security_group_ids"
+        elif key == "skipCreateRoles":
+            suggest = "skip_create_roles"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAwsProvider. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAwsProvider.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAwsProvider.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 deploy_role_arn: str,
+                 image: 'outputs.Mk8sAwsProviderImage',
+                 region: str,
+                 vpc_id: str,
+                 autoscaler: Optional['outputs.Mk8sAwsProviderAutoscaler'] = None,
+                 disk_encryption_key_arn: Optional[str] = None,
+                 key_pair: Optional[str] = None,
+                 networking: Optional['outputs.Mk8sAwsProviderNetworking'] = None,
+                 node_pools: Optional[Sequence['outputs.Mk8sAwsProviderNodePool']] = None,
+                 pre_install_script: Optional[str] = None,
+                 security_group_ids: Optional[Sequence[str]] = None,
+                 skip_create_roles: Optional[bool] = None):
+        Mk8sAwsProvider._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            deploy_role_arn=deploy_role_arn,
+            image=image,
+            region=region,
+            vpc_id=vpc_id,
+            autoscaler=autoscaler,
+            disk_encryption_key_arn=disk_encryption_key_arn,
+            key_pair=key_pair,
+            networking=networking,
+            node_pools=node_pools,
+            pre_install_script=pre_install_script,
+            security_group_ids=security_group_ids,
+            skip_create_roles=skip_create_roles,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             deploy_role_arn: str,
+             image: 'outputs.Mk8sAwsProviderImage',
+             region: str,
+             vpc_id: str,
+             autoscaler: Optional['outputs.Mk8sAwsProviderAutoscaler'] = None,
+             disk_encryption_key_arn: Optional[str] = None,
+             key_pair: Optional[str] = None,
+             networking: Optional['outputs.Mk8sAwsProviderNetworking'] = None,
+             node_pools: Optional[Sequence['outputs.Mk8sAwsProviderNodePool']] = None,
+             pre_install_script: Optional[str] = None,
+             security_group_ids: Optional[Sequence[str]] = None,
+             skip_create_roles: Optional[bool] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'deployRoleArn' in kwargs:
+            deploy_role_arn = kwargs['deployRoleArn']
+        if 'vpcId' in kwargs:
+            vpc_id = kwargs['vpcId']
+        if 'diskEncryptionKeyArn' in kwargs:
+            disk_encryption_key_arn = kwargs['diskEncryptionKeyArn']
+        if 'keyPair' in kwargs:
+            key_pair = kwargs['keyPair']
+        if 'nodePools' in kwargs:
+            node_pools = kwargs['nodePools']
+        if 'preInstallScript' in kwargs:
+            pre_install_script = kwargs['preInstallScript']
+        if 'securityGroupIds' in kwargs:
+            security_group_ids = kwargs['securityGroupIds']
+        if 'skipCreateRoles' in kwargs:
+            skip_create_roles = kwargs['skipCreateRoles']
+
+        _setter("deploy_role_arn", deploy_role_arn)
+        _setter("image", image)
+        _setter("region", region)
+        _setter("vpc_id", vpc_id)
+        if autoscaler is not None:
+            _setter("autoscaler", autoscaler)
+        if disk_encryption_key_arn is not None:
+            _setter("disk_encryption_key_arn", disk_encryption_key_arn)
+        if key_pair is not None:
+            _setter("key_pair", key_pair)
+        if networking is not None:
+            _setter("networking", networking)
+        if node_pools is not None:
+            _setter("node_pools", node_pools)
+        if pre_install_script is not None:
+            _setter("pre_install_script", pre_install_script)
+        if security_group_ids is not None:
+            _setter("security_group_ids", security_group_ids)
+        if skip_create_roles is not None:
+            _setter("skip_create_roles", skip_create_roles)
+
+    @property
+    @pulumi.getter(name="deployRoleArn")
+    def deploy_role_arn(self) -> str:
+        return pulumi.get(self, "deploy_role_arn")
+
+    @property
+    @pulumi.getter
+    def image(self) -> 'outputs.Mk8sAwsProviderImage':
+        return pulumi.get(self, "image")
+
+    @property
+    @pulumi.getter
+    def region(self) -> str:
+        return pulumi.get(self, "region")
+
+    @property
+    @pulumi.getter(name="vpcId")
+    def vpc_id(self) -> str:
+        return pulumi.get(self, "vpc_id")
+
+    @property
+    @pulumi.getter
+    def autoscaler(self) -> Optional['outputs.Mk8sAwsProviderAutoscaler']:
+        return pulumi.get(self, "autoscaler")
+
+    @property
+    @pulumi.getter(name="diskEncryptionKeyArn")
+    def disk_encryption_key_arn(self) -> Optional[str]:
+        return pulumi.get(self, "disk_encryption_key_arn")
+
+    @property
+    @pulumi.getter(name="keyPair")
+    def key_pair(self) -> Optional[str]:
+        return pulumi.get(self, "key_pair")
+
+    @property
+    @pulumi.getter
+    def networking(self) -> Optional['outputs.Mk8sAwsProviderNetworking']:
+        return pulumi.get(self, "networking")
+
+    @property
+    @pulumi.getter(name="nodePools")
+    def node_pools(self) -> Optional[Sequence['outputs.Mk8sAwsProviderNodePool']]:
+        return pulumi.get(self, "node_pools")
+
+    @property
+    @pulumi.getter(name="preInstallScript")
+    def pre_install_script(self) -> Optional[str]:
+        return pulumi.get(self, "pre_install_script")
+
+    @property
+    @pulumi.getter(name="securityGroupIds")
+    def security_group_ids(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "security_group_ids")
+
+    @property
+    @pulumi.getter(name="skipCreateRoles")
+    def skip_create_roles(self) -> Optional[bool]:
+        return pulumi.get(self, "skip_create_roles")
+
+
+@pulumi.output_type
+class Mk8sAwsProviderAutoscaler(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "unneededTime":
+            suggest = "unneeded_time"
+        elif key == "unreadyTime":
+            suggest = "unready_time"
+        elif key == "utilizationThreshold":
+            suggest = "utilization_threshold"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAwsProviderAutoscaler. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAwsProviderAutoscaler.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAwsProviderAutoscaler.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 expanders: Sequence[str],
+                 unneeded_time: Optional[str] = None,
+                 unready_time: Optional[str] = None,
+                 utilization_threshold: Optional[float] = None):
+        Mk8sAwsProviderAutoscaler._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            expanders=expanders,
+            unneeded_time=unneeded_time,
+            unready_time=unready_time,
+            utilization_threshold=utilization_threshold,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             expanders: Sequence[str],
+             unneeded_time: Optional[str] = None,
+             unready_time: Optional[str] = None,
+             utilization_threshold: Optional[float] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'unneededTime' in kwargs:
+            unneeded_time = kwargs['unneededTime']
+        if 'unreadyTime' in kwargs:
+            unready_time = kwargs['unreadyTime']
+        if 'utilizationThreshold' in kwargs:
+            utilization_threshold = kwargs['utilizationThreshold']
+
+        _setter("expanders", expanders)
+        if unneeded_time is not None:
+            _setter("unneeded_time", unneeded_time)
+        if unready_time is not None:
+            _setter("unready_time", unready_time)
+        if utilization_threshold is not None:
+            _setter("utilization_threshold", utilization_threshold)
+
+    @property
+    @pulumi.getter
+    def expanders(self) -> Sequence[str]:
+        return pulumi.get(self, "expanders")
+
+    @property
+    @pulumi.getter(name="unneededTime")
+    def unneeded_time(self) -> Optional[str]:
+        return pulumi.get(self, "unneeded_time")
+
+    @property
+    @pulumi.getter(name="unreadyTime")
+    def unready_time(self) -> Optional[str]:
+        return pulumi.get(self, "unready_time")
+
+    @property
+    @pulumi.getter(name="utilizationThreshold")
+    def utilization_threshold(self) -> Optional[float]:
+        return pulumi.get(self, "utilization_threshold")
+
+
+@pulumi.output_type
+class Mk8sAwsProviderImage(dict):
+    def __init__(__self__, *,
+                 exact: Optional[str] = None,
+                 recommended: Optional[str] = None):
+        Mk8sAwsProviderImage._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            exact=exact,
+            recommended=recommended,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             exact: Optional[str] = None,
+             recommended: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if exact is not None:
+            _setter("exact", exact)
+        if recommended is not None:
+            _setter("recommended", recommended)
+
+    @property
+    @pulumi.getter
+    def exact(self) -> Optional[str]:
+        return pulumi.get(self, "exact")
+
+    @property
+    @pulumi.getter
+    def recommended(self) -> Optional[str]:
+        return pulumi.get(self, "recommended")
+
+
+@pulumi.output_type
+class Mk8sAwsProviderNetworking(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "podNetwork":
+            suggest = "pod_network"
+        elif key == "serviceNetwork":
+            suggest = "service_network"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAwsProviderNetworking. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAwsProviderNetworking.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAwsProviderNetworking.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 pod_network: Optional[str] = None,
+                 service_network: Optional[str] = None):
+        Mk8sAwsProviderNetworking._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            pod_network=pod_network,
+            service_network=service_network,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             pod_network: Optional[str] = None,
+             service_network: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'podNetwork' in kwargs:
+            pod_network = kwargs['podNetwork']
+        if 'serviceNetwork' in kwargs:
+            service_network = kwargs['serviceNetwork']
+
+        if pod_network is not None:
+            _setter("pod_network", pod_network)
+        if service_network is not None:
+            _setter("service_network", service_network)
+
+    @property
+    @pulumi.getter(name="podNetwork")
+    def pod_network(self) -> Optional[str]:
+        return pulumi.get(self, "pod_network")
+
+    @property
+    @pulumi.getter(name="serviceNetwork")
+    def service_network(self) -> Optional[str]:
+        return pulumi.get(self, "service_network")
+
+
+@pulumi.output_type
+class Mk8sAwsProviderNodePool(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "instanceTypes":
+            suggest = "instance_types"
+        elif key == "overrideImage":
+            suggest = "override_image"
+        elif key == "subnetIds":
+            suggest = "subnet_ids"
+        elif key == "bootDiskSize":
+            suggest = "boot_disk_size"
+        elif key == "extraSecurityGroupIds":
+            suggest = "extra_security_group_ids"
+        elif key == "maxSize":
+            suggest = "max_size"
+        elif key == "minSize":
+            suggest = "min_size"
+        elif key == "onDemandBaseCapacity":
+            suggest = "on_demand_base_capacity"
+        elif key == "onDemandPercentageAboveBaseCapacity":
+            suggest = "on_demand_percentage_above_base_capacity"
+        elif key == "spotAllocationStrategy":
+            suggest = "spot_allocation_strategy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAwsProviderNodePool. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAwsProviderNodePool.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAwsProviderNodePool.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 instance_types: Sequence[str],
+                 name: str,
+                 override_image: 'outputs.Mk8sAwsProviderNodePoolOverrideImage',
+                 subnet_ids: Sequence[str],
+                 boot_disk_size: Optional[int] = None,
+                 extra_security_group_ids: Optional[Sequence[str]] = None,
+                 labels: Optional[Mapping[str, str]] = None,
+                 max_size: Optional[int] = None,
+                 min_size: Optional[int] = None,
+                 on_demand_base_capacity: Optional[int] = None,
+                 on_demand_percentage_above_base_capacity: Optional[int] = None,
+                 spot_allocation_strategy: Optional[str] = None,
+                 taints: Optional[Sequence['outputs.Mk8sAwsProviderNodePoolTaint']] = None):
+        Mk8sAwsProviderNodePool._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            instance_types=instance_types,
+            name=name,
+            override_image=override_image,
+            subnet_ids=subnet_ids,
+            boot_disk_size=boot_disk_size,
+            extra_security_group_ids=extra_security_group_ids,
+            labels=labels,
+            max_size=max_size,
+            min_size=min_size,
+            on_demand_base_capacity=on_demand_base_capacity,
+            on_demand_percentage_above_base_capacity=on_demand_percentage_above_base_capacity,
+            spot_allocation_strategy=spot_allocation_strategy,
+            taints=taints,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             instance_types: Sequence[str],
+             name: str,
+             override_image: 'outputs.Mk8sAwsProviderNodePoolOverrideImage',
+             subnet_ids: Sequence[str],
+             boot_disk_size: Optional[int] = None,
+             extra_security_group_ids: Optional[Sequence[str]] = None,
+             labels: Optional[Mapping[str, str]] = None,
+             max_size: Optional[int] = None,
+             min_size: Optional[int] = None,
+             on_demand_base_capacity: Optional[int] = None,
+             on_demand_percentage_above_base_capacity: Optional[int] = None,
+             spot_allocation_strategy: Optional[str] = None,
+             taints: Optional[Sequence['outputs.Mk8sAwsProviderNodePoolTaint']] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'instanceTypes' in kwargs:
+            instance_types = kwargs['instanceTypes']
+        if 'overrideImage' in kwargs:
+            override_image = kwargs['overrideImage']
+        if 'subnetIds' in kwargs:
+            subnet_ids = kwargs['subnetIds']
+        if 'bootDiskSize' in kwargs:
+            boot_disk_size = kwargs['bootDiskSize']
+        if 'extraSecurityGroupIds' in kwargs:
+            extra_security_group_ids = kwargs['extraSecurityGroupIds']
+        if 'maxSize' in kwargs:
+            max_size = kwargs['maxSize']
+        if 'minSize' in kwargs:
+            min_size = kwargs['minSize']
+        if 'onDemandBaseCapacity' in kwargs:
+            on_demand_base_capacity = kwargs['onDemandBaseCapacity']
+        if 'onDemandPercentageAboveBaseCapacity' in kwargs:
+            on_demand_percentage_above_base_capacity = kwargs['onDemandPercentageAboveBaseCapacity']
+        if 'spotAllocationStrategy' in kwargs:
+            spot_allocation_strategy = kwargs['spotAllocationStrategy']
+
+        _setter("instance_types", instance_types)
+        _setter("name", name)
+        _setter("override_image", override_image)
+        _setter("subnet_ids", subnet_ids)
+        if boot_disk_size is not None:
+            _setter("boot_disk_size", boot_disk_size)
+        if extra_security_group_ids is not None:
+            _setter("extra_security_group_ids", extra_security_group_ids)
+        if labels is not None:
+            _setter("labels", labels)
+        if max_size is not None:
+            _setter("max_size", max_size)
+        if min_size is not None:
+            _setter("min_size", min_size)
+        if on_demand_base_capacity is not None:
+            _setter("on_demand_base_capacity", on_demand_base_capacity)
+        if on_demand_percentage_above_base_capacity is not None:
+            _setter("on_demand_percentage_above_base_capacity", on_demand_percentage_above_base_capacity)
+        if spot_allocation_strategy is not None:
+            _setter("spot_allocation_strategy", spot_allocation_strategy)
+        if taints is not None:
+            _setter("taints", taints)
+
+    @property
+    @pulumi.getter(name="instanceTypes")
+    def instance_types(self) -> Sequence[str]:
+        return pulumi.get(self, "instance_types")
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="overrideImage")
+    def override_image(self) -> 'outputs.Mk8sAwsProviderNodePoolOverrideImage':
+        return pulumi.get(self, "override_image")
+
+    @property
+    @pulumi.getter(name="subnetIds")
+    def subnet_ids(self) -> Sequence[str]:
+        return pulumi.get(self, "subnet_ids")
+
+    @property
+    @pulumi.getter(name="bootDiskSize")
+    def boot_disk_size(self) -> Optional[int]:
+        return pulumi.get(self, "boot_disk_size")
+
+    @property
+    @pulumi.getter(name="extraSecurityGroupIds")
+    def extra_security_group_ids(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "extra_security_group_ids")
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Optional[Mapping[str, str]]:
+        return pulumi.get(self, "labels")
+
+    @property
+    @pulumi.getter(name="maxSize")
+    def max_size(self) -> Optional[int]:
+        return pulumi.get(self, "max_size")
+
+    @property
+    @pulumi.getter(name="minSize")
+    def min_size(self) -> Optional[int]:
+        return pulumi.get(self, "min_size")
+
+    @property
+    @pulumi.getter(name="onDemandBaseCapacity")
+    def on_demand_base_capacity(self) -> Optional[int]:
+        return pulumi.get(self, "on_demand_base_capacity")
+
+    @property
+    @pulumi.getter(name="onDemandPercentageAboveBaseCapacity")
+    def on_demand_percentage_above_base_capacity(self) -> Optional[int]:
+        return pulumi.get(self, "on_demand_percentage_above_base_capacity")
+
+    @property
+    @pulumi.getter(name="spotAllocationStrategy")
+    def spot_allocation_strategy(self) -> Optional[str]:
+        return pulumi.get(self, "spot_allocation_strategy")
+
+    @property
+    @pulumi.getter
+    def taints(self) -> Optional[Sequence['outputs.Mk8sAwsProviderNodePoolTaint']]:
+        return pulumi.get(self, "taints")
+
+
+@pulumi.output_type
+class Mk8sAwsProviderNodePoolOverrideImage(dict):
+    def __init__(__self__, *,
+                 exact: Optional[str] = None,
+                 recommended: Optional[str] = None):
+        Mk8sAwsProviderNodePoolOverrideImage._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            exact=exact,
+            recommended=recommended,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             exact: Optional[str] = None,
+             recommended: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if exact is not None:
+            _setter("exact", exact)
+        if recommended is not None:
+            _setter("recommended", recommended)
+
+    @property
+    @pulumi.getter
+    def exact(self) -> Optional[str]:
+        return pulumi.get(self, "exact")
+
+    @property
+    @pulumi.getter
+    def recommended(self) -> Optional[str]:
+        return pulumi.get(self, "recommended")
+
+
+@pulumi.output_type
+class Mk8sAwsProviderNodePoolTaint(dict):
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 value: Optional[str] = None):
+        Mk8sAwsProviderNodePoolTaint._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            effect=effect,
+            key=key,
+            value=value,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             effect: Optional[str] = None,
+             key: Optional[str] = None,
+             value: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if effect is not None:
+            _setter("effect", effect)
+        if key is not None:
+            _setter("key", key)
+        if value is not None:
+            _setter("value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        return pulumi.get(self, "value")
+
+
+@pulumi.output_type
+class Mk8sFirewall(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "sourceCidr":
+            suggest = "source_cidr"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sFirewall. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sFirewall.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sFirewall.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 source_cidr: str,
+                 description: Optional[str] = None):
+        Mk8sFirewall._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            source_cidr=source_cidr,
+            description=description,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             source_cidr: str,
+             description: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'sourceCidr' in kwargs:
+            source_cidr = kwargs['sourceCidr']
+
+        _setter("source_cidr", source_cidr)
+        if description is not None:
+            _setter("description", description)
+
+    @property
+    @pulumi.getter(name="sourceCidr")
+    def source_cidr(self) -> str:
+        return pulumi.get(self, "source_cidr")
+
+    @property
+    @pulumi.getter
+    def description(self) -> Optional[str]:
+        return pulumi.get(self, "description")
+
+
+@pulumi.output_type
+class Mk8sGenericProvider(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "nodePools":
+            suggest = "node_pools"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sGenericProvider. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sGenericProvider.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sGenericProvider.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 location: str,
+                 networking: Optional['outputs.Mk8sGenericProviderNetworking'] = None,
+                 node_pools: Optional[Sequence['outputs.Mk8sGenericProviderNodePool']] = None):
+        Mk8sGenericProvider._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            location=location,
+            networking=networking,
+            node_pools=node_pools,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             location: str,
+             networking: Optional['outputs.Mk8sGenericProviderNetworking'] = None,
+             node_pools: Optional[Sequence['outputs.Mk8sGenericProviderNodePool']] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'nodePools' in kwargs:
+            node_pools = kwargs['nodePools']
+
+        _setter("location", location)
+        if networking is not None:
+            _setter("networking", networking)
+        if node_pools is not None:
+            _setter("node_pools", node_pools)
+
+    @property
+    @pulumi.getter
+    def location(self) -> str:
+        return pulumi.get(self, "location")
+
+    @property
+    @pulumi.getter
+    def networking(self) -> Optional['outputs.Mk8sGenericProviderNetworking']:
+        return pulumi.get(self, "networking")
+
+    @property
+    @pulumi.getter(name="nodePools")
+    def node_pools(self) -> Optional[Sequence['outputs.Mk8sGenericProviderNodePool']]:
+        return pulumi.get(self, "node_pools")
+
+
+@pulumi.output_type
+class Mk8sGenericProviderNetworking(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "podNetwork":
+            suggest = "pod_network"
+        elif key == "serviceNetwork":
+            suggest = "service_network"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sGenericProviderNetworking. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sGenericProviderNetworking.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sGenericProviderNetworking.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 pod_network: Optional[str] = None,
+                 service_network: Optional[str] = None):
+        Mk8sGenericProviderNetworking._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            pod_network=pod_network,
+            service_network=service_network,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             pod_network: Optional[str] = None,
+             service_network: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'podNetwork' in kwargs:
+            pod_network = kwargs['podNetwork']
+        if 'serviceNetwork' in kwargs:
+            service_network = kwargs['serviceNetwork']
+
+        if pod_network is not None:
+            _setter("pod_network", pod_network)
+        if service_network is not None:
+            _setter("service_network", service_network)
+
+    @property
+    @pulumi.getter(name="podNetwork")
+    def pod_network(self) -> Optional[str]:
+        return pulumi.get(self, "pod_network")
+
+    @property
+    @pulumi.getter(name="serviceNetwork")
+    def service_network(self) -> Optional[str]:
+        return pulumi.get(self, "service_network")
+
+
+@pulumi.output_type
+class Mk8sGenericProviderNodePool(dict):
+    def __init__(__self__, *,
+                 name: str,
+                 labels: Optional[Mapping[str, str]] = None,
+                 taints: Optional[Sequence['outputs.Mk8sGenericProviderNodePoolTaint']] = None):
+        Mk8sGenericProviderNodePool._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            labels=labels,
+            taints=taints,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             labels: Optional[Mapping[str, str]] = None,
+             taints: Optional[Sequence['outputs.Mk8sGenericProviderNodePoolTaint']] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("name", name)
+        if labels is not None:
+            _setter("labels", labels)
+        if taints is not None:
+            _setter("taints", taints)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Optional[Mapping[str, str]]:
+        return pulumi.get(self, "labels")
+
+    @property
+    @pulumi.getter
+    def taints(self) -> Optional[Sequence['outputs.Mk8sGenericProviderNodePoolTaint']]:
+        return pulumi.get(self, "taints")
+
+
+@pulumi.output_type
+class Mk8sGenericProviderNodePoolTaint(dict):
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 value: Optional[str] = None):
+        Mk8sGenericProviderNodePoolTaint._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            effect=effect,
+            key=key,
+            value=value,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             effect: Optional[str] = None,
+             key: Optional[str] = None,
+             value: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if effect is not None:
+            _setter("effect", effect)
+        if key is not None:
+            _setter("key", key)
+        if value is not None:
+            _setter("value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        return pulumi.get(self, "value")
+
+
+@pulumi.output_type
+class Mk8sHetznerProvider(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "networkId":
+            suggest = "network_id"
+        elif key == "tokenSecretLink":
+            suggest = "token_secret_link"
+        elif key == "dedicatedServerNodePools":
+            suggest = "dedicated_server_node_pools"
+        elif key == "firewallId":
+            suggest = "firewall_id"
+        elif key == "nodePools":
+            suggest = "node_pools"
+        elif key == "preInstallScript":
+            suggest = "pre_install_script"
+        elif key == "sshKey":
+            suggest = "ssh_key"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sHetznerProvider. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sHetznerProvider.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sHetznerProvider.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 network_id: str,
+                 region: str,
+                 token_secret_link: str,
+                 autoscaler: Optional['outputs.Mk8sHetznerProviderAutoscaler'] = None,
+                 dedicated_server_node_pools: Optional[Sequence['outputs.Mk8sHetznerProviderDedicatedServerNodePool']] = None,
+                 firewall_id: Optional[str] = None,
+                 image: Optional[str] = None,
+                 networking: Optional['outputs.Mk8sHetznerProviderNetworking'] = None,
+                 node_pools: Optional[Sequence['outputs.Mk8sHetznerProviderNodePool']] = None,
+                 pre_install_script: Optional[str] = None,
+                 ssh_key: Optional[str] = None):
+        Mk8sHetznerProvider._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            network_id=network_id,
+            region=region,
+            token_secret_link=token_secret_link,
+            autoscaler=autoscaler,
+            dedicated_server_node_pools=dedicated_server_node_pools,
+            firewall_id=firewall_id,
+            image=image,
+            networking=networking,
+            node_pools=node_pools,
+            pre_install_script=pre_install_script,
+            ssh_key=ssh_key,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             network_id: str,
+             region: str,
+             token_secret_link: str,
+             autoscaler: Optional['outputs.Mk8sHetznerProviderAutoscaler'] = None,
+             dedicated_server_node_pools: Optional[Sequence['outputs.Mk8sHetznerProviderDedicatedServerNodePool']] = None,
+             firewall_id: Optional[str] = None,
+             image: Optional[str] = None,
+             networking: Optional['outputs.Mk8sHetznerProviderNetworking'] = None,
+             node_pools: Optional[Sequence['outputs.Mk8sHetznerProviderNodePool']] = None,
+             pre_install_script: Optional[str] = None,
+             ssh_key: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'networkId' in kwargs:
+            network_id = kwargs['networkId']
+        if 'tokenSecretLink' in kwargs:
+            token_secret_link = kwargs['tokenSecretLink']
+        if 'dedicatedServerNodePools' in kwargs:
+            dedicated_server_node_pools = kwargs['dedicatedServerNodePools']
+        if 'firewallId' in kwargs:
+            firewall_id = kwargs['firewallId']
+        if 'nodePools' in kwargs:
+            node_pools = kwargs['nodePools']
+        if 'preInstallScript' in kwargs:
+            pre_install_script = kwargs['preInstallScript']
+        if 'sshKey' in kwargs:
+            ssh_key = kwargs['sshKey']
+
+        _setter("network_id", network_id)
+        _setter("region", region)
+        _setter("token_secret_link", token_secret_link)
+        if autoscaler is not None:
+            _setter("autoscaler", autoscaler)
+        if dedicated_server_node_pools is not None:
+            _setter("dedicated_server_node_pools", dedicated_server_node_pools)
+        if firewall_id is not None:
+            _setter("firewall_id", firewall_id)
+        if image is not None:
+            _setter("image", image)
+        if networking is not None:
+            _setter("networking", networking)
+        if node_pools is not None:
+            _setter("node_pools", node_pools)
+        if pre_install_script is not None:
+            _setter("pre_install_script", pre_install_script)
+        if ssh_key is not None:
+            _setter("ssh_key", ssh_key)
+
+    @property
+    @pulumi.getter(name="networkId")
+    def network_id(self) -> str:
+        return pulumi.get(self, "network_id")
+
+    @property
+    @pulumi.getter
+    def region(self) -> str:
+        return pulumi.get(self, "region")
+
+    @property
+    @pulumi.getter(name="tokenSecretLink")
+    def token_secret_link(self) -> str:
+        return pulumi.get(self, "token_secret_link")
+
+    @property
+    @pulumi.getter
+    def autoscaler(self) -> Optional['outputs.Mk8sHetznerProviderAutoscaler']:
+        return pulumi.get(self, "autoscaler")
+
+    @property
+    @pulumi.getter(name="dedicatedServerNodePools")
+    def dedicated_server_node_pools(self) -> Optional[Sequence['outputs.Mk8sHetznerProviderDedicatedServerNodePool']]:
+        return pulumi.get(self, "dedicated_server_node_pools")
+
+    @property
+    @pulumi.getter(name="firewallId")
+    def firewall_id(self) -> Optional[str]:
+        return pulumi.get(self, "firewall_id")
+
+    @property
+    @pulumi.getter
+    def image(self) -> Optional[str]:
+        return pulumi.get(self, "image")
+
+    @property
+    @pulumi.getter
+    def networking(self) -> Optional['outputs.Mk8sHetznerProviderNetworking']:
+        return pulumi.get(self, "networking")
+
+    @property
+    @pulumi.getter(name="nodePools")
+    def node_pools(self) -> Optional[Sequence['outputs.Mk8sHetznerProviderNodePool']]:
+        return pulumi.get(self, "node_pools")
+
+    @property
+    @pulumi.getter(name="preInstallScript")
+    def pre_install_script(self) -> Optional[str]:
+        return pulumi.get(self, "pre_install_script")
+
+    @property
+    @pulumi.getter(name="sshKey")
+    def ssh_key(self) -> Optional[str]:
+        return pulumi.get(self, "ssh_key")
+
+
+@pulumi.output_type
+class Mk8sHetznerProviderAutoscaler(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "unneededTime":
+            suggest = "unneeded_time"
+        elif key == "unreadyTime":
+            suggest = "unready_time"
+        elif key == "utilizationThreshold":
+            suggest = "utilization_threshold"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sHetznerProviderAutoscaler. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sHetznerProviderAutoscaler.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sHetznerProviderAutoscaler.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 expanders: Sequence[str],
+                 unneeded_time: Optional[str] = None,
+                 unready_time: Optional[str] = None,
+                 utilization_threshold: Optional[float] = None):
+        Mk8sHetznerProviderAutoscaler._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            expanders=expanders,
+            unneeded_time=unneeded_time,
+            unready_time=unready_time,
+            utilization_threshold=utilization_threshold,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             expanders: Sequence[str],
+             unneeded_time: Optional[str] = None,
+             unready_time: Optional[str] = None,
+             utilization_threshold: Optional[float] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'unneededTime' in kwargs:
+            unneeded_time = kwargs['unneededTime']
+        if 'unreadyTime' in kwargs:
+            unready_time = kwargs['unreadyTime']
+        if 'utilizationThreshold' in kwargs:
+            utilization_threshold = kwargs['utilizationThreshold']
+
+        _setter("expanders", expanders)
+        if unneeded_time is not None:
+            _setter("unneeded_time", unneeded_time)
+        if unready_time is not None:
+            _setter("unready_time", unready_time)
+        if utilization_threshold is not None:
+            _setter("utilization_threshold", utilization_threshold)
+
+    @property
+    @pulumi.getter
+    def expanders(self) -> Sequence[str]:
+        return pulumi.get(self, "expanders")
+
+    @property
+    @pulumi.getter(name="unneededTime")
+    def unneeded_time(self) -> Optional[str]:
+        return pulumi.get(self, "unneeded_time")
+
+    @property
+    @pulumi.getter(name="unreadyTime")
+    def unready_time(self) -> Optional[str]:
+        return pulumi.get(self, "unready_time")
+
+    @property
+    @pulumi.getter(name="utilizationThreshold")
+    def utilization_threshold(self) -> Optional[float]:
+        return pulumi.get(self, "utilization_threshold")
+
+
+@pulumi.output_type
+class Mk8sHetznerProviderDedicatedServerNodePool(dict):
+    def __init__(__self__, *,
+                 name: str,
+                 labels: Optional[Mapping[str, str]] = None,
+                 taints: Optional[Sequence['outputs.Mk8sHetznerProviderDedicatedServerNodePoolTaint']] = None):
+        Mk8sHetznerProviderDedicatedServerNodePool._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            labels=labels,
+            taints=taints,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             labels: Optional[Mapping[str, str]] = None,
+             taints: Optional[Sequence['outputs.Mk8sHetznerProviderDedicatedServerNodePoolTaint']] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("name", name)
+        if labels is not None:
+            _setter("labels", labels)
+        if taints is not None:
+            _setter("taints", taints)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Optional[Mapping[str, str]]:
+        return pulumi.get(self, "labels")
+
+    @property
+    @pulumi.getter
+    def taints(self) -> Optional[Sequence['outputs.Mk8sHetznerProviderDedicatedServerNodePoolTaint']]:
+        return pulumi.get(self, "taints")
+
+
+@pulumi.output_type
+class Mk8sHetznerProviderDedicatedServerNodePoolTaint(dict):
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 value: Optional[str] = None):
+        Mk8sHetznerProviderDedicatedServerNodePoolTaint._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            effect=effect,
+            key=key,
+            value=value,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             effect: Optional[str] = None,
+             key: Optional[str] = None,
+             value: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if effect is not None:
+            _setter("effect", effect)
+        if key is not None:
+            _setter("key", key)
+        if value is not None:
+            _setter("value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        return pulumi.get(self, "value")
+
+
+@pulumi.output_type
+class Mk8sHetznerProviderNetworking(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "podNetwork":
+            suggest = "pod_network"
+        elif key == "serviceNetwork":
+            suggest = "service_network"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sHetznerProviderNetworking. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sHetznerProviderNetworking.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sHetznerProviderNetworking.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 pod_network: Optional[str] = None,
+                 service_network: Optional[str] = None):
+        Mk8sHetznerProviderNetworking._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            pod_network=pod_network,
+            service_network=service_network,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             pod_network: Optional[str] = None,
+             service_network: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'podNetwork' in kwargs:
+            pod_network = kwargs['podNetwork']
+        if 'serviceNetwork' in kwargs:
+            service_network = kwargs['serviceNetwork']
+
+        if pod_network is not None:
+            _setter("pod_network", pod_network)
+        if service_network is not None:
+            _setter("service_network", service_network)
+
+    @property
+    @pulumi.getter(name="podNetwork")
+    def pod_network(self) -> Optional[str]:
+        return pulumi.get(self, "pod_network")
+
+    @property
+    @pulumi.getter(name="serviceNetwork")
+    def service_network(self) -> Optional[str]:
+        return pulumi.get(self, "service_network")
+
+
+@pulumi.output_type
+class Mk8sHetznerProviderNodePool(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "serverType":
+            suggest = "server_type"
+        elif key == "maxSize":
+            suggest = "max_size"
+        elif key == "minSize":
+            suggest = "min_size"
+        elif key == "overrideImage":
+            suggest = "override_image"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sHetznerProviderNodePool. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sHetznerProviderNodePool.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sHetznerProviderNodePool.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 name: str,
+                 server_type: str,
+                 labels: Optional[Mapping[str, str]] = None,
+                 max_size: Optional[int] = None,
+                 min_size: Optional[int] = None,
+                 override_image: Optional[str] = None,
+                 taints: Optional[Sequence['outputs.Mk8sHetznerProviderNodePoolTaint']] = None):
+        Mk8sHetznerProviderNodePool._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            server_type=server_type,
+            labels=labels,
+            max_size=max_size,
+            min_size=min_size,
+            override_image=override_image,
+            taints=taints,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             server_type: str,
+             labels: Optional[Mapping[str, str]] = None,
+             max_size: Optional[int] = None,
+             min_size: Optional[int] = None,
+             override_image: Optional[str] = None,
+             taints: Optional[Sequence['outputs.Mk8sHetznerProviderNodePoolTaint']] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'serverType' in kwargs:
+            server_type = kwargs['serverType']
+        if 'maxSize' in kwargs:
+            max_size = kwargs['maxSize']
+        if 'minSize' in kwargs:
+            min_size = kwargs['minSize']
+        if 'overrideImage' in kwargs:
+            override_image = kwargs['overrideImage']
+
+        _setter("name", name)
+        _setter("server_type", server_type)
+        if labels is not None:
+            _setter("labels", labels)
+        if max_size is not None:
+            _setter("max_size", max_size)
+        if min_size is not None:
+            _setter("min_size", min_size)
+        if override_image is not None:
+            _setter("override_image", override_image)
+        if taints is not None:
+            _setter("taints", taints)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="serverType")
+    def server_type(self) -> str:
+        return pulumi.get(self, "server_type")
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Optional[Mapping[str, str]]:
+        return pulumi.get(self, "labels")
+
+    @property
+    @pulumi.getter(name="maxSize")
+    def max_size(self) -> Optional[int]:
+        return pulumi.get(self, "max_size")
+
+    @property
+    @pulumi.getter(name="minSize")
+    def min_size(self) -> Optional[int]:
+        return pulumi.get(self, "min_size")
+
+    @property
+    @pulumi.getter(name="overrideImage")
+    def override_image(self) -> Optional[str]:
+        return pulumi.get(self, "override_image")
+
+    @property
+    @pulumi.getter
+    def taints(self) -> Optional[Sequence['outputs.Mk8sHetznerProviderNodePoolTaint']]:
+        return pulumi.get(self, "taints")
+
+
+@pulumi.output_type
+class Mk8sHetznerProviderNodePoolTaint(dict):
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 value: Optional[str] = None):
+        Mk8sHetznerProviderNodePoolTaint._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            effect=effect,
+            key=key,
+            value=value,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             effect: Optional[str] = None,
+             key: Optional[str] = None,
+             value: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if effect is not None:
+            _setter("effect", effect)
+        if key is not None:
+            _setter("key", key)
+        if value is not None:
+            _setter("value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        return pulumi.get(self, "value")
+
+
+@pulumi.output_type
+class Mk8sStatus(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "addOns":
+            suggest = "add_ons"
+        elif key == "homeLocation":
+            suggest = "home_location"
+        elif key == "oidcProviderUrl":
+            suggest = "oidc_provider_url"
+        elif key == "serverUrl":
+            suggest = "server_url"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sStatus. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sStatus.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sStatus.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 add_ons: Optional[Sequence['outputs.Mk8sStatusAddOn']] = None,
+                 home_location: Optional[str] = None,
+                 oidc_provider_url: Optional[str] = None,
+                 server_url: Optional[str] = None):
+        Mk8sStatus._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            add_ons=add_ons,
+            home_location=home_location,
+            oidc_provider_url=oidc_provider_url,
+            server_url=server_url,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             add_ons: Optional[Sequence['outputs.Mk8sStatusAddOn']] = None,
+             home_location: Optional[str] = None,
+             oidc_provider_url: Optional[str] = None,
+             server_url: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'addOns' in kwargs:
+            add_ons = kwargs['addOns']
+        if 'homeLocation' in kwargs:
+            home_location = kwargs['homeLocation']
+        if 'oidcProviderUrl' in kwargs:
+            oidc_provider_url = kwargs['oidcProviderUrl']
+        if 'serverUrl' in kwargs:
+            server_url = kwargs['serverUrl']
+
+        if add_ons is not None:
+            _setter("add_ons", add_ons)
+        if home_location is not None:
+            _setter("home_location", home_location)
+        if oidc_provider_url is not None:
+            _setter("oidc_provider_url", oidc_provider_url)
+        if server_url is not None:
+            _setter("server_url", server_url)
+
+    @property
+    @pulumi.getter(name="addOns")
+    def add_ons(self) -> Optional[Sequence['outputs.Mk8sStatusAddOn']]:
+        return pulumi.get(self, "add_ons")
+
+    @property
+    @pulumi.getter(name="homeLocation")
+    def home_location(self) -> Optional[str]:
+        return pulumi.get(self, "home_location")
+
+    @property
+    @pulumi.getter(name="oidcProviderUrl")
+    def oidc_provider_url(self) -> Optional[str]:
+        return pulumi.get(self, "oidc_provider_url")
+
+    @property
+    @pulumi.getter(name="serverUrl")
+    def server_url(self) -> Optional[str]:
+        return pulumi.get(self, "server_url")
+
+
+@pulumi.output_type
+class Mk8sStatusAddOn(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "awsEcrs":
+            suggest = "aws_ecrs"
+        elif key == "awsEfs":
+            suggest = "aws_efs"
+        elif key == "awsElbs":
+            suggest = "aws_elbs"
+        elif key == "awsWorkloadIdentities":
+            suggest = "aws_workload_identities"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sStatusAddOn. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sStatusAddOn.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sStatusAddOn.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 aws_ecrs: Optional[Sequence['outputs.Mk8sStatusAddOnAwsEcr']] = None,
+                 aws_efs: Optional[Sequence['outputs.Mk8sStatusAddOnAwsEf']] = None,
+                 aws_elbs: Optional[Sequence['outputs.Mk8sStatusAddOnAwsElb']] = None,
+                 aws_workload_identities: Optional[Sequence['outputs.Mk8sStatusAddOnAwsWorkloadIdentity']] = None,
+                 dashboards: Optional[Sequence['outputs.Mk8sStatusAddOnDashboard']] = None,
+                 logs: Optional[Sequence['outputs.Mk8sStatusAddOnLog']] = None,
+                 metrics: Optional[Sequence['outputs.Mk8sStatusAddOnMetric']] = None):
+        Mk8sStatusAddOn._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            aws_ecrs=aws_ecrs,
+            aws_efs=aws_efs,
+            aws_elbs=aws_elbs,
+            aws_workload_identities=aws_workload_identities,
+            dashboards=dashboards,
+            logs=logs,
+            metrics=metrics,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             aws_ecrs: Optional[Sequence['outputs.Mk8sStatusAddOnAwsEcr']] = None,
+             aws_efs: Optional[Sequence['outputs.Mk8sStatusAddOnAwsEf']] = None,
+             aws_elbs: Optional[Sequence['outputs.Mk8sStatusAddOnAwsElb']] = None,
+             aws_workload_identities: Optional[Sequence['outputs.Mk8sStatusAddOnAwsWorkloadIdentity']] = None,
+             dashboards: Optional[Sequence['outputs.Mk8sStatusAddOnDashboard']] = None,
+             logs: Optional[Sequence['outputs.Mk8sStatusAddOnLog']] = None,
+             metrics: Optional[Sequence['outputs.Mk8sStatusAddOnMetric']] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'awsEcrs' in kwargs:
+            aws_ecrs = kwargs['awsEcrs']
+        if 'awsEfs' in kwargs:
+            aws_efs = kwargs['awsEfs']
+        if 'awsElbs' in kwargs:
+            aws_elbs = kwargs['awsElbs']
+        if 'awsWorkloadIdentities' in kwargs:
+            aws_workload_identities = kwargs['awsWorkloadIdentities']
+
+        if aws_ecrs is not None:
+            _setter("aws_ecrs", aws_ecrs)
+        if aws_efs is not None:
+            _setter("aws_efs", aws_efs)
+        if aws_elbs is not None:
+            _setter("aws_elbs", aws_elbs)
+        if aws_workload_identities is not None:
+            _setter("aws_workload_identities", aws_workload_identities)
+        if dashboards is not None:
+            _setter("dashboards", dashboards)
+        if logs is not None:
+            _setter("logs", logs)
+        if metrics is not None:
+            _setter("metrics", metrics)
+
+    @property
+    @pulumi.getter(name="awsEcrs")
+    def aws_ecrs(self) -> Optional[Sequence['outputs.Mk8sStatusAddOnAwsEcr']]:
+        return pulumi.get(self, "aws_ecrs")
+
+    @property
+    @pulumi.getter(name="awsEfs")
+    def aws_efs(self) -> Optional[Sequence['outputs.Mk8sStatusAddOnAwsEf']]:
+        return pulumi.get(self, "aws_efs")
+
+    @property
+    @pulumi.getter(name="awsElbs")
+    def aws_elbs(self) -> Optional[Sequence['outputs.Mk8sStatusAddOnAwsElb']]:
+        return pulumi.get(self, "aws_elbs")
+
+    @property
+    @pulumi.getter(name="awsWorkloadIdentities")
+    def aws_workload_identities(self) -> Optional[Sequence['outputs.Mk8sStatusAddOnAwsWorkloadIdentity']]:
+        return pulumi.get(self, "aws_workload_identities")
+
+    @property
+    @pulumi.getter
+    def dashboards(self) -> Optional[Sequence['outputs.Mk8sStatusAddOnDashboard']]:
+        return pulumi.get(self, "dashboards")
+
+    @property
+    @pulumi.getter
+    def logs(self) -> Optional[Sequence['outputs.Mk8sStatusAddOnLog']]:
+        return pulumi.get(self, "logs")
+
+    @property
+    @pulumi.getter
+    def metrics(self) -> Optional[Sequence['outputs.Mk8sStatusAddOnMetric']]:
+        return pulumi.get(self, "metrics")
+
+
+@pulumi.output_type
+class Mk8sStatusAddOnAwsEcr(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "trustPolicy":
+            suggest = "trust_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sStatusAddOnAwsEcr. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sStatusAddOnAwsEcr.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sStatusAddOnAwsEcr.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 trust_policy: Optional[str] = None):
+        Mk8sStatusAddOnAwsEcr._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            trust_policy=trust_policy,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             trust_policy: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'trustPolicy' in kwargs:
+            trust_policy = kwargs['trustPolicy']
+
+        if trust_policy is not None:
+            _setter("trust_policy", trust_policy)
+
+    @property
+    @pulumi.getter(name="trustPolicy")
+    def trust_policy(self) -> Optional[str]:
+        return pulumi.get(self, "trust_policy")
+
+
+@pulumi.output_type
+class Mk8sStatusAddOnAwsEf(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "trustPolicy":
+            suggest = "trust_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sStatusAddOnAwsEf. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sStatusAddOnAwsEf.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sStatusAddOnAwsEf.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 trust_policy: Optional[str] = None):
+        Mk8sStatusAddOnAwsEf._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            trust_policy=trust_policy,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             trust_policy: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'trustPolicy' in kwargs:
+            trust_policy = kwargs['trustPolicy']
+
+        if trust_policy is not None:
+            _setter("trust_policy", trust_policy)
+
+    @property
+    @pulumi.getter(name="trustPolicy")
+    def trust_policy(self) -> Optional[str]:
+        return pulumi.get(self, "trust_policy")
+
+
+@pulumi.output_type
+class Mk8sStatusAddOnAwsElb(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "trustPolicy":
+            suggest = "trust_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sStatusAddOnAwsElb. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sStatusAddOnAwsElb.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sStatusAddOnAwsElb.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 trust_policy: Optional[str] = None):
+        Mk8sStatusAddOnAwsElb._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            trust_policy=trust_policy,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             trust_policy: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'trustPolicy' in kwargs:
+            trust_policy = kwargs['trustPolicy']
+
+        if trust_policy is not None:
+            _setter("trust_policy", trust_policy)
+
+    @property
+    @pulumi.getter(name="trustPolicy")
+    def trust_policy(self) -> Optional[str]:
+        return pulumi.get(self, "trust_policy")
+
+
+@pulumi.output_type
+class Mk8sStatusAddOnAwsWorkloadIdentity(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "oidcProviderConfigs":
+            suggest = "oidc_provider_configs"
+        elif key == "trustPolicy":
+            suggest = "trust_policy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sStatusAddOnAwsWorkloadIdentity. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sStatusAddOnAwsWorkloadIdentity.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sStatusAddOnAwsWorkloadIdentity.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 oidc_provider_configs: Optional[Sequence['outputs.Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig']] = None,
+                 trust_policy: Optional[str] = None):
+        Mk8sStatusAddOnAwsWorkloadIdentity._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            oidc_provider_configs=oidc_provider_configs,
+            trust_policy=trust_policy,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             oidc_provider_configs: Optional[Sequence['outputs.Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig']] = None,
+             trust_policy: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'oidcProviderConfigs' in kwargs:
+            oidc_provider_configs = kwargs['oidcProviderConfigs']
+        if 'trustPolicy' in kwargs:
+            trust_policy = kwargs['trustPolicy']
+
+        if oidc_provider_configs is not None:
+            _setter("oidc_provider_configs", oidc_provider_configs)
+        if trust_policy is not None:
+            _setter("trust_policy", trust_policy)
+
+    @property
+    @pulumi.getter(name="oidcProviderConfigs")
+    def oidc_provider_configs(self) -> Optional[Sequence['outputs.Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig']]:
+        return pulumi.get(self, "oidc_provider_configs")
+
+    @property
+    @pulumi.getter(name="trustPolicy")
+    def trust_policy(self) -> Optional[str]:
+        return pulumi.get(self, "trust_policy")
+
+
+@pulumi.output_type
+class Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "providerUrl":
+            suggest = "provider_url"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 audience: Optional[str] = None,
+                 provider_url: Optional[str] = None):
+        Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            audience=audience,
+            provider_url=provider_url,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             audience: Optional[str] = None,
+             provider_url: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'providerUrl' in kwargs:
+            provider_url = kwargs['providerUrl']
+
+        if audience is not None:
+            _setter("audience", audience)
+        if provider_url is not None:
+            _setter("provider_url", provider_url)
+
+    @property
+    @pulumi.getter
+    def audience(self) -> Optional[str]:
+        return pulumi.get(self, "audience")
+
+    @property
+    @pulumi.getter(name="providerUrl")
+    def provider_url(self) -> Optional[str]:
+        return pulumi.get(self, "provider_url")
+
+
+@pulumi.output_type
+class Mk8sStatusAddOnDashboard(dict):
+    def __init__(__self__, *,
+                 url: Optional[str] = None):
+        Mk8sStatusAddOnDashboard._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            url=url,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             url: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if url is not None:
+            _setter("url", url)
+
+    @property
+    @pulumi.getter
+    def url(self) -> Optional[str]:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class Mk8sStatusAddOnLog(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "lokiAddress":
+            suggest = "loki_address"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sStatusAddOnLog. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sStatusAddOnLog.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sStatusAddOnLog.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 loki_address: Optional[str] = None):
+        Mk8sStatusAddOnLog._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            loki_address=loki_address,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             loki_address: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'lokiAddress' in kwargs:
+            loki_address = kwargs['lokiAddress']
+
+        if loki_address is not None:
+            _setter("loki_address", loki_address)
+
+    @property
+    @pulumi.getter(name="lokiAddress")
+    def loki_address(self) -> Optional[str]:
+        return pulumi.get(self, "loki_address")
+
+
+@pulumi.output_type
+class Mk8sStatusAddOnMetric(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "prometheusEndpoint":
+            suggest = "prometheus_endpoint"
+        elif key == "remoteWriteConfig":
+            suggest = "remote_write_config"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sStatusAddOnMetric. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sStatusAddOnMetric.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sStatusAddOnMetric.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 prometheus_endpoint: Optional[str] = None,
+                 remote_write_config: Optional[str] = None):
+        Mk8sStatusAddOnMetric._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            prometheus_endpoint=prometheus_endpoint,
+            remote_write_config=remote_write_config,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             prometheus_endpoint: Optional[str] = None,
+             remote_write_config: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'prometheusEndpoint' in kwargs:
+            prometheus_endpoint = kwargs['prometheusEndpoint']
+        if 'remoteWriteConfig' in kwargs:
+            remote_write_config = kwargs['remoteWriteConfig']
+
+        if prometheus_endpoint is not None:
+            _setter("prometheus_endpoint", prometheus_endpoint)
+        if remote_write_config is not None:
+            _setter("remote_write_config", remote_write_config)
+
+    @property
+    @pulumi.getter(name="prometheusEndpoint")
+    def prometheus_endpoint(self) -> Optional[str]:
+        return pulumi.get(self, "prometheus_endpoint")
+
+    @property
+    @pulumi.getter(name="remoteWriteConfig")
+    def remote_write_config(self) -> Optional[str]:
+        return pulumi.get(self, "remote_write_config")
+
+
+@pulumi.output_type
 class OrgAuthConfig(dict):
     @staticmethod
     def __key_warning(key: str):
@@ -2807,6 +5603,68 @@ class OrgLoggingStackdriverLogging(dict):
     @pulumi.getter
     def location(self) -> str:
         return pulumi.get(self, "location")
+
+
+@pulumi.output_type
+class OrgLoggingSyslogLogging(dict):
+    def __init__(__self__, *,
+                 host: str,
+                 port: int,
+                 format: Optional[str] = None,
+                 mode: Optional[str] = None,
+                 severity: Optional[int] = None):
+        OrgLoggingSyslogLogging._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            host=host,
+            port=port,
+            format=format,
+            mode=mode,
+            severity=severity,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             host: str,
+             port: int,
+             format: Optional[str] = None,
+             mode: Optional[str] = None,
+             severity: Optional[int] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("host", host)
+        _setter("port", port)
+        if format is not None:
+            _setter("format", format)
+        if mode is not None:
+            _setter("mode", mode)
+        if severity is not None:
+            _setter("severity", severity)
+
+    @property
+    @pulumi.getter
+    def host(self) -> str:
+        return pulumi.get(self, "host")
+
+    @property
+    @pulumi.getter
+    def port(self) -> int:
+        return pulumi.get(self, "port")
+
+    @property
+    @pulumi.getter
+    def format(self) -> Optional[str]:
+        return pulumi.get(self, "format")
+
+    @property
+    @pulumi.getter
+    def mode(self) -> Optional[str]:
+        return pulumi.get(self, "mode")
+
+    @property
+    @pulumi.getter
+    def severity(self) -> Optional[int]:
+        return pulumi.get(self, "severity")
 
 
 @pulumi.output_type

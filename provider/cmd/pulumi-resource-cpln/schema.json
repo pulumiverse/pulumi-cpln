@@ -709,6 +709,855 @@
             },
             "type": "object"
         },
+        "cpln:index/LocationGeo:LocationGeo": {
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "continent": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "lat": {
+                    "type": "number"
+                },
+                "lon": {
+                    "type": "number"
+                },
+                "state": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sAddOns:Mk8sAddOns": {
+            "properties": {
+                "awsEcr": {
+                    "$ref": "#/types/cpln:index/Mk8sAddOnsAwsEcr:Mk8sAddOnsAwsEcr"
+                },
+                "awsEfs": {
+                    "$ref": "#/types/cpln:index/Mk8sAddOnsAwsEfs:Mk8sAddOnsAwsEfs"
+                },
+                "awsElb": {
+                    "$ref": "#/types/cpln:index/Mk8sAddOnsAwsElb:Mk8sAddOnsAwsElb"
+                },
+                "awsWorkloadIdentity": {
+                    "type": "boolean"
+                },
+                "azureAcr": {
+                    "$ref": "#/types/cpln:index/Mk8sAddOnsAzureAcr:Mk8sAddOnsAzureAcr"
+                },
+                "azureWorkloadIdentity": {
+                    "$ref": "#/types/cpln:index/Mk8sAddOnsAzureWorkloadIdentity:Mk8sAddOnsAzureWorkloadIdentity"
+                },
+                "dashboard": {
+                    "type": "boolean"
+                },
+                "localPathStorage": {
+                    "type": "boolean"
+                },
+                "logs": {
+                    "$ref": "#/types/cpln:index/Mk8sAddOnsLogs:Mk8sAddOnsLogs"
+                },
+                "metrics": {
+                    "$ref": "#/types/cpln:index/Mk8sAddOnsMetrics:Mk8sAddOnsMetrics"
+                },
+                "nvidia": {
+                    "$ref": "#/types/cpln:index/Mk8sAddOnsNvidia:Mk8sAddOnsNvidia"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sAddOnsAwsEcr:Mk8sAddOnsAwsEcr": {
+            "properties": {
+                "roleArn": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "roleArn"
+            ]
+        },
+        "cpln:index/Mk8sAddOnsAwsEfs:Mk8sAddOnsAwsEfs": {
+            "properties": {
+                "roleArn": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "roleArn"
+            ]
+        },
+        "cpln:index/Mk8sAddOnsAwsElb:Mk8sAddOnsAwsElb": {
+            "properties": {
+                "roleArn": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "roleArn"
+            ]
+        },
+        "cpln:index/Mk8sAddOnsAzureAcr:Mk8sAddOnsAzureAcr": {
+            "properties": {
+                "clientId": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "clientId"
+            ]
+        },
+        "cpln:index/Mk8sAddOnsAzureWorkloadIdentity:Mk8sAddOnsAzureWorkloadIdentity": {
+            "properties": {
+                "tenantId": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "tenantId"
+            ]
+        },
+        "cpln:index/Mk8sAddOnsLogs:Mk8sAddOnsLogs": {
+            "properties": {
+                "auditEnabled": {
+                    "type": "boolean"
+                },
+                "excludeNamespaces": {
+                    "type": "string"
+                },
+                "includeNamespaces": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sAddOnsMetrics:Mk8sAddOnsMetrics": {
+            "properties": {
+                "apiServer": {
+                    "type": "boolean"
+                },
+                "cadvisor": {
+                    "type": "boolean"
+                },
+                "coreDns": {
+                    "type": "boolean"
+                },
+                "kubeState": {
+                    "type": "boolean"
+                },
+                "kubelet": {
+                    "type": "boolean"
+                },
+                "nodeExporter": {
+                    "type": "boolean"
+                },
+                "scrapeAnnotated": {
+                    "$ref": "#/types/cpln:index/Mk8sAddOnsMetricsScrapeAnnotated:Mk8sAddOnsMetricsScrapeAnnotated"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sAddOnsMetricsScrapeAnnotated:Mk8sAddOnsMetricsScrapeAnnotated": {
+            "properties": {
+                "excludeNamespaces": {
+                    "type": "string"
+                },
+                "includeNamespaces": {
+                    "type": "string"
+                },
+                "intervalSeconds": {
+                    "type": "integer"
+                },
+                "retainLabels": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sAddOnsNvidia:Mk8sAddOnsNvidia": {
+            "properties": {
+                "taintGpuNodes": {
+                    "type": "boolean"
+                }
+            },
+            "type": "object",
+            "required": [
+                "taintGpuNodes"
+            ]
+        },
+        "cpln:index/Mk8sAwsProvider:Mk8sAwsProvider": {
+            "properties": {
+                "autoscaler": {
+                    "$ref": "#/types/cpln:index/Mk8sAwsProviderAutoscaler:Mk8sAwsProviderAutoscaler"
+                },
+                "deployRoleArn": {
+                    "type": "string"
+                },
+                "diskEncryptionKeyArn": {
+                    "type": "string"
+                },
+                "image": {
+                    "$ref": "#/types/cpln:index/Mk8sAwsProviderImage:Mk8sAwsProviderImage"
+                },
+                "keyPair": {
+                    "type": "string"
+                },
+                "networking": {
+                    "$ref": "#/types/cpln:index/Mk8sAwsProviderNetworking:Mk8sAwsProviderNetworking"
+                },
+                "nodePools": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sAwsProviderNodePool:Mk8sAwsProviderNodePool"
+                    }
+                },
+                "preInstallScript": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "securityGroupIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "skipCreateRoles": {
+                    "type": "boolean"
+                },
+                "vpcId": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "deployRoleArn",
+                "image",
+                "region",
+                "vpcId"
+            ]
+        },
+        "cpln:index/Mk8sAwsProviderAutoscaler:Mk8sAwsProviderAutoscaler": {
+            "properties": {
+                "expanders": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "unneededTime": {
+                    "type": "string"
+                },
+                "unreadyTime": {
+                    "type": "string"
+                },
+                "utilizationThreshold": {
+                    "type": "number"
+                }
+            },
+            "type": "object",
+            "required": [
+                "expanders"
+            ]
+        },
+        "cpln:index/Mk8sAwsProviderImage:Mk8sAwsProviderImage": {
+            "properties": {
+                "exact": {
+                    "type": "string"
+                },
+                "recommended": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sAwsProviderNetworking:Mk8sAwsProviderNetworking": {
+            "properties": {
+                "podNetwork": {
+                    "type": "string"
+                },
+                "serviceNetwork": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sAwsProviderNodePool:Mk8sAwsProviderNodePool": {
+            "properties": {
+                "bootDiskSize": {
+                    "type": "integer"
+                },
+                "extraSecurityGroupIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "instanceTypes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "maxSize": {
+                    "type": "integer"
+                },
+                "minSize": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "onDemandBaseCapacity": {
+                    "type": "integer"
+                },
+                "onDemandPercentageAboveBaseCapacity": {
+                    "type": "integer"
+                },
+                "overrideImage": {
+                    "$ref": "#/types/cpln:index/Mk8sAwsProviderNodePoolOverrideImage:Mk8sAwsProviderNodePoolOverrideImage"
+                },
+                "spotAllocationStrategy": {
+                    "type": "string"
+                },
+                "subnetIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "taints": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sAwsProviderNodePoolTaint:Mk8sAwsProviderNodePoolTaint"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "instanceTypes",
+                "name",
+                "overrideImage",
+                "subnetIds"
+            ]
+        },
+        "cpln:index/Mk8sAwsProviderNodePoolOverrideImage:Mk8sAwsProviderNodePoolOverrideImage": {
+            "properties": {
+                "exact": {
+                    "type": "string"
+                },
+                "recommended": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sAwsProviderNodePoolTaint:Mk8sAwsProviderNodePoolTaint": {
+            "properties": {
+                "effect": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sFirewall:Mk8sFirewall": {
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "sourceCidr": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "sourceCidr"
+            ]
+        },
+        "cpln:index/Mk8sGenericProvider:Mk8sGenericProvider": {
+            "properties": {
+                "location": {
+                    "type": "string"
+                },
+                "networking": {
+                    "$ref": "#/types/cpln:index/Mk8sGenericProviderNetworking:Mk8sGenericProviderNetworking"
+                },
+                "nodePools": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sGenericProviderNodePool:Mk8sGenericProviderNodePool"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "location"
+            ]
+        },
+        "cpln:index/Mk8sGenericProviderNetworking:Mk8sGenericProviderNetworking": {
+            "properties": {
+                "podNetwork": {
+                    "type": "string"
+                },
+                "serviceNetwork": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sGenericProviderNodePool:Mk8sGenericProviderNodePool": {
+            "properties": {
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "taints": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sGenericProviderNodePoolTaint:Mk8sGenericProviderNodePoolTaint"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "name"
+            ]
+        },
+        "cpln:index/Mk8sGenericProviderNodePoolTaint:Mk8sGenericProviderNodePoolTaint": {
+            "properties": {
+                "effect": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sHetznerProvider:Mk8sHetznerProvider": {
+            "properties": {
+                "autoscaler": {
+                    "$ref": "#/types/cpln:index/Mk8sHetznerProviderAutoscaler:Mk8sHetznerProviderAutoscaler"
+                },
+                "dedicatedServerNodePools": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sHetznerProviderDedicatedServerNodePool:Mk8sHetznerProviderDedicatedServerNodePool"
+                    }
+                },
+                "firewallId": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "networkId": {
+                    "type": "string"
+                },
+                "networking": {
+                    "$ref": "#/types/cpln:index/Mk8sHetznerProviderNetworking:Mk8sHetznerProviderNetworking"
+                },
+                "nodePools": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sHetznerProviderNodePool:Mk8sHetznerProviderNodePool"
+                    }
+                },
+                "preInstallScript": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "sshKey": {
+                    "type": "string"
+                },
+                "tokenSecretLink": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "networkId",
+                "region",
+                "tokenSecretLink"
+            ]
+        },
+        "cpln:index/Mk8sHetznerProviderAutoscaler:Mk8sHetznerProviderAutoscaler": {
+            "properties": {
+                "expanders": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "unneededTime": {
+                    "type": "string"
+                },
+                "unreadyTime": {
+                    "type": "string"
+                },
+                "utilizationThreshold": {
+                    "type": "number"
+                }
+            },
+            "type": "object",
+            "required": [
+                "expanders"
+            ]
+        },
+        "cpln:index/Mk8sHetznerProviderDedicatedServerNodePool:Mk8sHetznerProviderDedicatedServerNodePool": {
+            "properties": {
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "taints": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sHetznerProviderDedicatedServerNodePoolTaint:Mk8sHetznerProviderDedicatedServerNodePoolTaint"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "name"
+            ]
+        },
+        "cpln:index/Mk8sHetznerProviderDedicatedServerNodePoolTaint:Mk8sHetznerProviderDedicatedServerNodePoolTaint": {
+            "properties": {
+                "effect": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sHetznerProviderNetworking:Mk8sHetznerProviderNetworking": {
+            "properties": {
+                "podNetwork": {
+                    "type": "string"
+                },
+                "serviceNetwork": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sHetznerProviderNodePool:Mk8sHetznerProviderNodePool": {
+            "properties": {
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "maxSize": {
+                    "type": "integer"
+                },
+                "minSize": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "overrideImage": {
+                    "type": "string"
+                },
+                "serverType": {
+                    "type": "string"
+                },
+                "taints": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sHetznerProviderNodePoolTaint:Mk8sHetznerProviderNodePoolTaint"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "name",
+                "serverType"
+            ]
+        },
+        "cpln:index/Mk8sHetznerProviderNodePoolTaint:Mk8sHetznerProviderNodePoolTaint": {
+            "properties": {
+                "effect": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sStatus:Mk8sStatus": {
+            "properties": {
+                "addOns": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sStatusAddOn:Mk8sStatusAddOn"
+                    }
+                },
+                "homeLocation": {
+                    "type": "string"
+                },
+                "oidcProviderUrl": {
+                    "type": "string"
+                },
+                "serverUrl": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "addOns",
+                        "homeLocation",
+                        "oidcProviderUrl",
+                        "serverUrl"
+                    ]
+                }
+            }
+        },
+        "cpln:index/Mk8sStatusAddOn:Mk8sStatusAddOn": {
+            "properties": {
+                "awsEcrs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sStatusAddOnAwsEcr:Mk8sStatusAddOnAwsEcr"
+                    }
+                },
+                "awsEfs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sStatusAddOnAwsEf:Mk8sStatusAddOnAwsEf"
+                    }
+                },
+                "awsElbs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sStatusAddOnAwsElb:Mk8sStatusAddOnAwsElb"
+                    }
+                },
+                "awsWorkloadIdentities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sStatusAddOnAwsWorkloadIdentity:Mk8sStatusAddOnAwsWorkloadIdentity"
+                    }
+                },
+                "dashboards": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sStatusAddOnDashboard:Mk8sStatusAddOnDashboard"
+                    }
+                },
+                "logs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sStatusAddOnLog:Mk8sStatusAddOnLog"
+                    }
+                },
+                "metrics": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sStatusAddOnMetric:Mk8sStatusAddOnMetric"
+                    }
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "awsEcrs",
+                        "awsEfs",
+                        "awsElbs",
+                        "awsWorkloadIdentities",
+                        "dashboards",
+                        "logs",
+                        "metrics"
+                    ]
+                }
+            }
+        },
+        "cpln:index/Mk8sStatusAddOnAwsEcr:Mk8sStatusAddOnAwsEcr": {
+            "properties": {
+                "trustPolicy": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "trustPolicy"
+                    ]
+                }
+            }
+        },
+        "cpln:index/Mk8sStatusAddOnAwsEf:Mk8sStatusAddOnAwsEf": {
+            "properties": {
+                "trustPolicy": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "trustPolicy"
+                    ]
+                }
+            }
+        },
+        "cpln:index/Mk8sStatusAddOnAwsElb:Mk8sStatusAddOnAwsElb": {
+            "properties": {
+                "trustPolicy": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "trustPolicy"
+                    ]
+                }
+            }
+        },
+        "cpln:index/Mk8sStatusAddOnAwsWorkloadIdentity:Mk8sStatusAddOnAwsWorkloadIdentity": {
+            "properties": {
+                "oidcProviderConfigs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig:Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig"
+                    }
+                },
+                "trustPolicy": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "oidcProviderConfigs",
+                        "trustPolicy"
+                    ]
+                }
+            }
+        },
+        "cpln:index/Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig:Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig": {
+            "properties": {
+                "audience": {
+                    "type": "string"
+                },
+                "providerUrl": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "audience",
+                        "providerUrl"
+                    ]
+                }
+            }
+        },
+        "cpln:index/Mk8sStatusAddOnDashboard:Mk8sStatusAddOnDashboard": {
+            "properties": {
+                "url": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "url"
+                    ]
+                }
+            }
+        },
+        "cpln:index/Mk8sStatusAddOnLog:Mk8sStatusAddOnLog": {
+            "properties": {
+                "lokiAddress": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "lokiAddress"
+                    ]
+                }
+            }
+        },
+        "cpln:index/Mk8sStatusAddOnMetric:Mk8sStatusAddOnMetric": {
+            "properties": {
+                "prometheusEndpoint": {
+                    "type": "string"
+                },
+                "remoteWriteConfig": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "prometheusEndpoint",
+                        "remoteWriteConfig"
+                    ]
+                }
+            }
+        },
         "cpln:index/OrgAuthConfig:OrgAuthConfig": {
             "properties": {
                 "domainAutoMembers": {
@@ -953,6 +1802,30 @@
             "required": [
                 "credentials",
                 "location"
+            ]
+        },
+        "cpln:index/OrgLoggingSyslogLogging:OrgLoggingSyslogLogging": {
+            "properties": {
+                "format": {
+                    "type": "string"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "mode": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "severity": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "host",
+                "port"
             ]
         },
         "cpln:index/OrgObservability:OrgObservability": {
@@ -3605,6 +4478,323 @@
                 "type": "object"
             }
         },
+        "cpln:index/location:Location": {
+            "description": "Manages an org's [Location](https://docs.controlplane.com/reference/location).\n\n## Declaration\n\n### Required\n\n- **name** (String) Name of the Location.\n- **tags** (Map of String) Key-value map of resource tags.\n- **enabled** (Boolean) Indication if location is enabled.\n\n\u003e **Note** You need to associate the same tags that are defined in a location; otherwise, the pulumi preview will not be empty. It is common practice to reference the tags from a location data source.\n\n## Outputs\n\n- **cpln_id** (String) The ID, in GUID format, of the location.\n- **description** (String) Description of the location.\n- **cloud_provider** (String) Cloud Provider of the location.\n- **region** (String) Region of the location.\n- **geo** (Block List, Max: 1) (see below)\n- **ip_ranges** (List of String) A list of IP ranges of the location.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n\n\u003ca id=\"nestedblock--geo\"\u003e\u003c/a\u003e\n\n### `geo`\n\nLocation geographical details\n\n- **lat** (Number) Latitude.\n- **lon** (Number) Longitude.\n- **country** (String) Country.\n- **state** (String) State.\n- **city** (String) City.\n- **continent** (String) Continent.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n### Reference Tags from Data Source\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumi/cpln\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nconst main-location = cpln.getLocation({\n    name: \"aws-eu-central-1\",\n});\nconst reference_tags_example = new cpln.Location(\"reference-tags-example\", {\n    enabled: true,\n    tags: main_location.then(main_location =\u003e main_location.tags),\n});\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\nimport pulumiverse_cpln as cpln\n\nmain_location = cpln.get_location(name=\"aws-eu-central-1\")\nreference_tags_example = cpln.Location(\"reference-tags-example\",\n    enabled=True,\n    tags=main_location.tags)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\nusing Cpln = Pulumiverse.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var main_location = Cpln.GetLocation.Invoke(new()\n    {\n        Name = \"aws-eu-central-1\",\n    });\n\n    var reference_tags_example = new Cpln.Location(\"reference-tags-example\", new()\n    {\n        Enabled = true,\n        Tags = main_location.Apply(main_location =\u003e main_location.Apply(getLocationResult =\u003e getLocationResult.Tags)),\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tmain_location, err := cpln.LookupLocation(ctx, \u0026cpln.LookupLocationArgs{\n\t\t\tName: \"aws-eu-central-1\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = cpln.NewLocation(ctx, \"reference-tags-example\", \u0026cpln.LocationArgs{\n\t\t\tEnabled: pulumi.Bool(true),\n\t\t\tTags:    interface{}(main_location.Tags),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport com.pulumi.cpln.inputs.GetLocationArgs;\nimport com.pulumi.cpln.Location;\nimport com.pulumi.cpln.LocationArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var main-location = CplnFunctions.getLocation(GetLocationArgs.builder()\n            .name(\"aws-eu-central-1\")\n            .build());\n\n        var reference_tags_example = new Location(\"reference-tags-example\", LocationArgs.builder()        \n            .enabled(true)\n            .tags(main_location.tags())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  reference-tags-example:\n    type: cpln:Location\n    properties:\n      enabled: true\n      tags: ${[\"main-location\"].tags}\nvariables:\n  main-location:\n    fn::invoke:\n      Function: cpln:getLocation\n      Arguments:\n        name: aws-eu-central-1\n```\n{{% /example %}}\n{{% example %}}\n### Hard Code Location Tags\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nconst example = new cpln.Location(\"example\", {\n    enabled: true,\n    tags: {\n        \"cpln/city\": \"Frankfurt\",\n        \"cpln/continent\": \"Europe\",\n        \"cpln/country\": \"Germany\",\n    },\n});\n```\n```python\nimport pulumi\nimport pulumiverse_cpln as cpln\n\nexample = cpln.Location(\"example\",\n    enabled=True,\n    tags={\n        \"cpln/city\": \"Frankfurt\",\n        \"cpln/continent\": \"Europe\",\n        \"cpln/country\": \"Germany\",\n    })\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumiverse.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var example = new Cpln.Location(\"example\", new()\n    {\n        Enabled = true,\n        Tags = \n        {\n            { \"cpln/city\", \"Frankfurt\" },\n            { \"cpln/continent\", \"Europe\" },\n            { \"cpln/country\", \"Germany\" },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := cpln.NewLocation(ctx, \"example\", \u0026cpln.LocationArgs{\n\t\t\tEnabled: pulumi.Bool(true),\n\t\t\tTags: pulumi.StringMap{\n\t\t\t\t\"cpln/city\":      pulumi.String(\"Frankfurt\"),\n\t\t\t\t\"cpln/continent\": pulumi.String(\"Europe\"),\n\t\t\t\t\"cpln/country\":   pulumi.String(\"Germany\"),\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.Location;\nimport com.pulumi.cpln.LocationArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var example = new Location(\"example\", LocationArgs.builder()        \n            .enabled(true)\n            .tags(Map.ofEntries(\n                Map.entry(\"cpln/city\", \"Frankfurt\"),\n                Map.entry(\"cpln/continent\", \"Europe\"),\n                Map.entry(\"cpln/country\", \"Germany\")\n            ))\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  example:\n    type: cpln:Location\n    properties:\n      enabled: true\n      tags:\n        cpln/city: Frankfurt\n        cpln/continent: Europe\n        cpln/country: Germany\n```\n{{% /example %}}\n{{% /examples %}}",
+            "properties": {
+                "cloudProvider": {
+                    "type": "string",
+                    "description": "Cloud Provider of the location.\n"
+                },
+                "cplnId": {
+                    "type": "string",
+                    "description": "The ID, in GUID format, of the location.\n"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of the location.\n"
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Indication if location is enabled.\n"
+                },
+                "geos": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/LocationGeo:LocationGeo"
+                    }
+                },
+                "ipRanges": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "A list of IP ranges of the location.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the Location.\n"
+                },
+                "region": {
+                    "type": "string",
+                    "description": "Region of the location.\n"
+                },
+                "selfLink": {
+                    "type": "string",
+                    "description": "Full link to this resource. Can be referenced by other resources.\n"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Key-value map of resource tags.\n"
+                }
+            },
+            "required": [
+                "cloudProvider",
+                "cplnId",
+                "description",
+                "enabled",
+                "geos",
+                "ipRanges",
+                "name",
+                "region",
+                "selfLink",
+                "tags"
+            ],
+            "inputProperties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Indication if location is enabled.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the Location.\n",
+                    "willReplaceOnChanges": true
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Key-value map of resource tags.\n"
+                }
+            },
+            "requiredInputs": [
+                "enabled",
+                "tags"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Location resources.\n",
+                "properties": {
+                    "cloudProvider": {
+                        "type": "string",
+                        "description": "Cloud Provider of the location.\n"
+                    },
+                    "cplnId": {
+                        "type": "string",
+                        "description": "The ID, in GUID format, of the location.\n"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Description of the location.\n"
+                    },
+                    "enabled": {
+                        "type": "boolean",
+                        "description": "Indication if location is enabled.\n"
+                    },
+                    "geos": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/LocationGeo:LocationGeo"
+                        }
+                    },
+                    "ipRanges": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "A list of IP ranges of the location.\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the Location.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "Region of the location.\n"
+                    },
+                    "selfLink": {
+                        "type": "string",
+                        "description": "Full link to this resource. Can be referenced by other resources.\n"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Key-value map of resource tags.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "cpln:index/mk8s:Mk8s": {
+            "description": "Manages a Mk8s's [Mk8s](https://docs.controlplane.com/mk8s/overview).\n\n## Declaration\n\n### Required\n\n- **name** (String) Name of the Mk8s.\n- **version** (String)\n\n\u003e **Note** Only one of the providers listed below can be included in a resource.\n\n- **generic_provider** (Block List, Max: 1) (see below)\n- **hetzner_provider** (Block List, Max: 1) (see below)\n- **aws_provider** (Block List, Max: 1) (see below)\n\n### Optional\n\n- **description** (String) Description of the Mk8s.\n- **tags** (Map of String) Key-value map of resource tags.\n- **firewall** (Block List, Max: 1) (see below)\n- **add_ons** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--generic_provider\"\u003e\u003c/a\u003e\n\n### `generic_provider`\n\nRequired:\n\n- **location** (String) Control Plane location that will host the K8S components. Prefer one that is closest to where the nodes are running.\n\nOptional:\n\n- **networking** (Block List, Max: 1) (see below)\n- **node_pool** (Block List) (see below)\n\n\u003ca id=\"nestedblock--generic_provider--networking\"\u003e\u003c/a\u003e\n\n### `generic_provider.networking`\n\nOptional:\n\n- **service_network** (String) The CIDR of the service network.\n- **pod_network** (String) The CIDR of the pod network.\n\n\u003ca id=\"nestedblock--generic_provider--node_pool\"\u003e\u003c/a\u003e\n\n### `generic_provider.node_pool`\n\nList of node pools.\n\nRequired:\n\n- **name** (String)\n\nOptional:\n\n- **labels** (Map of String) Labels to attach to nodes of a node pool.\n- **taint** (Block List) (see below)\n\n\u003ca id=\"nestedblock--generic_provider--node_pool--taint\"\u003e\u003c/a\u003e\n\n### `generic_provider.node_pool.taint`\n\nTaint for the nodes of a pool.\n\nOptional:\n\n- **key** (String)\n- **value** (String)\n- **effect** (String)\n\n\u003ca id=\"nestedblock--hetzner_provider\"\u003e\u003c/a\u003e\n\n### `hetzner_provider`\n\nRequired:\n\n- **region** (String) Hetzner region to deploy nodes to.\n- **token_secret_link** (String) Link to a secret holding Hetzner access key.\n- **network_id** (String) ID of the Hetzner network to deploy nodes to.\n\nOptional:\n\n- **networking** (Block List, Max: 1) (see below)\n- **pre_install_script** (String) Optional shell script that will be run before K8S is installed.\n- **firewall_id** (String) Optional firewall rule to attach to all nodes.\n- **node_pool** (Block List) (see below)\n- **dedicated_server_node_pool** (Block List) (see below)\n- **image** (String) Default image for all nodes.\n- **ssh_key** (String) SSH key name for accessing deployed nodes.\n- **autoscaler** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--hetzner_provider--node_pool\"\u003e\u003c/a\u003e\n\n### `hetzner_provider.node_pool`\n\nList of node pools.\n\nRequired:\n\n- **name** (String)\n- **server_type** (String)\n\nOptional:\n\n- **labels** (Map of String) Labels to attach to nodes of a node pool.\n- **taint** (Block List) (see below)\n- **override_image** (String)\n- **min_size** (Number)\n- **max_size** (Number)\n\n\u003ca id=\"nestedblock--hetzner_provider--dedicated_server_node_pool\"\u003e\u003c/a\u003e\n\n### `hetzner_provider.dedicated_server_node_pool`\n\nNode pool that can configure dedicated Hetzner servers.\n\nRequired:\n\n- **name** (String)\n\nOptional:\n\n- **labels** (Map of String) Labels to attach to nodes of a node pool.\n- **taint** (Block List) (see below)\n\n\u003ca id=\"nestedblock--aws_provider\"\u003e\u003c/a\u003e\n\n### `aws_provider`\n\nRequired:\n\n- **region** (String) Region where the cluster nodes will live.\n- **skip_create_roles** (Boolean) If true, Control Plane will not create any roles.\n- **image** (Block List, Max: 1) (see below)\n- **deploy_role_arn** (String) Control Plane will set up the cluster by assuming this role.\n- **vpc_id** (String) The vpc where nodes will be deployed. Supports SSM.\n\nOptional:\n\n- **networking** (Block List, Max: 1) (see below)\n- **pre_install_script** (String) Optional shell script that will be run before K8S is installed. Supports SSM.\n- **key_pair** (String) Name of keyPair. Supports SSM\n- **disk_encryption_key_arn** (String) KMS key used to encrypt volumes. Supports SSM.\n- **security_group_ids** (List of String) Security groups to deploy nodes to. Security groups control if the cluster is multi-zone or single-zon.\n- **node_pool** (Block List) (see below)\n- **autoscaler** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--aws_provider--node_pool\"\u003e\u003c/a\u003e\n\n### `aws_provider.node_pool`\n\nList of node pools.\n\nRequired:\n\n- **name** (String)\n- **instance_types** (List of String)\n- **override_image** (Block List, Max: 1) (see below)\n- **subnet_ids** (List of String)\n\nOptional:\n\n- **labels** (Map of String) Labels to attach to nodes of a node pool.\n- **taint** (Block List) (see below)\n- **boot_disk_size** (Number) Size in GB.\n- **min_size** (Number)\n- **max_size** (Number)\n- **on_demand_base_capacity** (Number)\n- **on_demand_percentage_above_base_capacity** (Number)\n- **spot_allocation_strategy** (String)\n- **extra_security_group_ids** (List of String)\n\n\u003ca id=\"nestedblock--aws_provider--ami\"\u003e\u003c/a\u003e\n\n### `ami`\n\nDefault image for all nodes.\n\nRequired:\n\n\u003e **Note** Only one of the following listed below can be included.\n\n- **recommended** (String)\n- **exact** (String) Support SSM.\n\n\u003ca id=\"nestedblock--autoscaler\"\u003e\u003c/a\u003e\n\n### `autoscaler`\n\nOptional:\n\n- **expander** (List of String)\n- **unneeded_time** (String)\n- **unready_time** (String)\n- **utilization_threshold** (Float64)\n\n\u003ca id=\"nestedblock--firewall\"\u003e\u003c/a\u003e\n\n### `firewall`\n\nAllow-list.\n\nRequired:\n\n- **source_cidr** (String)\n\nOptional:\n\n- **description** (String)\n\n\u003ca id=\"nestedblock--add_ons\"\u003e\u003c/a\u003e\n\n### `add_ons`\n\nOptional:\n\n- **dashboard** (Boolean)\n- **azure_workload_identity** (Block List, Max: 1) (see below)\n- **aws_workload_identity** (Boolean)\n- **local_path_storage** (Boolean)\n- **metrics** (Block List, Max: 1) (see below)\n- **logs** (Block List, Max: 1) (see below)\n- **nvidia** (Block List, Max: 1) (see below)\n- **aws_efs** (Block List, Max: 1) (see below)\n- **aws_ecr** (Block List, Max: 1) (see below)\n- **aws_elb** (Block List, Max: 1) (see below)\n- **azure_acr** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--add_ons--azure_workload_identity\"\u003e\u003c/a\u003e\n\n### `add_ons.azure_workload_identity`\n\nRequired:\n\n- **tenant_id** (String) Tenant ID to use for workload identity.\n\n\u003ca id=\"nestedblock--add_ons--metrics\"\u003e\u003c/a\u003e\n\n### `add_ons.metrics`\n\nOptional:\n\n- **kube_state** (Boolean) Enable kube-state metrics.\n- **core_dns** (Boolean) Enable scraping of core-dns service.\n- **kubelet** (Boolean) Enable scraping kubelet stats.\n- **api_server** (Boolean) Enable scraping apiserver stats.\n- **node_exporter** (Boolean) Enable collecting node-level stats (disk, network, filesystem, etc).\n- **cadvisor** (Boolean) Enable CNI-level container stats.\n- **scrape_annotated** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--add_ons--metrics--scrape-annotated\"\u003e\u003c/a\u003e\n\n### `add_ons.metrics.scrape-annotated`\n\nScrape pods annotated with prometheus.io/scrape=true.\n\nOptional:\n\n- **interval_seconds** (Number)\n- **include_namespaces** (String)\n- **exclude_namespaces** (String)\n- **retain_labels** (String)\n\n\u003ca id=\"nestedblock--add_ons--logs\"\u003e\u003c/a\u003e\n\n### `add_ons.logs`\n\nOptional:\n\n- **audit_enabled** (Boolean) Collect k8s audit log as log events.\n- **include_namespaces** (String)\n- **exclude_namespaces** (String)\n\n\u003ca id=\"nestedblock--add_ons--nvidia\"\u003e\u003c/a\u003e\n\n### `add_ons.nvidia`\n\nRequired:\n\n- **taint_gpu_nodes** (Boolean)\n\n\u003ca id=\"nestedblock--add_ons--aws--efs\"\u003e\u003c/a\u003e\n\n### `add_ons.aws_efs`\n\nRequired:\n\n- **role_arn** (String) Use this role for EFS interaction.\n\n\u003ca id=\"nestedblock--add_ons--aws--ecr\"\u003e\u003c/a\u003e\n\n### `add_ons.aws_ecr`\n\nRequired:\n\n- **role_arn** (String) Role to use when authorizing ECR pulls. Optional on AWS, in which case it will use the instance role to pull.\n\n\u003ca id=\"nestedblock--add_ons--aws--elb\"\u003e\u003c/a\u003e\n\n### `add_ons.aws_elb`\n\nRequired:\n\n- **role_arn** (String) Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.\n\n\u003ca id=\"nestedblock--add_ons--azure_acr\"\u003e\u003c/a\u003e\n\n### `add_ons.azure_acr`\n\nRequired:\n\n- **client_id** (String)\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the Mk8s.\n- **alias** (String) The alias name of the Mk8s.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n- **status** (Block List, Max: 1) (see below).\n\n\u003ca id=\"nestedblock--status\"\u003e\u003c/a\u003e\n\n### `status`\n\nStatus of the mk8s.\n\nRead-Only:\n\n- **oidc_provider_url** (String)\n- **server_url** (String)\n- **home_location** (String)\n- **add_ons** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--status--add_ons\"\u003e\u003c/a\u003e\n\n### `status.add_ons`\n\nRead-Only:\n\n- **dashboard** (Block List, Max: 1) (see below)\n- **aws_workload_identity** (Block List, Max: 1) (see below)\n- **metrics** (Block List, Max: 1) (see below)\n- **logs** (Block List, Max: 1) (see below)\n- **aws_ecr** (Block List, Max: 1) (see below)\n- **aws_efs** (Block List, Max: 1) (see below)\n- **aws_elb** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--status--add_ons--dashobard\"\u003e\u003c/a\u003e\n\n### `status.add_ons.dashboard`\n\nRead-Only:\n\n- **url** (String) Access to dashboard.\n\n\u003ca id=\"nestedblock--status--add_ons--aws_workload_identity\"\u003e\u003c/a\u003e\n\n### `status.add_ons.aws_workload_identity`\n\nRead-Only:\n\n- **oidc_provider_config** (Block List, Max: 1) (see below)\n- **trust_policy** (String)\n\n\u003ca id=\"nestedblock--status--add_ons--aws_workload_identity--oidc_provider_config\"\u003e\u003c/a\u003e\n\n### `status.add_ons.aws_workload_identity.oidc_provider_config`\n\nRead-Only:\n\n- **provider_url** (String)\n- **audience** (String)\n\n\u003ca id=\"nestedblock--status--add_ons--metrics\"\u003e\u003c/a\u003e\n\n### `status.add_ons.metrics`\n\nRead-Only:\n\n- **prometheus_endpoint** (String)\n- **remote_write_config** (String)\n\n\u003ca id=\"nestedblock--status--add_ons--logs\"\u003e\u003c/a\u003e\n\n### `status.add_ons.logs`\n\nRead-Only:\n\n- **loki_address** (String) Loki endpoint to query logs from.\n\n\u003ca id=\"nestedblock--status--add_ons--aws\"\u003e\u003c/a\u003e\n\n### `status.add_ons.aws`\n\nRead-Only:\n\n- **trust_policy** (String)\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n### Generic Provider\n\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.Mk8s;\nimport com.pulumi.cpln.Mk8sArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAzureAcrArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAzureWorkloadIdentityArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsLogsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsMetricsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsMetricsScrapeAnnotatedArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsNvidiaArgs;\nimport com.pulumi.cpln.inputs.Mk8sFirewallArgs;\nimport com.pulumi.cpln.inputs.Mk8sGenericProviderArgs;\nimport com.pulumi.cpln.inputs.Mk8sGenericProviderNetworkingArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var generic = new Mk8s(\"generic\", Mk8sArgs.builder()        \n            .addOns(Mk8sAddOnsArgs.builder()\n                .awsWorkloadIdentity(true)\n                .azureAcr(Mk8sAddOnsAzureAcrArgs.builder()\n                    .clientId(\"4e25b134-160b-4a9d-b392-13b381ced5ef\")\n                    .build())\n                .azureWorkloadIdentity(Mk8sAddOnsAzureWorkloadIdentityArgs.builder()\n                    .tenantId(\"7f43458a-a34e-4bfa-9e56-e2289e49c4ec\")\n                    .build())\n                .dashboard(true)\n                .localPathStorage(true)\n                .logs(Mk8sAddOnsLogsArgs.builder()\n                    .auditEnabled(true)\n                    .excludeNamespaces(\"^[a-z]$\")\n                    .includeNamespaces(\"^\\\\d+$\")\n                    .build())\n                .metrics(Mk8sAddOnsMetricsArgs.builder()\n                    .apiServer(true)\n                    .cadvisor(true)\n                    .coreDns(true)\n                    .kubeState(true)\n                    .kubelet(true)\n                    .nodeExporter(true)\n                    .scrapeAnnotated(Mk8sAddOnsMetricsScrapeAnnotatedArgs.builder()\n                        .excludeNamespaces(\"^[a-z]$\")\n                        .includeNamespaces(\"^\\\\d+$\")\n                        .intervalSeconds(30)\n                        .retainLabels(\"^\\\\w+$\")\n                        .build())\n                    .build())\n                .nvidia(Mk8sAddOnsNvidiaArgs.builder()\n                    .taintGpuNodes(true)\n                    .build())\n                .build())\n            .description(\"demo-mk8s-generic-provider\")\n            .firewalls(Mk8sFirewallArgs.builder()\n                .description(\"hello world\")\n                .sourceCidr(\"192.168.1.255\")\n                .build())\n            .genericProvider(Mk8sGenericProviderArgs.builder()\n                .location(\"aws-eu-central-1\")\n                .networking(Mk8sGenericProviderNetworkingArgs.builder()\n                    .podNetwork(\"10.42.0.0/16\")\n                    .serviceNetwork(\"10.43.0.0/16\")\n                    .build())\n                .nodePools(Mk8sGenericProviderNodePoolArgs.builder()\n                    .labels(Map.of(\"hello\", \"world\"))\n                    .name(\"my-node-pool\")\n                    .taint(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference))\n                    .build())\n                .build())\n            .tags(Map.ofEntries(\n                Map.entry(\"acceptance_test\", \"true\"),\n                Map.entry(\"terraform_generated\", \"true\")\n            ))\n            .version(\"1.28.4\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  generic:\n    type: cpln:Mk8s\n    properties:\n      addOns:\n        awsWorkloadIdentity: true\n        azureAcr:\n          clientId: 4e25b134-160b-4a9d-b392-13b381ced5ef\n        azureWorkloadIdentity:\n          tenantId: 7f43458a-a34e-4bfa-9e56-e2289e49c4ec\n        dashboard: true\n        localPathStorage: true\n        logs:\n          auditEnabled: true\n          excludeNamespaces: ^[a-z]$\n          includeNamespaces: ^\\d+$\n        metrics:\n          apiServer: true\n          cadvisor: true\n          coreDns: true\n          kubeState: true\n          kubelet: true\n          nodeExporter: true\n          scrapeAnnotated:\n            excludeNamespaces: ^[a-z]$\n            includeNamespaces: ^\\d+$\n            intervalSeconds: 30\n            retainLabels: ^\\w+$\n        nvidia:\n          taintGpuNodes: true\n      description: demo-mk8s-generic-provider\n      firewalls:\n        - description: hello world\n          sourceCidr: 192.168.1.255\n      genericProvider:\n        location: aws-eu-central-1\n        networking:\n          podNetwork: 10.42.0.0/16\n          serviceNetwork: 10.43.0.0/16\n        nodePools:\n          - labels:\n              hello: world\n            name: my-node-pool\n            taint:\n              - effect: NoSchedule\n                key: hello\n                value: world\n      tags:\n        acceptance_test: 'true'\n        terraform_generated: 'true'\n      version: 1.28.4\n```\n{{% /example %}}\n{{% example %}}\n### Hetzner Provider\n\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.Mk8s;\nimport com.pulumi.cpln.Mk8sArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAzureAcrArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAzureWorkloadIdentityArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsLogsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsMetricsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsMetricsScrapeAnnotatedArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsNvidiaArgs;\nimport com.pulumi.cpln.inputs.Mk8sFirewallArgs;\nimport com.pulumi.cpln.inputs.Mk8sHetznerProviderArgs;\nimport com.pulumi.cpln.inputs.Mk8sHetznerProviderAutoscalerArgs;\nimport com.pulumi.cpln.inputs.Mk8sHetznerProviderNetworkingArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var hetzner = new Mk8s(\"hetzner\", Mk8sArgs.builder()        \n            .addOns(Mk8sAddOnsArgs.builder()\n                .awsWorkloadIdentity(true)\n                .azureAcr(Mk8sAddOnsAzureAcrArgs.builder()\n                    .clientId(\"4e25b134-160b-4a9d-b392-13b381ced5ef\")\n                    .build())\n                .azureWorkloadIdentity(Mk8sAddOnsAzureWorkloadIdentityArgs.builder()\n                    .tenantId(\"7f43458a-a34e-4bfa-9e56-e2289e49c4ec\")\n                    .build())\n                .dashboard(true)\n                .localPathStorage(true)\n                .logs(Mk8sAddOnsLogsArgs.builder()\n                    .auditEnabled(true)\n                    .excludeNamespaces(\"^[a-z]$\")\n                    .includeNamespaces(\"^\\\\d+$\")\n                    .build())\n                .metrics(Mk8sAddOnsMetricsArgs.builder()\n                    .apiServer(true)\n                    .cadvisor(true)\n                    .coreDns(true)\n                    .kubeState(true)\n                    .kubelet(true)\n                    .nodeExporter(true)\n                    .scrapeAnnotated(Mk8sAddOnsMetricsScrapeAnnotatedArgs.builder()\n                        .excludeNamespaces(\"^[a-z]$\")\n                        .includeNamespaces(\"^\\\\d+$\")\n                        .intervalSeconds(30)\n                        .retainLabels(\"^\\\\w+$\")\n                        .build())\n                    .build())\n                .nvidia(Mk8sAddOnsNvidiaArgs.builder()\n                    .taintGpuNodes(true)\n                    .build())\n                .build())\n            .description(\"demo-mk8s-hetzner-provider\")\n            .firewalls(Mk8sFirewallArgs.builder()\n                .description(\"hello world\")\n                .sourceCidr(\"192.168.1.255\")\n                .build())\n            .hetznerProvider(Mk8sHetznerProviderArgs.builder()\n                .autoscaler(Mk8sHetznerProviderAutoscalerArgs.builder()\n                    .expander(\"most-pods\")\n                    .unneededTime(\"10m\")\n                    .unreadyTime(\"20m\")\n                    .utilizationThreshold(0.7)\n                    .build())\n                .dedicatedServerNodePools(Mk8sHetznerProviderDedicatedServerNodePoolArgs.builder()\n                    .labels(Map.of(\"hello\", \"world\"))\n                    .name(\"my-node-pool\")\n                    .taint(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference))\n                    .build())\n                .image(\"centos-7\")\n                .networkId(\"2808575\")\n                .networking(Mk8sHetznerProviderNetworkingArgs.builder()\n                    .podNetwork(\"10.42.0.0/16\")\n                    .serviceNetwork(\"10.43.0.0/16\")\n                    .build())\n                .nodePools(Mk8sHetznerProviderNodePoolArgs.builder()\n                    .labels(Map.of(\"hello\", \"world\"))\n                    .maxSize(0)\n                    .minSize(0)\n                    .name(\"my-hetzner-node-pool\")\n                    .overrideImage(\"debian-11\")\n                    .serverType(\"cx11\")\n                    .taint(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference))\n                    .build())\n                .preInstallScript(\"#! echo hello world\")\n                .region(\"fsn1\")\n                .sshKey(\"10925607\")\n                .tokenSecretLink(\"/org/terraform-test-org/secret/hetzner\")\n                .build())\n            .tags(Map.ofEntries(\n                Map.entry(\"acceptance_test\", \"true\"),\n                Map.entry(\"terraform_generated\", \"true\")\n            ))\n            .version(\"1.28.4\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  hetzner:\n    type: cpln:Mk8s\n    properties:\n      addOns:\n        awsWorkloadIdentity: true\n        azureAcr:\n          clientId: 4e25b134-160b-4a9d-b392-13b381ced5ef\n        azureWorkloadIdentity:\n          tenantId: 7f43458a-a34e-4bfa-9e56-e2289e49c4ec\n        dashboard: true\n        localPathStorage: true\n        logs:\n          auditEnabled: true\n          excludeNamespaces: ^[a-z]$\n          includeNamespaces: ^\\d+$\n        metrics:\n          apiServer: true\n          cadvisor: true\n          coreDns: true\n          kubeState: true\n          kubelet: true\n          nodeExporter: true\n          scrapeAnnotated:\n            excludeNamespaces: ^[a-z]$\n            includeNamespaces: ^\\d+$\n            intervalSeconds: 30\n            retainLabels: ^\\w+$\n        nvidia:\n          taintGpuNodes: true\n      description: demo-mk8s-hetzner-provider\n      firewalls:\n        - description: hello world\n          sourceCidr: 192.168.1.255\n      hetznerProvider:\n        autoscaler:\n          expander:\n            - most-pods\n          unneededTime: 10m\n          unreadyTime: 20m\n          utilizationThreshold: 0.7\n        dedicatedServerNodePools:\n          - labels:\n              hello: world\n            name: my-node-pool\n            taint:\n              - effect: NoSchedule\n                key: hello\n                value: world\n        image: centos-7\n        networkId: '2808575'\n        networking:\n          podNetwork: 10.42.0.0/16\n          serviceNetwork: 10.43.0.0/16\n        nodePools:\n          - labels:\n              hello: world\n            maxSize: 0\n            minSize: 0\n            name: my-hetzner-node-pool\n            overrideImage: debian-11\n            serverType: cx11\n            taint:\n              - effect: NoSchedule\n                key: hello\n                value: world\n        preInstallScript: '#! echo hello world'\n        region: fsn1\n        sshKey: '10925607'\n        tokenSecretLink: /org/terraform-test-org/secret/hetzner\n      tags:\n        acceptance_test: 'true'\n        terraform_generated: 'true'\n      version: 1.28.4\n```\n{{% /example %}}\n{{% example %}}\n### AWS Provider\n\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.Mk8s;\nimport com.pulumi.cpln.Mk8sArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAwsEcrArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAwsEfsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAwsElbArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAzureAcrArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAzureWorkloadIdentityArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsLogsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsMetricsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsMetricsScrapeAnnotatedArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsNvidiaArgs;\nimport com.pulumi.cpln.inputs.Mk8sAwsProviderArgs;\nimport com.pulumi.cpln.inputs.Mk8sAwsProviderAutoscalerArgs;\nimport com.pulumi.cpln.inputs.Mk8sAwsProviderImageArgs;\nimport com.pulumi.cpln.inputs.Mk8sAwsProviderNetworkingArgs;\nimport com.pulumi.cpln.inputs.Mk8sFirewallArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var aws = new Mk8s(\"aws\", Mk8sArgs.builder()        \n            .addOns(Mk8sAddOnsArgs.builder()\n                .awsEcr(Mk8sAddOnsAwsEcrArgs.builder()\n                    .roleArn(\"arn:aws:iam::123456789012:role/aws-ecr-role\")\n                    .build())\n                .awsEfs(Mk8sAddOnsAwsEfsArgs.builder()\n                    .roleArn(\"arn:aws:iam::123456789012:role/aws-efs-role\")\n                    .build())\n                .awsElb(Mk8sAddOnsAwsElbArgs.builder()\n                    .roleArn(\"arn:aws:iam::123456789012:role/aws-elb-role\")\n                    .build())\n                .awsWorkloadIdentity(true)\n                .azureAcr(Mk8sAddOnsAzureAcrArgs.builder()\n                    .clientId(\"4e25b134-160b-4a9d-b392-13b381ced5ef\")\n                    .build())\n                .azureWorkloadIdentity(Mk8sAddOnsAzureWorkloadIdentityArgs.builder()\n                    .tenantId(\"7f43458a-a34e-4bfa-9e56-e2289e49c4ec\")\n                    .build())\n                .dashboard(true)\n                .localPathStorage(true)\n                .logs(Mk8sAddOnsLogsArgs.builder()\n                    .auditEnabled(true)\n                    .excludeNamespaces(\"^[a-z]$\")\n                    .includeNamespaces(\"^\\\\d+$\")\n                    .build())\n                .metrics(Mk8sAddOnsMetricsArgs.builder()\n                    .apiServer(true)\n                    .cadvisor(true)\n                    .coreDns(true)\n                    .kubeState(true)\n                    .kubelet(true)\n                    .nodeExporter(true)\n                    .scrapeAnnotated(Mk8sAddOnsMetricsScrapeAnnotatedArgs.builder()\n                        .excludeNamespaces(\"^[a-z]$\")\n                        .includeNamespaces(\"^\\\\d+$\")\n                        .intervalSeconds(30)\n                        .retainLabels(\"^\\\\w+$\")\n                        .build())\n                    .build())\n                .nvidia(Mk8sAddOnsNvidiaArgs.builder()\n                    .taintGpuNodes(true)\n                    .build())\n                .build())\n            .awsProvider(Mk8sAwsProviderArgs.builder()\n                .autoscaler(Mk8sAwsProviderAutoscalerArgs.builder()\n                    .expander(\"most-pods\")\n                    .unneededTime(\"10m\")\n                    .unreadyTime(\"20m\")\n                    .utilizationThreshold(0.7)\n                    .build())\n                .deployRoleArn(\"arn:aws:iam::12345678901:role/cpln\")\n                .diskEncryptionKeyArn(\"arn:aws:kms:eu-central-1:12345678901:key/0a1bcd23-4567-8901-e2fg-3h4i5jk678lm\")\n                .image(Mk8sAwsProviderImageArgs.builder()\n                    .recommended(\"amazon/al2023\")\n                    .build())\n                .keyPair(\"cem_uzak\")\n                .networking(Mk8sAwsProviderNetworkingArgs.builder()\n                    .podNetwork(\"10.42.0.0/16\")\n                    .serviceNetwork(\"10.43.0.0/16\")\n                    .build())\n                .nodePools(Mk8sAwsProviderNodePoolArgs.builder()\n                    .bootDiskSize(20)\n                    .extraSecurityGroupIds(\"sg-031480aa7a1e6e38b\")\n                    .instanceTypes(\"t4g.nano\")\n                    .labels(Map.of(\"hello\", \"world\"))\n                    .maxSize(0)\n                    .minSize(0)\n                    .name(\"my-aws-node-pool\")\n                    .onDemandBaseCapacity(0)\n                    .onDemandPercentageAboveBaseCapacity(0)\n                    .overrideImage(Mk8sAwsProviderNodePoolOverrideImageArgs.builder()\n                        .exact(\"ami-123\")\n                        .build())\n                    .spotAllocationStrategy(\"lowest-price\")\n                    .subnetIds(\"subnet-0e564a042e2a45009\")\n                    .taint(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference))\n                    .build())\n                .preInstallScript(\"#! echo hello world\")\n                .region(\"eu-central-1\")\n                .securityGroupIds(\"sg-031480aa7a1e6e38b\")\n                .skipCreateRoles(false)\n                .vpcId(\"vpc-03105bd4dc058d3a8\")\n                .build())\n            .description(\"demo-mk8s-aws-provider\")\n            .firewalls(Mk8sFirewallArgs.builder()\n                .description(\"hello world\")\n                .sourceCidr(\"192.168.1.255\")\n                .build())\n            .tags(Map.ofEntries(\n                Map.entry(\"acceptance_test\", \"true\"),\n                Map.entry(\"terraform_generated\", \"true\")\n            ))\n            .version(\"1.28.4\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  aws:\n    type: cpln:Mk8s\n    properties:\n      addOns:\n        awsEcr:\n          roleArn: arn:aws:iam::123456789012:role/aws-ecr-role\n        awsEfs:\n          roleArn: arn:aws:iam::123456789012:role/aws-efs-role\n        awsElb:\n          roleArn: arn:aws:iam::123456789012:role/aws-elb-role\n        awsWorkloadIdentity: true\n        azureAcr:\n          clientId: 4e25b134-160b-4a9d-b392-13b381ced5ef\n        azureWorkloadIdentity:\n          tenantId: 7f43458a-a34e-4bfa-9e56-e2289e49c4ec\n        dashboard: true\n        localPathStorage: true\n        logs:\n          auditEnabled: true\n          excludeNamespaces: ^[a-z]$\n          includeNamespaces: ^\\d+$\n        metrics:\n          apiServer: true\n          cadvisor: true\n          coreDns: true\n          kubeState: true\n          kubelet: true\n          nodeExporter: true\n          scrapeAnnotated:\n            excludeNamespaces: ^[a-z]$\n            includeNamespaces: ^\\d+$\n            intervalSeconds: 30\n            retainLabels: ^\\w+$\n        nvidia:\n          taintGpuNodes: true\n      awsProvider:\n        autoscaler:\n          expander:\n            - most-pods\n          unneededTime: 10m\n          unreadyTime: 20m\n          utilizationThreshold: 0.7\n        deployRoleArn: arn:aws:iam::12345678901:role/cpln\n        diskEncryptionKeyArn: arn:aws:kms:eu-central-1:12345678901:key/0a1bcd23-4567-8901-e2fg-3h4i5jk678lm\n        image:\n          recommended: amazon/al2023\n        keyPair: cem_uzak\n        networking:\n          podNetwork: 10.42.0.0/16\n          serviceNetwork: 10.43.0.0/16\n        nodePools:\n          - bootDiskSize: 20\n            extraSecurityGroupIds:\n              - sg-031480aa7a1e6e38b\n            instanceTypes:\n              - t4g.nano\n            labels:\n              hello: world\n            maxSize: 0\n            minSize: 0\n            name: my-aws-node-pool\n            onDemandBaseCapacity: 0\n            onDemandPercentageAboveBaseCapacity: 0\n            overrideImage:\n              exact: ami-123\n            spotAllocationStrategy: lowest-price\n            subnetIds:\n              - subnet-0e564a042e2a45009\n            taint:\n              - effect: NoSchedule\n                key: hello\n                value: world\n        preInstallScript: '#! echo hello world'\n        region: eu-central-1\n        securityGroupIds:\n          - sg-031480aa7a1e6e38b\n        skipCreateRoles: false\n        vpcId: vpc-03105bd4dc058d3a8\n      description: demo-mk8s-aws-provider\n      firewalls:\n        - description: hello world\n          sourceCidr: 192.168.1.255\n      tags:\n        acceptance_test: 'true'\n        terraform_generated: 'true'\n      version: 1.28.4\n```\n{{% /example %}}\n{{% /examples %}}",
+            "properties": {
+                "addOns": {
+                    "$ref": "#/types/cpln:index/Mk8sAddOns:Mk8sAddOns"
+                },
+                "alias": {
+                    "type": "string",
+                    "description": "The alias name of the Mk8s.\n"
+                },
+                "awsProvider": {
+                    "$ref": "#/types/cpln:index/Mk8sAwsProvider:Mk8sAwsProvider"
+                },
+                "cplnId": {
+                    "type": "string",
+                    "description": "The ID, in GUID format, of the Mk8s.\n"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of the Mk8s.\n"
+                },
+                "firewalls": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sFirewall:Mk8sFirewall"
+                    },
+                    "description": "Allow-list.\n"
+                },
+                "genericProvider": {
+                    "$ref": "#/types/cpln:index/Mk8sGenericProvider:Mk8sGenericProvider"
+                },
+                "hetznerProvider": {
+                    "$ref": "#/types/cpln:index/Mk8sHetznerProvider:Mk8sHetznerProvider"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the Mk8s.\n"
+                },
+                "selfLink": {
+                    "type": "string",
+                    "description": "Full link to this resource. Can be referenced by other resources.\n"
+                },
+                "statuses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sStatus:Mk8sStatus"
+                    },
+                    "description": "Status of the mk8s.\n"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Key-value map of resource tags.\n"
+                },
+                "version": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "alias",
+                "cplnId",
+                "name",
+                "selfLink",
+                "statuses",
+                "version"
+            ],
+            "inputProperties": {
+                "addOns": {
+                    "$ref": "#/types/cpln:index/Mk8sAddOns:Mk8sAddOns"
+                },
+                "awsProvider": {
+                    "$ref": "#/types/cpln:index/Mk8sAwsProvider:Mk8sAwsProvider"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of the Mk8s.\n"
+                },
+                "firewalls": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sFirewall:Mk8sFirewall"
+                    },
+                    "description": "Allow-list.\n"
+                },
+                "genericProvider": {
+                    "$ref": "#/types/cpln:index/Mk8sGenericProvider:Mk8sGenericProvider"
+                },
+                "hetznerProvider": {
+                    "$ref": "#/types/cpln:index/Mk8sHetznerProvider:Mk8sHetznerProvider"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the Mk8s.\n",
+                    "willReplaceOnChanges": true
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Key-value map of resource tags.\n"
+                },
+                "version": {
+                    "type": "string"
+                }
+            },
+            "requiredInputs": [
+                "version"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Mk8s resources.\n",
+                "properties": {
+                    "addOns": {
+                        "$ref": "#/types/cpln:index/Mk8sAddOns:Mk8sAddOns"
+                    },
+                    "alias": {
+                        "type": "string",
+                        "description": "The alias name of the Mk8s.\n"
+                    },
+                    "awsProvider": {
+                        "$ref": "#/types/cpln:index/Mk8sAwsProvider:Mk8sAwsProvider"
+                    },
+                    "cplnId": {
+                        "type": "string",
+                        "description": "The ID, in GUID format, of the Mk8s.\n"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Description of the Mk8s.\n"
+                    },
+                    "firewalls": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/Mk8sFirewall:Mk8sFirewall"
+                        },
+                        "description": "Allow-list.\n"
+                    },
+                    "genericProvider": {
+                        "$ref": "#/types/cpln:index/Mk8sGenericProvider:Mk8sGenericProvider"
+                    },
+                    "hetznerProvider": {
+                        "$ref": "#/types/cpln:index/Mk8sHetznerProvider:Mk8sHetznerProvider"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the Mk8s.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "selfLink": {
+                        "type": "string",
+                        "description": "Full link to this resource. Can be referenced by other resources.\n"
+                    },
+                    "statuses": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/Mk8sStatus:Mk8sStatus"
+                        },
+                        "description": "Status of the mk8s.\n"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Key-value map of resource tags.\n"
+                    },
+                    "version": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "cpln:index/org:Org": {
             "properties": {
                 "accountId": {
@@ -3830,6 +5020,12 @@
                         "$ref": "#/types/cpln:index/OrgLoggingStackdriverLogging:OrgLoggingStackdriverLogging"
                     }
                 },
+                "syslogLoggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingSyslogLogging:OrgLoggingSyslogLogging"
+                    }
+                },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
@@ -3895,6 +5091,12 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/OrgLoggingStackdriverLogging:OrgLoggingStackdriverLogging"
+                    }
+                },
+                "syslogLoggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingSyslogLogging:OrgLoggingSyslogLogging"
                     }
                 }
             },
@@ -3963,6 +5165,12 @@
                         "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/OrgLoggingStackdriverLogging:OrgLoggingStackdriverLogging"
+                        }
+                    },
+                    "syslogLoggings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/OrgLoggingSyslogLogging:OrgLoggingSyslogLogging"
                         }
                     },
                     "tags": {
@@ -5383,7 +6591,7 @@
             }
         },
         "cpln:index/getLocation:getLocation": {
-            "description": "Use this data source to access information about a [Location](https://docs.controlplane.com/reference/location) within Control Plane.\n\n## Required\n\n- **name** (String) Name of the location (i.e. `aws-us-west-2`).\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the location.\n- **name** (String) Name of the location.\n- **description** (String) Description of the location.\n- **tags** (Map of String) Key-value map of resource tags.\n- **cloud_provider** (String) Cloud Provider of the location.\n- **region** (String) Region of the location.\n- **enabled** (Boolean) Indication if location is enabled.\n- **geo** (Block List, Max: 1) (see below)\n- **ip_ranges** (List of String) A list of IP ranges of the location.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n\n\u003ca id=\"nestedblock--geo\"\u003e\u003c/a\u003e\n\n### `geo`\n\nLocation geographical details\n\n- **lat** (Number) Latitude.\n- **lon** (Number) Longitude.\n- **country** (String) Country.\n- **state** (String) State.\n- **city** (String) City.\n- **continent** (String) Continent.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumi/cpln\";\n\nconst locationLocation = cpln.getLocation({\n    name: \"aws-us-west-2\",\n});\nexport const location = locationLocation;\nexport const locationEnabled = locationLocation.then(locationLocation =\u003e locationLocation.enabled);\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\nlocation_location = cpln.get_location(name=\"aws-us-west-2\")\npulumi.export(\"location\", location_location)\npulumi.export(\"locationEnabled\", location_location.enabled)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var locationLocation = Cpln.GetLocation.Invoke(new()\n    {\n        Name = \"aws-us-west-2\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"location\"] = locationLocation,\n        [\"locationEnabled\"] = locationLocation.Apply(getLocationResult =\u003e getLocationResult.Enabled),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tlocationLocation, err := cpln.GetLocation(ctx, \u0026cpln.GetLocationArgs{\n\t\t\tName: \"aws-us-west-2\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"location\", locationLocation)\n\t\tctx.Export(\"locationEnabled\", locationLocation.Enabled)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport com.pulumi.cpln.inputs.GetLocationArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var locationLocation = CplnFunctions.getLocation(GetLocationArgs.builder()\n            .name(\"aws-us-west-2\")\n            .build());\n\n        ctx.export(\"location\", locationLocation.applyValue(getLocationResult -\u003e getLocationResult));\n        ctx.export(\"locationEnabled\", locationLocation.applyValue(getLocationResult -\u003e getLocationResult.enabled()));\n    }\n}\n```\n```yaml\nvariables:\n  locationLocation:\n    fn::invoke:\n      Function: cpln:getLocation\n      Arguments:\n        name: aws-us-west-2\noutputs:\n  location: ${locationLocation}\n  locationEnabled: ${locationLocation.enabled}\n```\n{{% /example %}}\n{{% /examples %}}",
+            "description": "Use this data source to access information about a [Location](https://docs.controlplane.com/reference/location) within Control Plane.\n\n## Required\n\n- **name** (String) Name of the location (i.e. `aws-us-west-2`).\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the location.\n- **name** (String) Name of the location.\n- **description** (String) Description of the location.\n- **tags** (Map of String) Key-value map of resource tags.\n- **cloud_provider** (String) Cloud Provider of the location.\n- **region** (String) Region of the location.\n- **enabled** (Boolean) Indication if location is enabled.\n- **geo** (Block List, Max: 1) (see below)\n- **ip_ranges** (List of String) A list of IP ranges of the location.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n\n\u003ca id=\"nestedblock--geo\"\u003e\u003c/a\u003e\n\n### `geo`\n\nLocation geographical details\n\n- **lat** (Number) Latitude.\n- **lon** (Number) Longitude.\n- **country** (String) Country.\n- **state** (String) State.\n- **city** (String) City.\n- **continent** (String) Continent.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumi/cpln\";\n\nconst locationLocation = cpln.getLocation({\n    name: \"aws-us-west-2\",\n});\nexport const location = locationLocation;\nexport const locationEnabled = locationLocation.then(locationLocation =\u003e locationLocation.enabled);\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\nlocation_location = cpln.get_location(name=\"aws-us-west-2\")\npulumi.export(\"location\", location_location)\npulumi.export(\"locationEnabled\", location_location.enabled)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var locationLocation = Cpln.GetLocation.Invoke(new()\n    {\n        Name = \"aws-us-west-2\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"location\"] = locationLocation,\n        [\"locationEnabled\"] = locationLocation.Apply(getLocationResult =\u003e getLocationResult.Enabled),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tlocationLocation, err := cpln.LookupLocation(ctx, \u0026cpln.LookupLocationArgs{\n\t\t\tName: \"aws-us-west-2\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"location\", locationLocation)\n\t\tctx.Export(\"locationEnabled\", locationLocation.Enabled)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport com.pulumi.cpln.inputs.GetLocationArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var locationLocation = CplnFunctions.getLocation(GetLocationArgs.builder()\n            .name(\"aws-us-west-2\")\n            .build());\n\n        ctx.export(\"location\", locationLocation.applyValue(getLocationResult -\u003e getLocationResult));\n        ctx.export(\"locationEnabled\", locationLocation.applyValue(getLocationResult -\u003e getLocationResult.enabled()));\n    }\n}\n```\n```yaml\nvariables:\n  locationLocation:\n    fn::invoke:\n      Function: cpln:getLocation\n      Arguments:\n        name: aws-us-west-2\noutputs:\n  location: ${locationLocation}\n  locationEnabled: ${locationLocation.enabled}\n```\n{{% /example %}}\n{{% /examples %}}",
             "inputs": {
                 "description": "A collection of arguments for invoking getLocation.\n",
                 "properties": {

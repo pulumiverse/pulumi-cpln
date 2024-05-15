@@ -304,6 +304,269 @@ export interface IdentityNgsAccessPolicySub {
     denies?: pulumi.Input<pulumi.Input<string>[]>;
 }
 
+export interface LocationGeo {
+    city?: pulumi.Input<string>;
+    continent?: pulumi.Input<string>;
+    country?: pulumi.Input<string>;
+    lat?: pulumi.Input<number>;
+    lon?: pulumi.Input<number>;
+    state?: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOns {
+    awsEcr?: pulumi.Input<inputs.Mk8sAddOnsAwsEcr>;
+    awsEfs?: pulumi.Input<inputs.Mk8sAddOnsAwsEfs>;
+    awsElb?: pulumi.Input<inputs.Mk8sAddOnsAwsElb>;
+    awsWorkloadIdentity?: pulumi.Input<boolean>;
+    azureAcr?: pulumi.Input<inputs.Mk8sAddOnsAzureAcr>;
+    azureWorkloadIdentity?: pulumi.Input<inputs.Mk8sAddOnsAzureWorkloadIdentity>;
+    dashboard?: pulumi.Input<boolean>;
+    localPathStorage?: pulumi.Input<boolean>;
+    logs?: pulumi.Input<inputs.Mk8sAddOnsLogs>;
+    metrics?: pulumi.Input<inputs.Mk8sAddOnsMetrics>;
+    nvidia?: pulumi.Input<inputs.Mk8sAddOnsNvidia>;
+}
+
+export interface Mk8sAddOnsAwsEcr {
+    roleArn: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsAwsEfs {
+    roleArn: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsAwsElb {
+    roleArn: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsAzureAcr {
+    clientId: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsAzureWorkloadIdentity {
+    tenantId: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsLogs {
+    auditEnabled?: pulumi.Input<boolean>;
+    excludeNamespaces?: pulumi.Input<string>;
+    includeNamespaces?: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsMetrics {
+    apiServer?: pulumi.Input<boolean>;
+    cadvisor?: pulumi.Input<boolean>;
+    coreDns?: pulumi.Input<boolean>;
+    kubeState?: pulumi.Input<boolean>;
+    kubelet?: pulumi.Input<boolean>;
+    nodeExporter?: pulumi.Input<boolean>;
+    scrapeAnnotated?: pulumi.Input<inputs.Mk8sAddOnsMetricsScrapeAnnotated>;
+}
+
+export interface Mk8sAddOnsMetricsScrapeAnnotated {
+    excludeNamespaces?: pulumi.Input<string>;
+    includeNamespaces?: pulumi.Input<string>;
+    intervalSeconds?: pulumi.Input<number>;
+    retainLabels?: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsNvidia {
+    taintGpuNodes: pulumi.Input<boolean>;
+}
+
+export interface Mk8sAwsProvider {
+    autoscaler?: pulumi.Input<inputs.Mk8sAwsProviderAutoscaler>;
+    deployRoleArn: pulumi.Input<string>;
+    diskEncryptionKeyArn?: pulumi.Input<string>;
+    image: pulumi.Input<inputs.Mk8sAwsProviderImage>;
+    keyPair?: pulumi.Input<string>;
+    networking?: pulumi.Input<inputs.Mk8sAwsProviderNetworking>;
+    nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sAwsProviderNodePool>[]>;
+    preInstallScript?: pulumi.Input<string>;
+    region: pulumi.Input<string>;
+    securityGroupIds?: pulumi.Input<pulumi.Input<string>[]>;
+    skipCreateRoles?: pulumi.Input<boolean>;
+    vpcId: pulumi.Input<string>;
+}
+
+export interface Mk8sAwsProviderAutoscaler {
+    expanders: pulumi.Input<pulumi.Input<string>[]>;
+    unneededTime?: pulumi.Input<string>;
+    unreadyTime?: pulumi.Input<string>;
+    utilizationThreshold?: pulumi.Input<number>;
+}
+
+export interface Mk8sAwsProviderImage {
+    exact?: pulumi.Input<string>;
+    recommended?: pulumi.Input<string>;
+}
+
+export interface Mk8sAwsProviderNetworking {
+    podNetwork?: pulumi.Input<string>;
+    serviceNetwork?: pulumi.Input<string>;
+}
+
+export interface Mk8sAwsProviderNodePool {
+    bootDiskSize?: pulumi.Input<number>;
+    extraSecurityGroupIds?: pulumi.Input<pulumi.Input<string>[]>;
+    instanceTypes: pulumi.Input<pulumi.Input<string>[]>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    maxSize?: pulumi.Input<number>;
+    minSize?: pulumi.Input<number>;
+    name: pulumi.Input<string>;
+    onDemandBaseCapacity?: pulumi.Input<number>;
+    onDemandPercentageAboveBaseCapacity?: pulumi.Input<number>;
+    overrideImage: pulumi.Input<inputs.Mk8sAwsProviderNodePoolOverrideImage>;
+    spotAllocationStrategy?: pulumi.Input<string>;
+    subnetIds: pulumi.Input<pulumi.Input<string>[]>;
+    taints?: pulumi.Input<pulumi.Input<inputs.Mk8sAwsProviderNodePoolTaint>[]>;
+}
+
+export interface Mk8sAwsProviderNodePoolOverrideImage {
+    exact?: pulumi.Input<string>;
+    recommended?: pulumi.Input<string>;
+}
+
+export interface Mk8sAwsProviderNodePoolTaint {
+    effect?: pulumi.Input<string>;
+    key?: pulumi.Input<string>;
+    value?: pulumi.Input<string>;
+}
+
+export interface Mk8sFirewall {
+    description?: pulumi.Input<string>;
+    sourceCidr: pulumi.Input<string>;
+}
+
+export interface Mk8sGenericProvider {
+    location: pulumi.Input<string>;
+    networking?: pulumi.Input<inputs.Mk8sGenericProviderNetworking>;
+    nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sGenericProviderNodePool>[]>;
+}
+
+export interface Mk8sGenericProviderNetworking {
+    podNetwork?: pulumi.Input<string>;
+    serviceNetwork?: pulumi.Input<string>;
+}
+
+export interface Mk8sGenericProviderNodePool {
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    name: pulumi.Input<string>;
+    taints?: pulumi.Input<pulumi.Input<inputs.Mk8sGenericProviderNodePoolTaint>[]>;
+}
+
+export interface Mk8sGenericProviderNodePoolTaint {
+    effect?: pulumi.Input<string>;
+    key?: pulumi.Input<string>;
+    value?: pulumi.Input<string>;
+}
+
+export interface Mk8sHetznerProvider {
+    autoscaler?: pulumi.Input<inputs.Mk8sHetznerProviderAutoscaler>;
+    dedicatedServerNodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sHetznerProviderDedicatedServerNodePool>[]>;
+    firewallId?: pulumi.Input<string>;
+    image?: pulumi.Input<string>;
+    networkId: pulumi.Input<string>;
+    networking?: pulumi.Input<inputs.Mk8sHetznerProviderNetworking>;
+    nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sHetznerProviderNodePool>[]>;
+    preInstallScript?: pulumi.Input<string>;
+    region: pulumi.Input<string>;
+    sshKey?: pulumi.Input<string>;
+    tokenSecretLink: pulumi.Input<string>;
+}
+
+export interface Mk8sHetznerProviderAutoscaler {
+    expanders: pulumi.Input<pulumi.Input<string>[]>;
+    unneededTime?: pulumi.Input<string>;
+    unreadyTime?: pulumi.Input<string>;
+    utilizationThreshold?: pulumi.Input<number>;
+}
+
+export interface Mk8sHetznerProviderDedicatedServerNodePool {
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    name: pulumi.Input<string>;
+    taints?: pulumi.Input<pulumi.Input<inputs.Mk8sHetznerProviderDedicatedServerNodePoolTaint>[]>;
+}
+
+export interface Mk8sHetznerProviderDedicatedServerNodePoolTaint {
+    effect?: pulumi.Input<string>;
+    key?: pulumi.Input<string>;
+    value?: pulumi.Input<string>;
+}
+
+export interface Mk8sHetznerProviderNetworking {
+    podNetwork?: pulumi.Input<string>;
+    serviceNetwork?: pulumi.Input<string>;
+}
+
+export interface Mk8sHetznerProviderNodePool {
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    maxSize?: pulumi.Input<number>;
+    minSize?: pulumi.Input<number>;
+    name: pulumi.Input<string>;
+    overrideImage?: pulumi.Input<string>;
+    serverType: pulumi.Input<string>;
+    taints?: pulumi.Input<pulumi.Input<inputs.Mk8sHetznerProviderNodePoolTaint>[]>;
+}
+
+export interface Mk8sHetznerProviderNodePoolTaint {
+    effect?: pulumi.Input<string>;
+    key?: pulumi.Input<string>;
+    value?: pulumi.Input<string>;
+}
+
+export interface Mk8sStatus {
+    addOns?: pulumi.Input<pulumi.Input<inputs.Mk8sStatusAddOn>[]>;
+    homeLocation?: pulumi.Input<string>;
+    oidcProviderUrl?: pulumi.Input<string>;
+    serverUrl?: pulumi.Input<string>;
+}
+
+export interface Mk8sStatusAddOn {
+    awsEcrs?: pulumi.Input<pulumi.Input<inputs.Mk8sStatusAddOnAwsEcr>[]>;
+    awsEfs?: pulumi.Input<pulumi.Input<inputs.Mk8sStatusAddOnAwsEf>[]>;
+    awsElbs?: pulumi.Input<pulumi.Input<inputs.Mk8sStatusAddOnAwsElb>[]>;
+    awsWorkloadIdentities?: pulumi.Input<pulumi.Input<inputs.Mk8sStatusAddOnAwsWorkloadIdentity>[]>;
+    dashboards?: pulumi.Input<pulumi.Input<inputs.Mk8sStatusAddOnDashboard>[]>;
+    logs?: pulumi.Input<pulumi.Input<inputs.Mk8sStatusAddOnLog>[]>;
+    metrics?: pulumi.Input<pulumi.Input<inputs.Mk8sStatusAddOnMetric>[]>;
+}
+
+export interface Mk8sStatusAddOnAwsEcr {
+    trustPolicy?: pulumi.Input<string>;
+}
+
+export interface Mk8sStatusAddOnAwsEf {
+    trustPolicy?: pulumi.Input<string>;
+}
+
+export interface Mk8sStatusAddOnAwsElb {
+    trustPolicy?: pulumi.Input<string>;
+}
+
+export interface Mk8sStatusAddOnAwsWorkloadIdentity {
+    oidcProviderConfigs?: pulumi.Input<pulumi.Input<inputs.Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig>[]>;
+    trustPolicy?: pulumi.Input<string>;
+}
+
+export interface Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig {
+    audience?: pulumi.Input<string>;
+    providerUrl?: pulumi.Input<string>;
+}
+
+export interface Mk8sStatusAddOnDashboard {
+    url?: pulumi.Input<string>;
+}
+
+export interface Mk8sStatusAddOnLog {
+    lokiAddress?: pulumi.Input<string>;
+}
+
+export interface Mk8sStatusAddOnMetric {
+    prometheusEndpoint?: pulumi.Input<string>;
+    remoteWriteConfig?: pulumi.Input<string>;
+}
+
 export interface OrgAuthConfig {
     domainAutoMembers: pulumi.Input<pulumi.Input<string>[]>;
     samlOnly?: pulumi.Input<boolean>;
@@ -380,6 +643,14 @@ export interface OrgLoggingS3Logging {
 export interface OrgLoggingStackdriverLogging {
     credentials: pulumi.Input<string>;
     location: pulumi.Input<string>;
+}
+
+export interface OrgLoggingSyslogLogging {
+    format?: pulumi.Input<string>;
+    host: pulumi.Input<string>;
+    mode?: pulumi.Input<string>;
+    port: pulumi.Input<number>;
+    severity?: pulumi.Input<number>;
 }
 
 export interface OrgObservability {

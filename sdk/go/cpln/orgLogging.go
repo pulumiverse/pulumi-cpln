@@ -33,6 +33,7 @@ type OrgLogging struct {
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
 	S3Loggings          OrgLoggingS3LoggingArrayOutput          `pulumi:"s3Loggings"`
 	StackdriverLoggings OrgLoggingStackdriverLoggingArrayOutput `pulumi:"stackdriverLoggings"`
+	SyslogLoggings      OrgLoggingSyslogLoggingArrayOutput      `pulumi:"syslogLoggings"`
 	// Key-value map of the org's tags.
 	Tags pulumi.StringMapOutput `pulumi:"tags"`
 }
@@ -85,6 +86,7 @@ type orgLoggingState struct {
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
 	S3Loggings          []OrgLoggingS3Logging          `pulumi:"s3Loggings"`
 	StackdriverLoggings []OrgLoggingStackdriverLogging `pulumi:"stackdriverLoggings"`
+	SyslogLoggings      []OrgLoggingSyslogLogging      `pulumi:"syslogLoggings"`
 	// Key-value map of the org's tags.
 	Tags map[string]string `pulumi:"tags"`
 }
@@ -108,6 +110,7 @@ type OrgLoggingState struct {
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
 	S3Loggings          OrgLoggingS3LoggingArrayInput
 	StackdriverLoggings OrgLoggingStackdriverLoggingArrayInput
+	SyslogLoggings      OrgLoggingSyslogLoggingArrayInput
 	// Key-value map of the org's tags.
 	Tags pulumi.StringMapInput
 }
@@ -129,6 +132,7 @@ type orgLoggingArgs struct {
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
 	S3Loggings          []OrgLoggingS3Logging          `pulumi:"s3Loggings"`
 	StackdriverLoggings []OrgLoggingStackdriverLogging `pulumi:"stackdriverLoggings"`
+	SyslogLoggings      []OrgLoggingSyslogLogging      `pulumi:"syslogLoggings"`
 }
 
 // The set of arguments for constructing a OrgLogging resource.
@@ -145,6 +149,7 @@ type OrgLoggingArgs struct {
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
 	S3Loggings          OrgLoggingS3LoggingArrayInput
 	StackdriverLoggings OrgLoggingStackdriverLoggingArrayInput
+	SyslogLoggings      OrgLoggingSyslogLoggingArrayInput
 }
 
 func (OrgLoggingArgs) ElementType() reflect.Type {
@@ -307,6 +312,10 @@ func (o OrgLoggingOutput) S3Loggings() OrgLoggingS3LoggingArrayOutput {
 
 func (o OrgLoggingOutput) StackdriverLoggings() OrgLoggingStackdriverLoggingArrayOutput {
 	return o.ApplyT(func(v *OrgLogging) OrgLoggingStackdriverLoggingArrayOutput { return v.StackdriverLoggings }).(OrgLoggingStackdriverLoggingArrayOutput)
+}
+
+func (o OrgLoggingOutput) SyslogLoggings() OrgLoggingSyslogLoggingArrayOutput {
+	return o.ApplyT(func(v *OrgLogging) OrgLoggingSyslogLoggingArrayOutput { return v.SyslogLoggings }).(OrgLoggingSyslogLoggingArrayOutput)
 }
 
 // Key-value map of the org's tags.

@@ -340,6 +340,269 @@ export interface IdentityNgsAccessPolicySub {
     denies?: string[];
 }
 
+export interface LocationGeo {
+    city?: string;
+    continent?: string;
+    country?: string;
+    lat?: number;
+    lon?: number;
+    state?: string;
+}
+
+export interface Mk8sAddOns {
+    awsEcr?: outputs.Mk8sAddOnsAwsEcr;
+    awsEfs?: outputs.Mk8sAddOnsAwsEfs;
+    awsElb?: outputs.Mk8sAddOnsAwsElb;
+    awsWorkloadIdentity?: boolean;
+    azureAcr?: outputs.Mk8sAddOnsAzureAcr;
+    azureWorkloadIdentity?: outputs.Mk8sAddOnsAzureWorkloadIdentity;
+    dashboard?: boolean;
+    localPathStorage?: boolean;
+    logs?: outputs.Mk8sAddOnsLogs;
+    metrics?: outputs.Mk8sAddOnsMetrics;
+    nvidia?: outputs.Mk8sAddOnsNvidia;
+}
+
+export interface Mk8sAddOnsAwsEcr {
+    roleArn: string;
+}
+
+export interface Mk8sAddOnsAwsEfs {
+    roleArn: string;
+}
+
+export interface Mk8sAddOnsAwsElb {
+    roleArn: string;
+}
+
+export interface Mk8sAddOnsAzureAcr {
+    clientId: string;
+}
+
+export interface Mk8sAddOnsAzureWorkloadIdentity {
+    tenantId: string;
+}
+
+export interface Mk8sAddOnsLogs {
+    auditEnabled?: boolean;
+    excludeNamespaces?: string;
+    includeNamespaces?: string;
+}
+
+export interface Mk8sAddOnsMetrics {
+    apiServer?: boolean;
+    cadvisor?: boolean;
+    coreDns?: boolean;
+    kubeState?: boolean;
+    kubelet?: boolean;
+    nodeExporter?: boolean;
+    scrapeAnnotated?: outputs.Mk8sAddOnsMetricsScrapeAnnotated;
+}
+
+export interface Mk8sAddOnsMetricsScrapeAnnotated {
+    excludeNamespaces?: string;
+    includeNamespaces?: string;
+    intervalSeconds?: number;
+    retainLabels?: string;
+}
+
+export interface Mk8sAddOnsNvidia {
+    taintGpuNodes: boolean;
+}
+
+export interface Mk8sAwsProvider {
+    autoscaler?: outputs.Mk8sAwsProviderAutoscaler;
+    deployRoleArn: string;
+    diskEncryptionKeyArn?: string;
+    image: outputs.Mk8sAwsProviderImage;
+    keyPair?: string;
+    networking?: outputs.Mk8sAwsProviderNetworking;
+    nodePools?: outputs.Mk8sAwsProviderNodePool[];
+    preInstallScript?: string;
+    region: string;
+    securityGroupIds?: string[];
+    skipCreateRoles?: boolean;
+    vpcId: string;
+}
+
+export interface Mk8sAwsProviderAutoscaler {
+    expanders: string[];
+    unneededTime?: string;
+    unreadyTime?: string;
+    utilizationThreshold?: number;
+}
+
+export interface Mk8sAwsProviderImage {
+    exact?: string;
+    recommended?: string;
+}
+
+export interface Mk8sAwsProviderNetworking {
+    podNetwork?: string;
+    serviceNetwork?: string;
+}
+
+export interface Mk8sAwsProviderNodePool {
+    bootDiskSize?: number;
+    extraSecurityGroupIds?: string[];
+    instanceTypes: string[];
+    labels?: {[key: string]: string};
+    maxSize?: number;
+    minSize?: number;
+    name: string;
+    onDemandBaseCapacity?: number;
+    onDemandPercentageAboveBaseCapacity?: number;
+    overrideImage: outputs.Mk8sAwsProviderNodePoolOverrideImage;
+    spotAllocationStrategy?: string;
+    subnetIds: string[];
+    taints?: outputs.Mk8sAwsProviderNodePoolTaint[];
+}
+
+export interface Mk8sAwsProviderNodePoolOverrideImage {
+    exact?: string;
+    recommended?: string;
+}
+
+export interface Mk8sAwsProviderNodePoolTaint {
+    effect?: string;
+    key?: string;
+    value?: string;
+}
+
+export interface Mk8sFirewall {
+    description?: string;
+    sourceCidr: string;
+}
+
+export interface Mk8sGenericProvider {
+    location: string;
+    networking?: outputs.Mk8sGenericProviderNetworking;
+    nodePools?: outputs.Mk8sGenericProviderNodePool[];
+}
+
+export interface Mk8sGenericProviderNetworking {
+    podNetwork?: string;
+    serviceNetwork?: string;
+}
+
+export interface Mk8sGenericProviderNodePool {
+    labels?: {[key: string]: string};
+    name: string;
+    taints?: outputs.Mk8sGenericProviderNodePoolTaint[];
+}
+
+export interface Mk8sGenericProviderNodePoolTaint {
+    effect?: string;
+    key?: string;
+    value?: string;
+}
+
+export interface Mk8sHetznerProvider {
+    autoscaler?: outputs.Mk8sHetznerProviderAutoscaler;
+    dedicatedServerNodePools?: outputs.Mk8sHetznerProviderDedicatedServerNodePool[];
+    firewallId?: string;
+    image?: string;
+    networkId: string;
+    networking?: outputs.Mk8sHetznerProviderNetworking;
+    nodePools?: outputs.Mk8sHetznerProviderNodePool[];
+    preInstallScript?: string;
+    region: string;
+    sshKey?: string;
+    tokenSecretLink: string;
+}
+
+export interface Mk8sHetznerProviderAutoscaler {
+    expanders: string[];
+    unneededTime?: string;
+    unreadyTime?: string;
+    utilizationThreshold?: number;
+}
+
+export interface Mk8sHetznerProviderDedicatedServerNodePool {
+    labels?: {[key: string]: string};
+    name: string;
+    taints?: outputs.Mk8sHetznerProviderDedicatedServerNodePoolTaint[];
+}
+
+export interface Mk8sHetznerProviderDedicatedServerNodePoolTaint {
+    effect?: string;
+    key?: string;
+    value?: string;
+}
+
+export interface Mk8sHetznerProviderNetworking {
+    podNetwork?: string;
+    serviceNetwork?: string;
+}
+
+export interface Mk8sHetznerProviderNodePool {
+    labels?: {[key: string]: string};
+    maxSize?: number;
+    minSize?: number;
+    name: string;
+    overrideImage?: string;
+    serverType: string;
+    taints?: outputs.Mk8sHetznerProviderNodePoolTaint[];
+}
+
+export interface Mk8sHetznerProviderNodePoolTaint {
+    effect?: string;
+    key?: string;
+    value?: string;
+}
+
+export interface Mk8sStatus {
+    addOns: outputs.Mk8sStatusAddOn[];
+    homeLocation: string;
+    oidcProviderUrl: string;
+    serverUrl: string;
+}
+
+export interface Mk8sStatusAddOn {
+    awsEcrs: outputs.Mk8sStatusAddOnAwsEcr[];
+    awsEfs: outputs.Mk8sStatusAddOnAwsEf[];
+    awsElbs: outputs.Mk8sStatusAddOnAwsElb[];
+    awsWorkloadIdentities: outputs.Mk8sStatusAddOnAwsWorkloadIdentity[];
+    dashboards: outputs.Mk8sStatusAddOnDashboard[];
+    logs: outputs.Mk8sStatusAddOnLog[];
+    metrics: outputs.Mk8sStatusAddOnMetric[];
+}
+
+export interface Mk8sStatusAddOnAwsEcr {
+    trustPolicy: string;
+}
+
+export interface Mk8sStatusAddOnAwsEf {
+    trustPolicy: string;
+}
+
+export interface Mk8sStatusAddOnAwsElb {
+    trustPolicy: string;
+}
+
+export interface Mk8sStatusAddOnAwsWorkloadIdentity {
+    oidcProviderConfigs: outputs.Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig[];
+    trustPolicy: string;
+}
+
+export interface Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig {
+    audience: string;
+    providerUrl: string;
+}
+
+export interface Mk8sStatusAddOnDashboard {
+    url: string;
+}
+
+export interface Mk8sStatusAddOnLog {
+    lokiAddress: string;
+}
+
+export interface Mk8sStatusAddOnMetric {
+    prometheusEndpoint: string;
+    remoteWriteConfig: string;
+}
+
 export interface OrgAuthConfig {
     domainAutoMembers: string[];
     samlOnly?: boolean;
@@ -416,6 +679,14 @@ export interface OrgLoggingS3Logging {
 export interface OrgLoggingStackdriverLogging {
     credentials: string;
     location: string;
+}
+
+export interface OrgLoggingSyslogLogging {
+    format?: string;
+    host: string;
+    mode?: string;
+    port: number;
+    severity?: number;
 }
 
 export interface OrgObservability {

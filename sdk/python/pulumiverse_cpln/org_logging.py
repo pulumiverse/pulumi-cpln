@@ -23,7 +23,8 @@ class OrgLoggingArgs:
                  fluentd_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingFluentdLoggingArgs']]]] = None,
                  logzio_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingLogzioLoggingArgs']]]] = None,
                  s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]]] = None,
-                 stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingStackdriverLoggingArgs']]]] = None):
+                 stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingStackdriverLoggingArgs']]]] = None,
+                 syslog_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingSyslogLoggingArgs']]]] = None):
         """
         The set of arguments for constructing a OrgLogging resource.
         :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingCoralogixLoggingArgs']]] coralogix_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
@@ -41,6 +42,7 @@ class OrgLoggingArgs:
             logzio_loggings=logzio_loggings,
             s3_loggings=s3_loggings,
             stackdriver_loggings=stackdriver_loggings,
+            syslog_loggings=syslog_loggings,
         )
     @staticmethod
     def _configure(
@@ -53,6 +55,7 @@ class OrgLoggingArgs:
              logzio_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingLogzioLoggingArgs']]]] = None,
              s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]]] = None,
              stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingStackdriverLoggingArgs']]]] = None,
+             syslog_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingSyslogLoggingArgs']]]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
         if 'cloudWatchLoggings' in kwargs:
@@ -71,6 +74,8 @@ class OrgLoggingArgs:
             s3_loggings = kwargs['s3Loggings']
         if 'stackdriverLoggings' in kwargs:
             stackdriver_loggings = kwargs['stackdriverLoggings']
+        if 'syslogLoggings' in kwargs:
+            syslog_loggings = kwargs['syslogLoggings']
 
         if cloud_watch_loggings is not None:
             _setter("cloud_watch_loggings", cloud_watch_loggings)
@@ -88,6 +93,8 @@ class OrgLoggingArgs:
             _setter("s3_loggings", s3_loggings)
         if stackdriver_loggings is not None:
             _setter("stackdriver_loggings", stackdriver_loggings)
+        if syslog_loggings is not None:
+            _setter("syslog_loggings", syslog_loggings)
 
     @property
     @pulumi.getter(name="cloudWatchLoggings")
@@ -173,6 +180,15 @@ class OrgLoggingArgs:
     def stackdriver_loggings(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingStackdriverLoggingArgs']]]]):
         pulumi.set(self, "stackdriver_loggings", value)
 
+    @property
+    @pulumi.getter(name="syslogLoggings")
+    def syslog_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingSyslogLoggingArgs']]]]:
+        return pulumi.get(self, "syslog_loggings")
+
+    @syslog_loggings.setter
+    def syslog_loggings(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingSyslogLoggingArgs']]]]):
+        pulumi.set(self, "syslog_loggings", value)
+
 
 @pulumi.input_type
 class _OrgLoggingState:
@@ -188,6 +204,7 @@ class _OrgLoggingState:
                  name: Optional[pulumi.Input[str]] = None,
                  s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]]] = None,
                  stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingStackdriverLoggingArgs']]]] = None,
+                 syslog_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingSyslogLoggingArgs']]]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         Input properties used for looking up and filtering OrgLogging resources.
@@ -213,6 +230,7 @@ class _OrgLoggingState:
             name=name,
             s3_loggings=s3_loggings,
             stackdriver_loggings=stackdriver_loggings,
+            syslog_loggings=syslog_loggings,
             tags=tags,
         )
     @staticmethod
@@ -229,6 +247,7 @@ class _OrgLoggingState:
              name: Optional[pulumi.Input[str]] = None,
              s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]]] = None,
              stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingStackdriverLoggingArgs']]]] = None,
+             syslog_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingSyslogLoggingArgs']]]] = None,
              tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -250,6 +269,8 @@ class _OrgLoggingState:
             s3_loggings = kwargs['s3Loggings']
         if 'stackdriverLoggings' in kwargs:
             stackdriver_loggings = kwargs['stackdriverLoggings']
+        if 'syslogLoggings' in kwargs:
+            syslog_loggings = kwargs['syslogLoggings']
 
         if cloud_watch_loggings is not None:
             _setter("cloud_watch_loggings", cloud_watch_loggings)
@@ -273,6 +294,8 @@ class _OrgLoggingState:
             _setter("s3_loggings", s3_loggings)
         if stackdriver_loggings is not None:
             _setter("stackdriver_loggings", stackdriver_loggings)
+        if syslog_loggings is not None:
+            _setter("syslog_loggings", syslog_loggings)
         if tags is not None:
             _setter("tags", tags)
 
@@ -397,6 +420,15 @@ class _OrgLoggingState:
         pulumi.set(self, "stackdriver_loggings", value)
 
     @property
+    @pulumi.getter(name="syslogLoggings")
+    def syslog_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingSyslogLoggingArgs']]]]:
+        return pulumi.get(self, "syslog_loggings")
+
+    @syslog_loggings.setter
+    def syslog_loggings(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingSyslogLoggingArgs']]]]):
+        pulumi.set(self, "syslog_loggings", value)
+
+    @property
     @pulumi.getter
     def tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
@@ -422,6 +454,7 @@ class OrgLogging(pulumi.CustomResource):
                  logzio_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingLogzioLoggingArgs']]]]] = None,
                  s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingS3LoggingArgs']]]]] = None,
                  stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingStackdriverLoggingArgs']]]]] = None,
+                 syslog_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingSyslogLoggingArgs']]]]] = None,
                  __props__=None):
         """
         Create a OrgLogging resource with the given unique name, props, and options.
@@ -467,6 +500,7 @@ class OrgLogging(pulumi.CustomResource):
                  logzio_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingLogzioLoggingArgs']]]]] = None,
                  s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingS3LoggingArgs']]]]] = None,
                  stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingStackdriverLoggingArgs']]]]] = None,
+                 syslog_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingSyslogLoggingArgs']]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -484,6 +518,7 @@ class OrgLogging(pulumi.CustomResource):
             __props__.__dict__["logzio_loggings"] = logzio_loggings
             __props__.__dict__["s3_loggings"] = s3_loggings
             __props__.__dict__["stackdriver_loggings"] = stackdriver_loggings
+            __props__.__dict__["syslog_loggings"] = syslog_loggings
             __props__.__dict__["cpln_id"] = None
             __props__.__dict__["description"] = None
             __props__.__dict__["name"] = None
@@ -509,6 +544,7 @@ class OrgLogging(pulumi.CustomResource):
             name: Optional[pulumi.Input[str]] = None,
             s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingS3LoggingArgs']]]]] = None,
             stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingStackdriverLoggingArgs']]]]] = None,
+            syslog_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingSyslogLoggingArgs']]]]] = None,
             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None) -> 'OrgLogging':
         """
         Get an existing OrgLogging resource's state with the given name, id, and optional extra
@@ -541,6 +577,7 @@ class OrgLogging(pulumi.CustomResource):
         __props__.__dict__["name"] = name
         __props__.__dict__["s3_loggings"] = s3_loggings
         __props__.__dict__["stackdriver_loggings"] = stackdriver_loggings
+        __props__.__dict__["syslog_loggings"] = syslog_loggings
         __props__.__dict__["tags"] = tags
         return OrgLogging(resource_name, opts=opts, __props__=__props__)
 
@@ -619,6 +656,11 @@ class OrgLogging(pulumi.CustomResource):
     @pulumi.getter(name="stackdriverLoggings")
     def stackdriver_loggings(self) -> pulumi.Output[Optional[Sequence['outputs.OrgLoggingStackdriverLogging']]]:
         return pulumi.get(self, "stackdriver_loggings")
+
+    @property
+    @pulumi.getter(name="syslogLoggings")
+    def syslog_loggings(self) -> pulumi.Output[Optional[Sequence['outputs.OrgLoggingSyslogLogging']]]:
+        return pulumi.get(self, "syslog_loggings")
 
     @property
     @pulumi.getter
