@@ -766,6 +766,9 @@
                 },
                 "nvidia": {
                     "$ref": "#/types/cpln:index/Mk8sAddOnsNvidia:Mk8sAddOnsNvidia"
+                },
+                "sysbox": {
+                    "type": "boolean"
                 }
             },
             "type": "object"
@@ -897,6 +900,12 @@
             "properties": {
                 "autoscaler": {
                     "$ref": "#/types/cpln:index/Mk8sAwsProviderAutoscaler:Mk8sAwsProviderAutoscaler"
+                },
+                "awsTags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
                 },
                 "deployRoleArn": {
                     "type": "string"
@@ -1176,6 +1185,12 @@
                 },
                 "firewallId": {
                     "type": "string"
+                },
+                "hetznerLabels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
                 },
                 "image": {
                     "type": "string"
@@ -1841,6 +1856,45 @@
                 }
             },
             "type": "object"
+        },
+        "cpln:index/OrgSecurity:OrgSecurity": {
+            "properties": {
+                "threatDetection": {
+                    "$ref": "#/types/cpln:index/OrgSecurityThreatDetection:OrgSecurityThreatDetection"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/OrgSecurityThreatDetection:OrgSecurityThreatDetection": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "minimumSeverity": {
+                    "type": "string"
+                },
+                "syslog": {
+                    "$ref": "#/types/cpln:index/OrgSecurityThreatDetectionSyslog:OrgSecurityThreatDetectionSyslog"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/OrgSecurityThreatDetectionSyslog:OrgSecurityThreatDetectionSyslog": {
+            "properties": {
+                "host": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "transport": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "port"
+            ]
         },
         "cpln:index/OrgStatus:OrgStatus": {
             "properties": {
@@ -3574,10 +3628,12 @@
         "cpln:index/cloudAccount:CloudAccount": {
             "properties": {
                 "aws": {
-                    "$ref": "#/types/cpln:index/CloudAccountAws:CloudAccountAws"
+                    "$ref": "#/types/cpln:index/CloudAccountAws:CloudAccountAws",
+                    "description": "Contains AWS cloud account configuration.\n"
                 },
                 "azure": {
-                    "$ref": "#/types/cpln:index/CloudAccountAzure:CloudAccountAzure"
+                    "$ref": "#/types/cpln:index/CloudAccountAzure:CloudAccountAzure",
+                    "description": "Contains Azure cloud account configuration.\n"
                 },
                 "cplnId": {
                     "type": "string",
@@ -3588,7 +3644,8 @@
                     "description": "Description of the Cloud Account.\n"
                 },
                 "gcp": {
-                    "$ref": "#/types/cpln:index/CloudAccountGcp:CloudAccountGcp"
+                    "$ref": "#/types/cpln:index/CloudAccountGcp:CloudAccountGcp",
+                    "description": "Contains GCP cloud account configuration.\n"
                 },
                 "gcpRoles": {
                     "type": "array",
@@ -3627,17 +3684,20 @@
             ],
             "inputProperties": {
                 "aws": {
-                    "$ref": "#/types/cpln:index/CloudAccountAws:CloudAccountAws"
+                    "$ref": "#/types/cpln:index/CloudAccountAws:CloudAccountAws",
+                    "description": "Contains AWS cloud account configuration.\n"
                 },
                 "azure": {
-                    "$ref": "#/types/cpln:index/CloudAccountAzure:CloudAccountAzure"
+                    "$ref": "#/types/cpln:index/CloudAccountAzure:CloudAccountAzure",
+                    "description": "Contains Azure cloud account configuration.\n"
                 },
                 "description": {
                     "type": "string",
                     "description": "Description of the Cloud Account.\n"
                 },
                 "gcp": {
-                    "$ref": "#/types/cpln:index/CloudAccountGcp:CloudAccountGcp"
+                    "$ref": "#/types/cpln:index/CloudAccountGcp:CloudAccountGcp",
+                    "description": "Contains GCP cloud account configuration.\n"
                 },
                 "name": {
                     "type": "string",
@@ -3659,10 +3719,12 @@
                 "description": "Input properties used for looking up and filtering CloudAccount resources.\n",
                 "properties": {
                     "aws": {
-                        "$ref": "#/types/cpln:index/CloudAccountAws:CloudAccountAws"
+                        "$ref": "#/types/cpln:index/CloudAccountAws:CloudAccountAws",
+                        "description": "Contains AWS cloud account configuration.\n"
                     },
                     "azure": {
-                        "$ref": "#/types/cpln:index/CloudAccountAzure:CloudAccountAzure"
+                        "$ref": "#/types/cpln:index/CloudAccountAzure:CloudAccountAzure",
+                        "description": "Contains Azure cloud account configuration.\n"
                     },
                     "cplnId": {
                         "type": "string",
@@ -3673,7 +3735,8 @@
                         "description": "Description of the Cloud Account.\n"
                     },
                     "gcp": {
-                        "$ref": "#/types/cpln:index/CloudAccountGcp:CloudAccountGcp"
+                        "$ref": "#/types/cpln:index/CloudAccountGcp:CloudAccountGcp",
+                        "description": "Contains GCP cloud account configuration.\n"
                     },
                     "gcpRoles": {
                         "type": "array",
@@ -3726,7 +3789,8 @@
                     "description": "Full link to this resource. Can be referenced by other resources.\n"
                 },
                 "spec": {
-                    "$ref": "#/types/cpln:index/DomainSpec:DomainSpec"
+                    "$ref": "#/types/cpln:index/DomainSpec:DomainSpec",
+                    "description": "Domain specificiation.\n"
                 },
                 "statuses": {
                     "type": "array",
@@ -3760,7 +3824,8 @@
                     "willReplaceOnChanges": true
                 },
                 "spec": {
-                    "$ref": "#/types/cpln:index/DomainSpec:DomainSpec"
+                    "$ref": "#/types/cpln:index/DomainSpec:DomainSpec",
+                    "description": "Domain specificiation.\n"
                 },
                 "tags": {
                     "type": "object",
@@ -3794,7 +3859,8 @@
                         "description": "Full link to this resource. Can be referenced by other resources.\n"
                     },
                     "spec": {
-                        "$ref": "#/types/cpln:index/DomainSpec:DomainSpec"
+                        "$ref": "#/types/cpln:index/DomainSpec:DomainSpec",
+                        "description": "Domain specificiation.\n"
                     },
                     "statuses": {
                         "type": "array",
@@ -3835,6 +3901,10 @@
                     "type": "string",
                     "description": "The path will match any unmatched path prefixes for the subdomain.\n"
                 },
+                "regex": {
+                    "type": "string",
+                    "description": "Used to match URI paths. Uses the google re2 regex syntax.\n"
+                },
                 "replacePrefix": {
                     "type": "string",
                     "description": "A path prefix can be configured to be replaced when forwarding the request to the Workload.\n"
@@ -3846,7 +3916,6 @@
             },
             "required": [
                 "domainLink",
-                "prefix",
                 "workloadLink"
             ],
             "inputProperties": {
@@ -3873,6 +3942,11 @@
                     "description": "The path will match any unmatched path prefixes for the subdomain.\n",
                     "willReplaceOnChanges": true
                 },
+                "regex": {
+                    "type": "string",
+                    "description": "Used to match URI paths. Uses the google re2 regex syntax.\n",
+                    "willReplaceOnChanges": true
+                },
                 "replacePrefix": {
                     "type": "string",
                     "description": "A path prefix can be configured to be replaced when forwarding the request to the Workload.\n"
@@ -3884,7 +3958,6 @@
             },
             "requiredInputs": [
                 "domainLink",
-                "prefix",
                 "workloadLink"
             ],
             "stateInputs": {
@@ -3913,6 +3986,11 @@
                         "description": "The path will match any unmatched path prefixes for the subdomain.\n",
                         "willReplaceOnChanges": true
                     },
+                    "regex": {
+                        "type": "string",
+                        "description": "Used to match URI paths. Uses the google re2 regex syntax.\n",
+                        "willReplaceOnChanges": true
+                    },
                     "replacePrefix": {
                         "type": "string",
                         "description": "A path prefix can be configured to be replaced when forwarding the request to the Workload.\n"
@@ -3936,10 +4014,12 @@
                     "description": "Description of Group.\n"
                 },
                 "identityMatcher": {
-                    "$ref": "#/types/cpln:index/GroupIdentityMatcher:GroupIdentityMatcher"
+                    "$ref": "#/types/cpln:index/GroupIdentityMatcher:GroupIdentityMatcher",
+                    "description": "Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful\nfor managing the grouping of users logged-in with SAML providers.\n"
                 },
                 "memberQuery": {
-                    "$ref": "#/types/cpln:index/GroupMemberQuery:GroupMemberQuery"
+                    "$ref": "#/types/cpln:index/GroupMemberQuery:GroupMemberQuery",
+                    "description": "A predefined set of criteria or conditions used to query and retrieve members within the group.\n"
                 },
                 "name": {
                     "type": "string",
@@ -3950,7 +4030,8 @@
                     "description": "Origin of the service account. Either `builtin` or `default`.\n"
                 },
                 "selfLink": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Fully qualified link to the this group.\n"
                 },
                 "serviceAccounts": {
                     "type": "array",
@@ -3986,10 +4067,12 @@
                     "description": "Description of Group.\n"
                 },
                 "identityMatcher": {
-                    "$ref": "#/types/cpln:index/GroupIdentityMatcher:GroupIdentityMatcher"
+                    "$ref": "#/types/cpln:index/GroupIdentityMatcher:GroupIdentityMatcher",
+                    "description": "Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful\nfor managing the grouping of users logged-in with SAML providers.\n"
                 },
                 "memberQuery": {
-                    "$ref": "#/types/cpln:index/GroupMemberQuery:GroupMemberQuery"
+                    "$ref": "#/types/cpln:index/GroupMemberQuery:GroupMemberQuery",
+                    "description": "A predefined set of criteria or conditions used to query and retrieve members within the group.\n"
                 },
                 "name": {
                     "type": "string",
@@ -4030,10 +4113,12 @@
                         "description": "Description of Group.\n"
                     },
                     "identityMatcher": {
-                        "$ref": "#/types/cpln:index/GroupIdentityMatcher:GroupIdentityMatcher"
+                        "$ref": "#/types/cpln:index/GroupIdentityMatcher:GroupIdentityMatcher",
+                        "description": "Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful\nfor managing the grouping of users logged-in with SAML providers.\n"
                     },
                     "memberQuery": {
-                        "$ref": "#/types/cpln:index/GroupMemberQuery:GroupMemberQuery"
+                        "$ref": "#/types/cpln:index/GroupMemberQuery:GroupMemberQuery",
+                        "description": "A predefined set of criteria or conditions used to query and retrieve members within the group.\n"
                     },
                     "name": {
                         "type": "string",
@@ -4045,7 +4130,8 @@
                         "description": "Origin of the service account. Either `builtin` or `default`.\n"
                     },
                     "selfLink": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Fully qualified link to the this group.\n"
                     },
                     "serviceAccounts": {
                         "type": "array",
@@ -4105,7 +4191,8 @@
                     "$ref": "#/types/cpln:index/GvcLightstepTracing:GvcLightstepTracing"
                 },
                 "loadBalancer": {
-                    "$ref": "#/types/cpln:index/GvcLoadBalancer:GvcLoadBalancer"
+                    "$ref": "#/types/cpln:index/GvcLoadBalancer:GvcLoadBalancer",
+                    "description": "Dedicated load balancer configuration.\n"
                 },
                 "locations": {
                     "type": "array",
@@ -4173,7 +4260,8 @@
                     "$ref": "#/types/cpln:index/GvcLightstepTracing:GvcLightstepTracing"
                 },
                 "loadBalancer": {
-                    "$ref": "#/types/cpln:index/GvcLoadBalancer:GvcLoadBalancer"
+                    "$ref": "#/types/cpln:index/GvcLoadBalancer:GvcLoadBalancer",
+                    "description": "Dedicated load balancer configuration.\n"
                 },
                 "locations": {
                     "type": "array",
@@ -4242,7 +4330,8 @@
                         "$ref": "#/types/cpln:index/GvcLightstepTracing:GvcLightstepTracing"
                     },
                     "loadBalancer": {
-                        "$ref": "#/types/cpln:index/GvcLoadBalancer:GvcLoadBalancer"
+                        "$ref": "#/types/cpln:index/GvcLoadBalancer:GvcLoadBalancer",
+                        "description": "Dedicated load balancer configuration.\n"
                     },
                     "locations": {
                         "type": "array",
@@ -4287,10 +4376,12 @@
         "cpln:index/identity:Identity": {
             "properties": {
                 "awsAccessPolicy": {
-                    "$ref": "#/types/cpln:index/IdentityAwsAccessPolicy:IdentityAwsAccessPolicy"
+                    "$ref": "#/types/cpln:index/IdentityAwsAccessPolicy:IdentityAwsAccessPolicy",
+                    "description": "A set of access policy rules that defines the actions and resources that an identity can access within an AWS\nenvironment.\n"
                 },
                 "azureAccessPolicy": {
-                    "$ref": "#/types/cpln:index/IdentityAzureAccessPolicy:IdentityAzureAccessPolicy"
+                    "$ref": "#/types/cpln:index/IdentityAzureAccessPolicy:IdentityAzureAccessPolicy",
+                    "description": "A set of access policy rules that defines the actions and resources that an identity can access within an Azure\nenvironment.\n"
                 },
                 "cplnId": {
                     "type": "string",
@@ -4327,7 +4418,8 @@
                     "description": "A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and\nports. - IP's and ports.\n"
                 },
                 "ngsAccessPolicy": {
-                    "$ref": "#/types/cpln:index/IdentityNgsAccessPolicy:IdentityNgsAccessPolicy"
+                    "$ref": "#/types/cpln:index/IdentityNgsAccessPolicy:IdentityNgsAccessPolicy",
+                    "description": "A set of access policy rules that defines the actions and resources that an identity can access within an NGA\nenvironment.\n"
                 },
                 "selfLink": {
                     "type": "string",
@@ -4357,10 +4449,12 @@
             ],
             "inputProperties": {
                 "awsAccessPolicy": {
-                    "$ref": "#/types/cpln:index/IdentityAwsAccessPolicy:IdentityAwsAccessPolicy"
+                    "$ref": "#/types/cpln:index/IdentityAwsAccessPolicy:IdentityAwsAccessPolicy",
+                    "description": "A set of access policy rules that defines the actions and resources that an identity can access within an AWS\nenvironment.\n"
                 },
                 "azureAccessPolicy": {
-                    "$ref": "#/types/cpln:index/IdentityAzureAccessPolicy:IdentityAzureAccessPolicy"
+                    "$ref": "#/types/cpln:index/IdentityAzureAccessPolicy:IdentityAzureAccessPolicy",
+                    "description": "A set of access policy rules that defines the actions and resources that an identity can access within an Azure\nenvironment.\n"
                 },
                 "description": {
                     "type": "string",
@@ -4395,7 +4489,8 @@
                     "description": "A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and\nports. - IP's and ports.\n"
                 },
                 "ngsAccessPolicy": {
-                    "$ref": "#/types/cpln:index/IdentityNgsAccessPolicy:IdentityNgsAccessPolicy"
+                    "$ref": "#/types/cpln:index/IdentityNgsAccessPolicy:IdentityNgsAccessPolicy",
+                    "description": "A set of access policy rules that defines the actions and resources that an identity can access within an NGA\nenvironment.\n"
                 },
                 "tags": {
                     "type": "object",
@@ -4412,10 +4507,12 @@
                 "description": "Input properties used for looking up and filtering Identity resources.\n",
                 "properties": {
                     "awsAccessPolicy": {
-                        "$ref": "#/types/cpln:index/IdentityAwsAccessPolicy:IdentityAwsAccessPolicy"
+                        "$ref": "#/types/cpln:index/IdentityAwsAccessPolicy:IdentityAwsAccessPolicy",
+                        "description": "A set of access policy rules that defines the actions and resources that an identity can access within an AWS\nenvironment.\n"
                     },
                     "azureAccessPolicy": {
-                        "$ref": "#/types/cpln:index/IdentityAzureAccessPolicy:IdentityAzureAccessPolicy"
+                        "$ref": "#/types/cpln:index/IdentityAzureAccessPolicy:IdentityAzureAccessPolicy",
+                        "description": "A set of access policy rules that defines the actions and resources that an identity can access within an Azure\nenvironment.\n"
                     },
                     "cplnId": {
                         "type": "string",
@@ -4454,7 +4551,8 @@
                         "description": "A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and\nports. - IP's and ports.\n"
                     },
                     "ngsAccessPolicy": {
-                        "$ref": "#/types/cpln:index/IdentityNgsAccessPolicy:IdentityNgsAccessPolicy"
+                        "$ref": "#/types/cpln:index/IdentityNgsAccessPolicy:IdentityNgsAccessPolicy",
+                        "description": "A set of access policy rules that defines the actions and resources that an identity can access within an NGA\nenvironment.\n"
                     },
                     "selfLink": {
                         "type": "string",
@@ -4621,7 +4719,7 @@
             }
         },
         "cpln:index/mk8s:Mk8s": {
-            "description": "Manages a Mk8s's [Mk8s](https://docs.controlplane.com/mk8s/overview).\n\n## Declaration\n\n### Required\n\n- **name** (String) Name of the Mk8s.\n- **version** (String)\n\n\u003e **Note** Only one of the providers listed below can be included in a resource.\n\n- **generic_provider** (Block List, Max: 1) (see below)\n- **hetzner_provider** (Block List, Max: 1) (see below)\n- **aws_provider** (Block List, Max: 1) (see below)\n\n### Optional\n\n- **description** (String) Description of the Mk8s.\n- **tags** (Map of String) Key-value map of resource tags.\n- **firewall** (Block List, Max: 1) (see below)\n- **add_ons** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--generic_provider\"\u003e\u003c/a\u003e\n\n### `generic_provider`\n\nRequired:\n\n- **location** (String) Control Plane location that will host the K8S components. Prefer one that is closest to where the nodes are running.\n\nOptional:\n\n- **networking** (Block List, Max: 1) (see below)\n- **node_pool** (Block List) (see below)\n\n\u003ca id=\"nestedblock--generic_provider--networking\"\u003e\u003c/a\u003e\n\n### `generic_provider.networking`\n\nOptional:\n\n- **service_network** (String) The CIDR of the service network.\n- **pod_network** (String) The CIDR of the pod network.\n\n\u003ca id=\"nestedblock--generic_provider--node_pool\"\u003e\u003c/a\u003e\n\n### `generic_provider.node_pool`\n\nList of node pools.\n\nRequired:\n\n- **name** (String)\n\nOptional:\n\n- **labels** (Map of String) Labels to attach to nodes of a node pool.\n- **taint** (Block List) (see below)\n\n\u003ca id=\"nestedblock--generic_provider--node_pool--taint\"\u003e\u003c/a\u003e\n\n### `generic_provider.node_pool.taint`\n\nTaint for the nodes of a pool.\n\nOptional:\n\n- **key** (String)\n- **value** (String)\n- **effect** (String)\n\n\u003ca id=\"nestedblock--hetzner_provider\"\u003e\u003c/a\u003e\n\n### `hetzner_provider`\n\nRequired:\n\n- **region** (String) Hetzner region to deploy nodes to.\n- **token_secret_link** (String) Link to a secret holding Hetzner access key.\n- **network_id** (String) ID of the Hetzner network to deploy nodes to.\n\nOptional:\n\n- **networking** (Block List, Max: 1) (see below)\n- **pre_install_script** (String) Optional shell script that will be run before K8S is installed.\n- **firewall_id** (String) Optional firewall rule to attach to all nodes.\n- **node_pool** (Block List) (see below)\n- **dedicated_server_node_pool** (Block List) (see below)\n- **image** (String) Default image for all nodes.\n- **ssh_key** (String) SSH key name for accessing deployed nodes.\n- **autoscaler** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--hetzner_provider--node_pool\"\u003e\u003c/a\u003e\n\n### `hetzner_provider.node_pool`\n\nList of node pools.\n\nRequired:\n\n- **name** (String)\n- **server_type** (String)\n\nOptional:\n\n- **labels** (Map of String) Labels to attach to nodes of a node pool.\n- **taint** (Block List) (see below)\n- **override_image** (String)\n- **min_size** (Number)\n- **max_size** (Number)\n\n\u003ca id=\"nestedblock--hetzner_provider--dedicated_server_node_pool\"\u003e\u003c/a\u003e\n\n### `hetzner_provider.dedicated_server_node_pool`\n\nNode pool that can configure dedicated Hetzner servers.\n\nRequired:\n\n- **name** (String)\n\nOptional:\n\n- **labels** (Map of String) Labels to attach to nodes of a node pool.\n- **taint** (Block List) (see below)\n\n\u003ca id=\"nestedblock--aws_provider\"\u003e\u003c/a\u003e\n\n### `aws_provider`\n\nRequired:\n\n- **region** (String) Region where the cluster nodes will live.\n- **skip_create_roles** (Boolean) If true, Control Plane will not create any roles.\n- **image** (Block List, Max: 1) (see below)\n- **deploy_role_arn** (String) Control Plane will set up the cluster by assuming this role.\n- **vpc_id** (String) The vpc where nodes will be deployed. Supports SSM.\n\nOptional:\n\n- **networking** (Block List, Max: 1) (see below)\n- **pre_install_script** (String) Optional shell script that will be run before K8S is installed. Supports SSM.\n- **key_pair** (String) Name of keyPair. Supports SSM\n- **disk_encryption_key_arn** (String) KMS key used to encrypt volumes. Supports SSM.\n- **security_group_ids** (List of String) Security groups to deploy nodes to. Security groups control if the cluster is multi-zone or single-zon.\n- **node_pool** (Block List) (see below)\n- **autoscaler** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--aws_provider--node_pool\"\u003e\u003c/a\u003e\n\n### `aws_provider.node_pool`\n\nList of node pools.\n\nRequired:\n\n- **name** (String)\n- **instance_types** (List of String)\n- **override_image** (Block List, Max: 1) (see below)\n- **subnet_ids** (List of String)\n\nOptional:\n\n- **labels** (Map of String) Labels to attach to nodes of a node pool.\n- **taint** (Block List) (see below)\n- **boot_disk_size** (Number) Size in GB.\n- **min_size** (Number)\n- **max_size** (Number)\n- **on_demand_base_capacity** (Number)\n- **on_demand_percentage_above_base_capacity** (Number)\n- **spot_allocation_strategy** (String)\n- **extra_security_group_ids** (List of String)\n\n\u003ca id=\"nestedblock--aws_provider--ami\"\u003e\u003c/a\u003e\n\n### `ami`\n\nDefault image for all nodes.\n\nRequired:\n\n\u003e **Note** Only one of the following listed below can be included.\n\n- **recommended** (String)\n- **exact** (String) Support SSM.\n\n\u003ca id=\"nestedblock--autoscaler\"\u003e\u003c/a\u003e\n\n### `autoscaler`\n\nOptional:\n\n- **expander** (List of String)\n- **unneeded_time** (String)\n- **unready_time** (String)\n- **utilization_threshold** (Float64)\n\n\u003ca id=\"nestedblock--firewall\"\u003e\u003c/a\u003e\n\n### `firewall`\n\nAllow-list.\n\nRequired:\n\n- **source_cidr** (String)\n\nOptional:\n\n- **description** (String)\n\n\u003ca id=\"nestedblock--add_ons\"\u003e\u003c/a\u003e\n\n### `add_ons`\n\nOptional:\n\n- **dashboard** (Boolean)\n- **azure_workload_identity** (Block List, Max: 1) (see below)\n- **aws_workload_identity** (Boolean)\n- **local_path_storage** (Boolean)\n- **metrics** (Block List, Max: 1) (see below)\n- **logs** (Block List, Max: 1) (see below)\n- **nvidia** (Block List, Max: 1) (see below)\n- **aws_efs** (Block List, Max: 1) (see below)\n- **aws_ecr** (Block List, Max: 1) (see below)\n- **aws_elb** (Block List, Max: 1) (see below)\n- **azure_acr** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--add_ons--azure_workload_identity\"\u003e\u003c/a\u003e\n\n### `add_ons.azure_workload_identity`\n\nRequired:\n\n- **tenant_id** (String) Tenant ID to use for workload identity.\n\n\u003ca id=\"nestedblock--add_ons--metrics\"\u003e\u003c/a\u003e\n\n### `add_ons.metrics`\n\nOptional:\n\n- **kube_state** (Boolean) Enable kube-state metrics.\n- **core_dns** (Boolean) Enable scraping of core-dns service.\n- **kubelet** (Boolean) Enable scraping kubelet stats.\n- **api_server** (Boolean) Enable scraping apiserver stats.\n- **node_exporter** (Boolean) Enable collecting node-level stats (disk, network, filesystem, etc).\n- **cadvisor** (Boolean) Enable CNI-level container stats.\n- **scrape_annotated** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--add_ons--metrics--scrape-annotated\"\u003e\u003c/a\u003e\n\n### `add_ons.metrics.scrape-annotated`\n\nScrape pods annotated with prometheus.io/scrape=true.\n\nOptional:\n\n- **interval_seconds** (Number)\n- **include_namespaces** (String)\n- **exclude_namespaces** (String)\n- **retain_labels** (String)\n\n\u003ca id=\"nestedblock--add_ons--logs\"\u003e\u003c/a\u003e\n\n### `add_ons.logs`\n\nOptional:\n\n- **audit_enabled** (Boolean) Collect k8s audit log as log events.\n- **include_namespaces** (String)\n- **exclude_namespaces** (String)\n\n\u003ca id=\"nestedblock--add_ons--nvidia\"\u003e\u003c/a\u003e\n\n### `add_ons.nvidia`\n\nRequired:\n\n- **taint_gpu_nodes** (Boolean)\n\n\u003ca id=\"nestedblock--add_ons--aws--efs\"\u003e\u003c/a\u003e\n\n### `add_ons.aws_efs`\n\nRequired:\n\n- **role_arn** (String) Use this role for EFS interaction.\n\n\u003ca id=\"nestedblock--add_ons--aws--ecr\"\u003e\u003c/a\u003e\n\n### `add_ons.aws_ecr`\n\nRequired:\n\n- **role_arn** (String) Role to use when authorizing ECR pulls. Optional on AWS, in which case it will use the instance role to pull.\n\n\u003ca id=\"nestedblock--add_ons--aws--elb\"\u003e\u003c/a\u003e\n\n### `add_ons.aws_elb`\n\nRequired:\n\n- **role_arn** (String) Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.\n\n\u003ca id=\"nestedblock--add_ons--azure_acr\"\u003e\u003c/a\u003e\n\n### `add_ons.azure_acr`\n\nRequired:\n\n- **client_id** (String)\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the Mk8s.\n- **alias** (String) The alias name of the Mk8s.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n- **status** (Block List, Max: 1) (see below).\n\n\u003ca id=\"nestedblock--status\"\u003e\u003c/a\u003e\n\n### `status`\n\nStatus of the mk8s.\n\nRead-Only:\n\n- **oidc_provider_url** (String)\n- **server_url** (String)\n- **home_location** (String)\n- **add_ons** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--status--add_ons\"\u003e\u003c/a\u003e\n\n### `status.add_ons`\n\nRead-Only:\n\n- **dashboard** (Block List, Max: 1) (see below)\n- **aws_workload_identity** (Block List, Max: 1) (see below)\n- **metrics** (Block List, Max: 1) (see below)\n- **logs** (Block List, Max: 1) (see below)\n- **aws_ecr** (Block List, Max: 1) (see below)\n- **aws_efs** (Block List, Max: 1) (see below)\n- **aws_elb** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--status--add_ons--dashobard\"\u003e\u003c/a\u003e\n\n### `status.add_ons.dashboard`\n\nRead-Only:\n\n- **url** (String) Access to dashboard.\n\n\u003ca id=\"nestedblock--status--add_ons--aws_workload_identity\"\u003e\u003c/a\u003e\n\n### `status.add_ons.aws_workload_identity`\n\nRead-Only:\n\n- **oidc_provider_config** (Block List, Max: 1) (see below)\n- **trust_policy** (String)\n\n\u003ca id=\"nestedblock--status--add_ons--aws_workload_identity--oidc_provider_config\"\u003e\u003c/a\u003e\n\n### `status.add_ons.aws_workload_identity.oidc_provider_config`\n\nRead-Only:\n\n- **provider_url** (String)\n- **audience** (String)\n\n\u003ca id=\"nestedblock--status--add_ons--metrics\"\u003e\u003c/a\u003e\n\n### `status.add_ons.metrics`\n\nRead-Only:\n\n- **prometheus_endpoint** (String)\n- **remote_write_config** (String)\n\n\u003ca id=\"nestedblock--status--add_ons--logs\"\u003e\u003c/a\u003e\n\n### `status.add_ons.logs`\n\nRead-Only:\n\n- **loki_address** (String) Loki endpoint to query logs from.\n\n\u003ca id=\"nestedblock--status--add_ons--aws\"\u003e\u003c/a\u003e\n\n### `status.add_ons.aws`\n\nRead-Only:\n\n- **trust_policy** (String)\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n### Generic Provider\n\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.Mk8s;\nimport com.pulumi.cpln.Mk8sArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAzureAcrArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAzureWorkloadIdentityArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsLogsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsMetricsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsMetricsScrapeAnnotatedArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsNvidiaArgs;\nimport com.pulumi.cpln.inputs.Mk8sFirewallArgs;\nimport com.pulumi.cpln.inputs.Mk8sGenericProviderArgs;\nimport com.pulumi.cpln.inputs.Mk8sGenericProviderNetworkingArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var generic = new Mk8s(\"generic\", Mk8sArgs.builder()        \n            .addOns(Mk8sAddOnsArgs.builder()\n                .awsWorkloadIdentity(true)\n                .azureAcr(Mk8sAddOnsAzureAcrArgs.builder()\n                    .clientId(\"4e25b134-160b-4a9d-b392-13b381ced5ef\")\n                    .build())\n                .azureWorkloadIdentity(Mk8sAddOnsAzureWorkloadIdentityArgs.builder()\n                    .tenantId(\"7f43458a-a34e-4bfa-9e56-e2289e49c4ec\")\n                    .build())\n                .dashboard(true)\n                .localPathStorage(true)\n                .logs(Mk8sAddOnsLogsArgs.builder()\n                    .auditEnabled(true)\n                    .excludeNamespaces(\"^[a-z]$\")\n                    .includeNamespaces(\"^\\\\d+$\")\n                    .build())\n                .metrics(Mk8sAddOnsMetricsArgs.builder()\n                    .apiServer(true)\n                    .cadvisor(true)\n                    .coreDns(true)\n                    .kubeState(true)\n                    .kubelet(true)\n                    .nodeExporter(true)\n                    .scrapeAnnotated(Mk8sAddOnsMetricsScrapeAnnotatedArgs.builder()\n                        .excludeNamespaces(\"^[a-z]$\")\n                        .includeNamespaces(\"^\\\\d+$\")\n                        .intervalSeconds(30)\n                        .retainLabels(\"^\\\\w+$\")\n                        .build())\n                    .build())\n                .nvidia(Mk8sAddOnsNvidiaArgs.builder()\n                    .taintGpuNodes(true)\n                    .build())\n                .build())\n            .description(\"demo-mk8s-generic-provider\")\n            .firewalls(Mk8sFirewallArgs.builder()\n                .description(\"hello world\")\n                .sourceCidr(\"192.168.1.255\")\n                .build())\n            .genericProvider(Mk8sGenericProviderArgs.builder()\n                .location(\"aws-eu-central-1\")\n                .networking(Mk8sGenericProviderNetworkingArgs.builder()\n                    .podNetwork(\"10.42.0.0/16\")\n                    .serviceNetwork(\"10.43.0.0/16\")\n                    .build())\n                .nodePools(Mk8sGenericProviderNodePoolArgs.builder()\n                    .labels(Map.of(\"hello\", \"world\"))\n                    .name(\"my-node-pool\")\n                    .taint(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference))\n                    .build())\n                .build())\n            .tags(Map.ofEntries(\n                Map.entry(\"acceptance_test\", \"true\"),\n                Map.entry(\"terraform_generated\", \"true\")\n            ))\n            .version(\"1.28.4\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  generic:\n    type: cpln:Mk8s\n    properties:\n      addOns:\n        awsWorkloadIdentity: true\n        azureAcr:\n          clientId: 4e25b134-160b-4a9d-b392-13b381ced5ef\n        azureWorkloadIdentity:\n          tenantId: 7f43458a-a34e-4bfa-9e56-e2289e49c4ec\n        dashboard: true\n        localPathStorage: true\n        logs:\n          auditEnabled: true\n          excludeNamespaces: ^[a-z]$\n          includeNamespaces: ^\\d+$\n        metrics:\n          apiServer: true\n          cadvisor: true\n          coreDns: true\n          kubeState: true\n          kubelet: true\n          nodeExporter: true\n          scrapeAnnotated:\n            excludeNamespaces: ^[a-z]$\n            includeNamespaces: ^\\d+$\n            intervalSeconds: 30\n            retainLabels: ^\\w+$\n        nvidia:\n          taintGpuNodes: true\n      description: demo-mk8s-generic-provider\n      firewalls:\n        - description: hello world\n          sourceCidr: 192.168.1.255\n      genericProvider:\n        location: aws-eu-central-1\n        networking:\n          podNetwork: 10.42.0.0/16\n          serviceNetwork: 10.43.0.0/16\n        nodePools:\n          - labels:\n              hello: world\n            name: my-node-pool\n            taint:\n              - effect: NoSchedule\n                key: hello\n                value: world\n      tags:\n        acceptance_test: 'true'\n        terraform_generated: 'true'\n      version: 1.28.4\n```\n{{% /example %}}\n{{% example %}}\n### Hetzner Provider\n\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.Mk8s;\nimport com.pulumi.cpln.Mk8sArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAzureAcrArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAzureWorkloadIdentityArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsLogsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsMetricsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsMetricsScrapeAnnotatedArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsNvidiaArgs;\nimport com.pulumi.cpln.inputs.Mk8sFirewallArgs;\nimport com.pulumi.cpln.inputs.Mk8sHetznerProviderArgs;\nimport com.pulumi.cpln.inputs.Mk8sHetznerProviderAutoscalerArgs;\nimport com.pulumi.cpln.inputs.Mk8sHetznerProviderNetworkingArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var hetzner = new Mk8s(\"hetzner\", Mk8sArgs.builder()        \n            .addOns(Mk8sAddOnsArgs.builder()\n                .awsWorkloadIdentity(true)\n                .azureAcr(Mk8sAddOnsAzureAcrArgs.builder()\n                    .clientId(\"4e25b134-160b-4a9d-b392-13b381ced5ef\")\n                    .build())\n                .azureWorkloadIdentity(Mk8sAddOnsAzureWorkloadIdentityArgs.builder()\n                    .tenantId(\"7f43458a-a34e-4bfa-9e56-e2289e49c4ec\")\n                    .build())\n                .dashboard(true)\n                .localPathStorage(true)\n                .logs(Mk8sAddOnsLogsArgs.builder()\n                    .auditEnabled(true)\n                    .excludeNamespaces(\"^[a-z]$\")\n                    .includeNamespaces(\"^\\\\d+$\")\n                    .build())\n                .metrics(Mk8sAddOnsMetricsArgs.builder()\n                    .apiServer(true)\n                    .cadvisor(true)\n                    .coreDns(true)\n                    .kubeState(true)\n                    .kubelet(true)\n                    .nodeExporter(true)\n                    .scrapeAnnotated(Mk8sAddOnsMetricsScrapeAnnotatedArgs.builder()\n                        .excludeNamespaces(\"^[a-z]$\")\n                        .includeNamespaces(\"^\\\\d+$\")\n                        .intervalSeconds(30)\n                        .retainLabels(\"^\\\\w+$\")\n                        .build())\n                    .build())\n                .nvidia(Mk8sAddOnsNvidiaArgs.builder()\n                    .taintGpuNodes(true)\n                    .build())\n                .build())\n            .description(\"demo-mk8s-hetzner-provider\")\n            .firewalls(Mk8sFirewallArgs.builder()\n                .description(\"hello world\")\n                .sourceCidr(\"192.168.1.255\")\n                .build())\n            .hetznerProvider(Mk8sHetznerProviderArgs.builder()\n                .autoscaler(Mk8sHetznerProviderAutoscalerArgs.builder()\n                    .expander(\"most-pods\")\n                    .unneededTime(\"10m\")\n                    .unreadyTime(\"20m\")\n                    .utilizationThreshold(0.7)\n                    .build())\n                .dedicatedServerNodePools(Mk8sHetznerProviderDedicatedServerNodePoolArgs.builder()\n                    .labels(Map.of(\"hello\", \"world\"))\n                    .name(\"my-node-pool\")\n                    .taint(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference))\n                    .build())\n                .image(\"centos-7\")\n                .networkId(\"2808575\")\n                .networking(Mk8sHetznerProviderNetworkingArgs.builder()\n                    .podNetwork(\"10.42.0.0/16\")\n                    .serviceNetwork(\"10.43.0.0/16\")\n                    .build())\n                .nodePools(Mk8sHetznerProviderNodePoolArgs.builder()\n                    .labels(Map.of(\"hello\", \"world\"))\n                    .maxSize(0)\n                    .minSize(0)\n                    .name(\"my-hetzner-node-pool\")\n                    .overrideImage(\"debian-11\")\n                    .serverType(\"cx11\")\n                    .taint(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference))\n                    .build())\n                .preInstallScript(\"#! echo hello world\")\n                .region(\"fsn1\")\n                .sshKey(\"10925607\")\n                .tokenSecretLink(\"/org/terraform-test-org/secret/hetzner\")\n                .build())\n            .tags(Map.ofEntries(\n                Map.entry(\"acceptance_test\", \"true\"),\n                Map.entry(\"terraform_generated\", \"true\")\n            ))\n            .version(\"1.28.4\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  hetzner:\n    type: cpln:Mk8s\n    properties:\n      addOns:\n        awsWorkloadIdentity: true\n        azureAcr:\n          clientId: 4e25b134-160b-4a9d-b392-13b381ced5ef\n        azureWorkloadIdentity:\n          tenantId: 7f43458a-a34e-4bfa-9e56-e2289e49c4ec\n        dashboard: true\n        localPathStorage: true\n        logs:\n          auditEnabled: true\n          excludeNamespaces: ^[a-z]$\n          includeNamespaces: ^\\d+$\n        metrics:\n          apiServer: true\n          cadvisor: true\n          coreDns: true\n          kubeState: true\n          kubelet: true\n          nodeExporter: true\n          scrapeAnnotated:\n            excludeNamespaces: ^[a-z]$\n            includeNamespaces: ^\\d+$\n            intervalSeconds: 30\n            retainLabels: ^\\w+$\n        nvidia:\n          taintGpuNodes: true\n      description: demo-mk8s-hetzner-provider\n      firewalls:\n        - description: hello world\n          sourceCidr: 192.168.1.255\n      hetznerProvider:\n        autoscaler:\n          expander:\n            - most-pods\n          unneededTime: 10m\n          unreadyTime: 20m\n          utilizationThreshold: 0.7\n        dedicatedServerNodePools:\n          - labels:\n              hello: world\n            name: my-node-pool\n            taint:\n              - effect: NoSchedule\n                key: hello\n                value: world\n        image: centos-7\n        networkId: '2808575'\n        networking:\n          podNetwork: 10.42.0.0/16\n          serviceNetwork: 10.43.0.0/16\n        nodePools:\n          - labels:\n              hello: world\n            maxSize: 0\n            minSize: 0\n            name: my-hetzner-node-pool\n            overrideImage: debian-11\n            serverType: cx11\n            taint:\n              - effect: NoSchedule\n                key: hello\n                value: world\n        preInstallScript: '#! echo hello world'\n        region: fsn1\n        sshKey: '10925607'\n        tokenSecretLink: /org/terraform-test-org/secret/hetzner\n      tags:\n        acceptance_test: 'true'\n        terraform_generated: 'true'\n      version: 1.28.4\n```\n{{% /example %}}\n{{% example %}}\n### AWS Provider\n\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.Mk8s;\nimport com.pulumi.cpln.Mk8sArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAwsEcrArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAwsEfsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAwsElbArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAzureAcrArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAzureWorkloadIdentityArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsLogsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsMetricsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsMetricsScrapeAnnotatedArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsNvidiaArgs;\nimport com.pulumi.cpln.inputs.Mk8sAwsProviderArgs;\nimport com.pulumi.cpln.inputs.Mk8sAwsProviderAutoscalerArgs;\nimport com.pulumi.cpln.inputs.Mk8sAwsProviderImageArgs;\nimport com.pulumi.cpln.inputs.Mk8sAwsProviderNetworkingArgs;\nimport com.pulumi.cpln.inputs.Mk8sFirewallArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var aws = new Mk8s(\"aws\", Mk8sArgs.builder()        \n            .addOns(Mk8sAddOnsArgs.builder()\n                .awsEcr(Mk8sAddOnsAwsEcrArgs.builder()\n                    .roleArn(\"arn:aws:iam::123456789012:role/aws-ecr-role\")\n                    .build())\n                .awsEfs(Mk8sAddOnsAwsEfsArgs.builder()\n                    .roleArn(\"arn:aws:iam::123456789012:role/aws-efs-role\")\n                    .build())\n                .awsElb(Mk8sAddOnsAwsElbArgs.builder()\n                    .roleArn(\"arn:aws:iam::123456789012:role/aws-elb-role\")\n                    .build())\n                .awsWorkloadIdentity(true)\n                .azureAcr(Mk8sAddOnsAzureAcrArgs.builder()\n                    .clientId(\"4e25b134-160b-4a9d-b392-13b381ced5ef\")\n                    .build())\n                .azureWorkloadIdentity(Mk8sAddOnsAzureWorkloadIdentityArgs.builder()\n                    .tenantId(\"7f43458a-a34e-4bfa-9e56-e2289e49c4ec\")\n                    .build())\n                .dashboard(true)\n                .localPathStorage(true)\n                .logs(Mk8sAddOnsLogsArgs.builder()\n                    .auditEnabled(true)\n                    .excludeNamespaces(\"^[a-z]$\")\n                    .includeNamespaces(\"^\\\\d+$\")\n                    .build())\n                .metrics(Mk8sAddOnsMetricsArgs.builder()\n                    .apiServer(true)\n                    .cadvisor(true)\n                    .coreDns(true)\n                    .kubeState(true)\n                    .kubelet(true)\n                    .nodeExporter(true)\n                    .scrapeAnnotated(Mk8sAddOnsMetricsScrapeAnnotatedArgs.builder()\n                        .excludeNamespaces(\"^[a-z]$\")\n                        .includeNamespaces(\"^\\\\d+$\")\n                        .intervalSeconds(30)\n                        .retainLabels(\"^\\\\w+$\")\n                        .build())\n                    .build())\n                .nvidia(Mk8sAddOnsNvidiaArgs.builder()\n                    .taintGpuNodes(true)\n                    .build())\n                .build())\n            .awsProvider(Mk8sAwsProviderArgs.builder()\n                .autoscaler(Mk8sAwsProviderAutoscalerArgs.builder()\n                    .expander(\"most-pods\")\n                    .unneededTime(\"10m\")\n                    .unreadyTime(\"20m\")\n                    .utilizationThreshold(0.7)\n                    .build())\n                .deployRoleArn(\"arn:aws:iam::12345678901:role/cpln\")\n                .diskEncryptionKeyArn(\"arn:aws:kms:eu-central-1:12345678901:key/0a1bcd23-4567-8901-e2fg-3h4i5jk678lm\")\n                .image(Mk8sAwsProviderImageArgs.builder()\n                    .recommended(\"amazon/al2023\")\n                    .build())\n                .keyPair(\"cem_uzak\")\n                .networking(Mk8sAwsProviderNetworkingArgs.builder()\n                    .podNetwork(\"10.42.0.0/16\")\n                    .serviceNetwork(\"10.43.0.0/16\")\n                    .build())\n                .nodePools(Mk8sAwsProviderNodePoolArgs.builder()\n                    .bootDiskSize(20)\n                    .extraSecurityGroupIds(\"sg-031480aa7a1e6e38b\")\n                    .instanceTypes(\"t4g.nano\")\n                    .labels(Map.of(\"hello\", \"world\"))\n                    .maxSize(0)\n                    .minSize(0)\n                    .name(\"my-aws-node-pool\")\n                    .onDemandBaseCapacity(0)\n                    .onDemandPercentageAboveBaseCapacity(0)\n                    .overrideImage(Mk8sAwsProviderNodePoolOverrideImageArgs.builder()\n                        .exact(\"ami-123\")\n                        .build())\n                    .spotAllocationStrategy(\"lowest-price\")\n                    .subnetIds(\"subnet-0e564a042e2a45009\")\n                    .taint(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference))\n                    .build())\n                .preInstallScript(\"#! echo hello world\")\n                .region(\"eu-central-1\")\n                .securityGroupIds(\"sg-031480aa7a1e6e38b\")\n                .skipCreateRoles(false)\n                .vpcId(\"vpc-03105bd4dc058d3a8\")\n                .build())\n            .description(\"demo-mk8s-aws-provider\")\n            .firewalls(Mk8sFirewallArgs.builder()\n                .description(\"hello world\")\n                .sourceCidr(\"192.168.1.255\")\n                .build())\n            .tags(Map.ofEntries(\n                Map.entry(\"acceptance_test\", \"true\"),\n                Map.entry(\"terraform_generated\", \"true\")\n            ))\n            .version(\"1.28.4\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  aws:\n    type: cpln:Mk8s\n    properties:\n      addOns:\n        awsEcr:\n          roleArn: arn:aws:iam::123456789012:role/aws-ecr-role\n        awsEfs:\n          roleArn: arn:aws:iam::123456789012:role/aws-efs-role\n        awsElb:\n          roleArn: arn:aws:iam::123456789012:role/aws-elb-role\n        awsWorkloadIdentity: true\n        azureAcr:\n          clientId: 4e25b134-160b-4a9d-b392-13b381ced5ef\n        azureWorkloadIdentity:\n          tenantId: 7f43458a-a34e-4bfa-9e56-e2289e49c4ec\n        dashboard: true\n        localPathStorage: true\n        logs:\n          auditEnabled: true\n          excludeNamespaces: ^[a-z]$\n          includeNamespaces: ^\\d+$\n        metrics:\n          apiServer: true\n          cadvisor: true\n          coreDns: true\n          kubeState: true\n          kubelet: true\n          nodeExporter: true\n          scrapeAnnotated:\n            excludeNamespaces: ^[a-z]$\n            includeNamespaces: ^\\d+$\n            intervalSeconds: 30\n            retainLabels: ^\\w+$\n        nvidia:\n          taintGpuNodes: true\n      awsProvider:\n        autoscaler:\n          expander:\n            - most-pods\n          unneededTime: 10m\n          unreadyTime: 20m\n          utilizationThreshold: 0.7\n        deployRoleArn: arn:aws:iam::12345678901:role/cpln\n        diskEncryptionKeyArn: arn:aws:kms:eu-central-1:12345678901:key/0a1bcd23-4567-8901-e2fg-3h4i5jk678lm\n        image:\n          recommended: amazon/al2023\n        keyPair: cem_uzak\n        networking:\n          podNetwork: 10.42.0.0/16\n          serviceNetwork: 10.43.0.0/16\n        nodePools:\n          - bootDiskSize: 20\n            extraSecurityGroupIds:\n              - sg-031480aa7a1e6e38b\n            instanceTypes:\n              - t4g.nano\n            labels:\n              hello: world\n            maxSize: 0\n            minSize: 0\n            name: my-aws-node-pool\n            onDemandBaseCapacity: 0\n            onDemandPercentageAboveBaseCapacity: 0\n            overrideImage:\n              exact: ami-123\n            spotAllocationStrategy: lowest-price\n            subnetIds:\n              - subnet-0e564a042e2a45009\n            taint:\n              - effect: NoSchedule\n                key: hello\n                value: world\n        preInstallScript: '#! echo hello world'\n        region: eu-central-1\n        securityGroupIds:\n          - sg-031480aa7a1e6e38b\n        skipCreateRoles: false\n        vpcId: vpc-03105bd4dc058d3a8\n      description: demo-mk8s-aws-provider\n      firewalls:\n        - description: hello world\n          sourceCidr: 192.168.1.255\n      tags:\n        acceptance_test: 'true'\n        terraform_generated: 'true'\n      version: 1.28.4\n```\n{{% /example %}}\n{{% /examples %}}",
+            "description": "Manages a Mk8s's [Mk8s](https://docs.controlplane.com/mk8s/overview).\n\n## Declaration\n\n### Required\n\n- **name** (String) Name of the Mk8s.\n- **version** (String)\n\n\u003e **Note** Only one of the providers listed below can be included in a resource.\n\n- **generic_provider** (Block List, Max: 1) (see below)\n- **hetzner_provider** (Block List, Max: 1) (see below)\n- **aws_provider** (Block List, Max: 1) (see below)\n\n### Optional\n\n- **description** (String) Description of the Mk8s.\n- **tags** (Map of String) Key-value map of resource tags.\n- **firewall** (Block List, Max: 1) (see below)\n- **add_ons** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--generic_provider\"\u003e\u003c/a\u003e\n\n### `generic_provider`\n\nRequired:\n\n- **location** (String) Control Plane location that will host the K8S components. Prefer one that is closest to where the nodes are running.\n\nOptional:\n\n- **networking** (Block List, Max: 1) (see below)\n- **node_pool** (Block List) (see below)\n\n\u003ca id=\"nestedblock--generic_provider--networking\"\u003e\u003c/a\u003e\n\n### `generic_provider.networking`\n\nOptional:\n\n- **service_network** (String) The CIDR of the service network.\n- **pod_network** (String) The CIDR of the pod network.\n\n\u003ca id=\"nestedblock--generic_provider--node_pool\"\u003e\u003c/a\u003e\n\n### `generic_provider.node_pool`\n\nList of node pools.\n\nRequired:\n\n- **name** (String)\n\nOptional:\n\n- **labels** (Map of String) Labels to attach to nodes of a node pool.\n- **taint** (Block List) (see below)\n\n\u003ca id=\"nestedblock--generic_provider--node_pool--taint\"\u003e\u003c/a\u003e\n\n### `generic_provider.node_pool.taint`\n\nTaint for the nodes of a pool.\n\nOptional:\n\n- **key** (String)\n- **value** (String)\n- **effect** (String)\n\n\u003ca id=\"nestedblock--hetzner_provider\"\u003e\u003c/a\u003e\n\n### `hetzner_provider`\n\nRequired:\n\n- **region** (String) Hetzner region to deploy nodes to.\n- **token_secret_link** (String) Link to a secret holding Hetzner access key.\n- **network_id** (String) ID of the Hetzner network to deploy nodes to.\n\nOptional:\n\n- **hetzner_labels** (Map of String) Extra labels to attach to servers.\n- **networking** (Block List, Max: 1) (see below)\n- **pre_install_script** (String) Optional shell script that will be run before K8S is installed.\n- **firewall_id** (String) Optional firewall rule to attach to all nodes.\n- **node_pool** (Block List) (see below)\n- **dedicated_server_node_pool** (Block List) (see below)\n- **image** (String) Default image for all nodes.\n- **ssh_key** (String) SSH key name for accessing deployed nodes.\n- **autoscaler** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--hetzner_provider--node_pool\"\u003e\u003c/a\u003e\n\n### `hetzner_provider.node_pool`\n\nList of node pools.\n\nRequired:\n\n- **name** (String)\n- **server_type** (String)\n\nOptional:\n\n- **labels** (Map of String) Labels to attach to nodes of a node pool.\n- **taint** (Block List) (see below)\n- **override_image** (String)\n- **min_size** (Number)\n- **max_size** (Number)\n\n\u003ca id=\"nestedblock--hetzner_provider--dedicated_server_node_pool\"\u003e\u003c/a\u003e\n\n### `hetzner_provider.dedicated_server_node_pool`\n\nNode pool that can configure dedicated Hetzner servers.\n\nRequired:\n\n- **name** (String)\n\nOptional:\n\n- **labels** (Map of String) Labels to attach to nodes of a node pool.\n- **taint** (Block List) (see below)\n\n\u003ca id=\"nestedblock--aws_provider\"\u003e\u003c/a\u003e\n\n### `aws_provider`\n\nRequired:\n\n- **region** (String) Region where the cluster nodes will live.\n- **skip_create_roles** (Boolean) If true, Control Plane will not create any roles.\n- **image** (Block List, Max: 1) (see below)\n- **deploy_role_arn** (String) Control Plane will set up the cluster by assuming this role.\n- **vpc_id** (String) The vpc where nodes will be deployed. Supports SSM.\n\nOptional:\n\n- **aws_tags** (Map of String) Extra tags to attach to all created objects.\n- **networking** (Block List, Max: 1) (see below)\n- **pre_install_script** (String) Optional shell script that will be run before K8S is installed. Supports SSM.\n- **key_pair** (String) Name of keyPair. Supports SSM\n- **disk_encryption_key_arn** (String) KMS key used to encrypt volumes. Supports SSM.\n- **security_group_ids** (List of String) Security groups to deploy nodes to. Security groups control if the cluster is multi-zone or single-zon.\n- **node_pool** (Block List) (see below)\n- **autoscaler** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--aws_provider--node_pool\"\u003e\u003c/a\u003e\n\n### `aws_provider.node_pool`\n\nList of node pools.\n\nRequired:\n\n- **name** (String)\n- **instance_types** (List of String)\n- **override_image** (Block List, Max: 1) (see below)\n- **subnet_ids** (List of String)\n\nOptional:\n\n- **labels** (Map of String) Labels to attach to nodes of a node pool.\n- **taint** (Block List) (see below)\n- **boot_disk_size** (Number) Size in GB.\n- **min_size** (Number)\n- **max_size** (Number)\n- **on_demand_base_capacity** (Number)\n- **on_demand_percentage_above_base_capacity** (Number)\n- **spot_allocation_strategy** (String)\n- **extra_security_group_ids** (List of String)\n\n\u003ca id=\"nestedblock--aws_provider--ami\"\u003e\u003c/a\u003e\n\n### `ami`\n\nDefault image for all nodes.\n\nRequired:\n\n\u003e **Note** Only one of the following listed below can be included.\n\n- **recommended** (String)\n- **exact** (String) Support SSM.\n\n\u003ca id=\"nestedblock--autoscaler\"\u003e\u003c/a\u003e\n\n### `autoscaler`\n\nOptional:\n\n- **expander** (List of String)\n- **unneeded_time** (String)\n- **unready_time** (String)\n- **utilization_threshold** (Float64)\n\n\u003ca id=\"nestedblock--firewall\"\u003e\u003c/a\u003e\n\n### `firewall`\n\nAllow-list.\n\nRequired:\n\n- **source_cidr** (String)\n\nOptional:\n\n- **description** (String)\n\n\u003ca id=\"nestedblock--add_ons\"\u003e\u003c/a\u003e\n\n### `add_ons`\n\nOptional:\n\n- **dashboard** (Boolean)\n- **azure_workload_identity** (Block List, Max: 1) (see below)\n- **aws_workload_identity** (Boolean)\n- **local_path_storage** (Boolean)\n- **metrics** (Block List, Max: 1) (see below)\n- **logs** (Block List, Max: 1) (see below)\n- **nvidia** (Block List, Max: 1) (see below)\n- **aws_efs** (Block List, Max: 1) (see below)\n- **aws_ecr** (Block List, Max: 1) (see below)\n- **aws_elb** (Block List, Max: 1) (see below)\n- **azure_acr** (Block List, Max: 1) (see below)\n- **sysbox** (Boolean)\n\n\u003ca id=\"nestedblock--add_ons--azure_workload_identity\"\u003e\u003c/a\u003e\n\n### `add_ons.azure_workload_identity`\n\nRequired:\n\n- **tenant_id** (String) Tenant ID to use for workload identity.\n\n\u003ca id=\"nestedblock--add_ons--metrics\"\u003e\u003c/a\u003e\n\n### `add_ons.metrics`\n\nOptional:\n\n- **kube_state** (Boolean) Enable kube-state metrics.\n- **core_dns** (Boolean) Enable scraping of core-dns service.\n- **kubelet** (Boolean) Enable scraping kubelet stats.\n- **api_server** (Boolean) Enable scraping apiserver stats.\n- **node_exporter** (Boolean) Enable collecting node-level stats (disk, network, filesystem, etc).\n- **cadvisor** (Boolean) Enable CNI-level container stats.\n- **scrape_annotated** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--add_ons--metrics--scrape-annotated\"\u003e\u003c/a\u003e\n\n### `add_ons.metrics.scrape-annotated`\n\nScrape pods annotated with prometheus.io/scrape=true.\n\nOptional:\n\n- **interval_seconds** (Number)\n- **include_namespaces** (String)\n- **exclude_namespaces** (String)\n- **retain_labels** (String)\n\n\u003ca id=\"nestedblock--add_ons--logs\"\u003e\u003c/a\u003e\n\n### `add_ons.logs`\n\nOptional:\n\n- **audit_enabled** (Boolean) Collect k8s audit log as log events.\n- **include_namespaces** (String)\n- **exclude_namespaces** (String)\n\n\u003ca id=\"nestedblock--add_ons--nvidia\"\u003e\u003c/a\u003e\n\n### `add_ons.nvidia`\n\nRequired:\n\n- **taint_gpu_nodes** (Boolean)\n\n\u003ca id=\"nestedblock--add_ons--aws--efs\"\u003e\u003c/a\u003e\n\n### `add_ons.aws_efs`\n\nRequired:\n\n- **role_arn** (String) Use this role for EFS interaction.\n\n\u003ca id=\"nestedblock--add_ons--aws--ecr\"\u003e\u003c/a\u003e\n\n### `add_ons.aws_ecr`\n\nRequired:\n\n- **role_arn** (String) Role to use when authorizing ECR pulls. Optional on AWS, in which case it will use the instance role to pull.\n\n\u003ca id=\"nestedblock--add_ons--aws--elb\"\u003e\u003c/a\u003e\n\n### `add_ons.aws_elb`\n\nRequired:\n\n- **role_arn** (String) Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.\n\n\u003ca id=\"nestedblock--add_ons--azure_acr\"\u003e\u003c/a\u003e\n\n### `add_ons.azure_acr`\n\nRequired:\n\n- **client_id** (String)\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the Mk8s.\n- **alias** (String) The alias name of the Mk8s.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n- **status** (Block List, Max: 1) (see below).\n\n\u003ca id=\"nestedblock--status\"\u003e\u003c/a\u003e\n\n### `status`\n\nStatus of the mk8s.\n\nRead-Only:\n\n- **oidc_provider_url** (String)\n- **server_url** (String)\n- **home_location** (String)\n- **add_ons** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--status--add_ons\"\u003e\u003c/a\u003e\n\n### `status.add_ons`\n\nRead-Only:\n\n- **dashboard** (Block List, Max: 1) (see below)\n- **aws_workload_identity** (Block List, Max: 1) (see below)\n- **metrics** (Block List, Max: 1) (see below)\n- **logs** (Block List, Max: 1) (see below)\n- **aws_ecr** (Block List, Max: 1) (see below)\n- **aws_efs** (Block List, Max: 1) (see below)\n- **aws_elb** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--status--add_ons--dashobard\"\u003e\u003c/a\u003e\n\n### `status.add_ons.dashboard`\n\nRead-Only:\n\n- **url** (String) Access to dashboard.\n\n\u003ca id=\"nestedblock--status--add_ons--aws_workload_identity\"\u003e\u003c/a\u003e\n\n### `status.add_ons.aws_workload_identity`\n\nRead-Only:\n\n- **oidc_provider_config** (Block List, Max: 1) (see below)\n- **trust_policy** (String)\n\n\u003ca id=\"nestedblock--status--add_ons--aws_workload_identity--oidc_provider_config\"\u003e\u003c/a\u003e\n\n### `status.add_ons.aws_workload_identity.oidc_provider_config`\n\nRead-Only:\n\n- **provider_url** (String)\n- **audience** (String)\n\n\u003ca id=\"nestedblock--status--add_ons--metrics\"\u003e\u003c/a\u003e\n\n### `status.add_ons.metrics`\n\nRead-Only:\n\n- **prometheus_endpoint** (String)\n- **remote_write_config** (String)\n\n\u003ca id=\"nestedblock--status--add_ons--logs\"\u003e\u003c/a\u003e\n\n### `status.add_ons.logs`\n\nRead-Only:\n\n- **loki_address** (String) Loki endpoint to query logs from.\n\n\u003ca id=\"nestedblock--status--add_ons--aws\"\u003e\u003c/a\u003e\n\n### `status.add_ons.aws`\n\nRead-Only:\n\n- **trust_policy** (String)\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n### Generic Provider\n\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.Mk8s;\nimport com.pulumi.cpln.Mk8sArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAzureAcrArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAzureWorkloadIdentityArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsLogsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsMetricsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsMetricsScrapeAnnotatedArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsNvidiaArgs;\nimport com.pulumi.cpln.inputs.Mk8sFirewallArgs;\nimport com.pulumi.cpln.inputs.Mk8sGenericProviderArgs;\nimport com.pulumi.cpln.inputs.Mk8sGenericProviderNetworkingArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var generic = new Mk8s(\"generic\", Mk8sArgs.builder()        \n            .addOns(Mk8sAddOnsArgs.builder()\n                .awsWorkloadIdentity(true)\n                .azureAcr(Mk8sAddOnsAzureAcrArgs.builder()\n                    .clientId(\"4e25b134-160b-4a9d-b392-13b381ced5ef\")\n                    .build())\n                .azureWorkloadIdentity(Mk8sAddOnsAzureWorkloadIdentityArgs.builder()\n                    .tenantId(\"7f43458a-a34e-4bfa-9e56-e2289e49c4ec\")\n                    .build())\n                .dashboard(true)\n                .localPathStorage(true)\n                .logs(Mk8sAddOnsLogsArgs.builder()\n                    .auditEnabled(true)\n                    .excludeNamespaces(\"^[a-z]$\")\n                    .includeNamespaces(\"^\\\\d+$\")\n                    .build())\n                .metrics(Mk8sAddOnsMetricsArgs.builder()\n                    .apiServer(true)\n                    .cadvisor(true)\n                    .coreDns(true)\n                    .kubeState(true)\n                    .kubelet(true)\n                    .nodeExporter(true)\n                    .scrapeAnnotated(Mk8sAddOnsMetricsScrapeAnnotatedArgs.builder()\n                        .excludeNamespaces(\"^[a-z]$\")\n                        .includeNamespaces(\"^\\\\d+$\")\n                        .intervalSeconds(30)\n                        .retainLabels(\"^\\\\w+$\")\n                        .build())\n                    .build())\n                .nvidia(Mk8sAddOnsNvidiaArgs.builder()\n                    .taintGpuNodes(true)\n                    .build())\n                .sysbox(true)\n                .build())\n            .description(\"demo-mk8s-generic-provider\")\n            .firewalls(Mk8sFirewallArgs.builder()\n                .description(\"hello world\")\n                .sourceCidr(\"192.168.1.255\")\n                .build())\n            .genericProvider(Mk8sGenericProviderArgs.builder()\n                .location(\"aws-eu-central-1\")\n                .networking(Mk8sGenericProviderNetworkingArgs.builder()\n                    .podNetwork(\"10.42.0.0/16\")\n                    .serviceNetwork(\"10.43.0.0/16\")\n                    .build())\n                .nodePools(Mk8sGenericProviderNodePoolArgs.builder()\n                    .labels(Map.of(\"hello\", \"world\"))\n                    .name(\"my-node-pool\")\n                    .taint(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference))\n                    .build())\n                .build())\n            .tags(Map.ofEntries(\n                Map.entry(\"acceptance_test\", \"true\"),\n                Map.entry(\"terraform_generated\", \"true\")\n            ))\n            .version(\"1.28.4\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  generic:\n    type: cpln:Mk8s\n    properties:\n      addOns:\n        awsWorkloadIdentity: true\n        azureAcr:\n          clientId: 4e25b134-160b-4a9d-b392-13b381ced5ef\n        azureWorkloadIdentity:\n          tenantId: 7f43458a-a34e-4bfa-9e56-e2289e49c4ec\n        dashboard: true\n        localPathStorage: true\n        logs:\n          auditEnabled: true\n          excludeNamespaces: ^[a-z]$\n          includeNamespaces: ^\\d+$\n        metrics:\n          apiServer: true\n          cadvisor: true\n          coreDns: true\n          kubeState: true\n          kubelet: true\n          nodeExporter: true\n          scrapeAnnotated:\n            excludeNamespaces: ^[a-z]$\n            includeNamespaces: ^\\d+$\n            intervalSeconds: 30\n            retainLabels: ^\\w+$\n        nvidia:\n          taintGpuNodes: true\n        sysbox: true\n      description: demo-mk8s-generic-provider\n      firewalls:\n        - description: hello world\n          sourceCidr: 192.168.1.255\n      genericProvider:\n        location: aws-eu-central-1\n        networking:\n          podNetwork: 10.42.0.0/16\n          serviceNetwork: 10.43.0.0/16\n        nodePools:\n          - labels:\n              hello: world\n            name: my-node-pool\n            taint:\n              - effect: NoSchedule\n                key: hello\n                value: world\n      tags:\n        acceptance_test: 'true'\n        terraform_generated: 'true'\n      version: 1.28.4\n```\n{{% /example %}}\n{{% example %}}\n### Hetzner Provider\n\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.Mk8s;\nimport com.pulumi.cpln.Mk8sArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAzureAcrArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAzureWorkloadIdentityArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsLogsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsMetricsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsMetricsScrapeAnnotatedArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsNvidiaArgs;\nimport com.pulumi.cpln.inputs.Mk8sFirewallArgs;\nimport com.pulumi.cpln.inputs.Mk8sHetznerProviderArgs;\nimport com.pulumi.cpln.inputs.Mk8sHetznerProviderAutoscalerArgs;\nimport com.pulumi.cpln.inputs.Mk8sHetznerProviderNetworkingArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var hetzner = new Mk8s(\"hetzner\", Mk8sArgs.builder()        \n            .addOns(Mk8sAddOnsArgs.builder()\n                .awsWorkloadIdentity(true)\n                .azureAcr(Mk8sAddOnsAzureAcrArgs.builder()\n                    .clientId(\"4e25b134-160b-4a9d-b392-13b381ced5ef\")\n                    .build())\n                .azureWorkloadIdentity(Mk8sAddOnsAzureWorkloadIdentityArgs.builder()\n                    .tenantId(\"7f43458a-a34e-4bfa-9e56-e2289e49c4ec\")\n                    .build())\n                .dashboard(true)\n                .localPathStorage(true)\n                .logs(Mk8sAddOnsLogsArgs.builder()\n                    .auditEnabled(true)\n                    .excludeNamespaces(\"^[a-z]$\")\n                    .includeNamespaces(\"^\\\\d+$\")\n                    .build())\n                .metrics(Mk8sAddOnsMetricsArgs.builder()\n                    .apiServer(true)\n                    .cadvisor(true)\n                    .coreDns(true)\n                    .kubeState(true)\n                    .kubelet(true)\n                    .nodeExporter(true)\n                    .scrapeAnnotated(Mk8sAddOnsMetricsScrapeAnnotatedArgs.builder()\n                        .excludeNamespaces(\"^[a-z]$\")\n                        .includeNamespaces(\"^\\\\d+$\")\n                        .intervalSeconds(30)\n                        .retainLabels(\"^\\\\w+$\")\n                        .build())\n                    .build())\n                .nvidia(Mk8sAddOnsNvidiaArgs.builder()\n                    .taintGpuNodes(true)\n                    .build())\n                .sysbox(true)\n                .build())\n            .description(\"demo-mk8s-hetzner-provider\")\n            .firewalls(Mk8sFirewallArgs.builder()\n                .description(\"hello world\")\n                .sourceCidr(\"192.168.1.255\")\n                .build())\n            .hetznerProvider(Mk8sHetznerProviderArgs.builder()\n                .autoscaler(Mk8sHetznerProviderAutoscalerArgs.builder()\n                    .expander(\"most-pods\")\n                    .unneededTime(\"10m\")\n                    .unreadyTime(\"20m\")\n                    .utilizationThreshold(0.7)\n                    .build())\n                .dedicatedServerNodePools(Mk8sHetznerProviderDedicatedServerNodePoolArgs.builder()\n                    .labels(Map.of(\"hello\", \"world\"))\n                    .name(\"my-node-pool\")\n                    .taint(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference))\n                    .build())\n                .hetznerLabels(Map.of(\"hello\", \"world\"))\n                .image(\"centos-7\")\n                .networkId(\"2808575\")\n                .networking(Mk8sHetznerProviderNetworkingArgs.builder()\n                    .podNetwork(\"10.42.0.0/16\")\n                    .serviceNetwork(\"10.43.0.0/16\")\n                    .build())\n                .nodePools(Mk8sHetznerProviderNodePoolArgs.builder()\n                    .labels(Map.of(\"hello\", \"world\"))\n                    .maxSize(0)\n                    .minSize(0)\n                    .name(\"my-hetzner-node-pool\")\n                    .overrideImage(\"debian-11\")\n                    .serverType(\"cx11\")\n                    .taint(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference))\n                    .build())\n                .preInstallScript(\"#! echo hello world\")\n                .region(\"fsn1\")\n                .sshKey(\"10925607\")\n                .tokenSecretLink(\"/org/terraform-test-org/secret/hetzner\")\n                .build())\n            .tags(Map.ofEntries(\n                Map.entry(\"acceptance_test\", \"true\"),\n                Map.entry(\"terraform_generated\", \"true\")\n            ))\n            .version(\"1.28.4\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  hetzner:\n    type: cpln:Mk8s\n    properties:\n      addOns:\n        awsWorkloadIdentity: true\n        azureAcr:\n          clientId: 4e25b134-160b-4a9d-b392-13b381ced5ef\n        azureWorkloadIdentity:\n          tenantId: 7f43458a-a34e-4bfa-9e56-e2289e49c4ec\n        dashboard: true\n        localPathStorage: true\n        logs:\n          auditEnabled: true\n          excludeNamespaces: ^[a-z]$\n          includeNamespaces: ^\\d+$\n        metrics:\n          apiServer: true\n          cadvisor: true\n          coreDns: true\n          kubeState: true\n          kubelet: true\n          nodeExporter: true\n          scrapeAnnotated:\n            excludeNamespaces: ^[a-z]$\n            includeNamespaces: ^\\d+$\n            intervalSeconds: 30\n            retainLabels: ^\\w+$\n        nvidia:\n          taintGpuNodes: true\n        sysbox: true\n      description: demo-mk8s-hetzner-provider\n      firewalls:\n        - description: hello world\n          sourceCidr: 192.168.1.255\n      hetznerProvider:\n        autoscaler:\n          expander:\n            - most-pods\n          unneededTime: 10m\n          unreadyTime: 20m\n          utilizationThreshold: 0.7\n        dedicatedServerNodePools:\n          - labels:\n              hello: world\n            name: my-node-pool\n            taint:\n              - effect: NoSchedule\n                key: hello\n                value: world\n        hetznerLabels:\n          hello: world\n        image: centos-7\n        networkId: '2808575'\n        networking:\n          podNetwork: 10.42.0.0/16\n          serviceNetwork: 10.43.0.0/16\n        nodePools:\n          - labels:\n              hello: world\n            maxSize: 0\n            minSize: 0\n            name: my-hetzner-node-pool\n            overrideImage: debian-11\n            serverType: cx11\n            taint:\n              - effect: NoSchedule\n                key: hello\n                value: world\n        preInstallScript: '#! echo hello world'\n        region: fsn1\n        sshKey: '10925607'\n        tokenSecretLink: /org/terraform-test-org/secret/hetzner\n      tags:\n        acceptance_test: 'true'\n        terraform_generated: 'true'\n      version: 1.28.4\n```\n{{% /example %}}\n{{% example %}}\n### AWS Provider\n\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.Mk8s;\nimport com.pulumi.cpln.Mk8sArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAwsEcrArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAwsEfsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAwsElbArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAzureAcrArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsAzureWorkloadIdentityArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsLogsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsMetricsArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsMetricsScrapeAnnotatedArgs;\nimport com.pulumi.cpln.inputs.Mk8sAddOnsNvidiaArgs;\nimport com.pulumi.cpln.inputs.Mk8sAwsProviderArgs;\nimport com.pulumi.cpln.inputs.Mk8sAwsProviderAutoscalerArgs;\nimport com.pulumi.cpln.inputs.Mk8sAwsProviderImageArgs;\nimport com.pulumi.cpln.inputs.Mk8sAwsProviderNetworkingArgs;\nimport com.pulumi.cpln.inputs.Mk8sFirewallArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var aws = new Mk8s(\"aws\", Mk8sArgs.builder()        \n            .addOns(Mk8sAddOnsArgs.builder()\n                .awsEcr(Mk8sAddOnsAwsEcrArgs.builder()\n                    .roleArn(\"arn:aws:iam::123456789012:role/aws-ecr-role\")\n                    .build())\n                .awsEfs(Mk8sAddOnsAwsEfsArgs.builder()\n                    .roleArn(\"arn:aws:iam::123456789012:role/aws-efs-role\")\n                    .build())\n                .awsElb(Mk8sAddOnsAwsElbArgs.builder()\n                    .roleArn(\"arn:aws:iam::123456789012:role/aws-elb-role\")\n                    .build())\n                .awsWorkloadIdentity(true)\n                .azureAcr(Mk8sAddOnsAzureAcrArgs.builder()\n                    .clientId(\"4e25b134-160b-4a9d-b392-13b381ced5ef\")\n                    .build())\n                .azureWorkloadIdentity(Mk8sAddOnsAzureWorkloadIdentityArgs.builder()\n                    .tenantId(\"7f43458a-a34e-4bfa-9e56-e2289e49c4ec\")\n                    .build())\n                .dashboard(true)\n                .localPathStorage(true)\n                .logs(Mk8sAddOnsLogsArgs.builder()\n                    .auditEnabled(true)\n                    .excludeNamespaces(\"^[a-z]$\")\n                    .includeNamespaces(\"^\\\\d+$\")\n                    .build())\n                .metrics(Mk8sAddOnsMetricsArgs.builder()\n                    .apiServer(true)\n                    .cadvisor(true)\n                    .coreDns(true)\n                    .kubeState(true)\n                    .kubelet(true)\n                    .nodeExporter(true)\n                    .scrapeAnnotated(Mk8sAddOnsMetricsScrapeAnnotatedArgs.builder()\n                        .excludeNamespaces(\"^[a-z]$\")\n                        .includeNamespaces(\"^\\\\d+$\")\n                        .intervalSeconds(30)\n                        .retainLabels(\"^\\\\w+$\")\n                        .build())\n                    .build())\n                .nvidia(Mk8sAddOnsNvidiaArgs.builder()\n                    .taintGpuNodes(true)\n                    .build())\n                .sysbox(true)\n                .build())\n            .awsProvider(Mk8sAwsProviderArgs.builder()\n                .autoscaler(Mk8sAwsProviderAutoscalerArgs.builder()\n                    .expander(\"most-pods\")\n                    .unneededTime(\"10m\")\n                    .unreadyTime(\"20m\")\n                    .utilizationThreshold(0.7)\n                    .build())\n                .awsTags(Map.of(\"hello\", \"world\"))\n                .deployRoleArn(\"arn:aws:iam::12345678901:role/cpln\")\n                .diskEncryptionKeyArn(\"arn:aws:kms:eu-central-1:12345678901:key/0a1bcd23-4567-8901-e2fg-3h4i5jk678lm\")\n                .image(Mk8sAwsProviderImageArgs.builder()\n                    .recommended(\"amazon/al2023\")\n                    .build())\n                .keyPair(\"cem_uzak\")\n                .networking(Mk8sAwsProviderNetworkingArgs.builder()\n                    .podNetwork(\"10.42.0.0/16\")\n                    .serviceNetwork(\"10.43.0.0/16\")\n                    .build())\n                .nodePools(Mk8sAwsProviderNodePoolArgs.builder()\n                    .bootDiskSize(20)\n                    .extraSecurityGroupIds(\"sg-031480aa7a1e6e38b\")\n                    .instanceTypes(\"t4g.nano\")\n                    .labels(Map.of(\"hello\", \"world\"))\n                    .maxSize(0)\n                    .minSize(0)\n                    .name(\"my-aws-node-pool\")\n                    .onDemandBaseCapacity(0)\n                    .onDemandPercentageAboveBaseCapacity(0)\n                    .overrideImage(Mk8sAwsProviderNodePoolOverrideImageArgs.builder()\n                        .exact(\"ami-123\")\n                        .build())\n                    .spotAllocationStrategy(\"lowest-price\")\n                    .subnetIds(\"subnet-0e564a042e2a45009\")\n                    .taint(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference))\n                    .build())\n                .preInstallScript(\"#! echo hello world\")\n                .region(\"eu-central-1\")\n                .securityGroupIds(\"sg-031480aa7a1e6e38b\")\n                .skipCreateRoles(false)\n                .vpcId(\"vpc-03105bd4dc058d3a8\")\n                .build())\n            .description(\"demo-mk8s-aws-provider\")\n            .firewalls(Mk8sFirewallArgs.builder()\n                .description(\"hello world\")\n                .sourceCidr(\"192.168.1.255\")\n                .build())\n            .tags(Map.ofEntries(\n                Map.entry(\"acceptance_test\", \"true\"),\n                Map.entry(\"terraform_generated\", \"true\")\n            ))\n            .version(\"1.28.4\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  aws:\n    type: cpln:Mk8s\n    properties:\n      addOns:\n        awsEcr:\n          roleArn: arn:aws:iam::123456789012:role/aws-ecr-role\n        awsEfs:\n          roleArn: arn:aws:iam::123456789012:role/aws-efs-role\n        awsElb:\n          roleArn: arn:aws:iam::123456789012:role/aws-elb-role\n        awsWorkloadIdentity: true\n        azureAcr:\n          clientId: 4e25b134-160b-4a9d-b392-13b381ced5ef\n        azureWorkloadIdentity:\n          tenantId: 7f43458a-a34e-4bfa-9e56-e2289e49c4ec\n        dashboard: true\n        localPathStorage: true\n        logs:\n          auditEnabled: true\n          excludeNamespaces: ^[a-z]$\n          includeNamespaces: ^\\d+$\n        metrics:\n          apiServer: true\n          cadvisor: true\n          coreDns: true\n          kubeState: true\n          kubelet: true\n          nodeExporter: true\n          scrapeAnnotated:\n            excludeNamespaces: ^[a-z]$\n            includeNamespaces: ^\\d+$\n            intervalSeconds: 30\n            retainLabels: ^\\w+$\n        nvidia:\n          taintGpuNodes: true\n        sysbox: true\n      awsProvider:\n        autoscaler:\n          expander:\n            - most-pods\n          unneededTime: 10m\n          unreadyTime: 20m\n          utilizationThreshold: 0.7\n        awsTags:\n          hello: world\n        deployRoleArn: arn:aws:iam::12345678901:role/cpln\n        diskEncryptionKeyArn: arn:aws:kms:eu-central-1:12345678901:key/0a1bcd23-4567-8901-e2fg-3h4i5jk678lm\n        image:\n          recommended: amazon/al2023\n        keyPair: cem_uzak\n        networking:\n          podNetwork: 10.42.0.0/16\n          serviceNetwork: 10.43.0.0/16\n        nodePools:\n          - bootDiskSize: 20\n            extraSecurityGroupIds:\n              - sg-031480aa7a1e6e38b\n            instanceTypes:\n              - t4g.nano\n            labels:\n              hello: world\n            maxSize: 0\n            minSize: 0\n            name: my-aws-node-pool\n            onDemandBaseCapacity: 0\n            onDemandPercentageAboveBaseCapacity: 0\n            overrideImage:\n              exact: ami-123\n            spotAllocationStrategy: lowest-price\n            subnetIds:\n              - subnet-0e564a042e2a45009\n            taint:\n              - effect: NoSchedule\n                key: hello\n                value: world\n        preInstallScript: '#! echo hello world'\n        region: eu-central-1\n        securityGroupIds:\n          - sg-031480aa7a1e6e38b\n        skipCreateRoles: false\n        vpcId: vpc-03105bd4dc058d3a8\n      description: demo-mk8s-aws-provider\n      firewalls:\n        - description: hello world\n          sourceCidr: 192.168.1.255\n      tags:\n        acceptance_test: 'true'\n        terraform_generated: 'true'\n      version: 1.28.4\n```\n{{% /example %}}\n{{% /examples %}}",
             "properties": {
                 "addOns": {
                     "$ref": "#/types/cpln:index/Mk8sAddOns:Mk8sAddOns"
@@ -4802,7 +4900,8 @@
                     "description": "The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be\nobtained from the `Org Management \u0026 Billing` page.\n"
                 },
                 "authConfig": {
-                    "$ref": "#/types/cpln:index/OrgAuthConfig:OrgAuthConfig"
+                    "$ref": "#/types/cpln:index/OrgAuthConfig:OrgAuthConfig",
+                    "description": "The configuration settings and parameters related to authentication within the org.\n"
                 },
                 "cplnId": {
                     "type": "string",
@@ -4826,6 +4925,9 @@
                 "observability": {
                     "$ref": "#/types/cpln:index/OrgObservability:OrgObservability",
                     "description": "The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.\n"
+                },
+                "security": {
+                    "$ref": "#/types/cpln:index/OrgSecurity:OrgSecurity"
                 },
                 "selfLink": {
                     "type": "string",
@@ -4863,7 +4965,8 @@
                     "description": "The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be\nobtained from the `Org Management \u0026 Billing` page.\n"
                 },
                 "authConfig": {
-                    "$ref": "#/types/cpln:index/OrgAuthConfig:OrgAuthConfig"
+                    "$ref": "#/types/cpln:index/OrgAuthConfig:OrgAuthConfig",
+                    "description": "The configuration settings and parameters related to authentication within the org.\n"
                 },
                 "description": {
                     "type": "string",
@@ -4879,6 +4982,9 @@
                 "observability": {
                     "$ref": "#/types/cpln:index/OrgObservability:OrgObservability",
                     "description": "The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.\n"
+                },
+                "security": {
+                    "$ref": "#/types/cpln:index/OrgSecurity:OrgSecurity"
                 },
                 "sessionTimeoutSeconds": {
                     "type": "integer",
@@ -4903,7 +5009,8 @@
                         "description": "The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be\nobtained from the `Org Management \u0026 Billing` page.\n"
                     },
                     "authConfig": {
-                        "$ref": "#/types/cpln:index/OrgAuthConfig:OrgAuthConfig"
+                        "$ref": "#/types/cpln:index/OrgAuthConfig:OrgAuthConfig",
+                        "description": "The configuration settings and parameters related to authentication within the org.\n"
                     },
                     "cplnId": {
                         "type": "string",
@@ -4927,6 +5034,9 @@
                     "observability": {
                         "$ref": "#/types/cpln:index/OrgObservability:OrgObservability",
                         "description": "The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.\n"
+                    },
+                    "security": {
+                        "$ref": "#/types/cpln:index/OrgSecurity:OrgSecurity"
                     },
                     "selfLink": {
                         "type": "string",
@@ -4988,7 +5098,8 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/OrgLoggingElasticLogging:OrgLoggingElasticLogging"
-                    }
+                    },
+                    "description": "For logging and analyzing data within an org using Elastic Logging.\n"
                 },
                 "fluentdLoggings": {
                     "type": "array",
@@ -5065,7 +5176,8 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/OrgLoggingElasticLogging:OrgLoggingElasticLogging"
-                    }
+                    },
+                    "description": "For logging and analyzing data within an org using Elastic Logging.\n"
                 },
                 "fluentdLoggings": {
                     "type": "array",
@@ -5135,7 +5247,8 @@
                         "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/OrgLoggingElasticLogging:OrgLoggingElasticLogging"
-                        }
+                        },
+                        "description": "For logging and analyzing data within an org using Elastic Logging.\n"
                     },
                     "fluentdLoggings": {
                         "type": "array",
@@ -5273,7 +5386,8 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/PolicyBinding:PolicyBinding"
-                    }
+                    },
+                    "description": "The association between a target kind and the bound permissions to service principals.\n"
                 },
                 "cplnId": {
                     "type": "string",
@@ -5322,7 +5436,8 @@
                     "description": "List of the targets this policy will be applied to. Not used if `target` is set to `all`.\n"
                 },
                 "targetQuery": {
-                    "$ref": "#/types/cpln:index/PolicyTargetQuery:PolicyTargetQuery"
+                    "$ref": "#/types/cpln:index/PolicyTargetQuery:PolicyTargetQuery",
+                    "description": "A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.\n"
                 }
             },
             "required": [
@@ -5337,7 +5452,8 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/PolicyBinding:PolicyBinding"
-                    }
+                    },
+                    "description": "The association between a target kind and the bound permissions to service principals.\n"
                 },
                 "description": {
                     "type": "string",
@@ -5376,7 +5492,8 @@
                     "description": "List of the targets this policy will be applied to. Not used if `target` is set to `all`.\n"
                 },
                 "targetQuery": {
-                    "$ref": "#/types/cpln:index/PolicyTargetQuery:PolicyTargetQuery"
+                    "$ref": "#/types/cpln:index/PolicyTargetQuery:PolicyTargetQuery",
+                    "description": "A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.\n"
                 }
             },
             "requiredInputs": [
@@ -5389,7 +5506,8 @@
                         "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/PolicyBinding:PolicyBinding"
-                        }
+                        },
+                        "description": "The association between a target kind and the bound permissions to service principals.\n"
                     },
                     "cplnId": {
                         "type": "string",
@@ -5440,7 +5558,8 @@
                         "description": "List of the targets this policy will be applied to. Not used if `target` is set to `all`.\n"
                     },
                     "targetQuery": {
-                        "$ref": "#/types/cpln:index/PolicyTargetQuery:PolicyTargetQuery"
+                        "$ref": "#/types/cpln:index/PolicyTargetQuery:PolicyTargetQuery",
+                        "description": "A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.\n"
                     }
                 },
                 "type": "object"
@@ -5881,7 +6000,8 @@
         "cpln:index/volumeSet:VolumeSet": {
             "properties": {
                 "autoscaling": {
-                    "$ref": "#/types/cpln:index/VolumeSetAutoscaling:VolumeSetAutoscaling"
+                    "$ref": "#/types/cpln:index/VolumeSetAutoscaling:VolumeSetAutoscaling",
+                    "description": "Automated adjustment of the volume set's capacity based on predefined metrics or conditions.\n"
                 },
                 "cplnId": {
                     "type": "string",
@@ -5916,7 +6036,8 @@
                     "description": "Full link to this resource. Can be referenced by other resources.\n"
                 },
                 "snapshots": {
-                    "$ref": "#/types/cpln:index/VolumeSetSnapshots:VolumeSetSnapshots"
+                    "$ref": "#/types/cpln:index/VolumeSetSnapshots:VolumeSetSnapshots",
+                    "description": "Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.\n"
                 },
                 "statuses": {
                     "type": "array",
@@ -5953,7 +6074,8 @@
             ],
             "inputProperties": {
                 "autoscaling": {
-                    "$ref": "#/types/cpln:index/VolumeSetAutoscaling:VolumeSetAutoscaling"
+                    "$ref": "#/types/cpln:index/VolumeSetAutoscaling:VolumeSetAutoscaling",
+                    "description": "Automated adjustment of the volume set's capacity based on predefined metrics or conditions.\n"
                 },
                 "description": {
                     "type": "string",
@@ -5984,7 +6106,8 @@
                     "willReplaceOnChanges": true
                 },
                 "snapshots": {
-                    "$ref": "#/types/cpln:index/VolumeSetSnapshots:VolumeSetSnapshots"
+                    "$ref": "#/types/cpln:index/VolumeSetSnapshots:VolumeSetSnapshots",
+                    "description": "Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.\n"
                 },
                 "storageClassSuffix": {
                     "type": "string",
@@ -6007,7 +6130,8 @@
                 "description": "Input properties used for looking up and filtering VolumeSet resources.\n",
                 "properties": {
                     "autoscaling": {
-                        "$ref": "#/types/cpln:index/VolumeSetAutoscaling:VolumeSetAutoscaling"
+                        "$ref": "#/types/cpln:index/VolumeSetAutoscaling:VolumeSetAutoscaling",
+                        "description": "Automated adjustment of the volume set's capacity based on predefined metrics or conditions.\n"
                     },
                     "cplnId": {
                         "type": "string",
@@ -6046,7 +6170,8 @@
                         "description": "Full link to this resource. Can be referenced by other resources.\n"
                     },
                     "snapshots": {
-                        "$ref": "#/types/cpln:index/VolumeSetSnapshots:VolumeSetSnapshots"
+                        "$ref": "#/types/cpln:index/VolumeSetSnapshots:VolumeSetSnapshots",
+                        "description": "Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.\n"
                     },
                     "statuses": {
                         "type": "array",
@@ -6080,7 +6205,8 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/WorkloadContainer:WorkloadContainer"
-                    }
+                    },
+                    "description": "An isolated and lightweight runtime environment that encapsulates an application and its dependencies.\n"
                 },
                 "cplnId": {
                     "type": "string",
@@ -6117,13 +6243,16 @@
                     "description": "Name of the Workload.\n"
                 },
                 "options": {
-                    "$ref": "#/types/cpln:index/WorkloadOptions:WorkloadOptions"
+                    "$ref": "#/types/cpln:index/WorkloadOptions:WorkloadOptions",
+                    "description": "Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and\ncharacteristics of the workload.\n"
                 },
                 "rolloutOptions": {
-                    "$ref": "#/types/cpln:index/WorkloadRolloutOptions:WorkloadRolloutOptions"
+                    "$ref": "#/types/cpln:index/WorkloadRolloutOptions:WorkloadRolloutOptions",
+                    "description": "Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable\nreplicas, surge replicas, and scaling policies.\n"
                 },
                 "securityOptions": {
-                    "$ref": "#/types/cpln:index/WorkloadSecurityOptions:WorkloadSecurityOptions"
+                    "$ref": "#/types/cpln:index/WorkloadSecurityOptions:WorkloadSecurityOptions",
+                    "description": "Allows for the configuration of the `file system group id`\n"
                 },
                 "selfLink": {
                     "type": "string",
@@ -6170,7 +6299,8 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/types/cpln:index/WorkloadContainer:WorkloadContainer"
-                    }
+                    },
+                    "description": "An isolated and lightweight runtime environment that encapsulates an application and its dependencies.\n"
                 },
                 "description": {
                     "type": "string",
@@ -6205,13 +6335,16 @@
                     "willReplaceOnChanges": true
                 },
                 "options": {
-                    "$ref": "#/types/cpln:index/WorkloadOptions:WorkloadOptions"
+                    "$ref": "#/types/cpln:index/WorkloadOptions:WorkloadOptions",
+                    "description": "Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and\ncharacteristics of the workload.\n"
                 },
                 "rolloutOptions": {
-                    "$ref": "#/types/cpln:index/WorkloadRolloutOptions:WorkloadRolloutOptions"
+                    "$ref": "#/types/cpln:index/WorkloadRolloutOptions:WorkloadRolloutOptions",
+                    "description": "Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable\nreplicas, surge replicas, and scaling policies.\n"
                 },
                 "securityOptions": {
-                    "$ref": "#/types/cpln:index/WorkloadSecurityOptions:WorkloadSecurityOptions"
+                    "$ref": "#/types/cpln:index/WorkloadSecurityOptions:WorkloadSecurityOptions",
+                    "description": "Allows for the configuration of the `file system group id`\n"
                 },
                 "sidecar": {
                     "$ref": "#/types/cpln:index/WorkloadSidecar:WorkloadSidecar"
@@ -6246,7 +6379,8 @@
                         "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/WorkloadContainer:WorkloadContainer"
-                        }
+                        },
+                        "description": "An isolated and lightweight runtime environment that encapsulates an application and its dependencies.\n"
                     },
                     "cplnId": {
                         "type": "string",
@@ -6285,13 +6419,16 @@
                         "willReplaceOnChanges": true
                     },
                     "options": {
-                        "$ref": "#/types/cpln:index/WorkloadOptions:WorkloadOptions"
+                        "$ref": "#/types/cpln:index/WorkloadOptions:WorkloadOptions",
+                        "description": "Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and\ncharacteristics of the workload.\n"
                     },
                     "rolloutOptions": {
-                        "$ref": "#/types/cpln:index/WorkloadRolloutOptions:WorkloadRolloutOptions"
+                        "$ref": "#/types/cpln:index/WorkloadRolloutOptions:WorkloadRolloutOptions",
+                        "description": "Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable\nreplicas, surge replicas, and scaling policies.\n"
                     },
                     "securityOptions": {
-                        "$ref": "#/types/cpln:index/WorkloadSecurityOptions:WorkloadSecurityOptions"
+                        "$ref": "#/types/cpln:index/WorkloadSecurityOptions:WorkloadSecurityOptions",
+                        "description": "Allows for the configuration of the `file system group id`\n"
                     },
                     "selfLink": {
                         "type": "string",
