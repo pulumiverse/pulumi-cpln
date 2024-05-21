@@ -15,43 +15,47 @@ __all__ = ['DomainRouteArgs', 'DomainRoute']
 class DomainRouteArgs:
     def __init__(__self__, *,
                  domain_link: pulumi.Input[str],
-                 prefix: pulumi.Input[str],
                  workload_link: pulumi.Input[str],
                  domain_port: Optional[pulumi.Input[int]] = None,
                  host_prefix: Optional[pulumi.Input[str]] = None,
                  port: Optional[pulumi.Input[int]] = None,
+                 prefix: Optional[pulumi.Input[str]] = None,
+                 regex: Optional[pulumi.Input[str]] = None,
                  replace_prefix: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a DomainRoute resource.
         :param pulumi.Input[str] domain_link: The self link of the domain to add the route to.
-        :param pulumi.Input[str] prefix: The path will match any unmatched path prefixes for the subdomain.
         :param pulumi.Input[str] workload_link: The link of the workload to map the prefix to.
         :param pulumi.Input[int] domain_port: The port the route corresponds to. Default: 443
         :param pulumi.Input[str] host_prefix: This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
                target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
                Slack or at support@controlplane.com for additional details.
         :param pulumi.Input[int] port: For the linked workload, the port to route traffic to.
+        :param pulumi.Input[str] prefix: The path will match any unmatched path prefixes for the subdomain.
+        :param pulumi.Input[str] regex: Used to match URI paths. Uses the google re2 regex syntax.
         :param pulumi.Input[str] replace_prefix: A path prefix can be configured to be replaced when forwarding the request to the Workload.
         """
         DomainRouteArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             domain_link=domain_link,
-            prefix=prefix,
             workload_link=workload_link,
             domain_port=domain_port,
             host_prefix=host_prefix,
             port=port,
+            prefix=prefix,
+            regex=regex,
             replace_prefix=replace_prefix,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
              domain_link: pulumi.Input[str],
-             prefix: pulumi.Input[str],
              workload_link: pulumi.Input[str],
              domain_port: Optional[pulumi.Input[int]] = None,
              host_prefix: Optional[pulumi.Input[str]] = None,
              port: Optional[pulumi.Input[int]] = None,
+             prefix: Optional[pulumi.Input[str]] = None,
+             regex: Optional[pulumi.Input[str]] = None,
              replace_prefix: Optional[pulumi.Input[str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -67,7 +71,6 @@ class DomainRouteArgs:
             replace_prefix = kwargs['replacePrefix']
 
         _setter("domain_link", domain_link)
-        _setter("prefix", prefix)
         _setter("workload_link", workload_link)
         if domain_port is not None:
             _setter("domain_port", domain_port)
@@ -75,6 +78,10 @@ class DomainRouteArgs:
             _setter("host_prefix", host_prefix)
         if port is not None:
             _setter("port", port)
+        if prefix is not None:
+            _setter("prefix", prefix)
+        if regex is not None:
+            _setter("regex", regex)
         if replace_prefix is not None:
             _setter("replace_prefix", replace_prefix)
 
@@ -89,18 +96,6 @@ class DomainRouteArgs:
     @domain_link.setter
     def domain_link(self, value: pulumi.Input[str]):
         pulumi.set(self, "domain_link", value)
-
-    @property
-    @pulumi.getter
-    def prefix(self) -> pulumi.Input[str]:
-        """
-        The path will match any unmatched path prefixes for the subdomain.
-        """
-        return pulumi.get(self, "prefix")
-
-    @prefix.setter
-    def prefix(self, value: pulumi.Input[str]):
-        pulumi.set(self, "prefix", value)
 
     @property
     @pulumi.getter(name="workloadLink")
@@ -153,6 +148,30 @@ class DomainRouteArgs:
         pulumi.set(self, "port", value)
 
     @property
+    @pulumi.getter
+    def prefix(self) -> Optional[pulumi.Input[str]]:
+        """
+        The path will match any unmatched path prefixes for the subdomain.
+        """
+        return pulumi.get(self, "prefix")
+
+    @prefix.setter
+    def prefix(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "prefix", value)
+
+    @property
+    @pulumi.getter
+    def regex(self) -> Optional[pulumi.Input[str]]:
+        """
+        Used to match URI paths. Uses the google re2 regex syntax.
+        """
+        return pulumi.get(self, "regex")
+
+    @regex.setter
+    def regex(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "regex", value)
+
+    @property
     @pulumi.getter(name="replacePrefix")
     def replace_prefix(self) -> Optional[pulumi.Input[str]]:
         """
@@ -173,6 +192,7 @@ class _DomainRouteState:
                  host_prefix: Optional[pulumi.Input[str]] = None,
                  port: Optional[pulumi.Input[int]] = None,
                  prefix: Optional[pulumi.Input[str]] = None,
+                 regex: Optional[pulumi.Input[str]] = None,
                  replace_prefix: Optional[pulumi.Input[str]] = None,
                  workload_link: Optional[pulumi.Input[str]] = None):
         """
@@ -184,6 +204,7 @@ class _DomainRouteState:
                Slack or at support@controlplane.com for additional details.
         :param pulumi.Input[int] port: For the linked workload, the port to route traffic to.
         :param pulumi.Input[str] prefix: The path will match any unmatched path prefixes for the subdomain.
+        :param pulumi.Input[str] regex: Used to match URI paths. Uses the google re2 regex syntax.
         :param pulumi.Input[str] replace_prefix: A path prefix can be configured to be replaced when forwarding the request to the Workload.
         :param pulumi.Input[str] workload_link: The link of the workload to map the prefix to.
         """
@@ -194,6 +215,7 @@ class _DomainRouteState:
             host_prefix=host_prefix,
             port=port,
             prefix=prefix,
+            regex=regex,
             replace_prefix=replace_prefix,
             workload_link=workload_link,
         )
@@ -205,6 +227,7 @@ class _DomainRouteState:
              host_prefix: Optional[pulumi.Input[str]] = None,
              port: Optional[pulumi.Input[int]] = None,
              prefix: Optional[pulumi.Input[str]] = None,
+             regex: Optional[pulumi.Input[str]] = None,
              replace_prefix: Optional[pulumi.Input[str]] = None,
              workload_link: Optional[pulumi.Input[str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -230,6 +253,8 @@ class _DomainRouteState:
             _setter("port", port)
         if prefix is not None:
             _setter("prefix", prefix)
+        if regex is not None:
+            _setter("regex", regex)
         if replace_prefix is not None:
             _setter("replace_prefix", replace_prefix)
         if workload_link is not None:
@@ -298,6 +323,18 @@ class _DomainRouteState:
         pulumi.set(self, "prefix", value)
 
     @property
+    @pulumi.getter
+    def regex(self) -> Optional[pulumi.Input[str]]:
+        """
+        Used to match URI paths. Uses the google re2 regex syntax.
+        """
+        return pulumi.get(self, "regex")
+
+    @regex.setter
+    def regex(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "regex", value)
+
+    @property
     @pulumi.getter(name="replacePrefix")
     def replace_prefix(self) -> Optional[pulumi.Input[str]]:
         """
@@ -332,6 +369,7 @@ class DomainRoute(pulumi.CustomResource):
                  host_prefix: Optional[pulumi.Input[str]] = None,
                  port: Optional[pulumi.Input[int]] = None,
                  prefix: Optional[pulumi.Input[str]] = None,
+                 regex: Optional[pulumi.Input[str]] = None,
                  replace_prefix: Optional[pulumi.Input[str]] = None,
                  workload_link: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -346,6 +384,7 @@ class DomainRoute(pulumi.CustomResource):
                Slack or at support@controlplane.com for additional details.
         :param pulumi.Input[int] port: For the linked workload, the port to route traffic to.
         :param pulumi.Input[str] prefix: The path will match any unmatched path prefixes for the subdomain.
+        :param pulumi.Input[str] regex: Used to match URI paths. Uses the google re2 regex syntax.
         :param pulumi.Input[str] replace_prefix: A path prefix can be configured to be replaced when forwarding the request to the Workload.
         :param pulumi.Input[str] workload_link: The link of the workload to map the prefix to.
         """
@@ -381,6 +420,7 @@ class DomainRoute(pulumi.CustomResource):
                  host_prefix: Optional[pulumi.Input[str]] = None,
                  port: Optional[pulumi.Input[int]] = None,
                  prefix: Optional[pulumi.Input[str]] = None,
+                 regex: Optional[pulumi.Input[str]] = None,
                  replace_prefix: Optional[pulumi.Input[str]] = None,
                  workload_link: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -398,9 +438,8 @@ class DomainRoute(pulumi.CustomResource):
             __props__.__dict__["domain_port"] = domain_port
             __props__.__dict__["host_prefix"] = host_prefix
             __props__.__dict__["port"] = port
-            if prefix is None and not opts.urn:
-                raise TypeError("Missing required property 'prefix'")
             __props__.__dict__["prefix"] = prefix
+            __props__.__dict__["regex"] = regex
             __props__.__dict__["replace_prefix"] = replace_prefix
             if workload_link is None and not opts.urn:
                 raise TypeError("Missing required property 'workload_link'")
@@ -420,6 +459,7 @@ class DomainRoute(pulumi.CustomResource):
             host_prefix: Optional[pulumi.Input[str]] = None,
             port: Optional[pulumi.Input[int]] = None,
             prefix: Optional[pulumi.Input[str]] = None,
+            regex: Optional[pulumi.Input[str]] = None,
             replace_prefix: Optional[pulumi.Input[str]] = None,
             workload_link: Optional[pulumi.Input[str]] = None) -> 'DomainRoute':
         """
@@ -436,6 +476,7 @@ class DomainRoute(pulumi.CustomResource):
                Slack or at support@controlplane.com for additional details.
         :param pulumi.Input[int] port: For the linked workload, the port to route traffic to.
         :param pulumi.Input[str] prefix: The path will match any unmatched path prefixes for the subdomain.
+        :param pulumi.Input[str] regex: Used to match URI paths. Uses the google re2 regex syntax.
         :param pulumi.Input[str] replace_prefix: A path prefix can be configured to be replaced when forwarding the request to the Workload.
         :param pulumi.Input[str] workload_link: The link of the workload to map the prefix to.
         """
@@ -448,6 +489,7 @@ class DomainRoute(pulumi.CustomResource):
         __props__.__dict__["host_prefix"] = host_prefix
         __props__.__dict__["port"] = port
         __props__.__dict__["prefix"] = prefix
+        __props__.__dict__["regex"] = regex
         __props__.__dict__["replace_prefix"] = replace_prefix
         __props__.__dict__["workload_link"] = workload_link
         return DomainRoute(resource_name, opts=opts, __props__=__props__)
@@ -488,11 +530,19 @@ class DomainRoute(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def prefix(self) -> pulumi.Output[str]:
+    def prefix(self) -> pulumi.Output[Optional[str]]:
         """
         The path will match any unmatched path prefixes for the subdomain.
         """
         return pulumi.get(self, "prefix")
+
+    @property
+    @pulumi.getter
+    def regex(self) -> pulumi.Output[Optional[str]]:
+        """
+        Used to match URI paths. Uses the google re2 regex syntax.
+        """
+        return pulumi.get(self, "regex")
 
     @property
     @pulumi.getter(name="replacePrefix")

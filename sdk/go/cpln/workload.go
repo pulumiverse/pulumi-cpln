@@ -16,6 +16,7 @@ import (
 type Workload struct {
 	pulumi.CustomResourceState
 
+	// An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
 	Containers WorkloadContainerArrayOutput `pulumi:"containers"`
 	// The ID, in GUID format, of the Workload.
 	CplnId pulumi.StringOutput `pulumi:"cplnId"`
@@ -32,9 +33,14 @@ type Workload struct {
 	Job          WorkloadJobPtrOutput           `pulumi:"job"`
 	LocalOptions WorkloadLocalOptionArrayOutput `pulumi:"localOptions"`
 	// Name of the Workload.
-	Name            pulumi.StringOutput              `pulumi:"name"`
-	Options         WorkloadOptionsOutput            `pulumi:"options"`
-	RolloutOptions  WorkloadRolloutOptionsPtrOutput  `pulumi:"rolloutOptions"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+	// characteristics of the workload.
+	Options WorkloadOptionsOutput `pulumi:"options"`
+	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+	// replicas, surge replicas, and scaling policies.
+	RolloutOptions WorkloadRolloutOptionsPtrOutput `pulumi:"rolloutOptions"`
+	// Allows for the configuration of the `file system group id`
 	SecurityOptions WorkloadSecurityOptionsPtrOutput `pulumi:"securityOptions"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringOutput      `pulumi:"selfLink"`
@@ -92,6 +98,7 @@ func GetWorkload(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Workload resources.
 type workloadState struct {
+	// An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
 	Containers []WorkloadContainer `pulumi:"containers"`
 	// The ID, in GUID format, of the Workload.
 	CplnId *string `pulumi:"cplnId"`
@@ -108,9 +115,14 @@ type workloadState struct {
 	Job          *WorkloadJob          `pulumi:"job"`
 	LocalOptions []WorkloadLocalOption `pulumi:"localOptions"`
 	// Name of the Workload.
-	Name            *string                  `pulumi:"name"`
-	Options         *WorkloadOptions         `pulumi:"options"`
-	RolloutOptions  *WorkloadRolloutOptions  `pulumi:"rolloutOptions"`
+	Name *string `pulumi:"name"`
+	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+	// characteristics of the workload.
+	Options *WorkloadOptions `pulumi:"options"`
+	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+	// replicas, surge replicas, and scaling policies.
+	RolloutOptions *WorkloadRolloutOptions `pulumi:"rolloutOptions"`
+	// Allows for the configuration of the `file system group id`
 	SecurityOptions *WorkloadSecurityOptions `pulumi:"securityOptions"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink *string          `pulumi:"selfLink"`
@@ -127,6 +139,7 @@ type workloadState struct {
 }
 
 type WorkloadState struct {
+	// An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
 	Containers WorkloadContainerArrayInput
 	// The ID, in GUID format, of the Workload.
 	CplnId pulumi.StringPtrInput
@@ -143,9 +156,14 @@ type WorkloadState struct {
 	Job          WorkloadJobPtrInput
 	LocalOptions WorkloadLocalOptionArrayInput
 	// Name of the Workload.
-	Name            pulumi.StringPtrInput
-	Options         WorkloadOptionsPtrInput
-	RolloutOptions  WorkloadRolloutOptionsPtrInput
+	Name pulumi.StringPtrInput
+	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+	// characteristics of the workload.
+	Options WorkloadOptionsPtrInput
+	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+	// replicas, surge replicas, and scaling policies.
+	RolloutOptions WorkloadRolloutOptionsPtrInput
+	// Allows for the configuration of the `file system group id`
 	SecurityOptions WorkloadSecurityOptionsPtrInput
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringPtrInput
@@ -166,6 +184,7 @@ func (WorkloadState) ElementType() reflect.Type {
 }
 
 type workloadArgs struct {
+	// An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
 	Containers []WorkloadContainer `pulumi:"containers"`
 	// Description of the Workload.
 	Description *string `pulumi:"description"`
@@ -180,9 +199,14 @@ type workloadArgs struct {
 	Job          *WorkloadJob          `pulumi:"job"`
 	LocalOptions []WorkloadLocalOption `pulumi:"localOptions"`
 	// Name of the Workload.
-	Name            *string                  `pulumi:"name"`
-	Options         WorkloadOptions          `pulumi:"options"`
-	RolloutOptions  *WorkloadRolloutOptions  `pulumi:"rolloutOptions"`
+	Name *string `pulumi:"name"`
+	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+	// characteristics of the workload.
+	Options WorkloadOptions `pulumi:"options"`
+	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+	// replicas, surge replicas, and scaling policies.
+	RolloutOptions *WorkloadRolloutOptions `pulumi:"rolloutOptions"`
+	// Allows for the configuration of the `file system group id`
 	SecurityOptions *WorkloadSecurityOptions `pulumi:"securityOptions"`
 	Sidecar         *WorkloadSidecar         `pulumi:"sidecar"`
 	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
@@ -196,6 +220,7 @@ type workloadArgs struct {
 
 // The set of arguments for constructing a Workload resource.
 type WorkloadArgs struct {
+	// An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
 	Containers WorkloadContainerArrayInput
 	// Description of the Workload.
 	Description pulumi.StringPtrInput
@@ -210,9 +235,14 @@ type WorkloadArgs struct {
 	Job          WorkloadJobPtrInput
 	LocalOptions WorkloadLocalOptionArrayInput
 	// Name of the Workload.
-	Name            pulumi.StringPtrInput
-	Options         WorkloadOptionsInput
-	RolloutOptions  WorkloadRolloutOptionsPtrInput
+	Name pulumi.StringPtrInput
+	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+	// characteristics of the workload.
+	Options WorkloadOptionsInput
+	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+	// replicas, surge replicas, and scaling policies.
+	RolloutOptions WorkloadRolloutOptionsPtrInput
+	// Allows for the configuration of the `file system group id`
 	SecurityOptions WorkloadSecurityOptionsPtrInput
 	Sidecar         WorkloadSidecarPtrInput
 	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
@@ -335,6 +365,7 @@ func (o WorkloadOutput) ToOutput(ctx context.Context) pulumix.Output[*Workload] 
 	}
 }
 
+// An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
 func (o WorkloadOutput) Containers() WorkloadContainerArrayOutput {
 	return o.ApplyT(func(v *Workload) WorkloadContainerArrayOutput { return v.Containers }).(WorkloadContainerArrayOutput)
 }
@@ -379,14 +410,19 @@ func (o WorkloadOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+// characteristics of the workload.
 func (o WorkloadOutput) Options() WorkloadOptionsOutput {
 	return o.ApplyT(func(v *Workload) WorkloadOptionsOutput { return v.Options }).(WorkloadOptionsOutput)
 }
 
+// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+// replicas, surge replicas, and scaling policies.
 func (o WorkloadOutput) RolloutOptions() WorkloadRolloutOptionsPtrOutput {
 	return o.ApplyT(func(v *Workload) WorkloadRolloutOptionsPtrOutput { return v.RolloutOptions }).(WorkloadRolloutOptionsPtrOutput)
 }
 
+// Allows for the configuration of the `file system group id`
 func (o WorkloadOutput) SecurityOptions() WorkloadSecurityOptionsPtrOutput {
 	return o.ApplyT(func(v *Workload) WorkloadSecurityOptionsPtrOutput { return v.SecurityOptions }).(WorkloadSecurityOptionsPtrOutput)
 }

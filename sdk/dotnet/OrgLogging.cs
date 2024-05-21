@@ -40,6 +40,9 @@ namespace Pulumiverse.Cpln
         [Output("description")]
         public Output<string> Description { get; private set; } = null!;
 
+        /// <summary>
+        /// For logging and analyzing data within an org using Elastic Logging.
+        /// </summary>
         [Output("elasticLoggings")]
         public Output<ImmutableArray<Outputs.OrgLoggingElasticLogging>> ElasticLoggings { get; private set; } = null!;
 
@@ -157,6 +160,10 @@ namespace Pulumiverse.Cpln
 
         [Input("elasticLoggings")]
         private InputList<Inputs.OrgLoggingElasticLoggingArgs>? _elasticLoggings;
+
+        /// <summary>
+        /// For logging and analyzing data within an org using Elastic Logging.
+        /// </summary>
         public InputList<Inputs.OrgLoggingElasticLoggingArgs> ElasticLoggings
         {
             get => _elasticLoggings ?? (_elasticLoggings = new InputList<Inputs.OrgLoggingElasticLoggingArgs>());
@@ -265,6 +272,10 @@ namespace Pulumiverse.Cpln
 
         [Input("elasticLoggings")]
         private InputList<Inputs.OrgLoggingElasticLoggingGetArgs>? _elasticLoggings;
+
+        /// <summary>
+        /// For logging and analyzing data within an org using Elastic Logging.
+        /// </summary>
         public InputList<Inputs.OrgLoggingElasticLoggingGetArgs> ElasticLoggings
         {
             get => _elasticLoggings ?? (_elasticLoggings = new InputList<Inputs.OrgLoggingElasticLoggingGetArgs>());

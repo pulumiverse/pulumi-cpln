@@ -27,6 +27,14 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("firewallId")]
         public Input<string>? FirewallId { get; set; }
 
+        [Input("hetznerLabels")]
+        private InputMap<string>? _hetznerLabels;
+        public InputMap<string> HetznerLabels
+        {
+            get => _hetznerLabels ?? (_hetznerLabels = new InputMap<string>());
+            set => _hetznerLabels = value;
+        }
+
         [Input("image")]
         public Input<string>? Image { get; set; }
 

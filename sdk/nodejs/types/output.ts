@@ -361,6 +361,7 @@ export interface Mk8sAddOns {
     logs?: outputs.Mk8sAddOnsLogs;
     metrics?: outputs.Mk8sAddOnsMetrics;
     nvidia?: outputs.Mk8sAddOnsNvidia;
+    sysbox?: boolean;
 }
 
 export interface Mk8sAddOnsAwsEcr {
@@ -412,6 +413,7 @@ export interface Mk8sAddOnsNvidia {
 
 export interface Mk8sAwsProvider {
     autoscaler?: outputs.Mk8sAwsProviderAutoscaler;
+    awsTags?: {[key: string]: string};
     deployRoleArn: string;
     diskEncryptionKeyArn?: string;
     image: outputs.Mk8sAwsProviderImage;
@@ -501,6 +503,7 @@ export interface Mk8sHetznerProvider {
     autoscaler?: outputs.Mk8sHetznerProviderAutoscaler;
     dedicatedServerNodePools?: outputs.Mk8sHetznerProviderDedicatedServerNodePool[];
     firewallId?: string;
+    hetznerLabels?: {[key: string]: string};
     image?: string;
     networkId: string;
     networking?: outputs.Mk8sHetznerProviderNetworking;
@@ -693,6 +696,22 @@ export interface OrgObservability {
     logsRetentionDays?: number;
     metricsRetentionDays?: number;
     tracesRetentionDays?: number;
+}
+
+export interface OrgSecurity {
+    threatDetection?: outputs.OrgSecurityThreatDetection;
+}
+
+export interface OrgSecurityThreatDetection {
+    enabled?: boolean;
+    minimumSeverity?: string;
+    syslog?: outputs.OrgSecurityThreatDetectionSyslog;
+}
+
+export interface OrgSecurityThreatDetectionSyslog {
+    host?: string;
+    port: number;
+    transport?: string;
 }
 
 export interface OrgStatus {

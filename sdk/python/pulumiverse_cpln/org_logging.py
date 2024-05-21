@@ -29,6 +29,7 @@ class OrgLoggingArgs:
         The set of arguments for constructing a OrgLogging resource.
         :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingCoralogixLoggingArgs']]] coralogix_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
         :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingDatadogLoggingArgs']]] datadog_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+        :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingElasticLoggingArgs']]] elastic_loggings: For logging and analyzing data within an org using Elastic Logging.
         :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingLogzioLoggingArgs']]] logzio_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
         :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]] s3_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
         """
@@ -132,6 +133,9 @@ class OrgLoggingArgs:
     @property
     @pulumi.getter(name="elasticLoggings")
     def elastic_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingElasticLoggingArgs']]]]:
+        """
+        For logging and analyzing data within an org using Elastic Logging.
+        """
         return pulumi.get(self, "elastic_loggings")
 
     @elastic_loggings.setter
@@ -212,6 +216,7 @@ class _OrgLoggingState:
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the org.
         :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingDatadogLoggingArgs']]] datadog_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
         :param pulumi.Input[str] description: The description of org.
+        :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingElasticLoggingArgs']]] elastic_loggings: For logging and analyzing data within an org using Elastic Logging.
         :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingLogzioLoggingArgs']]] logzio_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
         :param pulumi.Input[str] name: The name of the org.
         :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]] s3_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
@@ -359,6 +364,9 @@ class _OrgLoggingState:
     @property
     @pulumi.getter(name="elasticLoggings")
     def elastic_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingElasticLoggingArgs']]]]:
+        """
+        For logging and analyzing data within an org using Elastic Logging.
+        """
         return pulumi.get(self, "elastic_loggings")
 
     @elastic_loggings.setter
@@ -462,6 +470,7 @@ class OrgLogging(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingCoralogixLoggingArgs']]]] coralogix_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingDatadogLoggingArgs']]]] datadog_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingElasticLoggingArgs']]]] elastic_loggings: For logging and analyzing data within an org using Elastic Logging.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingLogzioLoggingArgs']]]] logzio_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingS3LoggingArgs']]]] s3_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
         """
@@ -557,6 +566,7 @@ class OrgLogging(pulumi.CustomResource):
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the org.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingDatadogLoggingArgs']]]] datadog_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
         :param pulumi.Input[str] description: The description of org.
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingElasticLoggingArgs']]]] elastic_loggings: For logging and analyzing data within an org using Elastic Logging.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingLogzioLoggingArgs']]]] logzio_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
         :param pulumi.Input[str] name: The name of the org.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgLoggingS3LoggingArgs']]]] s3_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
@@ -621,6 +631,9 @@ class OrgLogging(pulumi.CustomResource):
     @property
     @pulumi.getter(name="elasticLoggings")
     def elastic_loggings(self) -> pulumi.Output[Optional[Sequence['outputs.OrgLoggingElasticLogging']]]:
+        """
+        For logging and analyzing data within an org using Elastic Logging.
+        """
         return pulumi.get(self, "elastic_loggings")
 
     @property

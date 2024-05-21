@@ -33,7 +33,10 @@ class WorkloadArgs:
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a Workload resource.
+        :param pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
         :param pulumi.Input[str] gvc: Name of the associated GVC.
+        :param pulumi.Input['WorkloadOptionsArgs'] options: Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+               characteristics of the workload.
         :param pulumi.Input[str] type: Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
         :param pulumi.Input[str] description: Description of the Workload.
         :param pulumi.Input['WorkloadFirewallSpecArgs'] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
@@ -41,6 +44,9 @@ class WorkloadArgs:
         :param pulumi.Input[str] identity_link: Full link to an Identity.
         :param pulumi.Input['WorkloadJobArgs'] job: [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
         :param pulumi.Input[str] name: Name of the Workload.
+        :param pulumi.Input['WorkloadRolloutOptionsArgs'] rollout_options: Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+               replicas, surge replicas, and scaling policies.
+        :param pulumi.Input['WorkloadSecurityOptionsArgs'] security_options: Allows for the configuration of the `file system group id`
         :param pulumi.Input[bool] support_dynamic_tags: Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
                false.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
@@ -126,6 +132,9 @@ class WorkloadArgs:
     @property
     @pulumi.getter
     def containers(self) -> pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]]:
+        """
+        An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
+        """
         return pulumi.get(self, "containers")
 
     @containers.setter
@@ -147,6 +156,10 @@ class WorkloadArgs:
     @property
     @pulumi.getter
     def options(self) -> pulumi.Input['WorkloadOptionsArgs']:
+        """
+        Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+        characteristics of the workload.
+        """
         return pulumi.get(self, "options")
 
     @options.setter
@@ -238,6 +251,10 @@ class WorkloadArgs:
     @property
     @pulumi.getter(name="rolloutOptions")
     def rollout_options(self) -> Optional[pulumi.Input['WorkloadRolloutOptionsArgs']]:
+        """
+        Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+        replicas, surge replicas, and scaling policies.
+        """
         return pulumi.get(self, "rollout_options")
 
     @rollout_options.setter
@@ -247,6 +264,9 @@ class WorkloadArgs:
     @property
     @pulumi.getter(name="securityOptions")
     def security_options(self) -> Optional[pulumi.Input['WorkloadSecurityOptionsArgs']]:
+        """
+        Allows for the configuration of the `file system group id`
+        """
         return pulumi.get(self, "security_options")
 
     @security_options.setter
@@ -311,6 +331,7 @@ class _WorkloadState:
                  type: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Workload resources.
+        :param pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Workload.
         :param pulumi.Input[str] description: Description of the Workload.
         :param pulumi.Input['WorkloadFirewallSpecArgs'] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
@@ -319,6 +340,11 @@ class _WorkloadState:
         :param pulumi.Input[str] identity_link: Full link to an Identity.
         :param pulumi.Input['WorkloadJobArgs'] job: [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
         :param pulumi.Input[str] name: Name of the Workload.
+        :param pulumi.Input['WorkloadOptionsArgs'] options: Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+               characteristics of the workload.
+        :param pulumi.Input['WorkloadRolloutOptionsArgs'] rollout_options: Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+               replicas, surge replicas, and scaling policies.
+        :param pulumi.Input['WorkloadSecurityOptionsArgs'] security_options: Allows for the configuration of the `file system group id`
         :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Sequence[pulumi.Input['WorkloadStatusArgs']]] statuses: Status of the workload.
         :param pulumi.Input[bool] support_dynamic_tags: Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
@@ -427,6 +453,9 @@ class _WorkloadState:
     @property
     @pulumi.getter
     def containers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]]]:
+        """
+        An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
+        """
         return pulumi.get(self, "containers")
 
     @containers.setter
@@ -530,6 +559,10 @@ class _WorkloadState:
     @property
     @pulumi.getter
     def options(self) -> Optional[pulumi.Input['WorkloadOptionsArgs']]:
+        """
+        Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+        characteristics of the workload.
+        """
         return pulumi.get(self, "options")
 
     @options.setter
@@ -539,6 +572,10 @@ class _WorkloadState:
     @property
     @pulumi.getter(name="rolloutOptions")
     def rollout_options(self) -> Optional[pulumi.Input['WorkloadRolloutOptionsArgs']]:
+        """
+        Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+        replicas, surge replicas, and scaling policies.
+        """
         return pulumi.get(self, "rollout_options")
 
     @rollout_options.setter
@@ -548,6 +585,9 @@ class _WorkloadState:
     @property
     @pulumi.getter(name="securityOptions")
     def security_options(self) -> Optional[pulumi.Input['WorkloadSecurityOptionsArgs']]:
+        """
+        Allows for the configuration of the `file system group id`
+        """
         return pulumi.get(self, "security_options")
 
     @security_options.setter
@@ -650,6 +690,7 @@ class Workload(pulumi.CustomResource):
         Create a Workload resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['WorkloadContainerArgs']]]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
         :param pulumi.Input[str] description: Description of the Workload.
         :param pulumi.Input[pulumi.InputType['WorkloadFirewallSpecArgs']] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
                Access is restricted by default.
@@ -657,6 +698,11 @@ class Workload(pulumi.CustomResource):
         :param pulumi.Input[str] identity_link: Full link to an Identity.
         :param pulumi.Input[pulumi.InputType['WorkloadJobArgs']] job: [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
         :param pulumi.Input[str] name: Name of the Workload.
+        :param pulumi.Input[pulumi.InputType['WorkloadOptionsArgs']] options: Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+               characteristics of the workload.
+        :param pulumi.Input[pulumi.InputType['WorkloadRolloutOptionsArgs']] rollout_options: Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+               replicas, surge replicas, and scaling policies.
+        :param pulumi.Input[pulumi.InputType['WorkloadSecurityOptionsArgs']] security_options: Allows for the configuration of the `file system group id`
         :param pulumi.Input[bool] support_dynamic_tags: Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
                false.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
@@ -804,6 +850,7 @@ class Workload(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['WorkloadContainerArgs']]]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Workload.
         :param pulumi.Input[str] description: Description of the Workload.
         :param pulumi.Input[pulumi.InputType['WorkloadFirewallSpecArgs']] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
@@ -812,6 +859,11 @@ class Workload(pulumi.CustomResource):
         :param pulumi.Input[str] identity_link: Full link to an Identity.
         :param pulumi.Input[pulumi.InputType['WorkloadJobArgs']] job: [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
         :param pulumi.Input[str] name: Name of the Workload.
+        :param pulumi.Input[pulumi.InputType['WorkloadOptionsArgs']] options: Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+               characteristics of the workload.
+        :param pulumi.Input[pulumi.InputType['WorkloadRolloutOptionsArgs']] rollout_options: Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+               replicas, surge replicas, and scaling policies.
+        :param pulumi.Input[pulumi.InputType['WorkloadSecurityOptionsArgs']] security_options: Allows for the configuration of the `file system group id`
         :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['WorkloadStatusArgs']]]] statuses: Status of the workload.
         :param pulumi.Input[bool] support_dynamic_tags: Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
@@ -846,6 +898,9 @@ class Workload(pulumi.CustomResource):
     @property
     @pulumi.getter
     def containers(self) -> pulumi.Output[Sequence['outputs.WorkloadContainer']]:
+        """
+        An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
+        """
         return pulumi.get(self, "containers")
 
     @property
@@ -913,16 +968,27 @@ class Workload(pulumi.CustomResource):
     @property
     @pulumi.getter
     def options(self) -> pulumi.Output['outputs.WorkloadOptions']:
+        """
+        Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+        characteristics of the workload.
+        """
         return pulumi.get(self, "options")
 
     @property
     @pulumi.getter(name="rolloutOptions")
     def rollout_options(self) -> pulumi.Output[Optional['outputs.WorkloadRolloutOptions']]:
+        """
+        Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+        replicas, surge replicas, and scaling policies.
+        """
         return pulumi.get(self, "rollout_options")
 
     @property
     @pulumi.getter(name="securityOptions")
     def security_options(self) -> pulumi.Output[Optional['outputs.WorkloadSecurityOptions']]:
+        """
+        Allows for the configuration of the `file system group id`
+        """
         return pulumi.get(self, "security_options")
 
     @property

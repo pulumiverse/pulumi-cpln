@@ -21,6 +21,7 @@ class OrgArgs:
                  auth_config: Optional[pulumi.Input['OrgAuthConfigArgs']] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  invitees: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 security: Optional[pulumi.Input['OrgSecurityArgs']] = None,
                  session_timeout_seconds: Optional[pulumi.Input[int]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
@@ -28,6 +29,7 @@ class OrgArgs:
         :param pulumi.Input['OrgObservabilityArgs'] observability: The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
         :param pulumi.Input[str] account_id: The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
                obtained from the `Org Management & Billing` page.
+        :param pulumi.Input['OrgAuthConfigArgs'] auth_config: The configuration settings and parameters related to authentication within the org.
         :param pulumi.Input[str] description: The description of org.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] invitees: When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
                the `superusers` group. The user account used when creating the org will be included in this list.
@@ -41,6 +43,7 @@ class OrgArgs:
             auth_config=auth_config,
             description=description,
             invitees=invitees,
+            security=security,
             session_timeout_seconds=session_timeout_seconds,
             tags=tags,
         )
@@ -52,6 +55,7 @@ class OrgArgs:
              auth_config: Optional[pulumi.Input['OrgAuthConfigArgs']] = None,
              description: Optional[pulumi.Input[str]] = None,
              invitees: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+             security: Optional[pulumi.Input['OrgSecurityArgs']] = None,
              session_timeout_seconds: Optional[pulumi.Input[int]] = None,
              tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -72,6 +76,8 @@ class OrgArgs:
             _setter("description", description)
         if invitees is not None:
             _setter("invitees", invitees)
+        if security is not None:
+            _setter("security", security)
         if session_timeout_seconds is not None:
             _setter("session_timeout_seconds", session_timeout_seconds)
         if tags is not None:
@@ -105,6 +111,9 @@ class OrgArgs:
     @property
     @pulumi.getter(name="authConfig")
     def auth_config(self) -> Optional[pulumi.Input['OrgAuthConfigArgs']]:
+        """
+        The configuration settings and parameters related to authentication within the org.
+        """
         return pulumi.get(self, "auth_config")
 
     @auth_config.setter
@@ -135,6 +144,15 @@ class OrgArgs:
     @invitees.setter
     def invitees(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
         pulumi.set(self, "invitees", value)
+
+    @property
+    @pulumi.getter
+    def security(self) -> Optional[pulumi.Input['OrgSecurityArgs']]:
+        return pulumi.get(self, "security")
+
+    @security.setter
+    def security(self, value: Optional[pulumi.Input['OrgSecurityArgs']]):
+        pulumi.set(self, "security", value)
 
     @property
     @pulumi.getter(name="sessionTimeoutSeconds")
@@ -171,6 +189,7 @@ class _OrgState:
                  invitees: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  observability: Optional[pulumi.Input['OrgObservabilityArgs']] = None,
+                 security: Optional[pulumi.Input['OrgSecurityArgs']] = None,
                  self_link: Optional[pulumi.Input[str]] = None,
                  session_timeout_seconds: Optional[pulumi.Input[int]] = None,
                  statuses: Optional[pulumi.Input[Sequence[pulumi.Input['OrgStatusArgs']]]] = None,
@@ -179,6 +198,7 @@ class _OrgState:
         Input properties used for looking up and filtering Org resources.
         :param pulumi.Input[str] account_id: The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
                obtained from the `Org Management & Billing` page.
+        :param pulumi.Input['OrgAuthConfigArgs'] auth_config: The configuration settings and parameters related to authentication within the org.
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the org.
         :param pulumi.Input[str] description: The description of org.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] invitees: When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
@@ -199,6 +219,7 @@ class _OrgState:
             invitees=invitees,
             name=name,
             observability=observability,
+            security=security,
             self_link=self_link,
             session_timeout_seconds=session_timeout_seconds,
             statuses=statuses,
@@ -214,6 +235,7 @@ class _OrgState:
              invitees: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
              name: Optional[pulumi.Input[str]] = None,
              observability: Optional[pulumi.Input['OrgObservabilityArgs']] = None,
+             security: Optional[pulumi.Input['OrgSecurityArgs']] = None,
              self_link: Optional[pulumi.Input[str]] = None,
              session_timeout_seconds: Optional[pulumi.Input[int]] = None,
              statuses: Optional[pulumi.Input[Sequence[pulumi.Input['OrgStatusArgs']]]] = None,
@@ -245,6 +267,8 @@ class _OrgState:
             _setter("name", name)
         if observability is not None:
             _setter("observability", observability)
+        if security is not None:
+            _setter("security", security)
         if self_link is not None:
             _setter("self_link", self_link)
         if session_timeout_seconds is not None:
@@ -270,6 +294,9 @@ class _OrgState:
     @property
     @pulumi.getter(name="authConfig")
     def auth_config(self) -> Optional[pulumi.Input['OrgAuthConfigArgs']]:
+        """
+        The configuration settings and parameters related to authentication within the org.
+        """
         return pulumi.get(self, "auth_config")
 
     @auth_config.setter
@@ -338,6 +365,15 @@ class _OrgState:
         pulumi.set(self, "observability", value)
 
     @property
+    @pulumi.getter
+    def security(self) -> Optional[pulumi.Input['OrgSecurityArgs']]:
+        return pulumi.get(self, "security")
+
+    @security.setter
+    def security(self, value: Optional[pulumi.Input['OrgSecurityArgs']]):
+        pulumi.set(self, "security", value)
+
+    @property
     @pulumi.getter(name="selfLink")
     def self_link(self) -> Optional[pulumi.Input[str]]:
         """
@@ -396,6 +432,7 @@ class Org(pulumi.CustomResource):
                  description: Optional[pulumi.Input[str]] = None,
                  invitees: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  observability: Optional[pulumi.Input[pulumi.InputType['OrgObservabilityArgs']]] = None,
+                 security: Optional[pulumi.Input[pulumi.InputType['OrgSecurityArgs']]] = None,
                  session_timeout_seconds: Optional[pulumi.Input[int]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
@@ -405,6 +442,7 @@ class Org(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] account_id: The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
                obtained from the `Org Management & Billing` page.
+        :param pulumi.Input[pulumi.InputType['OrgAuthConfigArgs']] auth_config: The configuration settings and parameters related to authentication within the org.
         :param pulumi.Input[str] description: The description of org.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] invitees: When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
                the `superusers` group. The user account used when creating the org will be included in this list.
@@ -444,6 +482,7 @@ class Org(pulumi.CustomResource):
                  description: Optional[pulumi.Input[str]] = None,
                  invitees: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  observability: Optional[pulumi.Input[pulumi.InputType['OrgObservabilityArgs']]] = None,
+                 security: Optional[pulumi.Input[pulumi.InputType['OrgSecurityArgs']]] = None,
                  session_timeout_seconds: Optional[pulumi.Input[int]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
@@ -472,6 +511,12 @@ class Org(pulumi.CustomResource):
             if observability is None and not opts.urn:
                 raise TypeError("Missing required property 'observability'")
             __props__.__dict__["observability"] = observability
+            if security is not None and not isinstance(security, OrgSecurityArgs):
+                security = security or {}
+                def _setter(key, value):
+                    security[key] = value
+                OrgSecurityArgs._configure(_setter, **security)
+            __props__.__dict__["security"] = security
             __props__.__dict__["session_timeout_seconds"] = session_timeout_seconds
             __props__.__dict__["tags"] = tags
             __props__.__dict__["cpln_id"] = None
@@ -495,6 +540,7 @@ class Org(pulumi.CustomResource):
             invitees: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             name: Optional[pulumi.Input[str]] = None,
             observability: Optional[pulumi.Input[pulumi.InputType['OrgObservabilityArgs']]] = None,
+            security: Optional[pulumi.Input[pulumi.InputType['OrgSecurityArgs']]] = None,
             self_link: Optional[pulumi.Input[str]] = None,
             session_timeout_seconds: Optional[pulumi.Input[int]] = None,
             statuses: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['OrgStatusArgs']]]]] = None,
@@ -508,6 +554,7 @@ class Org(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] account_id: The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
                obtained from the `Org Management & Billing` page.
+        :param pulumi.Input[pulumi.InputType['OrgAuthConfigArgs']] auth_config: The configuration settings and parameters related to authentication within the org.
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the org.
         :param pulumi.Input[str] description: The description of org.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] invitees: When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
@@ -530,6 +577,7 @@ class Org(pulumi.CustomResource):
         __props__.__dict__["invitees"] = invitees
         __props__.__dict__["name"] = name
         __props__.__dict__["observability"] = observability
+        __props__.__dict__["security"] = security
         __props__.__dict__["self_link"] = self_link
         __props__.__dict__["session_timeout_seconds"] = session_timeout_seconds
         __props__.__dict__["statuses"] = statuses
@@ -548,6 +596,9 @@ class Org(pulumi.CustomResource):
     @property
     @pulumi.getter(name="authConfig")
     def auth_config(self) -> pulumi.Output[Optional['outputs.OrgAuthConfig']]:
+        """
+        The configuration settings and parameters related to authentication within the org.
+        """
         return pulumi.get(self, "auth_config")
 
     @property
@@ -590,6 +641,11 @@ class Org(pulumi.CustomResource):
         The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
         """
         return pulumi.get(self, "observability")
+
+    @property
+    @pulumi.getter
+    def security(self) -> pulumi.Output[Optional['outputs.OrgSecurity']]:
+        return pulumi.get(self, "security")
 
     @property
     @pulumi.getter(name="selfLink")

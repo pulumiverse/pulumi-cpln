@@ -27,7 +27,9 @@ type DomainRoute struct {
 	// For the linked workload, the port to route traffic to.
 	Port pulumi.IntPtrOutput `pulumi:"port"`
 	// The path will match any unmatched path prefixes for the subdomain.
-	Prefix pulumi.StringOutput `pulumi:"prefix"`
+	Prefix pulumi.StringPtrOutput `pulumi:"prefix"`
+	// Used to match URI paths. Uses the google re2 regex syntax.
+	Regex pulumi.StringPtrOutput `pulumi:"regex"`
 	// A path prefix can be configured to be replaced when forwarding the request to the Workload.
 	ReplacePrefix pulumi.StringPtrOutput `pulumi:"replacePrefix"`
 	// The link of the workload to map the prefix to.
@@ -43,9 +45,6 @@ func NewDomainRoute(ctx *pulumi.Context,
 
 	if args.DomainLink == nil {
 		return nil, errors.New("invalid value for required argument 'DomainLink'")
-	}
-	if args.Prefix == nil {
-		return nil, errors.New("invalid value for required argument 'Prefix'")
 	}
 	if args.WorkloadLink == nil {
 		return nil, errors.New("invalid value for required argument 'WorkloadLink'")
@@ -85,6 +84,8 @@ type domainRouteState struct {
 	Port *int `pulumi:"port"`
 	// The path will match any unmatched path prefixes for the subdomain.
 	Prefix *string `pulumi:"prefix"`
+	// Used to match URI paths. Uses the google re2 regex syntax.
+	Regex *string `pulumi:"regex"`
 	// A path prefix can be configured to be replaced when forwarding the request to the Workload.
 	ReplacePrefix *string `pulumi:"replacePrefix"`
 	// The link of the workload to map the prefix to.
@@ -104,6 +105,8 @@ type DomainRouteState struct {
 	Port pulumi.IntPtrInput
 	// The path will match any unmatched path prefixes for the subdomain.
 	Prefix pulumi.StringPtrInput
+	// Used to match URI paths. Uses the google re2 regex syntax.
+	Regex pulumi.StringPtrInput
 	// A path prefix can be configured to be replaced when forwarding the request to the Workload.
 	ReplacePrefix pulumi.StringPtrInput
 	// The link of the workload to map the prefix to.
@@ -126,7 +129,9 @@ type domainRouteArgs struct {
 	// For the linked workload, the port to route traffic to.
 	Port *int `pulumi:"port"`
 	// The path will match any unmatched path prefixes for the subdomain.
-	Prefix string `pulumi:"prefix"`
+	Prefix *string `pulumi:"prefix"`
+	// Used to match URI paths. Uses the google re2 regex syntax.
+	Regex *string `pulumi:"regex"`
 	// A path prefix can be configured to be replaced when forwarding the request to the Workload.
 	ReplacePrefix *string `pulumi:"replacePrefix"`
 	// The link of the workload to map the prefix to.
@@ -146,7 +151,9 @@ type DomainRouteArgs struct {
 	// For the linked workload, the port to route traffic to.
 	Port pulumi.IntPtrInput
 	// The path will match any unmatched path prefixes for the subdomain.
-	Prefix pulumi.StringInput
+	Prefix pulumi.StringPtrInput
+	// Used to match URI paths. Uses the google re2 regex syntax.
+	Regex pulumi.StringPtrInput
 	// A path prefix can be configured to be replaced when forwarding the request to the Workload.
 	ReplacePrefix pulumi.StringPtrInput
 	// The link of the workload to map the prefix to.
@@ -287,8 +294,13 @@ func (o DomainRouteOutput) Port() pulumi.IntPtrOutput {
 }
 
 // The path will match any unmatched path prefixes for the subdomain.
-func (o DomainRouteOutput) Prefix() pulumi.StringOutput {
-	return o.ApplyT(func(v *DomainRoute) pulumi.StringOutput { return v.Prefix }).(pulumi.StringOutput)
+func (o DomainRouteOutput) Prefix() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *DomainRoute) pulumi.StringPtrOutput { return v.Prefix }).(pulumi.StringPtrOutput)
+}
+
+// Used to match URI paths. Uses the google re2 regex syntax.
+func (o DomainRouteOutput) Regex() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *DomainRoute) pulumi.StringPtrOutput { return v.Regex }).(pulumi.StringPtrOutput)
 }
 
 // A path prefix can be configured to be replaced when forwarding the request to the Workload.

@@ -18,13 +18,17 @@ type Group struct {
 	// The ID, in GUID format, of the Group.
 	CplnId pulumi.StringOutput `pulumi:"cplnId"`
 	// Description of Group.
-	Description     pulumi.StringPtrOutput        `pulumi:"description"`
+	Description pulumi.StringPtrOutput `pulumi:"description"`
+	// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+	// for managing the grouping of users logged-in with SAML providers.
 	IdentityMatcher GroupIdentityMatcherPtrOutput `pulumi:"identityMatcher"`
-	MemberQuery     GroupMemberQueryPtrOutput     `pulumi:"memberQuery"`
+	// A predefined set of criteria or conditions used to query and retrieve members within the group.
+	MemberQuery GroupMemberQueryPtrOutput `pulumi:"memberQuery"`
 	// Name of the Group.
 	Name pulumi.StringOutput `pulumi:"name"`
 	// Origin of the service account. Either `builtin` or `default`.
-	Origin   pulumi.StringOutput `pulumi:"origin"`
+	Origin pulumi.StringOutput `pulumi:"origin"`
+	// Fully qualified link to the this group.
 	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
 	// List of service accounts that exists within the configured org. Group membership will fail if the service account does
 	// not exits within the org.
@@ -69,13 +73,17 @@ type groupState struct {
 	// The ID, in GUID format, of the Group.
 	CplnId *string `pulumi:"cplnId"`
 	// Description of Group.
-	Description     *string               `pulumi:"description"`
+	Description *string `pulumi:"description"`
+	// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+	// for managing the grouping of users logged-in with SAML providers.
 	IdentityMatcher *GroupIdentityMatcher `pulumi:"identityMatcher"`
-	MemberQuery     *GroupMemberQuery     `pulumi:"memberQuery"`
+	// A predefined set of criteria or conditions used to query and retrieve members within the group.
+	MemberQuery *GroupMemberQuery `pulumi:"memberQuery"`
 	// Name of the Group.
 	Name *string `pulumi:"name"`
 	// Origin of the service account. Either `builtin` or `default`.
-	Origin   *string `pulumi:"origin"`
+	Origin *string `pulumi:"origin"`
+	// Fully qualified link to the this group.
 	SelfLink *string `pulumi:"selfLink"`
 	// List of service accounts that exists within the configured org. Group membership will fail if the service account does
 	// not exits within the org.
@@ -91,13 +99,17 @@ type GroupState struct {
 	// The ID, in GUID format, of the Group.
 	CplnId pulumi.StringPtrInput
 	// Description of Group.
-	Description     pulumi.StringPtrInput
+	Description pulumi.StringPtrInput
+	// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+	// for managing the grouping of users logged-in with SAML providers.
 	IdentityMatcher GroupIdentityMatcherPtrInput
-	MemberQuery     GroupMemberQueryPtrInput
+	// A predefined set of criteria or conditions used to query and retrieve members within the group.
+	MemberQuery GroupMemberQueryPtrInput
 	// Name of the Group.
 	Name pulumi.StringPtrInput
 	// Origin of the service account. Either `builtin` or `default`.
-	Origin   pulumi.StringPtrInput
+	Origin pulumi.StringPtrInput
+	// Fully qualified link to the this group.
 	SelfLink pulumi.StringPtrInput
 	// List of service accounts that exists within the configured org. Group membership will fail if the service account does
 	// not exits within the org.
@@ -115,9 +127,12 @@ func (GroupState) ElementType() reflect.Type {
 
 type groupArgs struct {
 	// Description of Group.
-	Description     *string               `pulumi:"description"`
+	Description *string `pulumi:"description"`
+	// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+	// for managing the grouping of users logged-in with SAML providers.
 	IdentityMatcher *GroupIdentityMatcher `pulumi:"identityMatcher"`
-	MemberQuery     *GroupMemberQuery     `pulumi:"memberQuery"`
+	// A predefined set of criteria or conditions used to query and retrieve members within the group.
+	MemberQuery *GroupMemberQuery `pulumi:"memberQuery"`
 	// Name of the Group.
 	Name *string `pulumi:"name"`
 	// List of service accounts that exists within the configured org. Group membership will fail if the service account does
@@ -133,9 +148,12 @@ type groupArgs struct {
 // The set of arguments for constructing a Group resource.
 type GroupArgs struct {
 	// Description of Group.
-	Description     pulumi.StringPtrInput
+	Description pulumi.StringPtrInput
+	// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+	// for managing the grouping of users logged-in with SAML providers.
 	IdentityMatcher GroupIdentityMatcherPtrInput
-	MemberQuery     GroupMemberQueryPtrInput
+	// A predefined set of criteria or conditions used to query and retrieve members within the group.
+	MemberQuery GroupMemberQueryPtrInput
 	// Name of the Group.
 	Name pulumi.StringPtrInput
 	// List of service accounts that exists within the configured org. Group membership will fail if the service account does
@@ -269,10 +287,13 @@ func (o GroupOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Group) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
+// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+// for managing the grouping of users logged-in with SAML providers.
 func (o GroupOutput) IdentityMatcher() GroupIdentityMatcherPtrOutput {
 	return o.ApplyT(func(v *Group) GroupIdentityMatcherPtrOutput { return v.IdentityMatcher }).(GroupIdentityMatcherPtrOutput)
 }
 
+// A predefined set of criteria or conditions used to query and retrieve members within the group.
 func (o GroupOutput) MemberQuery() GroupMemberQueryPtrOutput {
 	return o.ApplyT(func(v *Group) GroupMemberQueryPtrOutput { return v.MemberQuery }).(GroupMemberQueryPtrOutput)
 }
@@ -287,6 +308,7 @@ func (o GroupOutput) Origin() pulumi.StringOutput {
 	return o.ApplyT(func(v *Group) pulumi.StringOutput { return v.Origin }).(pulumi.StringOutput)
 }
 
+// Fully qualified link to the this group.
 func (o GroupOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *Group) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
 }

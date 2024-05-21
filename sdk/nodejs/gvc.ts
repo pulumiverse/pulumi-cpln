@@ -58,6 +58,9 @@ export class Gvc extends pulumi.CustomResource {
      */
     public readonly env!: pulumi.Output<{[key: string]: string} | undefined>;
     public readonly lightstepTracing!: pulumi.Output<outputs.GvcLightstepTracing | undefined>;
+    /**
+     * Dedicated load balancer configuration.
+     */
     public readonly loadBalancer!: pulumi.Output<outputs.GvcLoadBalancer | undefined>;
     /**
      * A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
@@ -162,6 +165,9 @@ export interface GvcState {
      */
     env?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     lightstepTracing?: pulumi.Input<inputs.GvcLightstepTracing>;
+    /**
+     * Dedicated load balancer configuration.
+     */
     loadBalancer?: pulumi.Input<inputs.GvcLoadBalancer>;
     /**
      * A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
@@ -208,6 +214,9 @@ export interface GvcArgs {
      */
     env?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     lightstepTracing?: pulumi.Input<inputs.GvcLightstepTracing>;
+    /**
+     * Dedicated load balancer configuration.
+     */
     loadBalancer?: pulumi.Input<inputs.GvcLoadBalancer>;
     /**
      * A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.

@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln
     [CplnResourceType("cpln:index/policy:Policy")]
     public partial class Policy : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The association between a target kind and the bound permissions to service principals.
+        /// </summary>
         [Output("bindings")]
         public Output<ImmutableArray<Outputs.PolicyBinding>> Bindings { get; private set; } = null!;
 
@@ -77,6 +80,9 @@ namespace Pulumiverse.Cpln
         [Output("targetLinks")]
         public Output<ImmutableArray<string>> TargetLinks { get; private set; } = null!;
 
+        /// <summary>
+        /// A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
+        /// </summary>
         [Output("targetQuery")]
         public Output<Outputs.PolicyTargetQuery?> TargetQuery { get; private set; } = null!;
 
@@ -129,6 +135,10 @@ namespace Pulumiverse.Cpln
     {
         [Input("bindings")]
         private InputList<Inputs.PolicyBindingArgs>? _bindings;
+
+        /// <summary>
+        /// The association between a target kind and the bound permissions to service principals.
+        /// </summary>
         public InputList<Inputs.PolicyBindingArgs> Bindings
         {
             get => _bindings ?? (_bindings = new InputList<Inputs.PolicyBindingArgs>());
@@ -190,6 +200,9 @@ namespace Pulumiverse.Cpln
             set => _targetLinks = value;
         }
 
+        /// <summary>
+        /// A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
+        /// </summary>
         [Input("targetQuery")]
         public Input<Inputs.PolicyTargetQueryArgs>? TargetQuery { get; set; }
 
@@ -203,6 +216,10 @@ namespace Pulumiverse.Cpln
     {
         [Input("bindings")]
         private InputList<Inputs.PolicyBindingGetArgs>? _bindings;
+
+        /// <summary>
+        /// The association between a target kind and the bound permissions to service principals.
+        /// </summary>
         public InputList<Inputs.PolicyBindingGetArgs> Bindings
         {
             get => _bindings ?? (_bindings = new InputList<Inputs.PolicyBindingGetArgs>());
@@ -282,6 +299,9 @@ namespace Pulumiverse.Cpln
             set => _targetLinks = value;
         }
 
+        /// <summary>
+        /// A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
+        /// </summary>
         [Input("targetQuery")]
         public Input<Inputs.PolicyTargetQueryGetArgs>? TargetQuery { get; set; }
 

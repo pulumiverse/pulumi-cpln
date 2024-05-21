@@ -51,6 +51,9 @@ export class OrgLogging extends pulumi.CustomResource {
      * The description of org.
      */
     public /*out*/ readonly description!: pulumi.Output<string>;
+    /**
+     * For logging and analyzing data within an org using Elastic Logging.
+     */
     public readonly elasticLoggings!: pulumi.Output<outputs.OrgLoggingElasticLogging[] | undefined>;
     public readonly fluentdLoggings!: pulumi.Output<outputs.OrgLoggingFluentdLogging[] | undefined>;
     /**
@@ -140,6 +143,9 @@ export interface OrgLoggingState {
      * The description of org.
      */
     description?: pulumi.Input<string>;
+    /**
+     * For logging and analyzing data within an org using Elastic Logging.
+     */
     elasticLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingElasticLogging>[]>;
     fluentdLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingFluentdLogging>[]>;
     /**
@@ -175,6 +181,9 @@ export interface OrgLoggingArgs {
      * [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
      */
     datadogLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingDatadogLogging>[]>;
+    /**
+     * For logging and analyzing data within an org using Elastic Logging.
+     */
     elasticLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingElasticLogging>[]>;
     fluentdLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingFluentdLogging>[]>;
     /**

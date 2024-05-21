@@ -51,6 +51,9 @@ export class Domain extends pulumi.CustomResource {
      * Full link to this resource. Can be referenced by other resources.
      */
     public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    /**
+     * Domain specificiation.
+     */
     public readonly spec!: pulumi.Output<outputs.DomainSpec>;
     public /*out*/ readonly statuses!: pulumi.Output<outputs.DomainStatus[]>;
     /**
@@ -117,6 +120,9 @@ export interface DomainState {
      * Full link to this resource. Can be referenced by other resources.
      */
     selfLink?: pulumi.Input<string>;
+    /**
+     * Domain specificiation.
+     */
     spec?: pulumi.Input<inputs.DomainSpec>;
     statuses?: pulumi.Input<pulumi.Input<inputs.DomainStatus>[]>;
     /**
@@ -138,6 +144,9 @@ export interface DomainArgs {
      * DNS. Create and Update will fail if the required DNS entries cannot be validated.
      */
     name?: pulumi.Input<string>;
+    /**
+     * Domain specificiation.
+     */
     spec: pulumi.Input<inputs.DomainSpec>;
     /**
      * Key-value map of resource tags.

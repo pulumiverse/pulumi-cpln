@@ -29,7 +29,8 @@ type Gvc struct {
 	// Key-value array of resource env variables.
 	Env              pulumi.StringMapOutput       `pulumi:"env"`
 	LightstepTracing GvcLightstepTracingPtrOutput `pulumi:"lightstepTracing"`
-	LoadBalancer     GvcLoadBalancerPtrOutput     `pulumi:"loadBalancer"`
+	// Dedicated load balancer configuration.
+	LoadBalancer GvcLoadBalancerPtrOutput `pulumi:"loadBalancer"`
 	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
 	Locations pulumi.StringArrayOutput `pulumi:"locations"`
 	// Name of the GVC.
@@ -89,7 +90,8 @@ type gvcState struct {
 	// Key-value array of resource env variables.
 	Env              map[string]string    `pulumi:"env"`
 	LightstepTracing *GvcLightstepTracing `pulumi:"lightstepTracing"`
-	LoadBalancer     *GvcLoadBalancer     `pulumi:"loadBalancer"`
+	// Dedicated load balancer configuration.
+	LoadBalancer *GvcLoadBalancer `pulumi:"loadBalancer"`
 	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
 	Locations []string `pulumi:"locations"`
 	// Name of the GVC.
@@ -120,7 +122,8 @@ type GvcState struct {
 	// Key-value array of resource env variables.
 	Env              pulumi.StringMapInput
 	LightstepTracing GvcLightstepTracingPtrInput
-	LoadBalancer     GvcLoadBalancerPtrInput
+	// Dedicated load balancer configuration.
+	LoadBalancer GvcLoadBalancerPtrInput
 	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
 	Locations pulumi.StringArrayInput
 	// Name of the GVC.
@@ -151,7 +154,8 @@ type gvcArgs struct {
 	// Key-value array of resource env variables.
 	Env              map[string]string    `pulumi:"env"`
 	LightstepTracing *GvcLightstepTracing `pulumi:"lightstepTracing"`
-	LoadBalancer     *GvcLoadBalancer     `pulumi:"loadBalancer"`
+	// Dedicated load balancer configuration.
+	LoadBalancer *GvcLoadBalancer `pulumi:"loadBalancer"`
 	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
 	Locations []string `pulumi:"locations"`
 	// Name of the GVC.
@@ -177,7 +181,8 @@ type GvcArgs struct {
 	// Key-value array of resource env variables.
 	Env              pulumi.StringMapInput
 	LightstepTracing GvcLightstepTracingPtrInput
-	LoadBalancer     GvcLoadBalancerPtrInput
+	// Dedicated load balancer configuration.
+	LoadBalancer GvcLoadBalancerPtrInput
 	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
 	Locations pulumi.StringArrayInput
 	// Name of the GVC.
@@ -337,6 +342,7 @@ func (o GvcOutput) LightstepTracing() GvcLightstepTracingPtrOutput {
 	return o.ApplyT(func(v *Gvc) GvcLightstepTracingPtrOutput { return v.LightstepTracing }).(GvcLightstepTracingPtrOutput)
 }
 
+// Dedicated load balancer configuration.
 func (o GvcOutput) LoadBalancer() GvcLoadBalancerPtrOutput {
 	return o.ApplyT(func(v *Gvc) GvcLoadBalancerPtrOutput { return v.LoadBalancer }).(GvcLoadBalancerPtrOutput)
 }

@@ -42,7 +42,14 @@ export class Group extends pulumi.CustomResource {
      * Description of Group.
      */
     public readonly description!: pulumi.Output<string | undefined>;
+    /**
+     * Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+     * for managing the grouping of users logged-in with SAML providers.
+     */
     public readonly identityMatcher!: pulumi.Output<outputs.GroupIdentityMatcher | undefined>;
+    /**
+     * A predefined set of criteria or conditions used to query and retrieve members within the group.
+     */
     public readonly memberQuery!: pulumi.Output<outputs.GroupMemberQuery | undefined>;
     /**
      * Name of the Group.
@@ -52,6 +59,9 @@ export class Group extends pulumi.CustomResource {
      * Origin of the service account. Either `builtin` or `default`.
      */
     public /*out*/ readonly origin!: pulumi.Output<string>;
+    /**
+     * Fully qualified link to the this group.
+     */
     public /*out*/ readonly selfLink!: pulumi.Output<string>;
     /**
      * List of service accounts that exists within the configured org. Group membership will fail if the service account does
@@ -121,7 +131,14 @@ export interface GroupState {
      * Description of Group.
      */
     description?: pulumi.Input<string>;
+    /**
+     * Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+     * for managing the grouping of users logged-in with SAML providers.
+     */
     identityMatcher?: pulumi.Input<inputs.GroupIdentityMatcher>;
+    /**
+     * A predefined set of criteria or conditions used to query and retrieve members within the group.
+     */
     memberQuery?: pulumi.Input<inputs.GroupMemberQuery>;
     /**
      * Name of the Group.
@@ -131,6 +148,9 @@ export interface GroupState {
      * Origin of the service account. Either `builtin` or `default`.
      */
     origin?: pulumi.Input<string>;
+    /**
+     * Fully qualified link to the this group.
+     */
     selfLink?: pulumi.Input<string>;
     /**
      * List of service accounts that exists within the configured org. Group membership will fail if the service account does
@@ -156,7 +176,14 @@ export interface GroupArgs {
      * Description of Group.
      */
     description?: pulumi.Input<string>;
+    /**
+     * Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+     * for managing the grouping of users logged-in with SAML providers.
+     */
     identityMatcher?: pulumi.Input<inputs.GroupIdentityMatcher>;
+    /**
+     * A predefined set of criteria or conditions used to query and retrieve members within the group.
+     */
     memberQuery?: pulumi.Input<inputs.GroupMemberQuery>;
     /**
      * Name of the Group.

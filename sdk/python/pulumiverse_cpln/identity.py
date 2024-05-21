@@ -29,12 +29,18 @@ class IdentityArgs:
         """
         The set of arguments for constructing a Identity resource.
         :param pulumi.Input[str] gvc: Name of the GVC.
+        :param pulumi.Input['IdentityAwsAccessPolicyArgs'] aws_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+               environment.
+        :param pulumi.Input['IdentityAzureAccessPolicyArgs'] azure_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+               environment.
         :param pulumi.Input[str] description: Description of the Identity.
         :param pulumi.Input['IdentityGcpAccessPolicyArgs'] gcp_access_policy: The GCP access policy can either contain an existing service_account or multiple bindings.
         :param pulumi.Input[str] name: Name of the Identity.
         :param pulumi.Input[Sequence[pulumi.Input['IdentityNativeNetworkResourceArgs']]] native_network_resources: ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
         :param pulumi.Input[Sequence[pulumi.Input['IdentityNetworkResourceArgs']]] network_resources: A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
                ports. - IP's and ports.
+        :param pulumi.Input['IdentityNgsAccessPolicyArgs'] ngs_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+               environment.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         IdentityArgs._configure(
@@ -113,6 +119,10 @@ class IdentityArgs:
     @property
     @pulumi.getter(name="awsAccessPolicy")
     def aws_access_policy(self) -> Optional[pulumi.Input['IdentityAwsAccessPolicyArgs']]:
+        """
+        A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+        environment.
+        """
         return pulumi.get(self, "aws_access_policy")
 
     @aws_access_policy.setter
@@ -122,6 +132,10 @@ class IdentityArgs:
     @property
     @pulumi.getter(name="azureAccessPolicy")
     def azure_access_policy(self) -> Optional[pulumi.Input['IdentityAzureAccessPolicyArgs']]:
+        """
+        A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+        environment.
+        """
         return pulumi.get(self, "azure_access_policy")
 
     @azure_access_policy.setter
@@ -192,6 +206,10 @@ class IdentityArgs:
     @property
     @pulumi.getter(name="ngsAccessPolicy")
     def ngs_access_policy(self) -> Optional[pulumi.Input['IdentityNgsAccessPolicyArgs']]:
+        """
+        A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+        environment.
+        """
         return pulumi.get(self, "ngs_access_policy")
 
     @ngs_access_policy.setter
@@ -229,6 +247,10 @@ class _IdentityState:
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         Input properties used for looking up and filtering Identity resources.
+        :param pulumi.Input['IdentityAwsAccessPolicyArgs'] aws_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+               environment.
+        :param pulumi.Input['IdentityAzureAccessPolicyArgs'] azure_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+               environment.
         :param pulumi.Input[str] cpln_id: ID, in GUID format, of the Identity.
         :param pulumi.Input[str] description: Description of the Identity.
         :param pulumi.Input['IdentityGcpAccessPolicyArgs'] gcp_access_policy: The GCP access policy can either contain an existing service_account or multiple bindings.
@@ -237,6 +259,8 @@ class _IdentityState:
         :param pulumi.Input[Sequence[pulumi.Input['IdentityNativeNetworkResourceArgs']]] native_network_resources: ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
         :param pulumi.Input[Sequence[pulumi.Input['IdentityNetworkResourceArgs']]] network_resources: A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
                ports. - IP's and ports.
+        :param pulumi.Input['IdentityNgsAccessPolicyArgs'] ngs_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+               environment.
         :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] status: Key-value map of identity status. Available fields: `objectName`.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
@@ -322,6 +346,10 @@ class _IdentityState:
     @property
     @pulumi.getter(name="awsAccessPolicy")
     def aws_access_policy(self) -> Optional[pulumi.Input['IdentityAwsAccessPolicyArgs']]:
+        """
+        A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+        environment.
+        """
         return pulumi.get(self, "aws_access_policy")
 
     @aws_access_policy.setter
@@ -331,6 +359,10 @@ class _IdentityState:
     @property
     @pulumi.getter(name="azureAccessPolicy")
     def azure_access_policy(self) -> Optional[pulumi.Input['IdentityAzureAccessPolicyArgs']]:
+        """
+        A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+        environment.
+        """
         return pulumi.get(self, "azure_access_policy")
 
     @azure_access_policy.setter
@@ -425,6 +457,10 @@ class _IdentityState:
     @property
     @pulumi.getter(name="ngsAccessPolicy")
     def ngs_access_policy(self) -> Optional[pulumi.Input['IdentityNgsAccessPolicyArgs']]:
+        """
+        A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+        environment.
+        """
         return pulumi.get(self, "ngs_access_policy")
 
     @ngs_access_policy.setter
@@ -488,6 +524,10 @@ class Identity(pulumi.CustomResource):
         Create a Identity resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[pulumi.InputType['IdentityAwsAccessPolicyArgs']] aws_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+               environment.
+        :param pulumi.Input[pulumi.InputType['IdentityAzureAccessPolicyArgs']] azure_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+               environment.
         :param pulumi.Input[str] description: Description of the Identity.
         :param pulumi.Input[pulumi.InputType['IdentityGcpAccessPolicyArgs']] gcp_access_policy: The GCP access policy can either contain an existing service_account or multiple bindings.
         :param pulumi.Input[str] gvc: Name of the GVC.
@@ -495,6 +535,8 @@ class Identity(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IdentityNativeNetworkResourceArgs']]]] native_network_resources: ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IdentityNetworkResourceArgs']]]] network_resources: A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
                ports. - IP's and ports.
+        :param pulumi.Input[pulumi.InputType['IdentityNgsAccessPolicyArgs']] ngs_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+               environment.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         ...
@@ -608,6 +650,10 @@ class Identity(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[pulumi.InputType['IdentityAwsAccessPolicyArgs']] aws_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+               environment.
+        :param pulumi.Input[pulumi.InputType['IdentityAzureAccessPolicyArgs']] azure_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+               environment.
         :param pulumi.Input[str] cpln_id: ID, in GUID format, of the Identity.
         :param pulumi.Input[str] description: Description of the Identity.
         :param pulumi.Input[pulumi.InputType['IdentityGcpAccessPolicyArgs']] gcp_access_policy: The GCP access policy can either contain an existing service_account or multiple bindings.
@@ -616,6 +662,8 @@ class Identity(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IdentityNativeNetworkResourceArgs']]]] native_network_resources: ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IdentityNetworkResourceArgs']]]] network_resources: A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
                ports. - IP's and ports.
+        :param pulumi.Input[pulumi.InputType['IdentityNgsAccessPolicyArgs']] ngs_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+               environment.
         :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] status: Key-value map of identity status. Available fields: `objectName`.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
@@ -642,11 +690,19 @@ class Identity(pulumi.CustomResource):
     @property
     @pulumi.getter(name="awsAccessPolicy")
     def aws_access_policy(self) -> pulumi.Output[Optional['outputs.IdentityAwsAccessPolicy']]:
+        """
+        A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+        environment.
+        """
         return pulumi.get(self, "aws_access_policy")
 
     @property
     @pulumi.getter(name="azureAccessPolicy")
     def azure_access_policy(self) -> pulumi.Output[Optional['outputs.IdentityAzureAccessPolicy']]:
+        """
+        A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+        environment.
+        """
         return pulumi.get(self, "azure_access_policy")
 
     @property
@@ -709,6 +765,10 @@ class Identity(pulumi.CustomResource):
     @property
     @pulumi.getter(name="ngsAccessPolicy")
     def ngs_access_policy(self) -> pulumi.Output[Optional['outputs.IdentityNgsAccessPolicy']]:
+        """
+        A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+        environment.
+        """
         return pulumi.get(self, "ngs_access_policy")
 
     @property

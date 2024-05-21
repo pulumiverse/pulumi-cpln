@@ -13,9 +13,15 @@ namespace Pulumiverse.Cpln
     [CplnResourceType("cpln:index/cloudAccount:CloudAccount")]
     public partial class CloudAccount : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Contains AWS cloud account configuration.
+        /// </summary>
         [Output("aws")]
         public Output<Outputs.CloudAccountAws?> Aws { get; private set; } = null!;
 
+        /// <summary>
+        /// Contains Azure cloud account configuration.
+        /// </summary>
         [Output("azure")]
         public Output<Outputs.CloudAccountAzure?> Azure { get; private set; } = null!;
 
@@ -31,6 +37,9 @@ namespace Pulumiverse.Cpln
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
 
+        /// <summary>
+        /// Contains GCP cloud account configuration.
+        /// </summary>
         [Output("gcp")]
         public Output<Outputs.CloudAccountGcp?> Gcp { get; private set; } = null!;
 
@@ -108,9 +117,15 @@ namespace Pulumiverse.Cpln
 
     public sealed class CloudAccountArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Contains AWS cloud account configuration.
+        /// </summary>
         [Input("aws")]
         public Input<Inputs.CloudAccountAwsArgs>? Aws { get; set; }
 
+        /// <summary>
+        /// Contains Azure cloud account configuration.
+        /// </summary>
         [Input("azure")]
         public Input<Inputs.CloudAccountAzureArgs>? Azure { get; set; }
 
@@ -120,6 +135,9 @@ namespace Pulumiverse.Cpln
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// Contains GCP cloud account configuration.
+        /// </summary>
         [Input("gcp")]
         public Input<Inputs.CloudAccountGcpArgs>? Gcp { get; set; }
 
@@ -152,9 +170,15 @@ namespace Pulumiverse.Cpln
 
     public sealed class CloudAccountState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Contains AWS cloud account configuration.
+        /// </summary>
         [Input("aws")]
         public Input<Inputs.CloudAccountAwsGetArgs>? Aws { get; set; }
 
+        /// <summary>
+        /// Contains Azure cloud account configuration.
+        /// </summary>
         [Input("azure")]
         public Input<Inputs.CloudAccountAzureGetArgs>? Azure { get; set; }
 
@@ -170,6 +194,9 @@ namespace Pulumiverse.Cpln
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// Contains GCP cloud account configuration.
+        /// </summary>
         [Input("gcp")]
         public Input<Inputs.CloudAccountGcpGetArgs>? Gcp { get; set; }
 

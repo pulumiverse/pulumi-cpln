@@ -325,6 +325,7 @@ export interface Mk8sAddOns {
     logs?: pulumi.Input<inputs.Mk8sAddOnsLogs>;
     metrics?: pulumi.Input<inputs.Mk8sAddOnsMetrics>;
     nvidia?: pulumi.Input<inputs.Mk8sAddOnsNvidia>;
+    sysbox?: pulumi.Input<boolean>;
 }
 
 export interface Mk8sAddOnsAwsEcr {
@@ -376,6 +377,7 @@ export interface Mk8sAddOnsNvidia {
 
 export interface Mk8sAwsProvider {
     autoscaler?: pulumi.Input<inputs.Mk8sAwsProviderAutoscaler>;
+    awsTags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     deployRoleArn: pulumi.Input<string>;
     diskEncryptionKeyArn?: pulumi.Input<string>;
     image: pulumi.Input<inputs.Mk8sAwsProviderImage>;
@@ -465,6 +467,7 @@ export interface Mk8sHetznerProvider {
     autoscaler?: pulumi.Input<inputs.Mk8sHetznerProviderAutoscaler>;
     dedicatedServerNodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sHetznerProviderDedicatedServerNodePool>[]>;
     firewallId?: pulumi.Input<string>;
+    hetznerLabels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     image?: pulumi.Input<string>;
     networkId: pulumi.Input<string>;
     networking?: pulumi.Input<inputs.Mk8sHetznerProviderNetworking>;
@@ -657,6 +660,22 @@ export interface OrgObservability {
     logsRetentionDays?: pulumi.Input<number>;
     metricsRetentionDays?: pulumi.Input<number>;
     tracesRetentionDays?: pulumi.Input<number>;
+}
+
+export interface OrgSecurity {
+    threatDetection?: pulumi.Input<inputs.OrgSecurityThreatDetection>;
+}
+
+export interface OrgSecurityThreatDetection {
+    enabled?: pulumi.Input<boolean>;
+    minimumSeverity?: pulumi.Input<string>;
+    syslog?: pulumi.Input<inputs.OrgSecurityThreatDetectionSyslog>;
+}
+
+export interface OrgSecurityThreatDetectionSyslog {
+    host?: pulumi.Input<string>;
+    port: pulumi.Input<number>;
+    transport?: pulumi.Input<string>;
 }
 
 export interface OrgStatus {

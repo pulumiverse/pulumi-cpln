@@ -16,6 +16,14 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("autoscaler")]
         public Input<Inputs.Mk8sAwsProviderAutoscalerArgs>? Autoscaler { get; set; }
 
+        [Input("awsTags")]
+        private InputMap<string>? _awsTags;
+        public InputMap<string> AwsTags
+        {
+            get => _awsTags ?? (_awsTags = new InputMap<string>());
+            set => _awsTags = value;
+        }
+
         [Input("deployRoleArn", required: true)]
         public Input<string> DeployRoleArn { get; set; } = null!;
 

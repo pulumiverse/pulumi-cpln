@@ -46,6 +46,9 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("nvidia")]
         public Input<Inputs.Mk8sAddOnsNvidiaArgs>? Nvidia { get; set; }
 
+        [Input("sysbox")]
+        public Input<bool>? Sysbox { get; set; }
+
         public Mk8sAddOnsArgs()
         {
         }

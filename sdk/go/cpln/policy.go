@@ -16,6 +16,7 @@ import (
 type Policy struct {
 	pulumi.CustomResourceState
 
+	// The association between a target kind and the bound permissions to service principals.
 	Bindings PolicyBindingArrayOutput `pulumi:"bindings"`
 	// The ID, in GUID format, of the Policy.
 	CplnId pulumi.StringOutput `pulumi:"cplnId"`
@@ -37,7 +38,8 @@ type Policy struct {
 	// The kind of resource to target (e.g., gvc, serviceaccount, etc.).
 	TargetKind pulumi.StringOutput `pulumi:"targetKind"`
 	// List of the targets this policy will be applied to. Not used if `target` is set to `all`.
-	TargetLinks pulumi.StringArrayOutput   `pulumi:"targetLinks"`
+	TargetLinks pulumi.StringArrayOutput `pulumi:"targetLinks"`
+	// A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
 	TargetQuery PolicyTargetQueryPtrOutput `pulumi:"targetQuery"`
 }
 
@@ -74,6 +76,7 @@ func GetPolicy(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Policy resources.
 type policyState struct {
+	// The association between a target kind and the bound permissions to service principals.
 	Bindings []PolicyBinding `pulumi:"bindings"`
 	// The ID, in GUID format, of the Policy.
 	CplnId *string `pulumi:"cplnId"`
@@ -95,11 +98,13 @@ type policyState struct {
 	// The kind of resource to target (e.g., gvc, serviceaccount, etc.).
 	TargetKind *string `pulumi:"targetKind"`
 	// List of the targets this policy will be applied to. Not used if `target` is set to `all`.
-	TargetLinks []string           `pulumi:"targetLinks"`
+	TargetLinks []string `pulumi:"targetLinks"`
+	// A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
 	TargetQuery *PolicyTargetQuery `pulumi:"targetQuery"`
 }
 
 type PolicyState struct {
+	// The association between a target kind and the bound permissions to service principals.
 	Bindings PolicyBindingArrayInput
 	// The ID, in GUID format, of the Policy.
 	CplnId pulumi.StringPtrInput
@@ -122,6 +127,7 @@ type PolicyState struct {
 	TargetKind pulumi.StringPtrInput
 	// List of the targets this policy will be applied to. Not used if `target` is set to `all`.
 	TargetLinks pulumi.StringArrayInput
+	// A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
 	TargetQuery PolicyTargetQueryPtrInput
 }
 
@@ -130,6 +136,7 @@ func (PolicyState) ElementType() reflect.Type {
 }
 
 type policyArgs struct {
+	// The association between a target kind and the bound permissions to service principals.
 	Bindings []PolicyBinding `pulumi:"bindings"`
 	// Description of the Policy.
 	Description *string `pulumi:"description"`
@@ -145,12 +152,14 @@ type policyArgs struct {
 	// The kind of resource to target (e.g., gvc, serviceaccount, etc.).
 	TargetKind string `pulumi:"targetKind"`
 	// List of the targets this policy will be applied to. Not used if `target` is set to `all`.
-	TargetLinks []string           `pulumi:"targetLinks"`
+	TargetLinks []string `pulumi:"targetLinks"`
+	// A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
 	TargetQuery *PolicyTargetQuery `pulumi:"targetQuery"`
 }
 
 // The set of arguments for constructing a Policy resource.
 type PolicyArgs struct {
+	// The association between a target kind and the bound permissions to service principals.
 	Bindings PolicyBindingArrayInput
 	// Description of the Policy.
 	Description pulumi.StringPtrInput
@@ -167,6 +176,7 @@ type PolicyArgs struct {
 	TargetKind pulumi.StringInput
 	// List of the targets this policy will be applied to. Not used if `target` is set to `all`.
 	TargetLinks pulumi.StringArrayInput
+	// A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
 	TargetQuery PolicyTargetQueryPtrInput
 }
 
@@ -281,6 +291,7 @@ func (o PolicyOutput) ToOutput(ctx context.Context) pulumix.Output[*Policy] {
 	}
 }
 
+// The association between a target kind and the bound permissions to service principals.
 func (o PolicyOutput) Bindings() PolicyBindingArrayOutput {
 	return o.ApplyT(func(v *Policy) PolicyBindingArrayOutput { return v.Bindings }).(PolicyBindingArrayOutput)
 }
@@ -336,6 +347,7 @@ func (o PolicyOutput) TargetLinks() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Policy) pulumi.StringArrayOutput { return v.TargetLinks }).(pulumi.StringArrayOutput)
 }
 
+// A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
 func (o PolicyOutput) TargetQuery() PolicyTargetQueryPtrOutput {
 	return o.ApplyT(func(v *Policy) PolicyTargetQueryPtrOutput { return v.TargetQuery }).(PolicyTargetQueryPtrOutput)
 }

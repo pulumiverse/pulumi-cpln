@@ -16,6 +16,7 @@ import (
 type VolumeSet struct {
 	pulumi.CustomResourceState
 
+	// Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
 	Autoscaling VolumeSetAutoscalingPtrOutput `pulumi:"autoscaling"`
 	// ID, in GUID format, of the Volume Set.
 	CplnId pulumi.StringOutput `pulumi:"cplnId"`
@@ -33,7 +34,8 @@ type VolumeSet struct {
 	// `high-throughput-ssd`
 	PerformanceClass pulumi.StringOutput `pulumi:"performanceClass"`
 	// Full link to this resource. Can be referenced by other resources.
-	SelfLink  pulumi.StringOutput         `pulumi:"selfLink"`
+	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
+	// Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
 	Snapshots VolumeSetSnapshotsPtrOutput `pulumi:"snapshots"`
 	// Status of the Volume Set.
 	Statuses VolumeSetStatusArrayOutput `pulumi:"statuses"`
@@ -86,6 +88,7 @@ func GetVolumeSet(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering VolumeSet resources.
 type volumeSetState struct {
+	// Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
 	Autoscaling *VolumeSetAutoscaling `pulumi:"autoscaling"`
 	// ID, in GUID format, of the Volume Set.
 	CplnId *string `pulumi:"cplnId"`
@@ -103,7 +106,8 @@ type volumeSetState struct {
 	// `high-throughput-ssd`
 	PerformanceClass *string `pulumi:"performanceClass"`
 	// Full link to this resource. Can be referenced by other resources.
-	SelfLink  *string             `pulumi:"selfLink"`
+	SelfLink *string `pulumi:"selfLink"`
+	// Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
 	Snapshots *VolumeSetSnapshots `pulumi:"snapshots"`
 	// Status of the Volume Set.
 	Statuses []VolumeSetStatus `pulumi:"statuses"`
@@ -118,6 +122,7 @@ type volumeSetState struct {
 }
 
 type VolumeSetState struct {
+	// Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
 	Autoscaling VolumeSetAutoscalingPtrInput
 	// ID, in GUID format, of the Volume Set.
 	CplnId pulumi.StringPtrInput
@@ -135,7 +140,8 @@ type VolumeSetState struct {
 	// `high-throughput-ssd`
 	PerformanceClass pulumi.StringPtrInput
 	// Full link to this resource. Can be referenced by other resources.
-	SelfLink  pulumi.StringPtrInput
+	SelfLink pulumi.StringPtrInput
+	// Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
 	Snapshots VolumeSetSnapshotsPtrInput
 	// Status of the Volume Set.
 	Statuses VolumeSetStatusArrayInput
@@ -154,6 +160,7 @@ func (VolumeSetState) ElementType() reflect.Type {
 }
 
 type volumeSetArgs struct {
+	// Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
 	Autoscaling *VolumeSetAutoscaling `pulumi:"autoscaling"`
 	// Description of the Volume Set.
 	Description *string `pulumi:"description"`
@@ -167,8 +174,9 @@ type volumeSetArgs struct {
 	Name *string `pulumi:"name"`
 	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
 	// `high-throughput-ssd`
-	PerformanceClass string              `pulumi:"performanceClass"`
-	Snapshots        *VolumeSetSnapshots `pulumi:"snapshots"`
+	PerformanceClass string `pulumi:"performanceClass"`
+	// Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
+	Snapshots *VolumeSetSnapshots `pulumi:"snapshots"`
 	// For self-hosted locations only. The storage class used for volumes in this set will be
 	// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
 	// {performanceClass}-{fileSystemType}
@@ -179,6 +187,7 @@ type volumeSetArgs struct {
 
 // The set of arguments for constructing a VolumeSet resource.
 type VolumeSetArgs struct {
+	// Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
 	Autoscaling VolumeSetAutoscalingPtrInput
 	// Description of the Volume Set.
 	Description pulumi.StringPtrInput
@@ -193,7 +202,8 @@ type VolumeSetArgs struct {
 	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
 	// `high-throughput-ssd`
 	PerformanceClass pulumi.StringInput
-	Snapshots        VolumeSetSnapshotsPtrInput
+	// Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
+	Snapshots VolumeSetSnapshotsPtrInput
 	// For self-hosted locations only. The storage class used for volumes in this set will be
 	// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
 	// {performanceClass}-{fileSystemType}
@@ -313,6 +323,7 @@ func (o VolumeSetOutput) ToOutput(ctx context.Context) pulumix.Output[*VolumeSet
 	}
 }
 
+// Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
 func (o VolumeSetOutput) Autoscaling() VolumeSetAutoscalingPtrOutput {
 	return o.ApplyT(func(v *VolumeSet) VolumeSetAutoscalingPtrOutput { return v.Autoscaling }).(VolumeSetAutoscalingPtrOutput)
 }
@@ -358,6 +369,7 @@ func (o VolumeSetOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
 }
 
+// Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
 func (o VolumeSetOutput) Snapshots() VolumeSetSnapshotsPtrOutput {
 	return o.ApplyT(func(v *VolumeSet) VolumeSetSnapshotsPtrOutput { return v.Snapshots }).(VolumeSetSnapshotsPtrOutput)
 }

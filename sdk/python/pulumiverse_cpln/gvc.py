@@ -33,6 +33,7 @@ class GvcArgs:
         :param pulumi.Input[str] description: Description of the GVC.
         :param pulumi.Input[str] domain: Custom domain name used by associated workloads.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] env: Key-value array of resource env variables.
+        :param pulumi.Input['GvcLoadBalancerArgs'] load_balancer: Dedicated load balancer configuration.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] locations: A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
         :param pulumi.Input[str] name: Name of the GVC.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] pull_secrets: A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
@@ -170,6 +171,9 @@ class GvcArgs:
     @property
     @pulumi.getter(name="loadBalancer")
     def load_balancer(self) -> Optional[pulumi.Input['GvcLoadBalancerArgs']]:
+        """
+        Dedicated load balancer configuration.
+        """
         return pulumi.get(self, "load_balancer")
 
     @load_balancer.setter
@@ -269,6 +273,7 @@ class _GvcState:
         :param pulumi.Input[str] description: Description of the GVC.
         :param pulumi.Input[str] domain: Custom domain name used by associated workloads.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] env: Key-value array of resource env variables.
+        :param pulumi.Input['GvcLoadBalancerArgs'] load_balancer: Dedicated load balancer configuration.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] locations: A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
         :param pulumi.Input[str] name: Name of the GVC.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] pull_secrets: A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
@@ -447,6 +452,9 @@ class _GvcState:
     @property
     @pulumi.getter(name="loadBalancer")
     def load_balancer(self) -> Optional[pulumi.Input['GvcLoadBalancerArgs']]:
+        """
+        Dedicated load balancer configuration.
+        """
         return pulumi.get(self, "load_balancer")
 
     @load_balancer.setter
@@ -558,6 +566,7 @@ class Gvc(pulumi.CustomResource):
         :param pulumi.Input[str] description: Description of the GVC.
         :param pulumi.Input[str] domain: Custom domain name used by associated workloads.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] env: Key-value array of resource env variables.
+        :param pulumi.Input[pulumi.InputType['GvcLoadBalancerArgs']] load_balancer: Dedicated load balancer configuration.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] locations: A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
         :param pulumi.Input[str] name: Name of the GVC.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] pull_secrets: A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
@@ -689,6 +698,7 @@ class Gvc(pulumi.CustomResource):
         :param pulumi.Input[str] description: Description of the GVC.
         :param pulumi.Input[str] domain: Custom domain name used by associated workloads.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] env: Key-value array of resource env variables.
+        :param pulumi.Input[pulumi.InputType['GvcLoadBalancerArgs']] load_balancer: Dedicated load balancer configuration.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] locations: A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
         :param pulumi.Input[str] name: Name of the GVC.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] pull_secrets: A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
@@ -773,6 +783,9 @@ class Gvc(pulumi.CustomResource):
     @property
     @pulumi.getter(name="loadBalancer")
     def load_balancer(self) -> pulumi.Output[Optional['outputs.GvcLoadBalancer']]:
+        """
+        Dedicated load balancer configuration.
+        """
         return pulumi.get(self, "load_balancer")
 
     @property

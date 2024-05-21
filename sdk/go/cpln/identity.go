@@ -16,7 +16,11 @@ import (
 type Identity struct {
 	pulumi.CustomResourceState
 
-	AwsAccessPolicy   IdentityAwsAccessPolicyPtrOutput   `pulumi:"awsAccessPolicy"`
+	// A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+	// environment.
+	AwsAccessPolicy IdentityAwsAccessPolicyPtrOutput `pulumi:"awsAccessPolicy"`
+	// A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+	// environment.
 	AzureAccessPolicy IdentityAzureAccessPolicyPtrOutput `pulumi:"azureAccessPolicy"`
 	// ID, in GUID format, of the Identity.
 	CplnId pulumi.StringOutput `pulumi:"cplnId"`
@@ -33,7 +37,9 @@ type Identity struct {
 	// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
 	// ports. - IP's and ports.
 	NetworkResources IdentityNetworkResourceArrayOutput `pulumi:"networkResources"`
-	NgsAccessPolicy  IdentityNgsAccessPolicyPtrOutput   `pulumi:"ngsAccessPolicy"`
+	// A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+	// environment.
+	NgsAccessPolicy IdentityNgsAccessPolicyPtrOutput `pulumi:"ngsAccessPolicy"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
 	// Key-value map of identity status. Available fields: `objectName`.
@@ -75,7 +81,11 @@ func GetIdentity(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Identity resources.
 type identityState struct {
-	AwsAccessPolicy   *IdentityAwsAccessPolicy   `pulumi:"awsAccessPolicy"`
+	// A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+	// environment.
+	AwsAccessPolicy *IdentityAwsAccessPolicy `pulumi:"awsAccessPolicy"`
+	// A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+	// environment.
 	AzureAccessPolicy *IdentityAzureAccessPolicy `pulumi:"azureAccessPolicy"`
 	// ID, in GUID format, of the Identity.
 	CplnId *string `pulumi:"cplnId"`
@@ -92,7 +102,9 @@ type identityState struct {
 	// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
 	// ports. - IP's and ports.
 	NetworkResources []IdentityNetworkResource `pulumi:"networkResources"`
-	NgsAccessPolicy  *IdentityNgsAccessPolicy  `pulumi:"ngsAccessPolicy"`
+	// A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+	// environment.
+	NgsAccessPolicy *IdentityNgsAccessPolicy `pulumi:"ngsAccessPolicy"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink *string `pulumi:"selfLink"`
 	// Key-value map of identity status. Available fields: `objectName`.
@@ -102,7 +114,11 @@ type identityState struct {
 }
 
 type IdentityState struct {
-	AwsAccessPolicy   IdentityAwsAccessPolicyPtrInput
+	// A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+	// environment.
+	AwsAccessPolicy IdentityAwsAccessPolicyPtrInput
+	// A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+	// environment.
 	AzureAccessPolicy IdentityAzureAccessPolicyPtrInput
 	// ID, in GUID format, of the Identity.
 	CplnId pulumi.StringPtrInput
@@ -119,7 +135,9 @@ type IdentityState struct {
 	// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
 	// ports. - IP's and ports.
 	NetworkResources IdentityNetworkResourceArrayInput
-	NgsAccessPolicy  IdentityNgsAccessPolicyPtrInput
+	// A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+	// environment.
+	NgsAccessPolicy IdentityNgsAccessPolicyPtrInput
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringPtrInput
 	// Key-value map of identity status. Available fields: `objectName`.
@@ -133,7 +151,11 @@ func (IdentityState) ElementType() reflect.Type {
 }
 
 type identityArgs struct {
-	AwsAccessPolicy   *IdentityAwsAccessPolicy   `pulumi:"awsAccessPolicy"`
+	// A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+	// environment.
+	AwsAccessPolicy *IdentityAwsAccessPolicy `pulumi:"awsAccessPolicy"`
+	// A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+	// environment.
 	AzureAccessPolicy *IdentityAzureAccessPolicy `pulumi:"azureAccessPolicy"`
 	// Description of the Identity.
 	Description *string `pulumi:"description"`
@@ -148,14 +170,20 @@ type identityArgs struct {
 	// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
 	// ports. - IP's and ports.
 	NetworkResources []IdentityNetworkResource `pulumi:"networkResources"`
-	NgsAccessPolicy  *IdentityNgsAccessPolicy  `pulumi:"ngsAccessPolicy"`
+	// A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+	// environment.
+	NgsAccessPolicy *IdentityNgsAccessPolicy `pulumi:"ngsAccessPolicy"`
 	// Key-value map of resource tags.
 	Tags map[string]string `pulumi:"tags"`
 }
 
 // The set of arguments for constructing a Identity resource.
 type IdentityArgs struct {
-	AwsAccessPolicy   IdentityAwsAccessPolicyPtrInput
+	// A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+	// environment.
+	AwsAccessPolicy IdentityAwsAccessPolicyPtrInput
+	// A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+	// environment.
 	AzureAccessPolicy IdentityAzureAccessPolicyPtrInput
 	// Description of the Identity.
 	Description pulumi.StringPtrInput
@@ -170,7 +198,9 @@ type IdentityArgs struct {
 	// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
 	// ports. - IP's and ports.
 	NetworkResources IdentityNetworkResourceArrayInput
-	NgsAccessPolicy  IdentityNgsAccessPolicyPtrInput
+	// A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+	// environment.
+	NgsAccessPolicy IdentityNgsAccessPolicyPtrInput
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapInput
 }
@@ -286,10 +316,14 @@ func (o IdentityOutput) ToOutput(ctx context.Context) pulumix.Output[*Identity] 
 	}
 }
 
+// A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+// environment.
 func (o IdentityOutput) AwsAccessPolicy() IdentityAwsAccessPolicyPtrOutput {
 	return o.ApplyT(func(v *Identity) IdentityAwsAccessPolicyPtrOutput { return v.AwsAccessPolicy }).(IdentityAwsAccessPolicyPtrOutput)
 }
 
+// A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+// environment.
 func (o IdentityOutput) AzureAccessPolicy() IdentityAzureAccessPolicyPtrOutput {
 	return o.ApplyT(func(v *Identity) IdentityAzureAccessPolicyPtrOutput { return v.AzureAccessPolicy }).(IdentityAzureAccessPolicyPtrOutput)
 }
@@ -330,6 +364,8 @@ func (o IdentityOutput) NetworkResources() IdentityNetworkResourceArrayOutput {
 	return o.ApplyT(func(v *Identity) IdentityNetworkResourceArrayOutput { return v.NetworkResources }).(IdentityNetworkResourceArrayOutput)
 }
 
+// A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+// environment.
 func (o IdentityOutput) NgsAccessPolicy() IdentityNgsAccessPolicyPtrOutput {
 	return o.ApplyT(func(v *Identity) IdentityNgsAccessPolicyPtrOutput { return v.NgsAccessPolicy }).(IdentityNgsAccessPolicyPtrOutput)
 }

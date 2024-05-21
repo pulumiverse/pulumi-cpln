@@ -18,7 +18,8 @@ type Org struct {
 
 	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
 	// obtained from the `Org Management & Billing` page.
-	AccountId  pulumi.StringPtrOutput `pulumi:"accountId"`
+	AccountId pulumi.StringPtrOutput `pulumi:"accountId"`
+	// The configuration settings and parameters related to authentication within the org.
 	AuthConfig OrgAuthConfigPtrOutput `pulumi:"authConfig"`
 	// The ID, in GUID format, of the org.
 	CplnId pulumi.StringOutput `pulumi:"cplnId"`
@@ -31,6 +32,7 @@ type Org struct {
 	Name pulumi.StringOutput `pulumi:"name"`
 	// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
 	Observability OrgObservabilityOutput `pulumi:"observability"`
+	Security      OrgSecurityPtrOutput   `pulumi:"security"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
 	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
@@ -76,7 +78,8 @@ func GetOrg(ctx *pulumi.Context,
 type orgState struct {
 	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
 	// obtained from the `Org Management & Billing` page.
-	AccountId  *string        `pulumi:"accountId"`
+	AccountId *string `pulumi:"accountId"`
+	// The configuration settings and parameters related to authentication within the org.
 	AuthConfig *OrgAuthConfig `pulumi:"authConfig"`
 	// The ID, in GUID format, of the org.
 	CplnId *string `pulumi:"cplnId"`
@@ -89,6 +92,7 @@ type orgState struct {
 	Name *string `pulumi:"name"`
 	// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
 	Observability *OrgObservability `pulumi:"observability"`
+	Security      *OrgSecurity      `pulumi:"security"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink *string `pulumi:"selfLink"`
 	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
@@ -102,7 +106,8 @@ type orgState struct {
 type OrgState struct {
 	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
 	// obtained from the `Org Management & Billing` page.
-	AccountId  pulumi.StringPtrInput
+	AccountId pulumi.StringPtrInput
+	// The configuration settings and parameters related to authentication within the org.
 	AuthConfig OrgAuthConfigPtrInput
 	// The ID, in GUID format, of the org.
 	CplnId pulumi.StringPtrInput
@@ -115,6 +120,7 @@ type OrgState struct {
 	Name pulumi.StringPtrInput
 	// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
 	Observability OrgObservabilityPtrInput
+	Security      OrgSecurityPtrInput
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringPtrInput
 	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
@@ -132,7 +138,8 @@ func (OrgState) ElementType() reflect.Type {
 type orgArgs struct {
 	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
 	// obtained from the `Org Management & Billing` page.
-	AccountId  *string        `pulumi:"accountId"`
+	AccountId *string `pulumi:"accountId"`
+	// The configuration settings and parameters related to authentication within the org.
 	AuthConfig *OrgAuthConfig `pulumi:"authConfig"`
 	// The description of org.
 	Description *string `pulumi:"description"`
@@ -141,6 +148,7 @@ type orgArgs struct {
 	Invitees []string `pulumi:"invitees"`
 	// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
 	Observability OrgObservability `pulumi:"observability"`
+	Security      *OrgSecurity     `pulumi:"security"`
 	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
 	SessionTimeoutSeconds *int `pulumi:"sessionTimeoutSeconds"`
 	// Key-value map of the org's tags.
@@ -151,7 +159,8 @@ type orgArgs struct {
 type OrgArgs struct {
 	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
 	// obtained from the `Org Management & Billing` page.
-	AccountId  pulumi.StringPtrInput
+	AccountId pulumi.StringPtrInput
+	// The configuration settings and parameters related to authentication within the org.
 	AuthConfig OrgAuthConfigPtrInput
 	// The description of org.
 	Description pulumi.StringPtrInput
@@ -160,6 +169,7 @@ type OrgArgs struct {
 	Invitees pulumi.StringArrayInput
 	// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
 	Observability OrgObservabilityInput
+	Security      OrgSecurityPtrInput
 	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
 	SessionTimeoutSeconds pulumi.IntPtrInput
 	// Key-value map of the org's tags.
@@ -283,6 +293,7 @@ func (o OrgOutput) AccountId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Org) pulumi.StringPtrOutput { return v.AccountId }).(pulumi.StringPtrOutput)
 }
 
+// The configuration settings and parameters related to authentication within the org.
 func (o OrgOutput) AuthConfig() OrgAuthConfigPtrOutput {
 	return o.ApplyT(func(v *Org) OrgAuthConfigPtrOutput { return v.AuthConfig }).(OrgAuthConfigPtrOutput)
 }
@@ -311,6 +322,10 @@ func (o OrgOutput) Name() pulumi.StringOutput {
 // The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
 func (o OrgOutput) Observability() OrgObservabilityOutput {
 	return o.ApplyT(func(v *Org) OrgObservabilityOutput { return v.Observability }).(OrgObservabilityOutput)
+}
+
+func (o OrgOutput) Security() OrgSecurityPtrOutput {
+	return o.ApplyT(func(v *Org) OrgSecurityPtrOutput { return v.Security }).(OrgSecurityPtrOutput)
 }
 
 // Full link to this resource. Can be referenced by other resources.

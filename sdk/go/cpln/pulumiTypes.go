@@ -6137,6 +6137,7 @@ type Mk8sAddOns struct {
 	Logs                  *Mk8sAddOnsLogs                  `pulumi:"logs"`
 	Metrics               *Mk8sAddOnsMetrics               `pulumi:"metrics"`
 	Nvidia                *Mk8sAddOnsNvidia                `pulumi:"nvidia"`
+	Sysbox                *bool                            `pulumi:"sysbox"`
 }
 
 // Mk8sAddOnsInput is an input type that accepts Mk8sAddOnsArgs and Mk8sAddOnsOutput values.
@@ -6162,6 +6163,7 @@ type Mk8sAddOnsArgs struct {
 	Logs                  Mk8sAddOnsLogsPtrInput                  `pulumi:"logs"`
 	Metrics               Mk8sAddOnsMetricsPtrInput               `pulumi:"metrics"`
 	Nvidia                Mk8sAddOnsNvidiaPtrInput                `pulumi:"nvidia"`
+	Sysbox                pulumi.BoolPtrInput                     `pulumi:"sysbox"`
 }
 
 func (Mk8sAddOnsArgs) ElementType() reflect.Type {
@@ -6303,6 +6305,10 @@ func (o Mk8sAddOnsOutput) Nvidia() Mk8sAddOnsNvidiaPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOns) *Mk8sAddOnsNvidia { return v.Nvidia }).(Mk8sAddOnsNvidiaPtrOutput)
 }
 
+func (o Mk8sAddOnsOutput) Sysbox() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOns) *bool { return v.Sysbox }).(pulumi.BoolPtrOutput)
+}
+
 type Mk8sAddOnsPtrOutput struct{ *pulumi.OutputState }
 
 func (Mk8sAddOnsPtrOutput) ElementType() reflect.Type {
@@ -6430,6 +6436,15 @@ func (o Mk8sAddOnsPtrOutput) Nvidia() Mk8sAddOnsNvidiaPtrOutput {
 		}
 		return v.Nvidia
 	}).(Mk8sAddOnsNvidiaPtrOutput)
+}
+
+func (o Mk8sAddOnsPtrOutput) Sysbox() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOns) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Sysbox
+	}).(pulumi.BoolPtrOutput)
 }
 
 type Mk8sAddOnsAwsEcr struct {
@@ -8012,6 +8027,7 @@ func (o Mk8sAddOnsNvidiaPtrOutput) TaintGpuNodes() pulumi.BoolPtrOutput {
 
 type Mk8sAwsProvider struct {
 	Autoscaler           *Mk8sAwsProviderAutoscaler `pulumi:"autoscaler"`
+	AwsTags              map[string]string          `pulumi:"awsTags"`
 	DeployRoleArn        string                     `pulumi:"deployRoleArn"`
 	DiskEncryptionKeyArn *string                    `pulumi:"diskEncryptionKeyArn"`
 	Image                Mk8sAwsProviderImage       `pulumi:"image"`
@@ -8038,6 +8054,7 @@ type Mk8sAwsProviderInput interface {
 
 type Mk8sAwsProviderArgs struct {
 	Autoscaler           Mk8sAwsProviderAutoscalerPtrInput `pulumi:"autoscaler"`
+	AwsTags              pulumi.StringMapInput             `pulumi:"awsTags"`
 	DeployRoleArn        pulumi.StringInput                `pulumi:"deployRoleArn"`
 	DiskEncryptionKeyArn pulumi.StringPtrInput             `pulumi:"diskEncryptionKeyArn"`
 	Image                Mk8sAwsProviderImageInput         `pulumi:"image"`
@@ -8150,6 +8167,10 @@ func (o Mk8sAwsProviderOutput) Autoscaler() Mk8sAwsProviderAutoscalerPtrOutput {
 	return o.ApplyT(func(v Mk8sAwsProvider) *Mk8sAwsProviderAutoscaler { return v.Autoscaler }).(Mk8sAwsProviderAutoscalerPtrOutput)
 }
 
+func (o Mk8sAwsProviderOutput) AwsTags() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sAwsProvider) map[string]string { return v.AwsTags }).(pulumi.StringMapOutput)
+}
+
 func (o Mk8sAwsProviderOutput) DeployRoleArn() pulumi.StringOutput {
 	return o.ApplyT(func(v Mk8sAwsProvider) string { return v.DeployRoleArn }).(pulumi.StringOutput)
 }
@@ -8231,6 +8252,15 @@ func (o Mk8sAwsProviderPtrOutput) Autoscaler() Mk8sAwsProviderAutoscalerPtrOutpu
 		}
 		return v.Autoscaler
 	}).(Mk8sAwsProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sAwsProviderPtrOutput) AwsTags() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Mk8sAwsProvider) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.AwsTags
+	}).(pulumi.StringMapOutput)
 }
 
 func (o Mk8sAwsProviderPtrOutput) DeployRoleArn() pulumi.StringPtrOutput {
@@ -10012,6 +10042,7 @@ type Mk8sHetznerProvider struct {
 	Autoscaler               *Mk8sHetznerProviderAutoscaler               `pulumi:"autoscaler"`
 	DedicatedServerNodePools []Mk8sHetznerProviderDedicatedServerNodePool `pulumi:"dedicatedServerNodePools"`
 	FirewallId               *string                                      `pulumi:"firewallId"`
+	HetznerLabels            map[string]string                            `pulumi:"hetznerLabels"`
 	Image                    *string                                      `pulumi:"image"`
 	NetworkId                string                                       `pulumi:"networkId"`
 	Networking               *Mk8sHetznerProviderNetworking               `pulumi:"networking"`
@@ -10037,6 +10068,7 @@ type Mk8sHetznerProviderArgs struct {
 	Autoscaler               Mk8sHetznerProviderAutoscalerPtrInput                `pulumi:"autoscaler"`
 	DedicatedServerNodePools Mk8sHetznerProviderDedicatedServerNodePoolArrayInput `pulumi:"dedicatedServerNodePools"`
 	FirewallId               pulumi.StringPtrInput                                `pulumi:"firewallId"`
+	HetznerLabels            pulumi.StringMapInput                                `pulumi:"hetznerLabels"`
 	Image                    pulumi.StringPtrInput                                `pulumi:"image"`
 	NetworkId                pulumi.StringInput                                   `pulumi:"networkId"`
 	Networking               Mk8sHetznerProviderNetworkingPtrInput                `pulumi:"networking"`
@@ -10156,6 +10188,10 @@ func (o Mk8sHetznerProviderOutput) FirewallId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Mk8sHetznerProvider) *string { return v.FirewallId }).(pulumi.StringPtrOutput)
 }
 
+func (o Mk8sHetznerProviderOutput) HetznerLabels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sHetznerProvider) map[string]string { return v.HetznerLabels }).(pulumi.StringMapOutput)
+}
+
 func (o Mk8sHetznerProviderOutput) Image() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Mk8sHetznerProvider) *string { return v.Image }).(pulumi.StringPtrOutput)
 }
@@ -10243,6 +10279,15 @@ func (o Mk8sHetznerProviderPtrOutput) FirewallId() pulumi.StringPtrOutput {
 		}
 		return v.FirewallId
 	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sHetznerProviderPtrOutput) HetznerLabels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Mk8sHetznerProvider) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.HetznerLabels
+	}).(pulumi.StringMapOutput)
 }
 
 func (o Mk8sHetznerProviderPtrOutput) Image() pulumi.StringPtrOutput {
@@ -14696,6 +14741,537 @@ func (o OrgObservabilityPtrOutput) TracesRetentionDays() pulumi.IntPtrOutput {
 		}
 		return v.TracesRetentionDays
 	}).(pulumi.IntPtrOutput)
+}
+
+type OrgSecurity struct {
+	ThreatDetection *OrgSecurityThreatDetection `pulumi:"threatDetection"`
+}
+
+// OrgSecurityInput is an input type that accepts OrgSecurityArgs and OrgSecurityOutput values.
+// You can construct a concrete instance of `OrgSecurityInput` via:
+//
+//	OrgSecurityArgs{...}
+type OrgSecurityInput interface {
+	pulumi.Input
+
+	ToOrgSecurityOutput() OrgSecurityOutput
+	ToOrgSecurityOutputWithContext(context.Context) OrgSecurityOutput
+}
+
+type OrgSecurityArgs struct {
+	ThreatDetection OrgSecurityThreatDetectionPtrInput `pulumi:"threatDetection"`
+}
+
+func (OrgSecurityArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrgSecurity)(nil)).Elem()
+}
+
+func (i OrgSecurityArgs) ToOrgSecurityOutput() OrgSecurityOutput {
+	return i.ToOrgSecurityOutputWithContext(context.Background())
+}
+
+func (i OrgSecurityArgs) ToOrgSecurityOutputWithContext(ctx context.Context) OrgSecurityOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgSecurityOutput)
+}
+
+func (i OrgSecurityArgs) ToOutput(ctx context.Context) pulumix.Output[OrgSecurity] {
+	return pulumix.Output[OrgSecurity]{
+		OutputState: i.ToOrgSecurityOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i OrgSecurityArgs) ToOrgSecurityPtrOutput() OrgSecurityPtrOutput {
+	return i.ToOrgSecurityPtrOutputWithContext(context.Background())
+}
+
+func (i OrgSecurityArgs) ToOrgSecurityPtrOutputWithContext(ctx context.Context) OrgSecurityPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgSecurityOutput).ToOrgSecurityPtrOutputWithContext(ctx)
+}
+
+// OrgSecurityPtrInput is an input type that accepts OrgSecurityArgs, OrgSecurityPtr and OrgSecurityPtrOutput values.
+// You can construct a concrete instance of `OrgSecurityPtrInput` via:
+//
+//	        OrgSecurityArgs{...}
+//
+//	or:
+//
+//	        nil
+type OrgSecurityPtrInput interface {
+	pulumi.Input
+
+	ToOrgSecurityPtrOutput() OrgSecurityPtrOutput
+	ToOrgSecurityPtrOutputWithContext(context.Context) OrgSecurityPtrOutput
+}
+
+type orgSecurityPtrType OrgSecurityArgs
+
+func OrgSecurityPtr(v *OrgSecurityArgs) OrgSecurityPtrInput {
+	return (*orgSecurityPtrType)(v)
+}
+
+func (*orgSecurityPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**OrgSecurity)(nil)).Elem()
+}
+
+func (i *orgSecurityPtrType) ToOrgSecurityPtrOutput() OrgSecurityPtrOutput {
+	return i.ToOrgSecurityPtrOutputWithContext(context.Background())
+}
+
+func (i *orgSecurityPtrType) ToOrgSecurityPtrOutputWithContext(ctx context.Context) OrgSecurityPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgSecurityPtrOutput)
+}
+
+func (i *orgSecurityPtrType) ToOutput(ctx context.Context) pulumix.Output[*OrgSecurity] {
+	return pulumix.Output[*OrgSecurity]{
+		OutputState: i.ToOrgSecurityPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type OrgSecurityOutput struct{ *pulumi.OutputState }
+
+func (OrgSecurityOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrgSecurity)(nil)).Elem()
+}
+
+func (o OrgSecurityOutput) ToOrgSecurityOutput() OrgSecurityOutput {
+	return o
+}
+
+func (o OrgSecurityOutput) ToOrgSecurityOutputWithContext(ctx context.Context) OrgSecurityOutput {
+	return o
+}
+
+func (o OrgSecurityOutput) ToOrgSecurityPtrOutput() OrgSecurityPtrOutput {
+	return o.ToOrgSecurityPtrOutputWithContext(context.Background())
+}
+
+func (o OrgSecurityOutput) ToOrgSecurityPtrOutputWithContext(ctx context.Context) OrgSecurityPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v OrgSecurity) *OrgSecurity {
+		return &v
+	}).(OrgSecurityPtrOutput)
+}
+
+func (o OrgSecurityOutput) ToOutput(ctx context.Context) pulumix.Output[OrgSecurity] {
+	return pulumix.Output[OrgSecurity]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o OrgSecurityOutput) ThreatDetection() OrgSecurityThreatDetectionPtrOutput {
+	return o.ApplyT(func(v OrgSecurity) *OrgSecurityThreatDetection { return v.ThreatDetection }).(OrgSecurityThreatDetectionPtrOutput)
+}
+
+type OrgSecurityPtrOutput struct{ *pulumi.OutputState }
+
+func (OrgSecurityPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**OrgSecurity)(nil)).Elem()
+}
+
+func (o OrgSecurityPtrOutput) ToOrgSecurityPtrOutput() OrgSecurityPtrOutput {
+	return o
+}
+
+func (o OrgSecurityPtrOutput) ToOrgSecurityPtrOutputWithContext(ctx context.Context) OrgSecurityPtrOutput {
+	return o
+}
+
+func (o OrgSecurityPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*OrgSecurity] {
+	return pulumix.Output[*OrgSecurity]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o OrgSecurityPtrOutput) Elem() OrgSecurityOutput {
+	return o.ApplyT(func(v *OrgSecurity) OrgSecurity {
+		if v != nil {
+			return *v
+		}
+		var ret OrgSecurity
+		return ret
+	}).(OrgSecurityOutput)
+}
+
+func (o OrgSecurityPtrOutput) ThreatDetection() OrgSecurityThreatDetectionPtrOutput {
+	return o.ApplyT(func(v *OrgSecurity) *OrgSecurityThreatDetection {
+		if v == nil {
+			return nil
+		}
+		return v.ThreatDetection
+	}).(OrgSecurityThreatDetectionPtrOutput)
+}
+
+type OrgSecurityThreatDetection struct {
+	Enabled         *bool                             `pulumi:"enabled"`
+	MinimumSeverity *string                           `pulumi:"minimumSeverity"`
+	Syslog          *OrgSecurityThreatDetectionSyslog `pulumi:"syslog"`
+}
+
+// OrgSecurityThreatDetectionInput is an input type that accepts OrgSecurityThreatDetectionArgs and OrgSecurityThreatDetectionOutput values.
+// You can construct a concrete instance of `OrgSecurityThreatDetectionInput` via:
+//
+//	OrgSecurityThreatDetectionArgs{...}
+type OrgSecurityThreatDetectionInput interface {
+	pulumi.Input
+
+	ToOrgSecurityThreatDetectionOutput() OrgSecurityThreatDetectionOutput
+	ToOrgSecurityThreatDetectionOutputWithContext(context.Context) OrgSecurityThreatDetectionOutput
+}
+
+type OrgSecurityThreatDetectionArgs struct {
+	Enabled         pulumi.BoolPtrInput                      `pulumi:"enabled"`
+	MinimumSeverity pulumi.StringPtrInput                    `pulumi:"minimumSeverity"`
+	Syslog          OrgSecurityThreatDetectionSyslogPtrInput `pulumi:"syslog"`
+}
+
+func (OrgSecurityThreatDetectionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrgSecurityThreatDetection)(nil)).Elem()
+}
+
+func (i OrgSecurityThreatDetectionArgs) ToOrgSecurityThreatDetectionOutput() OrgSecurityThreatDetectionOutput {
+	return i.ToOrgSecurityThreatDetectionOutputWithContext(context.Background())
+}
+
+func (i OrgSecurityThreatDetectionArgs) ToOrgSecurityThreatDetectionOutputWithContext(ctx context.Context) OrgSecurityThreatDetectionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgSecurityThreatDetectionOutput)
+}
+
+func (i OrgSecurityThreatDetectionArgs) ToOutput(ctx context.Context) pulumix.Output[OrgSecurityThreatDetection] {
+	return pulumix.Output[OrgSecurityThreatDetection]{
+		OutputState: i.ToOrgSecurityThreatDetectionOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i OrgSecurityThreatDetectionArgs) ToOrgSecurityThreatDetectionPtrOutput() OrgSecurityThreatDetectionPtrOutput {
+	return i.ToOrgSecurityThreatDetectionPtrOutputWithContext(context.Background())
+}
+
+func (i OrgSecurityThreatDetectionArgs) ToOrgSecurityThreatDetectionPtrOutputWithContext(ctx context.Context) OrgSecurityThreatDetectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgSecurityThreatDetectionOutput).ToOrgSecurityThreatDetectionPtrOutputWithContext(ctx)
+}
+
+// OrgSecurityThreatDetectionPtrInput is an input type that accepts OrgSecurityThreatDetectionArgs, OrgSecurityThreatDetectionPtr and OrgSecurityThreatDetectionPtrOutput values.
+// You can construct a concrete instance of `OrgSecurityThreatDetectionPtrInput` via:
+//
+//	        OrgSecurityThreatDetectionArgs{...}
+//
+//	or:
+//
+//	        nil
+type OrgSecurityThreatDetectionPtrInput interface {
+	pulumi.Input
+
+	ToOrgSecurityThreatDetectionPtrOutput() OrgSecurityThreatDetectionPtrOutput
+	ToOrgSecurityThreatDetectionPtrOutputWithContext(context.Context) OrgSecurityThreatDetectionPtrOutput
+}
+
+type orgSecurityThreatDetectionPtrType OrgSecurityThreatDetectionArgs
+
+func OrgSecurityThreatDetectionPtr(v *OrgSecurityThreatDetectionArgs) OrgSecurityThreatDetectionPtrInput {
+	return (*orgSecurityThreatDetectionPtrType)(v)
+}
+
+func (*orgSecurityThreatDetectionPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**OrgSecurityThreatDetection)(nil)).Elem()
+}
+
+func (i *orgSecurityThreatDetectionPtrType) ToOrgSecurityThreatDetectionPtrOutput() OrgSecurityThreatDetectionPtrOutput {
+	return i.ToOrgSecurityThreatDetectionPtrOutputWithContext(context.Background())
+}
+
+func (i *orgSecurityThreatDetectionPtrType) ToOrgSecurityThreatDetectionPtrOutputWithContext(ctx context.Context) OrgSecurityThreatDetectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgSecurityThreatDetectionPtrOutput)
+}
+
+func (i *orgSecurityThreatDetectionPtrType) ToOutput(ctx context.Context) pulumix.Output[*OrgSecurityThreatDetection] {
+	return pulumix.Output[*OrgSecurityThreatDetection]{
+		OutputState: i.ToOrgSecurityThreatDetectionPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type OrgSecurityThreatDetectionOutput struct{ *pulumi.OutputState }
+
+func (OrgSecurityThreatDetectionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrgSecurityThreatDetection)(nil)).Elem()
+}
+
+func (o OrgSecurityThreatDetectionOutput) ToOrgSecurityThreatDetectionOutput() OrgSecurityThreatDetectionOutput {
+	return o
+}
+
+func (o OrgSecurityThreatDetectionOutput) ToOrgSecurityThreatDetectionOutputWithContext(ctx context.Context) OrgSecurityThreatDetectionOutput {
+	return o
+}
+
+func (o OrgSecurityThreatDetectionOutput) ToOrgSecurityThreatDetectionPtrOutput() OrgSecurityThreatDetectionPtrOutput {
+	return o.ToOrgSecurityThreatDetectionPtrOutputWithContext(context.Background())
+}
+
+func (o OrgSecurityThreatDetectionOutput) ToOrgSecurityThreatDetectionPtrOutputWithContext(ctx context.Context) OrgSecurityThreatDetectionPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v OrgSecurityThreatDetection) *OrgSecurityThreatDetection {
+		return &v
+	}).(OrgSecurityThreatDetectionPtrOutput)
+}
+
+func (o OrgSecurityThreatDetectionOutput) ToOutput(ctx context.Context) pulumix.Output[OrgSecurityThreatDetection] {
+	return pulumix.Output[OrgSecurityThreatDetection]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o OrgSecurityThreatDetectionOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v OrgSecurityThreatDetection) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+func (o OrgSecurityThreatDetectionOutput) MinimumSeverity() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v OrgSecurityThreatDetection) *string { return v.MinimumSeverity }).(pulumi.StringPtrOutput)
+}
+
+func (o OrgSecurityThreatDetectionOutput) Syslog() OrgSecurityThreatDetectionSyslogPtrOutput {
+	return o.ApplyT(func(v OrgSecurityThreatDetection) *OrgSecurityThreatDetectionSyslog { return v.Syslog }).(OrgSecurityThreatDetectionSyslogPtrOutput)
+}
+
+type OrgSecurityThreatDetectionPtrOutput struct{ *pulumi.OutputState }
+
+func (OrgSecurityThreatDetectionPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**OrgSecurityThreatDetection)(nil)).Elem()
+}
+
+func (o OrgSecurityThreatDetectionPtrOutput) ToOrgSecurityThreatDetectionPtrOutput() OrgSecurityThreatDetectionPtrOutput {
+	return o
+}
+
+func (o OrgSecurityThreatDetectionPtrOutput) ToOrgSecurityThreatDetectionPtrOutputWithContext(ctx context.Context) OrgSecurityThreatDetectionPtrOutput {
+	return o
+}
+
+func (o OrgSecurityThreatDetectionPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*OrgSecurityThreatDetection] {
+	return pulumix.Output[*OrgSecurityThreatDetection]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o OrgSecurityThreatDetectionPtrOutput) Elem() OrgSecurityThreatDetectionOutput {
+	return o.ApplyT(func(v *OrgSecurityThreatDetection) OrgSecurityThreatDetection {
+		if v != nil {
+			return *v
+		}
+		var ret OrgSecurityThreatDetection
+		return ret
+	}).(OrgSecurityThreatDetectionOutput)
+}
+
+func (o OrgSecurityThreatDetectionPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *OrgSecurityThreatDetection) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o OrgSecurityThreatDetectionPtrOutput) MinimumSeverity() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *OrgSecurityThreatDetection) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinimumSeverity
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o OrgSecurityThreatDetectionPtrOutput) Syslog() OrgSecurityThreatDetectionSyslogPtrOutput {
+	return o.ApplyT(func(v *OrgSecurityThreatDetection) *OrgSecurityThreatDetectionSyslog {
+		if v == nil {
+			return nil
+		}
+		return v.Syslog
+	}).(OrgSecurityThreatDetectionSyslogPtrOutput)
+}
+
+type OrgSecurityThreatDetectionSyslog struct {
+	Host      *string `pulumi:"host"`
+	Port      int     `pulumi:"port"`
+	Transport *string `pulumi:"transport"`
+}
+
+// OrgSecurityThreatDetectionSyslogInput is an input type that accepts OrgSecurityThreatDetectionSyslogArgs and OrgSecurityThreatDetectionSyslogOutput values.
+// You can construct a concrete instance of `OrgSecurityThreatDetectionSyslogInput` via:
+//
+//	OrgSecurityThreatDetectionSyslogArgs{...}
+type OrgSecurityThreatDetectionSyslogInput interface {
+	pulumi.Input
+
+	ToOrgSecurityThreatDetectionSyslogOutput() OrgSecurityThreatDetectionSyslogOutput
+	ToOrgSecurityThreatDetectionSyslogOutputWithContext(context.Context) OrgSecurityThreatDetectionSyslogOutput
+}
+
+type OrgSecurityThreatDetectionSyslogArgs struct {
+	Host      pulumi.StringPtrInput `pulumi:"host"`
+	Port      pulumi.IntInput       `pulumi:"port"`
+	Transport pulumi.StringPtrInput `pulumi:"transport"`
+}
+
+func (OrgSecurityThreatDetectionSyslogArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrgSecurityThreatDetectionSyslog)(nil)).Elem()
+}
+
+func (i OrgSecurityThreatDetectionSyslogArgs) ToOrgSecurityThreatDetectionSyslogOutput() OrgSecurityThreatDetectionSyslogOutput {
+	return i.ToOrgSecurityThreatDetectionSyslogOutputWithContext(context.Background())
+}
+
+func (i OrgSecurityThreatDetectionSyslogArgs) ToOrgSecurityThreatDetectionSyslogOutputWithContext(ctx context.Context) OrgSecurityThreatDetectionSyslogOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgSecurityThreatDetectionSyslogOutput)
+}
+
+func (i OrgSecurityThreatDetectionSyslogArgs) ToOutput(ctx context.Context) pulumix.Output[OrgSecurityThreatDetectionSyslog] {
+	return pulumix.Output[OrgSecurityThreatDetectionSyslog]{
+		OutputState: i.ToOrgSecurityThreatDetectionSyslogOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i OrgSecurityThreatDetectionSyslogArgs) ToOrgSecurityThreatDetectionSyslogPtrOutput() OrgSecurityThreatDetectionSyslogPtrOutput {
+	return i.ToOrgSecurityThreatDetectionSyslogPtrOutputWithContext(context.Background())
+}
+
+func (i OrgSecurityThreatDetectionSyslogArgs) ToOrgSecurityThreatDetectionSyslogPtrOutputWithContext(ctx context.Context) OrgSecurityThreatDetectionSyslogPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgSecurityThreatDetectionSyslogOutput).ToOrgSecurityThreatDetectionSyslogPtrOutputWithContext(ctx)
+}
+
+// OrgSecurityThreatDetectionSyslogPtrInput is an input type that accepts OrgSecurityThreatDetectionSyslogArgs, OrgSecurityThreatDetectionSyslogPtr and OrgSecurityThreatDetectionSyslogPtrOutput values.
+// You can construct a concrete instance of `OrgSecurityThreatDetectionSyslogPtrInput` via:
+//
+//	        OrgSecurityThreatDetectionSyslogArgs{...}
+//
+//	or:
+//
+//	        nil
+type OrgSecurityThreatDetectionSyslogPtrInput interface {
+	pulumi.Input
+
+	ToOrgSecurityThreatDetectionSyslogPtrOutput() OrgSecurityThreatDetectionSyslogPtrOutput
+	ToOrgSecurityThreatDetectionSyslogPtrOutputWithContext(context.Context) OrgSecurityThreatDetectionSyslogPtrOutput
+}
+
+type orgSecurityThreatDetectionSyslogPtrType OrgSecurityThreatDetectionSyslogArgs
+
+func OrgSecurityThreatDetectionSyslogPtr(v *OrgSecurityThreatDetectionSyslogArgs) OrgSecurityThreatDetectionSyslogPtrInput {
+	return (*orgSecurityThreatDetectionSyslogPtrType)(v)
+}
+
+func (*orgSecurityThreatDetectionSyslogPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**OrgSecurityThreatDetectionSyslog)(nil)).Elem()
+}
+
+func (i *orgSecurityThreatDetectionSyslogPtrType) ToOrgSecurityThreatDetectionSyslogPtrOutput() OrgSecurityThreatDetectionSyslogPtrOutput {
+	return i.ToOrgSecurityThreatDetectionSyslogPtrOutputWithContext(context.Background())
+}
+
+func (i *orgSecurityThreatDetectionSyslogPtrType) ToOrgSecurityThreatDetectionSyslogPtrOutputWithContext(ctx context.Context) OrgSecurityThreatDetectionSyslogPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgSecurityThreatDetectionSyslogPtrOutput)
+}
+
+func (i *orgSecurityThreatDetectionSyslogPtrType) ToOutput(ctx context.Context) pulumix.Output[*OrgSecurityThreatDetectionSyslog] {
+	return pulumix.Output[*OrgSecurityThreatDetectionSyslog]{
+		OutputState: i.ToOrgSecurityThreatDetectionSyslogPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type OrgSecurityThreatDetectionSyslogOutput struct{ *pulumi.OutputState }
+
+func (OrgSecurityThreatDetectionSyslogOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrgSecurityThreatDetectionSyslog)(nil)).Elem()
+}
+
+func (o OrgSecurityThreatDetectionSyslogOutput) ToOrgSecurityThreatDetectionSyslogOutput() OrgSecurityThreatDetectionSyslogOutput {
+	return o
+}
+
+func (o OrgSecurityThreatDetectionSyslogOutput) ToOrgSecurityThreatDetectionSyslogOutputWithContext(ctx context.Context) OrgSecurityThreatDetectionSyslogOutput {
+	return o
+}
+
+func (o OrgSecurityThreatDetectionSyslogOutput) ToOrgSecurityThreatDetectionSyslogPtrOutput() OrgSecurityThreatDetectionSyslogPtrOutput {
+	return o.ToOrgSecurityThreatDetectionSyslogPtrOutputWithContext(context.Background())
+}
+
+func (o OrgSecurityThreatDetectionSyslogOutput) ToOrgSecurityThreatDetectionSyslogPtrOutputWithContext(ctx context.Context) OrgSecurityThreatDetectionSyslogPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v OrgSecurityThreatDetectionSyslog) *OrgSecurityThreatDetectionSyslog {
+		return &v
+	}).(OrgSecurityThreatDetectionSyslogPtrOutput)
+}
+
+func (o OrgSecurityThreatDetectionSyslogOutput) ToOutput(ctx context.Context) pulumix.Output[OrgSecurityThreatDetectionSyslog] {
+	return pulumix.Output[OrgSecurityThreatDetectionSyslog]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o OrgSecurityThreatDetectionSyslogOutput) Host() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v OrgSecurityThreatDetectionSyslog) *string { return v.Host }).(pulumi.StringPtrOutput)
+}
+
+func (o OrgSecurityThreatDetectionSyslogOutput) Port() pulumi.IntOutput {
+	return o.ApplyT(func(v OrgSecurityThreatDetectionSyslog) int { return v.Port }).(pulumi.IntOutput)
+}
+
+func (o OrgSecurityThreatDetectionSyslogOutput) Transport() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v OrgSecurityThreatDetectionSyslog) *string { return v.Transport }).(pulumi.StringPtrOutput)
+}
+
+type OrgSecurityThreatDetectionSyslogPtrOutput struct{ *pulumi.OutputState }
+
+func (OrgSecurityThreatDetectionSyslogPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**OrgSecurityThreatDetectionSyslog)(nil)).Elem()
+}
+
+func (o OrgSecurityThreatDetectionSyslogPtrOutput) ToOrgSecurityThreatDetectionSyslogPtrOutput() OrgSecurityThreatDetectionSyslogPtrOutput {
+	return o
+}
+
+func (o OrgSecurityThreatDetectionSyslogPtrOutput) ToOrgSecurityThreatDetectionSyslogPtrOutputWithContext(ctx context.Context) OrgSecurityThreatDetectionSyslogPtrOutput {
+	return o
+}
+
+func (o OrgSecurityThreatDetectionSyslogPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*OrgSecurityThreatDetectionSyslog] {
+	return pulumix.Output[*OrgSecurityThreatDetectionSyslog]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o OrgSecurityThreatDetectionSyslogPtrOutput) Elem() OrgSecurityThreatDetectionSyslogOutput {
+	return o.ApplyT(func(v *OrgSecurityThreatDetectionSyslog) OrgSecurityThreatDetectionSyslog {
+		if v != nil {
+			return *v
+		}
+		var ret OrgSecurityThreatDetectionSyslog
+		return ret
+	}).(OrgSecurityThreatDetectionSyslogOutput)
+}
+
+func (o OrgSecurityThreatDetectionSyslogPtrOutput) Host() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *OrgSecurityThreatDetectionSyslog) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Host
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o OrgSecurityThreatDetectionSyslogPtrOutput) Port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *OrgSecurityThreatDetectionSyslog) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.Port
+	}).(pulumi.IntPtrOutput)
+}
+
+func (o OrgSecurityThreatDetectionSyslogPtrOutput) Transport() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *OrgSecurityThreatDetectionSyslog) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Transport
+	}).(pulumi.StringPtrOutput)
 }
 
 type OrgStatus struct {
@@ -27455,6 +28031,12 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingSyslogLoggingArrayInput)(nil)).Elem(), OrgLoggingSyslogLoggingArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgObservabilityInput)(nil)).Elem(), OrgObservabilityArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgObservabilityPtrInput)(nil)).Elem(), OrgObservabilityArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrgSecurityInput)(nil)).Elem(), OrgSecurityArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrgSecurityPtrInput)(nil)).Elem(), OrgSecurityArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrgSecurityThreatDetectionInput)(nil)).Elem(), OrgSecurityThreatDetectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrgSecurityThreatDetectionPtrInput)(nil)).Elem(), OrgSecurityThreatDetectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrgSecurityThreatDetectionSyslogInput)(nil)).Elem(), OrgSecurityThreatDetectionSyslogArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrgSecurityThreatDetectionSyslogPtrInput)(nil)).Elem(), OrgSecurityThreatDetectionSyslogArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgStatusInput)(nil)).Elem(), OrgStatusArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgStatusArrayInput)(nil)).Elem(), OrgStatusArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgTracingControlplaneTracingInput)(nil)).Elem(), OrgTracingControlplaneTracingArgs{})
@@ -27783,6 +28365,12 @@ func init() {
 	pulumi.RegisterOutputType(OrgLoggingSyslogLoggingArrayOutput{})
 	pulumi.RegisterOutputType(OrgObservabilityOutput{})
 	pulumi.RegisterOutputType(OrgObservabilityPtrOutput{})
+	pulumi.RegisterOutputType(OrgSecurityOutput{})
+	pulumi.RegisterOutputType(OrgSecurityPtrOutput{})
+	pulumi.RegisterOutputType(OrgSecurityThreatDetectionOutput{})
+	pulumi.RegisterOutputType(OrgSecurityThreatDetectionPtrOutput{})
+	pulumi.RegisterOutputType(OrgSecurityThreatDetectionSyslogOutput{})
+	pulumi.RegisterOutputType(OrgSecurityThreatDetectionSyslogPtrOutput{})
 	pulumi.RegisterOutputType(OrgStatusOutput{})
 	pulumi.RegisterOutputType(OrgStatusArrayOutput{})
 	pulumi.RegisterOutputType(OrgTracingControlplaneTracingOutput{})

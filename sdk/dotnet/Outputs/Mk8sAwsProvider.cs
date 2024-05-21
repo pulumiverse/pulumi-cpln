@@ -15,6 +15,7 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class Mk8sAwsProvider
     {
         public readonly Outputs.Mk8sAwsProviderAutoscaler? Autoscaler;
+        public readonly ImmutableDictionary<string, string>? AwsTags;
         public readonly string DeployRoleArn;
         public readonly string? DiskEncryptionKeyArn;
         public readonly Outputs.Mk8sAwsProviderImage Image;
@@ -30,6 +31,8 @@ namespace Pulumiverse.Cpln.Outputs
         [OutputConstructor]
         private Mk8sAwsProvider(
             Outputs.Mk8sAwsProviderAutoscaler? autoscaler,
+
+            ImmutableDictionary<string, string>? awsTags,
 
             string deployRoleArn,
 
@@ -54,6 +57,7 @@ namespace Pulumiverse.Cpln.Outputs
             string vpcId)
         {
             Autoscaler = autoscaler;
+            AwsTags = awsTags;
             DeployRoleArn = deployRoleArn;
             DiskEncryptionKeyArn = diskEncryptionKeyArn;
             Image = image;
