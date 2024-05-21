@@ -34,7 +34,13 @@ export class CloudAccount extends pulumi.CustomResource {
         return obj['__pulumiType'] === CloudAccount.__pulumiType;
     }
 
+    /**
+     * Contains AWS cloud account configuration.
+     */
     public readonly aws!: pulumi.Output<outputs.CloudAccountAws | undefined>;
+    /**
+     * Contains Azure cloud account configuration.
+     */
     public readonly azure!: pulumi.Output<outputs.CloudAccountAzure | undefined>;
     /**
      * The ID, in GUID format, of the Cloud Account.
@@ -44,6 +50,9 @@ export class CloudAccount extends pulumi.CustomResource {
      * Description of the Cloud Account.
      */
     public readonly description!: pulumi.Output<string | undefined>;
+    /**
+     * Contains GCP cloud account configuration.
+     */
     public readonly gcp!: pulumi.Output<outputs.CloudAccountGcp | undefined>;
     public /*out*/ readonly gcpRoles!: pulumi.Output<string[]>;
     /**
@@ -108,7 +117,13 @@ export class CloudAccount extends pulumi.CustomResource {
  * Input properties used for looking up and filtering CloudAccount resources.
  */
 export interface CloudAccountState {
+    /**
+     * Contains AWS cloud account configuration.
+     */
     aws?: pulumi.Input<inputs.CloudAccountAws>;
+    /**
+     * Contains Azure cloud account configuration.
+     */
     azure?: pulumi.Input<inputs.CloudAccountAzure>;
     /**
      * The ID, in GUID format, of the Cloud Account.
@@ -118,6 +133,9 @@ export interface CloudAccountState {
      * Description of the Cloud Account.
      */
     description?: pulumi.Input<string>;
+    /**
+     * Contains GCP cloud account configuration.
+     */
     gcp?: pulumi.Input<inputs.CloudAccountGcp>;
     gcpRoles?: pulumi.Input<pulumi.Input<string>[]>;
     /**
@@ -140,12 +158,21 @@ export interface CloudAccountState {
  * The set of arguments for constructing a CloudAccount resource.
  */
 export interface CloudAccountArgs {
+    /**
+     * Contains AWS cloud account configuration.
+     */
     aws?: pulumi.Input<inputs.CloudAccountAws>;
+    /**
+     * Contains Azure cloud account configuration.
+     */
     azure?: pulumi.Input<inputs.CloudAccountAzure>;
     /**
      * Description of the Cloud Account.
      */
     description?: pulumi.Input<string>;
+    /**
+     * Contains GCP cloud account configuration.
+     */
     gcp?: pulumi.Input<inputs.CloudAccountGcp>;
     /**
      * Name of the Cloud Account.

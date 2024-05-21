@@ -20,6 +20,9 @@ namespace Pulumiverse.Cpln
         [Output("accountId")]
         public Output<string?> AccountId { get; private set; } = null!;
 
+        /// <summary>
+        /// The configuration settings and parameters related to authentication within the org.
+        /// </summary>
         [Output("authConfig")]
         public Output<Outputs.OrgAuthConfig?> AuthConfig { get; private set; } = null!;
 
@@ -53,6 +56,9 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Output("observability")]
         public Output<Outputs.OrgObservability> Observability { get; private set; } = null!;
+
+        [Output("security")]
+        public Output<Outputs.OrgSecurity?> Security { get; private set; } = null!;
 
         /// <summary>
         /// Full link to this resource. Can be referenced by other resources.
@@ -132,6 +138,9 @@ namespace Pulumiverse.Cpln
         [Input("accountId")]
         public Input<string>? AccountId { get; set; }
 
+        /// <summary>
+        /// The configuration settings and parameters related to authentication within the org.
+        /// </summary>
         [Input("authConfig")]
         public Input<Inputs.OrgAuthConfigArgs>? AuthConfig { get; set; }
 
@@ -159,6 +168,9 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Input("observability", required: true)]
         public Input<Inputs.OrgObservabilityArgs> Observability { get; set; } = null!;
+
+        [Input("security")]
+        public Input<Inputs.OrgSecurityArgs>? Security { get; set; }
 
         /// <summary>
         /// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
@@ -193,6 +205,9 @@ namespace Pulumiverse.Cpln
         [Input("accountId")]
         public Input<string>? AccountId { get; set; }
 
+        /// <summary>
+        /// The configuration settings and parameters related to authentication within the org.
+        /// </summary>
         [Input("authConfig")]
         public Input<Inputs.OrgAuthConfigGetArgs>? AuthConfig { get; set; }
 
@@ -232,6 +247,9 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Input("observability")]
         public Input<Inputs.OrgObservabilityGetArgs>? Observability { get; set; }
+
+        [Input("security")]
+        public Input<Inputs.OrgSecurityGetArgs>? Security { get; set; }
 
         /// <summary>
         /// Full link to this resource. Can be referenced by other resources.

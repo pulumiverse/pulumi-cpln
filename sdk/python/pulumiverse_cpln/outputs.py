@@ -102,6 +102,9 @@ __all__ = [
     'OrgLoggingStackdriverLogging',
     'OrgLoggingSyslogLogging',
     'OrgObservability',
+    'OrgSecurity',
+    'OrgSecurityThreatDetection',
+    'OrgSecurityThreatDetectionSyslog',
     'OrgStatus',
     'OrgTracingControlplaneTracing',
     'OrgTracingLightstepTracing',
@@ -2306,7 +2309,8 @@ class Mk8sAddOns(dict):
                  local_path_storage: Optional[bool] = None,
                  logs: Optional['outputs.Mk8sAddOnsLogs'] = None,
                  metrics: Optional['outputs.Mk8sAddOnsMetrics'] = None,
-                 nvidia: Optional['outputs.Mk8sAddOnsNvidia'] = None):
+                 nvidia: Optional['outputs.Mk8sAddOnsNvidia'] = None,
+                 sysbox: Optional[bool] = None):
         Mk8sAddOns._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             aws_ecr=aws_ecr,
@@ -2320,6 +2324,7 @@ class Mk8sAddOns(dict):
             logs=logs,
             metrics=metrics,
             nvidia=nvidia,
+            sysbox=sysbox,
         )
     @staticmethod
     def _configure(
@@ -2335,6 +2340,7 @@ class Mk8sAddOns(dict):
              logs: Optional['outputs.Mk8sAddOnsLogs'] = None,
              metrics: Optional['outputs.Mk8sAddOnsMetrics'] = None,
              nvidia: Optional['outputs.Mk8sAddOnsNvidia'] = None,
+             sysbox: Optional[bool] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
         if 'awsEcr' in kwargs:
@@ -2374,6 +2380,8 @@ class Mk8sAddOns(dict):
             _setter("metrics", metrics)
         if nvidia is not None:
             _setter("nvidia", nvidia)
+        if sysbox is not None:
+            _setter("sysbox", sysbox)
 
     @property
     @pulumi.getter(name="awsEcr")
@@ -2429,6 +2437,11 @@ class Mk8sAddOns(dict):
     @pulumi.getter
     def nvidia(self) -> Optional['outputs.Mk8sAddOnsNvidia']:
         return pulumi.get(self, "nvidia")
+
+    @property
+    @pulumi.getter
+    def sysbox(self) -> Optional[bool]:
+        return pulumi.get(self, "sysbox")
 
 
 @pulumi.output_type
@@ -2967,6 +2980,8 @@ class Mk8sAwsProvider(dict):
             suggest = "deploy_role_arn"
         elif key == "vpcId":
             suggest = "vpc_id"
+        elif key == "awsTags":
+            suggest = "aws_tags"
         elif key == "diskEncryptionKeyArn":
             suggest = "disk_encryption_key_arn"
         elif key == "keyPair":
@@ -2997,6 +3012,7 @@ class Mk8sAwsProvider(dict):
                  region: str,
                  vpc_id: str,
                  autoscaler: Optional['outputs.Mk8sAwsProviderAutoscaler'] = None,
+                 aws_tags: Optional[Mapping[str, str]] = None,
                  disk_encryption_key_arn: Optional[str] = None,
                  key_pair: Optional[str] = None,
                  networking: Optional['outputs.Mk8sAwsProviderNetworking'] = None,
@@ -3011,6 +3027,7 @@ class Mk8sAwsProvider(dict):
             region=region,
             vpc_id=vpc_id,
             autoscaler=autoscaler,
+            aws_tags=aws_tags,
             disk_encryption_key_arn=disk_encryption_key_arn,
             key_pair=key_pair,
             networking=networking,
@@ -3027,6 +3044,7 @@ class Mk8sAwsProvider(dict):
              region: str,
              vpc_id: str,
              autoscaler: Optional['outputs.Mk8sAwsProviderAutoscaler'] = None,
+             aws_tags: Optional[Mapping[str, str]] = None,
              disk_encryption_key_arn: Optional[str] = None,
              key_pair: Optional[str] = None,
              networking: Optional['outputs.Mk8sAwsProviderNetworking'] = None,
@@ -3040,6 +3058,8 @@ class Mk8sAwsProvider(dict):
             deploy_role_arn = kwargs['deployRoleArn']
         if 'vpcId' in kwargs:
             vpc_id = kwargs['vpcId']
+        if 'awsTags' in kwargs:
+            aws_tags = kwargs['awsTags']
         if 'diskEncryptionKeyArn' in kwargs:
             disk_encryption_key_arn = kwargs['diskEncryptionKeyArn']
         if 'keyPair' in kwargs:
@@ -3059,6 +3079,8 @@ class Mk8sAwsProvider(dict):
         _setter("vpc_id", vpc_id)
         if autoscaler is not None:
             _setter("autoscaler", autoscaler)
+        if aws_tags is not None:
+            _setter("aws_tags", aws_tags)
         if disk_encryption_key_arn is not None:
             _setter("disk_encryption_key_arn", disk_encryption_key_arn)
         if key_pair is not None:
@@ -3098,6 +3120,11 @@ class Mk8sAwsProvider(dict):
     @pulumi.getter
     def autoscaler(self) -> Optional['outputs.Mk8sAwsProviderAutoscaler']:
         return pulumi.get(self, "autoscaler")
+
+    @property
+    @pulumi.getter(name="awsTags")
+    def aws_tags(self) -> Optional[Mapping[str, str]]:
+        return pulumi.get(self, "aws_tags")
 
     @property
     @pulumi.getter(name="diskEncryptionKeyArn")
@@ -3850,6 +3877,8 @@ class Mk8sHetznerProvider(dict):
             suggest = "dedicated_server_node_pools"
         elif key == "firewallId":
             suggest = "firewall_id"
+        elif key == "hetznerLabels":
+            suggest = "hetzner_labels"
         elif key == "nodePools":
             suggest = "node_pools"
         elif key == "preInstallScript":
@@ -3875,6 +3904,7 @@ class Mk8sHetznerProvider(dict):
                  autoscaler: Optional['outputs.Mk8sHetznerProviderAutoscaler'] = None,
                  dedicated_server_node_pools: Optional[Sequence['outputs.Mk8sHetznerProviderDedicatedServerNodePool']] = None,
                  firewall_id: Optional[str] = None,
+                 hetzner_labels: Optional[Mapping[str, str]] = None,
                  image: Optional[str] = None,
                  networking: Optional['outputs.Mk8sHetznerProviderNetworking'] = None,
                  node_pools: Optional[Sequence['outputs.Mk8sHetznerProviderNodePool']] = None,
@@ -3888,6 +3918,7 @@ class Mk8sHetznerProvider(dict):
             autoscaler=autoscaler,
             dedicated_server_node_pools=dedicated_server_node_pools,
             firewall_id=firewall_id,
+            hetzner_labels=hetzner_labels,
             image=image,
             networking=networking,
             node_pools=node_pools,
@@ -3903,6 +3934,7 @@ class Mk8sHetznerProvider(dict):
              autoscaler: Optional['outputs.Mk8sHetznerProviderAutoscaler'] = None,
              dedicated_server_node_pools: Optional[Sequence['outputs.Mk8sHetznerProviderDedicatedServerNodePool']] = None,
              firewall_id: Optional[str] = None,
+             hetzner_labels: Optional[Mapping[str, str]] = None,
              image: Optional[str] = None,
              networking: Optional['outputs.Mk8sHetznerProviderNetworking'] = None,
              node_pools: Optional[Sequence['outputs.Mk8sHetznerProviderNodePool']] = None,
@@ -3918,6 +3950,8 @@ class Mk8sHetznerProvider(dict):
             dedicated_server_node_pools = kwargs['dedicatedServerNodePools']
         if 'firewallId' in kwargs:
             firewall_id = kwargs['firewallId']
+        if 'hetznerLabels' in kwargs:
+            hetzner_labels = kwargs['hetznerLabels']
         if 'nodePools' in kwargs:
             node_pools = kwargs['nodePools']
         if 'preInstallScript' in kwargs:
@@ -3934,6 +3968,8 @@ class Mk8sHetznerProvider(dict):
             _setter("dedicated_server_node_pools", dedicated_server_node_pools)
         if firewall_id is not None:
             _setter("firewall_id", firewall_id)
+        if hetzner_labels is not None:
+            _setter("hetzner_labels", hetzner_labels)
         if image is not None:
             _setter("image", image)
         if networking is not None:
@@ -3974,6 +4010,11 @@ class Mk8sHetznerProvider(dict):
     @pulumi.getter(name="firewallId")
     def firewall_id(self) -> Optional[str]:
         return pulumi.get(self, "firewall_id")
+
+    @property
+    @pulumi.getter(name="hetznerLabels")
+    def hetzner_labels(self) -> Optional[Mapping[str, str]]:
+        return pulumi.get(self, "hetzner_labels")
 
     @property
     @pulumi.getter
@@ -5736,6 +5777,155 @@ class OrgObservability(dict):
     @pulumi.getter(name="tracesRetentionDays")
     def traces_retention_days(self) -> Optional[int]:
         return pulumi.get(self, "traces_retention_days")
+
+
+@pulumi.output_type
+class OrgSecurity(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "threatDetection":
+            suggest = "threat_detection"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in OrgSecurity. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        OrgSecurity.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        OrgSecurity.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 threat_detection: Optional['outputs.OrgSecurityThreatDetection'] = None):
+        OrgSecurity._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            threat_detection=threat_detection,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             threat_detection: Optional['outputs.OrgSecurityThreatDetection'] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'threatDetection' in kwargs:
+            threat_detection = kwargs['threatDetection']
+
+        if threat_detection is not None:
+            _setter("threat_detection", threat_detection)
+
+    @property
+    @pulumi.getter(name="threatDetection")
+    def threat_detection(self) -> Optional['outputs.OrgSecurityThreatDetection']:
+        return pulumi.get(self, "threat_detection")
+
+
+@pulumi.output_type
+class OrgSecurityThreatDetection(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "minimumSeverity":
+            suggest = "minimum_severity"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in OrgSecurityThreatDetection. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        OrgSecurityThreatDetection.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        OrgSecurityThreatDetection.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 enabled: Optional[bool] = None,
+                 minimum_severity: Optional[str] = None,
+                 syslog: Optional['outputs.OrgSecurityThreatDetectionSyslog'] = None):
+        OrgSecurityThreatDetection._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            enabled=enabled,
+            minimum_severity=minimum_severity,
+            syslog=syslog,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             enabled: Optional[bool] = None,
+             minimum_severity: Optional[str] = None,
+             syslog: Optional['outputs.OrgSecurityThreatDetectionSyslog'] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'minimumSeverity' in kwargs:
+            minimum_severity = kwargs['minimumSeverity']
+
+        if enabled is not None:
+            _setter("enabled", enabled)
+        if minimum_severity is not None:
+            _setter("minimum_severity", minimum_severity)
+        if syslog is not None:
+            _setter("syslog", syslog)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[bool]:
+        return pulumi.get(self, "enabled")
+
+    @property
+    @pulumi.getter(name="minimumSeverity")
+    def minimum_severity(self) -> Optional[str]:
+        return pulumi.get(self, "minimum_severity")
+
+    @property
+    @pulumi.getter
+    def syslog(self) -> Optional['outputs.OrgSecurityThreatDetectionSyslog']:
+        return pulumi.get(self, "syslog")
+
+
+@pulumi.output_type
+class OrgSecurityThreatDetectionSyslog(dict):
+    def __init__(__self__, *,
+                 port: int,
+                 host: Optional[str] = None,
+                 transport: Optional[str] = None):
+        OrgSecurityThreatDetectionSyslog._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            port=port,
+            host=host,
+            transport=transport,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             port: int,
+             host: Optional[str] = None,
+             transport: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("port", port)
+        if host is not None:
+            _setter("host", host)
+        if transport is not None:
+            _setter("transport", transport)
+
+    @property
+    @pulumi.getter
+    def port(self) -> int:
+        return pulumi.get(self, "port")
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[str]:
+        return pulumi.get(self, "host")
+
+    @property
+    @pulumi.getter
+    def transport(self) -> Optional[str]:
+        return pulumi.get(self, "transport")
 
 
 @pulumi.output_type

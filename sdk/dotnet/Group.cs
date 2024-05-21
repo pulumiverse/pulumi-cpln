@@ -25,9 +25,16 @@ namespace Pulumiverse.Cpln
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
 
+        /// <summary>
+        /// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+        /// for managing the grouping of users logged-in with SAML providers.
+        /// </summary>
         [Output("identityMatcher")]
         public Output<Outputs.GroupIdentityMatcher?> IdentityMatcher { get; private set; } = null!;
 
+        /// <summary>
+        /// A predefined set of criteria or conditions used to query and retrieve members within the group.
+        /// </summary>
         [Output("memberQuery")]
         public Output<Outputs.GroupMemberQuery?> MemberQuery { get; private set; } = null!;
 
@@ -43,6 +50,9 @@ namespace Pulumiverse.Cpln
         [Output("origin")]
         public Output<string> Origin { get; private set; } = null!;
 
+        /// <summary>
+        /// Fully qualified link to the this group.
+        /// </summary>
         [Output("selfLink")]
         public Output<string> SelfLink { get; private set; } = null!;
 
@@ -119,9 +129,16 @@ namespace Pulumiverse.Cpln
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+        /// for managing the grouping of users logged-in with SAML providers.
+        /// </summary>
         [Input("identityMatcher")]
         public Input<Inputs.GroupIdentityMatcherArgs>? IdentityMatcher { get; set; }
 
+        /// <summary>
+        /// A predefined set of criteria or conditions used to query and retrieve members within the group.
+        /// </summary>
         [Input("memberQuery")]
         public Input<Inputs.GroupMemberQueryArgs>? MemberQuery { get; set; }
 
@@ -189,9 +206,16 @@ namespace Pulumiverse.Cpln
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+        /// for managing the grouping of users logged-in with SAML providers.
+        /// </summary>
         [Input("identityMatcher")]
         public Input<Inputs.GroupIdentityMatcherGetArgs>? IdentityMatcher { get; set; }
 
+        /// <summary>
+        /// A predefined set of criteria or conditions used to query and retrieve members within the group.
+        /// </summary>
         [Input("memberQuery")]
         public Input<Inputs.GroupMemberQueryGetArgs>? MemberQuery { get; set; }
 
@@ -207,6 +231,9 @@ namespace Pulumiverse.Cpln
         [Input("origin")]
         public Input<string>? Origin { get; set; }
 
+        /// <summary>
+        /// Fully qualified link to the this group.
+        /// </summary>
         [Input("selfLink")]
         public Input<string>? SelfLink { get; set; }
 

@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln
     [CplnResourceType("cpln:index/workload:Workload")]
     public partial class Workload : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
+        /// </summary>
         [Output("containers")]
         public Output<ImmutableArray<Outputs.WorkloadContainer>> Containers { get; private set; } = null!;
 
@@ -62,12 +65,23 @@ namespace Pulumiverse.Cpln
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+        /// characteristics of the workload.
+        /// </summary>
         [Output("options")]
         public Output<Outputs.WorkloadOptions> Options { get; private set; } = null!;
 
+        /// <summary>
+        /// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+        /// replicas, surge replicas, and scaling policies.
+        /// </summary>
         [Output("rolloutOptions")]
         public Output<Outputs.WorkloadRolloutOptions?> RolloutOptions { get; private set; } = null!;
 
+        /// <summary>
+        /// Allows for the configuration of the `file system group id`
+        /// </summary>
         [Output("securityOptions")]
         public Output<Outputs.WorkloadSecurityOptions?> SecurityOptions { get; private set; } = null!;
 
@@ -154,6 +168,10 @@ namespace Pulumiverse.Cpln
     {
         [Input("containers", required: true)]
         private InputList<Inputs.WorkloadContainerArgs>? _containers;
+
+        /// <summary>
+        /// An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
+        /// </summary>
         public InputList<Inputs.WorkloadContainerArgs> Containers
         {
             get => _containers ?? (_containers = new InputList<Inputs.WorkloadContainerArgs>());
@@ -205,12 +223,23 @@ namespace Pulumiverse.Cpln
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+        /// characteristics of the workload.
+        /// </summary>
         [Input("options", required: true)]
         public Input<Inputs.WorkloadOptionsArgs> Options { get; set; } = null!;
 
+        /// <summary>
+        /// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+        /// replicas, surge replicas, and scaling policies.
+        /// </summary>
         [Input("rolloutOptions")]
         public Input<Inputs.WorkloadRolloutOptionsArgs>? RolloutOptions { get; set; }
 
+        /// <summary>
+        /// Allows for the configuration of the `file system group id`
+        /// </summary>
         [Input("securityOptions")]
         public Input<Inputs.WorkloadSecurityOptionsArgs>? SecurityOptions { get; set; }
 
@@ -252,6 +281,10 @@ namespace Pulumiverse.Cpln
     {
         [Input("containers")]
         private InputList<Inputs.WorkloadContainerGetArgs>? _containers;
+
+        /// <summary>
+        /// An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
+        /// </summary>
         public InputList<Inputs.WorkloadContainerGetArgs> Containers
         {
             get => _containers ?? (_containers = new InputList<Inputs.WorkloadContainerGetArgs>());
@@ -309,12 +342,23 @@ namespace Pulumiverse.Cpln
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+        /// characteristics of the workload.
+        /// </summary>
         [Input("options")]
         public Input<Inputs.WorkloadOptionsGetArgs>? Options { get; set; }
 
+        /// <summary>
+        /// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+        /// replicas, surge replicas, and scaling policies.
+        /// </summary>
         [Input("rolloutOptions")]
         public Input<Inputs.WorkloadRolloutOptionsGetArgs>? RolloutOptions { get; set; }
 
+        /// <summary>
+        /// Allows for the configuration of the `file system group id`
+        /// </summary>
         [Input("securityOptions")]
         public Input<Inputs.WorkloadSecurityOptionsGetArgs>? SecurityOptions { get; set; }
 

@@ -34,6 +34,9 @@ export class VolumeSet extends pulumi.CustomResource {
         return obj['__pulumiType'] === VolumeSet.__pulumiType;
     }
 
+    /**
+     * Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
+     */
     public readonly autoscaling!: pulumi.Output<outputs.VolumeSetAutoscaling | undefined>;
     /**
      * ID, in GUID format, of the Volume Set.
@@ -68,6 +71,9 @@ export class VolumeSet extends pulumi.CustomResource {
      * Full link to this resource. Can be referenced by other resources.
      */
     public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    /**
+     * Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
+     */
     public readonly snapshots!: pulumi.Output<outputs.VolumeSetSnapshots | undefined>;
     /**
      * Status of the Volume Set.
@@ -150,6 +156,9 @@ export class VolumeSet extends pulumi.CustomResource {
  * Input properties used for looking up and filtering VolumeSet resources.
  */
 export interface VolumeSetState {
+    /**
+     * Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
+     */
     autoscaling?: pulumi.Input<inputs.VolumeSetAutoscaling>;
     /**
      * ID, in GUID format, of the Volume Set.
@@ -184,6 +193,9 @@ export interface VolumeSetState {
      * Full link to this resource. Can be referenced by other resources.
      */
     selfLink?: pulumi.Input<string>;
+    /**
+     * Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
+     */
     snapshots?: pulumi.Input<inputs.VolumeSetSnapshots>;
     /**
      * Status of the Volume Set.
@@ -209,6 +221,9 @@ export interface VolumeSetState {
  * The set of arguments for constructing a VolumeSet resource.
  */
 export interface VolumeSetArgs {
+    /**
+     * Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
+     */
     autoscaling?: pulumi.Input<inputs.VolumeSetAutoscaling>;
     /**
      * Description of the Volume Set.
@@ -235,6 +250,9 @@ export interface VolumeSetArgs {
      * `high-throughput-ssd`
      */
     performanceClass: pulumi.Input<string>;
+    /**
+     * Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
+     */
     snapshots?: pulumi.Input<inputs.VolumeSetSnapshots>;
     /**
      * For self-hosted locations only. The storage class used for volumes in this set will be

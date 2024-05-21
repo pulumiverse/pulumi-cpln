@@ -32,9 +32,11 @@ class VolumeSetArgs:
         :param pulumi.Input[int] initial_capacity: The initial size in GB of volumes in this set. Minimum value: `10`.
         :param pulumi.Input[str] performance_class: Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
                `high-throughput-ssd`
+        :param pulumi.Input['VolumeSetAutoscalingArgs'] autoscaling: Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
         :param pulumi.Input[str] description: Description of the Volume Set.
         :param pulumi.Input[str] file_system_type: Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
         :param pulumi.Input[str] name: Name of the Volume Set.
+        :param pulumi.Input['VolumeSetSnapshotsArgs'] snapshots: Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
         :param pulumi.Input[str] storage_class_suffix: For self-hosted locations only. The storage class used for volumes in this set will be
                {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
                {performanceClass}-{fileSystemType}
@@ -135,6 +137,9 @@ class VolumeSetArgs:
     @property
     @pulumi.getter
     def autoscaling(self) -> Optional[pulumi.Input['VolumeSetAutoscalingArgs']]:
+        """
+        Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
+        """
         return pulumi.get(self, "autoscaling")
 
     @autoscaling.setter
@@ -180,6 +185,9 @@ class VolumeSetArgs:
     @property
     @pulumi.getter
     def snapshots(self) -> Optional[pulumi.Input['VolumeSetSnapshotsArgs']]:
+        """
+        Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
+        """
         return pulumi.get(self, "snapshots")
 
     @snapshots.setter
@@ -232,6 +240,7 @@ class _VolumeSetState:
                  volumeset_link: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering VolumeSet resources.
+        :param pulumi.Input['VolumeSetAutoscalingArgs'] autoscaling: Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
         :param pulumi.Input[str] cpln_id: ID, in GUID format, of the Volume Set.
         :param pulumi.Input[str] description: Description of the Volume Set.
         :param pulumi.Input[str] file_system_type: Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
@@ -241,6 +250,7 @@ class _VolumeSetState:
         :param pulumi.Input[str] performance_class: Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
                `high-throughput-ssd`
         :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
+        :param pulumi.Input['VolumeSetSnapshotsArgs'] snapshots: Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
         :param pulumi.Input[Sequence[pulumi.Input['VolumeSetStatusArgs']]] statuses: Status of the Volume Set.
         :param pulumi.Input[str] storage_class_suffix: For self-hosted locations only. The storage class used for volumes in this set will be
                {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
@@ -331,6 +341,9 @@ class _VolumeSetState:
     @property
     @pulumi.getter
     def autoscaling(self) -> Optional[pulumi.Input['VolumeSetAutoscalingArgs']]:
+        """
+        Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
+        """
         return pulumi.get(self, "autoscaling")
 
     @autoscaling.setter
@@ -437,6 +450,9 @@ class _VolumeSetState:
     @property
     @pulumi.getter
     def snapshots(self) -> Optional[pulumi.Input['VolumeSetSnapshotsArgs']]:
+        """
+        Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
+        """
         return pulumi.get(self, "snapshots")
 
     @snapshots.setter
@@ -514,6 +530,7 @@ class VolumeSet(pulumi.CustomResource):
         Create a VolumeSet resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[pulumi.InputType['VolumeSetAutoscalingArgs']] autoscaling: Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
         :param pulumi.Input[str] description: Description of the Volume Set.
         :param pulumi.Input[str] file_system_type: Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
         :param pulumi.Input[str] gvc: Name of the associated GVC.
@@ -521,6 +538,7 @@ class VolumeSet(pulumi.CustomResource):
         :param pulumi.Input[str] name: Name of the Volume Set.
         :param pulumi.Input[str] performance_class: Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
                `high-throughput-ssd`
+        :param pulumi.Input[pulumi.InputType['VolumeSetSnapshotsArgs']] snapshots: Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
         :param pulumi.Input[str] storage_class_suffix: For self-hosted locations only. The storage class used for volumes in this set will be
                {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
                {performanceClass}-{fileSystemType}
@@ -633,6 +651,7 @@ class VolumeSet(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[pulumi.InputType['VolumeSetAutoscalingArgs']] autoscaling: Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
         :param pulumi.Input[str] cpln_id: ID, in GUID format, of the Volume Set.
         :param pulumi.Input[str] description: Description of the Volume Set.
         :param pulumi.Input[str] file_system_type: Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
@@ -642,6 +661,7 @@ class VolumeSet(pulumi.CustomResource):
         :param pulumi.Input[str] performance_class: Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
                `high-throughput-ssd`
         :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
+        :param pulumi.Input[pulumi.InputType['VolumeSetSnapshotsArgs']] snapshots: Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['VolumeSetStatusArgs']]]] statuses: Status of the Volume Set.
         :param pulumi.Input[str] storage_class_suffix: For self-hosted locations only. The storage class used for volumes in this set will be
                {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
@@ -672,6 +692,9 @@ class VolumeSet(pulumi.CustomResource):
     @property
     @pulumi.getter
     def autoscaling(self) -> pulumi.Output[Optional['outputs.VolumeSetAutoscaling']]:
+        """
+        Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
+        """
         return pulumi.get(self, "autoscaling")
 
     @property
@@ -742,6 +765,9 @@ class VolumeSet(pulumi.CustomResource):
     @property
     @pulumi.getter
     def snapshots(self) -> pulumi.Output[Optional['outputs.VolumeSetSnapshots']]:
+        """
+        Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
+        """
         return pulumi.get(self, "snapshots")
 
     @property

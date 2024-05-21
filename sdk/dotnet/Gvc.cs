@@ -49,6 +49,9 @@ namespace Pulumiverse.Cpln
         [Output("lightstepTracing")]
         public Output<Outputs.GvcLightstepTracing?> LightstepTracing { get; private set; } = null!;
 
+        /// <summary>
+        /// Dedicated load balancer configuration.
+        /// </summary>
         [Output("loadBalancer")]
         public Output<Outputs.GvcLoadBalancer?> LoadBalancer { get; private set; } = null!;
 
@@ -166,6 +169,9 @@ namespace Pulumiverse.Cpln
         [Input("lightstepTracing")]
         public Input<Inputs.GvcLightstepTracingArgs>? LightstepTracing { get; set; }
 
+        /// <summary>
+        /// Dedicated load balancer configuration.
+        /// </summary>
         [Input("loadBalancer")]
         public Input<Inputs.GvcLoadBalancerArgs>? LoadBalancer { get; set; }
 
@@ -268,6 +274,9 @@ namespace Pulumiverse.Cpln
         [Input("lightstepTracing")]
         public Input<Inputs.GvcLightstepTracingGetArgs>? LightstepTracing { get; set; }
 
+        /// <summary>
+        /// Dedicated load balancer configuration.
+        /// </summary>
         [Input("loadBalancer")]
         public Input<Inputs.GvcLoadBalancerGetArgs>? LoadBalancer { get; set; }
 

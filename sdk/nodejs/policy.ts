@@ -34,6 +34,9 @@ export class Policy extends pulumi.CustomResource {
         return obj['__pulumiType'] === Policy.__pulumiType;
     }
 
+    /**
+     * The association between a target kind and the bound permissions to service principals.
+     */
     public readonly bindings!: pulumi.Output<outputs.PolicyBinding[] | undefined>;
     /**
      * The ID, in GUID format, of the Policy.
@@ -76,6 +79,9 @@ export class Policy extends pulumi.CustomResource {
      * List of the targets this policy will be applied to. Not used if `target` is set to `all`.
      */
     public readonly targetLinks!: pulumi.Output<string[] | undefined>;
+    /**
+     * A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
+     */
     public readonly targetQuery!: pulumi.Output<outputs.PolicyTargetQuery | undefined>;
 
     /**
@@ -130,6 +136,9 @@ export class Policy extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Policy resources.
  */
 export interface PolicyState {
+    /**
+     * The association between a target kind and the bound permissions to service principals.
+     */
     bindings?: pulumi.Input<pulumi.Input<inputs.PolicyBinding>[]>;
     /**
      * The ID, in GUID format, of the Policy.
@@ -172,6 +181,9 @@ export interface PolicyState {
      * List of the targets this policy will be applied to. Not used if `target` is set to `all`.
      */
     targetLinks?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
+     */
     targetQuery?: pulumi.Input<inputs.PolicyTargetQuery>;
 }
 
@@ -179,6 +191,9 @@ export interface PolicyState {
  * The set of arguments for constructing a Policy resource.
  */
 export interface PolicyArgs {
+    /**
+     * The association between a target kind and the bound permissions to service principals.
+     */
     bindings?: pulumi.Input<pulumi.Input<inputs.PolicyBinding>[]>;
     /**
      * Description of the Policy.
@@ -209,5 +224,8 @@ export interface PolicyArgs {
      * List of the targets this policy will be applied to. Not used if `target` is set to `all`.
      */
     targetLinks?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
+     */
     targetQuery?: pulumi.Input<inputs.PolicyTargetQuery>;
 }

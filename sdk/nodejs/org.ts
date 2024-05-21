@@ -39,6 +39,9 @@ export class Org extends pulumi.CustomResource {
      * obtained from the `Org Management & Billing` page.
      */
     public readonly accountId!: pulumi.Output<string | undefined>;
+    /**
+     * The configuration settings and parameters related to authentication within the org.
+     */
     public readonly authConfig!: pulumi.Output<outputs.OrgAuthConfig | undefined>;
     /**
      * The ID, in GUID format, of the org.
@@ -61,6 +64,7 @@ export class Org extends pulumi.CustomResource {
      * The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
      */
     public readonly observability!: pulumi.Output<outputs.OrgObservability>;
+    public readonly security!: pulumi.Output<outputs.OrgSecurity | undefined>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
@@ -98,6 +102,7 @@ export class Org extends pulumi.CustomResource {
             resourceInputs["invitees"] = state ? state.invitees : undefined;
             resourceInputs["name"] = state ? state.name : undefined;
             resourceInputs["observability"] = state ? state.observability : undefined;
+            resourceInputs["security"] = state ? state.security : undefined;
             resourceInputs["selfLink"] = state ? state.selfLink : undefined;
             resourceInputs["sessionTimeoutSeconds"] = state ? state.sessionTimeoutSeconds : undefined;
             resourceInputs["statuses"] = state ? state.statuses : undefined;
@@ -112,6 +117,7 @@ export class Org extends pulumi.CustomResource {
             resourceInputs["description"] = args ? args.description : undefined;
             resourceInputs["invitees"] = args ? args.invitees : undefined;
             resourceInputs["observability"] = args ? args.observability : undefined;
+            resourceInputs["security"] = args ? args.security : undefined;
             resourceInputs["sessionTimeoutSeconds"] = args ? args.sessionTimeoutSeconds : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["cplnId"] = undefined /*out*/;
@@ -133,6 +139,9 @@ export interface OrgState {
      * obtained from the `Org Management & Billing` page.
      */
     accountId?: pulumi.Input<string>;
+    /**
+     * The configuration settings and parameters related to authentication within the org.
+     */
     authConfig?: pulumi.Input<inputs.OrgAuthConfig>;
     /**
      * The ID, in GUID format, of the org.
@@ -155,6 +164,7 @@ export interface OrgState {
      * The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
      */
     observability?: pulumi.Input<inputs.OrgObservability>;
+    security?: pulumi.Input<inputs.OrgSecurity>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
@@ -182,6 +192,9 @@ export interface OrgArgs {
      * obtained from the `Org Management & Billing` page.
      */
     accountId?: pulumi.Input<string>;
+    /**
+     * The configuration settings and parameters related to authentication within the org.
+     */
     authConfig?: pulumi.Input<inputs.OrgAuthConfig>;
     /**
      * The description of org.
@@ -196,6 +209,7 @@ export interface OrgArgs {
      * The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
      */
     observability: pulumi.Input<inputs.OrgObservability>;
+    security?: pulumi.Input<inputs.OrgSecurity>;
     /**
      * The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
      */

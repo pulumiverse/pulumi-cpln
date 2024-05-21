@@ -28,6 +28,7 @@ class PolicyArgs:
         """
         The set of arguments for constructing a Policy resource.
         :param pulumi.Input[str] target_kind: The kind of resource to target (e.g., gvc, serviceaccount, etc.).
+        :param pulumi.Input[Sequence[pulumi.Input['PolicyBindingArgs']]] bindings: The association between a target kind and the bound permissions to service principals.
         :param pulumi.Input[str] description: Description of the Policy.
         :param pulumi.Input[str] gvc: The GVC for `identity`, `workload` and `volumeset` target kinds only.
         :param pulumi.Input[str] name: Name of the Policy.
@@ -35,6 +36,7 @@ class PolicyArgs:
         :param pulumi.Input[str] target: Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
                do not include the attribute.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] target_links: List of the targets this policy will be applied to. Not used if `target` is set to `all`.
+        :param pulumi.Input['PolicyTargetQueryArgs'] target_query: A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
         """
         PolicyArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -102,6 +104,9 @@ class PolicyArgs:
     @property
     @pulumi.getter
     def bindings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['PolicyBindingArgs']]]]:
+        """
+        The association between a target kind and the bound permissions to service principals.
+        """
         return pulumi.get(self, "bindings")
 
     @bindings.setter
@@ -184,6 +189,9 @@ class PolicyArgs:
     @property
     @pulumi.getter(name="targetQuery")
     def target_query(self) -> Optional[pulumi.Input['PolicyTargetQueryArgs']]:
+        """
+        A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
+        """
         return pulumi.get(self, "target_query")
 
     @target_query.setter
@@ -208,6 +216,7 @@ class _PolicyState:
                  target_query: Optional[pulumi.Input['PolicyTargetQueryArgs']] = None):
         """
         Input properties used for looking up and filtering Policy resources.
+        :param pulumi.Input[Sequence[pulumi.Input['PolicyBindingArgs']]] bindings: The association between a target kind and the bound permissions to service principals.
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Policy.
         :param pulumi.Input[str] description: Description of the Policy.
         :param pulumi.Input[str] gvc: The GVC for `identity`, `workload` and `volumeset` target kinds only.
@@ -219,6 +228,7 @@ class _PolicyState:
                do not include the attribute.
         :param pulumi.Input[str] target_kind: The kind of resource to target (e.g., gvc, serviceaccount, etc.).
         :param pulumi.Input[Sequence[pulumi.Input[str]]] target_links: List of the targets this policy will be applied to. Not used if `target` is set to `all`.
+        :param pulumi.Input['PolicyTargetQueryArgs'] target_query: A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
         """
         _PolicyState._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -291,6 +301,9 @@ class _PolicyState:
     @property
     @pulumi.getter
     def bindings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['PolicyBindingArgs']]]]:
+        """
+        The association between a target kind and the bound permissions to service principals.
+        """
         return pulumi.get(self, "bindings")
 
     @bindings.setter
@@ -421,6 +434,9 @@ class _PolicyState:
     @property
     @pulumi.getter(name="targetQuery")
     def target_query(self) -> Optional[pulumi.Input['PolicyTargetQueryArgs']]:
+        """
+        A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
+        """
         return pulumi.get(self, "target_query")
 
     @target_query.setter
@@ -447,6 +463,7 @@ class Policy(pulumi.CustomResource):
         Create a Policy resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['PolicyBindingArgs']]]] bindings: The association between a target kind and the bound permissions to service principals.
         :param pulumi.Input[str] description: Description of the Policy.
         :param pulumi.Input[str] gvc: The GVC for `identity`, `workload` and `volumeset` target kinds only.
         :param pulumi.Input[str] name: Name of the Policy.
@@ -455,6 +472,7 @@ class Policy(pulumi.CustomResource):
                do not include the attribute.
         :param pulumi.Input[str] target_kind: The kind of resource to target (e.g., gvc, serviceaccount, etc.).
         :param pulumi.Input[Sequence[pulumi.Input[str]]] target_links: List of the targets this policy will be applied to. Not used if `target` is set to `all`.
+        :param pulumi.Input[pulumi.InputType['PolicyTargetQueryArgs']] target_query: A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
         """
         ...
     @overload
@@ -549,6 +567,7 @@ class Policy(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['PolicyBindingArgs']]]] bindings: The association between a target kind and the bound permissions to service principals.
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Policy.
         :param pulumi.Input[str] description: Description of the Policy.
         :param pulumi.Input[str] gvc: The GVC for `identity`, `workload` and `volumeset` target kinds only.
@@ -560,6 +579,7 @@ class Policy(pulumi.CustomResource):
                do not include the attribute.
         :param pulumi.Input[str] target_kind: The kind of resource to target (e.g., gvc, serviceaccount, etc.).
         :param pulumi.Input[Sequence[pulumi.Input[str]]] target_links: List of the targets this policy will be applied to. Not used if `target` is set to `all`.
+        :param pulumi.Input[pulumi.InputType['PolicyTargetQueryArgs']] target_query: A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -582,6 +602,9 @@ class Policy(pulumi.CustomResource):
     @property
     @pulumi.getter
     def bindings(self) -> pulumi.Output[Optional[Sequence['outputs.PolicyBinding']]]:
+        """
+        The association between a target kind and the bound permissions to service principals.
+        """
         return pulumi.get(self, "bindings")
 
     @property
@@ -668,5 +691,8 @@ class Policy(pulumi.CustomResource):
     @property
     @pulumi.getter(name="targetQuery")
     def target_query(self) -> pulumi.Output[Optional['outputs.PolicyTargetQuery']]:
+        """
+        A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
+        """
         return pulumi.get(self, "target_query")
 

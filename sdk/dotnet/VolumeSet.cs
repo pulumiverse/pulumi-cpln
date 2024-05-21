@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln
     [CplnResourceType("cpln:index/volumeSet:VolumeSet")]
     public partial class VolumeSet : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
+        /// </summary>
         [Output("autoscaling")]
         public Output<Outputs.VolumeSetAutoscaling?> Autoscaling { get; private set; } = null!;
 
@@ -65,6 +68,9 @@ namespace Pulumiverse.Cpln
         [Output("selfLink")]
         public Output<string> SelfLink { get; private set; } = null!;
 
+        /// <summary>
+        /// Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
+        /// </summary>
         [Output("snapshots")]
         public Output<Outputs.VolumeSetSnapshots?> Snapshots { get; private set; } = null!;
 
@@ -141,6 +147,9 @@ namespace Pulumiverse.Cpln
 
     public sealed class VolumeSetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
+        /// </summary>
         [Input("autoscaling")]
         public Input<Inputs.VolumeSetAutoscalingArgs>? Autoscaling { get; set; }
 
@@ -181,6 +190,9 @@ namespace Pulumiverse.Cpln
         [Input("performanceClass", required: true)]
         public Input<string> PerformanceClass { get; set; } = null!;
 
+        /// <summary>
+        /// Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
+        /// </summary>
         [Input("snapshots")]
         public Input<Inputs.VolumeSetSnapshotsArgs>? Snapshots { get; set; }
 
@@ -212,6 +224,9 @@ namespace Pulumiverse.Cpln
 
     public sealed class VolumeSetState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
+        /// </summary>
         [Input("autoscaling")]
         public Input<Inputs.VolumeSetAutoscalingGetArgs>? Autoscaling { get; set; }
 
@@ -264,6 +279,9 @@ namespace Pulumiverse.Cpln
         [Input("selfLink")]
         public Input<string>? SelfLink { get; set; }
 
+        /// <summary>
+        /// Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
+        /// </summary>
         [Input("snapshots")]
         public Input<Inputs.VolumeSetSnapshotsGetArgs>? Snapshots { get; set; }
 

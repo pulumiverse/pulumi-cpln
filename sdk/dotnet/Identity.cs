@@ -13,9 +13,17 @@ namespace Pulumiverse.Cpln
     [CplnResourceType("cpln:index/identity:Identity")]
     public partial class Identity : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+        /// environment.
+        /// </summary>
         [Output("awsAccessPolicy")]
         public Output<Outputs.IdentityAwsAccessPolicy?> AwsAccessPolicy { get; private set; } = null!;
 
+        /// <summary>
+        /// A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+        /// environment.
+        /// </summary>
         [Output("azureAccessPolicy")]
         public Output<Outputs.IdentityAzureAccessPolicy?> AzureAccessPolicy { get; private set; } = null!;
 
@@ -62,6 +70,10 @@ namespace Pulumiverse.Cpln
         [Output("networkResources")]
         public Output<ImmutableArray<Outputs.IdentityNetworkResource>> NetworkResources { get; private set; } = null!;
 
+        /// <summary>
+        /// A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+        /// environment.
+        /// </summary>
         [Output("ngsAccessPolicy")]
         public Output<Outputs.IdentityNgsAccessPolicy?> NgsAccessPolicy { get; private set; } = null!;
 
@@ -130,9 +142,17 @@ namespace Pulumiverse.Cpln
 
     public sealed class IdentityArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+        /// environment.
+        /// </summary>
         [Input("awsAccessPolicy")]
         public Input<Inputs.IdentityAwsAccessPolicyArgs>? AwsAccessPolicy { get; set; }
 
+        /// <summary>
+        /// A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+        /// environment.
+        /// </summary>
         [Input("azureAccessPolicy")]
         public Input<Inputs.IdentityAzureAccessPolicyArgs>? AzureAccessPolicy { get; set; }
 
@@ -185,6 +205,10 @@ namespace Pulumiverse.Cpln
             set => _networkResources = value;
         }
 
+        /// <summary>
+        /// A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+        /// environment.
+        /// </summary>
         [Input("ngsAccessPolicy")]
         public Input<Inputs.IdentityNgsAccessPolicyArgs>? NgsAccessPolicy { get; set; }
 
@@ -208,9 +232,17 @@ namespace Pulumiverse.Cpln
 
     public sealed class IdentityState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+        /// environment.
+        /// </summary>
         [Input("awsAccessPolicy")]
         public Input<Inputs.IdentityAwsAccessPolicyGetArgs>? AwsAccessPolicy { get; set; }
 
+        /// <summary>
+        /// A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+        /// environment.
+        /// </summary>
         [Input("azureAccessPolicy")]
         public Input<Inputs.IdentityAzureAccessPolicyGetArgs>? AzureAccessPolicy { get; set; }
 
@@ -269,6 +301,10 @@ namespace Pulumiverse.Cpln
             set => _networkResources = value;
         }
 
+        /// <summary>
+        /// A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+        /// environment.
+        /// </summary>
         [Input("ngsAccessPolicy")]
         public Input<Inputs.IdentityNgsAccessPolicyGetArgs>? NgsAccessPolicy { get; set; }
 

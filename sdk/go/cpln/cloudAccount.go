@@ -15,14 +15,17 @@ import (
 type CloudAccount struct {
 	pulumi.CustomResourceState
 
-	Aws   CloudAccountAwsPtrOutput   `pulumi:"aws"`
+	// Contains AWS cloud account configuration.
+	Aws CloudAccountAwsPtrOutput `pulumi:"aws"`
+	// Contains Azure cloud account configuration.
 	Azure CloudAccountAzurePtrOutput `pulumi:"azure"`
 	// The ID, in GUID format, of the Cloud Account.
 	CplnId pulumi.StringOutput `pulumi:"cplnId"`
 	// Description of the Cloud Account.
-	Description pulumi.StringPtrOutput   `pulumi:"description"`
-	Gcp         CloudAccountGcpPtrOutput `pulumi:"gcp"`
-	GcpRoles    pulumi.StringArrayOutput `pulumi:"gcpRoles"`
+	Description pulumi.StringPtrOutput `pulumi:"description"`
+	// Contains GCP cloud account configuration.
+	Gcp      CloudAccountGcpPtrOutput `pulumi:"gcp"`
+	GcpRoles pulumi.StringArrayOutput `pulumi:"gcpRoles"`
 	// GCP service account name used during the configuration of the cloud account at GCP.
 	GcpServiceAccountName pulumi.StringOutput `pulumi:"gcpServiceAccountName"`
 	// Name of the Cloud Account.
@@ -63,14 +66,17 @@ func GetCloudAccount(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering CloudAccount resources.
 type cloudAccountState struct {
-	Aws   *CloudAccountAws   `pulumi:"aws"`
+	// Contains AWS cloud account configuration.
+	Aws *CloudAccountAws `pulumi:"aws"`
+	// Contains Azure cloud account configuration.
 	Azure *CloudAccountAzure `pulumi:"azure"`
 	// The ID, in GUID format, of the Cloud Account.
 	CplnId *string `pulumi:"cplnId"`
 	// Description of the Cloud Account.
-	Description *string          `pulumi:"description"`
-	Gcp         *CloudAccountGcp `pulumi:"gcp"`
-	GcpRoles    []string         `pulumi:"gcpRoles"`
+	Description *string `pulumi:"description"`
+	// Contains GCP cloud account configuration.
+	Gcp      *CloudAccountGcp `pulumi:"gcp"`
+	GcpRoles []string         `pulumi:"gcpRoles"`
 	// GCP service account name used during the configuration of the cloud account at GCP.
 	GcpServiceAccountName *string `pulumi:"gcpServiceAccountName"`
 	// Name of the Cloud Account.
@@ -82,14 +88,17 @@ type cloudAccountState struct {
 }
 
 type CloudAccountState struct {
-	Aws   CloudAccountAwsPtrInput
+	// Contains AWS cloud account configuration.
+	Aws CloudAccountAwsPtrInput
+	// Contains Azure cloud account configuration.
 	Azure CloudAccountAzurePtrInput
 	// The ID, in GUID format, of the Cloud Account.
 	CplnId pulumi.StringPtrInput
 	// Description of the Cloud Account.
 	Description pulumi.StringPtrInput
-	Gcp         CloudAccountGcpPtrInput
-	GcpRoles    pulumi.StringArrayInput
+	// Contains GCP cloud account configuration.
+	Gcp      CloudAccountGcpPtrInput
+	GcpRoles pulumi.StringArrayInput
 	// GCP service account name used during the configuration of the cloud account at GCP.
 	GcpServiceAccountName pulumi.StringPtrInput
 	// Name of the Cloud Account.
@@ -105,11 +114,14 @@ func (CloudAccountState) ElementType() reflect.Type {
 }
 
 type cloudAccountArgs struct {
-	Aws   *CloudAccountAws   `pulumi:"aws"`
+	// Contains AWS cloud account configuration.
+	Aws *CloudAccountAws `pulumi:"aws"`
+	// Contains Azure cloud account configuration.
 	Azure *CloudAccountAzure `pulumi:"azure"`
 	// Description of the Cloud Account.
-	Description *string          `pulumi:"description"`
-	Gcp         *CloudAccountGcp `pulumi:"gcp"`
+	Description *string `pulumi:"description"`
+	// Contains GCP cloud account configuration.
+	Gcp *CloudAccountGcp `pulumi:"gcp"`
 	// Name of the Cloud Account.
 	Name *string          `pulumi:"name"`
 	Ngs  *CloudAccountNgs `pulumi:"ngs"`
@@ -119,11 +131,14 @@ type cloudAccountArgs struct {
 
 // The set of arguments for constructing a CloudAccount resource.
 type CloudAccountArgs struct {
-	Aws   CloudAccountAwsPtrInput
+	// Contains AWS cloud account configuration.
+	Aws CloudAccountAwsPtrInput
+	// Contains Azure cloud account configuration.
 	Azure CloudAccountAzurePtrInput
 	// Description of the Cloud Account.
 	Description pulumi.StringPtrInput
-	Gcp         CloudAccountGcpPtrInput
+	// Contains GCP cloud account configuration.
+	Gcp CloudAccountGcpPtrInput
 	// Name of the Cloud Account.
 	Name pulumi.StringPtrInput
 	Ngs  CloudAccountNgsPtrInput
@@ -242,10 +257,12 @@ func (o CloudAccountOutput) ToOutput(ctx context.Context) pulumix.Output[*CloudA
 	}
 }
 
+// Contains AWS cloud account configuration.
 func (o CloudAccountOutput) Aws() CloudAccountAwsPtrOutput {
 	return o.ApplyT(func(v *CloudAccount) CloudAccountAwsPtrOutput { return v.Aws }).(CloudAccountAwsPtrOutput)
 }
 
+// Contains Azure cloud account configuration.
 func (o CloudAccountOutput) Azure() CloudAccountAzurePtrOutput {
 	return o.ApplyT(func(v *CloudAccount) CloudAccountAzurePtrOutput { return v.Azure }).(CloudAccountAzurePtrOutput)
 }
@@ -260,6 +277,7 @@ func (o CloudAccountOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *CloudAccount) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
+// Contains GCP cloud account configuration.
 func (o CloudAccountOutput) Gcp() CloudAccountGcpPtrOutput {
 	return o.ApplyT(func(v *CloudAccount) CloudAccountGcpPtrOutput { return v.Gcp }).(CloudAccountGcpPtrOutput)
 }

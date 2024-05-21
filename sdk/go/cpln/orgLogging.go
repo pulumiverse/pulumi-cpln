@@ -23,7 +23,8 @@ type OrgLogging struct {
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
 	DatadogLoggings OrgLoggingDatadogLoggingArrayOutput `pulumi:"datadogLoggings"`
 	// The description of org.
-	Description     pulumi.StringOutput                 `pulumi:"description"`
+	Description pulumi.StringOutput `pulumi:"description"`
+	// For logging and analyzing data within an org using Elastic Logging.
 	ElasticLoggings OrgLoggingElasticLoggingArrayOutput `pulumi:"elasticLoggings"`
 	FluentdLoggings OrgLoggingFluentdLoggingArrayOutput `pulumi:"fluentdLoggings"`
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
@@ -76,7 +77,8 @@ type orgLoggingState struct {
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
 	DatadogLoggings []OrgLoggingDatadogLogging `pulumi:"datadogLoggings"`
 	// The description of org.
-	Description     *string                    `pulumi:"description"`
+	Description *string `pulumi:"description"`
+	// For logging and analyzing data within an org using Elastic Logging.
 	ElasticLoggings []OrgLoggingElasticLogging `pulumi:"elasticLoggings"`
 	FluentdLoggings []OrgLoggingFluentdLogging `pulumi:"fluentdLoggings"`
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
@@ -100,7 +102,8 @@ type OrgLoggingState struct {
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
 	DatadogLoggings OrgLoggingDatadogLoggingArrayInput
 	// The description of org.
-	Description     pulumi.StringPtrInput
+	Description pulumi.StringPtrInput
+	// For logging and analyzing data within an org using Elastic Logging.
 	ElasticLoggings OrgLoggingElasticLoggingArrayInput
 	FluentdLoggings OrgLoggingFluentdLoggingArrayInput
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
@@ -125,6 +128,7 @@ type orgLoggingArgs struct {
 	CoralogixLoggings []OrgLoggingCoralogixLogging `pulumi:"coralogixLoggings"`
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
 	DatadogLoggings []OrgLoggingDatadogLogging `pulumi:"datadogLoggings"`
+	// For logging and analyzing data within an org using Elastic Logging.
 	ElasticLoggings []OrgLoggingElasticLogging `pulumi:"elasticLoggings"`
 	FluentdLoggings []OrgLoggingFluentdLogging `pulumi:"fluentdLoggings"`
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
@@ -142,6 +146,7 @@ type OrgLoggingArgs struct {
 	CoralogixLoggings OrgLoggingCoralogixLoggingArrayInput
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
 	DatadogLoggings OrgLoggingDatadogLoggingArrayInput
+	// For logging and analyzing data within an org using Elastic Logging.
 	ElasticLoggings OrgLoggingElasticLoggingArrayInput
 	FluentdLoggings OrgLoggingFluentdLoggingArrayInput
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
@@ -287,6 +292,7 @@ func (o OrgLoggingOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v *OrgLogging) pulumi.StringOutput { return v.Description }).(pulumi.StringOutput)
 }
 
+// For logging and analyzing data within an org using Elastic Logging.
 func (o OrgLoggingOutput) ElasticLoggings() OrgLoggingElasticLoggingArrayOutput {
 	return o.ApplyT(func(v *OrgLogging) OrgLoggingElasticLoggingArrayOutput { return v.ElasticLoggings }).(OrgLoggingElasticLoggingArrayOutput)
 }

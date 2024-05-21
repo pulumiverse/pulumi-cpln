@@ -34,7 +34,15 @@ export class Identity extends pulumi.CustomResource {
         return obj['__pulumiType'] === Identity.__pulumiType;
     }
 
+    /**
+     * A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+     * environment.
+     */
     public readonly awsAccessPolicy!: pulumi.Output<outputs.IdentityAwsAccessPolicy | undefined>;
+    /**
+     * A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+     * environment.
+     */
     public readonly azureAccessPolicy!: pulumi.Output<outputs.IdentityAzureAccessPolicy | undefined>;
     /**
      * ID, in GUID format, of the Identity.
@@ -65,6 +73,10 @@ export class Identity extends pulumi.CustomResource {
      * ports. - IP's and ports.
      */
     public readonly networkResources!: pulumi.Output<outputs.IdentityNetworkResource[] | undefined>;
+    /**
+     * A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+     * environment.
+     */
     public readonly ngsAccessPolicy!: pulumi.Output<outputs.IdentityNgsAccessPolicy | undefined>;
     /**
      * Full link to this resource. Can be referenced by other resources.
@@ -133,7 +145,15 @@ export class Identity extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Identity resources.
  */
 export interface IdentityState {
+    /**
+     * A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+     * environment.
+     */
     awsAccessPolicy?: pulumi.Input<inputs.IdentityAwsAccessPolicy>;
+    /**
+     * A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+     * environment.
+     */
     azureAccessPolicy?: pulumi.Input<inputs.IdentityAzureAccessPolicy>;
     /**
      * ID, in GUID format, of the Identity.
@@ -164,6 +184,10 @@ export interface IdentityState {
      * ports. - IP's and ports.
      */
     networkResources?: pulumi.Input<pulumi.Input<inputs.IdentityNetworkResource>[]>;
+    /**
+     * A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+     * environment.
+     */
     ngsAccessPolicy?: pulumi.Input<inputs.IdentityNgsAccessPolicy>;
     /**
      * Full link to this resource. Can be referenced by other resources.
@@ -183,7 +207,15 @@ export interface IdentityState {
  * The set of arguments for constructing a Identity resource.
  */
 export interface IdentityArgs {
+    /**
+     * A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+     * environment.
+     */
     awsAccessPolicy?: pulumi.Input<inputs.IdentityAwsAccessPolicy>;
+    /**
+     * A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+     * environment.
+     */
     azureAccessPolicy?: pulumi.Input<inputs.IdentityAzureAccessPolicy>;
     /**
      * Description of the Identity.
@@ -210,6 +242,10 @@ export interface IdentityArgs {
      * ports. - IP's and ports.
      */
     networkResources?: pulumi.Input<pulumi.Input<inputs.IdentityNetworkResource>[]>;
+    /**
+     * A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+     * environment.
+     */
     ngsAccessPolicy?: pulumi.Input<inputs.IdentityNgsAccessPolicy>;
     /**
      * Key-value map of resource tags.

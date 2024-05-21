@@ -53,7 +53,11 @@ export class DomainRoute extends pulumi.CustomResource {
     /**
      * The path will match any unmatched path prefixes for the subdomain.
      */
-    public readonly prefix!: pulumi.Output<string>;
+    public readonly prefix!: pulumi.Output<string | undefined>;
+    /**
+     * Used to match URI paths. Uses the google re2 regex syntax.
+     */
+    public readonly regex!: pulumi.Output<string | undefined>;
     /**
      * A path prefix can be configured to be replaced when forwarding the request to the Workload.
      */
@@ -81,15 +85,13 @@ export class DomainRoute extends pulumi.CustomResource {
             resourceInputs["hostPrefix"] = state ? state.hostPrefix : undefined;
             resourceInputs["port"] = state ? state.port : undefined;
             resourceInputs["prefix"] = state ? state.prefix : undefined;
+            resourceInputs["regex"] = state ? state.regex : undefined;
             resourceInputs["replacePrefix"] = state ? state.replacePrefix : undefined;
             resourceInputs["workloadLink"] = state ? state.workloadLink : undefined;
         } else {
             const args = argsOrState as DomainRouteArgs | undefined;
             if ((!args || args.domainLink === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'domainLink'");
-            }
-            if ((!args || args.prefix === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'prefix'");
             }
             if ((!args || args.workloadLink === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'workloadLink'");
@@ -99,6 +101,7 @@ export class DomainRoute extends pulumi.CustomResource {
             resourceInputs["hostPrefix"] = args ? args.hostPrefix : undefined;
             resourceInputs["port"] = args ? args.port : undefined;
             resourceInputs["prefix"] = args ? args.prefix : undefined;
+            resourceInputs["regex"] = args ? args.regex : undefined;
             resourceInputs["replacePrefix"] = args ? args.replacePrefix : undefined;
             resourceInputs["workloadLink"] = args ? args.workloadLink : undefined;
         }
@@ -134,6 +137,10 @@ export interface DomainRouteState {
      */
     prefix?: pulumi.Input<string>;
     /**
+     * Used to match URI paths. Uses the google re2 regex syntax.
+     */
+    regex?: pulumi.Input<string>;
+    /**
      * A path prefix can be configured to be replaced when forwarding the request to the Workload.
      */
     replacePrefix?: pulumi.Input<string>;
@@ -168,7 +175,11 @@ export interface DomainRouteArgs {
     /**
      * The path will match any unmatched path prefixes for the subdomain.
      */
-    prefix: pulumi.Input<string>;
+    prefix?: pulumi.Input<string>;
+    /**
+     * Used to match URI paths. Uses the google re2 regex syntax.
+     */
+    regex?: pulumi.Input<string>;
     /**
      * A path prefix can be configured to be replaced when forwarding the request to the Workload.
      */

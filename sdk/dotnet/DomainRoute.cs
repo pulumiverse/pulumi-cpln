@@ -43,7 +43,13 @@ namespace Pulumiverse.Cpln
         /// The path will match any unmatched path prefixes for the subdomain.
         /// </summary>
         [Output("prefix")]
-        public Output<string> Prefix { get; private set; } = null!;
+        public Output<string?> Prefix { get; private set; } = null!;
+
+        /// <summary>
+        /// Used to match URI paths. Uses the google re2 regex syntax.
+        /// </summary>
+        [Output("regex")]
+        public Output<string?> Regex { get; private set; } = null!;
 
         /// <summary>
         /// A path prefix can be configured to be replaced when forwarding the request to the Workload.
@@ -133,8 +139,14 @@ namespace Pulumiverse.Cpln
         /// <summary>
         /// The path will match any unmatched path prefixes for the subdomain.
         /// </summary>
-        [Input("prefix", required: true)]
-        public Input<string> Prefix { get; set; } = null!;
+        [Input("prefix")]
+        public Input<string>? Prefix { get; set; }
+
+        /// <summary>
+        /// Used to match URI paths. Uses the google re2 regex syntax.
+        /// </summary>
+        [Input("regex")]
+        public Input<string>? Regex { get; set; }
 
         /// <summary>
         /// A path prefix can be configured to be replaced when forwarding the request to the Workload.
@@ -187,6 +199,12 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Input("prefix")]
         public Input<string>? Prefix { get; set; }
+
+        /// <summary>
+        /// Used to match URI paths. Uses the google re2 regex syntax.
+        /// </summary>
+        [Input("regex")]
+        public Input<string>? Regex { get; set; }
 
         /// <summary>
         /// A path prefix can be configured to be replaced when forwarding the request to the Workload.

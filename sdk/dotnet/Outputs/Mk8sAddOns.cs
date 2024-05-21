@@ -25,6 +25,7 @@ namespace Pulumiverse.Cpln.Outputs
         public readonly Outputs.Mk8sAddOnsLogs? Logs;
         public readonly Outputs.Mk8sAddOnsMetrics? Metrics;
         public readonly Outputs.Mk8sAddOnsNvidia? Nvidia;
+        public readonly bool? Sysbox;
 
         [OutputConstructor]
         private Mk8sAddOns(
@@ -48,7 +49,9 @@ namespace Pulumiverse.Cpln.Outputs
 
             Outputs.Mk8sAddOnsMetrics? metrics,
 
-            Outputs.Mk8sAddOnsNvidia? nvidia)
+            Outputs.Mk8sAddOnsNvidia? nvidia,
+
+            bool? sysbox)
         {
             AwsEcr = awsEcr;
             AwsEfs = awsEfs;
@@ -61,6 +64,7 @@ namespace Pulumiverse.Cpln.Outputs
             Logs = logs;
             Metrics = metrics;
             Nvidia = nvidia;
+            Sysbox = sysbox;
         }
     }
 }

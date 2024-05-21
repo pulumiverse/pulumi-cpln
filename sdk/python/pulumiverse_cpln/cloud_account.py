@@ -25,7 +25,10 @@ class CloudAccountArgs:
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a CloudAccount resource.
+        :param pulumi.Input['CloudAccountAwsArgs'] aws: Contains AWS cloud account configuration.
+        :param pulumi.Input['CloudAccountAzureArgs'] azure: Contains Azure cloud account configuration.
         :param pulumi.Input[str] description: Description of the Cloud Account.
+        :param pulumi.Input['CloudAccountGcpArgs'] gcp: Contains GCP cloud account configuration.
         :param pulumi.Input[str] name: Name of the Cloud Account.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
@@ -70,6 +73,9 @@ class CloudAccountArgs:
     @property
     @pulumi.getter
     def aws(self) -> Optional[pulumi.Input['CloudAccountAwsArgs']]:
+        """
+        Contains AWS cloud account configuration.
+        """
         return pulumi.get(self, "aws")
 
     @aws.setter
@@ -79,6 +85,9 @@ class CloudAccountArgs:
     @property
     @pulumi.getter
     def azure(self) -> Optional[pulumi.Input['CloudAccountAzureArgs']]:
+        """
+        Contains Azure cloud account configuration.
+        """
         return pulumi.get(self, "azure")
 
     @azure.setter
@@ -100,6 +109,9 @@ class CloudAccountArgs:
     @property
     @pulumi.getter
     def gcp(self) -> Optional[pulumi.Input['CloudAccountGcpArgs']]:
+        """
+        Contains GCP cloud account configuration.
+        """
         return pulumi.get(self, "gcp")
 
     @gcp.setter
@@ -156,8 +168,11 @@ class _CloudAccountState:
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         Input properties used for looking up and filtering CloudAccount resources.
+        :param pulumi.Input['CloudAccountAwsArgs'] aws: Contains AWS cloud account configuration.
+        :param pulumi.Input['CloudAccountAzureArgs'] azure: Contains Azure cloud account configuration.
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Cloud Account.
         :param pulumi.Input[str] description: Description of the Cloud Account.
+        :param pulumi.Input['CloudAccountGcpArgs'] gcp: Contains GCP cloud account configuration.
         :param pulumi.Input[str] gcp_service_account_name: GCP service account name used during the configuration of the cloud account at GCP.
         :param pulumi.Input[str] name: Name of the Cloud Account.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
@@ -227,6 +242,9 @@ class _CloudAccountState:
     @property
     @pulumi.getter
     def aws(self) -> Optional[pulumi.Input['CloudAccountAwsArgs']]:
+        """
+        Contains AWS cloud account configuration.
+        """
         return pulumi.get(self, "aws")
 
     @aws.setter
@@ -236,6 +254,9 @@ class _CloudAccountState:
     @property
     @pulumi.getter
     def azure(self) -> Optional[pulumi.Input['CloudAccountAzureArgs']]:
+        """
+        Contains Azure cloud account configuration.
+        """
         return pulumi.get(self, "azure")
 
     @azure.setter
@@ -269,6 +290,9 @@ class _CloudAccountState:
     @property
     @pulumi.getter
     def gcp(self) -> Optional[pulumi.Input['CloudAccountGcpArgs']]:
+        """
+        Contains GCP cloud account configuration.
+        """
         return pulumi.get(self, "gcp")
 
     @gcp.setter
@@ -356,7 +380,10 @@ class CloudAccount(pulumi.CustomResource):
         Create a CloudAccount resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[pulumi.InputType['CloudAccountAwsArgs']] aws: Contains AWS cloud account configuration.
+        :param pulumi.Input[pulumi.InputType['CloudAccountAzureArgs']] azure: Contains Azure cloud account configuration.
         :param pulumi.Input[str] description: Description of the Cloud Account.
+        :param pulumi.Input[pulumi.InputType['CloudAccountGcpArgs']] gcp: Contains GCP cloud account configuration.
         :param pulumi.Input[str] name: Name of the Cloud Account.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
@@ -462,8 +489,11 @@ class CloudAccount(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[pulumi.InputType['CloudAccountAwsArgs']] aws: Contains AWS cloud account configuration.
+        :param pulumi.Input[pulumi.InputType['CloudAccountAzureArgs']] azure: Contains Azure cloud account configuration.
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Cloud Account.
         :param pulumi.Input[str] description: Description of the Cloud Account.
+        :param pulumi.Input[pulumi.InputType['CloudAccountGcpArgs']] gcp: Contains GCP cloud account configuration.
         :param pulumi.Input[str] gcp_service_account_name: GCP service account name used during the configuration of the cloud account at GCP.
         :param pulumi.Input[str] name: Name of the Cloud Account.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
@@ -488,11 +518,17 @@ class CloudAccount(pulumi.CustomResource):
     @property
     @pulumi.getter
     def aws(self) -> pulumi.Output[Optional['outputs.CloudAccountAws']]:
+        """
+        Contains AWS cloud account configuration.
+        """
         return pulumi.get(self, "aws")
 
     @property
     @pulumi.getter
     def azure(self) -> pulumi.Output[Optional['outputs.CloudAccountAzure']]:
+        """
+        Contains Azure cloud account configuration.
+        """
         return pulumi.get(self, "azure")
 
     @property
@@ -514,6 +550,9 @@ class CloudAccount(pulumi.CustomResource):
     @property
     @pulumi.getter
     def gcp(self) -> pulumi.Output[Optional['outputs.CloudAccountGcp']]:
+        """
+        Contains GCP cloud account configuration.
+        """
         return pulumi.get(self, "gcp")
 
     @property

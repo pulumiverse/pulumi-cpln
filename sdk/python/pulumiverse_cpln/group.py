@@ -26,6 +26,9 @@ class GroupArgs:
         """
         The set of arguments for constructing a Group resource.
         :param pulumi.Input[str] description: Description of Group.
+        :param pulumi.Input['GroupIdentityMatcherArgs'] identity_matcher: Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+               for managing the grouping of users logged-in with SAML providers.
+        :param pulumi.Input['GroupMemberQueryArgs'] member_query: A predefined set of criteria or conditions used to query and retrieve members within the group.
         :param pulumi.Input[str] name: Name of the Group.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] service_accounts: List of service accounts that exists within the configured org. Group membership will fail if the service account does
                not exits within the org.
@@ -94,6 +97,10 @@ class GroupArgs:
     @property
     @pulumi.getter(name="identityMatcher")
     def identity_matcher(self) -> Optional[pulumi.Input['GroupIdentityMatcherArgs']]:
+        """
+        Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+        for managing the grouping of users logged-in with SAML providers.
+        """
         return pulumi.get(self, "identity_matcher")
 
     @identity_matcher.setter
@@ -103,6 +110,9 @@ class GroupArgs:
     @property
     @pulumi.getter(name="memberQuery")
     def member_query(self) -> Optional[pulumi.Input['GroupMemberQueryArgs']]:
+        """
+        A predefined set of criteria or conditions used to query and retrieve members within the group.
+        """
         return pulumi.get(self, "member_query")
 
     @member_query.setter
@@ -177,8 +187,12 @@ class _GroupState:
         Input properties used for looking up and filtering Group resources.
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Group.
         :param pulumi.Input[str] description: Description of Group.
+        :param pulumi.Input['GroupIdentityMatcherArgs'] identity_matcher: Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+               for managing the grouping of users logged-in with SAML providers.
+        :param pulumi.Input['GroupMemberQueryArgs'] member_query: A predefined set of criteria or conditions used to query and retrieve members within the group.
         :param pulumi.Input[str] name: Name of the Group.
         :param pulumi.Input[str] origin: Origin of the service account. Either `builtin` or `default`.
+        :param pulumi.Input[str] self_link: Fully qualified link to the this group.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] service_accounts: List of service accounts that exists within the configured org. Group membership will fail if the service account does
                not exits within the org.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
@@ -274,6 +288,10 @@ class _GroupState:
     @property
     @pulumi.getter(name="identityMatcher")
     def identity_matcher(self) -> Optional[pulumi.Input['GroupIdentityMatcherArgs']]:
+        """
+        Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+        for managing the grouping of users logged-in with SAML providers.
+        """
         return pulumi.get(self, "identity_matcher")
 
     @identity_matcher.setter
@@ -283,6 +301,9 @@ class _GroupState:
     @property
     @pulumi.getter(name="memberQuery")
     def member_query(self) -> Optional[pulumi.Input['GroupMemberQueryArgs']]:
+        """
+        A predefined set of criteria or conditions used to query and retrieve members within the group.
+        """
         return pulumi.get(self, "member_query")
 
     @member_query.setter
@@ -316,6 +337,9 @@ class _GroupState:
     @property
     @pulumi.getter(name="selfLink")
     def self_link(self) -> Optional[pulumi.Input[str]]:
+        """
+        Fully qualified link to the this group.
+        """
         return pulumi.get(self, "self_link")
 
     @self_link.setter
@@ -379,6 +403,9 @@ class Group(pulumi.CustomResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] description: Description of Group.
+        :param pulumi.Input[pulumi.InputType['GroupIdentityMatcherArgs']] identity_matcher: Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+               for managing the grouping of users logged-in with SAML providers.
+        :param pulumi.Input[pulumi.InputType['GroupMemberQueryArgs']] member_query: A predefined set of criteria or conditions used to query and retrieve members within the group.
         :param pulumi.Input[str] name: Name of the Group.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] service_accounts: List of service accounts that exists within the configured org. Group membership will fail if the service account does
                not exits within the org.
@@ -478,8 +505,12 @@ class Group(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Group.
         :param pulumi.Input[str] description: Description of Group.
+        :param pulumi.Input[pulumi.InputType['GroupIdentityMatcherArgs']] identity_matcher: Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+               for managing the grouping of users logged-in with SAML providers.
+        :param pulumi.Input[pulumi.InputType['GroupMemberQueryArgs']] member_query: A predefined set of criteria or conditions used to query and retrieve members within the group.
         :param pulumi.Input[str] name: Name of the Group.
         :param pulumi.Input[str] origin: Origin of the service account. Either `builtin` or `default`.
+        :param pulumi.Input[str] self_link: Fully qualified link to the this group.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] service_accounts: List of service accounts that exists within the configured org. Group membership will fail if the service account does
                not exits within the org.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
@@ -521,11 +552,18 @@ class Group(pulumi.CustomResource):
     @property
     @pulumi.getter(name="identityMatcher")
     def identity_matcher(self) -> pulumi.Output[Optional['outputs.GroupIdentityMatcher']]:
+        """
+        Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+        for managing the grouping of users logged-in with SAML providers.
+        """
         return pulumi.get(self, "identity_matcher")
 
     @property
     @pulumi.getter(name="memberQuery")
     def member_query(self) -> pulumi.Output[Optional['outputs.GroupMemberQuery']]:
+        """
+        A predefined set of criteria or conditions used to query and retrieve members within the group.
+        """
         return pulumi.get(self, "member_query")
 
     @property
@@ -547,6 +585,9 @@ class Group(pulumi.CustomResource):
     @property
     @pulumi.getter(name="selfLink")
     def self_link(self) -> pulumi.Output[str]:
+        """
+        Fully qualified link to the this group.
+        """
         return pulumi.get(self, "self_link")
 
     @property

@@ -34,6 +34,9 @@ export class Workload extends pulumi.CustomResource {
         return obj['__pulumiType'] === Workload.__pulumiType;
     }
 
+    /**
+     * An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
+     */
     public readonly containers!: pulumi.Output<outputs.WorkloadContainer[]>;
     /**
      * The ID, in GUID format, of the Workload.
@@ -65,8 +68,19 @@ export class Workload extends pulumi.CustomResource {
      * Name of the Workload.
      */
     public readonly name!: pulumi.Output<string>;
+    /**
+     * Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+     * characteristics of the workload.
+     */
     public readonly options!: pulumi.Output<outputs.WorkloadOptions>;
+    /**
+     * Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+     * replicas, surge replicas, and scaling policies.
+     */
     public readonly rolloutOptions!: pulumi.Output<outputs.WorkloadRolloutOptions | undefined>;
+    /**
+     * Allows for the configuration of the `file system group id`
+     */
     public readonly securityOptions!: pulumi.Output<outputs.WorkloadSecurityOptions | undefined>;
     /**
      * Full link to this resource. Can be referenced by other resources.
@@ -164,6 +178,9 @@ export class Workload extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Workload resources.
  */
 export interface WorkloadState {
+    /**
+     * An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
+     */
     containers?: pulumi.Input<pulumi.Input<inputs.WorkloadContainer>[]>;
     /**
      * The ID, in GUID format, of the Workload.
@@ -195,8 +212,19 @@ export interface WorkloadState {
      * Name of the Workload.
      */
     name?: pulumi.Input<string>;
+    /**
+     * Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+     * characteristics of the workload.
+     */
     options?: pulumi.Input<inputs.WorkloadOptions>;
+    /**
+     * Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+     * replicas, surge replicas, and scaling policies.
+     */
     rolloutOptions?: pulumi.Input<inputs.WorkloadRolloutOptions>;
+    /**
+     * Allows for the configuration of the `file system group id`
+     */
     securityOptions?: pulumi.Input<inputs.WorkloadSecurityOptions>;
     /**
      * Full link to this resource. Can be referenced by other resources.
@@ -226,6 +254,9 @@ export interface WorkloadState {
  * The set of arguments for constructing a Workload resource.
  */
 export interface WorkloadArgs {
+    /**
+     * An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
+     */
     containers: pulumi.Input<pulumi.Input<inputs.WorkloadContainer>[]>;
     /**
      * Description of the Workload.
@@ -253,8 +284,19 @@ export interface WorkloadArgs {
      * Name of the Workload.
      */
     name?: pulumi.Input<string>;
+    /**
+     * Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+     * characteristics of the workload.
+     */
     options: pulumi.Input<inputs.WorkloadOptions>;
+    /**
+     * Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+     * replicas, surge replicas, and scaling policies.
+     */
     rolloutOptions?: pulumi.Input<inputs.WorkloadRolloutOptions>;
+    /**
+     * Allows for the configuration of the `file system group id`
+     */
     securityOptions?: pulumi.Input<inputs.WorkloadSecurityOptions>;
     sidecar?: pulumi.Input<inputs.WorkloadSidecar>;
     /**

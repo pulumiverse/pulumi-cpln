@@ -96,6 +96,7 @@ import (
 //
 // Optional:
 //
+// - **hetzner_labels** (Map of String) Extra labels to attach to servers.
 // - **networking** (Block List, Max: 1) (see below)
 // - **pre_install_script** (String) Optional shell script that will be run before K8S is installed.
 // - **firewall_id** (String) Optional firewall rule to attach to all nodes.
@@ -153,6 +154,7 @@ import (
 //
 // Optional:
 //
+// - **aws_tags** (Map of String) Extra tags to attach to all created objects.
 // - **networking** (Block List, Max: 1) (see below)
 // - **pre_install_script** (String) Optional shell script that will be run before K8S is installed. Supports SSM.
 // - **key_pair** (String) Name of keyPair. Supports SSM
@@ -241,6 +243,7 @@ import (
 // - **aws_ecr** (Block List, Max: 1) (see below)
 // - **aws_elb** (Block List, Max: 1) (see below)
 // - **azure_acr** (Block List, Max: 1) (see below)
+// - **sysbox** (Boolean)
 //
 // <a id="nestedblock--add_ons--azure_workload_identity"></a>
 //
