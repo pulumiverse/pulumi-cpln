@@ -25,6 +25,7 @@ namespace Pulumiverse.Cpln
     /// - **generic_provider** (Block List, Max: 1) (see below)
     /// - **hetzner_provider** (Block List, Max: 1) (see below)
     /// - **aws_provider** (Block List, Max: 1) (see below)
+    /// - **ephemeral_provider** (Block List, Max: 1) (see below)
     /// 
     /// ### Optional
     /// 
@@ -40,15 +41,17 @@ namespace Pulumiverse.Cpln
     /// Required:
     /// 
     /// - **location** (String) Control Plane location that will host the K8S components. Prefer one that is closest to where the nodes are running.
+    /// - **networking** (Block List, Max: 1) (see below)
     /// 
     /// Optional:
     /// 
-    /// - **networking** (Block List, Max: 1) (see below)
     /// - **node_pool** (Block List) (see below)
     /// 
     /// &lt;a id="nestedblock--generic_provider--networking"&gt;&lt;/a&gt;
     /// 
     /// ### `generic_provider.networking`
+    /// 
+    /// Networking declaration is required even if networking is not utilized. Example usage: `networking {}`.
     /// 
     /// Optional:
     /// 
@@ -91,11 +94,11 @@ namespace Pulumiverse.Cpln
     /// - **region** (String) Hetzner region to deploy nodes to.
     /// - **token_secret_link** (String) Link to a secret holding Hetzner access key.
     /// - **network_id** (String) ID of the Hetzner network to deploy nodes to.
+    /// - **networking** (Block List, Max: 1) (see below)
     /// 
     /// Optional:
     /// 
     /// - **hetzner_labels** (Map of String) Extra labels to attach to servers.
-    /// - **networking** (Block List, Max: 1) (see below)
     /// - **pre_install_script** (String) Optional shell script that will be run before K8S is installed.
     /// - **firewall_id** (String) Optional firewall rule to attach to all nodes.
     /// - **node_pool** (Block List) (see below)
@@ -103,6 +106,7 @@ namespace Pulumiverse.Cpln
     /// - **image** (String) Default image for all nodes.
     /// - **ssh_key** (String) SSH key name for accessing deployed nodes.
     /// - **autoscaler** (Block List, Max: 1) (see below)
+    /// - **floating_ip_selector** (Map of String) If supplied, nodes will get assigned a random floating ip matching the selector.
     /// 
     /// &lt;a id="nestedblock--hetzner_provider--node_pool"&gt;&lt;/a&gt;
     /// 
@@ -149,11 +153,11 @@ namespace Pulumiverse.Cpln
     /// - **image** (Block List, Max: 1) (see below)
     /// - **deploy_role_arn** (String) Control Plane will set up the cluster by assuming this role.
     /// - **vpc_id** (String) The vpc where nodes will be deployed. Supports SSM.
+    /// - **networking** (Block List, Max: 1) (see below)
     /// 
     /// Optional:
     /// 
     /// - **aws_tags** (Map of String) Extra tags to attach to all created objects.
-    /// - **networking** (Block List, Max: 1) (see below)
     /// - **pre_install_script** (String) Optional shell script that will be run before K8S is installed. Supports SSM.
     /// - **key_pair** (String) Name of keyPair. Supports SSM
     /// - **disk_encryption_key_arn** (String) KMS key used to encrypt volumes. Supports SSM.
@@ -198,6 +202,38 @@ namespace Pulumiverse.Cpln
     /// 
     /// - **recommended** (String)
     /// - **exact** (String) Support SSM.
+    /// 
+    /// &lt;a id="nestedblock--ephemeral_provider"&gt;&lt;/a&gt;
+    /// 
+    /// ### `ephemeral_provider`
+    /// 
+    /// Required:
+    /// 
+    /// - **location** (String) Control Plane location that will host the K8S components. Prefer one that is closest to where the nodes are running.
+    /// 
+    /// Optional:
+    /// 
+    /// - **node_pool** (Block List) (see below)
+    /// 
+    /// &lt;a id="nestedblock--ephemeral_provider--node_pool"&gt;&lt;/a&gt;
+    /// 
+    /// ### `ephemeral_provider.node_pool`
+    /// 
+    /// List of node pools.
+    /// 
+    /// Required:
+    /// 
+    /// - **name** (String)
+    /// - **count** (Int) Number of nodes to deploy.
+    /// - **arch** (String) CPU architecture of the nodes.
+    /// - **flavor** (String) Linux distro to use for ephemeral nodes.
+    /// - **cpu** (String) Allocated CPU.
+    /// - **memory** (String) Allocated memory.
+    /// 
+    /// Optional:
+    /// 
+    /// - **labels** (Map of String) Labels to attach to nodes of a node pool.
+    /// - **taint** (Block List) (see below)
     /// 
     /// &lt;a id="nestedblock--autoscaler"&gt;&lt;/a&gt;
     /// 
@@ -444,6 +480,9 @@ namespace Pulumiverse.Cpln
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
 
+        [Output("ephemeralProvider")]
+        public Output<Outputs.Mk8sEphemeralProvider?> EphemeralProvider { get; private set; } = null!;
+
         /// <summary>
         /// Allow-list.
         /// </summary>
@@ -542,6 +581,9 @@ namespace Pulumiverse.Cpln
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        [Input("ephemeralProvider")]
+        public Input<Inputs.Mk8sEphemeralProviderArgs>? EphemeralProvider { get; set; }
+
         [Input("firewalls")]
         private InputList<Inputs.Mk8sFirewallArgs>? _firewalls;
 
@@ -612,6 +654,9 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
+
+        [Input("ephemeralProvider")]
+        public Input<Inputs.Mk8sEphemeralProviderGetArgs>? EphemeralProvider { get; set; }
 
         [Input("firewalls")]
         private InputList<Inputs.Mk8sFirewallGetArgs>? _firewalls;

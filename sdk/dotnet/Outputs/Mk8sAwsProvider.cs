@@ -20,7 +20,7 @@ namespace Pulumiverse.Cpln.Outputs
         public readonly string? DiskEncryptionKeyArn;
         public readonly Outputs.Mk8sAwsProviderImage Image;
         public readonly string? KeyPair;
-        public readonly Outputs.Mk8sAwsProviderNetworking? Networking;
+        public readonly Outputs.Mk8sAwsProviderNetworking Networking;
         public readonly ImmutableArray<Outputs.Mk8sAwsProviderNodePool> NodePools;
         public readonly string? PreInstallScript;
         public readonly string Region;
@@ -42,7 +42,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             string? keyPair,
 
-            Outputs.Mk8sAwsProviderNetworking? networking,
+            Outputs.Mk8sAwsProviderNetworking networking,
 
             ImmutableArray<Outputs.Mk8sAwsProviderNodePool> nodePools,
 

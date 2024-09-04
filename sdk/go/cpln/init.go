@@ -27,6 +27,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &AuditContext{}
 	case "cpln:index/cloudAccount:CloudAccount":
 		r = &CloudAccount{}
+	case "cpln:index/customLocation:CustomLocation":
+		r = &CustomLocation{}
 	case "cpln:index/domain:Domain":
 		r = &Domain{}
 	case "cpln:index/domainRoute:DomainRoute":
@@ -103,6 +105,11 @@ func init() {
 	pulumi.RegisterResourceModule(
 		"cpln",
 		"index/cloudAccount",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"cpln",
+		"index/customLocation",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(

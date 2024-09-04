@@ -8,6 +8,8 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
+from . import outputs
+from ._inputs import *
 
 __all__ = ['DomainRouteArgs', 'DomainRoute']
 
@@ -17,6 +19,7 @@ class DomainRouteArgs:
                  domain_link: pulumi.Input[str],
                  workload_link: pulumi.Input[str],
                  domain_port: Optional[pulumi.Input[int]] = None,
+                 headers: Optional[pulumi.Input['DomainRouteHeadersArgs']] = None,
                  host_prefix: Optional[pulumi.Input[str]] = None,
                  port: Optional[pulumi.Input[int]] = None,
                  prefix: Optional[pulumi.Input[str]] = None,
@@ -27,6 +30,7 @@ class DomainRouteArgs:
         :param pulumi.Input[str] domain_link: The self link of the domain to add the route to.
         :param pulumi.Input[str] workload_link: The link of the workload to map the prefix to.
         :param pulumi.Input[int] domain_port: The port the route corresponds to. Default: 443
+        :param pulumi.Input['DomainRouteHeadersArgs'] headers: Modify the headers for all http requests for this route.
         :param pulumi.Input[str] host_prefix: This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
                target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
                Slack or at support@controlplane.com for additional details.
@@ -40,6 +44,7 @@ class DomainRouteArgs:
             domain_link=domain_link,
             workload_link=workload_link,
             domain_port=domain_port,
+            headers=headers,
             host_prefix=host_prefix,
             port=port,
             prefix=prefix,
@@ -52,6 +57,7 @@ class DomainRouteArgs:
              domain_link: pulumi.Input[str],
              workload_link: pulumi.Input[str],
              domain_port: Optional[pulumi.Input[int]] = None,
+             headers: Optional[pulumi.Input['DomainRouteHeadersArgs']] = None,
              host_prefix: Optional[pulumi.Input[str]] = None,
              port: Optional[pulumi.Input[int]] = None,
              prefix: Optional[pulumi.Input[str]] = None,
@@ -74,6 +80,8 @@ class DomainRouteArgs:
         _setter("workload_link", workload_link)
         if domain_port is not None:
             _setter("domain_port", domain_port)
+        if headers is not None:
+            _setter("headers", headers)
         if host_prefix is not None:
             _setter("host_prefix", host_prefix)
         if port is not None:
@@ -120,6 +128,18 @@ class DomainRouteArgs:
     @domain_port.setter
     def domain_port(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "domain_port", value)
+
+    @property
+    @pulumi.getter
+    def headers(self) -> Optional[pulumi.Input['DomainRouteHeadersArgs']]:
+        """
+        Modify the headers for all http requests for this route.
+        """
+        return pulumi.get(self, "headers")
+
+    @headers.setter
+    def headers(self, value: Optional[pulumi.Input['DomainRouteHeadersArgs']]):
+        pulumi.set(self, "headers", value)
 
     @property
     @pulumi.getter(name="hostPrefix")
@@ -189,6 +209,7 @@ class _DomainRouteState:
     def __init__(__self__, *,
                  domain_link: Optional[pulumi.Input[str]] = None,
                  domain_port: Optional[pulumi.Input[int]] = None,
+                 headers: Optional[pulumi.Input['DomainRouteHeadersArgs']] = None,
                  host_prefix: Optional[pulumi.Input[str]] = None,
                  port: Optional[pulumi.Input[int]] = None,
                  prefix: Optional[pulumi.Input[str]] = None,
@@ -199,6 +220,7 @@ class _DomainRouteState:
         Input properties used for looking up and filtering DomainRoute resources.
         :param pulumi.Input[str] domain_link: The self link of the domain to add the route to.
         :param pulumi.Input[int] domain_port: The port the route corresponds to. Default: 443
+        :param pulumi.Input['DomainRouteHeadersArgs'] headers: Modify the headers for all http requests for this route.
         :param pulumi.Input[str] host_prefix: This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
                target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
                Slack or at support@controlplane.com for additional details.
@@ -212,6 +234,7 @@ class _DomainRouteState:
             lambda key, value: pulumi.set(__self__, key, value),
             domain_link=domain_link,
             domain_port=domain_port,
+            headers=headers,
             host_prefix=host_prefix,
             port=port,
             prefix=prefix,
@@ -224,6 +247,7 @@ class _DomainRouteState:
              _setter: Callable[[Any, Any], None],
              domain_link: Optional[pulumi.Input[str]] = None,
              domain_port: Optional[pulumi.Input[int]] = None,
+             headers: Optional[pulumi.Input['DomainRouteHeadersArgs']] = None,
              host_prefix: Optional[pulumi.Input[str]] = None,
              port: Optional[pulumi.Input[int]] = None,
              prefix: Optional[pulumi.Input[str]] = None,
@@ -247,6 +271,8 @@ class _DomainRouteState:
             _setter("domain_link", domain_link)
         if domain_port is not None:
             _setter("domain_port", domain_port)
+        if headers is not None:
+            _setter("headers", headers)
         if host_prefix is not None:
             _setter("host_prefix", host_prefix)
         if port is not None:
@@ -283,6 +309,18 @@ class _DomainRouteState:
     @domain_port.setter
     def domain_port(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "domain_port", value)
+
+    @property
+    @pulumi.getter
+    def headers(self) -> Optional[pulumi.Input['DomainRouteHeadersArgs']]:
+        """
+        Modify the headers for all http requests for this route.
+        """
+        return pulumi.get(self, "headers")
+
+    @headers.setter
+    def headers(self, value: Optional[pulumi.Input['DomainRouteHeadersArgs']]):
+        pulumi.set(self, "headers", value)
 
     @property
     @pulumi.getter(name="hostPrefix")
@@ -366,6 +404,7 @@ class DomainRoute(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  domain_link: Optional[pulumi.Input[str]] = None,
                  domain_port: Optional[pulumi.Input[int]] = None,
+                 headers: Optional[pulumi.Input[pulumi.InputType['DomainRouteHeadersArgs']]] = None,
                  host_prefix: Optional[pulumi.Input[str]] = None,
                  port: Optional[pulumi.Input[int]] = None,
                  prefix: Optional[pulumi.Input[str]] = None,
@@ -379,6 +418,7 @@ class DomainRoute(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] domain_link: The self link of the domain to add the route to.
         :param pulumi.Input[int] domain_port: The port the route corresponds to. Default: 443
+        :param pulumi.Input[pulumi.InputType['DomainRouteHeadersArgs']] headers: Modify the headers for all http requests for this route.
         :param pulumi.Input[str] host_prefix: This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
                target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
                Slack or at support@controlplane.com for additional details.
@@ -417,6 +457,7 @@ class DomainRoute(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  domain_link: Optional[pulumi.Input[str]] = None,
                  domain_port: Optional[pulumi.Input[int]] = None,
+                 headers: Optional[pulumi.Input[pulumi.InputType['DomainRouteHeadersArgs']]] = None,
                  host_prefix: Optional[pulumi.Input[str]] = None,
                  port: Optional[pulumi.Input[int]] = None,
                  prefix: Optional[pulumi.Input[str]] = None,
@@ -436,6 +477,12 @@ class DomainRoute(pulumi.CustomResource):
                 raise TypeError("Missing required property 'domain_link'")
             __props__.__dict__["domain_link"] = domain_link
             __props__.__dict__["domain_port"] = domain_port
+            if headers is not None and not isinstance(headers, DomainRouteHeadersArgs):
+                headers = headers or {}
+                def _setter(key, value):
+                    headers[key] = value
+                DomainRouteHeadersArgs._configure(_setter, **headers)
+            __props__.__dict__["headers"] = headers
             __props__.__dict__["host_prefix"] = host_prefix
             __props__.__dict__["port"] = port
             __props__.__dict__["prefix"] = prefix
@@ -456,6 +503,7 @@ class DomainRoute(pulumi.CustomResource):
             opts: Optional[pulumi.ResourceOptions] = None,
             domain_link: Optional[pulumi.Input[str]] = None,
             domain_port: Optional[pulumi.Input[int]] = None,
+            headers: Optional[pulumi.Input[pulumi.InputType['DomainRouteHeadersArgs']]] = None,
             host_prefix: Optional[pulumi.Input[str]] = None,
             port: Optional[pulumi.Input[int]] = None,
             prefix: Optional[pulumi.Input[str]] = None,
@@ -471,6 +519,7 @@ class DomainRoute(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] domain_link: The self link of the domain to add the route to.
         :param pulumi.Input[int] domain_port: The port the route corresponds to. Default: 443
+        :param pulumi.Input[pulumi.InputType['DomainRouteHeadersArgs']] headers: Modify the headers for all http requests for this route.
         :param pulumi.Input[str] host_prefix: This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
                target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
                Slack or at support@controlplane.com for additional details.
@@ -486,6 +535,7 @@ class DomainRoute(pulumi.CustomResource):
 
         __props__.__dict__["domain_link"] = domain_link
         __props__.__dict__["domain_port"] = domain_port
+        __props__.__dict__["headers"] = headers
         __props__.__dict__["host_prefix"] = host_prefix
         __props__.__dict__["port"] = port
         __props__.__dict__["prefix"] = prefix
@@ -509,6 +559,14 @@ class DomainRoute(pulumi.CustomResource):
         The port the route corresponds to. Default: 443
         """
         return pulumi.get(self, "domain_port")
+
+    @property
+    @pulumi.getter
+    def headers(self) -> pulumi.Output[Optional['outputs.DomainRouteHeaders']]:
+        """
+        Modify the headers for all http requests for this route.
+        """
+        return pulumi.get(self, "headers")
 
     @property
     @pulumi.getter(name="hostPrefix")

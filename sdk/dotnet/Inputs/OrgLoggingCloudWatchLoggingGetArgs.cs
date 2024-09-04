@@ -16,6 +16,14 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("credentials", required: true)]
         public Input<string> Credentials { get; set; } = null!;
 
+        [Input("extractFields")]
+        private InputMap<string>? _extractFields;
+        public InputMap<string> ExtractFields
+        {
+            get => _extractFields ?? (_extractFields = new InputMap<string>());
+            set => _extractFields = value;
+        }
+
         [Input("groupName", required: true)]
         public Input<string> GroupName { get; set; } = null!;
 

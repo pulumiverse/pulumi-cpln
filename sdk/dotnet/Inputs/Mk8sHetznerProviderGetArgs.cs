@@ -27,6 +27,14 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("firewallId")]
         public Input<string>? FirewallId { get; set; }
 
+        [Input("floatingIpSelector")]
+        private InputMap<string>? _floatingIpSelector;
+        public InputMap<string> FloatingIpSelector
+        {
+            get => _floatingIpSelector ?? (_floatingIpSelector = new InputMap<string>());
+            set => _floatingIpSelector = value;
+        }
+
         [Input("hetznerLabels")]
         private InputMap<string>? _hetznerLabels;
         public InputMap<string> HetznerLabels
@@ -41,8 +49,8 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("networkId", required: true)]
         public Input<string> NetworkId { get; set; } = null!;
 
-        [Input("networking")]
-        public Input<Inputs.Mk8sHetznerProviderNetworkingGetArgs>? Networking { get; set; }
+        [Input("networking", required: true)]
+        public Input<Inputs.Mk8sHetznerProviderNetworkingGetArgs> Networking { get; set; } = null!;
 
         [Input("nodePools")]
         private InputList<Inputs.Mk8sHetznerProviderNodePoolGetArgs>? _nodePools;

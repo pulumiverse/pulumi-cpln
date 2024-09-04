@@ -15,6 +15,8 @@ __all__ = [
     'CloudAccountAzure',
     'CloudAccountGcp',
     'CloudAccountNgs',
+    'DomainRouteHeaders',
+    'DomainRouteHeadersRequest',
     'DomainSpec',
     'DomainSpecPort',
     'DomainSpecPortCors',
@@ -66,6 +68,9 @@ __all__ = [
     'Mk8sAwsProviderNodePool',
     'Mk8sAwsProviderNodePoolOverrideImage',
     'Mk8sAwsProviderNodePoolTaint',
+    'Mk8sEphemeralProvider',
+    'Mk8sEphemeralProviderNodePool',
+    'Mk8sEphemeralProviderNodePoolTaint',
     'Mk8sFirewall',
     'Mk8sGenericProvider',
     'Mk8sGenericProviderNetworking',
@@ -347,6 +352,54 @@ class CloudAccountNgs(dict):
     @pulumi.getter(name="secretLink")
     def secret_link(self) -> str:
         return pulumi.get(self, "secret_link")
+
+
+@pulumi.output_type
+class DomainRouteHeaders(dict):
+    def __init__(__self__, *,
+                 request: Optional['outputs.DomainRouteHeadersRequest'] = None):
+        DomainRouteHeaders._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            request=request,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             request: Optional['outputs.DomainRouteHeadersRequest'] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if request is not None:
+            _setter("request", request)
+
+    @property
+    @pulumi.getter
+    def request(self) -> Optional['outputs.DomainRouteHeadersRequest']:
+        return pulumi.get(self, "request")
+
+
+@pulumi.output_type
+class DomainRouteHeadersRequest(dict):
+    def __init__(__self__, *,
+                 set: Optional[Mapping[str, str]] = None):
+        DomainRouteHeadersRequest._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            set=set,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             set: Optional[Mapping[str, str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if set is not None:
+            _setter("set", set)
+
+    @property
+    @pulumi.getter
+    def set(self) -> Optional[Mapping[str, str]]:
+        return pulumi.get(self, "set")
 
 
 @pulumi.output_type
@@ -3009,13 +3062,13 @@ class Mk8sAwsProvider(dict):
     def __init__(__self__, *,
                  deploy_role_arn: str,
                  image: 'outputs.Mk8sAwsProviderImage',
+                 networking: 'outputs.Mk8sAwsProviderNetworking',
                  region: str,
                  vpc_id: str,
                  autoscaler: Optional['outputs.Mk8sAwsProviderAutoscaler'] = None,
                  aws_tags: Optional[Mapping[str, str]] = None,
                  disk_encryption_key_arn: Optional[str] = None,
                  key_pair: Optional[str] = None,
-                 networking: Optional['outputs.Mk8sAwsProviderNetworking'] = None,
                  node_pools: Optional[Sequence['outputs.Mk8sAwsProviderNodePool']] = None,
                  pre_install_script: Optional[str] = None,
                  security_group_ids: Optional[Sequence[str]] = None,
@@ -3024,13 +3077,13 @@ class Mk8sAwsProvider(dict):
             lambda key, value: pulumi.set(__self__, key, value),
             deploy_role_arn=deploy_role_arn,
             image=image,
+            networking=networking,
             region=region,
             vpc_id=vpc_id,
             autoscaler=autoscaler,
             aws_tags=aws_tags,
             disk_encryption_key_arn=disk_encryption_key_arn,
             key_pair=key_pair,
-            networking=networking,
             node_pools=node_pools,
             pre_install_script=pre_install_script,
             security_group_ids=security_group_ids,
@@ -3041,13 +3094,13 @@ class Mk8sAwsProvider(dict):
              _setter: Callable[[Any, Any], None],
              deploy_role_arn: str,
              image: 'outputs.Mk8sAwsProviderImage',
+             networking: 'outputs.Mk8sAwsProviderNetworking',
              region: str,
              vpc_id: str,
              autoscaler: Optional['outputs.Mk8sAwsProviderAutoscaler'] = None,
              aws_tags: Optional[Mapping[str, str]] = None,
              disk_encryption_key_arn: Optional[str] = None,
              key_pair: Optional[str] = None,
-             networking: Optional['outputs.Mk8sAwsProviderNetworking'] = None,
              node_pools: Optional[Sequence['outputs.Mk8sAwsProviderNodePool']] = None,
              pre_install_script: Optional[str] = None,
              security_group_ids: Optional[Sequence[str]] = None,
@@ -3075,6 +3128,7 @@ class Mk8sAwsProvider(dict):
 
         _setter("deploy_role_arn", deploy_role_arn)
         _setter("image", image)
+        _setter("networking", networking)
         _setter("region", region)
         _setter("vpc_id", vpc_id)
         if autoscaler is not None:
@@ -3085,8 +3139,6 @@ class Mk8sAwsProvider(dict):
             _setter("disk_encryption_key_arn", disk_encryption_key_arn)
         if key_pair is not None:
             _setter("key_pair", key_pair)
-        if networking is not None:
-            _setter("networking", networking)
         if node_pools is not None:
             _setter("node_pools", node_pools)
         if pre_install_script is not None:
@@ -3105,6 +3157,11 @@ class Mk8sAwsProvider(dict):
     @pulumi.getter
     def image(self) -> 'outputs.Mk8sAwsProviderImage':
         return pulumi.get(self, "image")
+
+    @property
+    @pulumi.getter
+    def networking(self) -> 'outputs.Mk8sAwsProviderNetworking':
+        return pulumi.get(self, "networking")
 
     @property
     @pulumi.getter
@@ -3135,11 +3192,6 @@ class Mk8sAwsProvider(dict):
     @pulumi.getter(name="keyPair")
     def key_pair(self) -> Optional[str]:
         return pulumi.get(self, "key_pair")
-
-    @property
-    @pulumi.getter
-    def networking(self) -> Optional['outputs.Mk8sAwsProviderNetworking']:
-        return pulumi.get(self, "networking")
 
     @property
     @pulumi.getter(name="nodePools")
@@ -3607,6 +3659,190 @@ class Mk8sAwsProviderNodePoolTaint(dict):
 
 
 @pulumi.output_type
+class Mk8sEphemeralProvider(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "nodePools":
+            suggest = "node_pools"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sEphemeralProvider. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sEphemeralProvider.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sEphemeralProvider.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 location: str,
+                 node_pools: Optional[Sequence['outputs.Mk8sEphemeralProviderNodePool']] = None):
+        Mk8sEphemeralProvider._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            location=location,
+            node_pools=node_pools,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             location: str,
+             node_pools: Optional[Sequence['outputs.Mk8sEphemeralProviderNodePool']] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'nodePools' in kwargs:
+            node_pools = kwargs['nodePools']
+
+        _setter("location", location)
+        if node_pools is not None:
+            _setter("node_pools", node_pools)
+
+    @property
+    @pulumi.getter
+    def location(self) -> str:
+        return pulumi.get(self, "location")
+
+    @property
+    @pulumi.getter(name="nodePools")
+    def node_pools(self) -> Optional[Sequence['outputs.Mk8sEphemeralProviderNodePool']]:
+        return pulumi.get(self, "node_pools")
+
+
+@pulumi.output_type
+class Mk8sEphemeralProviderNodePool(dict):
+    def __init__(__self__, *,
+                 arch: str,
+                 count: int,
+                 cpu: str,
+                 flavor: str,
+                 memory: str,
+                 name: str,
+                 labels: Optional[Mapping[str, str]] = None,
+                 taints: Optional[Sequence['outputs.Mk8sEphemeralProviderNodePoolTaint']] = None):
+        Mk8sEphemeralProviderNodePool._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            arch=arch,
+            count=count,
+            cpu=cpu,
+            flavor=flavor,
+            memory=memory,
+            name=name,
+            labels=labels,
+            taints=taints,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             arch: str,
+             count: int,
+             cpu: str,
+             flavor: str,
+             memory: str,
+             name: str,
+             labels: Optional[Mapping[str, str]] = None,
+             taints: Optional[Sequence['outputs.Mk8sEphemeralProviderNodePoolTaint']] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("arch", arch)
+        _setter("count", count)
+        _setter("cpu", cpu)
+        _setter("flavor", flavor)
+        _setter("memory", memory)
+        _setter("name", name)
+        if labels is not None:
+            _setter("labels", labels)
+        if taints is not None:
+            _setter("taints", taints)
+
+    @property
+    @pulumi.getter
+    def arch(self) -> str:
+        return pulumi.get(self, "arch")
+
+    @property
+    @pulumi.getter
+    def count(self) -> int:
+        return pulumi.get(self, "count")
+
+    @property
+    @pulumi.getter
+    def cpu(self) -> str:
+        return pulumi.get(self, "cpu")
+
+    @property
+    @pulumi.getter
+    def flavor(self) -> str:
+        return pulumi.get(self, "flavor")
+
+    @property
+    @pulumi.getter
+    def memory(self) -> str:
+        return pulumi.get(self, "memory")
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Optional[Mapping[str, str]]:
+        return pulumi.get(self, "labels")
+
+    @property
+    @pulumi.getter
+    def taints(self) -> Optional[Sequence['outputs.Mk8sEphemeralProviderNodePoolTaint']]:
+        return pulumi.get(self, "taints")
+
+
+@pulumi.output_type
+class Mk8sEphemeralProviderNodePoolTaint(dict):
+    def __init__(__self__, *,
+                 effect: Optional[str] = None,
+                 key: Optional[str] = None,
+                 value: Optional[str] = None):
+        Mk8sEphemeralProviderNodePoolTaint._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            effect=effect,
+            key=key,
+            value=value,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             effect: Optional[str] = None,
+             key: Optional[str] = None,
+             value: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if effect is not None:
+            _setter("effect", effect)
+        if key is not None:
+            _setter("key", key)
+        if value is not None:
+            _setter("value", value)
+
+    @property
+    @pulumi.getter
+    def effect(self) -> Optional[str]:
+        return pulumi.get(self, "effect")
+
+    @property
+    @pulumi.getter
+    def key(self) -> Optional[str]:
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[str]:
+        return pulumi.get(self, "value")
+
+
+@pulumi.output_type
 class Mk8sFirewall(dict):
     @staticmethod
     def __key_warning(key: str):
@@ -3679,7 +3915,7 @@ class Mk8sGenericProvider(dict):
 
     def __init__(__self__, *,
                  location: str,
-                 networking: Optional['outputs.Mk8sGenericProviderNetworking'] = None,
+                 networking: 'outputs.Mk8sGenericProviderNetworking',
                  node_pools: Optional[Sequence['outputs.Mk8sGenericProviderNodePool']] = None):
         Mk8sGenericProvider._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -3691,7 +3927,7 @@ class Mk8sGenericProvider(dict):
     def _configure(
              _setter: Callable[[Any, Any], None],
              location: str,
-             networking: Optional['outputs.Mk8sGenericProviderNetworking'] = None,
+             networking: 'outputs.Mk8sGenericProviderNetworking',
              node_pools: Optional[Sequence['outputs.Mk8sGenericProviderNodePool']] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -3699,8 +3935,7 @@ class Mk8sGenericProvider(dict):
             node_pools = kwargs['nodePools']
 
         _setter("location", location)
-        if networking is not None:
-            _setter("networking", networking)
+        _setter("networking", networking)
         if node_pools is not None:
             _setter("node_pools", node_pools)
 
@@ -3711,7 +3946,7 @@ class Mk8sGenericProvider(dict):
 
     @property
     @pulumi.getter
-    def networking(self) -> Optional['outputs.Mk8sGenericProviderNetworking']:
+    def networking(self) -> 'outputs.Mk8sGenericProviderNetworking':
         return pulumi.get(self, "networking")
 
     @property
@@ -3877,6 +4112,8 @@ class Mk8sHetznerProvider(dict):
             suggest = "dedicated_server_node_pools"
         elif key == "firewallId":
             suggest = "firewall_id"
+        elif key == "floatingIpSelector":
+            suggest = "floating_ip_selector"
         elif key == "hetznerLabels":
             suggest = "hetzner_labels"
         elif key == "nodePools":
@@ -3899,28 +4136,30 @@ class Mk8sHetznerProvider(dict):
 
     def __init__(__self__, *,
                  network_id: str,
+                 networking: 'outputs.Mk8sHetznerProviderNetworking',
                  region: str,
                  token_secret_link: str,
                  autoscaler: Optional['outputs.Mk8sHetznerProviderAutoscaler'] = None,
                  dedicated_server_node_pools: Optional[Sequence['outputs.Mk8sHetznerProviderDedicatedServerNodePool']] = None,
                  firewall_id: Optional[str] = None,
+                 floating_ip_selector: Optional[Mapping[str, str]] = None,
                  hetzner_labels: Optional[Mapping[str, str]] = None,
                  image: Optional[str] = None,
-                 networking: Optional['outputs.Mk8sHetznerProviderNetworking'] = None,
                  node_pools: Optional[Sequence['outputs.Mk8sHetznerProviderNodePool']] = None,
                  pre_install_script: Optional[str] = None,
                  ssh_key: Optional[str] = None):
         Mk8sHetznerProvider._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             network_id=network_id,
+            networking=networking,
             region=region,
             token_secret_link=token_secret_link,
             autoscaler=autoscaler,
             dedicated_server_node_pools=dedicated_server_node_pools,
             firewall_id=firewall_id,
+            floating_ip_selector=floating_ip_selector,
             hetzner_labels=hetzner_labels,
             image=image,
-            networking=networking,
             node_pools=node_pools,
             pre_install_script=pre_install_script,
             ssh_key=ssh_key,
@@ -3929,14 +4168,15 @@ class Mk8sHetznerProvider(dict):
     def _configure(
              _setter: Callable[[Any, Any], None],
              network_id: str,
+             networking: 'outputs.Mk8sHetznerProviderNetworking',
              region: str,
              token_secret_link: str,
              autoscaler: Optional['outputs.Mk8sHetznerProviderAutoscaler'] = None,
              dedicated_server_node_pools: Optional[Sequence['outputs.Mk8sHetznerProviderDedicatedServerNodePool']] = None,
              firewall_id: Optional[str] = None,
+             floating_ip_selector: Optional[Mapping[str, str]] = None,
              hetzner_labels: Optional[Mapping[str, str]] = None,
              image: Optional[str] = None,
-             networking: Optional['outputs.Mk8sHetznerProviderNetworking'] = None,
              node_pools: Optional[Sequence['outputs.Mk8sHetznerProviderNodePool']] = None,
              pre_install_script: Optional[str] = None,
              ssh_key: Optional[str] = None,
@@ -3950,6 +4190,8 @@ class Mk8sHetznerProvider(dict):
             dedicated_server_node_pools = kwargs['dedicatedServerNodePools']
         if 'firewallId' in kwargs:
             firewall_id = kwargs['firewallId']
+        if 'floatingIpSelector' in kwargs:
+            floating_ip_selector = kwargs['floatingIpSelector']
         if 'hetznerLabels' in kwargs:
             hetzner_labels = kwargs['hetznerLabels']
         if 'nodePools' in kwargs:
@@ -3960,6 +4202,7 @@ class Mk8sHetznerProvider(dict):
             ssh_key = kwargs['sshKey']
 
         _setter("network_id", network_id)
+        _setter("networking", networking)
         _setter("region", region)
         _setter("token_secret_link", token_secret_link)
         if autoscaler is not None:
@@ -3968,12 +4211,12 @@ class Mk8sHetznerProvider(dict):
             _setter("dedicated_server_node_pools", dedicated_server_node_pools)
         if firewall_id is not None:
             _setter("firewall_id", firewall_id)
+        if floating_ip_selector is not None:
+            _setter("floating_ip_selector", floating_ip_selector)
         if hetzner_labels is not None:
             _setter("hetzner_labels", hetzner_labels)
         if image is not None:
             _setter("image", image)
-        if networking is not None:
-            _setter("networking", networking)
         if node_pools is not None:
             _setter("node_pools", node_pools)
         if pre_install_script is not None:
@@ -3985,6 +4228,11 @@ class Mk8sHetznerProvider(dict):
     @pulumi.getter(name="networkId")
     def network_id(self) -> str:
         return pulumi.get(self, "network_id")
+
+    @property
+    @pulumi.getter
+    def networking(self) -> 'outputs.Mk8sHetznerProviderNetworking':
+        return pulumi.get(self, "networking")
 
     @property
     @pulumi.getter
@@ -4012,6 +4260,11 @@ class Mk8sHetznerProvider(dict):
         return pulumi.get(self, "firewall_id")
 
     @property
+    @pulumi.getter(name="floatingIpSelector")
+    def floating_ip_selector(self) -> Optional[Mapping[str, str]]:
+        return pulumi.get(self, "floating_ip_selector")
+
+    @property
     @pulumi.getter(name="hetznerLabels")
     def hetzner_labels(self) -> Optional[Mapping[str, str]]:
         return pulumi.get(self, "hetzner_labels")
@@ -4020,11 +4273,6 @@ class Mk8sHetznerProvider(dict):
     @pulumi.getter
     def image(self) -> Optional[str]:
         return pulumi.get(self, "image")
-
-    @property
-    @pulumi.getter
-    def networking(self) -> Optional['outputs.Mk8sHetznerProviderNetworking']:
-        return pulumi.get(self, "networking")
 
     @property
     @pulumi.getter(name="nodePools")
@@ -5051,6 +5299,8 @@ class OrgLoggingCloudWatchLogging(dict):
             suggest = "group_name"
         elif key == "streamName":
             suggest = "stream_name"
+        elif key == "extractFields":
+            suggest = "extract_fields"
         elif key == "retentionDays":
             suggest = "retention_days"
 
@@ -5070,6 +5320,7 @@ class OrgLoggingCloudWatchLogging(dict):
                  group_name: str,
                  region: str,
                  stream_name: str,
+                 extract_fields: Optional[Mapping[str, str]] = None,
                  retention_days: Optional[int] = None):
         OrgLoggingCloudWatchLogging._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -5077,6 +5328,7 @@ class OrgLoggingCloudWatchLogging(dict):
             group_name=group_name,
             region=region,
             stream_name=stream_name,
+            extract_fields=extract_fields,
             retention_days=retention_days,
         )
     @staticmethod
@@ -5086,6 +5338,7 @@ class OrgLoggingCloudWatchLogging(dict):
              group_name: str,
              region: str,
              stream_name: str,
+             extract_fields: Optional[Mapping[str, str]] = None,
              retention_days: Optional[int] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -5093,6 +5346,8 @@ class OrgLoggingCloudWatchLogging(dict):
             group_name = kwargs['groupName']
         if 'streamName' in kwargs:
             stream_name = kwargs['streamName']
+        if 'extractFields' in kwargs:
+            extract_fields = kwargs['extractFields']
         if 'retentionDays' in kwargs:
             retention_days = kwargs['retentionDays']
 
@@ -5100,6 +5355,8 @@ class OrgLoggingCloudWatchLogging(dict):
         _setter("group_name", group_name)
         _setter("region", region)
         _setter("stream_name", stream_name)
+        if extract_fields is not None:
+            _setter("extract_fields", extract_fields)
         if retention_days is not None:
             _setter("retention_days", retention_days)
 
@@ -5122,6 +5379,11 @@ class OrgLoggingCloudWatchLogging(dict):
     @pulumi.getter(name="streamName")
     def stream_name(self) -> str:
         return pulumi.get(self, "stream_name")
+
+    @property
+    @pulumi.getter(name="extractFields")
+    def extract_fields(self) -> Optional[Mapping[str, str]]:
+        return pulumi.get(self, "extract_fields")
 
     @property
     @pulumi.getter(name="retentionDays")

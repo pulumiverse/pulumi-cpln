@@ -20,6 +20,11 @@ export type CloudAccount = import("./cloudAccount").CloudAccount;
 export const CloudAccount: typeof import("./cloudAccount").CloudAccount = null as any;
 utilities.lazyLoad(exports, ["CloudAccount"], () => require("./cloudAccount"));
 
+export { CustomLocationArgs, CustomLocationState } from "./customLocation";
+export type CustomLocation = import("./customLocation").CustomLocation;
+export const CustomLocation: typeof import("./customLocation").CustomLocation = null as any;
+utilities.lazyLoad(exports, ["CustomLocation"], () => require("./customLocation"));
+
 export { DomainArgs, DomainState } from "./domain";
 export type Domain = import("./domain").Domain;
 export const Domain: typeof import("./domain").Domain = null as any;
@@ -160,6 +165,8 @@ const _module = {
                 return new AuditContext(name, <any>undefined, { urn })
             case "cpln:index/cloudAccount:CloudAccount":
                 return new CloudAccount(name, <any>undefined, { urn })
+            case "cpln:index/customLocation:CustomLocation":
+                return new CustomLocation(name, <any>undefined, { urn })
             case "cpln:index/domain:Domain":
                 return new Domain(name, <any>undefined, { urn })
             case "cpln:index/domainRoute:DomainRoute":
@@ -200,6 +207,7 @@ const _module = {
 pulumi.runtime.registerResourceModule("cpln", "index/agent", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/auditContext", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/cloudAccount", _module)
+pulumi.runtime.registerResourceModule("cpln", "index/customLocation", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/domain", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/domainRoute", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/group", _module)

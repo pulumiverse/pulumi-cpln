@@ -21,6 +21,7 @@ import * as utilities from "./utilities";
  * - **generic_provider** (Block List, Max: 1) (see below)
  * - **hetzner_provider** (Block List, Max: 1) (see below)
  * - **aws_provider** (Block List, Max: 1) (see below)
+ * - **ephemeral_provider** (Block List, Max: 1) (see below)
  *
  * ### Optional
  *
@@ -36,15 +37,17 @@ import * as utilities from "./utilities";
  * Required:
  *
  * - **location** (String) Control Plane location that will host the K8S components. Prefer one that is closest to where the nodes are running.
+ * - **networking** (Block List, Max: 1) (see below)
  *
  * Optional:
  *
- * - **networking** (Block List, Max: 1) (see below)
  * - **node_pool** (Block List) (see below)
  *
  * <a id="nestedblock--generic_provider--networking"></a>
  *
  * ### `generic_provider.networking`
+ *
+ * Networking declaration is required even if networking is not utilized. Example usage: `networking {}`.
  *
  * Optional:
  *
@@ -87,11 +90,11 @@ import * as utilities from "./utilities";
  * - **region** (String) Hetzner region to deploy nodes to.
  * - **token_secret_link** (String) Link to a secret holding Hetzner access key.
  * - **network_id** (String) ID of the Hetzner network to deploy nodes to.
+ * - **networking** (Block List, Max: 1) (see below)
  *
  * Optional:
  *
  * - **hetzner_labels** (Map of String) Extra labels to attach to servers.
- * - **networking** (Block List, Max: 1) (see below)
  * - **pre_install_script** (String) Optional shell script that will be run before K8S is installed.
  * - **firewall_id** (String) Optional firewall rule to attach to all nodes.
  * - **node_pool** (Block List) (see below)
@@ -99,6 +102,7 @@ import * as utilities from "./utilities";
  * - **image** (String) Default image for all nodes.
  * - **ssh_key** (String) SSH key name for accessing deployed nodes.
  * - **autoscaler** (Block List, Max: 1) (see below)
+ * - **floating_ip_selector** (Map of String) If supplied, nodes will get assigned a random floating ip matching the selector.
  *
  * <a id="nestedblock--hetzner_provider--node_pool"></a>
  *
@@ -145,11 +149,11 @@ import * as utilities from "./utilities";
  * - **image** (Block List, Max: 1) (see below)
  * - **deploy_role_arn** (String) Control Plane will set up the cluster by assuming this role.
  * - **vpc_id** (String) The vpc where nodes will be deployed. Supports SSM.
+ * - **networking** (Block List, Max: 1) (see below)
  *
  * Optional:
  *
  * - **aws_tags** (Map of String) Extra tags to attach to all created objects.
- * - **networking** (Block List, Max: 1) (see below)
  * - **pre_install_script** (String) Optional shell script that will be run before K8S is installed. Supports SSM.
  * - **key_pair** (String) Name of keyPair. Supports SSM
  * - **disk_encryption_key_arn** (String) KMS key used to encrypt volumes. Supports SSM.
@@ -194,6 +198,38 @@ import * as utilities from "./utilities";
  *
  * - **recommended** (String)
  * - **exact** (String) Support SSM.
+ *
+ * <a id="nestedblock--ephemeral_provider"></a>
+ *
+ * ### `ephemeralProvider`
+ *
+ * Required:
+ *
+ * - **location** (String) Control Plane location that will host the K8S components. Prefer one that is closest to where the nodes are running.
+ *
+ * Optional:
+ *
+ * - **node_pool** (Block List) (see below)
+ *
+ * <a id="nestedblock--ephemeral_provider--node_pool"></a>
+ *
+ * ### `ephemeral_provider.node_pool`
+ *
+ * List of node pools.
+ *
+ * Required:
+ *
+ * - **name** (String)
+ * - **count** (Int) Number of nodes to deploy.
+ * - **arch** (String) CPU architecture of the nodes.
+ * - **flavor** (String) Linux distro to use for ephemeral nodes.
+ * - **cpu** (String) Allocated CPU.
+ * - **memory** (String) Allocated memory.
+ *
+ * Optional:
+ *
+ * - **labels** (Map of String) Labels to attach to nodes of a node pool.
+ * - **taint** (Block List) (see below)
  *
  * <a id="nestedblock--autoscaler"></a>
  *
@@ -455,6 +491,7 @@ export class Mk8s extends pulumi.CustomResource {
      * Description of the Mk8s.
      */
     public readonly description!: pulumi.Output<string | undefined>;
+    public readonly ephemeralProvider!: pulumi.Output<outputs.Mk8sEphemeralProvider | undefined>;
     /**
      * Allow-list.
      */
@@ -497,6 +534,7 @@ export class Mk8s extends pulumi.CustomResource {
             resourceInputs["awsProvider"] = state ? state.awsProvider : undefined;
             resourceInputs["cplnId"] = state ? state.cplnId : undefined;
             resourceInputs["description"] = state ? state.description : undefined;
+            resourceInputs["ephemeralProvider"] = state ? state.ephemeralProvider : undefined;
             resourceInputs["firewalls"] = state ? state.firewalls : undefined;
             resourceInputs["genericProvider"] = state ? state.genericProvider : undefined;
             resourceInputs["hetznerProvider"] = state ? state.hetznerProvider : undefined;
@@ -513,6 +551,7 @@ export class Mk8s extends pulumi.CustomResource {
             resourceInputs["addOns"] = args ? args.addOns : undefined;
             resourceInputs["awsProvider"] = args ? args.awsProvider : undefined;
             resourceInputs["description"] = args ? args.description : undefined;
+            resourceInputs["ephemeralProvider"] = args ? args.ephemeralProvider : undefined;
             resourceInputs["firewalls"] = args ? args.firewalls : undefined;
             resourceInputs["genericProvider"] = args ? args.genericProvider : undefined;
             resourceInputs["hetznerProvider"] = args ? args.hetznerProvider : undefined;
@@ -547,6 +586,7 @@ export interface Mk8sState {
      * Description of the Mk8s.
      */
     description?: pulumi.Input<string>;
+    ephemeralProvider?: pulumi.Input<inputs.Mk8sEphemeralProvider>;
     /**
      * Allow-list.
      */
@@ -582,6 +622,7 @@ export interface Mk8sArgs {
      * Description of the Mk8s.
      */
     description?: pulumi.Input<string>;
+    ephemeralProvider?: pulumi.Input<inputs.Mk8sEphemeralProvider>;
     /**
      * Allow-list.
      */

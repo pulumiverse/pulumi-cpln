@@ -27,6 +27,7 @@ import (
 // - **generic_provider** (Block List, Max: 1) (see below)
 // - **hetzner_provider** (Block List, Max: 1) (see below)
 // - **aws_provider** (Block List, Max: 1) (see below)
+// - **ephemeral_provider** (Block List, Max: 1) (see below)
 //
 // ### Optional
 //
@@ -42,15 +43,17 @@ import (
 // Required:
 //
 // - **location** (String) Control Plane location that will host the K8S components. Prefer one that is closest to where the nodes are running.
+// - **networking** (Block List, Max: 1) (see below)
 //
 // Optional:
 //
-// - **networking** (Block List, Max: 1) (see below)
 // - **node_pool** (Block List) (see below)
 //
 // <a id="nestedblock--generic_provider--networking"></a>
 //
 // ### `generic_provider.networking`
+//
+// Networking declaration is required even if networking is not utilized. Example usage: `networking {}`.
 //
 // Optional:
 //
@@ -93,11 +96,11 @@ import (
 // - **region** (String) Hetzner region to deploy nodes to.
 // - **token_secret_link** (String) Link to a secret holding Hetzner access key.
 // - **network_id** (String) ID of the Hetzner network to deploy nodes to.
+// - **networking** (Block List, Max: 1) (see below)
 //
 // Optional:
 //
 // - **hetzner_labels** (Map of String) Extra labels to attach to servers.
-// - **networking** (Block List, Max: 1) (see below)
 // - **pre_install_script** (String) Optional shell script that will be run before K8S is installed.
 // - **firewall_id** (String) Optional firewall rule to attach to all nodes.
 // - **node_pool** (Block List) (see below)
@@ -105,6 +108,7 @@ import (
 // - **image** (String) Default image for all nodes.
 // - **ssh_key** (String) SSH key name for accessing deployed nodes.
 // - **autoscaler** (Block List, Max: 1) (see below)
+// - **floating_ip_selector** (Map of String) If supplied, nodes will get assigned a random floating ip matching the selector.
 //
 // <a id="nestedblock--hetzner_provider--node_pool"></a>
 //
@@ -151,11 +155,11 @@ import (
 // - **image** (Block List, Max: 1) (see below)
 // - **deploy_role_arn** (String) Control Plane will set up the cluster by assuming this role.
 // - **vpc_id** (String) The vpc where nodes will be deployed. Supports SSM.
+// - **networking** (Block List, Max: 1) (see below)
 //
 // Optional:
 //
 // - **aws_tags** (Map of String) Extra tags to attach to all created objects.
-// - **networking** (Block List, Max: 1) (see below)
 // - **pre_install_script** (String) Optional shell script that will be run before K8S is installed. Supports SSM.
 // - **key_pair** (String) Name of keyPair. Supports SSM
 // - **disk_encryption_key_arn** (String) KMS key used to encrypt volumes. Supports SSM.
@@ -200,6 +204,38 @@ import (
 //
 // - **recommended** (String)
 // - **exact** (String) Support SSM.
+//
+// <a id="nestedblock--ephemeral_provider"></a>
+//
+// ### `ephemeralProvider`
+//
+// Required:
+//
+// - **location** (String) Control Plane location that will host the K8S components. Prefer one that is closest to where the nodes are running.
+//
+// Optional:
+//
+// - **node_pool** (Block List) (see below)
+//
+// <a id="nestedblock--ephemeral_provider--node_pool"></a>
+//
+// ### `ephemeral_provider.node_pool`
+//
+// List of node pools.
+//
+// Required:
+//
+// - **name** (String)
+// - **count** (Int) Number of nodes to deploy.
+// - **arch** (String) CPU architecture of the nodes.
+// - **flavor** (String) Linux distro to use for ephemeral nodes.
+// - **cpu** (String) Allocated CPU.
+// - **memory** (String) Allocated memory.
+//
+// Optional:
+//
+// - **labels** (Map of String) Labels to attach to nodes of a node pool.
+// - **taint** (Block List) (see below)
 //
 // <a id="nestedblock--autoscaler"></a>
 //
@@ -428,7 +464,8 @@ type Mk8s struct {
 	// The ID, in GUID format, of the Mk8s.
 	CplnId pulumi.StringOutput `pulumi:"cplnId"`
 	// Description of the Mk8s.
-	Description pulumi.StringPtrOutput `pulumi:"description"`
+	Description       pulumi.StringPtrOutput         `pulumi:"description"`
+	EphemeralProvider Mk8sEphemeralProviderPtrOutput `pulumi:"ephemeralProvider"`
 	// Allow-list.
 	Firewalls       Mk8sFirewallArrayOutput      `pulumi:"firewalls"`
 	GenericProvider Mk8sGenericProviderPtrOutput `pulumi:"genericProvider"`
@@ -484,7 +521,8 @@ type mk8sState struct {
 	// The ID, in GUID format, of the Mk8s.
 	CplnId *string `pulumi:"cplnId"`
 	// Description of the Mk8s.
-	Description *string `pulumi:"description"`
+	Description       *string                `pulumi:"description"`
+	EphemeralProvider *Mk8sEphemeralProvider `pulumi:"ephemeralProvider"`
 	// Allow-list.
 	Firewalls       []Mk8sFirewall       `pulumi:"firewalls"`
 	GenericProvider *Mk8sGenericProvider `pulumi:"genericProvider"`
@@ -508,7 +546,8 @@ type Mk8sState struct {
 	// The ID, in GUID format, of the Mk8s.
 	CplnId pulumi.StringPtrInput
 	// Description of the Mk8s.
-	Description pulumi.StringPtrInput
+	Description       pulumi.StringPtrInput
+	EphemeralProvider Mk8sEphemeralProviderPtrInput
 	// Allow-list.
 	Firewalls       Mk8sFirewallArrayInput
 	GenericProvider Mk8sGenericProviderPtrInput
@@ -532,7 +571,8 @@ type mk8sArgs struct {
 	AddOns      *Mk8sAddOns      `pulumi:"addOns"`
 	AwsProvider *Mk8sAwsProvider `pulumi:"awsProvider"`
 	// Description of the Mk8s.
-	Description *string `pulumi:"description"`
+	Description       *string                `pulumi:"description"`
+	EphemeralProvider *Mk8sEphemeralProvider `pulumi:"ephemeralProvider"`
 	// Allow-list.
 	Firewalls       []Mk8sFirewall       `pulumi:"firewalls"`
 	GenericProvider *Mk8sGenericProvider `pulumi:"genericProvider"`
@@ -549,7 +589,8 @@ type Mk8sArgs struct {
 	AddOns      Mk8sAddOnsPtrInput
 	AwsProvider Mk8sAwsProviderPtrInput
 	// Description of the Mk8s.
-	Description pulumi.StringPtrInput
+	Description       pulumi.StringPtrInput
+	EphemeralProvider Mk8sEphemeralProviderPtrInput
 	// Allow-list.
 	Firewalls       Mk8sFirewallArrayInput
 	GenericProvider Mk8sGenericProviderPtrInput
@@ -693,6 +734,10 @@ func (o Mk8sOutput) CplnId() pulumi.StringOutput {
 // Description of the Mk8s.
 func (o Mk8sOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Mk8s) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sOutput) EphemeralProvider() Mk8sEphemeralProviderPtrOutput {
+	return o.ApplyT(func(v *Mk8s) Mk8sEphemeralProviderPtrOutput { return v.EphemeralProvider }).(Mk8sEphemeralProviderPtrOutput)
 }
 
 // Allow-list.

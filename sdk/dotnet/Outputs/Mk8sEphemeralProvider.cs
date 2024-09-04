@@ -12,22 +12,18 @@ namespace Pulumiverse.Cpln.Outputs
 {
 
     [OutputType]
-    public sealed class Mk8sGenericProvider
+    public sealed class Mk8sEphemeralProvider
     {
         public readonly string Location;
-        public readonly Outputs.Mk8sGenericProviderNetworking Networking;
-        public readonly ImmutableArray<Outputs.Mk8sGenericProviderNodePool> NodePools;
+        public readonly ImmutableArray<Outputs.Mk8sEphemeralProviderNodePool> NodePools;
 
         [OutputConstructor]
-        private Mk8sGenericProvider(
+        private Mk8sEphemeralProvider(
             string location,
 
-            Outputs.Mk8sGenericProviderNetworking networking,
-
-            ImmutableArray<Outputs.Mk8sGenericProviderNodePool> nodePools)
+            ImmutableArray<Outputs.Mk8sEphemeralProviderNodePool> nodePools)
         {
             Location = location;
-            Networking = networking;
             NodePools = nodePools;
         }
     }
