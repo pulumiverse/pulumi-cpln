@@ -97,6 +97,7 @@ func Provider() tfbridge.ProviderInfo {
 			"cpln_agent":               {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Agent")},
 			"cpln_audit_context":       {Tok: tfbridge.MakeResource(mainPkg, mainMod, "AuditContext")},
 			"cpln_cloud_account":       {Tok: tfbridge.MakeResource(mainPkg, mainMod, "CloudAccount")},
+			"cpln_custom_location":     {Tok: tfbridge.MakeResource(mainPkg, mainMod, "CustomLocation")},
 			"cpln_domain_route":        {Tok: tfbridge.MakeResource(mainPkg, mainMod, "DomainRoute")},
 			"cpln_group":               {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Group")},
 			"cpln_gvc":                 {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Gvc")},
