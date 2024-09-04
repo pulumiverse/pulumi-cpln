@@ -17,10 +17,11 @@ namespace Pulumiverse.Cpln.Outputs
         public readonly Outputs.Mk8sHetznerProviderAutoscaler? Autoscaler;
         public readonly ImmutableArray<Outputs.Mk8sHetznerProviderDedicatedServerNodePool> DedicatedServerNodePools;
         public readonly string? FirewallId;
+        public readonly ImmutableDictionary<string, string>? FloatingIpSelector;
         public readonly ImmutableDictionary<string, string>? HetznerLabels;
         public readonly string? Image;
         public readonly string NetworkId;
-        public readonly Outputs.Mk8sHetznerProviderNetworking? Networking;
+        public readonly Outputs.Mk8sHetznerProviderNetworking Networking;
         public readonly ImmutableArray<Outputs.Mk8sHetznerProviderNodePool> NodePools;
         public readonly string? PreInstallScript;
         public readonly string Region;
@@ -35,13 +36,15 @@ namespace Pulumiverse.Cpln.Outputs
 
             string? firewallId,
 
+            ImmutableDictionary<string, string>? floatingIpSelector,
+
             ImmutableDictionary<string, string>? hetznerLabels,
 
             string? image,
 
             string networkId,
 
-            Outputs.Mk8sHetznerProviderNetworking? networking,
+            Outputs.Mk8sHetznerProviderNetworking networking,
 
             ImmutableArray<Outputs.Mk8sHetznerProviderNodePool> nodePools,
 
@@ -56,6 +59,7 @@ namespace Pulumiverse.Cpln.Outputs
             Autoscaler = autoscaler;
             DedicatedServerNodePools = dedicatedServerNodePools;
             FirewallId = firewallId;
+            FloatingIpSelector = floatingIpSelector;
             HetznerLabels = hetznerLabels;
             Image = image;
             NetworkId = networkId;

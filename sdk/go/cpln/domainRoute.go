@@ -20,6 +20,8 @@ type DomainRoute struct {
 	DomainLink pulumi.StringOutput `pulumi:"domainLink"`
 	// The port the route corresponds to. Default: 443
 	DomainPort pulumi.IntPtrOutput `pulumi:"domainPort"`
+	// Modify the headers for all http requests for this route.
+	Headers DomainRouteHeadersPtrOutput `pulumi:"headers"`
 	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
 	// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
 	// Slack or at support@controlplane.com for additional details.
@@ -76,6 +78,8 @@ type domainRouteState struct {
 	DomainLink *string `pulumi:"domainLink"`
 	// The port the route corresponds to. Default: 443
 	DomainPort *int `pulumi:"domainPort"`
+	// Modify the headers for all http requests for this route.
+	Headers *DomainRouteHeaders `pulumi:"headers"`
 	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
 	// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
 	// Slack or at support@controlplane.com for additional details.
@@ -97,6 +101,8 @@ type DomainRouteState struct {
 	DomainLink pulumi.StringPtrInput
 	// The port the route corresponds to. Default: 443
 	DomainPort pulumi.IntPtrInput
+	// Modify the headers for all http requests for this route.
+	Headers DomainRouteHeadersPtrInput
 	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
 	// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
 	// Slack or at support@controlplane.com for additional details.
@@ -122,6 +128,8 @@ type domainRouteArgs struct {
 	DomainLink string `pulumi:"domainLink"`
 	// The port the route corresponds to. Default: 443
 	DomainPort *int `pulumi:"domainPort"`
+	// Modify the headers for all http requests for this route.
+	Headers *DomainRouteHeaders `pulumi:"headers"`
 	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
 	// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
 	// Slack or at support@controlplane.com for additional details.
@@ -144,6 +152,8 @@ type DomainRouteArgs struct {
 	DomainLink pulumi.StringInput
 	// The port the route corresponds to. Default: 443
 	DomainPort pulumi.IntPtrInput
+	// Modify the headers for all http requests for this route.
+	Headers DomainRouteHeadersPtrInput
 	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
 	// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
 	// Slack or at support@controlplane.com for additional details.
@@ -279,6 +289,11 @@ func (o DomainRouteOutput) DomainLink() pulumi.StringOutput {
 // The port the route corresponds to. Default: 443
 func (o DomainRouteOutput) DomainPort() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *DomainRoute) pulumi.IntPtrOutput { return v.DomainPort }).(pulumi.IntPtrOutput)
+}
+
+// Modify the headers for all http requests for this route.
+func (o DomainRouteOutput) Headers() DomainRouteHeadersPtrOutput {
+	return o.ApplyT(func(v *DomainRoute) DomainRouteHeadersPtrOutput { return v.Headers }).(DomainRouteHeadersPtrOutput)
 }
 
 // This option allows forwarding traffic for different host headers to different workloads. This will only be used when the

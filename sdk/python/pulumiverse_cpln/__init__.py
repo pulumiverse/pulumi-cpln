@@ -8,6 +8,7 @@ import typing
 from .agent import *
 from .audit_context import *
 from .cloud_account import *
+from .custom_location import *
 from .domain import *
 from .domain_route import *
 from .get_cloud_account import *
@@ -67,6 +68,14 @@ _utilities.register(
   "fqn": "pulumiverse_cpln",
   "classes": {
    "cpln:index/cloudAccount:CloudAccount": "CloudAccount"
+  }
+ },
+ {
+  "pkg": "cpln",
+  "mod": "index/customLocation",
+  "fqn": "pulumiverse_cpln",
+  "classes": {
+   "cpln:index/customLocation:CustomLocation": "CustomLocation"
   }
  },
  {

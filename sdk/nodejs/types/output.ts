@@ -21,6 +21,14 @@ export interface CloudAccountNgs {
     secretLink: string;
 }
 
+export interface DomainRouteHeaders {
+    request?: outputs.DomainRouteHeadersRequest;
+}
+
+export interface DomainRouteHeadersRequest {
+    set?: {[key: string]: string};
+}
+
 export interface DomainSpec {
     acceptAllHosts?: boolean;
     dnsMode?: string;
@@ -418,7 +426,7 @@ export interface Mk8sAwsProvider {
     diskEncryptionKeyArn?: string;
     image: outputs.Mk8sAwsProviderImage;
     keyPair?: string;
-    networking?: outputs.Mk8sAwsProviderNetworking;
+    networking: outputs.Mk8sAwsProviderNetworking;
     nodePools?: outputs.Mk8sAwsProviderNodePool[];
     preInstallScript?: string;
     region: string;
@@ -471,6 +479,28 @@ export interface Mk8sAwsProviderNodePoolTaint {
     value?: string;
 }
 
+export interface Mk8sEphemeralProvider {
+    location: string;
+    nodePools?: outputs.Mk8sEphemeralProviderNodePool[];
+}
+
+export interface Mk8sEphemeralProviderNodePool {
+    arch: string;
+    count: number;
+    cpu: string;
+    flavor: string;
+    labels?: {[key: string]: string};
+    memory: string;
+    name: string;
+    taints?: outputs.Mk8sEphemeralProviderNodePoolTaint[];
+}
+
+export interface Mk8sEphemeralProviderNodePoolTaint {
+    effect?: string;
+    key?: string;
+    value?: string;
+}
+
 export interface Mk8sFirewall {
     description?: string;
     sourceCidr: string;
@@ -478,7 +508,7 @@ export interface Mk8sFirewall {
 
 export interface Mk8sGenericProvider {
     location: string;
-    networking?: outputs.Mk8sGenericProviderNetworking;
+    networking: outputs.Mk8sGenericProviderNetworking;
     nodePools?: outputs.Mk8sGenericProviderNodePool[];
 }
 
@@ -503,10 +533,11 @@ export interface Mk8sHetznerProvider {
     autoscaler?: outputs.Mk8sHetznerProviderAutoscaler;
     dedicatedServerNodePools?: outputs.Mk8sHetznerProviderDedicatedServerNodePool[];
     firewallId?: string;
+    floatingIpSelector?: {[key: string]: string};
     hetznerLabels?: {[key: string]: string};
     image?: string;
     networkId: string;
-    networking?: outputs.Mk8sHetznerProviderNetworking;
+    networking: outputs.Mk8sHetznerProviderNetworking;
     nodePools?: outputs.Mk8sHetznerProviderNodePool[];
     preInstallScript?: string;
     region: string;
@@ -613,6 +644,7 @@ export interface OrgAuthConfig {
 
 export interface OrgLoggingCloudWatchLogging {
     credentials: string;
+    extractFields?: {[key: string]: string};
     groupName: string;
     region: string;
     retentionDays?: number;

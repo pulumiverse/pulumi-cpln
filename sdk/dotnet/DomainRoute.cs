@@ -26,6 +26,12 @@ namespace Pulumiverse.Cpln
         public Output<int?> DomainPort { get; private set; } = null!;
 
         /// <summary>
+        /// Modify the headers for all http requests for this route.
+        /// </summary>
+        [Output("headers")]
+        public Output<Outputs.DomainRouteHeaders?> Headers { get; private set; } = null!;
+
+        /// <summary>
         /// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
         /// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
         /// Slack or at support@controlplane.com for additional details.
@@ -123,6 +129,12 @@ namespace Pulumiverse.Cpln
         public Input<int>? DomainPort { get; set; }
 
         /// <summary>
+        /// Modify the headers for all http requests for this route.
+        /// </summary>
+        [Input("headers")]
+        public Input<Inputs.DomainRouteHeadersArgs>? Headers { get; set; }
+
+        /// <summary>
         /// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
         /// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
         /// Slack or at support@controlplane.com for additional details.
@@ -179,6 +191,12 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Input("domainPort")]
         public Input<int>? DomainPort { get; set; }
+
+        /// <summary>
+        /// Modify the headers for all http requests for this route.
+        /// </summary>
+        [Input("headers")]
+        public Input<Inputs.DomainRouteHeadersGetArgs>? Headers { get; set; }
 
         /// <summary>
         /// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the

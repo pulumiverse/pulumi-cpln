@@ -36,8 +36,8 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("keyPair")]
         public Input<string>? KeyPair { get; set; }
 
-        [Input("networking")]
-        public Input<Inputs.Mk8sAwsProviderNetworkingGetArgs>? Networking { get; set; }
+        [Input("networking", required: true)]
+        public Input<Inputs.Mk8sAwsProviderNetworkingGetArgs> Networking { get; set; } = null!;
 
         [Input("nodePools")]
         private InputList<Inputs.Mk8sAwsProviderNodePoolGetArgs>? _nodePools;

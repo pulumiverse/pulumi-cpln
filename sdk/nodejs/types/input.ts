@@ -21,6 +21,14 @@ export interface CloudAccountNgs {
     secretLink: pulumi.Input<string>;
 }
 
+export interface DomainRouteHeaders {
+    request?: pulumi.Input<inputs.DomainRouteHeadersRequest>;
+}
+
+export interface DomainRouteHeadersRequest {
+    set?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+}
+
 export interface DomainSpec {
     acceptAllHosts?: pulumi.Input<boolean>;
     dnsMode?: pulumi.Input<string>;
@@ -382,7 +390,7 @@ export interface Mk8sAwsProvider {
     diskEncryptionKeyArn?: pulumi.Input<string>;
     image: pulumi.Input<inputs.Mk8sAwsProviderImage>;
     keyPair?: pulumi.Input<string>;
-    networking?: pulumi.Input<inputs.Mk8sAwsProviderNetworking>;
+    networking: pulumi.Input<inputs.Mk8sAwsProviderNetworking>;
     nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sAwsProviderNodePool>[]>;
     preInstallScript?: pulumi.Input<string>;
     region: pulumi.Input<string>;
@@ -435,6 +443,28 @@ export interface Mk8sAwsProviderNodePoolTaint {
     value?: pulumi.Input<string>;
 }
 
+export interface Mk8sEphemeralProvider {
+    location: pulumi.Input<string>;
+    nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sEphemeralProviderNodePool>[]>;
+}
+
+export interface Mk8sEphemeralProviderNodePool {
+    arch: pulumi.Input<string>;
+    count: pulumi.Input<number>;
+    cpu: pulumi.Input<string>;
+    flavor: pulumi.Input<string>;
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    memory: pulumi.Input<string>;
+    name: pulumi.Input<string>;
+    taints?: pulumi.Input<pulumi.Input<inputs.Mk8sEphemeralProviderNodePoolTaint>[]>;
+}
+
+export interface Mk8sEphemeralProviderNodePoolTaint {
+    effect?: pulumi.Input<string>;
+    key?: pulumi.Input<string>;
+    value?: pulumi.Input<string>;
+}
+
 export interface Mk8sFirewall {
     description?: pulumi.Input<string>;
     sourceCidr: pulumi.Input<string>;
@@ -442,7 +472,7 @@ export interface Mk8sFirewall {
 
 export interface Mk8sGenericProvider {
     location: pulumi.Input<string>;
-    networking?: pulumi.Input<inputs.Mk8sGenericProviderNetworking>;
+    networking: pulumi.Input<inputs.Mk8sGenericProviderNetworking>;
     nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sGenericProviderNodePool>[]>;
 }
 
@@ -467,10 +497,11 @@ export interface Mk8sHetznerProvider {
     autoscaler?: pulumi.Input<inputs.Mk8sHetznerProviderAutoscaler>;
     dedicatedServerNodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sHetznerProviderDedicatedServerNodePool>[]>;
     firewallId?: pulumi.Input<string>;
+    floatingIpSelector?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     hetznerLabels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     image?: pulumi.Input<string>;
     networkId: pulumi.Input<string>;
-    networking?: pulumi.Input<inputs.Mk8sHetznerProviderNetworking>;
+    networking: pulumi.Input<inputs.Mk8sHetznerProviderNetworking>;
     nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sHetznerProviderNodePool>[]>;
     preInstallScript?: pulumi.Input<string>;
     region: pulumi.Input<string>;
@@ -577,6 +608,7 @@ export interface OrgAuthConfig {
 
 export interface OrgLoggingCloudWatchLogging {
     credentials: pulumi.Input<string>;
+    extractFields?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     groupName: pulumi.Input<string>;
     region: pulumi.Input<string>;
     retentionDays?: pulumi.Input<number>;

@@ -20,6 +20,7 @@ class Mk8sArgs:
                  add_ons: Optional[pulumi.Input['Mk8sAddOnsArgs']] = None,
                  aws_provider: Optional[pulumi.Input['Mk8sAwsProviderArgs']] = None,
                  description: Optional[pulumi.Input[str]] = None,
+                 ephemeral_provider: Optional[pulumi.Input['Mk8sEphemeralProviderArgs']] = None,
                  firewalls: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sFirewallArgs']]]] = None,
                  generic_provider: Optional[pulumi.Input['Mk8sGenericProviderArgs']] = None,
                  hetzner_provider: Optional[pulumi.Input['Mk8sHetznerProviderArgs']] = None,
@@ -38,6 +39,7 @@ class Mk8sArgs:
             add_ons=add_ons,
             aws_provider=aws_provider,
             description=description,
+            ephemeral_provider=ephemeral_provider,
             firewalls=firewalls,
             generic_provider=generic_provider,
             hetzner_provider=hetzner_provider,
@@ -51,6 +53,7 @@ class Mk8sArgs:
              add_ons: Optional[pulumi.Input['Mk8sAddOnsArgs']] = None,
              aws_provider: Optional[pulumi.Input['Mk8sAwsProviderArgs']] = None,
              description: Optional[pulumi.Input[str]] = None,
+             ephemeral_provider: Optional[pulumi.Input['Mk8sEphemeralProviderArgs']] = None,
              firewalls: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sFirewallArgs']]]] = None,
              generic_provider: Optional[pulumi.Input['Mk8sGenericProviderArgs']] = None,
              hetzner_provider: Optional[pulumi.Input['Mk8sHetznerProviderArgs']] = None,
@@ -62,6 +65,8 @@ class Mk8sArgs:
             add_ons = kwargs['addOns']
         if 'awsProvider' in kwargs:
             aws_provider = kwargs['awsProvider']
+        if 'ephemeralProvider' in kwargs:
+            ephemeral_provider = kwargs['ephemeralProvider']
         if 'genericProvider' in kwargs:
             generic_provider = kwargs['genericProvider']
         if 'hetznerProvider' in kwargs:
@@ -74,6 +79,8 @@ class Mk8sArgs:
             _setter("aws_provider", aws_provider)
         if description is not None:
             _setter("description", description)
+        if ephemeral_provider is not None:
+            _setter("ephemeral_provider", ephemeral_provider)
         if firewalls is not None:
             _setter("firewalls", firewalls)
         if generic_provider is not None:
@@ -123,6 +130,15 @@ class Mk8sArgs:
     @description.setter
     def description(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "description", value)
+
+    @property
+    @pulumi.getter(name="ephemeralProvider")
+    def ephemeral_provider(self) -> Optional[pulumi.Input['Mk8sEphemeralProviderArgs']]:
+        return pulumi.get(self, "ephemeral_provider")
+
+    @ephemeral_provider.setter
+    def ephemeral_provider(self, value: Optional[pulumi.Input['Mk8sEphemeralProviderArgs']]):
+        pulumi.set(self, "ephemeral_provider", value)
 
     @property
     @pulumi.getter
@@ -187,6 +203,7 @@ class _Mk8sState:
                  aws_provider: Optional[pulumi.Input['Mk8sAwsProviderArgs']] = None,
                  cpln_id: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
+                 ephemeral_provider: Optional[pulumi.Input['Mk8sEphemeralProviderArgs']] = None,
                  firewalls: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sFirewallArgs']]]] = None,
                  generic_provider: Optional[pulumi.Input['Mk8sGenericProviderArgs']] = None,
                  hetzner_provider: Optional[pulumi.Input['Mk8sHetznerProviderArgs']] = None,
@@ -213,6 +230,7 @@ class _Mk8sState:
             aws_provider=aws_provider,
             cpln_id=cpln_id,
             description=description,
+            ephemeral_provider=ephemeral_provider,
             firewalls=firewalls,
             generic_provider=generic_provider,
             hetzner_provider=hetzner_provider,
@@ -230,6 +248,7 @@ class _Mk8sState:
              aws_provider: Optional[pulumi.Input['Mk8sAwsProviderArgs']] = None,
              cpln_id: Optional[pulumi.Input[str]] = None,
              description: Optional[pulumi.Input[str]] = None,
+             ephemeral_provider: Optional[pulumi.Input['Mk8sEphemeralProviderArgs']] = None,
              firewalls: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sFirewallArgs']]]] = None,
              generic_provider: Optional[pulumi.Input['Mk8sGenericProviderArgs']] = None,
              hetzner_provider: Optional[pulumi.Input['Mk8sHetznerProviderArgs']] = None,
@@ -246,6 +265,8 @@ class _Mk8sState:
             aws_provider = kwargs['awsProvider']
         if 'cplnId' in kwargs:
             cpln_id = kwargs['cplnId']
+        if 'ephemeralProvider' in kwargs:
+            ephemeral_provider = kwargs['ephemeralProvider']
         if 'genericProvider' in kwargs:
             generic_provider = kwargs['genericProvider']
         if 'hetznerProvider' in kwargs:
@@ -263,6 +284,8 @@ class _Mk8sState:
             _setter("cpln_id", cpln_id)
         if description is not None:
             _setter("description", description)
+        if ephemeral_provider is not None:
+            _setter("ephemeral_provider", ephemeral_provider)
         if firewalls is not None:
             _setter("firewalls", firewalls)
         if generic_provider is not None:
@@ -333,6 +356,15 @@ class _Mk8sState:
     @description.setter
     def description(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "description", value)
+
+    @property
+    @pulumi.getter(name="ephemeralProvider")
+    def ephemeral_provider(self) -> Optional[pulumi.Input['Mk8sEphemeralProviderArgs']]:
+        return pulumi.get(self, "ephemeral_provider")
+
+    @ephemeral_provider.setter
+    def ephemeral_provider(self, value: Optional[pulumi.Input['Mk8sEphemeralProviderArgs']]):
+        pulumi.set(self, "ephemeral_provider", value)
 
     @property
     @pulumi.getter
@@ -430,6 +462,7 @@ class Mk8s(pulumi.CustomResource):
                  add_ons: Optional[pulumi.Input[pulumi.InputType['Mk8sAddOnsArgs']]] = None,
                  aws_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sAwsProviderArgs']]] = None,
                  description: Optional[pulumi.Input[str]] = None,
+                 ephemeral_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sEphemeralProviderArgs']]] = None,
                  firewalls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['Mk8sFirewallArgs']]]]] = None,
                  generic_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sGenericProviderArgs']]] = None,
                  hetzner_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sHetznerProviderArgs']]] = None,
@@ -452,6 +485,7 @@ class Mk8s(pulumi.CustomResource):
         - **generic_provider** (Block List, Max: 1) (see below)
         - **hetzner_provider** (Block List, Max: 1) (see below)
         - **aws_provider** (Block List, Max: 1) (see below)
+        - **ephemeral_provider** (Block List, Max: 1) (see below)
 
         ### Optional
 
@@ -467,15 +501,17 @@ class Mk8s(pulumi.CustomResource):
         Required:
 
         - **location** (String) Control Plane location that will host the K8S components. Prefer one that is closest to where the nodes are running.
+        - **networking** (Block List, Max: 1) (see below)
 
         Optional:
 
-        - **networking** (Block List, Max: 1) (see below)
         - **node_pool** (Block List) (see below)
 
         <a id="nestedblock--generic_provider--networking"></a>
 
         ### `generic_provider.networking`
+
+        Networking declaration is required even if networking is not utilized. Example usage: `networking {}`.
 
         Optional:
 
@@ -518,11 +554,11 @@ class Mk8s(pulumi.CustomResource):
         - **region** (String) Hetzner region to deploy nodes to.
         - **token_secret_link** (String) Link to a secret holding Hetzner access key.
         - **network_id** (String) ID of the Hetzner network to deploy nodes to.
+        - **networking** (Block List, Max: 1) (see below)
 
         Optional:
 
         - **hetzner_labels** (Map of String) Extra labels to attach to servers.
-        - **networking** (Block List, Max: 1) (see below)
         - **pre_install_script** (String) Optional shell script that will be run before K8S is installed.
         - **firewall_id** (String) Optional firewall rule to attach to all nodes.
         - **node_pool** (Block List) (see below)
@@ -530,6 +566,7 @@ class Mk8s(pulumi.CustomResource):
         - **image** (String) Default image for all nodes.
         - **ssh_key** (String) SSH key name for accessing deployed nodes.
         - **autoscaler** (Block List, Max: 1) (see below)
+        - **floating_ip_selector** (Map of String) If supplied, nodes will get assigned a random floating ip matching the selector.
 
         <a id="nestedblock--hetzner_provider--node_pool"></a>
 
@@ -576,11 +613,11 @@ class Mk8s(pulumi.CustomResource):
         - **image** (Block List, Max: 1) (see below)
         - **deploy_role_arn** (String) Control Plane will set up the cluster by assuming this role.
         - **vpc_id** (String) The vpc where nodes will be deployed. Supports SSM.
+        - **networking** (Block List, Max: 1) (see below)
 
         Optional:
 
         - **aws_tags** (Map of String) Extra tags to attach to all created objects.
-        - **networking** (Block List, Max: 1) (see below)
         - **pre_install_script** (String) Optional shell script that will be run before K8S is installed. Supports SSM.
         - **key_pair** (String) Name of keyPair. Supports SSM
         - **disk_encryption_key_arn** (String) KMS key used to encrypt volumes. Supports SSM.
@@ -625,6 +662,38 @@ class Mk8s(pulumi.CustomResource):
 
         - **recommended** (String)
         - **exact** (String) Support SSM.
+
+        <a id="nestedblock--ephemeral_provider"></a>
+
+        ### `ephemeral_provider`
+
+        Required:
+
+        - **location** (String) Control Plane location that will host the K8S components. Prefer one that is closest to where the nodes are running.
+
+        Optional:
+
+        - **node_pool** (Block List) (see below)
+
+        <a id="nestedblock--ephemeral_provider--node_pool"></a>
+
+        ### `ephemeral_provider.node_pool`
+
+        List of node pools.
+
+        Required:
+
+        - **name** (String)
+        - **count** (Int) Number of nodes to deploy.
+        - **arch** (String) CPU architecture of the nodes.
+        - **flavor** (String) Linux distro to use for ephemeral nodes.
+        - **cpu** (String) Allocated CPU.
+        - **memory** (String) Allocated memory.
+
+        Optional:
+
+        - **labels** (Map of String) Labels to attach to nodes of a node pool.
+        - **taint** (Block List) (see below)
 
         <a id="nestedblock--autoscaler"></a>
 
@@ -872,6 +941,7 @@ class Mk8s(pulumi.CustomResource):
         - **generic_provider** (Block List, Max: 1) (see below)
         - **hetzner_provider** (Block List, Max: 1) (see below)
         - **aws_provider** (Block List, Max: 1) (see below)
+        - **ephemeral_provider** (Block List, Max: 1) (see below)
 
         ### Optional
 
@@ -887,15 +957,17 @@ class Mk8s(pulumi.CustomResource):
         Required:
 
         - **location** (String) Control Plane location that will host the K8S components. Prefer one that is closest to where the nodes are running.
+        - **networking** (Block List, Max: 1) (see below)
 
         Optional:
 
-        - **networking** (Block List, Max: 1) (see below)
         - **node_pool** (Block List) (see below)
 
         <a id="nestedblock--generic_provider--networking"></a>
 
         ### `generic_provider.networking`
+
+        Networking declaration is required even if networking is not utilized. Example usage: `networking {}`.
 
         Optional:
 
@@ -938,11 +1010,11 @@ class Mk8s(pulumi.CustomResource):
         - **region** (String) Hetzner region to deploy nodes to.
         - **token_secret_link** (String) Link to a secret holding Hetzner access key.
         - **network_id** (String) ID of the Hetzner network to deploy nodes to.
+        - **networking** (Block List, Max: 1) (see below)
 
         Optional:
 
         - **hetzner_labels** (Map of String) Extra labels to attach to servers.
-        - **networking** (Block List, Max: 1) (see below)
         - **pre_install_script** (String) Optional shell script that will be run before K8S is installed.
         - **firewall_id** (String) Optional firewall rule to attach to all nodes.
         - **node_pool** (Block List) (see below)
@@ -950,6 +1022,7 @@ class Mk8s(pulumi.CustomResource):
         - **image** (String) Default image for all nodes.
         - **ssh_key** (String) SSH key name for accessing deployed nodes.
         - **autoscaler** (Block List, Max: 1) (see below)
+        - **floating_ip_selector** (Map of String) If supplied, nodes will get assigned a random floating ip matching the selector.
 
         <a id="nestedblock--hetzner_provider--node_pool"></a>
 
@@ -996,11 +1069,11 @@ class Mk8s(pulumi.CustomResource):
         - **image** (Block List, Max: 1) (see below)
         - **deploy_role_arn** (String) Control Plane will set up the cluster by assuming this role.
         - **vpc_id** (String) The vpc where nodes will be deployed. Supports SSM.
+        - **networking** (Block List, Max: 1) (see below)
 
         Optional:
 
         - **aws_tags** (Map of String) Extra tags to attach to all created objects.
-        - **networking** (Block List, Max: 1) (see below)
         - **pre_install_script** (String) Optional shell script that will be run before K8S is installed. Supports SSM.
         - **key_pair** (String) Name of keyPair. Supports SSM
         - **disk_encryption_key_arn** (String) KMS key used to encrypt volumes. Supports SSM.
@@ -1045,6 +1118,38 @@ class Mk8s(pulumi.CustomResource):
 
         - **recommended** (String)
         - **exact** (String) Support SSM.
+
+        <a id="nestedblock--ephemeral_provider"></a>
+
+        ### `ephemeral_provider`
+
+        Required:
+
+        - **location** (String) Control Plane location that will host the K8S components. Prefer one that is closest to where the nodes are running.
+
+        Optional:
+
+        - **node_pool** (Block List) (see below)
+
+        <a id="nestedblock--ephemeral_provider--node_pool"></a>
+
+        ### `ephemeral_provider.node_pool`
+
+        List of node pools.
+
+        Required:
+
+        - **name** (String)
+        - **count** (Int) Number of nodes to deploy.
+        - **arch** (String) CPU architecture of the nodes.
+        - **flavor** (String) Linux distro to use for ephemeral nodes.
+        - **cpu** (String) Allocated CPU.
+        - **memory** (String) Allocated memory.
+
+        Optional:
+
+        - **labels** (Map of String) Labels to attach to nodes of a node pool.
+        - **taint** (Block List) (see below)
 
         <a id="nestedblock--autoscaler"></a>
 
@@ -1286,6 +1391,7 @@ class Mk8s(pulumi.CustomResource):
                  add_ons: Optional[pulumi.Input[pulumi.InputType['Mk8sAddOnsArgs']]] = None,
                  aws_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sAwsProviderArgs']]] = None,
                  description: Optional[pulumi.Input[str]] = None,
+                 ephemeral_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sEphemeralProviderArgs']]] = None,
                  firewalls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['Mk8sFirewallArgs']]]]] = None,
                  generic_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sGenericProviderArgs']]] = None,
                  hetzner_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sHetznerProviderArgs']]] = None,
@@ -1314,6 +1420,12 @@ class Mk8s(pulumi.CustomResource):
                 Mk8sAwsProviderArgs._configure(_setter, **aws_provider)
             __props__.__dict__["aws_provider"] = aws_provider
             __props__.__dict__["description"] = description
+            if ephemeral_provider is not None and not isinstance(ephemeral_provider, Mk8sEphemeralProviderArgs):
+                ephemeral_provider = ephemeral_provider or {}
+                def _setter(key, value):
+                    ephemeral_provider[key] = value
+                Mk8sEphemeralProviderArgs._configure(_setter, **ephemeral_provider)
+            __props__.__dict__["ephemeral_provider"] = ephemeral_provider
             __props__.__dict__["firewalls"] = firewalls
             if generic_provider is not None and not isinstance(generic_provider, Mk8sGenericProviderArgs):
                 generic_provider = generic_provider or {}
@@ -1351,6 +1463,7 @@ class Mk8s(pulumi.CustomResource):
             aws_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sAwsProviderArgs']]] = None,
             cpln_id: Optional[pulumi.Input[str]] = None,
             description: Optional[pulumi.Input[str]] = None,
+            ephemeral_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sEphemeralProviderArgs']]] = None,
             firewalls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['Mk8sFirewallArgs']]]]] = None,
             generic_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sGenericProviderArgs']]] = None,
             hetzner_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sHetznerProviderArgs']]] = None,
@@ -1384,6 +1497,7 @@ class Mk8s(pulumi.CustomResource):
         __props__.__dict__["aws_provider"] = aws_provider
         __props__.__dict__["cpln_id"] = cpln_id
         __props__.__dict__["description"] = description
+        __props__.__dict__["ephemeral_provider"] = ephemeral_provider
         __props__.__dict__["firewalls"] = firewalls
         __props__.__dict__["generic_provider"] = generic_provider
         __props__.__dict__["hetzner_provider"] = hetzner_provider
@@ -1427,6 +1541,11 @@ class Mk8s(pulumi.CustomResource):
         Description of the Mk8s.
         """
         return pulumi.get(self, "description")
+
+    @property
+    @pulumi.getter(name="ephemeralProvider")
+    def ephemeral_provider(self) -> pulumi.Output[Optional['outputs.Mk8sEphemeralProvider']]:
+        return pulumi.get(self, "ephemeral_provider")
 
     @property
     @pulumi.getter

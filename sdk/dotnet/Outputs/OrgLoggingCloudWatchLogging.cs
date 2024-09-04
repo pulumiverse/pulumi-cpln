@@ -15,6 +15,7 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class OrgLoggingCloudWatchLogging
     {
         public readonly string Credentials;
+        public readonly ImmutableDictionary<string, string>? ExtractFields;
         public readonly string GroupName;
         public readonly string Region;
         public readonly int? RetentionDays;
@@ -23,6 +24,8 @@ namespace Pulumiverse.Cpln.Outputs
         [OutputConstructor]
         private OrgLoggingCloudWatchLogging(
             string credentials,
+
+            ImmutableDictionary<string, string>? extractFields,
 
             string groupName,
 
@@ -33,6 +36,7 @@ namespace Pulumiverse.Cpln.Outputs
             string streamName)
         {
             Credentials = credentials;
+            ExtractFields = extractFields;
             GroupName = groupName;
             Region = region;
             RetentionDays = retentionDays;
