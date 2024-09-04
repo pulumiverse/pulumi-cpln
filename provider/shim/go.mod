@@ -5,7 +5,7 @@ go 1.21.10
 toolchain go1.21.13
 
 require (
-	github.com/controlplane-com/terraform-provider-cpln v1.1.30
+	github.com/controlplane-com/terraform-provider-cpln v1.1.31
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.33.0
 )
 
@@ -30,7 +30,7 @@ require (
 	github.com/hashicorp/logutils v1.0.0 // indirect
 	github.com/hashicorp/terraform-plugin-go v0.22.1 // indirect
 	github.com/hashicorp/terraform-plugin-log v0.9.0 // indirect
-	github.com/imroc/req/v3 v3.43.1 // indirect
+	github.com/imroc/req/v3 v3.43.4 // indirect
 	github.com/klauspost/compress v1.17.7 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
