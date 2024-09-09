@@ -34,38 +34,38 @@ jobs:
     permissions:
       contents: write
     steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v2
-    - name: Bump version
-      id: version
-      uses: mapped/action-vtl@latest
-      with:
-        baseVersion: 0.0.1
-        gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-        # No need to create VERSION file
-        versionFile: "" 
-    - name: Unshallow clone for tags
-      run: git fetch --prune --unshallow --tags
-    - name: Install Go
-      uses: actions/setup-go@v2
-      with:
-        go-version: ${{matrix.goversion}}
-    - name: Install pulumictl
-      uses: jaxxstorm/action-install-gh-release@v1.5.0
-      with:
-        repo: pulumi/pulumictl
-    - name: Set PreRelease Version
-      run: echo "GORELEASER_CURRENT_TAG=${{ steps.version.outputs.release_tag }}" >> $GITHUB_ENV
-    - name: Run GoReleaser
-      uses: goreleaser/goreleaser-action@v4
-      with:
-        args: -p 3 release --rm-dist
-        version: latest
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Bump version
+        id: version
+        uses: mapped/action-vtl@latest
+        with:
+          baseVersion: 0.0.1
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          # No need to create VERSION file
+          versionFile: ""
+      - name: Unshallow clone for tags
+        run: git fetch --prune --unshallow --tags
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{matrix.goversion}}
+      - name: Install pulumictl
+        uses: jaxxstorm/action-install-gh-release@v1.5.0
+        with:
+          repo: pulumi/pulumictl
+      - name: Set PreRelease Version
+        run: echo "GORELEASER_CURRENT_TAG=${{ steps.version.outputs.release_tag }}" >> $GITHUB_ENV
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v4
+        with:
+          args: -p 3 release --clean
+          version: latest
     strategy:
       fail-fast: true
       matrix:
         goversion:
-        - 1.21.x
+          - 1.21.x
   publish_sdk:
     name: Publish SDKs
     runs-on: ubuntu-latest
@@ -145,4 +145,3 @@ jobs:
           - 20.x
         pythonversion:
           - "3.9"
-
