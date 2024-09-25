@@ -6,74 +6,6 @@ import * as inputs from "./types/input";
 import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
-/**
- * Manages an org's [Location](https://docs.controlplane.com/reference/location).
- *
- * ## Declaration
- *
- * ### Required
- *
- * - **name** (String) Name of the Location.
- * - **tags** (Map of String) Key-value map of resource tags.
- * - **enabled** (Boolean) Indication if location is enabled.
- *
- * > **Note** You need to associate the same tags that are defined in a location; otherwise, the pulumi preview will not be empty. It is common practice to reference the tags from a location data source.
- *
- * ## Outputs
- *
- * - **cpln_id** (String) The ID, in GUID format, of the location.
- * - **description** (String) Description of the location.
- * - **cloud_provider** (String) Cloud Provider of the location.
- * - **region** (String) Region of the location.
- * - **geo** (Block List, Max: 1) (see below)
- * - **ip_ranges** (List of String) A list of IP ranges of the location.
- * - **self_link** (String) Full link to this resource. Can be referenced by other resources.
- *
- * <a id="nestedblock--geo"></a>
- *
- * ### `geo`
- *
- * Location geographical details
- *
- * - **lat** (Number) Latitude.
- * - **lon** (Number) Longitude.
- * - **country** (String) Country.
- * - **state** (String) State.
- * - **city** (String) City.
- * - **continent** (String) Continent.
- *
- * ## Example Usage
- * ### Reference Tags from Data Source
- *
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as cpln from "@pulumi/cpln";
- * import * as cpln from "@pulumiverse/cpln";
- *
- * const main-location = cpln.getLocation({
- *     name: "aws-eu-central-1",
- * });
- * const reference_tags_example = new cpln.Location("reference-tags-example", {
- *     enabled: true,
- *     tags: main_location.then(main_location => main_location.tags),
- * });
- * ```
- * ### Hard Code Location Tags
- *
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as cpln from "@pulumiverse/cpln";
- *
- * const example = new cpln.Location("example", {
- *     enabled: true,
- *     tags: {
- *         "cpln/city": "Frankfurt",
- *         "cpln/continent": "Europe",
- *         "cpln/country": "Germany",
- *     },
- * });
- * ```
- */
 export class Location extends pulumi.CustomResource {
     /**
      * Get an existing Location resource's state with the given name, ID, and optional extra
@@ -138,7 +70,7 @@ export class Location extends pulumi.CustomResource {
     /**
      * Key-value map of resource tags.
      */
-    public readonly tags!: pulumi.Output<{[key: string]: string}>;
+    public readonly tags!: pulumi.Output<{[key: string]: string} | undefined>;
 
     /**
      * Create a Location resource with the given unique name, arguments, and options.
@@ -167,9 +99,6 @@ export class Location extends pulumi.CustomResource {
             const args = argsOrState as LocationArgs | undefined;
             if ((!args || args.enabled === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'enabled'");
-            }
-            if ((!args || args.tags === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'tags'");
             }
             resourceInputs["enabled"] = args ? args.enabled : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
@@ -245,5 +174,5 @@ export interface LocationArgs {
     /**
      * Key-value map of resource tags.
      */
-    tags: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }

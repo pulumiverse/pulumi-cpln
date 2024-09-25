@@ -22,7 +22,7 @@ namespace Pulumiverse.Cpln.Inputs
         }
 
         [Input("sampling", required: true)]
-        public int Sampling { get; set; }
+        public double Sampling { get; set; }
 
         public GetGvcControlplaneTracingArgs()
         {

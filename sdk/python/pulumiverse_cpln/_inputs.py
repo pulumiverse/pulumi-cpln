@@ -153,15 +153,21 @@ __all__ = [
     'WorkloadFirewallSpecExternalOutboundAllowPortArgs',
     'WorkloadFirewallSpecInternalArgs',
     'WorkloadJobArgs',
+    'WorkloadLoadBalancerArgs',
+    'WorkloadLoadBalancerDirectArgs',
+    'WorkloadLoadBalancerDirectPortArgs',
     'WorkloadLocalOptionArgs',
     'WorkloadLocalOptionAutoscalingArgs',
     'WorkloadOptionsArgs',
     'WorkloadOptionsAutoscalingArgs',
     'WorkloadRolloutOptionsArgs',
     'WorkloadSecurityOptionsArgs',
+    'WorkloadSecurityOptionsGeoLocationArgs',
+    'WorkloadSecurityOptionsGeoLocationHeadersArgs',
     'WorkloadSidecarArgs',
     'WorkloadStatusArgs',
     'WorkloadStatusHealthCheckArgs',
+    'WorkloadStatusLoadBalancerArgs',
     'WorkloadStatusResolvedImageArgs',
     'WorkloadStatusResolvedImageImageArgs',
     'WorkloadStatusResolvedImageImageManifestArgs',
@@ -1154,12 +1160,14 @@ class GroupMemberQuerySpecTermArgs:
     def __init__(__self__, *,
                  op: Optional[pulumi.Input[str]] = None,
                  property: Optional[pulumi.Input[str]] = None,
+                 rel: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
         GroupMemberQuerySpecTermArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             op=op,
             property=property,
+            rel=rel,
             tag=tag,
             value=value,
         )
@@ -1168,6 +1176,7 @@ class GroupMemberQuerySpecTermArgs:
              _setter: Callable[[Any, Any], None],
              op: Optional[pulumi.Input[str]] = None,
              property: Optional[pulumi.Input[str]] = None,
+             rel: Optional[pulumi.Input[str]] = None,
              tag: Optional[pulumi.Input[str]] = None,
              value: Optional[pulumi.Input[str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -1177,6 +1186,8 @@ class GroupMemberQuerySpecTermArgs:
             _setter("op", op)
         if property is not None:
             _setter("property", property)
+        if rel is not None:
+            _setter("rel", rel)
         if tag is not None:
             _setter("tag", tag)
         if value is not None:
@@ -1190,6 +1201,15 @@ class GroupMemberQuerySpecTermArgs:
     @op.setter
     def op(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "op", value)
+
+    @property
+    @pulumi.getter
+    def rel(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "rel")
+
+    @rel.setter
+    def rel(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "rel", value)
 
     @property
     @pulumi.getter
@@ -1222,7 +1242,7 @@ class GroupMemberQuerySpecTermArgs:
 @pulumi.input_type
 class GvcControlplaneTracingArgs:
     def __init__(__self__, *,
-                 sampling: pulumi.Input[int],
+                 sampling: pulumi.Input[float],
                  custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         GvcControlplaneTracingArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -1232,7 +1252,7 @@ class GvcControlplaneTracingArgs:
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
-             sampling: pulumi.Input[int],
+             sampling: pulumi.Input[float],
              custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -1245,11 +1265,11 @@ class GvcControlplaneTracingArgs:
 
     @property
     @pulumi.getter
-    def sampling(self) -> pulumi.Input[int]:
+    def sampling(self) -> pulumi.Input[float]:
         return pulumi.get(self, "sampling")
 
     @sampling.setter
-    def sampling(self, value: pulumi.Input[int]):
+    def sampling(self, value: pulumi.Input[float]):
         pulumi.set(self, "sampling", value)
 
     @property
@@ -1266,7 +1286,7 @@ class GvcControlplaneTracingArgs:
 class GvcLightstepTracingArgs:
     def __init__(__self__, *,
                  endpoint: pulumi.Input[str],
-                 sampling: pulumi.Input[int],
+                 sampling: pulumi.Input[float],
                  credentials: Optional[pulumi.Input[str]] = None,
                  custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         GvcLightstepTracingArgs._configure(
@@ -1280,7 +1300,7 @@ class GvcLightstepTracingArgs:
     def _configure(
              _setter: Callable[[Any, Any], None],
              endpoint: pulumi.Input[str],
-             sampling: pulumi.Input[int],
+             sampling: pulumi.Input[float],
              credentials: Optional[pulumi.Input[str]] = None,
              custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -1306,11 +1326,11 @@ class GvcLightstepTracingArgs:
 
     @property
     @pulumi.getter
-    def sampling(self) -> pulumi.Input[int]:
+    def sampling(self) -> pulumi.Input[float]:
         return pulumi.get(self, "sampling")
 
     @sampling.setter
-    def sampling(self, value: pulumi.Input[int]):
+    def sampling(self, value: pulumi.Input[float]):
         pulumi.set(self, "sampling", value)
 
     @property
@@ -1379,7 +1399,7 @@ class GvcLoadBalancerArgs:
 class GvcOtelTracingArgs:
     def __init__(__self__, *,
                  endpoint: pulumi.Input[str],
-                 sampling: pulumi.Input[int],
+                 sampling: pulumi.Input[float],
                  custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         GvcOtelTracingArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -1391,7 +1411,7 @@ class GvcOtelTracingArgs:
     def _configure(
              _setter: Callable[[Any, Any], None],
              endpoint: pulumi.Input[str],
-             sampling: pulumi.Input[int],
+             sampling: pulumi.Input[float],
              custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -1414,11 +1434,11 @@ class GvcOtelTracingArgs:
 
     @property
     @pulumi.getter
-    def sampling(self) -> pulumi.Input[int]:
+    def sampling(self) -> pulumi.Input[float]:
         return pulumi.get(self, "sampling")
 
     @sampling.setter
-    def sampling(self, value: pulumi.Input[int]):
+    def sampling(self, value: pulumi.Input[float]):
         pulumi.set(self, "sampling", value)
 
     @property
@@ -6275,7 +6295,7 @@ class OrgStatusArgs:
 @pulumi.input_type
 class OrgTracingControlplaneTracingArgs:
     def __init__(__self__, *,
-                 sampling: pulumi.Input[int],
+                 sampling: pulumi.Input[float],
                  custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         OrgTracingControlplaneTracingArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -6285,7 +6305,7 @@ class OrgTracingControlplaneTracingArgs:
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
-             sampling: pulumi.Input[int],
+             sampling: pulumi.Input[float],
              custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -6298,11 +6318,11 @@ class OrgTracingControlplaneTracingArgs:
 
     @property
     @pulumi.getter
-    def sampling(self) -> pulumi.Input[int]:
+    def sampling(self) -> pulumi.Input[float]:
         return pulumi.get(self, "sampling")
 
     @sampling.setter
-    def sampling(self, value: pulumi.Input[int]):
+    def sampling(self, value: pulumi.Input[float]):
         pulumi.set(self, "sampling", value)
 
     @property
@@ -6319,7 +6339,7 @@ class OrgTracingControlplaneTracingArgs:
 class OrgTracingLightstepTracingArgs:
     def __init__(__self__, *,
                  endpoint: pulumi.Input[str],
-                 sampling: pulumi.Input[int],
+                 sampling: pulumi.Input[float],
                  credentials: Optional[pulumi.Input[str]] = None,
                  custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         OrgTracingLightstepTracingArgs._configure(
@@ -6333,7 +6353,7 @@ class OrgTracingLightstepTracingArgs:
     def _configure(
              _setter: Callable[[Any, Any], None],
              endpoint: pulumi.Input[str],
-             sampling: pulumi.Input[int],
+             sampling: pulumi.Input[float],
              credentials: Optional[pulumi.Input[str]] = None,
              custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -6359,11 +6379,11 @@ class OrgTracingLightstepTracingArgs:
 
     @property
     @pulumi.getter
-    def sampling(self) -> pulumi.Input[int]:
+    def sampling(self) -> pulumi.Input[float]:
         return pulumi.get(self, "sampling")
 
     @sampling.setter
-    def sampling(self, value: pulumi.Input[int]):
+    def sampling(self, value: pulumi.Input[float]):
         pulumi.set(self, "sampling", value)
 
     @property
@@ -6389,7 +6409,7 @@ class OrgTracingLightstepTracingArgs:
 class OrgTracingOtelTracingArgs:
     def __init__(__self__, *,
                  endpoint: pulumi.Input[str],
-                 sampling: pulumi.Input[int],
+                 sampling: pulumi.Input[float],
                  custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         OrgTracingOtelTracingArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -6401,7 +6421,7 @@ class OrgTracingOtelTracingArgs:
     def _configure(
              _setter: Callable[[Any, Any], None],
              endpoint: pulumi.Input[str],
-             sampling: pulumi.Input[int],
+             sampling: pulumi.Input[float],
              custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -6424,11 +6444,11 @@ class OrgTracingOtelTracingArgs:
 
     @property
     @pulumi.getter
-    def sampling(self) -> pulumi.Input[int]:
+    def sampling(self) -> pulumi.Input[float]:
         return pulumi.get(self, "sampling")
 
     @sampling.setter
-    def sampling(self, value: pulumi.Input[int]):
+    def sampling(self, value: pulumi.Input[float]):
         pulumi.set(self, "sampling", value)
 
     @property
@@ -6572,12 +6592,14 @@ class PolicyTargetQuerySpecTermArgs:
     def __init__(__self__, *,
                  op: Optional[pulumi.Input[str]] = None,
                  property: Optional[pulumi.Input[str]] = None,
+                 rel: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
         PolicyTargetQuerySpecTermArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             op=op,
             property=property,
+            rel=rel,
             tag=tag,
             value=value,
         )
@@ -6586,6 +6608,7 @@ class PolicyTargetQuerySpecTermArgs:
              _setter: Callable[[Any, Any], None],
              op: Optional[pulumi.Input[str]] = None,
              property: Optional[pulumi.Input[str]] = None,
+             rel: Optional[pulumi.Input[str]] = None,
              tag: Optional[pulumi.Input[str]] = None,
              value: Optional[pulumi.Input[str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -6595,6 +6618,8 @@ class PolicyTargetQuerySpecTermArgs:
             _setter("op", op)
         if property is not None:
             _setter("property", property)
+        if rel is not None:
+            _setter("rel", rel)
         if tag is not None:
             _setter("tag", tag)
         if value is not None:
@@ -6608,6 +6633,15 @@ class PolicyTargetQuerySpecTermArgs:
     @op.setter
     def op(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "op", value)
+
+    @property
+    @pulumi.getter
+    def rel(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "rel")
+
+    @rel.setter
+    def rel(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "rel", value)
 
     @property
     @pulumi.getter
@@ -8842,6 +8876,147 @@ class WorkloadJobArgs:
 
 
 @pulumi.input_type
+class WorkloadLoadBalancerArgs:
+    def __init__(__self__, *,
+                 direct: Optional[pulumi.Input['WorkloadLoadBalancerDirectArgs']] = None):
+        WorkloadLoadBalancerArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            direct=direct,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             direct: Optional[pulumi.Input['WorkloadLoadBalancerDirectArgs']] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if direct is not None:
+            _setter("direct", direct)
+
+    @property
+    @pulumi.getter
+    def direct(self) -> Optional[pulumi.Input['WorkloadLoadBalancerDirectArgs']]:
+        return pulumi.get(self, "direct")
+
+    @direct.setter
+    def direct(self, value: Optional[pulumi.Input['WorkloadLoadBalancerDirectArgs']]):
+        pulumi.set(self, "direct", value)
+
+
+@pulumi.input_type
+class WorkloadLoadBalancerDirectArgs:
+    def __init__(__self__, *,
+                 enabled: pulumi.Input[bool],
+                 ports: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadLoadBalancerDirectPortArgs']]]] = None):
+        WorkloadLoadBalancerDirectArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            enabled=enabled,
+            ports=ports,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             enabled: pulumi.Input[bool],
+             ports: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadLoadBalancerDirectPortArgs']]]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("enabled", enabled)
+        if ports is not None:
+            _setter("ports", ports)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> pulumi.Input[bool]:
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: pulumi.Input[bool]):
+        pulumi.set(self, "enabled", value)
+
+    @property
+    @pulumi.getter
+    def ports(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadLoadBalancerDirectPortArgs']]]]:
+        return pulumi.get(self, "ports")
+
+    @ports.setter
+    def ports(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadLoadBalancerDirectPortArgs']]]]):
+        pulumi.set(self, "ports", value)
+
+
+@pulumi.input_type
+class WorkloadLoadBalancerDirectPortArgs:
+    def __init__(__self__, *,
+                 external_port: pulumi.Input[int],
+                 protocol: pulumi.Input[str],
+                 container_port: Optional[pulumi.Input[int]] = None,
+                 scheme: Optional[pulumi.Input[str]] = None):
+        WorkloadLoadBalancerDirectPortArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            external_port=external_port,
+            protocol=protocol,
+            container_port=container_port,
+            scheme=scheme,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             external_port: pulumi.Input[int],
+             protocol: pulumi.Input[str],
+             container_port: Optional[pulumi.Input[int]] = None,
+             scheme: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'externalPort' in kwargs:
+            external_port = kwargs['externalPort']
+        if 'containerPort' in kwargs:
+            container_port = kwargs['containerPort']
+
+        _setter("external_port", external_port)
+        _setter("protocol", protocol)
+        if container_port is not None:
+            _setter("container_port", container_port)
+        if scheme is not None:
+            _setter("scheme", scheme)
+
+    @property
+    @pulumi.getter(name="externalPort")
+    def external_port(self) -> pulumi.Input[int]:
+        return pulumi.get(self, "external_port")
+
+    @external_port.setter
+    def external_port(self, value: pulumi.Input[int]):
+        pulumi.set(self, "external_port", value)
+
+    @property
+    @pulumi.getter
+    def protocol(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "protocol")
+
+    @protocol.setter
+    def protocol(self, value: pulumi.Input[str]):
+        pulumi.set(self, "protocol", value)
+
+    @property
+    @pulumi.getter(name="containerPort")
+    def container_port(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "container_port")
+
+    @container_port.setter
+    def container_port(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "container_port", value)
+
+    @property
+    @pulumi.getter
+    def scheme(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "scheme")
+
+    @scheme.setter
+    def scheme(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "scheme", value)
+
+
+@pulumi.input_type
 class WorkloadLocalOptionArgs:
     def __init__(__self__, *,
                  location: pulumi.Input[str],
@@ -9355,30 +9530,159 @@ class WorkloadRolloutOptionsArgs:
 @pulumi.input_type
 class WorkloadSecurityOptionsArgs:
     def __init__(__self__, *,
-                 file_system_group_id: pulumi.Input[int]):
+                 file_system_group_id: Optional[pulumi.Input[int]] = None,
+                 geo_location: Optional[pulumi.Input['WorkloadSecurityOptionsGeoLocationArgs']] = None):
         WorkloadSecurityOptionsArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             file_system_group_id=file_system_group_id,
+            geo_location=geo_location,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
-             file_system_group_id: pulumi.Input[int],
+             file_system_group_id: Optional[pulumi.Input[int]] = None,
+             geo_location: Optional[pulumi.Input['WorkloadSecurityOptionsGeoLocationArgs']] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
         if 'fileSystemGroupId' in kwargs:
             file_system_group_id = kwargs['fileSystemGroupId']
+        if 'geoLocation' in kwargs:
+            geo_location = kwargs['geoLocation']
 
-        _setter("file_system_group_id", file_system_group_id)
+        if file_system_group_id is not None:
+            _setter("file_system_group_id", file_system_group_id)
+        if geo_location is not None:
+            _setter("geo_location", geo_location)
 
     @property
     @pulumi.getter(name="fileSystemGroupId")
-    def file_system_group_id(self) -> pulumi.Input[int]:
+    def file_system_group_id(self) -> Optional[pulumi.Input[int]]:
         return pulumi.get(self, "file_system_group_id")
 
     @file_system_group_id.setter
-    def file_system_group_id(self, value: pulumi.Input[int]):
+    def file_system_group_id(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "file_system_group_id", value)
+
+    @property
+    @pulumi.getter(name="geoLocation")
+    def geo_location(self) -> Optional[pulumi.Input['WorkloadSecurityOptionsGeoLocationArgs']]:
+        return pulumi.get(self, "geo_location")
+
+    @geo_location.setter
+    def geo_location(self, value: Optional[pulumi.Input['WorkloadSecurityOptionsGeoLocationArgs']]):
+        pulumi.set(self, "geo_location", value)
+
+
+@pulumi.input_type
+class WorkloadSecurityOptionsGeoLocationArgs:
+    def __init__(__self__, *,
+                 enabled: Optional[pulumi.Input[bool]] = None,
+                 headers: Optional[pulumi.Input['WorkloadSecurityOptionsGeoLocationHeadersArgs']] = None):
+        WorkloadSecurityOptionsGeoLocationArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            enabled=enabled,
+            headers=headers,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             enabled: Optional[pulumi.Input[bool]] = None,
+             headers: Optional[pulumi.Input['WorkloadSecurityOptionsGeoLocationHeadersArgs']] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if enabled is not None:
+            _setter("enabled", enabled)
+        if headers is not None:
+            _setter("headers", headers)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "enabled", value)
+
+    @property
+    @pulumi.getter
+    def headers(self) -> Optional[pulumi.Input['WorkloadSecurityOptionsGeoLocationHeadersArgs']]:
+        return pulumi.get(self, "headers")
+
+    @headers.setter
+    def headers(self, value: Optional[pulumi.Input['WorkloadSecurityOptionsGeoLocationHeadersArgs']]):
+        pulumi.set(self, "headers", value)
+
+
+@pulumi.input_type
+class WorkloadSecurityOptionsGeoLocationHeadersArgs:
+    def __init__(__self__, *,
+                 asn: Optional[pulumi.Input[str]] = None,
+                 city: Optional[pulumi.Input[str]] = None,
+                 country: Optional[pulumi.Input[str]] = None,
+                 region: Optional[pulumi.Input[str]] = None):
+        WorkloadSecurityOptionsGeoLocationHeadersArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            asn=asn,
+            city=city,
+            country=country,
+            region=region,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             asn: Optional[pulumi.Input[str]] = None,
+             city: Optional[pulumi.Input[str]] = None,
+             country: Optional[pulumi.Input[str]] = None,
+             region: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if asn is not None:
+            _setter("asn", asn)
+        if city is not None:
+            _setter("city", city)
+        if country is not None:
+            _setter("country", country)
+        if region is not None:
+            _setter("region", region)
+
+    @property
+    @pulumi.getter
+    def asn(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "asn")
+
+    @asn.setter
+    def asn(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "asn", value)
+
+    @property
+    @pulumi.getter
+    def city(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "city")
+
+    @city.setter
+    def city(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "city", value)
+
+    @property
+    @pulumi.getter
+    def country(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "country")
+
+    @country.setter
+    def country(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "country", value)
+
+    @property
+    @pulumi.getter
+    def region(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "region", value)
 
 
 @pulumi.input_type
@@ -9416,6 +9720,7 @@ class WorkloadStatusArgs:
                  endpoint: Optional[pulumi.Input[str]] = None,
                  health_checks: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusHealthCheckArgs']]]] = None,
                  internal_name: Optional[pulumi.Input[str]] = None,
+                 load_balancers: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusLoadBalancerArgs']]]] = None,
                  parent_id: Optional[pulumi.Input[str]] = None,
                  resolved_images: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageArgs']]]] = None):
         WorkloadStatusArgs._configure(
@@ -9425,6 +9730,7 @@ class WorkloadStatusArgs:
             endpoint=endpoint,
             health_checks=health_checks,
             internal_name=internal_name,
+            load_balancers=load_balancers,
             parent_id=parent_id,
             resolved_images=resolved_images,
         )
@@ -9436,6 +9742,7 @@ class WorkloadStatusArgs:
              endpoint: Optional[pulumi.Input[str]] = None,
              health_checks: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusHealthCheckArgs']]]] = None,
              internal_name: Optional[pulumi.Input[str]] = None,
+             load_balancers: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusLoadBalancerArgs']]]] = None,
              parent_id: Optional[pulumi.Input[str]] = None,
              resolved_images: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageArgs']]]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -9448,6 +9755,8 @@ class WorkloadStatusArgs:
             health_checks = kwargs['healthChecks']
         if 'internalName' in kwargs:
             internal_name = kwargs['internalName']
+        if 'loadBalancers' in kwargs:
+            load_balancers = kwargs['loadBalancers']
         if 'parentId' in kwargs:
             parent_id = kwargs['parentId']
         if 'resolvedImages' in kwargs:
@@ -9463,6 +9772,8 @@ class WorkloadStatusArgs:
             _setter("health_checks", health_checks)
         if internal_name is not None:
             _setter("internal_name", internal_name)
+        if load_balancers is not None:
+            _setter("load_balancers", load_balancers)
         if parent_id is not None:
             _setter("parent_id", parent_id)
         if resolved_images is not None:
@@ -9512,6 +9823,15 @@ class WorkloadStatusArgs:
     @internal_name.setter
     def internal_name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "internal_name", value)
+
+    @property
+    @pulumi.getter(name="loadBalancers")
+    def load_balancers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusLoadBalancerArgs']]]]:
+        return pulumi.get(self, "load_balancers")
+
+    @load_balancers.setter
+    def load_balancers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusLoadBalancerArgs']]]]):
+        pulumi.set(self, "load_balancers", value)
 
     @property
     @pulumi.getter(name="parentId")
@@ -9643,6 +9963,48 @@ class WorkloadStatusHealthCheckArgs:
     @successes.setter
     def successes(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "successes", value)
+
+
+@pulumi.input_type
+class WorkloadStatusLoadBalancerArgs:
+    def __init__(__self__, *,
+                 origin: Optional[pulumi.Input[str]] = None,
+                 url: Optional[pulumi.Input[str]] = None):
+        WorkloadStatusLoadBalancerArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            origin=origin,
+            url=url,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             origin: Optional[pulumi.Input[str]] = None,
+             url: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if origin is not None:
+            _setter("origin", origin)
+        if url is not None:
+            _setter("url", url)
+
+    @property
+    @pulumi.getter
+    def origin(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "origin")
+
+    @origin.setter
+    def origin(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "origin", value)
+
+    @property
+    @pulumi.getter
+    def url(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "url")
+
+    @url.setter
+    def url(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "url", value)
 
 
 @pulumi.input_type
@@ -9822,7 +10184,7 @@ class WorkloadStatusResolvedImageImageManifestArgs:
 @pulumi.input_type
 class GetGvcControlplaneTracingArgs:
     def __init__(__self__, *,
-                 sampling: int,
+                 sampling: float,
                  custom_tags: Optional[Mapping[str, str]] = None):
         GetGvcControlplaneTracingArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -9832,7 +10194,7 @@ class GetGvcControlplaneTracingArgs:
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
-             sampling: int,
+             sampling: float,
              custom_tags: Optional[Mapping[str, str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -9845,11 +10207,11 @@ class GetGvcControlplaneTracingArgs:
 
     @property
     @pulumi.getter
-    def sampling(self) -> int:
+    def sampling(self) -> float:
         return pulumi.get(self, "sampling")
 
     @sampling.setter
-    def sampling(self, value: int):
+    def sampling(self, value: float):
         pulumi.set(self, "sampling", value)
 
     @property
@@ -9866,7 +10228,7 @@ class GetGvcControlplaneTracingArgs:
 class GetGvcLightstepTracingArgs:
     def __init__(__self__, *,
                  endpoint: str,
-                 sampling: int,
+                 sampling: float,
                  credentials: Optional[str] = None,
                  custom_tags: Optional[Mapping[str, str]] = None):
         GetGvcLightstepTracingArgs._configure(
@@ -9880,7 +10242,7 @@ class GetGvcLightstepTracingArgs:
     def _configure(
              _setter: Callable[[Any, Any], None],
              endpoint: str,
-             sampling: int,
+             sampling: float,
              credentials: Optional[str] = None,
              custom_tags: Optional[Mapping[str, str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -9906,11 +10268,11 @@ class GetGvcLightstepTracingArgs:
 
     @property
     @pulumi.getter
-    def sampling(self) -> int:
+    def sampling(self) -> float:
         return pulumi.get(self, "sampling")
 
     @sampling.setter
-    def sampling(self, value: int):
+    def sampling(self, value: float):
         pulumi.set(self, "sampling", value)
 
     @property
@@ -9979,7 +10341,7 @@ class GetGvcLoadBalancerArgs:
 class GetGvcOtelTracingArgs:
     def __init__(__self__, *,
                  endpoint: str,
-                 sampling: int,
+                 sampling: float,
                  custom_tags: Optional[Mapping[str, str]] = None):
         GetGvcOtelTracingArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -9991,7 +10353,7 @@ class GetGvcOtelTracingArgs:
     def _configure(
              _setter: Callable[[Any, Any], None],
              endpoint: str,
-             sampling: int,
+             sampling: float,
              custom_tags: Optional[Mapping[str, str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -10014,11 +10376,11 @@ class GetGvcOtelTracingArgs:
 
     @property
     @pulumi.getter
-    def sampling(self) -> int:
+    def sampling(self) -> float:
         return pulumi.get(self, "sampling")
 
     @sampling.setter
-    def sampling(self, value: int):
+    def sampling(self, value: float):
         pulumi.set(self, "sampling", value)
 
     @property
@@ -10147,12 +10509,14 @@ class GetImagesQuerySpecTermArgs:
     def __init__(__self__, *,
                  op: Optional[str] = None,
                  property: Optional[str] = None,
+                 rel: Optional[str] = None,
                  tag: Optional[str] = None,
                  value: Optional[str] = None):
         GetImagesQuerySpecTermArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             op=op,
             property=property,
+            rel=rel,
             tag=tag,
             value=value,
         )
@@ -10161,6 +10525,7 @@ class GetImagesQuerySpecTermArgs:
              _setter: Callable[[Any, Any], None],
              op: Optional[str] = None,
              property: Optional[str] = None,
+             rel: Optional[str] = None,
              tag: Optional[str] = None,
              value: Optional[str] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -10170,6 +10535,8 @@ class GetImagesQuerySpecTermArgs:
             _setter("op", op)
         if property is not None:
             _setter("property", property)
+        if rel is not None:
+            _setter("rel", rel)
         if tag is not None:
             _setter("tag", tag)
         if value is not None:
@@ -10183,6 +10550,15 @@ class GetImagesQuerySpecTermArgs:
     @op.setter
     def op(self, value: Optional[str]):
         pulumi.set(self, "op", value)
+
+    @property
+    @pulumi.getter
+    def rel(self) -> Optional[str]:
+        return pulumi.get(self, "rel")
+
+    @rel.setter
+    def rel(self, value: Optional[str]):
+        pulumi.set(self, "rel", value)
 
     @property
     @pulumi.getter

@@ -279,42 +279,7 @@ class CustomLocation(pulumi.CustomResource):
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
         """
-        Manages an org's [Custom Location](https://docs.controlplane.com/reference/location#byok-locations).
-
-        ## Declaration
-
-        ### Required
-
-        - **name** (String) Name of the Custom Location.
-        - **enabled** (Boolean) Indication if custom location is enabled.
-        - **cloud_provider** (String) Provider of the custom location, must be `byok`.
-
-        ### Optional
-
-        - **tags** (Map of String) Key-value map of resource tags.
-        - **description** - (String) Description of Custom Location.
-
-        ## Outputs
-
-        - **cpln_id** (String) The ID, in GUID format, of the custom location.
-        - **self_link** (String) Full link to this resource. Can be referenced by other resources.
-
-        ## Example Usage
-
-        ```python
-        import pulumi
-        import pulumiverse_cpln as cpln
-
-        example = cpln.CustomLocation("example",
-            cloud_provider="byok",
-            description="custom location description",
-            enabled=True,
-            tags={
-                "baz": "qux",
-                "foo": "bar",
-            })
-        ```
-
+        Create a CustomLocation resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] cloud_provider: Cloud Provider of the custom location.
@@ -330,42 +295,7 @@ class CustomLocation(pulumi.CustomResource):
                  args: CustomLocationArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Manages an org's [Custom Location](https://docs.controlplane.com/reference/location#byok-locations).
-
-        ## Declaration
-
-        ### Required
-
-        - **name** (String) Name of the Custom Location.
-        - **enabled** (Boolean) Indication if custom location is enabled.
-        - **cloud_provider** (String) Provider of the custom location, must be `byok`.
-
-        ### Optional
-
-        - **tags** (Map of String) Key-value map of resource tags.
-        - **description** - (String) Description of Custom Location.
-
-        ## Outputs
-
-        - **cpln_id** (String) The ID, in GUID format, of the custom location.
-        - **self_link** (String) Full link to this resource. Can be referenced by other resources.
-
-        ## Example Usage
-
-        ```python
-        import pulumi
-        import pulumiverse_cpln as cpln
-
-        example = cpln.CustomLocation("example",
-            cloud_provider="byok",
-            description="custom location description",
-            enabled=True,
-            tags={
-                "baz": "qux",
-                "foo": "bar",
-            })
-        ```
-
+        Create a CustomLocation resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param CustomLocationArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.

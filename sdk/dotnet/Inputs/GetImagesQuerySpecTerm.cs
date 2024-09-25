@@ -19,6 +19,9 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("property")]
         public string? Property { get; set; }
 
+        [Input("rel")]
+        public string? Rel { get; set; }
+
         [Input("tag")]
         public string? Tag { get; set; }
 

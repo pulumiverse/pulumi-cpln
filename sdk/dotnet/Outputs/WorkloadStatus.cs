@@ -19,6 +19,7 @@ namespace Pulumiverse.Cpln.Outputs
         public readonly string? Endpoint;
         public readonly ImmutableArray<Outputs.WorkloadStatusHealthCheck> HealthChecks;
         public readonly string? InternalName;
+        public readonly ImmutableArray<Outputs.WorkloadStatusLoadBalancer> LoadBalancers;
         public readonly string? ParentId;
         public readonly ImmutableArray<Outputs.WorkloadStatusResolvedImage> ResolvedImages;
 
@@ -34,6 +35,8 @@ namespace Pulumiverse.Cpln.Outputs
 
             string? internalName,
 
+            ImmutableArray<Outputs.WorkloadStatusLoadBalancer> loadBalancers,
+
             string? parentId,
 
             ImmutableArray<Outputs.WorkloadStatusResolvedImage> resolvedImages)
@@ -43,6 +46,7 @@ namespace Pulumiverse.Cpln.Outputs
             Endpoint = endpoint;
             HealthChecks = healthChecks;
             InternalName = internalName;
+            LoadBalancers = loadBalancers;
             ParentId = parentId;
             ResolvedImages = resolvedImages;
         }

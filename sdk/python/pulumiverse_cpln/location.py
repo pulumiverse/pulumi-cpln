@@ -17,33 +17,34 @@ __all__ = ['LocationArgs', 'Location']
 class LocationArgs:
     def __init__(__self__, *,
                  enabled: pulumi.Input[bool],
-                 tags: pulumi.Input[Mapping[str, pulumi.Input[str]]],
-                 name: Optional[pulumi.Input[str]] = None):
+                 name: Optional[pulumi.Input[str]] = None,
+                 tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a Location resource.
         :param pulumi.Input[bool] enabled: Indication if location is enabled.
-        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         :param pulumi.Input[str] name: Name of the Location.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         LocationArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             enabled=enabled,
-            tags=tags,
             name=name,
+            tags=tags,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
              enabled: pulumi.Input[bool],
-             tags: pulumi.Input[Mapping[str, pulumi.Input[str]]],
              name: Optional[pulumi.Input[str]] = None,
+             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
 
         _setter("enabled", enabled)
-        _setter("tags", tags)
         if name is not None:
             _setter("name", name)
+        if tags is not None:
+            _setter("tags", tags)
 
     @property
     @pulumi.getter
@@ -59,18 +60,6 @@ class LocationArgs:
 
     @property
     @pulumi.getter
-    def tags(self) -> pulumi.Input[Mapping[str, pulumi.Input[str]]]:
-        """
-        Key-value map of resource tags.
-        """
-        return pulumi.get(self, "tags")
-
-    @tags.setter
-    def tags(self, value: pulumi.Input[Mapping[str, pulumi.Input[str]]]):
-        pulumi.set(self, "tags", value)
-
-    @property
-    @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
         """
         Name of the Location.
@@ -80,6 +69,18 @@ class LocationArgs:
     @name.setter
     def name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of resource tags.
+        """
+        return pulumi.get(self, "tags")
+
+    @tags.setter
+    def tags(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "tags", value)
 
 
 @pulumi.input_type
@@ -293,69 +294,7 @@ class Location(pulumi.CustomResource):
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
         """
-        Manages an org's [Location](https://docs.controlplane.com/reference/location).
-
-        ## Declaration
-
-        ### Required
-
-        - **name** (String) Name of the Location.
-        - **tags** (Map of String) Key-value map of resource tags.
-        - **enabled** (Boolean) Indication if location is enabled.
-
-        > **Note** You need to associate the same tags that are defined in a location; otherwise, the pulumi preview will not be empty. It is common practice to reference the tags from a location data source.
-
-        ## Outputs
-
-        - **cpln_id** (String) The ID, in GUID format, of the location.
-        - **description** (String) Description of the location.
-        - **cloud_provider** (String) Cloud Provider of the location.
-        - **region** (String) Region of the location.
-        - **geo** (Block List, Max: 1) (see below)
-        - **ip_ranges** (List of String) A list of IP ranges of the location.
-        - **self_link** (String) Full link to this resource. Can be referenced by other resources.
-
-        <a id="nestedblock--geo"></a>
-
-        ### `geo`
-
-        Location geographical details
-
-        - **lat** (Number) Latitude.
-        - **lon** (Number) Longitude.
-        - **country** (String) Country.
-        - **state** (String) State.
-        - **city** (String) City.
-        - **continent** (String) Continent.
-
-        ## Example Usage
-        ### Reference Tags from Data Source
-
-        ```python
-        import pulumi
-        import pulumi_cpln as cpln
-        import pulumiverse_cpln as cpln
-
-        main_location = cpln.get_location(name="aws-eu-central-1")
-        reference_tags_example = cpln.Location("reference-tags-example",
-            enabled=True,
-            tags=main_location.tags)
-        ```
-        ### Hard Code Location Tags
-
-        ```python
-        import pulumi
-        import pulumiverse_cpln as cpln
-
-        example = cpln.Location("example",
-            enabled=True,
-            tags={
-                "cpln/city": "Frankfurt",
-                "cpln/continent": "Europe",
-                "cpln/country": "Germany",
-            })
-        ```
-
+        Create a Location resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[bool] enabled: Indication if location is enabled.
@@ -369,69 +308,7 @@ class Location(pulumi.CustomResource):
                  args: LocationArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Manages an org's [Location](https://docs.controlplane.com/reference/location).
-
-        ## Declaration
-
-        ### Required
-
-        - **name** (String) Name of the Location.
-        - **tags** (Map of String) Key-value map of resource tags.
-        - **enabled** (Boolean) Indication if location is enabled.
-
-        > **Note** You need to associate the same tags that are defined in a location; otherwise, the pulumi preview will not be empty. It is common practice to reference the tags from a location data source.
-
-        ## Outputs
-
-        - **cpln_id** (String) The ID, in GUID format, of the location.
-        - **description** (String) Description of the location.
-        - **cloud_provider** (String) Cloud Provider of the location.
-        - **region** (String) Region of the location.
-        - **geo** (Block List, Max: 1) (see below)
-        - **ip_ranges** (List of String) A list of IP ranges of the location.
-        - **self_link** (String) Full link to this resource. Can be referenced by other resources.
-
-        <a id="nestedblock--geo"></a>
-
-        ### `geo`
-
-        Location geographical details
-
-        - **lat** (Number) Latitude.
-        - **lon** (Number) Longitude.
-        - **country** (String) Country.
-        - **state** (String) State.
-        - **city** (String) City.
-        - **continent** (String) Continent.
-
-        ## Example Usage
-        ### Reference Tags from Data Source
-
-        ```python
-        import pulumi
-        import pulumi_cpln as cpln
-        import pulumiverse_cpln as cpln
-
-        main_location = cpln.get_location(name="aws-eu-central-1")
-        reference_tags_example = cpln.Location("reference-tags-example",
-            enabled=True,
-            tags=main_location.tags)
-        ```
-        ### Hard Code Location Tags
-
-        ```python
-        import pulumi
-        import pulumiverse_cpln as cpln
-
-        example = cpln.Location("example",
-            enabled=True,
-            tags={
-                "cpln/city": "Frankfurt",
-                "cpln/continent": "Europe",
-                "cpln/country": "Germany",
-            })
-        ```
-
+        Create a Location resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param LocationArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -467,8 +344,6 @@ class Location(pulumi.CustomResource):
                 raise TypeError("Missing required property 'enabled'")
             __props__.__dict__["enabled"] = enabled
             __props__.__dict__["name"] = name
-            if tags is None and not opts.urn:
-                raise TypeError("Missing required property 'tags'")
             __props__.__dict__["tags"] = tags
             __props__.__dict__["cloud_provider"] = None
             __props__.__dict__["cpln_id"] = None
@@ -601,7 +476,7 @@ class Location(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def tags(self) -> pulumi.Output[Mapping[str, str]]:
+    def tags(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
         """
         Key-value map of resource tags.
         """

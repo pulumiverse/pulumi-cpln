@@ -10,91 +10,6 @@ using Pulumi;
 
 namespace Pulumiverse.Cpln
 {
-    /// <summary>
-    /// Manages an org's [Location](https://docs.controlplane.com/reference/location).
-    /// 
-    /// ## Declaration
-    /// 
-    /// ### Required
-    /// 
-    /// - **name** (String) Name of the Location.
-    /// - **tags** (Map of String) Key-value map of resource tags.
-    /// - **enabled** (Boolean) Indication if location is enabled.
-    /// 
-    /// &gt; **Note** You need to associate the same tags that are defined in a location; otherwise, the pulumi preview will not be empty. It is common practice to reference the tags from a location data source.
-    /// 
-    /// ## Outputs
-    /// 
-    /// - **cpln_id** (String) The ID, in GUID format, of the location.
-    /// - **description** (String) Description of the location.
-    /// - **cloud_provider** (String) Cloud Provider of the location.
-    /// - **region** (String) Region of the location.
-    /// - **geo** (Block List, Max: 1) (see below)
-    /// - **ip_ranges** (List of String) A list of IP ranges of the location.
-    /// - **self_link** (String) Full link to this resource. Can be referenced by other resources.
-    /// 
-    /// &lt;a id="nestedblock--geo"&gt;&lt;/a&gt;
-    /// 
-    /// ### `geo`
-    /// 
-    /// Location geographical details
-    /// 
-    /// - **lat** (Number) Latitude.
-    /// - **lon** (Number) Longitude.
-    /// - **country** (String) Country.
-    /// - **state** (String) State.
-    /// - **city** (String) City.
-    /// - **continent** (String) Continent.
-    /// 
-    /// ## Example Usage
-    /// ### Reference Tags from Data Source
-    /// 
-    /// ```csharp
-    /// using System.Collections.Generic;
-    /// using System.Linq;
-    /// using Pulumi;
-    /// using Cpln = Pulumi.Cpln;
-    /// using Cpln = Pulumiverse.Cpln;
-    /// 
-    /// return await Deployment.RunAsync(() =&gt; 
-    /// {
-    ///     var main_location = Cpln.GetLocation.Invoke(new()
-    ///     {
-    ///         Name = "aws-eu-central-1",
-    ///     });
-    /// 
-    ///     var reference_tags_example = new Cpln.Location("reference-tags-example", new()
-    ///     {
-    ///         Enabled = true,
-    ///         Tags = main_location.Apply(main_location =&gt; main_location.Apply(getLocationResult =&gt; getLocationResult.Tags)),
-    ///     });
-    /// 
-    /// });
-    /// ```
-    /// ### Hard Code Location Tags
-    /// 
-    /// ```csharp
-    /// using System.Collections.Generic;
-    /// using System.Linq;
-    /// using Pulumi;
-    /// using Cpln = Pulumiverse.Cpln;
-    /// 
-    /// return await Deployment.RunAsync(() =&gt; 
-    /// {
-    ///     var example = new Cpln.Location("example", new()
-    ///     {
-    ///         Enabled = true,
-    ///         Tags = 
-    ///         {
-    ///             { "cpln/city", "Frankfurt" },
-    ///             { "cpln/continent", "Europe" },
-    ///             { "cpln/country", "Germany" },
-    ///         },
-    ///     });
-    /// 
-    /// });
-    /// ```
-    /// </summary>
     [CplnResourceType("cpln:index/location:Location")]
     public partial class Location : global::Pulumi.CustomResource
     {
@@ -153,7 +68,7 @@ namespace Pulumiverse.Cpln
         /// Key-value map of resource tags.
         /// </summary>
         [Output("tags")]
-        public Output<ImmutableDictionary<string, string>> Tags { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>?> Tags { get; private set; } = null!;
 
 
         /// <summary>
@@ -214,7 +129,7 @@ namespace Pulumiverse.Cpln
         [Input("name")]
         public Input<string>? Name { get; set; }
 
-        [Input("tags", required: true)]
+        [Input("tags")]
         private InputMap<string>? _tags;
 
         /// <summary>

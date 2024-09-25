@@ -174,6 +174,7 @@ export interface GetImagesQuerySpecArgs {
 export interface GetImagesQuerySpecTerm {
     op?: string;
     property?: string;
+    rel?: string;
     tag?: string;
     value?: string;
 }
@@ -181,6 +182,7 @@ export interface GetImagesQuerySpecTerm {
 export interface GetImagesQuerySpecTermArgs {
     op?: pulumi.Input<string>;
     property?: pulumi.Input<string>;
+    rel?: pulumi.Input<string>;
     tag?: pulumi.Input<string>;
     value?: pulumi.Input<string>;
 }
@@ -203,6 +205,7 @@ export interface GroupMemberQuerySpec {
 export interface GroupMemberQuerySpecTerm {
     op?: pulumi.Input<string>;
     property?: pulumi.Input<string>;
+    rel?: pulumi.Input<string>;
     tag?: pulumi.Input<string>;
     value?: pulumi.Input<string>;
 }
@@ -751,6 +754,7 @@ export interface PolicyTargetQuerySpec {
 export interface PolicyTargetQuerySpecTerm {
     op?: pulumi.Input<string>;
     property?: pulumi.Input<string>;
+    rel?: pulumi.Input<string>;
     tag?: pulumi.Input<string>;
     value?: pulumi.Input<string>;
 }
@@ -981,6 +985,22 @@ export interface WorkloadJob {
     schedule: pulumi.Input<string>;
 }
 
+export interface WorkloadLoadBalancer {
+    direct?: pulumi.Input<inputs.WorkloadLoadBalancerDirect>;
+}
+
+export interface WorkloadLoadBalancerDirect {
+    enabled: pulumi.Input<boolean>;
+    ports?: pulumi.Input<pulumi.Input<inputs.WorkloadLoadBalancerDirectPort>[]>;
+}
+
+export interface WorkloadLoadBalancerDirectPort {
+    containerPort?: pulumi.Input<number>;
+    externalPort: pulumi.Input<number>;
+    protocol: pulumi.Input<string>;
+    scheme?: pulumi.Input<string>;
+}
+
 export interface WorkloadLocalOption {
     autoscaling?: pulumi.Input<inputs.WorkloadLocalOptionAutoscaling>;
     capacityAi?: pulumi.Input<boolean>;
@@ -1026,7 +1046,20 @@ export interface WorkloadRolloutOptions {
 }
 
 export interface WorkloadSecurityOptions {
-    fileSystemGroupId: pulumi.Input<number>;
+    fileSystemGroupId?: pulumi.Input<number>;
+    geoLocation?: pulumi.Input<inputs.WorkloadSecurityOptionsGeoLocation>;
+}
+
+export interface WorkloadSecurityOptionsGeoLocation {
+    enabled?: pulumi.Input<boolean>;
+    headers?: pulumi.Input<inputs.WorkloadSecurityOptionsGeoLocationHeaders>;
+}
+
+export interface WorkloadSecurityOptionsGeoLocationHeaders {
+    asn?: pulumi.Input<string>;
+    city?: pulumi.Input<string>;
+    country?: pulumi.Input<string>;
+    region?: pulumi.Input<string>;
 }
 
 export interface WorkloadSidecar {
@@ -1039,6 +1072,7 @@ export interface WorkloadStatus {
     endpoint?: pulumi.Input<string>;
     healthChecks?: pulumi.Input<pulumi.Input<inputs.WorkloadStatusHealthCheck>[]>;
     internalName?: pulumi.Input<string>;
+    loadBalancers?: pulumi.Input<pulumi.Input<inputs.WorkloadStatusLoadBalancer>[]>;
     parentId?: pulumi.Input<string>;
     resolvedImages?: pulumi.Input<pulumi.Input<inputs.WorkloadStatusResolvedImage>[]>;
 }
@@ -1051,6 +1085,11 @@ export interface WorkloadStatusHealthCheck {
     message?: pulumi.Input<string>;
     success?: pulumi.Input<boolean>;
     successes?: pulumi.Input<number>;
+}
+
+export interface WorkloadStatusLoadBalancer {
+    origin?: pulumi.Input<string>;
+    url?: pulumi.Input<string>;
 }
 
 export interface WorkloadStatusResolvedImage {

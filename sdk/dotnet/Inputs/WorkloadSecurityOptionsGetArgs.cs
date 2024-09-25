@@ -13,8 +13,11 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadSecurityOptionsGetArgs : global::Pulumi.ResourceArgs
     {
-        [Input("fileSystemGroupId", required: true)]
-        public Input<int> FileSystemGroupId { get; set; } = null!;
+        [Input("fileSystemGroupId")]
+        public Input<int>? FileSystemGroupId { get; set; }
+
+        [Input("geoLocation")]
+        public Input<Inputs.WorkloadSecurityOptionsGeoLocationGetArgs>? GeoLocation { get; set; }
 
         public WorkloadSecurityOptionsGetArgs()
         {

@@ -10,52 +10,6 @@ using Pulumi;
 
 namespace Pulumiverse.Cpln
 {
-    /// <summary>
-    /// Manages an org's [Custom Location](https://docs.controlplane.com/reference/location#byok-locations).
-    /// 
-    /// ## Declaration
-    /// 
-    /// ### Required
-    /// 
-    /// - **name** (String) Name of the Custom Location.
-    /// - **enabled** (Boolean) Indication if custom location is enabled.
-    /// - **cloud_provider** (String) Provider of the custom location, must be `byok`.
-    /// 
-    /// ### Optional
-    /// 
-    /// - **tags** (Map of String) Key-value map of resource tags.
-    /// - **description** - (String) Description of Custom Location.
-    /// 
-    /// ## Outputs
-    /// 
-    /// - **cpln_id** (String) The ID, in GUID format, of the custom location.
-    /// - **self_link** (String) Full link to this resource. Can be referenced by other resources.
-    /// 
-    /// ## Example Usage
-    /// 
-    /// ```csharp
-    /// using System.Collections.Generic;
-    /// using System.Linq;
-    /// using Pulumi;
-    /// using Cpln = Pulumiverse.Cpln;
-    /// 
-    /// return await Deployment.RunAsync(() =&gt; 
-    /// {
-    ///     var example = new Cpln.CustomLocation("example", new()
-    ///     {
-    ///         CloudProvider = "byok",
-    ///         Description = "custom location description",
-    ///         Enabled = true,
-    ///         Tags = 
-    ///         {
-    ///             { "baz", "qux" },
-    ///             { "foo", "bar" },
-    ///         },
-    ///     });
-    /// 
-    /// });
-    /// ```
-    /// </summary>
     [CplnResourceType("cpln:index/customLocation:CustomLocation")]
     public partial class CustomLocation : global::Pulumi.CustomResource
     {
