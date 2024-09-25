@@ -13,104 +13,6 @@ import (
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
-// Manages an org's [Location](https://docs.controlplane.com/reference/location).
-//
-// ## Declaration
-//
-// ### Required
-//
-// - **name** (String) Name of the Location.
-// - **tags** (Map of String) Key-value map of resource tags.
-// - **enabled** (Boolean) Indication if location is enabled.
-//
-// > **Note** You need to associate the same tags that are defined in a location; otherwise, the pulumi preview will not be empty. It is common practice to reference the tags from a location data source.
-//
-// ## Outputs
-//
-// - **cpln_id** (String) The ID, in GUID format, of the location.
-// - **description** (String) Description of the location.
-// - **cloud_provider** (String) Cloud Provider of the location.
-// - **region** (String) Region of the location.
-// - **geo** (Block List, Max: 1) (see below)
-// - **ip_ranges** (List of String) A list of IP ranges of the location.
-// - **self_link** (String) Full link to this resource. Can be referenced by other resources.
-//
-// <a id="nestedblock--geo"></a>
-//
-// ### `geo`
-//
-// # Location geographical details
-//
-// - **lat** (Number) Latitude.
-// - **lon** (Number) Longitude.
-// - **country** (String) Country.
-// - **state** (String) State.
-// - **city** (String) City.
-// - **continent** (String) Continent.
-//
-// ## Example Usage
-// ### Reference Tags from Data Source
-//
-// ```go
-// package main
-//
-// import (
-//
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln"
-//
-// )
-//
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			main_location, err := cpln.LookupLocation(ctx, &cpln.LookupLocationArgs{
-//				Name: "aws-eu-central-1",
-//			}, nil)
-//			if err != nil {
-//				return err
-//			}
-//			_, err = cpln.NewLocation(ctx, "reference-tags-example", &cpln.LocationArgs{
-//				Enabled: pulumi.Bool(true),
-//				Tags:    interface{}(main_location.Tags),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			return nil
-//		})
-//	}
-//
-// ```
-// ### Hard Code Location Tags
-//
-// ```go
-// package main
-//
-// import (
-//
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln"
-//
-// )
-//
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := cpln.NewLocation(ctx, "example", &cpln.LocationArgs{
-//				Enabled: pulumi.Bool(true),
-//				Tags: pulumi.StringMap{
-//					"cpln/city":      pulumi.String("Frankfurt"),
-//					"cpln/continent": pulumi.String("Europe"),
-//					"cpln/country":   pulumi.String("Germany"),
-//				},
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			return nil
-//		})
-//	}
-//
-// ```
 type Location struct {
 	pulumi.CustomResourceState
 
@@ -144,9 +46,6 @@ func NewLocation(ctx *pulumi.Context,
 
 	if args.Enabled == nil {
 		return nil, errors.New("invalid value for required argument 'Enabled'")
-	}
-	if args.Tags == nil {
-		return nil, errors.New("invalid value for required argument 'Tags'")
 	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Location

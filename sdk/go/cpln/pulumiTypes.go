@@ -3088,6 +3088,7 @@ func (o GroupMemberQuerySpecPtrOutput) Terms() GroupMemberQuerySpecTermArrayOutp
 type GroupMemberQuerySpecTerm struct {
 	Op       *string `pulumi:"op"`
 	Property *string `pulumi:"property"`
+	Rel      *string `pulumi:"rel"`
 	Tag      *string `pulumi:"tag"`
 	Value    *string `pulumi:"value"`
 }
@@ -3106,6 +3107,7 @@ type GroupMemberQuerySpecTermInput interface {
 type GroupMemberQuerySpecTermArgs struct {
 	Op       pulumi.StringPtrInput `pulumi:"op"`
 	Property pulumi.StringPtrInput `pulumi:"property"`
+	Rel      pulumi.StringPtrInput `pulumi:"rel"`
 	Tag      pulumi.StringPtrInput `pulumi:"tag"`
 	Value    pulumi.StringPtrInput `pulumi:"value"`
 }
@@ -3187,6 +3189,10 @@ func (o GroupMemberQuerySpecTermOutput) Property() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GroupMemberQuerySpecTerm) *string { return v.Property }).(pulumi.StringPtrOutput)
 }
 
+func (o GroupMemberQuerySpecTermOutput) Rel() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GroupMemberQuerySpecTerm) *string { return v.Rel }).(pulumi.StringPtrOutput)
+}
+
 func (o GroupMemberQuerySpecTermOutput) Tag() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GroupMemberQuerySpecTerm) *string { return v.Tag }).(pulumi.StringPtrOutput)
 }
@@ -3223,7 +3229,7 @@ func (o GroupMemberQuerySpecTermArrayOutput) Index(i pulumi.IntInput) GroupMembe
 
 type GvcControlplaneTracing struct {
 	CustomTags map[string]string `pulumi:"customTags"`
-	Sampling   int               `pulumi:"sampling"`
+	Sampling   float64           `pulumi:"sampling"`
 }
 
 // GvcControlplaneTracingInput is an input type that accepts GvcControlplaneTracingArgs and GvcControlplaneTracingOutput values.
@@ -3239,7 +3245,7 @@ type GvcControlplaneTracingInput interface {
 
 type GvcControlplaneTracingArgs struct {
 	CustomTags pulumi.StringMapInput `pulumi:"customTags"`
-	Sampling   pulumi.IntInput       `pulumi:"sampling"`
+	Sampling   pulumi.Float64Input   `pulumi:"sampling"`
 }
 
 func (GvcControlplaneTracingArgs) ElementType() reflect.Type {
@@ -3341,8 +3347,8 @@ func (o GvcControlplaneTracingOutput) CustomTags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v GvcControlplaneTracing) map[string]string { return v.CustomTags }).(pulumi.StringMapOutput)
 }
 
-func (o GvcControlplaneTracingOutput) Sampling() pulumi.IntOutput {
-	return o.ApplyT(func(v GvcControlplaneTracing) int { return v.Sampling }).(pulumi.IntOutput)
+func (o GvcControlplaneTracingOutput) Sampling() pulumi.Float64Output {
+	return o.ApplyT(func(v GvcControlplaneTracing) float64 { return v.Sampling }).(pulumi.Float64Output)
 }
 
 type GvcControlplaneTracingPtrOutput struct{ *pulumi.OutputState }
@@ -3384,20 +3390,20 @@ func (o GvcControlplaneTracingPtrOutput) CustomTags() pulumi.StringMapOutput {
 	}).(pulumi.StringMapOutput)
 }
 
-func (o GvcControlplaneTracingPtrOutput) Sampling() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *GvcControlplaneTracing) *int {
+func (o GvcControlplaneTracingPtrOutput) Sampling() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *GvcControlplaneTracing) *float64 {
 		if v == nil {
 			return nil
 		}
 		return &v.Sampling
-	}).(pulumi.IntPtrOutput)
+	}).(pulumi.Float64PtrOutput)
 }
 
 type GvcLightstepTracing struct {
 	Credentials *string           `pulumi:"credentials"`
 	CustomTags  map[string]string `pulumi:"customTags"`
 	Endpoint    string            `pulumi:"endpoint"`
-	Sampling    int               `pulumi:"sampling"`
+	Sampling    float64           `pulumi:"sampling"`
 }
 
 // GvcLightstepTracingInput is an input type that accepts GvcLightstepTracingArgs and GvcLightstepTracingOutput values.
@@ -3415,7 +3421,7 @@ type GvcLightstepTracingArgs struct {
 	Credentials pulumi.StringPtrInput `pulumi:"credentials"`
 	CustomTags  pulumi.StringMapInput `pulumi:"customTags"`
 	Endpoint    pulumi.StringInput    `pulumi:"endpoint"`
-	Sampling    pulumi.IntInput       `pulumi:"sampling"`
+	Sampling    pulumi.Float64Input   `pulumi:"sampling"`
 }
 
 func (GvcLightstepTracingArgs) ElementType() reflect.Type {
@@ -3525,8 +3531,8 @@ func (o GvcLightstepTracingOutput) Endpoint() pulumi.StringOutput {
 	return o.ApplyT(func(v GvcLightstepTracing) string { return v.Endpoint }).(pulumi.StringOutput)
 }
 
-func (o GvcLightstepTracingOutput) Sampling() pulumi.IntOutput {
-	return o.ApplyT(func(v GvcLightstepTracing) int { return v.Sampling }).(pulumi.IntOutput)
+func (o GvcLightstepTracingOutput) Sampling() pulumi.Float64Output {
+	return o.ApplyT(func(v GvcLightstepTracing) float64 { return v.Sampling }).(pulumi.Float64Output)
 }
 
 type GvcLightstepTracingPtrOutput struct{ *pulumi.OutputState }
@@ -3586,13 +3592,13 @@ func (o GvcLightstepTracingPtrOutput) Endpoint() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o GvcLightstepTracingPtrOutput) Sampling() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *GvcLightstepTracing) *int {
+func (o GvcLightstepTracingPtrOutput) Sampling() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *GvcLightstepTracing) *float64 {
 		if v == nil {
 			return nil
 		}
 		return &v.Sampling
-	}).(pulumi.IntPtrOutput)
+	}).(pulumi.Float64PtrOutput)
 }
 
 type GvcLoadBalancer struct {
@@ -3770,7 +3776,7 @@ func (o GvcLoadBalancerPtrOutput) TrustedProxies() pulumi.IntPtrOutput {
 type GvcOtelTracing struct {
 	CustomTags map[string]string `pulumi:"customTags"`
 	Endpoint   string            `pulumi:"endpoint"`
-	Sampling   int               `pulumi:"sampling"`
+	Sampling   float64           `pulumi:"sampling"`
 }
 
 // GvcOtelTracingInput is an input type that accepts GvcOtelTracingArgs and GvcOtelTracingOutput values.
@@ -3787,7 +3793,7 @@ type GvcOtelTracingInput interface {
 type GvcOtelTracingArgs struct {
 	CustomTags pulumi.StringMapInput `pulumi:"customTags"`
 	Endpoint   pulumi.StringInput    `pulumi:"endpoint"`
-	Sampling   pulumi.IntInput       `pulumi:"sampling"`
+	Sampling   pulumi.Float64Input   `pulumi:"sampling"`
 }
 
 func (GvcOtelTracingArgs) ElementType() reflect.Type {
@@ -3893,8 +3899,8 @@ func (o GvcOtelTracingOutput) Endpoint() pulumi.StringOutput {
 	return o.ApplyT(func(v GvcOtelTracing) string { return v.Endpoint }).(pulumi.StringOutput)
 }
 
-func (o GvcOtelTracingOutput) Sampling() pulumi.IntOutput {
-	return o.ApplyT(func(v GvcOtelTracing) int { return v.Sampling }).(pulumi.IntOutput)
+func (o GvcOtelTracingOutput) Sampling() pulumi.Float64Output {
+	return o.ApplyT(func(v GvcOtelTracing) float64 { return v.Sampling }).(pulumi.Float64Output)
 }
 
 type GvcOtelTracingPtrOutput struct{ *pulumi.OutputState }
@@ -3945,13 +3951,13 @@ func (o GvcOtelTracingPtrOutput) Endpoint() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o GvcOtelTracingPtrOutput) Sampling() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *GvcOtelTracing) *int {
+func (o GvcOtelTracingPtrOutput) Sampling() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *GvcOtelTracing) *float64 {
 		if v == nil {
 			return nil
 		}
 		return &v.Sampling
-	}).(pulumi.IntPtrOutput)
+	}).(pulumi.Float64PtrOutput)
 }
 
 type GvcSidecar struct {
@@ -16197,7 +16203,7 @@ func (o OrgStatusArrayOutput) Index(i pulumi.IntInput) OrgStatusOutput {
 
 type OrgTracingControlplaneTracing struct {
 	CustomTags map[string]string `pulumi:"customTags"`
-	Sampling   int               `pulumi:"sampling"`
+	Sampling   float64           `pulumi:"sampling"`
 }
 
 // OrgTracingControlplaneTracingInput is an input type that accepts OrgTracingControlplaneTracingArgs and OrgTracingControlplaneTracingOutput values.
@@ -16213,7 +16219,7 @@ type OrgTracingControlplaneTracingInput interface {
 
 type OrgTracingControlplaneTracingArgs struct {
 	CustomTags pulumi.StringMapInput `pulumi:"customTags"`
-	Sampling   pulumi.IntInput       `pulumi:"sampling"`
+	Sampling   pulumi.Float64Input   `pulumi:"sampling"`
 }
 
 func (OrgTracingControlplaneTracingArgs) ElementType() reflect.Type {
@@ -16315,8 +16321,8 @@ func (o OrgTracingControlplaneTracingOutput) CustomTags() pulumi.StringMapOutput
 	return o.ApplyT(func(v OrgTracingControlplaneTracing) map[string]string { return v.CustomTags }).(pulumi.StringMapOutput)
 }
 
-func (o OrgTracingControlplaneTracingOutput) Sampling() pulumi.IntOutput {
-	return o.ApplyT(func(v OrgTracingControlplaneTracing) int { return v.Sampling }).(pulumi.IntOutput)
+func (o OrgTracingControlplaneTracingOutput) Sampling() pulumi.Float64Output {
+	return o.ApplyT(func(v OrgTracingControlplaneTracing) float64 { return v.Sampling }).(pulumi.Float64Output)
 }
 
 type OrgTracingControlplaneTracingPtrOutput struct{ *pulumi.OutputState }
@@ -16358,20 +16364,20 @@ func (o OrgTracingControlplaneTracingPtrOutput) CustomTags() pulumi.StringMapOut
 	}).(pulumi.StringMapOutput)
 }
 
-func (o OrgTracingControlplaneTracingPtrOutput) Sampling() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *OrgTracingControlplaneTracing) *int {
+func (o OrgTracingControlplaneTracingPtrOutput) Sampling() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *OrgTracingControlplaneTracing) *float64 {
 		if v == nil {
 			return nil
 		}
 		return &v.Sampling
-	}).(pulumi.IntPtrOutput)
+	}).(pulumi.Float64PtrOutput)
 }
 
 type OrgTracingLightstepTracing struct {
 	Credentials *string           `pulumi:"credentials"`
 	CustomTags  map[string]string `pulumi:"customTags"`
 	Endpoint    string            `pulumi:"endpoint"`
-	Sampling    int               `pulumi:"sampling"`
+	Sampling    float64           `pulumi:"sampling"`
 }
 
 // OrgTracingLightstepTracingInput is an input type that accepts OrgTracingLightstepTracingArgs and OrgTracingLightstepTracingOutput values.
@@ -16389,7 +16395,7 @@ type OrgTracingLightstepTracingArgs struct {
 	Credentials pulumi.StringPtrInput `pulumi:"credentials"`
 	CustomTags  pulumi.StringMapInput `pulumi:"customTags"`
 	Endpoint    pulumi.StringInput    `pulumi:"endpoint"`
-	Sampling    pulumi.IntInput       `pulumi:"sampling"`
+	Sampling    pulumi.Float64Input   `pulumi:"sampling"`
 }
 
 func (OrgTracingLightstepTracingArgs) ElementType() reflect.Type {
@@ -16499,8 +16505,8 @@ func (o OrgTracingLightstepTracingOutput) Endpoint() pulumi.StringOutput {
 	return o.ApplyT(func(v OrgTracingLightstepTracing) string { return v.Endpoint }).(pulumi.StringOutput)
 }
 
-func (o OrgTracingLightstepTracingOutput) Sampling() pulumi.IntOutput {
-	return o.ApplyT(func(v OrgTracingLightstepTracing) int { return v.Sampling }).(pulumi.IntOutput)
+func (o OrgTracingLightstepTracingOutput) Sampling() pulumi.Float64Output {
+	return o.ApplyT(func(v OrgTracingLightstepTracing) float64 { return v.Sampling }).(pulumi.Float64Output)
 }
 
 type OrgTracingLightstepTracingPtrOutput struct{ *pulumi.OutputState }
@@ -16560,19 +16566,19 @@ func (o OrgTracingLightstepTracingPtrOutput) Endpoint() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o OrgTracingLightstepTracingPtrOutput) Sampling() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *OrgTracingLightstepTracing) *int {
+func (o OrgTracingLightstepTracingPtrOutput) Sampling() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *OrgTracingLightstepTracing) *float64 {
 		if v == nil {
 			return nil
 		}
 		return &v.Sampling
-	}).(pulumi.IntPtrOutput)
+	}).(pulumi.Float64PtrOutput)
 }
 
 type OrgTracingOtelTracing struct {
 	CustomTags map[string]string `pulumi:"customTags"`
 	Endpoint   string            `pulumi:"endpoint"`
-	Sampling   int               `pulumi:"sampling"`
+	Sampling   float64           `pulumi:"sampling"`
 }
 
 // OrgTracingOtelTracingInput is an input type that accepts OrgTracingOtelTracingArgs and OrgTracingOtelTracingOutput values.
@@ -16589,7 +16595,7 @@ type OrgTracingOtelTracingInput interface {
 type OrgTracingOtelTracingArgs struct {
 	CustomTags pulumi.StringMapInput `pulumi:"customTags"`
 	Endpoint   pulumi.StringInput    `pulumi:"endpoint"`
-	Sampling   pulumi.IntInput       `pulumi:"sampling"`
+	Sampling   pulumi.Float64Input   `pulumi:"sampling"`
 }
 
 func (OrgTracingOtelTracingArgs) ElementType() reflect.Type {
@@ -16695,8 +16701,8 @@ func (o OrgTracingOtelTracingOutput) Endpoint() pulumi.StringOutput {
 	return o.ApplyT(func(v OrgTracingOtelTracing) string { return v.Endpoint }).(pulumi.StringOutput)
 }
 
-func (o OrgTracingOtelTracingOutput) Sampling() pulumi.IntOutput {
-	return o.ApplyT(func(v OrgTracingOtelTracing) int { return v.Sampling }).(pulumi.IntOutput)
+func (o OrgTracingOtelTracingOutput) Sampling() pulumi.Float64Output {
+	return o.ApplyT(func(v OrgTracingOtelTracing) float64 { return v.Sampling }).(pulumi.Float64Output)
 }
 
 type OrgTracingOtelTracingPtrOutput struct{ *pulumi.OutputState }
@@ -16747,13 +16753,13 @@ func (o OrgTracingOtelTracingPtrOutput) Endpoint() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o OrgTracingOtelTracingPtrOutput) Sampling() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *OrgTracingOtelTracing) *int {
+func (o OrgTracingOtelTracingPtrOutput) Sampling() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *OrgTracingOtelTracing) *float64 {
 		if v == nil {
 			return nil
 		}
 		return &v.Sampling
-	}).(pulumi.IntPtrOutput)
+	}).(pulumi.Float64PtrOutput)
 }
 
 type PolicyBinding struct {
@@ -17227,6 +17233,7 @@ func (o PolicyTargetQuerySpecPtrOutput) Terms() PolicyTargetQuerySpecTermArrayOu
 type PolicyTargetQuerySpecTerm struct {
 	Op       *string `pulumi:"op"`
 	Property *string `pulumi:"property"`
+	Rel      *string `pulumi:"rel"`
 	Tag      *string `pulumi:"tag"`
 	Value    *string `pulumi:"value"`
 }
@@ -17245,6 +17252,7 @@ type PolicyTargetQuerySpecTermInput interface {
 type PolicyTargetQuerySpecTermArgs struct {
 	Op       pulumi.StringPtrInput `pulumi:"op"`
 	Property pulumi.StringPtrInput `pulumi:"property"`
+	Rel      pulumi.StringPtrInput `pulumi:"rel"`
 	Tag      pulumi.StringPtrInput `pulumi:"tag"`
 	Value    pulumi.StringPtrInput `pulumi:"value"`
 }
@@ -17324,6 +17332,10 @@ func (o PolicyTargetQuerySpecTermOutput) Op() pulumi.StringPtrOutput {
 
 func (o PolicyTargetQuerySpecTermOutput) Property() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v PolicyTargetQuerySpecTerm) *string { return v.Property }).(pulumi.StringPtrOutput)
+}
+
+func (o PolicyTargetQuerySpecTermOutput) Rel() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v PolicyTargetQuerySpecTerm) *string { return v.Rel }).(pulumi.StringPtrOutput)
 }
 
 func (o PolicyTargetQuerySpecTermOutput) Tag() pulumi.StringPtrOutput {
@@ -23782,6 +23794,471 @@ func (o WorkloadJobPtrOutput) Schedule() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+type WorkloadLoadBalancer struct {
+	Direct *WorkloadLoadBalancerDirect `pulumi:"direct"`
+}
+
+// WorkloadLoadBalancerInput is an input type that accepts WorkloadLoadBalancerArgs and WorkloadLoadBalancerOutput values.
+// You can construct a concrete instance of `WorkloadLoadBalancerInput` via:
+//
+//	WorkloadLoadBalancerArgs{...}
+type WorkloadLoadBalancerInput interface {
+	pulumi.Input
+
+	ToWorkloadLoadBalancerOutput() WorkloadLoadBalancerOutput
+	ToWorkloadLoadBalancerOutputWithContext(context.Context) WorkloadLoadBalancerOutput
+}
+
+type WorkloadLoadBalancerArgs struct {
+	Direct WorkloadLoadBalancerDirectPtrInput `pulumi:"direct"`
+}
+
+func (WorkloadLoadBalancerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLoadBalancer)(nil)).Elem()
+}
+
+func (i WorkloadLoadBalancerArgs) ToWorkloadLoadBalancerOutput() WorkloadLoadBalancerOutput {
+	return i.ToWorkloadLoadBalancerOutputWithContext(context.Background())
+}
+
+func (i WorkloadLoadBalancerArgs) ToWorkloadLoadBalancerOutputWithContext(ctx context.Context) WorkloadLoadBalancerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLoadBalancerOutput)
+}
+
+func (i WorkloadLoadBalancerArgs) ToOutput(ctx context.Context) pulumix.Output[WorkloadLoadBalancer] {
+	return pulumix.Output[WorkloadLoadBalancer]{
+		OutputState: i.ToWorkloadLoadBalancerOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i WorkloadLoadBalancerArgs) ToWorkloadLoadBalancerPtrOutput() WorkloadLoadBalancerPtrOutput {
+	return i.ToWorkloadLoadBalancerPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadLoadBalancerArgs) ToWorkloadLoadBalancerPtrOutputWithContext(ctx context.Context) WorkloadLoadBalancerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLoadBalancerOutput).ToWorkloadLoadBalancerPtrOutputWithContext(ctx)
+}
+
+// WorkloadLoadBalancerPtrInput is an input type that accepts WorkloadLoadBalancerArgs, WorkloadLoadBalancerPtr and WorkloadLoadBalancerPtrOutput values.
+// You can construct a concrete instance of `WorkloadLoadBalancerPtrInput` via:
+//
+//	        WorkloadLoadBalancerArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadLoadBalancerPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadLoadBalancerPtrOutput() WorkloadLoadBalancerPtrOutput
+	ToWorkloadLoadBalancerPtrOutputWithContext(context.Context) WorkloadLoadBalancerPtrOutput
+}
+
+type workloadLoadBalancerPtrType WorkloadLoadBalancerArgs
+
+func WorkloadLoadBalancerPtr(v *WorkloadLoadBalancerArgs) WorkloadLoadBalancerPtrInput {
+	return (*workloadLoadBalancerPtrType)(v)
+}
+
+func (*workloadLoadBalancerPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLoadBalancer)(nil)).Elem()
+}
+
+func (i *workloadLoadBalancerPtrType) ToWorkloadLoadBalancerPtrOutput() WorkloadLoadBalancerPtrOutput {
+	return i.ToWorkloadLoadBalancerPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadLoadBalancerPtrType) ToWorkloadLoadBalancerPtrOutputWithContext(ctx context.Context) WorkloadLoadBalancerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLoadBalancerPtrOutput)
+}
+
+func (i *workloadLoadBalancerPtrType) ToOutput(ctx context.Context) pulumix.Output[*WorkloadLoadBalancer] {
+	return pulumix.Output[*WorkloadLoadBalancer]{
+		OutputState: i.ToWorkloadLoadBalancerPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type WorkloadLoadBalancerOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLoadBalancerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLoadBalancer)(nil)).Elem()
+}
+
+func (o WorkloadLoadBalancerOutput) ToWorkloadLoadBalancerOutput() WorkloadLoadBalancerOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerOutput) ToWorkloadLoadBalancerOutputWithContext(ctx context.Context) WorkloadLoadBalancerOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerOutput) ToWorkloadLoadBalancerPtrOutput() WorkloadLoadBalancerPtrOutput {
+	return o.ToWorkloadLoadBalancerPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadLoadBalancerOutput) ToWorkloadLoadBalancerPtrOutputWithContext(ctx context.Context) WorkloadLoadBalancerPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadLoadBalancer) *WorkloadLoadBalancer {
+		return &v
+	}).(WorkloadLoadBalancerPtrOutput)
+}
+
+func (o WorkloadLoadBalancerOutput) ToOutput(ctx context.Context) pulumix.Output[WorkloadLoadBalancer] {
+	return pulumix.Output[WorkloadLoadBalancer]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadLoadBalancerOutput) Direct() WorkloadLoadBalancerDirectPtrOutput {
+	return o.ApplyT(func(v WorkloadLoadBalancer) *WorkloadLoadBalancerDirect { return v.Direct }).(WorkloadLoadBalancerDirectPtrOutput)
+}
+
+type WorkloadLoadBalancerPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLoadBalancerPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLoadBalancer)(nil)).Elem()
+}
+
+func (o WorkloadLoadBalancerPtrOutput) ToWorkloadLoadBalancerPtrOutput() WorkloadLoadBalancerPtrOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerPtrOutput) ToWorkloadLoadBalancerPtrOutputWithContext(ctx context.Context) WorkloadLoadBalancerPtrOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*WorkloadLoadBalancer] {
+	return pulumix.Output[*WorkloadLoadBalancer]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadLoadBalancerPtrOutput) Elem() WorkloadLoadBalancerOutput {
+	return o.ApplyT(func(v *WorkloadLoadBalancer) WorkloadLoadBalancer {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadLoadBalancer
+		return ret
+	}).(WorkloadLoadBalancerOutput)
+}
+
+func (o WorkloadLoadBalancerPtrOutput) Direct() WorkloadLoadBalancerDirectPtrOutput {
+	return o.ApplyT(func(v *WorkloadLoadBalancer) *WorkloadLoadBalancerDirect {
+		if v == nil {
+			return nil
+		}
+		return v.Direct
+	}).(WorkloadLoadBalancerDirectPtrOutput)
+}
+
+type WorkloadLoadBalancerDirect struct {
+	Enabled bool                             `pulumi:"enabled"`
+	Ports   []WorkloadLoadBalancerDirectPort `pulumi:"ports"`
+}
+
+// WorkloadLoadBalancerDirectInput is an input type that accepts WorkloadLoadBalancerDirectArgs and WorkloadLoadBalancerDirectOutput values.
+// You can construct a concrete instance of `WorkloadLoadBalancerDirectInput` via:
+//
+//	WorkloadLoadBalancerDirectArgs{...}
+type WorkloadLoadBalancerDirectInput interface {
+	pulumi.Input
+
+	ToWorkloadLoadBalancerDirectOutput() WorkloadLoadBalancerDirectOutput
+	ToWorkloadLoadBalancerDirectOutputWithContext(context.Context) WorkloadLoadBalancerDirectOutput
+}
+
+type WorkloadLoadBalancerDirectArgs struct {
+	Enabled pulumi.BoolInput                         `pulumi:"enabled"`
+	Ports   WorkloadLoadBalancerDirectPortArrayInput `pulumi:"ports"`
+}
+
+func (WorkloadLoadBalancerDirectArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLoadBalancerDirect)(nil)).Elem()
+}
+
+func (i WorkloadLoadBalancerDirectArgs) ToWorkloadLoadBalancerDirectOutput() WorkloadLoadBalancerDirectOutput {
+	return i.ToWorkloadLoadBalancerDirectOutputWithContext(context.Background())
+}
+
+func (i WorkloadLoadBalancerDirectArgs) ToWorkloadLoadBalancerDirectOutputWithContext(ctx context.Context) WorkloadLoadBalancerDirectOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLoadBalancerDirectOutput)
+}
+
+func (i WorkloadLoadBalancerDirectArgs) ToOutput(ctx context.Context) pulumix.Output[WorkloadLoadBalancerDirect] {
+	return pulumix.Output[WorkloadLoadBalancerDirect]{
+		OutputState: i.ToWorkloadLoadBalancerDirectOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i WorkloadLoadBalancerDirectArgs) ToWorkloadLoadBalancerDirectPtrOutput() WorkloadLoadBalancerDirectPtrOutput {
+	return i.ToWorkloadLoadBalancerDirectPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadLoadBalancerDirectArgs) ToWorkloadLoadBalancerDirectPtrOutputWithContext(ctx context.Context) WorkloadLoadBalancerDirectPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLoadBalancerDirectOutput).ToWorkloadLoadBalancerDirectPtrOutputWithContext(ctx)
+}
+
+// WorkloadLoadBalancerDirectPtrInput is an input type that accepts WorkloadLoadBalancerDirectArgs, WorkloadLoadBalancerDirectPtr and WorkloadLoadBalancerDirectPtrOutput values.
+// You can construct a concrete instance of `WorkloadLoadBalancerDirectPtrInput` via:
+//
+//	        WorkloadLoadBalancerDirectArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadLoadBalancerDirectPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadLoadBalancerDirectPtrOutput() WorkloadLoadBalancerDirectPtrOutput
+	ToWorkloadLoadBalancerDirectPtrOutputWithContext(context.Context) WorkloadLoadBalancerDirectPtrOutput
+}
+
+type workloadLoadBalancerDirectPtrType WorkloadLoadBalancerDirectArgs
+
+func WorkloadLoadBalancerDirectPtr(v *WorkloadLoadBalancerDirectArgs) WorkloadLoadBalancerDirectPtrInput {
+	return (*workloadLoadBalancerDirectPtrType)(v)
+}
+
+func (*workloadLoadBalancerDirectPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLoadBalancerDirect)(nil)).Elem()
+}
+
+func (i *workloadLoadBalancerDirectPtrType) ToWorkloadLoadBalancerDirectPtrOutput() WorkloadLoadBalancerDirectPtrOutput {
+	return i.ToWorkloadLoadBalancerDirectPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadLoadBalancerDirectPtrType) ToWorkloadLoadBalancerDirectPtrOutputWithContext(ctx context.Context) WorkloadLoadBalancerDirectPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLoadBalancerDirectPtrOutput)
+}
+
+func (i *workloadLoadBalancerDirectPtrType) ToOutput(ctx context.Context) pulumix.Output[*WorkloadLoadBalancerDirect] {
+	return pulumix.Output[*WorkloadLoadBalancerDirect]{
+		OutputState: i.ToWorkloadLoadBalancerDirectPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type WorkloadLoadBalancerDirectOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLoadBalancerDirectOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLoadBalancerDirect)(nil)).Elem()
+}
+
+func (o WorkloadLoadBalancerDirectOutput) ToWorkloadLoadBalancerDirectOutput() WorkloadLoadBalancerDirectOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerDirectOutput) ToWorkloadLoadBalancerDirectOutputWithContext(ctx context.Context) WorkloadLoadBalancerDirectOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerDirectOutput) ToWorkloadLoadBalancerDirectPtrOutput() WorkloadLoadBalancerDirectPtrOutput {
+	return o.ToWorkloadLoadBalancerDirectPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadLoadBalancerDirectOutput) ToWorkloadLoadBalancerDirectPtrOutputWithContext(ctx context.Context) WorkloadLoadBalancerDirectPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadLoadBalancerDirect) *WorkloadLoadBalancerDirect {
+		return &v
+	}).(WorkloadLoadBalancerDirectPtrOutput)
+}
+
+func (o WorkloadLoadBalancerDirectOutput) ToOutput(ctx context.Context) pulumix.Output[WorkloadLoadBalancerDirect] {
+	return pulumix.Output[WorkloadLoadBalancerDirect]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadLoadBalancerDirectOutput) Enabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v WorkloadLoadBalancerDirect) bool { return v.Enabled }).(pulumi.BoolOutput)
+}
+
+func (o WorkloadLoadBalancerDirectOutput) Ports() WorkloadLoadBalancerDirectPortArrayOutput {
+	return o.ApplyT(func(v WorkloadLoadBalancerDirect) []WorkloadLoadBalancerDirectPort { return v.Ports }).(WorkloadLoadBalancerDirectPortArrayOutput)
+}
+
+type WorkloadLoadBalancerDirectPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLoadBalancerDirectPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLoadBalancerDirect)(nil)).Elem()
+}
+
+func (o WorkloadLoadBalancerDirectPtrOutput) ToWorkloadLoadBalancerDirectPtrOutput() WorkloadLoadBalancerDirectPtrOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerDirectPtrOutput) ToWorkloadLoadBalancerDirectPtrOutputWithContext(ctx context.Context) WorkloadLoadBalancerDirectPtrOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerDirectPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*WorkloadLoadBalancerDirect] {
+	return pulumix.Output[*WorkloadLoadBalancerDirect]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadLoadBalancerDirectPtrOutput) Elem() WorkloadLoadBalancerDirectOutput {
+	return o.ApplyT(func(v *WorkloadLoadBalancerDirect) WorkloadLoadBalancerDirect {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadLoadBalancerDirect
+		return ret
+	}).(WorkloadLoadBalancerDirectOutput)
+}
+
+func (o WorkloadLoadBalancerDirectPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *WorkloadLoadBalancerDirect) *bool {
+		if v == nil {
+			return nil
+		}
+		return &v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o WorkloadLoadBalancerDirectPtrOutput) Ports() WorkloadLoadBalancerDirectPortArrayOutput {
+	return o.ApplyT(func(v *WorkloadLoadBalancerDirect) []WorkloadLoadBalancerDirectPort {
+		if v == nil {
+			return nil
+		}
+		return v.Ports
+	}).(WorkloadLoadBalancerDirectPortArrayOutput)
+}
+
+type WorkloadLoadBalancerDirectPort struct {
+	ContainerPort *int    `pulumi:"containerPort"`
+	ExternalPort  int     `pulumi:"externalPort"`
+	Protocol      string  `pulumi:"protocol"`
+	Scheme        *string `pulumi:"scheme"`
+}
+
+// WorkloadLoadBalancerDirectPortInput is an input type that accepts WorkloadLoadBalancerDirectPortArgs and WorkloadLoadBalancerDirectPortOutput values.
+// You can construct a concrete instance of `WorkloadLoadBalancerDirectPortInput` via:
+//
+//	WorkloadLoadBalancerDirectPortArgs{...}
+type WorkloadLoadBalancerDirectPortInput interface {
+	pulumi.Input
+
+	ToWorkloadLoadBalancerDirectPortOutput() WorkloadLoadBalancerDirectPortOutput
+	ToWorkloadLoadBalancerDirectPortOutputWithContext(context.Context) WorkloadLoadBalancerDirectPortOutput
+}
+
+type WorkloadLoadBalancerDirectPortArgs struct {
+	ContainerPort pulumi.IntPtrInput    `pulumi:"containerPort"`
+	ExternalPort  pulumi.IntInput       `pulumi:"externalPort"`
+	Protocol      pulumi.StringInput    `pulumi:"protocol"`
+	Scheme        pulumi.StringPtrInput `pulumi:"scheme"`
+}
+
+func (WorkloadLoadBalancerDirectPortArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLoadBalancerDirectPort)(nil)).Elem()
+}
+
+func (i WorkloadLoadBalancerDirectPortArgs) ToWorkloadLoadBalancerDirectPortOutput() WorkloadLoadBalancerDirectPortOutput {
+	return i.ToWorkloadLoadBalancerDirectPortOutputWithContext(context.Background())
+}
+
+func (i WorkloadLoadBalancerDirectPortArgs) ToWorkloadLoadBalancerDirectPortOutputWithContext(ctx context.Context) WorkloadLoadBalancerDirectPortOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLoadBalancerDirectPortOutput)
+}
+
+func (i WorkloadLoadBalancerDirectPortArgs) ToOutput(ctx context.Context) pulumix.Output[WorkloadLoadBalancerDirectPort] {
+	return pulumix.Output[WorkloadLoadBalancerDirectPort]{
+		OutputState: i.ToWorkloadLoadBalancerDirectPortOutputWithContext(ctx).OutputState,
+	}
+}
+
+// WorkloadLoadBalancerDirectPortArrayInput is an input type that accepts WorkloadLoadBalancerDirectPortArray and WorkloadLoadBalancerDirectPortArrayOutput values.
+// You can construct a concrete instance of `WorkloadLoadBalancerDirectPortArrayInput` via:
+//
+//	WorkloadLoadBalancerDirectPortArray{ WorkloadLoadBalancerDirectPortArgs{...} }
+type WorkloadLoadBalancerDirectPortArrayInput interface {
+	pulumi.Input
+
+	ToWorkloadLoadBalancerDirectPortArrayOutput() WorkloadLoadBalancerDirectPortArrayOutput
+	ToWorkloadLoadBalancerDirectPortArrayOutputWithContext(context.Context) WorkloadLoadBalancerDirectPortArrayOutput
+}
+
+type WorkloadLoadBalancerDirectPortArray []WorkloadLoadBalancerDirectPortInput
+
+func (WorkloadLoadBalancerDirectPortArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadLoadBalancerDirectPort)(nil)).Elem()
+}
+
+func (i WorkloadLoadBalancerDirectPortArray) ToWorkloadLoadBalancerDirectPortArrayOutput() WorkloadLoadBalancerDirectPortArrayOutput {
+	return i.ToWorkloadLoadBalancerDirectPortArrayOutputWithContext(context.Background())
+}
+
+func (i WorkloadLoadBalancerDirectPortArray) ToWorkloadLoadBalancerDirectPortArrayOutputWithContext(ctx context.Context) WorkloadLoadBalancerDirectPortArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLoadBalancerDirectPortArrayOutput)
+}
+
+func (i WorkloadLoadBalancerDirectPortArray) ToOutput(ctx context.Context) pulumix.Output[[]WorkloadLoadBalancerDirectPort] {
+	return pulumix.Output[[]WorkloadLoadBalancerDirectPort]{
+		OutputState: i.ToWorkloadLoadBalancerDirectPortArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type WorkloadLoadBalancerDirectPortOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLoadBalancerDirectPortOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLoadBalancerDirectPort)(nil)).Elem()
+}
+
+func (o WorkloadLoadBalancerDirectPortOutput) ToWorkloadLoadBalancerDirectPortOutput() WorkloadLoadBalancerDirectPortOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerDirectPortOutput) ToWorkloadLoadBalancerDirectPortOutputWithContext(ctx context.Context) WorkloadLoadBalancerDirectPortOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerDirectPortOutput) ToOutput(ctx context.Context) pulumix.Output[WorkloadLoadBalancerDirectPort] {
+	return pulumix.Output[WorkloadLoadBalancerDirectPort]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadLoadBalancerDirectPortOutput) ContainerPort() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadLoadBalancerDirectPort) *int { return v.ContainerPort }).(pulumi.IntPtrOutput)
+}
+
+func (o WorkloadLoadBalancerDirectPortOutput) ExternalPort() pulumi.IntOutput {
+	return o.ApplyT(func(v WorkloadLoadBalancerDirectPort) int { return v.ExternalPort }).(pulumi.IntOutput)
+}
+
+func (o WorkloadLoadBalancerDirectPortOutput) Protocol() pulumi.StringOutput {
+	return o.ApplyT(func(v WorkloadLoadBalancerDirectPort) string { return v.Protocol }).(pulumi.StringOutput)
+}
+
+func (o WorkloadLoadBalancerDirectPortOutput) Scheme() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadLoadBalancerDirectPort) *string { return v.Scheme }).(pulumi.StringPtrOutput)
+}
+
+type WorkloadLoadBalancerDirectPortArrayOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLoadBalancerDirectPortArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadLoadBalancerDirectPort)(nil)).Elem()
+}
+
+func (o WorkloadLoadBalancerDirectPortArrayOutput) ToWorkloadLoadBalancerDirectPortArrayOutput() WorkloadLoadBalancerDirectPortArrayOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerDirectPortArrayOutput) ToWorkloadLoadBalancerDirectPortArrayOutputWithContext(ctx context.Context) WorkloadLoadBalancerDirectPortArrayOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerDirectPortArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]WorkloadLoadBalancerDirectPort] {
+	return pulumix.Output[[]WorkloadLoadBalancerDirectPort]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadLoadBalancerDirectPortArrayOutput) Index(i pulumi.IntInput) WorkloadLoadBalancerDirectPortOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadLoadBalancerDirectPort {
+		return vs[0].([]WorkloadLoadBalancerDirectPort)[vs[1].(int)]
+	}).(WorkloadLoadBalancerDirectPortOutput)
+}
+
 type WorkloadLocalOption struct {
 	Autoscaling    *WorkloadLocalOptionAutoscaling `pulumi:"autoscaling"`
 	CapacityAi     *bool                           `pulumi:"capacityAi"`
@@ -24844,7 +25321,8 @@ func (o WorkloadRolloutOptionsPtrOutput) ScalingPolicy() pulumi.StringPtrOutput 
 }
 
 type WorkloadSecurityOptions struct {
-	FileSystemGroupId int `pulumi:"fileSystemGroupId"`
+	FileSystemGroupId *int                                `pulumi:"fileSystemGroupId"`
+	GeoLocation       *WorkloadSecurityOptionsGeoLocation `pulumi:"geoLocation"`
 }
 
 // WorkloadSecurityOptionsInput is an input type that accepts WorkloadSecurityOptionsArgs and WorkloadSecurityOptionsOutput values.
@@ -24859,7 +25337,8 @@ type WorkloadSecurityOptionsInput interface {
 }
 
 type WorkloadSecurityOptionsArgs struct {
-	FileSystemGroupId pulumi.IntInput `pulumi:"fileSystemGroupId"`
+	FileSystemGroupId pulumi.IntPtrInput                         `pulumi:"fileSystemGroupId"`
+	GeoLocation       WorkloadSecurityOptionsGeoLocationPtrInput `pulumi:"geoLocation"`
 }
 
 func (WorkloadSecurityOptionsArgs) ElementType() reflect.Type {
@@ -24957,8 +25436,12 @@ func (o WorkloadSecurityOptionsOutput) ToOutput(ctx context.Context) pulumix.Out
 	}
 }
 
-func (o WorkloadSecurityOptionsOutput) FileSystemGroupId() pulumi.IntOutput {
-	return o.ApplyT(func(v WorkloadSecurityOptions) int { return v.FileSystemGroupId }).(pulumi.IntOutput)
+func (o WorkloadSecurityOptionsOutput) FileSystemGroupId() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadSecurityOptions) *int { return v.FileSystemGroupId }).(pulumi.IntPtrOutput)
+}
+
+func (o WorkloadSecurityOptionsOutput) GeoLocation() WorkloadSecurityOptionsGeoLocationPtrOutput {
+	return o.ApplyT(func(v WorkloadSecurityOptions) *WorkloadSecurityOptionsGeoLocation { return v.GeoLocation }).(WorkloadSecurityOptionsGeoLocationPtrOutput)
 }
 
 type WorkloadSecurityOptionsPtrOutput struct{ *pulumi.OutputState }
@@ -24996,8 +25479,393 @@ func (o WorkloadSecurityOptionsPtrOutput) FileSystemGroupId() pulumi.IntPtrOutpu
 		if v == nil {
 			return nil
 		}
-		return &v.FileSystemGroupId
+		return v.FileSystemGroupId
 	}).(pulumi.IntPtrOutput)
+}
+
+func (o WorkloadSecurityOptionsPtrOutput) GeoLocation() WorkloadSecurityOptionsGeoLocationPtrOutput {
+	return o.ApplyT(func(v *WorkloadSecurityOptions) *WorkloadSecurityOptionsGeoLocation {
+		if v == nil {
+			return nil
+		}
+		return v.GeoLocation
+	}).(WorkloadSecurityOptionsGeoLocationPtrOutput)
+}
+
+type WorkloadSecurityOptionsGeoLocation struct {
+	Enabled *bool                                      `pulumi:"enabled"`
+	Headers *WorkloadSecurityOptionsGeoLocationHeaders `pulumi:"headers"`
+}
+
+// WorkloadSecurityOptionsGeoLocationInput is an input type that accepts WorkloadSecurityOptionsGeoLocationArgs and WorkloadSecurityOptionsGeoLocationOutput values.
+// You can construct a concrete instance of `WorkloadSecurityOptionsGeoLocationInput` via:
+//
+//	WorkloadSecurityOptionsGeoLocationArgs{...}
+type WorkloadSecurityOptionsGeoLocationInput interface {
+	pulumi.Input
+
+	ToWorkloadSecurityOptionsGeoLocationOutput() WorkloadSecurityOptionsGeoLocationOutput
+	ToWorkloadSecurityOptionsGeoLocationOutputWithContext(context.Context) WorkloadSecurityOptionsGeoLocationOutput
+}
+
+type WorkloadSecurityOptionsGeoLocationArgs struct {
+	Enabled pulumi.BoolPtrInput                               `pulumi:"enabled"`
+	Headers WorkloadSecurityOptionsGeoLocationHeadersPtrInput `pulumi:"headers"`
+}
+
+func (WorkloadSecurityOptionsGeoLocationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadSecurityOptionsGeoLocation)(nil)).Elem()
+}
+
+func (i WorkloadSecurityOptionsGeoLocationArgs) ToWorkloadSecurityOptionsGeoLocationOutput() WorkloadSecurityOptionsGeoLocationOutput {
+	return i.ToWorkloadSecurityOptionsGeoLocationOutputWithContext(context.Background())
+}
+
+func (i WorkloadSecurityOptionsGeoLocationArgs) ToWorkloadSecurityOptionsGeoLocationOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadSecurityOptionsGeoLocationOutput)
+}
+
+func (i WorkloadSecurityOptionsGeoLocationArgs) ToOutput(ctx context.Context) pulumix.Output[WorkloadSecurityOptionsGeoLocation] {
+	return pulumix.Output[WorkloadSecurityOptionsGeoLocation]{
+		OutputState: i.ToWorkloadSecurityOptionsGeoLocationOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i WorkloadSecurityOptionsGeoLocationArgs) ToWorkloadSecurityOptionsGeoLocationPtrOutput() WorkloadSecurityOptionsGeoLocationPtrOutput {
+	return i.ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadSecurityOptionsGeoLocationArgs) ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadSecurityOptionsGeoLocationOutput).ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(ctx)
+}
+
+// WorkloadSecurityOptionsGeoLocationPtrInput is an input type that accepts WorkloadSecurityOptionsGeoLocationArgs, WorkloadSecurityOptionsGeoLocationPtr and WorkloadSecurityOptionsGeoLocationPtrOutput values.
+// You can construct a concrete instance of `WorkloadSecurityOptionsGeoLocationPtrInput` via:
+//
+//	        WorkloadSecurityOptionsGeoLocationArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadSecurityOptionsGeoLocationPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadSecurityOptionsGeoLocationPtrOutput() WorkloadSecurityOptionsGeoLocationPtrOutput
+	ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(context.Context) WorkloadSecurityOptionsGeoLocationPtrOutput
+}
+
+type workloadSecurityOptionsGeoLocationPtrType WorkloadSecurityOptionsGeoLocationArgs
+
+func WorkloadSecurityOptionsGeoLocationPtr(v *WorkloadSecurityOptionsGeoLocationArgs) WorkloadSecurityOptionsGeoLocationPtrInput {
+	return (*workloadSecurityOptionsGeoLocationPtrType)(v)
+}
+
+func (*workloadSecurityOptionsGeoLocationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadSecurityOptionsGeoLocation)(nil)).Elem()
+}
+
+func (i *workloadSecurityOptionsGeoLocationPtrType) ToWorkloadSecurityOptionsGeoLocationPtrOutput() WorkloadSecurityOptionsGeoLocationPtrOutput {
+	return i.ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadSecurityOptionsGeoLocationPtrType) ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadSecurityOptionsGeoLocationPtrOutput)
+}
+
+func (i *workloadSecurityOptionsGeoLocationPtrType) ToOutput(ctx context.Context) pulumix.Output[*WorkloadSecurityOptionsGeoLocation] {
+	return pulumix.Output[*WorkloadSecurityOptionsGeoLocation]{
+		OutputState: i.ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type WorkloadSecurityOptionsGeoLocationOutput struct{ *pulumi.OutputState }
+
+func (WorkloadSecurityOptionsGeoLocationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadSecurityOptionsGeoLocation)(nil)).Elem()
+}
+
+func (o WorkloadSecurityOptionsGeoLocationOutput) ToWorkloadSecurityOptionsGeoLocationOutput() WorkloadSecurityOptionsGeoLocationOutput {
+	return o
+}
+
+func (o WorkloadSecurityOptionsGeoLocationOutput) ToWorkloadSecurityOptionsGeoLocationOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationOutput {
+	return o
+}
+
+func (o WorkloadSecurityOptionsGeoLocationOutput) ToWorkloadSecurityOptionsGeoLocationPtrOutput() WorkloadSecurityOptionsGeoLocationPtrOutput {
+	return o.ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadSecurityOptionsGeoLocationOutput) ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadSecurityOptionsGeoLocation) *WorkloadSecurityOptionsGeoLocation {
+		return &v
+	}).(WorkloadSecurityOptionsGeoLocationPtrOutput)
+}
+
+func (o WorkloadSecurityOptionsGeoLocationOutput) ToOutput(ctx context.Context) pulumix.Output[WorkloadSecurityOptionsGeoLocation] {
+	return pulumix.Output[WorkloadSecurityOptionsGeoLocation]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadSecurityOptionsGeoLocationOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadSecurityOptionsGeoLocation) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+func (o WorkloadSecurityOptionsGeoLocationOutput) Headers() WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
+	return o.ApplyT(func(v WorkloadSecurityOptionsGeoLocation) *WorkloadSecurityOptionsGeoLocationHeaders {
+		return v.Headers
+	}).(WorkloadSecurityOptionsGeoLocationHeadersPtrOutput)
+}
+
+type WorkloadSecurityOptionsGeoLocationPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadSecurityOptionsGeoLocationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadSecurityOptionsGeoLocation)(nil)).Elem()
+}
+
+func (o WorkloadSecurityOptionsGeoLocationPtrOutput) ToWorkloadSecurityOptionsGeoLocationPtrOutput() WorkloadSecurityOptionsGeoLocationPtrOutput {
+	return o
+}
+
+func (o WorkloadSecurityOptionsGeoLocationPtrOutput) ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationPtrOutput {
+	return o
+}
+
+func (o WorkloadSecurityOptionsGeoLocationPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*WorkloadSecurityOptionsGeoLocation] {
+	return pulumix.Output[*WorkloadSecurityOptionsGeoLocation]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadSecurityOptionsGeoLocationPtrOutput) Elem() WorkloadSecurityOptionsGeoLocationOutput {
+	return o.ApplyT(func(v *WorkloadSecurityOptionsGeoLocation) WorkloadSecurityOptionsGeoLocation {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadSecurityOptionsGeoLocation
+		return ret
+	}).(WorkloadSecurityOptionsGeoLocationOutput)
+}
+
+func (o WorkloadSecurityOptionsGeoLocationPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *WorkloadSecurityOptionsGeoLocation) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o WorkloadSecurityOptionsGeoLocationPtrOutput) Headers() WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
+	return o.ApplyT(func(v *WorkloadSecurityOptionsGeoLocation) *WorkloadSecurityOptionsGeoLocationHeaders {
+		if v == nil {
+			return nil
+		}
+		return v.Headers
+	}).(WorkloadSecurityOptionsGeoLocationHeadersPtrOutput)
+}
+
+type WorkloadSecurityOptionsGeoLocationHeaders struct {
+	Asn     *string `pulumi:"asn"`
+	City    *string `pulumi:"city"`
+	Country *string `pulumi:"country"`
+	Region  *string `pulumi:"region"`
+}
+
+// WorkloadSecurityOptionsGeoLocationHeadersInput is an input type that accepts WorkloadSecurityOptionsGeoLocationHeadersArgs and WorkloadSecurityOptionsGeoLocationHeadersOutput values.
+// You can construct a concrete instance of `WorkloadSecurityOptionsGeoLocationHeadersInput` via:
+//
+//	WorkloadSecurityOptionsGeoLocationHeadersArgs{...}
+type WorkloadSecurityOptionsGeoLocationHeadersInput interface {
+	pulumi.Input
+
+	ToWorkloadSecurityOptionsGeoLocationHeadersOutput() WorkloadSecurityOptionsGeoLocationHeadersOutput
+	ToWorkloadSecurityOptionsGeoLocationHeadersOutputWithContext(context.Context) WorkloadSecurityOptionsGeoLocationHeadersOutput
+}
+
+type WorkloadSecurityOptionsGeoLocationHeadersArgs struct {
+	Asn     pulumi.StringPtrInput `pulumi:"asn"`
+	City    pulumi.StringPtrInput `pulumi:"city"`
+	Country pulumi.StringPtrInput `pulumi:"country"`
+	Region  pulumi.StringPtrInput `pulumi:"region"`
+}
+
+func (WorkloadSecurityOptionsGeoLocationHeadersArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadSecurityOptionsGeoLocationHeaders)(nil)).Elem()
+}
+
+func (i WorkloadSecurityOptionsGeoLocationHeadersArgs) ToWorkloadSecurityOptionsGeoLocationHeadersOutput() WorkloadSecurityOptionsGeoLocationHeadersOutput {
+	return i.ToWorkloadSecurityOptionsGeoLocationHeadersOutputWithContext(context.Background())
+}
+
+func (i WorkloadSecurityOptionsGeoLocationHeadersArgs) ToWorkloadSecurityOptionsGeoLocationHeadersOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationHeadersOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadSecurityOptionsGeoLocationHeadersOutput)
+}
+
+func (i WorkloadSecurityOptionsGeoLocationHeadersArgs) ToOutput(ctx context.Context) pulumix.Output[WorkloadSecurityOptionsGeoLocationHeaders] {
+	return pulumix.Output[WorkloadSecurityOptionsGeoLocationHeaders]{
+		OutputState: i.ToWorkloadSecurityOptionsGeoLocationHeadersOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i WorkloadSecurityOptionsGeoLocationHeadersArgs) ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutput() WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
+	return i.ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadSecurityOptionsGeoLocationHeadersArgs) ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadSecurityOptionsGeoLocationHeadersOutput).ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(ctx)
+}
+
+// WorkloadSecurityOptionsGeoLocationHeadersPtrInput is an input type that accepts WorkloadSecurityOptionsGeoLocationHeadersArgs, WorkloadSecurityOptionsGeoLocationHeadersPtr and WorkloadSecurityOptionsGeoLocationHeadersPtrOutput values.
+// You can construct a concrete instance of `WorkloadSecurityOptionsGeoLocationHeadersPtrInput` via:
+//
+//	        WorkloadSecurityOptionsGeoLocationHeadersArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadSecurityOptionsGeoLocationHeadersPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutput() WorkloadSecurityOptionsGeoLocationHeadersPtrOutput
+	ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(context.Context) WorkloadSecurityOptionsGeoLocationHeadersPtrOutput
+}
+
+type workloadSecurityOptionsGeoLocationHeadersPtrType WorkloadSecurityOptionsGeoLocationHeadersArgs
+
+func WorkloadSecurityOptionsGeoLocationHeadersPtr(v *WorkloadSecurityOptionsGeoLocationHeadersArgs) WorkloadSecurityOptionsGeoLocationHeadersPtrInput {
+	return (*workloadSecurityOptionsGeoLocationHeadersPtrType)(v)
+}
+
+func (*workloadSecurityOptionsGeoLocationHeadersPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadSecurityOptionsGeoLocationHeaders)(nil)).Elem()
+}
+
+func (i *workloadSecurityOptionsGeoLocationHeadersPtrType) ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutput() WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
+	return i.ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadSecurityOptionsGeoLocationHeadersPtrType) ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadSecurityOptionsGeoLocationHeadersPtrOutput)
+}
+
+func (i *workloadSecurityOptionsGeoLocationHeadersPtrType) ToOutput(ctx context.Context) pulumix.Output[*WorkloadSecurityOptionsGeoLocationHeaders] {
+	return pulumix.Output[*WorkloadSecurityOptionsGeoLocationHeaders]{
+		OutputState: i.ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type WorkloadSecurityOptionsGeoLocationHeadersOutput struct{ *pulumi.OutputState }
+
+func (WorkloadSecurityOptionsGeoLocationHeadersOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadSecurityOptionsGeoLocationHeaders)(nil)).Elem()
+}
+
+func (o WorkloadSecurityOptionsGeoLocationHeadersOutput) ToWorkloadSecurityOptionsGeoLocationHeadersOutput() WorkloadSecurityOptionsGeoLocationHeadersOutput {
+	return o
+}
+
+func (o WorkloadSecurityOptionsGeoLocationHeadersOutput) ToWorkloadSecurityOptionsGeoLocationHeadersOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationHeadersOutput {
+	return o
+}
+
+func (o WorkloadSecurityOptionsGeoLocationHeadersOutput) ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutput() WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
+	return o.ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadSecurityOptionsGeoLocationHeadersOutput) ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadSecurityOptionsGeoLocationHeaders) *WorkloadSecurityOptionsGeoLocationHeaders {
+		return &v
+	}).(WorkloadSecurityOptionsGeoLocationHeadersPtrOutput)
+}
+
+func (o WorkloadSecurityOptionsGeoLocationHeadersOutput) ToOutput(ctx context.Context) pulumix.Output[WorkloadSecurityOptionsGeoLocationHeaders] {
+	return pulumix.Output[WorkloadSecurityOptionsGeoLocationHeaders]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadSecurityOptionsGeoLocationHeadersOutput) Asn() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadSecurityOptionsGeoLocationHeaders) *string { return v.Asn }).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadSecurityOptionsGeoLocationHeadersOutput) City() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadSecurityOptionsGeoLocationHeaders) *string { return v.City }).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadSecurityOptionsGeoLocationHeadersOutput) Country() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadSecurityOptionsGeoLocationHeaders) *string { return v.Country }).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadSecurityOptionsGeoLocationHeadersOutput) Region() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadSecurityOptionsGeoLocationHeaders) *string { return v.Region }).(pulumi.StringPtrOutput)
+}
+
+type WorkloadSecurityOptionsGeoLocationHeadersPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadSecurityOptionsGeoLocationHeadersPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadSecurityOptionsGeoLocationHeaders)(nil)).Elem()
+}
+
+func (o WorkloadSecurityOptionsGeoLocationHeadersPtrOutput) ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutput() WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
+	return o
+}
+
+func (o WorkloadSecurityOptionsGeoLocationHeadersPtrOutput) ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
+	return o
+}
+
+func (o WorkloadSecurityOptionsGeoLocationHeadersPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*WorkloadSecurityOptionsGeoLocationHeaders] {
+	return pulumix.Output[*WorkloadSecurityOptionsGeoLocationHeaders]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadSecurityOptionsGeoLocationHeadersPtrOutput) Elem() WorkloadSecurityOptionsGeoLocationHeadersOutput {
+	return o.ApplyT(func(v *WorkloadSecurityOptionsGeoLocationHeaders) WorkloadSecurityOptionsGeoLocationHeaders {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadSecurityOptionsGeoLocationHeaders
+		return ret
+	}).(WorkloadSecurityOptionsGeoLocationHeadersOutput)
+}
+
+func (o WorkloadSecurityOptionsGeoLocationHeadersPtrOutput) Asn() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadSecurityOptionsGeoLocationHeaders) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Asn
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadSecurityOptionsGeoLocationHeadersPtrOutput) City() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadSecurityOptionsGeoLocationHeaders) *string {
+		if v == nil {
+			return nil
+		}
+		return v.City
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadSecurityOptionsGeoLocationHeadersPtrOutput) Country() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadSecurityOptionsGeoLocationHeaders) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Country
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadSecurityOptionsGeoLocationHeadersPtrOutput) Region() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadSecurityOptionsGeoLocationHeaders) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Region
+	}).(pulumi.StringPtrOutput)
 }
 
 type WorkloadSidecar struct {
@@ -25163,6 +26031,7 @@ type WorkloadStatus struct {
 	Endpoint            *string                       `pulumi:"endpoint"`
 	HealthChecks        []WorkloadStatusHealthCheck   `pulumi:"healthChecks"`
 	InternalName        *string                       `pulumi:"internalName"`
+	LoadBalancers       []WorkloadStatusLoadBalancer  `pulumi:"loadBalancers"`
 	ParentId            *string                       `pulumi:"parentId"`
 	ResolvedImages      []WorkloadStatusResolvedImage `pulumi:"resolvedImages"`
 }
@@ -25184,6 +26053,7 @@ type WorkloadStatusArgs struct {
 	Endpoint            pulumi.StringPtrInput                 `pulumi:"endpoint"`
 	HealthChecks        WorkloadStatusHealthCheckArrayInput   `pulumi:"healthChecks"`
 	InternalName        pulumi.StringPtrInput                 `pulumi:"internalName"`
+	LoadBalancers       WorkloadStatusLoadBalancerArrayInput  `pulumi:"loadBalancers"`
 	ParentId            pulumi.StringPtrInput                 `pulumi:"parentId"`
 	ResolvedImages      WorkloadStatusResolvedImageArrayInput `pulumi:"resolvedImages"`
 }
@@ -25275,6 +26145,10 @@ func (o WorkloadStatusOutput) HealthChecks() WorkloadStatusHealthCheckArrayOutpu
 
 func (o WorkloadStatusOutput) InternalName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v WorkloadStatus) *string { return v.InternalName }).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadStatusOutput) LoadBalancers() WorkloadStatusLoadBalancerArrayOutput {
+	return o.ApplyT(func(v WorkloadStatus) []WorkloadStatusLoadBalancer { return v.LoadBalancers }).(WorkloadStatusLoadBalancerArrayOutput)
 }
 
 func (o WorkloadStatusOutput) ParentId() pulumi.StringPtrOutput {
@@ -25463,6 +26337,130 @@ func (o WorkloadStatusHealthCheckArrayOutput) Index(i pulumi.IntInput) WorkloadS
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadStatusHealthCheck {
 		return vs[0].([]WorkloadStatusHealthCheck)[vs[1].(int)]
 	}).(WorkloadStatusHealthCheckOutput)
+}
+
+type WorkloadStatusLoadBalancer struct {
+	Origin *string `pulumi:"origin"`
+	Url    *string `pulumi:"url"`
+}
+
+// WorkloadStatusLoadBalancerInput is an input type that accepts WorkloadStatusLoadBalancerArgs and WorkloadStatusLoadBalancerOutput values.
+// You can construct a concrete instance of `WorkloadStatusLoadBalancerInput` via:
+//
+//	WorkloadStatusLoadBalancerArgs{...}
+type WorkloadStatusLoadBalancerInput interface {
+	pulumi.Input
+
+	ToWorkloadStatusLoadBalancerOutput() WorkloadStatusLoadBalancerOutput
+	ToWorkloadStatusLoadBalancerOutputWithContext(context.Context) WorkloadStatusLoadBalancerOutput
+}
+
+type WorkloadStatusLoadBalancerArgs struct {
+	Origin pulumi.StringPtrInput `pulumi:"origin"`
+	Url    pulumi.StringPtrInput `pulumi:"url"`
+}
+
+func (WorkloadStatusLoadBalancerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadStatusLoadBalancer)(nil)).Elem()
+}
+
+func (i WorkloadStatusLoadBalancerArgs) ToWorkloadStatusLoadBalancerOutput() WorkloadStatusLoadBalancerOutput {
+	return i.ToWorkloadStatusLoadBalancerOutputWithContext(context.Background())
+}
+
+func (i WorkloadStatusLoadBalancerArgs) ToWorkloadStatusLoadBalancerOutputWithContext(ctx context.Context) WorkloadStatusLoadBalancerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadStatusLoadBalancerOutput)
+}
+
+func (i WorkloadStatusLoadBalancerArgs) ToOutput(ctx context.Context) pulumix.Output[WorkloadStatusLoadBalancer] {
+	return pulumix.Output[WorkloadStatusLoadBalancer]{
+		OutputState: i.ToWorkloadStatusLoadBalancerOutputWithContext(ctx).OutputState,
+	}
+}
+
+// WorkloadStatusLoadBalancerArrayInput is an input type that accepts WorkloadStatusLoadBalancerArray and WorkloadStatusLoadBalancerArrayOutput values.
+// You can construct a concrete instance of `WorkloadStatusLoadBalancerArrayInput` via:
+//
+//	WorkloadStatusLoadBalancerArray{ WorkloadStatusLoadBalancerArgs{...} }
+type WorkloadStatusLoadBalancerArrayInput interface {
+	pulumi.Input
+
+	ToWorkloadStatusLoadBalancerArrayOutput() WorkloadStatusLoadBalancerArrayOutput
+	ToWorkloadStatusLoadBalancerArrayOutputWithContext(context.Context) WorkloadStatusLoadBalancerArrayOutput
+}
+
+type WorkloadStatusLoadBalancerArray []WorkloadStatusLoadBalancerInput
+
+func (WorkloadStatusLoadBalancerArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadStatusLoadBalancer)(nil)).Elem()
+}
+
+func (i WorkloadStatusLoadBalancerArray) ToWorkloadStatusLoadBalancerArrayOutput() WorkloadStatusLoadBalancerArrayOutput {
+	return i.ToWorkloadStatusLoadBalancerArrayOutputWithContext(context.Background())
+}
+
+func (i WorkloadStatusLoadBalancerArray) ToWorkloadStatusLoadBalancerArrayOutputWithContext(ctx context.Context) WorkloadStatusLoadBalancerArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadStatusLoadBalancerArrayOutput)
+}
+
+func (i WorkloadStatusLoadBalancerArray) ToOutput(ctx context.Context) pulumix.Output[[]WorkloadStatusLoadBalancer] {
+	return pulumix.Output[[]WorkloadStatusLoadBalancer]{
+		OutputState: i.ToWorkloadStatusLoadBalancerArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type WorkloadStatusLoadBalancerOutput struct{ *pulumi.OutputState }
+
+func (WorkloadStatusLoadBalancerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadStatusLoadBalancer)(nil)).Elem()
+}
+
+func (o WorkloadStatusLoadBalancerOutput) ToWorkloadStatusLoadBalancerOutput() WorkloadStatusLoadBalancerOutput {
+	return o
+}
+
+func (o WorkloadStatusLoadBalancerOutput) ToWorkloadStatusLoadBalancerOutputWithContext(ctx context.Context) WorkloadStatusLoadBalancerOutput {
+	return o
+}
+
+func (o WorkloadStatusLoadBalancerOutput) ToOutput(ctx context.Context) pulumix.Output[WorkloadStatusLoadBalancer] {
+	return pulumix.Output[WorkloadStatusLoadBalancer]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadStatusLoadBalancerOutput) Origin() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadStatusLoadBalancer) *string { return v.Origin }).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadStatusLoadBalancerOutput) Url() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadStatusLoadBalancer) *string { return v.Url }).(pulumi.StringPtrOutput)
+}
+
+type WorkloadStatusLoadBalancerArrayOutput struct{ *pulumi.OutputState }
+
+func (WorkloadStatusLoadBalancerArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadStatusLoadBalancer)(nil)).Elem()
+}
+
+func (o WorkloadStatusLoadBalancerArrayOutput) ToWorkloadStatusLoadBalancerArrayOutput() WorkloadStatusLoadBalancerArrayOutput {
+	return o
+}
+
+func (o WorkloadStatusLoadBalancerArrayOutput) ToWorkloadStatusLoadBalancerArrayOutputWithContext(ctx context.Context) WorkloadStatusLoadBalancerArrayOutput {
+	return o
+}
+
+func (o WorkloadStatusLoadBalancerArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]WorkloadStatusLoadBalancer] {
+	return pulumix.Output[[]WorkloadStatusLoadBalancer]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadStatusLoadBalancerArrayOutput) Index(i pulumi.IntInput) WorkloadStatusLoadBalancerOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadStatusLoadBalancer {
+		return vs[0].([]WorkloadStatusLoadBalancer)[vs[1].(int)]
+	}).(WorkloadStatusLoadBalancerOutput)
 }
 
 type WorkloadStatusResolvedImage struct {
@@ -25859,7 +26857,7 @@ func (o WorkloadStatusResolvedImageImageManifestArrayOutput) Index(i pulumi.IntI
 
 type GetGvcControlplaneTracing struct {
 	CustomTags map[string]string `pulumi:"customTags"`
-	Sampling   int               `pulumi:"sampling"`
+	Sampling   float64           `pulumi:"sampling"`
 }
 
 // GetGvcControlplaneTracingInput is an input type that accepts GetGvcControlplaneTracingArgs and GetGvcControlplaneTracingOutput values.
@@ -25875,7 +26873,7 @@ type GetGvcControlplaneTracingInput interface {
 
 type GetGvcControlplaneTracingArgs struct {
 	CustomTags pulumi.StringMapInput `pulumi:"customTags"`
-	Sampling   pulumi.IntInput       `pulumi:"sampling"`
+	Sampling   pulumi.Float64Input   `pulumi:"sampling"`
 }
 
 func (GetGvcControlplaneTracingArgs) ElementType() reflect.Type {
@@ -25977,8 +26975,8 @@ func (o GetGvcControlplaneTracingOutput) CustomTags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v GetGvcControlplaneTracing) map[string]string { return v.CustomTags }).(pulumi.StringMapOutput)
 }
 
-func (o GetGvcControlplaneTracingOutput) Sampling() pulumi.IntOutput {
-	return o.ApplyT(func(v GetGvcControlplaneTracing) int { return v.Sampling }).(pulumi.IntOutput)
+func (o GetGvcControlplaneTracingOutput) Sampling() pulumi.Float64Output {
+	return o.ApplyT(func(v GetGvcControlplaneTracing) float64 { return v.Sampling }).(pulumi.Float64Output)
 }
 
 type GetGvcControlplaneTracingPtrOutput struct{ *pulumi.OutputState }
@@ -26020,20 +27018,20 @@ func (o GetGvcControlplaneTracingPtrOutput) CustomTags() pulumi.StringMapOutput 
 	}).(pulumi.StringMapOutput)
 }
 
-func (o GetGvcControlplaneTracingPtrOutput) Sampling() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *GetGvcControlplaneTracing) *int {
+func (o GetGvcControlplaneTracingPtrOutput) Sampling() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *GetGvcControlplaneTracing) *float64 {
 		if v == nil {
 			return nil
 		}
 		return &v.Sampling
-	}).(pulumi.IntPtrOutput)
+	}).(pulumi.Float64PtrOutput)
 }
 
 type GetGvcLightstepTracing struct {
 	Credentials *string           `pulumi:"credentials"`
 	CustomTags  map[string]string `pulumi:"customTags"`
 	Endpoint    string            `pulumi:"endpoint"`
-	Sampling    int               `pulumi:"sampling"`
+	Sampling    float64           `pulumi:"sampling"`
 }
 
 // GetGvcLightstepTracingInput is an input type that accepts GetGvcLightstepTracingArgs and GetGvcLightstepTracingOutput values.
@@ -26051,7 +27049,7 @@ type GetGvcLightstepTracingArgs struct {
 	Credentials pulumi.StringPtrInput `pulumi:"credentials"`
 	CustomTags  pulumi.StringMapInput `pulumi:"customTags"`
 	Endpoint    pulumi.StringInput    `pulumi:"endpoint"`
-	Sampling    pulumi.IntInput       `pulumi:"sampling"`
+	Sampling    pulumi.Float64Input   `pulumi:"sampling"`
 }
 
 func (GetGvcLightstepTracingArgs) ElementType() reflect.Type {
@@ -26161,8 +27159,8 @@ func (o GetGvcLightstepTracingOutput) Endpoint() pulumi.StringOutput {
 	return o.ApplyT(func(v GetGvcLightstepTracing) string { return v.Endpoint }).(pulumi.StringOutput)
 }
 
-func (o GetGvcLightstepTracingOutput) Sampling() pulumi.IntOutput {
-	return o.ApplyT(func(v GetGvcLightstepTracing) int { return v.Sampling }).(pulumi.IntOutput)
+func (o GetGvcLightstepTracingOutput) Sampling() pulumi.Float64Output {
+	return o.ApplyT(func(v GetGvcLightstepTracing) float64 { return v.Sampling }).(pulumi.Float64Output)
 }
 
 type GetGvcLightstepTracingPtrOutput struct{ *pulumi.OutputState }
@@ -26222,13 +27220,13 @@ func (o GetGvcLightstepTracingPtrOutput) Endpoint() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o GetGvcLightstepTracingPtrOutput) Sampling() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *GetGvcLightstepTracing) *int {
+func (o GetGvcLightstepTracingPtrOutput) Sampling() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *GetGvcLightstepTracing) *float64 {
 		if v == nil {
 			return nil
 		}
 		return &v.Sampling
-	}).(pulumi.IntPtrOutput)
+	}).(pulumi.Float64PtrOutput)
 }
 
 type GetGvcLoadBalancer struct {
@@ -26406,7 +27404,7 @@ func (o GetGvcLoadBalancerPtrOutput) TrustedProxies() pulumi.IntPtrOutput {
 type GetGvcOtelTracing struct {
 	CustomTags map[string]string `pulumi:"customTags"`
 	Endpoint   string            `pulumi:"endpoint"`
-	Sampling   int               `pulumi:"sampling"`
+	Sampling   float64           `pulumi:"sampling"`
 }
 
 // GetGvcOtelTracingInput is an input type that accepts GetGvcOtelTracingArgs and GetGvcOtelTracingOutput values.
@@ -26423,7 +27421,7 @@ type GetGvcOtelTracingInput interface {
 type GetGvcOtelTracingArgs struct {
 	CustomTags pulumi.StringMapInput `pulumi:"customTags"`
 	Endpoint   pulumi.StringInput    `pulumi:"endpoint"`
-	Sampling   pulumi.IntInput       `pulumi:"sampling"`
+	Sampling   pulumi.Float64Input   `pulumi:"sampling"`
 }
 
 func (GetGvcOtelTracingArgs) ElementType() reflect.Type {
@@ -26529,8 +27527,8 @@ func (o GetGvcOtelTracingOutput) Endpoint() pulumi.StringOutput {
 	return o.ApplyT(func(v GetGvcOtelTracing) string { return v.Endpoint }).(pulumi.StringOutput)
 }
 
-func (o GetGvcOtelTracingOutput) Sampling() pulumi.IntOutput {
-	return o.ApplyT(func(v GetGvcOtelTracing) int { return v.Sampling }).(pulumi.IntOutput)
+func (o GetGvcOtelTracingOutput) Sampling() pulumi.Float64Output {
+	return o.ApplyT(func(v GetGvcOtelTracing) float64 { return v.Sampling }).(pulumi.Float64Output)
 }
 
 type GetGvcOtelTracingPtrOutput struct{ *pulumi.OutputState }
@@ -26581,13 +27579,13 @@ func (o GetGvcOtelTracingPtrOutput) Endpoint() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-func (o GetGvcOtelTracingPtrOutput) Sampling() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *GetGvcOtelTracing) *int {
+func (o GetGvcOtelTracingPtrOutput) Sampling() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *GetGvcOtelTracing) *float64 {
 		if v == nil {
 			return nil
 		}
 		return &v.Sampling
-	}).(pulumi.IntPtrOutput)
+	}).(pulumi.Float64PtrOutput)
 }
 
 type GetGvcSidecar struct {
@@ -28046,6 +29044,7 @@ func (o GetImagesQuerySpecPtrOutput) Terms() GetImagesQuerySpecTermArrayOutput {
 type GetImagesQuerySpecTerm struct {
 	Op       *string `pulumi:"op"`
 	Property *string `pulumi:"property"`
+	Rel      *string `pulumi:"rel"`
 	Tag      *string `pulumi:"tag"`
 	Value    *string `pulumi:"value"`
 }
@@ -28064,6 +29063,7 @@ type GetImagesQuerySpecTermInput interface {
 type GetImagesQuerySpecTermArgs struct {
 	Op       pulumi.StringPtrInput `pulumi:"op"`
 	Property pulumi.StringPtrInput `pulumi:"property"`
+	Rel      pulumi.StringPtrInput `pulumi:"rel"`
 	Tag      pulumi.StringPtrInput `pulumi:"tag"`
 	Value    pulumi.StringPtrInput `pulumi:"value"`
 }
@@ -28143,6 +29143,10 @@ func (o GetImagesQuerySpecTermOutput) Op() pulumi.StringPtrOutput {
 
 func (o GetImagesQuerySpecTermOutput) Property() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetImagesQuerySpecTerm) *string { return v.Property }).(pulumi.StringPtrOutput)
+}
+
+func (o GetImagesQuerySpecTermOutput) Rel() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetImagesQuerySpecTerm) *string { return v.Rel }).(pulumi.StringPtrOutput)
 }
 
 func (o GetImagesQuerySpecTermOutput) Tag() pulumi.StringPtrOutput {
@@ -28932,6 +29936,12 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadFirewallSpecInternalPtrInput)(nil)).Elem(), WorkloadFirewallSpecInternalArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadJobInput)(nil)).Elem(), WorkloadJobArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadJobPtrInput)(nil)).Elem(), WorkloadJobArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerInput)(nil)).Elem(), WorkloadLoadBalancerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerPtrInput)(nil)).Elem(), WorkloadLoadBalancerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerDirectInput)(nil)).Elem(), WorkloadLoadBalancerDirectArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerDirectPtrInput)(nil)).Elem(), WorkloadLoadBalancerDirectArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerDirectPortInput)(nil)).Elem(), WorkloadLoadBalancerDirectPortArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerDirectPortArrayInput)(nil)).Elem(), WorkloadLoadBalancerDirectPortArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionInput)(nil)).Elem(), WorkloadLocalOptionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionArrayInput)(nil)).Elem(), WorkloadLocalOptionArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingArgs{})
@@ -28944,12 +29954,18 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadRolloutOptionsPtrInput)(nil)).Elem(), WorkloadRolloutOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadSecurityOptionsInput)(nil)).Elem(), WorkloadSecurityOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadSecurityOptionsPtrInput)(nil)).Elem(), WorkloadSecurityOptionsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadSecurityOptionsGeoLocationInput)(nil)).Elem(), WorkloadSecurityOptionsGeoLocationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadSecurityOptionsGeoLocationPtrInput)(nil)).Elem(), WorkloadSecurityOptionsGeoLocationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadSecurityOptionsGeoLocationHeadersInput)(nil)).Elem(), WorkloadSecurityOptionsGeoLocationHeadersArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadSecurityOptionsGeoLocationHeadersPtrInput)(nil)).Elem(), WorkloadSecurityOptionsGeoLocationHeadersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadSidecarInput)(nil)).Elem(), WorkloadSidecarArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadSidecarPtrInput)(nil)).Elem(), WorkloadSidecarArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadStatusInput)(nil)).Elem(), WorkloadStatusArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadStatusArrayInput)(nil)).Elem(), WorkloadStatusArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadStatusHealthCheckInput)(nil)).Elem(), WorkloadStatusHealthCheckArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadStatusHealthCheckArrayInput)(nil)).Elem(), WorkloadStatusHealthCheckArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadStatusLoadBalancerInput)(nil)).Elem(), WorkloadStatusLoadBalancerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadStatusLoadBalancerArrayInput)(nil)).Elem(), WorkloadStatusLoadBalancerArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadStatusResolvedImageInput)(nil)).Elem(), WorkloadStatusResolvedImageArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadStatusResolvedImageArrayInput)(nil)).Elem(), WorkloadStatusResolvedImageArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadStatusResolvedImageImageInput)(nil)).Elem(), WorkloadStatusResolvedImageImageArgs{})
@@ -29276,6 +30292,12 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadFirewallSpecInternalPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadJobOutput{})
 	pulumi.RegisterOutputType(WorkloadJobPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadLoadBalancerOutput{})
+	pulumi.RegisterOutputType(WorkloadLoadBalancerPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadLoadBalancerDirectOutput{})
+	pulumi.RegisterOutputType(WorkloadLoadBalancerDirectPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadLoadBalancerDirectPortOutput{})
+	pulumi.RegisterOutputType(WorkloadLoadBalancerDirectPortArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingOutput{})
@@ -29288,12 +30310,18 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadRolloutOptionsPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadSecurityOptionsOutput{})
 	pulumi.RegisterOutputType(WorkloadSecurityOptionsPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadSecurityOptionsGeoLocationOutput{})
+	pulumi.RegisterOutputType(WorkloadSecurityOptionsGeoLocationPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadSecurityOptionsGeoLocationHeadersOutput{})
+	pulumi.RegisterOutputType(WorkloadSecurityOptionsGeoLocationHeadersPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadSidecarOutput{})
 	pulumi.RegisterOutputType(WorkloadSidecarPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadStatusOutput{})
 	pulumi.RegisterOutputType(WorkloadStatusArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadStatusHealthCheckOutput{})
 	pulumi.RegisterOutputType(WorkloadStatusHealthCheckArrayOutput{})
+	pulumi.RegisterOutputType(WorkloadStatusLoadBalancerOutput{})
+	pulumi.RegisterOutputType(WorkloadStatusLoadBalancerArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadStatusResolvedImageOutput{})
 	pulumi.RegisterOutputType(WorkloadStatusResolvedImageArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadStatusResolvedImageImageOutput{})

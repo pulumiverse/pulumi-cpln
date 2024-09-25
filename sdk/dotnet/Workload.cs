@@ -56,6 +56,9 @@ namespace Pulumiverse.Cpln
         [Output("job")]
         public Output<Outputs.WorkloadJob?> Job { get; private set; } = null!;
 
+        [Output("loadBalancer")]
+        public Output<Outputs.WorkloadLoadBalancer?> LoadBalancer { get; private set; } = null!;
+
         [Output("localOptions")]
         public Output<ImmutableArray<Outputs.WorkloadLocalOption>> LocalOptions { get; private set; } = null!;
 
@@ -80,7 +83,7 @@ namespace Pulumiverse.Cpln
         public Output<Outputs.WorkloadRolloutOptions?> RolloutOptions { get; private set; } = null!;
 
         /// <summary>
-        /// Allows for the configuration of the `file system group id`
+        /// Allows for the configuration of the `file system group id` and `geo location`
         /// </summary>
         [Output("securityOptions")]
         public Output<Outputs.WorkloadSecurityOptions?> SecurityOptions { get; private set; } = null!;
@@ -209,6 +212,9 @@ namespace Pulumiverse.Cpln
         [Input("job")]
         public Input<Inputs.WorkloadJobArgs>? Job { get; set; }
 
+        [Input("loadBalancer")]
+        public Input<Inputs.WorkloadLoadBalancerArgs>? LoadBalancer { get; set; }
+
         [Input("localOptions")]
         private InputList<Inputs.WorkloadLocalOptionArgs>? _localOptions;
         public InputList<Inputs.WorkloadLocalOptionArgs> LocalOptions
@@ -238,7 +244,7 @@ namespace Pulumiverse.Cpln
         public Input<Inputs.WorkloadRolloutOptionsArgs>? RolloutOptions { get; set; }
 
         /// <summary>
-        /// Allows for the configuration of the `file system group id`
+        /// Allows for the configuration of the `file system group id` and `geo location`
         /// </summary>
         [Input("securityOptions")]
         public Input<Inputs.WorkloadSecurityOptionsArgs>? SecurityOptions { get; set; }
@@ -328,6 +334,9 @@ namespace Pulumiverse.Cpln
         [Input("job")]
         public Input<Inputs.WorkloadJobGetArgs>? Job { get; set; }
 
+        [Input("loadBalancer")]
+        public Input<Inputs.WorkloadLoadBalancerGetArgs>? LoadBalancer { get; set; }
+
         [Input("localOptions")]
         private InputList<Inputs.WorkloadLocalOptionGetArgs>? _localOptions;
         public InputList<Inputs.WorkloadLocalOptionGetArgs> LocalOptions
@@ -357,7 +366,7 @@ namespace Pulumiverse.Cpln
         public Input<Inputs.WorkloadRolloutOptionsGetArgs>? RolloutOptions { get; set; }
 
         /// <summary>
-        /// Allows for the configuration of the `file system group id`
+        /// Allows for the configuration of the `file system group id` and `geo location`
         /// </summary>
         [Input("securityOptions")]
         public Input<Inputs.WorkloadSecurityOptionsGetArgs>? SecurityOptions { get; set; }

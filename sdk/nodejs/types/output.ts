@@ -186,6 +186,7 @@ export interface GetImagesQuerySpec {
 export interface GetImagesQuerySpecTerm {
     op?: string;
     property?: string;
+    rel?: string;
     tag?: string;
     value?: string;
 }
@@ -239,6 +240,7 @@ export interface GroupMemberQuerySpec {
 export interface GroupMemberQuerySpecTerm {
     op?: string;
     property?: string;
+    rel?: string;
     tag?: string;
     value?: string;
 }
@@ -787,6 +789,7 @@ export interface PolicyTargetQuerySpec {
 export interface PolicyTargetQuerySpecTerm {
     op?: string;
     property?: string;
+    rel?: string;
     tag?: string;
     value?: string;
 }
@@ -1017,6 +1020,22 @@ export interface WorkloadJob {
     schedule: string;
 }
 
+export interface WorkloadLoadBalancer {
+    direct?: outputs.WorkloadLoadBalancerDirect;
+}
+
+export interface WorkloadLoadBalancerDirect {
+    enabled: boolean;
+    ports?: outputs.WorkloadLoadBalancerDirectPort[];
+}
+
+export interface WorkloadLoadBalancerDirectPort {
+    containerPort?: number;
+    externalPort: number;
+    protocol: string;
+    scheme?: string;
+}
+
 export interface WorkloadLocalOption {
     autoscaling?: outputs.WorkloadLocalOptionAutoscaling;
     capacityAi?: boolean;
@@ -1062,7 +1081,20 @@ export interface WorkloadRolloutOptions {
 }
 
 export interface WorkloadSecurityOptions {
-    fileSystemGroupId: number;
+    fileSystemGroupId?: number;
+    geoLocation?: outputs.WorkloadSecurityOptionsGeoLocation;
+}
+
+export interface WorkloadSecurityOptionsGeoLocation {
+    enabled?: boolean;
+    headers?: outputs.WorkloadSecurityOptionsGeoLocationHeaders;
+}
+
+export interface WorkloadSecurityOptionsGeoLocationHeaders {
+    asn?: string;
+    city?: string;
+    country?: string;
+    region?: string;
 }
 
 export interface WorkloadSidecar {
@@ -1075,6 +1107,7 @@ export interface WorkloadStatus {
     endpoint?: string;
     healthChecks?: outputs.WorkloadStatusHealthCheck[];
     internalName?: string;
+    loadBalancers?: outputs.WorkloadStatusLoadBalancer[];
     parentId?: string;
     resolvedImages?: outputs.WorkloadStatusResolvedImage[];
 }
@@ -1087,6 +1120,11 @@ export interface WorkloadStatusHealthCheck {
     message?: string;
     success?: boolean;
     successes?: number;
+}
+
+export interface WorkloadStatusLoadBalancer {
+    origin?: string;
+    url?: string;
 }
 
 export interface WorkloadStatusResolvedImage {

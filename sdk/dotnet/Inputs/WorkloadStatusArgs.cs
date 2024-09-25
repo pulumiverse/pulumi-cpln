@@ -33,6 +33,14 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("internalName")]
         public Input<string>? InternalName { get; set; }
 
+        [Input("loadBalancers")]
+        private InputList<Inputs.WorkloadStatusLoadBalancerArgs>? _loadBalancers;
+        public InputList<Inputs.WorkloadStatusLoadBalancerArgs> LoadBalancers
+        {
+            get => _loadBalancers ?? (_loadBalancers = new InputList<Inputs.WorkloadStatusLoadBalancerArgs>());
+            set => _loadBalancers = value;
+        }
+
         [Input("parentId")]
         public Input<string>? ParentId { get; set; }
 

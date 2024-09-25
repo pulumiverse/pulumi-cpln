@@ -31,6 +31,7 @@ type Workload struct {
 	IdentityLink pulumi.StringPtrOutput `pulumi:"identityLink"`
 	// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
 	Job          WorkloadJobPtrOutput           `pulumi:"job"`
+	LoadBalancer WorkloadLoadBalancerPtrOutput  `pulumi:"loadBalancer"`
 	LocalOptions WorkloadLocalOptionArrayOutput `pulumi:"localOptions"`
 	// Name of the Workload.
 	Name pulumi.StringOutput `pulumi:"name"`
@@ -40,7 +41,7 @@ type Workload struct {
 	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
 	// replicas, surge replicas, and scaling policies.
 	RolloutOptions WorkloadRolloutOptionsPtrOutput `pulumi:"rolloutOptions"`
-	// Allows for the configuration of the `file system group id`
+	// Allows for the configuration of the `file system group id` and `geo location`
 	SecurityOptions WorkloadSecurityOptionsPtrOutput `pulumi:"securityOptions"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringOutput      `pulumi:"selfLink"`
@@ -113,6 +114,7 @@ type workloadState struct {
 	IdentityLink *string `pulumi:"identityLink"`
 	// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
 	Job          *WorkloadJob          `pulumi:"job"`
+	LoadBalancer *WorkloadLoadBalancer `pulumi:"loadBalancer"`
 	LocalOptions []WorkloadLocalOption `pulumi:"localOptions"`
 	// Name of the Workload.
 	Name *string `pulumi:"name"`
@@ -122,7 +124,7 @@ type workloadState struct {
 	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
 	// replicas, surge replicas, and scaling policies.
 	RolloutOptions *WorkloadRolloutOptions `pulumi:"rolloutOptions"`
-	// Allows for the configuration of the `file system group id`
+	// Allows for the configuration of the `file system group id` and `geo location`
 	SecurityOptions *WorkloadSecurityOptions `pulumi:"securityOptions"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink *string          `pulumi:"selfLink"`
@@ -154,6 +156,7 @@ type WorkloadState struct {
 	IdentityLink pulumi.StringPtrInput
 	// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
 	Job          WorkloadJobPtrInput
+	LoadBalancer WorkloadLoadBalancerPtrInput
 	LocalOptions WorkloadLocalOptionArrayInput
 	// Name of the Workload.
 	Name pulumi.StringPtrInput
@@ -163,7 +166,7 @@ type WorkloadState struct {
 	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
 	// replicas, surge replicas, and scaling policies.
 	RolloutOptions WorkloadRolloutOptionsPtrInput
-	// Allows for the configuration of the `file system group id`
+	// Allows for the configuration of the `file system group id` and `geo location`
 	SecurityOptions WorkloadSecurityOptionsPtrInput
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringPtrInput
@@ -197,6 +200,7 @@ type workloadArgs struct {
 	IdentityLink *string `pulumi:"identityLink"`
 	// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
 	Job          *WorkloadJob          `pulumi:"job"`
+	LoadBalancer *WorkloadLoadBalancer `pulumi:"loadBalancer"`
 	LocalOptions []WorkloadLocalOption `pulumi:"localOptions"`
 	// Name of the Workload.
 	Name *string `pulumi:"name"`
@@ -206,7 +210,7 @@ type workloadArgs struct {
 	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
 	// replicas, surge replicas, and scaling policies.
 	RolloutOptions *WorkloadRolloutOptions `pulumi:"rolloutOptions"`
-	// Allows for the configuration of the `file system group id`
+	// Allows for the configuration of the `file system group id` and `geo location`
 	SecurityOptions *WorkloadSecurityOptions `pulumi:"securityOptions"`
 	Sidecar         *WorkloadSidecar         `pulumi:"sidecar"`
 	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
@@ -233,6 +237,7 @@ type WorkloadArgs struct {
 	IdentityLink pulumi.StringPtrInput
 	// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
 	Job          WorkloadJobPtrInput
+	LoadBalancer WorkloadLoadBalancerPtrInput
 	LocalOptions WorkloadLocalOptionArrayInput
 	// Name of the Workload.
 	Name pulumi.StringPtrInput
@@ -242,7 +247,7 @@ type WorkloadArgs struct {
 	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
 	// replicas, surge replicas, and scaling policies.
 	RolloutOptions WorkloadRolloutOptionsPtrInput
-	// Allows for the configuration of the `file system group id`
+	// Allows for the configuration of the `file system group id` and `geo location`
 	SecurityOptions WorkloadSecurityOptionsPtrInput
 	Sidecar         WorkloadSidecarPtrInput
 	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
@@ -401,6 +406,10 @@ func (o WorkloadOutput) Job() WorkloadJobPtrOutput {
 	return o.ApplyT(func(v *Workload) WorkloadJobPtrOutput { return v.Job }).(WorkloadJobPtrOutput)
 }
 
+func (o WorkloadOutput) LoadBalancer() WorkloadLoadBalancerPtrOutput {
+	return o.ApplyT(func(v *Workload) WorkloadLoadBalancerPtrOutput { return v.LoadBalancer }).(WorkloadLoadBalancerPtrOutput)
+}
+
 func (o WorkloadOutput) LocalOptions() WorkloadLocalOptionArrayOutput {
 	return o.ApplyT(func(v *Workload) WorkloadLocalOptionArrayOutput { return v.LocalOptions }).(WorkloadLocalOptionArrayOutput)
 }
@@ -422,7 +431,7 @@ func (o WorkloadOutput) RolloutOptions() WorkloadRolloutOptionsPtrOutput {
 	return o.ApplyT(func(v *Workload) WorkloadRolloutOptionsPtrOutput { return v.RolloutOptions }).(WorkloadRolloutOptionsPtrOutput)
 }
 
-// Allows for the configuration of the `file system group id`
+// Allows for the configuration of the `file system group id` and `geo location`
 func (o WorkloadOutput) SecurityOptions() WorkloadSecurityOptionsPtrOutput {
 	return o.ApplyT(func(v *Workload) WorkloadSecurityOptionsPtrOutput { return v.SecurityOptions }).(WorkloadSecurityOptionsPtrOutput)
 }

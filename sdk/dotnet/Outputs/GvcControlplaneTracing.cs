@@ -15,13 +15,13 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class GvcControlplaneTracing
     {
         public readonly ImmutableDictionary<string, string>? CustomTags;
-        public readonly int Sampling;
+        public readonly double Sampling;
 
         [OutputConstructor]
         private GvcControlplaneTracing(
             ImmutableDictionary<string, string>? customTags,
 
-            int sampling)
+            double sampling)
         {
             CustomTags = customTags;
             Sampling = sampling;

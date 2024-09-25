@@ -17,7 +17,7 @@ namespace Pulumiverse.Cpln.Outputs
         public readonly string? Credentials;
         public readonly ImmutableDictionary<string, string>? CustomTags;
         public readonly string Endpoint;
-        public readonly int Sampling;
+        public readonly double Sampling;
 
         [OutputConstructor]
         private OrgTracingLightstepTracing(
@@ -27,7 +27,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             string endpoint,
 
-            int sampling)
+            double sampling)
         {
             Credentials = credentials;
             CustomTags = customTags;

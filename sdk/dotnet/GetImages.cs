@@ -43,14 +43,14 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;!-- Terms can only contain one of the following attributes: `property`, `rel`, `tag`. --&gt;
         /// 
-        /// Terms can only contain one of the following attributes: `property`, `tag`.
+        /// Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
         /// 
         /// Optional:
         /// 
         /// - **op** (String) Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `exists`, `!exists`. Default: `=`.
         /// 
         /// - **property** (String) Property to use for query evaluation.
-        /// &lt;!-- - **rel** (String) Rel to use use for query evaluation. --&gt;
+        /// - **rel** (String) Rel to use use for query evaluation.
         /// - **tag** (String) Tag key to use for query evaluation.
         /// - **value** (String) Testing value for query evaluation.
         /// 
@@ -130,14 +130,14 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;!-- Terms can only contain one of the following attributes: `property`, `rel`, `tag`. --&gt;
         /// 
-        /// Terms can only contain one of the following attributes: `property`, `tag`.
+        /// Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
         /// 
         /// Optional:
         /// 
         /// - **op** (String) Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `exists`, `!exists`. Default: `=`.
         /// 
         /// - **property** (String) Property to use for query evaluation.
-        /// &lt;!-- - **rel** (String) Rel to use use for query evaluation. --&gt;
+        /// - **rel** (String) Rel to use use for query evaluation.
         /// - **tag** (String) Tag key to use for query evaluation.
         /// - **value** (String) Testing value for query evaluation.
         /// 

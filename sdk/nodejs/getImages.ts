@@ -37,14 +37,14 @@ import * as utilities from "./utilities";
  *
  * <!-- Terms can only contain one of the following attributes: `property`, `rel`, `tag`. -->
  *
- * Terms can only contain one of the following attributes: `property`, `tag`.
+ * Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
  *
  * Optional:
  *
  * - **op** (String) Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
  *
  * - **property** (String) Property to use for query evaluation.
- * <!-- - **rel** (String) Rel to use use for query evaluation. -->
+ * - **rel** (String) Rel to use use for query evaluation.
  * - **tag** (String) Tag key to use for query evaluation.
  * - **value** (String) Testing value for query evaluation.
  *
@@ -148,14 +148,14 @@ export interface GetImagesResult {
  *
  * <!-- Terms can only contain one of the following attributes: `property`, `rel`, `tag`. -->
  *
- * Terms can only contain one of the following attributes: `property`, `tag`.
+ * Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
  *
  * Optional:
  *
  * - **op** (String) Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
  *
  * - **property** (String) Property to use for query evaluation.
- * <!-- - **rel** (String) Rel to use use for query evaluation. -->
+ * - **rel** (String) Rel to use use for query evaluation.
  * - **tag** (String) Tag key to use for query evaluation.
  * - **value** (String) Testing value for query evaluation.
  *

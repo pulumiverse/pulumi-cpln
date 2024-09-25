@@ -63,6 +63,7 @@ export class Workload extends pulumi.CustomResource {
      * [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
      */
     public readonly job!: pulumi.Output<outputs.WorkloadJob | undefined>;
+    public readonly loadBalancer!: pulumi.Output<outputs.WorkloadLoadBalancer | undefined>;
     public readonly localOptions!: pulumi.Output<outputs.WorkloadLocalOption[] | undefined>;
     /**
      * Name of the Workload.
@@ -79,7 +80,7 @@ export class Workload extends pulumi.CustomResource {
      */
     public readonly rolloutOptions!: pulumi.Output<outputs.WorkloadRolloutOptions | undefined>;
     /**
-     * Allows for the configuration of the `file system group id`
+     * Allows for the configuration of the `file system group id` and `geo location`
      */
     public readonly securityOptions!: pulumi.Output<outputs.WorkloadSecurityOptions | undefined>;
     /**
@@ -125,6 +126,7 @@ export class Workload extends pulumi.CustomResource {
             resourceInputs["gvc"] = state ? state.gvc : undefined;
             resourceInputs["identityLink"] = state ? state.identityLink : undefined;
             resourceInputs["job"] = state ? state.job : undefined;
+            resourceInputs["loadBalancer"] = state ? state.loadBalancer : undefined;
             resourceInputs["localOptions"] = state ? state.localOptions : undefined;
             resourceInputs["name"] = state ? state.name : undefined;
             resourceInputs["options"] = state ? state.options : undefined;
@@ -156,6 +158,7 @@ export class Workload extends pulumi.CustomResource {
             resourceInputs["gvc"] = args ? args.gvc : undefined;
             resourceInputs["identityLink"] = args ? args.identityLink : undefined;
             resourceInputs["job"] = args ? args.job : undefined;
+            resourceInputs["loadBalancer"] = args ? args.loadBalancer : undefined;
             resourceInputs["localOptions"] = args ? args.localOptions : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
             resourceInputs["options"] = args ? args.options : undefined;
@@ -207,6 +210,7 @@ export interface WorkloadState {
      * [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
      */
     job?: pulumi.Input<inputs.WorkloadJob>;
+    loadBalancer?: pulumi.Input<inputs.WorkloadLoadBalancer>;
     localOptions?: pulumi.Input<pulumi.Input<inputs.WorkloadLocalOption>[]>;
     /**
      * Name of the Workload.
@@ -223,7 +227,7 @@ export interface WorkloadState {
      */
     rolloutOptions?: pulumi.Input<inputs.WorkloadRolloutOptions>;
     /**
-     * Allows for the configuration of the `file system group id`
+     * Allows for the configuration of the `file system group id` and `geo location`
      */
     securityOptions?: pulumi.Input<inputs.WorkloadSecurityOptions>;
     /**
@@ -279,6 +283,7 @@ export interface WorkloadArgs {
      * [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
      */
     job?: pulumi.Input<inputs.WorkloadJob>;
+    loadBalancer?: pulumi.Input<inputs.WorkloadLoadBalancer>;
     localOptions?: pulumi.Input<pulumi.Input<inputs.WorkloadLocalOption>[]>;
     /**
      * Name of the Workload.
@@ -295,7 +300,7 @@ export interface WorkloadArgs {
      */
     rolloutOptions?: pulumi.Input<inputs.WorkloadRolloutOptions>;
     /**
-     * Allows for the configuration of the `file system group id`
+     * Allows for the configuration of the `file system group id` and `geo location`
      */
     securityOptions?: pulumi.Input<inputs.WorkloadSecurityOptions>;
     sidecar?: pulumi.Input<inputs.WorkloadSidecar>;

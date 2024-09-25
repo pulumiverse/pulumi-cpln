@@ -154,15 +154,21 @@ __all__ = [
     'WorkloadFirewallSpecExternalOutboundAllowPort',
     'WorkloadFirewallSpecInternal',
     'WorkloadJob',
+    'WorkloadLoadBalancer',
+    'WorkloadLoadBalancerDirect',
+    'WorkloadLoadBalancerDirectPort',
     'WorkloadLocalOption',
     'WorkloadLocalOptionAutoscaling',
     'WorkloadOptions',
     'WorkloadOptionsAutoscaling',
     'WorkloadRolloutOptions',
     'WorkloadSecurityOptions',
+    'WorkloadSecurityOptionsGeoLocation',
+    'WorkloadSecurityOptionsGeoLocationHeaders',
     'WorkloadSidecar',
     'WorkloadStatus',
     'WorkloadStatusHealthCheck',
+    'WorkloadStatusLoadBalancer',
     'WorkloadStatusResolvedImage',
     'WorkloadStatusResolvedImageImage',
     'WorkloadStatusResolvedImageImageManifest',
@@ -1201,12 +1207,14 @@ class GroupMemberQuerySpecTerm(dict):
     def __init__(__self__, *,
                  op: Optional[str] = None,
                  property: Optional[str] = None,
+                 rel: Optional[str] = None,
                  tag: Optional[str] = None,
                  value: Optional[str] = None):
         GroupMemberQuerySpecTerm._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             op=op,
             property=property,
+            rel=rel,
             tag=tag,
             value=value,
         )
@@ -1215,6 +1223,7 @@ class GroupMemberQuerySpecTerm(dict):
              _setter: Callable[[Any, Any], None],
              op: Optional[str] = None,
              property: Optional[str] = None,
+             rel: Optional[str] = None,
              tag: Optional[str] = None,
              value: Optional[str] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -1224,6 +1233,8 @@ class GroupMemberQuerySpecTerm(dict):
             _setter("op", op)
         if property is not None:
             _setter("property", property)
+        if rel is not None:
+            _setter("rel", rel)
         if tag is not None:
             _setter("tag", tag)
         if value is not None:
@@ -1233,6 +1244,11 @@ class GroupMemberQuerySpecTerm(dict):
     @pulumi.getter
     def op(self) -> Optional[str]:
         return pulumi.get(self, "op")
+
+    @property
+    @pulumi.getter
+    def rel(self) -> Optional[str]:
+        return pulumi.get(self, "rel")
 
     @property
     @pulumi.getter
@@ -1270,7 +1286,7 @@ class GvcControlplaneTracing(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 sampling: int,
+                 sampling: float,
                  custom_tags: Optional[Mapping[str, str]] = None):
         GvcControlplaneTracing._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -1280,7 +1296,7 @@ class GvcControlplaneTracing(dict):
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
-             sampling: int,
+             sampling: float,
              custom_tags: Optional[Mapping[str, str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -1293,7 +1309,7 @@ class GvcControlplaneTracing(dict):
 
     @property
     @pulumi.getter
-    def sampling(self) -> int:
+    def sampling(self) -> float:
         return pulumi.get(self, "sampling")
 
     @property
@@ -1323,7 +1339,7 @@ class GvcLightstepTracing(dict):
 
     def __init__(__self__, *,
                  endpoint: str,
-                 sampling: int,
+                 sampling: float,
                  credentials: Optional[str] = None,
                  custom_tags: Optional[Mapping[str, str]] = None):
         GvcLightstepTracing._configure(
@@ -1337,7 +1353,7 @@ class GvcLightstepTracing(dict):
     def _configure(
              _setter: Callable[[Any, Any], None],
              endpoint: str,
-             sampling: int,
+             sampling: float,
              credentials: Optional[str] = None,
              custom_tags: Optional[Mapping[str, str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -1359,7 +1375,7 @@ class GvcLightstepTracing(dict):
 
     @property
     @pulumi.getter
-    def sampling(self) -> int:
+    def sampling(self) -> float:
         return pulumi.get(self, "sampling")
 
     @property
@@ -1446,7 +1462,7 @@ class GvcOtelTracing(dict):
 
     def __init__(__self__, *,
                  endpoint: str,
-                 sampling: int,
+                 sampling: float,
                  custom_tags: Optional[Mapping[str, str]] = None):
         GvcOtelTracing._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -1458,7 +1474,7 @@ class GvcOtelTracing(dict):
     def _configure(
              _setter: Callable[[Any, Any], None],
              endpoint: str,
-             sampling: int,
+             sampling: float,
              custom_tags: Optional[Mapping[str, str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -1477,7 +1493,7 @@ class GvcOtelTracing(dict):
 
     @property
     @pulumi.getter
-    def sampling(self) -> int:
+    def sampling(self) -> float:
         return pulumi.get(self, "sampling")
 
     @property
@@ -6263,7 +6279,7 @@ class OrgTracingControlplaneTracing(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 sampling: int,
+                 sampling: float,
                  custom_tags: Optional[Mapping[str, str]] = None):
         OrgTracingControlplaneTracing._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -6273,7 +6289,7 @@ class OrgTracingControlplaneTracing(dict):
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
-             sampling: int,
+             sampling: float,
              custom_tags: Optional[Mapping[str, str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -6286,7 +6302,7 @@ class OrgTracingControlplaneTracing(dict):
 
     @property
     @pulumi.getter
-    def sampling(self) -> int:
+    def sampling(self) -> float:
         return pulumi.get(self, "sampling")
 
     @property
@@ -6316,7 +6332,7 @@ class OrgTracingLightstepTracing(dict):
 
     def __init__(__self__, *,
                  endpoint: str,
-                 sampling: int,
+                 sampling: float,
                  credentials: Optional[str] = None,
                  custom_tags: Optional[Mapping[str, str]] = None):
         OrgTracingLightstepTracing._configure(
@@ -6330,7 +6346,7 @@ class OrgTracingLightstepTracing(dict):
     def _configure(
              _setter: Callable[[Any, Any], None],
              endpoint: str,
-             sampling: int,
+             sampling: float,
              credentials: Optional[str] = None,
              custom_tags: Optional[Mapping[str, str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -6352,7 +6368,7 @@ class OrgTracingLightstepTracing(dict):
 
     @property
     @pulumi.getter
-    def sampling(self) -> int:
+    def sampling(self) -> float:
         return pulumi.get(self, "sampling")
 
     @property
@@ -6387,7 +6403,7 @@ class OrgTracingOtelTracing(dict):
 
     def __init__(__self__, *,
                  endpoint: str,
-                 sampling: int,
+                 sampling: float,
                  custom_tags: Optional[Mapping[str, str]] = None):
         OrgTracingOtelTracing._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -6399,7 +6415,7 @@ class OrgTracingOtelTracing(dict):
     def _configure(
              _setter: Callable[[Any, Any], None],
              endpoint: str,
-             sampling: int,
+             sampling: float,
              custom_tags: Optional[Mapping[str, str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -6418,7 +6434,7 @@ class OrgTracingOtelTracing(dict):
 
     @property
     @pulumi.getter
-    def sampling(self) -> int:
+    def sampling(self) -> float:
         return pulumi.get(self, "sampling")
 
     @property
@@ -6551,12 +6567,14 @@ class PolicyTargetQuerySpecTerm(dict):
     def __init__(__self__, *,
                  op: Optional[str] = None,
                  property: Optional[str] = None,
+                 rel: Optional[str] = None,
                  tag: Optional[str] = None,
                  value: Optional[str] = None):
         PolicyTargetQuerySpecTerm._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             op=op,
             property=property,
+            rel=rel,
             tag=tag,
             value=value,
         )
@@ -6565,6 +6583,7 @@ class PolicyTargetQuerySpecTerm(dict):
              _setter: Callable[[Any, Any], None],
              op: Optional[str] = None,
              property: Optional[str] = None,
+             rel: Optional[str] = None,
              tag: Optional[str] = None,
              value: Optional[str] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -6574,6 +6593,8 @@ class PolicyTargetQuerySpecTerm(dict):
             _setter("op", op)
         if property is not None:
             _setter("property", property)
+        if rel is not None:
+            _setter("rel", rel)
         if tag is not None:
             _setter("tag", tag)
         if value is not None:
@@ -6583,6 +6604,11 @@ class PolicyTargetQuerySpecTerm(dict):
     @pulumi.getter
     def op(self) -> Optional[str]:
         return pulumi.get(self, "op")
+
+    @property
+    @pulumi.getter
+    def rel(self) -> Optional[str]:
+        return pulumi.get(self, "rel")
 
     @property
     @pulumi.getter
@@ -8747,6 +8773,138 @@ class WorkloadJob(dict):
 
 
 @pulumi.output_type
+class WorkloadLoadBalancer(dict):
+    def __init__(__self__, *,
+                 direct: Optional['outputs.WorkloadLoadBalancerDirect'] = None):
+        WorkloadLoadBalancer._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            direct=direct,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             direct: Optional['outputs.WorkloadLoadBalancerDirect'] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if direct is not None:
+            _setter("direct", direct)
+
+    @property
+    @pulumi.getter
+    def direct(self) -> Optional['outputs.WorkloadLoadBalancerDirect']:
+        return pulumi.get(self, "direct")
+
+
+@pulumi.output_type
+class WorkloadLoadBalancerDirect(dict):
+    def __init__(__self__, *,
+                 enabled: bool,
+                 ports: Optional[Sequence['outputs.WorkloadLoadBalancerDirectPort']] = None):
+        WorkloadLoadBalancerDirect._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            enabled=enabled,
+            ports=ports,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             enabled: bool,
+             ports: Optional[Sequence['outputs.WorkloadLoadBalancerDirectPort']] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("enabled", enabled)
+        if ports is not None:
+            _setter("ports", ports)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> bool:
+        return pulumi.get(self, "enabled")
+
+    @property
+    @pulumi.getter
+    def ports(self) -> Optional[Sequence['outputs.WorkloadLoadBalancerDirectPort']]:
+        return pulumi.get(self, "ports")
+
+
+@pulumi.output_type
+class WorkloadLoadBalancerDirectPort(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "externalPort":
+            suggest = "external_port"
+        elif key == "containerPort":
+            suggest = "container_port"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadLoadBalancerDirectPort. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadLoadBalancerDirectPort.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadLoadBalancerDirectPort.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 external_port: int,
+                 protocol: str,
+                 container_port: Optional[int] = None,
+                 scheme: Optional[str] = None):
+        WorkloadLoadBalancerDirectPort._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            external_port=external_port,
+            protocol=protocol,
+            container_port=container_port,
+            scheme=scheme,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             external_port: int,
+             protocol: str,
+             container_port: Optional[int] = None,
+             scheme: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'externalPort' in kwargs:
+            external_port = kwargs['externalPort']
+        if 'containerPort' in kwargs:
+            container_port = kwargs['containerPort']
+
+        _setter("external_port", external_port)
+        _setter("protocol", protocol)
+        if container_port is not None:
+            _setter("container_port", container_port)
+        if scheme is not None:
+            _setter("scheme", scheme)
+
+    @property
+    @pulumi.getter(name="externalPort")
+    def external_port(self) -> int:
+        return pulumi.get(self, "external_port")
+
+    @property
+    @pulumi.getter
+    def protocol(self) -> str:
+        return pulumi.get(self, "protocol")
+
+    @property
+    @pulumi.getter(name="containerPort")
+    def container_port(self) -> Optional[int]:
+        return pulumi.get(self, "container_port")
+
+    @property
+    @pulumi.getter
+    def scheme(self) -> Optional[str]:
+        return pulumi.get(self, "scheme")
+
+
+@pulumi.output_type
 class WorkloadLocalOption(dict):
     @staticmethod
     def __key_warning(key: str):
@@ -9259,6 +9417,8 @@ class WorkloadSecurityOptions(dict):
         suggest = None
         if key == "fileSystemGroupId":
             suggest = "file_system_group_id"
+        elif key == "geoLocation":
+            suggest = "geo_location"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in WorkloadSecurityOptions. Access the value via the '{suggest}' property getter instead.")
@@ -9272,26 +9432,127 @@ class WorkloadSecurityOptions(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 file_system_group_id: int):
+                 file_system_group_id: Optional[int] = None,
+                 geo_location: Optional['outputs.WorkloadSecurityOptionsGeoLocation'] = None):
         WorkloadSecurityOptions._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             file_system_group_id=file_system_group_id,
+            geo_location=geo_location,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
-             file_system_group_id: int,
+             file_system_group_id: Optional[int] = None,
+             geo_location: Optional['outputs.WorkloadSecurityOptionsGeoLocation'] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
         if 'fileSystemGroupId' in kwargs:
             file_system_group_id = kwargs['fileSystemGroupId']
+        if 'geoLocation' in kwargs:
+            geo_location = kwargs['geoLocation']
 
-        _setter("file_system_group_id", file_system_group_id)
+        if file_system_group_id is not None:
+            _setter("file_system_group_id", file_system_group_id)
+        if geo_location is not None:
+            _setter("geo_location", geo_location)
 
     @property
     @pulumi.getter(name="fileSystemGroupId")
-    def file_system_group_id(self) -> int:
+    def file_system_group_id(self) -> Optional[int]:
         return pulumi.get(self, "file_system_group_id")
+
+    @property
+    @pulumi.getter(name="geoLocation")
+    def geo_location(self) -> Optional['outputs.WorkloadSecurityOptionsGeoLocation']:
+        return pulumi.get(self, "geo_location")
+
+
+@pulumi.output_type
+class WorkloadSecurityOptionsGeoLocation(dict):
+    def __init__(__self__, *,
+                 enabled: Optional[bool] = None,
+                 headers: Optional['outputs.WorkloadSecurityOptionsGeoLocationHeaders'] = None):
+        WorkloadSecurityOptionsGeoLocation._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            enabled=enabled,
+            headers=headers,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             enabled: Optional[bool] = None,
+             headers: Optional['outputs.WorkloadSecurityOptionsGeoLocationHeaders'] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if enabled is not None:
+            _setter("enabled", enabled)
+        if headers is not None:
+            _setter("headers", headers)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[bool]:
+        return pulumi.get(self, "enabled")
+
+    @property
+    @pulumi.getter
+    def headers(self) -> Optional['outputs.WorkloadSecurityOptionsGeoLocationHeaders']:
+        return pulumi.get(self, "headers")
+
+
+@pulumi.output_type
+class WorkloadSecurityOptionsGeoLocationHeaders(dict):
+    def __init__(__self__, *,
+                 asn: Optional[str] = None,
+                 city: Optional[str] = None,
+                 country: Optional[str] = None,
+                 region: Optional[str] = None):
+        WorkloadSecurityOptionsGeoLocationHeaders._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            asn=asn,
+            city=city,
+            country=country,
+            region=region,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             asn: Optional[str] = None,
+             city: Optional[str] = None,
+             country: Optional[str] = None,
+             region: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if asn is not None:
+            _setter("asn", asn)
+        if city is not None:
+            _setter("city", city)
+        if country is not None:
+            _setter("country", country)
+        if region is not None:
+            _setter("region", region)
+
+    @property
+    @pulumi.getter
+    def asn(self) -> Optional[str]:
+        return pulumi.get(self, "asn")
+
+    @property
+    @pulumi.getter
+    def city(self) -> Optional[str]:
+        return pulumi.get(self, "city")
+
+    @property
+    @pulumi.getter
+    def country(self) -> Optional[str]:
+        return pulumi.get(self, "country")
+
+    @property
+    @pulumi.getter
+    def region(self) -> Optional[str]:
+        return pulumi.get(self, "region")
 
 
 @pulumi.output_type
@@ -9330,6 +9591,8 @@ class WorkloadStatus(dict):
             suggest = "health_checks"
         elif key == "internalName":
             suggest = "internal_name"
+        elif key == "loadBalancers":
+            suggest = "load_balancers"
         elif key == "parentId":
             suggest = "parent_id"
         elif key == "resolvedImages":
@@ -9352,6 +9615,7 @@ class WorkloadStatus(dict):
                  endpoint: Optional[str] = None,
                  health_checks: Optional[Sequence['outputs.WorkloadStatusHealthCheck']] = None,
                  internal_name: Optional[str] = None,
+                 load_balancers: Optional[Sequence['outputs.WorkloadStatusLoadBalancer']] = None,
                  parent_id: Optional[str] = None,
                  resolved_images: Optional[Sequence['outputs.WorkloadStatusResolvedImage']] = None):
         WorkloadStatus._configure(
@@ -9361,6 +9625,7 @@ class WorkloadStatus(dict):
             endpoint=endpoint,
             health_checks=health_checks,
             internal_name=internal_name,
+            load_balancers=load_balancers,
             parent_id=parent_id,
             resolved_images=resolved_images,
         )
@@ -9372,6 +9637,7 @@ class WorkloadStatus(dict):
              endpoint: Optional[str] = None,
              health_checks: Optional[Sequence['outputs.WorkloadStatusHealthCheck']] = None,
              internal_name: Optional[str] = None,
+             load_balancers: Optional[Sequence['outputs.WorkloadStatusLoadBalancer']] = None,
              parent_id: Optional[str] = None,
              resolved_images: Optional[Sequence['outputs.WorkloadStatusResolvedImage']] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -9384,6 +9650,8 @@ class WorkloadStatus(dict):
             health_checks = kwargs['healthChecks']
         if 'internalName' in kwargs:
             internal_name = kwargs['internalName']
+        if 'loadBalancers' in kwargs:
+            load_balancers = kwargs['loadBalancers']
         if 'parentId' in kwargs:
             parent_id = kwargs['parentId']
         if 'resolvedImages' in kwargs:
@@ -9399,6 +9667,8 @@ class WorkloadStatus(dict):
             _setter("health_checks", health_checks)
         if internal_name is not None:
             _setter("internal_name", internal_name)
+        if load_balancers is not None:
+            _setter("load_balancers", load_balancers)
         if parent_id is not None:
             _setter("parent_id", parent_id)
         if resolved_images is not None:
@@ -9428,6 +9698,11 @@ class WorkloadStatus(dict):
     @pulumi.getter(name="internalName")
     def internal_name(self) -> Optional[str]:
         return pulumi.get(self, "internal_name")
+
+    @property
+    @pulumi.getter(name="loadBalancers")
+    def load_balancers(self) -> Optional[Sequence['outputs.WorkloadStatusLoadBalancer']]:
+        return pulumi.get(self, "load_balancers")
 
     @property
     @pulumi.getter(name="parentId")
@@ -9540,6 +9815,40 @@ class WorkloadStatusHealthCheck(dict):
     @pulumi.getter
     def successes(self) -> Optional[int]:
         return pulumi.get(self, "successes")
+
+
+@pulumi.output_type
+class WorkloadStatusLoadBalancer(dict):
+    def __init__(__self__, *,
+                 origin: Optional[str] = None,
+                 url: Optional[str] = None):
+        WorkloadStatusLoadBalancer._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            origin=origin,
+            url=url,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             origin: Optional[str] = None,
+             url: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if origin is not None:
+            _setter("origin", origin)
+        if url is not None:
+            _setter("url", url)
+
+    @property
+    @pulumi.getter
+    def origin(self) -> Optional[str]:
+        return pulumi.get(self, "origin")
+
+    @property
+    @pulumi.getter
+    def url(self) -> Optional[str]:
+        return pulumi.get(self, "url")
 
 
 @pulumi.output_type
@@ -9719,7 +10028,7 @@ class WorkloadStatusResolvedImageImageManifest(dict):
 @pulumi.output_type
 class GetGvcControlplaneTracingResult(dict):
     def __init__(__self__, *,
-                 sampling: int,
+                 sampling: float,
                  custom_tags: Optional[Mapping[str, str]] = None):
         GetGvcControlplaneTracingResult._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -9729,7 +10038,7 @@ class GetGvcControlplaneTracingResult(dict):
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
-             sampling: int,
+             sampling: float,
              custom_tags: Optional[Mapping[str, str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -9742,7 +10051,7 @@ class GetGvcControlplaneTracingResult(dict):
 
     @property
     @pulumi.getter
-    def sampling(self) -> int:
+    def sampling(self) -> float:
         return pulumi.get(self, "sampling")
 
     @property
@@ -9755,7 +10064,7 @@ class GetGvcControlplaneTracingResult(dict):
 class GetGvcLightstepTracingResult(dict):
     def __init__(__self__, *,
                  endpoint: str,
-                 sampling: int,
+                 sampling: float,
                  credentials: Optional[str] = None,
                  custom_tags: Optional[Mapping[str, str]] = None):
         GetGvcLightstepTracingResult._configure(
@@ -9769,7 +10078,7 @@ class GetGvcLightstepTracingResult(dict):
     def _configure(
              _setter: Callable[[Any, Any], None],
              endpoint: str,
-             sampling: int,
+             sampling: float,
              credentials: Optional[str] = None,
              custom_tags: Optional[Mapping[str, str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -9791,7 +10100,7 @@ class GetGvcLightstepTracingResult(dict):
 
     @property
     @pulumi.getter
-    def sampling(self) -> int:
+    def sampling(self) -> float:
         return pulumi.get(self, "sampling")
 
     @property
@@ -9844,7 +10153,7 @@ class GetGvcLoadBalancerResult(dict):
 class GetGvcOtelTracingResult(dict):
     def __init__(__self__, *,
                  endpoint: str,
-                 sampling: int,
+                 sampling: float,
                  custom_tags: Optional[Mapping[str, str]] = None):
         GetGvcOtelTracingResult._configure(
             lambda key, value: pulumi.set(__self__, key, value),
@@ -9856,7 +10165,7 @@ class GetGvcOtelTracingResult(dict):
     def _configure(
              _setter: Callable[[Any, Any], None],
              endpoint: str,
-             sampling: int,
+             sampling: float,
              custom_tags: Optional[Mapping[str, str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -9875,7 +10184,7 @@ class GetGvcOtelTracingResult(dict):
 
     @property
     @pulumi.getter
-    def sampling(self) -> int:
+    def sampling(self) -> float:
         return pulumi.get(self, "sampling")
 
     @property
@@ -10350,12 +10659,14 @@ class GetImagesQuerySpecTermResult(dict):
     def __init__(__self__, *,
                  op: Optional[str] = None,
                  property: Optional[str] = None,
+                 rel: Optional[str] = None,
                  tag: Optional[str] = None,
                  value: Optional[str] = None):
         GetImagesQuerySpecTermResult._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             op=op,
             property=property,
+            rel=rel,
             tag=tag,
             value=value,
         )
@@ -10364,6 +10675,7 @@ class GetImagesQuerySpecTermResult(dict):
              _setter: Callable[[Any, Any], None],
              op: Optional[str] = None,
              property: Optional[str] = None,
+             rel: Optional[str] = None,
              tag: Optional[str] = None,
              value: Optional[str] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -10373,6 +10685,8 @@ class GetImagesQuerySpecTermResult(dict):
             _setter("op", op)
         if property is not None:
             _setter("property", property)
+        if rel is not None:
+            _setter("rel", rel)
         if tag is not None:
             _setter("tag", tag)
         if value is not None:
@@ -10382,6 +10696,11 @@ class GetImagesQuerySpecTermResult(dict):
     @pulumi.getter
     def op(self) -> Optional[str]:
         return pulumi.get(self, "op")
+
+    @property
+    @pulumi.getter
+    def rel(self) -> Optional[str]:
+        return pulumi.get(self, "rel")
 
     @property
     @pulumi.getter

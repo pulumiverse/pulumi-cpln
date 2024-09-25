@@ -16,6 +16,7 @@ namespace Pulumiverse.Cpln.Outputs
     {
         public readonly string? Op;
         public readonly string? Property;
+        public readonly string? Rel;
         public readonly string? Tag;
         public readonly string? Value;
 
@@ -25,12 +26,15 @@ namespace Pulumiverse.Cpln.Outputs
 
             string? property,
 
+            string? rel,
+
             string? tag,
 
             string? value)
         {
             Op = op;
             Property = property;
+            Rel = rel;
             Tag = tag;
             Value = value;
         }

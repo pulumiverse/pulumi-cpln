@@ -25,7 +25,7 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<string> Endpoint { get; set; } = null!;
 
         [Input("sampling", required: true)]
-        public Input<int> Sampling { get; set; } = null!;
+        public Input<double> Sampling { get; set; } = null!;
 
         public OrgTracingOtelTracingGetArgs()
         {
