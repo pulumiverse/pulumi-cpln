@@ -387,6 +387,9 @@
                 "property": {
                     "type": "string"
                 },
+                "rel": {
+                    "type": "string"
+                },
                 "tag": {
                     "type": "string"
                 },
@@ -405,7 +408,7 @@
                     }
                 },
                 "sampling": {
-                    "type": "integer"
+                    "type": "number"
                 }
             },
             "type": "object",
@@ -428,7 +431,7 @@
                     "type": "string"
                 },
                 "sampling": {
-                    "type": "integer"
+                    "type": "number"
                 }
             },
             "type": "object",
@@ -463,7 +466,7 @@
                     "type": "string"
                 },
                 "sampling": {
-                    "type": "integer"
+                    "type": "number"
                 }
             },
             "type": "object",
@@ -2024,7 +2027,7 @@
                     }
                 },
                 "sampling": {
-                    "type": "integer"
+                    "type": "number"
                 }
             },
             "type": "object",
@@ -2047,7 +2050,7 @@
                     "type": "string"
                 },
                 "sampling": {
-                    "type": "integer"
+                    "type": "number"
                 }
             },
             "type": "object",
@@ -2068,7 +2071,7 @@
                     "type": "string"
                 },
                 "sampling": {
-                    "type": "integer"
+                    "type": "number"
                 }
             },
             "type": "object",
@@ -2129,6 +2132,9 @@
                     "type": "string"
                 },
                 "property": {
+                    "type": "string"
+                },
+                "rel": {
                     "type": "string"
                 },
                 "tag": {
@@ -2818,6 +2824,52 @@
                 "schedule"
             ]
         },
+        "cpln:index/WorkloadLoadBalancer:WorkloadLoadBalancer": {
+            "properties": {
+                "direct": {
+                    "$ref": "#/types/cpln:index/WorkloadLoadBalancerDirect:WorkloadLoadBalancerDirect"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadLoadBalancerDirect:WorkloadLoadBalancerDirect": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "ports": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadLoadBalancerDirectPort:WorkloadLoadBalancerDirectPort"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "enabled"
+            ]
+        },
+        "cpln:index/WorkloadLoadBalancerDirectPort:WorkloadLoadBalancerDirectPort": {
+            "properties": {
+                "containerPort": {
+                    "type": "integer"
+                },
+                "externalPort": {
+                    "type": "integer"
+                },
+                "protocol": {
+                    "type": "string"
+                },
+                "scheme": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "externalPort",
+                "protocol"
+            ]
+        },
         "cpln:index/WorkloadLocalOption:WorkloadLocalOption": {
             "properties": {
                 "autoscaling": {
@@ -2937,12 +2989,40 @@
             "properties": {
                 "fileSystemGroupId": {
                     "type": "integer"
+                },
+                "geoLocation": {
+                    "$ref": "#/types/cpln:index/WorkloadSecurityOptionsGeoLocation:WorkloadSecurityOptionsGeoLocation"
                 }
             },
-            "type": "object",
-            "required": [
-                "fileSystemGroupId"
-            ]
+            "type": "object"
+        },
+        "cpln:index/WorkloadSecurityOptionsGeoLocation:WorkloadSecurityOptionsGeoLocation": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "headers": {
+                    "$ref": "#/types/cpln:index/WorkloadSecurityOptionsGeoLocationHeaders:WorkloadSecurityOptionsGeoLocationHeaders"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadSecurityOptionsGeoLocationHeaders:WorkloadSecurityOptionsGeoLocationHeaders": {
+            "properties": {
+                "asn": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
         },
         "cpln:index/WorkloadSidecar:WorkloadSidecar": {
             "properties": {
@@ -2974,6 +3054,12 @@
                 },
                 "internalName": {
                     "type": "string"
+                },
+                "loadBalancers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadStatusLoadBalancer:WorkloadStatusLoadBalancer"
+                    }
                 },
                 "parentId": {
                     "type": "string"
@@ -3015,6 +3101,17 @@
             "required": [
                 "active"
             ]
+        },
+        "cpln:index/WorkloadStatusLoadBalancer:WorkloadStatusLoadBalancer": {
+            "properties": {
+                "origin": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
         },
         "cpln:index/WorkloadStatusResolvedImage:WorkloadStatusResolvedImage": {
             "properties": {
@@ -3076,7 +3173,7 @@
                     }
                 },
                 "sampling": {
-                    "type": "integer"
+                    "type": "number"
                 }
             },
             "type": "object",
@@ -3099,7 +3196,7 @@
                     "type": "string"
                 },
                 "sampling": {
-                    "type": "integer"
+                    "type": "number"
                 }
             },
             "type": "object",
@@ -3134,7 +3231,7 @@
                     "type": "string"
                 },
                 "sampling": {
-                    "type": "integer"
+                    "type": "number"
                 }
             },
             "type": "object",
@@ -3399,6 +3496,9 @@
                     "type": "string"
                 },
                 "property": {
+                    "type": "string"
+                },
+                "rel": {
                     "type": "string"
                 },
                 "tag": {
@@ -3879,7 +3979,6 @@
             }
         },
         "cpln:index/customLocation:CustomLocation": {
-            "description": "Manages an org's [Custom Location](https://docs.controlplane.com/reference/location#byok-locations).\n\n## Declaration\n\n### Required\n\n- **name** (String) Name of the Custom Location.\n- **enabled** (Boolean) Indication if custom location is enabled.\n- **cloud_provider** (String) Provider of the custom location, must be `byok`.\n\n### Optional\n\n- **tags** (Map of String) Key-value map of resource tags.\n- **description** - (String) Description of Custom Location.\n\n## Outputs\n\n- **cpln_id** (String) The ID, in GUID format, of the custom location.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nconst example = new cpln.CustomLocation(\"example\", {\n    cloudProvider: \"byok\",\n    description: \"custom location description\",\n    enabled: true,\n    tags: {\n        baz: \"qux\",\n        foo: \"bar\",\n    },\n});\n```\n```python\nimport pulumi\nimport pulumiverse_cpln as cpln\n\nexample = cpln.CustomLocation(\"example\",\n    cloud_provider=\"byok\",\n    description=\"custom location description\",\n    enabled=True,\n    tags={\n        \"baz\": \"qux\",\n        \"foo\": \"bar\",\n    })\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumiverse.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var example = new Cpln.CustomLocation(\"example\", new()\n    {\n        CloudProvider = \"byok\",\n        Description = \"custom location description\",\n        Enabled = true,\n        Tags = \n        {\n            { \"baz\", \"qux\" },\n            { \"foo\", \"bar\" },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := cpln.NewCustomLocation(ctx, \"example\", \u0026cpln.CustomLocationArgs{\n\t\t\tCloudProvider: pulumi.String(\"byok\"),\n\t\t\tDescription:   pulumi.String(\"custom location description\"),\n\t\t\tEnabled:       pulumi.Bool(true),\n\t\t\tTags: pulumi.StringMap{\n\t\t\t\t\"baz\": pulumi.String(\"qux\"),\n\t\t\t\t\"foo\": pulumi.String(\"bar\"),\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CustomLocation;\nimport com.pulumi.cpln.CustomLocationArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var example = new CustomLocation(\"example\", CustomLocationArgs.builder()        \n            .cloudProvider(\"byok\")\n            .description(\"custom location description\")\n            .enabled(\"true\")\n            .tags(Map.ofEntries(\n                Map.entry(\"baz\", \"qux\"),\n                Map.entry(\"foo\", \"bar\")\n            ))\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  example:\n    type: cpln:CustomLocation\n    properties:\n      cloudProvider: byok\n      description: custom location description\n      enabled: 'true'\n      tags:\n        baz: qux\n        foo: bar\n```\n{{% /example %}}\n{{% /examples %}}",
             "properties": {
                 "cloudProvider": {
                     "type": "string",
@@ -4810,7 +4909,6 @@
             }
         },
         "cpln:index/location:Location": {
-            "description": "Manages an org's [Location](https://docs.controlplane.com/reference/location).\n\n## Declaration\n\n### Required\n\n- **name** (String) Name of the Location.\n- **tags** (Map of String) Key-value map of resource tags.\n- **enabled** (Boolean) Indication if location is enabled.\n\n\u003e **Note** You need to associate the same tags that are defined in a location; otherwise, the pulumi preview will not be empty. It is common practice to reference the tags from a location data source.\n\n## Outputs\n\n- **cpln_id** (String) The ID, in GUID format, of the location.\n- **description** (String) Description of the location.\n- **cloud_provider** (String) Cloud Provider of the location.\n- **region** (String) Region of the location.\n- **geo** (Block List, Max: 1) (see below)\n- **ip_ranges** (List of String) A list of IP ranges of the location.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n\n\u003ca id=\"nestedblock--geo\"\u003e\u003c/a\u003e\n\n### `geo`\n\nLocation geographical details\n\n- **lat** (Number) Latitude.\n- **lon** (Number) Longitude.\n- **country** (String) Country.\n- **state** (String) State.\n- **city** (String) City.\n- **continent** (String) Continent.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n### Reference Tags from Data Source\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumi/cpln\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nconst main-location = cpln.getLocation({\n    name: \"aws-eu-central-1\",\n});\nconst reference_tags_example = new cpln.Location(\"reference-tags-example\", {\n    enabled: true,\n    tags: main_location.then(main_location =\u003e main_location.tags),\n});\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\nimport pulumiverse_cpln as cpln\n\nmain_location = cpln.get_location(name=\"aws-eu-central-1\")\nreference_tags_example = cpln.Location(\"reference-tags-example\",\n    enabled=True,\n    tags=main_location.tags)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\nusing Cpln = Pulumiverse.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var main_location = Cpln.GetLocation.Invoke(new()\n    {\n        Name = \"aws-eu-central-1\",\n    });\n\n    var reference_tags_example = new Cpln.Location(\"reference-tags-example\", new()\n    {\n        Enabled = true,\n        Tags = main_location.Apply(main_location =\u003e main_location.Apply(getLocationResult =\u003e getLocationResult.Tags)),\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tmain_location, err := cpln.LookupLocation(ctx, \u0026cpln.LookupLocationArgs{\n\t\t\tName: \"aws-eu-central-1\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = cpln.NewLocation(ctx, \"reference-tags-example\", \u0026cpln.LocationArgs{\n\t\t\tEnabled: pulumi.Bool(true),\n\t\t\tTags:    interface{}(main_location.Tags),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport com.pulumi.cpln.inputs.GetLocationArgs;\nimport com.pulumi.cpln.Location;\nimport com.pulumi.cpln.LocationArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var main-location = CplnFunctions.getLocation(GetLocationArgs.builder()\n            .name(\"aws-eu-central-1\")\n            .build());\n\n        var reference_tags_example = new Location(\"reference-tags-example\", LocationArgs.builder()        \n            .enabled(true)\n            .tags(main_location.tags())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  reference-tags-example:\n    type: cpln:Location\n    properties:\n      enabled: true\n      tags: ${[\"main-location\"].tags}\nvariables:\n  main-location:\n    fn::invoke:\n      Function: cpln:getLocation\n      Arguments:\n        name: aws-eu-central-1\n```\n{{% /example %}}\n{{% example %}}\n### Hard Code Location Tags\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nconst example = new cpln.Location(\"example\", {\n    enabled: true,\n    tags: {\n        \"cpln/city\": \"Frankfurt\",\n        \"cpln/continent\": \"Europe\",\n        \"cpln/country\": \"Germany\",\n    },\n});\n```\n```python\nimport pulumi\nimport pulumiverse_cpln as cpln\n\nexample = cpln.Location(\"example\",\n    enabled=True,\n    tags={\n        \"cpln/city\": \"Frankfurt\",\n        \"cpln/continent\": \"Europe\",\n        \"cpln/country\": \"Germany\",\n    })\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumiverse.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var example = new Cpln.Location(\"example\", new()\n    {\n        Enabled = true,\n        Tags = \n        {\n            { \"cpln/city\", \"Frankfurt\" },\n            { \"cpln/continent\", \"Europe\" },\n            { \"cpln/country\", \"Germany\" },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := cpln.NewLocation(ctx, \"example\", \u0026cpln.LocationArgs{\n\t\t\tEnabled: pulumi.Bool(true),\n\t\t\tTags: pulumi.StringMap{\n\t\t\t\t\"cpln/city\":      pulumi.String(\"Frankfurt\"),\n\t\t\t\t\"cpln/continent\": pulumi.String(\"Europe\"),\n\t\t\t\t\"cpln/country\":   pulumi.String(\"Germany\"),\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.Location;\nimport com.pulumi.cpln.LocationArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var example = new Location(\"example\", LocationArgs.builder()        \n            .enabled(true)\n            .tags(Map.ofEntries(\n                Map.entry(\"cpln/city\", \"Frankfurt\"),\n                Map.entry(\"cpln/continent\", \"Europe\"),\n                Map.entry(\"cpln/country\", \"Germany\")\n            ))\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  example:\n    type: cpln:Location\n    properties:\n      enabled: true\n      tags:\n        cpln/city: Frankfurt\n        cpln/continent: Europe\n        cpln/country: Germany\n```\n{{% /example %}}\n{{% /examples %}}",
             "properties": {
                 "cloudProvider": {
                     "type": "string",
@@ -4870,8 +4968,7 @@
                 "ipRanges",
                 "name",
                 "region",
-                "selfLink",
-                "tags"
+                "selfLink"
             ],
             "inputProperties": {
                 "enabled": {
@@ -4892,8 +4989,7 @@
                 }
             },
             "requiredInputs": [
-                "enabled",
-                "tags"
+                "enabled"
             ],
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Location resources.\n",
@@ -6474,6 +6570,9 @@
                     "$ref": "#/types/cpln:index/WorkloadJob:WorkloadJob",
                     "description": "[Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).\n"
                 },
+                "loadBalancer": {
+                    "$ref": "#/types/cpln:index/WorkloadLoadBalancer:WorkloadLoadBalancer"
+                },
                 "localOptions": {
                     "type": "array",
                     "items": {
@@ -6494,7 +6593,7 @@
                 },
                 "securityOptions": {
                     "$ref": "#/types/cpln:index/WorkloadSecurityOptions:WorkloadSecurityOptions",
-                    "description": "Allows for the configuration of the `file system group id`\n"
+                    "description": "Allows for the configuration of the `file system group id` and `geo location`\n"
                 },
                 "selfLink": {
                     "type": "string",
@@ -6565,6 +6664,9 @@
                     "$ref": "#/types/cpln:index/WorkloadJob:WorkloadJob",
                     "description": "[Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).\n"
                 },
+                "loadBalancer": {
+                    "$ref": "#/types/cpln:index/WorkloadLoadBalancer:WorkloadLoadBalancer"
+                },
                 "localOptions": {
                     "type": "array",
                     "items": {
@@ -6586,7 +6688,7 @@
                 },
                 "securityOptions": {
                     "$ref": "#/types/cpln:index/WorkloadSecurityOptions:WorkloadSecurityOptions",
-                    "description": "Allows for the configuration of the `file system group id`\n"
+                    "description": "Allows for the configuration of the `file system group id` and `geo location`\n"
                 },
                 "sidecar": {
                     "$ref": "#/types/cpln:index/WorkloadSidecar:WorkloadSidecar"
@@ -6649,6 +6751,9 @@
                         "$ref": "#/types/cpln:index/WorkloadJob:WorkloadJob",
                         "description": "[Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).\n"
                     },
+                    "loadBalancer": {
+                        "$ref": "#/types/cpln:index/WorkloadLoadBalancer:WorkloadLoadBalancer"
+                    },
                     "localOptions": {
                         "type": "array",
                         "items": {
@@ -6670,7 +6775,7 @@
                     },
                     "securityOptions": {
                         "$ref": "#/types/cpln:index/WorkloadSecurityOptions:WorkloadSecurityOptions",
-                        "description": "Allows for the configuration of the `file system group id`\n"
+                        "description": "Allows for the configuration of the `file system group id` and `geo location`\n"
                     },
                     "selfLink": {
                         "type": "string",
@@ -6935,7 +7040,7 @@
             }
         },
         "cpln:index/getImages:getImages": {
-            "description": "Use this data source to access information about all [Images](https://docs.controlplane.com/reference/image) within Control Plane.\n\n## Optional\n\n- **query** (Block List, Max: 1) (see below).\n\n\u003ca id=\"nestedblock--query\"\u003e\u003c/a\u003e\n\n### `query`\n\nOptional:\n\n- **fetch** (String) Type of fetch. Specify either: `links` or `items`. Default: `items`.\n- **spec** (Block List, Max: 1) (see below).\n\n\u003ca id=\"nestedblock--query--spec\"\u003e\u003c/a\u003e\n\n### `query.spec`\n\nOptional:\n\n- **match** (String) Type of match. Available values: `all`, `any`, `none`. Default: `all`.\n- **terms** (Block List) (see below).\n\n\u003ca id=\"nestedblock--query--spec--terms\"\u003e\u003c/a\u003e\n\n### `query.spec.terms`\n\n\u003c!-- Terms can only contain one of the following attributes: `property`, `rel`, `tag`. --\u003e\n\nTerms can only contain one of the following attributes: `property`, `tag`.\n\nOptional:\n\n- **op** (String) Type of query operation. Available values: `=`, `\u003e`, `\u003e=`, `\u003c`, `\u003c=`, `!=`, `exists`, `!exists`. Default: `=`.\n\n- **property** (String) Property to use for query evaluation.\n\u003c!-- - **rel** (String) Rel to use use for query evaluation. --\u003e\n- **tag** (String) Tag key to use for query evaluation.\n- **value** (String) Testing value for query evaluation.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **images** (Block List) (see below).\n\n\u003ca id=\"nestedblock--images\"\u003e\u003c/a\u003e\n\n### `images`\n\n- **cpln_id** (String) The ID, in GUID format, of the Image.\n- **name** (String) Name of the Image.\n- **tags** (Map of String) Key-value map of resource tags.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n- **tag** (String) Tag of the image.\n- **repository** (String) Respository name of the image.\n- **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.\n- **manifest** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--manifest\"\u003e\u003c/a\u003e\n\n### `manifest`\n\n The manifest provides configuration and layers information about the image. It plays a crucial role in the Docker image distribution system, enabling image creation, verification, and replication in a consistent and secure manner.\n\n- **config** (Block List, Max: 1) (see below).\n- **layers** (Block List) (see below).\n- **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.\n- **schema_version** (Number) The version of the Docker Image Manifest format.\n\n\u003ca id=\"nestedblock--config--layers\"\u003e\u003c/a\u003e\n\n### `config` and `layers`\n\nThe config is a JSON blob that contains the image configuration data which includes environment variables, default command to run, and other settings necessary to run the container based on this image.\n\nLayers lists the digests of the image's layers. These layers are filesystem changes or additions made in each step of the Docker image's creation process. The layers are stored separately and pulled as needed, which allows for efficient storage and transfer of images. Each layer is represented by a SHA256 digest, ensuring the integrity and authenticity of the image.\n\n- **size** (Number) The size of the image or layer in bytes. This helps in estimating the space required and the download time.\n- **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.\n- **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.\n",
+            "description": "Use this data source to access information about all [Images](https://docs.controlplane.com/reference/image) within Control Plane.\n\n## Optional\n\n- **query** (Block List, Max: 1) (see below).\n\n\u003ca id=\"nestedblock--query\"\u003e\u003c/a\u003e\n\n### `query`\n\nOptional:\n\n- **fetch** (String) Type of fetch. Specify either: `links` or `items`. Default: `items`.\n- **spec** (Block List, Max: 1) (see below).\n\n\u003ca id=\"nestedblock--query--spec\"\u003e\u003c/a\u003e\n\n### `query.spec`\n\nOptional:\n\n- **match** (String) Type of match. Available values: `all`, `any`, `none`. Default: `all`.\n- **terms** (Block List) (see below).\n\n\u003ca id=\"nestedblock--query--spec--terms\"\u003e\u003c/a\u003e\n\n### `query.spec.terms`\n\n\u003c!-- Terms can only contain one of the following attributes: `property`, `rel`, `tag`. --\u003e\n\nTerms can only contain one of the following attributes: `property`, `rel`, `tag`.\n\nOptional:\n\n- **op** (String) Type of query operation. Available values: `=`, `\u003e`, `\u003e=`, `\u003c`, `\u003c=`, `!=`, `exists`, `!exists`. Default: `=`.\n\n- **property** (String) Property to use for query evaluation.\n- **rel** (String) Rel to use use for query evaluation.\n- **tag** (String) Tag key to use for query evaluation.\n- **value** (String) Testing value for query evaluation.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **images** (Block List) (see below).\n\n\u003ca id=\"nestedblock--images\"\u003e\u003c/a\u003e\n\n### `images`\n\n- **cpln_id** (String) The ID, in GUID format, of the Image.\n- **name** (String) Name of the Image.\n- **tags** (Map of String) Key-value map of resource tags.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n- **tag** (String) Tag of the image.\n- **repository** (String) Respository name of the image.\n- **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.\n- **manifest** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--manifest\"\u003e\u003c/a\u003e\n\n### `manifest`\n\n The manifest provides configuration and layers information about the image. It plays a crucial role in the Docker image distribution system, enabling image creation, verification, and replication in a consistent and secure manner.\n\n- **config** (Block List, Max: 1) (see below).\n- **layers** (Block List) (see below).\n- **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.\n- **schema_version** (Number) The version of the Docker Image Manifest format.\n\n\u003ca id=\"nestedblock--config--layers\"\u003e\u003c/a\u003e\n\n### `config` and `layers`\n\nThe config is a JSON blob that contains the image configuration data which includes environment variables, default command to run, and other settings necessary to run the container based on this image.\n\nLayers lists the digests of the image's layers. These layers are filesystem changes or additions made in each step of the Docker image's creation process. The layers are stored separately and pulled as needed, which allows for efficient storage and transfer of images. Each layer is represented by a SHA256 digest, ensuring the integrity and authenticity of the image.\n\n- **size** (Number) The size of the image or layer in bytes. This helps in estimating the space required and the download time.\n- **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.\n- **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getImages.\n",
                 "properties": {
