@@ -18,7 +18,6 @@ class WorkloadArgs:
     def __init__(__self__, *,
                  containers: pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]],
                  gvc: pulumi.Input[str],
-                 options: pulumi.Input['WorkloadOptionsArgs'],
                  type: pulumi.Input[str],
                  description: Optional[pulumi.Input[str]] = None,
                  firewall_spec: Optional[pulumi.Input['WorkloadFirewallSpecArgs']] = None,
@@ -27,6 +26,7 @@ class WorkloadArgs:
                  load_balancer: Optional[pulumi.Input['WorkloadLoadBalancerArgs']] = None,
                  local_options: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadLocalOptionArgs']]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
+                 options: Optional[pulumi.Input['WorkloadOptionsArgs']] = None,
                  rollout_options: Optional[pulumi.Input['WorkloadRolloutOptionsArgs']] = None,
                  security_options: Optional[pulumi.Input['WorkloadSecurityOptionsArgs']] = None,
                  sidecar: Optional[pulumi.Input['WorkloadSidecarArgs']] = None,
@@ -36,8 +36,6 @@ class WorkloadArgs:
         The set of arguments for constructing a Workload resource.
         :param pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
         :param pulumi.Input[str] gvc: Name of the associated GVC.
-        :param pulumi.Input['WorkloadOptionsArgs'] options: Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
-               characteristics of the workload.
         :param pulumi.Input[str] type: Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
         :param pulumi.Input[str] description: Description of the Workload.
         :param pulumi.Input['WorkloadFirewallSpecArgs'] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
@@ -45,6 +43,8 @@ class WorkloadArgs:
         :param pulumi.Input[str] identity_link: Full link to an Identity.
         :param pulumi.Input['WorkloadJobArgs'] job: [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
         :param pulumi.Input[str] name: Name of the Workload.
+        :param pulumi.Input['WorkloadOptionsArgs'] options: Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+               characteristics of the workload.
         :param pulumi.Input['WorkloadRolloutOptionsArgs'] rollout_options: Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
                replicas, surge replicas, and scaling policies.
         :param pulumi.Input['WorkloadSecurityOptionsArgs'] security_options: Allows for the configuration of the `file system group id` and `geo location`
@@ -56,7 +56,6 @@ class WorkloadArgs:
             lambda key, value: pulumi.set(__self__, key, value),
             containers=containers,
             gvc=gvc,
-            options=options,
             type=type,
             description=description,
             firewall_spec=firewall_spec,
@@ -65,6 +64,7 @@ class WorkloadArgs:
             load_balancer=load_balancer,
             local_options=local_options,
             name=name,
+            options=options,
             rollout_options=rollout_options,
             security_options=security_options,
             sidecar=sidecar,
@@ -76,7 +76,6 @@ class WorkloadArgs:
              _setter: Callable[[Any, Any], None],
              containers: pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]],
              gvc: pulumi.Input[str],
-             options: pulumi.Input['WorkloadOptionsArgs'],
              type: pulumi.Input[str],
              description: Optional[pulumi.Input[str]] = None,
              firewall_spec: Optional[pulumi.Input['WorkloadFirewallSpecArgs']] = None,
@@ -85,6 +84,7 @@ class WorkloadArgs:
              load_balancer: Optional[pulumi.Input['WorkloadLoadBalancerArgs']] = None,
              local_options: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadLocalOptionArgs']]]] = None,
              name: Optional[pulumi.Input[str]] = None,
+             options: Optional[pulumi.Input['WorkloadOptionsArgs']] = None,
              rollout_options: Optional[pulumi.Input['WorkloadRolloutOptionsArgs']] = None,
              security_options: Optional[pulumi.Input['WorkloadSecurityOptionsArgs']] = None,
              sidecar: Optional[pulumi.Input['WorkloadSidecarArgs']] = None,
@@ -109,7 +109,6 @@ class WorkloadArgs:
 
         _setter("containers", containers)
         _setter("gvc", gvc)
-        _setter("options", options)
         _setter("type", type)
         if description is not None:
             _setter("description", description)
@@ -125,6 +124,8 @@ class WorkloadArgs:
             _setter("local_options", local_options)
         if name is not None:
             _setter("name", name)
+        if options is not None:
+            _setter("options", options)
         if rollout_options is not None:
             _setter("rollout_options", rollout_options)
         if security_options is not None:
@@ -159,19 +160,6 @@ class WorkloadArgs:
     @gvc.setter
     def gvc(self, value: pulumi.Input[str]):
         pulumi.set(self, "gvc", value)
-
-    @property
-    @pulumi.getter
-    def options(self) -> pulumi.Input['WorkloadOptionsArgs']:
-        """
-        Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
-        characteristics of the workload.
-        """
-        return pulumi.get(self, "options")
-
-    @options.setter
-    def options(self, value: pulumi.Input['WorkloadOptionsArgs']):
-        pulumi.set(self, "options", value)
 
     @property
     @pulumi.getter
@@ -263,6 +251,19 @@ class WorkloadArgs:
     @name.setter
     def name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def options(self) -> Optional[pulumi.Input['WorkloadOptionsArgs']]:
+        """
+        Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+        characteristics of the workload.
+        """
+        return pulumi.get(self, "options")
+
+    @options.setter
+    def options(self, value: Optional[pulumi.Input['WorkloadOptionsArgs']]):
+        pulumi.set(self, "options", value)
 
     @property
     @pulumi.getter(name="rolloutOptions")
@@ -826,8 +827,6 @@ class Workload(pulumi.CustomResource):
                 def _setter(key, value):
                     options[key] = value
                 WorkloadOptionsArgs._configure(_setter, **options)
-            if options is None and not opts.urn:
-                raise TypeError("Missing required property 'options'")
             __props__.__dict__["options"] = options
             if rollout_options is not None and not isinstance(rollout_options, WorkloadRolloutOptionsArgs):
                 rollout_options = rollout_options or {}
@@ -1014,7 +1013,7 @@ class Workload(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def options(self) -> pulumi.Output['outputs.WorkloadOptions']:
+    def options(self) -> pulumi.Output[Optional['outputs.WorkloadOptions']]:
         """
         Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
         characteristics of the workload.
