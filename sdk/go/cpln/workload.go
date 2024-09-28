@@ -37,7 +37,7 @@ type Workload struct {
 	Name pulumi.StringOutput `pulumi:"name"`
 	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
 	// characteristics of the workload.
-	Options WorkloadOptionsOutput `pulumi:"options"`
+	Options WorkloadOptionsPtrOutput `pulumi:"options"`
 	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
 	// replicas, surge replicas, and scaling policies.
 	RolloutOptions WorkloadRolloutOptionsPtrOutput `pulumi:"rolloutOptions"`
@@ -69,9 +69,6 @@ func NewWorkload(ctx *pulumi.Context,
 	}
 	if args.Gvc == nil {
 		return nil, errors.New("invalid value for required argument 'Gvc'")
-	}
-	if args.Options == nil {
-		return nil, errors.New("invalid value for required argument 'Options'")
 	}
 	if args.Type == nil {
 		return nil, errors.New("invalid value for required argument 'Type'")
@@ -206,7 +203,7 @@ type workloadArgs struct {
 	Name *string `pulumi:"name"`
 	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
 	// characteristics of the workload.
-	Options WorkloadOptions `pulumi:"options"`
+	Options *WorkloadOptions `pulumi:"options"`
 	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
 	// replicas, surge replicas, and scaling policies.
 	RolloutOptions *WorkloadRolloutOptions `pulumi:"rolloutOptions"`
@@ -243,7 +240,7 @@ type WorkloadArgs struct {
 	Name pulumi.StringPtrInput
 	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
 	// characteristics of the workload.
-	Options WorkloadOptionsInput
+	Options WorkloadOptionsPtrInput
 	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
 	// replicas, surge replicas, and scaling policies.
 	RolloutOptions WorkloadRolloutOptionsPtrInput
@@ -421,8 +418,8 @@ func (o WorkloadOutput) Name() pulumi.StringOutput {
 
 // Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
 // characteristics of the workload.
-func (o WorkloadOutput) Options() WorkloadOptionsOutput {
-	return o.ApplyT(func(v *Workload) WorkloadOptionsOutput { return v.Options }).(WorkloadOptionsOutput)
+func (o WorkloadOutput) Options() WorkloadOptionsPtrOutput {
+	return o.ApplyT(func(v *Workload) WorkloadOptionsPtrOutput { return v.Options }).(WorkloadOptionsPtrOutput)
 }
 
 // Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable

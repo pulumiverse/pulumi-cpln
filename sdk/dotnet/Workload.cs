@@ -73,7 +73,7 @@ namespace Pulumiverse.Cpln
         /// characteristics of the workload.
         /// </summary>
         [Output("options")]
-        public Output<Outputs.WorkloadOptions> Options { get; private set; } = null!;
+        public Output<Outputs.WorkloadOptions?> Options { get; private set; } = null!;
 
         /// <summary>
         /// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
@@ -233,8 +233,8 @@ namespace Pulumiverse.Cpln
         /// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
         /// characteristics of the workload.
         /// </summary>
-        [Input("options", required: true)]
-        public Input<Inputs.WorkloadOptionsArgs> Options { get; set; } = null!;
+        [Input("options")]
+        public Input<Inputs.WorkloadOptionsArgs>? Options { get; set; }
 
         /// <summary>
         /// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable

@@ -73,7 +73,7 @@ export class Workload extends pulumi.CustomResource {
      * Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
      * characteristics of the workload.
      */
-    public readonly options!: pulumi.Output<outputs.WorkloadOptions>;
+    public readonly options!: pulumi.Output<outputs.WorkloadOptions | undefined>;
     /**
      * Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
      * replicas, surge replicas, and scaling policies.
@@ -145,9 +145,6 @@ export class Workload extends pulumi.CustomResource {
             }
             if ((!args || args.gvc === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'gvc'");
-            }
-            if ((!args || args.options === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'options'");
             }
             if ((!args || args.type === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'type'");
@@ -293,7 +290,7 @@ export interface WorkloadArgs {
      * Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
      * characteristics of the workload.
      */
-    options: pulumi.Input<inputs.WorkloadOptions>;
+    options?: pulumi.Input<inputs.WorkloadOptions>;
     /**
      * Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
      * replicas, surge replicas, and scaling policies.
