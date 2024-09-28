@@ -6629,7 +6629,6 @@
                 "cplnId",
                 "gvc",
                 "name",
-                "options",
                 "selfLink",
                 "statuses",
                 "type"
@@ -6712,7 +6711,6 @@
             "requiredInputs": [
                 "containers",
                 "gvc",
-                "options",
                 "type"
             ],
             "stateInputs": {
