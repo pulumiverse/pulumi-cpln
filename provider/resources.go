@@ -123,6 +123,7 @@ func Provider() tfbridge.ProviderInfo {
 			"cpln_location":      {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getLocation")},
 			"cpln_locations":     {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getLocations")},
 			"cpln_org":           {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getOrg")},
+			"cpln_secret":        {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getSecret")},
 		},
 		JavaScript: &tfbridge.JavaScriptInfo{
 			PackageName: "@pulumiverse/cpln",
