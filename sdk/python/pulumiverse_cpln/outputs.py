@@ -157,14 +157,14 @@ __all__ = [
     'WorkloadLoadBalancer',
     'WorkloadLoadBalancerDirect',
     'WorkloadLoadBalancerDirectPort',
+    'WorkloadLoadBalancerGeoLocation',
+    'WorkloadLoadBalancerGeoLocationHeaders',
     'WorkloadLocalOption',
     'WorkloadLocalOptionAutoscaling',
     'WorkloadOptions',
     'WorkloadOptionsAutoscaling',
     'WorkloadRolloutOptions',
     'WorkloadSecurityOptions',
-    'WorkloadSecurityOptionsGeoLocation',
-    'WorkloadSecurityOptionsGeoLocationHeaders',
     'WorkloadSidecar',
     'WorkloadStatus',
     'WorkloadStatusHealthCheck',
@@ -190,6 +190,14 @@ __all__ = [
     'GetLocationGeoResult',
     'GetLocationsLocationResult',
     'GetLocationsLocationGeoResult',
+    'GetSecretAwsResult',
+    'GetSecretAzureConnectorResult',
+    'GetSecretEcrResult',
+    'GetSecretKeypairResult',
+    'GetSecretNatsAccountResult',
+    'GetSecretOpaqueResult',
+    'GetSecretTlsResult',
+    'GetSecretUserpassResult',
 ]
 
 @pulumi.output_type
@@ -8774,26 +8782,55 @@ class WorkloadJob(dict):
 
 @pulumi.output_type
 class WorkloadLoadBalancer(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "geoLocation":
+            suggest = "geo_location"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadLoadBalancer. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadLoadBalancer.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadLoadBalancer.__key_warning(key)
+        return super().get(key, default)
+
     def __init__(__self__, *,
-                 direct: Optional['outputs.WorkloadLoadBalancerDirect'] = None):
+                 direct: Optional['outputs.WorkloadLoadBalancerDirect'] = None,
+                 geo_location: Optional['outputs.WorkloadLoadBalancerGeoLocation'] = None):
         WorkloadLoadBalancer._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             direct=direct,
+            geo_location=geo_location,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
              direct: Optional['outputs.WorkloadLoadBalancerDirect'] = None,
+             geo_location: Optional['outputs.WorkloadLoadBalancerGeoLocation'] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
+        if 'geoLocation' in kwargs:
+            geo_location = kwargs['geoLocation']
 
         if direct is not None:
             _setter("direct", direct)
+        if geo_location is not None:
+            _setter("geo_location", geo_location)
 
     @property
     @pulumi.getter
     def direct(self) -> Optional['outputs.WorkloadLoadBalancerDirect']:
         return pulumi.get(self, "direct")
+
+    @property
+    @pulumi.getter(name="geoLocation")
+    def geo_location(self) -> Optional['outputs.WorkloadLoadBalancerGeoLocation']:
+        return pulumi.get(self, "geo_location")
 
 
 @pulumi.output_type
@@ -8902,6 +8939,94 @@ class WorkloadLoadBalancerDirectPort(dict):
     @pulumi.getter
     def scheme(self) -> Optional[str]:
         return pulumi.get(self, "scheme")
+
+
+@pulumi.output_type
+class WorkloadLoadBalancerGeoLocation(dict):
+    def __init__(__self__, *,
+                 enabled: Optional[bool] = None,
+                 headers: Optional['outputs.WorkloadLoadBalancerGeoLocationHeaders'] = None):
+        WorkloadLoadBalancerGeoLocation._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            enabled=enabled,
+            headers=headers,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             enabled: Optional[bool] = None,
+             headers: Optional['outputs.WorkloadLoadBalancerGeoLocationHeaders'] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if enabled is not None:
+            _setter("enabled", enabled)
+        if headers is not None:
+            _setter("headers", headers)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[bool]:
+        return pulumi.get(self, "enabled")
+
+    @property
+    @pulumi.getter
+    def headers(self) -> Optional['outputs.WorkloadLoadBalancerGeoLocationHeaders']:
+        return pulumi.get(self, "headers")
+
+
+@pulumi.output_type
+class WorkloadLoadBalancerGeoLocationHeaders(dict):
+    def __init__(__self__, *,
+                 asn: Optional[str] = None,
+                 city: Optional[str] = None,
+                 country: Optional[str] = None,
+                 region: Optional[str] = None):
+        WorkloadLoadBalancerGeoLocationHeaders._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            asn=asn,
+            city=city,
+            country=country,
+            region=region,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             asn: Optional[str] = None,
+             city: Optional[str] = None,
+             country: Optional[str] = None,
+             region: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if asn is not None:
+            _setter("asn", asn)
+        if city is not None:
+            _setter("city", city)
+        if country is not None:
+            _setter("country", country)
+        if region is not None:
+            _setter("region", region)
+
+    @property
+    @pulumi.getter
+    def asn(self) -> Optional[str]:
+        return pulumi.get(self, "asn")
+
+    @property
+    @pulumi.getter
+    def city(self) -> Optional[str]:
+        return pulumi.get(self, "city")
+
+    @property
+    @pulumi.getter
+    def country(self) -> Optional[str]:
+        return pulumi.get(self, "country")
+
+    @property
+    @pulumi.getter
+    def region(self) -> Optional[str]:
+        return pulumi.get(self, "region")
 
 
 @pulumi.output_type
@@ -9417,8 +9542,6 @@ class WorkloadSecurityOptions(dict):
         suggest = None
         if key == "fileSystemGroupId":
             suggest = "file_system_group_id"
-        elif key == "geoLocation":
-            suggest = "geo_location"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in WorkloadSecurityOptions. Access the value via the '{suggest}' property getter instead.")
@@ -9432,127 +9555,27 @@ class WorkloadSecurityOptions(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 file_system_group_id: Optional[int] = None,
-                 geo_location: Optional['outputs.WorkloadSecurityOptionsGeoLocation'] = None):
+                 file_system_group_id: Optional[int] = None):
         WorkloadSecurityOptions._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             file_system_group_id=file_system_group_id,
-            geo_location=geo_location,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
              file_system_group_id: Optional[int] = None,
-             geo_location: Optional['outputs.WorkloadSecurityOptionsGeoLocation'] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
         if 'fileSystemGroupId' in kwargs:
             file_system_group_id = kwargs['fileSystemGroupId']
-        if 'geoLocation' in kwargs:
-            geo_location = kwargs['geoLocation']
 
         if file_system_group_id is not None:
             _setter("file_system_group_id", file_system_group_id)
-        if geo_location is not None:
-            _setter("geo_location", geo_location)
 
     @property
     @pulumi.getter(name="fileSystemGroupId")
     def file_system_group_id(self) -> Optional[int]:
         return pulumi.get(self, "file_system_group_id")
-
-    @property
-    @pulumi.getter(name="geoLocation")
-    def geo_location(self) -> Optional['outputs.WorkloadSecurityOptionsGeoLocation']:
-        return pulumi.get(self, "geo_location")
-
-
-@pulumi.output_type
-class WorkloadSecurityOptionsGeoLocation(dict):
-    def __init__(__self__, *,
-                 enabled: Optional[bool] = None,
-                 headers: Optional['outputs.WorkloadSecurityOptionsGeoLocationHeaders'] = None):
-        WorkloadSecurityOptionsGeoLocation._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            enabled=enabled,
-            headers=headers,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             enabled: Optional[bool] = None,
-             headers: Optional['outputs.WorkloadSecurityOptionsGeoLocationHeaders'] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        if enabled is not None:
-            _setter("enabled", enabled)
-        if headers is not None:
-            _setter("headers", headers)
-
-    @property
-    @pulumi.getter
-    def enabled(self) -> Optional[bool]:
-        return pulumi.get(self, "enabled")
-
-    @property
-    @pulumi.getter
-    def headers(self) -> Optional['outputs.WorkloadSecurityOptionsGeoLocationHeaders']:
-        return pulumi.get(self, "headers")
-
-
-@pulumi.output_type
-class WorkloadSecurityOptionsGeoLocationHeaders(dict):
-    def __init__(__self__, *,
-                 asn: Optional[str] = None,
-                 city: Optional[str] = None,
-                 country: Optional[str] = None,
-                 region: Optional[str] = None):
-        WorkloadSecurityOptionsGeoLocationHeaders._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            asn=asn,
-            city=city,
-            country=country,
-            region=region,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             asn: Optional[str] = None,
-             city: Optional[str] = None,
-             country: Optional[str] = None,
-             region: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        if asn is not None:
-            _setter("asn", asn)
-        if city is not None:
-            _setter("city", city)
-        if country is not None:
-            _setter("country", country)
-        if region is not None:
-            _setter("region", region)
-
-    @property
-    @pulumi.getter
-    def asn(self) -> Optional[str]:
-        return pulumi.get(self, "asn")
-
-    @property
-    @pulumi.getter
-    def city(self) -> Optional[str]:
-        return pulumi.get(self, "city")
-
-    @property
-    @pulumi.getter
-    def country(self) -> Optional[str]:
-        return pulumi.get(self, "country")
-
-    @property
-    @pulumi.getter
-    def region(self) -> Optional[str]:
-        return pulumi.get(self, "region")
 
 
 @pulumi.output_type
@@ -10976,5 +10999,366 @@ class GetLocationsLocationGeoResult(dict):
     @pulumi.getter
     def state(self) -> Optional[str]:
         return pulumi.get(self, "state")
+
+
+@pulumi.output_type
+class GetSecretAwsResult(dict):
+    def __init__(__self__, *,
+                 access_key: str,
+                 secret_key: str,
+                 external_id: Optional[str] = None,
+                 role_arn: Optional[str] = None):
+        GetSecretAwsResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            access_key=access_key,
+            secret_key=secret_key,
+            external_id=external_id,
+            role_arn=role_arn,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             access_key: str,
+             secret_key: str,
+             external_id: Optional[str] = None,
+             role_arn: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'accessKey' in kwargs:
+            access_key = kwargs['accessKey']
+        if 'secretKey' in kwargs:
+            secret_key = kwargs['secretKey']
+        if 'externalId' in kwargs:
+            external_id = kwargs['externalId']
+        if 'roleArn' in kwargs:
+            role_arn = kwargs['roleArn']
+
+        _setter("access_key", access_key)
+        _setter("secret_key", secret_key)
+        if external_id is not None:
+            _setter("external_id", external_id)
+        if role_arn is not None:
+            _setter("role_arn", role_arn)
+
+    @property
+    @pulumi.getter(name="accessKey")
+    def access_key(self) -> str:
+        return pulumi.get(self, "access_key")
+
+    @property
+    @pulumi.getter(name="secretKey")
+    def secret_key(self) -> str:
+        return pulumi.get(self, "secret_key")
+
+    @property
+    @pulumi.getter(name="externalId")
+    def external_id(self) -> Optional[str]:
+        return pulumi.get(self, "external_id")
+
+    @property
+    @pulumi.getter(name="roleArn")
+    def role_arn(self) -> Optional[str]:
+        return pulumi.get(self, "role_arn")
+
+
+@pulumi.output_type
+class GetSecretAzureConnectorResult(dict):
+    def __init__(__self__, *,
+                 code: str,
+                 url: str):
+        GetSecretAzureConnectorResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            code=code,
+            url=url,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             code: str,
+             url: str,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("code", code)
+        _setter("url", url)
+
+    @property
+    @pulumi.getter
+    def code(self) -> str:
+        return pulumi.get(self, "code")
+
+    @property
+    @pulumi.getter
+    def url(self) -> str:
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class GetSecretEcrResult(dict):
+    def __init__(__self__, *,
+                 access_key: str,
+                 repos: Sequence[str],
+                 secret_key: str,
+                 external_id: Optional[str] = None,
+                 role_arn: Optional[str] = None):
+        GetSecretEcrResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            access_key=access_key,
+            repos=repos,
+            secret_key=secret_key,
+            external_id=external_id,
+            role_arn=role_arn,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             access_key: str,
+             repos: Sequence[str],
+             secret_key: str,
+             external_id: Optional[str] = None,
+             role_arn: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'accessKey' in kwargs:
+            access_key = kwargs['accessKey']
+        if 'secretKey' in kwargs:
+            secret_key = kwargs['secretKey']
+        if 'externalId' in kwargs:
+            external_id = kwargs['externalId']
+        if 'roleArn' in kwargs:
+            role_arn = kwargs['roleArn']
+
+        _setter("access_key", access_key)
+        _setter("repos", repos)
+        _setter("secret_key", secret_key)
+        if external_id is not None:
+            _setter("external_id", external_id)
+        if role_arn is not None:
+            _setter("role_arn", role_arn)
+
+    @property
+    @pulumi.getter(name="accessKey")
+    def access_key(self) -> str:
+        return pulumi.get(self, "access_key")
+
+    @property
+    @pulumi.getter
+    def repos(self) -> Sequence[str]:
+        return pulumi.get(self, "repos")
+
+    @property
+    @pulumi.getter(name="secretKey")
+    def secret_key(self) -> str:
+        return pulumi.get(self, "secret_key")
+
+    @property
+    @pulumi.getter(name="externalId")
+    def external_id(self) -> Optional[str]:
+        return pulumi.get(self, "external_id")
+
+    @property
+    @pulumi.getter(name="roleArn")
+    def role_arn(self) -> Optional[str]:
+        return pulumi.get(self, "role_arn")
+
+
+@pulumi.output_type
+class GetSecretKeypairResult(dict):
+    def __init__(__self__, *,
+                 secret_key: str,
+                 passphrase: Optional[str] = None,
+                 public_key: Optional[str] = None):
+        GetSecretKeypairResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            secret_key=secret_key,
+            passphrase=passphrase,
+            public_key=public_key,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             secret_key: str,
+             passphrase: Optional[str] = None,
+             public_key: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'secretKey' in kwargs:
+            secret_key = kwargs['secretKey']
+        if 'publicKey' in kwargs:
+            public_key = kwargs['publicKey']
+
+        _setter("secret_key", secret_key)
+        if passphrase is not None:
+            _setter("passphrase", passphrase)
+        if public_key is not None:
+            _setter("public_key", public_key)
+
+    @property
+    @pulumi.getter(name="secretKey")
+    def secret_key(self) -> str:
+        return pulumi.get(self, "secret_key")
+
+    @property
+    @pulumi.getter
+    def passphrase(self) -> Optional[str]:
+        return pulumi.get(self, "passphrase")
+
+    @property
+    @pulumi.getter(name="publicKey")
+    def public_key(self) -> Optional[str]:
+        return pulumi.get(self, "public_key")
+
+
+@pulumi.output_type
+class GetSecretNatsAccountResult(dict):
+    def __init__(__self__, *,
+                 account_id: str,
+                 private_key: str):
+        GetSecretNatsAccountResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            account_id=account_id,
+            private_key=private_key,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             account_id: str,
+             private_key: str,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'accountId' in kwargs:
+            account_id = kwargs['accountId']
+        if 'privateKey' in kwargs:
+            private_key = kwargs['privateKey']
+
+        _setter("account_id", account_id)
+        _setter("private_key", private_key)
+
+    @property
+    @pulumi.getter(name="accountId")
+    def account_id(self) -> str:
+        return pulumi.get(self, "account_id")
+
+    @property
+    @pulumi.getter(name="privateKey")
+    def private_key(self) -> str:
+        return pulumi.get(self, "private_key")
+
+
+@pulumi.output_type
+class GetSecretOpaqueResult(dict):
+    def __init__(__self__, *,
+                 payload: str,
+                 encoding: Optional[str] = None):
+        GetSecretOpaqueResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            payload=payload,
+            encoding=encoding,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             payload: str,
+             encoding: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("payload", payload)
+        if encoding is not None:
+            _setter("encoding", encoding)
+
+    @property
+    @pulumi.getter
+    def payload(self) -> str:
+        return pulumi.get(self, "payload")
+
+    @property
+    @pulumi.getter
+    def encoding(self) -> Optional[str]:
+        return pulumi.get(self, "encoding")
+
+
+@pulumi.output_type
+class GetSecretTlsResult(dict):
+    def __init__(__self__, *,
+                 cert: str,
+                 key: str,
+                 chain: Optional[str] = None):
+        GetSecretTlsResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            cert=cert,
+            key=key,
+            chain=chain,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             cert: str,
+             key: str,
+             chain: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("cert", cert)
+        _setter("key", key)
+        if chain is not None:
+            _setter("chain", chain)
+
+    @property
+    @pulumi.getter
+    def cert(self) -> str:
+        return pulumi.get(self, "cert")
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        return pulumi.get(self, "key")
+
+    @property
+    @pulumi.getter
+    def chain(self) -> Optional[str]:
+        return pulumi.get(self, "chain")
+
+
+@pulumi.output_type
+class GetSecretUserpassResult(dict):
+    def __init__(__self__, *,
+                 password: str,
+                 username: str,
+                 encoding: Optional[str] = None):
+        GetSecretUserpassResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            password=password,
+            username=username,
+            encoding=encoding,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             password: str,
+             username: str,
+             encoding: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("password", password)
+        _setter("username", username)
+        if encoding is not None:
+            _setter("encoding", encoding)
+
+    @property
+    @pulumi.getter
+    def password(self) -> str:
+        return pulumi.get(self, "password")
+
+    @property
+    @pulumi.getter
+    def username(self) -> str:
+        return pulumi.get(self, "username")
+
+    @property
+    @pulumi.getter
+    def encoding(self) -> Optional[str]:
+        return pulumi.get(self, "encoding")
 
 

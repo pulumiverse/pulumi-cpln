@@ -23795,7 +23795,8 @@ func (o WorkloadJobPtrOutput) Schedule() pulumi.StringPtrOutput {
 }
 
 type WorkloadLoadBalancer struct {
-	Direct *WorkloadLoadBalancerDirect `pulumi:"direct"`
+	Direct      *WorkloadLoadBalancerDirect      `pulumi:"direct"`
+	GeoLocation *WorkloadLoadBalancerGeoLocation `pulumi:"geoLocation"`
 }
 
 // WorkloadLoadBalancerInput is an input type that accepts WorkloadLoadBalancerArgs and WorkloadLoadBalancerOutput values.
@@ -23810,7 +23811,8 @@ type WorkloadLoadBalancerInput interface {
 }
 
 type WorkloadLoadBalancerArgs struct {
-	Direct WorkloadLoadBalancerDirectPtrInput `pulumi:"direct"`
+	Direct      WorkloadLoadBalancerDirectPtrInput      `pulumi:"direct"`
+	GeoLocation WorkloadLoadBalancerGeoLocationPtrInput `pulumi:"geoLocation"`
 }
 
 func (WorkloadLoadBalancerArgs) ElementType() reflect.Type {
@@ -23912,6 +23914,10 @@ func (o WorkloadLoadBalancerOutput) Direct() WorkloadLoadBalancerDirectPtrOutput
 	return o.ApplyT(func(v WorkloadLoadBalancer) *WorkloadLoadBalancerDirect { return v.Direct }).(WorkloadLoadBalancerDirectPtrOutput)
 }
 
+func (o WorkloadLoadBalancerOutput) GeoLocation() WorkloadLoadBalancerGeoLocationPtrOutput {
+	return o.ApplyT(func(v WorkloadLoadBalancer) *WorkloadLoadBalancerGeoLocation { return v.GeoLocation }).(WorkloadLoadBalancerGeoLocationPtrOutput)
+}
+
 type WorkloadLoadBalancerPtrOutput struct{ *pulumi.OutputState }
 
 func (WorkloadLoadBalancerPtrOutput) ElementType() reflect.Type {
@@ -23949,6 +23955,15 @@ func (o WorkloadLoadBalancerPtrOutput) Direct() WorkloadLoadBalancerDirectPtrOut
 		}
 		return v.Direct
 	}).(WorkloadLoadBalancerDirectPtrOutput)
+}
+
+func (o WorkloadLoadBalancerPtrOutput) GeoLocation() WorkloadLoadBalancerGeoLocationPtrOutput {
+	return o.ApplyT(func(v *WorkloadLoadBalancer) *WorkloadLoadBalancerGeoLocation {
+		if v == nil {
+			return nil
+		}
+		return v.GeoLocation
+	}).(WorkloadLoadBalancerGeoLocationPtrOutput)
 }
 
 type WorkloadLoadBalancerDirect struct {
@@ -24257,6 +24272,380 @@ func (o WorkloadLoadBalancerDirectPortArrayOutput) Index(i pulumi.IntInput) Work
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadLoadBalancerDirectPort {
 		return vs[0].([]WorkloadLoadBalancerDirectPort)[vs[1].(int)]
 	}).(WorkloadLoadBalancerDirectPortOutput)
+}
+
+type WorkloadLoadBalancerGeoLocation struct {
+	Enabled *bool                                   `pulumi:"enabled"`
+	Headers *WorkloadLoadBalancerGeoLocationHeaders `pulumi:"headers"`
+}
+
+// WorkloadLoadBalancerGeoLocationInput is an input type that accepts WorkloadLoadBalancerGeoLocationArgs and WorkloadLoadBalancerGeoLocationOutput values.
+// You can construct a concrete instance of `WorkloadLoadBalancerGeoLocationInput` via:
+//
+//	WorkloadLoadBalancerGeoLocationArgs{...}
+type WorkloadLoadBalancerGeoLocationInput interface {
+	pulumi.Input
+
+	ToWorkloadLoadBalancerGeoLocationOutput() WorkloadLoadBalancerGeoLocationOutput
+	ToWorkloadLoadBalancerGeoLocationOutputWithContext(context.Context) WorkloadLoadBalancerGeoLocationOutput
+}
+
+type WorkloadLoadBalancerGeoLocationArgs struct {
+	Enabled pulumi.BoolPtrInput                            `pulumi:"enabled"`
+	Headers WorkloadLoadBalancerGeoLocationHeadersPtrInput `pulumi:"headers"`
+}
+
+func (WorkloadLoadBalancerGeoLocationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLoadBalancerGeoLocation)(nil)).Elem()
+}
+
+func (i WorkloadLoadBalancerGeoLocationArgs) ToWorkloadLoadBalancerGeoLocationOutput() WorkloadLoadBalancerGeoLocationOutput {
+	return i.ToWorkloadLoadBalancerGeoLocationOutputWithContext(context.Background())
+}
+
+func (i WorkloadLoadBalancerGeoLocationArgs) ToWorkloadLoadBalancerGeoLocationOutputWithContext(ctx context.Context) WorkloadLoadBalancerGeoLocationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLoadBalancerGeoLocationOutput)
+}
+
+func (i WorkloadLoadBalancerGeoLocationArgs) ToOutput(ctx context.Context) pulumix.Output[WorkloadLoadBalancerGeoLocation] {
+	return pulumix.Output[WorkloadLoadBalancerGeoLocation]{
+		OutputState: i.ToWorkloadLoadBalancerGeoLocationOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i WorkloadLoadBalancerGeoLocationArgs) ToWorkloadLoadBalancerGeoLocationPtrOutput() WorkloadLoadBalancerGeoLocationPtrOutput {
+	return i.ToWorkloadLoadBalancerGeoLocationPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadLoadBalancerGeoLocationArgs) ToWorkloadLoadBalancerGeoLocationPtrOutputWithContext(ctx context.Context) WorkloadLoadBalancerGeoLocationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLoadBalancerGeoLocationOutput).ToWorkloadLoadBalancerGeoLocationPtrOutputWithContext(ctx)
+}
+
+// WorkloadLoadBalancerGeoLocationPtrInput is an input type that accepts WorkloadLoadBalancerGeoLocationArgs, WorkloadLoadBalancerGeoLocationPtr and WorkloadLoadBalancerGeoLocationPtrOutput values.
+// You can construct a concrete instance of `WorkloadLoadBalancerGeoLocationPtrInput` via:
+//
+//	        WorkloadLoadBalancerGeoLocationArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadLoadBalancerGeoLocationPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadLoadBalancerGeoLocationPtrOutput() WorkloadLoadBalancerGeoLocationPtrOutput
+	ToWorkloadLoadBalancerGeoLocationPtrOutputWithContext(context.Context) WorkloadLoadBalancerGeoLocationPtrOutput
+}
+
+type workloadLoadBalancerGeoLocationPtrType WorkloadLoadBalancerGeoLocationArgs
+
+func WorkloadLoadBalancerGeoLocationPtr(v *WorkloadLoadBalancerGeoLocationArgs) WorkloadLoadBalancerGeoLocationPtrInput {
+	return (*workloadLoadBalancerGeoLocationPtrType)(v)
+}
+
+func (*workloadLoadBalancerGeoLocationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLoadBalancerGeoLocation)(nil)).Elem()
+}
+
+func (i *workloadLoadBalancerGeoLocationPtrType) ToWorkloadLoadBalancerGeoLocationPtrOutput() WorkloadLoadBalancerGeoLocationPtrOutput {
+	return i.ToWorkloadLoadBalancerGeoLocationPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadLoadBalancerGeoLocationPtrType) ToWorkloadLoadBalancerGeoLocationPtrOutputWithContext(ctx context.Context) WorkloadLoadBalancerGeoLocationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLoadBalancerGeoLocationPtrOutput)
+}
+
+func (i *workloadLoadBalancerGeoLocationPtrType) ToOutput(ctx context.Context) pulumix.Output[*WorkloadLoadBalancerGeoLocation] {
+	return pulumix.Output[*WorkloadLoadBalancerGeoLocation]{
+		OutputState: i.ToWorkloadLoadBalancerGeoLocationPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type WorkloadLoadBalancerGeoLocationOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLoadBalancerGeoLocationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLoadBalancerGeoLocation)(nil)).Elem()
+}
+
+func (o WorkloadLoadBalancerGeoLocationOutput) ToWorkloadLoadBalancerGeoLocationOutput() WorkloadLoadBalancerGeoLocationOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerGeoLocationOutput) ToWorkloadLoadBalancerGeoLocationOutputWithContext(ctx context.Context) WorkloadLoadBalancerGeoLocationOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerGeoLocationOutput) ToWorkloadLoadBalancerGeoLocationPtrOutput() WorkloadLoadBalancerGeoLocationPtrOutput {
+	return o.ToWorkloadLoadBalancerGeoLocationPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadLoadBalancerGeoLocationOutput) ToWorkloadLoadBalancerGeoLocationPtrOutputWithContext(ctx context.Context) WorkloadLoadBalancerGeoLocationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadLoadBalancerGeoLocation) *WorkloadLoadBalancerGeoLocation {
+		return &v
+	}).(WorkloadLoadBalancerGeoLocationPtrOutput)
+}
+
+func (o WorkloadLoadBalancerGeoLocationOutput) ToOutput(ctx context.Context) pulumix.Output[WorkloadLoadBalancerGeoLocation] {
+	return pulumix.Output[WorkloadLoadBalancerGeoLocation]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadLoadBalancerGeoLocationOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadLoadBalancerGeoLocation) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+func (o WorkloadLoadBalancerGeoLocationOutput) Headers() WorkloadLoadBalancerGeoLocationHeadersPtrOutput {
+	return o.ApplyT(func(v WorkloadLoadBalancerGeoLocation) *WorkloadLoadBalancerGeoLocationHeaders { return v.Headers }).(WorkloadLoadBalancerGeoLocationHeadersPtrOutput)
+}
+
+type WorkloadLoadBalancerGeoLocationPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLoadBalancerGeoLocationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLoadBalancerGeoLocation)(nil)).Elem()
+}
+
+func (o WorkloadLoadBalancerGeoLocationPtrOutput) ToWorkloadLoadBalancerGeoLocationPtrOutput() WorkloadLoadBalancerGeoLocationPtrOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerGeoLocationPtrOutput) ToWorkloadLoadBalancerGeoLocationPtrOutputWithContext(ctx context.Context) WorkloadLoadBalancerGeoLocationPtrOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerGeoLocationPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*WorkloadLoadBalancerGeoLocation] {
+	return pulumix.Output[*WorkloadLoadBalancerGeoLocation]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadLoadBalancerGeoLocationPtrOutput) Elem() WorkloadLoadBalancerGeoLocationOutput {
+	return o.ApplyT(func(v *WorkloadLoadBalancerGeoLocation) WorkloadLoadBalancerGeoLocation {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadLoadBalancerGeoLocation
+		return ret
+	}).(WorkloadLoadBalancerGeoLocationOutput)
+}
+
+func (o WorkloadLoadBalancerGeoLocationPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *WorkloadLoadBalancerGeoLocation) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o WorkloadLoadBalancerGeoLocationPtrOutput) Headers() WorkloadLoadBalancerGeoLocationHeadersPtrOutput {
+	return o.ApplyT(func(v *WorkloadLoadBalancerGeoLocation) *WorkloadLoadBalancerGeoLocationHeaders {
+		if v == nil {
+			return nil
+		}
+		return v.Headers
+	}).(WorkloadLoadBalancerGeoLocationHeadersPtrOutput)
+}
+
+type WorkloadLoadBalancerGeoLocationHeaders struct {
+	Asn     *string `pulumi:"asn"`
+	City    *string `pulumi:"city"`
+	Country *string `pulumi:"country"`
+	Region  *string `pulumi:"region"`
+}
+
+// WorkloadLoadBalancerGeoLocationHeadersInput is an input type that accepts WorkloadLoadBalancerGeoLocationHeadersArgs and WorkloadLoadBalancerGeoLocationHeadersOutput values.
+// You can construct a concrete instance of `WorkloadLoadBalancerGeoLocationHeadersInput` via:
+//
+//	WorkloadLoadBalancerGeoLocationHeadersArgs{...}
+type WorkloadLoadBalancerGeoLocationHeadersInput interface {
+	pulumi.Input
+
+	ToWorkloadLoadBalancerGeoLocationHeadersOutput() WorkloadLoadBalancerGeoLocationHeadersOutput
+	ToWorkloadLoadBalancerGeoLocationHeadersOutputWithContext(context.Context) WorkloadLoadBalancerGeoLocationHeadersOutput
+}
+
+type WorkloadLoadBalancerGeoLocationHeadersArgs struct {
+	Asn     pulumi.StringPtrInput `pulumi:"asn"`
+	City    pulumi.StringPtrInput `pulumi:"city"`
+	Country pulumi.StringPtrInput `pulumi:"country"`
+	Region  pulumi.StringPtrInput `pulumi:"region"`
+}
+
+func (WorkloadLoadBalancerGeoLocationHeadersArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLoadBalancerGeoLocationHeaders)(nil)).Elem()
+}
+
+func (i WorkloadLoadBalancerGeoLocationHeadersArgs) ToWorkloadLoadBalancerGeoLocationHeadersOutput() WorkloadLoadBalancerGeoLocationHeadersOutput {
+	return i.ToWorkloadLoadBalancerGeoLocationHeadersOutputWithContext(context.Background())
+}
+
+func (i WorkloadLoadBalancerGeoLocationHeadersArgs) ToWorkloadLoadBalancerGeoLocationHeadersOutputWithContext(ctx context.Context) WorkloadLoadBalancerGeoLocationHeadersOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLoadBalancerGeoLocationHeadersOutput)
+}
+
+func (i WorkloadLoadBalancerGeoLocationHeadersArgs) ToOutput(ctx context.Context) pulumix.Output[WorkloadLoadBalancerGeoLocationHeaders] {
+	return pulumix.Output[WorkloadLoadBalancerGeoLocationHeaders]{
+		OutputState: i.ToWorkloadLoadBalancerGeoLocationHeadersOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i WorkloadLoadBalancerGeoLocationHeadersArgs) ToWorkloadLoadBalancerGeoLocationHeadersPtrOutput() WorkloadLoadBalancerGeoLocationHeadersPtrOutput {
+	return i.ToWorkloadLoadBalancerGeoLocationHeadersPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadLoadBalancerGeoLocationHeadersArgs) ToWorkloadLoadBalancerGeoLocationHeadersPtrOutputWithContext(ctx context.Context) WorkloadLoadBalancerGeoLocationHeadersPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLoadBalancerGeoLocationHeadersOutput).ToWorkloadLoadBalancerGeoLocationHeadersPtrOutputWithContext(ctx)
+}
+
+// WorkloadLoadBalancerGeoLocationHeadersPtrInput is an input type that accepts WorkloadLoadBalancerGeoLocationHeadersArgs, WorkloadLoadBalancerGeoLocationHeadersPtr and WorkloadLoadBalancerGeoLocationHeadersPtrOutput values.
+// You can construct a concrete instance of `WorkloadLoadBalancerGeoLocationHeadersPtrInput` via:
+//
+//	        WorkloadLoadBalancerGeoLocationHeadersArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadLoadBalancerGeoLocationHeadersPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadLoadBalancerGeoLocationHeadersPtrOutput() WorkloadLoadBalancerGeoLocationHeadersPtrOutput
+	ToWorkloadLoadBalancerGeoLocationHeadersPtrOutputWithContext(context.Context) WorkloadLoadBalancerGeoLocationHeadersPtrOutput
+}
+
+type workloadLoadBalancerGeoLocationHeadersPtrType WorkloadLoadBalancerGeoLocationHeadersArgs
+
+func WorkloadLoadBalancerGeoLocationHeadersPtr(v *WorkloadLoadBalancerGeoLocationHeadersArgs) WorkloadLoadBalancerGeoLocationHeadersPtrInput {
+	return (*workloadLoadBalancerGeoLocationHeadersPtrType)(v)
+}
+
+func (*workloadLoadBalancerGeoLocationHeadersPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLoadBalancerGeoLocationHeaders)(nil)).Elem()
+}
+
+func (i *workloadLoadBalancerGeoLocationHeadersPtrType) ToWorkloadLoadBalancerGeoLocationHeadersPtrOutput() WorkloadLoadBalancerGeoLocationHeadersPtrOutput {
+	return i.ToWorkloadLoadBalancerGeoLocationHeadersPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadLoadBalancerGeoLocationHeadersPtrType) ToWorkloadLoadBalancerGeoLocationHeadersPtrOutputWithContext(ctx context.Context) WorkloadLoadBalancerGeoLocationHeadersPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLoadBalancerGeoLocationHeadersPtrOutput)
+}
+
+func (i *workloadLoadBalancerGeoLocationHeadersPtrType) ToOutput(ctx context.Context) pulumix.Output[*WorkloadLoadBalancerGeoLocationHeaders] {
+	return pulumix.Output[*WorkloadLoadBalancerGeoLocationHeaders]{
+		OutputState: i.ToWorkloadLoadBalancerGeoLocationHeadersPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type WorkloadLoadBalancerGeoLocationHeadersOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLoadBalancerGeoLocationHeadersOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLoadBalancerGeoLocationHeaders)(nil)).Elem()
+}
+
+func (o WorkloadLoadBalancerGeoLocationHeadersOutput) ToWorkloadLoadBalancerGeoLocationHeadersOutput() WorkloadLoadBalancerGeoLocationHeadersOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerGeoLocationHeadersOutput) ToWorkloadLoadBalancerGeoLocationHeadersOutputWithContext(ctx context.Context) WorkloadLoadBalancerGeoLocationHeadersOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerGeoLocationHeadersOutput) ToWorkloadLoadBalancerGeoLocationHeadersPtrOutput() WorkloadLoadBalancerGeoLocationHeadersPtrOutput {
+	return o.ToWorkloadLoadBalancerGeoLocationHeadersPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadLoadBalancerGeoLocationHeadersOutput) ToWorkloadLoadBalancerGeoLocationHeadersPtrOutputWithContext(ctx context.Context) WorkloadLoadBalancerGeoLocationHeadersPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadLoadBalancerGeoLocationHeaders) *WorkloadLoadBalancerGeoLocationHeaders {
+		return &v
+	}).(WorkloadLoadBalancerGeoLocationHeadersPtrOutput)
+}
+
+func (o WorkloadLoadBalancerGeoLocationHeadersOutput) ToOutput(ctx context.Context) pulumix.Output[WorkloadLoadBalancerGeoLocationHeaders] {
+	return pulumix.Output[WorkloadLoadBalancerGeoLocationHeaders]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadLoadBalancerGeoLocationHeadersOutput) Asn() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadLoadBalancerGeoLocationHeaders) *string { return v.Asn }).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadLoadBalancerGeoLocationHeadersOutput) City() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadLoadBalancerGeoLocationHeaders) *string { return v.City }).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadLoadBalancerGeoLocationHeadersOutput) Country() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadLoadBalancerGeoLocationHeaders) *string { return v.Country }).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadLoadBalancerGeoLocationHeadersOutput) Region() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadLoadBalancerGeoLocationHeaders) *string { return v.Region }).(pulumi.StringPtrOutput)
+}
+
+type WorkloadLoadBalancerGeoLocationHeadersPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLoadBalancerGeoLocationHeadersPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLoadBalancerGeoLocationHeaders)(nil)).Elem()
+}
+
+func (o WorkloadLoadBalancerGeoLocationHeadersPtrOutput) ToWorkloadLoadBalancerGeoLocationHeadersPtrOutput() WorkloadLoadBalancerGeoLocationHeadersPtrOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerGeoLocationHeadersPtrOutput) ToWorkloadLoadBalancerGeoLocationHeadersPtrOutputWithContext(ctx context.Context) WorkloadLoadBalancerGeoLocationHeadersPtrOutput {
+	return o
+}
+
+func (o WorkloadLoadBalancerGeoLocationHeadersPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*WorkloadLoadBalancerGeoLocationHeaders] {
+	return pulumix.Output[*WorkloadLoadBalancerGeoLocationHeaders]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadLoadBalancerGeoLocationHeadersPtrOutput) Elem() WorkloadLoadBalancerGeoLocationHeadersOutput {
+	return o.ApplyT(func(v *WorkloadLoadBalancerGeoLocationHeaders) WorkloadLoadBalancerGeoLocationHeaders {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadLoadBalancerGeoLocationHeaders
+		return ret
+	}).(WorkloadLoadBalancerGeoLocationHeadersOutput)
+}
+
+func (o WorkloadLoadBalancerGeoLocationHeadersPtrOutput) Asn() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadLoadBalancerGeoLocationHeaders) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Asn
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadLoadBalancerGeoLocationHeadersPtrOutput) City() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadLoadBalancerGeoLocationHeaders) *string {
+		if v == nil {
+			return nil
+		}
+		return v.City
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadLoadBalancerGeoLocationHeadersPtrOutput) Country() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadLoadBalancerGeoLocationHeaders) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Country
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadLoadBalancerGeoLocationHeadersPtrOutput) Region() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadLoadBalancerGeoLocationHeaders) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Region
+	}).(pulumi.StringPtrOutput)
 }
 
 type WorkloadLocalOption struct {
@@ -25321,8 +25710,7 @@ func (o WorkloadRolloutOptionsPtrOutput) ScalingPolicy() pulumi.StringPtrOutput 
 }
 
 type WorkloadSecurityOptions struct {
-	FileSystemGroupId *int                                `pulumi:"fileSystemGroupId"`
-	GeoLocation       *WorkloadSecurityOptionsGeoLocation `pulumi:"geoLocation"`
+	FileSystemGroupId *int `pulumi:"fileSystemGroupId"`
 }
 
 // WorkloadSecurityOptionsInput is an input type that accepts WorkloadSecurityOptionsArgs and WorkloadSecurityOptionsOutput values.
@@ -25337,8 +25725,7 @@ type WorkloadSecurityOptionsInput interface {
 }
 
 type WorkloadSecurityOptionsArgs struct {
-	FileSystemGroupId pulumi.IntPtrInput                         `pulumi:"fileSystemGroupId"`
-	GeoLocation       WorkloadSecurityOptionsGeoLocationPtrInput `pulumi:"geoLocation"`
+	FileSystemGroupId pulumi.IntPtrInput `pulumi:"fileSystemGroupId"`
 }
 
 func (WorkloadSecurityOptionsArgs) ElementType() reflect.Type {
@@ -25440,10 +25827,6 @@ func (o WorkloadSecurityOptionsOutput) FileSystemGroupId() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadSecurityOptions) *int { return v.FileSystemGroupId }).(pulumi.IntPtrOutput)
 }
 
-func (o WorkloadSecurityOptionsOutput) GeoLocation() WorkloadSecurityOptionsGeoLocationPtrOutput {
-	return o.ApplyT(func(v WorkloadSecurityOptions) *WorkloadSecurityOptionsGeoLocation { return v.GeoLocation }).(WorkloadSecurityOptionsGeoLocationPtrOutput)
-}
-
 type WorkloadSecurityOptionsPtrOutput struct{ *pulumi.OutputState }
 
 func (WorkloadSecurityOptionsPtrOutput) ElementType() reflect.Type {
@@ -25481,391 +25864,6 @@ func (o WorkloadSecurityOptionsPtrOutput) FileSystemGroupId() pulumi.IntPtrOutpu
 		}
 		return v.FileSystemGroupId
 	}).(pulumi.IntPtrOutput)
-}
-
-func (o WorkloadSecurityOptionsPtrOutput) GeoLocation() WorkloadSecurityOptionsGeoLocationPtrOutput {
-	return o.ApplyT(func(v *WorkloadSecurityOptions) *WorkloadSecurityOptionsGeoLocation {
-		if v == nil {
-			return nil
-		}
-		return v.GeoLocation
-	}).(WorkloadSecurityOptionsGeoLocationPtrOutput)
-}
-
-type WorkloadSecurityOptionsGeoLocation struct {
-	Enabled *bool                                      `pulumi:"enabled"`
-	Headers *WorkloadSecurityOptionsGeoLocationHeaders `pulumi:"headers"`
-}
-
-// WorkloadSecurityOptionsGeoLocationInput is an input type that accepts WorkloadSecurityOptionsGeoLocationArgs and WorkloadSecurityOptionsGeoLocationOutput values.
-// You can construct a concrete instance of `WorkloadSecurityOptionsGeoLocationInput` via:
-//
-//	WorkloadSecurityOptionsGeoLocationArgs{...}
-type WorkloadSecurityOptionsGeoLocationInput interface {
-	pulumi.Input
-
-	ToWorkloadSecurityOptionsGeoLocationOutput() WorkloadSecurityOptionsGeoLocationOutput
-	ToWorkloadSecurityOptionsGeoLocationOutputWithContext(context.Context) WorkloadSecurityOptionsGeoLocationOutput
-}
-
-type WorkloadSecurityOptionsGeoLocationArgs struct {
-	Enabled pulumi.BoolPtrInput                               `pulumi:"enabled"`
-	Headers WorkloadSecurityOptionsGeoLocationHeadersPtrInput `pulumi:"headers"`
-}
-
-func (WorkloadSecurityOptionsGeoLocationArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*WorkloadSecurityOptionsGeoLocation)(nil)).Elem()
-}
-
-func (i WorkloadSecurityOptionsGeoLocationArgs) ToWorkloadSecurityOptionsGeoLocationOutput() WorkloadSecurityOptionsGeoLocationOutput {
-	return i.ToWorkloadSecurityOptionsGeoLocationOutputWithContext(context.Background())
-}
-
-func (i WorkloadSecurityOptionsGeoLocationArgs) ToWorkloadSecurityOptionsGeoLocationOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(WorkloadSecurityOptionsGeoLocationOutput)
-}
-
-func (i WorkloadSecurityOptionsGeoLocationArgs) ToOutput(ctx context.Context) pulumix.Output[WorkloadSecurityOptionsGeoLocation] {
-	return pulumix.Output[WorkloadSecurityOptionsGeoLocation]{
-		OutputState: i.ToWorkloadSecurityOptionsGeoLocationOutputWithContext(ctx).OutputState,
-	}
-}
-
-func (i WorkloadSecurityOptionsGeoLocationArgs) ToWorkloadSecurityOptionsGeoLocationPtrOutput() WorkloadSecurityOptionsGeoLocationPtrOutput {
-	return i.ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(context.Background())
-}
-
-func (i WorkloadSecurityOptionsGeoLocationArgs) ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(WorkloadSecurityOptionsGeoLocationOutput).ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(ctx)
-}
-
-// WorkloadSecurityOptionsGeoLocationPtrInput is an input type that accepts WorkloadSecurityOptionsGeoLocationArgs, WorkloadSecurityOptionsGeoLocationPtr and WorkloadSecurityOptionsGeoLocationPtrOutput values.
-// You can construct a concrete instance of `WorkloadSecurityOptionsGeoLocationPtrInput` via:
-//
-//	        WorkloadSecurityOptionsGeoLocationArgs{...}
-//
-//	or:
-//
-//	        nil
-type WorkloadSecurityOptionsGeoLocationPtrInput interface {
-	pulumi.Input
-
-	ToWorkloadSecurityOptionsGeoLocationPtrOutput() WorkloadSecurityOptionsGeoLocationPtrOutput
-	ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(context.Context) WorkloadSecurityOptionsGeoLocationPtrOutput
-}
-
-type workloadSecurityOptionsGeoLocationPtrType WorkloadSecurityOptionsGeoLocationArgs
-
-func WorkloadSecurityOptionsGeoLocationPtr(v *WorkloadSecurityOptionsGeoLocationArgs) WorkloadSecurityOptionsGeoLocationPtrInput {
-	return (*workloadSecurityOptionsGeoLocationPtrType)(v)
-}
-
-func (*workloadSecurityOptionsGeoLocationPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**WorkloadSecurityOptionsGeoLocation)(nil)).Elem()
-}
-
-func (i *workloadSecurityOptionsGeoLocationPtrType) ToWorkloadSecurityOptionsGeoLocationPtrOutput() WorkloadSecurityOptionsGeoLocationPtrOutput {
-	return i.ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(context.Background())
-}
-
-func (i *workloadSecurityOptionsGeoLocationPtrType) ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(WorkloadSecurityOptionsGeoLocationPtrOutput)
-}
-
-func (i *workloadSecurityOptionsGeoLocationPtrType) ToOutput(ctx context.Context) pulumix.Output[*WorkloadSecurityOptionsGeoLocation] {
-	return pulumix.Output[*WorkloadSecurityOptionsGeoLocation]{
-		OutputState: i.ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(ctx).OutputState,
-	}
-}
-
-type WorkloadSecurityOptionsGeoLocationOutput struct{ *pulumi.OutputState }
-
-func (WorkloadSecurityOptionsGeoLocationOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*WorkloadSecurityOptionsGeoLocation)(nil)).Elem()
-}
-
-func (o WorkloadSecurityOptionsGeoLocationOutput) ToWorkloadSecurityOptionsGeoLocationOutput() WorkloadSecurityOptionsGeoLocationOutput {
-	return o
-}
-
-func (o WorkloadSecurityOptionsGeoLocationOutput) ToWorkloadSecurityOptionsGeoLocationOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationOutput {
-	return o
-}
-
-func (o WorkloadSecurityOptionsGeoLocationOutput) ToWorkloadSecurityOptionsGeoLocationPtrOutput() WorkloadSecurityOptionsGeoLocationPtrOutput {
-	return o.ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(context.Background())
-}
-
-func (o WorkloadSecurityOptionsGeoLocationOutput) ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadSecurityOptionsGeoLocation) *WorkloadSecurityOptionsGeoLocation {
-		return &v
-	}).(WorkloadSecurityOptionsGeoLocationPtrOutput)
-}
-
-func (o WorkloadSecurityOptionsGeoLocationOutput) ToOutput(ctx context.Context) pulumix.Output[WorkloadSecurityOptionsGeoLocation] {
-	return pulumix.Output[WorkloadSecurityOptionsGeoLocation]{
-		OutputState: o.OutputState,
-	}
-}
-
-func (o WorkloadSecurityOptionsGeoLocationOutput) Enabled() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v WorkloadSecurityOptionsGeoLocation) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
-}
-
-func (o WorkloadSecurityOptionsGeoLocationOutput) Headers() WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
-	return o.ApplyT(func(v WorkloadSecurityOptionsGeoLocation) *WorkloadSecurityOptionsGeoLocationHeaders {
-		return v.Headers
-	}).(WorkloadSecurityOptionsGeoLocationHeadersPtrOutput)
-}
-
-type WorkloadSecurityOptionsGeoLocationPtrOutput struct{ *pulumi.OutputState }
-
-func (WorkloadSecurityOptionsGeoLocationPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**WorkloadSecurityOptionsGeoLocation)(nil)).Elem()
-}
-
-func (o WorkloadSecurityOptionsGeoLocationPtrOutput) ToWorkloadSecurityOptionsGeoLocationPtrOutput() WorkloadSecurityOptionsGeoLocationPtrOutput {
-	return o
-}
-
-func (o WorkloadSecurityOptionsGeoLocationPtrOutput) ToWorkloadSecurityOptionsGeoLocationPtrOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationPtrOutput {
-	return o
-}
-
-func (o WorkloadSecurityOptionsGeoLocationPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*WorkloadSecurityOptionsGeoLocation] {
-	return pulumix.Output[*WorkloadSecurityOptionsGeoLocation]{
-		OutputState: o.OutputState,
-	}
-}
-
-func (o WorkloadSecurityOptionsGeoLocationPtrOutput) Elem() WorkloadSecurityOptionsGeoLocationOutput {
-	return o.ApplyT(func(v *WorkloadSecurityOptionsGeoLocation) WorkloadSecurityOptionsGeoLocation {
-		if v != nil {
-			return *v
-		}
-		var ret WorkloadSecurityOptionsGeoLocation
-		return ret
-	}).(WorkloadSecurityOptionsGeoLocationOutput)
-}
-
-func (o WorkloadSecurityOptionsGeoLocationPtrOutput) Enabled() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *WorkloadSecurityOptionsGeoLocation) *bool {
-		if v == nil {
-			return nil
-		}
-		return v.Enabled
-	}).(pulumi.BoolPtrOutput)
-}
-
-func (o WorkloadSecurityOptionsGeoLocationPtrOutput) Headers() WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
-	return o.ApplyT(func(v *WorkloadSecurityOptionsGeoLocation) *WorkloadSecurityOptionsGeoLocationHeaders {
-		if v == nil {
-			return nil
-		}
-		return v.Headers
-	}).(WorkloadSecurityOptionsGeoLocationHeadersPtrOutput)
-}
-
-type WorkloadSecurityOptionsGeoLocationHeaders struct {
-	Asn     *string `pulumi:"asn"`
-	City    *string `pulumi:"city"`
-	Country *string `pulumi:"country"`
-	Region  *string `pulumi:"region"`
-}
-
-// WorkloadSecurityOptionsGeoLocationHeadersInput is an input type that accepts WorkloadSecurityOptionsGeoLocationHeadersArgs and WorkloadSecurityOptionsGeoLocationHeadersOutput values.
-// You can construct a concrete instance of `WorkloadSecurityOptionsGeoLocationHeadersInput` via:
-//
-//	WorkloadSecurityOptionsGeoLocationHeadersArgs{...}
-type WorkloadSecurityOptionsGeoLocationHeadersInput interface {
-	pulumi.Input
-
-	ToWorkloadSecurityOptionsGeoLocationHeadersOutput() WorkloadSecurityOptionsGeoLocationHeadersOutput
-	ToWorkloadSecurityOptionsGeoLocationHeadersOutputWithContext(context.Context) WorkloadSecurityOptionsGeoLocationHeadersOutput
-}
-
-type WorkloadSecurityOptionsGeoLocationHeadersArgs struct {
-	Asn     pulumi.StringPtrInput `pulumi:"asn"`
-	City    pulumi.StringPtrInput `pulumi:"city"`
-	Country pulumi.StringPtrInput `pulumi:"country"`
-	Region  pulumi.StringPtrInput `pulumi:"region"`
-}
-
-func (WorkloadSecurityOptionsGeoLocationHeadersArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*WorkloadSecurityOptionsGeoLocationHeaders)(nil)).Elem()
-}
-
-func (i WorkloadSecurityOptionsGeoLocationHeadersArgs) ToWorkloadSecurityOptionsGeoLocationHeadersOutput() WorkloadSecurityOptionsGeoLocationHeadersOutput {
-	return i.ToWorkloadSecurityOptionsGeoLocationHeadersOutputWithContext(context.Background())
-}
-
-func (i WorkloadSecurityOptionsGeoLocationHeadersArgs) ToWorkloadSecurityOptionsGeoLocationHeadersOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationHeadersOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(WorkloadSecurityOptionsGeoLocationHeadersOutput)
-}
-
-func (i WorkloadSecurityOptionsGeoLocationHeadersArgs) ToOutput(ctx context.Context) pulumix.Output[WorkloadSecurityOptionsGeoLocationHeaders] {
-	return pulumix.Output[WorkloadSecurityOptionsGeoLocationHeaders]{
-		OutputState: i.ToWorkloadSecurityOptionsGeoLocationHeadersOutputWithContext(ctx).OutputState,
-	}
-}
-
-func (i WorkloadSecurityOptionsGeoLocationHeadersArgs) ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutput() WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
-	return i.ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(context.Background())
-}
-
-func (i WorkloadSecurityOptionsGeoLocationHeadersArgs) ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(WorkloadSecurityOptionsGeoLocationHeadersOutput).ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(ctx)
-}
-
-// WorkloadSecurityOptionsGeoLocationHeadersPtrInput is an input type that accepts WorkloadSecurityOptionsGeoLocationHeadersArgs, WorkloadSecurityOptionsGeoLocationHeadersPtr and WorkloadSecurityOptionsGeoLocationHeadersPtrOutput values.
-// You can construct a concrete instance of `WorkloadSecurityOptionsGeoLocationHeadersPtrInput` via:
-//
-//	        WorkloadSecurityOptionsGeoLocationHeadersArgs{...}
-//
-//	or:
-//
-//	        nil
-type WorkloadSecurityOptionsGeoLocationHeadersPtrInput interface {
-	pulumi.Input
-
-	ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutput() WorkloadSecurityOptionsGeoLocationHeadersPtrOutput
-	ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(context.Context) WorkloadSecurityOptionsGeoLocationHeadersPtrOutput
-}
-
-type workloadSecurityOptionsGeoLocationHeadersPtrType WorkloadSecurityOptionsGeoLocationHeadersArgs
-
-func WorkloadSecurityOptionsGeoLocationHeadersPtr(v *WorkloadSecurityOptionsGeoLocationHeadersArgs) WorkloadSecurityOptionsGeoLocationHeadersPtrInput {
-	return (*workloadSecurityOptionsGeoLocationHeadersPtrType)(v)
-}
-
-func (*workloadSecurityOptionsGeoLocationHeadersPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**WorkloadSecurityOptionsGeoLocationHeaders)(nil)).Elem()
-}
-
-func (i *workloadSecurityOptionsGeoLocationHeadersPtrType) ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutput() WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
-	return i.ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(context.Background())
-}
-
-func (i *workloadSecurityOptionsGeoLocationHeadersPtrType) ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(WorkloadSecurityOptionsGeoLocationHeadersPtrOutput)
-}
-
-func (i *workloadSecurityOptionsGeoLocationHeadersPtrType) ToOutput(ctx context.Context) pulumix.Output[*WorkloadSecurityOptionsGeoLocationHeaders] {
-	return pulumix.Output[*WorkloadSecurityOptionsGeoLocationHeaders]{
-		OutputState: i.ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(ctx).OutputState,
-	}
-}
-
-type WorkloadSecurityOptionsGeoLocationHeadersOutput struct{ *pulumi.OutputState }
-
-func (WorkloadSecurityOptionsGeoLocationHeadersOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*WorkloadSecurityOptionsGeoLocationHeaders)(nil)).Elem()
-}
-
-func (o WorkloadSecurityOptionsGeoLocationHeadersOutput) ToWorkloadSecurityOptionsGeoLocationHeadersOutput() WorkloadSecurityOptionsGeoLocationHeadersOutput {
-	return o
-}
-
-func (o WorkloadSecurityOptionsGeoLocationHeadersOutput) ToWorkloadSecurityOptionsGeoLocationHeadersOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationHeadersOutput {
-	return o
-}
-
-func (o WorkloadSecurityOptionsGeoLocationHeadersOutput) ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutput() WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
-	return o.ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(context.Background())
-}
-
-func (o WorkloadSecurityOptionsGeoLocationHeadersOutput) ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadSecurityOptionsGeoLocationHeaders) *WorkloadSecurityOptionsGeoLocationHeaders {
-		return &v
-	}).(WorkloadSecurityOptionsGeoLocationHeadersPtrOutput)
-}
-
-func (o WorkloadSecurityOptionsGeoLocationHeadersOutput) ToOutput(ctx context.Context) pulumix.Output[WorkloadSecurityOptionsGeoLocationHeaders] {
-	return pulumix.Output[WorkloadSecurityOptionsGeoLocationHeaders]{
-		OutputState: o.OutputState,
-	}
-}
-
-func (o WorkloadSecurityOptionsGeoLocationHeadersOutput) Asn() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v WorkloadSecurityOptionsGeoLocationHeaders) *string { return v.Asn }).(pulumi.StringPtrOutput)
-}
-
-func (o WorkloadSecurityOptionsGeoLocationHeadersOutput) City() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v WorkloadSecurityOptionsGeoLocationHeaders) *string { return v.City }).(pulumi.StringPtrOutput)
-}
-
-func (o WorkloadSecurityOptionsGeoLocationHeadersOutput) Country() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v WorkloadSecurityOptionsGeoLocationHeaders) *string { return v.Country }).(pulumi.StringPtrOutput)
-}
-
-func (o WorkloadSecurityOptionsGeoLocationHeadersOutput) Region() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v WorkloadSecurityOptionsGeoLocationHeaders) *string { return v.Region }).(pulumi.StringPtrOutput)
-}
-
-type WorkloadSecurityOptionsGeoLocationHeadersPtrOutput struct{ *pulumi.OutputState }
-
-func (WorkloadSecurityOptionsGeoLocationHeadersPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**WorkloadSecurityOptionsGeoLocationHeaders)(nil)).Elem()
-}
-
-func (o WorkloadSecurityOptionsGeoLocationHeadersPtrOutput) ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutput() WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
-	return o
-}
-
-func (o WorkloadSecurityOptionsGeoLocationHeadersPtrOutput) ToWorkloadSecurityOptionsGeoLocationHeadersPtrOutputWithContext(ctx context.Context) WorkloadSecurityOptionsGeoLocationHeadersPtrOutput {
-	return o
-}
-
-func (o WorkloadSecurityOptionsGeoLocationHeadersPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*WorkloadSecurityOptionsGeoLocationHeaders] {
-	return pulumix.Output[*WorkloadSecurityOptionsGeoLocationHeaders]{
-		OutputState: o.OutputState,
-	}
-}
-
-func (o WorkloadSecurityOptionsGeoLocationHeadersPtrOutput) Elem() WorkloadSecurityOptionsGeoLocationHeadersOutput {
-	return o.ApplyT(func(v *WorkloadSecurityOptionsGeoLocationHeaders) WorkloadSecurityOptionsGeoLocationHeaders {
-		if v != nil {
-			return *v
-		}
-		var ret WorkloadSecurityOptionsGeoLocationHeaders
-		return ret
-	}).(WorkloadSecurityOptionsGeoLocationHeadersOutput)
-}
-
-func (o WorkloadSecurityOptionsGeoLocationHeadersPtrOutput) Asn() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *WorkloadSecurityOptionsGeoLocationHeaders) *string {
-		if v == nil {
-			return nil
-		}
-		return v.Asn
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o WorkloadSecurityOptionsGeoLocationHeadersPtrOutput) City() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *WorkloadSecurityOptionsGeoLocationHeaders) *string {
-		if v == nil {
-			return nil
-		}
-		return v.City
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o WorkloadSecurityOptionsGeoLocationHeadersPtrOutput) Country() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *WorkloadSecurityOptionsGeoLocationHeaders) *string {
-		if v == nil {
-			return nil
-		}
-		return v.Country
-	}).(pulumi.StringPtrOutput)
-}
-
-func (o WorkloadSecurityOptionsGeoLocationHeadersPtrOutput) Region() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *WorkloadSecurityOptionsGeoLocationHeaders) *string {
-		if v == nil {
-			return nil
-		}
-		return v.Region
-	}).(pulumi.StringPtrOutput)
 }
 
 type WorkloadSidecar struct {
@@ -29651,6 +29649,1502 @@ func (o GetLocationsLocationGeoArrayOutput) Index(i pulumi.IntInput) GetLocation
 	}).(GetLocationsLocationGeoOutput)
 }
 
+type GetSecretAws struct {
+	AccessKey  string  `pulumi:"accessKey"`
+	ExternalId *string `pulumi:"externalId"`
+	RoleArn    *string `pulumi:"roleArn"`
+	SecretKey  string  `pulumi:"secretKey"`
+}
+
+// GetSecretAwsInput is an input type that accepts GetSecretAwsArgs and GetSecretAwsOutput values.
+// You can construct a concrete instance of `GetSecretAwsInput` via:
+//
+//	GetSecretAwsArgs{...}
+type GetSecretAwsInput interface {
+	pulumi.Input
+
+	ToGetSecretAwsOutput() GetSecretAwsOutput
+	ToGetSecretAwsOutputWithContext(context.Context) GetSecretAwsOutput
+}
+
+type GetSecretAwsArgs struct {
+	AccessKey  pulumi.StringInput    `pulumi:"accessKey"`
+	ExternalId pulumi.StringPtrInput `pulumi:"externalId"`
+	RoleArn    pulumi.StringPtrInput `pulumi:"roleArn"`
+	SecretKey  pulumi.StringInput    `pulumi:"secretKey"`
+}
+
+func (GetSecretAwsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSecretAws)(nil)).Elem()
+}
+
+func (i GetSecretAwsArgs) ToGetSecretAwsOutput() GetSecretAwsOutput {
+	return i.ToGetSecretAwsOutputWithContext(context.Background())
+}
+
+func (i GetSecretAwsArgs) ToGetSecretAwsOutputWithContext(ctx context.Context) GetSecretAwsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretAwsOutput)
+}
+
+func (i GetSecretAwsArgs) ToOutput(ctx context.Context) pulumix.Output[GetSecretAws] {
+	return pulumix.Output[GetSecretAws]{
+		OutputState: i.ToGetSecretAwsOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i GetSecretAwsArgs) ToGetSecretAwsPtrOutput() GetSecretAwsPtrOutput {
+	return i.ToGetSecretAwsPtrOutputWithContext(context.Background())
+}
+
+func (i GetSecretAwsArgs) ToGetSecretAwsPtrOutputWithContext(ctx context.Context) GetSecretAwsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretAwsOutput).ToGetSecretAwsPtrOutputWithContext(ctx)
+}
+
+// GetSecretAwsPtrInput is an input type that accepts GetSecretAwsArgs, GetSecretAwsPtr and GetSecretAwsPtrOutput values.
+// You can construct a concrete instance of `GetSecretAwsPtrInput` via:
+//
+//	        GetSecretAwsArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetSecretAwsPtrInput interface {
+	pulumi.Input
+
+	ToGetSecretAwsPtrOutput() GetSecretAwsPtrOutput
+	ToGetSecretAwsPtrOutputWithContext(context.Context) GetSecretAwsPtrOutput
+}
+
+type getSecretAwsPtrType GetSecretAwsArgs
+
+func GetSecretAwsPtr(v *GetSecretAwsArgs) GetSecretAwsPtrInput {
+	return (*getSecretAwsPtrType)(v)
+}
+
+func (*getSecretAwsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSecretAws)(nil)).Elem()
+}
+
+func (i *getSecretAwsPtrType) ToGetSecretAwsPtrOutput() GetSecretAwsPtrOutput {
+	return i.ToGetSecretAwsPtrOutputWithContext(context.Background())
+}
+
+func (i *getSecretAwsPtrType) ToGetSecretAwsPtrOutputWithContext(ctx context.Context) GetSecretAwsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretAwsPtrOutput)
+}
+
+func (i *getSecretAwsPtrType) ToOutput(ctx context.Context) pulumix.Output[*GetSecretAws] {
+	return pulumix.Output[*GetSecretAws]{
+		OutputState: i.ToGetSecretAwsPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetSecretAwsOutput struct{ *pulumi.OutputState }
+
+func (GetSecretAwsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSecretAws)(nil)).Elem()
+}
+
+func (o GetSecretAwsOutput) ToGetSecretAwsOutput() GetSecretAwsOutput {
+	return o
+}
+
+func (o GetSecretAwsOutput) ToGetSecretAwsOutputWithContext(ctx context.Context) GetSecretAwsOutput {
+	return o
+}
+
+func (o GetSecretAwsOutput) ToGetSecretAwsPtrOutput() GetSecretAwsPtrOutput {
+	return o.ToGetSecretAwsPtrOutputWithContext(context.Background())
+}
+
+func (o GetSecretAwsOutput) ToGetSecretAwsPtrOutputWithContext(ctx context.Context) GetSecretAwsPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetSecretAws) *GetSecretAws {
+		return &v
+	}).(GetSecretAwsPtrOutput)
+}
+
+func (o GetSecretAwsOutput) ToOutput(ctx context.Context) pulumix.Output[GetSecretAws] {
+	return pulumix.Output[GetSecretAws]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetSecretAwsOutput) AccessKey() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSecretAws) string { return v.AccessKey }).(pulumi.StringOutput)
+}
+
+func (o GetSecretAwsOutput) ExternalId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSecretAws) *string { return v.ExternalId }).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretAwsOutput) RoleArn() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSecretAws) *string { return v.RoleArn }).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretAwsOutput) SecretKey() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSecretAws) string { return v.SecretKey }).(pulumi.StringOutput)
+}
+
+type GetSecretAwsPtrOutput struct{ *pulumi.OutputState }
+
+func (GetSecretAwsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSecretAws)(nil)).Elem()
+}
+
+func (o GetSecretAwsPtrOutput) ToGetSecretAwsPtrOutput() GetSecretAwsPtrOutput {
+	return o
+}
+
+func (o GetSecretAwsPtrOutput) ToGetSecretAwsPtrOutputWithContext(ctx context.Context) GetSecretAwsPtrOutput {
+	return o
+}
+
+func (o GetSecretAwsPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*GetSecretAws] {
+	return pulumix.Output[*GetSecretAws]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetSecretAwsPtrOutput) Elem() GetSecretAwsOutput {
+	return o.ApplyT(func(v *GetSecretAws) GetSecretAws {
+		if v != nil {
+			return *v
+		}
+		var ret GetSecretAws
+		return ret
+	}).(GetSecretAwsOutput)
+}
+
+func (o GetSecretAwsPtrOutput) AccessKey() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretAws) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.AccessKey
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretAwsPtrOutput) ExternalId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretAws) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ExternalId
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretAwsPtrOutput) RoleArn() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretAws) *string {
+		if v == nil {
+			return nil
+		}
+		return v.RoleArn
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretAwsPtrOutput) SecretKey() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretAws) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.SecretKey
+	}).(pulumi.StringPtrOutput)
+}
+
+type GetSecretAzureConnector struct {
+	Code string `pulumi:"code"`
+	Url  string `pulumi:"url"`
+}
+
+// GetSecretAzureConnectorInput is an input type that accepts GetSecretAzureConnectorArgs and GetSecretAzureConnectorOutput values.
+// You can construct a concrete instance of `GetSecretAzureConnectorInput` via:
+//
+//	GetSecretAzureConnectorArgs{...}
+type GetSecretAzureConnectorInput interface {
+	pulumi.Input
+
+	ToGetSecretAzureConnectorOutput() GetSecretAzureConnectorOutput
+	ToGetSecretAzureConnectorOutputWithContext(context.Context) GetSecretAzureConnectorOutput
+}
+
+type GetSecretAzureConnectorArgs struct {
+	Code pulumi.StringInput `pulumi:"code"`
+	Url  pulumi.StringInput `pulumi:"url"`
+}
+
+func (GetSecretAzureConnectorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSecretAzureConnector)(nil)).Elem()
+}
+
+func (i GetSecretAzureConnectorArgs) ToGetSecretAzureConnectorOutput() GetSecretAzureConnectorOutput {
+	return i.ToGetSecretAzureConnectorOutputWithContext(context.Background())
+}
+
+func (i GetSecretAzureConnectorArgs) ToGetSecretAzureConnectorOutputWithContext(ctx context.Context) GetSecretAzureConnectorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretAzureConnectorOutput)
+}
+
+func (i GetSecretAzureConnectorArgs) ToOutput(ctx context.Context) pulumix.Output[GetSecretAzureConnector] {
+	return pulumix.Output[GetSecretAzureConnector]{
+		OutputState: i.ToGetSecretAzureConnectorOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i GetSecretAzureConnectorArgs) ToGetSecretAzureConnectorPtrOutput() GetSecretAzureConnectorPtrOutput {
+	return i.ToGetSecretAzureConnectorPtrOutputWithContext(context.Background())
+}
+
+func (i GetSecretAzureConnectorArgs) ToGetSecretAzureConnectorPtrOutputWithContext(ctx context.Context) GetSecretAzureConnectorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretAzureConnectorOutput).ToGetSecretAzureConnectorPtrOutputWithContext(ctx)
+}
+
+// GetSecretAzureConnectorPtrInput is an input type that accepts GetSecretAzureConnectorArgs, GetSecretAzureConnectorPtr and GetSecretAzureConnectorPtrOutput values.
+// You can construct a concrete instance of `GetSecretAzureConnectorPtrInput` via:
+//
+//	        GetSecretAzureConnectorArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetSecretAzureConnectorPtrInput interface {
+	pulumi.Input
+
+	ToGetSecretAzureConnectorPtrOutput() GetSecretAzureConnectorPtrOutput
+	ToGetSecretAzureConnectorPtrOutputWithContext(context.Context) GetSecretAzureConnectorPtrOutput
+}
+
+type getSecretAzureConnectorPtrType GetSecretAzureConnectorArgs
+
+func GetSecretAzureConnectorPtr(v *GetSecretAzureConnectorArgs) GetSecretAzureConnectorPtrInput {
+	return (*getSecretAzureConnectorPtrType)(v)
+}
+
+func (*getSecretAzureConnectorPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSecretAzureConnector)(nil)).Elem()
+}
+
+func (i *getSecretAzureConnectorPtrType) ToGetSecretAzureConnectorPtrOutput() GetSecretAzureConnectorPtrOutput {
+	return i.ToGetSecretAzureConnectorPtrOutputWithContext(context.Background())
+}
+
+func (i *getSecretAzureConnectorPtrType) ToGetSecretAzureConnectorPtrOutputWithContext(ctx context.Context) GetSecretAzureConnectorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretAzureConnectorPtrOutput)
+}
+
+func (i *getSecretAzureConnectorPtrType) ToOutput(ctx context.Context) pulumix.Output[*GetSecretAzureConnector] {
+	return pulumix.Output[*GetSecretAzureConnector]{
+		OutputState: i.ToGetSecretAzureConnectorPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetSecretAzureConnectorOutput struct{ *pulumi.OutputState }
+
+func (GetSecretAzureConnectorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSecretAzureConnector)(nil)).Elem()
+}
+
+func (o GetSecretAzureConnectorOutput) ToGetSecretAzureConnectorOutput() GetSecretAzureConnectorOutput {
+	return o
+}
+
+func (o GetSecretAzureConnectorOutput) ToGetSecretAzureConnectorOutputWithContext(ctx context.Context) GetSecretAzureConnectorOutput {
+	return o
+}
+
+func (o GetSecretAzureConnectorOutput) ToGetSecretAzureConnectorPtrOutput() GetSecretAzureConnectorPtrOutput {
+	return o.ToGetSecretAzureConnectorPtrOutputWithContext(context.Background())
+}
+
+func (o GetSecretAzureConnectorOutput) ToGetSecretAzureConnectorPtrOutputWithContext(ctx context.Context) GetSecretAzureConnectorPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetSecretAzureConnector) *GetSecretAzureConnector {
+		return &v
+	}).(GetSecretAzureConnectorPtrOutput)
+}
+
+func (o GetSecretAzureConnectorOutput) ToOutput(ctx context.Context) pulumix.Output[GetSecretAzureConnector] {
+	return pulumix.Output[GetSecretAzureConnector]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetSecretAzureConnectorOutput) Code() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSecretAzureConnector) string { return v.Code }).(pulumi.StringOutput)
+}
+
+func (o GetSecretAzureConnectorOutput) Url() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSecretAzureConnector) string { return v.Url }).(pulumi.StringOutput)
+}
+
+type GetSecretAzureConnectorPtrOutput struct{ *pulumi.OutputState }
+
+func (GetSecretAzureConnectorPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSecretAzureConnector)(nil)).Elem()
+}
+
+func (o GetSecretAzureConnectorPtrOutput) ToGetSecretAzureConnectorPtrOutput() GetSecretAzureConnectorPtrOutput {
+	return o
+}
+
+func (o GetSecretAzureConnectorPtrOutput) ToGetSecretAzureConnectorPtrOutputWithContext(ctx context.Context) GetSecretAzureConnectorPtrOutput {
+	return o
+}
+
+func (o GetSecretAzureConnectorPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*GetSecretAzureConnector] {
+	return pulumix.Output[*GetSecretAzureConnector]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetSecretAzureConnectorPtrOutput) Elem() GetSecretAzureConnectorOutput {
+	return o.ApplyT(func(v *GetSecretAzureConnector) GetSecretAzureConnector {
+		if v != nil {
+			return *v
+		}
+		var ret GetSecretAzureConnector
+		return ret
+	}).(GetSecretAzureConnectorOutput)
+}
+
+func (o GetSecretAzureConnectorPtrOutput) Code() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretAzureConnector) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Code
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretAzureConnectorPtrOutput) Url() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretAzureConnector) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Url
+	}).(pulumi.StringPtrOutput)
+}
+
+type GetSecretEcr struct {
+	AccessKey  string   `pulumi:"accessKey"`
+	ExternalId *string  `pulumi:"externalId"`
+	Repos      []string `pulumi:"repos"`
+	RoleArn    *string  `pulumi:"roleArn"`
+	SecretKey  string   `pulumi:"secretKey"`
+}
+
+// GetSecretEcrInput is an input type that accepts GetSecretEcrArgs and GetSecretEcrOutput values.
+// You can construct a concrete instance of `GetSecretEcrInput` via:
+//
+//	GetSecretEcrArgs{...}
+type GetSecretEcrInput interface {
+	pulumi.Input
+
+	ToGetSecretEcrOutput() GetSecretEcrOutput
+	ToGetSecretEcrOutputWithContext(context.Context) GetSecretEcrOutput
+}
+
+type GetSecretEcrArgs struct {
+	AccessKey  pulumi.StringInput      `pulumi:"accessKey"`
+	ExternalId pulumi.StringPtrInput   `pulumi:"externalId"`
+	Repos      pulumi.StringArrayInput `pulumi:"repos"`
+	RoleArn    pulumi.StringPtrInput   `pulumi:"roleArn"`
+	SecretKey  pulumi.StringInput      `pulumi:"secretKey"`
+}
+
+func (GetSecretEcrArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSecretEcr)(nil)).Elem()
+}
+
+func (i GetSecretEcrArgs) ToGetSecretEcrOutput() GetSecretEcrOutput {
+	return i.ToGetSecretEcrOutputWithContext(context.Background())
+}
+
+func (i GetSecretEcrArgs) ToGetSecretEcrOutputWithContext(ctx context.Context) GetSecretEcrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretEcrOutput)
+}
+
+func (i GetSecretEcrArgs) ToOutput(ctx context.Context) pulumix.Output[GetSecretEcr] {
+	return pulumix.Output[GetSecretEcr]{
+		OutputState: i.ToGetSecretEcrOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i GetSecretEcrArgs) ToGetSecretEcrPtrOutput() GetSecretEcrPtrOutput {
+	return i.ToGetSecretEcrPtrOutputWithContext(context.Background())
+}
+
+func (i GetSecretEcrArgs) ToGetSecretEcrPtrOutputWithContext(ctx context.Context) GetSecretEcrPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretEcrOutput).ToGetSecretEcrPtrOutputWithContext(ctx)
+}
+
+// GetSecretEcrPtrInput is an input type that accepts GetSecretEcrArgs, GetSecretEcrPtr and GetSecretEcrPtrOutput values.
+// You can construct a concrete instance of `GetSecretEcrPtrInput` via:
+//
+//	        GetSecretEcrArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetSecretEcrPtrInput interface {
+	pulumi.Input
+
+	ToGetSecretEcrPtrOutput() GetSecretEcrPtrOutput
+	ToGetSecretEcrPtrOutputWithContext(context.Context) GetSecretEcrPtrOutput
+}
+
+type getSecretEcrPtrType GetSecretEcrArgs
+
+func GetSecretEcrPtr(v *GetSecretEcrArgs) GetSecretEcrPtrInput {
+	return (*getSecretEcrPtrType)(v)
+}
+
+func (*getSecretEcrPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSecretEcr)(nil)).Elem()
+}
+
+func (i *getSecretEcrPtrType) ToGetSecretEcrPtrOutput() GetSecretEcrPtrOutput {
+	return i.ToGetSecretEcrPtrOutputWithContext(context.Background())
+}
+
+func (i *getSecretEcrPtrType) ToGetSecretEcrPtrOutputWithContext(ctx context.Context) GetSecretEcrPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretEcrPtrOutput)
+}
+
+func (i *getSecretEcrPtrType) ToOutput(ctx context.Context) pulumix.Output[*GetSecretEcr] {
+	return pulumix.Output[*GetSecretEcr]{
+		OutputState: i.ToGetSecretEcrPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetSecretEcrOutput struct{ *pulumi.OutputState }
+
+func (GetSecretEcrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSecretEcr)(nil)).Elem()
+}
+
+func (o GetSecretEcrOutput) ToGetSecretEcrOutput() GetSecretEcrOutput {
+	return o
+}
+
+func (o GetSecretEcrOutput) ToGetSecretEcrOutputWithContext(ctx context.Context) GetSecretEcrOutput {
+	return o
+}
+
+func (o GetSecretEcrOutput) ToGetSecretEcrPtrOutput() GetSecretEcrPtrOutput {
+	return o.ToGetSecretEcrPtrOutputWithContext(context.Background())
+}
+
+func (o GetSecretEcrOutput) ToGetSecretEcrPtrOutputWithContext(ctx context.Context) GetSecretEcrPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetSecretEcr) *GetSecretEcr {
+		return &v
+	}).(GetSecretEcrPtrOutput)
+}
+
+func (o GetSecretEcrOutput) ToOutput(ctx context.Context) pulumix.Output[GetSecretEcr] {
+	return pulumix.Output[GetSecretEcr]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetSecretEcrOutput) AccessKey() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSecretEcr) string { return v.AccessKey }).(pulumi.StringOutput)
+}
+
+func (o GetSecretEcrOutput) ExternalId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSecretEcr) *string { return v.ExternalId }).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretEcrOutput) Repos() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetSecretEcr) []string { return v.Repos }).(pulumi.StringArrayOutput)
+}
+
+func (o GetSecretEcrOutput) RoleArn() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSecretEcr) *string { return v.RoleArn }).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretEcrOutput) SecretKey() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSecretEcr) string { return v.SecretKey }).(pulumi.StringOutput)
+}
+
+type GetSecretEcrPtrOutput struct{ *pulumi.OutputState }
+
+func (GetSecretEcrPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSecretEcr)(nil)).Elem()
+}
+
+func (o GetSecretEcrPtrOutput) ToGetSecretEcrPtrOutput() GetSecretEcrPtrOutput {
+	return o
+}
+
+func (o GetSecretEcrPtrOutput) ToGetSecretEcrPtrOutputWithContext(ctx context.Context) GetSecretEcrPtrOutput {
+	return o
+}
+
+func (o GetSecretEcrPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*GetSecretEcr] {
+	return pulumix.Output[*GetSecretEcr]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetSecretEcrPtrOutput) Elem() GetSecretEcrOutput {
+	return o.ApplyT(func(v *GetSecretEcr) GetSecretEcr {
+		if v != nil {
+			return *v
+		}
+		var ret GetSecretEcr
+		return ret
+	}).(GetSecretEcrOutput)
+}
+
+func (o GetSecretEcrPtrOutput) AccessKey() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretEcr) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.AccessKey
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretEcrPtrOutput) ExternalId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretEcr) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ExternalId
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretEcrPtrOutput) Repos() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *GetSecretEcr) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Repos
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o GetSecretEcrPtrOutput) RoleArn() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretEcr) *string {
+		if v == nil {
+			return nil
+		}
+		return v.RoleArn
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretEcrPtrOutput) SecretKey() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretEcr) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.SecretKey
+	}).(pulumi.StringPtrOutput)
+}
+
+type GetSecretKeypair struct {
+	Passphrase *string `pulumi:"passphrase"`
+	PublicKey  *string `pulumi:"publicKey"`
+	SecretKey  string  `pulumi:"secretKey"`
+}
+
+// GetSecretKeypairInput is an input type that accepts GetSecretKeypairArgs and GetSecretKeypairOutput values.
+// You can construct a concrete instance of `GetSecretKeypairInput` via:
+//
+//	GetSecretKeypairArgs{...}
+type GetSecretKeypairInput interface {
+	pulumi.Input
+
+	ToGetSecretKeypairOutput() GetSecretKeypairOutput
+	ToGetSecretKeypairOutputWithContext(context.Context) GetSecretKeypairOutput
+}
+
+type GetSecretKeypairArgs struct {
+	Passphrase pulumi.StringPtrInput `pulumi:"passphrase"`
+	PublicKey  pulumi.StringPtrInput `pulumi:"publicKey"`
+	SecretKey  pulumi.StringInput    `pulumi:"secretKey"`
+}
+
+func (GetSecretKeypairArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSecretKeypair)(nil)).Elem()
+}
+
+func (i GetSecretKeypairArgs) ToGetSecretKeypairOutput() GetSecretKeypairOutput {
+	return i.ToGetSecretKeypairOutputWithContext(context.Background())
+}
+
+func (i GetSecretKeypairArgs) ToGetSecretKeypairOutputWithContext(ctx context.Context) GetSecretKeypairOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretKeypairOutput)
+}
+
+func (i GetSecretKeypairArgs) ToOutput(ctx context.Context) pulumix.Output[GetSecretKeypair] {
+	return pulumix.Output[GetSecretKeypair]{
+		OutputState: i.ToGetSecretKeypairOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i GetSecretKeypairArgs) ToGetSecretKeypairPtrOutput() GetSecretKeypairPtrOutput {
+	return i.ToGetSecretKeypairPtrOutputWithContext(context.Background())
+}
+
+func (i GetSecretKeypairArgs) ToGetSecretKeypairPtrOutputWithContext(ctx context.Context) GetSecretKeypairPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretKeypairOutput).ToGetSecretKeypairPtrOutputWithContext(ctx)
+}
+
+// GetSecretKeypairPtrInput is an input type that accepts GetSecretKeypairArgs, GetSecretKeypairPtr and GetSecretKeypairPtrOutput values.
+// You can construct a concrete instance of `GetSecretKeypairPtrInput` via:
+//
+//	        GetSecretKeypairArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetSecretKeypairPtrInput interface {
+	pulumi.Input
+
+	ToGetSecretKeypairPtrOutput() GetSecretKeypairPtrOutput
+	ToGetSecretKeypairPtrOutputWithContext(context.Context) GetSecretKeypairPtrOutput
+}
+
+type getSecretKeypairPtrType GetSecretKeypairArgs
+
+func GetSecretKeypairPtr(v *GetSecretKeypairArgs) GetSecretKeypairPtrInput {
+	return (*getSecretKeypairPtrType)(v)
+}
+
+func (*getSecretKeypairPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSecretKeypair)(nil)).Elem()
+}
+
+func (i *getSecretKeypairPtrType) ToGetSecretKeypairPtrOutput() GetSecretKeypairPtrOutput {
+	return i.ToGetSecretKeypairPtrOutputWithContext(context.Background())
+}
+
+func (i *getSecretKeypairPtrType) ToGetSecretKeypairPtrOutputWithContext(ctx context.Context) GetSecretKeypairPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretKeypairPtrOutput)
+}
+
+func (i *getSecretKeypairPtrType) ToOutput(ctx context.Context) pulumix.Output[*GetSecretKeypair] {
+	return pulumix.Output[*GetSecretKeypair]{
+		OutputState: i.ToGetSecretKeypairPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetSecretKeypairOutput struct{ *pulumi.OutputState }
+
+func (GetSecretKeypairOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSecretKeypair)(nil)).Elem()
+}
+
+func (o GetSecretKeypairOutput) ToGetSecretKeypairOutput() GetSecretKeypairOutput {
+	return o
+}
+
+func (o GetSecretKeypairOutput) ToGetSecretKeypairOutputWithContext(ctx context.Context) GetSecretKeypairOutput {
+	return o
+}
+
+func (o GetSecretKeypairOutput) ToGetSecretKeypairPtrOutput() GetSecretKeypairPtrOutput {
+	return o.ToGetSecretKeypairPtrOutputWithContext(context.Background())
+}
+
+func (o GetSecretKeypairOutput) ToGetSecretKeypairPtrOutputWithContext(ctx context.Context) GetSecretKeypairPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetSecretKeypair) *GetSecretKeypair {
+		return &v
+	}).(GetSecretKeypairPtrOutput)
+}
+
+func (o GetSecretKeypairOutput) ToOutput(ctx context.Context) pulumix.Output[GetSecretKeypair] {
+	return pulumix.Output[GetSecretKeypair]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetSecretKeypairOutput) Passphrase() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSecretKeypair) *string { return v.Passphrase }).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretKeypairOutput) PublicKey() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSecretKeypair) *string { return v.PublicKey }).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretKeypairOutput) SecretKey() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSecretKeypair) string { return v.SecretKey }).(pulumi.StringOutput)
+}
+
+type GetSecretKeypairPtrOutput struct{ *pulumi.OutputState }
+
+func (GetSecretKeypairPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSecretKeypair)(nil)).Elem()
+}
+
+func (o GetSecretKeypairPtrOutput) ToGetSecretKeypairPtrOutput() GetSecretKeypairPtrOutput {
+	return o
+}
+
+func (o GetSecretKeypairPtrOutput) ToGetSecretKeypairPtrOutputWithContext(ctx context.Context) GetSecretKeypairPtrOutput {
+	return o
+}
+
+func (o GetSecretKeypairPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*GetSecretKeypair] {
+	return pulumix.Output[*GetSecretKeypair]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetSecretKeypairPtrOutput) Elem() GetSecretKeypairOutput {
+	return o.ApplyT(func(v *GetSecretKeypair) GetSecretKeypair {
+		if v != nil {
+			return *v
+		}
+		var ret GetSecretKeypair
+		return ret
+	}).(GetSecretKeypairOutput)
+}
+
+func (o GetSecretKeypairPtrOutput) Passphrase() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretKeypair) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Passphrase
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretKeypairPtrOutput) PublicKey() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretKeypair) *string {
+		if v == nil {
+			return nil
+		}
+		return v.PublicKey
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretKeypairPtrOutput) SecretKey() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretKeypair) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.SecretKey
+	}).(pulumi.StringPtrOutput)
+}
+
+type GetSecretNatsAccount struct {
+	AccountId  string `pulumi:"accountId"`
+	PrivateKey string `pulumi:"privateKey"`
+}
+
+// GetSecretNatsAccountInput is an input type that accepts GetSecretNatsAccountArgs and GetSecretNatsAccountOutput values.
+// You can construct a concrete instance of `GetSecretNatsAccountInput` via:
+//
+//	GetSecretNatsAccountArgs{...}
+type GetSecretNatsAccountInput interface {
+	pulumi.Input
+
+	ToGetSecretNatsAccountOutput() GetSecretNatsAccountOutput
+	ToGetSecretNatsAccountOutputWithContext(context.Context) GetSecretNatsAccountOutput
+}
+
+type GetSecretNatsAccountArgs struct {
+	AccountId  pulumi.StringInput `pulumi:"accountId"`
+	PrivateKey pulumi.StringInput `pulumi:"privateKey"`
+}
+
+func (GetSecretNatsAccountArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSecretNatsAccount)(nil)).Elem()
+}
+
+func (i GetSecretNatsAccountArgs) ToGetSecretNatsAccountOutput() GetSecretNatsAccountOutput {
+	return i.ToGetSecretNatsAccountOutputWithContext(context.Background())
+}
+
+func (i GetSecretNatsAccountArgs) ToGetSecretNatsAccountOutputWithContext(ctx context.Context) GetSecretNatsAccountOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretNatsAccountOutput)
+}
+
+func (i GetSecretNatsAccountArgs) ToOutput(ctx context.Context) pulumix.Output[GetSecretNatsAccount] {
+	return pulumix.Output[GetSecretNatsAccount]{
+		OutputState: i.ToGetSecretNatsAccountOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i GetSecretNatsAccountArgs) ToGetSecretNatsAccountPtrOutput() GetSecretNatsAccountPtrOutput {
+	return i.ToGetSecretNatsAccountPtrOutputWithContext(context.Background())
+}
+
+func (i GetSecretNatsAccountArgs) ToGetSecretNatsAccountPtrOutputWithContext(ctx context.Context) GetSecretNatsAccountPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretNatsAccountOutput).ToGetSecretNatsAccountPtrOutputWithContext(ctx)
+}
+
+// GetSecretNatsAccountPtrInput is an input type that accepts GetSecretNatsAccountArgs, GetSecretNatsAccountPtr and GetSecretNatsAccountPtrOutput values.
+// You can construct a concrete instance of `GetSecretNatsAccountPtrInput` via:
+//
+//	        GetSecretNatsAccountArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetSecretNatsAccountPtrInput interface {
+	pulumi.Input
+
+	ToGetSecretNatsAccountPtrOutput() GetSecretNatsAccountPtrOutput
+	ToGetSecretNatsAccountPtrOutputWithContext(context.Context) GetSecretNatsAccountPtrOutput
+}
+
+type getSecretNatsAccountPtrType GetSecretNatsAccountArgs
+
+func GetSecretNatsAccountPtr(v *GetSecretNatsAccountArgs) GetSecretNatsAccountPtrInput {
+	return (*getSecretNatsAccountPtrType)(v)
+}
+
+func (*getSecretNatsAccountPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSecretNatsAccount)(nil)).Elem()
+}
+
+func (i *getSecretNatsAccountPtrType) ToGetSecretNatsAccountPtrOutput() GetSecretNatsAccountPtrOutput {
+	return i.ToGetSecretNatsAccountPtrOutputWithContext(context.Background())
+}
+
+func (i *getSecretNatsAccountPtrType) ToGetSecretNatsAccountPtrOutputWithContext(ctx context.Context) GetSecretNatsAccountPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretNatsAccountPtrOutput)
+}
+
+func (i *getSecretNatsAccountPtrType) ToOutput(ctx context.Context) pulumix.Output[*GetSecretNatsAccount] {
+	return pulumix.Output[*GetSecretNatsAccount]{
+		OutputState: i.ToGetSecretNatsAccountPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetSecretNatsAccountOutput struct{ *pulumi.OutputState }
+
+func (GetSecretNatsAccountOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSecretNatsAccount)(nil)).Elem()
+}
+
+func (o GetSecretNatsAccountOutput) ToGetSecretNatsAccountOutput() GetSecretNatsAccountOutput {
+	return o
+}
+
+func (o GetSecretNatsAccountOutput) ToGetSecretNatsAccountOutputWithContext(ctx context.Context) GetSecretNatsAccountOutput {
+	return o
+}
+
+func (o GetSecretNatsAccountOutput) ToGetSecretNatsAccountPtrOutput() GetSecretNatsAccountPtrOutput {
+	return o.ToGetSecretNatsAccountPtrOutputWithContext(context.Background())
+}
+
+func (o GetSecretNatsAccountOutput) ToGetSecretNatsAccountPtrOutputWithContext(ctx context.Context) GetSecretNatsAccountPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetSecretNatsAccount) *GetSecretNatsAccount {
+		return &v
+	}).(GetSecretNatsAccountPtrOutput)
+}
+
+func (o GetSecretNatsAccountOutput) ToOutput(ctx context.Context) pulumix.Output[GetSecretNatsAccount] {
+	return pulumix.Output[GetSecretNatsAccount]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetSecretNatsAccountOutput) AccountId() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSecretNatsAccount) string { return v.AccountId }).(pulumi.StringOutput)
+}
+
+func (o GetSecretNatsAccountOutput) PrivateKey() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSecretNatsAccount) string { return v.PrivateKey }).(pulumi.StringOutput)
+}
+
+type GetSecretNatsAccountPtrOutput struct{ *pulumi.OutputState }
+
+func (GetSecretNatsAccountPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSecretNatsAccount)(nil)).Elem()
+}
+
+func (o GetSecretNatsAccountPtrOutput) ToGetSecretNatsAccountPtrOutput() GetSecretNatsAccountPtrOutput {
+	return o
+}
+
+func (o GetSecretNatsAccountPtrOutput) ToGetSecretNatsAccountPtrOutputWithContext(ctx context.Context) GetSecretNatsAccountPtrOutput {
+	return o
+}
+
+func (o GetSecretNatsAccountPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*GetSecretNatsAccount] {
+	return pulumix.Output[*GetSecretNatsAccount]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetSecretNatsAccountPtrOutput) Elem() GetSecretNatsAccountOutput {
+	return o.ApplyT(func(v *GetSecretNatsAccount) GetSecretNatsAccount {
+		if v != nil {
+			return *v
+		}
+		var ret GetSecretNatsAccount
+		return ret
+	}).(GetSecretNatsAccountOutput)
+}
+
+func (o GetSecretNatsAccountPtrOutput) AccountId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretNatsAccount) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.AccountId
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretNatsAccountPtrOutput) PrivateKey() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretNatsAccount) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.PrivateKey
+	}).(pulumi.StringPtrOutput)
+}
+
+type GetSecretOpaque struct {
+	Encoding *string `pulumi:"encoding"`
+	Payload  string  `pulumi:"payload"`
+}
+
+// GetSecretOpaqueInput is an input type that accepts GetSecretOpaqueArgs and GetSecretOpaqueOutput values.
+// You can construct a concrete instance of `GetSecretOpaqueInput` via:
+//
+//	GetSecretOpaqueArgs{...}
+type GetSecretOpaqueInput interface {
+	pulumi.Input
+
+	ToGetSecretOpaqueOutput() GetSecretOpaqueOutput
+	ToGetSecretOpaqueOutputWithContext(context.Context) GetSecretOpaqueOutput
+}
+
+type GetSecretOpaqueArgs struct {
+	Encoding pulumi.StringPtrInput `pulumi:"encoding"`
+	Payload  pulumi.StringInput    `pulumi:"payload"`
+}
+
+func (GetSecretOpaqueArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSecretOpaque)(nil)).Elem()
+}
+
+func (i GetSecretOpaqueArgs) ToGetSecretOpaqueOutput() GetSecretOpaqueOutput {
+	return i.ToGetSecretOpaqueOutputWithContext(context.Background())
+}
+
+func (i GetSecretOpaqueArgs) ToGetSecretOpaqueOutputWithContext(ctx context.Context) GetSecretOpaqueOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretOpaqueOutput)
+}
+
+func (i GetSecretOpaqueArgs) ToOutput(ctx context.Context) pulumix.Output[GetSecretOpaque] {
+	return pulumix.Output[GetSecretOpaque]{
+		OutputState: i.ToGetSecretOpaqueOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i GetSecretOpaqueArgs) ToGetSecretOpaquePtrOutput() GetSecretOpaquePtrOutput {
+	return i.ToGetSecretOpaquePtrOutputWithContext(context.Background())
+}
+
+func (i GetSecretOpaqueArgs) ToGetSecretOpaquePtrOutputWithContext(ctx context.Context) GetSecretOpaquePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretOpaqueOutput).ToGetSecretOpaquePtrOutputWithContext(ctx)
+}
+
+// GetSecretOpaquePtrInput is an input type that accepts GetSecretOpaqueArgs, GetSecretOpaquePtr and GetSecretOpaquePtrOutput values.
+// You can construct a concrete instance of `GetSecretOpaquePtrInput` via:
+//
+//	        GetSecretOpaqueArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetSecretOpaquePtrInput interface {
+	pulumi.Input
+
+	ToGetSecretOpaquePtrOutput() GetSecretOpaquePtrOutput
+	ToGetSecretOpaquePtrOutputWithContext(context.Context) GetSecretOpaquePtrOutput
+}
+
+type getSecretOpaquePtrType GetSecretOpaqueArgs
+
+func GetSecretOpaquePtr(v *GetSecretOpaqueArgs) GetSecretOpaquePtrInput {
+	return (*getSecretOpaquePtrType)(v)
+}
+
+func (*getSecretOpaquePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSecretOpaque)(nil)).Elem()
+}
+
+func (i *getSecretOpaquePtrType) ToGetSecretOpaquePtrOutput() GetSecretOpaquePtrOutput {
+	return i.ToGetSecretOpaquePtrOutputWithContext(context.Background())
+}
+
+func (i *getSecretOpaquePtrType) ToGetSecretOpaquePtrOutputWithContext(ctx context.Context) GetSecretOpaquePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretOpaquePtrOutput)
+}
+
+func (i *getSecretOpaquePtrType) ToOutput(ctx context.Context) pulumix.Output[*GetSecretOpaque] {
+	return pulumix.Output[*GetSecretOpaque]{
+		OutputState: i.ToGetSecretOpaquePtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetSecretOpaqueOutput struct{ *pulumi.OutputState }
+
+func (GetSecretOpaqueOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSecretOpaque)(nil)).Elem()
+}
+
+func (o GetSecretOpaqueOutput) ToGetSecretOpaqueOutput() GetSecretOpaqueOutput {
+	return o
+}
+
+func (o GetSecretOpaqueOutput) ToGetSecretOpaqueOutputWithContext(ctx context.Context) GetSecretOpaqueOutput {
+	return o
+}
+
+func (o GetSecretOpaqueOutput) ToGetSecretOpaquePtrOutput() GetSecretOpaquePtrOutput {
+	return o.ToGetSecretOpaquePtrOutputWithContext(context.Background())
+}
+
+func (o GetSecretOpaqueOutput) ToGetSecretOpaquePtrOutputWithContext(ctx context.Context) GetSecretOpaquePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetSecretOpaque) *GetSecretOpaque {
+		return &v
+	}).(GetSecretOpaquePtrOutput)
+}
+
+func (o GetSecretOpaqueOutput) ToOutput(ctx context.Context) pulumix.Output[GetSecretOpaque] {
+	return pulumix.Output[GetSecretOpaque]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetSecretOpaqueOutput) Encoding() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSecretOpaque) *string { return v.Encoding }).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretOpaqueOutput) Payload() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSecretOpaque) string { return v.Payload }).(pulumi.StringOutput)
+}
+
+type GetSecretOpaquePtrOutput struct{ *pulumi.OutputState }
+
+func (GetSecretOpaquePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSecretOpaque)(nil)).Elem()
+}
+
+func (o GetSecretOpaquePtrOutput) ToGetSecretOpaquePtrOutput() GetSecretOpaquePtrOutput {
+	return o
+}
+
+func (o GetSecretOpaquePtrOutput) ToGetSecretOpaquePtrOutputWithContext(ctx context.Context) GetSecretOpaquePtrOutput {
+	return o
+}
+
+func (o GetSecretOpaquePtrOutput) ToOutput(ctx context.Context) pulumix.Output[*GetSecretOpaque] {
+	return pulumix.Output[*GetSecretOpaque]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetSecretOpaquePtrOutput) Elem() GetSecretOpaqueOutput {
+	return o.ApplyT(func(v *GetSecretOpaque) GetSecretOpaque {
+		if v != nil {
+			return *v
+		}
+		var ret GetSecretOpaque
+		return ret
+	}).(GetSecretOpaqueOutput)
+}
+
+func (o GetSecretOpaquePtrOutput) Encoding() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretOpaque) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Encoding
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretOpaquePtrOutput) Payload() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretOpaque) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Payload
+	}).(pulumi.StringPtrOutput)
+}
+
+type GetSecretTls struct {
+	Cert  string  `pulumi:"cert"`
+	Chain *string `pulumi:"chain"`
+	Key   string  `pulumi:"key"`
+}
+
+// GetSecretTlsInput is an input type that accepts GetSecretTlsArgs and GetSecretTlsOutput values.
+// You can construct a concrete instance of `GetSecretTlsInput` via:
+//
+//	GetSecretTlsArgs{...}
+type GetSecretTlsInput interface {
+	pulumi.Input
+
+	ToGetSecretTlsOutput() GetSecretTlsOutput
+	ToGetSecretTlsOutputWithContext(context.Context) GetSecretTlsOutput
+}
+
+type GetSecretTlsArgs struct {
+	Cert  pulumi.StringInput    `pulumi:"cert"`
+	Chain pulumi.StringPtrInput `pulumi:"chain"`
+	Key   pulumi.StringInput    `pulumi:"key"`
+}
+
+func (GetSecretTlsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSecretTls)(nil)).Elem()
+}
+
+func (i GetSecretTlsArgs) ToGetSecretTlsOutput() GetSecretTlsOutput {
+	return i.ToGetSecretTlsOutputWithContext(context.Background())
+}
+
+func (i GetSecretTlsArgs) ToGetSecretTlsOutputWithContext(ctx context.Context) GetSecretTlsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretTlsOutput)
+}
+
+func (i GetSecretTlsArgs) ToOutput(ctx context.Context) pulumix.Output[GetSecretTls] {
+	return pulumix.Output[GetSecretTls]{
+		OutputState: i.ToGetSecretTlsOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i GetSecretTlsArgs) ToGetSecretTlsPtrOutput() GetSecretTlsPtrOutput {
+	return i.ToGetSecretTlsPtrOutputWithContext(context.Background())
+}
+
+func (i GetSecretTlsArgs) ToGetSecretTlsPtrOutputWithContext(ctx context.Context) GetSecretTlsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretTlsOutput).ToGetSecretTlsPtrOutputWithContext(ctx)
+}
+
+// GetSecretTlsPtrInput is an input type that accepts GetSecretTlsArgs, GetSecretTlsPtr and GetSecretTlsPtrOutput values.
+// You can construct a concrete instance of `GetSecretTlsPtrInput` via:
+//
+//	        GetSecretTlsArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetSecretTlsPtrInput interface {
+	pulumi.Input
+
+	ToGetSecretTlsPtrOutput() GetSecretTlsPtrOutput
+	ToGetSecretTlsPtrOutputWithContext(context.Context) GetSecretTlsPtrOutput
+}
+
+type getSecretTlsPtrType GetSecretTlsArgs
+
+func GetSecretTlsPtr(v *GetSecretTlsArgs) GetSecretTlsPtrInput {
+	return (*getSecretTlsPtrType)(v)
+}
+
+func (*getSecretTlsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSecretTls)(nil)).Elem()
+}
+
+func (i *getSecretTlsPtrType) ToGetSecretTlsPtrOutput() GetSecretTlsPtrOutput {
+	return i.ToGetSecretTlsPtrOutputWithContext(context.Background())
+}
+
+func (i *getSecretTlsPtrType) ToGetSecretTlsPtrOutputWithContext(ctx context.Context) GetSecretTlsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretTlsPtrOutput)
+}
+
+func (i *getSecretTlsPtrType) ToOutput(ctx context.Context) pulumix.Output[*GetSecretTls] {
+	return pulumix.Output[*GetSecretTls]{
+		OutputState: i.ToGetSecretTlsPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetSecretTlsOutput struct{ *pulumi.OutputState }
+
+func (GetSecretTlsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSecretTls)(nil)).Elem()
+}
+
+func (o GetSecretTlsOutput) ToGetSecretTlsOutput() GetSecretTlsOutput {
+	return o
+}
+
+func (o GetSecretTlsOutput) ToGetSecretTlsOutputWithContext(ctx context.Context) GetSecretTlsOutput {
+	return o
+}
+
+func (o GetSecretTlsOutput) ToGetSecretTlsPtrOutput() GetSecretTlsPtrOutput {
+	return o.ToGetSecretTlsPtrOutputWithContext(context.Background())
+}
+
+func (o GetSecretTlsOutput) ToGetSecretTlsPtrOutputWithContext(ctx context.Context) GetSecretTlsPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetSecretTls) *GetSecretTls {
+		return &v
+	}).(GetSecretTlsPtrOutput)
+}
+
+func (o GetSecretTlsOutput) ToOutput(ctx context.Context) pulumix.Output[GetSecretTls] {
+	return pulumix.Output[GetSecretTls]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetSecretTlsOutput) Cert() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSecretTls) string { return v.Cert }).(pulumi.StringOutput)
+}
+
+func (o GetSecretTlsOutput) Chain() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSecretTls) *string { return v.Chain }).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretTlsOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSecretTls) string { return v.Key }).(pulumi.StringOutput)
+}
+
+type GetSecretTlsPtrOutput struct{ *pulumi.OutputState }
+
+func (GetSecretTlsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSecretTls)(nil)).Elem()
+}
+
+func (o GetSecretTlsPtrOutput) ToGetSecretTlsPtrOutput() GetSecretTlsPtrOutput {
+	return o
+}
+
+func (o GetSecretTlsPtrOutput) ToGetSecretTlsPtrOutputWithContext(ctx context.Context) GetSecretTlsPtrOutput {
+	return o
+}
+
+func (o GetSecretTlsPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*GetSecretTls] {
+	return pulumix.Output[*GetSecretTls]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetSecretTlsPtrOutput) Elem() GetSecretTlsOutput {
+	return o.ApplyT(func(v *GetSecretTls) GetSecretTls {
+		if v != nil {
+			return *v
+		}
+		var ret GetSecretTls
+		return ret
+	}).(GetSecretTlsOutput)
+}
+
+func (o GetSecretTlsPtrOutput) Cert() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretTls) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Cert
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretTlsPtrOutput) Chain() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretTls) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Chain
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretTlsPtrOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretTls) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Key
+	}).(pulumi.StringPtrOutput)
+}
+
+type GetSecretUserpass struct {
+	Encoding *string `pulumi:"encoding"`
+	Password string  `pulumi:"password"`
+	Username string  `pulumi:"username"`
+}
+
+// GetSecretUserpassInput is an input type that accepts GetSecretUserpassArgs and GetSecretUserpassOutput values.
+// You can construct a concrete instance of `GetSecretUserpassInput` via:
+//
+//	GetSecretUserpassArgs{...}
+type GetSecretUserpassInput interface {
+	pulumi.Input
+
+	ToGetSecretUserpassOutput() GetSecretUserpassOutput
+	ToGetSecretUserpassOutputWithContext(context.Context) GetSecretUserpassOutput
+}
+
+type GetSecretUserpassArgs struct {
+	Encoding pulumi.StringPtrInput `pulumi:"encoding"`
+	Password pulumi.StringInput    `pulumi:"password"`
+	Username pulumi.StringInput    `pulumi:"username"`
+}
+
+func (GetSecretUserpassArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSecretUserpass)(nil)).Elem()
+}
+
+func (i GetSecretUserpassArgs) ToGetSecretUserpassOutput() GetSecretUserpassOutput {
+	return i.ToGetSecretUserpassOutputWithContext(context.Background())
+}
+
+func (i GetSecretUserpassArgs) ToGetSecretUserpassOutputWithContext(ctx context.Context) GetSecretUserpassOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretUserpassOutput)
+}
+
+func (i GetSecretUserpassArgs) ToOutput(ctx context.Context) pulumix.Output[GetSecretUserpass] {
+	return pulumix.Output[GetSecretUserpass]{
+		OutputState: i.ToGetSecretUserpassOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i GetSecretUserpassArgs) ToGetSecretUserpassPtrOutput() GetSecretUserpassPtrOutput {
+	return i.ToGetSecretUserpassPtrOutputWithContext(context.Background())
+}
+
+func (i GetSecretUserpassArgs) ToGetSecretUserpassPtrOutputWithContext(ctx context.Context) GetSecretUserpassPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretUserpassOutput).ToGetSecretUserpassPtrOutputWithContext(ctx)
+}
+
+// GetSecretUserpassPtrInput is an input type that accepts GetSecretUserpassArgs, GetSecretUserpassPtr and GetSecretUserpassPtrOutput values.
+// You can construct a concrete instance of `GetSecretUserpassPtrInput` via:
+//
+//	        GetSecretUserpassArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetSecretUserpassPtrInput interface {
+	pulumi.Input
+
+	ToGetSecretUserpassPtrOutput() GetSecretUserpassPtrOutput
+	ToGetSecretUserpassPtrOutputWithContext(context.Context) GetSecretUserpassPtrOutput
+}
+
+type getSecretUserpassPtrType GetSecretUserpassArgs
+
+func GetSecretUserpassPtr(v *GetSecretUserpassArgs) GetSecretUserpassPtrInput {
+	return (*getSecretUserpassPtrType)(v)
+}
+
+func (*getSecretUserpassPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSecretUserpass)(nil)).Elem()
+}
+
+func (i *getSecretUserpassPtrType) ToGetSecretUserpassPtrOutput() GetSecretUserpassPtrOutput {
+	return i.ToGetSecretUserpassPtrOutputWithContext(context.Background())
+}
+
+func (i *getSecretUserpassPtrType) ToGetSecretUserpassPtrOutputWithContext(ctx context.Context) GetSecretUserpassPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSecretUserpassPtrOutput)
+}
+
+func (i *getSecretUserpassPtrType) ToOutput(ctx context.Context) pulumix.Output[*GetSecretUserpass] {
+	return pulumix.Output[*GetSecretUserpass]{
+		OutputState: i.ToGetSecretUserpassPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetSecretUserpassOutput struct{ *pulumi.OutputState }
+
+func (GetSecretUserpassOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSecretUserpass)(nil)).Elem()
+}
+
+func (o GetSecretUserpassOutput) ToGetSecretUserpassOutput() GetSecretUserpassOutput {
+	return o
+}
+
+func (o GetSecretUserpassOutput) ToGetSecretUserpassOutputWithContext(ctx context.Context) GetSecretUserpassOutput {
+	return o
+}
+
+func (o GetSecretUserpassOutput) ToGetSecretUserpassPtrOutput() GetSecretUserpassPtrOutput {
+	return o.ToGetSecretUserpassPtrOutputWithContext(context.Background())
+}
+
+func (o GetSecretUserpassOutput) ToGetSecretUserpassPtrOutputWithContext(ctx context.Context) GetSecretUserpassPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetSecretUserpass) *GetSecretUserpass {
+		return &v
+	}).(GetSecretUserpassPtrOutput)
+}
+
+func (o GetSecretUserpassOutput) ToOutput(ctx context.Context) pulumix.Output[GetSecretUserpass] {
+	return pulumix.Output[GetSecretUserpass]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetSecretUserpassOutput) Encoding() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetSecretUserpass) *string { return v.Encoding }).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretUserpassOutput) Password() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSecretUserpass) string { return v.Password }).(pulumi.StringOutput)
+}
+
+func (o GetSecretUserpassOutput) Username() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSecretUserpass) string { return v.Username }).(pulumi.StringOutput)
+}
+
+type GetSecretUserpassPtrOutput struct{ *pulumi.OutputState }
+
+func (GetSecretUserpassPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetSecretUserpass)(nil)).Elem()
+}
+
+func (o GetSecretUserpassPtrOutput) ToGetSecretUserpassPtrOutput() GetSecretUserpassPtrOutput {
+	return o
+}
+
+func (o GetSecretUserpassPtrOutput) ToGetSecretUserpassPtrOutputWithContext(ctx context.Context) GetSecretUserpassPtrOutput {
+	return o
+}
+
+func (o GetSecretUserpassPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*GetSecretUserpass] {
+	return pulumix.Output[*GetSecretUserpass]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetSecretUserpassPtrOutput) Elem() GetSecretUserpassOutput {
+	return o.ApplyT(func(v *GetSecretUserpass) GetSecretUserpass {
+		if v != nil {
+			return *v
+		}
+		var ret GetSecretUserpass
+		return ret
+	}).(GetSecretUserpassOutput)
+}
+
+func (o GetSecretUserpassPtrOutput) Encoding() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretUserpass) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Encoding
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretUserpassPtrOutput) Password() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretUserpass) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Password
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o GetSecretUserpassPtrOutput) Username() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetSecretUserpass) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Username
+	}).(pulumi.StringPtrOutput)
+}
+
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CloudAccountAwsInput)(nil)).Elem(), CloudAccountAwsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CloudAccountAwsPtrInput)(nil)).Elem(), CloudAccountAwsArgs{})
@@ -29942,6 +31436,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerDirectPtrInput)(nil)).Elem(), WorkloadLoadBalancerDirectArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerDirectPortInput)(nil)).Elem(), WorkloadLoadBalancerDirectPortArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerDirectPortArrayInput)(nil)).Elem(), WorkloadLoadBalancerDirectPortArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerGeoLocationInput)(nil)).Elem(), WorkloadLoadBalancerGeoLocationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerGeoLocationPtrInput)(nil)).Elem(), WorkloadLoadBalancerGeoLocationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerGeoLocationHeadersInput)(nil)).Elem(), WorkloadLoadBalancerGeoLocationHeadersArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerGeoLocationHeadersPtrInput)(nil)).Elem(), WorkloadLoadBalancerGeoLocationHeadersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionInput)(nil)).Elem(), WorkloadLocalOptionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionArrayInput)(nil)).Elem(), WorkloadLocalOptionArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingArgs{})
@@ -29954,10 +31452,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadRolloutOptionsPtrInput)(nil)).Elem(), WorkloadRolloutOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadSecurityOptionsInput)(nil)).Elem(), WorkloadSecurityOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadSecurityOptionsPtrInput)(nil)).Elem(), WorkloadSecurityOptionsArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadSecurityOptionsGeoLocationInput)(nil)).Elem(), WorkloadSecurityOptionsGeoLocationArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadSecurityOptionsGeoLocationPtrInput)(nil)).Elem(), WorkloadSecurityOptionsGeoLocationArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadSecurityOptionsGeoLocationHeadersInput)(nil)).Elem(), WorkloadSecurityOptionsGeoLocationHeadersArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadSecurityOptionsGeoLocationHeadersPtrInput)(nil)).Elem(), WorkloadSecurityOptionsGeoLocationHeadersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadSidecarInput)(nil)).Elem(), WorkloadSidecarArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadSidecarPtrInput)(nil)).Elem(), WorkloadSidecarArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadStatusInput)(nil)).Elem(), WorkloadStatusArgs{})
@@ -30008,6 +31502,22 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetLocationsLocationArrayInput)(nil)).Elem(), GetLocationsLocationArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetLocationsLocationGeoInput)(nil)).Elem(), GetLocationsLocationGeoArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetLocationsLocationGeoArrayInput)(nil)).Elem(), GetLocationsLocationGeoArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretAwsInput)(nil)).Elem(), GetSecretAwsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretAwsPtrInput)(nil)).Elem(), GetSecretAwsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretAzureConnectorInput)(nil)).Elem(), GetSecretAzureConnectorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretAzureConnectorPtrInput)(nil)).Elem(), GetSecretAzureConnectorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretEcrInput)(nil)).Elem(), GetSecretEcrArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretEcrPtrInput)(nil)).Elem(), GetSecretEcrArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretKeypairInput)(nil)).Elem(), GetSecretKeypairArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretKeypairPtrInput)(nil)).Elem(), GetSecretKeypairArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretNatsAccountInput)(nil)).Elem(), GetSecretNatsAccountArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretNatsAccountPtrInput)(nil)).Elem(), GetSecretNatsAccountArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretOpaqueInput)(nil)).Elem(), GetSecretOpaqueArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretOpaquePtrInput)(nil)).Elem(), GetSecretOpaqueArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretTlsInput)(nil)).Elem(), GetSecretTlsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretTlsPtrInput)(nil)).Elem(), GetSecretTlsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretUserpassInput)(nil)).Elem(), GetSecretUserpassArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretUserpassPtrInput)(nil)).Elem(), GetSecretUserpassArgs{})
 	pulumi.RegisterOutputType(CloudAccountAwsOutput{})
 	pulumi.RegisterOutputType(CloudAccountAwsPtrOutput{})
 	pulumi.RegisterOutputType(CloudAccountAzureOutput{})
@@ -30298,6 +31808,10 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadLoadBalancerDirectPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadLoadBalancerDirectPortOutput{})
 	pulumi.RegisterOutputType(WorkloadLoadBalancerDirectPortArrayOutput{})
+	pulumi.RegisterOutputType(WorkloadLoadBalancerGeoLocationOutput{})
+	pulumi.RegisterOutputType(WorkloadLoadBalancerGeoLocationPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadLoadBalancerGeoLocationHeadersOutput{})
+	pulumi.RegisterOutputType(WorkloadLoadBalancerGeoLocationHeadersPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingOutput{})
@@ -30310,10 +31824,6 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadRolloutOptionsPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadSecurityOptionsOutput{})
 	pulumi.RegisterOutputType(WorkloadSecurityOptionsPtrOutput{})
-	pulumi.RegisterOutputType(WorkloadSecurityOptionsGeoLocationOutput{})
-	pulumi.RegisterOutputType(WorkloadSecurityOptionsGeoLocationPtrOutput{})
-	pulumi.RegisterOutputType(WorkloadSecurityOptionsGeoLocationHeadersOutput{})
-	pulumi.RegisterOutputType(WorkloadSecurityOptionsGeoLocationHeadersPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadSidecarOutput{})
 	pulumi.RegisterOutputType(WorkloadSidecarPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadStatusOutput{})
@@ -30364,4 +31874,20 @@ func init() {
 	pulumi.RegisterOutputType(GetLocationsLocationArrayOutput{})
 	pulumi.RegisterOutputType(GetLocationsLocationGeoOutput{})
 	pulumi.RegisterOutputType(GetLocationsLocationGeoArrayOutput{})
+	pulumi.RegisterOutputType(GetSecretAwsOutput{})
+	pulumi.RegisterOutputType(GetSecretAwsPtrOutput{})
+	pulumi.RegisterOutputType(GetSecretAzureConnectorOutput{})
+	pulumi.RegisterOutputType(GetSecretAzureConnectorPtrOutput{})
+	pulumi.RegisterOutputType(GetSecretEcrOutput{})
+	pulumi.RegisterOutputType(GetSecretEcrPtrOutput{})
+	pulumi.RegisterOutputType(GetSecretKeypairOutput{})
+	pulumi.RegisterOutputType(GetSecretKeypairPtrOutput{})
+	pulumi.RegisterOutputType(GetSecretNatsAccountOutput{})
+	pulumi.RegisterOutputType(GetSecretNatsAccountPtrOutput{})
+	pulumi.RegisterOutputType(GetSecretOpaqueOutput{})
+	pulumi.RegisterOutputType(GetSecretOpaquePtrOutput{})
+	pulumi.RegisterOutputType(GetSecretTlsOutput{})
+	pulumi.RegisterOutputType(GetSecretTlsPtrOutput{})
+	pulumi.RegisterOutputType(GetSecretUserpassOutput{})
+	pulumi.RegisterOutputType(GetSecretUserpassPtrOutput{})
 }

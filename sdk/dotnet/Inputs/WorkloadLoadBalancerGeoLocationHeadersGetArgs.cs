@@ -11,7 +11,7 @@ using Pulumi;
 namespace Pulumiverse.Cpln.Inputs
 {
 
-    public sealed class WorkloadSecurityOptionsGeoLocationHeadersGetArgs : global::Pulumi.ResourceArgs
+    public sealed class WorkloadLoadBalancerGeoLocationHeadersGetArgs : global::Pulumi.ResourceArgs
     {
         [Input("asn")]
         public Input<string>? Asn { get; set; }
@@ -25,9 +25,9 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("region")]
         public Input<string>? Region { get; set; }
 
-        public WorkloadSecurityOptionsGeoLocationHeadersGetArgs()
+        public WorkloadLoadBalancerGeoLocationHeadersGetArgs()
         {
         }
-        public static new WorkloadSecurityOptionsGeoLocationHeadersGetArgs Empty => new WorkloadSecurityOptionsGeoLocationHeadersGetArgs();
+        public static new WorkloadLoadBalancerGeoLocationHeadersGetArgs Empty => new WorkloadLoadBalancerGeoLocationHeadersGetArgs();
     }
 }

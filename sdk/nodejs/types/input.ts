@@ -187,6 +187,102 @@ export interface GetImagesQuerySpecTermArgs {
     value?: pulumi.Input<string>;
 }
 
+export interface GetSecretAws {
+    accessKey: string;
+    externalId?: string;
+    roleArn?: string;
+    secretKey: string;
+}
+
+export interface GetSecretAwsArgs {
+    accessKey: pulumi.Input<string>;
+    externalId?: pulumi.Input<string>;
+    roleArn?: pulumi.Input<string>;
+    secretKey: pulumi.Input<string>;
+}
+
+export interface GetSecretAzureConnector {
+    code: string;
+    url: string;
+}
+
+export interface GetSecretAzureConnectorArgs {
+    code: pulumi.Input<string>;
+    url: pulumi.Input<string>;
+}
+
+export interface GetSecretEcr {
+    accessKey: string;
+    externalId?: string;
+    repos: string[];
+    roleArn?: string;
+    secretKey: string;
+}
+
+export interface GetSecretEcrArgs {
+    accessKey: pulumi.Input<string>;
+    externalId?: pulumi.Input<string>;
+    repos: pulumi.Input<pulumi.Input<string>[]>;
+    roleArn?: pulumi.Input<string>;
+    secretKey: pulumi.Input<string>;
+}
+
+export interface GetSecretKeypair {
+    passphrase?: string;
+    publicKey?: string;
+    secretKey: string;
+}
+
+export interface GetSecretKeypairArgs {
+    passphrase?: pulumi.Input<string>;
+    publicKey?: pulumi.Input<string>;
+    secretKey: pulumi.Input<string>;
+}
+
+export interface GetSecretNatsAccount {
+    accountId: string;
+    privateKey: string;
+}
+
+export interface GetSecretNatsAccountArgs {
+    accountId: pulumi.Input<string>;
+    privateKey: pulumi.Input<string>;
+}
+
+export interface GetSecretOpaque {
+    encoding?: string;
+    payload: string;
+}
+
+export interface GetSecretOpaqueArgs {
+    encoding?: pulumi.Input<string>;
+    payload: pulumi.Input<string>;
+}
+
+export interface GetSecretTls {
+    cert: string;
+    chain?: string;
+    key: string;
+}
+
+export interface GetSecretTlsArgs {
+    cert: pulumi.Input<string>;
+    chain?: pulumi.Input<string>;
+    key: pulumi.Input<string>;
+}
+
+export interface GetSecretUserpass {
+    encoding?: string;
+    password: string;
+    username: string;
+}
+
+export interface GetSecretUserpassArgs {
+    encoding?: pulumi.Input<string>;
+    password: pulumi.Input<string>;
+    username: pulumi.Input<string>;
+}
+
 export interface GroupIdentityMatcher {
     expression: pulumi.Input<string>;
     language?: pulumi.Input<string>;
@@ -987,6 +1083,7 @@ export interface WorkloadJob {
 
 export interface WorkloadLoadBalancer {
     direct?: pulumi.Input<inputs.WorkloadLoadBalancerDirect>;
+    geoLocation?: pulumi.Input<inputs.WorkloadLoadBalancerGeoLocation>;
 }
 
 export interface WorkloadLoadBalancerDirect {
@@ -999,6 +1096,18 @@ export interface WorkloadLoadBalancerDirectPort {
     externalPort: pulumi.Input<number>;
     protocol: pulumi.Input<string>;
     scheme?: pulumi.Input<string>;
+}
+
+export interface WorkloadLoadBalancerGeoLocation {
+    enabled?: pulumi.Input<boolean>;
+    headers?: pulumi.Input<inputs.WorkloadLoadBalancerGeoLocationHeaders>;
+}
+
+export interface WorkloadLoadBalancerGeoLocationHeaders {
+    asn?: pulumi.Input<string>;
+    city?: pulumi.Input<string>;
+    country?: pulumi.Input<string>;
+    region?: pulumi.Input<string>;
 }
 
 export interface WorkloadLocalOption {
@@ -1047,19 +1156,6 @@ export interface WorkloadRolloutOptions {
 
 export interface WorkloadSecurityOptions {
     fileSystemGroupId?: pulumi.Input<number>;
-    geoLocation?: pulumi.Input<inputs.WorkloadSecurityOptionsGeoLocation>;
-}
-
-export interface WorkloadSecurityOptionsGeoLocation {
-    enabled?: pulumi.Input<boolean>;
-    headers?: pulumi.Input<inputs.WorkloadSecurityOptionsGeoLocationHeaders>;
-}
-
-export interface WorkloadSecurityOptionsGeoLocationHeaders {
-    asn?: pulumi.Input<string>;
-    city?: pulumi.Input<string>;
-    country?: pulumi.Input<string>;
-    region?: pulumi.Input<string>;
 }
 
 export interface WorkloadSidecar {

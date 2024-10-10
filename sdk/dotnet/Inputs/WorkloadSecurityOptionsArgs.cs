@@ -16,9 +16,6 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("fileSystemGroupId")]
         public Input<int>? FileSystemGroupId { get; set; }
 
-        [Input("geoLocation")]
-        public Input<Inputs.WorkloadSecurityOptionsGeoLocationArgs>? GeoLocation { get; set; }
-
         public WorkloadSecurityOptionsArgs()
         {
         }

@@ -12,19 +12,23 @@ namespace Pulumiverse.Cpln.Outputs
 {
 
     [OutputType]
-    public sealed class WorkloadLoadBalancer
+    public sealed class GetSecretKeypairResult
     {
-        public readonly Outputs.WorkloadLoadBalancerDirect? Direct;
-        public readonly Outputs.WorkloadLoadBalancerGeoLocation? GeoLocation;
+        public readonly string? Passphrase;
+        public readonly string? PublicKey;
+        public readonly string SecretKey;
 
         [OutputConstructor]
-        private WorkloadLoadBalancer(
-            Outputs.WorkloadLoadBalancerDirect? direct,
+        private GetSecretKeypairResult(
+            string? passphrase,
 
-            Outputs.WorkloadLoadBalancerGeoLocation? geoLocation)
+            string? publicKey,
+
+            string secretKey)
         {
-            Direct = direct;
-            GeoLocation = geoLocation;
+            Passphrase = passphrase;
+            PublicKey = publicKey;
+            SecretKey = secretKey;
         }
     }
 }
