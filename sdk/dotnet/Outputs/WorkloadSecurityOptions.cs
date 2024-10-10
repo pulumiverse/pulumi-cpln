@@ -15,16 +15,11 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class WorkloadSecurityOptions
     {
         public readonly int? FileSystemGroupId;
-        public readonly Outputs.WorkloadSecurityOptionsGeoLocation? GeoLocation;
 
         [OutputConstructor]
-        private WorkloadSecurityOptions(
-            int? fileSystemGroupId,
-
-            Outputs.WorkloadSecurityOptionsGeoLocation? geoLocation)
+        private WorkloadSecurityOptions(int? fileSystemGroupId)
         {
             FileSystemGroupId = fileSystemGroupId;
-            GeoLocation = geoLocation;
         }
     }
 }

@@ -2828,6 +2828,9 @@
             "properties": {
                 "direct": {
                     "$ref": "#/types/cpln:index/WorkloadLoadBalancerDirect:WorkloadLoadBalancerDirect"
+                },
+                "geoLocation": {
+                    "$ref": "#/types/cpln:index/WorkloadLoadBalancerGeoLocation:WorkloadLoadBalancerGeoLocation"
                 }
             },
             "type": "object"
@@ -2869,6 +2872,34 @@
                 "externalPort",
                 "protocol"
             ]
+        },
+        "cpln:index/WorkloadLoadBalancerGeoLocation:WorkloadLoadBalancerGeoLocation": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "headers": {
+                    "$ref": "#/types/cpln:index/WorkloadLoadBalancerGeoLocationHeaders:WorkloadLoadBalancerGeoLocationHeaders"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadLoadBalancerGeoLocationHeaders:WorkloadLoadBalancerGeoLocationHeaders": {
+            "properties": {
+                "asn": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
         },
         "cpln:index/WorkloadLocalOption:WorkloadLocalOption": {
             "properties": {
@@ -2989,37 +3020,6 @@
             "properties": {
                 "fileSystemGroupId": {
                     "type": "integer"
-                },
-                "geoLocation": {
-                    "$ref": "#/types/cpln:index/WorkloadSecurityOptionsGeoLocation:WorkloadSecurityOptionsGeoLocation"
-                }
-            },
-            "type": "object"
-        },
-        "cpln:index/WorkloadSecurityOptionsGeoLocation:WorkloadSecurityOptionsGeoLocation": {
-            "properties": {
-                "enabled": {
-                    "type": "boolean"
-                },
-                "headers": {
-                    "$ref": "#/types/cpln:index/WorkloadSecurityOptionsGeoLocationHeaders:WorkloadSecurityOptionsGeoLocationHeaders"
-                }
-            },
-            "type": "object"
-        },
-        "cpln:index/WorkloadSecurityOptionsGeoLocationHeaders:WorkloadSecurityOptionsGeoLocationHeaders": {
-            "properties": {
-                "asn": {
-                    "type": "string"
-                },
-                "city": {
-                    "type": "string"
-                },
-                "country": {
-                    "type": "string"
-                },
-                "region": {
-                    "type": "string"
                 }
             },
             "type": "object"
@@ -3616,6 +3616,163 @@
                 }
             },
             "type": "object"
+        },
+        "cpln:index/getSecretAws:getSecretAws": {
+            "properties": {
+                "accessKey": {
+                    "type": "string",
+                    "secret": true
+                },
+                "externalId": {
+                    "type": "string"
+                },
+                "roleArn": {
+                    "type": "string"
+                },
+                "secretKey": {
+                    "type": "string",
+                    "secret": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "accessKey",
+                "secretKey"
+            ]
+        },
+        "cpln:index/getSecretAzureConnector:getSecretAzureConnector": {
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "secret": true
+                },
+                "url": {
+                    "type": "string",
+                    "secret": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "code",
+                "url"
+            ]
+        },
+        "cpln:index/getSecretEcr:getSecretEcr": {
+            "properties": {
+                "accessKey": {
+                    "type": "string"
+                },
+                "externalId": {
+                    "type": "string"
+                },
+                "repos": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "roleArn": {
+                    "type": "string"
+                },
+                "secretKey": {
+                    "type": "string",
+                    "secret": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "accessKey",
+                "repos",
+                "secretKey"
+            ]
+        },
+        "cpln:index/getSecretKeypair:getSecretKeypair": {
+            "properties": {
+                "passphrase": {
+                    "type": "string",
+                    "secret": true
+                },
+                "publicKey": {
+                    "type": "string"
+                },
+                "secretKey": {
+                    "type": "string",
+                    "secret": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "secretKey"
+            ]
+        },
+        "cpln:index/getSecretNatsAccount:getSecretNatsAccount": {
+            "properties": {
+                "accountId": {
+                    "type": "string"
+                },
+                "privateKey": {
+                    "type": "string",
+                    "secret": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "accountId",
+                "privateKey"
+            ]
+        },
+        "cpln:index/getSecretOpaque:getSecretOpaque": {
+            "properties": {
+                "encoding": {
+                    "type": "string"
+                },
+                "payload": {
+                    "type": "string",
+                    "secret": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "payload"
+            ]
+        },
+        "cpln:index/getSecretTls:getSecretTls": {
+            "properties": {
+                "cert": {
+                    "type": "string"
+                },
+                "chain": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string",
+                    "secret": true
+                }
+            },
+            "type": "object",
+            "required": [
+                "cert",
+                "key"
+            ]
+        },
+        "cpln:index/getSecretUserpass:getSecretUserpass": {
+            "properties": {
+                "encoding": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "secret": true
+                },
+                "username": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ]
         }
     },
     "provider": {
@@ -7191,6 +7348,160 @@
                 "required": [
                     "cplnId",
                     "name",
+                    "id"
+                ]
+            }
+        },
+        "cpln:index/getSecret:getSecret": {
+            "description": "Use this data source to access information about a [Secret](https://docs.controlplane.com/reference/secret) within Control Plane.\n\n## Required\n\n- **name** (String) Name of the secret.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the secret.\n- **name** (String) Name of the secret.\n- **description** (String) Description of the secret.\n- **tags** (Map of String) Key-value map of resource tags.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n- **secret_link** (String) Output used when linking a secret to an environment variable or volume, in the format: `cpln://secret/SECRET_NAME`.\n- **dictionary_as_envs** (Map of String) If a dictionary secret is defined, this output will be a key-value map in the following format: `key = cpln://secret/SECRET_NAME.key`.\n- **aws** (Block List, Max: 1) (see below) [Reference Page](https://docs.controlplane.com/reference/secret#aws).\n- **azure_connector** (Block List, Max: 1) (see below) [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).\n- **azure_sdk** (String, Sensitive) JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).\n- **dictionary** (Map of String) List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).\n- **docker** (String, Sensitive) JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).\n- **ecr** (Block List, Max: 1) (see below).\n- **gcp** (String, Sensitive) JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)\n- **keypair** (Block List, Max: 1) (see below) [Reference Page](https://docs.controlplane.com/reference/secret#keypair).\n- **nats_account** (Block List, Max: 1) (see below) [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).\n- **opaque** (Block List, Max: 1) (see below) [Reference Page](https://docs.controlplane.com/reference/secret#opaque).\n- **tls** (Block List, Max: 1) (see below) [Reference Page](https://docs.controlplane.com/reference/secret#tls).\n- **userpass** (Block List, Max: 1) (see below) [Reference Page](https://docs.controlplane.com/reference/secret#username).\n\n\u003ca id=\"nestedblock--aws\"\u003e\u003c/a\u003e\n\n### `aws`\n\nOptional:\n\n- **access_key** (String, Sensitive) Access Key provided by AWS.\n- **role_arn** (String) Role ARN provided by AWS.\n- **secret_key** (String, Sensitive) Secret Key provided by AWS.\n- **external_id** (String) AWS IAM Role External ID.\n\n\u003ca id=\"nestedblock--azure_connector\"\u003e\u003c/a\u003e\n\n### `azure_connector`\n\nOptional:\n\n- **code** (String, Sensitive) Code/Key to authenticate to deployment URL.\n- **url** (String, Sensitive) Deployment URL.\n\n\u003ca id=\"nestedblock--ecr\"\u003e\u003c/a\u003e\n\n### `ecr`\n\n[Reference Page](https://docs.controlplane.com/reference/secret#ecr)\n\nOptional:\n\n- **access_key** (String) Access Key provided by AWS.\n- **repos** (Set of String) List of ECR repositories.\n- **role_arn** (String) Role ARN provided by AWS.\n- **secret_key** (String, Sensitive) Secret Key provided by AWS.\n- **external_id** (String) AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.\n\n\u003ca id=\"nestedblock--keypair\"\u003e\u003c/a\u003e\n\n### `keypair`\n\nOptional:\n\n- **passphrase** (String, Sensitive) Passphrase for private key.\n- **public_key** (String) Public Key.\n- **secret_key** (String, Sensitive) Secret/Private Key.\n\n\u003ca id=\"nestedblock--nats-account\"\u003e\u003c/a\u003e\n\n### `nats_account`\n\nRequired:\n\n- **account_id** (String) Account ID.\n- **private_key** (String) Private Key.\n\n\u003ca id=\"nestedblock--opaque\"\u003e\u003c/a\u003e\n\n### `opaque`\n\nOptional:\n\n- **encoding** (String) Available encodings: `plain`, `base64`. Default: `plain`.\n- **payload** (String, Sensitive) Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.\n\n\u003ca id=\"nestedblock--tls\"\u003e\u003c/a\u003e\n\n### `tls`\n\nOptional:\n\n- **cert** (String) Public Certificate.\n- **chain** (String) Chain Certificate.\n- **key** (String, Sensitive) Private Certificate.\n\n\u003ca id=\"nestedblock--userpass\"\u003e\u003c/a\u003e\n\n### `userpass`\n\nOptional:\n\n- **encoding** (String) Available encodings: `plain`, `base64`. Default: `plain`.\n- **password** (String, Sensitive) Password.\n- **username** (String) Username.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumi/cpln\";\n\nexport = async () =\u003e {\n    const example = await cpln.getSecret({\n        name: \"example-secret-opaque\",\n    });\n    return {\n        \"example-secret-payload\": example.opaque?.payload,\n    };\n}\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\nexample = cpln.get_secret(name=\"example-secret-opaque\")\npulumi.export(\"example-secret-payload\", example.opaque.payload)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var example = Cpln.GetSecret.Invoke(new()\n    {\n        Name = \"example-secret-opaque\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"example-secret-payload\"] = example.Apply(getSecretResult =\u003e getSecretResult.Opaque?.Payload),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\texample, err := cpln.LookupSecret(ctx, \u0026cpln.LookupSecretArgs{\n\t\t\tName: \"example-secret-opaque\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"example-secret-payload\", example.Opaque.Payload)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport com.pulumi.cpln.inputs.GetSecretArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var example = CplnFunctions.getSecret(GetSecretArgs.builder()\n            .name(\"example-secret-opaque\")\n            .build());\n\n        ctx.export(\"example-secret-payload\", example.applyValue(getSecretResult -\u003e getSecretResult.opaque().payload()));\n    }\n}\n```\n```yaml\nvariables:\n  example:\n    fn::invoke:\n      Function: cpln:getSecret\n      Arguments:\n        name: example-secret-opaque\noutputs:\n  example-secret-payload: ${example.opaque.payload}\n```\n{{% /example %}}\n{{% /examples %}}",
+            "inputs": {
+                "description": "A collection of arguments for invoking getSecret.\n",
+                "properties": {
+                    "aws": {
+                        "$ref": "#/types/cpln:index/getSecretAws:getSecretAws"
+                    },
+                    "azureConnector": {
+                        "$ref": "#/types/cpln:index/getSecretAzureConnector:getSecretAzureConnector"
+                    },
+                    "azureSdk": {
+                        "type": "string",
+                        "secret": true
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "dictionary": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "docker": {
+                        "type": "string",
+                        "secret": true
+                    },
+                    "ecr": {
+                        "$ref": "#/types/cpln:index/getSecretEcr:getSecretEcr"
+                    },
+                    "gcp": {
+                        "type": "string",
+                        "secret": true
+                    },
+                    "keypair": {
+                        "$ref": "#/types/cpln:index/getSecretKeypair:getSecretKeypair"
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "natsAccount": {
+                        "$ref": "#/types/cpln:index/getSecretNatsAccount:getSecretNatsAccount"
+                    },
+                    "opaque": {
+                        "$ref": "#/types/cpln:index/getSecretOpaque:getSecretOpaque"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "tls": {
+                        "$ref": "#/types/cpln:index/getSecretTls:getSecretTls"
+                    },
+                    "userpass": {
+                        "$ref": "#/types/cpln:index/getSecretUserpass:getSecretUserpass"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getSecret.\n",
+                "properties": {
+                    "aws": {
+                        "$ref": "#/types/cpln:index/getSecretAws:getSecretAws"
+                    },
+                    "azureConnector": {
+                        "$ref": "#/types/cpln:index/getSecretAzureConnector:getSecretAzureConnector"
+                    },
+                    "azureSdk": {
+                        "type": "string",
+                        "secret": true
+                    },
+                    "cplnId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "dictionary": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "dictionaryAsEnvs": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "pulumi.json#/Any"
+                        }
+                    },
+                    "docker": {
+                        "type": "string",
+                        "secret": true
+                    },
+                    "ecr": {
+                        "$ref": "#/types/cpln:index/getSecretEcr:getSecretEcr"
+                    },
+                    "gcp": {
+                        "type": "string",
+                        "secret": true
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "keypair": {
+                        "$ref": "#/types/cpln:index/getSecretKeypair:getSecretKeypair"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "natsAccount": {
+                        "$ref": "#/types/cpln:index/getSecretNatsAccount:getSecretNatsAccount"
+                    },
+                    "opaque": {
+                        "$ref": "#/types/cpln:index/getSecretOpaque:getSecretOpaque"
+                    },
+                    "secretLink": {
+                        "type": "string"
+                    },
+                    "selfLink": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "tls": {
+                        "$ref": "#/types/cpln:index/getSecretTls:getSecretTls"
+                    },
+                    "userpass": {
+                        "$ref": "#/types/cpln:index/getSecretUserpass:getSecretUserpass"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "cplnId",
+                    "dictionaryAsEnvs",
+                    "name",
+                    "secretLink",
+                    "selfLink",
                     "id"
                 ]
             }

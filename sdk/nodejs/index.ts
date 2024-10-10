@@ -70,6 +70,11 @@ export const getOrg: typeof import("./getOrg").getOrg = null as any;
 export const getOrgOutput: typeof import("./getOrg").getOrgOutput = null as any;
 utilities.lazyLoad(exports, ["getOrg","getOrgOutput"], () => require("./getOrg"));
 
+export { GetSecretArgs, GetSecretResult, GetSecretOutputArgs } from "./getSecret";
+export const getSecret: typeof import("./getSecret").getSecret = null as any;
+export const getSecretOutput: typeof import("./getSecret").getSecretOutput = null as any;
+utilities.lazyLoad(exports, ["getSecret","getSecretOutput"], () => require("./getSecret"));
+
 export { GroupArgs, GroupState } from "./group";
 export type Group = import("./group").Group;
 export const Group: typeof import("./group").Group = null as any;

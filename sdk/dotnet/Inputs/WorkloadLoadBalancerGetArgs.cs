@@ -16,6 +16,9 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("direct")]
         public Input<Inputs.WorkloadLoadBalancerDirectGetArgs>? Direct { get; set; }
 
+        [Input("geoLocation")]
+        public Input<Inputs.WorkloadLoadBalancerGeoLocationGetArgs>? GeoLocation { get; set; }
+
         public WorkloadLoadBalancerGetArgs()
         {
         }

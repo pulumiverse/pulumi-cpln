@@ -18,6 +18,7 @@ from .get_images import *
 from .get_location import *
 from .get_locations import *
 from .get_org import *
+from .get_secret import *
 from .group import *
 from .gvc import *
 from .identity import *

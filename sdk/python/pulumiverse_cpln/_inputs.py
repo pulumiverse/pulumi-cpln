@@ -156,14 +156,14 @@ __all__ = [
     'WorkloadLoadBalancerArgs',
     'WorkloadLoadBalancerDirectArgs',
     'WorkloadLoadBalancerDirectPortArgs',
+    'WorkloadLoadBalancerGeoLocationArgs',
+    'WorkloadLoadBalancerGeoLocationHeadersArgs',
     'WorkloadLocalOptionArgs',
     'WorkloadLocalOptionAutoscalingArgs',
     'WorkloadOptionsArgs',
     'WorkloadOptionsAutoscalingArgs',
     'WorkloadRolloutOptionsArgs',
     'WorkloadSecurityOptionsArgs',
-    'WorkloadSecurityOptionsGeoLocationArgs',
-    'WorkloadSecurityOptionsGeoLocationHeadersArgs',
     'WorkloadSidecarArgs',
     'WorkloadStatusArgs',
     'WorkloadStatusHealthCheckArgs',
@@ -179,6 +179,14 @@ __all__ = [
     'GetImagesQueryArgs',
     'GetImagesQuerySpecArgs',
     'GetImagesQuerySpecTermArgs',
+    'GetSecretAwsArgs',
+    'GetSecretAzureConnectorArgs',
+    'GetSecretEcrArgs',
+    'GetSecretKeypairArgs',
+    'GetSecretNatsAccountArgs',
+    'GetSecretOpaqueArgs',
+    'GetSecretTlsArgs',
+    'GetSecretUserpassArgs',
 ]
 
 @pulumi.input_type
@@ -8878,20 +8886,27 @@ class WorkloadJobArgs:
 @pulumi.input_type
 class WorkloadLoadBalancerArgs:
     def __init__(__self__, *,
-                 direct: Optional[pulumi.Input['WorkloadLoadBalancerDirectArgs']] = None):
+                 direct: Optional[pulumi.Input['WorkloadLoadBalancerDirectArgs']] = None,
+                 geo_location: Optional[pulumi.Input['WorkloadLoadBalancerGeoLocationArgs']] = None):
         WorkloadLoadBalancerArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             direct=direct,
+            geo_location=geo_location,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
              direct: Optional[pulumi.Input['WorkloadLoadBalancerDirectArgs']] = None,
+             geo_location: Optional[pulumi.Input['WorkloadLoadBalancerGeoLocationArgs']] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
+        if 'geoLocation' in kwargs:
+            geo_location = kwargs['geoLocation']
 
         if direct is not None:
             _setter("direct", direct)
+        if geo_location is not None:
+            _setter("geo_location", geo_location)
 
     @property
     @pulumi.getter
@@ -8901,6 +8916,15 @@ class WorkloadLoadBalancerArgs:
     @direct.setter
     def direct(self, value: Optional[pulumi.Input['WorkloadLoadBalancerDirectArgs']]):
         pulumi.set(self, "direct", value)
+
+    @property
+    @pulumi.getter(name="geoLocation")
+    def geo_location(self) -> Optional[pulumi.Input['WorkloadLoadBalancerGeoLocationArgs']]:
+        return pulumi.get(self, "geo_location")
+
+    @geo_location.setter
+    def geo_location(self, value: Optional[pulumi.Input['WorkloadLoadBalancerGeoLocationArgs']]):
+        pulumi.set(self, "geo_location", value)
 
 
 @pulumi.input_type
@@ -9014,6 +9038,118 @@ class WorkloadLoadBalancerDirectPortArgs:
     @scheme.setter
     def scheme(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "scheme", value)
+
+
+@pulumi.input_type
+class WorkloadLoadBalancerGeoLocationArgs:
+    def __init__(__self__, *,
+                 enabled: Optional[pulumi.Input[bool]] = None,
+                 headers: Optional[pulumi.Input['WorkloadLoadBalancerGeoLocationHeadersArgs']] = None):
+        WorkloadLoadBalancerGeoLocationArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            enabled=enabled,
+            headers=headers,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             enabled: Optional[pulumi.Input[bool]] = None,
+             headers: Optional[pulumi.Input['WorkloadLoadBalancerGeoLocationHeadersArgs']] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if enabled is not None:
+            _setter("enabled", enabled)
+        if headers is not None:
+            _setter("headers", headers)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "enabled", value)
+
+    @property
+    @pulumi.getter
+    def headers(self) -> Optional[pulumi.Input['WorkloadLoadBalancerGeoLocationHeadersArgs']]:
+        return pulumi.get(self, "headers")
+
+    @headers.setter
+    def headers(self, value: Optional[pulumi.Input['WorkloadLoadBalancerGeoLocationHeadersArgs']]):
+        pulumi.set(self, "headers", value)
+
+
+@pulumi.input_type
+class WorkloadLoadBalancerGeoLocationHeadersArgs:
+    def __init__(__self__, *,
+                 asn: Optional[pulumi.Input[str]] = None,
+                 city: Optional[pulumi.Input[str]] = None,
+                 country: Optional[pulumi.Input[str]] = None,
+                 region: Optional[pulumi.Input[str]] = None):
+        WorkloadLoadBalancerGeoLocationHeadersArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            asn=asn,
+            city=city,
+            country=country,
+            region=region,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             asn: Optional[pulumi.Input[str]] = None,
+             city: Optional[pulumi.Input[str]] = None,
+             country: Optional[pulumi.Input[str]] = None,
+             region: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if asn is not None:
+            _setter("asn", asn)
+        if city is not None:
+            _setter("city", city)
+        if country is not None:
+            _setter("country", country)
+        if region is not None:
+            _setter("region", region)
+
+    @property
+    @pulumi.getter
+    def asn(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "asn")
+
+    @asn.setter
+    def asn(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "asn", value)
+
+    @property
+    @pulumi.getter
+    def city(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "city")
+
+    @city.setter
+    def city(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "city", value)
+
+    @property
+    @pulumi.getter
+    def country(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "country")
+
+    @country.setter
+    def country(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "country", value)
+
+    @property
+    @pulumi.getter
+    def region(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "region", value)
 
 
 @pulumi.input_type
@@ -9530,29 +9666,22 @@ class WorkloadRolloutOptionsArgs:
 @pulumi.input_type
 class WorkloadSecurityOptionsArgs:
     def __init__(__self__, *,
-                 file_system_group_id: Optional[pulumi.Input[int]] = None,
-                 geo_location: Optional[pulumi.Input['WorkloadSecurityOptionsGeoLocationArgs']] = None):
+                 file_system_group_id: Optional[pulumi.Input[int]] = None):
         WorkloadSecurityOptionsArgs._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             file_system_group_id=file_system_group_id,
-            geo_location=geo_location,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
              file_system_group_id: Optional[pulumi.Input[int]] = None,
-             geo_location: Optional[pulumi.Input['WorkloadSecurityOptionsGeoLocationArgs']] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
         if 'fileSystemGroupId' in kwargs:
             file_system_group_id = kwargs['fileSystemGroupId']
-        if 'geoLocation' in kwargs:
-            geo_location = kwargs['geoLocation']
 
         if file_system_group_id is not None:
             _setter("file_system_group_id", file_system_group_id)
-        if geo_location is not None:
-            _setter("geo_location", geo_location)
 
     @property
     @pulumi.getter(name="fileSystemGroupId")
@@ -9562,127 +9691,6 @@ class WorkloadSecurityOptionsArgs:
     @file_system_group_id.setter
     def file_system_group_id(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "file_system_group_id", value)
-
-    @property
-    @pulumi.getter(name="geoLocation")
-    def geo_location(self) -> Optional[pulumi.Input['WorkloadSecurityOptionsGeoLocationArgs']]:
-        return pulumi.get(self, "geo_location")
-
-    @geo_location.setter
-    def geo_location(self, value: Optional[pulumi.Input['WorkloadSecurityOptionsGeoLocationArgs']]):
-        pulumi.set(self, "geo_location", value)
-
-
-@pulumi.input_type
-class WorkloadSecurityOptionsGeoLocationArgs:
-    def __init__(__self__, *,
-                 enabled: Optional[pulumi.Input[bool]] = None,
-                 headers: Optional[pulumi.Input['WorkloadSecurityOptionsGeoLocationHeadersArgs']] = None):
-        WorkloadSecurityOptionsGeoLocationArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            enabled=enabled,
-            headers=headers,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             enabled: Optional[pulumi.Input[bool]] = None,
-             headers: Optional[pulumi.Input['WorkloadSecurityOptionsGeoLocationHeadersArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        if enabled is not None:
-            _setter("enabled", enabled)
-        if headers is not None:
-            _setter("headers", headers)
-
-    @property
-    @pulumi.getter
-    def enabled(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "enabled")
-
-    @enabled.setter
-    def enabled(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "enabled", value)
-
-    @property
-    @pulumi.getter
-    def headers(self) -> Optional[pulumi.Input['WorkloadSecurityOptionsGeoLocationHeadersArgs']]:
-        return pulumi.get(self, "headers")
-
-    @headers.setter
-    def headers(self, value: Optional[pulumi.Input['WorkloadSecurityOptionsGeoLocationHeadersArgs']]):
-        pulumi.set(self, "headers", value)
-
-
-@pulumi.input_type
-class WorkloadSecurityOptionsGeoLocationHeadersArgs:
-    def __init__(__self__, *,
-                 asn: Optional[pulumi.Input[str]] = None,
-                 city: Optional[pulumi.Input[str]] = None,
-                 country: Optional[pulumi.Input[str]] = None,
-                 region: Optional[pulumi.Input[str]] = None):
-        WorkloadSecurityOptionsGeoLocationHeadersArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            asn=asn,
-            city=city,
-            country=country,
-            region=region,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             asn: Optional[pulumi.Input[str]] = None,
-             city: Optional[pulumi.Input[str]] = None,
-             country: Optional[pulumi.Input[str]] = None,
-             region: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        if asn is not None:
-            _setter("asn", asn)
-        if city is not None:
-            _setter("city", city)
-        if country is not None:
-            _setter("country", country)
-        if region is not None:
-            _setter("region", region)
-
-    @property
-    @pulumi.getter
-    def asn(self) -> Optional[pulumi.Input[str]]:
-        return pulumi.get(self, "asn")
-
-    @asn.setter
-    def asn(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "asn", value)
-
-    @property
-    @pulumi.getter
-    def city(self) -> Optional[pulumi.Input[str]]:
-        return pulumi.get(self, "city")
-
-    @city.setter
-    def city(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "city", value)
-
-    @property
-    @pulumi.getter
-    def country(self) -> Optional[pulumi.Input[str]]:
-        return pulumi.get(self, "country")
-
-    @country.setter
-    def country(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "country", value)
-
-    @property
-    @pulumi.getter
-    def region(self) -> Optional[pulumi.Input[str]]:
-        return pulumi.get(self, "region")
-
-    @region.setter
-    def region(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "region", value)
 
 
 @pulumi.input_type
@@ -10586,5 +10594,462 @@ class GetImagesQuerySpecTermArgs:
     @property.setter
     def property(self, value: Optional[str]):
         pulumi.set(self, "property", value)
+
+
+@pulumi.input_type
+class GetSecretAwsArgs:
+    def __init__(__self__, *,
+                 access_key: str,
+                 secret_key: str,
+                 external_id: Optional[str] = None,
+                 role_arn: Optional[str] = None):
+        GetSecretAwsArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            access_key=access_key,
+            secret_key=secret_key,
+            external_id=external_id,
+            role_arn=role_arn,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             access_key: str,
+             secret_key: str,
+             external_id: Optional[str] = None,
+             role_arn: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'accessKey' in kwargs:
+            access_key = kwargs['accessKey']
+        if 'secretKey' in kwargs:
+            secret_key = kwargs['secretKey']
+        if 'externalId' in kwargs:
+            external_id = kwargs['externalId']
+        if 'roleArn' in kwargs:
+            role_arn = kwargs['roleArn']
+
+        _setter("access_key", access_key)
+        _setter("secret_key", secret_key)
+        if external_id is not None:
+            _setter("external_id", external_id)
+        if role_arn is not None:
+            _setter("role_arn", role_arn)
+
+    @property
+    @pulumi.getter(name="accessKey")
+    def access_key(self) -> str:
+        return pulumi.get(self, "access_key")
+
+    @access_key.setter
+    def access_key(self, value: str):
+        pulumi.set(self, "access_key", value)
+
+    @property
+    @pulumi.getter(name="secretKey")
+    def secret_key(self) -> str:
+        return pulumi.get(self, "secret_key")
+
+    @secret_key.setter
+    def secret_key(self, value: str):
+        pulumi.set(self, "secret_key", value)
+
+    @property
+    @pulumi.getter(name="externalId")
+    def external_id(self) -> Optional[str]:
+        return pulumi.get(self, "external_id")
+
+    @external_id.setter
+    def external_id(self, value: Optional[str]):
+        pulumi.set(self, "external_id", value)
+
+    @property
+    @pulumi.getter(name="roleArn")
+    def role_arn(self) -> Optional[str]:
+        return pulumi.get(self, "role_arn")
+
+    @role_arn.setter
+    def role_arn(self, value: Optional[str]):
+        pulumi.set(self, "role_arn", value)
+
+
+@pulumi.input_type
+class GetSecretAzureConnectorArgs:
+    def __init__(__self__, *,
+                 code: str,
+                 url: str):
+        GetSecretAzureConnectorArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            code=code,
+            url=url,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             code: str,
+             url: str,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("code", code)
+        _setter("url", url)
+
+    @property
+    @pulumi.getter
+    def code(self) -> str:
+        return pulumi.get(self, "code")
+
+    @code.setter
+    def code(self, value: str):
+        pulumi.set(self, "code", value)
+
+    @property
+    @pulumi.getter
+    def url(self) -> str:
+        return pulumi.get(self, "url")
+
+    @url.setter
+    def url(self, value: str):
+        pulumi.set(self, "url", value)
+
+
+@pulumi.input_type
+class GetSecretEcrArgs:
+    def __init__(__self__, *,
+                 access_key: str,
+                 repos: Sequence[str],
+                 secret_key: str,
+                 external_id: Optional[str] = None,
+                 role_arn: Optional[str] = None):
+        GetSecretEcrArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            access_key=access_key,
+            repos=repos,
+            secret_key=secret_key,
+            external_id=external_id,
+            role_arn=role_arn,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             access_key: str,
+             repos: Sequence[str],
+             secret_key: str,
+             external_id: Optional[str] = None,
+             role_arn: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'accessKey' in kwargs:
+            access_key = kwargs['accessKey']
+        if 'secretKey' in kwargs:
+            secret_key = kwargs['secretKey']
+        if 'externalId' in kwargs:
+            external_id = kwargs['externalId']
+        if 'roleArn' in kwargs:
+            role_arn = kwargs['roleArn']
+
+        _setter("access_key", access_key)
+        _setter("repos", repos)
+        _setter("secret_key", secret_key)
+        if external_id is not None:
+            _setter("external_id", external_id)
+        if role_arn is not None:
+            _setter("role_arn", role_arn)
+
+    @property
+    @pulumi.getter(name="accessKey")
+    def access_key(self) -> str:
+        return pulumi.get(self, "access_key")
+
+    @access_key.setter
+    def access_key(self, value: str):
+        pulumi.set(self, "access_key", value)
+
+    @property
+    @pulumi.getter
+    def repos(self) -> Sequence[str]:
+        return pulumi.get(self, "repos")
+
+    @repos.setter
+    def repos(self, value: Sequence[str]):
+        pulumi.set(self, "repos", value)
+
+    @property
+    @pulumi.getter(name="secretKey")
+    def secret_key(self) -> str:
+        return pulumi.get(self, "secret_key")
+
+    @secret_key.setter
+    def secret_key(self, value: str):
+        pulumi.set(self, "secret_key", value)
+
+    @property
+    @pulumi.getter(name="externalId")
+    def external_id(self) -> Optional[str]:
+        return pulumi.get(self, "external_id")
+
+    @external_id.setter
+    def external_id(self, value: Optional[str]):
+        pulumi.set(self, "external_id", value)
+
+    @property
+    @pulumi.getter(name="roleArn")
+    def role_arn(self) -> Optional[str]:
+        return pulumi.get(self, "role_arn")
+
+    @role_arn.setter
+    def role_arn(self, value: Optional[str]):
+        pulumi.set(self, "role_arn", value)
+
+
+@pulumi.input_type
+class GetSecretKeypairArgs:
+    def __init__(__self__, *,
+                 secret_key: str,
+                 passphrase: Optional[str] = None,
+                 public_key: Optional[str] = None):
+        GetSecretKeypairArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            secret_key=secret_key,
+            passphrase=passphrase,
+            public_key=public_key,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             secret_key: str,
+             passphrase: Optional[str] = None,
+             public_key: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'secretKey' in kwargs:
+            secret_key = kwargs['secretKey']
+        if 'publicKey' in kwargs:
+            public_key = kwargs['publicKey']
+
+        _setter("secret_key", secret_key)
+        if passphrase is not None:
+            _setter("passphrase", passphrase)
+        if public_key is not None:
+            _setter("public_key", public_key)
+
+    @property
+    @pulumi.getter(name="secretKey")
+    def secret_key(self) -> str:
+        return pulumi.get(self, "secret_key")
+
+    @secret_key.setter
+    def secret_key(self, value: str):
+        pulumi.set(self, "secret_key", value)
+
+    @property
+    @pulumi.getter
+    def passphrase(self) -> Optional[str]:
+        return pulumi.get(self, "passphrase")
+
+    @passphrase.setter
+    def passphrase(self, value: Optional[str]):
+        pulumi.set(self, "passphrase", value)
+
+    @property
+    @pulumi.getter(name="publicKey")
+    def public_key(self) -> Optional[str]:
+        return pulumi.get(self, "public_key")
+
+    @public_key.setter
+    def public_key(self, value: Optional[str]):
+        pulumi.set(self, "public_key", value)
+
+
+@pulumi.input_type
+class GetSecretNatsAccountArgs:
+    def __init__(__self__, *,
+                 account_id: str,
+                 private_key: str):
+        GetSecretNatsAccountArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            account_id=account_id,
+            private_key=private_key,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             account_id: str,
+             private_key: str,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'accountId' in kwargs:
+            account_id = kwargs['accountId']
+        if 'privateKey' in kwargs:
+            private_key = kwargs['privateKey']
+
+        _setter("account_id", account_id)
+        _setter("private_key", private_key)
+
+    @property
+    @pulumi.getter(name="accountId")
+    def account_id(self) -> str:
+        return pulumi.get(self, "account_id")
+
+    @account_id.setter
+    def account_id(self, value: str):
+        pulumi.set(self, "account_id", value)
+
+    @property
+    @pulumi.getter(name="privateKey")
+    def private_key(self) -> str:
+        return pulumi.get(self, "private_key")
+
+    @private_key.setter
+    def private_key(self, value: str):
+        pulumi.set(self, "private_key", value)
+
+
+@pulumi.input_type
+class GetSecretOpaqueArgs:
+    def __init__(__self__, *,
+                 payload: str,
+                 encoding: Optional[str] = None):
+        GetSecretOpaqueArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            payload=payload,
+            encoding=encoding,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             payload: str,
+             encoding: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("payload", payload)
+        if encoding is not None:
+            _setter("encoding", encoding)
+
+    @property
+    @pulumi.getter
+    def payload(self) -> str:
+        return pulumi.get(self, "payload")
+
+    @payload.setter
+    def payload(self, value: str):
+        pulumi.set(self, "payload", value)
+
+    @property
+    @pulumi.getter
+    def encoding(self) -> Optional[str]:
+        return pulumi.get(self, "encoding")
+
+    @encoding.setter
+    def encoding(self, value: Optional[str]):
+        pulumi.set(self, "encoding", value)
+
+
+@pulumi.input_type
+class GetSecretTlsArgs:
+    def __init__(__self__, *,
+                 cert: str,
+                 key: str,
+                 chain: Optional[str] = None):
+        GetSecretTlsArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            cert=cert,
+            key=key,
+            chain=chain,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             cert: str,
+             key: str,
+             chain: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("cert", cert)
+        _setter("key", key)
+        if chain is not None:
+            _setter("chain", chain)
+
+    @property
+    @pulumi.getter
+    def cert(self) -> str:
+        return pulumi.get(self, "cert")
+
+    @cert.setter
+    def cert(self, value: str):
+        pulumi.set(self, "cert", value)
+
+    @property
+    @pulumi.getter
+    def key(self) -> str:
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: str):
+        pulumi.set(self, "key", value)
+
+    @property
+    @pulumi.getter
+    def chain(self) -> Optional[str]:
+        return pulumi.get(self, "chain")
+
+    @chain.setter
+    def chain(self, value: Optional[str]):
+        pulumi.set(self, "chain", value)
+
+
+@pulumi.input_type
+class GetSecretUserpassArgs:
+    def __init__(__self__, *,
+                 password: str,
+                 username: str,
+                 encoding: Optional[str] = None):
+        GetSecretUserpassArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            password=password,
+            username=username,
+            encoding=encoding,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             password: str,
+             username: str,
+             encoding: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        _setter("password", password)
+        _setter("username", username)
+        if encoding is not None:
+            _setter("encoding", encoding)
+
+    @property
+    @pulumi.getter
+    def password(self) -> str:
+        return pulumi.get(self, "password")
+
+    @password.setter
+    def password(self, value: str):
+        pulumi.set(self, "password", value)
+
+    @property
+    @pulumi.getter
+    def username(self) -> str:
+        return pulumi.get(self, "username")
+
+    @username.setter
+    def username(self, value: str):
+        pulumi.set(self, "username", value)
+
+    @property
+    @pulumi.getter
+    def encoding(self) -> Optional[str]:
+        return pulumi.get(self, "encoding")
+
+    @encoding.setter
+    def encoding(self, value: Optional[str]):
+        pulumi.set(self, "encoding", value)
 
 

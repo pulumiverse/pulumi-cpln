@@ -12,19 +12,23 @@ namespace Pulumiverse.Cpln.Outputs
 {
 
     [OutputType]
-    public sealed class WorkloadLoadBalancer
+    public sealed class GetSecretUserpassResult
     {
-        public readonly Outputs.WorkloadLoadBalancerDirect? Direct;
-        public readonly Outputs.WorkloadLoadBalancerGeoLocation? GeoLocation;
+        public readonly string? Encoding;
+        public readonly string Password;
+        public readonly string Username;
 
         [OutputConstructor]
-        private WorkloadLoadBalancer(
-            Outputs.WorkloadLoadBalancerDirect? direct,
+        private GetSecretUserpassResult(
+            string? encoding,
 
-            Outputs.WorkloadLoadBalancerGeoLocation? geoLocation)
+            string password,
+
+            string username)
         {
-            Direct = direct;
-            GeoLocation = geoLocation;
+            Encoding = encoding;
+            Password = password;
+            Username = username;
         }
     }
 }

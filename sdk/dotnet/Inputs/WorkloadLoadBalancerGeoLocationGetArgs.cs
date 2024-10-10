@@ -11,17 +11,17 @@ using Pulumi;
 namespace Pulumiverse.Cpln.Inputs
 {
 
-    public sealed class WorkloadSecurityOptionsGeoLocationArgs : global::Pulumi.ResourceArgs
+    public sealed class WorkloadLoadBalancerGeoLocationGetArgs : global::Pulumi.ResourceArgs
     {
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }
 
         [Input("headers")]
-        public Input<Inputs.WorkloadSecurityOptionsGeoLocationHeadersArgs>? Headers { get; set; }
+        public Input<Inputs.WorkloadLoadBalancerGeoLocationHeadersGetArgs>? Headers { get; set; }
 
-        public WorkloadSecurityOptionsGeoLocationArgs()
+        public WorkloadLoadBalancerGeoLocationGetArgs()
         {
         }
-        public static new WorkloadSecurityOptionsGeoLocationArgs Empty => new WorkloadSecurityOptionsGeoLocationArgs();
+        public static new WorkloadLoadBalancerGeoLocationGetArgs Empty => new WorkloadLoadBalancerGeoLocationGetArgs();
     }
 }

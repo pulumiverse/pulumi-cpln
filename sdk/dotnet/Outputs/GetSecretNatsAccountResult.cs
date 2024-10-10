@@ -12,19 +12,19 @@ namespace Pulumiverse.Cpln.Outputs
 {
 
     [OutputType]
-    public sealed class WorkloadLoadBalancer
+    public sealed class GetSecretNatsAccountResult
     {
-        public readonly Outputs.WorkloadLoadBalancerDirect? Direct;
-        public readonly Outputs.WorkloadLoadBalancerGeoLocation? GeoLocation;
+        public readonly string AccountId;
+        public readonly string PrivateKey;
 
         [OutputConstructor]
-        private WorkloadLoadBalancer(
-            Outputs.WorkloadLoadBalancerDirect? direct,
+        private GetSecretNatsAccountResult(
+            string accountId,
 
-            Outputs.WorkloadLoadBalancerGeoLocation? geoLocation)
+            string privateKey)
         {
-            Direct = direct;
-            GeoLocation = geoLocation;
+            AccountId = accountId;
+            PrivateKey = privateKey;
         }
     }
 }

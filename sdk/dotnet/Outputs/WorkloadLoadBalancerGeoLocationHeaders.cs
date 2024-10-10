@@ -12,7 +12,7 @@ namespace Pulumiverse.Cpln.Outputs
 {
 
     [OutputType]
-    public sealed class WorkloadSecurityOptionsGeoLocationHeaders
+    public sealed class WorkloadLoadBalancerGeoLocationHeaders
     {
         public readonly string? Asn;
         public readonly string? City;
@@ -20,7 +20,7 @@ namespace Pulumiverse.Cpln.Outputs
         public readonly string? Region;
 
         [OutputConstructor]
-        private WorkloadSecurityOptionsGeoLocationHeaders(
+        private WorkloadLoadBalancerGeoLocationHeaders(
             string? asn,
 
             string? city,

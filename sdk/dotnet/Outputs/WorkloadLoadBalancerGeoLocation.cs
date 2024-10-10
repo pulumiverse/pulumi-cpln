@@ -12,19 +12,19 @@ namespace Pulumiverse.Cpln.Outputs
 {
 
     [OutputType]
-    public sealed class WorkloadLoadBalancer
+    public sealed class WorkloadLoadBalancerGeoLocation
     {
-        public readonly Outputs.WorkloadLoadBalancerDirect? Direct;
-        public readonly Outputs.WorkloadLoadBalancerGeoLocation? GeoLocation;
+        public readonly bool? Enabled;
+        public readonly Outputs.WorkloadLoadBalancerGeoLocationHeaders? Headers;
 
         [OutputConstructor]
-        private WorkloadLoadBalancer(
-            Outputs.WorkloadLoadBalancerDirect? direct,
+        private WorkloadLoadBalancerGeoLocation(
+            bool? enabled,
 
-            Outputs.WorkloadLoadBalancerGeoLocation? geoLocation)
+            Outputs.WorkloadLoadBalancerGeoLocationHeaders? headers)
         {
-            Direct = direct;
-            GeoLocation = geoLocation;
+            Enabled = enabled;
+            Headers = headers;
         }
     }
 }

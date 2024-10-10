@@ -8,17 +8,23 @@ using System.Threading.Tasks;
 using Pulumi.Serialization;
 using Pulumi;
 
-namespace Pulumiverse.Cpln.Inputs
+namespace Pulumiverse.Cpln.Outputs
 {
 
-    public sealed class WorkloadSecurityOptionsGetArgs : global::Pulumi.ResourceArgs
+    [OutputType]
+    public sealed class GetSecretAzureConnectorResult
     {
-        [Input("fileSystemGroupId")]
-        public Input<int>? FileSystemGroupId { get; set; }
+        public readonly string Code;
+        public readonly string Url;
 
-        public WorkloadSecurityOptionsGetArgs()
+        [OutputConstructor]
+        private GetSecretAzureConnectorResult(
+            string code,
+
+            string url)
         {
+            Code = code;
+            Url = url;
         }
-        public static new WorkloadSecurityOptionsGetArgs Empty => new WorkloadSecurityOptionsGetArgs();
     }
 }

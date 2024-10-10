@@ -12,19 +12,19 @@ namespace Pulumiverse.Cpln.Outputs
 {
 
     [OutputType]
-    public sealed class WorkloadSecurityOptionsGeoLocation
+    public sealed class GetSecretOpaqueResult
     {
-        public readonly bool? Enabled;
-        public readonly Outputs.WorkloadSecurityOptionsGeoLocationHeaders? Headers;
+        public readonly string? Encoding;
+        public readonly string Payload;
 
         [OutputConstructor]
-        private WorkloadSecurityOptionsGeoLocation(
-            bool? enabled,
+        private GetSecretOpaqueResult(
+            string? encoding,
 
-            Outputs.WorkloadSecurityOptionsGeoLocationHeaders? headers)
+            string payload)
         {
-            Enabled = enabled;
-            Headers = headers;
+            Encoding = encoding;
+            Payload = payload;
         }
     }
 }

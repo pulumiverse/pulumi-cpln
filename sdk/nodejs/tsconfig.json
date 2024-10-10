@@ -28,6 +28,7 @@
         "getLocation.ts",
         "getLocations.ts",
         "getOrg.ts",
+        "getSecret.ts",
         "group.ts",
         "gvc.ts",
         "identity.ts",

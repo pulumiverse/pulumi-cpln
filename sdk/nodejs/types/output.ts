@@ -222,6 +222,54 @@ export interface GetLocationsLocationGeo {
     state?: string;
 }
 
+export interface GetSecretAws {
+    accessKey: string;
+    externalId?: string;
+    roleArn?: string;
+    secretKey: string;
+}
+
+export interface GetSecretAzureConnector {
+    code: string;
+    url: string;
+}
+
+export interface GetSecretEcr {
+    accessKey: string;
+    externalId?: string;
+    repos: string[];
+    roleArn?: string;
+    secretKey: string;
+}
+
+export interface GetSecretKeypair {
+    passphrase?: string;
+    publicKey?: string;
+    secretKey: string;
+}
+
+export interface GetSecretNatsAccount {
+    accountId: string;
+    privateKey: string;
+}
+
+export interface GetSecretOpaque {
+    encoding?: string;
+    payload: string;
+}
+
+export interface GetSecretTls {
+    cert: string;
+    chain?: string;
+    key: string;
+}
+
+export interface GetSecretUserpass {
+    encoding?: string;
+    password: string;
+    username: string;
+}
+
 export interface GroupIdentityMatcher {
     expression: string;
     language?: string;
@@ -1022,6 +1070,7 @@ export interface WorkloadJob {
 
 export interface WorkloadLoadBalancer {
     direct?: outputs.WorkloadLoadBalancerDirect;
+    geoLocation?: outputs.WorkloadLoadBalancerGeoLocation;
 }
 
 export interface WorkloadLoadBalancerDirect {
@@ -1034,6 +1083,18 @@ export interface WorkloadLoadBalancerDirectPort {
     externalPort: number;
     protocol: string;
     scheme?: string;
+}
+
+export interface WorkloadLoadBalancerGeoLocation {
+    enabled?: boolean;
+    headers?: outputs.WorkloadLoadBalancerGeoLocationHeaders;
+}
+
+export interface WorkloadLoadBalancerGeoLocationHeaders {
+    asn?: string;
+    city?: string;
+    country?: string;
+    region?: string;
 }
 
 export interface WorkloadLocalOption {
@@ -1082,19 +1143,6 @@ export interface WorkloadRolloutOptions {
 
 export interface WorkloadSecurityOptions {
     fileSystemGroupId?: number;
-    geoLocation?: outputs.WorkloadSecurityOptionsGeoLocation;
-}
-
-export interface WorkloadSecurityOptionsGeoLocation {
-    enabled?: boolean;
-    headers?: outputs.WorkloadSecurityOptionsGeoLocationHeaders;
-}
-
-export interface WorkloadSecurityOptionsGeoLocationHeaders {
-    asn?: string;
-    city?: string;
-    country?: string;
-    region?: string;
 }
 
 export interface WorkloadSidecar {
