@@ -14,11 +14,16 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sAddOnsAzureWorkloadIdentity
     {
-        public readonly string TenantId;
+        public readonly bool? _sentinel;
+        public readonly string? TenantId;
 
         [OutputConstructor]
-        private Mk8sAddOnsAzureWorkloadIdentity(string tenantId)
+        private Mk8sAddOnsAzureWorkloadIdentity(
+            bool? _sentinel,
+
+            string? tenantId)
         {
+            this._sentinel = _sentinel;
             TenantId = tenantId;
         }
     }

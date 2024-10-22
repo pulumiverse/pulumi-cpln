@@ -13,8 +13,11 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class Mk8sAddOnsAwsEfsArgs : global::Pulumi.ResourceArgs
     {
-        [Input("roleArn", required: true)]
-        public Input<string> RoleArn { get; set; } = null!;
+        [Input("_sentinel")]
+        public Input<bool>? _sentinel { get; set; }
+
+        [Input("roleArn")]
+        public Input<string>? RoleArn { get; set; }
 
         public Mk8sAddOnsAwsEfsArgs()
         {

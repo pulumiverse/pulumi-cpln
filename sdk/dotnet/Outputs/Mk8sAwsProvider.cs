@@ -17,6 +17,7 @@ namespace Pulumiverse.Cpln.Outputs
         public readonly Outputs.Mk8sAwsProviderAutoscaler? Autoscaler;
         public readonly ImmutableDictionary<string, string>? AwsTags;
         public readonly string DeployRoleArn;
+        public readonly ImmutableArray<Outputs.Mk8sAwsProviderDeployRoleChain> DeployRoleChains;
         public readonly string? DiskEncryptionKeyArn;
         public readonly Outputs.Mk8sAwsProviderImage Image;
         public readonly string? KeyPair;
@@ -35,6 +36,8 @@ namespace Pulumiverse.Cpln.Outputs
             ImmutableDictionary<string, string>? awsTags,
 
             string deployRoleArn,
+
+            ImmutableArray<Outputs.Mk8sAwsProviderDeployRoleChain> deployRoleChains,
 
             string? diskEncryptionKeyArn,
 
@@ -59,6 +62,7 @@ namespace Pulumiverse.Cpln.Outputs
             Autoscaler = autoscaler;
             AwsTags = awsTags;
             DeployRoleArn = deployRoleArn;
+            DeployRoleChains = deployRoleChains;
             DiskEncryptionKeyArn = diskEncryptionKeyArn;
             Image = image;
             KeyPair = keyPair;

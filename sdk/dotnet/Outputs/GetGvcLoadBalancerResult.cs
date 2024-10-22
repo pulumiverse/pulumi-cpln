@@ -15,15 +15,19 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class GetGvcLoadBalancerResult
     {
         public readonly bool Dedicated;
+        public readonly Outputs.GetGvcLoadBalancerRedirectResult? Redirect;
         public readonly int? TrustedProxies;
 
         [OutputConstructor]
         private GetGvcLoadBalancerResult(
             bool dedicated,
 
+            Outputs.GetGvcLoadBalancerRedirectResult? redirect,
+
             int? trustedProxies)
         {
             Dedicated = dedicated;
+            Redirect = redirect;
             TrustedProxies = trustedProxies;
         }
     }

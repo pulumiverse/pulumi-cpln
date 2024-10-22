@@ -14,6 +14,7 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sAddOnsMetrics
     {
+        public readonly bool? _sentinel;
         public readonly bool? ApiServer;
         public readonly bool? Cadvisor;
         public readonly bool? CoreDns;
@@ -24,6 +25,8 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private Mk8sAddOnsMetrics(
+            bool? _sentinel,
+
             bool? apiServer,
 
             bool? cadvisor,
@@ -38,6 +41,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             Outputs.Mk8sAddOnsMetricsScrapeAnnotated? scrapeAnnotated)
         {
+            this._sentinel = _sentinel;
             ApiServer = apiServer;
             Cadvisor = cadvisor;
             CoreDns = coreDns;

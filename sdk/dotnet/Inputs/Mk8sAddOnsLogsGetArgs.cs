@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class Mk8sAddOnsLogsGetArgs : global::Pulumi.ResourceArgs
     {
+        [Input("_sentinel")]
+        public Input<bool>? _sentinel { get; set; }
+
         [Input("auditEnabled")]
         public Input<bool>? AuditEnabled { get; set; }
 

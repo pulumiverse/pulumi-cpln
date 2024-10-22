@@ -33,6 +33,7 @@
         "gvc.ts",
         "identity.ts",
         "index.ts",
+        "ipSet.ts",
         "location.ts",
         "mk8s.ts",
         "org.ts",

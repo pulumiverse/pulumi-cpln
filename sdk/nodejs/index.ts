@@ -90,6 +90,11 @@ export type Identity = import("./identity").Identity;
 export const Identity: typeof import("./identity").Identity = null as any;
 utilities.lazyLoad(exports, ["Identity"], () => require("./identity"));
 
+export { IpSetArgs, IpSetState } from "./ipSet";
+export type IpSet = import("./ipSet").IpSet;
+export const IpSet: typeof import("./ipSet").IpSet = null as any;
+utilities.lazyLoad(exports, ["IpSet"], () => require("./ipSet"));
+
 export { LocationArgs, LocationState } from "./location";
 export type Location = import("./location").Location;
 export const Location: typeof import("./location").Location = null as any;
@@ -182,6 +187,8 @@ const _module = {
                 return new Gvc(name, <any>undefined, { urn })
             case "cpln:index/identity:Identity":
                 return new Identity(name, <any>undefined, { urn })
+            case "cpln:index/ipSet:IpSet":
+                return new IpSet(name, <any>undefined, { urn })
             case "cpln:index/location:Location":
                 return new Location(name, <any>undefined, { urn })
             case "cpln:index/mk8s:Mk8s":
@@ -218,6 +225,7 @@ pulumi.runtime.registerResourceModule("cpln", "index/domainRoute", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/group", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/gvc", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/identity", _module)
+pulumi.runtime.registerResourceModule("cpln", "index/ipSet", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/location", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/mk8s", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/org", _module)

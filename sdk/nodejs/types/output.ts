@@ -111,7 +111,16 @@ export interface GetGvcLightstepTracing {
 
 export interface GetGvcLoadBalancer {
     dedicated: boolean;
+    redirect?: outputs.GetGvcLoadBalancerRedirect;
     trustedProxies?: number;
+}
+
+export interface GetGvcLoadBalancerRedirect {
+    class?: outputs.GetGvcLoadBalancerRedirectClass;
+}
+
+export interface GetGvcLoadBalancerRedirectClass {
+    status5xx?: string;
 }
 
 export interface GetGvcOtelTracing {
@@ -307,7 +316,16 @@ export interface GvcLightstepTracing {
 
 export interface GvcLoadBalancer {
     dedicated: boolean;
+    redirect?: outputs.GvcLoadBalancerRedirect;
     trustedProxies?: number;
+}
+
+export interface GvcLoadBalancerRedirect {
+    class?: outputs.GvcLoadBalancerRedirectClass;
+}
+
+export interface GvcLoadBalancerRedirectClass {
+    status5xx?: string;
 }
 
 export interface GvcOtelTracing {
@@ -398,6 +416,24 @@ export interface IdentityNgsAccessPolicySub {
     denies?: string[];
 }
 
+export interface IpSetLocation {
+    name: string;
+    retentionPolicy: string;
+}
+
+export interface IpSetStatus {
+    error: string;
+    ipAddresses: outputs.IpSetStatusIpAddress[];
+}
+
+export interface IpSetStatusIpAddress {
+    created: string;
+    id: string;
+    ip: string;
+    name: string;
+    state: string;
+}
+
 export interface LocationGeo {
     city?: string;
     continent?: string;
@@ -423,15 +459,18 @@ export interface Mk8sAddOns {
 }
 
 export interface Mk8sAddOnsAwsEcr {
-    roleArn: string;
+    _sentinel?: boolean;
+    roleArn?: string;
 }
 
 export interface Mk8sAddOnsAwsEfs {
-    roleArn: string;
+    _sentinel?: boolean;
+    roleArn?: string;
 }
 
 export interface Mk8sAddOnsAwsElb {
-    roleArn: string;
+    _sentinel?: boolean;
+    roleArn?: string;
 }
 
 export interface Mk8sAddOnsAzureAcr {
@@ -439,16 +478,19 @@ export interface Mk8sAddOnsAzureAcr {
 }
 
 export interface Mk8sAddOnsAzureWorkloadIdentity {
-    tenantId: string;
+    _sentinel?: boolean;
+    tenantId?: string;
 }
 
 export interface Mk8sAddOnsLogs {
+    _sentinel?: boolean;
     auditEnabled?: boolean;
     excludeNamespaces?: string;
     includeNamespaces?: string;
 }
 
 export interface Mk8sAddOnsMetrics {
+    _sentinel?: boolean;
     apiServer?: boolean;
     cadvisor?: boolean;
     coreDns?: boolean;
@@ -459,6 +501,7 @@ export interface Mk8sAddOnsMetrics {
 }
 
 export interface Mk8sAddOnsMetricsScrapeAnnotated {
+    _sentinel?: boolean;
     excludeNamespaces?: string;
     includeNamespaces?: string;
     intervalSeconds?: number;
@@ -466,13 +509,15 @@ export interface Mk8sAddOnsMetricsScrapeAnnotated {
 }
 
 export interface Mk8sAddOnsNvidia {
-    taintGpuNodes: boolean;
+    _sentinel?: boolean;
+    taintGpuNodes?: boolean;
 }
 
 export interface Mk8sAwsProvider {
     autoscaler?: outputs.Mk8sAwsProviderAutoscaler;
     awsTags?: {[key: string]: string};
     deployRoleArn: string;
+    deployRoleChains?: outputs.Mk8sAwsProviderDeployRoleChain[];
     diskEncryptionKeyArn?: string;
     image: outputs.Mk8sAwsProviderImage;
     keyPair?: string;
@@ -490,6 +535,12 @@ export interface Mk8sAwsProviderAutoscaler {
     unneededTime?: string;
     unreadyTime?: string;
     utilizationThreshold?: number;
+}
+
+export interface Mk8sAwsProviderDeployRoleChain {
+    externalId?: string;
+    roleArn: string;
+    sessionNamePrefix?: string;
 }
 
 export interface Mk8sAwsProviderImage {
@@ -524,6 +575,49 @@ export interface Mk8sAwsProviderNodePoolOverrideImage {
 }
 
 export interface Mk8sAwsProviderNodePoolTaint {
+    effect?: string;
+    key?: string;
+    value?: string;
+}
+
+export interface Mk8sDigitalOceanProvider {
+    autoscaler?: outputs.Mk8sDigitalOceanProviderAutoscaler;
+    digitalOceanTags?: string[];
+    extraSshKeys?: string[];
+    image: string;
+    networking: outputs.Mk8sDigitalOceanProviderNetworking;
+    nodePools?: outputs.Mk8sDigitalOceanProviderNodePool[];
+    preInstallScript?: string;
+    region: string;
+    reservedIps?: string[];
+    sshKeys: string[];
+    tokenSecretLink: string;
+    vpcId: string;
+}
+
+export interface Mk8sDigitalOceanProviderAutoscaler {
+    expanders: string[];
+    unneededTime?: string;
+    unreadyTime?: string;
+    utilizationThreshold?: number;
+}
+
+export interface Mk8sDigitalOceanProviderNetworking {
+    podNetwork?: string;
+    serviceNetwork?: string;
+}
+
+export interface Mk8sDigitalOceanProviderNodePool {
+    dropletSize: string;
+    labels?: {[key: string]: string};
+    maxSize?: number;
+    minSize?: number;
+    name: string;
+    overrideImage?: string;
+    taints?: outputs.Mk8sDigitalOceanProviderNodePoolTaint[];
+}
+
+export interface Mk8sDigitalOceanProviderNodePoolTaint {
     effect?: string;
     key?: string;
     value?: string;
@@ -635,6 +729,185 @@ export interface Mk8sHetznerProviderNodePoolTaint {
     value?: string;
 }
 
+export interface Mk8sLambdalabsProvider {
+    autoscaler?: outputs.Mk8sLambdalabsProviderAutoscaler;
+    nodePools?: outputs.Mk8sLambdalabsProviderNodePool[];
+    preInstallScript?: string;
+    region: string;
+    sshKey: string;
+    tokenSecretLink: string;
+    unmanagedNodePools?: outputs.Mk8sLambdalabsProviderUnmanagedNodePool[];
+}
+
+export interface Mk8sLambdalabsProviderAutoscaler {
+    expanders: string[];
+    unneededTime?: string;
+    unreadyTime?: string;
+    utilizationThreshold?: number;
+}
+
+export interface Mk8sLambdalabsProviderNodePool {
+    instanceType: string;
+    labels?: {[key: string]: string};
+    maxSize?: number;
+    minSize?: number;
+    name: string;
+    taints?: outputs.Mk8sLambdalabsProviderNodePoolTaint[];
+}
+
+export interface Mk8sLambdalabsProviderNodePoolTaint {
+    effect?: string;
+    key?: string;
+    value?: string;
+}
+
+export interface Mk8sLambdalabsProviderUnmanagedNodePool {
+    labels?: {[key: string]: string};
+    name: string;
+    taints?: outputs.Mk8sLambdalabsProviderUnmanagedNodePoolTaint[];
+}
+
+export interface Mk8sLambdalabsProviderUnmanagedNodePoolTaint {
+    effect?: string;
+    key?: string;
+    value?: string;
+}
+
+export interface Mk8sLinodeProvider {
+    authorizedKeys?: string[];
+    authorizedUsers?: string[];
+    autoscaler?: outputs.Mk8sLinodeProviderAutoscaler;
+    firewallId?: string;
+    image: string;
+    networking: outputs.Mk8sLinodeProviderNetworking;
+    nodePools?: outputs.Mk8sLinodeProviderNodePool[];
+    preInstallScript?: string;
+    region: string;
+    tokenSecretLink: string;
+    vpcId: string;
+}
+
+export interface Mk8sLinodeProviderAutoscaler {
+    expanders: string[];
+    unneededTime?: string;
+    unreadyTime?: string;
+    utilizationThreshold?: number;
+}
+
+export interface Mk8sLinodeProviderNetworking {
+    podNetwork?: string;
+    serviceNetwork?: string;
+}
+
+export interface Mk8sLinodeProviderNodePool {
+    labels?: {[key: string]: string};
+    maxSize?: number;
+    minSize?: number;
+    name: string;
+    overrideImage?: string;
+    serverType: string;
+    subnetId: string;
+    taints?: outputs.Mk8sLinodeProviderNodePoolTaint[];
+}
+
+export interface Mk8sLinodeProviderNodePoolTaint {
+    effect?: string;
+    key?: string;
+    value?: string;
+}
+
+export interface Mk8sOblivusProvider {
+    autoscaler?: outputs.Mk8sOblivusProviderAutoscaler;
+    datacenter: string;
+    nodePools?: outputs.Mk8sOblivusProviderNodePool[];
+    preInstallScript?: string;
+    sshKeys?: string[];
+    tokenSecretLink: string;
+    unmanagedNodePools?: outputs.Mk8sOblivusProviderUnmanagedNodePool[];
+}
+
+export interface Mk8sOblivusProviderAutoscaler {
+    expanders: string[];
+    unneededTime?: string;
+    unreadyTime?: string;
+    utilizationThreshold?: number;
+}
+
+export interface Mk8sOblivusProviderNodePool {
+    flavor: string;
+    labels?: {[key: string]: string};
+    maxSize?: number;
+    minSize?: number;
+    name: string;
+    taints?: outputs.Mk8sOblivusProviderNodePoolTaint[];
+}
+
+export interface Mk8sOblivusProviderNodePoolTaint {
+    effect?: string;
+    key?: string;
+    value?: string;
+}
+
+export interface Mk8sOblivusProviderUnmanagedNodePool {
+    labels?: {[key: string]: string};
+    name: string;
+    taints?: outputs.Mk8sOblivusProviderUnmanagedNodePoolTaint[];
+}
+
+export interface Mk8sOblivusProviderUnmanagedNodePoolTaint {
+    effect?: string;
+    key?: string;
+    value?: string;
+}
+
+export interface Mk8sPaperspaceProvider {
+    autoscaler?: outputs.Mk8sPaperspaceProviderAutoscaler;
+    networkId: string;
+    nodePools?: outputs.Mk8sPaperspaceProviderNodePool[];
+    preInstallScript?: string;
+    region: string;
+    sharedDrives?: string[];
+    tokenSecretLink: string;
+    unmanagedNodePools?: outputs.Mk8sPaperspaceProviderUnmanagedNodePool[];
+    userIds?: string[];
+}
+
+export interface Mk8sPaperspaceProviderAutoscaler {
+    expanders: string[];
+    unneededTime?: string;
+    unreadyTime?: string;
+    utilizationThreshold?: number;
+}
+
+export interface Mk8sPaperspaceProviderNodePool {
+    bootDiskSize?: number;
+    labels?: {[key: string]: string};
+    machineType: string;
+    maxSize?: number;
+    minSize?: number;
+    name: string;
+    publicIpType: string;
+    taints?: outputs.Mk8sPaperspaceProviderNodePoolTaint[];
+}
+
+export interface Mk8sPaperspaceProviderNodePoolTaint {
+    effect?: string;
+    key?: string;
+    value?: string;
+}
+
+export interface Mk8sPaperspaceProviderUnmanagedNodePool {
+    labels?: {[key: string]: string};
+    name: string;
+    taints?: outputs.Mk8sPaperspaceProviderUnmanagedNodePoolTaint[];
+}
+
+export interface Mk8sPaperspaceProviderUnmanagedNodePoolTaint {
+    effect?: string;
+    key?: string;
+    value?: string;
+}
+
 export interface Mk8sStatus {
     addOns: outputs.Mk8sStatusAddOn[];
     homeLocation: string;
@@ -685,6 +958,57 @@ export interface Mk8sStatusAddOnLog {
 export interface Mk8sStatusAddOnMetric {
     prometheusEndpoint: string;
     remoteWriteConfig: string;
+}
+
+export interface Mk8sTritonProvider {
+    autoscaler?: outputs.Mk8sTritonProviderAutoscaler;
+    connection: outputs.Mk8sTritonProviderConnection;
+    firewallEnabled?: boolean;
+    imageId: string;
+    location: string;
+    networking: outputs.Mk8sTritonProviderNetworking;
+    nodePools?: outputs.Mk8sTritonProviderNodePool[];
+    preInstallScript?: string;
+    privateNetworkId: string;
+    sshKeys?: string[];
+}
+
+export interface Mk8sTritonProviderAutoscaler {
+    expanders: string[];
+    unneededTime?: string;
+    unreadyTime?: string;
+    utilizationThreshold?: number;
+}
+
+export interface Mk8sTritonProviderConnection {
+    account: string;
+    privateKeySecretLink: string;
+    url: string;
+    user?: string;
+}
+
+export interface Mk8sTritonProviderNetworking {
+    podNetwork?: string;
+    serviceNetwork?: string;
+}
+
+export interface Mk8sTritonProviderNodePool {
+    labels?: {[key: string]: string};
+    maxSize?: number;
+    minSize?: number;
+    name: string;
+    overrideImageId?: string;
+    packageId: string;
+    privateNetworkIds?: string[];
+    publicNetworkId?: string;
+    taints?: outputs.Mk8sTritonProviderNodePoolTaint[];
+    tritonTags?: {[key: string]: string};
+}
+
+export interface Mk8sTritonProviderNodePoolTaint {
+    effect?: string;
+    key?: string;
+    value?: string;
 }
 
 export interface OrgAuthConfig {

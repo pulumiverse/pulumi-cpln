@@ -445,6 +445,9 @@
                 "dedicated": {
                     "type": "boolean"
                 },
+                "redirect": {
+                    "$ref": "#/types/cpln:index/GvcLoadBalancerRedirect:GvcLoadBalancerRedirect"
+                },
                 "trustedProxies": {
                     "type": "integer"
                 }
@@ -453,6 +456,22 @@
             "required": [
                 "dedicated"
             ]
+        },
+        "cpln:index/GvcLoadBalancerRedirect:GvcLoadBalancerRedirect": {
+            "properties": {
+                "class": {
+                    "$ref": "#/types/cpln:index/GvcLoadBalancerRedirectClass:GvcLoadBalancerRedirectClass"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/GvcLoadBalancerRedirectClass:GvcLoadBalancerRedirectClass": {
+            "properties": {
+                "status5xx": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
         },
         "cpln:index/GvcOtelTracing:GvcOtelTracing": {
             "properties": {
@@ -731,6 +750,74 @@
             },
             "type": "object"
         },
+        "cpln:index/IpSetLocation:IpSetLocation": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "retentionPolicy": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "name",
+                "retentionPolicy"
+            ]
+        },
+        "cpln:index/IpSetStatus:IpSetStatus": {
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "ipAddresses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/IpSetStatusIpAddress:IpSetStatusIpAddress"
+                    }
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "error",
+                        "ipAddresses"
+                    ]
+                }
+            }
+        },
+        "cpln:index/IpSetStatusIpAddress:IpSetStatusIpAddress": {
+            "properties": {
+                "created": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "ip": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "created",
+                        "id",
+                        "ip",
+                        "name",
+                        "state"
+                    ]
+                }
+            }
+        },
         "cpln:index/LocationGeo:LocationGeo": {
             "properties": {
                 "city": {
@@ -797,36 +884,36 @@
         },
         "cpln:index/Mk8sAddOnsAwsEcr:Mk8sAddOnsAwsEcr": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "roleArn": {
                     "type": "string"
                 }
             },
-            "type": "object",
-            "required": [
-                "roleArn"
-            ]
+            "type": "object"
         },
         "cpln:index/Mk8sAddOnsAwsEfs:Mk8sAddOnsAwsEfs": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "roleArn": {
                     "type": "string"
                 }
             },
-            "type": "object",
-            "required": [
-                "roleArn"
-            ]
+            "type": "object"
         },
         "cpln:index/Mk8sAddOnsAwsElb:Mk8sAddOnsAwsElb": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "roleArn": {
                     "type": "string"
                 }
             },
-            "type": "object",
-            "required": [
-                "roleArn"
-            ]
+            "type": "object"
         },
         "cpln:index/Mk8sAddOnsAzureAcr:Mk8sAddOnsAzureAcr": {
             "properties": {
@@ -841,17 +928,20 @@
         },
         "cpln:index/Mk8sAddOnsAzureWorkloadIdentity:Mk8sAddOnsAzureWorkloadIdentity": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "tenantId": {
                     "type": "string"
                 }
             },
-            "type": "object",
-            "required": [
-                "tenantId"
-            ]
+            "type": "object"
         },
         "cpln:index/Mk8sAddOnsLogs:Mk8sAddOnsLogs": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "auditEnabled": {
                     "type": "boolean"
                 },
@@ -866,6 +956,9 @@
         },
         "cpln:index/Mk8sAddOnsMetrics:Mk8sAddOnsMetrics": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "apiServer": {
                     "type": "boolean"
                 },
@@ -892,6 +985,9 @@
         },
         "cpln:index/Mk8sAddOnsMetricsScrapeAnnotated:Mk8sAddOnsMetricsScrapeAnnotated": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "excludeNamespaces": {
                     "type": "string"
                 },
@@ -909,14 +1005,14 @@
         },
         "cpln:index/Mk8sAddOnsNvidia:Mk8sAddOnsNvidia": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "taintGpuNodes": {
                     "type": "boolean"
                 }
             },
-            "type": "object",
-            "required": [
-                "taintGpuNodes"
-            ]
+            "type": "object"
         },
         "cpln:index/Mk8sAwsProvider:Mk8sAwsProvider": {
             "properties": {
@@ -931,6 +1027,12 @@
                 },
                 "deployRoleArn": {
                     "type": "string"
+                },
+                "deployRoleChains": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sAwsProviderDeployRoleChain:Mk8sAwsProviderDeployRoleChain"
+                    }
                 },
                 "diskEncryptionKeyArn": {
                     "type": "string"
@@ -999,6 +1101,23 @@
             "type": "object",
             "required": [
                 "expanders"
+            ]
+        },
+        "cpln:index/Mk8sAwsProviderDeployRoleChain:Mk8sAwsProviderDeployRoleChain": {
+            "properties": {
+                "externalId": {
+                    "type": "string"
+                },
+                "roleArn": {
+                    "type": "string"
+                },
+                "sessionNamePrefix": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "roleArn"
             ]
         },
         "cpln:index/Mk8sAwsProviderImage:Mk8sAwsProviderImage": {
@@ -1100,6 +1219,154 @@
             "type": "object"
         },
         "cpln:index/Mk8sAwsProviderNodePoolTaint:Mk8sAwsProviderNodePoolTaint": {
+            "properties": {
+                "effect": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sDigitalOceanProvider:Mk8sDigitalOceanProvider": {
+            "properties": {
+                "autoscaler": {
+                    "$ref": "#/types/cpln:index/Mk8sDigitalOceanProviderAutoscaler:Mk8sDigitalOceanProviderAutoscaler"
+                },
+                "digitalOceanTags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "extraSshKeys": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "image": {
+                    "type": "string"
+                },
+                "networking": {
+                    "$ref": "#/types/cpln:index/Mk8sDigitalOceanProviderNetworking:Mk8sDigitalOceanProviderNetworking"
+                },
+                "nodePools": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sDigitalOceanProviderNodePool:Mk8sDigitalOceanProviderNodePool"
+                    }
+                },
+                "preInstallScript": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "reservedIps": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "sshKeys": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "tokenSecretLink": {
+                    "type": "string"
+                },
+                "vpcId": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "image",
+                "networking",
+                "region",
+                "sshKeys",
+                "tokenSecretLink",
+                "vpcId"
+            ]
+        },
+        "cpln:index/Mk8sDigitalOceanProviderAutoscaler:Mk8sDigitalOceanProviderAutoscaler": {
+            "properties": {
+                "expanders": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "unneededTime": {
+                    "type": "string"
+                },
+                "unreadyTime": {
+                    "type": "string"
+                },
+                "utilizationThreshold": {
+                    "type": "number"
+                }
+            },
+            "type": "object",
+            "required": [
+                "expanders"
+            ]
+        },
+        "cpln:index/Mk8sDigitalOceanProviderNetworking:Mk8sDigitalOceanProviderNetworking": {
+            "properties": {
+                "podNetwork": {
+                    "type": "string"
+                },
+                "serviceNetwork": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sDigitalOceanProviderNodePool:Mk8sDigitalOceanProviderNodePool": {
+            "properties": {
+                "dropletSize": {
+                    "type": "string"
+                },
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "maxSize": {
+                    "type": "integer"
+                },
+                "minSize": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "overrideImage": {
+                    "type": "string"
+                },
+                "taints": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sDigitalOceanProviderNodePoolTaint:Mk8sDigitalOceanProviderNodePoolTaint"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "dropletSize",
+                "name"
+            ]
+        },
+        "cpln:index/Mk8sDigitalOceanProviderNodePoolTaint:Mk8sDigitalOceanProviderNodePoolTaint": {
             "properties": {
                 "effect": {
                     "type": "string"
@@ -1453,6 +1720,601 @@
             },
             "type": "object"
         },
+        "cpln:index/Mk8sLambdalabsProvider:Mk8sLambdalabsProvider": {
+            "properties": {
+                "autoscaler": {
+                    "$ref": "#/types/cpln:index/Mk8sLambdalabsProviderAutoscaler:Mk8sLambdalabsProviderAutoscaler"
+                },
+                "nodePools": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sLambdalabsProviderNodePool:Mk8sLambdalabsProviderNodePool"
+                    }
+                },
+                "preInstallScript": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "sshKey": {
+                    "type": "string"
+                },
+                "tokenSecretLink": {
+                    "type": "string"
+                },
+                "unmanagedNodePools": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sLambdalabsProviderUnmanagedNodePool:Mk8sLambdalabsProviderUnmanagedNodePool"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "region",
+                "sshKey",
+                "tokenSecretLink"
+            ]
+        },
+        "cpln:index/Mk8sLambdalabsProviderAutoscaler:Mk8sLambdalabsProviderAutoscaler": {
+            "properties": {
+                "expanders": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "unneededTime": {
+                    "type": "string"
+                },
+                "unreadyTime": {
+                    "type": "string"
+                },
+                "utilizationThreshold": {
+                    "type": "number"
+                }
+            },
+            "type": "object",
+            "required": [
+                "expanders"
+            ]
+        },
+        "cpln:index/Mk8sLambdalabsProviderNodePool:Mk8sLambdalabsProviderNodePool": {
+            "properties": {
+                "instanceType": {
+                    "type": "string"
+                },
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "maxSize": {
+                    "type": "integer"
+                },
+                "minSize": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "taints": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sLambdalabsProviderNodePoolTaint:Mk8sLambdalabsProviderNodePoolTaint"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "instanceType",
+                "name"
+            ]
+        },
+        "cpln:index/Mk8sLambdalabsProviderNodePoolTaint:Mk8sLambdalabsProviderNodePoolTaint": {
+            "properties": {
+                "effect": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sLambdalabsProviderUnmanagedNodePool:Mk8sLambdalabsProviderUnmanagedNodePool": {
+            "properties": {
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "taints": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sLambdalabsProviderUnmanagedNodePoolTaint:Mk8sLambdalabsProviderUnmanagedNodePoolTaint"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "name"
+            ]
+        },
+        "cpln:index/Mk8sLambdalabsProviderUnmanagedNodePoolTaint:Mk8sLambdalabsProviderUnmanagedNodePoolTaint": {
+            "properties": {
+                "effect": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sLinodeProvider:Mk8sLinodeProvider": {
+            "properties": {
+                "authorizedKeys": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "authorizedUsers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "autoscaler": {
+                    "$ref": "#/types/cpln:index/Mk8sLinodeProviderAutoscaler:Mk8sLinodeProviderAutoscaler"
+                },
+                "firewallId": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "networking": {
+                    "$ref": "#/types/cpln:index/Mk8sLinodeProviderNetworking:Mk8sLinodeProviderNetworking"
+                },
+                "nodePools": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sLinodeProviderNodePool:Mk8sLinodeProviderNodePool"
+                    }
+                },
+                "preInstallScript": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "tokenSecretLink": {
+                    "type": "string"
+                },
+                "vpcId": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "image",
+                "networking",
+                "region",
+                "tokenSecretLink",
+                "vpcId"
+            ]
+        },
+        "cpln:index/Mk8sLinodeProviderAutoscaler:Mk8sLinodeProviderAutoscaler": {
+            "properties": {
+                "expanders": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "unneededTime": {
+                    "type": "string"
+                },
+                "unreadyTime": {
+                    "type": "string"
+                },
+                "utilizationThreshold": {
+                    "type": "number"
+                }
+            },
+            "type": "object",
+            "required": [
+                "expanders"
+            ]
+        },
+        "cpln:index/Mk8sLinodeProviderNetworking:Mk8sLinodeProviderNetworking": {
+            "properties": {
+                "podNetwork": {
+                    "type": "string"
+                },
+                "serviceNetwork": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sLinodeProviderNodePool:Mk8sLinodeProviderNodePool": {
+            "properties": {
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "maxSize": {
+                    "type": "integer"
+                },
+                "minSize": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "overrideImage": {
+                    "type": "string"
+                },
+                "serverType": {
+                    "type": "string"
+                },
+                "subnetId": {
+                    "type": "string"
+                },
+                "taints": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sLinodeProviderNodePoolTaint:Mk8sLinodeProviderNodePoolTaint"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "name",
+                "serverType",
+                "subnetId"
+            ]
+        },
+        "cpln:index/Mk8sLinodeProviderNodePoolTaint:Mk8sLinodeProviderNodePoolTaint": {
+            "properties": {
+                "effect": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sOblivusProvider:Mk8sOblivusProvider": {
+            "properties": {
+                "autoscaler": {
+                    "$ref": "#/types/cpln:index/Mk8sOblivusProviderAutoscaler:Mk8sOblivusProviderAutoscaler"
+                },
+                "datacenter": {
+                    "type": "string"
+                },
+                "nodePools": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sOblivusProviderNodePool:Mk8sOblivusProviderNodePool"
+                    }
+                },
+                "preInstallScript": {
+                    "type": "string"
+                },
+                "sshKeys": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "tokenSecretLink": {
+                    "type": "string"
+                },
+                "unmanagedNodePools": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sOblivusProviderUnmanagedNodePool:Mk8sOblivusProviderUnmanagedNodePool"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "datacenter",
+                "tokenSecretLink"
+            ]
+        },
+        "cpln:index/Mk8sOblivusProviderAutoscaler:Mk8sOblivusProviderAutoscaler": {
+            "properties": {
+                "expanders": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "unneededTime": {
+                    "type": "string"
+                },
+                "unreadyTime": {
+                    "type": "string"
+                },
+                "utilizationThreshold": {
+                    "type": "number"
+                }
+            },
+            "type": "object",
+            "required": [
+                "expanders"
+            ]
+        },
+        "cpln:index/Mk8sOblivusProviderNodePool:Mk8sOblivusProviderNodePool": {
+            "properties": {
+                "flavor": {
+                    "type": "string"
+                },
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "maxSize": {
+                    "type": "integer"
+                },
+                "minSize": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "taints": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sOblivusProviderNodePoolTaint:Mk8sOblivusProviderNodePoolTaint"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "flavor",
+                "name"
+            ]
+        },
+        "cpln:index/Mk8sOblivusProviderNodePoolTaint:Mk8sOblivusProviderNodePoolTaint": {
+            "properties": {
+                "effect": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sOblivusProviderUnmanagedNodePool:Mk8sOblivusProviderUnmanagedNodePool": {
+            "properties": {
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "taints": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sOblivusProviderUnmanagedNodePoolTaint:Mk8sOblivusProviderUnmanagedNodePoolTaint"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "name"
+            ]
+        },
+        "cpln:index/Mk8sOblivusProviderUnmanagedNodePoolTaint:Mk8sOblivusProviderUnmanagedNodePoolTaint": {
+            "properties": {
+                "effect": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sPaperspaceProvider:Mk8sPaperspaceProvider": {
+            "properties": {
+                "autoscaler": {
+                    "$ref": "#/types/cpln:index/Mk8sPaperspaceProviderAutoscaler:Mk8sPaperspaceProviderAutoscaler"
+                },
+                "networkId": {
+                    "type": "string"
+                },
+                "nodePools": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sPaperspaceProviderNodePool:Mk8sPaperspaceProviderNodePool"
+                    }
+                },
+                "preInstallScript": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "sharedDrives": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "tokenSecretLink": {
+                    "type": "string"
+                },
+                "unmanagedNodePools": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sPaperspaceProviderUnmanagedNodePool:Mk8sPaperspaceProviderUnmanagedNodePool"
+                    }
+                },
+                "userIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "networkId",
+                "region",
+                "tokenSecretLink"
+            ]
+        },
+        "cpln:index/Mk8sPaperspaceProviderAutoscaler:Mk8sPaperspaceProviderAutoscaler": {
+            "properties": {
+                "expanders": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "unneededTime": {
+                    "type": "string"
+                },
+                "unreadyTime": {
+                    "type": "string"
+                },
+                "utilizationThreshold": {
+                    "type": "number"
+                }
+            },
+            "type": "object",
+            "required": [
+                "expanders"
+            ]
+        },
+        "cpln:index/Mk8sPaperspaceProviderNodePool:Mk8sPaperspaceProviderNodePool": {
+            "properties": {
+                "bootDiskSize": {
+                    "type": "integer"
+                },
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "machineType": {
+                    "type": "string"
+                },
+                "maxSize": {
+                    "type": "integer"
+                },
+                "minSize": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "publicIpType": {
+                    "type": "string"
+                },
+                "taints": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sPaperspaceProviderNodePoolTaint:Mk8sPaperspaceProviderNodePoolTaint"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "machineType",
+                "name",
+                "publicIpType"
+            ]
+        },
+        "cpln:index/Mk8sPaperspaceProviderNodePoolTaint:Mk8sPaperspaceProviderNodePoolTaint": {
+            "properties": {
+                "effect": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sPaperspaceProviderUnmanagedNodePool:Mk8sPaperspaceProviderUnmanagedNodePool": {
+            "properties": {
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "taints": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sPaperspaceProviderUnmanagedNodePoolTaint:Mk8sPaperspaceProviderUnmanagedNodePoolTaint"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "name"
+            ]
+        },
+        "cpln:index/Mk8sPaperspaceProviderUnmanagedNodePoolTaint:Mk8sPaperspaceProviderUnmanagedNodePoolTaint": {
+            "properties": {
+                "effect": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
         "cpln:index/Mk8sStatus:Mk8sStatus": {
             "properties": {
                 "addOns": {
@@ -1677,6 +2539,175 @@
                     ]
                 }
             }
+        },
+        "cpln:index/Mk8sTritonProvider:Mk8sTritonProvider": {
+            "properties": {
+                "autoscaler": {
+                    "$ref": "#/types/cpln:index/Mk8sTritonProviderAutoscaler:Mk8sTritonProviderAutoscaler"
+                },
+                "connection": {
+                    "$ref": "#/types/cpln:index/Mk8sTritonProviderConnection:Mk8sTritonProviderConnection"
+                },
+                "firewallEnabled": {
+                    "type": "boolean"
+                },
+                "imageId": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "networking": {
+                    "$ref": "#/types/cpln:index/Mk8sTritonProviderNetworking:Mk8sTritonProviderNetworking"
+                },
+                "nodePools": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sTritonProviderNodePool:Mk8sTritonProviderNodePool"
+                    }
+                },
+                "preInstallScript": {
+                    "type": "string"
+                },
+                "privateNetworkId": {
+                    "type": "string"
+                },
+                "sshKeys": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "connection",
+                "imageId",
+                "location",
+                "networking",
+                "privateNetworkId"
+            ]
+        },
+        "cpln:index/Mk8sTritonProviderAutoscaler:Mk8sTritonProviderAutoscaler": {
+            "properties": {
+                "expanders": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "unneededTime": {
+                    "type": "string"
+                },
+                "unreadyTime": {
+                    "type": "string"
+                },
+                "utilizationThreshold": {
+                    "type": "number"
+                }
+            },
+            "type": "object",
+            "required": [
+                "expanders"
+            ]
+        },
+        "cpln:index/Mk8sTritonProviderConnection:Mk8sTritonProviderConnection": {
+            "properties": {
+                "account": {
+                    "type": "string"
+                },
+                "privateKeySecretLink": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "account",
+                "privateKeySecretLink",
+                "url"
+            ]
+        },
+        "cpln:index/Mk8sTritonProviderNetworking:Mk8sTritonProviderNetworking": {
+            "properties": {
+                "podNetwork": {
+                    "type": "string"
+                },
+                "serviceNetwork": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sTritonProviderNodePool:Mk8sTritonProviderNodePool": {
+            "properties": {
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "maxSize": {
+                    "type": "integer"
+                },
+                "minSize": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "overrideImageId": {
+                    "type": "string"
+                },
+                "packageId": {
+                    "type": "string"
+                },
+                "privateNetworkIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "publicNetworkId": {
+                    "type": "string"
+                },
+                "taints": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sTritonProviderNodePoolTaint:Mk8sTritonProviderNodePoolTaint"
+                    }
+                },
+                "tritonTags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "name",
+                "packageId"
+            ]
+        },
+        "cpln:index/Mk8sTritonProviderNodePoolTaint:Mk8sTritonProviderNodePoolTaint": {
+            "properties": {
+                "effect": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
         },
         "cpln:index/OrgAuthConfig:OrgAuthConfig": {
             "properties": {
@@ -3210,6 +4241,9 @@
                 "dedicated": {
                     "type": "boolean"
                 },
+                "redirect": {
+                    "$ref": "#/types/cpln:index/getGvcLoadBalancerRedirect:getGvcLoadBalancerRedirect"
+                },
                 "trustedProxies": {
                     "type": "integer"
                 }
@@ -3218,6 +4252,22 @@
             "required": [
                 "dedicated"
             ]
+        },
+        "cpln:index/getGvcLoadBalancerRedirect:getGvcLoadBalancerRedirect": {
+            "properties": {
+                "class": {
+                    "$ref": "#/types/cpln:index/getGvcLoadBalancerRedirectClass:getGvcLoadBalancerRedirectClass"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/getGvcLoadBalancerRedirectClass:getGvcLoadBalancerRedirectClass": {
+            "properties": {
+                "status5xx": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
         },
         "cpln:index/getGvcOtelTracing:getGvcOtelTracing": {
             "properties": {
@@ -5065,6 +6115,132 @@
                 "type": "object"
             }
         },
+        "cpln:index/ipSet:IpSet": {
+            "description": "Manages an org's IpSet.\n\n## Declaration\n\n### Required\n\n- **name** (String) Name of the IpSet.\n\n### Optional\n\n- **description** - (String) Description of the IpSet.\n- **tags** (Map of String) Key-value map of resource tags.\n- **link** (String) The self link of a workload.\n- **location** (Block List) (see below).\n\n\u003ca id=\"nestedblock--location\"\u003e\u003c/a\u003e\n\n### `location`\n\nRequired:\n\n- **name** (String) The self link of a location.\n- **retention_policy** (String) Exactly one of: `keep` and `free`.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the IpSet.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n- **status** (Block List, Max: 1) (see below).\n\n\u003ca id=\"nestedblock--status\"\u003e\u003c/a\u003e\n\n### `status`\n\nStatus of the IpSet.\n\nRead-Only:\n\n- **ip_address** (Block List) (see below)\n- **error** (String)\n\n\u003ca id=\"nestedblock--status--ip_address\"\u003e\u003c/a\u003e\n\n### `status.ip_address`\n\n- **name** (String)\n- **ip** (String)\n- **id** (String)\n- **state** (String)\n- **created** (String)\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nconst _new = new cpln.IpSet(\"new\", {\n    description: \"example\",\n    link: \"SELF_LINK_TO_WORKLOAD\",\n    locations: [{\n        name: \"SELF_LINK_TO_LOCATION\",\n        retentionPolicy: \"keep\",\n    }],\n    tags: {\n        terraform_generated: \"true\",\n    },\n});\n```\n```python\nimport pulumi\nimport pulumiverse_cpln as cpln\n\nnew = cpln.IpSet(\"new\",\n    description=\"example\",\n    link=\"SELF_LINK_TO_WORKLOAD\",\n    locations=[cpln.IpSetLocationArgs(\n        name=\"SELF_LINK_TO_LOCATION\",\n        retention_policy=\"keep\",\n    )],\n    tags={\n        \"terraform_generated\": \"true\",\n    })\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumiverse.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var @new = new Cpln.IpSet(\"new\", new()\n    {\n        Description = \"example\",\n        Link = \"SELF_LINK_TO_WORKLOAD\",\n        Locations = new[]\n        {\n            new Cpln.Inputs.IpSetLocationArgs\n            {\n                Name = \"SELF_LINK_TO_LOCATION\",\n                RetentionPolicy = \"keep\",\n            },\n        },\n        Tags = \n        {\n            { \"terraform_generated\", \"true\" },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := cpln.NewIpSet(ctx, \"new\", \u0026cpln.IpSetArgs{\n\t\t\tDescription: pulumi.String(\"example\"),\n\t\t\tLink:        pulumi.String(\"SELF_LINK_TO_WORKLOAD\"),\n\t\t\tLocations: cpln.IpSetLocationArray{\n\t\t\t\t\u0026cpln.IpSetLocationArgs{\n\t\t\t\t\tName:            pulumi.String(\"SELF_LINK_TO_LOCATION\"),\n\t\t\t\t\tRetentionPolicy: pulumi.String(\"keep\"),\n\t\t\t\t},\n\t\t\t},\n\t\t\tTags: pulumi.StringMap{\n\t\t\t\t\"terraform_generated\": pulumi.String(\"true\"),\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.IpSet;\nimport com.pulumi.cpln.IpSetArgs;\nimport com.pulumi.cpln.inputs.IpSetLocationArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var new_ = new IpSet(\"new\", IpSetArgs.builder()        \n            .description(\"example\")\n            .link(\"SELF_LINK_TO_WORKLOAD\")\n            .locations(IpSetLocationArgs.builder()\n                .name(\"SELF_LINK_TO_LOCATION\")\n                .retentionPolicy(\"keep\")\n                .build())\n            .tags(Map.of(\"terraform_generated\", \"true\"))\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  new:\n    type: cpln:IpSet\n    properties:\n      description: example\n      link: SELF_LINK_TO_WORKLOAD\n      locations:\n        - name: SELF_LINK_TO_LOCATION\n          retentionPolicy: keep\n      tags:\n        terraform_generated: 'true'\n```\n{{% /example %}}\n{{% /examples %}}",
+            "properties": {
+                "cplnId": {
+                    "type": "string",
+                    "description": "The ID, in GUID format, of the IpSet.\n"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of the IpSet.\n"
+                },
+                "link": {
+                    "type": "string",
+                    "description": "The self link of a workload.\n"
+                },
+                "locations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/IpSetLocation:IpSetLocation"
+                    }
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the IpSet.\n"
+                },
+                "selfLink": {
+                    "type": "string",
+                    "description": "Full link to this resource. Can be referenced by other resources.\n"
+                },
+                "statuses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/IpSetStatus:IpSetStatus"
+                    },
+                    "description": "Status of the IpSet.\n"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Key-value map of resource tags.\n"
+                }
+            },
+            "required": [
+                "cplnId",
+                "name",
+                "selfLink",
+                "statuses"
+            ],
+            "inputProperties": {
+                "description": {
+                    "type": "string",
+                    "description": "Description of the IpSet.\n"
+                },
+                "link": {
+                    "type": "string",
+                    "description": "The self link of a workload.\n"
+                },
+                "locations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/IpSetLocation:IpSetLocation"
+                    }
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the IpSet.\n",
+                    "willReplaceOnChanges": true
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Key-value map of resource tags.\n"
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering IpSet resources.\n",
+                "properties": {
+                    "cplnId": {
+                        "type": "string",
+                        "description": "The ID, in GUID format, of the IpSet.\n"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Description of the IpSet.\n"
+                    },
+                    "link": {
+                        "type": "string",
+                        "description": "The self link of a workload.\n"
+                    },
+                    "locations": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/IpSetLocation:IpSetLocation"
+                        }
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the IpSet.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "selfLink": {
+                        "type": "string",
+                        "description": "Full link to this resource. Can be referenced by other resources.\n"
+                    },
+                    "statuses": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/IpSetStatus:IpSetStatus"
+                        },
+                        "description": "Status of the IpSet.\n"
+                    },
+                    "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Key-value map of resource tags.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "cpln:index/location:Location": {
             "properties": {
                 "cloudProvider": {
@@ -5224,6 +6400,9 @@
                     "type": "string",
                     "description": "Description of the Mk8s.\n"
                 },
+                "digitalOceanProvider": {
+                    "$ref": "#/types/cpln:index/Mk8sDigitalOceanProvider:Mk8sDigitalOceanProvider"
+                },
                 "ephemeralProvider": {
                     "$ref": "#/types/cpln:index/Mk8sEphemeralProvider:Mk8sEphemeralProvider"
                 },
@@ -5240,9 +6419,21 @@
                 "hetznerProvider": {
                     "$ref": "#/types/cpln:index/Mk8sHetznerProvider:Mk8sHetznerProvider"
                 },
+                "lambdalabsProvider": {
+                    "$ref": "#/types/cpln:index/Mk8sLambdalabsProvider:Mk8sLambdalabsProvider"
+                },
+                "linodeProvider": {
+                    "$ref": "#/types/cpln:index/Mk8sLinodeProvider:Mk8sLinodeProvider"
+                },
                 "name": {
                     "type": "string",
                     "description": "Name of the Mk8s.\n"
+                },
+                "oblivusProvider": {
+                    "$ref": "#/types/cpln:index/Mk8sOblivusProvider:Mk8sOblivusProvider"
+                },
+                "paperspaceProvider": {
+                    "$ref": "#/types/cpln:index/Mk8sPaperspaceProvider:Mk8sPaperspaceProvider"
                 },
                 "selfLink": {
                     "type": "string",
@@ -5261,6 +6452,9 @@
                         "type": "string"
                     },
                     "description": "Key-value map of resource tags.\n"
+                },
+                "tritonProvider": {
+                    "$ref": "#/types/cpln:index/Mk8sTritonProvider:Mk8sTritonProvider"
                 },
                 "version": {
                     "type": "string"
@@ -5285,6 +6479,9 @@
                     "type": "string",
                     "description": "Description of the Mk8s.\n"
                 },
+                "digitalOceanProvider": {
+                    "$ref": "#/types/cpln:index/Mk8sDigitalOceanProvider:Mk8sDigitalOceanProvider"
+                },
                 "ephemeralProvider": {
                     "$ref": "#/types/cpln:index/Mk8sEphemeralProvider:Mk8sEphemeralProvider"
                 },
@@ -5301,10 +6498,22 @@
                 "hetznerProvider": {
                     "$ref": "#/types/cpln:index/Mk8sHetznerProvider:Mk8sHetznerProvider"
                 },
+                "lambdalabsProvider": {
+                    "$ref": "#/types/cpln:index/Mk8sLambdalabsProvider:Mk8sLambdalabsProvider"
+                },
+                "linodeProvider": {
+                    "$ref": "#/types/cpln:index/Mk8sLinodeProvider:Mk8sLinodeProvider"
+                },
                 "name": {
                     "type": "string",
                     "description": "Name of the Mk8s.\n",
                     "willReplaceOnChanges": true
+                },
+                "oblivusProvider": {
+                    "$ref": "#/types/cpln:index/Mk8sOblivusProvider:Mk8sOblivusProvider"
+                },
+                "paperspaceProvider": {
+                    "$ref": "#/types/cpln:index/Mk8sPaperspaceProvider:Mk8sPaperspaceProvider"
                 },
                 "tags": {
                     "type": "object",
@@ -5312,6 +6521,9 @@
                         "type": "string"
                     },
                     "description": "Key-value map of resource tags.\n"
+                },
+                "tritonProvider": {
+                    "$ref": "#/types/cpln:index/Mk8sTritonProvider:Mk8sTritonProvider"
                 },
                 "version": {
                     "type": "string"
@@ -5341,6 +6553,9 @@
                         "type": "string",
                         "description": "Description of the Mk8s.\n"
                     },
+                    "digitalOceanProvider": {
+                        "$ref": "#/types/cpln:index/Mk8sDigitalOceanProvider:Mk8sDigitalOceanProvider"
+                    },
                     "ephemeralProvider": {
                         "$ref": "#/types/cpln:index/Mk8sEphemeralProvider:Mk8sEphemeralProvider"
                     },
@@ -5357,10 +6572,22 @@
                     "hetznerProvider": {
                         "$ref": "#/types/cpln:index/Mk8sHetznerProvider:Mk8sHetznerProvider"
                     },
+                    "lambdalabsProvider": {
+                        "$ref": "#/types/cpln:index/Mk8sLambdalabsProvider:Mk8sLambdalabsProvider"
+                    },
+                    "linodeProvider": {
+                        "$ref": "#/types/cpln:index/Mk8sLinodeProvider:Mk8sLinodeProvider"
+                    },
                     "name": {
                         "type": "string",
                         "description": "Name of the Mk8s.\n",
                         "willReplaceOnChanges": true
+                    },
+                    "oblivusProvider": {
+                        "$ref": "#/types/cpln:index/Mk8sOblivusProvider:Mk8sOblivusProvider"
+                    },
+                    "paperspaceProvider": {
+                        "$ref": "#/types/cpln:index/Mk8sPaperspaceProvider:Mk8sPaperspaceProvider"
                     },
                     "selfLink": {
                         "type": "string",
@@ -5379,6 +6606,9 @@
                             "type": "string"
                         },
                         "description": "Key-value map of resource tags.\n"
+                    },
+                    "tritonProvider": {
+                        "$ref": "#/types/cpln:index/Mk8sTritonProvider:Mk8sTritonProvider"
                     },
                     "version": {
                         "type": "string"

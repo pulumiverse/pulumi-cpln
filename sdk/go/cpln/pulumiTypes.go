@@ -3602,8 +3602,9 @@ func (o GvcLightstepTracingPtrOutput) Sampling() pulumi.Float64PtrOutput {
 }
 
 type GvcLoadBalancer struct {
-	Dedicated      bool `pulumi:"dedicated"`
-	TrustedProxies *int `pulumi:"trustedProxies"`
+	Dedicated      bool                     `pulumi:"dedicated"`
+	Redirect       *GvcLoadBalancerRedirect `pulumi:"redirect"`
+	TrustedProxies *int                     `pulumi:"trustedProxies"`
 }
 
 // GvcLoadBalancerInput is an input type that accepts GvcLoadBalancerArgs and GvcLoadBalancerOutput values.
@@ -3618,8 +3619,9 @@ type GvcLoadBalancerInput interface {
 }
 
 type GvcLoadBalancerArgs struct {
-	Dedicated      pulumi.BoolInput   `pulumi:"dedicated"`
-	TrustedProxies pulumi.IntPtrInput `pulumi:"trustedProxies"`
+	Dedicated      pulumi.BoolInput                `pulumi:"dedicated"`
+	Redirect       GvcLoadBalancerRedirectPtrInput `pulumi:"redirect"`
+	TrustedProxies pulumi.IntPtrInput              `pulumi:"trustedProxies"`
 }
 
 func (GvcLoadBalancerArgs) ElementType() reflect.Type {
@@ -3721,6 +3723,10 @@ func (o GvcLoadBalancerOutput) Dedicated() pulumi.BoolOutput {
 	return o.ApplyT(func(v GvcLoadBalancer) bool { return v.Dedicated }).(pulumi.BoolOutput)
 }
 
+func (o GvcLoadBalancerOutput) Redirect() GvcLoadBalancerRedirectPtrOutput {
+	return o.ApplyT(func(v GvcLoadBalancer) *GvcLoadBalancerRedirect { return v.Redirect }).(GvcLoadBalancerRedirectPtrOutput)
+}
+
 func (o GvcLoadBalancerOutput) TrustedProxies() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v GvcLoadBalancer) *int { return v.TrustedProxies }).(pulumi.IntPtrOutput)
 }
@@ -3764,6 +3770,15 @@ func (o GvcLoadBalancerPtrOutput) Dedicated() pulumi.BoolPtrOutput {
 	}).(pulumi.BoolPtrOutput)
 }
 
+func (o GvcLoadBalancerPtrOutput) Redirect() GvcLoadBalancerRedirectPtrOutput {
+	return o.ApplyT(func(v *GvcLoadBalancer) *GvcLoadBalancerRedirect {
+		if v == nil {
+			return nil
+		}
+		return v.Redirect
+	}).(GvcLoadBalancerRedirectPtrOutput)
+}
+
 func (o GvcLoadBalancerPtrOutput) TrustedProxies() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *GvcLoadBalancer) *int {
 		if v == nil {
@@ -3771,6 +3786,320 @@ func (o GvcLoadBalancerPtrOutput) TrustedProxies() pulumi.IntPtrOutput {
 		}
 		return v.TrustedProxies
 	}).(pulumi.IntPtrOutput)
+}
+
+type GvcLoadBalancerRedirect struct {
+	Class *GvcLoadBalancerRedirectClass `pulumi:"class"`
+}
+
+// GvcLoadBalancerRedirectInput is an input type that accepts GvcLoadBalancerRedirectArgs and GvcLoadBalancerRedirectOutput values.
+// You can construct a concrete instance of `GvcLoadBalancerRedirectInput` via:
+//
+//	GvcLoadBalancerRedirectArgs{...}
+type GvcLoadBalancerRedirectInput interface {
+	pulumi.Input
+
+	ToGvcLoadBalancerRedirectOutput() GvcLoadBalancerRedirectOutput
+	ToGvcLoadBalancerRedirectOutputWithContext(context.Context) GvcLoadBalancerRedirectOutput
+}
+
+type GvcLoadBalancerRedirectArgs struct {
+	Class GvcLoadBalancerRedirectClassPtrInput `pulumi:"class"`
+}
+
+func (GvcLoadBalancerRedirectArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GvcLoadBalancerRedirect)(nil)).Elem()
+}
+
+func (i GvcLoadBalancerRedirectArgs) ToGvcLoadBalancerRedirectOutput() GvcLoadBalancerRedirectOutput {
+	return i.ToGvcLoadBalancerRedirectOutputWithContext(context.Background())
+}
+
+func (i GvcLoadBalancerRedirectArgs) ToGvcLoadBalancerRedirectOutputWithContext(ctx context.Context) GvcLoadBalancerRedirectOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcLoadBalancerRedirectOutput)
+}
+
+func (i GvcLoadBalancerRedirectArgs) ToOutput(ctx context.Context) pulumix.Output[GvcLoadBalancerRedirect] {
+	return pulumix.Output[GvcLoadBalancerRedirect]{
+		OutputState: i.ToGvcLoadBalancerRedirectOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i GvcLoadBalancerRedirectArgs) ToGvcLoadBalancerRedirectPtrOutput() GvcLoadBalancerRedirectPtrOutput {
+	return i.ToGvcLoadBalancerRedirectPtrOutputWithContext(context.Background())
+}
+
+func (i GvcLoadBalancerRedirectArgs) ToGvcLoadBalancerRedirectPtrOutputWithContext(ctx context.Context) GvcLoadBalancerRedirectPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcLoadBalancerRedirectOutput).ToGvcLoadBalancerRedirectPtrOutputWithContext(ctx)
+}
+
+// GvcLoadBalancerRedirectPtrInput is an input type that accepts GvcLoadBalancerRedirectArgs, GvcLoadBalancerRedirectPtr and GvcLoadBalancerRedirectPtrOutput values.
+// You can construct a concrete instance of `GvcLoadBalancerRedirectPtrInput` via:
+//
+//	        GvcLoadBalancerRedirectArgs{...}
+//
+//	or:
+//
+//	        nil
+type GvcLoadBalancerRedirectPtrInput interface {
+	pulumi.Input
+
+	ToGvcLoadBalancerRedirectPtrOutput() GvcLoadBalancerRedirectPtrOutput
+	ToGvcLoadBalancerRedirectPtrOutputWithContext(context.Context) GvcLoadBalancerRedirectPtrOutput
+}
+
+type gvcLoadBalancerRedirectPtrType GvcLoadBalancerRedirectArgs
+
+func GvcLoadBalancerRedirectPtr(v *GvcLoadBalancerRedirectArgs) GvcLoadBalancerRedirectPtrInput {
+	return (*gvcLoadBalancerRedirectPtrType)(v)
+}
+
+func (*gvcLoadBalancerRedirectPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GvcLoadBalancerRedirect)(nil)).Elem()
+}
+
+func (i *gvcLoadBalancerRedirectPtrType) ToGvcLoadBalancerRedirectPtrOutput() GvcLoadBalancerRedirectPtrOutput {
+	return i.ToGvcLoadBalancerRedirectPtrOutputWithContext(context.Background())
+}
+
+func (i *gvcLoadBalancerRedirectPtrType) ToGvcLoadBalancerRedirectPtrOutputWithContext(ctx context.Context) GvcLoadBalancerRedirectPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcLoadBalancerRedirectPtrOutput)
+}
+
+func (i *gvcLoadBalancerRedirectPtrType) ToOutput(ctx context.Context) pulumix.Output[*GvcLoadBalancerRedirect] {
+	return pulumix.Output[*GvcLoadBalancerRedirect]{
+		OutputState: i.ToGvcLoadBalancerRedirectPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GvcLoadBalancerRedirectOutput struct{ *pulumi.OutputState }
+
+func (GvcLoadBalancerRedirectOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GvcLoadBalancerRedirect)(nil)).Elem()
+}
+
+func (o GvcLoadBalancerRedirectOutput) ToGvcLoadBalancerRedirectOutput() GvcLoadBalancerRedirectOutput {
+	return o
+}
+
+func (o GvcLoadBalancerRedirectOutput) ToGvcLoadBalancerRedirectOutputWithContext(ctx context.Context) GvcLoadBalancerRedirectOutput {
+	return o
+}
+
+func (o GvcLoadBalancerRedirectOutput) ToGvcLoadBalancerRedirectPtrOutput() GvcLoadBalancerRedirectPtrOutput {
+	return o.ToGvcLoadBalancerRedirectPtrOutputWithContext(context.Background())
+}
+
+func (o GvcLoadBalancerRedirectOutput) ToGvcLoadBalancerRedirectPtrOutputWithContext(ctx context.Context) GvcLoadBalancerRedirectPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GvcLoadBalancerRedirect) *GvcLoadBalancerRedirect {
+		return &v
+	}).(GvcLoadBalancerRedirectPtrOutput)
+}
+
+func (o GvcLoadBalancerRedirectOutput) ToOutput(ctx context.Context) pulumix.Output[GvcLoadBalancerRedirect] {
+	return pulumix.Output[GvcLoadBalancerRedirect]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GvcLoadBalancerRedirectOutput) Class() GvcLoadBalancerRedirectClassPtrOutput {
+	return o.ApplyT(func(v GvcLoadBalancerRedirect) *GvcLoadBalancerRedirectClass { return v.Class }).(GvcLoadBalancerRedirectClassPtrOutput)
+}
+
+type GvcLoadBalancerRedirectPtrOutput struct{ *pulumi.OutputState }
+
+func (GvcLoadBalancerRedirectPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GvcLoadBalancerRedirect)(nil)).Elem()
+}
+
+func (o GvcLoadBalancerRedirectPtrOutput) ToGvcLoadBalancerRedirectPtrOutput() GvcLoadBalancerRedirectPtrOutput {
+	return o
+}
+
+func (o GvcLoadBalancerRedirectPtrOutput) ToGvcLoadBalancerRedirectPtrOutputWithContext(ctx context.Context) GvcLoadBalancerRedirectPtrOutput {
+	return o
+}
+
+func (o GvcLoadBalancerRedirectPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*GvcLoadBalancerRedirect] {
+	return pulumix.Output[*GvcLoadBalancerRedirect]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GvcLoadBalancerRedirectPtrOutput) Elem() GvcLoadBalancerRedirectOutput {
+	return o.ApplyT(func(v *GvcLoadBalancerRedirect) GvcLoadBalancerRedirect {
+		if v != nil {
+			return *v
+		}
+		var ret GvcLoadBalancerRedirect
+		return ret
+	}).(GvcLoadBalancerRedirectOutput)
+}
+
+func (o GvcLoadBalancerRedirectPtrOutput) Class() GvcLoadBalancerRedirectClassPtrOutput {
+	return o.ApplyT(func(v *GvcLoadBalancerRedirect) *GvcLoadBalancerRedirectClass {
+		if v == nil {
+			return nil
+		}
+		return v.Class
+	}).(GvcLoadBalancerRedirectClassPtrOutput)
+}
+
+type GvcLoadBalancerRedirectClass struct {
+	Status5xx *string `pulumi:"status5xx"`
+}
+
+// GvcLoadBalancerRedirectClassInput is an input type that accepts GvcLoadBalancerRedirectClassArgs and GvcLoadBalancerRedirectClassOutput values.
+// You can construct a concrete instance of `GvcLoadBalancerRedirectClassInput` via:
+//
+//	GvcLoadBalancerRedirectClassArgs{...}
+type GvcLoadBalancerRedirectClassInput interface {
+	pulumi.Input
+
+	ToGvcLoadBalancerRedirectClassOutput() GvcLoadBalancerRedirectClassOutput
+	ToGvcLoadBalancerRedirectClassOutputWithContext(context.Context) GvcLoadBalancerRedirectClassOutput
+}
+
+type GvcLoadBalancerRedirectClassArgs struct {
+	Status5xx pulumi.StringPtrInput `pulumi:"status5xx"`
+}
+
+func (GvcLoadBalancerRedirectClassArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GvcLoadBalancerRedirectClass)(nil)).Elem()
+}
+
+func (i GvcLoadBalancerRedirectClassArgs) ToGvcLoadBalancerRedirectClassOutput() GvcLoadBalancerRedirectClassOutput {
+	return i.ToGvcLoadBalancerRedirectClassOutputWithContext(context.Background())
+}
+
+func (i GvcLoadBalancerRedirectClassArgs) ToGvcLoadBalancerRedirectClassOutputWithContext(ctx context.Context) GvcLoadBalancerRedirectClassOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcLoadBalancerRedirectClassOutput)
+}
+
+func (i GvcLoadBalancerRedirectClassArgs) ToOutput(ctx context.Context) pulumix.Output[GvcLoadBalancerRedirectClass] {
+	return pulumix.Output[GvcLoadBalancerRedirectClass]{
+		OutputState: i.ToGvcLoadBalancerRedirectClassOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i GvcLoadBalancerRedirectClassArgs) ToGvcLoadBalancerRedirectClassPtrOutput() GvcLoadBalancerRedirectClassPtrOutput {
+	return i.ToGvcLoadBalancerRedirectClassPtrOutputWithContext(context.Background())
+}
+
+func (i GvcLoadBalancerRedirectClassArgs) ToGvcLoadBalancerRedirectClassPtrOutputWithContext(ctx context.Context) GvcLoadBalancerRedirectClassPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcLoadBalancerRedirectClassOutput).ToGvcLoadBalancerRedirectClassPtrOutputWithContext(ctx)
+}
+
+// GvcLoadBalancerRedirectClassPtrInput is an input type that accepts GvcLoadBalancerRedirectClassArgs, GvcLoadBalancerRedirectClassPtr and GvcLoadBalancerRedirectClassPtrOutput values.
+// You can construct a concrete instance of `GvcLoadBalancerRedirectClassPtrInput` via:
+//
+//	        GvcLoadBalancerRedirectClassArgs{...}
+//
+//	or:
+//
+//	        nil
+type GvcLoadBalancerRedirectClassPtrInput interface {
+	pulumi.Input
+
+	ToGvcLoadBalancerRedirectClassPtrOutput() GvcLoadBalancerRedirectClassPtrOutput
+	ToGvcLoadBalancerRedirectClassPtrOutputWithContext(context.Context) GvcLoadBalancerRedirectClassPtrOutput
+}
+
+type gvcLoadBalancerRedirectClassPtrType GvcLoadBalancerRedirectClassArgs
+
+func GvcLoadBalancerRedirectClassPtr(v *GvcLoadBalancerRedirectClassArgs) GvcLoadBalancerRedirectClassPtrInput {
+	return (*gvcLoadBalancerRedirectClassPtrType)(v)
+}
+
+func (*gvcLoadBalancerRedirectClassPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GvcLoadBalancerRedirectClass)(nil)).Elem()
+}
+
+func (i *gvcLoadBalancerRedirectClassPtrType) ToGvcLoadBalancerRedirectClassPtrOutput() GvcLoadBalancerRedirectClassPtrOutput {
+	return i.ToGvcLoadBalancerRedirectClassPtrOutputWithContext(context.Background())
+}
+
+func (i *gvcLoadBalancerRedirectClassPtrType) ToGvcLoadBalancerRedirectClassPtrOutputWithContext(ctx context.Context) GvcLoadBalancerRedirectClassPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcLoadBalancerRedirectClassPtrOutput)
+}
+
+func (i *gvcLoadBalancerRedirectClassPtrType) ToOutput(ctx context.Context) pulumix.Output[*GvcLoadBalancerRedirectClass] {
+	return pulumix.Output[*GvcLoadBalancerRedirectClass]{
+		OutputState: i.ToGvcLoadBalancerRedirectClassPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GvcLoadBalancerRedirectClassOutput struct{ *pulumi.OutputState }
+
+func (GvcLoadBalancerRedirectClassOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GvcLoadBalancerRedirectClass)(nil)).Elem()
+}
+
+func (o GvcLoadBalancerRedirectClassOutput) ToGvcLoadBalancerRedirectClassOutput() GvcLoadBalancerRedirectClassOutput {
+	return o
+}
+
+func (o GvcLoadBalancerRedirectClassOutput) ToGvcLoadBalancerRedirectClassOutputWithContext(ctx context.Context) GvcLoadBalancerRedirectClassOutput {
+	return o
+}
+
+func (o GvcLoadBalancerRedirectClassOutput) ToGvcLoadBalancerRedirectClassPtrOutput() GvcLoadBalancerRedirectClassPtrOutput {
+	return o.ToGvcLoadBalancerRedirectClassPtrOutputWithContext(context.Background())
+}
+
+func (o GvcLoadBalancerRedirectClassOutput) ToGvcLoadBalancerRedirectClassPtrOutputWithContext(ctx context.Context) GvcLoadBalancerRedirectClassPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GvcLoadBalancerRedirectClass) *GvcLoadBalancerRedirectClass {
+		return &v
+	}).(GvcLoadBalancerRedirectClassPtrOutput)
+}
+
+func (o GvcLoadBalancerRedirectClassOutput) ToOutput(ctx context.Context) pulumix.Output[GvcLoadBalancerRedirectClass] {
+	return pulumix.Output[GvcLoadBalancerRedirectClass]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GvcLoadBalancerRedirectClassOutput) Status5xx() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GvcLoadBalancerRedirectClass) *string { return v.Status5xx }).(pulumi.StringPtrOutput)
+}
+
+type GvcLoadBalancerRedirectClassPtrOutput struct{ *pulumi.OutputState }
+
+func (GvcLoadBalancerRedirectClassPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GvcLoadBalancerRedirectClass)(nil)).Elem()
+}
+
+func (o GvcLoadBalancerRedirectClassPtrOutput) ToGvcLoadBalancerRedirectClassPtrOutput() GvcLoadBalancerRedirectClassPtrOutput {
+	return o
+}
+
+func (o GvcLoadBalancerRedirectClassPtrOutput) ToGvcLoadBalancerRedirectClassPtrOutputWithContext(ctx context.Context) GvcLoadBalancerRedirectClassPtrOutput {
+	return o
+}
+
+func (o GvcLoadBalancerRedirectClassPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*GvcLoadBalancerRedirectClass] {
+	return pulumix.Output[*GvcLoadBalancerRedirectClass]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GvcLoadBalancerRedirectClassPtrOutput) Elem() GvcLoadBalancerRedirectClassOutput {
+	return o.ApplyT(func(v *GvcLoadBalancerRedirectClass) GvcLoadBalancerRedirectClass {
+		if v != nil {
+			return *v
+		}
+		var ret GvcLoadBalancerRedirectClass
+		return ret
+	}).(GvcLoadBalancerRedirectClassOutput)
+}
+
+func (o GvcLoadBalancerRedirectClassPtrOutput) Status5xx() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GvcLoadBalancerRedirectClass) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Status5xx
+	}).(pulumi.StringPtrOutput)
 }
 
 type GvcOtelTracing struct {
@@ -6297,6 +6626,396 @@ func (o IdentityNgsAccessPolicySubPtrOutput) Denies() pulumi.StringArrayOutput {
 	}).(pulumi.StringArrayOutput)
 }
 
+type IpSetLocation struct {
+	Name            string `pulumi:"name"`
+	RetentionPolicy string `pulumi:"retentionPolicy"`
+}
+
+// IpSetLocationInput is an input type that accepts IpSetLocationArgs and IpSetLocationOutput values.
+// You can construct a concrete instance of `IpSetLocationInput` via:
+//
+//	IpSetLocationArgs{...}
+type IpSetLocationInput interface {
+	pulumi.Input
+
+	ToIpSetLocationOutput() IpSetLocationOutput
+	ToIpSetLocationOutputWithContext(context.Context) IpSetLocationOutput
+}
+
+type IpSetLocationArgs struct {
+	Name            pulumi.StringInput `pulumi:"name"`
+	RetentionPolicy pulumi.StringInput `pulumi:"retentionPolicy"`
+}
+
+func (IpSetLocationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*IpSetLocation)(nil)).Elem()
+}
+
+func (i IpSetLocationArgs) ToIpSetLocationOutput() IpSetLocationOutput {
+	return i.ToIpSetLocationOutputWithContext(context.Background())
+}
+
+func (i IpSetLocationArgs) ToIpSetLocationOutputWithContext(ctx context.Context) IpSetLocationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IpSetLocationOutput)
+}
+
+func (i IpSetLocationArgs) ToOutput(ctx context.Context) pulumix.Output[IpSetLocation] {
+	return pulumix.Output[IpSetLocation]{
+		OutputState: i.ToIpSetLocationOutputWithContext(ctx).OutputState,
+	}
+}
+
+// IpSetLocationArrayInput is an input type that accepts IpSetLocationArray and IpSetLocationArrayOutput values.
+// You can construct a concrete instance of `IpSetLocationArrayInput` via:
+//
+//	IpSetLocationArray{ IpSetLocationArgs{...} }
+type IpSetLocationArrayInput interface {
+	pulumi.Input
+
+	ToIpSetLocationArrayOutput() IpSetLocationArrayOutput
+	ToIpSetLocationArrayOutputWithContext(context.Context) IpSetLocationArrayOutput
+}
+
+type IpSetLocationArray []IpSetLocationInput
+
+func (IpSetLocationArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]IpSetLocation)(nil)).Elem()
+}
+
+func (i IpSetLocationArray) ToIpSetLocationArrayOutput() IpSetLocationArrayOutput {
+	return i.ToIpSetLocationArrayOutputWithContext(context.Background())
+}
+
+func (i IpSetLocationArray) ToIpSetLocationArrayOutputWithContext(ctx context.Context) IpSetLocationArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IpSetLocationArrayOutput)
+}
+
+func (i IpSetLocationArray) ToOutput(ctx context.Context) pulumix.Output[[]IpSetLocation] {
+	return pulumix.Output[[]IpSetLocation]{
+		OutputState: i.ToIpSetLocationArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type IpSetLocationOutput struct{ *pulumi.OutputState }
+
+func (IpSetLocationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*IpSetLocation)(nil)).Elem()
+}
+
+func (o IpSetLocationOutput) ToIpSetLocationOutput() IpSetLocationOutput {
+	return o
+}
+
+func (o IpSetLocationOutput) ToIpSetLocationOutputWithContext(ctx context.Context) IpSetLocationOutput {
+	return o
+}
+
+func (o IpSetLocationOutput) ToOutput(ctx context.Context) pulumix.Output[IpSetLocation] {
+	return pulumix.Output[IpSetLocation]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o IpSetLocationOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v IpSetLocation) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o IpSetLocationOutput) RetentionPolicy() pulumi.StringOutput {
+	return o.ApplyT(func(v IpSetLocation) string { return v.RetentionPolicy }).(pulumi.StringOutput)
+}
+
+type IpSetLocationArrayOutput struct{ *pulumi.OutputState }
+
+func (IpSetLocationArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]IpSetLocation)(nil)).Elem()
+}
+
+func (o IpSetLocationArrayOutput) ToIpSetLocationArrayOutput() IpSetLocationArrayOutput {
+	return o
+}
+
+func (o IpSetLocationArrayOutput) ToIpSetLocationArrayOutputWithContext(ctx context.Context) IpSetLocationArrayOutput {
+	return o
+}
+
+func (o IpSetLocationArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]IpSetLocation] {
+	return pulumix.Output[[]IpSetLocation]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o IpSetLocationArrayOutput) Index(i pulumi.IntInput) IpSetLocationOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) IpSetLocation {
+		return vs[0].([]IpSetLocation)[vs[1].(int)]
+	}).(IpSetLocationOutput)
+}
+
+type IpSetStatus struct {
+	Error       *string                `pulumi:"error"`
+	IpAddresses []IpSetStatusIpAddress `pulumi:"ipAddresses"`
+}
+
+// IpSetStatusInput is an input type that accepts IpSetStatusArgs and IpSetStatusOutput values.
+// You can construct a concrete instance of `IpSetStatusInput` via:
+//
+//	IpSetStatusArgs{...}
+type IpSetStatusInput interface {
+	pulumi.Input
+
+	ToIpSetStatusOutput() IpSetStatusOutput
+	ToIpSetStatusOutputWithContext(context.Context) IpSetStatusOutput
+}
+
+type IpSetStatusArgs struct {
+	Error       pulumi.StringPtrInput          `pulumi:"error"`
+	IpAddresses IpSetStatusIpAddressArrayInput `pulumi:"ipAddresses"`
+}
+
+func (IpSetStatusArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*IpSetStatus)(nil)).Elem()
+}
+
+func (i IpSetStatusArgs) ToIpSetStatusOutput() IpSetStatusOutput {
+	return i.ToIpSetStatusOutputWithContext(context.Background())
+}
+
+func (i IpSetStatusArgs) ToIpSetStatusOutputWithContext(ctx context.Context) IpSetStatusOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IpSetStatusOutput)
+}
+
+func (i IpSetStatusArgs) ToOutput(ctx context.Context) pulumix.Output[IpSetStatus] {
+	return pulumix.Output[IpSetStatus]{
+		OutputState: i.ToIpSetStatusOutputWithContext(ctx).OutputState,
+	}
+}
+
+// IpSetStatusArrayInput is an input type that accepts IpSetStatusArray and IpSetStatusArrayOutput values.
+// You can construct a concrete instance of `IpSetStatusArrayInput` via:
+//
+//	IpSetStatusArray{ IpSetStatusArgs{...} }
+type IpSetStatusArrayInput interface {
+	pulumi.Input
+
+	ToIpSetStatusArrayOutput() IpSetStatusArrayOutput
+	ToIpSetStatusArrayOutputWithContext(context.Context) IpSetStatusArrayOutput
+}
+
+type IpSetStatusArray []IpSetStatusInput
+
+func (IpSetStatusArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]IpSetStatus)(nil)).Elem()
+}
+
+func (i IpSetStatusArray) ToIpSetStatusArrayOutput() IpSetStatusArrayOutput {
+	return i.ToIpSetStatusArrayOutputWithContext(context.Background())
+}
+
+func (i IpSetStatusArray) ToIpSetStatusArrayOutputWithContext(ctx context.Context) IpSetStatusArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IpSetStatusArrayOutput)
+}
+
+func (i IpSetStatusArray) ToOutput(ctx context.Context) pulumix.Output[[]IpSetStatus] {
+	return pulumix.Output[[]IpSetStatus]{
+		OutputState: i.ToIpSetStatusArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type IpSetStatusOutput struct{ *pulumi.OutputState }
+
+func (IpSetStatusOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*IpSetStatus)(nil)).Elem()
+}
+
+func (o IpSetStatusOutput) ToIpSetStatusOutput() IpSetStatusOutput {
+	return o
+}
+
+func (o IpSetStatusOutput) ToIpSetStatusOutputWithContext(ctx context.Context) IpSetStatusOutput {
+	return o
+}
+
+func (o IpSetStatusOutput) ToOutput(ctx context.Context) pulumix.Output[IpSetStatus] {
+	return pulumix.Output[IpSetStatus]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o IpSetStatusOutput) Error() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v IpSetStatus) *string { return v.Error }).(pulumi.StringPtrOutput)
+}
+
+func (o IpSetStatusOutput) IpAddresses() IpSetStatusIpAddressArrayOutput {
+	return o.ApplyT(func(v IpSetStatus) []IpSetStatusIpAddress { return v.IpAddresses }).(IpSetStatusIpAddressArrayOutput)
+}
+
+type IpSetStatusArrayOutput struct{ *pulumi.OutputState }
+
+func (IpSetStatusArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]IpSetStatus)(nil)).Elem()
+}
+
+func (o IpSetStatusArrayOutput) ToIpSetStatusArrayOutput() IpSetStatusArrayOutput {
+	return o
+}
+
+func (o IpSetStatusArrayOutput) ToIpSetStatusArrayOutputWithContext(ctx context.Context) IpSetStatusArrayOutput {
+	return o
+}
+
+func (o IpSetStatusArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]IpSetStatus] {
+	return pulumix.Output[[]IpSetStatus]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o IpSetStatusArrayOutput) Index(i pulumi.IntInput) IpSetStatusOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) IpSetStatus {
+		return vs[0].([]IpSetStatus)[vs[1].(int)]
+	}).(IpSetStatusOutput)
+}
+
+type IpSetStatusIpAddress struct {
+	Created *string `pulumi:"created"`
+	Id      *string `pulumi:"id"`
+	Ip      *string `pulumi:"ip"`
+	Name    *string `pulumi:"name"`
+	State   *string `pulumi:"state"`
+}
+
+// IpSetStatusIpAddressInput is an input type that accepts IpSetStatusIpAddressArgs and IpSetStatusIpAddressOutput values.
+// You can construct a concrete instance of `IpSetStatusIpAddressInput` via:
+//
+//	IpSetStatusIpAddressArgs{...}
+type IpSetStatusIpAddressInput interface {
+	pulumi.Input
+
+	ToIpSetStatusIpAddressOutput() IpSetStatusIpAddressOutput
+	ToIpSetStatusIpAddressOutputWithContext(context.Context) IpSetStatusIpAddressOutput
+}
+
+type IpSetStatusIpAddressArgs struct {
+	Created pulumi.StringPtrInput `pulumi:"created"`
+	Id      pulumi.StringPtrInput `pulumi:"id"`
+	Ip      pulumi.StringPtrInput `pulumi:"ip"`
+	Name    pulumi.StringPtrInput `pulumi:"name"`
+	State   pulumi.StringPtrInput `pulumi:"state"`
+}
+
+func (IpSetStatusIpAddressArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*IpSetStatusIpAddress)(nil)).Elem()
+}
+
+func (i IpSetStatusIpAddressArgs) ToIpSetStatusIpAddressOutput() IpSetStatusIpAddressOutput {
+	return i.ToIpSetStatusIpAddressOutputWithContext(context.Background())
+}
+
+func (i IpSetStatusIpAddressArgs) ToIpSetStatusIpAddressOutputWithContext(ctx context.Context) IpSetStatusIpAddressOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IpSetStatusIpAddressOutput)
+}
+
+func (i IpSetStatusIpAddressArgs) ToOutput(ctx context.Context) pulumix.Output[IpSetStatusIpAddress] {
+	return pulumix.Output[IpSetStatusIpAddress]{
+		OutputState: i.ToIpSetStatusIpAddressOutputWithContext(ctx).OutputState,
+	}
+}
+
+// IpSetStatusIpAddressArrayInput is an input type that accepts IpSetStatusIpAddressArray and IpSetStatusIpAddressArrayOutput values.
+// You can construct a concrete instance of `IpSetStatusIpAddressArrayInput` via:
+//
+//	IpSetStatusIpAddressArray{ IpSetStatusIpAddressArgs{...} }
+type IpSetStatusIpAddressArrayInput interface {
+	pulumi.Input
+
+	ToIpSetStatusIpAddressArrayOutput() IpSetStatusIpAddressArrayOutput
+	ToIpSetStatusIpAddressArrayOutputWithContext(context.Context) IpSetStatusIpAddressArrayOutput
+}
+
+type IpSetStatusIpAddressArray []IpSetStatusIpAddressInput
+
+func (IpSetStatusIpAddressArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]IpSetStatusIpAddress)(nil)).Elem()
+}
+
+func (i IpSetStatusIpAddressArray) ToIpSetStatusIpAddressArrayOutput() IpSetStatusIpAddressArrayOutput {
+	return i.ToIpSetStatusIpAddressArrayOutputWithContext(context.Background())
+}
+
+func (i IpSetStatusIpAddressArray) ToIpSetStatusIpAddressArrayOutputWithContext(ctx context.Context) IpSetStatusIpAddressArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(IpSetStatusIpAddressArrayOutput)
+}
+
+func (i IpSetStatusIpAddressArray) ToOutput(ctx context.Context) pulumix.Output[[]IpSetStatusIpAddress] {
+	return pulumix.Output[[]IpSetStatusIpAddress]{
+		OutputState: i.ToIpSetStatusIpAddressArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type IpSetStatusIpAddressOutput struct{ *pulumi.OutputState }
+
+func (IpSetStatusIpAddressOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*IpSetStatusIpAddress)(nil)).Elem()
+}
+
+func (o IpSetStatusIpAddressOutput) ToIpSetStatusIpAddressOutput() IpSetStatusIpAddressOutput {
+	return o
+}
+
+func (o IpSetStatusIpAddressOutput) ToIpSetStatusIpAddressOutputWithContext(ctx context.Context) IpSetStatusIpAddressOutput {
+	return o
+}
+
+func (o IpSetStatusIpAddressOutput) ToOutput(ctx context.Context) pulumix.Output[IpSetStatusIpAddress] {
+	return pulumix.Output[IpSetStatusIpAddress]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o IpSetStatusIpAddressOutput) Created() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v IpSetStatusIpAddress) *string { return v.Created }).(pulumi.StringPtrOutput)
+}
+
+func (o IpSetStatusIpAddressOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v IpSetStatusIpAddress) *string { return v.Id }).(pulumi.StringPtrOutput)
+}
+
+func (o IpSetStatusIpAddressOutput) Ip() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v IpSetStatusIpAddress) *string { return v.Ip }).(pulumi.StringPtrOutput)
+}
+
+func (o IpSetStatusIpAddressOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v IpSetStatusIpAddress) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+func (o IpSetStatusIpAddressOutput) State() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v IpSetStatusIpAddress) *string { return v.State }).(pulumi.StringPtrOutput)
+}
+
+type IpSetStatusIpAddressArrayOutput struct{ *pulumi.OutputState }
+
+func (IpSetStatusIpAddressArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]IpSetStatusIpAddress)(nil)).Elem()
+}
+
+func (o IpSetStatusIpAddressArrayOutput) ToIpSetStatusIpAddressArrayOutput() IpSetStatusIpAddressArrayOutput {
+	return o
+}
+
+func (o IpSetStatusIpAddressArrayOutput) ToIpSetStatusIpAddressArrayOutputWithContext(ctx context.Context) IpSetStatusIpAddressArrayOutput {
+	return o
+}
+
+func (o IpSetStatusIpAddressArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]IpSetStatusIpAddress] {
+	return pulumix.Output[[]IpSetStatusIpAddress]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o IpSetStatusIpAddressArrayOutput) Index(i pulumi.IntInput) IpSetStatusIpAddressOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) IpSetStatusIpAddress {
+		return vs[0].([]IpSetStatusIpAddress)[vs[1].(int)]
+	}).(IpSetStatusIpAddressOutput)
+}
+
 type LocationGeo struct {
 	City      *string  `pulumi:"city"`
 	Continent *string  `pulumi:"continent"`
@@ -6768,7 +7487,8 @@ func (o Mk8sAddOnsPtrOutput) Sysbox() pulumi.BoolPtrOutput {
 }
 
 type Mk8sAddOnsAwsEcr struct {
-	RoleArn string `pulumi:"roleArn"`
+	_sentinel *bool   `pulumi:"_sentinel"`
+	RoleArn   *string `pulumi:"roleArn"`
 }
 
 // Mk8sAddOnsAwsEcrInput is an input type that accepts Mk8sAddOnsAwsEcrArgs and Mk8sAddOnsAwsEcrOutput values.
@@ -6783,7 +7503,8 @@ type Mk8sAddOnsAwsEcrInput interface {
 }
 
 type Mk8sAddOnsAwsEcrArgs struct {
-	RoleArn pulumi.StringInput `pulumi:"roleArn"`
+	_sentinel pulumi.BoolPtrInput   `pulumi:"_sentinel"`
+	RoleArn   pulumi.StringPtrInput `pulumi:"roleArn"`
 }
 
 func (Mk8sAddOnsAwsEcrArgs) ElementType() reflect.Type {
@@ -6881,8 +7602,12 @@ func (o Mk8sAddOnsAwsEcrOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8
 	}
 }
 
-func (o Mk8sAddOnsAwsEcrOutput) RoleArn() pulumi.StringOutput {
-	return o.ApplyT(func(v Mk8sAddOnsAwsEcr) string { return v.RoleArn }).(pulumi.StringOutput)
+func (o Mk8sAddOnsAwsEcrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsAwsEcr) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
+func (o Mk8sAddOnsAwsEcrOutput) RoleArn() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsAwsEcr) *string { return v.RoleArn }).(pulumi.StringPtrOutput)
 }
 
 type Mk8sAddOnsAwsEcrPtrOutput struct{ *pulumi.OutputState }
@@ -6915,17 +7640,27 @@ func (o Mk8sAddOnsAwsEcrPtrOutput) Elem() Mk8sAddOnsAwsEcrOutput {
 	}).(Mk8sAddOnsAwsEcrOutput)
 }
 
+func (o Mk8sAddOnsAwsEcrPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsAwsEcr) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
+}
+
 func (o Mk8sAddOnsAwsEcrPtrOutput) RoleArn() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsAwsEcr) *string {
 		if v == nil {
 			return nil
 		}
-		return &v.RoleArn
+		return v.RoleArn
 	}).(pulumi.StringPtrOutput)
 }
 
 type Mk8sAddOnsAwsEfs struct {
-	RoleArn string `pulumi:"roleArn"`
+	_sentinel *bool   `pulumi:"_sentinel"`
+	RoleArn   *string `pulumi:"roleArn"`
 }
 
 // Mk8sAddOnsAwsEfsInput is an input type that accepts Mk8sAddOnsAwsEfsArgs and Mk8sAddOnsAwsEfsOutput values.
@@ -6940,7 +7675,8 @@ type Mk8sAddOnsAwsEfsInput interface {
 }
 
 type Mk8sAddOnsAwsEfsArgs struct {
-	RoleArn pulumi.StringInput `pulumi:"roleArn"`
+	_sentinel pulumi.BoolPtrInput   `pulumi:"_sentinel"`
+	RoleArn   pulumi.StringPtrInput `pulumi:"roleArn"`
 }
 
 func (Mk8sAddOnsAwsEfsArgs) ElementType() reflect.Type {
@@ -7038,8 +7774,12 @@ func (o Mk8sAddOnsAwsEfsOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8
 	}
 }
 
-func (o Mk8sAddOnsAwsEfsOutput) RoleArn() pulumi.StringOutput {
-	return o.ApplyT(func(v Mk8sAddOnsAwsEfs) string { return v.RoleArn }).(pulumi.StringOutput)
+func (o Mk8sAddOnsAwsEfsOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsAwsEfs) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
+func (o Mk8sAddOnsAwsEfsOutput) RoleArn() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsAwsEfs) *string { return v.RoleArn }).(pulumi.StringPtrOutput)
 }
 
 type Mk8sAddOnsAwsEfsPtrOutput struct{ *pulumi.OutputState }
@@ -7072,17 +7812,27 @@ func (o Mk8sAddOnsAwsEfsPtrOutput) Elem() Mk8sAddOnsAwsEfsOutput {
 	}).(Mk8sAddOnsAwsEfsOutput)
 }
 
+func (o Mk8sAddOnsAwsEfsPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsAwsEfs) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
+}
+
 func (o Mk8sAddOnsAwsEfsPtrOutput) RoleArn() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsAwsEfs) *string {
 		if v == nil {
 			return nil
 		}
-		return &v.RoleArn
+		return v.RoleArn
 	}).(pulumi.StringPtrOutput)
 }
 
 type Mk8sAddOnsAwsElb struct {
-	RoleArn string `pulumi:"roleArn"`
+	_sentinel *bool   `pulumi:"_sentinel"`
+	RoleArn   *string `pulumi:"roleArn"`
 }
 
 // Mk8sAddOnsAwsElbInput is an input type that accepts Mk8sAddOnsAwsElbArgs and Mk8sAddOnsAwsElbOutput values.
@@ -7097,7 +7847,8 @@ type Mk8sAddOnsAwsElbInput interface {
 }
 
 type Mk8sAddOnsAwsElbArgs struct {
-	RoleArn pulumi.StringInput `pulumi:"roleArn"`
+	_sentinel pulumi.BoolPtrInput   `pulumi:"_sentinel"`
+	RoleArn   pulumi.StringPtrInput `pulumi:"roleArn"`
 }
 
 func (Mk8sAddOnsAwsElbArgs) ElementType() reflect.Type {
@@ -7195,8 +7946,12 @@ func (o Mk8sAddOnsAwsElbOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8
 	}
 }
 
-func (o Mk8sAddOnsAwsElbOutput) RoleArn() pulumi.StringOutput {
-	return o.ApplyT(func(v Mk8sAddOnsAwsElb) string { return v.RoleArn }).(pulumi.StringOutput)
+func (o Mk8sAddOnsAwsElbOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsAwsElb) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
+func (o Mk8sAddOnsAwsElbOutput) RoleArn() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsAwsElb) *string { return v.RoleArn }).(pulumi.StringPtrOutput)
 }
 
 type Mk8sAddOnsAwsElbPtrOutput struct{ *pulumi.OutputState }
@@ -7229,12 +7984,21 @@ func (o Mk8sAddOnsAwsElbPtrOutput) Elem() Mk8sAddOnsAwsElbOutput {
 	}).(Mk8sAddOnsAwsElbOutput)
 }
 
+func (o Mk8sAddOnsAwsElbPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsAwsElb) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
+}
+
 func (o Mk8sAddOnsAwsElbPtrOutput) RoleArn() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsAwsElb) *string {
 		if v == nil {
 			return nil
 		}
-		return &v.RoleArn
+		return v.RoleArn
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -7396,7 +8160,8 @@ func (o Mk8sAddOnsAzureAcrPtrOutput) ClientId() pulumi.StringPtrOutput {
 }
 
 type Mk8sAddOnsAzureWorkloadIdentity struct {
-	TenantId string `pulumi:"tenantId"`
+	_sentinel *bool   `pulumi:"_sentinel"`
+	TenantId  *string `pulumi:"tenantId"`
 }
 
 // Mk8sAddOnsAzureWorkloadIdentityInput is an input type that accepts Mk8sAddOnsAzureWorkloadIdentityArgs and Mk8sAddOnsAzureWorkloadIdentityOutput values.
@@ -7411,7 +8176,8 @@ type Mk8sAddOnsAzureWorkloadIdentityInput interface {
 }
 
 type Mk8sAddOnsAzureWorkloadIdentityArgs struct {
-	TenantId pulumi.StringInput `pulumi:"tenantId"`
+	_sentinel pulumi.BoolPtrInput   `pulumi:"_sentinel"`
+	TenantId  pulumi.StringPtrInput `pulumi:"tenantId"`
 }
 
 func (Mk8sAddOnsAzureWorkloadIdentityArgs) ElementType() reflect.Type {
@@ -7509,8 +8275,12 @@ func (o Mk8sAddOnsAzureWorkloadIdentityOutput) ToOutput(ctx context.Context) pul
 	}
 }
 
-func (o Mk8sAddOnsAzureWorkloadIdentityOutput) TenantId() pulumi.StringOutput {
-	return o.ApplyT(func(v Mk8sAddOnsAzureWorkloadIdentity) string { return v.TenantId }).(pulumi.StringOutput)
+func (o Mk8sAddOnsAzureWorkloadIdentityOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsAzureWorkloadIdentity) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
+func (o Mk8sAddOnsAzureWorkloadIdentityOutput) TenantId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsAzureWorkloadIdentity) *string { return v.TenantId }).(pulumi.StringPtrOutput)
 }
 
 type Mk8sAddOnsAzureWorkloadIdentityPtrOutput struct{ *pulumi.OutputState }
@@ -7543,16 +8313,26 @@ func (o Mk8sAddOnsAzureWorkloadIdentityPtrOutput) Elem() Mk8sAddOnsAzureWorkload
 	}).(Mk8sAddOnsAzureWorkloadIdentityOutput)
 }
 
+func (o Mk8sAddOnsAzureWorkloadIdentityPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsAzureWorkloadIdentity) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
+}
+
 func (o Mk8sAddOnsAzureWorkloadIdentityPtrOutput) TenantId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsAzureWorkloadIdentity) *string {
 		if v == nil {
 			return nil
 		}
-		return &v.TenantId
+		return v.TenantId
 	}).(pulumi.StringPtrOutput)
 }
 
 type Mk8sAddOnsLogs struct {
+	_sentinel         *bool   `pulumi:"_sentinel"`
 	AuditEnabled      *bool   `pulumi:"auditEnabled"`
 	ExcludeNamespaces *string `pulumi:"excludeNamespaces"`
 	IncludeNamespaces *string `pulumi:"includeNamespaces"`
@@ -7570,6 +8350,7 @@ type Mk8sAddOnsLogsInput interface {
 }
 
 type Mk8sAddOnsLogsArgs struct {
+	_sentinel         pulumi.BoolPtrInput   `pulumi:"_sentinel"`
 	AuditEnabled      pulumi.BoolPtrInput   `pulumi:"auditEnabled"`
 	ExcludeNamespaces pulumi.StringPtrInput `pulumi:"excludeNamespaces"`
 	IncludeNamespaces pulumi.StringPtrInput `pulumi:"includeNamespaces"`
@@ -7670,6 +8451,10 @@ func (o Mk8sAddOnsLogsOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sA
 	}
 }
 
+func (o Mk8sAddOnsLogsOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsLogs) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
 func (o Mk8sAddOnsLogsOutput) AuditEnabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsLogs) *bool { return v.AuditEnabled }).(pulumi.BoolPtrOutput)
 }
@@ -7712,6 +8497,15 @@ func (o Mk8sAddOnsLogsPtrOutput) Elem() Mk8sAddOnsLogsOutput {
 	}).(Mk8sAddOnsLogsOutput)
 }
 
+func (o Mk8sAddOnsLogsPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsLogs) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
+}
+
 func (o Mk8sAddOnsLogsPtrOutput) AuditEnabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsLogs) *bool {
 		if v == nil {
@@ -7740,6 +8534,7 @@ func (o Mk8sAddOnsLogsPtrOutput) IncludeNamespaces() pulumi.StringPtrOutput {
 }
 
 type Mk8sAddOnsMetrics struct {
+	_sentinel       *bool                             `pulumi:"_sentinel"`
 	ApiServer       *bool                             `pulumi:"apiServer"`
 	Cadvisor        *bool                             `pulumi:"cadvisor"`
 	CoreDns         *bool                             `pulumi:"coreDns"`
@@ -7761,6 +8556,7 @@ type Mk8sAddOnsMetricsInput interface {
 }
 
 type Mk8sAddOnsMetricsArgs struct {
+	_sentinel       pulumi.BoolPtrInput                      `pulumi:"_sentinel"`
 	ApiServer       pulumi.BoolPtrInput                      `pulumi:"apiServer"`
 	Cadvisor        pulumi.BoolPtrInput                      `pulumi:"cadvisor"`
 	CoreDns         pulumi.BoolPtrInput                      `pulumi:"coreDns"`
@@ -7865,6 +8661,10 @@ func (o Mk8sAddOnsMetricsOutput) ToOutput(ctx context.Context) pulumix.Output[Mk
 	}
 }
 
+func (o Mk8sAddOnsMetricsOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsMetrics) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
 func (o Mk8sAddOnsMetricsOutput) ApiServer() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsMetrics) *bool { return v.ApiServer }).(pulumi.BoolPtrOutput)
 }
@@ -7921,6 +8721,15 @@ func (o Mk8sAddOnsMetricsPtrOutput) Elem() Mk8sAddOnsMetricsOutput {
 		var ret Mk8sAddOnsMetrics
 		return ret
 	}).(Mk8sAddOnsMetricsOutput)
+}
+
+func (o Mk8sAddOnsMetricsPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsMetrics) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
 }
 
 func (o Mk8sAddOnsMetricsPtrOutput) ApiServer() pulumi.BoolPtrOutput {
@@ -7987,6 +8796,7 @@ func (o Mk8sAddOnsMetricsPtrOutput) ScrapeAnnotated() Mk8sAddOnsMetricsScrapeAnn
 }
 
 type Mk8sAddOnsMetricsScrapeAnnotated struct {
+	_sentinel         *bool   `pulumi:"_sentinel"`
 	ExcludeNamespaces *string `pulumi:"excludeNamespaces"`
 	IncludeNamespaces *string `pulumi:"includeNamespaces"`
 	IntervalSeconds   *int    `pulumi:"intervalSeconds"`
@@ -8005,6 +8815,7 @@ type Mk8sAddOnsMetricsScrapeAnnotatedInput interface {
 }
 
 type Mk8sAddOnsMetricsScrapeAnnotatedArgs struct {
+	_sentinel         pulumi.BoolPtrInput   `pulumi:"_sentinel"`
 	ExcludeNamespaces pulumi.StringPtrInput `pulumi:"excludeNamespaces"`
 	IncludeNamespaces pulumi.StringPtrInput `pulumi:"includeNamespaces"`
 	IntervalSeconds   pulumi.IntPtrInput    `pulumi:"intervalSeconds"`
@@ -8106,6 +8917,10 @@ func (o Mk8sAddOnsMetricsScrapeAnnotatedOutput) ToOutput(ctx context.Context) pu
 	}
 }
 
+func (o Mk8sAddOnsMetricsScrapeAnnotatedOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsMetricsScrapeAnnotated) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
 func (o Mk8sAddOnsMetricsScrapeAnnotatedOutput) ExcludeNamespaces() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsMetricsScrapeAnnotated) *string { return v.ExcludeNamespaces }).(pulumi.StringPtrOutput)
 }
@@ -8152,6 +8967,15 @@ func (o Mk8sAddOnsMetricsScrapeAnnotatedPtrOutput) Elem() Mk8sAddOnsMetricsScrap
 	}).(Mk8sAddOnsMetricsScrapeAnnotatedOutput)
 }
 
+func (o Mk8sAddOnsMetricsScrapeAnnotatedPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsMetricsScrapeAnnotated) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
+}
+
 func (o Mk8sAddOnsMetricsScrapeAnnotatedPtrOutput) ExcludeNamespaces() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsMetricsScrapeAnnotated) *string {
 		if v == nil {
@@ -8189,7 +9013,8 @@ func (o Mk8sAddOnsMetricsScrapeAnnotatedPtrOutput) RetainLabels() pulumi.StringP
 }
 
 type Mk8sAddOnsNvidia struct {
-	TaintGpuNodes bool `pulumi:"taintGpuNodes"`
+	_sentinel     *bool `pulumi:"_sentinel"`
+	TaintGpuNodes *bool `pulumi:"taintGpuNodes"`
 }
 
 // Mk8sAddOnsNvidiaInput is an input type that accepts Mk8sAddOnsNvidiaArgs and Mk8sAddOnsNvidiaOutput values.
@@ -8204,7 +9029,8 @@ type Mk8sAddOnsNvidiaInput interface {
 }
 
 type Mk8sAddOnsNvidiaArgs struct {
-	TaintGpuNodes pulumi.BoolInput `pulumi:"taintGpuNodes"`
+	_sentinel     pulumi.BoolPtrInput `pulumi:"_sentinel"`
+	TaintGpuNodes pulumi.BoolPtrInput `pulumi:"taintGpuNodes"`
 }
 
 func (Mk8sAddOnsNvidiaArgs) ElementType() reflect.Type {
@@ -8302,8 +9128,12 @@ func (o Mk8sAddOnsNvidiaOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8
 	}
 }
 
-func (o Mk8sAddOnsNvidiaOutput) TaintGpuNodes() pulumi.BoolOutput {
-	return o.ApplyT(func(v Mk8sAddOnsNvidia) bool { return v.TaintGpuNodes }).(pulumi.BoolOutput)
+func (o Mk8sAddOnsNvidiaOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsNvidia) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
+func (o Mk8sAddOnsNvidiaOutput) TaintGpuNodes() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsNvidia) *bool { return v.TaintGpuNodes }).(pulumi.BoolPtrOutput)
 }
 
 type Mk8sAddOnsNvidiaPtrOutput struct{ *pulumi.OutputState }
@@ -8336,29 +9166,39 @@ func (o Mk8sAddOnsNvidiaPtrOutput) Elem() Mk8sAddOnsNvidiaOutput {
 	}).(Mk8sAddOnsNvidiaOutput)
 }
 
+func (o Mk8sAddOnsNvidiaPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsNvidia) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
+}
+
 func (o Mk8sAddOnsNvidiaPtrOutput) TaintGpuNodes() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsNvidia) *bool {
 		if v == nil {
 			return nil
 		}
-		return &v.TaintGpuNodes
+		return v.TaintGpuNodes
 	}).(pulumi.BoolPtrOutput)
 }
 
 type Mk8sAwsProvider struct {
-	Autoscaler           *Mk8sAwsProviderAutoscaler `pulumi:"autoscaler"`
-	AwsTags              map[string]string          `pulumi:"awsTags"`
-	DeployRoleArn        string                     `pulumi:"deployRoleArn"`
-	DiskEncryptionKeyArn *string                    `pulumi:"diskEncryptionKeyArn"`
-	Image                Mk8sAwsProviderImage       `pulumi:"image"`
-	KeyPair              *string                    `pulumi:"keyPair"`
-	Networking           Mk8sAwsProviderNetworking  `pulumi:"networking"`
-	NodePools            []Mk8sAwsProviderNodePool  `pulumi:"nodePools"`
-	PreInstallScript     *string                    `pulumi:"preInstallScript"`
-	Region               string                     `pulumi:"region"`
-	SecurityGroupIds     []string                   `pulumi:"securityGroupIds"`
-	SkipCreateRoles      *bool                      `pulumi:"skipCreateRoles"`
-	VpcId                string                     `pulumi:"vpcId"`
+	Autoscaler           *Mk8sAwsProviderAutoscaler       `pulumi:"autoscaler"`
+	AwsTags              map[string]string                `pulumi:"awsTags"`
+	DeployRoleArn        string                           `pulumi:"deployRoleArn"`
+	DeployRoleChains     []Mk8sAwsProviderDeployRoleChain `pulumi:"deployRoleChains"`
+	DiskEncryptionKeyArn *string                          `pulumi:"diskEncryptionKeyArn"`
+	Image                Mk8sAwsProviderImage             `pulumi:"image"`
+	KeyPair              *string                          `pulumi:"keyPair"`
+	Networking           Mk8sAwsProviderNetworking        `pulumi:"networking"`
+	NodePools            []Mk8sAwsProviderNodePool        `pulumi:"nodePools"`
+	PreInstallScript     *string                          `pulumi:"preInstallScript"`
+	Region               string                           `pulumi:"region"`
+	SecurityGroupIds     []string                         `pulumi:"securityGroupIds"`
+	SkipCreateRoles      *bool                            `pulumi:"skipCreateRoles"`
+	VpcId                string                           `pulumi:"vpcId"`
 }
 
 // Mk8sAwsProviderInput is an input type that accepts Mk8sAwsProviderArgs and Mk8sAwsProviderOutput values.
@@ -8373,19 +9213,20 @@ type Mk8sAwsProviderInput interface {
 }
 
 type Mk8sAwsProviderArgs struct {
-	Autoscaler           Mk8sAwsProviderAutoscalerPtrInput `pulumi:"autoscaler"`
-	AwsTags              pulumi.StringMapInput             `pulumi:"awsTags"`
-	DeployRoleArn        pulumi.StringInput                `pulumi:"deployRoleArn"`
-	DiskEncryptionKeyArn pulumi.StringPtrInput             `pulumi:"diskEncryptionKeyArn"`
-	Image                Mk8sAwsProviderImageInput         `pulumi:"image"`
-	KeyPair              pulumi.StringPtrInput             `pulumi:"keyPair"`
-	Networking           Mk8sAwsProviderNetworkingInput    `pulumi:"networking"`
-	NodePools            Mk8sAwsProviderNodePoolArrayInput `pulumi:"nodePools"`
-	PreInstallScript     pulumi.StringPtrInput             `pulumi:"preInstallScript"`
-	Region               pulumi.StringInput                `pulumi:"region"`
-	SecurityGroupIds     pulumi.StringArrayInput           `pulumi:"securityGroupIds"`
-	SkipCreateRoles      pulumi.BoolPtrInput               `pulumi:"skipCreateRoles"`
-	VpcId                pulumi.StringInput                `pulumi:"vpcId"`
+	Autoscaler           Mk8sAwsProviderAutoscalerPtrInput        `pulumi:"autoscaler"`
+	AwsTags              pulumi.StringMapInput                    `pulumi:"awsTags"`
+	DeployRoleArn        pulumi.StringInput                       `pulumi:"deployRoleArn"`
+	DeployRoleChains     Mk8sAwsProviderDeployRoleChainArrayInput `pulumi:"deployRoleChains"`
+	DiskEncryptionKeyArn pulumi.StringPtrInput                    `pulumi:"diskEncryptionKeyArn"`
+	Image                Mk8sAwsProviderImageInput                `pulumi:"image"`
+	KeyPair              pulumi.StringPtrInput                    `pulumi:"keyPair"`
+	Networking           Mk8sAwsProviderNetworkingInput           `pulumi:"networking"`
+	NodePools            Mk8sAwsProviderNodePoolArrayInput        `pulumi:"nodePools"`
+	PreInstallScript     pulumi.StringPtrInput                    `pulumi:"preInstallScript"`
+	Region               pulumi.StringInput                       `pulumi:"region"`
+	SecurityGroupIds     pulumi.StringArrayInput                  `pulumi:"securityGroupIds"`
+	SkipCreateRoles      pulumi.BoolPtrInput                      `pulumi:"skipCreateRoles"`
+	VpcId                pulumi.StringInput                       `pulumi:"vpcId"`
 }
 
 func (Mk8sAwsProviderArgs) ElementType() reflect.Type {
@@ -8495,6 +9336,10 @@ func (o Mk8sAwsProviderOutput) DeployRoleArn() pulumi.StringOutput {
 	return o.ApplyT(func(v Mk8sAwsProvider) string { return v.DeployRoleArn }).(pulumi.StringOutput)
 }
 
+func (o Mk8sAwsProviderOutput) DeployRoleChains() Mk8sAwsProviderDeployRoleChainArrayOutput {
+	return o.ApplyT(func(v Mk8sAwsProvider) []Mk8sAwsProviderDeployRoleChain { return v.DeployRoleChains }).(Mk8sAwsProviderDeployRoleChainArrayOutput)
+}
+
 func (o Mk8sAwsProviderOutput) DiskEncryptionKeyArn() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Mk8sAwsProvider) *string { return v.DiskEncryptionKeyArn }).(pulumi.StringPtrOutput)
 }
@@ -8590,6 +9435,15 @@ func (o Mk8sAwsProviderPtrOutput) DeployRoleArn() pulumi.StringPtrOutput {
 		}
 		return &v.DeployRoleArn
 	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sAwsProviderPtrOutput) DeployRoleChains() Mk8sAwsProviderDeployRoleChainArrayOutput {
+	return o.ApplyT(func(v *Mk8sAwsProvider) []Mk8sAwsProviderDeployRoleChain {
+		if v == nil {
+			return nil
+		}
+		return v.DeployRoleChains
+	}).(Mk8sAwsProviderDeployRoleChainArrayOutput)
 }
 
 func (o Mk8sAwsProviderPtrOutput) DiskEncryptionKeyArn() pulumi.StringPtrOutput {
@@ -8882,6 +9736,136 @@ func (o Mk8sAwsProviderAutoscalerPtrOutput) UtilizationThreshold() pulumi.Float6
 		}
 		return v.UtilizationThreshold
 	}).(pulumi.Float64PtrOutput)
+}
+
+type Mk8sAwsProviderDeployRoleChain struct {
+	ExternalId        *string `pulumi:"externalId"`
+	RoleArn           string  `pulumi:"roleArn"`
+	SessionNamePrefix *string `pulumi:"sessionNamePrefix"`
+}
+
+// Mk8sAwsProviderDeployRoleChainInput is an input type that accepts Mk8sAwsProviderDeployRoleChainArgs and Mk8sAwsProviderDeployRoleChainOutput values.
+// You can construct a concrete instance of `Mk8sAwsProviderDeployRoleChainInput` via:
+//
+//	Mk8sAwsProviderDeployRoleChainArgs{...}
+type Mk8sAwsProviderDeployRoleChainInput interface {
+	pulumi.Input
+
+	ToMk8sAwsProviderDeployRoleChainOutput() Mk8sAwsProviderDeployRoleChainOutput
+	ToMk8sAwsProviderDeployRoleChainOutputWithContext(context.Context) Mk8sAwsProviderDeployRoleChainOutput
+}
+
+type Mk8sAwsProviderDeployRoleChainArgs struct {
+	ExternalId        pulumi.StringPtrInput `pulumi:"externalId"`
+	RoleArn           pulumi.StringInput    `pulumi:"roleArn"`
+	SessionNamePrefix pulumi.StringPtrInput `pulumi:"sessionNamePrefix"`
+}
+
+func (Mk8sAwsProviderDeployRoleChainArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAwsProviderDeployRoleChain)(nil)).Elem()
+}
+
+func (i Mk8sAwsProviderDeployRoleChainArgs) ToMk8sAwsProviderDeployRoleChainOutput() Mk8sAwsProviderDeployRoleChainOutput {
+	return i.ToMk8sAwsProviderDeployRoleChainOutputWithContext(context.Background())
+}
+
+func (i Mk8sAwsProviderDeployRoleChainArgs) ToMk8sAwsProviderDeployRoleChainOutputWithContext(ctx context.Context) Mk8sAwsProviderDeployRoleChainOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAwsProviderDeployRoleChainOutput)
+}
+
+func (i Mk8sAwsProviderDeployRoleChainArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sAwsProviderDeployRoleChain] {
+	return pulumix.Output[Mk8sAwsProviderDeployRoleChain]{
+		OutputState: i.ToMk8sAwsProviderDeployRoleChainOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sAwsProviderDeployRoleChainArrayInput is an input type that accepts Mk8sAwsProviderDeployRoleChainArray and Mk8sAwsProviderDeployRoleChainArrayOutput values.
+// You can construct a concrete instance of `Mk8sAwsProviderDeployRoleChainArrayInput` via:
+//
+//	Mk8sAwsProviderDeployRoleChainArray{ Mk8sAwsProviderDeployRoleChainArgs{...} }
+type Mk8sAwsProviderDeployRoleChainArrayInput interface {
+	pulumi.Input
+
+	ToMk8sAwsProviderDeployRoleChainArrayOutput() Mk8sAwsProviderDeployRoleChainArrayOutput
+	ToMk8sAwsProviderDeployRoleChainArrayOutputWithContext(context.Context) Mk8sAwsProviderDeployRoleChainArrayOutput
+}
+
+type Mk8sAwsProviderDeployRoleChainArray []Mk8sAwsProviderDeployRoleChainInput
+
+func (Mk8sAwsProviderDeployRoleChainArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sAwsProviderDeployRoleChain)(nil)).Elem()
+}
+
+func (i Mk8sAwsProviderDeployRoleChainArray) ToMk8sAwsProviderDeployRoleChainArrayOutput() Mk8sAwsProviderDeployRoleChainArrayOutput {
+	return i.ToMk8sAwsProviderDeployRoleChainArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sAwsProviderDeployRoleChainArray) ToMk8sAwsProviderDeployRoleChainArrayOutputWithContext(ctx context.Context) Mk8sAwsProviderDeployRoleChainArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAwsProviderDeployRoleChainArrayOutput)
+}
+
+func (i Mk8sAwsProviderDeployRoleChainArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sAwsProviderDeployRoleChain] {
+	return pulumix.Output[[]Mk8sAwsProviderDeployRoleChain]{
+		OutputState: i.ToMk8sAwsProviderDeployRoleChainArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sAwsProviderDeployRoleChainOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAwsProviderDeployRoleChainOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAwsProviderDeployRoleChain)(nil)).Elem()
+}
+
+func (o Mk8sAwsProviderDeployRoleChainOutput) ToMk8sAwsProviderDeployRoleChainOutput() Mk8sAwsProviderDeployRoleChainOutput {
+	return o
+}
+
+func (o Mk8sAwsProviderDeployRoleChainOutput) ToMk8sAwsProviderDeployRoleChainOutputWithContext(ctx context.Context) Mk8sAwsProviderDeployRoleChainOutput {
+	return o
+}
+
+func (o Mk8sAwsProviderDeployRoleChainOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sAwsProviderDeployRoleChain] {
+	return pulumix.Output[Mk8sAwsProviderDeployRoleChain]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sAwsProviderDeployRoleChainOutput) ExternalId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAwsProviderDeployRoleChain) *string { return v.ExternalId }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sAwsProviderDeployRoleChainOutput) RoleArn() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sAwsProviderDeployRoleChain) string { return v.RoleArn }).(pulumi.StringOutput)
+}
+
+func (o Mk8sAwsProviderDeployRoleChainOutput) SessionNamePrefix() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAwsProviderDeployRoleChain) *string { return v.SessionNamePrefix }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAwsProviderDeployRoleChainArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAwsProviderDeployRoleChainArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sAwsProviderDeployRoleChain)(nil)).Elem()
+}
+
+func (o Mk8sAwsProviderDeployRoleChainArrayOutput) ToMk8sAwsProviderDeployRoleChainArrayOutput() Mk8sAwsProviderDeployRoleChainArrayOutput {
+	return o
+}
+
+func (o Mk8sAwsProviderDeployRoleChainArrayOutput) ToMk8sAwsProviderDeployRoleChainArrayOutputWithContext(ctx context.Context) Mk8sAwsProviderDeployRoleChainArrayOutput {
+	return o
+}
+
+func (o Mk8sAwsProviderDeployRoleChainArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sAwsProviderDeployRoleChain] {
+	return pulumix.Output[[]Mk8sAwsProviderDeployRoleChain]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sAwsProviderDeployRoleChainArrayOutput) Index(i pulumi.IntInput) Mk8sAwsProviderDeployRoleChainOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sAwsProviderDeployRoleChain {
+		return vs[0].([]Mk8sAwsProviderDeployRoleChain)[vs[1].(int)]
+	}).(Mk8sAwsProviderDeployRoleChainOutput)
 }
 
 type Mk8sAwsProviderImage struct {
@@ -9613,6 +10597,986 @@ func (o Mk8sAwsProviderNodePoolTaintArrayOutput) Index(i pulumi.IntInput) Mk8sAw
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sAwsProviderNodePoolTaint {
 		return vs[0].([]Mk8sAwsProviderNodePoolTaint)[vs[1].(int)]
 	}).(Mk8sAwsProviderNodePoolTaintOutput)
+}
+
+type Mk8sDigitalOceanProvider struct {
+	Autoscaler       *Mk8sDigitalOceanProviderAutoscaler `pulumi:"autoscaler"`
+	DigitalOceanTags []string                            `pulumi:"digitalOceanTags"`
+	ExtraSshKeys     []string                            `pulumi:"extraSshKeys"`
+	Image            string                              `pulumi:"image"`
+	Networking       Mk8sDigitalOceanProviderNetworking  `pulumi:"networking"`
+	NodePools        []Mk8sDigitalOceanProviderNodePool  `pulumi:"nodePools"`
+	PreInstallScript *string                             `pulumi:"preInstallScript"`
+	Region           string                              `pulumi:"region"`
+	ReservedIps      []string                            `pulumi:"reservedIps"`
+	SshKeys          []string                            `pulumi:"sshKeys"`
+	TokenSecretLink  string                              `pulumi:"tokenSecretLink"`
+	VpcId            string                              `pulumi:"vpcId"`
+}
+
+// Mk8sDigitalOceanProviderInput is an input type that accepts Mk8sDigitalOceanProviderArgs and Mk8sDigitalOceanProviderOutput values.
+// You can construct a concrete instance of `Mk8sDigitalOceanProviderInput` via:
+//
+//	Mk8sDigitalOceanProviderArgs{...}
+type Mk8sDigitalOceanProviderInput interface {
+	pulumi.Input
+
+	ToMk8sDigitalOceanProviderOutput() Mk8sDigitalOceanProviderOutput
+	ToMk8sDigitalOceanProviderOutputWithContext(context.Context) Mk8sDigitalOceanProviderOutput
+}
+
+type Mk8sDigitalOceanProviderArgs struct {
+	Autoscaler       Mk8sDigitalOceanProviderAutoscalerPtrInput `pulumi:"autoscaler"`
+	DigitalOceanTags pulumi.StringArrayInput                    `pulumi:"digitalOceanTags"`
+	ExtraSshKeys     pulumi.StringArrayInput                    `pulumi:"extraSshKeys"`
+	Image            pulumi.StringInput                         `pulumi:"image"`
+	Networking       Mk8sDigitalOceanProviderNetworkingInput    `pulumi:"networking"`
+	NodePools        Mk8sDigitalOceanProviderNodePoolArrayInput `pulumi:"nodePools"`
+	PreInstallScript pulumi.StringPtrInput                      `pulumi:"preInstallScript"`
+	Region           pulumi.StringInput                         `pulumi:"region"`
+	ReservedIps      pulumi.StringArrayInput                    `pulumi:"reservedIps"`
+	SshKeys          pulumi.StringArrayInput                    `pulumi:"sshKeys"`
+	TokenSecretLink  pulumi.StringInput                         `pulumi:"tokenSecretLink"`
+	VpcId            pulumi.StringInput                         `pulumi:"vpcId"`
+}
+
+func (Mk8sDigitalOceanProviderArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sDigitalOceanProvider)(nil)).Elem()
+}
+
+func (i Mk8sDigitalOceanProviderArgs) ToMk8sDigitalOceanProviderOutput() Mk8sDigitalOceanProviderOutput {
+	return i.ToMk8sDigitalOceanProviderOutputWithContext(context.Background())
+}
+
+func (i Mk8sDigitalOceanProviderArgs) ToMk8sDigitalOceanProviderOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sDigitalOceanProviderOutput)
+}
+
+func (i Mk8sDigitalOceanProviderArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sDigitalOceanProvider] {
+	return pulumix.Output[Mk8sDigitalOceanProvider]{
+		OutputState: i.ToMk8sDigitalOceanProviderOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i Mk8sDigitalOceanProviderArgs) ToMk8sDigitalOceanProviderPtrOutput() Mk8sDigitalOceanProviderPtrOutput {
+	return i.ToMk8sDigitalOceanProviderPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sDigitalOceanProviderArgs) ToMk8sDigitalOceanProviderPtrOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sDigitalOceanProviderOutput).ToMk8sDigitalOceanProviderPtrOutputWithContext(ctx)
+}
+
+// Mk8sDigitalOceanProviderPtrInput is an input type that accepts Mk8sDigitalOceanProviderArgs, Mk8sDigitalOceanProviderPtr and Mk8sDigitalOceanProviderPtrOutput values.
+// You can construct a concrete instance of `Mk8sDigitalOceanProviderPtrInput` via:
+//
+//	        Mk8sDigitalOceanProviderArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sDigitalOceanProviderPtrInput interface {
+	pulumi.Input
+
+	ToMk8sDigitalOceanProviderPtrOutput() Mk8sDigitalOceanProviderPtrOutput
+	ToMk8sDigitalOceanProviderPtrOutputWithContext(context.Context) Mk8sDigitalOceanProviderPtrOutput
+}
+
+type mk8sDigitalOceanProviderPtrType Mk8sDigitalOceanProviderArgs
+
+func Mk8sDigitalOceanProviderPtr(v *Mk8sDigitalOceanProviderArgs) Mk8sDigitalOceanProviderPtrInput {
+	return (*mk8sDigitalOceanProviderPtrType)(v)
+}
+
+func (*mk8sDigitalOceanProviderPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sDigitalOceanProvider)(nil)).Elem()
+}
+
+func (i *mk8sDigitalOceanProviderPtrType) ToMk8sDigitalOceanProviderPtrOutput() Mk8sDigitalOceanProviderPtrOutput {
+	return i.ToMk8sDigitalOceanProviderPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sDigitalOceanProviderPtrType) ToMk8sDigitalOceanProviderPtrOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sDigitalOceanProviderPtrOutput)
+}
+
+func (i *mk8sDigitalOceanProviderPtrType) ToOutput(ctx context.Context) pulumix.Output[*Mk8sDigitalOceanProvider] {
+	return pulumix.Output[*Mk8sDigitalOceanProvider]{
+		OutputState: i.ToMk8sDigitalOceanProviderPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sDigitalOceanProviderOutput struct{ *pulumi.OutputState }
+
+func (Mk8sDigitalOceanProviderOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sDigitalOceanProvider)(nil)).Elem()
+}
+
+func (o Mk8sDigitalOceanProviderOutput) ToMk8sDigitalOceanProviderOutput() Mk8sDigitalOceanProviderOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderOutput) ToMk8sDigitalOceanProviderOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderOutput) ToMk8sDigitalOceanProviderPtrOutput() Mk8sDigitalOceanProviderPtrOutput {
+	return o.ToMk8sDigitalOceanProviderPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sDigitalOceanProviderOutput) ToMk8sDigitalOceanProviderPtrOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sDigitalOceanProvider) *Mk8sDigitalOceanProvider {
+		return &v
+	}).(Mk8sDigitalOceanProviderPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sDigitalOceanProvider] {
+	return pulumix.Output[Mk8sDigitalOceanProvider]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sDigitalOceanProviderOutput) Autoscaler() Mk8sDigitalOceanProviderAutoscalerPtrOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProvider) *Mk8sDigitalOceanProviderAutoscaler { return v.Autoscaler }).(Mk8sDigitalOceanProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderOutput) DigitalOceanTags() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProvider) []string { return v.DigitalOceanTags }).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sDigitalOceanProviderOutput) ExtraSshKeys() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProvider) []string { return v.ExtraSshKeys }).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sDigitalOceanProviderOutput) Image() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProvider) string { return v.Image }).(pulumi.StringOutput)
+}
+
+func (o Mk8sDigitalOceanProviderOutput) Networking() Mk8sDigitalOceanProviderNetworkingOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProvider) Mk8sDigitalOceanProviderNetworking { return v.Networking }).(Mk8sDigitalOceanProviderNetworkingOutput)
+}
+
+func (o Mk8sDigitalOceanProviderOutput) NodePools() Mk8sDigitalOceanProviderNodePoolArrayOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProvider) []Mk8sDigitalOceanProviderNodePool { return v.NodePools }).(Mk8sDigitalOceanProviderNodePoolArrayOutput)
+}
+
+func (o Mk8sDigitalOceanProviderOutput) PreInstallScript() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProvider) *string { return v.PreInstallScript }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProvider) string { return v.Region }).(pulumi.StringOutput)
+}
+
+func (o Mk8sDigitalOceanProviderOutput) ReservedIps() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProvider) []string { return v.ReservedIps }).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sDigitalOceanProviderOutput) SshKeys() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProvider) []string { return v.SshKeys }).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sDigitalOceanProviderOutput) TokenSecretLink() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProvider) string { return v.TokenSecretLink }).(pulumi.StringOutput)
+}
+
+func (o Mk8sDigitalOceanProviderOutput) VpcId() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProvider) string { return v.VpcId }).(pulumi.StringOutput)
+}
+
+type Mk8sDigitalOceanProviderPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sDigitalOceanProviderPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sDigitalOceanProvider)(nil)).Elem()
+}
+
+func (o Mk8sDigitalOceanProviderPtrOutput) ToMk8sDigitalOceanProviderPtrOutput() Mk8sDigitalOceanProviderPtrOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderPtrOutput) ToMk8sDigitalOceanProviderPtrOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderPtrOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*Mk8sDigitalOceanProvider] {
+	return pulumix.Output[*Mk8sDigitalOceanProvider]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sDigitalOceanProviderPtrOutput) Elem() Mk8sDigitalOceanProviderOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProvider) Mk8sDigitalOceanProvider {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sDigitalOceanProvider
+		return ret
+	}).(Mk8sDigitalOceanProviderOutput)
+}
+
+func (o Mk8sDigitalOceanProviderPtrOutput) Autoscaler() Mk8sDigitalOceanProviderAutoscalerPtrOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProvider) *Mk8sDigitalOceanProviderAutoscaler {
+		if v == nil {
+			return nil
+		}
+		return v.Autoscaler
+	}).(Mk8sDigitalOceanProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderPtrOutput) DigitalOceanTags() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProvider) []string {
+		if v == nil {
+			return nil
+		}
+		return v.DigitalOceanTags
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sDigitalOceanProviderPtrOutput) ExtraSshKeys() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProvider) []string {
+		if v == nil {
+			return nil
+		}
+		return v.ExtraSshKeys
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sDigitalOceanProviderPtrOutput) Image() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Image
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderPtrOutput) Networking() Mk8sDigitalOceanProviderNetworkingPtrOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProvider) *Mk8sDigitalOceanProviderNetworking {
+		if v == nil {
+			return nil
+		}
+		return &v.Networking
+	}).(Mk8sDigitalOceanProviderNetworkingPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderPtrOutput) NodePools() Mk8sDigitalOceanProviderNodePoolArrayOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProvider) []Mk8sDigitalOceanProviderNodePool {
+		if v == nil {
+			return nil
+		}
+		return v.NodePools
+	}).(Mk8sDigitalOceanProviderNodePoolArrayOutput)
+}
+
+func (o Mk8sDigitalOceanProviderPtrOutput) PreInstallScript() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return v.PreInstallScript
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderPtrOutput) Region() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Region
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderPtrOutput) ReservedIps() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProvider) []string {
+		if v == nil {
+			return nil
+		}
+		return v.ReservedIps
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sDigitalOceanProviderPtrOutput) SshKeys() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProvider) []string {
+		if v == nil {
+			return nil
+		}
+		return v.SshKeys
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sDigitalOceanProviderPtrOutput) TokenSecretLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.TokenSecretLink
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderPtrOutput) VpcId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.VpcId
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sDigitalOceanProviderAutoscaler struct {
+	Expanders            []string `pulumi:"expanders"`
+	UnneededTime         *string  `pulumi:"unneededTime"`
+	UnreadyTime          *string  `pulumi:"unreadyTime"`
+	UtilizationThreshold *float64 `pulumi:"utilizationThreshold"`
+}
+
+// Mk8sDigitalOceanProviderAutoscalerInput is an input type that accepts Mk8sDigitalOceanProviderAutoscalerArgs and Mk8sDigitalOceanProviderAutoscalerOutput values.
+// You can construct a concrete instance of `Mk8sDigitalOceanProviderAutoscalerInput` via:
+//
+//	Mk8sDigitalOceanProviderAutoscalerArgs{...}
+type Mk8sDigitalOceanProviderAutoscalerInput interface {
+	pulumi.Input
+
+	ToMk8sDigitalOceanProviderAutoscalerOutput() Mk8sDigitalOceanProviderAutoscalerOutput
+	ToMk8sDigitalOceanProviderAutoscalerOutputWithContext(context.Context) Mk8sDigitalOceanProviderAutoscalerOutput
+}
+
+type Mk8sDigitalOceanProviderAutoscalerArgs struct {
+	Expanders            pulumi.StringArrayInput `pulumi:"expanders"`
+	UnneededTime         pulumi.StringPtrInput   `pulumi:"unneededTime"`
+	UnreadyTime          pulumi.StringPtrInput   `pulumi:"unreadyTime"`
+	UtilizationThreshold pulumi.Float64PtrInput  `pulumi:"utilizationThreshold"`
+}
+
+func (Mk8sDigitalOceanProviderAutoscalerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sDigitalOceanProviderAutoscaler)(nil)).Elem()
+}
+
+func (i Mk8sDigitalOceanProviderAutoscalerArgs) ToMk8sDigitalOceanProviderAutoscalerOutput() Mk8sDigitalOceanProviderAutoscalerOutput {
+	return i.ToMk8sDigitalOceanProviderAutoscalerOutputWithContext(context.Background())
+}
+
+func (i Mk8sDigitalOceanProviderAutoscalerArgs) ToMk8sDigitalOceanProviderAutoscalerOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderAutoscalerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sDigitalOceanProviderAutoscalerOutput)
+}
+
+func (i Mk8sDigitalOceanProviderAutoscalerArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sDigitalOceanProviderAutoscaler] {
+	return pulumix.Output[Mk8sDigitalOceanProviderAutoscaler]{
+		OutputState: i.ToMk8sDigitalOceanProviderAutoscalerOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i Mk8sDigitalOceanProviderAutoscalerArgs) ToMk8sDigitalOceanProviderAutoscalerPtrOutput() Mk8sDigitalOceanProviderAutoscalerPtrOutput {
+	return i.ToMk8sDigitalOceanProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sDigitalOceanProviderAutoscalerArgs) ToMk8sDigitalOceanProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderAutoscalerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sDigitalOceanProviderAutoscalerOutput).ToMk8sDigitalOceanProviderAutoscalerPtrOutputWithContext(ctx)
+}
+
+// Mk8sDigitalOceanProviderAutoscalerPtrInput is an input type that accepts Mk8sDigitalOceanProviderAutoscalerArgs, Mk8sDigitalOceanProviderAutoscalerPtr and Mk8sDigitalOceanProviderAutoscalerPtrOutput values.
+// You can construct a concrete instance of `Mk8sDigitalOceanProviderAutoscalerPtrInput` via:
+//
+//	        Mk8sDigitalOceanProviderAutoscalerArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sDigitalOceanProviderAutoscalerPtrInput interface {
+	pulumi.Input
+
+	ToMk8sDigitalOceanProviderAutoscalerPtrOutput() Mk8sDigitalOceanProviderAutoscalerPtrOutput
+	ToMk8sDigitalOceanProviderAutoscalerPtrOutputWithContext(context.Context) Mk8sDigitalOceanProviderAutoscalerPtrOutput
+}
+
+type mk8sDigitalOceanProviderAutoscalerPtrType Mk8sDigitalOceanProviderAutoscalerArgs
+
+func Mk8sDigitalOceanProviderAutoscalerPtr(v *Mk8sDigitalOceanProviderAutoscalerArgs) Mk8sDigitalOceanProviderAutoscalerPtrInput {
+	return (*mk8sDigitalOceanProviderAutoscalerPtrType)(v)
+}
+
+func (*mk8sDigitalOceanProviderAutoscalerPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sDigitalOceanProviderAutoscaler)(nil)).Elem()
+}
+
+func (i *mk8sDigitalOceanProviderAutoscalerPtrType) ToMk8sDigitalOceanProviderAutoscalerPtrOutput() Mk8sDigitalOceanProviderAutoscalerPtrOutput {
+	return i.ToMk8sDigitalOceanProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sDigitalOceanProviderAutoscalerPtrType) ToMk8sDigitalOceanProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderAutoscalerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sDigitalOceanProviderAutoscalerPtrOutput)
+}
+
+func (i *mk8sDigitalOceanProviderAutoscalerPtrType) ToOutput(ctx context.Context) pulumix.Output[*Mk8sDigitalOceanProviderAutoscaler] {
+	return pulumix.Output[*Mk8sDigitalOceanProviderAutoscaler]{
+		OutputState: i.ToMk8sDigitalOceanProviderAutoscalerPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sDigitalOceanProviderAutoscalerOutput struct{ *pulumi.OutputState }
+
+func (Mk8sDigitalOceanProviderAutoscalerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sDigitalOceanProviderAutoscaler)(nil)).Elem()
+}
+
+func (o Mk8sDigitalOceanProviderAutoscalerOutput) ToMk8sDigitalOceanProviderAutoscalerOutput() Mk8sDigitalOceanProviderAutoscalerOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderAutoscalerOutput) ToMk8sDigitalOceanProviderAutoscalerOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderAutoscalerOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderAutoscalerOutput) ToMk8sDigitalOceanProviderAutoscalerPtrOutput() Mk8sDigitalOceanProviderAutoscalerPtrOutput {
+	return o.ToMk8sDigitalOceanProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sDigitalOceanProviderAutoscalerOutput) ToMk8sDigitalOceanProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderAutoscalerPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sDigitalOceanProviderAutoscaler) *Mk8sDigitalOceanProviderAutoscaler {
+		return &v
+	}).(Mk8sDigitalOceanProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderAutoscalerOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sDigitalOceanProviderAutoscaler] {
+	return pulumix.Output[Mk8sDigitalOceanProviderAutoscaler]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sDigitalOceanProviderAutoscalerOutput) Expanders() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProviderAutoscaler) []string { return v.Expanders }).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sDigitalOceanProviderAutoscalerOutput) UnneededTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProviderAutoscaler) *string { return v.UnneededTime }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderAutoscalerOutput) UnreadyTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProviderAutoscaler) *string { return v.UnreadyTime }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderAutoscalerOutput) UtilizationThreshold() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProviderAutoscaler) *float64 { return v.UtilizationThreshold }).(pulumi.Float64PtrOutput)
+}
+
+type Mk8sDigitalOceanProviderAutoscalerPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sDigitalOceanProviderAutoscalerPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sDigitalOceanProviderAutoscaler)(nil)).Elem()
+}
+
+func (o Mk8sDigitalOceanProviderAutoscalerPtrOutput) ToMk8sDigitalOceanProviderAutoscalerPtrOutput() Mk8sDigitalOceanProviderAutoscalerPtrOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderAutoscalerPtrOutput) ToMk8sDigitalOceanProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderAutoscalerPtrOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderAutoscalerPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*Mk8sDigitalOceanProviderAutoscaler] {
+	return pulumix.Output[*Mk8sDigitalOceanProviderAutoscaler]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sDigitalOceanProviderAutoscalerPtrOutput) Elem() Mk8sDigitalOceanProviderAutoscalerOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProviderAutoscaler) Mk8sDigitalOceanProviderAutoscaler {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sDigitalOceanProviderAutoscaler
+		return ret
+	}).(Mk8sDigitalOceanProviderAutoscalerOutput)
+}
+
+func (o Mk8sDigitalOceanProviderAutoscalerPtrOutput) Expanders() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProviderAutoscaler) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Expanders
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sDigitalOceanProviderAutoscalerPtrOutput) UnneededTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProviderAutoscaler) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UnneededTime
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderAutoscalerPtrOutput) UnreadyTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProviderAutoscaler) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UnreadyTime
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderAutoscalerPtrOutput) UtilizationThreshold() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProviderAutoscaler) *float64 {
+		if v == nil {
+			return nil
+		}
+		return v.UtilizationThreshold
+	}).(pulumi.Float64PtrOutput)
+}
+
+type Mk8sDigitalOceanProviderNetworking struct {
+	PodNetwork     *string `pulumi:"podNetwork"`
+	ServiceNetwork *string `pulumi:"serviceNetwork"`
+}
+
+// Mk8sDigitalOceanProviderNetworkingInput is an input type that accepts Mk8sDigitalOceanProviderNetworkingArgs and Mk8sDigitalOceanProviderNetworkingOutput values.
+// You can construct a concrete instance of `Mk8sDigitalOceanProviderNetworkingInput` via:
+//
+//	Mk8sDigitalOceanProviderNetworkingArgs{...}
+type Mk8sDigitalOceanProviderNetworkingInput interface {
+	pulumi.Input
+
+	ToMk8sDigitalOceanProviderNetworkingOutput() Mk8sDigitalOceanProviderNetworkingOutput
+	ToMk8sDigitalOceanProviderNetworkingOutputWithContext(context.Context) Mk8sDigitalOceanProviderNetworkingOutput
+}
+
+type Mk8sDigitalOceanProviderNetworkingArgs struct {
+	PodNetwork     pulumi.StringPtrInput `pulumi:"podNetwork"`
+	ServiceNetwork pulumi.StringPtrInput `pulumi:"serviceNetwork"`
+}
+
+func (Mk8sDigitalOceanProviderNetworkingArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sDigitalOceanProviderNetworking)(nil)).Elem()
+}
+
+func (i Mk8sDigitalOceanProviderNetworkingArgs) ToMk8sDigitalOceanProviderNetworkingOutput() Mk8sDigitalOceanProviderNetworkingOutput {
+	return i.ToMk8sDigitalOceanProviderNetworkingOutputWithContext(context.Background())
+}
+
+func (i Mk8sDigitalOceanProviderNetworkingArgs) ToMk8sDigitalOceanProviderNetworkingOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderNetworkingOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sDigitalOceanProviderNetworkingOutput)
+}
+
+func (i Mk8sDigitalOceanProviderNetworkingArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sDigitalOceanProviderNetworking] {
+	return pulumix.Output[Mk8sDigitalOceanProviderNetworking]{
+		OutputState: i.ToMk8sDigitalOceanProviderNetworkingOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i Mk8sDigitalOceanProviderNetworkingArgs) ToMk8sDigitalOceanProviderNetworkingPtrOutput() Mk8sDigitalOceanProviderNetworkingPtrOutput {
+	return i.ToMk8sDigitalOceanProviderNetworkingPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sDigitalOceanProviderNetworkingArgs) ToMk8sDigitalOceanProviderNetworkingPtrOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderNetworkingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sDigitalOceanProviderNetworkingOutput).ToMk8sDigitalOceanProviderNetworkingPtrOutputWithContext(ctx)
+}
+
+// Mk8sDigitalOceanProviderNetworkingPtrInput is an input type that accepts Mk8sDigitalOceanProviderNetworkingArgs, Mk8sDigitalOceanProviderNetworkingPtr and Mk8sDigitalOceanProviderNetworkingPtrOutput values.
+// You can construct a concrete instance of `Mk8sDigitalOceanProviderNetworkingPtrInput` via:
+//
+//	        Mk8sDigitalOceanProviderNetworkingArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sDigitalOceanProviderNetworkingPtrInput interface {
+	pulumi.Input
+
+	ToMk8sDigitalOceanProviderNetworkingPtrOutput() Mk8sDigitalOceanProviderNetworkingPtrOutput
+	ToMk8sDigitalOceanProviderNetworkingPtrOutputWithContext(context.Context) Mk8sDigitalOceanProviderNetworkingPtrOutput
+}
+
+type mk8sDigitalOceanProviderNetworkingPtrType Mk8sDigitalOceanProviderNetworkingArgs
+
+func Mk8sDigitalOceanProviderNetworkingPtr(v *Mk8sDigitalOceanProviderNetworkingArgs) Mk8sDigitalOceanProviderNetworkingPtrInput {
+	return (*mk8sDigitalOceanProviderNetworkingPtrType)(v)
+}
+
+func (*mk8sDigitalOceanProviderNetworkingPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sDigitalOceanProviderNetworking)(nil)).Elem()
+}
+
+func (i *mk8sDigitalOceanProviderNetworkingPtrType) ToMk8sDigitalOceanProviderNetworkingPtrOutput() Mk8sDigitalOceanProviderNetworkingPtrOutput {
+	return i.ToMk8sDigitalOceanProviderNetworkingPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sDigitalOceanProviderNetworkingPtrType) ToMk8sDigitalOceanProviderNetworkingPtrOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderNetworkingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sDigitalOceanProviderNetworkingPtrOutput)
+}
+
+func (i *mk8sDigitalOceanProviderNetworkingPtrType) ToOutput(ctx context.Context) pulumix.Output[*Mk8sDigitalOceanProviderNetworking] {
+	return pulumix.Output[*Mk8sDigitalOceanProviderNetworking]{
+		OutputState: i.ToMk8sDigitalOceanProviderNetworkingPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sDigitalOceanProviderNetworkingOutput struct{ *pulumi.OutputState }
+
+func (Mk8sDigitalOceanProviderNetworkingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sDigitalOceanProviderNetworking)(nil)).Elem()
+}
+
+func (o Mk8sDigitalOceanProviderNetworkingOutput) ToMk8sDigitalOceanProviderNetworkingOutput() Mk8sDigitalOceanProviderNetworkingOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderNetworkingOutput) ToMk8sDigitalOceanProviderNetworkingOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderNetworkingOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderNetworkingOutput) ToMk8sDigitalOceanProviderNetworkingPtrOutput() Mk8sDigitalOceanProviderNetworkingPtrOutput {
+	return o.ToMk8sDigitalOceanProviderNetworkingPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sDigitalOceanProviderNetworkingOutput) ToMk8sDigitalOceanProviderNetworkingPtrOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderNetworkingPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sDigitalOceanProviderNetworking) *Mk8sDigitalOceanProviderNetworking {
+		return &v
+	}).(Mk8sDigitalOceanProviderNetworkingPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderNetworkingOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sDigitalOceanProviderNetworking] {
+	return pulumix.Output[Mk8sDigitalOceanProviderNetworking]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sDigitalOceanProviderNetworkingOutput) PodNetwork() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProviderNetworking) *string { return v.PodNetwork }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderNetworkingOutput) ServiceNetwork() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProviderNetworking) *string { return v.ServiceNetwork }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sDigitalOceanProviderNetworkingPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sDigitalOceanProviderNetworkingPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sDigitalOceanProviderNetworking)(nil)).Elem()
+}
+
+func (o Mk8sDigitalOceanProviderNetworkingPtrOutput) ToMk8sDigitalOceanProviderNetworkingPtrOutput() Mk8sDigitalOceanProviderNetworkingPtrOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderNetworkingPtrOutput) ToMk8sDigitalOceanProviderNetworkingPtrOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderNetworkingPtrOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderNetworkingPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*Mk8sDigitalOceanProviderNetworking] {
+	return pulumix.Output[*Mk8sDigitalOceanProviderNetworking]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sDigitalOceanProviderNetworkingPtrOutput) Elem() Mk8sDigitalOceanProviderNetworkingOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProviderNetworking) Mk8sDigitalOceanProviderNetworking {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sDigitalOceanProviderNetworking
+		return ret
+	}).(Mk8sDigitalOceanProviderNetworkingOutput)
+}
+
+func (o Mk8sDigitalOceanProviderNetworkingPtrOutput) PodNetwork() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProviderNetworking) *string {
+		if v == nil {
+			return nil
+		}
+		return v.PodNetwork
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderNetworkingPtrOutput) ServiceNetwork() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sDigitalOceanProviderNetworking) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ServiceNetwork
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sDigitalOceanProviderNodePool struct {
+	DropletSize   string                                  `pulumi:"dropletSize"`
+	Labels        map[string]string                       `pulumi:"labels"`
+	MaxSize       *int                                    `pulumi:"maxSize"`
+	MinSize       *int                                    `pulumi:"minSize"`
+	Name          string                                  `pulumi:"name"`
+	OverrideImage *string                                 `pulumi:"overrideImage"`
+	Taints        []Mk8sDigitalOceanProviderNodePoolTaint `pulumi:"taints"`
+}
+
+// Mk8sDigitalOceanProviderNodePoolInput is an input type that accepts Mk8sDigitalOceanProviderNodePoolArgs and Mk8sDigitalOceanProviderNodePoolOutput values.
+// You can construct a concrete instance of `Mk8sDigitalOceanProviderNodePoolInput` via:
+//
+//	Mk8sDigitalOceanProviderNodePoolArgs{...}
+type Mk8sDigitalOceanProviderNodePoolInput interface {
+	pulumi.Input
+
+	ToMk8sDigitalOceanProviderNodePoolOutput() Mk8sDigitalOceanProviderNodePoolOutput
+	ToMk8sDigitalOceanProviderNodePoolOutputWithContext(context.Context) Mk8sDigitalOceanProviderNodePoolOutput
+}
+
+type Mk8sDigitalOceanProviderNodePoolArgs struct {
+	DropletSize   pulumi.StringInput                              `pulumi:"dropletSize"`
+	Labels        pulumi.StringMapInput                           `pulumi:"labels"`
+	MaxSize       pulumi.IntPtrInput                              `pulumi:"maxSize"`
+	MinSize       pulumi.IntPtrInput                              `pulumi:"minSize"`
+	Name          pulumi.StringInput                              `pulumi:"name"`
+	OverrideImage pulumi.StringPtrInput                           `pulumi:"overrideImage"`
+	Taints        Mk8sDigitalOceanProviderNodePoolTaintArrayInput `pulumi:"taints"`
+}
+
+func (Mk8sDigitalOceanProviderNodePoolArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sDigitalOceanProviderNodePool)(nil)).Elem()
+}
+
+func (i Mk8sDigitalOceanProviderNodePoolArgs) ToMk8sDigitalOceanProviderNodePoolOutput() Mk8sDigitalOceanProviderNodePoolOutput {
+	return i.ToMk8sDigitalOceanProviderNodePoolOutputWithContext(context.Background())
+}
+
+func (i Mk8sDigitalOceanProviderNodePoolArgs) ToMk8sDigitalOceanProviderNodePoolOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderNodePoolOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sDigitalOceanProviderNodePoolOutput)
+}
+
+func (i Mk8sDigitalOceanProviderNodePoolArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sDigitalOceanProviderNodePool] {
+	return pulumix.Output[Mk8sDigitalOceanProviderNodePool]{
+		OutputState: i.ToMk8sDigitalOceanProviderNodePoolOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sDigitalOceanProviderNodePoolArrayInput is an input type that accepts Mk8sDigitalOceanProviderNodePoolArray and Mk8sDigitalOceanProviderNodePoolArrayOutput values.
+// You can construct a concrete instance of `Mk8sDigitalOceanProviderNodePoolArrayInput` via:
+//
+//	Mk8sDigitalOceanProviderNodePoolArray{ Mk8sDigitalOceanProviderNodePoolArgs{...} }
+type Mk8sDigitalOceanProviderNodePoolArrayInput interface {
+	pulumi.Input
+
+	ToMk8sDigitalOceanProviderNodePoolArrayOutput() Mk8sDigitalOceanProviderNodePoolArrayOutput
+	ToMk8sDigitalOceanProviderNodePoolArrayOutputWithContext(context.Context) Mk8sDigitalOceanProviderNodePoolArrayOutput
+}
+
+type Mk8sDigitalOceanProviderNodePoolArray []Mk8sDigitalOceanProviderNodePoolInput
+
+func (Mk8sDigitalOceanProviderNodePoolArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sDigitalOceanProviderNodePool)(nil)).Elem()
+}
+
+func (i Mk8sDigitalOceanProviderNodePoolArray) ToMk8sDigitalOceanProviderNodePoolArrayOutput() Mk8sDigitalOceanProviderNodePoolArrayOutput {
+	return i.ToMk8sDigitalOceanProviderNodePoolArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sDigitalOceanProviderNodePoolArray) ToMk8sDigitalOceanProviderNodePoolArrayOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderNodePoolArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sDigitalOceanProviderNodePoolArrayOutput)
+}
+
+func (i Mk8sDigitalOceanProviderNodePoolArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sDigitalOceanProviderNodePool] {
+	return pulumix.Output[[]Mk8sDigitalOceanProviderNodePool]{
+		OutputState: i.ToMk8sDigitalOceanProviderNodePoolArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sDigitalOceanProviderNodePoolOutput struct{ *pulumi.OutputState }
+
+func (Mk8sDigitalOceanProviderNodePoolOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sDigitalOceanProviderNodePool)(nil)).Elem()
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolOutput) ToMk8sDigitalOceanProviderNodePoolOutput() Mk8sDigitalOceanProviderNodePoolOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolOutput) ToMk8sDigitalOceanProviderNodePoolOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderNodePoolOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sDigitalOceanProviderNodePool] {
+	return pulumix.Output[Mk8sDigitalOceanProviderNodePool]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolOutput) DropletSize() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProviderNodePool) string { return v.DropletSize }).(pulumi.StringOutput)
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProviderNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolOutput) MaxSize() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProviderNodePool) *int { return v.MaxSize }).(pulumi.IntPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolOutput) MinSize() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProviderNodePool) *int { return v.MinSize }).(pulumi.IntPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProviderNodePool) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolOutput) OverrideImage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProviderNodePool) *string { return v.OverrideImage }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolOutput) Taints() Mk8sDigitalOceanProviderNodePoolTaintArrayOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProviderNodePool) []Mk8sDigitalOceanProviderNodePoolTaint { return v.Taints }).(Mk8sDigitalOceanProviderNodePoolTaintArrayOutput)
+}
+
+type Mk8sDigitalOceanProviderNodePoolArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sDigitalOceanProviderNodePoolArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sDigitalOceanProviderNodePool)(nil)).Elem()
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolArrayOutput) ToMk8sDigitalOceanProviderNodePoolArrayOutput() Mk8sDigitalOceanProviderNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolArrayOutput) ToMk8sDigitalOceanProviderNodePoolArrayOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sDigitalOceanProviderNodePool] {
+	return pulumix.Output[[]Mk8sDigitalOceanProviderNodePool]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolArrayOutput) Index(i pulumi.IntInput) Mk8sDigitalOceanProviderNodePoolOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sDigitalOceanProviderNodePool {
+		return vs[0].([]Mk8sDigitalOceanProviderNodePool)[vs[1].(int)]
+	}).(Mk8sDigitalOceanProviderNodePoolOutput)
+}
+
+type Mk8sDigitalOceanProviderNodePoolTaint struct {
+	Effect *string `pulumi:"effect"`
+	Key    *string `pulumi:"key"`
+	Value  *string `pulumi:"value"`
+}
+
+// Mk8sDigitalOceanProviderNodePoolTaintInput is an input type that accepts Mk8sDigitalOceanProviderNodePoolTaintArgs and Mk8sDigitalOceanProviderNodePoolTaintOutput values.
+// You can construct a concrete instance of `Mk8sDigitalOceanProviderNodePoolTaintInput` via:
+//
+//	Mk8sDigitalOceanProviderNodePoolTaintArgs{...}
+type Mk8sDigitalOceanProviderNodePoolTaintInput interface {
+	pulumi.Input
+
+	ToMk8sDigitalOceanProviderNodePoolTaintOutput() Mk8sDigitalOceanProviderNodePoolTaintOutput
+	ToMk8sDigitalOceanProviderNodePoolTaintOutputWithContext(context.Context) Mk8sDigitalOceanProviderNodePoolTaintOutput
+}
+
+type Mk8sDigitalOceanProviderNodePoolTaintArgs struct {
+	Effect pulumi.StringPtrInput `pulumi:"effect"`
+	Key    pulumi.StringPtrInput `pulumi:"key"`
+	Value  pulumi.StringPtrInput `pulumi:"value"`
+}
+
+func (Mk8sDigitalOceanProviderNodePoolTaintArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sDigitalOceanProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sDigitalOceanProviderNodePoolTaintArgs) ToMk8sDigitalOceanProviderNodePoolTaintOutput() Mk8sDigitalOceanProviderNodePoolTaintOutput {
+	return i.ToMk8sDigitalOceanProviderNodePoolTaintOutputWithContext(context.Background())
+}
+
+func (i Mk8sDigitalOceanProviderNodePoolTaintArgs) ToMk8sDigitalOceanProviderNodePoolTaintOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderNodePoolTaintOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sDigitalOceanProviderNodePoolTaintOutput)
+}
+
+func (i Mk8sDigitalOceanProviderNodePoolTaintArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sDigitalOceanProviderNodePoolTaint] {
+	return pulumix.Output[Mk8sDigitalOceanProviderNodePoolTaint]{
+		OutputState: i.ToMk8sDigitalOceanProviderNodePoolTaintOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sDigitalOceanProviderNodePoolTaintArrayInput is an input type that accepts Mk8sDigitalOceanProviderNodePoolTaintArray and Mk8sDigitalOceanProviderNodePoolTaintArrayOutput values.
+// You can construct a concrete instance of `Mk8sDigitalOceanProviderNodePoolTaintArrayInput` via:
+//
+//	Mk8sDigitalOceanProviderNodePoolTaintArray{ Mk8sDigitalOceanProviderNodePoolTaintArgs{...} }
+type Mk8sDigitalOceanProviderNodePoolTaintArrayInput interface {
+	pulumi.Input
+
+	ToMk8sDigitalOceanProviderNodePoolTaintArrayOutput() Mk8sDigitalOceanProviderNodePoolTaintArrayOutput
+	ToMk8sDigitalOceanProviderNodePoolTaintArrayOutputWithContext(context.Context) Mk8sDigitalOceanProviderNodePoolTaintArrayOutput
+}
+
+type Mk8sDigitalOceanProviderNodePoolTaintArray []Mk8sDigitalOceanProviderNodePoolTaintInput
+
+func (Mk8sDigitalOceanProviderNodePoolTaintArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sDigitalOceanProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sDigitalOceanProviderNodePoolTaintArray) ToMk8sDigitalOceanProviderNodePoolTaintArrayOutput() Mk8sDigitalOceanProviderNodePoolTaintArrayOutput {
+	return i.ToMk8sDigitalOceanProviderNodePoolTaintArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sDigitalOceanProviderNodePoolTaintArray) ToMk8sDigitalOceanProviderNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderNodePoolTaintArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sDigitalOceanProviderNodePoolTaintArrayOutput)
+}
+
+func (i Mk8sDigitalOceanProviderNodePoolTaintArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sDigitalOceanProviderNodePoolTaint] {
+	return pulumix.Output[[]Mk8sDigitalOceanProviderNodePoolTaint]{
+		OutputState: i.ToMk8sDigitalOceanProviderNodePoolTaintArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sDigitalOceanProviderNodePoolTaintOutput struct{ *pulumi.OutputState }
+
+func (Mk8sDigitalOceanProviderNodePoolTaintOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sDigitalOceanProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolTaintOutput) ToMk8sDigitalOceanProviderNodePoolTaintOutput() Mk8sDigitalOceanProviderNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolTaintOutput) ToMk8sDigitalOceanProviderNodePoolTaintOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolTaintOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sDigitalOceanProviderNodePoolTaint] {
+	return pulumix.Output[Mk8sDigitalOceanProviderNodePoolTaint]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolTaintOutput) Effect() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProviderNodePoolTaint) *string { return v.Effect }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolTaintOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProviderNodePoolTaint) *string { return v.Key }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolTaintOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProviderNodePoolTaint) *string { return v.Value }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sDigitalOceanProviderNodePoolTaintArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sDigitalOceanProviderNodePoolTaintArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sDigitalOceanProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolTaintArrayOutput) ToMk8sDigitalOceanProviderNodePoolTaintArrayOutput() Mk8sDigitalOceanProviderNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolTaintArrayOutput) ToMk8sDigitalOceanProviderNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sDigitalOceanProviderNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolTaintArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sDigitalOceanProviderNodePoolTaint] {
+	return pulumix.Output[[]Mk8sDigitalOceanProviderNodePoolTaint]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sDigitalOceanProviderNodePoolTaintArrayOutput) Index(i pulumi.IntInput) Mk8sDigitalOceanProviderNodePoolTaintOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sDigitalOceanProviderNodePoolTaint {
+		return vs[0].([]Mk8sDigitalOceanProviderNodePoolTaint)[vs[1].(int)]
+	}).(Mk8sDigitalOceanProviderNodePoolTaintOutput)
 }
 
 type Mk8sEphemeralProvider struct {
@@ -12079,6 +14043,3986 @@ func (o Mk8sHetznerProviderNodePoolTaintArrayOutput) Index(i pulumi.IntInput) Mk
 	}).(Mk8sHetznerProviderNodePoolTaintOutput)
 }
 
+type Mk8sLambdalabsProvider struct {
+	Autoscaler         *Mk8sLambdalabsProviderAutoscaler         `pulumi:"autoscaler"`
+	NodePools          []Mk8sLambdalabsProviderNodePool          `pulumi:"nodePools"`
+	PreInstallScript   *string                                   `pulumi:"preInstallScript"`
+	Region             string                                    `pulumi:"region"`
+	SshKey             string                                    `pulumi:"sshKey"`
+	TokenSecretLink    string                                    `pulumi:"tokenSecretLink"`
+	UnmanagedNodePools []Mk8sLambdalabsProviderUnmanagedNodePool `pulumi:"unmanagedNodePools"`
+}
+
+// Mk8sLambdalabsProviderInput is an input type that accepts Mk8sLambdalabsProviderArgs and Mk8sLambdalabsProviderOutput values.
+// You can construct a concrete instance of `Mk8sLambdalabsProviderInput` via:
+//
+//	Mk8sLambdalabsProviderArgs{...}
+type Mk8sLambdalabsProviderInput interface {
+	pulumi.Input
+
+	ToMk8sLambdalabsProviderOutput() Mk8sLambdalabsProviderOutput
+	ToMk8sLambdalabsProviderOutputWithContext(context.Context) Mk8sLambdalabsProviderOutput
+}
+
+type Mk8sLambdalabsProviderArgs struct {
+	Autoscaler         Mk8sLambdalabsProviderAutoscalerPtrInput          `pulumi:"autoscaler"`
+	NodePools          Mk8sLambdalabsProviderNodePoolArrayInput          `pulumi:"nodePools"`
+	PreInstallScript   pulumi.StringPtrInput                             `pulumi:"preInstallScript"`
+	Region             pulumi.StringInput                                `pulumi:"region"`
+	SshKey             pulumi.StringInput                                `pulumi:"sshKey"`
+	TokenSecretLink    pulumi.StringInput                                `pulumi:"tokenSecretLink"`
+	UnmanagedNodePools Mk8sLambdalabsProviderUnmanagedNodePoolArrayInput `pulumi:"unmanagedNodePools"`
+}
+
+func (Mk8sLambdalabsProviderArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLambdalabsProvider)(nil)).Elem()
+}
+
+func (i Mk8sLambdalabsProviderArgs) ToMk8sLambdalabsProviderOutput() Mk8sLambdalabsProviderOutput {
+	return i.ToMk8sLambdalabsProviderOutputWithContext(context.Background())
+}
+
+func (i Mk8sLambdalabsProviderArgs) ToMk8sLambdalabsProviderOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLambdalabsProviderOutput)
+}
+
+func (i Mk8sLambdalabsProviderArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sLambdalabsProvider] {
+	return pulumix.Output[Mk8sLambdalabsProvider]{
+		OutputState: i.ToMk8sLambdalabsProviderOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i Mk8sLambdalabsProviderArgs) ToMk8sLambdalabsProviderPtrOutput() Mk8sLambdalabsProviderPtrOutput {
+	return i.ToMk8sLambdalabsProviderPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sLambdalabsProviderArgs) ToMk8sLambdalabsProviderPtrOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLambdalabsProviderOutput).ToMk8sLambdalabsProviderPtrOutputWithContext(ctx)
+}
+
+// Mk8sLambdalabsProviderPtrInput is an input type that accepts Mk8sLambdalabsProviderArgs, Mk8sLambdalabsProviderPtr and Mk8sLambdalabsProviderPtrOutput values.
+// You can construct a concrete instance of `Mk8sLambdalabsProviderPtrInput` via:
+//
+//	        Mk8sLambdalabsProviderArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sLambdalabsProviderPtrInput interface {
+	pulumi.Input
+
+	ToMk8sLambdalabsProviderPtrOutput() Mk8sLambdalabsProviderPtrOutput
+	ToMk8sLambdalabsProviderPtrOutputWithContext(context.Context) Mk8sLambdalabsProviderPtrOutput
+}
+
+type mk8sLambdalabsProviderPtrType Mk8sLambdalabsProviderArgs
+
+func Mk8sLambdalabsProviderPtr(v *Mk8sLambdalabsProviderArgs) Mk8sLambdalabsProviderPtrInput {
+	return (*mk8sLambdalabsProviderPtrType)(v)
+}
+
+func (*mk8sLambdalabsProviderPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sLambdalabsProvider)(nil)).Elem()
+}
+
+func (i *mk8sLambdalabsProviderPtrType) ToMk8sLambdalabsProviderPtrOutput() Mk8sLambdalabsProviderPtrOutput {
+	return i.ToMk8sLambdalabsProviderPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sLambdalabsProviderPtrType) ToMk8sLambdalabsProviderPtrOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLambdalabsProviderPtrOutput)
+}
+
+func (i *mk8sLambdalabsProviderPtrType) ToOutput(ctx context.Context) pulumix.Output[*Mk8sLambdalabsProvider] {
+	return pulumix.Output[*Mk8sLambdalabsProvider]{
+		OutputState: i.ToMk8sLambdalabsProviderPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sLambdalabsProviderOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLambdalabsProviderOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLambdalabsProvider)(nil)).Elem()
+}
+
+func (o Mk8sLambdalabsProviderOutput) ToMk8sLambdalabsProviderOutput() Mk8sLambdalabsProviderOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderOutput) ToMk8sLambdalabsProviderOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderOutput) ToMk8sLambdalabsProviderPtrOutput() Mk8sLambdalabsProviderPtrOutput {
+	return o.ToMk8sLambdalabsProviderPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sLambdalabsProviderOutput) ToMk8sLambdalabsProviderPtrOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sLambdalabsProvider) *Mk8sLambdalabsProvider {
+		return &v
+	}).(Mk8sLambdalabsProviderPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sLambdalabsProvider] {
+	return pulumix.Output[Mk8sLambdalabsProvider]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLambdalabsProviderOutput) Autoscaler() Mk8sLambdalabsProviderAutoscalerPtrOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProvider) *Mk8sLambdalabsProviderAutoscaler { return v.Autoscaler }).(Mk8sLambdalabsProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderOutput) NodePools() Mk8sLambdalabsProviderNodePoolArrayOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProvider) []Mk8sLambdalabsProviderNodePool { return v.NodePools }).(Mk8sLambdalabsProviderNodePoolArrayOutput)
+}
+
+func (o Mk8sLambdalabsProviderOutput) PreInstallScript() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProvider) *string { return v.PreInstallScript }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProvider) string { return v.Region }).(pulumi.StringOutput)
+}
+
+func (o Mk8sLambdalabsProviderOutput) SshKey() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProvider) string { return v.SshKey }).(pulumi.StringOutput)
+}
+
+func (o Mk8sLambdalabsProviderOutput) TokenSecretLink() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProvider) string { return v.TokenSecretLink }).(pulumi.StringOutput)
+}
+
+func (o Mk8sLambdalabsProviderOutput) UnmanagedNodePools() Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProvider) []Mk8sLambdalabsProviderUnmanagedNodePool { return v.UnmanagedNodePools }).(Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput)
+}
+
+type Mk8sLambdalabsProviderPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLambdalabsProviderPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sLambdalabsProvider)(nil)).Elem()
+}
+
+func (o Mk8sLambdalabsProviderPtrOutput) ToMk8sLambdalabsProviderPtrOutput() Mk8sLambdalabsProviderPtrOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderPtrOutput) ToMk8sLambdalabsProviderPtrOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderPtrOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*Mk8sLambdalabsProvider] {
+	return pulumix.Output[*Mk8sLambdalabsProvider]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLambdalabsProviderPtrOutput) Elem() Mk8sLambdalabsProviderOutput {
+	return o.ApplyT(func(v *Mk8sLambdalabsProvider) Mk8sLambdalabsProvider {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sLambdalabsProvider
+		return ret
+	}).(Mk8sLambdalabsProviderOutput)
+}
+
+func (o Mk8sLambdalabsProviderPtrOutput) Autoscaler() Mk8sLambdalabsProviderAutoscalerPtrOutput {
+	return o.ApplyT(func(v *Mk8sLambdalabsProvider) *Mk8sLambdalabsProviderAutoscaler {
+		if v == nil {
+			return nil
+		}
+		return v.Autoscaler
+	}).(Mk8sLambdalabsProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderPtrOutput) NodePools() Mk8sLambdalabsProviderNodePoolArrayOutput {
+	return o.ApplyT(func(v *Mk8sLambdalabsProvider) []Mk8sLambdalabsProviderNodePool {
+		if v == nil {
+			return nil
+		}
+		return v.NodePools
+	}).(Mk8sLambdalabsProviderNodePoolArrayOutput)
+}
+
+func (o Mk8sLambdalabsProviderPtrOutput) PreInstallScript() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sLambdalabsProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return v.PreInstallScript
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderPtrOutput) Region() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sLambdalabsProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Region
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderPtrOutput) SshKey() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sLambdalabsProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.SshKey
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderPtrOutput) TokenSecretLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sLambdalabsProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.TokenSecretLink
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderPtrOutput) UnmanagedNodePools() Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput {
+	return o.ApplyT(func(v *Mk8sLambdalabsProvider) []Mk8sLambdalabsProviderUnmanagedNodePool {
+		if v == nil {
+			return nil
+		}
+		return v.UnmanagedNodePools
+	}).(Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput)
+}
+
+type Mk8sLambdalabsProviderAutoscaler struct {
+	Expanders            []string `pulumi:"expanders"`
+	UnneededTime         *string  `pulumi:"unneededTime"`
+	UnreadyTime          *string  `pulumi:"unreadyTime"`
+	UtilizationThreshold *float64 `pulumi:"utilizationThreshold"`
+}
+
+// Mk8sLambdalabsProviderAutoscalerInput is an input type that accepts Mk8sLambdalabsProviderAutoscalerArgs and Mk8sLambdalabsProviderAutoscalerOutput values.
+// You can construct a concrete instance of `Mk8sLambdalabsProviderAutoscalerInput` via:
+//
+//	Mk8sLambdalabsProviderAutoscalerArgs{...}
+type Mk8sLambdalabsProviderAutoscalerInput interface {
+	pulumi.Input
+
+	ToMk8sLambdalabsProviderAutoscalerOutput() Mk8sLambdalabsProviderAutoscalerOutput
+	ToMk8sLambdalabsProviderAutoscalerOutputWithContext(context.Context) Mk8sLambdalabsProviderAutoscalerOutput
+}
+
+type Mk8sLambdalabsProviderAutoscalerArgs struct {
+	Expanders            pulumi.StringArrayInput `pulumi:"expanders"`
+	UnneededTime         pulumi.StringPtrInput   `pulumi:"unneededTime"`
+	UnreadyTime          pulumi.StringPtrInput   `pulumi:"unreadyTime"`
+	UtilizationThreshold pulumi.Float64PtrInput  `pulumi:"utilizationThreshold"`
+}
+
+func (Mk8sLambdalabsProviderAutoscalerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLambdalabsProviderAutoscaler)(nil)).Elem()
+}
+
+func (i Mk8sLambdalabsProviderAutoscalerArgs) ToMk8sLambdalabsProviderAutoscalerOutput() Mk8sLambdalabsProviderAutoscalerOutput {
+	return i.ToMk8sLambdalabsProviderAutoscalerOutputWithContext(context.Background())
+}
+
+func (i Mk8sLambdalabsProviderAutoscalerArgs) ToMk8sLambdalabsProviderAutoscalerOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderAutoscalerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLambdalabsProviderAutoscalerOutput)
+}
+
+func (i Mk8sLambdalabsProviderAutoscalerArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sLambdalabsProviderAutoscaler] {
+	return pulumix.Output[Mk8sLambdalabsProviderAutoscaler]{
+		OutputState: i.ToMk8sLambdalabsProviderAutoscalerOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i Mk8sLambdalabsProviderAutoscalerArgs) ToMk8sLambdalabsProviderAutoscalerPtrOutput() Mk8sLambdalabsProviderAutoscalerPtrOutput {
+	return i.ToMk8sLambdalabsProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sLambdalabsProviderAutoscalerArgs) ToMk8sLambdalabsProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderAutoscalerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLambdalabsProviderAutoscalerOutput).ToMk8sLambdalabsProviderAutoscalerPtrOutputWithContext(ctx)
+}
+
+// Mk8sLambdalabsProviderAutoscalerPtrInput is an input type that accepts Mk8sLambdalabsProviderAutoscalerArgs, Mk8sLambdalabsProviderAutoscalerPtr and Mk8sLambdalabsProviderAutoscalerPtrOutput values.
+// You can construct a concrete instance of `Mk8sLambdalabsProviderAutoscalerPtrInput` via:
+//
+//	        Mk8sLambdalabsProviderAutoscalerArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sLambdalabsProviderAutoscalerPtrInput interface {
+	pulumi.Input
+
+	ToMk8sLambdalabsProviderAutoscalerPtrOutput() Mk8sLambdalabsProviderAutoscalerPtrOutput
+	ToMk8sLambdalabsProviderAutoscalerPtrOutputWithContext(context.Context) Mk8sLambdalabsProviderAutoscalerPtrOutput
+}
+
+type mk8sLambdalabsProviderAutoscalerPtrType Mk8sLambdalabsProviderAutoscalerArgs
+
+func Mk8sLambdalabsProviderAutoscalerPtr(v *Mk8sLambdalabsProviderAutoscalerArgs) Mk8sLambdalabsProviderAutoscalerPtrInput {
+	return (*mk8sLambdalabsProviderAutoscalerPtrType)(v)
+}
+
+func (*mk8sLambdalabsProviderAutoscalerPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sLambdalabsProviderAutoscaler)(nil)).Elem()
+}
+
+func (i *mk8sLambdalabsProviderAutoscalerPtrType) ToMk8sLambdalabsProviderAutoscalerPtrOutput() Mk8sLambdalabsProviderAutoscalerPtrOutput {
+	return i.ToMk8sLambdalabsProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sLambdalabsProviderAutoscalerPtrType) ToMk8sLambdalabsProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderAutoscalerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLambdalabsProviderAutoscalerPtrOutput)
+}
+
+func (i *mk8sLambdalabsProviderAutoscalerPtrType) ToOutput(ctx context.Context) pulumix.Output[*Mk8sLambdalabsProviderAutoscaler] {
+	return pulumix.Output[*Mk8sLambdalabsProviderAutoscaler]{
+		OutputState: i.ToMk8sLambdalabsProviderAutoscalerPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sLambdalabsProviderAutoscalerOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLambdalabsProviderAutoscalerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLambdalabsProviderAutoscaler)(nil)).Elem()
+}
+
+func (o Mk8sLambdalabsProviderAutoscalerOutput) ToMk8sLambdalabsProviderAutoscalerOutput() Mk8sLambdalabsProviderAutoscalerOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderAutoscalerOutput) ToMk8sLambdalabsProviderAutoscalerOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderAutoscalerOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderAutoscalerOutput) ToMk8sLambdalabsProviderAutoscalerPtrOutput() Mk8sLambdalabsProviderAutoscalerPtrOutput {
+	return o.ToMk8sLambdalabsProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sLambdalabsProviderAutoscalerOutput) ToMk8sLambdalabsProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderAutoscalerPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sLambdalabsProviderAutoscaler) *Mk8sLambdalabsProviderAutoscaler {
+		return &v
+	}).(Mk8sLambdalabsProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderAutoscalerOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sLambdalabsProviderAutoscaler] {
+	return pulumix.Output[Mk8sLambdalabsProviderAutoscaler]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLambdalabsProviderAutoscalerOutput) Expanders() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderAutoscaler) []string { return v.Expanders }).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sLambdalabsProviderAutoscalerOutput) UnneededTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderAutoscaler) *string { return v.UnneededTime }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderAutoscalerOutput) UnreadyTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderAutoscaler) *string { return v.UnreadyTime }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderAutoscalerOutput) UtilizationThreshold() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderAutoscaler) *float64 { return v.UtilizationThreshold }).(pulumi.Float64PtrOutput)
+}
+
+type Mk8sLambdalabsProviderAutoscalerPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLambdalabsProviderAutoscalerPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sLambdalabsProviderAutoscaler)(nil)).Elem()
+}
+
+func (o Mk8sLambdalabsProviderAutoscalerPtrOutput) ToMk8sLambdalabsProviderAutoscalerPtrOutput() Mk8sLambdalabsProviderAutoscalerPtrOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderAutoscalerPtrOutput) ToMk8sLambdalabsProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderAutoscalerPtrOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderAutoscalerPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*Mk8sLambdalabsProviderAutoscaler] {
+	return pulumix.Output[*Mk8sLambdalabsProviderAutoscaler]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLambdalabsProviderAutoscalerPtrOutput) Elem() Mk8sLambdalabsProviderAutoscalerOutput {
+	return o.ApplyT(func(v *Mk8sLambdalabsProviderAutoscaler) Mk8sLambdalabsProviderAutoscaler {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sLambdalabsProviderAutoscaler
+		return ret
+	}).(Mk8sLambdalabsProviderAutoscalerOutput)
+}
+
+func (o Mk8sLambdalabsProviderAutoscalerPtrOutput) Expanders() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sLambdalabsProviderAutoscaler) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Expanders
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sLambdalabsProviderAutoscalerPtrOutput) UnneededTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sLambdalabsProviderAutoscaler) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UnneededTime
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderAutoscalerPtrOutput) UnreadyTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sLambdalabsProviderAutoscaler) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UnreadyTime
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderAutoscalerPtrOutput) UtilizationThreshold() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *Mk8sLambdalabsProviderAutoscaler) *float64 {
+		if v == nil {
+			return nil
+		}
+		return v.UtilizationThreshold
+	}).(pulumi.Float64PtrOutput)
+}
+
+type Mk8sLambdalabsProviderNodePool struct {
+	InstanceType string                                `pulumi:"instanceType"`
+	Labels       map[string]string                     `pulumi:"labels"`
+	MaxSize      *int                                  `pulumi:"maxSize"`
+	MinSize      *int                                  `pulumi:"minSize"`
+	Name         string                                `pulumi:"name"`
+	Taints       []Mk8sLambdalabsProviderNodePoolTaint `pulumi:"taints"`
+}
+
+// Mk8sLambdalabsProviderNodePoolInput is an input type that accepts Mk8sLambdalabsProviderNodePoolArgs and Mk8sLambdalabsProviderNodePoolOutput values.
+// You can construct a concrete instance of `Mk8sLambdalabsProviderNodePoolInput` via:
+//
+//	Mk8sLambdalabsProviderNodePoolArgs{...}
+type Mk8sLambdalabsProviderNodePoolInput interface {
+	pulumi.Input
+
+	ToMk8sLambdalabsProviderNodePoolOutput() Mk8sLambdalabsProviderNodePoolOutput
+	ToMk8sLambdalabsProviderNodePoolOutputWithContext(context.Context) Mk8sLambdalabsProviderNodePoolOutput
+}
+
+type Mk8sLambdalabsProviderNodePoolArgs struct {
+	InstanceType pulumi.StringInput                            `pulumi:"instanceType"`
+	Labels       pulumi.StringMapInput                         `pulumi:"labels"`
+	MaxSize      pulumi.IntPtrInput                            `pulumi:"maxSize"`
+	MinSize      pulumi.IntPtrInput                            `pulumi:"minSize"`
+	Name         pulumi.StringInput                            `pulumi:"name"`
+	Taints       Mk8sLambdalabsProviderNodePoolTaintArrayInput `pulumi:"taints"`
+}
+
+func (Mk8sLambdalabsProviderNodePoolArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLambdalabsProviderNodePool)(nil)).Elem()
+}
+
+func (i Mk8sLambdalabsProviderNodePoolArgs) ToMk8sLambdalabsProviderNodePoolOutput() Mk8sLambdalabsProviderNodePoolOutput {
+	return i.ToMk8sLambdalabsProviderNodePoolOutputWithContext(context.Background())
+}
+
+func (i Mk8sLambdalabsProviderNodePoolArgs) ToMk8sLambdalabsProviderNodePoolOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderNodePoolOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLambdalabsProviderNodePoolOutput)
+}
+
+func (i Mk8sLambdalabsProviderNodePoolArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sLambdalabsProviderNodePool] {
+	return pulumix.Output[Mk8sLambdalabsProviderNodePool]{
+		OutputState: i.ToMk8sLambdalabsProviderNodePoolOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sLambdalabsProviderNodePoolArrayInput is an input type that accepts Mk8sLambdalabsProviderNodePoolArray and Mk8sLambdalabsProviderNodePoolArrayOutput values.
+// You can construct a concrete instance of `Mk8sLambdalabsProviderNodePoolArrayInput` via:
+//
+//	Mk8sLambdalabsProviderNodePoolArray{ Mk8sLambdalabsProviderNodePoolArgs{...} }
+type Mk8sLambdalabsProviderNodePoolArrayInput interface {
+	pulumi.Input
+
+	ToMk8sLambdalabsProviderNodePoolArrayOutput() Mk8sLambdalabsProviderNodePoolArrayOutput
+	ToMk8sLambdalabsProviderNodePoolArrayOutputWithContext(context.Context) Mk8sLambdalabsProviderNodePoolArrayOutput
+}
+
+type Mk8sLambdalabsProviderNodePoolArray []Mk8sLambdalabsProviderNodePoolInput
+
+func (Mk8sLambdalabsProviderNodePoolArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sLambdalabsProviderNodePool)(nil)).Elem()
+}
+
+func (i Mk8sLambdalabsProviderNodePoolArray) ToMk8sLambdalabsProviderNodePoolArrayOutput() Mk8sLambdalabsProviderNodePoolArrayOutput {
+	return i.ToMk8sLambdalabsProviderNodePoolArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sLambdalabsProviderNodePoolArray) ToMk8sLambdalabsProviderNodePoolArrayOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderNodePoolArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLambdalabsProviderNodePoolArrayOutput)
+}
+
+func (i Mk8sLambdalabsProviderNodePoolArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sLambdalabsProviderNodePool] {
+	return pulumix.Output[[]Mk8sLambdalabsProviderNodePool]{
+		OutputState: i.ToMk8sLambdalabsProviderNodePoolArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sLambdalabsProviderNodePoolOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLambdalabsProviderNodePoolOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLambdalabsProviderNodePool)(nil)).Elem()
+}
+
+func (o Mk8sLambdalabsProviderNodePoolOutput) ToMk8sLambdalabsProviderNodePoolOutput() Mk8sLambdalabsProviderNodePoolOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderNodePoolOutput) ToMk8sLambdalabsProviderNodePoolOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderNodePoolOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderNodePoolOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sLambdalabsProviderNodePool] {
+	return pulumix.Output[Mk8sLambdalabsProviderNodePool]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLambdalabsProviderNodePoolOutput) InstanceType() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderNodePool) string { return v.InstanceType }).(pulumi.StringOutput)
+}
+
+func (o Mk8sLambdalabsProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+func (o Mk8sLambdalabsProviderNodePoolOutput) MaxSize() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderNodePool) *int { return v.MaxSize }).(pulumi.IntPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderNodePoolOutput) MinSize() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderNodePool) *int { return v.MinSize }).(pulumi.IntPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderNodePoolOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderNodePool) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o Mk8sLambdalabsProviderNodePoolOutput) Taints() Mk8sLambdalabsProviderNodePoolTaintArrayOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderNodePool) []Mk8sLambdalabsProviderNodePoolTaint { return v.Taints }).(Mk8sLambdalabsProviderNodePoolTaintArrayOutput)
+}
+
+type Mk8sLambdalabsProviderNodePoolArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLambdalabsProviderNodePoolArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sLambdalabsProviderNodePool)(nil)).Elem()
+}
+
+func (o Mk8sLambdalabsProviderNodePoolArrayOutput) ToMk8sLambdalabsProviderNodePoolArrayOutput() Mk8sLambdalabsProviderNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderNodePoolArrayOutput) ToMk8sLambdalabsProviderNodePoolArrayOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderNodePoolArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sLambdalabsProviderNodePool] {
+	return pulumix.Output[[]Mk8sLambdalabsProviderNodePool]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLambdalabsProviderNodePoolArrayOutput) Index(i pulumi.IntInput) Mk8sLambdalabsProviderNodePoolOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sLambdalabsProviderNodePool {
+		return vs[0].([]Mk8sLambdalabsProviderNodePool)[vs[1].(int)]
+	}).(Mk8sLambdalabsProviderNodePoolOutput)
+}
+
+type Mk8sLambdalabsProviderNodePoolTaint struct {
+	Effect *string `pulumi:"effect"`
+	Key    *string `pulumi:"key"`
+	Value  *string `pulumi:"value"`
+}
+
+// Mk8sLambdalabsProviderNodePoolTaintInput is an input type that accepts Mk8sLambdalabsProviderNodePoolTaintArgs and Mk8sLambdalabsProviderNodePoolTaintOutput values.
+// You can construct a concrete instance of `Mk8sLambdalabsProviderNodePoolTaintInput` via:
+//
+//	Mk8sLambdalabsProviderNodePoolTaintArgs{...}
+type Mk8sLambdalabsProviderNodePoolTaintInput interface {
+	pulumi.Input
+
+	ToMk8sLambdalabsProviderNodePoolTaintOutput() Mk8sLambdalabsProviderNodePoolTaintOutput
+	ToMk8sLambdalabsProviderNodePoolTaintOutputWithContext(context.Context) Mk8sLambdalabsProviderNodePoolTaintOutput
+}
+
+type Mk8sLambdalabsProviderNodePoolTaintArgs struct {
+	Effect pulumi.StringPtrInput `pulumi:"effect"`
+	Key    pulumi.StringPtrInput `pulumi:"key"`
+	Value  pulumi.StringPtrInput `pulumi:"value"`
+}
+
+func (Mk8sLambdalabsProviderNodePoolTaintArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLambdalabsProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sLambdalabsProviderNodePoolTaintArgs) ToMk8sLambdalabsProviderNodePoolTaintOutput() Mk8sLambdalabsProviderNodePoolTaintOutput {
+	return i.ToMk8sLambdalabsProviderNodePoolTaintOutputWithContext(context.Background())
+}
+
+func (i Mk8sLambdalabsProviderNodePoolTaintArgs) ToMk8sLambdalabsProviderNodePoolTaintOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderNodePoolTaintOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLambdalabsProviderNodePoolTaintOutput)
+}
+
+func (i Mk8sLambdalabsProviderNodePoolTaintArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sLambdalabsProviderNodePoolTaint] {
+	return pulumix.Output[Mk8sLambdalabsProviderNodePoolTaint]{
+		OutputState: i.ToMk8sLambdalabsProviderNodePoolTaintOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sLambdalabsProviderNodePoolTaintArrayInput is an input type that accepts Mk8sLambdalabsProviderNodePoolTaintArray and Mk8sLambdalabsProviderNodePoolTaintArrayOutput values.
+// You can construct a concrete instance of `Mk8sLambdalabsProviderNodePoolTaintArrayInput` via:
+//
+//	Mk8sLambdalabsProviderNodePoolTaintArray{ Mk8sLambdalabsProviderNodePoolTaintArgs{...} }
+type Mk8sLambdalabsProviderNodePoolTaintArrayInput interface {
+	pulumi.Input
+
+	ToMk8sLambdalabsProviderNodePoolTaintArrayOutput() Mk8sLambdalabsProviderNodePoolTaintArrayOutput
+	ToMk8sLambdalabsProviderNodePoolTaintArrayOutputWithContext(context.Context) Mk8sLambdalabsProviderNodePoolTaintArrayOutput
+}
+
+type Mk8sLambdalabsProviderNodePoolTaintArray []Mk8sLambdalabsProviderNodePoolTaintInput
+
+func (Mk8sLambdalabsProviderNodePoolTaintArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sLambdalabsProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sLambdalabsProviderNodePoolTaintArray) ToMk8sLambdalabsProviderNodePoolTaintArrayOutput() Mk8sLambdalabsProviderNodePoolTaintArrayOutput {
+	return i.ToMk8sLambdalabsProviderNodePoolTaintArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sLambdalabsProviderNodePoolTaintArray) ToMk8sLambdalabsProviderNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderNodePoolTaintArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLambdalabsProviderNodePoolTaintArrayOutput)
+}
+
+func (i Mk8sLambdalabsProviderNodePoolTaintArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sLambdalabsProviderNodePoolTaint] {
+	return pulumix.Output[[]Mk8sLambdalabsProviderNodePoolTaint]{
+		OutputState: i.ToMk8sLambdalabsProviderNodePoolTaintArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sLambdalabsProviderNodePoolTaintOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLambdalabsProviderNodePoolTaintOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLambdalabsProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sLambdalabsProviderNodePoolTaintOutput) ToMk8sLambdalabsProviderNodePoolTaintOutput() Mk8sLambdalabsProviderNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderNodePoolTaintOutput) ToMk8sLambdalabsProviderNodePoolTaintOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderNodePoolTaintOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sLambdalabsProviderNodePoolTaint] {
+	return pulumix.Output[Mk8sLambdalabsProviderNodePoolTaint]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLambdalabsProviderNodePoolTaintOutput) Effect() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderNodePoolTaint) *string { return v.Effect }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderNodePoolTaintOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderNodePoolTaint) *string { return v.Key }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderNodePoolTaintOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderNodePoolTaint) *string { return v.Value }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sLambdalabsProviderNodePoolTaintArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLambdalabsProviderNodePoolTaintArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sLambdalabsProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sLambdalabsProviderNodePoolTaintArrayOutput) ToMk8sLambdalabsProviderNodePoolTaintArrayOutput() Mk8sLambdalabsProviderNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderNodePoolTaintArrayOutput) ToMk8sLambdalabsProviderNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderNodePoolTaintArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sLambdalabsProviderNodePoolTaint] {
+	return pulumix.Output[[]Mk8sLambdalabsProviderNodePoolTaint]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLambdalabsProviderNodePoolTaintArrayOutput) Index(i pulumi.IntInput) Mk8sLambdalabsProviderNodePoolTaintOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sLambdalabsProviderNodePoolTaint {
+		return vs[0].([]Mk8sLambdalabsProviderNodePoolTaint)[vs[1].(int)]
+	}).(Mk8sLambdalabsProviderNodePoolTaintOutput)
+}
+
+type Mk8sLambdalabsProviderUnmanagedNodePool struct {
+	Labels map[string]string                              `pulumi:"labels"`
+	Name   string                                         `pulumi:"name"`
+	Taints []Mk8sLambdalabsProviderUnmanagedNodePoolTaint `pulumi:"taints"`
+}
+
+// Mk8sLambdalabsProviderUnmanagedNodePoolInput is an input type that accepts Mk8sLambdalabsProviderUnmanagedNodePoolArgs and Mk8sLambdalabsProviderUnmanagedNodePoolOutput values.
+// You can construct a concrete instance of `Mk8sLambdalabsProviderUnmanagedNodePoolInput` via:
+//
+//	Mk8sLambdalabsProviderUnmanagedNodePoolArgs{...}
+type Mk8sLambdalabsProviderUnmanagedNodePoolInput interface {
+	pulumi.Input
+
+	ToMk8sLambdalabsProviderUnmanagedNodePoolOutput() Mk8sLambdalabsProviderUnmanagedNodePoolOutput
+	ToMk8sLambdalabsProviderUnmanagedNodePoolOutputWithContext(context.Context) Mk8sLambdalabsProviderUnmanagedNodePoolOutput
+}
+
+type Mk8sLambdalabsProviderUnmanagedNodePoolArgs struct {
+	Labels pulumi.StringMapInput                                  `pulumi:"labels"`
+	Name   pulumi.StringInput                                     `pulumi:"name"`
+	Taints Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayInput `pulumi:"taints"`
+}
+
+func (Mk8sLambdalabsProviderUnmanagedNodePoolArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLambdalabsProviderUnmanagedNodePool)(nil)).Elem()
+}
+
+func (i Mk8sLambdalabsProviderUnmanagedNodePoolArgs) ToMk8sLambdalabsProviderUnmanagedNodePoolOutput() Mk8sLambdalabsProviderUnmanagedNodePoolOutput {
+	return i.ToMk8sLambdalabsProviderUnmanagedNodePoolOutputWithContext(context.Background())
+}
+
+func (i Mk8sLambdalabsProviderUnmanagedNodePoolArgs) ToMk8sLambdalabsProviderUnmanagedNodePoolOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderUnmanagedNodePoolOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLambdalabsProviderUnmanagedNodePoolOutput)
+}
+
+func (i Mk8sLambdalabsProviderUnmanagedNodePoolArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sLambdalabsProviderUnmanagedNodePool] {
+	return pulumix.Output[Mk8sLambdalabsProviderUnmanagedNodePool]{
+		OutputState: i.ToMk8sLambdalabsProviderUnmanagedNodePoolOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sLambdalabsProviderUnmanagedNodePoolArrayInput is an input type that accepts Mk8sLambdalabsProviderUnmanagedNodePoolArray and Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput values.
+// You can construct a concrete instance of `Mk8sLambdalabsProviderUnmanagedNodePoolArrayInput` via:
+//
+//	Mk8sLambdalabsProviderUnmanagedNodePoolArray{ Mk8sLambdalabsProviderUnmanagedNodePoolArgs{...} }
+type Mk8sLambdalabsProviderUnmanagedNodePoolArrayInput interface {
+	pulumi.Input
+
+	ToMk8sLambdalabsProviderUnmanagedNodePoolArrayOutput() Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput
+	ToMk8sLambdalabsProviderUnmanagedNodePoolArrayOutputWithContext(context.Context) Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput
+}
+
+type Mk8sLambdalabsProviderUnmanagedNodePoolArray []Mk8sLambdalabsProviderUnmanagedNodePoolInput
+
+func (Mk8sLambdalabsProviderUnmanagedNodePoolArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sLambdalabsProviderUnmanagedNodePool)(nil)).Elem()
+}
+
+func (i Mk8sLambdalabsProviderUnmanagedNodePoolArray) ToMk8sLambdalabsProviderUnmanagedNodePoolArrayOutput() Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput {
+	return i.ToMk8sLambdalabsProviderUnmanagedNodePoolArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sLambdalabsProviderUnmanagedNodePoolArray) ToMk8sLambdalabsProviderUnmanagedNodePoolArrayOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput)
+}
+
+func (i Mk8sLambdalabsProviderUnmanagedNodePoolArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sLambdalabsProviderUnmanagedNodePool] {
+	return pulumix.Output[[]Mk8sLambdalabsProviderUnmanagedNodePool]{
+		OutputState: i.ToMk8sLambdalabsProviderUnmanagedNodePoolArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sLambdalabsProviderUnmanagedNodePoolOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLambdalabsProviderUnmanagedNodePoolOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLambdalabsProviderUnmanagedNodePool)(nil)).Elem()
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolOutput) ToMk8sLambdalabsProviderUnmanagedNodePoolOutput() Mk8sLambdalabsProviderUnmanagedNodePoolOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolOutput) ToMk8sLambdalabsProviderUnmanagedNodePoolOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderUnmanagedNodePoolOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sLambdalabsProviderUnmanagedNodePool] {
+	return pulumix.Output[Mk8sLambdalabsProviderUnmanagedNodePool]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderUnmanagedNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderUnmanagedNodePool) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolOutput) Taints() Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderUnmanagedNodePool) []Mk8sLambdalabsProviderUnmanagedNodePoolTaint {
+		return v.Taints
+	}).(Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput)
+}
+
+type Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sLambdalabsProviderUnmanagedNodePool)(nil)).Elem()
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput) ToMk8sLambdalabsProviderUnmanagedNodePoolArrayOutput() Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput) ToMk8sLambdalabsProviderUnmanagedNodePoolArrayOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sLambdalabsProviderUnmanagedNodePool] {
+	return pulumix.Output[[]Mk8sLambdalabsProviderUnmanagedNodePool]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput) Index(i pulumi.IntInput) Mk8sLambdalabsProviderUnmanagedNodePoolOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sLambdalabsProviderUnmanagedNodePool {
+		return vs[0].([]Mk8sLambdalabsProviderUnmanagedNodePool)[vs[1].(int)]
+	}).(Mk8sLambdalabsProviderUnmanagedNodePoolOutput)
+}
+
+type Mk8sLambdalabsProviderUnmanagedNodePoolTaint struct {
+	Effect *string `pulumi:"effect"`
+	Key    *string `pulumi:"key"`
+	Value  *string `pulumi:"value"`
+}
+
+// Mk8sLambdalabsProviderUnmanagedNodePoolTaintInput is an input type that accepts Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgs and Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput values.
+// You can construct a concrete instance of `Mk8sLambdalabsProviderUnmanagedNodePoolTaintInput` via:
+//
+//	Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgs{...}
+type Mk8sLambdalabsProviderUnmanagedNodePoolTaintInput interface {
+	pulumi.Input
+
+	ToMk8sLambdalabsProviderUnmanagedNodePoolTaintOutput() Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput
+	ToMk8sLambdalabsProviderUnmanagedNodePoolTaintOutputWithContext(context.Context) Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput
+}
+
+type Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgs struct {
+	Effect pulumi.StringPtrInput `pulumi:"effect"`
+	Key    pulumi.StringPtrInput `pulumi:"key"`
+	Value  pulumi.StringPtrInput `pulumi:"value"`
+}
+
+func (Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLambdalabsProviderUnmanagedNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgs) ToMk8sLambdalabsProviderUnmanagedNodePoolTaintOutput() Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput {
+	return i.ToMk8sLambdalabsProviderUnmanagedNodePoolTaintOutputWithContext(context.Background())
+}
+
+func (i Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgs) ToMk8sLambdalabsProviderUnmanagedNodePoolTaintOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput)
+}
+
+func (i Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sLambdalabsProviderUnmanagedNodePoolTaint] {
+	return pulumix.Output[Mk8sLambdalabsProviderUnmanagedNodePoolTaint]{
+		OutputState: i.ToMk8sLambdalabsProviderUnmanagedNodePoolTaintOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayInput is an input type that accepts Mk8sLambdalabsProviderUnmanagedNodePoolTaintArray and Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput values.
+// You can construct a concrete instance of `Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayInput` via:
+//
+//	Mk8sLambdalabsProviderUnmanagedNodePoolTaintArray{ Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgs{...} }
+type Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayInput interface {
+	pulumi.Input
+
+	ToMk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput() Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput
+	ToMk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutputWithContext(context.Context) Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput
+}
+
+type Mk8sLambdalabsProviderUnmanagedNodePoolTaintArray []Mk8sLambdalabsProviderUnmanagedNodePoolTaintInput
+
+func (Mk8sLambdalabsProviderUnmanagedNodePoolTaintArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sLambdalabsProviderUnmanagedNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sLambdalabsProviderUnmanagedNodePoolTaintArray) ToMk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput() Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput {
+	return i.ToMk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sLambdalabsProviderUnmanagedNodePoolTaintArray) ToMk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput)
+}
+
+func (i Mk8sLambdalabsProviderUnmanagedNodePoolTaintArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sLambdalabsProviderUnmanagedNodePoolTaint] {
+	return pulumix.Output[[]Mk8sLambdalabsProviderUnmanagedNodePoolTaint]{
+		OutputState: i.ToMk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLambdalabsProviderUnmanagedNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput) ToMk8sLambdalabsProviderUnmanagedNodePoolTaintOutput() Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput) ToMk8sLambdalabsProviderUnmanagedNodePoolTaintOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sLambdalabsProviderUnmanagedNodePoolTaint] {
+	return pulumix.Output[Mk8sLambdalabsProviderUnmanagedNodePoolTaint]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput) Effect() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderUnmanagedNodePoolTaint) *string { return v.Effect }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderUnmanagedNodePoolTaint) *string { return v.Key }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderUnmanagedNodePoolTaint) *string { return v.Value }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sLambdalabsProviderUnmanagedNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput) ToMk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput() Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput) ToMk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sLambdalabsProviderUnmanagedNodePoolTaint] {
+	return pulumix.Output[[]Mk8sLambdalabsProviderUnmanagedNodePoolTaint]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput) Index(i pulumi.IntInput) Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sLambdalabsProviderUnmanagedNodePoolTaint {
+		return vs[0].([]Mk8sLambdalabsProviderUnmanagedNodePoolTaint)[vs[1].(int)]
+	}).(Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput)
+}
+
+type Mk8sLinodeProvider struct {
+	AuthorizedKeys   []string                      `pulumi:"authorizedKeys"`
+	AuthorizedUsers  []string                      `pulumi:"authorizedUsers"`
+	Autoscaler       *Mk8sLinodeProviderAutoscaler `pulumi:"autoscaler"`
+	FirewallId       *string                       `pulumi:"firewallId"`
+	Image            string                        `pulumi:"image"`
+	Networking       Mk8sLinodeProviderNetworking  `pulumi:"networking"`
+	NodePools        []Mk8sLinodeProviderNodePool  `pulumi:"nodePools"`
+	PreInstallScript *string                       `pulumi:"preInstallScript"`
+	Region           string                        `pulumi:"region"`
+	TokenSecretLink  string                        `pulumi:"tokenSecretLink"`
+	VpcId            string                        `pulumi:"vpcId"`
+}
+
+// Mk8sLinodeProviderInput is an input type that accepts Mk8sLinodeProviderArgs and Mk8sLinodeProviderOutput values.
+// You can construct a concrete instance of `Mk8sLinodeProviderInput` via:
+//
+//	Mk8sLinodeProviderArgs{...}
+type Mk8sLinodeProviderInput interface {
+	pulumi.Input
+
+	ToMk8sLinodeProviderOutput() Mk8sLinodeProviderOutput
+	ToMk8sLinodeProviderOutputWithContext(context.Context) Mk8sLinodeProviderOutput
+}
+
+type Mk8sLinodeProviderArgs struct {
+	AuthorizedKeys   pulumi.StringArrayInput              `pulumi:"authorizedKeys"`
+	AuthorizedUsers  pulumi.StringArrayInput              `pulumi:"authorizedUsers"`
+	Autoscaler       Mk8sLinodeProviderAutoscalerPtrInput `pulumi:"autoscaler"`
+	FirewallId       pulumi.StringPtrInput                `pulumi:"firewallId"`
+	Image            pulumi.StringInput                   `pulumi:"image"`
+	Networking       Mk8sLinodeProviderNetworkingInput    `pulumi:"networking"`
+	NodePools        Mk8sLinodeProviderNodePoolArrayInput `pulumi:"nodePools"`
+	PreInstallScript pulumi.StringPtrInput                `pulumi:"preInstallScript"`
+	Region           pulumi.StringInput                   `pulumi:"region"`
+	TokenSecretLink  pulumi.StringInput                   `pulumi:"tokenSecretLink"`
+	VpcId            pulumi.StringInput                   `pulumi:"vpcId"`
+}
+
+func (Mk8sLinodeProviderArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLinodeProvider)(nil)).Elem()
+}
+
+func (i Mk8sLinodeProviderArgs) ToMk8sLinodeProviderOutput() Mk8sLinodeProviderOutput {
+	return i.ToMk8sLinodeProviderOutputWithContext(context.Background())
+}
+
+func (i Mk8sLinodeProviderArgs) ToMk8sLinodeProviderOutputWithContext(ctx context.Context) Mk8sLinodeProviderOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLinodeProviderOutput)
+}
+
+func (i Mk8sLinodeProviderArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sLinodeProvider] {
+	return pulumix.Output[Mk8sLinodeProvider]{
+		OutputState: i.ToMk8sLinodeProviderOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i Mk8sLinodeProviderArgs) ToMk8sLinodeProviderPtrOutput() Mk8sLinodeProviderPtrOutput {
+	return i.ToMk8sLinodeProviderPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sLinodeProviderArgs) ToMk8sLinodeProviderPtrOutputWithContext(ctx context.Context) Mk8sLinodeProviderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLinodeProviderOutput).ToMk8sLinodeProviderPtrOutputWithContext(ctx)
+}
+
+// Mk8sLinodeProviderPtrInput is an input type that accepts Mk8sLinodeProviderArgs, Mk8sLinodeProviderPtr and Mk8sLinodeProviderPtrOutput values.
+// You can construct a concrete instance of `Mk8sLinodeProviderPtrInput` via:
+//
+//	        Mk8sLinodeProviderArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sLinodeProviderPtrInput interface {
+	pulumi.Input
+
+	ToMk8sLinodeProviderPtrOutput() Mk8sLinodeProviderPtrOutput
+	ToMk8sLinodeProviderPtrOutputWithContext(context.Context) Mk8sLinodeProviderPtrOutput
+}
+
+type mk8sLinodeProviderPtrType Mk8sLinodeProviderArgs
+
+func Mk8sLinodeProviderPtr(v *Mk8sLinodeProviderArgs) Mk8sLinodeProviderPtrInput {
+	return (*mk8sLinodeProviderPtrType)(v)
+}
+
+func (*mk8sLinodeProviderPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sLinodeProvider)(nil)).Elem()
+}
+
+func (i *mk8sLinodeProviderPtrType) ToMk8sLinodeProviderPtrOutput() Mk8sLinodeProviderPtrOutput {
+	return i.ToMk8sLinodeProviderPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sLinodeProviderPtrType) ToMk8sLinodeProviderPtrOutputWithContext(ctx context.Context) Mk8sLinodeProviderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLinodeProviderPtrOutput)
+}
+
+func (i *mk8sLinodeProviderPtrType) ToOutput(ctx context.Context) pulumix.Output[*Mk8sLinodeProvider] {
+	return pulumix.Output[*Mk8sLinodeProvider]{
+		OutputState: i.ToMk8sLinodeProviderPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sLinodeProviderOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLinodeProviderOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLinodeProvider)(nil)).Elem()
+}
+
+func (o Mk8sLinodeProviderOutput) ToMk8sLinodeProviderOutput() Mk8sLinodeProviderOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderOutput) ToMk8sLinodeProviderOutputWithContext(ctx context.Context) Mk8sLinodeProviderOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderOutput) ToMk8sLinodeProviderPtrOutput() Mk8sLinodeProviderPtrOutput {
+	return o.ToMk8sLinodeProviderPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sLinodeProviderOutput) ToMk8sLinodeProviderPtrOutputWithContext(ctx context.Context) Mk8sLinodeProviderPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sLinodeProvider) *Mk8sLinodeProvider {
+		return &v
+	}).(Mk8sLinodeProviderPtrOutput)
+}
+
+func (o Mk8sLinodeProviderOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sLinodeProvider] {
+	return pulumix.Output[Mk8sLinodeProvider]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLinodeProviderOutput) AuthorizedKeys() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sLinodeProvider) []string { return v.AuthorizedKeys }).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sLinodeProviderOutput) AuthorizedUsers() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sLinodeProvider) []string { return v.AuthorizedUsers }).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sLinodeProviderOutput) Autoscaler() Mk8sLinodeProviderAutoscalerPtrOutput {
+	return o.ApplyT(func(v Mk8sLinodeProvider) *Mk8sLinodeProviderAutoscaler { return v.Autoscaler }).(Mk8sLinodeProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sLinodeProviderOutput) FirewallId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLinodeProvider) *string { return v.FirewallId }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLinodeProviderOutput) Image() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sLinodeProvider) string { return v.Image }).(pulumi.StringOutput)
+}
+
+func (o Mk8sLinodeProviderOutput) Networking() Mk8sLinodeProviderNetworkingOutput {
+	return o.ApplyT(func(v Mk8sLinodeProvider) Mk8sLinodeProviderNetworking { return v.Networking }).(Mk8sLinodeProviderNetworkingOutput)
+}
+
+func (o Mk8sLinodeProviderOutput) NodePools() Mk8sLinodeProviderNodePoolArrayOutput {
+	return o.ApplyT(func(v Mk8sLinodeProvider) []Mk8sLinodeProviderNodePool { return v.NodePools }).(Mk8sLinodeProviderNodePoolArrayOutput)
+}
+
+func (o Mk8sLinodeProviderOutput) PreInstallScript() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLinodeProvider) *string { return v.PreInstallScript }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLinodeProviderOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sLinodeProvider) string { return v.Region }).(pulumi.StringOutput)
+}
+
+func (o Mk8sLinodeProviderOutput) TokenSecretLink() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sLinodeProvider) string { return v.TokenSecretLink }).(pulumi.StringOutput)
+}
+
+func (o Mk8sLinodeProviderOutput) VpcId() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sLinodeProvider) string { return v.VpcId }).(pulumi.StringOutput)
+}
+
+type Mk8sLinodeProviderPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLinodeProviderPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sLinodeProvider)(nil)).Elem()
+}
+
+func (o Mk8sLinodeProviderPtrOutput) ToMk8sLinodeProviderPtrOutput() Mk8sLinodeProviderPtrOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderPtrOutput) ToMk8sLinodeProviderPtrOutputWithContext(ctx context.Context) Mk8sLinodeProviderPtrOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*Mk8sLinodeProvider] {
+	return pulumix.Output[*Mk8sLinodeProvider]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLinodeProviderPtrOutput) Elem() Mk8sLinodeProviderOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProvider) Mk8sLinodeProvider {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sLinodeProvider
+		return ret
+	}).(Mk8sLinodeProviderOutput)
+}
+
+func (o Mk8sLinodeProviderPtrOutput) AuthorizedKeys() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProvider) []string {
+		if v == nil {
+			return nil
+		}
+		return v.AuthorizedKeys
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sLinodeProviderPtrOutput) AuthorizedUsers() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProvider) []string {
+		if v == nil {
+			return nil
+		}
+		return v.AuthorizedUsers
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sLinodeProviderPtrOutput) Autoscaler() Mk8sLinodeProviderAutoscalerPtrOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProvider) *Mk8sLinodeProviderAutoscaler {
+		if v == nil {
+			return nil
+		}
+		return v.Autoscaler
+	}).(Mk8sLinodeProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sLinodeProviderPtrOutput) FirewallId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return v.FirewallId
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLinodeProviderPtrOutput) Image() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Image
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLinodeProviderPtrOutput) Networking() Mk8sLinodeProviderNetworkingPtrOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProvider) *Mk8sLinodeProviderNetworking {
+		if v == nil {
+			return nil
+		}
+		return &v.Networking
+	}).(Mk8sLinodeProviderNetworkingPtrOutput)
+}
+
+func (o Mk8sLinodeProviderPtrOutput) NodePools() Mk8sLinodeProviderNodePoolArrayOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProvider) []Mk8sLinodeProviderNodePool {
+		if v == nil {
+			return nil
+		}
+		return v.NodePools
+	}).(Mk8sLinodeProviderNodePoolArrayOutput)
+}
+
+func (o Mk8sLinodeProviderPtrOutput) PreInstallScript() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return v.PreInstallScript
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLinodeProviderPtrOutput) Region() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Region
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLinodeProviderPtrOutput) TokenSecretLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.TokenSecretLink
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLinodeProviderPtrOutput) VpcId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.VpcId
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sLinodeProviderAutoscaler struct {
+	Expanders            []string `pulumi:"expanders"`
+	UnneededTime         *string  `pulumi:"unneededTime"`
+	UnreadyTime          *string  `pulumi:"unreadyTime"`
+	UtilizationThreshold *float64 `pulumi:"utilizationThreshold"`
+}
+
+// Mk8sLinodeProviderAutoscalerInput is an input type that accepts Mk8sLinodeProviderAutoscalerArgs and Mk8sLinodeProviderAutoscalerOutput values.
+// You can construct a concrete instance of `Mk8sLinodeProviderAutoscalerInput` via:
+//
+//	Mk8sLinodeProviderAutoscalerArgs{...}
+type Mk8sLinodeProviderAutoscalerInput interface {
+	pulumi.Input
+
+	ToMk8sLinodeProviderAutoscalerOutput() Mk8sLinodeProviderAutoscalerOutput
+	ToMk8sLinodeProviderAutoscalerOutputWithContext(context.Context) Mk8sLinodeProviderAutoscalerOutput
+}
+
+type Mk8sLinodeProviderAutoscalerArgs struct {
+	Expanders            pulumi.StringArrayInput `pulumi:"expanders"`
+	UnneededTime         pulumi.StringPtrInput   `pulumi:"unneededTime"`
+	UnreadyTime          pulumi.StringPtrInput   `pulumi:"unreadyTime"`
+	UtilizationThreshold pulumi.Float64PtrInput  `pulumi:"utilizationThreshold"`
+}
+
+func (Mk8sLinodeProviderAutoscalerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLinodeProviderAutoscaler)(nil)).Elem()
+}
+
+func (i Mk8sLinodeProviderAutoscalerArgs) ToMk8sLinodeProviderAutoscalerOutput() Mk8sLinodeProviderAutoscalerOutput {
+	return i.ToMk8sLinodeProviderAutoscalerOutputWithContext(context.Background())
+}
+
+func (i Mk8sLinodeProviderAutoscalerArgs) ToMk8sLinodeProviderAutoscalerOutputWithContext(ctx context.Context) Mk8sLinodeProviderAutoscalerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLinodeProviderAutoscalerOutput)
+}
+
+func (i Mk8sLinodeProviderAutoscalerArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sLinodeProviderAutoscaler] {
+	return pulumix.Output[Mk8sLinodeProviderAutoscaler]{
+		OutputState: i.ToMk8sLinodeProviderAutoscalerOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i Mk8sLinodeProviderAutoscalerArgs) ToMk8sLinodeProviderAutoscalerPtrOutput() Mk8sLinodeProviderAutoscalerPtrOutput {
+	return i.ToMk8sLinodeProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sLinodeProviderAutoscalerArgs) ToMk8sLinodeProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sLinodeProviderAutoscalerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLinodeProviderAutoscalerOutput).ToMk8sLinodeProviderAutoscalerPtrOutputWithContext(ctx)
+}
+
+// Mk8sLinodeProviderAutoscalerPtrInput is an input type that accepts Mk8sLinodeProviderAutoscalerArgs, Mk8sLinodeProviderAutoscalerPtr and Mk8sLinodeProviderAutoscalerPtrOutput values.
+// You can construct a concrete instance of `Mk8sLinodeProviderAutoscalerPtrInput` via:
+//
+//	        Mk8sLinodeProviderAutoscalerArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sLinodeProviderAutoscalerPtrInput interface {
+	pulumi.Input
+
+	ToMk8sLinodeProviderAutoscalerPtrOutput() Mk8sLinodeProviderAutoscalerPtrOutput
+	ToMk8sLinodeProviderAutoscalerPtrOutputWithContext(context.Context) Mk8sLinodeProviderAutoscalerPtrOutput
+}
+
+type mk8sLinodeProviderAutoscalerPtrType Mk8sLinodeProviderAutoscalerArgs
+
+func Mk8sLinodeProviderAutoscalerPtr(v *Mk8sLinodeProviderAutoscalerArgs) Mk8sLinodeProviderAutoscalerPtrInput {
+	return (*mk8sLinodeProviderAutoscalerPtrType)(v)
+}
+
+func (*mk8sLinodeProviderAutoscalerPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sLinodeProviderAutoscaler)(nil)).Elem()
+}
+
+func (i *mk8sLinodeProviderAutoscalerPtrType) ToMk8sLinodeProviderAutoscalerPtrOutput() Mk8sLinodeProviderAutoscalerPtrOutput {
+	return i.ToMk8sLinodeProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sLinodeProviderAutoscalerPtrType) ToMk8sLinodeProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sLinodeProviderAutoscalerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLinodeProviderAutoscalerPtrOutput)
+}
+
+func (i *mk8sLinodeProviderAutoscalerPtrType) ToOutput(ctx context.Context) pulumix.Output[*Mk8sLinodeProviderAutoscaler] {
+	return pulumix.Output[*Mk8sLinodeProviderAutoscaler]{
+		OutputState: i.ToMk8sLinodeProviderAutoscalerPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sLinodeProviderAutoscalerOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLinodeProviderAutoscalerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLinodeProviderAutoscaler)(nil)).Elem()
+}
+
+func (o Mk8sLinodeProviderAutoscalerOutput) ToMk8sLinodeProviderAutoscalerOutput() Mk8sLinodeProviderAutoscalerOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderAutoscalerOutput) ToMk8sLinodeProviderAutoscalerOutputWithContext(ctx context.Context) Mk8sLinodeProviderAutoscalerOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderAutoscalerOutput) ToMk8sLinodeProviderAutoscalerPtrOutput() Mk8sLinodeProviderAutoscalerPtrOutput {
+	return o.ToMk8sLinodeProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sLinodeProviderAutoscalerOutput) ToMk8sLinodeProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sLinodeProviderAutoscalerPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sLinodeProviderAutoscaler) *Mk8sLinodeProviderAutoscaler {
+		return &v
+	}).(Mk8sLinodeProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sLinodeProviderAutoscalerOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sLinodeProviderAutoscaler] {
+	return pulumix.Output[Mk8sLinodeProviderAutoscaler]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLinodeProviderAutoscalerOutput) Expanders() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sLinodeProviderAutoscaler) []string { return v.Expanders }).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sLinodeProviderAutoscalerOutput) UnneededTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLinodeProviderAutoscaler) *string { return v.UnneededTime }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLinodeProviderAutoscalerOutput) UnreadyTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLinodeProviderAutoscaler) *string { return v.UnreadyTime }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLinodeProviderAutoscalerOutput) UtilizationThreshold() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v Mk8sLinodeProviderAutoscaler) *float64 { return v.UtilizationThreshold }).(pulumi.Float64PtrOutput)
+}
+
+type Mk8sLinodeProviderAutoscalerPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLinodeProviderAutoscalerPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sLinodeProviderAutoscaler)(nil)).Elem()
+}
+
+func (o Mk8sLinodeProviderAutoscalerPtrOutput) ToMk8sLinodeProviderAutoscalerPtrOutput() Mk8sLinodeProviderAutoscalerPtrOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderAutoscalerPtrOutput) ToMk8sLinodeProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sLinodeProviderAutoscalerPtrOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderAutoscalerPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*Mk8sLinodeProviderAutoscaler] {
+	return pulumix.Output[*Mk8sLinodeProviderAutoscaler]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLinodeProviderAutoscalerPtrOutput) Elem() Mk8sLinodeProviderAutoscalerOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProviderAutoscaler) Mk8sLinodeProviderAutoscaler {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sLinodeProviderAutoscaler
+		return ret
+	}).(Mk8sLinodeProviderAutoscalerOutput)
+}
+
+func (o Mk8sLinodeProviderAutoscalerPtrOutput) Expanders() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProviderAutoscaler) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Expanders
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sLinodeProviderAutoscalerPtrOutput) UnneededTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProviderAutoscaler) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UnneededTime
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLinodeProviderAutoscalerPtrOutput) UnreadyTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProviderAutoscaler) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UnreadyTime
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLinodeProviderAutoscalerPtrOutput) UtilizationThreshold() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProviderAutoscaler) *float64 {
+		if v == nil {
+			return nil
+		}
+		return v.UtilizationThreshold
+	}).(pulumi.Float64PtrOutput)
+}
+
+type Mk8sLinodeProviderNetworking struct {
+	PodNetwork     *string `pulumi:"podNetwork"`
+	ServiceNetwork *string `pulumi:"serviceNetwork"`
+}
+
+// Mk8sLinodeProviderNetworkingInput is an input type that accepts Mk8sLinodeProviderNetworkingArgs and Mk8sLinodeProviderNetworkingOutput values.
+// You can construct a concrete instance of `Mk8sLinodeProviderNetworkingInput` via:
+//
+//	Mk8sLinodeProviderNetworkingArgs{...}
+type Mk8sLinodeProviderNetworkingInput interface {
+	pulumi.Input
+
+	ToMk8sLinodeProviderNetworkingOutput() Mk8sLinodeProviderNetworkingOutput
+	ToMk8sLinodeProviderNetworkingOutputWithContext(context.Context) Mk8sLinodeProviderNetworkingOutput
+}
+
+type Mk8sLinodeProviderNetworkingArgs struct {
+	PodNetwork     pulumi.StringPtrInput `pulumi:"podNetwork"`
+	ServiceNetwork pulumi.StringPtrInput `pulumi:"serviceNetwork"`
+}
+
+func (Mk8sLinodeProviderNetworkingArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLinodeProviderNetworking)(nil)).Elem()
+}
+
+func (i Mk8sLinodeProviderNetworkingArgs) ToMk8sLinodeProviderNetworkingOutput() Mk8sLinodeProviderNetworkingOutput {
+	return i.ToMk8sLinodeProviderNetworkingOutputWithContext(context.Background())
+}
+
+func (i Mk8sLinodeProviderNetworkingArgs) ToMk8sLinodeProviderNetworkingOutputWithContext(ctx context.Context) Mk8sLinodeProviderNetworkingOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLinodeProviderNetworkingOutput)
+}
+
+func (i Mk8sLinodeProviderNetworkingArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sLinodeProviderNetworking] {
+	return pulumix.Output[Mk8sLinodeProviderNetworking]{
+		OutputState: i.ToMk8sLinodeProviderNetworkingOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i Mk8sLinodeProviderNetworkingArgs) ToMk8sLinodeProviderNetworkingPtrOutput() Mk8sLinodeProviderNetworkingPtrOutput {
+	return i.ToMk8sLinodeProviderNetworkingPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sLinodeProviderNetworkingArgs) ToMk8sLinodeProviderNetworkingPtrOutputWithContext(ctx context.Context) Mk8sLinodeProviderNetworkingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLinodeProviderNetworkingOutput).ToMk8sLinodeProviderNetworkingPtrOutputWithContext(ctx)
+}
+
+// Mk8sLinodeProviderNetworkingPtrInput is an input type that accepts Mk8sLinodeProviderNetworkingArgs, Mk8sLinodeProviderNetworkingPtr and Mk8sLinodeProviderNetworkingPtrOutput values.
+// You can construct a concrete instance of `Mk8sLinodeProviderNetworkingPtrInput` via:
+//
+//	        Mk8sLinodeProviderNetworkingArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sLinodeProviderNetworkingPtrInput interface {
+	pulumi.Input
+
+	ToMk8sLinodeProviderNetworkingPtrOutput() Mk8sLinodeProviderNetworkingPtrOutput
+	ToMk8sLinodeProviderNetworkingPtrOutputWithContext(context.Context) Mk8sLinodeProviderNetworkingPtrOutput
+}
+
+type mk8sLinodeProviderNetworkingPtrType Mk8sLinodeProviderNetworkingArgs
+
+func Mk8sLinodeProviderNetworkingPtr(v *Mk8sLinodeProviderNetworkingArgs) Mk8sLinodeProviderNetworkingPtrInput {
+	return (*mk8sLinodeProviderNetworkingPtrType)(v)
+}
+
+func (*mk8sLinodeProviderNetworkingPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sLinodeProviderNetworking)(nil)).Elem()
+}
+
+func (i *mk8sLinodeProviderNetworkingPtrType) ToMk8sLinodeProviderNetworkingPtrOutput() Mk8sLinodeProviderNetworkingPtrOutput {
+	return i.ToMk8sLinodeProviderNetworkingPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sLinodeProviderNetworkingPtrType) ToMk8sLinodeProviderNetworkingPtrOutputWithContext(ctx context.Context) Mk8sLinodeProviderNetworkingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLinodeProviderNetworkingPtrOutput)
+}
+
+func (i *mk8sLinodeProviderNetworkingPtrType) ToOutput(ctx context.Context) pulumix.Output[*Mk8sLinodeProviderNetworking] {
+	return pulumix.Output[*Mk8sLinodeProviderNetworking]{
+		OutputState: i.ToMk8sLinodeProviderNetworkingPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sLinodeProviderNetworkingOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLinodeProviderNetworkingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLinodeProviderNetworking)(nil)).Elem()
+}
+
+func (o Mk8sLinodeProviderNetworkingOutput) ToMk8sLinodeProviderNetworkingOutput() Mk8sLinodeProviderNetworkingOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderNetworkingOutput) ToMk8sLinodeProviderNetworkingOutputWithContext(ctx context.Context) Mk8sLinodeProviderNetworkingOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderNetworkingOutput) ToMk8sLinodeProviderNetworkingPtrOutput() Mk8sLinodeProviderNetworkingPtrOutput {
+	return o.ToMk8sLinodeProviderNetworkingPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sLinodeProviderNetworkingOutput) ToMk8sLinodeProviderNetworkingPtrOutputWithContext(ctx context.Context) Mk8sLinodeProviderNetworkingPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sLinodeProviderNetworking) *Mk8sLinodeProviderNetworking {
+		return &v
+	}).(Mk8sLinodeProviderNetworkingPtrOutput)
+}
+
+func (o Mk8sLinodeProviderNetworkingOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sLinodeProviderNetworking] {
+	return pulumix.Output[Mk8sLinodeProviderNetworking]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLinodeProviderNetworkingOutput) PodNetwork() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLinodeProviderNetworking) *string { return v.PodNetwork }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLinodeProviderNetworkingOutput) ServiceNetwork() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLinodeProviderNetworking) *string { return v.ServiceNetwork }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sLinodeProviderNetworkingPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLinodeProviderNetworkingPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sLinodeProviderNetworking)(nil)).Elem()
+}
+
+func (o Mk8sLinodeProviderNetworkingPtrOutput) ToMk8sLinodeProviderNetworkingPtrOutput() Mk8sLinodeProviderNetworkingPtrOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderNetworkingPtrOutput) ToMk8sLinodeProviderNetworkingPtrOutputWithContext(ctx context.Context) Mk8sLinodeProviderNetworkingPtrOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderNetworkingPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*Mk8sLinodeProviderNetworking] {
+	return pulumix.Output[*Mk8sLinodeProviderNetworking]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLinodeProviderNetworkingPtrOutput) Elem() Mk8sLinodeProviderNetworkingOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProviderNetworking) Mk8sLinodeProviderNetworking {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sLinodeProviderNetworking
+		return ret
+	}).(Mk8sLinodeProviderNetworkingOutput)
+}
+
+func (o Mk8sLinodeProviderNetworkingPtrOutput) PodNetwork() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProviderNetworking) *string {
+		if v == nil {
+			return nil
+		}
+		return v.PodNetwork
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLinodeProviderNetworkingPtrOutput) ServiceNetwork() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sLinodeProviderNetworking) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ServiceNetwork
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sLinodeProviderNodePool struct {
+	Labels        map[string]string                 `pulumi:"labels"`
+	MaxSize       *int                              `pulumi:"maxSize"`
+	MinSize       *int                              `pulumi:"minSize"`
+	Name          string                            `pulumi:"name"`
+	OverrideImage *string                           `pulumi:"overrideImage"`
+	ServerType    string                            `pulumi:"serverType"`
+	SubnetId      string                            `pulumi:"subnetId"`
+	Taints        []Mk8sLinodeProviderNodePoolTaint `pulumi:"taints"`
+}
+
+// Mk8sLinodeProviderNodePoolInput is an input type that accepts Mk8sLinodeProviderNodePoolArgs and Mk8sLinodeProviderNodePoolOutput values.
+// You can construct a concrete instance of `Mk8sLinodeProviderNodePoolInput` via:
+//
+//	Mk8sLinodeProviderNodePoolArgs{...}
+type Mk8sLinodeProviderNodePoolInput interface {
+	pulumi.Input
+
+	ToMk8sLinodeProviderNodePoolOutput() Mk8sLinodeProviderNodePoolOutput
+	ToMk8sLinodeProviderNodePoolOutputWithContext(context.Context) Mk8sLinodeProviderNodePoolOutput
+}
+
+type Mk8sLinodeProviderNodePoolArgs struct {
+	Labels        pulumi.StringMapInput                     `pulumi:"labels"`
+	MaxSize       pulumi.IntPtrInput                        `pulumi:"maxSize"`
+	MinSize       pulumi.IntPtrInput                        `pulumi:"minSize"`
+	Name          pulumi.StringInput                        `pulumi:"name"`
+	OverrideImage pulumi.StringPtrInput                     `pulumi:"overrideImage"`
+	ServerType    pulumi.StringInput                        `pulumi:"serverType"`
+	SubnetId      pulumi.StringInput                        `pulumi:"subnetId"`
+	Taints        Mk8sLinodeProviderNodePoolTaintArrayInput `pulumi:"taints"`
+}
+
+func (Mk8sLinodeProviderNodePoolArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLinodeProviderNodePool)(nil)).Elem()
+}
+
+func (i Mk8sLinodeProviderNodePoolArgs) ToMk8sLinodeProviderNodePoolOutput() Mk8sLinodeProviderNodePoolOutput {
+	return i.ToMk8sLinodeProviderNodePoolOutputWithContext(context.Background())
+}
+
+func (i Mk8sLinodeProviderNodePoolArgs) ToMk8sLinodeProviderNodePoolOutputWithContext(ctx context.Context) Mk8sLinodeProviderNodePoolOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLinodeProviderNodePoolOutput)
+}
+
+func (i Mk8sLinodeProviderNodePoolArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sLinodeProviderNodePool] {
+	return pulumix.Output[Mk8sLinodeProviderNodePool]{
+		OutputState: i.ToMk8sLinodeProviderNodePoolOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sLinodeProviderNodePoolArrayInput is an input type that accepts Mk8sLinodeProviderNodePoolArray and Mk8sLinodeProviderNodePoolArrayOutput values.
+// You can construct a concrete instance of `Mk8sLinodeProviderNodePoolArrayInput` via:
+//
+//	Mk8sLinodeProviderNodePoolArray{ Mk8sLinodeProviderNodePoolArgs{...} }
+type Mk8sLinodeProviderNodePoolArrayInput interface {
+	pulumi.Input
+
+	ToMk8sLinodeProviderNodePoolArrayOutput() Mk8sLinodeProviderNodePoolArrayOutput
+	ToMk8sLinodeProviderNodePoolArrayOutputWithContext(context.Context) Mk8sLinodeProviderNodePoolArrayOutput
+}
+
+type Mk8sLinodeProviderNodePoolArray []Mk8sLinodeProviderNodePoolInput
+
+func (Mk8sLinodeProviderNodePoolArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sLinodeProviderNodePool)(nil)).Elem()
+}
+
+func (i Mk8sLinodeProviderNodePoolArray) ToMk8sLinodeProviderNodePoolArrayOutput() Mk8sLinodeProviderNodePoolArrayOutput {
+	return i.ToMk8sLinodeProviderNodePoolArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sLinodeProviderNodePoolArray) ToMk8sLinodeProviderNodePoolArrayOutputWithContext(ctx context.Context) Mk8sLinodeProviderNodePoolArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLinodeProviderNodePoolArrayOutput)
+}
+
+func (i Mk8sLinodeProviderNodePoolArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sLinodeProviderNodePool] {
+	return pulumix.Output[[]Mk8sLinodeProviderNodePool]{
+		OutputState: i.ToMk8sLinodeProviderNodePoolArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sLinodeProviderNodePoolOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLinodeProviderNodePoolOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLinodeProviderNodePool)(nil)).Elem()
+}
+
+func (o Mk8sLinodeProviderNodePoolOutput) ToMk8sLinodeProviderNodePoolOutput() Mk8sLinodeProviderNodePoolOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderNodePoolOutput) ToMk8sLinodeProviderNodePoolOutputWithContext(ctx context.Context) Mk8sLinodeProviderNodePoolOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderNodePoolOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sLinodeProviderNodePool] {
+	return pulumix.Output[Mk8sLinodeProviderNodePool]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLinodeProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sLinodeProviderNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+func (o Mk8sLinodeProviderNodePoolOutput) MaxSize() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sLinodeProviderNodePool) *int { return v.MaxSize }).(pulumi.IntPtrOutput)
+}
+
+func (o Mk8sLinodeProviderNodePoolOutput) MinSize() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sLinodeProviderNodePool) *int { return v.MinSize }).(pulumi.IntPtrOutput)
+}
+
+func (o Mk8sLinodeProviderNodePoolOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sLinodeProviderNodePool) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o Mk8sLinodeProviderNodePoolOutput) OverrideImage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLinodeProviderNodePool) *string { return v.OverrideImage }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLinodeProviderNodePoolOutput) ServerType() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sLinodeProviderNodePool) string { return v.ServerType }).(pulumi.StringOutput)
+}
+
+func (o Mk8sLinodeProviderNodePoolOutput) SubnetId() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sLinodeProviderNodePool) string { return v.SubnetId }).(pulumi.StringOutput)
+}
+
+func (o Mk8sLinodeProviderNodePoolOutput) Taints() Mk8sLinodeProviderNodePoolTaintArrayOutput {
+	return o.ApplyT(func(v Mk8sLinodeProviderNodePool) []Mk8sLinodeProviderNodePoolTaint { return v.Taints }).(Mk8sLinodeProviderNodePoolTaintArrayOutput)
+}
+
+type Mk8sLinodeProviderNodePoolArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLinodeProviderNodePoolArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sLinodeProviderNodePool)(nil)).Elem()
+}
+
+func (o Mk8sLinodeProviderNodePoolArrayOutput) ToMk8sLinodeProviderNodePoolArrayOutput() Mk8sLinodeProviderNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderNodePoolArrayOutput) ToMk8sLinodeProviderNodePoolArrayOutputWithContext(ctx context.Context) Mk8sLinodeProviderNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderNodePoolArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sLinodeProviderNodePool] {
+	return pulumix.Output[[]Mk8sLinodeProviderNodePool]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLinodeProviderNodePoolArrayOutput) Index(i pulumi.IntInput) Mk8sLinodeProviderNodePoolOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sLinodeProviderNodePool {
+		return vs[0].([]Mk8sLinodeProviderNodePool)[vs[1].(int)]
+	}).(Mk8sLinodeProviderNodePoolOutput)
+}
+
+type Mk8sLinodeProviderNodePoolTaint struct {
+	Effect *string `pulumi:"effect"`
+	Key    *string `pulumi:"key"`
+	Value  *string `pulumi:"value"`
+}
+
+// Mk8sLinodeProviderNodePoolTaintInput is an input type that accepts Mk8sLinodeProviderNodePoolTaintArgs and Mk8sLinodeProviderNodePoolTaintOutput values.
+// You can construct a concrete instance of `Mk8sLinodeProviderNodePoolTaintInput` via:
+//
+//	Mk8sLinodeProviderNodePoolTaintArgs{...}
+type Mk8sLinodeProviderNodePoolTaintInput interface {
+	pulumi.Input
+
+	ToMk8sLinodeProviderNodePoolTaintOutput() Mk8sLinodeProviderNodePoolTaintOutput
+	ToMk8sLinodeProviderNodePoolTaintOutputWithContext(context.Context) Mk8sLinodeProviderNodePoolTaintOutput
+}
+
+type Mk8sLinodeProviderNodePoolTaintArgs struct {
+	Effect pulumi.StringPtrInput `pulumi:"effect"`
+	Key    pulumi.StringPtrInput `pulumi:"key"`
+	Value  pulumi.StringPtrInput `pulumi:"value"`
+}
+
+func (Mk8sLinodeProviderNodePoolTaintArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLinodeProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sLinodeProviderNodePoolTaintArgs) ToMk8sLinodeProviderNodePoolTaintOutput() Mk8sLinodeProviderNodePoolTaintOutput {
+	return i.ToMk8sLinodeProviderNodePoolTaintOutputWithContext(context.Background())
+}
+
+func (i Mk8sLinodeProviderNodePoolTaintArgs) ToMk8sLinodeProviderNodePoolTaintOutputWithContext(ctx context.Context) Mk8sLinodeProviderNodePoolTaintOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLinodeProviderNodePoolTaintOutput)
+}
+
+func (i Mk8sLinodeProviderNodePoolTaintArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sLinodeProviderNodePoolTaint] {
+	return pulumix.Output[Mk8sLinodeProviderNodePoolTaint]{
+		OutputState: i.ToMk8sLinodeProviderNodePoolTaintOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sLinodeProviderNodePoolTaintArrayInput is an input type that accepts Mk8sLinodeProviderNodePoolTaintArray and Mk8sLinodeProviderNodePoolTaintArrayOutput values.
+// You can construct a concrete instance of `Mk8sLinodeProviderNodePoolTaintArrayInput` via:
+//
+//	Mk8sLinodeProviderNodePoolTaintArray{ Mk8sLinodeProviderNodePoolTaintArgs{...} }
+type Mk8sLinodeProviderNodePoolTaintArrayInput interface {
+	pulumi.Input
+
+	ToMk8sLinodeProviderNodePoolTaintArrayOutput() Mk8sLinodeProviderNodePoolTaintArrayOutput
+	ToMk8sLinodeProviderNodePoolTaintArrayOutputWithContext(context.Context) Mk8sLinodeProviderNodePoolTaintArrayOutput
+}
+
+type Mk8sLinodeProviderNodePoolTaintArray []Mk8sLinodeProviderNodePoolTaintInput
+
+func (Mk8sLinodeProviderNodePoolTaintArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sLinodeProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sLinodeProviderNodePoolTaintArray) ToMk8sLinodeProviderNodePoolTaintArrayOutput() Mk8sLinodeProviderNodePoolTaintArrayOutput {
+	return i.ToMk8sLinodeProviderNodePoolTaintArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sLinodeProviderNodePoolTaintArray) ToMk8sLinodeProviderNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sLinodeProviderNodePoolTaintArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sLinodeProviderNodePoolTaintArrayOutput)
+}
+
+func (i Mk8sLinodeProviderNodePoolTaintArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sLinodeProviderNodePoolTaint] {
+	return pulumix.Output[[]Mk8sLinodeProviderNodePoolTaint]{
+		OutputState: i.ToMk8sLinodeProviderNodePoolTaintArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sLinodeProviderNodePoolTaintOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLinodeProviderNodePoolTaintOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sLinodeProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sLinodeProviderNodePoolTaintOutput) ToMk8sLinodeProviderNodePoolTaintOutput() Mk8sLinodeProviderNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderNodePoolTaintOutput) ToMk8sLinodeProviderNodePoolTaintOutputWithContext(ctx context.Context) Mk8sLinodeProviderNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderNodePoolTaintOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sLinodeProviderNodePoolTaint] {
+	return pulumix.Output[Mk8sLinodeProviderNodePoolTaint]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLinodeProviderNodePoolTaintOutput) Effect() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLinodeProviderNodePoolTaint) *string { return v.Effect }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLinodeProviderNodePoolTaintOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLinodeProviderNodePoolTaint) *string { return v.Key }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sLinodeProviderNodePoolTaintOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sLinodeProviderNodePoolTaint) *string { return v.Value }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sLinodeProviderNodePoolTaintArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sLinodeProviderNodePoolTaintArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sLinodeProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sLinodeProviderNodePoolTaintArrayOutput) ToMk8sLinodeProviderNodePoolTaintArrayOutput() Mk8sLinodeProviderNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderNodePoolTaintArrayOutput) ToMk8sLinodeProviderNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sLinodeProviderNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sLinodeProviderNodePoolTaintArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sLinodeProviderNodePoolTaint] {
+	return pulumix.Output[[]Mk8sLinodeProviderNodePoolTaint]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sLinodeProviderNodePoolTaintArrayOutput) Index(i pulumi.IntInput) Mk8sLinodeProviderNodePoolTaintOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sLinodeProviderNodePoolTaint {
+		return vs[0].([]Mk8sLinodeProviderNodePoolTaint)[vs[1].(int)]
+	}).(Mk8sLinodeProviderNodePoolTaintOutput)
+}
+
+type Mk8sOblivusProvider struct {
+	Autoscaler         *Mk8sOblivusProviderAutoscaler         `pulumi:"autoscaler"`
+	Datacenter         string                                 `pulumi:"datacenter"`
+	NodePools          []Mk8sOblivusProviderNodePool          `pulumi:"nodePools"`
+	PreInstallScript   *string                                `pulumi:"preInstallScript"`
+	SshKeys            []string                               `pulumi:"sshKeys"`
+	TokenSecretLink    string                                 `pulumi:"tokenSecretLink"`
+	UnmanagedNodePools []Mk8sOblivusProviderUnmanagedNodePool `pulumi:"unmanagedNodePools"`
+}
+
+// Mk8sOblivusProviderInput is an input type that accepts Mk8sOblivusProviderArgs and Mk8sOblivusProviderOutput values.
+// You can construct a concrete instance of `Mk8sOblivusProviderInput` via:
+//
+//	Mk8sOblivusProviderArgs{...}
+type Mk8sOblivusProviderInput interface {
+	pulumi.Input
+
+	ToMk8sOblivusProviderOutput() Mk8sOblivusProviderOutput
+	ToMk8sOblivusProviderOutputWithContext(context.Context) Mk8sOblivusProviderOutput
+}
+
+type Mk8sOblivusProviderArgs struct {
+	Autoscaler         Mk8sOblivusProviderAutoscalerPtrInput          `pulumi:"autoscaler"`
+	Datacenter         pulumi.StringInput                             `pulumi:"datacenter"`
+	NodePools          Mk8sOblivusProviderNodePoolArrayInput          `pulumi:"nodePools"`
+	PreInstallScript   pulumi.StringPtrInput                          `pulumi:"preInstallScript"`
+	SshKeys            pulumi.StringArrayInput                        `pulumi:"sshKeys"`
+	TokenSecretLink    pulumi.StringInput                             `pulumi:"tokenSecretLink"`
+	UnmanagedNodePools Mk8sOblivusProviderUnmanagedNodePoolArrayInput `pulumi:"unmanagedNodePools"`
+}
+
+func (Mk8sOblivusProviderArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sOblivusProvider)(nil)).Elem()
+}
+
+func (i Mk8sOblivusProviderArgs) ToMk8sOblivusProviderOutput() Mk8sOblivusProviderOutput {
+	return i.ToMk8sOblivusProviderOutputWithContext(context.Background())
+}
+
+func (i Mk8sOblivusProviderArgs) ToMk8sOblivusProviderOutputWithContext(ctx context.Context) Mk8sOblivusProviderOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sOblivusProviderOutput)
+}
+
+func (i Mk8sOblivusProviderArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sOblivusProvider] {
+	return pulumix.Output[Mk8sOblivusProvider]{
+		OutputState: i.ToMk8sOblivusProviderOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i Mk8sOblivusProviderArgs) ToMk8sOblivusProviderPtrOutput() Mk8sOblivusProviderPtrOutput {
+	return i.ToMk8sOblivusProviderPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sOblivusProviderArgs) ToMk8sOblivusProviderPtrOutputWithContext(ctx context.Context) Mk8sOblivusProviderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sOblivusProviderOutput).ToMk8sOblivusProviderPtrOutputWithContext(ctx)
+}
+
+// Mk8sOblivusProviderPtrInput is an input type that accepts Mk8sOblivusProviderArgs, Mk8sOblivusProviderPtr and Mk8sOblivusProviderPtrOutput values.
+// You can construct a concrete instance of `Mk8sOblivusProviderPtrInput` via:
+//
+//	        Mk8sOblivusProviderArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sOblivusProviderPtrInput interface {
+	pulumi.Input
+
+	ToMk8sOblivusProviderPtrOutput() Mk8sOblivusProviderPtrOutput
+	ToMk8sOblivusProviderPtrOutputWithContext(context.Context) Mk8sOblivusProviderPtrOutput
+}
+
+type mk8sOblivusProviderPtrType Mk8sOblivusProviderArgs
+
+func Mk8sOblivusProviderPtr(v *Mk8sOblivusProviderArgs) Mk8sOblivusProviderPtrInput {
+	return (*mk8sOblivusProviderPtrType)(v)
+}
+
+func (*mk8sOblivusProviderPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sOblivusProvider)(nil)).Elem()
+}
+
+func (i *mk8sOblivusProviderPtrType) ToMk8sOblivusProviderPtrOutput() Mk8sOblivusProviderPtrOutput {
+	return i.ToMk8sOblivusProviderPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sOblivusProviderPtrType) ToMk8sOblivusProviderPtrOutputWithContext(ctx context.Context) Mk8sOblivusProviderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sOblivusProviderPtrOutput)
+}
+
+func (i *mk8sOblivusProviderPtrType) ToOutput(ctx context.Context) pulumix.Output[*Mk8sOblivusProvider] {
+	return pulumix.Output[*Mk8sOblivusProvider]{
+		OutputState: i.ToMk8sOblivusProviderPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sOblivusProviderOutput struct{ *pulumi.OutputState }
+
+func (Mk8sOblivusProviderOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sOblivusProvider)(nil)).Elem()
+}
+
+func (o Mk8sOblivusProviderOutput) ToMk8sOblivusProviderOutput() Mk8sOblivusProviderOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderOutput) ToMk8sOblivusProviderOutputWithContext(ctx context.Context) Mk8sOblivusProviderOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderOutput) ToMk8sOblivusProviderPtrOutput() Mk8sOblivusProviderPtrOutput {
+	return o.ToMk8sOblivusProviderPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sOblivusProviderOutput) ToMk8sOblivusProviderPtrOutputWithContext(ctx context.Context) Mk8sOblivusProviderPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sOblivusProvider) *Mk8sOblivusProvider {
+		return &v
+	}).(Mk8sOblivusProviderPtrOutput)
+}
+
+func (o Mk8sOblivusProviderOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sOblivusProvider] {
+	return pulumix.Output[Mk8sOblivusProvider]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sOblivusProviderOutput) Autoscaler() Mk8sOblivusProviderAutoscalerPtrOutput {
+	return o.ApplyT(func(v Mk8sOblivusProvider) *Mk8sOblivusProviderAutoscaler { return v.Autoscaler }).(Mk8sOblivusProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sOblivusProviderOutput) Datacenter() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sOblivusProvider) string { return v.Datacenter }).(pulumi.StringOutput)
+}
+
+func (o Mk8sOblivusProviderOutput) NodePools() Mk8sOblivusProviderNodePoolArrayOutput {
+	return o.ApplyT(func(v Mk8sOblivusProvider) []Mk8sOblivusProviderNodePool { return v.NodePools }).(Mk8sOblivusProviderNodePoolArrayOutput)
+}
+
+func (o Mk8sOblivusProviderOutput) PreInstallScript() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sOblivusProvider) *string { return v.PreInstallScript }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sOblivusProviderOutput) SshKeys() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sOblivusProvider) []string { return v.SshKeys }).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sOblivusProviderOutput) TokenSecretLink() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sOblivusProvider) string { return v.TokenSecretLink }).(pulumi.StringOutput)
+}
+
+func (o Mk8sOblivusProviderOutput) UnmanagedNodePools() Mk8sOblivusProviderUnmanagedNodePoolArrayOutput {
+	return o.ApplyT(func(v Mk8sOblivusProvider) []Mk8sOblivusProviderUnmanagedNodePool { return v.UnmanagedNodePools }).(Mk8sOblivusProviderUnmanagedNodePoolArrayOutput)
+}
+
+type Mk8sOblivusProviderPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sOblivusProviderPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sOblivusProvider)(nil)).Elem()
+}
+
+func (o Mk8sOblivusProviderPtrOutput) ToMk8sOblivusProviderPtrOutput() Mk8sOblivusProviderPtrOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderPtrOutput) ToMk8sOblivusProviderPtrOutputWithContext(ctx context.Context) Mk8sOblivusProviderPtrOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*Mk8sOblivusProvider] {
+	return pulumix.Output[*Mk8sOblivusProvider]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sOblivusProviderPtrOutput) Elem() Mk8sOblivusProviderOutput {
+	return o.ApplyT(func(v *Mk8sOblivusProvider) Mk8sOblivusProvider {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sOblivusProvider
+		return ret
+	}).(Mk8sOblivusProviderOutput)
+}
+
+func (o Mk8sOblivusProviderPtrOutput) Autoscaler() Mk8sOblivusProviderAutoscalerPtrOutput {
+	return o.ApplyT(func(v *Mk8sOblivusProvider) *Mk8sOblivusProviderAutoscaler {
+		if v == nil {
+			return nil
+		}
+		return v.Autoscaler
+	}).(Mk8sOblivusProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sOblivusProviderPtrOutput) Datacenter() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sOblivusProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Datacenter
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sOblivusProviderPtrOutput) NodePools() Mk8sOblivusProviderNodePoolArrayOutput {
+	return o.ApplyT(func(v *Mk8sOblivusProvider) []Mk8sOblivusProviderNodePool {
+		if v == nil {
+			return nil
+		}
+		return v.NodePools
+	}).(Mk8sOblivusProviderNodePoolArrayOutput)
+}
+
+func (o Mk8sOblivusProviderPtrOutput) PreInstallScript() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sOblivusProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return v.PreInstallScript
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sOblivusProviderPtrOutput) SshKeys() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sOblivusProvider) []string {
+		if v == nil {
+			return nil
+		}
+		return v.SshKeys
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sOblivusProviderPtrOutput) TokenSecretLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sOblivusProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.TokenSecretLink
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sOblivusProviderPtrOutput) UnmanagedNodePools() Mk8sOblivusProviderUnmanagedNodePoolArrayOutput {
+	return o.ApplyT(func(v *Mk8sOblivusProvider) []Mk8sOblivusProviderUnmanagedNodePool {
+		if v == nil {
+			return nil
+		}
+		return v.UnmanagedNodePools
+	}).(Mk8sOblivusProviderUnmanagedNodePoolArrayOutput)
+}
+
+type Mk8sOblivusProviderAutoscaler struct {
+	Expanders            []string `pulumi:"expanders"`
+	UnneededTime         *string  `pulumi:"unneededTime"`
+	UnreadyTime          *string  `pulumi:"unreadyTime"`
+	UtilizationThreshold *float64 `pulumi:"utilizationThreshold"`
+}
+
+// Mk8sOblivusProviderAutoscalerInput is an input type that accepts Mk8sOblivusProviderAutoscalerArgs and Mk8sOblivusProviderAutoscalerOutput values.
+// You can construct a concrete instance of `Mk8sOblivusProviderAutoscalerInput` via:
+//
+//	Mk8sOblivusProviderAutoscalerArgs{...}
+type Mk8sOblivusProviderAutoscalerInput interface {
+	pulumi.Input
+
+	ToMk8sOblivusProviderAutoscalerOutput() Mk8sOblivusProviderAutoscalerOutput
+	ToMk8sOblivusProviderAutoscalerOutputWithContext(context.Context) Mk8sOblivusProviderAutoscalerOutput
+}
+
+type Mk8sOblivusProviderAutoscalerArgs struct {
+	Expanders            pulumi.StringArrayInput `pulumi:"expanders"`
+	UnneededTime         pulumi.StringPtrInput   `pulumi:"unneededTime"`
+	UnreadyTime          pulumi.StringPtrInput   `pulumi:"unreadyTime"`
+	UtilizationThreshold pulumi.Float64PtrInput  `pulumi:"utilizationThreshold"`
+}
+
+func (Mk8sOblivusProviderAutoscalerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sOblivusProviderAutoscaler)(nil)).Elem()
+}
+
+func (i Mk8sOblivusProviderAutoscalerArgs) ToMk8sOblivusProviderAutoscalerOutput() Mk8sOblivusProviderAutoscalerOutput {
+	return i.ToMk8sOblivusProviderAutoscalerOutputWithContext(context.Background())
+}
+
+func (i Mk8sOblivusProviderAutoscalerArgs) ToMk8sOblivusProviderAutoscalerOutputWithContext(ctx context.Context) Mk8sOblivusProviderAutoscalerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sOblivusProviderAutoscalerOutput)
+}
+
+func (i Mk8sOblivusProviderAutoscalerArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sOblivusProviderAutoscaler] {
+	return pulumix.Output[Mk8sOblivusProviderAutoscaler]{
+		OutputState: i.ToMk8sOblivusProviderAutoscalerOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i Mk8sOblivusProviderAutoscalerArgs) ToMk8sOblivusProviderAutoscalerPtrOutput() Mk8sOblivusProviderAutoscalerPtrOutput {
+	return i.ToMk8sOblivusProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sOblivusProviderAutoscalerArgs) ToMk8sOblivusProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sOblivusProviderAutoscalerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sOblivusProviderAutoscalerOutput).ToMk8sOblivusProviderAutoscalerPtrOutputWithContext(ctx)
+}
+
+// Mk8sOblivusProviderAutoscalerPtrInput is an input type that accepts Mk8sOblivusProviderAutoscalerArgs, Mk8sOblivusProviderAutoscalerPtr and Mk8sOblivusProviderAutoscalerPtrOutput values.
+// You can construct a concrete instance of `Mk8sOblivusProviderAutoscalerPtrInput` via:
+//
+//	        Mk8sOblivusProviderAutoscalerArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sOblivusProviderAutoscalerPtrInput interface {
+	pulumi.Input
+
+	ToMk8sOblivusProviderAutoscalerPtrOutput() Mk8sOblivusProviderAutoscalerPtrOutput
+	ToMk8sOblivusProviderAutoscalerPtrOutputWithContext(context.Context) Mk8sOblivusProviderAutoscalerPtrOutput
+}
+
+type mk8sOblivusProviderAutoscalerPtrType Mk8sOblivusProviderAutoscalerArgs
+
+func Mk8sOblivusProviderAutoscalerPtr(v *Mk8sOblivusProviderAutoscalerArgs) Mk8sOblivusProviderAutoscalerPtrInput {
+	return (*mk8sOblivusProviderAutoscalerPtrType)(v)
+}
+
+func (*mk8sOblivusProviderAutoscalerPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sOblivusProviderAutoscaler)(nil)).Elem()
+}
+
+func (i *mk8sOblivusProviderAutoscalerPtrType) ToMk8sOblivusProviderAutoscalerPtrOutput() Mk8sOblivusProviderAutoscalerPtrOutput {
+	return i.ToMk8sOblivusProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sOblivusProviderAutoscalerPtrType) ToMk8sOblivusProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sOblivusProviderAutoscalerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sOblivusProviderAutoscalerPtrOutput)
+}
+
+func (i *mk8sOblivusProviderAutoscalerPtrType) ToOutput(ctx context.Context) pulumix.Output[*Mk8sOblivusProviderAutoscaler] {
+	return pulumix.Output[*Mk8sOblivusProviderAutoscaler]{
+		OutputState: i.ToMk8sOblivusProviderAutoscalerPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sOblivusProviderAutoscalerOutput struct{ *pulumi.OutputState }
+
+func (Mk8sOblivusProviderAutoscalerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sOblivusProviderAutoscaler)(nil)).Elem()
+}
+
+func (o Mk8sOblivusProviderAutoscalerOutput) ToMk8sOblivusProviderAutoscalerOutput() Mk8sOblivusProviderAutoscalerOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderAutoscalerOutput) ToMk8sOblivusProviderAutoscalerOutputWithContext(ctx context.Context) Mk8sOblivusProviderAutoscalerOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderAutoscalerOutput) ToMk8sOblivusProviderAutoscalerPtrOutput() Mk8sOblivusProviderAutoscalerPtrOutput {
+	return o.ToMk8sOblivusProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sOblivusProviderAutoscalerOutput) ToMk8sOblivusProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sOblivusProviderAutoscalerPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sOblivusProviderAutoscaler) *Mk8sOblivusProviderAutoscaler {
+		return &v
+	}).(Mk8sOblivusProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sOblivusProviderAutoscalerOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sOblivusProviderAutoscaler] {
+	return pulumix.Output[Mk8sOblivusProviderAutoscaler]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sOblivusProviderAutoscalerOutput) Expanders() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderAutoscaler) []string { return v.Expanders }).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sOblivusProviderAutoscalerOutput) UnneededTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderAutoscaler) *string { return v.UnneededTime }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sOblivusProviderAutoscalerOutput) UnreadyTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderAutoscaler) *string { return v.UnreadyTime }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sOblivusProviderAutoscalerOutput) UtilizationThreshold() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderAutoscaler) *float64 { return v.UtilizationThreshold }).(pulumi.Float64PtrOutput)
+}
+
+type Mk8sOblivusProviderAutoscalerPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sOblivusProviderAutoscalerPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sOblivusProviderAutoscaler)(nil)).Elem()
+}
+
+func (o Mk8sOblivusProviderAutoscalerPtrOutput) ToMk8sOblivusProviderAutoscalerPtrOutput() Mk8sOblivusProviderAutoscalerPtrOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderAutoscalerPtrOutput) ToMk8sOblivusProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sOblivusProviderAutoscalerPtrOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderAutoscalerPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*Mk8sOblivusProviderAutoscaler] {
+	return pulumix.Output[*Mk8sOblivusProviderAutoscaler]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sOblivusProviderAutoscalerPtrOutput) Elem() Mk8sOblivusProviderAutoscalerOutput {
+	return o.ApplyT(func(v *Mk8sOblivusProviderAutoscaler) Mk8sOblivusProviderAutoscaler {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sOblivusProviderAutoscaler
+		return ret
+	}).(Mk8sOblivusProviderAutoscalerOutput)
+}
+
+func (o Mk8sOblivusProviderAutoscalerPtrOutput) Expanders() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sOblivusProviderAutoscaler) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Expanders
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sOblivusProviderAutoscalerPtrOutput) UnneededTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sOblivusProviderAutoscaler) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UnneededTime
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sOblivusProviderAutoscalerPtrOutput) UnreadyTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sOblivusProviderAutoscaler) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UnreadyTime
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sOblivusProviderAutoscalerPtrOutput) UtilizationThreshold() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *Mk8sOblivusProviderAutoscaler) *float64 {
+		if v == nil {
+			return nil
+		}
+		return v.UtilizationThreshold
+	}).(pulumi.Float64PtrOutput)
+}
+
+type Mk8sOblivusProviderNodePool struct {
+	Flavor  string                             `pulumi:"flavor"`
+	Labels  map[string]string                  `pulumi:"labels"`
+	MaxSize *int                               `pulumi:"maxSize"`
+	MinSize *int                               `pulumi:"minSize"`
+	Name    string                             `pulumi:"name"`
+	Taints  []Mk8sOblivusProviderNodePoolTaint `pulumi:"taints"`
+}
+
+// Mk8sOblivusProviderNodePoolInput is an input type that accepts Mk8sOblivusProviderNodePoolArgs and Mk8sOblivusProviderNodePoolOutput values.
+// You can construct a concrete instance of `Mk8sOblivusProviderNodePoolInput` via:
+//
+//	Mk8sOblivusProviderNodePoolArgs{...}
+type Mk8sOblivusProviderNodePoolInput interface {
+	pulumi.Input
+
+	ToMk8sOblivusProviderNodePoolOutput() Mk8sOblivusProviderNodePoolOutput
+	ToMk8sOblivusProviderNodePoolOutputWithContext(context.Context) Mk8sOblivusProviderNodePoolOutput
+}
+
+type Mk8sOblivusProviderNodePoolArgs struct {
+	Flavor  pulumi.StringInput                         `pulumi:"flavor"`
+	Labels  pulumi.StringMapInput                      `pulumi:"labels"`
+	MaxSize pulumi.IntPtrInput                         `pulumi:"maxSize"`
+	MinSize pulumi.IntPtrInput                         `pulumi:"minSize"`
+	Name    pulumi.StringInput                         `pulumi:"name"`
+	Taints  Mk8sOblivusProviderNodePoolTaintArrayInput `pulumi:"taints"`
+}
+
+func (Mk8sOblivusProviderNodePoolArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sOblivusProviderNodePool)(nil)).Elem()
+}
+
+func (i Mk8sOblivusProviderNodePoolArgs) ToMk8sOblivusProviderNodePoolOutput() Mk8sOblivusProviderNodePoolOutput {
+	return i.ToMk8sOblivusProviderNodePoolOutputWithContext(context.Background())
+}
+
+func (i Mk8sOblivusProviderNodePoolArgs) ToMk8sOblivusProviderNodePoolOutputWithContext(ctx context.Context) Mk8sOblivusProviderNodePoolOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sOblivusProviderNodePoolOutput)
+}
+
+func (i Mk8sOblivusProviderNodePoolArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sOblivusProviderNodePool] {
+	return pulumix.Output[Mk8sOblivusProviderNodePool]{
+		OutputState: i.ToMk8sOblivusProviderNodePoolOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sOblivusProviderNodePoolArrayInput is an input type that accepts Mk8sOblivusProviderNodePoolArray and Mk8sOblivusProviderNodePoolArrayOutput values.
+// You can construct a concrete instance of `Mk8sOblivusProviderNodePoolArrayInput` via:
+//
+//	Mk8sOblivusProviderNodePoolArray{ Mk8sOblivusProviderNodePoolArgs{...} }
+type Mk8sOblivusProviderNodePoolArrayInput interface {
+	pulumi.Input
+
+	ToMk8sOblivusProviderNodePoolArrayOutput() Mk8sOblivusProviderNodePoolArrayOutput
+	ToMk8sOblivusProviderNodePoolArrayOutputWithContext(context.Context) Mk8sOblivusProviderNodePoolArrayOutput
+}
+
+type Mk8sOblivusProviderNodePoolArray []Mk8sOblivusProviderNodePoolInput
+
+func (Mk8sOblivusProviderNodePoolArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sOblivusProviderNodePool)(nil)).Elem()
+}
+
+func (i Mk8sOblivusProviderNodePoolArray) ToMk8sOblivusProviderNodePoolArrayOutput() Mk8sOblivusProviderNodePoolArrayOutput {
+	return i.ToMk8sOblivusProviderNodePoolArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sOblivusProviderNodePoolArray) ToMk8sOblivusProviderNodePoolArrayOutputWithContext(ctx context.Context) Mk8sOblivusProviderNodePoolArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sOblivusProviderNodePoolArrayOutput)
+}
+
+func (i Mk8sOblivusProviderNodePoolArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sOblivusProviderNodePool] {
+	return pulumix.Output[[]Mk8sOblivusProviderNodePool]{
+		OutputState: i.ToMk8sOblivusProviderNodePoolArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sOblivusProviderNodePoolOutput struct{ *pulumi.OutputState }
+
+func (Mk8sOblivusProviderNodePoolOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sOblivusProviderNodePool)(nil)).Elem()
+}
+
+func (o Mk8sOblivusProviderNodePoolOutput) ToMk8sOblivusProviderNodePoolOutput() Mk8sOblivusProviderNodePoolOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderNodePoolOutput) ToMk8sOblivusProviderNodePoolOutputWithContext(ctx context.Context) Mk8sOblivusProviderNodePoolOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderNodePoolOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sOblivusProviderNodePool] {
+	return pulumix.Output[Mk8sOblivusProviderNodePool]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sOblivusProviderNodePoolOutput) Flavor() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderNodePool) string { return v.Flavor }).(pulumi.StringOutput)
+}
+
+func (o Mk8sOblivusProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+func (o Mk8sOblivusProviderNodePoolOutput) MaxSize() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderNodePool) *int { return v.MaxSize }).(pulumi.IntPtrOutput)
+}
+
+func (o Mk8sOblivusProviderNodePoolOutput) MinSize() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderNodePool) *int { return v.MinSize }).(pulumi.IntPtrOutput)
+}
+
+func (o Mk8sOblivusProviderNodePoolOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderNodePool) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o Mk8sOblivusProviderNodePoolOutput) Taints() Mk8sOblivusProviderNodePoolTaintArrayOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderNodePool) []Mk8sOblivusProviderNodePoolTaint { return v.Taints }).(Mk8sOblivusProviderNodePoolTaintArrayOutput)
+}
+
+type Mk8sOblivusProviderNodePoolArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sOblivusProviderNodePoolArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sOblivusProviderNodePool)(nil)).Elem()
+}
+
+func (o Mk8sOblivusProviderNodePoolArrayOutput) ToMk8sOblivusProviderNodePoolArrayOutput() Mk8sOblivusProviderNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderNodePoolArrayOutput) ToMk8sOblivusProviderNodePoolArrayOutputWithContext(ctx context.Context) Mk8sOblivusProviderNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderNodePoolArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sOblivusProviderNodePool] {
+	return pulumix.Output[[]Mk8sOblivusProviderNodePool]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sOblivusProviderNodePoolArrayOutput) Index(i pulumi.IntInput) Mk8sOblivusProviderNodePoolOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sOblivusProviderNodePool {
+		return vs[0].([]Mk8sOblivusProviderNodePool)[vs[1].(int)]
+	}).(Mk8sOblivusProviderNodePoolOutput)
+}
+
+type Mk8sOblivusProviderNodePoolTaint struct {
+	Effect *string `pulumi:"effect"`
+	Key    *string `pulumi:"key"`
+	Value  *string `pulumi:"value"`
+}
+
+// Mk8sOblivusProviderNodePoolTaintInput is an input type that accepts Mk8sOblivusProviderNodePoolTaintArgs and Mk8sOblivusProviderNodePoolTaintOutput values.
+// You can construct a concrete instance of `Mk8sOblivusProviderNodePoolTaintInput` via:
+//
+//	Mk8sOblivusProviderNodePoolTaintArgs{...}
+type Mk8sOblivusProviderNodePoolTaintInput interface {
+	pulumi.Input
+
+	ToMk8sOblivusProviderNodePoolTaintOutput() Mk8sOblivusProviderNodePoolTaintOutput
+	ToMk8sOblivusProviderNodePoolTaintOutputWithContext(context.Context) Mk8sOblivusProviderNodePoolTaintOutput
+}
+
+type Mk8sOblivusProviderNodePoolTaintArgs struct {
+	Effect pulumi.StringPtrInput `pulumi:"effect"`
+	Key    pulumi.StringPtrInput `pulumi:"key"`
+	Value  pulumi.StringPtrInput `pulumi:"value"`
+}
+
+func (Mk8sOblivusProviderNodePoolTaintArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sOblivusProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sOblivusProviderNodePoolTaintArgs) ToMk8sOblivusProviderNodePoolTaintOutput() Mk8sOblivusProviderNodePoolTaintOutput {
+	return i.ToMk8sOblivusProviderNodePoolTaintOutputWithContext(context.Background())
+}
+
+func (i Mk8sOblivusProviderNodePoolTaintArgs) ToMk8sOblivusProviderNodePoolTaintOutputWithContext(ctx context.Context) Mk8sOblivusProviderNodePoolTaintOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sOblivusProviderNodePoolTaintOutput)
+}
+
+func (i Mk8sOblivusProviderNodePoolTaintArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sOblivusProviderNodePoolTaint] {
+	return pulumix.Output[Mk8sOblivusProviderNodePoolTaint]{
+		OutputState: i.ToMk8sOblivusProviderNodePoolTaintOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sOblivusProviderNodePoolTaintArrayInput is an input type that accepts Mk8sOblivusProviderNodePoolTaintArray and Mk8sOblivusProviderNodePoolTaintArrayOutput values.
+// You can construct a concrete instance of `Mk8sOblivusProviderNodePoolTaintArrayInput` via:
+//
+//	Mk8sOblivusProviderNodePoolTaintArray{ Mk8sOblivusProviderNodePoolTaintArgs{...} }
+type Mk8sOblivusProviderNodePoolTaintArrayInput interface {
+	pulumi.Input
+
+	ToMk8sOblivusProviderNodePoolTaintArrayOutput() Mk8sOblivusProviderNodePoolTaintArrayOutput
+	ToMk8sOblivusProviderNodePoolTaintArrayOutputWithContext(context.Context) Mk8sOblivusProviderNodePoolTaintArrayOutput
+}
+
+type Mk8sOblivusProviderNodePoolTaintArray []Mk8sOblivusProviderNodePoolTaintInput
+
+func (Mk8sOblivusProviderNodePoolTaintArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sOblivusProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sOblivusProviderNodePoolTaintArray) ToMk8sOblivusProviderNodePoolTaintArrayOutput() Mk8sOblivusProviderNodePoolTaintArrayOutput {
+	return i.ToMk8sOblivusProviderNodePoolTaintArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sOblivusProviderNodePoolTaintArray) ToMk8sOblivusProviderNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sOblivusProviderNodePoolTaintArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sOblivusProviderNodePoolTaintArrayOutput)
+}
+
+func (i Mk8sOblivusProviderNodePoolTaintArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sOblivusProviderNodePoolTaint] {
+	return pulumix.Output[[]Mk8sOblivusProviderNodePoolTaint]{
+		OutputState: i.ToMk8sOblivusProviderNodePoolTaintArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sOblivusProviderNodePoolTaintOutput struct{ *pulumi.OutputState }
+
+func (Mk8sOblivusProviderNodePoolTaintOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sOblivusProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sOblivusProviderNodePoolTaintOutput) ToMk8sOblivusProviderNodePoolTaintOutput() Mk8sOblivusProviderNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderNodePoolTaintOutput) ToMk8sOblivusProviderNodePoolTaintOutputWithContext(ctx context.Context) Mk8sOblivusProviderNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderNodePoolTaintOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sOblivusProviderNodePoolTaint] {
+	return pulumix.Output[Mk8sOblivusProviderNodePoolTaint]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sOblivusProviderNodePoolTaintOutput) Effect() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderNodePoolTaint) *string { return v.Effect }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sOblivusProviderNodePoolTaintOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderNodePoolTaint) *string { return v.Key }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sOblivusProviderNodePoolTaintOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderNodePoolTaint) *string { return v.Value }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sOblivusProviderNodePoolTaintArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sOblivusProviderNodePoolTaintArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sOblivusProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sOblivusProviderNodePoolTaintArrayOutput) ToMk8sOblivusProviderNodePoolTaintArrayOutput() Mk8sOblivusProviderNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderNodePoolTaintArrayOutput) ToMk8sOblivusProviderNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sOblivusProviderNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderNodePoolTaintArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sOblivusProviderNodePoolTaint] {
+	return pulumix.Output[[]Mk8sOblivusProviderNodePoolTaint]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sOblivusProviderNodePoolTaintArrayOutput) Index(i pulumi.IntInput) Mk8sOblivusProviderNodePoolTaintOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sOblivusProviderNodePoolTaint {
+		return vs[0].([]Mk8sOblivusProviderNodePoolTaint)[vs[1].(int)]
+	}).(Mk8sOblivusProviderNodePoolTaintOutput)
+}
+
+type Mk8sOblivusProviderUnmanagedNodePool struct {
+	Labels map[string]string                           `pulumi:"labels"`
+	Name   string                                      `pulumi:"name"`
+	Taints []Mk8sOblivusProviderUnmanagedNodePoolTaint `pulumi:"taints"`
+}
+
+// Mk8sOblivusProviderUnmanagedNodePoolInput is an input type that accepts Mk8sOblivusProviderUnmanagedNodePoolArgs and Mk8sOblivusProviderUnmanagedNodePoolOutput values.
+// You can construct a concrete instance of `Mk8sOblivusProviderUnmanagedNodePoolInput` via:
+//
+//	Mk8sOblivusProviderUnmanagedNodePoolArgs{...}
+type Mk8sOblivusProviderUnmanagedNodePoolInput interface {
+	pulumi.Input
+
+	ToMk8sOblivusProviderUnmanagedNodePoolOutput() Mk8sOblivusProviderUnmanagedNodePoolOutput
+	ToMk8sOblivusProviderUnmanagedNodePoolOutputWithContext(context.Context) Mk8sOblivusProviderUnmanagedNodePoolOutput
+}
+
+type Mk8sOblivusProviderUnmanagedNodePoolArgs struct {
+	Labels pulumi.StringMapInput                               `pulumi:"labels"`
+	Name   pulumi.StringInput                                  `pulumi:"name"`
+	Taints Mk8sOblivusProviderUnmanagedNodePoolTaintArrayInput `pulumi:"taints"`
+}
+
+func (Mk8sOblivusProviderUnmanagedNodePoolArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sOblivusProviderUnmanagedNodePool)(nil)).Elem()
+}
+
+func (i Mk8sOblivusProviderUnmanagedNodePoolArgs) ToMk8sOblivusProviderUnmanagedNodePoolOutput() Mk8sOblivusProviderUnmanagedNodePoolOutput {
+	return i.ToMk8sOblivusProviderUnmanagedNodePoolOutputWithContext(context.Background())
+}
+
+func (i Mk8sOblivusProviderUnmanagedNodePoolArgs) ToMk8sOblivusProviderUnmanagedNodePoolOutputWithContext(ctx context.Context) Mk8sOblivusProviderUnmanagedNodePoolOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sOblivusProviderUnmanagedNodePoolOutput)
+}
+
+func (i Mk8sOblivusProviderUnmanagedNodePoolArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sOblivusProviderUnmanagedNodePool] {
+	return pulumix.Output[Mk8sOblivusProviderUnmanagedNodePool]{
+		OutputState: i.ToMk8sOblivusProviderUnmanagedNodePoolOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sOblivusProviderUnmanagedNodePoolArrayInput is an input type that accepts Mk8sOblivusProviderUnmanagedNodePoolArray and Mk8sOblivusProviderUnmanagedNodePoolArrayOutput values.
+// You can construct a concrete instance of `Mk8sOblivusProviderUnmanagedNodePoolArrayInput` via:
+//
+//	Mk8sOblivusProviderUnmanagedNodePoolArray{ Mk8sOblivusProviderUnmanagedNodePoolArgs{...} }
+type Mk8sOblivusProviderUnmanagedNodePoolArrayInput interface {
+	pulumi.Input
+
+	ToMk8sOblivusProviderUnmanagedNodePoolArrayOutput() Mk8sOblivusProviderUnmanagedNodePoolArrayOutput
+	ToMk8sOblivusProviderUnmanagedNodePoolArrayOutputWithContext(context.Context) Mk8sOblivusProviderUnmanagedNodePoolArrayOutput
+}
+
+type Mk8sOblivusProviderUnmanagedNodePoolArray []Mk8sOblivusProviderUnmanagedNodePoolInput
+
+func (Mk8sOblivusProviderUnmanagedNodePoolArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sOblivusProviderUnmanagedNodePool)(nil)).Elem()
+}
+
+func (i Mk8sOblivusProviderUnmanagedNodePoolArray) ToMk8sOblivusProviderUnmanagedNodePoolArrayOutput() Mk8sOblivusProviderUnmanagedNodePoolArrayOutput {
+	return i.ToMk8sOblivusProviderUnmanagedNodePoolArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sOblivusProviderUnmanagedNodePoolArray) ToMk8sOblivusProviderUnmanagedNodePoolArrayOutputWithContext(ctx context.Context) Mk8sOblivusProviderUnmanagedNodePoolArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sOblivusProviderUnmanagedNodePoolArrayOutput)
+}
+
+func (i Mk8sOblivusProviderUnmanagedNodePoolArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sOblivusProviderUnmanagedNodePool] {
+	return pulumix.Output[[]Mk8sOblivusProviderUnmanagedNodePool]{
+		OutputState: i.ToMk8sOblivusProviderUnmanagedNodePoolArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sOblivusProviderUnmanagedNodePoolOutput struct{ *pulumi.OutputState }
+
+func (Mk8sOblivusProviderUnmanagedNodePoolOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sOblivusProviderUnmanagedNodePool)(nil)).Elem()
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolOutput) ToMk8sOblivusProviderUnmanagedNodePoolOutput() Mk8sOblivusProviderUnmanagedNodePoolOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolOutput) ToMk8sOblivusProviderUnmanagedNodePoolOutputWithContext(ctx context.Context) Mk8sOblivusProviderUnmanagedNodePoolOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sOblivusProviderUnmanagedNodePool] {
+	return pulumix.Output[Mk8sOblivusProviderUnmanagedNodePool]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderUnmanagedNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderUnmanagedNodePool) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolOutput) Taints() Mk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderUnmanagedNodePool) []Mk8sOblivusProviderUnmanagedNodePoolTaint {
+		return v.Taints
+	}).(Mk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput)
+}
+
+type Mk8sOblivusProviderUnmanagedNodePoolArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sOblivusProviderUnmanagedNodePoolArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sOblivusProviderUnmanagedNodePool)(nil)).Elem()
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolArrayOutput) ToMk8sOblivusProviderUnmanagedNodePoolArrayOutput() Mk8sOblivusProviderUnmanagedNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolArrayOutput) ToMk8sOblivusProviderUnmanagedNodePoolArrayOutputWithContext(ctx context.Context) Mk8sOblivusProviderUnmanagedNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sOblivusProviderUnmanagedNodePool] {
+	return pulumix.Output[[]Mk8sOblivusProviderUnmanagedNodePool]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolArrayOutput) Index(i pulumi.IntInput) Mk8sOblivusProviderUnmanagedNodePoolOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sOblivusProviderUnmanagedNodePool {
+		return vs[0].([]Mk8sOblivusProviderUnmanagedNodePool)[vs[1].(int)]
+	}).(Mk8sOblivusProviderUnmanagedNodePoolOutput)
+}
+
+type Mk8sOblivusProviderUnmanagedNodePoolTaint struct {
+	Effect *string `pulumi:"effect"`
+	Key    *string `pulumi:"key"`
+	Value  *string `pulumi:"value"`
+}
+
+// Mk8sOblivusProviderUnmanagedNodePoolTaintInput is an input type that accepts Mk8sOblivusProviderUnmanagedNodePoolTaintArgs and Mk8sOblivusProviderUnmanagedNodePoolTaintOutput values.
+// You can construct a concrete instance of `Mk8sOblivusProviderUnmanagedNodePoolTaintInput` via:
+//
+//	Mk8sOblivusProviderUnmanagedNodePoolTaintArgs{...}
+type Mk8sOblivusProviderUnmanagedNodePoolTaintInput interface {
+	pulumi.Input
+
+	ToMk8sOblivusProviderUnmanagedNodePoolTaintOutput() Mk8sOblivusProviderUnmanagedNodePoolTaintOutput
+	ToMk8sOblivusProviderUnmanagedNodePoolTaintOutputWithContext(context.Context) Mk8sOblivusProviderUnmanagedNodePoolTaintOutput
+}
+
+type Mk8sOblivusProviderUnmanagedNodePoolTaintArgs struct {
+	Effect pulumi.StringPtrInput `pulumi:"effect"`
+	Key    pulumi.StringPtrInput `pulumi:"key"`
+	Value  pulumi.StringPtrInput `pulumi:"value"`
+}
+
+func (Mk8sOblivusProviderUnmanagedNodePoolTaintArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sOblivusProviderUnmanagedNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sOblivusProviderUnmanagedNodePoolTaintArgs) ToMk8sOblivusProviderUnmanagedNodePoolTaintOutput() Mk8sOblivusProviderUnmanagedNodePoolTaintOutput {
+	return i.ToMk8sOblivusProviderUnmanagedNodePoolTaintOutputWithContext(context.Background())
+}
+
+func (i Mk8sOblivusProviderUnmanagedNodePoolTaintArgs) ToMk8sOblivusProviderUnmanagedNodePoolTaintOutputWithContext(ctx context.Context) Mk8sOblivusProviderUnmanagedNodePoolTaintOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sOblivusProviderUnmanagedNodePoolTaintOutput)
+}
+
+func (i Mk8sOblivusProviderUnmanagedNodePoolTaintArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sOblivusProviderUnmanagedNodePoolTaint] {
+	return pulumix.Output[Mk8sOblivusProviderUnmanagedNodePoolTaint]{
+		OutputState: i.ToMk8sOblivusProviderUnmanagedNodePoolTaintOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sOblivusProviderUnmanagedNodePoolTaintArrayInput is an input type that accepts Mk8sOblivusProviderUnmanagedNodePoolTaintArray and Mk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput values.
+// You can construct a concrete instance of `Mk8sOblivusProviderUnmanagedNodePoolTaintArrayInput` via:
+//
+//	Mk8sOblivusProviderUnmanagedNodePoolTaintArray{ Mk8sOblivusProviderUnmanagedNodePoolTaintArgs{...} }
+type Mk8sOblivusProviderUnmanagedNodePoolTaintArrayInput interface {
+	pulumi.Input
+
+	ToMk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput() Mk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput
+	ToMk8sOblivusProviderUnmanagedNodePoolTaintArrayOutputWithContext(context.Context) Mk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput
+}
+
+type Mk8sOblivusProviderUnmanagedNodePoolTaintArray []Mk8sOblivusProviderUnmanagedNodePoolTaintInput
+
+func (Mk8sOblivusProviderUnmanagedNodePoolTaintArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sOblivusProviderUnmanagedNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sOblivusProviderUnmanagedNodePoolTaintArray) ToMk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput() Mk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput {
+	return i.ToMk8sOblivusProviderUnmanagedNodePoolTaintArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sOblivusProviderUnmanagedNodePoolTaintArray) ToMk8sOblivusProviderUnmanagedNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput)
+}
+
+func (i Mk8sOblivusProviderUnmanagedNodePoolTaintArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sOblivusProviderUnmanagedNodePoolTaint] {
+	return pulumix.Output[[]Mk8sOblivusProviderUnmanagedNodePoolTaint]{
+		OutputState: i.ToMk8sOblivusProviderUnmanagedNodePoolTaintArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sOblivusProviderUnmanagedNodePoolTaintOutput struct{ *pulumi.OutputState }
+
+func (Mk8sOblivusProviderUnmanagedNodePoolTaintOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sOblivusProviderUnmanagedNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolTaintOutput) ToMk8sOblivusProviderUnmanagedNodePoolTaintOutput() Mk8sOblivusProviderUnmanagedNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolTaintOutput) ToMk8sOblivusProviderUnmanagedNodePoolTaintOutputWithContext(ctx context.Context) Mk8sOblivusProviderUnmanagedNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolTaintOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sOblivusProviderUnmanagedNodePoolTaint] {
+	return pulumix.Output[Mk8sOblivusProviderUnmanagedNodePoolTaint]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolTaintOutput) Effect() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderUnmanagedNodePoolTaint) *string { return v.Effect }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolTaintOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderUnmanagedNodePoolTaint) *string { return v.Key }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolTaintOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderUnmanagedNodePoolTaint) *string { return v.Value }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sOblivusProviderUnmanagedNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput) ToMk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput() Mk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput) ToMk8sOblivusProviderUnmanagedNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sOblivusProviderUnmanagedNodePoolTaint] {
+	return pulumix.Output[[]Mk8sOblivusProviderUnmanagedNodePoolTaint]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput) Index(i pulumi.IntInput) Mk8sOblivusProviderUnmanagedNodePoolTaintOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sOblivusProviderUnmanagedNodePoolTaint {
+		return vs[0].([]Mk8sOblivusProviderUnmanagedNodePoolTaint)[vs[1].(int)]
+	}).(Mk8sOblivusProviderUnmanagedNodePoolTaintOutput)
+}
+
+type Mk8sPaperspaceProvider struct {
+	Autoscaler         *Mk8sPaperspaceProviderAutoscaler         `pulumi:"autoscaler"`
+	NetworkId          string                                    `pulumi:"networkId"`
+	NodePools          []Mk8sPaperspaceProviderNodePool          `pulumi:"nodePools"`
+	PreInstallScript   *string                                   `pulumi:"preInstallScript"`
+	Region             string                                    `pulumi:"region"`
+	SharedDrives       []string                                  `pulumi:"sharedDrives"`
+	TokenSecretLink    string                                    `pulumi:"tokenSecretLink"`
+	UnmanagedNodePools []Mk8sPaperspaceProviderUnmanagedNodePool `pulumi:"unmanagedNodePools"`
+	UserIds            []string                                  `pulumi:"userIds"`
+}
+
+// Mk8sPaperspaceProviderInput is an input type that accepts Mk8sPaperspaceProviderArgs and Mk8sPaperspaceProviderOutput values.
+// You can construct a concrete instance of `Mk8sPaperspaceProviderInput` via:
+//
+//	Mk8sPaperspaceProviderArgs{...}
+type Mk8sPaperspaceProviderInput interface {
+	pulumi.Input
+
+	ToMk8sPaperspaceProviderOutput() Mk8sPaperspaceProviderOutput
+	ToMk8sPaperspaceProviderOutputWithContext(context.Context) Mk8sPaperspaceProviderOutput
+}
+
+type Mk8sPaperspaceProviderArgs struct {
+	Autoscaler         Mk8sPaperspaceProviderAutoscalerPtrInput          `pulumi:"autoscaler"`
+	NetworkId          pulumi.StringInput                                `pulumi:"networkId"`
+	NodePools          Mk8sPaperspaceProviderNodePoolArrayInput          `pulumi:"nodePools"`
+	PreInstallScript   pulumi.StringPtrInput                             `pulumi:"preInstallScript"`
+	Region             pulumi.StringInput                                `pulumi:"region"`
+	SharedDrives       pulumi.StringArrayInput                           `pulumi:"sharedDrives"`
+	TokenSecretLink    pulumi.StringInput                                `pulumi:"tokenSecretLink"`
+	UnmanagedNodePools Mk8sPaperspaceProviderUnmanagedNodePoolArrayInput `pulumi:"unmanagedNodePools"`
+	UserIds            pulumi.StringArrayInput                           `pulumi:"userIds"`
+}
+
+func (Mk8sPaperspaceProviderArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sPaperspaceProvider)(nil)).Elem()
+}
+
+func (i Mk8sPaperspaceProviderArgs) ToMk8sPaperspaceProviderOutput() Mk8sPaperspaceProviderOutput {
+	return i.ToMk8sPaperspaceProviderOutputWithContext(context.Background())
+}
+
+func (i Mk8sPaperspaceProviderArgs) ToMk8sPaperspaceProviderOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sPaperspaceProviderOutput)
+}
+
+func (i Mk8sPaperspaceProviderArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sPaperspaceProvider] {
+	return pulumix.Output[Mk8sPaperspaceProvider]{
+		OutputState: i.ToMk8sPaperspaceProviderOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i Mk8sPaperspaceProviderArgs) ToMk8sPaperspaceProviderPtrOutput() Mk8sPaperspaceProviderPtrOutput {
+	return i.ToMk8sPaperspaceProviderPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sPaperspaceProviderArgs) ToMk8sPaperspaceProviderPtrOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sPaperspaceProviderOutput).ToMk8sPaperspaceProviderPtrOutputWithContext(ctx)
+}
+
+// Mk8sPaperspaceProviderPtrInput is an input type that accepts Mk8sPaperspaceProviderArgs, Mk8sPaperspaceProviderPtr and Mk8sPaperspaceProviderPtrOutput values.
+// You can construct a concrete instance of `Mk8sPaperspaceProviderPtrInput` via:
+//
+//	        Mk8sPaperspaceProviderArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sPaperspaceProviderPtrInput interface {
+	pulumi.Input
+
+	ToMk8sPaperspaceProviderPtrOutput() Mk8sPaperspaceProviderPtrOutput
+	ToMk8sPaperspaceProviderPtrOutputWithContext(context.Context) Mk8sPaperspaceProviderPtrOutput
+}
+
+type mk8sPaperspaceProviderPtrType Mk8sPaperspaceProviderArgs
+
+func Mk8sPaperspaceProviderPtr(v *Mk8sPaperspaceProviderArgs) Mk8sPaperspaceProviderPtrInput {
+	return (*mk8sPaperspaceProviderPtrType)(v)
+}
+
+func (*mk8sPaperspaceProviderPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sPaperspaceProvider)(nil)).Elem()
+}
+
+func (i *mk8sPaperspaceProviderPtrType) ToMk8sPaperspaceProviderPtrOutput() Mk8sPaperspaceProviderPtrOutput {
+	return i.ToMk8sPaperspaceProviderPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sPaperspaceProviderPtrType) ToMk8sPaperspaceProviderPtrOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sPaperspaceProviderPtrOutput)
+}
+
+func (i *mk8sPaperspaceProviderPtrType) ToOutput(ctx context.Context) pulumix.Output[*Mk8sPaperspaceProvider] {
+	return pulumix.Output[*Mk8sPaperspaceProvider]{
+		OutputState: i.ToMk8sPaperspaceProviderPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sPaperspaceProviderOutput struct{ *pulumi.OutputState }
+
+func (Mk8sPaperspaceProviderOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sPaperspaceProvider)(nil)).Elem()
+}
+
+func (o Mk8sPaperspaceProviderOutput) ToMk8sPaperspaceProviderOutput() Mk8sPaperspaceProviderOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderOutput) ToMk8sPaperspaceProviderOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderOutput) ToMk8sPaperspaceProviderPtrOutput() Mk8sPaperspaceProviderPtrOutput {
+	return o.ToMk8sPaperspaceProviderPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sPaperspaceProviderOutput) ToMk8sPaperspaceProviderPtrOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sPaperspaceProvider) *Mk8sPaperspaceProvider {
+		return &v
+	}).(Mk8sPaperspaceProviderPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sPaperspaceProvider] {
+	return pulumix.Output[Mk8sPaperspaceProvider]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sPaperspaceProviderOutput) Autoscaler() Mk8sPaperspaceProviderAutoscalerPtrOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProvider) *Mk8sPaperspaceProviderAutoscaler { return v.Autoscaler }).(Mk8sPaperspaceProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderOutput) NetworkId() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProvider) string { return v.NetworkId }).(pulumi.StringOutput)
+}
+
+func (o Mk8sPaperspaceProviderOutput) NodePools() Mk8sPaperspaceProviderNodePoolArrayOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProvider) []Mk8sPaperspaceProviderNodePool { return v.NodePools }).(Mk8sPaperspaceProviderNodePoolArrayOutput)
+}
+
+func (o Mk8sPaperspaceProviderOutput) PreInstallScript() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProvider) *string { return v.PreInstallScript }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProvider) string { return v.Region }).(pulumi.StringOutput)
+}
+
+func (o Mk8sPaperspaceProviderOutput) SharedDrives() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProvider) []string { return v.SharedDrives }).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sPaperspaceProviderOutput) TokenSecretLink() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProvider) string { return v.TokenSecretLink }).(pulumi.StringOutput)
+}
+
+func (o Mk8sPaperspaceProviderOutput) UnmanagedNodePools() Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProvider) []Mk8sPaperspaceProviderUnmanagedNodePool { return v.UnmanagedNodePools }).(Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput)
+}
+
+func (o Mk8sPaperspaceProviderOutput) UserIds() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProvider) []string { return v.UserIds }).(pulumi.StringArrayOutput)
+}
+
+type Mk8sPaperspaceProviderPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sPaperspaceProviderPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sPaperspaceProvider)(nil)).Elem()
+}
+
+func (o Mk8sPaperspaceProviderPtrOutput) ToMk8sPaperspaceProviderPtrOutput() Mk8sPaperspaceProviderPtrOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderPtrOutput) ToMk8sPaperspaceProviderPtrOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderPtrOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*Mk8sPaperspaceProvider] {
+	return pulumix.Output[*Mk8sPaperspaceProvider]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sPaperspaceProviderPtrOutput) Elem() Mk8sPaperspaceProviderOutput {
+	return o.ApplyT(func(v *Mk8sPaperspaceProvider) Mk8sPaperspaceProvider {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sPaperspaceProvider
+		return ret
+	}).(Mk8sPaperspaceProviderOutput)
+}
+
+func (o Mk8sPaperspaceProviderPtrOutput) Autoscaler() Mk8sPaperspaceProviderAutoscalerPtrOutput {
+	return o.ApplyT(func(v *Mk8sPaperspaceProvider) *Mk8sPaperspaceProviderAutoscaler {
+		if v == nil {
+			return nil
+		}
+		return v.Autoscaler
+	}).(Mk8sPaperspaceProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderPtrOutput) NetworkId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sPaperspaceProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.NetworkId
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderPtrOutput) NodePools() Mk8sPaperspaceProviderNodePoolArrayOutput {
+	return o.ApplyT(func(v *Mk8sPaperspaceProvider) []Mk8sPaperspaceProviderNodePool {
+		if v == nil {
+			return nil
+		}
+		return v.NodePools
+	}).(Mk8sPaperspaceProviderNodePoolArrayOutput)
+}
+
+func (o Mk8sPaperspaceProviderPtrOutput) PreInstallScript() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sPaperspaceProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return v.PreInstallScript
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderPtrOutput) Region() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sPaperspaceProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Region
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderPtrOutput) SharedDrives() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sPaperspaceProvider) []string {
+		if v == nil {
+			return nil
+		}
+		return v.SharedDrives
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sPaperspaceProviderPtrOutput) TokenSecretLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sPaperspaceProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.TokenSecretLink
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderPtrOutput) UnmanagedNodePools() Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput {
+	return o.ApplyT(func(v *Mk8sPaperspaceProvider) []Mk8sPaperspaceProviderUnmanagedNodePool {
+		if v == nil {
+			return nil
+		}
+		return v.UnmanagedNodePools
+	}).(Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput)
+}
+
+func (o Mk8sPaperspaceProviderPtrOutput) UserIds() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sPaperspaceProvider) []string {
+		if v == nil {
+			return nil
+		}
+		return v.UserIds
+	}).(pulumi.StringArrayOutput)
+}
+
+type Mk8sPaperspaceProviderAutoscaler struct {
+	Expanders            []string `pulumi:"expanders"`
+	UnneededTime         *string  `pulumi:"unneededTime"`
+	UnreadyTime          *string  `pulumi:"unreadyTime"`
+	UtilizationThreshold *float64 `pulumi:"utilizationThreshold"`
+}
+
+// Mk8sPaperspaceProviderAutoscalerInput is an input type that accepts Mk8sPaperspaceProviderAutoscalerArgs and Mk8sPaperspaceProviderAutoscalerOutput values.
+// You can construct a concrete instance of `Mk8sPaperspaceProviderAutoscalerInput` via:
+//
+//	Mk8sPaperspaceProviderAutoscalerArgs{...}
+type Mk8sPaperspaceProviderAutoscalerInput interface {
+	pulumi.Input
+
+	ToMk8sPaperspaceProviderAutoscalerOutput() Mk8sPaperspaceProviderAutoscalerOutput
+	ToMk8sPaperspaceProviderAutoscalerOutputWithContext(context.Context) Mk8sPaperspaceProviderAutoscalerOutput
+}
+
+type Mk8sPaperspaceProviderAutoscalerArgs struct {
+	Expanders            pulumi.StringArrayInput `pulumi:"expanders"`
+	UnneededTime         pulumi.StringPtrInput   `pulumi:"unneededTime"`
+	UnreadyTime          pulumi.StringPtrInput   `pulumi:"unreadyTime"`
+	UtilizationThreshold pulumi.Float64PtrInput  `pulumi:"utilizationThreshold"`
+}
+
+func (Mk8sPaperspaceProviderAutoscalerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sPaperspaceProviderAutoscaler)(nil)).Elem()
+}
+
+func (i Mk8sPaperspaceProviderAutoscalerArgs) ToMk8sPaperspaceProviderAutoscalerOutput() Mk8sPaperspaceProviderAutoscalerOutput {
+	return i.ToMk8sPaperspaceProviderAutoscalerOutputWithContext(context.Background())
+}
+
+func (i Mk8sPaperspaceProviderAutoscalerArgs) ToMk8sPaperspaceProviderAutoscalerOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderAutoscalerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sPaperspaceProviderAutoscalerOutput)
+}
+
+func (i Mk8sPaperspaceProviderAutoscalerArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sPaperspaceProviderAutoscaler] {
+	return pulumix.Output[Mk8sPaperspaceProviderAutoscaler]{
+		OutputState: i.ToMk8sPaperspaceProviderAutoscalerOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i Mk8sPaperspaceProviderAutoscalerArgs) ToMk8sPaperspaceProviderAutoscalerPtrOutput() Mk8sPaperspaceProviderAutoscalerPtrOutput {
+	return i.ToMk8sPaperspaceProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sPaperspaceProviderAutoscalerArgs) ToMk8sPaperspaceProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderAutoscalerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sPaperspaceProviderAutoscalerOutput).ToMk8sPaperspaceProviderAutoscalerPtrOutputWithContext(ctx)
+}
+
+// Mk8sPaperspaceProviderAutoscalerPtrInput is an input type that accepts Mk8sPaperspaceProviderAutoscalerArgs, Mk8sPaperspaceProviderAutoscalerPtr and Mk8sPaperspaceProviderAutoscalerPtrOutput values.
+// You can construct a concrete instance of `Mk8sPaperspaceProviderAutoscalerPtrInput` via:
+//
+//	        Mk8sPaperspaceProviderAutoscalerArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sPaperspaceProviderAutoscalerPtrInput interface {
+	pulumi.Input
+
+	ToMk8sPaperspaceProviderAutoscalerPtrOutput() Mk8sPaperspaceProviderAutoscalerPtrOutput
+	ToMk8sPaperspaceProviderAutoscalerPtrOutputWithContext(context.Context) Mk8sPaperspaceProviderAutoscalerPtrOutput
+}
+
+type mk8sPaperspaceProviderAutoscalerPtrType Mk8sPaperspaceProviderAutoscalerArgs
+
+func Mk8sPaperspaceProviderAutoscalerPtr(v *Mk8sPaperspaceProviderAutoscalerArgs) Mk8sPaperspaceProviderAutoscalerPtrInput {
+	return (*mk8sPaperspaceProviderAutoscalerPtrType)(v)
+}
+
+func (*mk8sPaperspaceProviderAutoscalerPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sPaperspaceProviderAutoscaler)(nil)).Elem()
+}
+
+func (i *mk8sPaperspaceProviderAutoscalerPtrType) ToMk8sPaperspaceProviderAutoscalerPtrOutput() Mk8sPaperspaceProviderAutoscalerPtrOutput {
+	return i.ToMk8sPaperspaceProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sPaperspaceProviderAutoscalerPtrType) ToMk8sPaperspaceProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderAutoscalerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sPaperspaceProviderAutoscalerPtrOutput)
+}
+
+func (i *mk8sPaperspaceProviderAutoscalerPtrType) ToOutput(ctx context.Context) pulumix.Output[*Mk8sPaperspaceProviderAutoscaler] {
+	return pulumix.Output[*Mk8sPaperspaceProviderAutoscaler]{
+		OutputState: i.ToMk8sPaperspaceProviderAutoscalerPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sPaperspaceProviderAutoscalerOutput struct{ *pulumi.OutputState }
+
+func (Mk8sPaperspaceProviderAutoscalerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sPaperspaceProviderAutoscaler)(nil)).Elem()
+}
+
+func (o Mk8sPaperspaceProviderAutoscalerOutput) ToMk8sPaperspaceProviderAutoscalerOutput() Mk8sPaperspaceProviderAutoscalerOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderAutoscalerOutput) ToMk8sPaperspaceProviderAutoscalerOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderAutoscalerOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderAutoscalerOutput) ToMk8sPaperspaceProviderAutoscalerPtrOutput() Mk8sPaperspaceProviderAutoscalerPtrOutput {
+	return o.ToMk8sPaperspaceProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sPaperspaceProviderAutoscalerOutput) ToMk8sPaperspaceProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderAutoscalerPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sPaperspaceProviderAutoscaler) *Mk8sPaperspaceProviderAutoscaler {
+		return &v
+	}).(Mk8sPaperspaceProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderAutoscalerOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sPaperspaceProviderAutoscaler] {
+	return pulumix.Output[Mk8sPaperspaceProviderAutoscaler]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sPaperspaceProviderAutoscalerOutput) Expanders() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderAutoscaler) []string { return v.Expanders }).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sPaperspaceProviderAutoscalerOutput) UnneededTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderAutoscaler) *string { return v.UnneededTime }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderAutoscalerOutput) UnreadyTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderAutoscaler) *string { return v.UnreadyTime }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderAutoscalerOutput) UtilizationThreshold() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderAutoscaler) *float64 { return v.UtilizationThreshold }).(pulumi.Float64PtrOutput)
+}
+
+type Mk8sPaperspaceProviderAutoscalerPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sPaperspaceProviderAutoscalerPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sPaperspaceProviderAutoscaler)(nil)).Elem()
+}
+
+func (o Mk8sPaperspaceProviderAutoscalerPtrOutput) ToMk8sPaperspaceProviderAutoscalerPtrOutput() Mk8sPaperspaceProviderAutoscalerPtrOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderAutoscalerPtrOutput) ToMk8sPaperspaceProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderAutoscalerPtrOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderAutoscalerPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*Mk8sPaperspaceProviderAutoscaler] {
+	return pulumix.Output[*Mk8sPaperspaceProviderAutoscaler]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sPaperspaceProviderAutoscalerPtrOutput) Elem() Mk8sPaperspaceProviderAutoscalerOutput {
+	return o.ApplyT(func(v *Mk8sPaperspaceProviderAutoscaler) Mk8sPaperspaceProviderAutoscaler {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sPaperspaceProviderAutoscaler
+		return ret
+	}).(Mk8sPaperspaceProviderAutoscalerOutput)
+}
+
+func (o Mk8sPaperspaceProviderAutoscalerPtrOutput) Expanders() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sPaperspaceProviderAutoscaler) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Expanders
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sPaperspaceProviderAutoscalerPtrOutput) UnneededTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sPaperspaceProviderAutoscaler) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UnneededTime
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderAutoscalerPtrOutput) UnreadyTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sPaperspaceProviderAutoscaler) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UnreadyTime
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderAutoscalerPtrOutput) UtilizationThreshold() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *Mk8sPaperspaceProviderAutoscaler) *float64 {
+		if v == nil {
+			return nil
+		}
+		return v.UtilizationThreshold
+	}).(pulumi.Float64PtrOutput)
+}
+
+type Mk8sPaperspaceProviderNodePool struct {
+	BootDiskSize *int                                  `pulumi:"bootDiskSize"`
+	Labels       map[string]string                     `pulumi:"labels"`
+	MachineType  string                                `pulumi:"machineType"`
+	MaxSize      *int                                  `pulumi:"maxSize"`
+	MinSize      *int                                  `pulumi:"minSize"`
+	Name         string                                `pulumi:"name"`
+	PublicIpType string                                `pulumi:"publicIpType"`
+	Taints       []Mk8sPaperspaceProviderNodePoolTaint `pulumi:"taints"`
+}
+
+// Mk8sPaperspaceProviderNodePoolInput is an input type that accepts Mk8sPaperspaceProviderNodePoolArgs and Mk8sPaperspaceProviderNodePoolOutput values.
+// You can construct a concrete instance of `Mk8sPaperspaceProviderNodePoolInput` via:
+//
+//	Mk8sPaperspaceProviderNodePoolArgs{...}
+type Mk8sPaperspaceProviderNodePoolInput interface {
+	pulumi.Input
+
+	ToMk8sPaperspaceProviderNodePoolOutput() Mk8sPaperspaceProviderNodePoolOutput
+	ToMk8sPaperspaceProviderNodePoolOutputWithContext(context.Context) Mk8sPaperspaceProviderNodePoolOutput
+}
+
+type Mk8sPaperspaceProviderNodePoolArgs struct {
+	BootDiskSize pulumi.IntPtrInput                            `pulumi:"bootDiskSize"`
+	Labels       pulumi.StringMapInput                         `pulumi:"labels"`
+	MachineType  pulumi.StringInput                            `pulumi:"machineType"`
+	MaxSize      pulumi.IntPtrInput                            `pulumi:"maxSize"`
+	MinSize      pulumi.IntPtrInput                            `pulumi:"minSize"`
+	Name         pulumi.StringInput                            `pulumi:"name"`
+	PublicIpType pulumi.StringInput                            `pulumi:"publicIpType"`
+	Taints       Mk8sPaperspaceProviderNodePoolTaintArrayInput `pulumi:"taints"`
+}
+
+func (Mk8sPaperspaceProviderNodePoolArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sPaperspaceProviderNodePool)(nil)).Elem()
+}
+
+func (i Mk8sPaperspaceProviderNodePoolArgs) ToMk8sPaperspaceProviderNodePoolOutput() Mk8sPaperspaceProviderNodePoolOutput {
+	return i.ToMk8sPaperspaceProviderNodePoolOutputWithContext(context.Background())
+}
+
+func (i Mk8sPaperspaceProviderNodePoolArgs) ToMk8sPaperspaceProviderNodePoolOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderNodePoolOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sPaperspaceProviderNodePoolOutput)
+}
+
+func (i Mk8sPaperspaceProviderNodePoolArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sPaperspaceProviderNodePool] {
+	return pulumix.Output[Mk8sPaperspaceProviderNodePool]{
+		OutputState: i.ToMk8sPaperspaceProviderNodePoolOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sPaperspaceProviderNodePoolArrayInput is an input type that accepts Mk8sPaperspaceProviderNodePoolArray and Mk8sPaperspaceProviderNodePoolArrayOutput values.
+// You can construct a concrete instance of `Mk8sPaperspaceProviderNodePoolArrayInput` via:
+//
+//	Mk8sPaperspaceProviderNodePoolArray{ Mk8sPaperspaceProviderNodePoolArgs{...} }
+type Mk8sPaperspaceProviderNodePoolArrayInput interface {
+	pulumi.Input
+
+	ToMk8sPaperspaceProviderNodePoolArrayOutput() Mk8sPaperspaceProviderNodePoolArrayOutput
+	ToMk8sPaperspaceProviderNodePoolArrayOutputWithContext(context.Context) Mk8sPaperspaceProviderNodePoolArrayOutput
+}
+
+type Mk8sPaperspaceProviderNodePoolArray []Mk8sPaperspaceProviderNodePoolInput
+
+func (Mk8sPaperspaceProviderNodePoolArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sPaperspaceProviderNodePool)(nil)).Elem()
+}
+
+func (i Mk8sPaperspaceProviderNodePoolArray) ToMk8sPaperspaceProviderNodePoolArrayOutput() Mk8sPaperspaceProviderNodePoolArrayOutput {
+	return i.ToMk8sPaperspaceProviderNodePoolArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sPaperspaceProviderNodePoolArray) ToMk8sPaperspaceProviderNodePoolArrayOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderNodePoolArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sPaperspaceProviderNodePoolArrayOutput)
+}
+
+func (i Mk8sPaperspaceProviderNodePoolArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sPaperspaceProviderNodePool] {
+	return pulumix.Output[[]Mk8sPaperspaceProviderNodePool]{
+		OutputState: i.ToMk8sPaperspaceProviderNodePoolArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sPaperspaceProviderNodePoolOutput struct{ *pulumi.OutputState }
+
+func (Mk8sPaperspaceProviderNodePoolOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sPaperspaceProviderNodePool)(nil)).Elem()
+}
+
+func (o Mk8sPaperspaceProviderNodePoolOutput) ToMk8sPaperspaceProviderNodePoolOutput() Mk8sPaperspaceProviderNodePoolOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderNodePoolOutput) ToMk8sPaperspaceProviderNodePoolOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderNodePoolOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderNodePoolOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sPaperspaceProviderNodePool] {
+	return pulumix.Output[Mk8sPaperspaceProviderNodePool]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sPaperspaceProviderNodePoolOutput) BootDiskSize() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderNodePool) *int { return v.BootDiskSize }).(pulumi.IntPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+func (o Mk8sPaperspaceProviderNodePoolOutput) MachineType() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderNodePool) string { return v.MachineType }).(pulumi.StringOutput)
+}
+
+func (o Mk8sPaperspaceProviderNodePoolOutput) MaxSize() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderNodePool) *int { return v.MaxSize }).(pulumi.IntPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderNodePoolOutput) MinSize() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderNodePool) *int { return v.MinSize }).(pulumi.IntPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderNodePoolOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderNodePool) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o Mk8sPaperspaceProviderNodePoolOutput) PublicIpType() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderNodePool) string { return v.PublicIpType }).(pulumi.StringOutput)
+}
+
+func (o Mk8sPaperspaceProviderNodePoolOutput) Taints() Mk8sPaperspaceProviderNodePoolTaintArrayOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderNodePool) []Mk8sPaperspaceProviderNodePoolTaint { return v.Taints }).(Mk8sPaperspaceProviderNodePoolTaintArrayOutput)
+}
+
+type Mk8sPaperspaceProviderNodePoolArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sPaperspaceProviderNodePoolArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sPaperspaceProviderNodePool)(nil)).Elem()
+}
+
+func (o Mk8sPaperspaceProviderNodePoolArrayOutput) ToMk8sPaperspaceProviderNodePoolArrayOutput() Mk8sPaperspaceProviderNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderNodePoolArrayOutput) ToMk8sPaperspaceProviderNodePoolArrayOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderNodePoolArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sPaperspaceProviderNodePool] {
+	return pulumix.Output[[]Mk8sPaperspaceProviderNodePool]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sPaperspaceProviderNodePoolArrayOutput) Index(i pulumi.IntInput) Mk8sPaperspaceProviderNodePoolOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sPaperspaceProviderNodePool {
+		return vs[0].([]Mk8sPaperspaceProviderNodePool)[vs[1].(int)]
+	}).(Mk8sPaperspaceProviderNodePoolOutput)
+}
+
+type Mk8sPaperspaceProviderNodePoolTaint struct {
+	Effect *string `pulumi:"effect"`
+	Key    *string `pulumi:"key"`
+	Value  *string `pulumi:"value"`
+}
+
+// Mk8sPaperspaceProviderNodePoolTaintInput is an input type that accepts Mk8sPaperspaceProviderNodePoolTaintArgs and Mk8sPaperspaceProviderNodePoolTaintOutput values.
+// You can construct a concrete instance of `Mk8sPaperspaceProviderNodePoolTaintInput` via:
+//
+//	Mk8sPaperspaceProviderNodePoolTaintArgs{...}
+type Mk8sPaperspaceProviderNodePoolTaintInput interface {
+	pulumi.Input
+
+	ToMk8sPaperspaceProviderNodePoolTaintOutput() Mk8sPaperspaceProviderNodePoolTaintOutput
+	ToMk8sPaperspaceProviderNodePoolTaintOutputWithContext(context.Context) Mk8sPaperspaceProviderNodePoolTaintOutput
+}
+
+type Mk8sPaperspaceProviderNodePoolTaintArgs struct {
+	Effect pulumi.StringPtrInput `pulumi:"effect"`
+	Key    pulumi.StringPtrInput `pulumi:"key"`
+	Value  pulumi.StringPtrInput `pulumi:"value"`
+}
+
+func (Mk8sPaperspaceProviderNodePoolTaintArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sPaperspaceProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sPaperspaceProviderNodePoolTaintArgs) ToMk8sPaperspaceProviderNodePoolTaintOutput() Mk8sPaperspaceProviderNodePoolTaintOutput {
+	return i.ToMk8sPaperspaceProviderNodePoolTaintOutputWithContext(context.Background())
+}
+
+func (i Mk8sPaperspaceProviderNodePoolTaintArgs) ToMk8sPaperspaceProviderNodePoolTaintOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderNodePoolTaintOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sPaperspaceProviderNodePoolTaintOutput)
+}
+
+func (i Mk8sPaperspaceProviderNodePoolTaintArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sPaperspaceProviderNodePoolTaint] {
+	return pulumix.Output[Mk8sPaperspaceProviderNodePoolTaint]{
+		OutputState: i.ToMk8sPaperspaceProviderNodePoolTaintOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sPaperspaceProviderNodePoolTaintArrayInput is an input type that accepts Mk8sPaperspaceProviderNodePoolTaintArray and Mk8sPaperspaceProviderNodePoolTaintArrayOutput values.
+// You can construct a concrete instance of `Mk8sPaperspaceProviderNodePoolTaintArrayInput` via:
+//
+//	Mk8sPaperspaceProviderNodePoolTaintArray{ Mk8sPaperspaceProviderNodePoolTaintArgs{...} }
+type Mk8sPaperspaceProviderNodePoolTaintArrayInput interface {
+	pulumi.Input
+
+	ToMk8sPaperspaceProviderNodePoolTaintArrayOutput() Mk8sPaperspaceProviderNodePoolTaintArrayOutput
+	ToMk8sPaperspaceProviderNodePoolTaintArrayOutputWithContext(context.Context) Mk8sPaperspaceProviderNodePoolTaintArrayOutput
+}
+
+type Mk8sPaperspaceProviderNodePoolTaintArray []Mk8sPaperspaceProviderNodePoolTaintInput
+
+func (Mk8sPaperspaceProviderNodePoolTaintArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sPaperspaceProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sPaperspaceProviderNodePoolTaintArray) ToMk8sPaperspaceProviderNodePoolTaintArrayOutput() Mk8sPaperspaceProviderNodePoolTaintArrayOutput {
+	return i.ToMk8sPaperspaceProviderNodePoolTaintArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sPaperspaceProviderNodePoolTaintArray) ToMk8sPaperspaceProviderNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderNodePoolTaintArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sPaperspaceProviderNodePoolTaintArrayOutput)
+}
+
+func (i Mk8sPaperspaceProviderNodePoolTaintArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sPaperspaceProviderNodePoolTaint] {
+	return pulumix.Output[[]Mk8sPaperspaceProviderNodePoolTaint]{
+		OutputState: i.ToMk8sPaperspaceProviderNodePoolTaintArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sPaperspaceProviderNodePoolTaintOutput struct{ *pulumi.OutputState }
+
+func (Mk8sPaperspaceProviderNodePoolTaintOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sPaperspaceProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sPaperspaceProviderNodePoolTaintOutput) ToMk8sPaperspaceProviderNodePoolTaintOutput() Mk8sPaperspaceProviderNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderNodePoolTaintOutput) ToMk8sPaperspaceProviderNodePoolTaintOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderNodePoolTaintOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sPaperspaceProviderNodePoolTaint] {
+	return pulumix.Output[Mk8sPaperspaceProviderNodePoolTaint]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sPaperspaceProviderNodePoolTaintOutput) Effect() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderNodePoolTaint) *string { return v.Effect }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderNodePoolTaintOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderNodePoolTaint) *string { return v.Key }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderNodePoolTaintOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderNodePoolTaint) *string { return v.Value }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sPaperspaceProviderNodePoolTaintArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sPaperspaceProviderNodePoolTaintArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sPaperspaceProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sPaperspaceProviderNodePoolTaintArrayOutput) ToMk8sPaperspaceProviderNodePoolTaintArrayOutput() Mk8sPaperspaceProviderNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderNodePoolTaintArrayOutput) ToMk8sPaperspaceProviderNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderNodePoolTaintArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sPaperspaceProviderNodePoolTaint] {
+	return pulumix.Output[[]Mk8sPaperspaceProviderNodePoolTaint]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sPaperspaceProviderNodePoolTaintArrayOutput) Index(i pulumi.IntInput) Mk8sPaperspaceProviderNodePoolTaintOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sPaperspaceProviderNodePoolTaint {
+		return vs[0].([]Mk8sPaperspaceProviderNodePoolTaint)[vs[1].(int)]
+	}).(Mk8sPaperspaceProviderNodePoolTaintOutput)
+}
+
+type Mk8sPaperspaceProviderUnmanagedNodePool struct {
+	Labels map[string]string                              `pulumi:"labels"`
+	Name   string                                         `pulumi:"name"`
+	Taints []Mk8sPaperspaceProviderUnmanagedNodePoolTaint `pulumi:"taints"`
+}
+
+// Mk8sPaperspaceProviderUnmanagedNodePoolInput is an input type that accepts Mk8sPaperspaceProviderUnmanagedNodePoolArgs and Mk8sPaperspaceProviderUnmanagedNodePoolOutput values.
+// You can construct a concrete instance of `Mk8sPaperspaceProviderUnmanagedNodePoolInput` via:
+//
+//	Mk8sPaperspaceProviderUnmanagedNodePoolArgs{...}
+type Mk8sPaperspaceProviderUnmanagedNodePoolInput interface {
+	pulumi.Input
+
+	ToMk8sPaperspaceProviderUnmanagedNodePoolOutput() Mk8sPaperspaceProviderUnmanagedNodePoolOutput
+	ToMk8sPaperspaceProviderUnmanagedNodePoolOutputWithContext(context.Context) Mk8sPaperspaceProviderUnmanagedNodePoolOutput
+}
+
+type Mk8sPaperspaceProviderUnmanagedNodePoolArgs struct {
+	Labels pulumi.StringMapInput                                  `pulumi:"labels"`
+	Name   pulumi.StringInput                                     `pulumi:"name"`
+	Taints Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayInput `pulumi:"taints"`
+}
+
+func (Mk8sPaperspaceProviderUnmanagedNodePoolArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sPaperspaceProviderUnmanagedNodePool)(nil)).Elem()
+}
+
+func (i Mk8sPaperspaceProviderUnmanagedNodePoolArgs) ToMk8sPaperspaceProviderUnmanagedNodePoolOutput() Mk8sPaperspaceProviderUnmanagedNodePoolOutput {
+	return i.ToMk8sPaperspaceProviderUnmanagedNodePoolOutputWithContext(context.Background())
+}
+
+func (i Mk8sPaperspaceProviderUnmanagedNodePoolArgs) ToMk8sPaperspaceProviderUnmanagedNodePoolOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderUnmanagedNodePoolOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sPaperspaceProviderUnmanagedNodePoolOutput)
+}
+
+func (i Mk8sPaperspaceProviderUnmanagedNodePoolArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sPaperspaceProviderUnmanagedNodePool] {
+	return pulumix.Output[Mk8sPaperspaceProviderUnmanagedNodePool]{
+		OutputState: i.ToMk8sPaperspaceProviderUnmanagedNodePoolOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sPaperspaceProviderUnmanagedNodePoolArrayInput is an input type that accepts Mk8sPaperspaceProviderUnmanagedNodePoolArray and Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput values.
+// You can construct a concrete instance of `Mk8sPaperspaceProviderUnmanagedNodePoolArrayInput` via:
+//
+//	Mk8sPaperspaceProviderUnmanagedNodePoolArray{ Mk8sPaperspaceProviderUnmanagedNodePoolArgs{...} }
+type Mk8sPaperspaceProviderUnmanagedNodePoolArrayInput interface {
+	pulumi.Input
+
+	ToMk8sPaperspaceProviderUnmanagedNodePoolArrayOutput() Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput
+	ToMk8sPaperspaceProviderUnmanagedNodePoolArrayOutputWithContext(context.Context) Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput
+}
+
+type Mk8sPaperspaceProviderUnmanagedNodePoolArray []Mk8sPaperspaceProviderUnmanagedNodePoolInput
+
+func (Mk8sPaperspaceProviderUnmanagedNodePoolArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sPaperspaceProviderUnmanagedNodePool)(nil)).Elem()
+}
+
+func (i Mk8sPaperspaceProviderUnmanagedNodePoolArray) ToMk8sPaperspaceProviderUnmanagedNodePoolArrayOutput() Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput {
+	return i.ToMk8sPaperspaceProviderUnmanagedNodePoolArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sPaperspaceProviderUnmanagedNodePoolArray) ToMk8sPaperspaceProviderUnmanagedNodePoolArrayOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput)
+}
+
+func (i Mk8sPaperspaceProviderUnmanagedNodePoolArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sPaperspaceProviderUnmanagedNodePool] {
+	return pulumix.Output[[]Mk8sPaperspaceProviderUnmanagedNodePool]{
+		OutputState: i.ToMk8sPaperspaceProviderUnmanagedNodePoolArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sPaperspaceProviderUnmanagedNodePoolOutput struct{ *pulumi.OutputState }
+
+func (Mk8sPaperspaceProviderUnmanagedNodePoolOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sPaperspaceProviderUnmanagedNodePool)(nil)).Elem()
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolOutput) ToMk8sPaperspaceProviderUnmanagedNodePoolOutput() Mk8sPaperspaceProviderUnmanagedNodePoolOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolOutput) ToMk8sPaperspaceProviderUnmanagedNodePoolOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderUnmanagedNodePoolOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sPaperspaceProviderUnmanagedNodePool] {
+	return pulumix.Output[Mk8sPaperspaceProviderUnmanagedNodePool]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderUnmanagedNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderUnmanagedNodePool) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolOutput) Taints() Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderUnmanagedNodePool) []Mk8sPaperspaceProviderUnmanagedNodePoolTaint {
+		return v.Taints
+	}).(Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput)
+}
+
+type Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sPaperspaceProviderUnmanagedNodePool)(nil)).Elem()
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput) ToMk8sPaperspaceProviderUnmanagedNodePoolArrayOutput() Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput) ToMk8sPaperspaceProviderUnmanagedNodePoolArrayOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sPaperspaceProviderUnmanagedNodePool] {
+	return pulumix.Output[[]Mk8sPaperspaceProviderUnmanagedNodePool]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput) Index(i pulumi.IntInput) Mk8sPaperspaceProviderUnmanagedNodePoolOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sPaperspaceProviderUnmanagedNodePool {
+		return vs[0].([]Mk8sPaperspaceProviderUnmanagedNodePool)[vs[1].(int)]
+	}).(Mk8sPaperspaceProviderUnmanagedNodePoolOutput)
+}
+
+type Mk8sPaperspaceProviderUnmanagedNodePoolTaint struct {
+	Effect *string `pulumi:"effect"`
+	Key    *string `pulumi:"key"`
+	Value  *string `pulumi:"value"`
+}
+
+// Mk8sPaperspaceProviderUnmanagedNodePoolTaintInput is an input type that accepts Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgs and Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput values.
+// You can construct a concrete instance of `Mk8sPaperspaceProviderUnmanagedNodePoolTaintInput` via:
+//
+//	Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgs{...}
+type Mk8sPaperspaceProviderUnmanagedNodePoolTaintInput interface {
+	pulumi.Input
+
+	ToMk8sPaperspaceProviderUnmanagedNodePoolTaintOutput() Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput
+	ToMk8sPaperspaceProviderUnmanagedNodePoolTaintOutputWithContext(context.Context) Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput
+}
+
+type Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgs struct {
+	Effect pulumi.StringPtrInput `pulumi:"effect"`
+	Key    pulumi.StringPtrInput `pulumi:"key"`
+	Value  pulumi.StringPtrInput `pulumi:"value"`
+}
+
+func (Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sPaperspaceProviderUnmanagedNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgs) ToMk8sPaperspaceProviderUnmanagedNodePoolTaintOutput() Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput {
+	return i.ToMk8sPaperspaceProviderUnmanagedNodePoolTaintOutputWithContext(context.Background())
+}
+
+func (i Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgs) ToMk8sPaperspaceProviderUnmanagedNodePoolTaintOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput)
+}
+
+func (i Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sPaperspaceProviderUnmanagedNodePoolTaint] {
+	return pulumix.Output[Mk8sPaperspaceProviderUnmanagedNodePoolTaint]{
+		OutputState: i.ToMk8sPaperspaceProviderUnmanagedNodePoolTaintOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayInput is an input type that accepts Mk8sPaperspaceProviderUnmanagedNodePoolTaintArray and Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput values.
+// You can construct a concrete instance of `Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayInput` via:
+//
+//	Mk8sPaperspaceProviderUnmanagedNodePoolTaintArray{ Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgs{...} }
+type Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayInput interface {
+	pulumi.Input
+
+	ToMk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput() Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput
+	ToMk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutputWithContext(context.Context) Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput
+}
+
+type Mk8sPaperspaceProviderUnmanagedNodePoolTaintArray []Mk8sPaperspaceProviderUnmanagedNodePoolTaintInput
+
+func (Mk8sPaperspaceProviderUnmanagedNodePoolTaintArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sPaperspaceProviderUnmanagedNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sPaperspaceProviderUnmanagedNodePoolTaintArray) ToMk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput() Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput {
+	return i.ToMk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sPaperspaceProviderUnmanagedNodePoolTaintArray) ToMk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput)
+}
+
+func (i Mk8sPaperspaceProviderUnmanagedNodePoolTaintArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sPaperspaceProviderUnmanagedNodePoolTaint] {
+	return pulumix.Output[[]Mk8sPaperspaceProviderUnmanagedNodePoolTaint]{
+		OutputState: i.ToMk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput struct{ *pulumi.OutputState }
+
+func (Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sPaperspaceProviderUnmanagedNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput) ToMk8sPaperspaceProviderUnmanagedNodePoolTaintOutput() Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput) ToMk8sPaperspaceProviderUnmanagedNodePoolTaintOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sPaperspaceProviderUnmanagedNodePoolTaint] {
+	return pulumix.Output[Mk8sPaperspaceProviderUnmanagedNodePoolTaint]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput) Effect() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderUnmanagedNodePoolTaint) *string { return v.Effect }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderUnmanagedNodePoolTaint) *string { return v.Key }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderUnmanagedNodePoolTaint) *string { return v.Value }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sPaperspaceProviderUnmanagedNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput) ToMk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput() Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput) ToMk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sPaperspaceProviderUnmanagedNodePoolTaint] {
+	return pulumix.Output[[]Mk8sPaperspaceProviderUnmanagedNodePoolTaint]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput) Index(i pulumi.IntInput) Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sPaperspaceProviderUnmanagedNodePoolTaint {
+		return vs[0].([]Mk8sPaperspaceProviderUnmanagedNodePoolTaint)[vs[1].(int)]
+	}).(Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput)
+}
+
 type Mk8sStatus struct {
 	AddOns          []Mk8sStatusAddOn `pulumi:"addOns"`
 	HomeLocation    *string           `pulumi:"homeLocation"`
@@ -13331,6 +19275,1176 @@ func (o Mk8sStatusAddOnMetricArrayOutput) Index(i pulumi.IntInput) Mk8sStatusAdd
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sStatusAddOnMetric {
 		return vs[0].([]Mk8sStatusAddOnMetric)[vs[1].(int)]
 	}).(Mk8sStatusAddOnMetricOutput)
+}
+
+type Mk8sTritonProvider struct {
+	Autoscaler       *Mk8sTritonProviderAutoscaler `pulumi:"autoscaler"`
+	Connection       Mk8sTritonProviderConnection  `pulumi:"connection"`
+	FirewallEnabled  *bool                         `pulumi:"firewallEnabled"`
+	ImageId          string                        `pulumi:"imageId"`
+	Location         string                        `pulumi:"location"`
+	Networking       Mk8sTritonProviderNetworking  `pulumi:"networking"`
+	NodePools        []Mk8sTritonProviderNodePool  `pulumi:"nodePools"`
+	PreInstallScript *string                       `pulumi:"preInstallScript"`
+	PrivateNetworkId string                        `pulumi:"privateNetworkId"`
+	SshKeys          []string                      `pulumi:"sshKeys"`
+}
+
+// Mk8sTritonProviderInput is an input type that accepts Mk8sTritonProviderArgs and Mk8sTritonProviderOutput values.
+// You can construct a concrete instance of `Mk8sTritonProviderInput` via:
+//
+//	Mk8sTritonProviderArgs{...}
+type Mk8sTritonProviderInput interface {
+	pulumi.Input
+
+	ToMk8sTritonProviderOutput() Mk8sTritonProviderOutput
+	ToMk8sTritonProviderOutputWithContext(context.Context) Mk8sTritonProviderOutput
+}
+
+type Mk8sTritonProviderArgs struct {
+	Autoscaler       Mk8sTritonProviderAutoscalerPtrInput `pulumi:"autoscaler"`
+	Connection       Mk8sTritonProviderConnectionInput    `pulumi:"connection"`
+	FirewallEnabled  pulumi.BoolPtrInput                  `pulumi:"firewallEnabled"`
+	ImageId          pulumi.StringInput                   `pulumi:"imageId"`
+	Location         pulumi.StringInput                   `pulumi:"location"`
+	Networking       Mk8sTritonProviderNetworkingInput    `pulumi:"networking"`
+	NodePools        Mk8sTritonProviderNodePoolArrayInput `pulumi:"nodePools"`
+	PreInstallScript pulumi.StringPtrInput                `pulumi:"preInstallScript"`
+	PrivateNetworkId pulumi.StringInput                   `pulumi:"privateNetworkId"`
+	SshKeys          pulumi.StringArrayInput              `pulumi:"sshKeys"`
+}
+
+func (Mk8sTritonProviderArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sTritonProvider)(nil)).Elem()
+}
+
+func (i Mk8sTritonProviderArgs) ToMk8sTritonProviderOutput() Mk8sTritonProviderOutput {
+	return i.ToMk8sTritonProviderOutputWithContext(context.Background())
+}
+
+func (i Mk8sTritonProviderArgs) ToMk8sTritonProviderOutputWithContext(ctx context.Context) Mk8sTritonProviderOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderOutput)
+}
+
+func (i Mk8sTritonProviderArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sTritonProvider] {
+	return pulumix.Output[Mk8sTritonProvider]{
+		OutputState: i.ToMk8sTritonProviderOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i Mk8sTritonProviderArgs) ToMk8sTritonProviderPtrOutput() Mk8sTritonProviderPtrOutput {
+	return i.ToMk8sTritonProviderPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sTritonProviderArgs) ToMk8sTritonProviderPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderOutput).ToMk8sTritonProviderPtrOutputWithContext(ctx)
+}
+
+// Mk8sTritonProviderPtrInput is an input type that accepts Mk8sTritonProviderArgs, Mk8sTritonProviderPtr and Mk8sTritonProviderPtrOutput values.
+// You can construct a concrete instance of `Mk8sTritonProviderPtrInput` via:
+//
+//	        Mk8sTritonProviderArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sTritonProviderPtrInput interface {
+	pulumi.Input
+
+	ToMk8sTritonProviderPtrOutput() Mk8sTritonProviderPtrOutput
+	ToMk8sTritonProviderPtrOutputWithContext(context.Context) Mk8sTritonProviderPtrOutput
+}
+
+type mk8sTritonProviderPtrType Mk8sTritonProviderArgs
+
+func Mk8sTritonProviderPtr(v *Mk8sTritonProviderArgs) Mk8sTritonProviderPtrInput {
+	return (*mk8sTritonProviderPtrType)(v)
+}
+
+func (*mk8sTritonProviderPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sTritonProvider)(nil)).Elem()
+}
+
+func (i *mk8sTritonProviderPtrType) ToMk8sTritonProviderPtrOutput() Mk8sTritonProviderPtrOutput {
+	return i.ToMk8sTritonProviderPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sTritonProviderPtrType) ToMk8sTritonProviderPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderPtrOutput)
+}
+
+func (i *mk8sTritonProviderPtrType) ToOutput(ctx context.Context) pulumix.Output[*Mk8sTritonProvider] {
+	return pulumix.Output[*Mk8sTritonProvider]{
+		OutputState: i.ToMk8sTritonProviderPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sTritonProviderOutput struct{ *pulumi.OutputState }
+
+func (Mk8sTritonProviderOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sTritonProvider)(nil)).Elem()
+}
+
+func (o Mk8sTritonProviderOutput) ToMk8sTritonProviderOutput() Mk8sTritonProviderOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderOutput) ToMk8sTritonProviderOutputWithContext(ctx context.Context) Mk8sTritonProviderOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderOutput) ToMk8sTritonProviderPtrOutput() Mk8sTritonProviderPtrOutput {
+	return o.ToMk8sTritonProviderPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sTritonProviderOutput) ToMk8sTritonProviderPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sTritonProvider) *Mk8sTritonProvider {
+		return &v
+	}).(Mk8sTritonProviderPtrOutput)
+}
+
+func (o Mk8sTritonProviderOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sTritonProvider] {
+	return pulumix.Output[Mk8sTritonProvider]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sTritonProviderOutput) Autoscaler() Mk8sTritonProviderAutoscalerPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProvider) *Mk8sTritonProviderAutoscaler { return v.Autoscaler }).(Mk8sTritonProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sTritonProviderOutput) Connection() Mk8sTritonProviderConnectionOutput {
+	return o.ApplyT(func(v Mk8sTritonProvider) Mk8sTritonProviderConnection { return v.Connection }).(Mk8sTritonProviderConnectionOutput)
+}
+
+func (o Mk8sTritonProviderOutput) FirewallEnabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProvider) *bool { return v.FirewallEnabled }).(pulumi.BoolPtrOutput)
+}
+
+func (o Mk8sTritonProviderOutput) ImageId() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sTritonProvider) string { return v.ImageId }).(pulumi.StringOutput)
+}
+
+func (o Mk8sTritonProviderOutput) Location() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sTritonProvider) string { return v.Location }).(pulumi.StringOutput)
+}
+
+func (o Mk8sTritonProviderOutput) Networking() Mk8sTritonProviderNetworkingOutput {
+	return o.ApplyT(func(v Mk8sTritonProvider) Mk8sTritonProviderNetworking { return v.Networking }).(Mk8sTritonProviderNetworkingOutput)
+}
+
+func (o Mk8sTritonProviderOutput) NodePools() Mk8sTritonProviderNodePoolArrayOutput {
+	return o.ApplyT(func(v Mk8sTritonProvider) []Mk8sTritonProviderNodePool { return v.NodePools }).(Mk8sTritonProviderNodePoolArrayOutput)
+}
+
+func (o Mk8sTritonProviderOutput) PreInstallScript() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProvider) *string { return v.PreInstallScript }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderOutput) PrivateNetworkId() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sTritonProvider) string { return v.PrivateNetworkId }).(pulumi.StringOutput)
+}
+
+func (o Mk8sTritonProviderOutput) SshKeys() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sTritonProvider) []string { return v.SshKeys }).(pulumi.StringArrayOutput)
+}
+
+type Mk8sTritonProviderPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sTritonProviderPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sTritonProvider)(nil)).Elem()
+}
+
+func (o Mk8sTritonProviderPtrOutput) ToMk8sTritonProviderPtrOutput() Mk8sTritonProviderPtrOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderPtrOutput) ToMk8sTritonProviderPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderPtrOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*Mk8sTritonProvider] {
+	return pulumix.Output[*Mk8sTritonProvider]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sTritonProviderPtrOutput) Elem() Mk8sTritonProviderOutput {
+	return o.ApplyT(func(v *Mk8sTritonProvider) Mk8sTritonProvider {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sTritonProvider
+		return ret
+	}).(Mk8sTritonProviderOutput)
+}
+
+func (o Mk8sTritonProviderPtrOutput) Autoscaler() Mk8sTritonProviderAutoscalerPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProvider) *Mk8sTritonProviderAutoscaler {
+		if v == nil {
+			return nil
+		}
+		return v.Autoscaler
+	}).(Mk8sTritonProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sTritonProviderPtrOutput) Connection() Mk8sTritonProviderConnectionPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProvider) *Mk8sTritonProviderConnection {
+		if v == nil {
+			return nil
+		}
+		return &v.Connection
+	}).(Mk8sTritonProviderConnectionPtrOutput)
+}
+
+func (o Mk8sTritonProviderPtrOutput) FirewallEnabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProvider) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.FirewallEnabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o Mk8sTritonProviderPtrOutput) ImageId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ImageId
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderPtrOutput) Location() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Location
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderPtrOutput) Networking() Mk8sTritonProviderNetworkingPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProvider) *Mk8sTritonProviderNetworking {
+		if v == nil {
+			return nil
+		}
+		return &v.Networking
+	}).(Mk8sTritonProviderNetworkingPtrOutput)
+}
+
+func (o Mk8sTritonProviderPtrOutput) NodePools() Mk8sTritonProviderNodePoolArrayOutput {
+	return o.ApplyT(func(v *Mk8sTritonProvider) []Mk8sTritonProviderNodePool {
+		if v == nil {
+			return nil
+		}
+		return v.NodePools
+	}).(Mk8sTritonProviderNodePoolArrayOutput)
+}
+
+func (o Mk8sTritonProviderPtrOutput) PreInstallScript() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return v.PreInstallScript
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderPtrOutput) PrivateNetworkId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.PrivateNetworkId
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderPtrOutput) SshKeys() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sTritonProvider) []string {
+		if v == nil {
+			return nil
+		}
+		return v.SshKeys
+	}).(pulumi.StringArrayOutput)
+}
+
+type Mk8sTritonProviderAutoscaler struct {
+	Expanders            []string `pulumi:"expanders"`
+	UnneededTime         *string  `pulumi:"unneededTime"`
+	UnreadyTime          *string  `pulumi:"unreadyTime"`
+	UtilizationThreshold *float64 `pulumi:"utilizationThreshold"`
+}
+
+// Mk8sTritonProviderAutoscalerInput is an input type that accepts Mk8sTritonProviderAutoscalerArgs and Mk8sTritonProviderAutoscalerOutput values.
+// You can construct a concrete instance of `Mk8sTritonProviderAutoscalerInput` via:
+//
+//	Mk8sTritonProviderAutoscalerArgs{...}
+type Mk8sTritonProviderAutoscalerInput interface {
+	pulumi.Input
+
+	ToMk8sTritonProviderAutoscalerOutput() Mk8sTritonProviderAutoscalerOutput
+	ToMk8sTritonProviderAutoscalerOutputWithContext(context.Context) Mk8sTritonProviderAutoscalerOutput
+}
+
+type Mk8sTritonProviderAutoscalerArgs struct {
+	Expanders            pulumi.StringArrayInput `pulumi:"expanders"`
+	UnneededTime         pulumi.StringPtrInput   `pulumi:"unneededTime"`
+	UnreadyTime          pulumi.StringPtrInput   `pulumi:"unreadyTime"`
+	UtilizationThreshold pulumi.Float64PtrInput  `pulumi:"utilizationThreshold"`
+}
+
+func (Mk8sTritonProviderAutoscalerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sTritonProviderAutoscaler)(nil)).Elem()
+}
+
+func (i Mk8sTritonProviderAutoscalerArgs) ToMk8sTritonProviderAutoscalerOutput() Mk8sTritonProviderAutoscalerOutput {
+	return i.ToMk8sTritonProviderAutoscalerOutputWithContext(context.Background())
+}
+
+func (i Mk8sTritonProviderAutoscalerArgs) ToMk8sTritonProviderAutoscalerOutputWithContext(ctx context.Context) Mk8sTritonProviderAutoscalerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderAutoscalerOutput)
+}
+
+func (i Mk8sTritonProviderAutoscalerArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sTritonProviderAutoscaler] {
+	return pulumix.Output[Mk8sTritonProviderAutoscaler]{
+		OutputState: i.ToMk8sTritonProviderAutoscalerOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i Mk8sTritonProviderAutoscalerArgs) ToMk8sTritonProviderAutoscalerPtrOutput() Mk8sTritonProviderAutoscalerPtrOutput {
+	return i.ToMk8sTritonProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sTritonProviderAutoscalerArgs) ToMk8sTritonProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderAutoscalerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderAutoscalerOutput).ToMk8sTritonProviderAutoscalerPtrOutputWithContext(ctx)
+}
+
+// Mk8sTritonProviderAutoscalerPtrInput is an input type that accepts Mk8sTritonProviderAutoscalerArgs, Mk8sTritonProviderAutoscalerPtr and Mk8sTritonProviderAutoscalerPtrOutput values.
+// You can construct a concrete instance of `Mk8sTritonProviderAutoscalerPtrInput` via:
+//
+//	        Mk8sTritonProviderAutoscalerArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sTritonProviderAutoscalerPtrInput interface {
+	pulumi.Input
+
+	ToMk8sTritonProviderAutoscalerPtrOutput() Mk8sTritonProviderAutoscalerPtrOutput
+	ToMk8sTritonProviderAutoscalerPtrOutputWithContext(context.Context) Mk8sTritonProviderAutoscalerPtrOutput
+}
+
+type mk8sTritonProviderAutoscalerPtrType Mk8sTritonProviderAutoscalerArgs
+
+func Mk8sTritonProviderAutoscalerPtr(v *Mk8sTritonProviderAutoscalerArgs) Mk8sTritonProviderAutoscalerPtrInput {
+	return (*mk8sTritonProviderAutoscalerPtrType)(v)
+}
+
+func (*mk8sTritonProviderAutoscalerPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sTritonProviderAutoscaler)(nil)).Elem()
+}
+
+func (i *mk8sTritonProviderAutoscalerPtrType) ToMk8sTritonProviderAutoscalerPtrOutput() Mk8sTritonProviderAutoscalerPtrOutput {
+	return i.ToMk8sTritonProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sTritonProviderAutoscalerPtrType) ToMk8sTritonProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderAutoscalerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderAutoscalerPtrOutput)
+}
+
+func (i *mk8sTritonProviderAutoscalerPtrType) ToOutput(ctx context.Context) pulumix.Output[*Mk8sTritonProviderAutoscaler] {
+	return pulumix.Output[*Mk8sTritonProviderAutoscaler]{
+		OutputState: i.ToMk8sTritonProviderAutoscalerPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sTritonProviderAutoscalerOutput struct{ *pulumi.OutputState }
+
+func (Mk8sTritonProviderAutoscalerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sTritonProviderAutoscaler)(nil)).Elem()
+}
+
+func (o Mk8sTritonProviderAutoscalerOutput) ToMk8sTritonProviderAutoscalerOutput() Mk8sTritonProviderAutoscalerOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderAutoscalerOutput) ToMk8sTritonProviderAutoscalerOutputWithContext(ctx context.Context) Mk8sTritonProviderAutoscalerOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderAutoscalerOutput) ToMk8sTritonProviderAutoscalerPtrOutput() Mk8sTritonProviderAutoscalerPtrOutput {
+	return o.ToMk8sTritonProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sTritonProviderAutoscalerOutput) ToMk8sTritonProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderAutoscalerPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sTritonProviderAutoscaler) *Mk8sTritonProviderAutoscaler {
+		return &v
+	}).(Mk8sTritonProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sTritonProviderAutoscalerOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sTritonProviderAutoscaler] {
+	return pulumix.Output[Mk8sTritonProviderAutoscaler]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sTritonProviderAutoscalerOutput) Expanders() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderAutoscaler) []string { return v.Expanders }).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sTritonProviderAutoscalerOutput) UnneededTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderAutoscaler) *string { return v.UnneededTime }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderAutoscalerOutput) UnreadyTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderAutoscaler) *string { return v.UnreadyTime }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderAutoscalerOutput) UtilizationThreshold() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderAutoscaler) *float64 { return v.UtilizationThreshold }).(pulumi.Float64PtrOutput)
+}
+
+type Mk8sTritonProviderAutoscalerPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sTritonProviderAutoscalerPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sTritonProviderAutoscaler)(nil)).Elem()
+}
+
+func (o Mk8sTritonProviderAutoscalerPtrOutput) ToMk8sTritonProviderAutoscalerPtrOutput() Mk8sTritonProviderAutoscalerPtrOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderAutoscalerPtrOutput) ToMk8sTritonProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderAutoscalerPtrOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderAutoscalerPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*Mk8sTritonProviderAutoscaler] {
+	return pulumix.Output[*Mk8sTritonProviderAutoscaler]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sTritonProviderAutoscalerPtrOutput) Elem() Mk8sTritonProviderAutoscalerOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderAutoscaler) Mk8sTritonProviderAutoscaler {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sTritonProviderAutoscaler
+		return ret
+	}).(Mk8sTritonProviderAutoscalerOutput)
+}
+
+func (o Mk8sTritonProviderAutoscalerPtrOutput) Expanders() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderAutoscaler) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Expanders
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sTritonProviderAutoscalerPtrOutput) UnneededTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderAutoscaler) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UnneededTime
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderAutoscalerPtrOutput) UnreadyTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderAutoscaler) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UnreadyTime
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderAutoscalerPtrOutput) UtilizationThreshold() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderAutoscaler) *float64 {
+		if v == nil {
+			return nil
+		}
+		return v.UtilizationThreshold
+	}).(pulumi.Float64PtrOutput)
+}
+
+type Mk8sTritonProviderConnection struct {
+	Account              string  `pulumi:"account"`
+	PrivateKeySecretLink string  `pulumi:"privateKeySecretLink"`
+	Url                  string  `pulumi:"url"`
+	User                 *string `pulumi:"user"`
+}
+
+// Mk8sTritonProviderConnectionInput is an input type that accepts Mk8sTritonProviderConnectionArgs and Mk8sTritonProviderConnectionOutput values.
+// You can construct a concrete instance of `Mk8sTritonProviderConnectionInput` via:
+//
+//	Mk8sTritonProviderConnectionArgs{...}
+type Mk8sTritonProviderConnectionInput interface {
+	pulumi.Input
+
+	ToMk8sTritonProviderConnectionOutput() Mk8sTritonProviderConnectionOutput
+	ToMk8sTritonProviderConnectionOutputWithContext(context.Context) Mk8sTritonProviderConnectionOutput
+}
+
+type Mk8sTritonProviderConnectionArgs struct {
+	Account              pulumi.StringInput    `pulumi:"account"`
+	PrivateKeySecretLink pulumi.StringInput    `pulumi:"privateKeySecretLink"`
+	Url                  pulumi.StringInput    `pulumi:"url"`
+	User                 pulumi.StringPtrInput `pulumi:"user"`
+}
+
+func (Mk8sTritonProviderConnectionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sTritonProviderConnection)(nil)).Elem()
+}
+
+func (i Mk8sTritonProviderConnectionArgs) ToMk8sTritonProviderConnectionOutput() Mk8sTritonProviderConnectionOutput {
+	return i.ToMk8sTritonProviderConnectionOutputWithContext(context.Background())
+}
+
+func (i Mk8sTritonProviderConnectionArgs) ToMk8sTritonProviderConnectionOutputWithContext(ctx context.Context) Mk8sTritonProviderConnectionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderConnectionOutput)
+}
+
+func (i Mk8sTritonProviderConnectionArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sTritonProviderConnection] {
+	return pulumix.Output[Mk8sTritonProviderConnection]{
+		OutputState: i.ToMk8sTritonProviderConnectionOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i Mk8sTritonProviderConnectionArgs) ToMk8sTritonProviderConnectionPtrOutput() Mk8sTritonProviderConnectionPtrOutput {
+	return i.ToMk8sTritonProviderConnectionPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sTritonProviderConnectionArgs) ToMk8sTritonProviderConnectionPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderConnectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderConnectionOutput).ToMk8sTritonProviderConnectionPtrOutputWithContext(ctx)
+}
+
+// Mk8sTritonProviderConnectionPtrInput is an input type that accepts Mk8sTritonProviderConnectionArgs, Mk8sTritonProviderConnectionPtr and Mk8sTritonProviderConnectionPtrOutput values.
+// You can construct a concrete instance of `Mk8sTritonProviderConnectionPtrInput` via:
+//
+//	        Mk8sTritonProviderConnectionArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sTritonProviderConnectionPtrInput interface {
+	pulumi.Input
+
+	ToMk8sTritonProviderConnectionPtrOutput() Mk8sTritonProviderConnectionPtrOutput
+	ToMk8sTritonProviderConnectionPtrOutputWithContext(context.Context) Mk8sTritonProviderConnectionPtrOutput
+}
+
+type mk8sTritonProviderConnectionPtrType Mk8sTritonProviderConnectionArgs
+
+func Mk8sTritonProviderConnectionPtr(v *Mk8sTritonProviderConnectionArgs) Mk8sTritonProviderConnectionPtrInput {
+	return (*mk8sTritonProviderConnectionPtrType)(v)
+}
+
+func (*mk8sTritonProviderConnectionPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sTritonProviderConnection)(nil)).Elem()
+}
+
+func (i *mk8sTritonProviderConnectionPtrType) ToMk8sTritonProviderConnectionPtrOutput() Mk8sTritonProviderConnectionPtrOutput {
+	return i.ToMk8sTritonProviderConnectionPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sTritonProviderConnectionPtrType) ToMk8sTritonProviderConnectionPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderConnectionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderConnectionPtrOutput)
+}
+
+func (i *mk8sTritonProviderConnectionPtrType) ToOutput(ctx context.Context) pulumix.Output[*Mk8sTritonProviderConnection] {
+	return pulumix.Output[*Mk8sTritonProviderConnection]{
+		OutputState: i.ToMk8sTritonProviderConnectionPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sTritonProviderConnectionOutput struct{ *pulumi.OutputState }
+
+func (Mk8sTritonProviderConnectionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sTritonProviderConnection)(nil)).Elem()
+}
+
+func (o Mk8sTritonProviderConnectionOutput) ToMk8sTritonProviderConnectionOutput() Mk8sTritonProviderConnectionOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderConnectionOutput) ToMk8sTritonProviderConnectionOutputWithContext(ctx context.Context) Mk8sTritonProviderConnectionOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderConnectionOutput) ToMk8sTritonProviderConnectionPtrOutput() Mk8sTritonProviderConnectionPtrOutput {
+	return o.ToMk8sTritonProviderConnectionPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sTritonProviderConnectionOutput) ToMk8sTritonProviderConnectionPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderConnectionPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sTritonProviderConnection) *Mk8sTritonProviderConnection {
+		return &v
+	}).(Mk8sTritonProviderConnectionPtrOutput)
+}
+
+func (o Mk8sTritonProviderConnectionOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sTritonProviderConnection] {
+	return pulumix.Output[Mk8sTritonProviderConnection]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sTritonProviderConnectionOutput) Account() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderConnection) string { return v.Account }).(pulumi.StringOutput)
+}
+
+func (o Mk8sTritonProviderConnectionOutput) PrivateKeySecretLink() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderConnection) string { return v.PrivateKeySecretLink }).(pulumi.StringOutput)
+}
+
+func (o Mk8sTritonProviderConnectionOutput) Url() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderConnection) string { return v.Url }).(pulumi.StringOutput)
+}
+
+func (o Mk8sTritonProviderConnectionOutput) User() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderConnection) *string { return v.User }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sTritonProviderConnectionPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sTritonProviderConnectionPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sTritonProviderConnection)(nil)).Elem()
+}
+
+func (o Mk8sTritonProviderConnectionPtrOutput) ToMk8sTritonProviderConnectionPtrOutput() Mk8sTritonProviderConnectionPtrOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderConnectionPtrOutput) ToMk8sTritonProviderConnectionPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderConnectionPtrOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderConnectionPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*Mk8sTritonProviderConnection] {
+	return pulumix.Output[*Mk8sTritonProviderConnection]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sTritonProviderConnectionPtrOutput) Elem() Mk8sTritonProviderConnectionOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderConnection) Mk8sTritonProviderConnection {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sTritonProviderConnection
+		return ret
+	}).(Mk8sTritonProviderConnectionOutput)
+}
+
+func (o Mk8sTritonProviderConnectionPtrOutput) Account() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderConnection) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Account
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderConnectionPtrOutput) PrivateKeySecretLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderConnection) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.PrivateKeySecretLink
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderConnectionPtrOutput) Url() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderConnection) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Url
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderConnectionPtrOutput) User() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderConnection) *string {
+		if v == nil {
+			return nil
+		}
+		return v.User
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sTritonProviderNetworking struct {
+	PodNetwork     *string `pulumi:"podNetwork"`
+	ServiceNetwork *string `pulumi:"serviceNetwork"`
+}
+
+// Mk8sTritonProviderNetworkingInput is an input type that accepts Mk8sTritonProviderNetworkingArgs and Mk8sTritonProviderNetworkingOutput values.
+// You can construct a concrete instance of `Mk8sTritonProviderNetworkingInput` via:
+//
+//	Mk8sTritonProviderNetworkingArgs{...}
+type Mk8sTritonProviderNetworkingInput interface {
+	pulumi.Input
+
+	ToMk8sTritonProviderNetworkingOutput() Mk8sTritonProviderNetworkingOutput
+	ToMk8sTritonProviderNetworkingOutputWithContext(context.Context) Mk8sTritonProviderNetworkingOutput
+}
+
+type Mk8sTritonProviderNetworkingArgs struct {
+	PodNetwork     pulumi.StringPtrInput `pulumi:"podNetwork"`
+	ServiceNetwork pulumi.StringPtrInput `pulumi:"serviceNetwork"`
+}
+
+func (Mk8sTritonProviderNetworkingArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sTritonProviderNetworking)(nil)).Elem()
+}
+
+func (i Mk8sTritonProviderNetworkingArgs) ToMk8sTritonProviderNetworkingOutput() Mk8sTritonProviderNetworkingOutput {
+	return i.ToMk8sTritonProviderNetworkingOutputWithContext(context.Background())
+}
+
+func (i Mk8sTritonProviderNetworkingArgs) ToMk8sTritonProviderNetworkingOutputWithContext(ctx context.Context) Mk8sTritonProviderNetworkingOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderNetworkingOutput)
+}
+
+func (i Mk8sTritonProviderNetworkingArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sTritonProviderNetworking] {
+	return pulumix.Output[Mk8sTritonProviderNetworking]{
+		OutputState: i.ToMk8sTritonProviderNetworkingOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i Mk8sTritonProviderNetworkingArgs) ToMk8sTritonProviderNetworkingPtrOutput() Mk8sTritonProviderNetworkingPtrOutput {
+	return i.ToMk8sTritonProviderNetworkingPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sTritonProviderNetworkingArgs) ToMk8sTritonProviderNetworkingPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderNetworkingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderNetworkingOutput).ToMk8sTritonProviderNetworkingPtrOutputWithContext(ctx)
+}
+
+// Mk8sTritonProviderNetworkingPtrInput is an input type that accepts Mk8sTritonProviderNetworkingArgs, Mk8sTritonProviderNetworkingPtr and Mk8sTritonProviderNetworkingPtrOutput values.
+// You can construct a concrete instance of `Mk8sTritonProviderNetworkingPtrInput` via:
+//
+//	        Mk8sTritonProviderNetworkingArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sTritonProviderNetworkingPtrInput interface {
+	pulumi.Input
+
+	ToMk8sTritonProviderNetworkingPtrOutput() Mk8sTritonProviderNetworkingPtrOutput
+	ToMk8sTritonProviderNetworkingPtrOutputWithContext(context.Context) Mk8sTritonProviderNetworkingPtrOutput
+}
+
+type mk8sTritonProviderNetworkingPtrType Mk8sTritonProviderNetworkingArgs
+
+func Mk8sTritonProviderNetworkingPtr(v *Mk8sTritonProviderNetworkingArgs) Mk8sTritonProviderNetworkingPtrInput {
+	return (*mk8sTritonProviderNetworkingPtrType)(v)
+}
+
+func (*mk8sTritonProviderNetworkingPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sTritonProviderNetworking)(nil)).Elem()
+}
+
+func (i *mk8sTritonProviderNetworkingPtrType) ToMk8sTritonProviderNetworkingPtrOutput() Mk8sTritonProviderNetworkingPtrOutput {
+	return i.ToMk8sTritonProviderNetworkingPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sTritonProviderNetworkingPtrType) ToMk8sTritonProviderNetworkingPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderNetworkingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderNetworkingPtrOutput)
+}
+
+func (i *mk8sTritonProviderNetworkingPtrType) ToOutput(ctx context.Context) pulumix.Output[*Mk8sTritonProviderNetworking] {
+	return pulumix.Output[*Mk8sTritonProviderNetworking]{
+		OutputState: i.ToMk8sTritonProviderNetworkingPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sTritonProviderNetworkingOutput struct{ *pulumi.OutputState }
+
+func (Mk8sTritonProviderNetworkingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sTritonProviderNetworking)(nil)).Elem()
+}
+
+func (o Mk8sTritonProviderNetworkingOutput) ToMk8sTritonProviderNetworkingOutput() Mk8sTritonProviderNetworkingOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderNetworkingOutput) ToMk8sTritonProviderNetworkingOutputWithContext(ctx context.Context) Mk8sTritonProviderNetworkingOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderNetworkingOutput) ToMk8sTritonProviderNetworkingPtrOutput() Mk8sTritonProviderNetworkingPtrOutput {
+	return o.ToMk8sTritonProviderNetworkingPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sTritonProviderNetworkingOutput) ToMk8sTritonProviderNetworkingPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderNetworkingPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sTritonProviderNetworking) *Mk8sTritonProviderNetworking {
+		return &v
+	}).(Mk8sTritonProviderNetworkingPtrOutput)
+}
+
+func (o Mk8sTritonProviderNetworkingOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sTritonProviderNetworking] {
+	return pulumix.Output[Mk8sTritonProviderNetworking]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sTritonProviderNetworkingOutput) PodNetwork() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderNetworking) *string { return v.PodNetwork }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderNetworkingOutput) ServiceNetwork() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderNetworking) *string { return v.ServiceNetwork }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sTritonProviderNetworkingPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sTritonProviderNetworkingPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sTritonProviderNetworking)(nil)).Elem()
+}
+
+func (o Mk8sTritonProviderNetworkingPtrOutput) ToMk8sTritonProviderNetworkingPtrOutput() Mk8sTritonProviderNetworkingPtrOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderNetworkingPtrOutput) ToMk8sTritonProviderNetworkingPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderNetworkingPtrOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderNetworkingPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*Mk8sTritonProviderNetworking] {
+	return pulumix.Output[*Mk8sTritonProviderNetworking]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sTritonProviderNetworkingPtrOutput) Elem() Mk8sTritonProviderNetworkingOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderNetworking) Mk8sTritonProviderNetworking {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sTritonProviderNetworking
+		return ret
+	}).(Mk8sTritonProviderNetworkingOutput)
+}
+
+func (o Mk8sTritonProviderNetworkingPtrOutput) PodNetwork() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderNetworking) *string {
+		if v == nil {
+			return nil
+		}
+		return v.PodNetwork
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderNetworkingPtrOutput) ServiceNetwork() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderNetworking) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ServiceNetwork
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sTritonProviderNodePool struct {
+	Labels            map[string]string                 `pulumi:"labels"`
+	MaxSize           *int                              `pulumi:"maxSize"`
+	MinSize           *int                              `pulumi:"minSize"`
+	Name              string                            `pulumi:"name"`
+	OverrideImageId   *string                           `pulumi:"overrideImageId"`
+	PackageId         string                            `pulumi:"packageId"`
+	PrivateNetworkIds []string                          `pulumi:"privateNetworkIds"`
+	PublicNetworkId   *string                           `pulumi:"publicNetworkId"`
+	Taints            []Mk8sTritonProviderNodePoolTaint `pulumi:"taints"`
+	TritonTags        map[string]string                 `pulumi:"tritonTags"`
+}
+
+// Mk8sTritonProviderNodePoolInput is an input type that accepts Mk8sTritonProviderNodePoolArgs and Mk8sTritonProviderNodePoolOutput values.
+// You can construct a concrete instance of `Mk8sTritonProviderNodePoolInput` via:
+//
+//	Mk8sTritonProviderNodePoolArgs{...}
+type Mk8sTritonProviderNodePoolInput interface {
+	pulumi.Input
+
+	ToMk8sTritonProviderNodePoolOutput() Mk8sTritonProviderNodePoolOutput
+	ToMk8sTritonProviderNodePoolOutputWithContext(context.Context) Mk8sTritonProviderNodePoolOutput
+}
+
+type Mk8sTritonProviderNodePoolArgs struct {
+	Labels            pulumi.StringMapInput                     `pulumi:"labels"`
+	MaxSize           pulumi.IntPtrInput                        `pulumi:"maxSize"`
+	MinSize           pulumi.IntPtrInput                        `pulumi:"minSize"`
+	Name              pulumi.StringInput                        `pulumi:"name"`
+	OverrideImageId   pulumi.StringPtrInput                     `pulumi:"overrideImageId"`
+	PackageId         pulumi.StringInput                        `pulumi:"packageId"`
+	PrivateNetworkIds pulumi.StringArrayInput                   `pulumi:"privateNetworkIds"`
+	PublicNetworkId   pulumi.StringPtrInput                     `pulumi:"publicNetworkId"`
+	Taints            Mk8sTritonProviderNodePoolTaintArrayInput `pulumi:"taints"`
+	TritonTags        pulumi.StringMapInput                     `pulumi:"tritonTags"`
+}
+
+func (Mk8sTritonProviderNodePoolArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sTritonProviderNodePool)(nil)).Elem()
+}
+
+func (i Mk8sTritonProviderNodePoolArgs) ToMk8sTritonProviderNodePoolOutput() Mk8sTritonProviderNodePoolOutput {
+	return i.ToMk8sTritonProviderNodePoolOutputWithContext(context.Background())
+}
+
+func (i Mk8sTritonProviderNodePoolArgs) ToMk8sTritonProviderNodePoolOutputWithContext(ctx context.Context) Mk8sTritonProviderNodePoolOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderNodePoolOutput)
+}
+
+func (i Mk8sTritonProviderNodePoolArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sTritonProviderNodePool] {
+	return pulumix.Output[Mk8sTritonProviderNodePool]{
+		OutputState: i.ToMk8sTritonProviderNodePoolOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sTritonProviderNodePoolArrayInput is an input type that accepts Mk8sTritonProviderNodePoolArray and Mk8sTritonProviderNodePoolArrayOutput values.
+// You can construct a concrete instance of `Mk8sTritonProviderNodePoolArrayInput` via:
+//
+//	Mk8sTritonProviderNodePoolArray{ Mk8sTritonProviderNodePoolArgs{...} }
+type Mk8sTritonProviderNodePoolArrayInput interface {
+	pulumi.Input
+
+	ToMk8sTritonProviderNodePoolArrayOutput() Mk8sTritonProviderNodePoolArrayOutput
+	ToMk8sTritonProviderNodePoolArrayOutputWithContext(context.Context) Mk8sTritonProviderNodePoolArrayOutput
+}
+
+type Mk8sTritonProviderNodePoolArray []Mk8sTritonProviderNodePoolInput
+
+func (Mk8sTritonProviderNodePoolArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sTritonProviderNodePool)(nil)).Elem()
+}
+
+func (i Mk8sTritonProviderNodePoolArray) ToMk8sTritonProviderNodePoolArrayOutput() Mk8sTritonProviderNodePoolArrayOutput {
+	return i.ToMk8sTritonProviderNodePoolArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sTritonProviderNodePoolArray) ToMk8sTritonProviderNodePoolArrayOutputWithContext(ctx context.Context) Mk8sTritonProviderNodePoolArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderNodePoolArrayOutput)
+}
+
+func (i Mk8sTritonProviderNodePoolArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sTritonProviderNodePool] {
+	return pulumix.Output[[]Mk8sTritonProviderNodePool]{
+		OutputState: i.ToMk8sTritonProviderNodePoolArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sTritonProviderNodePoolOutput struct{ *pulumi.OutputState }
+
+func (Mk8sTritonProviderNodePoolOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sTritonProviderNodePool)(nil)).Elem()
+}
+
+func (o Mk8sTritonProviderNodePoolOutput) ToMk8sTritonProviderNodePoolOutput() Mk8sTritonProviderNodePoolOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderNodePoolOutput) ToMk8sTritonProviderNodePoolOutputWithContext(ctx context.Context) Mk8sTritonProviderNodePoolOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderNodePoolOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sTritonProviderNodePool] {
+	return pulumix.Output[Mk8sTritonProviderNodePool]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sTritonProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+func (o Mk8sTritonProviderNodePoolOutput) MaxSize() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderNodePool) *int { return v.MaxSize }).(pulumi.IntPtrOutput)
+}
+
+func (o Mk8sTritonProviderNodePoolOutput) MinSize() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderNodePool) *int { return v.MinSize }).(pulumi.IntPtrOutput)
+}
+
+func (o Mk8sTritonProviderNodePoolOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderNodePool) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o Mk8sTritonProviderNodePoolOutput) OverrideImageId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderNodePool) *string { return v.OverrideImageId }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderNodePoolOutput) PackageId() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderNodePool) string { return v.PackageId }).(pulumi.StringOutput)
+}
+
+func (o Mk8sTritonProviderNodePoolOutput) PrivateNetworkIds() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderNodePool) []string { return v.PrivateNetworkIds }).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sTritonProviderNodePoolOutput) PublicNetworkId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderNodePool) *string { return v.PublicNetworkId }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderNodePoolOutput) Taints() Mk8sTritonProviderNodePoolTaintArrayOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderNodePool) []Mk8sTritonProviderNodePoolTaint { return v.Taints }).(Mk8sTritonProviderNodePoolTaintArrayOutput)
+}
+
+func (o Mk8sTritonProviderNodePoolOutput) TritonTags() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderNodePool) map[string]string { return v.TritonTags }).(pulumi.StringMapOutput)
+}
+
+type Mk8sTritonProviderNodePoolArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sTritonProviderNodePoolArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sTritonProviderNodePool)(nil)).Elem()
+}
+
+func (o Mk8sTritonProviderNodePoolArrayOutput) ToMk8sTritonProviderNodePoolArrayOutput() Mk8sTritonProviderNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderNodePoolArrayOutput) ToMk8sTritonProviderNodePoolArrayOutputWithContext(ctx context.Context) Mk8sTritonProviderNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderNodePoolArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sTritonProviderNodePool] {
+	return pulumix.Output[[]Mk8sTritonProviderNodePool]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sTritonProviderNodePoolArrayOutput) Index(i pulumi.IntInput) Mk8sTritonProviderNodePoolOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sTritonProviderNodePool {
+		return vs[0].([]Mk8sTritonProviderNodePool)[vs[1].(int)]
+	}).(Mk8sTritonProviderNodePoolOutput)
+}
+
+type Mk8sTritonProviderNodePoolTaint struct {
+	Effect *string `pulumi:"effect"`
+	Key    *string `pulumi:"key"`
+	Value  *string `pulumi:"value"`
+}
+
+// Mk8sTritonProviderNodePoolTaintInput is an input type that accepts Mk8sTritonProviderNodePoolTaintArgs and Mk8sTritonProviderNodePoolTaintOutput values.
+// You can construct a concrete instance of `Mk8sTritonProviderNodePoolTaintInput` via:
+//
+//	Mk8sTritonProviderNodePoolTaintArgs{...}
+type Mk8sTritonProviderNodePoolTaintInput interface {
+	pulumi.Input
+
+	ToMk8sTritonProviderNodePoolTaintOutput() Mk8sTritonProviderNodePoolTaintOutput
+	ToMk8sTritonProviderNodePoolTaintOutputWithContext(context.Context) Mk8sTritonProviderNodePoolTaintOutput
+}
+
+type Mk8sTritonProviderNodePoolTaintArgs struct {
+	Effect pulumi.StringPtrInput `pulumi:"effect"`
+	Key    pulumi.StringPtrInput `pulumi:"key"`
+	Value  pulumi.StringPtrInput `pulumi:"value"`
+}
+
+func (Mk8sTritonProviderNodePoolTaintArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sTritonProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sTritonProviderNodePoolTaintArgs) ToMk8sTritonProviderNodePoolTaintOutput() Mk8sTritonProviderNodePoolTaintOutput {
+	return i.ToMk8sTritonProviderNodePoolTaintOutputWithContext(context.Background())
+}
+
+func (i Mk8sTritonProviderNodePoolTaintArgs) ToMk8sTritonProviderNodePoolTaintOutputWithContext(ctx context.Context) Mk8sTritonProviderNodePoolTaintOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderNodePoolTaintOutput)
+}
+
+func (i Mk8sTritonProviderNodePoolTaintArgs) ToOutput(ctx context.Context) pulumix.Output[Mk8sTritonProviderNodePoolTaint] {
+	return pulumix.Output[Mk8sTritonProviderNodePoolTaint]{
+		OutputState: i.ToMk8sTritonProviderNodePoolTaintOutputWithContext(ctx).OutputState,
+	}
+}
+
+// Mk8sTritonProviderNodePoolTaintArrayInput is an input type that accepts Mk8sTritonProviderNodePoolTaintArray and Mk8sTritonProviderNodePoolTaintArrayOutput values.
+// You can construct a concrete instance of `Mk8sTritonProviderNodePoolTaintArrayInput` via:
+//
+//	Mk8sTritonProviderNodePoolTaintArray{ Mk8sTritonProviderNodePoolTaintArgs{...} }
+type Mk8sTritonProviderNodePoolTaintArrayInput interface {
+	pulumi.Input
+
+	ToMk8sTritonProviderNodePoolTaintArrayOutput() Mk8sTritonProviderNodePoolTaintArrayOutput
+	ToMk8sTritonProviderNodePoolTaintArrayOutputWithContext(context.Context) Mk8sTritonProviderNodePoolTaintArrayOutput
+}
+
+type Mk8sTritonProviderNodePoolTaintArray []Mk8sTritonProviderNodePoolTaintInput
+
+func (Mk8sTritonProviderNodePoolTaintArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sTritonProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sTritonProviderNodePoolTaintArray) ToMk8sTritonProviderNodePoolTaintArrayOutput() Mk8sTritonProviderNodePoolTaintArrayOutput {
+	return i.ToMk8sTritonProviderNodePoolTaintArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sTritonProviderNodePoolTaintArray) ToMk8sTritonProviderNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sTritonProviderNodePoolTaintArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderNodePoolTaintArrayOutput)
+}
+
+func (i Mk8sTritonProviderNodePoolTaintArray) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sTritonProviderNodePoolTaint] {
+	return pulumix.Output[[]Mk8sTritonProviderNodePoolTaint]{
+		OutputState: i.ToMk8sTritonProviderNodePoolTaintArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type Mk8sTritonProviderNodePoolTaintOutput struct{ *pulumi.OutputState }
+
+func (Mk8sTritonProviderNodePoolTaintOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sTritonProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sTritonProviderNodePoolTaintOutput) ToMk8sTritonProviderNodePoolTaintOutput() Mk8sTritonProviderNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderNodePoolTaintOutput) ToMk8sTritonProviderNodePoolTaintOutputWithContext(ctx context.Context) Mk8sTritonProviderNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderNodePoolTaintOutput) ToOutput(ctx context.Context) pulumix.Output[Mk8sTritonProviderNodePoolTaint] {
+	return pulumix.Output[Mk8sTritonProviderNodePoolTaint]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sTritonProviderNodePoolTaintOutput) Effect() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderNodePoolTaint) *string { return v.Effect }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderNodePoolTaintOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderNodePoolTaint) *string { return v.Key }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderNodePoolTaintOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderNodePoolTaint) *string { return v.Value }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sTritonProviderNodePoolTaintArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sTritonProviderNodePoolTaintArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sTritonProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sTritonProviderNodePoolTaintArrayOutput) ToMk8sTritonProviderNodePoolTaintArrayOutput() Mk8sTritonProviderNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderNodePoolTaintArrayOutput) ToMk8sTritonProviderNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sTritonProviderNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderNodePoolTaintArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]Mk8sTritonProviderNodePoolTaint] {
+	return pulumix.Output[[]Mk8sTritonProviderNodePoolTaint]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o Mk8sTritonProviderNodePoolTaintArrayOutput) Index(i pulumi.IntInput) Mk8sTritonProviderNodePoolTaintOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sTritonProviderNodePoolTaint {
+		return vs[0].([]Mk8sTritonProviderNodePoolTaint)[vs[1].(int)]
+	}).(Mk8sTritonProviderNodePoolTaintOutput)
 }
 
 type OrgAuthConfig struct {
@@ -27228,8 +34342,9 @@ func (o GetGvcLightstepTracingPtrOutput) Sampling() pulumi.Float64PtrOutput {
 }
 
 type GetGvcLoadBalancer struct {
-	Dedicated      bool `pulumi:"dedicated"`
-	TrustedProxies *int `pulumi:"trustedProxies"`
+	Dedicated      bool                        `pulumi:"dedicated"`
+	Redirect       *GetGvcLoadBalancerRedirect `pulumi:"redirect"`
+	TrustedProxies *int                        `pulumi:"trustedProxies"`
 }
 
 // GetGvcLoadBalancerInput is an input type that accepts GetGvcLoadBalancerArgs and GetGvcLoadBalancerOutput values.
@@ -27244,8 +34359,9 @@ type GetGvcLoadBalancerInput interface {
 }
 
 type GetGvcLoadBalancerArgs struct {
-	Dedicated      pulumi.BoolInput   `pulumi:"dedicated"`
-	TrustedProxies pulumi.IntPtrInput `pulumi:"trustedProxies"`
+	Dedicated      pulumi.BoolInput                   `pulumi:"dedicated"`
+	Redirect       GetGvcLoadBalancerRedirectPtrInput `pulumi:"redirect"`
+	TrustedProxies pulumi.IntPtrInput                 `pulumi:"trustedProxies"`
 }
 
 func (GetGvcLoadBalancerArgs) ElementType() reflect.Type {
@@ -27347,6 +34463,10 @@ func (o GetGvcLoadBalancerOutput) Dedicated() pulumi.BoolOutput {
 	return o.ApplyT(func(v GetGvcLoadBalancer) bool { return v.Dedicated }).(pulumi.BoolOutput)
 }
 
+func (o GetGvcLoadBalancerOutput) Redirect() GetGvcLoadBalancerRedirectPtrOutput {
+	return o.ApplyT(func(v GetGvcLoadBalancer) *GetGvcLoadBalancerRedirect { return v.Redirect }).(GetGvcLoadBalancerRedirectPtrOutput)
+}
+
 func (o GetGvcLoadBalancerOutput) TrustedProxies() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v GetGvcLoadBalancer) *int { return v.TrustedProxies }).(pulumi.IntPtrOutput)
 }
@@ -27390,6 +34510,15 @@ func (o GetGvcLoadBalancerPtrOutput) Dedicated() pulumi.BoolPtrOutput {
 	}).(pulumi.BoolPtrOutput)
 }
 
+func (o GetGvcLoadBalancerPtrOutput) Redirect() GetGvcLoadBalancerRedirectPtrOutput {
+	return o.ApplyT(func(v *GetGvcLoadBalancer) *GetGvcLoadBalancerRedirect {
+		if v == nil {
+			return nil
+		}
+		return v.Redirect
+	}).(GetGvcLoadBalancerRedirectPtrOutput)
+}
+
 func (o GetGvcLoadBalancerPtrOutput) TrustedProxies() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *GetGvcLoadBalancer) *int {
 		if v == nil {
@@ -27397,6 +34526,320 @@ func (o GetGvcLoadBalancerPtrOutput) TrustedProxies() pulumi.IntPtrOutput {
 		}
 		return v.TrustedProxies
 	}).(pulumi.IntPtrOutput)
+}
+
+type GetGvcLoadBalancerRedirect struct {
+	Class *GetGvcLoadBalancerRedirectClass `pulumi:"class"`
+}
+
+// GetGvcLoadBalancerRedirectInput is an input type that accepts GetGvcLoadBalancerRedirectArgs and GetGvcLoadBalancerRedirectOutput values.
+// You can construct a concrete instance of `GetGvcLoadBalancerRedirectInput` via:
+//
+//	GetGvcLoadBalancerRedirectArgs{...}
+type GetGvcLoadBalancerRedirectInput interface {
+	pulumi.Input
+
+	ToGetGvcLoadBalancerRedirectOutput() GetGvcLoadBalancerRedirectOutput
+	ToGetGvcLoadBalancerRedirectOutputWithContext(context.Context) GetGvcLoadBalancerRedirectOutput
+}
+
+type GetGvcLoadBalancerRedirectArgs struct {
+	Class GetGvcLoadBalancerRedirectClassPtrInput `pulumi:"class"`
+}
+
+func (GetGvcLoadBalancerRedirectArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetGvcLoadBalancerRedirect)(nil)).Elem()
+}
+
+func (i GetGvcLoadBalancerRedirectArgs) ToGetGvcLoadBalancerRedirectOutput() GetGvcLoadBalancerRedirectOutput {
+	return i.ToGetGvcLoadBalancerRedirectOutputWithContext(context.Background())
+}
+
+func (i GetGvcLoadBalancerRedirectArgs) ToGetGvcLoadBalancerRedirectOutputWithContext(ctx context.Context) GetGvcLoadBalancerRedirectOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetGvcLoadBalancerRedirectOutput)
+}
+
+func (i GetGvcLoadBalancerRedirectArgs) ToOutput(ctx context.Context) pulumix.Output[GetGvcLoadBalancerRedirect] {
+	return pulumix.Output[GetGvcLoadBalancerRedirect]{
+		OutputState: i.ToGetGvcLoadBalancerRedirectOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i GetGvcLoadBalancerRedirectArgs) ToGetGvcLoadBalancerRedirectPtrOutput() GetGvcLoadBalancerRedirectPtrOutput {
+	return i.ToGetGvcLoadBalancerRedirectPtrOutputWithContext(context.Background())
+}
+
+func (i GetGvcLoadBalancerRedirectArgs) ToGetGvcLoadBalancerRedirectPtrOutputWithContext(ctx context.Context) GetGvcLoadBalancerRedirectPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetGvcLoadBalancerRedirectOutput).ToGetGvcLoadBalancerRedirectPtrOutputWithContext(ctx)
+}
+
+// GetGvcLoadBalancerRedirectPtrInput is an input type that accepts GetGvcLoadBalancerRedirectArgs, GetGvcLoadBalancerRedirectPtr and GetGvcLoadBalancerRedirectPtrOutput values.
+// You can construct a concrete instance of `GetGvcLoadBalancerRedirectPtrInput` via:
+//
+//	        GetGvcLoadBalancerRedirectArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetGvcLoadBalancerRedirectPtrInput interface {
+	pulumi.Input
+
+	ToGetGvcLoadBalancerRedirectPtrOutput() GetGvcLoadBalancerRedirectPtrOutput
+	ToGetGvcLoadBalancerRedirectPtrOutputWithContext(context.Context) GetGvcLoadBalancerRedirectPtrOutput
+}
+
+type getGvcLoadBalancerRedirectPtrType GetGvcLoadBalancerRedirectArgs
+
+func GetGvcLoadBalancerRedirectPtr(v *GetGvcLoadBalancerRedirectArgs) GetGvcLoadBalancerRedirectPtrInput {
+	return (*getGvcLoadBalancerRedirectPtrType)(v)
+}
+
+func (*getGvcLoadBalancerRedirectPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetGvcLoadBalancerRedirect)(nil)).Elem()
+}
+
+func (i *getGvcLoadBalancerRedirectPtrType) ToGetGvcLoadBalancerRedirectPtrOutput() GetGvcLoadBalancerRedirectPtrOutput {
+	return i.ToGetGvcLoadBalancerRedirectPtrOutputWithContext(context.Background())
+}
+
+func (i *getGvcLoadBalancerRedirectPtrType) ToGetGvcLoadBalancerRedirectPtrOutputWithContext(ctx context.Context) GetGvcLoadBalancerRedirectPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetGvcLoadBalancerRedirectPtrOutput)
+}
+
+func (i *getGvcLoadBalancerRedirectPtrType) ToOutput(ctx context.Context) pulumix.Output[*GetGvcLoadBalancerRedirect] {
+	return pulumix.Output[*GetGvcLoadBalancerRedirect]{
+		OutputState: i.ToGetGvcLoadBalancerRedirectPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetGvcLoadBalancerRedirectOutput struct{ *pulumi.OutputState }
+
+func (GetGvcLoadBalancerRedirectOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetGvcLoadBalancerRedirect)(nil)).Elem()
+}
+
+func (o GetGvcLoadBalancerRedirectOutput) ToGetGvcLoadBalancerRedirectOutput() GetGvcLoadBalancerRedirectOutput {
+	return o
+}
+
+func (o GetGvcLoadBalancerRedirectOutput) ToGetGvcLoadBalancerRedirectOutputWithContext(ctx context.Context) GetGvcLoadBalancerRedirectOutput {
+	return o
+}
+
+func (o GetGvcLoadBalancerRedirectOutput) ToGetGvcLoadBalancerRedirectPtrOutput() GetGvcLoadBalancerRedirectPtrOutput {
+	return o.ToGetGvcLoadBalancerRedirectPtrOutputWithContext(context.Background())
+}
+
+func (o GetGvcLoadBalancerRedirectOutput) ToGetGvcLoadBalancerRedirectPtrOutputWithContext(ctx context.Context) GetGvcLoadBalancerRedirectPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetGvcLoadBalancerRedirect) *GetGvcLoadBalancerRedirect {
+		return &v
+	}).(GetGvcLoadBalancerRedirectPtrOutput)
+}
+
+func (o GetGvcLoadBalancerRedirectOutput) ToOutput(ctx context.Context) pulumix.Output[GetGvcLoadBalancerRedirect] {
+	return pulumix.Output[GetGvcLoadBalancerRedirect]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetGvcLoadBalancerRedirectOutput) Class() GetGvcLoadBalancerRedirectClassPtrOutput {
+	return o.ApplyT(func(v GetGvcLoadBalancerRedirect) *GetGvcLoadBalancerRedirectClass { return v.Class }).(GetGvcLoadBalancerRedirectClassPtrOutput)
+}
+
+type GetGvcLoadBalancerRedirectPtrOutput struct{ *pulumi.OutputState }
+
+func (GetGvcLoadBalancerRedirectPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetGvcLoadBalancerRedirect)(nil)).Elem()
+}
+
+func (o GetGvcLoadBalancerRedirectPtrOutput) ToGetGvcLoadBalancerRedirectPtrOutput() GetGvcLoadBalancerRedirectPtrOutput {
+	return o
+}
+
+func (o GetGvcLoadBalancerRedirectPtrOutput) ToGetGvcLoadBalancerRedirectPtrOutputWithContext(ctx context.Context) GetGvcLoadBalancerRedirectPtrOutput {
+	return o
+}
+
+func (o GetGvcLoadBalancerRedirectPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*GetGvcLoadBalancerRedirect] {
+	return pulumix.Output[*GetGvcLoadBalancerRedirect]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetGvcLoadBalancerRedirectPtrOutput) Elem() GetGvcLoadBalancerRedirectOutput {
+	return o.ApplyT(func(v *GetGvcLoadBalancerRedirect) GetGvcLoadBalancerRedirect {
+		if v != nil {
+			return *v
+		}
+		var ret GetGvcLoadBalancerRedirect
+		return ret
+	}).(GetGvcLoadBalancerRedirectOutput)
+}
+
+func (o GetGvcLoadBalancerRedirectPtrOutput) Class() GetGvcLoadBalancerRedirectClassPtrOutput {
+	return o.ApplyT(func(v *GetGvcLoadBalancerRedirect) *GetGvcLoadBalancerRedirectClass {
+		if v == nil {
+			return nil
+		}
+		return v.Class
+	}).(GetGvcLoadBalancerRedirectClassPtrOutput)
+}
+
+type GetGvcLoadBalancerRedirectClass struct {
+	Status5xx *string `pulumi:"status5xx"`
+}
+
+// GetGvcLoadBalancerRedirectClassInput is an input type that accepts GetGvcLoadBalancerRedirectClassArgs and GetGvcLoadBalancerRedirectClassOutput values.
+// You can construct a concrete instance of `GetGvcLoadBalancerRedirectClassInput` via:
+//
+//	GetGvcLoadBalancerRedirectClassArgs{...}
+type GetGvcLoadBalancerRedirectClassInput interface {
+	pulumi.Input
+
+	ToGetGvcLoadBalancerRedirectClassOutput() GetGvcLoadBalancerRedirectClassOutput
+	ToGetGvcLoadBalancerRedirectClassOutputWithContext(context.Context) GetGvcLoadBalancerRedirectClassOutput
+}
+
+type GetGvcLoadBalancerRedirectClassArgs struct {
+	Status5xx pulumi.StringPtrInput `pulumi:"status5xx"`
+}
+
+func (GetGvcLoadBalancerRedirectClassArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetGvcLoadBalancerRedirectClass)(nil)).Elem()
+}
+
+func (i GetGvcLoadBalancerRedirectClassArgs) ToGetGvcLoadBalancerRedirectClassOutput() GetGvcLoadBalancerRedirectClassOutput {
+	return i.ToGetGvcLoadBalancerRedirectClassOutputWithContext(context.Background())
+}
+
+func (i GetGvcLoadBalancerRedirectClassArgs) ToGetGvcLoadBalancerRedirectClassOutputWithContext(ctx context.Context) GetGvcLoadBalancerRedirectClassOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetGvcLoadBalancerRedirectClassOutput)
+}
+
+func (i GetGvcLoadBalancerRedirectClassArgs) ToOutput(ctx context.Context) pulumix.Output[GetGvcLoadBalancerRedirectClass] {
+	return pulumix.Output[GetGvcLoadBalancerRedirectClass]{
+		OutputState: i.ToGetGvcLoadBalancerRedirectClassOutputWithContext(ctx).OutputState,
+	}
+}
+
+func (i GetGvcLoadBalancerRedirectClassArgs) ToGetGvcLoadBalancerRedirectClassPtrOutput() GetGvcLoadBalancerRedirectClassPtrOutput {
+	return i.ToGetGvcLoadBalancerRedirectClassPtrOutputWithContext(context.Background())
+}
+
+func (i GetGvcLoadBalancerRedirectClassArgs) ToGetGvcLoadBalancerRedirectClassPtrOutputWithContext(ctx context.Context) GetGvcLoadBalancerRedirectClassPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetGvcLoadBalancerRedirectClassOutput).ToGetGvcLoadBalancerRedirectClassPtrOutputWithContext(ctx)
+}
+
+// GetGvcLoadBalancerRedirectClassPtrInput is an input type that accepts GetGvcLoadBalancerRedirectClassArgs, GetGvcLoadBalancerRedirectClassPtr and GetGvcLoadBalancerRedirectClassPtrOutput values.
+// You can construct a concrete instance of `GetGvcLoadBalancerRedirectClassPtrInput` via:
+//
+//	        GetGvcLoadBalancerRedirectClassArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetGvcLoadBalancerRedirectClassPtrInput interface {
+	pulumi.Input
+
+	ToGetGvcLoadBalancerRedirectClassPtrOutput() GetGvcLoadBalancerRedirectClassPtrOutput
+	ToGetGvcLoadBalancerRedirectClassPtrOutputWithContext(context.Context) GetGvcLoadBalancerRedirectClassPtrOutput
+}
+
+type getGvcLoadBalancerRedirectClassPtrType GetGvcLoadBalancerRedirectClassArgs
+
+func GetGvcLoadBalancerRedirectClassPtr(v *GetGvcLoadBalancerRedirectClassArgs) GetGvcLoadBalancerRedirectClassPtrInput {
+	return (*getGvcLoadBalancerRedirectClassPtrType)(v)
+}
+
+func (*getGvcLoadBalancerRedirectClassPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetGvcLoadBalancerRedirectClass)(nil)).Elem()
+}
+
+func (i *getGvcLoadBalancerRedirectClassPtrType) ToGetGvcLoadBalancerRedirectClassPtrOutput() GetGvcLoadBalancerRedirectClassPtrOutput {
+	return i.ToGetGvcLoadBalancerRedirectClassPtrOutputWithContext(context.Background())
+}
+
+func (i *getGvcLoadBalancerRedirectClassPtrType) ToGetGvcLoadBalancerRedirectClassPtrOutputWithContext(ctx context.Context) GetGvcLoadBalancerRedirectClassPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetGvcLoadBalancerRedirectClassPtrOutput)
+}
+
+func (i *getGvcLoadBalancerRedirectClassPtrType) ToOutput(ctx context.Context) pulumix.Output[*GetGvcLoadBalancerRedirectClass] {
+	return pulumix.Output[*GetGvcLoadBalancerRedirectClass]{
+		OutputState: i.ToGetGvcLoadBalancerRedirectClassPtrOutputWithContext(ctx).OutputState,
+	}
+}
+
+type GetGvcLoadBalancerRedirectClassOutput struct{ *pulumi.OutputState }
+
+func (GetGvcLoadBalancerRedirectClassOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetGvcLoadBalancerRedirectClass)(nil)).Elem()
+}
+
+func (o GetGvcLoadBalancerRedirectClassOutput) ToGetGvcLoadBalancerRedirectClassOutput() GetGvcLoadBalancerRedirectClassOutput {
+	return o
+}
+
+func (o GetGvcLoadBalancerRedirectClassOutput) ToGetGvcLoadBalancerRedirectClassOutputWithContext(ctx context.Context) GetGvcLoadBalancerRedirectClassOutput {
+	return o
+}
+
+func (o GetGvcLoadBalancerRedirectClassOutput) ToGetGvcLoadBalancerRedirectClassPtrOutput() GetGvcLoadBalancerRedirectClassPtrOutput {
+	return o.ToGetGvcLoadBalancerRedirectClassPtrOutputWithContext(context.Background())
+}
+
+func (o GetGvcLoadBalancerRedirectClassOutput) ToGetGvcLoadBalancerRedirectClassPtrOutputWithContext(ctx context.Context) GetGvcLoadBalancerRedirectClassPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetGvcLoadBalancerRedirectClass) *GetGvcLoadBalancerRedirectClass {
+		return &v
+	}).(GetGvcLoadBalancerRedirectClassPtrOutput)
+}
+
+func (o GetGvcLoadBalancerRedirectClassOutput) ToOutput(ctx context.Context) pulumix.Output[GetGvcLoadBalancerRedirectClass] {
+	return pulumix.Output[GetGvcLoadBalancerRedirectClass]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetGvcLoadBalancerRedirectClassOutput) Status5xx() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetGvcLoadBalancerRedirectClass) *string { return v.Status5xx }).(pulumi.StringPtrOutput)
+}
+
+type GetGvcLoadBalancerRedirectClassPtrOutput struct{ *pulumi.OutputState }
+
+func (GetGvcLoadBalancerRedirectClassPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetGvcLoadBalancerRedirectClass)(nil)).Elem()
+}
+
+func (o GetGvcLoadBalancerRedirectClassPtrOutput) ToGetGvcLoadBalancerRedirectClassPtrOutput() GetGvcLoadBalancerRedirectClassPtrOutput {
+	return o
+}
+
+func (o GetGvcLoadBalancerRedirectClassPtrOutput) ToGetGvcLoadBalancerRedirectClassPtrOutputWithContext(ctx context.Context) GetGvcLoadBalancerRedirectClassPtrOutput {
+	return o
+}
+
+func (o GetGvcLoadBalancerRedirectClassPtrOutput) ToOutput(ctx context.Context) pulumix.Output[*GetGvcLoadBalancerRedirectClass] {
+	return pulumix.Output[*GetGvcLoadBalancerRedirectClass]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o GetGvcLoadBalancerRedirectClassPtrOutput) Elem() GetGvcLoadBalancerRedirectClassOutput {
+	return o.ApplyT(func(v *GetGvcLoadBalancerRedirectClass) GetGvcLoadBalancerRedirectClass {
+		if v != nil {
+			return *v
+		}
+		var ret GetGvcLoadBalancerRedirectClass
+		return ret
+	}).(GetGvcLoadBalancerRedirectClassOutput)
+}
+
+func (o GetGvcLoadBalancerRedirectClassPtrOutput) Status5xx() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetGvcLoadBalancerRedirectClass) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Status5xx
+	}).(pulumi.StringPtrOutput)
 }
 
 type GetGvcOtelTracing struct {
@@ -31193,6 +38636,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcLightstepTracingPtrInput)(nil)).Elem(), GvcLightstepTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcLoadBalancerInput)(nil)).Elem(), GvcLoadBalancerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcLoadBalancerPtrInput)(nil)).Elem(), GvcLoadBalancerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GvcLoadBalancerRedirectInput)(nil)).Elem(), GvcLoadBalancerRedirectArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GvcLoadBalancerRedirectPtrInput)(nil)).Elem(), GvcLoadBalancerRedirectArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GvcLoadBalancerRedirectClassInput)(nil)).Elem(), GvcLoadBalancerRedirectClassArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GvcLoadBalancerRedirectClassPtrInput)(nil)).Elem(), GvcLoadBalancerRedirectClassArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcOtelTracingInput)(nil)).Elem(), GvcOtelTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcOtelTracingPtrInput)(nil)).Elem(), GvcOtelTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcSidecarInput)(nil)).Elem(), GvcSidecarArgs{})
@@ -31223,6 +38670,12 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*IdentityNgsAccessPolicyRespPtrInput)(nil)).Elem(), IdentityNgsAccessPolicyRespArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*IdentityNgsAccessPolicySubInput)(nil)).Elem(), IdentityNgsAccessPolicySubArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*IdentityNgsAccessPolicySubPtrInput)(nil)).Elem(), IdentityNgsAccessPolicySubArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IpSetLocationInput)(nil)).Elem(), IpSetLocationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IpSetLocationArrayInput)(nil)).Elem(), IpSetLocationArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IpSetStatusInput)(nil)).Elem(), IpSetStatusArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IpSetStatusArrayInput)(nil)).Elem(), IpSetStatusArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IpSetStatusIpAddressInput)(nil)).Elem(), IpSetStatusIpAddressArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*IpSetStatusIpAddressArrayInput)(nil)).Elem(), IpSetStatusIpAddressArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*LocationGeoInput)(nil)).Elem(), LocationGeoArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*LocationGeoArrayInput)(nil)).Elem(), LocationGeoArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsInput)(nil)).Elem(), Mk8sAddOnsArgs{})
@@ -31249,6 +38702,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderPtrInput)(nil)).Elem(), Mk8sAwsProviderArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderAutoscalerInput)(nil)).Elem(), Mk8sAwsProviderAutoscalerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderAutoscalerPtrInput)(nil)).Elem(), Mk8sAwsProviderAutoscalerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderDeployRoleChainInput)(nil)).Elem(), Mk8sAwsProviderDeployRoleChainArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderDeployRoleChainArrayInput)(nil)).Elem(), Mk8sAwsProviderDeployRoleChainArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderImageInput)(nil)).Elem(), Mk8sAwsProviderImageArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderImagePtrInput)(nil)).Elem(), Mk8sAwsProviderImageArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderNetworkingInput)(nil)).Elem(), Mk8sAwsProviderNetworkingArgs{})
@@ -31258,6 +38713,16 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderNodePoolOverrideImageInput)(nil)).Elem(), Mk8sAwsProviderNodePoolOverrideImageArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderNodePoolTaintInput)(nil)).Elem(), Mk8sAwsProviderNodePoolTaintArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderNodePoolTaintArrayInput)(nil)).Elem(), Mk8sAwsProviderNodePoolTaintArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sDigitalOceanProviderInput)(nil)).Elem(), Mk8sDigitalOceanProviderArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sDigitalOceanProviderPtrInput)(nil)).Elem(), Mk8sDigitalOceanProviderArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sDigitalOceanProviderAutoscalerInput)(nil)).Elem(), Mk8sDigitalOceanProviderAutoscalerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sDigitalOceanProviderAutoscalerPtrInput)(nil)).Elem(), Mk8sDigitalOceanProviderAutoscalerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sDigitalOceanProviderNetworkingInput)(nil)).Elem(), Mk8sDigitalOceanProviderNetworkingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sDigitalOceanProviderNetworkingPtrInput)(nil)).Elem(), Mk8sDigitalOceanProviderNetworkingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sDigitalOceanProviderNodePoolInput)(nil)).Elem(), Mk8sDigitalOceanProviderNodePoolArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sDigitalOceanProviderNodePoolArrayInput)(nil)).Elem(), Mk8sDigitalOceanProviderNodePoolArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sDigitalOceanProviderNodePoolTaintInput)(nil)).Elem(), Mk8sDigitalOceanProviderNodePoolTaintArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sDigitalOceanProviderNodePoolTaintArrayInput)(nil)).Elem(), Mk8sDigitalOceanProviderNodePoolTaintArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sEphemeralProviderInput)(nil)).Elem(), Mk8sEphemeralProviderArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sEphemeralProviderPtrInput)(nil)).Elem(), Mk8sEphemeralProviderArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sEphemeralProviderNodePoolInput)(nil)).Elem(), Mk8sEphemeralProviderNodePoolArgs{})
@@ -31288,6 +38753,52 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sHetznerProviderNodePoolArrayInput)(nil)).Elem(), Mk8sHetznerProviderNodePoolArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sHetznerProviderNodePoolTaintInput)(nil)).Elem(), Mk8sHetznerProviderNodePoolTaintArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sHetznerProviderNodePoolTaintArrayInput)(nil)).Elem(), Mk8sHetznerProviderNodePoolTaintArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLambdalabsProviderInput)(nil)).Elem(), Mk8sLambdalabsProviderArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLambdalabsProviderPtrInput)(nil)).Elem(), Mk8sLambdalabsProviderArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLambdalabsProviderAutoscalerInput)(nil)).Elem(), Mk8sLambdalabsProviderAutoscalerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLambdalabsProviderAutoscalerPtrInput)(nil)).Elem(), Mk8sLambdalabsProviderAutoscalerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLambdalabsProviderNodePoolInput)(nil)).Elem(), Mk8sLambdalabsProviderNodePoolArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLambdalabsProviderNodePoolArrayInput)(nil)).Elem(), Mk8sLambdalabsProviderNodePoolArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLambdalabsProviderNodePoolTaintInput)(nil)).Elem(), Mk8sLambdalabsProviderNodePoolTaintArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLambdalabsProviderNodePoolTaintArrayInput)(nil)).Elem(), Mk8sLambdalabsProviderNodePoolTaintArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLambdalabsProviderUnmanagedNodePoolInput)(nil)).Elem(), Mk8sLambdalabsProviderUnmanagedNodePoolArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLambdalabsProviderUnmanagedNodePoolArrayInput)(nil)).Elem(), Mk8sLambdalabsProviderUnmanagedNodePoolArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLambdalabsProviderUnmanagedNodePoolTaintInput)(nil)).Elem(), Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayInput)(nil)).Elem(), Mk8sLambdalabsProviderUnmanagedNodePoolTaintArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLinodeProviderInput)(nil)).Elem(), Mk8sLinodeProviderArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLinodeProviderPtrInput)(nil)).Elem(), Mk8sLinodeProviderArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLinodeProviderAutoscalerInput)(nil)).Elem(), Mk8sLinodeProviderAutoscalerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLinodeProviderAutoscalerPtrInput)(nil)).Elem(), Mk8sLinodeProviderAutoscalerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLinodeProviderNetworkingInput)(nil)).Elem(), Mk8sLinodeProviderNetworkingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLinodeProviderNetworkingPtrInput)(nil)).Elem(), Mk8sLinodeProviderNetworkingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLinodeProviderNodePoolInput)(nil)).Elem(), Mk8sLinodeProviderNodePoolArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLinodeProviderNodePoolArrayInput)(nil)).Elem(), Mk8sLinodeProviderNodePoolArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLinodeProviderNodePoolTaintInput)(nil)).Elem(), Mk8sLinodeProviderNodePoolTaintArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sLinodeProviderNodePoolTaintArrayInput)(nil)).Elem(), Mk8sLinodeProviderNodePoolTaintArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sOblivusProviderInput)(nil)).Elem(), Mk8sOblivusProviderArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sOblivusProviderPtrInput)(nil)).Elem(), Mk8sOblivusProviderArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sOblivusProviderAutoscalerInput)(nil)).Elem(), Mk8sOblivusProviderAutoscalerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sOblivusProviderAutoscalerPtrInput)(nil)).Elem(), Mk8sOblivusProviderAutoscalerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sOblivusProviderNodePoolInput)(nil)).Elem(), Mk8sOblivusProviderNodePoolArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sOblivusProviderNodePoolArrayInput)(nil)).Elem(), Mk8sOblivusProviderNodePoolArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sOblivusProviderNodePoolTaintInput)(nil)).Elem(), Mk8sOblivusProviderNodePoolTaintArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sOblivusProviderNodePoolTaintArrayInput)(nil)).Elem(), Mk8sOblivusProviderNodePoolTaintArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sOblivusProviderUnmanagedNodePoolInput)(nil)).Elem(), Mk8sOblivusProviderUnmanagedNodePoolArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sOblivusProviderUnmanagedNodePoolArrayInput)(nil)).Elem(), Mk8sOblivusProviderUnmanagedNodePoolArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sOblivusProviderUnmanagedNodePoolTaintInput)(nil)).Elem(), Mk8sOblivusProviderUnmanagedNodePoolTaintArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sOblivusProviderUnmanagedNodePoolTaintArrayInput)(nil)).Elem(), Mk8sOblivusProviderUnmanagedNodePoolTaintArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sPaperspaceProviderInput)(nil)).Elem(), Mk8sPaperspaceProviderArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sPaperspaceProviderPtrInput)(nil)).Elem(), Mk8sPaperspaceProviderArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sPaperspaceProviderAutoscalerInput)(nil)).Elem(), Mk8sPaperspaceProviderAutoscalerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sPaperspaceProviderAutoscalerPtrInput)(nil)).Elem(), Mk8sPaperspaceProviderAutoscalerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sPaperspaceProviderNodePoolInput)(nil)).Elem(), Mk8sPaperspaceProviderNodePoolArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sPaperspaceProviderNodePoolArrayInput)(nil)).Elem(), Mk8sPaperspaceProviderNodePoolArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sPaperspaceProviderNodePoolTaintInput)(nil)).Elem(), Mk8sPaperspaceProviderNodePoolTaintArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sPaperspaceProviderNodePoolTaintArrayInput)(nil)).Elem(), Mk8sPaperspaceProviderNodePoolTaintArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sPaperspaceProviderUnmanagedNodePoolInput)(nil)).Elem(), Mk8sPaperspaceProviderUnmanagedNodePoolArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sPaperspaceProviderUnmanagedNodePoolArrayInput)(nil)).Elem(), Mk8sPaperspaceProviderUnmanagedNodePoolArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sPaperspaceProviderUnmanagedNodePoolTaintInput)(nil)).Elem(), Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayInput)(nil)).Elem(), Mk8sPaperspaceProviderUnmanagedNodePoolTaintArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sStatusInput)(nil)).Elem(), Mk8sStatusArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sStatusArrayInput)(nil)).Elem(), Mk8sStatusArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sStatusAddOnInput)(nil)).Elem(), Mk8sStatusAddOnArgs{})
@@ -31308,6 +38819,18 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sStatusAddOnLogArrayInput)(nil)).Elem(), Mk8sStatusAddOnLogArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sStatusAddOnMetricInput)(nil)).Elem(), Mk8sStatusAddOnMetricArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sStatusAddOnMetricArrayInput)(nil)).Elem(), Mk8sStatusAddOnMetricArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderInput)(nil)).Elem(), Mk8sTritonProviderArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderPtrInput)(nil)).Elem(), Mk8sTritonProviderArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderAutoscalerInput)(nil)).Elem(), Mk8sTritonProviderAutoscalerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderAutoscalerPtrInput)(nil)).Elem(), Mk8sTritonProviderAutoscalerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderConnectionInput)(nil)).Elem(), Mk8sTritonProviderConnectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderConnectionPtrInput)(nil)).Elem(), Mk8sTritonProviderConnectionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderNetworkingInput)(nil)).Elem(), Mk8sTritonProviderNetworkingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderNetworkingPtrInput)(nil)).Elem(), Mk8sTritonProviderNetworkingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderNodePoolInput)(nil)).Elem(), Mk8sTritonProviderNodePoolArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderNodePoolArrayInput)(nil)).Elem(), Mk8sTritonProviderNodePoolArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderNodePoolTaintInput)(nil)).Elem(), Mk8sTritonProviderNodePoolTaintArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderNodePoolTaintArrayInput)(nil)).Elem(), Mk8sTritonProviderNodePoolTaintArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgAuthConfigInput)(nil)).Elem(), OrgAuthConfigArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgAuthConfigPtrInput)(nil)).Elem(), OrgAuthConfigArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingCloudWatchLoggingInput)(nil)).Elem(), OrgLoggingCloudWatchLoggingArgs{})
@@ -31472,6 +38995,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLightstepTracingPtrInput)(nil)).Elem(), GetGvcLightstepTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLoadBalancerInput)(nil)).Elem(), GetGvcLoadBalancerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLoadBalancerPtrInput)(nil)).Elem(), GetGvcLoadBalancerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLoadBalancerRedirectInput)(nil)).Elem(), GetGvcLoadBalancerRedirectArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLoadBalancerRedirectPtrInput)(nil)).Elem(), GetGvcLoadBalancerRedirectArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLoadBalancerRedirectClassInput)(nil)).Elem(), GetGvcLoadBalancerRedirectClassArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLoadBalancerRedirectClassPtrInput)(nil)).Elem(), GetGvcLoadBalancerRedirectClassArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcOtelTracingInput)(nil)).Elem(), GetGvcOtelTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcOtelTracingPtrInput)(nil)).Elem(), GetGvcOtelTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcSidecarInput)(nil)).Elem(), GetGvcSidecarArgs{})
@@ -31565,6 +39092,10 @@ func init() {
 	pulumi.RegisterOutputType(GvcLightstepTracingPtrOutput{})
 	pulumi.RegisterOutputType(GvcLoadBalancerOutput{})
 	pulumi.RegisterOutputType(GvcLoadBalancerPtrOutput{})
+	pulumi.RegisterOutputType(GvcLoadBalancerRedirectOutput{})
+	pulumi.RegisterOutputType(GvcLoadBalancerRedirectPtrOutput{})
+	pulumi.RegisterOutputType(GvcLoadBalancerRedirectClassOutput{})
+	pulumi.RegisterOutputType(GvcLoadBalancerRedirectClassPtrOutput{})
 	pulumi.RegisterOutputType(GvcOtelTracingOutput{})
 	pulumi.RegisterOutputType(GvcOtelTracingPtrOutput{})
 	pulumi.RegisterOutputType(GvcSidecarOutput{})
@@ -31595,6 +39126,12 @@ func init() {
 	pulumi.RegisterOutputType(IdentityNgsAccessPolicyRespPtrOutput{})
 	pulumi.RegisterOutputType(IdentityNgsAccessPolicySubOutput{})
 	pulumi.RegisterOutputType(IdentityNgsAccessPolicySubPtrOutput{})
+	pulumi.RegisterOutputType(IpSetLocationOutput{})
+	pulumi.RegisterOutputType(IpSetLocationArrayOutput{})
+	pulumi.RegisterOutputType(IpSetStatusOutput{})
+	pulumi.RegisterOutputType(IpSetStatusArrayOutput{})
+	pulumi.RegisterOutputType(IpSetStatusIpAddressOutput{})
+	pulumi.RegisterOutputType(IpSetStatusIpAddressArrayOutput{})
 	pulumi.RegisterOutputType(LocationGeoOutput{})
 	pulumi.RegisterOutputType(LocationGeoArrayOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsOutput{})
@@ -31621,6 +39158,8 @@ func init() {
 	pulumi.RegisterOutputType(Mk8sAwsProviderPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAwsProviderAutoscalerOutput{})
 	pulumi.RegisterOutputType(Mk8sAwsProviderAutoscalerPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAwsProviderDeployRoleChainOutput{})
+	pulumi.RegisterOutputType(Mk8sAwsProviderDeployRoleChainArrayOutput{})
 	pulumi.RegisterOutputType(Mk8sAwsProviderImageOutput{})
 	pulumi.RegisterOutputType(Mk8sAwsProviderImagePtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAwsProviderNetworkingOutput{})
@@ -31630,6 +39169,16 @@ func init() {
 	pulumi.RegisterOutputType(Mk8sAwsProviderNodePoolOverrideImageOutput{})
 	pulumi.RegisterOutputType(Mk8sAwsProviderNodePoolTaintOutput{})
 	pulumi.RegisterOutputType(Mk8sAwsProviderNodePoolTaintArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sDigitalOceanProviderOutput{})
+	pulumi.RegisterOutputType(Mk8sDigitalOceanProviderPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sDigitalOceanProviderAutoscalerOutput{})
+	pulumi.RegisterOutputType(Mk8sDigitalOceanProviderAutoscalerPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sDigitalOceanProviderNetworkingOutput{})
+	pulumi.RegisterOutputType(Mk8sDigitalOceanProviderNetworkingPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sDigitalOceanProviderNodePoolOutput{})
+	pulumi.RegisterOutputType(Mk8sDigitalOceanProviderNodePoolArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sDigitalOceanProviderNodePoolTaintOutput{})
+	pulumi.RegisterOutputType(Mk8sDigitalOceanProviderNodePoolTaintArrayOutput{})
 	pulumi.RegisterOutputType(Mk8sEphemeralProviderOutput{})
 	pulumi.RegisterOutputType(Mk8sEphemeralProviderPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sEphemeralProviderNodePoolOutput{})
@@ -31660,6 +39209,52 @@ func init() {
 	pulumi.RegisterOutputType(Mk8sHetznerProviderNodePoolArrayOutput{})
 	pulumi.RegisterOutputType(Mk8sHetznerProviderNodePoolTaintOutput{})
 	pulumi.RegisterOutputType(Mk8sHetznerProviderNodePoolTaintArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sLambdalabsProviderOutput{})
+	pulumi.RegisterOutputType(Mk8sLambdalabsProviderPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sLambdalabsProviderAutoscalerOutput{})
+	pulumi.RegisterOutputType(Mk8sLambdalabsProviderAutoscalerPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sLambdalabsProviderNodePoolOutput{})
+	pulumi.RegisterOutputType(Mk8sLambdalabsProviderNodePoolArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sLambdalabsProviderNodePoolTaintOutput{})
+	pulumi.RegisterOutputType(Mk8sLambdalabsProviderNodePoolTaintArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sLambdalabsProviderUnmanagedNodePoolOutput{})
+	pulumi.RegisterOutputType(Mk8sLambdalabsProviderUnmanagedNodePoolArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sLambdalabsProviderUnmanagedNodePoolTaintOutput{})
+	pulumi.RegisterOutputType(Mk8sLambdalabsProviderUnmanagedNodePoolTaintArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sLinodeProviderOutput{})
+	pulumi.RegisterOutputType(Mk8sLinodeProviderPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sLinodeProviderAutoscalerOutput{})
+	pulumi.RegisterOutputType(Mk8sLinodeProviderAutoscalerPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sLinodeProviderNetworkingOutput{})
+	pulumi.RegisterOutputType(Mk8sLinodeProviderNetworkingPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sLinodeProviderNodePoolOutput{})
+	pulumi.RegisterOutputType(Mk8sLinodeProviderNodePoolArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sLinodeProviderNodePoolTaintOutput{})
+	pulumi.RegisterOutputType(Mk8sLinodeProviderNodePoolTaintArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sOblivusProviderOutput{})
+	pulumi.RegisterOutputType(Mk8sOblivusProviderPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sOblivusProviderAutoscalerOutput{})
+	pulumi.RegisterOutputType(Mk8sOblivusProviderAutoscalerPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sOblivusProviderNodePoolOutput{})
+	pulumi.RegisterOutputType(Mk8sOblivusProviderNodePoolArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sOblivusProviderNodePoolTaintOutput{})
+	pulumi.RegisterOutputType(Mk8sOblivusProviderNodePoolTaintArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sOblivusProviderUnmanagedNodePoolOutput{})
+	pulumi.RegisterOutputType(Mk8sOblivusProviderUnmanagedNodePoolArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sOblivusProviderUnmanagedNodePoolTaintOutput{})
+	pulumi.RegisterOutputType(Mk8sOblivusProviderUnmanagedNodePoolTaintArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sPaperspaceProviderOutput{})
+	pulumi.RegisterOutputType(Mk8sPaperspaceProviderPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sPaperspaceProviderAutoscalerOutput{})
+	pulumi.RegisterOutputType(Mk8sPaperspaceProviderAutoscalerPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sPaperspaceProviderNodePoolOutput{})
+	pulumi.RegisterOutputType(Mk8sPaperspaceProviderNodePoolArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sPaperspaceProviderNodePoolTaintOutput{})
+	pulumi.RegisterOutputType(Mk8sPaperspaceProviderNodePoolTaintArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sPaperspaceProviderUnmanagedNodePoolOutput{})
+	pulumi.RegisterOutputType(Mk8sPaperspaceProviderUnmanagedNodePoolArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sPaperspaceProviderUnmanagedNodePoolTaintOutput{})
+	pulumi.RegisterOutputType(Mk8sPaperspaceProviderUnmanagedNodePoolTaintArrayOutput{})
 	pulumi.RegisterOutputType(Mk8sStatusOutput{})
 	pulumi.RegisterOutputType(Mk8sStatusArrayOutput{})
 	pulumi.RegisterOutputType(Mk8sStatusAddOnOutput{})
@@ -31680,6 +39275,18 @@ func init() {
 	pulumi.RegisterOutputType(Mk8sStatusAddOnLogArrayOutput{})
 	pulumi.RegisterOutputType(Mk8sStatusAddOnMetricOutput{})
 	pulumi.RegisterOutputType(Mk8sStatusAddOnMetricArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sTritonProviderOutput{})
+	pulumi.RegisterOutputType(Mk8sTritonProviderPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sTritonProviderAutoscalerOutput{})
+	pulumi.RegisterOutputType(Mk8sTritonProviderAutoscalerPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sTritonProviderConnectionOutput{})
+	pulumi.RegisterOutputType(Mk8sTritonProviderConnectionPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sTritonProviderNetworkingOutput{})
+	pulumi.RegisterOutputType(Mk8sTritonProviderNetworkingPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sTritonProviderNodePoolOutput{})
+	pulumi.RegisterOutputType(Mk8sTritonProviderNodePoolArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sTritonProviderNodePoolTaintOutput{})
+	pulumi.RegisterOutputType(Mk8sTritonProviderNodePoolTaintArrayOutput{})
 	pulumi.RegisterOutputType(OrgAuthConfigOutput{})
 	pulumi.RegisterOutputType(OrgAuthConfigPtrOutput{})
 	pulumi.RegisterOutputType(OrgLoggingCloudWatchLoggingOutput{})
@@ -31844,6 +39451,10 @@ func init() {
 	pulumi.RegisterOutputType(GetGvcLightstepTracingPtrOutput{})
 	pulumi.RegisterOutputType(GetGvcLoadBalancerOutput{})
 	pulumi.RegisterOutputType(GetGvcLoadBalancerPtrOutput{})
+	pulumi.RegisterOutputType(GetGvcLoadBalancerRedirectOutput{})
+	pulumi.RegisterOutputType(GetGvcLoadBalancerRedirectPtrOutput{})
+	pulumi.RegisterOutputType(GetGvcLoadBalancerRedirectClassOutput{})
+	pulumi.RegisterOutputType(GetGvcLoadBalancerRedirectClassPtrOutput{})
 	pulumi.RegisterOutputType(GetGvcOtelTracingOutput{})
 	pulumi.RegisterOutputType(GetGvcOtelTracingPtrOutput{})
 	pulumi.RegisterOutputType(GetGvcSidecarOutput{})

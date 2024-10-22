@@ -13,8 +13,11 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class Mk8sAddOnsNvidiaGetArgs : global::Pulumi.ResourceArgs
     {
-        [Input("taintGpuNodes", required: true)]
-        public Input<bool> TaintGpuNodes { get; set; } = null!;
+        [Input("_sentinel")]
+        public Input<bool>? _sentinel { get; set; }
+
+        [Input("taintGpuNodes")]
+        public Input<bool>? TaintGpuNodes { get; set; }
 
         public Mk8sAddOnsNvidiaGetArgs()
         {

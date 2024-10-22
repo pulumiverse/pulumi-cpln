@@ -14,11 +14,16 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sAddOnsAwsEfs
     {
-        public readonly string RoleArn;
+        public readonly bool? _sentinel;
+        public readonly string? RoleArn;
 
         [OutputConstructor]
-        private Mk8sAddOnsAwsEfs(string roleArn)
+        private Mk8sAddOnsAwsEfs(
+            bool? _sentinel,
+
+            string? roleArn)
         {
+            this._sentinel = _sentinel;
             RoleArn = roleArn;
         }
     }

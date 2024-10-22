@@ -22,6 +22,7 @@ from .get_secret import *
 from .group import *
 from .gvc import *
 from .identity import *
+from .ip_set import *
 from .location import *
 from .mk8s import *
 from .org import *
@@ -117,6 +118,14 @@ _utilities.register(
   "fqn": "pulumiverse_cpln",
   "classes": {
    "cpln:index/identity:Identity": "Identity"
+  }
+ },
+ {
+  "pkg": "cpln",
+  "mod": "index/ipSet",
+  "fqn": "pulumiverse_cpln",
+  "classes": {
+   "cpln:index/ipSet:IpSet": "IpSet"
   }
  },
  {

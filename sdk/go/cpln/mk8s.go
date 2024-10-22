@@ -23,21 +23,27 @@ type Mk8s struct {
 	// The ID, in GUID format, of the Mk8s.
 	CplnId pulumi.StringOutput `pulumi:"cplnId"`
 	// Description of the Mk8s.
-	Description       pulumi.StringPtrOutput         `pulumi:"description"`
-	EphemeralProvider Mk8sEphemeralProviderPtrOutput `pulumi:"ephemeralProvider"`
+	Description          pulumi.StringPtrOutput            `pulumi:"description"`
+	DigitalOceanProvider Mk8sDigitalOceanProviderPtrOutput `pulumi:"digitalOceanProvider"`
+	EphemeralProvider    Mk8sEphemeralProviderPtrOutput    `pulumi:"ephemeralProvider"`
 	// Allow-list.
-	Firewalls       Mk8sFirewallArrayOutput      `pulumi:"firewalls"`
-	GenericProvider Mk8sGenericProviderPtrOutput `pulumi:"genericProvider"`
-	HetznerProvider Mk8sHetznerProviderPtrOutput `pulumi:"hetznerProvider"`
+	Firewalls          Mk8sFirewallArrayOutput         `pulumi:"firewalls"`
+	GenericProvider    Mk8sGenericProviderPtrOutput    `pulumi:"genericProvider"`
+	HetznerProvider    Mk8sHetznerProviderPtrOutput    `pulumi:"hetznerProvider"`
+	LambdalabsProvider Mk8sLambdalabsProviderPtrOutput `pulumi:"lambdalabsProvider"`
+	LinodeProvider     Mk8sLinodeProviderPtrOutput     `pulumi:"linodeProvider"`
 	// Name of the Mk8s.
-	Name pulumi.StringOutput `pulumi:"name"`
+	Name               pulumi.StringOutput             `pulumi:"name"`
+	OblivusProvider    Mk8sOblivusProviderPtrOutput    `pulumi:"oblivusProvider"`
+	PaperspaceProvider Mk8sPaperspaceProviderPtrOutput `pulumi:"paperspaceProvider"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
 	// Status of the mk8s.
 	Statuses Mk8sStatusArrayOutput `pulumi:"statuses"`
 	// Key-value map of resource tags.
-	Tags    pulumi.StringMapOutput `pulumi:"tags"`
-	Version pulumi.StringOutput    `pulumi:"version"`
+	Tags           pulumi.StringMapOutput      `pulumi:"tags"`
+	TritonProvider Mk8sTritonProviderPtrOutput `pulumi:"tritonProvider"`
+	Version        pulumi.StringOutput         `pulumi:"version"`
 }
 
 // NewMk8s registers a new resource with the given unique name, arguments, and options.
@@ -80,21 +86,27 @@ type mk8sState struct {
 	// The ID, in GUID format, of the Mk8s.
 	CplnId *string `pulumi:"cplnId"`
 	// Description of the Mk8s.
-	Description       *string                `pulumi:"description"`
-	EphemeralProvider *Mk8sEphemeralProvider `pulumi:"ephemeralProvider"`
+	Description          *string                   `pulumi:"description"`
+	DigitalOceanProvider *Mk8sDigitalOceanProvider `pulumi:"digitalOceanProvider"`
+	EphemeralProvider    *Mk8sEphemeralProvider    `pulumi:"ephemeralProvider"`
 	// Allow-list.
-	Firewalls       []Mk8sFirewall       `pulumi:"firewalls"`
-	GenericProvider *Mk8sGenericProvider `pulumi:"genericProvider"`
-	HetznerProvider *Mk8sHetznerProvider `pulumi:"hetznerProvider"`
+	Firewalls          []Mk8sFirewall          `pulumi:"firewalls"`
+	GenericProvider    *Mk8sGenericProvider    `pulumi:"genericProvider"`
+	HetznerProvider    *Mk8sHetznerProvider    `pulumi:"hetznerProvider"`
+	LambdalabsProvider *Mk8sLambdalabsProvider `pulumi:"lambdalabsProvider"`
+	LinodeProvider     *Mk8sLinodeProvider     `pulumi:"linodeProvider"`
 	// Name of the Mk8s.
-	Name *string `pulumi:"name"`
+	Name               *string                 `pulumi:"name"`
+	OblivusProvider    *Mk8sOblivusProvider    `pulumi:"oblivusProvider"`
+	PaperspaceProvider *Mk8sPaperspaceProvider `pulumi:"paperspaceProvider"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink *string `pulumi:"selfLink"`
 	// Status of the mk8s.
 	Statuses []Mk8sStatus `pulumi:"statuses"`
 	// Key-value map of resource tags.
-	Tags    map[string]string `pulumi:"tags"`
-	Version *string           `pulumi:"version"`
+	Tags           map[string]string   `pulumi:"tags"`
+	TritonProvider *Mk8sTritonProvider `pulumi:"tritonProvider"`
+	Version        *string             `pulumi:"version"`
 }
 
 type Mk8sState struct {
@@ -105,21 +117,27 @@ type Mk8sState struct {
 	// The ID, in GUID format, of the Mk8s.
 	CplnId pulumi.StringPtrInput
 	// Description of the Mk8s.
-	Description       pulumi.StringPtrInput
-	EphemeralProvider Mk8sEphemeralProviderPtrInput
+	Description          pulumi.StringPtrInput
+	DigitalOceanProvider Mk8sDigitalOceanProviderPtrInput
+	EphemeralProvider    Mk8sEphemeralProviderPtrInput
 	// Allow-list.
-	Firewalls       Mk8sFirewallArrayInput
-	GenericProvider Mk8sGenericProviderPtrInput
-	HetznerProvider Mk8sHetznerProviderPtrInput
+	Firewalls          Mk8sFirewallArrayInput
+	GenericProvider    Mk8sGenericProviderPtrInput
+	HetznerProvider    Mk8sHetznerProviderPtrInput
+	LambdalabsProvider Mk8sLambdalabsProviderPtrInput
+	LinodeProvider     Mk8sLinodeProviderPtrInput
 	// Name of the Mk8s.
-	Name pulumi.StringPtrInput
+	Name               pulumi.StringPtrInput
+	OblivusProvider    Mk8sOblivusProviderPtrInput
+	PaperspaceProvider Mk8sPaperspaceProviderPtrInput
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringPtrInput
 	// Status of the mk8s.
 	Statuses Mk8sStatusArrayInput
 	// Key-value map of resource tags.
-	Tags    pulumi.StringMapInput
-	Version pulumi.StringPtrInput
+	Tags           pulumi.StringMapInput
+	TritonProvider Mk8sTritonProviderPtrInput
+	Version        pulumi.StringPtrInput
 }
 
 func (Mk8sState) ElementType() reflect.Type {
@@ -130,17 +148,23 @@ type mk8sArgs struct {
 	AddOns      *Mk8sAddOns      `pulumi:"addOns"`
 	AwsProvider *Mk8sAwsProvider `pulumi:"awsProvider"`
 	// Description of the Mk8s.
-	Description       *string                `pulumi:"description"`
-	EphemeralProvider *Mk8sEphemeralProvider `pulumi:"ephemeralProvider"`
+	Description          *string                   `pulumi:"description"`
+	DigitalOceanProvider *Mk8sDigitalOceanProvider `pulumi:"digitalOceanProvider"`
+	EphemeralProvider    *Mk8sEphemeralProvider    `pulumi:"ephemeralProvider"`
 	// Allow-list.
-	Firewalls       []Mk8sFirewall       `pulumi:"firewalls"`
-	GenericProvider *Mk8sGenericProvider `pulumi:"genericProvider"`
-	HetznerProvider *Mk8sHetznerProvider `pulumi:"hetznerProvider"`
+	Firewalls          []Mk8sFirewall          `pulumi:"firewalls"`
+	GenericProvider    *Mk8sGenericProvider    `pulumi:"genericProvider"`
+	HetznerProvider    *Mk8sHetznerProvider    `pulumi:"hetznerProvider"`
+	LambdalabsProvider *Mk8sLambdalabsProvider `pulumi:"lambdalabsProvider"`
+	LinodeProvider     *Mk8sLinodeProvider     `pulumi:"linodeProvider"`
 	// Name of the Mk8s.
-	Name *string `pulumi:"name"`
+	Name               *string                 `pulumi:"name"`
+	OblivusProvider    *Mk8sOblivusProvider    `pulumi:"oblivusProvider"`
+	PaperspaceProvider *Mk8sPaperspaceProvider `pulumi:"paperspaceProvider"`
 	// Key-value map of resource tags.
-	Tags    map[string]string `pulumi:"tags"`
-	Version string            `pulumi:"version"`
+	Tags           map[string]string   `pulumi:"tags"`
+	TritonProvider *Mk8sTritonProvider `pulumi:"tritonProvider"`
+	Version        string              `pulumi:"version"`
 }
 
 // The set of arguments for constructing a Mk8s resource.
@@ -148,17 +172,23 @@ type Mk8sArgs struct {
 	AddOns      Mk8sAddOnsPtrInput
 	AwsProvider Mk8sAwsProviderPtrInput
 	// Description of the Mk8s.
-	Description       pulumi.StringPtrInput
-	EphemeralProvider Mk8sEphemeralProviderPtrInput
+	Description          pulumi.StringPtrInput
+	DigitalOceanProvider Mk8sDigitalOceanProviderPtrInput
+	EphemeralProvider    Mk8sEphemeralProviderPtrInput
 	// Allow-list.
-	Firewalls       Mk8sFirewallArrayInput
-	GenericProvider Mk8sGenericProviderPtrInput
-	HetznerProvider Mk8sHetznerProviderPtrInput
+	Firewalls          Mk8sFirewallArrayInput
+	GenericProvider    Mk8sGenericProviderPtrInput
+	HetznerProvider    Mk8sHetznerProviderPtrInput
+	LambdalabsProvider Mk8sLambdalabsProviderPtrInput
+	LinodeProvider     Mk8sLinodeProviderPtrInput
 	// Name of the Mk8s.
-	Name pulumi.StringPtrInput
+	Name               pulumi.StringPtrInput
+	OblivusProvider    Mk8sOblivusProviderPtrInput
+	PaperspaceProvider Mk8sPaperspaceProviderPtrInput
 	// Key-value map of resource tags.
-	Tags    pulumi.StringMapInput
-	Version pulumi.StringInput
+	Tags           pulumi.StringMapInput
+	TritonProvider Mk8sTritonProviderPtrInput
+	Version        pulumi.StringInput
 }
 
 func (Mk8sArgs) ElementType() reflect.Type {
@@ -295,6 +325,10 @@ func (o Mk8sOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Mk8s) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
+func (o Mk8sOutput) DigitalOceanProvider() Mk8sDigitalOceanProviderPtrOutput {
+	return o.ApplyT(func(v *Mk8s) Mk8sDigitalOceanProviderPtrOutput { return v.DigitalOceanProvider }).(Mk8sDigitalOceanProviderPtrOutput)
+}
+
 func (o Mk8sOutput) EphemeralProvider() Mk8sEphemeralProviderPtrOutput {
 	return o.ApplyT(func(v *Mk8s) Mk8sEphemeralProviderPtrOutput { return v.EphemeralProvider }).(Mk8sEphemeralProviderPtrOutput)
 }
@@ -312,9 +346,25 @@ func (o Mk8sOutput) HetznerProvider() Mk8sHetznerProviderPtrOutput {
 	return o.ApplyT(func(v *Mk8s) Mk8sHetznerProviderPtrOutput { return v.HetznerProvider }).(Mk8sHetznerProviderPtrOutput)
 }
 
+func (o Mk8sOutput) LambdalabsProvider() Mk8sLambdalabsProviderPtrOutput {
+	return o.ApplyT(func(v *Mk8s) Mk8sLambdalabsProviderPtrOutput { return v.LambdalabsProvider }).(Mk8sLambdalabsProviderPtrOutput)
+}
+
+func (o Mk8sOutput) LinodeProvider() Mk8sLinodeProviderPtrOutput {
+	return o.ApplyT(func(v *Mk8s) Mk8sLinodeProviderPtrOutput { return v.LinodeProvider }).(Mk8sLinodeProviderPtrOutput)
+}
+
 // Name of the Mk8s.
 func (o Mk8sOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Mk8s) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o Mk8sOutput) OblivusProvider() Mk8sOblivusProviderPtrOutput {
+	return o.ApplyT(func(v *Mk8s) Mk8sOblivusProviderPtrOutput { return v.OblivusProvider }).(Mk8sOblivusProviderPtrOutput)
+}
+
+func (o Mk8sOutput) PaperspaceProvider() Mk8sPaperspaceProviderPtrOutput {
+	return o.ApplyT(func(v *Mk8s) Mk8sPaperspaceProviderPtrOutput { return v.PaperspaceProvider }).(Mk8sPaperspaceProviderPtrOutput)
 }
 
 // Full link to this resource. Can be referenced by other resources.
@@ -330,6 +380,10 @@ func (o Mk8sOutput) Statuses() Mk8sStatusArrayOutput {
 // Key-value map of resource tags.
 func (o Mk8sOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Mk8s) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
+}
+
+func (o Mk8sOutput) TritonProvider() Mk8sTritonProviderPtrOutput {
+	return o.ApplyT(func(v *Mk8s) Mk8sTritonProviderPtrOutput { return v.TritonProvider }).(Mk8sTritonProviderPtrOutput)
 }
 
 func (o Mk8sOutput) Version() pulumi.StringOutput {
