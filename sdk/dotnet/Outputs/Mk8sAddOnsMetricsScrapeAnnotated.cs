@@ -14,6 +14,7 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sAddOnsMetricsScrapeAnnotated
     {
+        public readonly bool? _sentinel;
         public readonly string? ExcludeNamespaces;
         public readonly string? IncludeNamespaces;
         public readonly int? IntervalSeconds;
@@ -21,6 +22,8 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private Mk8sAddOnsMetricsScrapeAnnotated(
+            bool? _sentinel,
+
             string? excludeNamespaces,
 
             string? includeNamespaces,
@@ -29,6 +32,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             string? retainLabels)
         {
+            this._sentinel = _sentinel;
             ExcludeNamespaces = excludeNamespaces;
             IncludeNamespaces = includeNamespaces;
             IntervalSeconds = intervalSeconds;

@@ -14,18 +14,22 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sAddOnsLogs
     {
+        public readonly bool? _sentinel;
         public readonly bool? AuditEnabled;
         public readonly string? ExcludeNamespaces;
         public readonly string? IncludeNamespaces;
 
         [OutputConstructor]
         private Mk8sAddOnsLogs(
+            bool? _sentinel,
+
             bool? auditEnabled,
 
             string? excludeNamespaces,
 
             string? includeNamespaces)
         {
+            this._sentinel = _sentinel;
             AuditEnabled = auditEnabled;
             ExcludeNamespaces = excludeNamespaces;
             IncludeNamespaces = includeNamespaces;

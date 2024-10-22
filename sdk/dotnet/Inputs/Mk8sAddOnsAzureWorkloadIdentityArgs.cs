@@ -13,8 +13,11 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class Mk8sAddOnsAzureWorkloadIdentityArgs : global::Pulumi.ResourceArgs
     {
-        [Input("tenantId", required: true)]
-        public Input<string> TenantId { get; set; } = null!;
+        [Input("_sentinel")]
+        public Input<bool>? _sentinel { get; set; }
+
+        [Input("tenantId")]
+        public Input<string>? TenantId { get; set; }
 
         public Mk8sAddOnsAzureWorkloadIdentityArgs()
         {

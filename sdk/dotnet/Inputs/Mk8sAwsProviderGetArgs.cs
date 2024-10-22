@@ -27,6 +27,14 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("deployRoleArn", required: true)]
         public Input<string> DeployRoleArn { get; set; } = null!;
 
+        [Input("deployRoleChains")]
+        private InputList<Inputs.Mk8sAwsProviderDeployRoleChainGetArgs>? _deployRoleChains;
+        public InputList<Inputs.Mk8sAwsProviderDeployRoleChainGetArgs> DeployRoleChains
+        {
+            get => _deployRoleChains ?? (_deployRoleChains = new InputList<Inputs.Mk8sAwsProviderDeployRoleChainGetArgs>());
+            set => _deployRoleChains = value;
+        }
+
         [Input("diskEncryptionKeyArn")]
         public Input<string>? DiskEncryptionKeyArn { get; set; }
 

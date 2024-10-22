@@ -16,6 +16,9 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("dedicated", required: true)]
         public Input<bool> Dedicated { get; set; } = null!;
 
+        [Input("redirect")]
+        public Input<Inputs.GvcLoadBalancerRedirectGetArgs>? Redirect { get; set; }
+
         [Input("trustedProxies")]
         public Input<int>? TrustedProxies { get; set; }
 

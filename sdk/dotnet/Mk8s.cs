@@ -37,6 +37,9 @@ namespace Pulumiverse.Cpln
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
 
+        [Output("digitalOceanProvider")]
+        public Output<Outputs.Mk8sDigitalOceanProvider?> DigitalOceanProvider { get; private set; } = null!;
+
         [Output("ephemeralProvider")]
         public Output<Outputs.Mk8sEphemeralProvider?> EphemeralProvider { get; private set; } = null!;
 
@@ -52,11 +55,23 @@ namespace Pulumiverse.Cpln
         [Output("hetznerProvider")]
         public Output<Outputs.Mk8sHetznerProvider?> HetznerProvider { get; private set; } = null!;
 
+        [Output("lambdalabsProvider")]
+        public Output<Outputs.Mk8sLambdalabsProvider?> LambdalabsProvider { get; private set; } = null!;
+
+        [Output("linodeProvider")]
+        public Output<Outputs.Mk8sLinodeProvider?> LinodeProvider { get; private set; } = null!;
+
         /// <summary>
         /// Name of the Mk8s.
         /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
+
+        [Output("oblivusProvider")]
+        public Output<Outputs.Mk8sOblivusProvider?> OblivusProvider { get; private set; } = null!;
+
+        [Output("paperspaceProvider")]
+        public Output<Outputs.Mk8sPaperspaceProvider?> PaperspaceProvider { get; private set; } = null!;
 
         /// <summary>
         /// Full link to this resource. Can be referenced by other resources.
@@ -75,6 +90,9 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Output("tags")]
         public Output<ImmutableDictionary<string, string>?> Tags { get; private set; } = null!;
+
+        [Output("tritonProvider")]
+        public Output<Outputs.Mk8sTritonProvider?> TritonProvider { get; private set; } = null!;
 
         [Output("version")]
         public Output<string> Version { get; private set; } = null!;
@@ -138,6 +156,9 @@ namespace Pulumiverse.Cpln
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        [Input("digitalOceanProvider")]
+        public Input<Inputs.Mk8sDigitalOceanProviderArgs>? DigitalOceanProvider { get; set; }
+
         [Input("ephemeralProvider")]
         public Input<Inputs.Mk8sEphemeralProviderArgs>? EphemeralProvider { get; set; }
 
@@ -159,11 +180,23 @@ namespace Pulumiverse.Cpln
         [Input("hetznerProvider")]
         public Input<Inputs.Mk8sHetznerProviderArgs>? HetznerProvider { get; set; }
 
+        [Input("lambdalabsProvider")]
+        public Input<Inputs.Mk8sLambdalabsProviderArgs>? LambdalabsProvider { get; set; }
+
+        [Input("linodeProvider")]
+        public Input<Inputs.Mk8sLinodeProviderArgs>? LinodeProvider { get; set; }
+
         /// <summary>
         /// Name of the Mk8s.
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
+
+        [Input("oblivusProvider")]
+        public Input<Inputs.Mk8sOblivusProviderArgs>? OblivusProvider { get; set; }
+
+        [Input("paperspaceProvider")]
+        public Input<Inputs.Mk8sPaperspaceProviderArgs>? PaperspaceProvider { get; set; }
 
         [Input("tags")]
         private InputMap<string>? _tags;
@@ -176,6 +209,9 @@ namespace Pulumiverse.Cpln
             get => _tags ?? (_tags = new InputMap<string>());
             set => _tags = value;
         }
+
+        [Input("tritonProvider")]
+        public Input<Inputs.Mk8sTritonProviderArgs>? TritonProvider { get; set; }
 
         [Input("version", required: true)]
         public Input<string> Version { get; set; } = null!;
@@ -212,6 +248,9 @@ namespace Pulumiverse.Cpln
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        [Input("digitalOceanProvider")]
+        public Input<Inputs.Mk8sDigitalOceanProviderGetArgs>? DigitalOceanProvider { get; set; }
+
         [Input("ephemeralProvider")]
         public Input<Inputs.Mk8sEphemeralProviderGetArgs>? EphemeralProvider { get; set; }
 
@@ -233,11 +272,23 @@ namespace Pulumiverse.Cpln
         [Input("hetznerProvider")]
         public Input<Inputs.Mk8sHetznerProviderGetArgs>? HetznerProvider { get; set; }
 
+        [Input("lambdalabsProvider")]
+        public Input<Inputs.Mk8sLambdalabsProviderGetArgs>? LambdalabsProvider { get; set; }
+
+        [Input("linodeProvider")]
+        public Input<Inputs.Mk8sLinodeProviderGetArgs>? LinodeProvider { get; set; }
+
         /// <summary>
         /// Name of the Mk8s.
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
+
+        [Input("oblivusProvider")]
+        public Input<Inputs.Mk8sOblivusProviderGetArgs>? OblivusProvider { get; set; }
+
+        [Input("paperspaceProvider")]
+        public Input<Inputs.Mk8sPaperspaceProviderGetArgs>? PaperspaceProvider { get; set; }
 
         /// <summary>
         /// Full link to this resource. Can be referenced by other resources.
@@ -268,6 +319,9 @@ namespace Pulumiverse.Cpln
             get => _tags ?? (_tags = new InputMap<string>());
             set => _tags = value;
         }
+
+        [Input("tritonProvider")]
+        public Input<Inputs.Mk8sTritonProviderGetArgs>? TritonProvider { get; set; }
 
         [Input("version")]
         public Input<string>? Version { get; set; }

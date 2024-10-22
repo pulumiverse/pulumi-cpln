@@ -48,6 +48,7 @@ export class Mk8s extends pulumi.CustomResource {
      * Description of the Mk8s.
      */
     public readonly description!: pulumi.Output<string | undefined>;
+    public readonly digitalOceanProvider!: pulumi.Output<outputs.Mk8sDigitalOceanProvider | undefined>;
     public readonly ephemeralProvider!: pulumi.Output<outputs.Mk8sEphemeralProvider | undefined>;
     /**
      * Allow-list.
@@ -55,10 +56,14 @@ export class Mk8s extends pulumi.CustomResource {
     public readonly firewalls!: pulumi.Output<outputs.Mk8sFirewall[] | undefined>;
     public readonly genericProvider!: pulumi.Output<outputs.Mk8sGenericProvider | undefined>;
     public readonly hetznerProvider!: pulumi.Output<outputs.Mk8sHetznerProvider | undefined>;
+    public readonly lambdalabsProvider!: pulumi.Output<outputs.Mk8sLambdalabsProvider | undefined>;
+    public readonly linodeProvider!: pulumi.Output<outputs.Mk8sLinodeProvider | undefined>;
     /**
      * Name of the Mk8s.
      */
     public readonly name!: pulumi.Output<string>;
+    public readonly oblivusProvider!: pulumi.Output<outputs.Mk8sOblivusProvider | undefined>;
+    public readonly paperspaceProvider!: pulumi.Output<outputs.Mk8sPaperspaceProvider | undefined>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
@@ -71,6 +76,7 @@ export class Mk8s extends pulumi.CustomResource {
      * Key-value map of resource tags.
      */
     public readonly tags!: pulumi.Output<{[key: string]: string} | undefined>;
+    public readonly tritonProvider!: pulumi.Output<outputs.Mk8sTritonProvider | undefined>;
     public readonly version!: pulumi.Output<string>;
 
     /**
@@ -91,14 +97,20 @@ export class Mk8s extends pulumi.CustomResource {
             resourceInputs["awsProvider"] = state ? state.awsProvider : undefined;
             resourceInputs["cplnId"] = state ? state.cplnId : undefined;
             resourceInputs["description"] = state ? state.description : undefined;
+            resourceInputs["digitalOceanProvider"] = state ? state.digitalOceanProvider : undefined;
             resourceInputs["ephemeralProvider"] = state ? state.ephemeralProvider : undefined;
             resourceInputs["firewalls"] = state ? state.firewalls : undefined;
             resourceInputs["genericProvider"] = state ? state.genericProvider : undefined;
             resourceInputs["hetznerProvider"] = state ? state.hetznerProvider : undefined;
+            resourceInputs["lambdalabsProvider"] = state ? state.lambdalabsProvider : undefined;
+            resourceInputs["linodeProvider"] = state ? state.linodeProvider : undefined;
             resourceInputs["name"] = state ? state.name : undefined;
+            resourceInputs["oblivusProvider"] = state ? state.oblivusProvider : undefined;
+            resourceInputs["paperspaceProvider"] = state ? state.paperspaceProvider : undefined;
             resourceInputs["selfLink"] = state ? state.selfLink : undefined;
             resourceInputs["statuses"] = state ? state.statuses : undefined;
             resourceInputs["tags"] = state ? state.tags : undefined;
+            resourceInputs["tritonProvider"] = state ? state.tritonProvider : undefined;
             resourceInputs["version"] = state ? state.version : undefined;
         } else {
             const args = argsOrState as Mk8sArgs | undefined;
@@ -108,12 +120,18 @@ export class Mk8s extends pulumi.CustomResource {
             resourceInputs["addOns"] = args ? args.addOns : undefined;
             resourceInputs["awsProvider"] = args ? args.awsProvider : undefined;
             resourceInputs["description"] = args ? args.description : undefined;
+            resourceInputs["digitalOceanProvider"] = args ? args.digitalOceanProvider : undefined;
             resourceInputs["ephemeralProvider"] = args ? args.ephemeralProvider : undefined;
             resourceInputs["firewalls"] = args ? args.firewalls : undefined;
             resourceInputs["genericProvider"] = args ? args.genericProvider : undefined;
             resourceInputs["hetznerProvider"] = args ? args.hetznerProvider : undefined;
+            resourceInputs["lambdalabsProvider"] = args ? args.lambdalabsProvider : undefined;
+            resourceInputs["linodeProvider"] = args ? args.linodeProvider : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
+            resourceInputs["oblivusProvider"] = args ? args.oblivusProvider : undefined;
+            resourceInputs["paperspaceProvider"] = args ? args.paperspaceProvider : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
+            resourceInputs["tritonProvider"] = args ? args.tritonProvider : undefined;
             resourceInputs["version"] = args ? args.version : undefined;
             resourceInputs["alias"] = undefined /*out*/;
             resourceInputs["cplnId"] = undefined /*out*/;
@@ -143,6 +161,7 @@ export interface Mk8sState {
      * Description of the Mk8s.
      */
     description?: pulumi.Input<string>;
+    digitalOceanProvider?: pulumi.Input<inputs.Mk8sDigitalOceanProvider>;
     ephemeralProvider?: pulumi.Input<inputs.Mk8sEphemeralProvider>;
     /**
      * Allow-list.
@@ -150,10 +169,14 @@ export interface Mk8sState {
     firewalls?: pulumi.Input<pulumi.Input<inputs.Mk8sFirewall>[]>;
     genericProvider?: pulumi.Input<inputs.Mk8sGenericProvider>;
     hetznerProvider?: pulumi.Input<inputs.Mk8sHetznerProvider>;
+    lambdalabsProvider?: pulumi.Input<inputs.Mk8sLambdalabsProvider>;
+    linodeProvider?: pulumi.Input<inputs.Mk8sLinodeProvider>;
     /**
      * Name of the Mk8s.
      */
     name?: pulumi.Input<string>;
+    oblivusProvider?: pulumi.Input<inputs.Mk8sOblivusProvider>;
+    paperspaceProvider?: pulumi.Input<inputs.Mk8sPaperspaceProvider>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
@@ -166,6 +189,7 @@ export interface Mk8sState {
      * Key-value map of resource tags.
      */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    tritonProvider?: pulumi.Input<inputs.Mk8sTritonProvider>;
     version?: pulumi.Input<string>;
 }
 
@@ -179,6 +203,7 @@ export interface Mk8sArgs {
      * Description of the Mk8s.
      */
     description?: pulumi.Input<string>;
+    digitalOceanProvider?: pulumi.Input<inputs.Mk8sDigitalOceanProvider>;
     ephemeralProvider?: pulumi.Input<inputs.Mk8sEphemeralProvider>;
     /**
      * Allow-list.
@@ -186,13 +211,18 @@ export interface Mk8sArgs {
     firewalls?: pulumi.Input<pulumi.Input<inputs.Mk8sFirewall>[]>;
     genericProvider?: pulumi.Input<inputs.Mk8sGenericProvider>;
     hetznerProvider?: pulumi.Input<inputs.Mk8sHetznerProvider>;
+    lambdalabsProvider?: pulumi.Input<inputs.Mk8sLambdalabsProvider>;
+    linodeProvider?: pulumi.Input<inputs.Mk8sLinodeProvider>;
     /**
      * Name of the Mk8s.
      */
     name?: pulumi.Input<string>;
+    oblivusProvider?: pulumi.Input<inputs.Mk8sOblivusProvider>;
+    paperspaceProvider?: pulumi.Input<inputs.Mk8sPaperspaceProvider>;
     /**
      * Key-value map of resource tags.
      */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    tritonProvider?: pulumi.Input<inputs.Mk8sTritonProvider>;
     version: pulumi.Input<string>;
 }

@@ -14,11 +14,16 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sAddOnsAwsEcr
     {
-        public readonly string RoleArn;
+        public readonly bool? _sentinel;
+        public readonly string? RoleArn;
 
         [OutputConstructor]
-        private Mk8sAddOnsAwsEcr(string roleArn)
+        private Mk8sAddOnsAwsEcr(
+            bool? _sentinel,
+
+            string? roleArn)
         {
+            this._sentinel = _sentinel;
             RoleArn = roleArn;
         }
     }
