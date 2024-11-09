@@ -19,6 +19,7 @@ namespace Pulumiverse.Cpln.Outputs
         public readonly string DeployRoleArn;
         public readonly ImmutableArray<Outputs.Mk8sAwsProviderDeployRoleChain> DeployRoleChains;
         public readonly string? DiskEncryptionKeyArn;
+        public readonly ImmutableArray<string> ExtraNodePolicies;
         public readonly Outputs.Mk8sAwsProviderImage Image;
         public readonly string? KeyPair;
         public readonly Outputs.Mk8sAwsProviderNetworking Networking;
@@ -40,6 +41,8 @@ namespace Pulumiverse.Cpln.Outputs
             ImmutableArray<Outputs.Mk8sAwsProviderDeployRoleChain> deployRoleChains,
 
             string? diskEncryptionKeyArn,
+
+            ImmutableArray<string> extraNodePolicies,
 
             Outputs.Mk8sAwsProviderImage image,
 
@@ -64,6 +67,7 @@ namespace Pulumiverse.Cpln.Outputs
             DeployRoleArn = deployRoleArn;
             DeployRoleChains = deployRoleChains;
             DiskEncryptionKeyArn = diskEncryptionKeyArn;
+            ExtraNodePolicies = extraNodePolicies;
             Image = image;
             KeyPair = keyPair;
             Networking = networking;

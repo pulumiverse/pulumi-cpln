@@ -44,7 +44,8 @@ namespace Pulumiverse.Cpln
         public Output<string> Gvc { get; private set; } = null!;
 
         /// <summary>
-        /// The initial size in GB of volumes in this set. Minimum value: `10`.
+        /// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+        /// is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
         /// </summary>
         [Output("initialCapacity")]
         public Output<int> InitialCapacity { get; private set; } = null!;
@@ -172,7 +173,8 @@ namespace Pulumiverse.Cpln
         public Input<string> Gvc { get; set; } = null!;
 
         /// <summary>
-        /// The initial size in GB of volumes in this set. Minimum value: `10`.
+        /// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+        /// is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
         /// </summary>
         [Input("initialCapacity", required: true)]
         public Input<int> InitialCapacity { get; set; } = null!;
@@ -255,7 +257,8 @@ namespace Pulumiverse.Cpln
         public Input<string>? Gvc { get; set; }
 
         /// <summary>
-        /// The initial size in GB of volumes in this set. Minimum value: `10`.
+        /// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+        /// is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
         /// </summary>
         [Input("initialCapacity")]
         public Input<int>? InitialCapacity { get; set; }

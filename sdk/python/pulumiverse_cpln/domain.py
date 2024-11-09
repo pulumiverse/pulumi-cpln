@@ -22,7 +22,7 @@ class DomainArgs:
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a Domain resource.
-        :param pulumi.Input['DomainSpecArgs'] spec: Domain specificiation.
+        :param pulumi.Input['DomainSpecArgs'] spec: Domain specification.
         :param pulumi.Input[str] description: Description of the domain name.
         :param pulumi.Input[str] name: Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with
                DNS. Create and Update will fail if the required DNS entries cannot be validated.
@@ -57,7 +57,7 @@ class DomainArgs:
     @pulumi.getter
     def spec(self) -> pulumi.Input['DomainSpecArgs']:
         """
-        Domain specificiation.
+        Domain specification.
         """
         return pulumi.get(self, "spec")
 
@@ -120,7 +120,7 @@ class _DomainState:
         :param pulumi.Input[str] name: Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with
                DNS. Create and Update will fail if the required DNS entries cannot be validated.
         :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
-        :param pulumi.Input['DomainSpecArgs'] spec: Domain specificiation.
+        :param pulumi.Input['DomainSpecArgs'] spec: Domain specification.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         _DomainState._configure(
@@ -218,7 +218,7 @@ class _DomainState:
     @pulumi.getter
     def spec(self) -> Optional[pulumi.Input['DomainSpecArgs']]:
         """
-        Domain specificiation.
+        Domain specification.
         """
         return pulumi.get(self, "spec")
 
@@ -265,7 +265,7 @@ class Domain(pulumi.CustomResource):
         :param pulumi.Input[str] description: Description of the domain name.
         :param pulumi.Input[str] name: Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with
                DNS. Create and Update will fail if the required DNS entries cannot be validated.
-        :param pulumi.Input[pulumi.InputType['DomainSpecArgs']] spec: Domain specificiation.
+        :param pulumi.Input[pulumi.InputType['DomainSpecArgs']] spec: Domain specification.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         ...
@@ -351,7 +351,7 @@ class Domain(pulumi.CustomResource):
         :param pulumi.Input[str] name: Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with
                DNS. Create and Update will fail if the required DNS entries cannot be validated.
         :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
-        :param pulumi.Input[pulumi.InputType['DomainSpecArgs']] spec: Domain specificiation.
+        :param pulumi.Input[pulumi.InputType['DomainSpecArgs']] spec: Domain specification.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -404,7 +404,7 @@ class Domain(pulumi.CustomResource):
     @pulumi.getter
     def spec(self) -> pulumi.Output['outputs.DomainSpec']:
         """
-        Domain specificiation.
+        Domain specification.
         """
         return pulumi.get(self, "spec")
 

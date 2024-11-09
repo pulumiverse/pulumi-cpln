@@ -14,13 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class GetGvcLoadBalancerResult
     {
-        public readonly bool Dedicated;
+        public readonly bool? Dedicated;
         public readonly Outputs.GetGvcLoadBalancerRedirectResult? Redirect;
         public readonly int? TrustedProxies;
 
         [OutputConstructor]
         private GetGvcLoadBalancerResult(
-            bool dedicated,
+            bool? dedicated,
 
             Outputs.GetGvcLoadBalancerRedirectResult? redirect,
 

@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadFirewallSpecArgs : global::Pulumi.ResourceArgs
     {
+        [Input("_sentinel")]
+        public Input<bool>? _sentinel { get; set; }
+
         [Input("external")]
         public Input<Inputs.WorkloadFirewallSpecExternalArgs>? External { get; set; }
 

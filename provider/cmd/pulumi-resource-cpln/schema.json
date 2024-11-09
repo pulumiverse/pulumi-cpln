@@ -127,6 +127,9 @@
         },
         "cpln:index/DomainRouteHeaders:DomainRouteHeaders": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "request": {
                     "$ref": "#/types/cpln:index/DomainRouteHeadersRequest:DomainRouteHeadersRequest"
                 }
@@ -135,6 +138,9 @@
         },
         "cpln:index/DomainRouteHeadersRequest:DomainRouteHeadersRequest": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "set": {
                     "type": "object",
                     "additionalProperties": {
@@ -452,13 +458,13 @@
                     "type": "integer"
                 }
             },
-            "type": "object",
-            "required": [
-                "dedicated"
-            ]
+            "type": "object"
         },
         "cpln:index/GvcLoadBalancerRedirect:GvcLoadBalancerRedirect": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "class": {
                     "$ref": "#/types/cpln:index/GvcLoadBalancerRedirectClass:GvcLoadBalancerRedirectClass"
                 }
@@ -467,6 +473,9 @@
         },
         "cpln:index/GvcLoadBalancerRedirectClass:GvcLoadBalancerRedirectClass": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "status5xx": {
                     "type": "string"
                 }
@@ -544,6 +553,9 @@
         },
         "cpln:index/IdentityAzureAccessPolicyRoleAssignment:IdentityAzureAccessPolicyRoleAssignment": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "roles": {
                     "type": "array",
                     "items": {
@@ -581,6 +593,9 @@
         },
         "cpln:index/IdentityGcpAccessPolicyBinding:IdentityGcpAccessPolicyBinding": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "resource": {
                     "type": "string"
                 },
@@ -672,8 +687,8 @@
             },
             "type": "object",
             "required": [
-                "agentLink",
-                "name"
+                "name",
+                "ports"
             ]
         },
         "cpln:index/IdentityNgsAccessPolicy:IdentityNgsAccessPolicy": {
@@ -1036,6 +1051,12 @@
                 },
                 "diskEncryptionKeyArn": {
                     "type": "string"
+                },
+                "extraNodePolicies": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "image": {
                     "$ref": "#/types/cpln:index/Mk8sAwsProviderImage:Mk8sAwsProviderImage"
@@ -2798,6 +2819,9 @@
         },
         "cpln:index/OrgLoggingElasticLogging:OrgLoggingElasticLogging": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "aws": {
                     "$ref": "#/types/cpln:index/OrgLoggingElasticLoggingAws:OrgLoggingElasticLoggingAws"
                 },
@@ -3001,6 +3025,9 @@
         },
         "cpln:index/OrgSecurity:OrgSecurity": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "threatDetection": {
                     "$ref": "#/types/cpln:index/OrgSecurityThreatDetection:OrgSecurityThreatDetection"
                 }
@@ -3019,7 +3046,10 @@
                     "$ref": "#/types/cpln:index/OrgSecurityThreatDetectionSyslog:OrgSecurityThreatDetectionSyslog"
                 }
             },
-            "type": "object"
+            "type": "object",
+            "required": [
+                "enabled"
+            ]
         },
         "cpln:index/OrgSecurityThreatDetectionSyslog:OrgSecurityThreatDetectionSyslog": {
             "properties": {
@@ -3035,6 +3065,7 @@
             },
             "type": "object",
             "required": [
+                "host",
                 "port"
             ]
         },
@@ -3346,12 +3377,7 @@
                     "type": "number"
                 }
             },
-            "type": "object",
-            "required": [
-                "maxCapacity",
-                "minFreePercentage",
-                "scalingFactor"
-            ]
+            "type": "object"
         },
         "cpln:index/VolumeSetSnapshots:VolumeSetSnapshots": {
             "properties": {
@@ -3493,6 +3519,9 @@
         },
         "cpln:index/WorkloadContainerLifecycle:WorkloadContainerLifecycle": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "postStart": {
                     "$ref": "#/types/cpln:index/WorkloadContainerLifecyclePostStart:WorkloadContainerLifecyclePostStart"
                 },
@@ -3600,6 +3629,9 @@
         },
         "cpln:index/WorkloadContainerLivenessProbeGrpc:WorkloadContainerLivenessProbeGrpc": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "port": {
                     "type": "integer"
                 }
@@ -3628,6 +3660,9 @@
         },
         "cpln:index/WorkloadContainerLivenessProbeTcpSocket:WorkloadContainerLivenessProbeTcpSocket": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "port": {
                     "type": "integer"
                 }
@@ -3711,6 +3746,9 @@
         },
         "cpln:index/WorkloadContainerReadinessProbeGrpc:WorkloadContainerReadinessProbeGrpc": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "port": {
                     "type": "integer"
                 }
@@ -3739,6 +3777,9 @@
         },
         "cpln:index/WorkloadContainerReadinessProbeTcpSocket:WorkloadContainerReadinessProbeTcpSocket": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "port": {
                     "type": "integer"
                 }
@@ -3765,6 +3806,9 @@
         },
         "cpln:index/WorkloadFirewallSpec:WorkloadFirewallSpec": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "external": {
                     "$ref": "#/types/cpln:index/WorkloadFirewallSpecExternal:WorkloadFirewallSpecExternal"
                 },
@@ -3857,6 +3901,9 @@
         },
         "cpln:index/WorkloadLoadBalancer:WorkloadLoadBalancer": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "direct": {
                     "$ref": "#/types/cpln:index/WorkloadLoadBalancerDirect:WorkloadLoadBalancerDirect"
                 },
@@ -3975,8 +4022,25 @@
                 "minScale": {
                     "type": "integer"
                 },
+                "multis": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadLocalOptionAutoscalingMulti:WorkloadLocalOptionAutoscalingMulti"
+                    }
+                },
                 "scaleToZeroDelay": {
                     "type": "integer"
+                },
+                "target": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadLocalOptionAutoscalingMulti:WorkloadLocalOptionAutoscalingMulti": {
+            "properties": {
+                "metric": {
+                    "type": "string"
                 },
                 "target": {
                     "type": "integer"
@@ -4021,8 +4085,25 @@
                 "minScale": {
                     "type": "integer"
                 },
+                "multis": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadOptionsAutoscalingMulti:WorkloadOptionsAutoscalingMulti"
+                    }
+                },
                 "scaleToZeroDelay": {
                     "type": "integer"
+                },
+                "target": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadOptionsAutoscalingMulti:WorkloadOptionsAutoscalingMulti": {
+            "properties": {
+                "metric": {
+                    "type": "string"
                 },
                 "target": {
                     "type": "integer"
@@ -4049,6 +4130,9 @@
         },
         "cpln:index/WorkloadSecurityOptions:WorkloadSecurityOptions": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "fileSystemGroupId": {
                     "type": "integer"
                 }
@@ -4248,13 +4332,13 @@
                     "type": "integer"
                 }
             },
-            "type": "object",
-            "required": [
-                "dedicated"
-            ]
+            "type": "object"
         },
         "cpln:index/getGvcLoadBalancerRedirect:getGvcLoadBalancerRedirect": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "class": {
                     "$ref": "#/types/cpln:index/getGvcLoadBalancerRedirectClass:getGvcLoadBalancerRedirectClass"
                 }
@@ -4263,6 +4347,9 @@
         },
         "cpln:index/getGvcLoadBalancerRedirectClass:getGvcLoadBalancerRedirectClass": {
             "properties": {
+                "_sentinel": {
+                    "type": "boolean"
+                },
                 "status5xx": {
                     "type": "string"
                 }
@@ -5317,7 +5404,7 @@
                 },
                 "spec": {
                     "$ref": "#/types/cpln:index/DomainSpec:DomainSpec",
-                    "description": "Domain specificiation.\n"
+                    "description": "Domain specification.\n"
                 },
                 "statuses": {
                     "type": "array",
@@ -5352,7 +5439,7 @@
                 },
                 "spec": {
                     "$ref": "#/types/cpln:index/DomainSpec:DomainSpec",
-                    "description": "Domain specificiation.\n"
+                    "description": "Domain specification.\n"
                 },
                 "tags": {
                     "type": "object",
@@ -5387,7 +5474,7 @@
                     },
                     "spec": {
                         "$ref": "#/types/cpln:index/DomainSpec:DomainSpec",
-                        "description": "Domain specificiation.\n"
+                        "description": "Domain specification.\n"
                     },
                     "statuses": {
                         "type": "array",
@@ -7745,7 +7832,7 @@
                 },
                 "initialCapacity": {
                     "type": "integer",
-                    "description": "The initial size in GB of volumes in this set. Minimum value: `10`.\n"
+                    "description": "The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`\nis `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.\n"
                 },
                 "name": {
                     "type": "string",
@@ -7817,7 +7904,7 @@
                 },
                 "initialCapacity": {
                     "type": "integer",
-                    "description": "The initial size in GB of volumes in this set. Minimum value: `10`.\n"
+                    "description": "The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`\nis `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.\n"
                 },
                 "name": {
                     "type": "string",
@@ -7877,7 +7964,7 @@
                     },
                     "initialCapacity": {
                         "type": "integer",
-                        "description": "The initial size in GB of volumes in this set. Minimum value: `10`.\n"
+                        "description": "The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`\nis `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.\n"
                     },
                     "name": {
                         "type": "string",

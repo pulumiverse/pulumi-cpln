@@ -14,15 +14,19 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class IdentityGcpAccessPolicyBinding
     {
+        public readonly bool? _sentinel;
         public readonly string? Resource;
         public readonly ImmutableArray<string> Roles;
 
         [OutputConstructor]
         private IdentityGcpAccessPolicyBinding(
+            bool? _sentinel,
+
             string? resource,
 
             ImmutableArray<string> roles)
         {
+            this._sentinel = _sentinel;
             Resource = resource;
             Roles = roles;
         }

@@ -14,13 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgSecurityThreatDetection
     {
-        public readonly bool? Enabled;
+        public readonly bool Enabled;
         public readonly string? MinimumSeverity;
         public readonly Outputs.OrgSecurityThreatDetectionSyslog? Syslog;
 
         [OutputConstructor]
         private OrgSecurityThreatDetection(
-            bool? enabled,
+            bool enabled,
 
             string? minimumSeverity,
 

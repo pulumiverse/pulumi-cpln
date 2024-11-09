@@ -22,10 +22,12 @@ export interface CloudAccountNgs {
 }
 
 export interface DomainRouteHeaders {
+    _sentinel?: boolean;
     request?: outputs.DomainRouteHeadersRequest;
 }
 
 export interface DomainRouteHeadersRequest {
+    _sentinel?: boolean;
     set?: {[key: string]: string};
 }
 
@@ -110,16 +112,18 @@ export interface GetGvcLightstepTracing {
 }
 
 export interface GetGvcLoadBalancer {
-    dedicated: boolean;
+    dedicated?: boolean;
     redirect?: outputs.GetGvcLoadBalancerRedirect;
     trustedProxies?: number;
 }
 
 export interface GetGvcLoadBalancerRedirect {
+    _sentinel?: boolean;
     class?: outputs.GetGvcLoadBalancerRedirectClass;
 }
 
 export interface GetGvcLoadBalancerRedirectClass {
+    _sentinel?: boolean;
     status5xx?: string;
 }
 
@@ -315,16 +319,18 @@ export interface GvcLightstepTracing {
 }
 
 export interface GvcLoadBalancer {
-    dedicated: boolean;
+    dedicated?: boolean;
     redirect?: outputs.GvcLoadBalancerRedirect;
     trustedProxies?: number;
 }
 
 export interface GvcLoadBalancerRedirect {
+    _sentinel?: boolean;
     class?: outputs.GvcLoadBalancerRedirectClass;
 }
 
 export interface GvcLoadBalancerRedirectClass {
+    _sentinel?: boolean;
     status5xx?: string;
 }
 
@@ -350,6 +356,7 @@ export interface IdentityAzureAccessPolicy {
 }
 
 export interface IdentityAzureAccessPolicyRoleAssignment {
+    _sentinel?: boolean;
     roles?: string[];
     scope?: string;
 }
@@ -362,6 +369,7 @@ export interface IdentityGcpAccessPolicy {
 }
 
 export interface IdentityGcpAccessPolicyBinding {
+    _sentinel?: boolean;
     resource?: string;
     roles?: string[];
 }
@@ -383,11 +391,11 @@ export interface IdentityNativeNetworkResourceGcpServiceConnect {
 }
 
 export interface IdentityNetworkResource {
-    agentLink: string;
+    agentLink?: string;
     fqdn?: string;
     ips?: string[];
     name: string;
-    ports?: number[];
+    ports: number[];
     resolverIp?: string;
 }
 
@@ -519,6 +527,7 @@ export interface Mk8sAwsProvider {
     deployRoleArn: string;
     deployRoleChains?: outputs.Mk8sAwsProviderDeployRoleChain[];
     diskEncryptionKeyArn?: string;
+    extraNodePolicies?: string[];
     image: outputs.Mk8sAwsProviderImage;
     keyPair?: string;
     networking: outputs.Mk8sAwsProviderNetworking;
@@ -1038,6 +1047,7 @@ export interface OrgLoggingDatadogLogging {
 }
 
 export interface OrgLoggingElasticLogging {
+    _sentinel?: boolean;
     aws?: outputs.OrgLoggingElasticLoggingAws;
     elasticCloud?: outputs.OrgLoggingElasticLoggingElasticCloud;
     generic?: outputs.OrgLoggingElasticLoggingGeneric;
@@ -1105,17 +1115,18 @@ export interface OrgObservability {
 }
 
 export interface OrgSecurity {
+    _sentinel?: boolean;
     threatDetection?: outputs.OrgSecurityThreatDetection;
 }
 
 export interface OrgSecurityThreatDetection {
-    enabled?: boolean;
+    enabled: boolean;
     minimumSeverity?: string;
     syslog?: outputs.OrgSecurityThreatDetectionSyslog;
 }
 
 export interface OrgSecurityThreatDetectionSyslog {
-    host?: string;
+    host: string;
     port: number;
     transport?: string;
 }
@@ -1215,9 +1226,9 @@ export interface SecretUserpass {
 }
 
 export interface VolumeSetAutoscaling {
-    maxCapacity: number;
-    minFreePercentage: number;
-    scalingFactor: number;
+    maxCapacity?: number;
+    minFreePercentage?: number;
+    scalingFactor?: number;
 }
 
 export interface VolumeSetSnapshots {
@@ -1264,6 +1275,7 @@ export interface WorkloadContainerGpuNvidia {
 }
 
 export interface WorkloadContainerLifecycle {
+    _sentinel?: boolean;
     postStart?: outputs.WorkloadContainerLifecyclePostStart;
     preStop?: outputs.WorkloadContainerLifecyclePreStop;
 }
@@ -1301,6 +1313,7 @@ export interface WorkloadContainerLivenessProbeExec {
 }
 
 export interface WorkloadContainerLivenessProbeGrpc {
+    _sentinel?: boolean;
     port?: number;
 }
 
@@ -1312,6 +1325,7 @@ export interface WorkloadContainerLivenessProbeHttpGet {
 }
 
 export interface WorkloadContainerLivenessProbeTcpSocket {
+    _sentinel?: boolean;
     port?: number;
 }
 
@@ -1342,6 +1356,7 @@ export interface WorkloadContainerReadinessProbeExec {
 }
 
 export interface WorkloadContainerReadinessProbeGrpc {
+    _sentinel?: boolean;
     port?: number;
 }
 
@@ -1353,6 +1368,7 @@ export interface WorkloadContainerReadinessProbeHttpGet {
 }
 
 export interface WorkloadContainerReadinessProbeTcpSocket {
+    _sentinel?: boolean;
     port?: number;
 }
 
@@ -1363,6 +1379,7 @@ export interface WorkloadContainerVolume {
 }
 
 export interface WorkloadFirewallSpec {
+    _sentinel?: boolean;
     external?: outputs.WorkloadFirewallSpecExternal;
     internal?: outputs.WorkloadFirewallSpecInternal;
 }
@@ -1393,6 +1410,7 @@ export interface WorkloadJob {
 }
 
 export interface WorkloadLoadBalancer {
+    _sentinel?: boolean;
     direct?: outputs.WorkloadLoadBalancerDirect;
     geoLocation?: outputs.WorkloadLoadBalancerGeoLocation;
 }
@@ -1436,7 +1454,13 @@ export interface WorkloadLocalOptionAutoscaling {
     metric?: string;
     metricPercentile?: string;
     minScale?: number;
+    multis?: outputs.WorkloadLocalOptionAutoscalingMulti[];
     scaleToZeroDelay?: number;
+    target?: number;
+}
+
+export interface WorkloadLocalOptionAutoscalingMulti {
+    metric?: string;
     target?: number;
 }
 
@@ -1454,7 +1478,13 @@ export interface WorkloadOptionsAutoscaling {
     metric?: string;
     metricPercentile?: string;
     minScale?: number;
+    multis?: outputs.WorkloadOptionsAutoscalingMulti[];
     scaleToZeroDelay?: number;
+    target?: number;
+}
+
+export interface WorkloadOptionsAutoscalingMulti {
+    metric?: string;
     target?: number;
 }
 
@@ -1466,6 +1496,7 @@ export interface WorkloadRolloutOptions {
 }
 
 export interface WorkloadSecurityOptions {
+    _sentinel?: boolean;
     fileSystemGroupId?: number;
 }
 

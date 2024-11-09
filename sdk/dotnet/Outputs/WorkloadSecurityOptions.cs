@@ -14,11 +14,16 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadSecurityOptions
     {
+        public readonly bool? _sentinel;
         public readonly int? FileSystemGroupId;
 
         [OutputConstructor]
-        private WorkloadSecurityOptions(int? fileSystemGroupId)
+        private WorkloadSecurityOptions(
+            bool? _sentinel,
+
+            int? fileSystemGroupId)
         {
+            this._sentinel = _sentinel;
             FileSystemGroupId = fileSystemGroupId;
         }
     }

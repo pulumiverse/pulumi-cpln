@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class IdentityNetworkResource
     {
-        public readonly string AgentLink;
+        public readonly string? AgentLink;
         public readonly string? Fqdn;
         public readonly ImmutableArray<string> Ips;
         public readonly string Name;
@@ -23,7 +23,7 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private IdentityNetworkResource(
-            string agentLink,
+            string? agentLink,
 
             string? fqdn,
 

@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class GvcLoadBalancerRedirectArgs : global::Pulumi.ResourceArgs
     {
+        [Input("_sentinel")]
+        public Input<bool>? _sentinel { get; set; }
+
         [Input("class")]
         public Input<Inputs.GvcLoadBalancerRedirectClassArgs>? Class { get; set; }
 

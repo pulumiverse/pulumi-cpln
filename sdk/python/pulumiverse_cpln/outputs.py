@@ -201,8 +201,10 @@ __all__ = [
     'WorkloadLoadBalancerGeoLocationHeaders',
     'WorkloadLocalOption',
     'WorkloadLocalOptionAutoscaling',
+    'WorkloadLocalOptionAutoscalingMulti',
     'WorkloadOptions',
     'WorkloadOptionsAutoscaling',
+    'WorkloadOptionsAutoscalingMulti',
     'WorkloadRolloutOptions',
     'WorkloadSecurityOptions',
     'WorkloadSidecar',
@@ -413,20 +415,30 @@ class CloudAccountNgs(dict):
 @pulumi.output_type
 class DomainRouteHeaders(dict):
     def __init__(__self__, *,
+                 _sentinel: Optional[bool] = None,
                  request: Optional['outputs.DomainRouteHeadersRequest'] = None):
         DomainRouteHeaders._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            _sentinel=_sentinel,
             request=request,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             _sentinel: Optional[bool] = None,
              request: Optional['outputs.DomainRouteHeadersRequest'] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
 
+        if _sentinel is not None:
+            _setter("_sentinel", _sentinel)
         if request is not None:
             _setter("request", request)
+
+    @property
+    @pulumi.getter
+    def _sentinel(self) -> Optional[bool]:
+        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter
@@ -437,20 +449,30 @@ class DomainRouteHeaders(dict):
 @pulumi.output_type
 class DomainRouteHeadersRequest(dict):
     def __init__(__self__, *,
+                 _sentinel: Optional[bool] = None,
                  set: Optional[Mapping[str, str]] = None):
         DomainRouteHeadersRequest._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            _sentinel=_sentinel,
             set=set,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             _sentinel: Optional[bool] = None,
              set: Optional[Mapping[str, str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
 
+        if _sentinel is not None:
+            _setter("_sentinel", _sentinel)
         if set is not None:
             _setter("set", set)
+
+    @property
+    @pulumi.getter
+    def _sentinel(self) -> Optional[bool]:
+        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter
@@ -1459,7 +1481,7 @@ class GvcLoadBalancer(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 dedicated: bool,
+                 dedicated: Optional[bool] = None,
                  redirect: Optional['outputs.GvcLoadBalancerRedirect'] = None,
                  trusted_proxies: Optional[int] = None):
         GvcLoadBalancer._configure(
@@ -1471,7 +1493,7 @@ class GvcLoadBalancer(dict):
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
-             dedicated: bool,
+             dedicated: Optional[bool] = None,
              redirect: Optional['outputs.GvcLoadBalancerRedirect'] = None,
              trusted_proxies: Optional[int] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -1479,7 +1501,8 @@ class GvcLoadBalancer(dict):
         if 'trustedProxies' in kwargs:
             trusted_proxies = kwargs['trustedProxies']
 
-        _setter("dedicated", dedicated)
+        if dedicated is not None:
+            _setter("dedicated", dedicated)
         if redirect is not None:
             _setter("redirect", redirect)
         if trusted_proxies is not None:
@@ -1487,7 +1510,7 @@ class GvcLoadBalancer(dict):
 
     @property
     @pulumi.getter
-    def dedicated(self) -> bool:
+    def dedicated(self) -> Optional[bool]:
         return pulumi.get(self, "dedicated")
 
     @property
@@ -1521,22 +1544,32 @@ class GvcLoadBalancerRedirect(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
+                 _sentinel: Optional[bool] = None,
                  class_: Optional['outputs.GvcLoadBalancerRedirectClass'] = None):
         GvcLoadBalancerRedirect._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            _sentinel=_sentinel,
             class_=class_,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             _sentinel: Optional[bool] = None,
              class_: Optional['outputs.GvcLoadBalancerRedirectClass'] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
         if 'class' in kwargs:
             class_ = kwargs['class']
 
+        if _sentinel is not None:
+            _setter("_sentinel", _sentinel)
         if class_ is not None:
             _setter("class_", class_)
+
+    @property
+    @pulumi.getter
+    def _sentinel(self) -> Optional[bool]:
+        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter(name="class")
@@ -1547,20 +1580,30 @@ class GvcLoadBalancerRedirect(dict):
 @pulumi.output_type
 class GvcLoadBalancerRedirectClass(dict):
     def __init__(__self__, *,
+                 _sentinel: Optional[bool] = None,
                  status5xx: Optional[str] = None):
         GvcLoadBalancerRedirectClass._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            _sentinel=_sentinel,
             status5xx=status5xx,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             _sentinel: Optional[bool] = None,
              status5xx: Optional[str] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
 
+        if _sentinel is not None:
+            _setter("_sentinel", _sentinel)
         if status5xx is not None:
             _setter("status5xx", status5xx)
+
+    @property
+    @pulumi.getter
+    def _sentinel(self) -> Optional[bool]:
+        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter
@@ -1781,25 +1824,35 @@ class IdentityAzureAccessPolicy(dict):
 @pulumi.output_type
 class IdentityAzureAccessPolicyRoleAssignment(dict):
     def __init__(__self__, *,
+                 _sentinel: Optional[bool] = None,
                  roles: Optional[Sequence[str]] = None,
                  scope: Optional[str] = None):
         IdentityAzureAccessPolicyRoleAssignment._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            _sentinel=_sentinel,
             roles=roles,
             scope=scope,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             _sentinel: Optional[bool] = None,
              roles: Optional[Sequence[str]] = None,
              scope: Optional[str] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
 
+        if _sentinel is not None:
+            _setter("_sentinel", _sentinel)
         if roles is not None:
             _setter("roles", roles)
         if scope is not None:
             _setter("scope", scope)
+
+    @property
+    @pulumi.getter
+    def _sentinel(self) -> Optional[bool]:
+        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter
@@ -1891,25 +1944,35 @@ class IdentityGcpAccessPolicy(dict):
 @pulumi.output_type
 class IdentityGcpAccessPolicyBinding(dict):
     def __init__(__self__, *,
+                 _sentinel: Optional[bool] = None,
                  resource: Optional[str] = None,
                  roles: Optional[Sequence[str]] = None):
         IdentityGcpAccessPolicyBinding._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            _sentinel=_sentinel,
             resource=resource,
             roles=roles,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             _sentinel: Optional[bool] = None,
              resource: Optional[str] = None,
              roles: Optional[Sequence[str]] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
 
+        if _sentinel is not None:
+            _setter("_sentinel", _sentinel)
         if resource is not None:
             _setter("resource", resource)
         if roles is not None:
             _setter("roles", roles)
+
+    @property
+    @pulumi.getter
+    def _sentinel(self) -> Optional[bool]:
+        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter
@@ -2112,29 +2175,29 @@ class IdentityNetworkResource(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 agent_link: str,
                  name: str,
+                 ports: Sequence[int],
+                 agent_link: Optional[str] = None,
                  fqdn: Optional[str] = None,
                  ips: Optional[Sequence[str]] = None,
-                 ports: Optional[Sequence[int]] = None,
                  resolver_ip: Optional[str] = None):
         IdentityNetworkResource._configure(
             lambda key, value: pulumi.set(__self__, key, value),
-            agent_link=agent_link,
             name=name,
+            ports=ports,
+            agent_link=agent_link,
             fqdn=fqdn,
             ips=ips,
-            ports=ports,
             resolver_ip=resolver_ip,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
-             agent_link: str,
              name: str,
+             ports: Sequence[int],
+             agent_link: Optional[str] = None,
              fqdn: Optional[str] = None,
              ips: Optional[Sequence[str]] = None,
-             ports: Optional[Sequence[int]] = None,
              resolver_ip: Optional[str] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
@@ -2143,26 +2206,31 @@ class IdentityNetworkResource(dict):
         if 'resolverIp' in kwargs:
             resolver_ip = kwargs['resolverIp']
 
-        _setter("agent_link", agent_link)
         _setter("name", name)
+        _setter("ports", ports)
+        if agent_link is not None:
+            _setter("agent_link", agent_link)
         if fqdn is not None:
             _setter("fqdn", fqdn)
         if ips is not None:
             _setter("ips", ips)
-        if ports is not None:
-            _setter("ports", ports)
         if resolver_ip is not None:
             _setter("resolver_ip", resolver_ip)
-
-    @property
-    @pulumi.getter(name="agentLink")
-    def agent_link(self) -> str:
-        return pulumi.get(self, "agent_link")
 
     @property
     @pulumi.getter
     def name(self) -> str:
         return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def ports(self) -> Sequence[int]:
+        return pulumi.get(self, "ports")
+
+    @property
+    @pulumi.getter(name="agentLink")
+    def agent_link(self) -> Optional[str]:
+        return pulumi.get(self, "agent_link")
 
     @property
     @pulumi.getter
@@ -2173,11 +2241,6 @@ class IdentityNetworkResource(dict):
     @pulumi.getter
     def ips(self) -> Optional[Sequence[str]]:
         return pulumi.get(self, "ips")
-
-    @property
-    @pulumi.getter
-    def ports(self) -> Optional[Sequence[int]]:
-        return pulumi.get(self, "ports")
 
     @property
     @pulumi.getter(name="resolverIp")
@@ -3435,6 +3498,8 @@ class Mk8sAwsProvider(dict):
             suggest = "deploy_role_chains"
         elif key == "diskEncryptionKeyArn":
             suggest = "disk_encryption_key_arn"
+        elif key == "extraNodePolicies":
+            suggest = "extra_node_policies"
         elif key == "keyPair":
             suggest = "key_pair"
         elif key == "nodePools":
@@ -3467,6 +3532,7 @@ class Mk8sAwsProvider(dict):
                  aws_tags: Optional[Mapping[str, str]] = None,
                  deploy_role_chains: Optional[Sequence['outputs.Mk8sAwsProviderDeployRoleChain']] = None,
                  disk_encryption_key_arn: Optional[str] = None,
+                 extra_node_policies: Optional[Sequence[str]] = None,
                  key_pair: Optional[str] = None,
                  node_pools: Optional[Sequence['outputs.Mk8sAwsProviderNodePool']] = None,
                  pre_install_script: Optional[str] = None,
@@ -3483,6 +3549,7 @@ class Mk8sAwsProvider(dict):
             aws_tags=aws_tags,
             deploy_role_chains=deploy_role_chains,
             disk_encryption_key_arn=disk_encryption_key_arn,
+            extra_node_policies=extra_node_policies,
             key_pair=key_pair,
             node_pools=node_pools,
             pre_install_script=pre_install_script,
@@ -3501,6 +3568,7 @@ class Mk8sAwsProvider(dict):
              aws_tags: Optional[Mapping[str, str]] = None,
              deploy_role_chains: Optional[Sequence['outputs.Mk8sAwsProviderDeployRoleChain']] = None,
              disk_encryption_key_arn: Optional[str] = None,
+             extra_node_policies: Optional[Sequence[str]] = None,
              key_pair: Optional[str] = None,
              node_pools: Optional[Sequence['outputs.Mk8sAwsProviderNodePool']] = None,
              pre_install_script: Optional[str] = None,
@@ -3518,6 +3586,8 @@ class Mk8sAwsProvider(dict):
             deploy_role_chains = kwargs['deployRoleChains']
         if 'diskEncryptionKeyArn' in kwargs:
             disk_encryption_key_arn = kwargs['diskEncryptionKeyArn']
+        if 'extraNodePolicies' in kwargs:
+            extra_node_policies = kwargs['extraNodePolicies']
         if 'keyPair' in kwargs:
             key_pair = kwargs['keyPair']
         if 'nodePools' in kwargs:
@@ -3542,6 +3612,8 @@ class Mk8sAwsProvider(dict):
             _setter("deploy_role_chains", deploy_role_chains)
         if disk_encryption_key_arn is not None:
             _setter("disk_encryption_key_arn", disk_encryption_key_arn)
+        if extra_node_policies is not None:
+            _setter("extra_node_policies", extra_node_policies)
         if key_pair is not None:
             _setter("key_pair", key_pair)
         if node_pools is not None:
@@ -3597,6 +3669,11 @@ class Mk8sAwsProvider(dict):
     @pulumi.getter(name="diskEncryptionKeyArn")
     def disk_encryption_key_arn(self) -> Optional[str]:
         return pulumi.get(self, "disk_encryption_key_arn")
+
+    @property
+    @pulumi.getter(name="extraNodePolicies")
+    def extra_node_policies(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "extra_node_policies")
 
     @property
     @pulumi.getter(name="keyPair")
@@ -8795,11 +8872,13 @@ class OrgLoggingElasticLogging(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
+                 _sentinel: Optional[bool] = None,
                  aws: Optional['outputs.OrgLoggingElasticLoggingAws'] = None,
                  elastic_cloud: Optional['outputs.OrgLoggingElasticLoggingElasticCloud'] = None,
                  generic: Optional['outputs.OrgLoggingElasticLoggingGeneric'] = None):
         OrgLoggingElasticLogging._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            _sentinel=_sentinel,
             aws=aws,
             elastic_cloud=elastic_cloud,
             generic=generic,
@@ -8807,6 +8886,7 @@ class OrgLoggingElasticLogging(dict):
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             _sentinel: Optional[bool] = None,
              aws: Optional['outputs.OrgLoggingElasticLoggingAws'] = None,
              elastic_cloud: Optional['outputs.OrgLoggingElasticLoggingElasticCloud'] = None,
              generic: Optional['outputs.OrgLoggingElasticLoggingGeneric'] = None,
@@ -8815,12 +8895,19 @@ class OrgLoggingElasticLogging(dict):
         if 'elasticCloud' in kwargs:
             elastic_cloud = kwargs['elasticCloud']
 
+        if _sentinel is not None:
+            _setter("_sentinel", _sentinel)
         if aws is not None:
             _setter("aws", aws)
         if elastic_cloud is not None:
             _setter("elastic_cloud", elastic_cloud)
         if generic is not None:
             _setter("generic", generic)
+
+    @property
+    @pulumi.getter
+    def _sentinel(self) -> Optional[bool]:
+        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter
@@ -9363,22 +9450,32 @@ class OrgSecurity(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
+                 _sentinel: Optional[bool] = None,
                  threat_detection: Optional['outputs.OrgSecurityThreatDetection'] = None):
         OrgSecurity._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            _sentinel=_sentinel,
             threat_detection=threat_detection,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             _sentinel: Optional[bool] = None,
              threat_detection: Optional['outputs.OrgSecurityThreatDetection'] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
         if 'threatDetection' in kwargs:
             threat_detection = kwargs['threatDetection']
 
+        if _sentinel is not None:
+            _setter("_sentinel", _sentinel)
         if threat_detection is not None:
             _setter("threat_detection", threat_detection)
+
+    @property
+    @pulumi.getter
+    def _sentinel(self) -> Optional[bool]:
+        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter(name="threatDetection")
@@ -9406,7 +9503,7 @@ class OrgSecurityThreatDetection(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 enabled: Optional[bool] = None,
+                 enabled: bool,
                  minimum_severity: Optional[str] = None,
                  syslog: Optional['outputs.OrgSecurityThreatDetectionSyslog'] = None):
         OrgSecurityThreatDetection._configure(
@@ -9418,7 +9515,7 @@ class OrgSecurityThreatDetection(dict):
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
-             enabled: Optional[bool] = None,
+             enabled: bool,
              minimum_severity: Optional[str] = None,
              syslog: Optional['outputs.OrgSecurityThreatDetectionSyslog'] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -9426,8 +9523,7 @@ class OrgSecurityThreatDetection(dict):
         if 'minimumSeverity' in kwargs:
             minimum_severity = kwargs['minimumSeverity']
 
-        if enabled is not None:
-            _setter("enabled", enabled)
+        _setter("enabled", enabled)
         if minimum_severity is not None:
             _setter("minimum_severity", minimum_severity)
         if syslog is not None:
@@ -9435,7 +9531,7 @@ class OrgSecurityThreatDetection(dict):
 
     @property
     @pulumi.getter
-    def enabled(self) -> Optional[bool]:
+    def enabled(self) -> bool:
         return pulumi.get(self, "enabled")
 
     @property
@@ -9452,39 +9548,38 @@ class OrgSecurityThreatDetection(dict):
 @pulumi.output_type
 class OrgSecurityThreatDetectionSyslog(dict):
     def __init__(__self__, *,
+                 host: str,
                  port: int,
-                 host: Optional[str] = None,
                  transport: Optional[str] = None):
         OrgSecurityThreatDetectionSyslog._configure(
             lambda key, value: pulumi.set(__self__, key, value),
-            port=port,
             host=host,
+            port=port,
             transport=transport,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             host: str,
              port: int,
-             host: Optional[str] = None,
              transport: Optional[str] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
 
+        _setter("host", host)
         _setter("port", port)
-        if host is not None:
-            _setter("host", host)
         if transport is not None:
             _setter("transport", transport)
 
     @property
     @pulumi.getter
-    def port(self) -> int:
-        return pulumi.get(self, "port")
+    def host(self) -> str:
+        return pulumi.get(self, "host")
 
     @property
     @pulumi.getter
-    def host(self) -> Optional[str]:
-        return pulumi.get(self, "host")
+    def port(self) -> int:
+        return pulumi.get(self, "port")
 
     @property
     @pulumi.getter
@@ -10381,9 +10476,9 @@ class VolumeSetAutoscaling(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 max_capacity: int,
-                 min_free_percentage: int,
-                 scaling_factor: float):
+                 max_capacity: Optional[int] = None,
+                 min_free_percentage: Optional[int] = None,
+                 scaling_factor: Optional[float] = None):
         VolumeSetAutoscaling._configure(
             lambda key, value: pulumi.set(__self__, key, value),
             max_capacity=max_capacity,
@@ -10393,9 +10488,9 @@ class VolumeSetAutoscaling(dict):
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
-             max_capacity: int,
-             min_free_percentage: int,
-             scaling_factor: float,
+             max_capacity: Optional[int] = None,
+             min_free_percentage: Optional[int] = None,
+             scaling_factor: Optional[float] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
         if 'maxCapacity' in kwargs:
@@ -10405,23 +10500,26 @@ class VolumeSetAutoscaling(dict):
         if 'scalingFactor' in kwargs:
             scaling_factor = kwargs['scalingFactor']
 
-        _setter("max_capacity", max_capacity)
-        _setter("min_free_percentage", min_free_percentage)
-        _setter("scaling_factor", scaling_factor)
+        if max_capacity is not None:
+            _setter("max_capacity", max_capacity)
+        if min_free_percentage is not None:
+            _setter("min_free_percentage", min_free_percentage)
+        if scaling_factor is not None:
+            _setter("scaling_factor", scaling_factor)
 
     @property
     @pulumi.getter(name="maxCapacity")
-    def max_capacity(self) -> int:
+    def max_capacity(self) -> Optional[int]:
         return pulumi.get(self, "max_capacity")
 
     @property
     @pulumi.getter(name="minFreePercentage")
-    def min_free_percentage(self) -> int:
+    def min_free_percentage(self) -> Optional[int]:
         return pulumi.get(self, "min_free_percentage")
 
     @property
     @pulumi.getter(name="scalingFactor")
-    def scaling_factor(self) -> float:
+    def scaling_factor(self) -> Optional[float]:
         return pulumi.get(self, "scaling_factor")
 
 
@@ -10875,16 +10973,19 @@ class WorkloadContainerLifecycle(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
+                 _sentinel: Optional[bool] = None,
                  post_start: Optional['outputs.WorkloadContainerLifecyclePostStart'] = None,
                  pre_stop: Optional['outputs.WorkloadContainerLifecyclePreStop'] = None):
         WorkloadContainerLifecycle._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            _sentinel=_sentinel,
             post_start=post_start,
             pre_stop=pre_stop,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             _sentinel: Optional[bool] = None,
              post_start: Optional['outputs.WorkloadContainerLifecyclePostStart'] = None,
              pre_stop: Optional['outputs.WorkloadContainerLifecyclePreStop'] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -10894,10 +10995,17 @@ class WorkloadContainerLifecycle(dict):
         if 'preStop' in kwargs:
             pre_stop = kwargs['preStop']
 
+        if _sentinel is not None:
+            _setter("_sentinel", _sentinel)
         if post_start is not None:
             _setter("post_start", post_start)
         if pre_stop is not None:
             _setter("pre_stop", pre_stop)
+
+    @property
+    @pulumi.getter
+    def _sentinel(self) -> Optional[bool]:
+        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter(name="postStart")
@@ -11217,20 +11325,30 @@ class WorkloadContainerLivenessProbeExec(dict):
 @pulumi.output_type
 class WorkloadContainerLivenessProbeGrpc(dict):
     def __init__(__self__, *,
+                 _sentinel: Optional[bool] = None,
                  port: Optional[int] = None):
         WorkloadContainerLivenessProbeGrpc._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            _sentinel=_sentinel,
             port=port,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             _sentinel: Optional[bool] = None,
              port: Optional[int] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
 
+        if _sentinel is not None:
+            _setter("_sentinel", _sentinel)
         if port is not None:
             _setter("port", port)
+
+    @property
+    @pulumi.getter
+    def _sentinel(self) -> Optional[bool]:
+        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter
@@ -11314,20 +11432,30 @@ class WorkloadContainerLivenessProbeHttpGet(dict):
 @pulumi.output_type
 class WorkloadContainerLivenessProbeTcpSocket(dict):
     def __init__(__self__, *,
+                 _sentinel: Optional[bool] = None,
                  port: Optional[int] = None):
         WorkloadContainerLivenessProbeTcpSocket._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            _sentinel=_sentinel,
             port=port,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             _sentinel: Optional[bool] = None,
              port: Optional[int] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
 
+        if _sentinel is not None:
+            _setter("_sentinel", _sentinel)
         if port is not None:
             _setter("port", port)
+
+    @property
+    @pulumi.getter
+    def _sentinel(self) -> Optional[bool]:
+        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter
@@ -11577,20 +11705,30 @@ class WorkloadContainerReadinessProbeExec(dict):
 @pulumi.output_type
 class WorkloadContainerReadinessProbeGrpc(dict):
     def __init__(__self__, *,
+                 _sentinel: Optional[bool] = None,
                  port: Optional[int] = None):
         WorkloadContainerReadinessProbeGrpc._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            _sentinel=_sentinel,
             port=port,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             _sentinel: Optional[bool] = None,
              port: Optional[int] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
 
+        if _sentinel is not None:
+            _setter("_sentinel", _sentinel)
         if port is not None:
             _setter("port", port)
+
+    @property
+    @pulumi.getter
+    def _sentinel(self) -> Optional[bool]:
+        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter
@@ -11674,20 +11812,30 @@ class WorkloadContainerReadinessProbeHttpGet(dict):
 @pulumi.output_type
 class WorkloadContainerReadinessProbeTcpSocket(dict):
     def __init__(__self__, *,
+                 _sentinel: Optional[bool] = None,
                  port: Optional[int] = None):
         WorkloadContainerReadinessProbeTcpSocket._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            _sentinel=_sentinel,
             port=port,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             _sentinel: Optional[bool] = None,
              port: Optional[int] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
 
+        if _sentinel is not None:
+            _setter("_sentinel", _sentinel)
         if port is not None:
             _setter("port", port)
+
+    @property
+    @pulumi.getter
+    def _sentinel(self) -> Optional[bool]:
+        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter
@@ -11759,25 +11907,35 @@ class WorkloadContainerVolume(dict):
 @pulumi.output_type
 class WorkloadFirewallSpec(dict):
     def __init__(__self__, *,
+                 _sentinel: Optional[bool] = None,
                  external: Optional['outputs.WorkloadFirewallSpecExternal'] = None,
                  internal: Optional['outputs.WorkloadFirewallSpecInternal'] = None):
         WorkloadFirewallSpec._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            _sentinel=_sentinel,
             external=external,
             internal=internal,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             _sentinel: Optional[bool] = None,
              external: Optional['outputs.WorkloadFirewallSpecExternal'] = None,
              internal: Optional['outputs.WorkloadFirewallSpecInternal'] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
 
+        if _sentinel is not None:
+            _setter("_sentinel", _sentinel)
         if external is not None:
             _setter("external", external)
         if internal is not None:
             _setter("internal", internal)
+
+    @property
+    @pulumi.getter
+    def _sentinel(self) -> Optional[bool]:
+        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter
@@ -12078,16 +12236,19 @@ class WorkloadLoadBalancer(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
+                 _sentinel: Optional[bool] = None,
                  direct: Optional['outputs.WorkloadLoadBalancerDirect'] = None,
                  geo_location: Optional['outputs.WorkloadLoadBalancerGeoLocation'] = None):
         WorkloadLoadBalancer._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            _sentinel=_sentinel,
             direct=direct,
             geo_location=geo_location,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             _sentinel: Optional[bool] = None,
              direct: Optional['outputs.WorkloadLoadBalancerDirect'] = None,
              geo_location: Optional['outputs.WorkloadLoadBalancerGeoLocation'] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -12095,10 +12256,17 @@ class WorkloadLoadBalancer(dict):
         if 'geoLocation' in kwargs:
             geo_location = kwargs['geoLocation']
 
+        if _sentinel is not None:
+            _setter("_sentinel", _sentinel)
         if direct is not None:
             _setter("direct", direct)
         if geo_location is not None:
             _setter("geo_location", geo_location)
+
+    @property
+    @pulumi.getter
+    def _sentinel(self) -> Optional[bool]:
+        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter
@@ -12436,6 +12604,7 @@ class WorkloadLocalOptionAutoscaling(dict):
                  metric: Optional[str] = None,
                  metric_percentile: Optional[str] = None,
                  min_scale: Optional[int] = None,
+                 multis: Optional[Sequence['outputs.WorkloadLocalOptionAutoscalingMulti']] = None,
                  scale_to_zero_delay: Optional[int] = None,
                  target: Optional[int] = None):
         WorkloadLocalOptionAutoscaling._configure(
@@ -12445,6 +12614,7 @@ class WorkloadLocalOptionAutoscaling(dict):
             metric=metric,
             metric_percentile=metric_percentile,
             min_scale=min_scale,
+            multis=multis,
             scale_to_zero_delay=scale_to_zero_delay,
             target=target,
         )
@@ -12456,6 +12626,7 @@ class WorkloadLocalOptionAutoscaling(dict):
              metric: Optional[str] = None,
              metric_percentile: Optional[str] = None,
              min_scale: Optional[int] = None,
+             multis: Optional[Sequence['outputs.WorkloadLocalOptionAutoscalingMulti']] = None,
              scale_to_zero_delay: Optional[int] = None,
              target: Optional[int] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -12481,6 +12652,8 @@ class WorkloadLocalOptionAutoscaling(dict):
             _setter("metric_percentile", metric_percentile)
         if min_scale is not None:
             _setter("min_scale", min_scale)
+        if multis is not None:
+            _setter("multis", multis)
         if scale_to_zero_delay is not None:
             _setter("scale_to_zero_delay", scale_to_zero_delay)
         if target is not None:
@@ -12512,9 +12685,48 @@ class WorkloadLocalOptionAutoscaling(dict):
         return pulumi.get(self, "min_scale")
 
     @property
+    @pulumi.getter
+    def multis(self) -> Optional[Sequence['outputs.WorkloadLocalOptionAutoscalingMulti']]:
+        return pulumi.get(self, "multis")
+
+    @property
     @pulumi.getter(name="scaleToZeroDelay")
     def scale_to_zero_delay(self) -> Optional[int]:
         return pulumi.get(self, "scale_to_zero_delay")
+
+    @property
+    @pulumi.getter
+    def target(self) -> Optional[int]:
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class WorkloadLocalOptionAutoscalingMulti(dict):
+    def __init__(__self__, *,
+                 metric: Optional[str] = None,
+                 target: Optional[int] = None):
+        WorkloadLocalOptionAutoscalingMulti._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            metric=metric,
+            target=target,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             metric: Optional[str] = None,
+             target: Optional[int] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if metric is not None:
+            _setter("metric", metric)
+        if target is not None:
+            _setter("target", target)
+
+    @property
+    @pulumi.getter
+    def metric(self) -> Optional[str]:
+        return pulumi.get(self, "metric")
 
     @property
     @pulumi.getter
@@ -12642,6 +12854,7 @@ class WorkloadOptionsAutoscaling(dict):
                  metric: Optional[str] = None,
                  metric_percentile: Optional[str] = None,
                  min_scale: Optional[int] = None,
+                 multis: Optional[Sequence['outputs.WorkloadOptionsAutoscalingMulti']] = None,
                  scale_to_zero_delay: Optional[int] = None,
                  target: Optional[int] = None):
         WorkloadOptionsAutoscaling._configure(
@@ -12651,6 +12864,7 @@ class WorkloadOptionsAutoscaling(dict):
             metric=metric,
             metric_percentile=metric_percentile,
             min_scale=min_scale,
+            multis=multis,
             scale_to_zero_delay=scale_to_zero_delay,
             target=target,
         )
@@ -12662,6 +12876,7 @@ class WorkloadOptionsAutoscaling(dict):
              metric: Optional[str] = None,
              metric_percentile: Optional[str] = None,
              min_scale: Optional[int] = None,
+             multis: Optional[Sequence['outputs.WorkloadOptionsAutoscalingMulti']] = None,
              scale_to_zero_delay: Optional[int] = None,
              target: Optional[int] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -12687,6 +12902,8 @@ class WorkloadOptionsAutoscaling(dict):
             _setter("metric_percentile", metric_percentile)
         if min_scale is not None:
             _setter("min_scale", min_scale)
+        if multis is not None:
+            _setter("multis", multis)
         if scale_to_zero_delay is not None:
             _setter("scale_to_zero_delay", scale_to_zero_delay)
         if target is not None:
@@ -12718,9 +12935,48 @@ class WorkloadOptionsAutoscaling(dict):
         return pulumi.get(self, "min_scale")
 
     @property
+    @pulumi.getter
+    def multis(self) -> Optional[Sequence['outputs.WorkloadOptionsAutoscalingMulti']]:
+        return pulumi.get(self, "multis")
+
+    @property
     @pulumi.getter(name="scaleToZeroDelay")
     def scale_to_zero_delay(self) -> Optional[int]:
         return pulumi.get(self, "scale_to_zero_delay")
+
+    @property
+    @pulumi.getter
+    def target(self) -> Optional[int]:
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class WorkloadOptionsAutoscalingMulti(dict):
+    def __init__(__self__, *,
+                 metric: Optional[str] = None,
+                 target: Optional[int] = None):
+        WorkloadOptionsAutoscalingMulti._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            metric=metric,
+            target=target,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             metric: Optional[str] = None,
+             target: Optional[int] = None,
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
+        if metric is not None:
+            _setter("metric", metric)
+        if target is not None:
+            _setter("target", target)
+
+    @property
+    @pulumi.getter
+    def metric(self) -> Optional[str]:
+        return pulumi.get(self, "metric")
 
     @property
     @pulumi.getter
@@ -12833,22 +13089,32 @@ class WorkloadSecurityOptions(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
+                 _sentinel: Optional[bool] = None,
                  file_system_group_id: Optional[int] = None):
         WorkloadSecurityOptions._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            _sentinel=_sentinel,
             file_system_group_id=file_system_group_id,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             _sentinel: Optional[bool] = None,
              file_system_group_id: Optional[int] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
         if 'fileSystemGroupId' in kwargs:
             file_system_group_id = kwargs['fileSystemGroupId']
 
+        if _sentinel is not None:
+            _setter("_sentinel", _sentinel)
         if file_system_group_id is not None:
             _setter("file_system_group_id", file_system_group_id)
+
+    @property
+    @pulumi.getter
+    def _sentinel(self) -> Optional[bool]:
+        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter(name="fileSystemGroupId")
@@ -13418,7 +13684,7 @@ class GetGvcLightstepTracingResult(dict):
 @pulumi.output_type
 class GetGvcLoadBalancerResult(dict):
     def __init__(__self__, *,
-                 dedicated: bool,
+                 dedicated: Optional[bool] = None,
                  redirect: Optional['outputs.GetGvcLoadBalancerRedirectResult'] = None,
                  trusted_proxies: Optional[int] = None):
         GetGvcLoadBalancerResult._configure(
@@ -13430,7 +13696,7 @@ class GetGvcLoadBalancerResult(dict):
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
-             dedicated: bool,
+             dedicated: Optional[bool] = None,
              redirect: Optional['outputs.GetGvcLoadBalancerRedirectResult'] = None,
              trusted_proxies: Optional[int] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
@@ -13438,7 +13704,8 @@ class GetGvcLoadBalancerResult(dict):
         if 'trustedProxies' in kwargs:
             trusted_proxies = kwargs['trustedProxies']
 
-        _setter("dedicated", dedicated)
+        if dedicated is not None:
+            _setter("dedicated", dedicated)
         if redirect is not None:
             _setter("redirect", redirect)
         if trusted_proxies is not None:
@@ -13446,7 +13713,7 @@ class GetGvcLoadBalancerResult(dict):
 
     @property
     @pulumi.getter
-    def dedicated(self) -> bool:
+    def dedicated(self) -> Optional[bool]:
         return pulumi.get(self, "dedicated")
 
     @property
@@ -13463,22 +13730,32 @@ class GetGvcLoadBalancerResult(dict):
 @pulumi.output_type
 class GetGvcLoadBalancerRedirectResult(dict):
     def __init__(__self__, *,
+                 _sentinel: Optional[bool] = None,
                  class_: Optional['outputs.GetGvcLoadBalancerRedirectClassResult'] = None):
         GetGvcLoadBalancerRedirectResult._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            _sentinel=_sentinel,
             class_=class_,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             _sentinel: Optional[bool] = None,
              class_: Optional['outputs.GetGvcLoadBalancerRedirectClassResult'] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
         if 'class' in kwargs:
             class_ = kwargs['class']
 
+        if _sentinel is not None:
+            _setter("_sentinel", _sentinel)
         if class_ is not None:
             _setter("class_", class_)
+
+    @property
+    @pulumi.getter
+    def _sentinel(self) -> Optional[bool]:
+        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter(name="class")
@@ -13489,20 +13766,30 @@ class GetGvcLoadBalancerRedirectResult(dict):
 @pulumi.output_type
 class GetGvcLoadBalancerRedirectClassResult(dict):
     def __init__(__self__, *,
+                 _sentinel: Optional[bool] = None,
                  status5xx: Optional[str] = None):
         GetGvcLoadBalancerRedirectClassResult._configure(
             lambda key, value: pulumi.set(__self__, key, value),
+            _sentinel=_sentinel,
             status5xx=status5xx,
         )
     @staticmethod
     def _configure(
              _setter: Callable[[Any, Any], None],
+             _sentinel: Optional[bool] = None,
              status5xx: Optional[str] = None,
              opts: Optional[pulumi.ResourceOptions]=None,
              **kwargs):
 
+        if _sentinel is not None:
+            _setter("_sentinel", _sentinel)
         if status5xx is not None:
             _setter("status5xx", status5xx)
+
+    @property
+    @pulumi.getter
+    def _sentinel(self) -> Optional[bool]:
+        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter

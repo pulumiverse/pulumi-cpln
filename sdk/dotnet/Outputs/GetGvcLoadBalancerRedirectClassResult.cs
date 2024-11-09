@@ -14,11 +14,16 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class GetGvcLoadBalancerRedirectClassResult
     {
+        public readonly bool? _sentinel;
         public readonly string? Status5xx;
 
         [OutputConstructor]
-        private GetGvcLoadBalancerRedirectClassResult(string? status5xx)
+        private GetGvcLoadBalancerRedirectClassResult(
+            bool? _sentinel,
+
+            string? status5xx)
         {
+            this._sentinel = _sentinel;
             Status5xx = status5xx;
         }
     }

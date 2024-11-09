@@ -28,6 +28,14 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("minScale")]
         public Input<int>? MinScale { get; set; }
 
+        [Input("multis")]
+        private InputList<Inputs.WorkloadLocalOptionAutoscalingMultiArgs>? _multis;
+        public InputList<Inputs.WorkloadLocalOptionAutoscalingMultiArgs> Multis
+        {
+            get => _multis ?? (_multis = new InputList<Inputs.WorkloadLocalOptionAutoscalingMultiArgs>());
+            set => _multis = value;
+        }
+
         [Input("scaleToZeroDelay")]
         public Input<int>? ScaleToZeroDelay { get; set; }
 

@@ -12,19 +12,19 @@ namespace Pulumiverse.Cpln.Outputs
 {
 
     [OutputType]
-    public sealed class DomainRouteHeaders
+    public sealed class WorkloadLocalOptionAutoscalingMulti
     {
-        public readonly bool? _sentinel;
-        public readonly Outputs.DomainRouteHeadersRequest? Request;
+        public readonly string? Metric;
+        public readonly int? Target;
 
         [OutputConstructor]
-        private DomainRouteHeaders(
-            bool? _sentinel,
+        private WorkloadLocalOptionAutoscalingMulti(
+            string? metric,
 
-            Outputs.DomainRouteHeadersRequest? request)
+            int? target)
         {
-            this._sentinel = _sentinel;
-            Request = request;
+            Metric = metric;
+            Target = target;
         }
     }
 }

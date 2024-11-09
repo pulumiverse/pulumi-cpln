@@ -25,7 +25,7 @@ type Domain struct {
 	Name pulumi.StringOutput `pulumi:"name"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
-	// Domain specificiation.
+	// Domain specification.
 	Spec     DomainSpecOutput        `pulumi:"spec"`
 	Statuses DomainStatusArrayOutput `pulumi:"statuses"`
 	// Key-value map of resource tags.
@@ -74,7 +74,7 @@ type domainState struct {
 	Name *string `pulumi:"name"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink *string `pulumi:"selfLink"`
-	// Domain specificiation.
+	// Domain specification.
 	Spec     *DomainSpec    `pulumi:"spec"`
 	Statuses []DomainStatus `pulumi:"statuses"`
 	// Key-value map of resource tags.
@@ -91,7 +91,7 @@ type DomainState struct {
 	Name pulumi.StringPtrInput
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringPtrInput
-	// Domain specificiation.
+	// Domain specification.
 	Spec     DomainSpecPtrInput
 	Statuses DomainStatusArrayInput
 	// Key-value map of resource tags.
@@ -108,7 +108,7 @@ type domainArgs struct {
 	// Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with
 	// DNS. Create and Update will fail if the required DNS entries cannot be validated.
 	Name *string `pulumi:"name"`
-	// Domain specificiation.
+	// Domain specification.
 	Spec DomainSpec `pulumi:"spec"`
 	// Key-value map of resource tags.
 	Tags map[string]string `pulumi:"tags"`
@@ -121,7 +121,7 @@ type DomainArgs struct {
 	// Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with
 	// DNS. Create and Update will fail if the required DNS entries cannot be validated.
 	Name pulumi.StringPtrInput
-	// Domain specificiation.
+	// Domain specification.
 	Spec DomainSpecInput
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapInput
@@ -259,7 +259,7 @@ func (o DomainOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *Domain) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
 }
 
-// Domain specificiation.
+// Domain specification.
 func (o DomainOutput) Spec() DomainSpecOutput {
 	return o.ApplyT(func(v *Domain) DomainSpecOutput { return v.Spec }).(DomainSpecOutput)
 }

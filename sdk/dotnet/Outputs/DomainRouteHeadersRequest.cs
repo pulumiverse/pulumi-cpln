@@ -14,11 +14,16 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class DomainRouteHeadersRequest
     {
+        public readonly bool? _sentinel;
         public readonly ImmutableDictionary<string, string>? Set;
 
         [OutputConstructor]
-        private DomainRouteHeadersRequest(ImmutableDictionary<string, string>? set)
+        private DomainRouteHeadersRequest(
+            bool? _sentinel,
+
+            ImmutableDictionary<string, string>? set)
         {
+            this._sentinel = _sentinel;
             Set = set;
         }
     }

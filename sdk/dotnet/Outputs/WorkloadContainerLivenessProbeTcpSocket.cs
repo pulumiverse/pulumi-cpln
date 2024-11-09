@@ -14,11 +14,16 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadContainerLivenessProbeTcpSocket
     {
+        public readonly bool? _sentinel;
         public readonly int? Port;
 
         [OutputConstructor]
-        private WorkloadContainerLivenessProbeTcpSocket(int? port)
+        private WorkloadContainerLivenessProbeTcpSocket(
+            bool? _sentinel,
+
+            int? port)
         {
+            this._sentinel = _sentinel;
             Port = port;
         }
     }

@@ -13,8 +13,8 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class OrgSecurityThreatDetectionSyslogGetArgs : global::Pulumi.ResourceArgs
     {
-        [Input("host")]
-        public Input<string>? Host { get; set; }
+        [Input("host", required: true)]
+        public Input<string> Host { get; set; } = null!;
 
         [Input("port", required: true)]
         public Input<int> Port { get; set; } = null!;

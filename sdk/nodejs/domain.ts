@@ -52,7 +52,7 @@ export class Domain extends pulumi.CustomResource {
      */
     public /*out*/ readonly selfLink!: pulumi.Output<string>;
     /**
-     * Domain specificiation.
+     * Domain specification.
      */
     public readonly spec!: pulumi.Output<outputs.DomainSpec>;
     public /*out*/ readonly statuses!: pulumi.Output<outputs.DomainStatus[]>;
@@ -121,7 +121,7 @@ export interface DomainState {
      */
     selfLink?: pulumi.Input<string>;
     /**
-     * Domain specificiation.
+     * Domain specification.
      */
     spec?: pulumi.Input<inputs.DomainSpec>;
     statuses?: pulumi.Input<pulumi.Input<inputs.DomainStatus>[]>;
@@ -145,7 +145,7 @@ export interface DomainArgs {
      */
     name?: pulumi.Input<string>;
     /**
-     * Domain specificiation.
+     * Domain specification.
      */
     spec: pulumi.Input<inputs.DomainSpec>;
     /**

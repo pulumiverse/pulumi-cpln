@@ -13,8 +13,8 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class IdentityNetworkResourceArgs : global::Pulumi.ResourceArgs
     {
-        [Input("agentLink", required: true)]
-        public Input<string> AgentLink { get; set; } = null!;
+        [Input("agentLink")]
+        public Input<string>? AgentLink { get; set; }
 
         [Input("fqdn")]
         public Input<string>? Fqdn { get; set; }
@@ -30,7 +30,7 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
-        [Input("ports")]
+        [Input("ports", required: true)]
         private InputList<int>? _ports;
         public InputList<int> Ports
         {
