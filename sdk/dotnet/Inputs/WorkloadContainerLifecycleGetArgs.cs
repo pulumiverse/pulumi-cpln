@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadContainerLifecycleGetArgs : global::Pulumi.ResourceArgs
     {
+        [Input("_sentinel")]
+        public Input<bool>? _sentinel { get; set; }
+
         [Input("postStart")]
         public Input<Inputs.WorkloadContainerLifecyclePostStartGetArgs>? PostStart { get; set; }
 

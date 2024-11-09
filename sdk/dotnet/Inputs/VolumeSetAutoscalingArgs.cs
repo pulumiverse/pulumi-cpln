@@ -13,14 +13,14 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class VolumeSetAutoscalingArgs : global::Pulumi.ResourceArgs
     {
-        [Input("maxCapacity", required: true)]
-        public Input<int> MaxCapacity { get; set; } = null!;
+        [Input("maxCapacity")]
+        public Input<int>? MaxCapacity { get; set; }
 
-        [Input("minFreePercentage", required: true)]
-        public Input<int> MinFreePercentage { get; set; } = null!;
+        [Input("minFreePercentage")]
+        public Input<int>? MinFreePercentage { get; set; }
 
-        [Input("scalingFactor", required: true)]
-        public Input<double> ScalingFactor { get; set; } = null!;
+        [Input("scalingFactor")]
+        public Input<double>? ScalingFactor { get; set; }
 
         public VolumeSetAutoscalingArgs()
         {

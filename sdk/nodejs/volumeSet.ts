@@ -55,7 +55,8 @@ export class VolumeSet extends pulumi.CustomResource {
      */
     public readonly gvc!: pulumi.Output<string>;
     /**
-     * The initial size in GB of volumes in this set. Minimum value: `10`.
+     * The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+     * is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
      */
     public readonly initialCapacity!: pulumi.Output<number>;
     /**
@@ -177,7 +178,8 @@ export interface VolumeSetState {
      */
     gvc?: pulumi.Input<string>;
     /**
-     * The initial size in GB of volumes in this set. Minimum value: `10`.
+     * The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+     * is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
      */
     initialCapacity?: pulumi.Input<number>;
     /**
@@ -238,7 +240,8 @@ export interface VolumeSetArgs {
      */
     gvc: pulumi.Input<string>;
     /**
-     * The initial size in GB of volumes in this set. Minimum value: `10`.
+     * The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+     * is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
      */
     initialCapacity: pulumi.Input<number>;
     /**

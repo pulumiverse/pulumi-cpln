@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class OrgLoggingElasticLoggingGetArgs : global::Pulumi.ResourceArgs
     {
+        [Input("_sentinel")]
+        public Input<bool>? _sentinel { get; set; }
+
         [Input("aws")]
         public Input<Inputs.OrgLoggingElasticLoggingAwsGetArgs>? Aws { get; set; }
 

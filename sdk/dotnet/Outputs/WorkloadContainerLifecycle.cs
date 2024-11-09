@@ -14,15 +14,19 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadContainerLifecycle
     {
+        public readonly bool? _sentinel;
         public readonly Outputs.WorkloadContainerLifecyclePostStart? PostStart;
         public readonly Outputs.WorkloadContainerLifecyclePreStop? PreStop;
 
         [OutputConstructor]
         private WorkloadContainerLifecycle(
+            bool? _sentinel,
+
             Outputs.WorkloadContainerLifecyclePostStart? postStart,
 
             Outputs.WorkloadContainerLifecyclePreStop? preStop)
         {
+            this._sentinel = _sentinel;
             PostStart = postStart;
             PreStop = preStop;
         }

@@ -14,13 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgSecurityThreatDetectionSyslog
     {
-        public readonly string? Host;
+        public readonly string Host;
         public readonly int Port;
         public readonly string? Transport;
 
         [OutputConstructor]
         private OrgSecurityThreatDetectionSyslog(
-            string? host,
+            string host,
 
             int port,
 

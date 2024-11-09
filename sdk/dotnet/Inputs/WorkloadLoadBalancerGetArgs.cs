@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadLoadBalancerGetArgs : global::Pulumi.ResourceArgs
     {
+        [Input("_sentinel")]
+        public Input<bool>? _sentinel { get; set; }
+
         [Input("direct")]
         public Input<Inputs.WorkloadLoadBalancerDirectGetArgs>? Direct { get; set; }
 

@@ -13,8 +13,8 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class OrgSecurityThreatDetectionGetArgs : global::Pulumi.ResourceArgs
     {
-        [Input("enabled")]
-        public Input<bool>? Enabled { get; set; }
+        [Input("enabled", required: true)]
+        public Input<bool> Enabled { get; set; } = null!;
 
         [Input("minimumSeverity")]
         public Input<string>? MinimumSeverity { get; set; }

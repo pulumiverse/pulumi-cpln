@@ -13,8 +13,8 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class GvcLoadBalancerGetArgs : global::Pulumi.ResourceArgs
     {
-        [Input("dedicated", required: true)]
-        public Input<bool> Dedicated { get; set; } = null!;
+        [Input("dedicated")]
+        public Input<bool>? Dedicated { get; set; }
 
         [Input("redirect")]
         public Input<Inputs.GvcLoadBalancerRedirectGetArgs>? Redirect { get; set; }

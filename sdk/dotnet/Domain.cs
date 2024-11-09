@@ -39,7 +39,7 @@ namespace Pulumiverse.Cpln
         public Output<string> SelfLink { get; private set; } = null!;
 
         /// <summary>
-        /// Domain specificiation.
+        /// Domain specification.
         /// </summary>
         [Output("spec")]
         public Output<Outputs.DomainSpec> Spec { get; private set; } = null!;
@@ -114,7 +114,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// Domain specificiation.
+        /// Domain specification.
         /// </summary>
         [Input("spec", required: true)]
         public Input<Inputs.DomainSpecArgs> Spec { get; set; } = null!;
@@ -165,7 +165,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? SelfLink { get; set; }
 
         /// <summary>
-        /// Domain specificiation.
+        /// Domain specification.
         /// </summary>
         [Input("spec")]
         public Input<Inputs.DomainSpecGetArgs>? Spec { get; set; }

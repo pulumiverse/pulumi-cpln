@@ -14,11 +14,16 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadContainerLivenessProbeGrpc
     {
+        public readonly bool? _sentinel;
         public readonly int? Port;
 
         [OutputConstructor]
-        private WorkloadContainerLivenessProbeGrpc(int? port)
+        private WorkloadContainerLivenessProbeGrpc(
+            bool? _sentinel,
+
+            int? port)
         {
+            this._sentinel = _sentinel;
             Port = port;
         }
     }

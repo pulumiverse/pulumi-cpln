@@ -26,7 +26,8 @@ type VolumeSet struct {
 	FileSystemType pulumi.StringPtrOutput `pulumi:"fileSystemType"`
 	// Name of the associated GVC.
 	Gvc pulumi.StringOutput `pulumi:"gvc"`
-	// The initial size in GB of volumes in this set. Minimum value: `10`.
+	// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+	// is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
 	InitialCapacity pulumi.IntOutput `pulumi:"initialCapacity"`
 	// Name of the Volume Set.
 	Name pulumi.StringOutput `pulumi:"name"`
@@ -98,7 +99,8 @@ type volumeSetState struct {
 	FileSystemType *string `pulumi:"fileSystemType"`
 	// Name of the associated GVC.
 	Gvc *string `pulumi:"gvc"`
-	// The initial size in GB of volumes in this set. Minimum value: `10`.
+	// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+	// is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
 	InitialCapacity *int `pulumi:"initialCapacity"`
 	// Name of the Volume Set.
 	Name *string `pulumi:"name"`
@@ -132,7 +134,8 @@ type VolumeSetState struct {
 	FileSystemType pulumi.StringPtrInput
 	// Name of the associated GVC.
 	Gvc pulumi.StringPtrInput
-	// The initial size in GB of volumes in this set. Minimum value: `10`.
+	// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+	// is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
 	InitialCapacity pulumi.IntPtrInput
 	// Name of the Volume Set.
 	Name pulumi.StringPtrInput
@@ -168,7 +171,8 @@ type volumeSetArgs struct {
 	FileSystemType *string `pulumi:"fileSystemType"`
 	// Name of the associated GVC.
 	Gvc string `pulumi:"gvc"`
-	// The initial size in GB of volumes in this set. Minimum value: `10`.
+	// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+	// is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
 	InitialCapacity int `pulumi:"initialCapacity"`
 	// Name of the Volume Set.
 	Name *string `pulumi:"name"`
@@ -195,7 +199,8 @@ type VolumeSetArgs struct {
 	FileSystemType pulumi.StringPtrInput
 	// Name of the associated GVC.
 	Gvc pulumi.StringInput
-	// The initial size in GB of volumes in this set. Minimum value: `10`.
+	// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+	// is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
 	InitialCapacity pulumi.IntInput
 	// Name of the Volume Set.
 	Name pulumi.StringPtrInput
@@ -348,7 +353,8 @@ func (o VolumeSetOutput) Gvc() pulumi.StringOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringOutput { return v.Gvc }).(pulumi.StringOutput)
 }
 
-// The initial size in GB of volumes in this set. Minimum value: `10`.
+// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+// is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
 func (o VolumeSetOutput) InitialCapacity() pulumi.IntOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.IntOutput { return v.InitialCapacity }).(pulumi.IntOutput)
 }

@@ -14,15 +14,19 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadFirewallSpec
     {
+        public readonly bool? _sentinel;
         public readonly Outputs.WorkloadFirewallSpecExternal? External;
         public readonly Outputs.WorkloadFirewallSpecInternal? Internal;
 
         [OutputConstructor]
         private WorkloadFirewallSpec(
+            bool? _sentinel,
+
             Outputs.WorkloadFirewallSpecExternal? external,
 
             Outputs.WorkloadFirewallSpecInternal? @internal)
         {
+            this._sentinel = _sentinel;
             External = external;
             Internal = @internal;
         }

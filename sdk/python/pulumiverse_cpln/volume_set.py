@@ -29,7 +29,8 @@ class VolumeSetArgs:
         """
         The set of arguments for constructing a VolumeSet resource.
         :param pulumi.Input[str] gvc: Name of the associated GVC.
-        :param pulumi.Input[int] initial_capacity: The initial size in GB of volumes in this set. Minimum value: `10`.
+        :param pulumi.Input[int] initial_capacity: The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+               is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
         :param pulumi.Input[str] performance_class: Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
                `high-throughput-ssd`
         :param pulumi.Input['VolumeSetAutoscalingArgs'] autoscaling: Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
@@ -113,7 +114,8 @@ class VolumeSetArgs:
     @pulumi.getter(name="initialCapacity")
     def initial_capacity(self) -> pulumi.Input[int]:
         """
-        The initial size in GB of volumes in this set. Minimum value: `10`.
+        The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+        is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
         """
         return pulumi.get(self, "initial_capacity")
 
@@ -245,7 +247,8 @@ class _VolumeSetState:
         :param pulumi.Input[str] description: Description of the Volume Set.
         :param pulumi.Input[str] file_system_type: Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
         :param pulumi.Input[str] gvc: Name of the associated GVC.
-        :param pulumi.Input[int] initial_capacity: The initial size in GB of volumes in this set. Minimum value: `10`.
+        :param pulumi.Input[int] initial_capacity: The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+               is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
         :param pulumi.Input[str] name: Name of the Volume Set.
         :param pulumi.Input[str] performance_class: Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
                `high-throughput-ssd`
@@ -402,7 +405,8 @@ class _VolumeSetState:
     @pulumi.getter(name="initialCapacity")
     def initial_capacity(self) -> Optional[pulumi.Input[int]]:
         """
-        The initial size in GB of volumes in this set. Minimum value: `10`.
+        The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+        is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
         """
         return pulumi.get(self, "initial_capacity")
 
@@ -534,7 +538,8 @@ class VolumeSet(pulumi.CustomResource):
         :param pulumi.Input[str] description: Description of the Volume Set.
         :param pulumi.Input[str] file_system_type: Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
         :param pulumi.Input[str] gvc: Name of the associated GVC.
-        :param pulumi.Input[int] initial_capacity: The initial size in GB of volumes in this set. Minimum value: `10`.
+        :param pulumi.Input[int] initial_capacity: The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+               is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
         :param pulumi.Input[str] name: Name of the Volume Set.
         :param pulumi.Input[str] performance_class: Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
                `high-throughput-ssd`
@@ -656,7 +661,8 @@ class VolumeSet(pulumi.CustomResource):
         :param pulumi.Input[str] description: Description of the Volume Set.
         :param pulumi.Input[str] file_system_type: Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
         :param pulumi.Input[str] gvc: Name of the associated GVC.
-        :param pulumi.Input[int] initial_capacity: The initial size in GB of volumes in this set. Minimum value: `10`.
+        :param pulumi.Input[int] initial_capacity: The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+               is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
         :param pulumi.Input[str] name: Name of the Volume Set.
         :param pulumi.Input[str] performance_class: Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
                `high-throughput-ssd`
@@ -733,7 +739,8 @@ class VolumeSet(pulumi.CustomResource):
     @pulumi.getter(name="initialCapacity")
     def initial_capacity(self) -> pulumi.Output[int]:
         """
-        The initial size in GB of volumes in this set. Minimum value: `10`.
+        The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
+        is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
         """
         return pulumi.get(self, "initial_capacity")
 

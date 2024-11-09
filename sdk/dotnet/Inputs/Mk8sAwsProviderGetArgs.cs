@@ -38,6 +38,14 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("diskEncryptionKeyArn")]
         public Input<string>? DiskEncryptionKeyArn { get; set; }
 
+        [Input("extraNodePolicies")]
+        private InputList<string>? _extraNodePolicies;
+        public InputList<string> ExtraNodePolicies
+        {
+            get => _extraNodePolicies ?? (_extraNodePolicies = new InputList<string>());
+            set => _extraNodePolicies = value;
+        }
+
         [Input("image", required: true)]
         public Input<Inputs.Mk8sAwsProviderImageGetArgs> Image { get; set; } = null!;
 

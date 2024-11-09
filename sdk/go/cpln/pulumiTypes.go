@@ -643,7 +643,8 @@ func (o CloudAccountNgsPtrOutput) SecretLink() pulumi.StringPtrOutput {
 }
 
 type DomainRouteHeaders struct {
-	Request *DomainRouteHeadersRequest `pulumi:"request"`
+	_sentinel *bool                      `pulumi:"_sentinel"`
+	Request   *DomainRouteHeadersRequest `pulumi:"request"`
 }
 
 // DomainRouteHeadersInput is an input type that accepts DomainRouteHeadersArgs and DomainRouteHeadersOutput values.
@@ -658,7 +659,8 @@ type DomainRouteHeadersInput interface {
 }
 
 type DomainRouteHeadersArgs struct {
-	Request DomainRouteHeadersRequestPtrInput `pulumi:"request"`
+	_sentinel pulumi.BoolPtrInput               `pulumi:"_sentinel"`
+	Request   DomainRouteHeadersRequestPtrInput `pulumi:"request"`
 }
 
 func (DomainRouteHeadersArgs) ElementType() reflect.Type {
@@ -756,6 +758,10 @@ func (o DomainRouteHeadersOutput) ToOutput(ctx context.Context) pulumix.Output[D
 	}
 }
 
+func (o DomainRouteHeadersOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v DomainRouteHeaders) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
 func (o DomainRouteHeadersOutput) Request() DomainRouteHeadersRequestPtrOutput {
 	return o.ApplyT(func(v DomainRouteHeaders) *DomainRouteHeadersRequest { return v.Request }).(DomainRouteHeadersRequestPtrOutput)
 }
@@ -790,6 +796,15 @@ func (o DomainRouteHeadersPtrOutput) Elem() DomainRouteHeadersOutput {
 	}).(DomainRouteHeadersOutput)
 }
 
+func (o DomainRouteHeadersPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *DomainRouteHeaders) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
+}
+
 func (o DomainRouteHeadersPtrOutput) Request() DomainRouteHeadersRequestPtrOutput {
 	return o.ApplyT(func(v *DomainRouteHeaders) *DomainRouteHeadersRequest {
 		if v == nil {
@@ -800,7 +815,8 @@ func (o DomainRouteHeadersPtrOutput) Request() DomainRouteHeadersRequestPtrOutpu
 }
 
 type DomainRouteHeadersRequest struct {
-	Set map[string]string `pulumi:"set"`
+	_sentinel *bool             `pulumi:"_sentinel"`
+	Set       map[string]string `pulumi:"set"`
 }
 
 // DomainRouteHeadersRequestInput is an input type that accepts DomainRouteHeadersRequestArgs and DomainRouteHeadersRequestOutput values.
@@ -815,7 +831,8 @@ type DomainRouteHeadersRequestInput interface {
 }
 
 type DomainRouteHeadersRequestArgs struct {
-	Set pulumi.StringMapInput `pulumi:"set"`
+	_sentinel pulumi.BoolPtrInput   `pulumi:"_sentinel"`
+	Set       pulumi.StringMapInput `pulumi:"set"`
 }
 
 func (DomainRouteHeadersRequestArgs) ElementType() reflect.Type {
@@ -913,6 +930,10 @@ func (o DomainRouteHeadersRequestOutput) ToOutput(ctx context.Context) pulumix.O
 	}
 }
 
+func (o DomainRouteHeadersRequestOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v DomainRouteHeadersRequest) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
 func (o DomainRouteHeadersRequestOutput) Set() pulumi.StringMapOutput {
 	return o.ApplyT(func(v DomainRouteHeadersRequest) map[string]string { return v.Set }).(pulumi.StringMapOutput)
 }
@@ -945,6 +966,15 @@ func (o DomainRouteHeadersRequestPtrOutput) Elem() DomainRouteHeadersRequestOutp
 		var ret DomainRouteHeadersRequest
 		return ret
 	}).(DomainRouteHeadersRequestOutput)
+}
+
+func (o DomainRouteHeadersRequestPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *DomainRouteHeadersRequest) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
 }
 
 func (o DomainRouteHeadersRequestPtrOutput) Set() pulumi.StringMapOutput {
@@ -3602,7 +3632,7 @@ func (o GvcLightstepTracingPtrOutput) Sampling() pulumi.Float64PtrOutput {
 }
 
 type GvcLoadBalancer struct {
-	Dedicated      bool                     `pulumi:"dedicated"`
+	Dedicated      *bool                    `pulumi:"dedicated"`
 	Redirect       *GvcLoadBalancerRedirect `pulumi:"redirect"`
 	TrustedProxies *int                     `pulumi:"trustedProxies"`
 }
@@ -3619,7 +3649,7 @@ type GvcLoadBalancerInput interface {
 }
 
 type GvcLoadBalancerArgs struct {
-	Dedicated      pulumi.BoolInput                `pulumi:"dedicated"`
+	Dedicated      pulumi.BoolPtrInput             `pulumi:"dedicated"`
 	Redirect       GvcLoadBalancerRedirectPtrInput `pulumi:"redirect"`
 	TrustedProxies pulumi.IntPtrInput              `pulumi:"trustedProxies"`
 }
@@ -3719,8 +3749,8 @@ func (o GvcLoadBalancerOutput) ToOutput(ctx context.Context) pulumix.Output[GvcL
 	}
 }
 
-func (o GvcLoadBalancerOutput) Dedicated() pulumi.BoolOutput {
-	return o.ApplyT(func(v GvcLoadBalancer) bool { return v.Dedicated }).(pulumi.BoolOutput)
+func (o GvcLoadBalancerOutput) Dedicated() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v GvcLoadBalancer) *bool { return v.Dedicated }).(pulumi.BoolPtrOutput)
 }
 
 func (o GvcLoadBalancerOutput) Redirect() GvcLoadBalancerRedirectPtrOutput {
@@ -3766,7 +3796,7 @@ func (o GvcLoadBalancerPtrOutput) Dedicated() pulumi.BoolPtrOutput {
 		if v == nil {
 			return nil
 		}
-		return &v.Dedicated
+		return v.Dedicated
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -3789,7 +3819,8 @@ func (o GvcLoadBalancerPtrOutput) TrustedProxies() pulumi.IntPtrOutput {
 }
 
 type GvcLoadBalancerRedirect struct {
-	Class *GvcLoadBalancerRedirectClass `pulumi:"class"`
+	_sentinel *bool                         `pulumi:"_sentinel"`
+	Class     *GvcLoadBalancerRedirectClass `pulumi:"class"`
 }
 
 // GvcLoadBalancerRedirectInput is an input type that accepts GvcLoadBalancerRedirectArgs and GvcLoadBalancerRedirectOutput values.
@@ -3804,7 +3835,8 @@ type GvcLoadBalancerRedirectInput interface {
 }
 
 type GvcLoadBalancerRedirectArgs struct {
-	Class GvcLoadBalancerRedirectClassPtrInput `pulumi:"class"`
+	_sentinel pulumi.BoolPtrInput                  `pulumi:"_sentinel"`
+	Class     GvcLoadBalancerRedirectClassPtrInput `pulumi:"class"`
 }
 
 func (GvcLoadBalancerRedirectArgs) ElementType() reflect.Type {
@@ -3902,6 +3934,10 @@ func (o GvcLoadBalancerRedirectOutput) ToOutput(ctx context.Context) pulumix.Out
 	}
 }
 
+func (o GvcLoadBalancerRedirectOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v GvcLoadBalancerRedirect) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
 func (o GvcLoadBalancerRedirectOutput) Class() GvcLoadBalancerRedirectClassPtrOutput {
 	return o.ApplyT(func(v GvcLoadBalancerRedirect) *GvcLoadBalancerRedirectClass { return v.Class }).(GvcLoadBalancerRedirectClassPtrOutput)
 }
@@ -3936,6 +3972,15 @@ func (o GvcLoadBalancerRedirectPtrOutput) Elem() GvcLoadBalancerRedirectOutput {
 	}).(GvcLoadBalancerRedirectOutput)
 }
 
+func (o GvcLoadBalancerRedirectPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *GvcLoadBalancerRedirect) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
+}
+
 func (o GvcLoadBalancerRedirectPtrOutput) Class() GvcLoadBalancerRedirectClassPtrOutput {
 	return o.ApplyT(func(v *GvcLoadBalancerRedirect) *GvcLoadBalancerRedirectClass {
 		if v == nil {
@@ -3946,6 +3991,7 @@ func (o GvcLoadBalancerRedirectPtrOutput) Class() GvcLoadBalancerRedirectClassPt
 }
 
 type GvcLoadBalancerRedirectClass struct {
+	_sentinel *bool   `pulumi:"_sentinel"`
 	Status5xx *string `pulumi:"status5xx"`
 }
 
@@ -3961,6 +4007,7 @@ type GvcLoadBalancerRedirectClassInput interface {
 }
 
 type GvcLoadBalancerRedirectClassArgs struct {
+	_sentinel pulumi.BoolPtrInput   `pulumi:"_sentinel"`
 	Status5xx pulumi.StringPtrInput `pulumi:"status5xx"`
 }
 
@@ -4059,6 +4106,10 @@ func (o GvcLoadBalancerRedirectClassOutput) ToOutput(ctx context.Context) pulumi
 	}
 }
 
+func (o GvcLoadBalancerRedirectClassOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v GvcLoadBalancerRedirectClass) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
 func (o GvcLoadBalancerRedirectClassOutput) Status5xx() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GvcLoadBalancerRedirectClass) *string { return v.Status5xx }).(pulumi.StringPtrOutput)
 }
@@ -4091,6 +4142,15 @@ func (o GvcLoadBalancerRedirectClassPtrOutput) Elem() GvcLoadBalancerRedirectCla
 		var ret GvcLoadBalancerRedirectClass
 		return ret
 	}).(GvcLoadBalancerRedirectClassOutput)
+}
+
+func (o GvcLoadBalancerRedirectClassPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *GvcLoadBalancerRedirectClass) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
 }
 
 func (o GvcLoadBalancerRedirectClassPtrOutput) Status5xx() pulumi.StringPtrOutput {
@@ -4806,8 +4866,9 @@ func (o IdentityAzureAccessPolicyPtrOutput) RoleAssignments() IdentityAzureAcces
 }
 
 type IdentityAzureAccessPolicyRoleAssignment struct {
-	Roles []string `pulumi:"roles"`
-	Scope *string  `pulumi:"scope"`
+	_sentinel *bool    `pulumi:"_sentinel"`
+	Roles     []string `pulumi:"roles"`
+	Scope     *string  `pulumi:"scope"`
 }
 
 // IdentityAzureAccessPolicyRoleAssignmentInput is an input type that accepts IdentityAzureAccessPolicyRoleAssignmentArgs and IdentityAzureAccessPolicyRoleAssignmentOutput values.
@@ -4822,8 +4883,9 @@ type IdentityAzureAccessPolicyRoleAssignmentInput interface {
 }
 
 type IdentityAzureAccessPolicyRoleAssignmentArgs struct {
-	Roles pulumi.StringArrayInput `pulumi:"roles"`
-	Scope pulumi.StringPtrInput   `pulumi:"scope"`
+	_sentinel pulumi.BoolPtrInput     `pulumi:"_sentinel"`
+	Roles     pulumi.StringArrayInput `pulumi:"roles"`
+	Scope     pulumi.StringPtrInput   `pulumi:"scope"`
 }
 
 func (IdentityAzureAccessPolicyRoleAssignmentArgs) ElementType() reflect.Type {
@@ -4893,6 +4955,10 @@ func (o IdentityAzureAccessPolicyRoleAssignmentOutput) ToOutput(ctx context.Cont
 	return pulumix.Output[IdentityAzureAccessPolicyRoleAssignment]{
 		OutputState: o.OutputState,
 	}
+}
+
+func (o IdentityAzureAccessPolicyRoleAssignmentOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v IdentityAzureAccessPolicyRoleAssignment) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
 }
 
 func (o IdentityAzureAccessPolicyRoleAssignmentOutput) Roles() pulumi.StringArrayOutput {
@@ -5132,8 +5198,9 @@ func (o IdentityGcpAccessPolicyPtrOutput) ServiceAccount() pulumi.StringPtrOutpu
 }
 
 type IdentityGcpAccessPolicyBinding struct {
-	Resource *string  `pulumi:"resource"`
-	Roles    []string `pulumi:"roles"`
+	_sentinel *bool    `pulumi:"_sentinel"`
+	Resource  *string  `pulumi:"resource"`
+	Roles     []string `pulumi:"roles"`
 }
 
 // IdentityGcpAccessPolicyBindingInput is an input type that accepts IdentityGcpAccessPolicyBindingArgs and IdentityGcpAccessPolicyBindingOutput values.
@@ -5148,8 +5215,9 @@ type IdentityGcpAccessPolicyBindingInput interface {
 }
 
 type IdentityGcpAccessPolicyBindingArgs struct {
-	Resource pulumi.StringPtrInput   `pulumi:"resource"`
-	Roles    pulumi.StringArrayInput `pulumi:"roles"`
+	_sentinel pulumi.BoolPtrInput     `pulumi:"_sentinel"`
+	Resource  pulumi.StringPtrInput   `pulumi:"resource"`
+	Roles     pulumi.StringArrayInput `pulumi:"roles"`
 }
 
 func (IdentityGcpAccessPolicyBindingArgs) ElementType() reflect.Type {
@@ -5219,6 +5287,10 @@ func (o IdentityGcpAccessPolicyBindingOutput) ToOutput(ctx context.Context) pulu
 	return pulumix.Output[IdentityGcpAccessPolicyBinding]{
 		OutputState: o.OutputState,
 	}
+}
+
+func (o IdentityGcpAccessPolicyBindingOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v IdentityGcpAccessPolicyBinding) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
 }
 
 func (o IdentityGcpAccessPolicyBindingOutput) Resource() pulumi.StringPtrOutput {
@@ -5716,7 +5788,7 @@ func (o IdentityNativeNetworkResourceGcpServiceConnectPtrOutput) TargetService()
 }
 
 type IdentityNetworkResource struct {
-	AgentLink  string   `pulumi:"agentLink"`
+	AgentLink  *string  `pulumi:"agentLink"`
 	Fqdn       *string  `pulumi:"fqdn"`
 	Ips        []string `pulumi:"ips"`
 	Name       string   `pulumi:"name"`
@@ -5736,7 +5808,7 @@ type IdentityNetworkResourceInput interface {
 }
 
 type IdentityNetworkResourceArgs struct {
-	AgentLink  pulumi.StringInput      `pulumi:"agentLink"`
+	AgentLink  pulumi.StringPtrInput   `pulumi:"agentLink"`
 	Fqdn       pulumi.StringPtrInput   `pulumi:"fqdn"`
 	Ips        pulumi.StringArrayInput `pulumi:"ips"`
 	Name       pulumi.StringInput      `pulumi:"name"`
@@ -5813,8 +5885,8 @@ func (o IdentityNetworkResourceOutput) ToOutput(ctx context.Context) pulumix.Out
 	}
 }
 
-func (o IdentityNetworkResourceOutput) AgentLink() pulumi.StringOutput {
-	return o.ApplyT(func(v IdentityNetworkResource) string { return v.AgentLink }).(pulumi.StringOutput)
+func (o IdentityNetworkResourceOutput) AgentLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v IdentityNetworkResource) *string { return v.AgentLink }).(pulumi.StringPtrOutput)
 }
 
 func (o IdentityNetworkResourceOutput) Fqdn() pulumi.StringPtrOutput {
@@ -9190,6 +9262,7 @@ type Mk8sAwsProvider struct {
 	DeployRoleArn        string                           `pulumi:"deployRoleArn"`
 	DeployRoleChains     []Mk8sAwsProviderDeployRoleChain `pulumi:"deployRoleChains"`
 	DiskEncryptionKeyArn *string                          `pulumi:"diskEncryptionKeyArn"`
+	ExtraNodePolicies    []string                         `pulumi:"extraNodePolicies"`
 	Image                Mk8sAwsProviderImage             `pulumi:"image"`
 	KeyPair              *string                          `pulumi:"keyPair"`
 	Networking           Mk8sAwsProviderNetworking        `pulumi:"networking"`
@@ -9218,6 +9291,7 @@ type Mk8sAwsProviderArgs struct {
 	DeployRoleArn        pulumi.StringInput                       `pulumi:"deployRoleArn"`
 	DeployRoleChains     Mk8sAwsProviderDeployRoleChainArrayInput `pulumi:"deployRoleChains"`
 	DiskEncryptionKeyArn pulumi.StringPtrInput                    `pulumi:"diskEncryptionKeyArn"`
+	ExtraNodePolicies    pulumi.StringArrayInput                  `pulumi:"extraNodePolicies"`
 	Image                Mk8sAwsProviderImageInput                `pulumi:"image"`
 	KeyPair              pulumi.StringPtrInput                    `pulumi:"keyPair"`
 	Networking           Mk8sAwsProviderNetworkingInput           `pulumi:"networking"`
@@ -9344,6 +9418,10 @@ func (o Mk8sAwsProviderOutput) DiskEncryptionKeyArn() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Mk8sAwsProvider) *string { return v.DiskEncryptionKeyArn }).(pulumi.StringPtrOutput)
 }
 
+func (o Mk8sAwsProviderOutput) ExtraNodePolicies() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sAwsProvider) []string { return v.ExtraNodePolicies }).(pulumi.StringArrayOutput)
+}
+
 func (o Mk8sAwsProviderOutput) Image() Mk8sAwsProviderImageOutput {
 	return o.ApplyT(func(v Mk8sAwsProvider) Mk8sAwsProviderImage { return v.Image }).(Mk8sAwsProviderImageOutput)
 }
@@ -9453,6 +9531,15 @@ func (o Mk8sAwsProviderPtrOutput) DiskEncryptionKeyArn() pulumi.StringPtrOutput 
 		}
 		return v.DiskEncryptionKeyArn
 	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sAwsProviderPtrOutput) ExtraNodePolicies() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sAwsProvider) []string {
+		if v == nil {
+			return nil
+		}
+		return v.ExtraNodePolicies
+	}).(pulumi.StringArrayOutput)
 }
 
 func (o Mk8sAwsProviderPtrOutput) Image() Mk8sAwsProviderImagePtrOutput {
@@ -21028,6 +21115,7 @@ func (o OrgLoggingDatadogLoggingArrayOutput) Index(i pulumi.IntInput) OrgLogging
 }
 
 type OrgLoggingElasticLogging struct {
+	_sentinel    *bool                                 `pulumi:"_sentinel"`
 	Aws          *OrgLoggingElasticLoggingAws          `pulumi:"aws"`
 	ElasticCloud *OrgLoggingElasticLoggingElasticCloud `pulumi:"elasticCloud"`
 	Generic      *OrgLoggingElasticLoggingGeneric      `pulumi:"generic"`
@@ -21045,6 +21133,7 @@ type OrgLoggingElasticLoggingInput interface {
 }
 
 type OrgLoggingElasticLoggingArgs struct {
+	_sentinel    pulumi.BoolPtrInput                          `pulumi:"_sentinel"`
 	Aws          OrgLoggingElasticLoggingAwsPtrInput          `pulumi:"aws"`
 	ElasticCloud OrgLoggingElasticLoggingElasticCloudPtrInput `pulumi:"elasticCloud"`
 	Generic      OrgLoggingElasticLoggingGenericPtrInput      `pulumi:"generic"`
@@ -21117,6 +21206,10 @@ func (o OrgLoggingElasticLoggingOutput) ToOutput(ctx context.Context) pulumix.Ou
 	return pulumix.Output[OrgLoggingElasticLogging]{
 		OutputState: o.OutputState,
 	}
+}
+
+func (o OrgLoggingElasticLoggingOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v OrgLoggingElasticLogging) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
 }
 
 func (o OrgLoggingElasticLoggingOutput) Aws() OrgLoggingElasticLoggingAwsPtrOutput {
@@ -22661,6 +22754,7 @@ func (o OrgObservabilityPtrOutput) TracesRetentionDays() pulumi.IntPtrOutput {
 }
 
 type OrgSecurity struct {
+	_sentinel       *bool                       `pulumi:"_sentinel"`
 	ThreatDetection *OrgSecurityThreatDetection `pulumi:"threatDetection"`
 }
 
@@ -22676,6 +22770,7 @@ type OrgSecurityInput interface {
 }
 
 type OrgSecurityArgs struct {
+	_sentinel       pulumi.BoolPtrInput                `pulumi:"_sentinel"`
 	ThreatDetection OrgSecurityThreatDetectionPtrInput `pulumi:"threatDetection"`
 }
 
@@ -22774,6 +22869,10 @@ func (o OrgSecurityOutput) ToOutput(ctx context.Context) pulumix.Output[OrgSecur
 	}
 }
 
+func (o OrgSecurityOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v OrgSecurity) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
 func (o OrgSecurityOutput) ThreatDetection() OrgSecurityThreatDetectionPtrOutput {
 	return o.ApplyT(func(v OrgSecurity) *OrgSecurityThreatDetection { return v.ThreatDetection }).(OrgSecurityThreatDetectionPtrOutput)
 }
@@ -22808,6 +22907,15 @@ func (o OrgSecurityPtrOutput) Elem() OrgSecurityOutput {
 	}).(OrgSecurityOutput)
 }
 
+func (o OrgSecurityPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *OrgSecurity) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
+}
+
 func (o OrgSecurityPtrOutput) ThreatDetection() OrgSecurityThreatDetectionPtrOutput {
 	return o.ApplyT(func(v *OrgSecurity) *OrgSecurityThreatDetection {
 		if v == nil {
@@ -22818,7 +22926,7 @@ func (o OrgSecurityPtrOutput) ThreatDetection() OrgSecurityThreatDetectionPtrOut
 }
 
 type OrgSecurityThreatDetection struct {
-	Enabled         *bool                             `pulumi:"enabled"`
+	Enabled         bool                              `pulumi:"enabled"`
 	MinimumSeverity *string                           `pulumi:"minimumSeverity"`
 	Syslog          *OrgSecurityThreatDetectionSyslog `pulumi:"syslog"`
 }
@@ -22835,7 +22943,7 @@ type OrgSecurityThreatDetectionInput interface {
 }
 
 type OrgSecurityThreatDetectionArgs struct {
-	Enabled         pulumi.BoolPtrInput                      `pulumi:"enabled"`
+	Enabled         pulumi.BoolInput                         `pulumi:"enabled"`
 	MinimumSeverity pulumi.StringPtrInput                    `pulumi:"minimumSeverity"`
 	Syslog          OrgSecurityThreatDetectionSyslogPtrInput `pulumi:"syslog"`
 }
@@ -22935,8 +23043,8 @@ func (o OrgSecurityThreatDetectionOutput) ToOutput(ctx context.Context) pulumix.
 	}
 }
 
-func (o OrgSecurityThreatDetectionOutput) Enabled() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v OrgSecurityThreatDetection) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+func (o OrgSecurityThreatDetectionOutput) Enabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v OrgSecurityThreatDetection) bool { return v.Enabled }).(pulumi.BoolOutput)
 }
 
 func (o OrgSecurityThreatDetectionOutput) MinimumSeverity() pulumi.StringPtrOutput {
@@ -22982,7 +23090,7 @@ func (o OrgSecurityThreatDetectionPtrOutput) Enabled() pulumi.BoolPtrOutput {
 		if v == nil {
 			return nil
 		}
-		return v.Enabled
+		return &v.Enabled
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -23005,7 +23113,7 @@ func (o OrgSecurityThreatDetectionPtrOutput) Syslog() OrgSecurityThreatDetection
 }
 
 type OrgSecurityThreatDetectionSyslog struct {
-	Host      *string `pulumi:"host"`
+	Host      string  `pulumi:"host"`
 	Port      int     `pulumi:"port"`
 	Transport *string `pulumi:"transport"`
 }
@@ -23022,7 +23130,7 @@ type OrgSecurityThreatDetectionSyslogInput interface {
 }
 
 type OrgSecurityThreatDetectionSyslogArgs struct {
-	Host      pulumi.StringPtrInput `pulumi:"host"`
+	Host      pulumi.StringInput    `pulumi:"host"`
 	Port      pulumi.IntInput       `pulumi:"port"`
 	Transport pulumi.StringPtrInput `pulumi:"transport"`
 }
@@ -23122,8 +23230,8 @@ func (o OrgSecurityThreatDetectionSyslogOutput) ToOutput(ctx context.Context) pu
 	}
 }
 
-func (o OrgSecurityThreatDetectionSyslogOutput) Host() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v OrgSecurityThreatDetectionSyslog) *string { return v.Host }).(pulumi.StringPtrOutput)
+func (o OrgSecurityThreatDetectionSyslogOutput) Host() pulumi.StringOutput {
+	return o.ApplyT(func(v OrgSecurityThreatDetectionSyslog) string { return v.Host }).(pulumi.StringOutput)
 }
 
 func (o OrgSecurityThreatDetectionSyslogOutput) Port() pulumi.IntOutput {
@@ -23169,7 +23277,7 @@ func (o OrgSecurityThreatDetectionSyslogPtrOutput) Host() pulumi.StringPtrOutput
 		if v == nil {
 			return nil
 		}
-		return v.Host
+		return &v.Host
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -25983,9 +26091,9 @@ func (o SecretUserpassPtrOutput) Username() pulumi.StringPtrOutput {
 }
 
 type VolumeSetAutoscaling struct {
-	MaxCapacity       int     `pulumi:"maxCapacity"`
-	MinFreePercentage int     `pulumi:"minFreePercentage"`
-	ScalingFactor     float64 `pulumi:"scalingFactor"`
+	MaxCapacity       *int     `pulumi:"maxCapacity"`
+	MinFreePercentage *int     `pulumi:"minFreePercentage"`
+	ScalingFactor     *float64 `pulumi:"scalingFactor"`
 }
 
 // VolumeSetAutoscalingInput is an input type that accepts VolumeSetAutoscalingArgs and VolumeSetAutoscalingOutput values.
@@ -26000,9 +26108,9 @@ type VolumeSetAutoscalingInput interface {
 }
 
 type VolumeSetAutoscalingArgs struct {
-	MaxCapacity       pulumi.IntInput     `pulumi:"maxCapacity"`
-	MinFreePercentage pulumi.IntInput     `pulumi:"minFreePercentage"`
-	ScalingFactor     pulumi.Float64Input `pulumi:"scalingFactor"`
+	MaxCapacity       pulumi.IntPtrInput     `pulumi:"maxCapacity"`
+	MinFreePercentage pulumi.IntPtrInput     `pulumi:"minFreePercentage"`
+	ScalingFactor     pulumi.Float64PtrInput `pulumi:"scalingFactor"`
 }
 
 func (VolumeSetAutoscalingArgs) ElementType() reflect.Type {
@@ -26100,16 +26208,16 @@ func (o VolumeSetAutoscalingOutput) ToOutput(ctx context.Context) pulumix.Output
 	}
 }
 
-func (o VolumeSetAutoscalingOutput) MaxCapacity() pulumi.IntOutput {
-	return o.ApplyT(func(v VolumeSetAutoscaling) int { return v.MaxCapacity }).(pulumi.IntOutput)
+func (o VolumeSetAutoscalingOutput) MaxCapacity() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v VolumeSetAutoscaling) *int { return v.MaxCapacity }).(pulumi.IntPtrOutput)
 }
 
-func (o VolumeSetAutoscalingOutput) MinFreePercentage() pulumi.IntOutput {
-	return o.ApplyT(func(v VolumeSetAutoscaling) int { return v.MinFreePercentage }).(pulumi.IntOutput)
+func (o VolumeSetAutoscalingOutput) MinFreePercentage() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v VolumeSetAutoscaling) *int { return v.MinFreePercentage }).(pulumi.IntPtrOutput)
 }
 
-func (o VolumeSetAutoscalingOutput) ScalingFactor() pulumi.Float64Output {
-	return o.ApplyT(func(v VolumeSetAutoscaling) float64 { return v.ScalingFactor }).(pulumi.Float64Output)
+func (o VolumeSetAutoscalingOutput) ScalingFactor() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v VolumeSetAutoscaling) *float64 { return v.ScalingFactor }).(pulumi.Float64PtrOutput)
 }
 
 type VolumeSetAutoscalingPtrOutput struct{ *pulumi.OutputState }
@@ -26147,7 +26255,7 @@ func (o VolumeSetAutoscalingPtrOutput) MaxCapacity() pulumi.IntPtrOutput {
 		if v == nil {
 			return nil
 		}
-		return &v.MaxCapacity
+		return v.MaxCapacity
 	}).(pulumi.IntPtrOutput)
 }
 
@@ -26156,7 +26264,7 @@ func (o VolumeSetAutoscalingPtrOutput) MinFreePercentage() pulumi.IntPtrOutput {
 		if v == nil {
 			return nil
 		}
-		return &v.MinFreePercentage
+		return v.MinFreePercentage
 	}).(pulumi.IntPtrOutput)
 }
 
@@ -26165,7 +26273,7 @@ func (o VolumeSetAutoscalingPtrOutput) ScalingFactor() pulumi.Float64PtrOutput {
 		if v == nil {
 			return nil
 		}
-		return &v.ScalingFactor
+		return v.ScalingFactor
 	}).(pulumi.Float64PtrOutput)
 }
 
@@ -26894,6 +27002,7 @@ func (o WorkloadContainerGpuNvidiaPtrOutput) Quantity() pulumi.IntPtrOutput {
 }
 
 type WorkloadContainerLifecycle struct {
+	_sentinel *bool                                `pulumi:"_sentinel"`
 	PostStart *WorkloadContainerLifecyclePostStart `pulumi:"postStart"`
 	PreStop   *WorkloadContainerLifecyclePreStop   `pulumi:"preStop"`
 }
@@ -26910,6 +27019,7 @@ type WorkloadContainerLifecycleInput interface {
 }
 
 type WorkloadContainerLifecycleArgs struct {
+	_sentinel pulumi.BoolPtrInput                         `pulumi:"_sentinel"`
 	PostStart WorkloadContainerLifecyclePostStartPtrInput `pulumi:"postStart"`
 	PreStop   WorkloadContainerLifecyclePreStopPtrInput   `pulumi:"preStop"`
 }
@@ -27009,6 +27119,10 @@ func (o WorkloadContainerLifecycleOutput) ToOutput(ctx context.Context) pulumix.
 	}
 }
 
+func (o WorkloadContainerLifecycleOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadContainerLifecycle) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
 func (o WorkloadContainerLifecycleOutput) PostStart() WorkloadContainerLifecyclePostStartPtrOutput {
 	return o.ApplyT(func(v WorkloadContainerLifecycle) *WorkloadContainerLifecyclePostStart { return v.PostStart }).(WorkloadContainerLifecyclePostStartPtrOutput)
 }
@@ -27045,6 +27159,15 @@ func (o WorkloadContainerLifecyclePtrOutput) Elem() WorkloadContainerLifecycleOu
 		var ret WorkloadContainerLifecycle
 		return ret
 	}).(WorkloadContainerLifecycleOutput)
+}
+
+func (o WorkloadContainerLifecyclePtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *WorkloadContainerLifecycle) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
 }
 
 func (o WorkloadContainerLifecyclePtrOutput) PostStart() WorkloadContainerLifecyclePostStartPtrOutput {
@@ -28128,7 +28251,8 @@ func (o WorkloadContainerLivenessProbeExecPtrOutput) Commands() pulumi.StringArr
 }
 
 type WorkloadContainerLivenessProbeGrpc struct {
-	Port *int `pulumi:"port"`
+	_sentinel *bool `pulumi:"_sentinel"`
+	Port      *int  `pulumi:"port"`
 }
 
 // WorkloadContainerLivenessProbeGrpcInput is an input type that accepts WorkloadContainerLivenessProbeGrpcArgs and WorkloadContainerLivenessProbeGrpcOutput values.
@@ -28143,7 +28267,8 @@ type WorkloadContainerLivenessProbeGrpcInput interface {
 }
 
 type WorkloadContainerLivenessProbeGrpcArgs struct {
-	Port pulumi.IntPtrInput `pulumi:"port"`
+	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
+	Port      pulumi.IntPtrInput  `pulumi:"port"`
 }
 
 func (WorkloadContainerLivenessProbeGrpcArgs) ElementType() reflect.Type {
@@ -28241,6 +28366,10 @@ func (o WorkloadContainerLivenessProbeGrpcOutput) ToOutput(ctx context.Context) 
 	}
 }
 
+func (o WorkloadContainerLivenessProbeGrpcOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadContainerLivenessProbeGrpc) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
 func (o WorkloadContainerLivenessProbeGrpcOutput) Port() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadContainerLivenessProbeGrpc) *int { return v.Port }).(pulumi.IntPtrOutput)
 }
@@ -28273,6 +28402,15 @@ func (o WorkloadContainerLivenessProbeGrpcPtrOutput) Elem() WorkloadContainerLiv
 		var ret WorkloadContainerLivenessProbeGrpc
 		return ret
 	}).(WorkloadContainerLivenessProbeGrpcOutput)
+}
+
+func (o WorkloadContainerLivenessProbeGrpcPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *WorkloadContainerLivenessProbeGrpc) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
 }
 
 func (o WorkloadContainerLivenessProbeGrpcPtrOutput) Port() pulumi.IntPtrOutput {
@@ -28487,7 +28625,8 @@ func (o WorkloadContainerLivenessProbeHttpGetPtrOutput) Scheme() pulumi.StringPt
 }
 
 type WorkloadContainerLivenessProbeTcpSocket struct {
-	Port *int `pulumi:"port"`
+	_sentinel *bool `pulumi:"_sentinel"`
+	Port      *int  `pulumi:"port"`
 }
 
 // WorkloadContainerLivenessProbeTcpSocketInput is an input type that accepts WorkloadContainerLivenessProbeTcpSocketArgs and WorkloadContainerLivenessProbeTcpSocketOutput values.
@@ -28502,7 +28641,8 @@ type WorkloadContainerLivenessProbeTcpSocketInput interface {
 }
 
 type WorkloadContainerLivenessProbeTcpSocketArgs struct {
-	Port pulumi.IntPtrInput `pulumi:"port"`
+	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
+	Port      pulumi.IntPtrInput  `pulumi:"port"`
 }
 
 func (WorkloadContainerLivenessProbeTcpSocketArgs) ElementType() reflect.Type {
@@ -28600,6 +28740,10 @@ func (o WorkloadContainerLivenessProbeTcpSocketOutput) ToOutput(ctx context.Cont
 	}
 }
 
+func (o WorkloadContainerLivenessProbeTcpSocketOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadContainerLivenessProbeTcpSocket) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
 func (o WorkloadContainerLivenessProbeTcpSocketOutput) Port() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadContainerLivenessProbeTcpSocket) *int { return v.Port }).(pulumi.IntPtrOutput)
 }
@@ -28632,6 +28776,15 @@ func (o WorkloadContainerLivenessProbeTcpSocketPtrOutput) Elem() WorkloadContain
 		var ret WorkloadContainerLivenessProbeTcpSocket
 		return ret
 	}).(WorkloadContainerLivenessProbeTcpSocketOutput)
+}
+
+func (o WorkloadContainerLivenessProbeTcpSocketPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *WorkloadContainerLivenessProbeTcpSocket) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
 }
 
 func (o WorkloadContainerLivenessProbeTcpSocketPtrOutput) Port() pulumi.IntPtrOutput {
@@ -29374,7 +29527,8 @@ func (o WorkloadContainerReadinessProbeExecPtrOutput) Commands() pulumi.StringAr
 }
 
 type WorkloadContainerReadinessProbeGrpc struct {
-	Port *int `pulumi:"port"`
+	_sentinel *bool `pulumi:"_sentinel"`
+	Port      *int  `pulumi:"port"`
 }
 
 // WorkloadContainerReadinessProbeGrpcInput is an input type that accepts WorkloadContainerReadinessProbeGrpcArgs and WorkloadContainerReadinessProbeGrpcOutput values.
@@ -29389,7 +29543,8 @@ type WorkloadContainerReadinessProbeGrpcInput interface {
 }
 
 type WorkloadContainerReadinessProbeGrpcArgs struct {
-	Port pulumi.IntPtrInput `pulumi:"port"`
+	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
+	Port      pulumi.IntPtrInput  `pulumi:"port"`
 }
 
 func (WorkloadContainerReadinessProbeGrpcArgs) ElementType() reflect.Type {
@@ -29487,6 +29642,10 @@ func (o WorkloadContainerReadinessProbeGrpcOutput) ToOutput(ctx context.Context)
 	}
 }
 
+func (o WorkloadContainerReadinessProbeGrpcOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadContainerReadinessProbeGrpc) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
 func (o WorkloadContainerReadinessProbeGrpcOutput) Port() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadContainerReadinessProbeGrpc) *int { return v.Port }).(pulumi.IntPtrOutput)
 }
@@ -29519,6 +29678,15 @@ func (o WorkloadContainerReadinessProbeGrpcPtrOutput) Elem() WorkloadContainerRe
 		var ret WorkloadContainerReadinessProbeGrpc
 		return ret
 	}).(WorkloadContainerReadinessProbeGrpcOutput)
+}
+
+func (o WorkloadContainerReadinessProbeGrpcPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *WorkloadContainerReadinessProbeGrpc) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
 }
 
 func (o WorkloadContainerReadinessProbeGrpcPtrOutput) Port() pulumi.IntPtrOutput {
@@ -29733,7 +29901,8 @@ func (o WorkloadContainerReadinessProbeHttpGetPtrOutput) Scheme() pulumi.StringP
 }
 
 type WorkloadContainerReadinessProbeTcpSocket struct {
-	Port *int `pulumi:"port"`
+	_sentinel *bool `pulumi:"_sentinel"`
+	Port      *int  `pulumi:"port"`
 }
 
 // WorkloadContainerReadinessProbeTcpSocketInput is an input type that accepts WorkloadContainerReadinessProbeTcpSocketArgs and WorkloadContainerReadinessProbeTcpSocketOutput values.
@@ -29748,7 +29917,8 @@ type WorkloadContainerReadinessProbeTcpSocketInput interface {
 }
 
 type WorkloadContainerReadinessProbeTcpSocketArgs struct {
-	Port pulumi.IntPtrInput `pulumi:"port"`
+	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
+	Port      pulumi.IntPtrInput  `pulumi:"port"`
 }
 
 func (WorkloadContainerReadinessProbeTcpSocketArgs) ElementType() reflect.Type {
@@ -29846,6 +30016,10 @@ func (o WorkloadContainerReadinessProbeTcpSocketOutput) ToOutput(ctx context.Con
 	}
 }
 
+func (o WorkloadContainerReadinessProbeTcpSocketOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadContainerReadinessProbeTcpSocket) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
 func (o WorkloadContainerReadinessProbeTcpSocketOutput) Port() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadContainerReadinessProbeTcpSocket) *int { return v.Port }).(pulumi.IntPtrOutput)
 }
@@ -29878,6 +30052,15 @@ func (o WorkloadContainerReadinessProbeTcpSocketPtrOutput) Elem() WorkloadContai
 		var ret WorkloadContainerReadinessProbeTcpSocket
 		return ret
 	}).(WorkloadContainerReadinessProbeTcpSocketOutput)
+}
+
+func (o WorkloadContainerReadinessProbeTcpSocketPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *WorkloadContainerReadinessProbeTcpSocket) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
 }
 
 func (o WorkloadContainerReadinessProbeTcpSocketPtrOutput) Port() pulumi.IntPtrOutput {
@@ -30020,8 +30203,9 @@ func (o WorkloadContainerVolumeArrayOutput) Index(i pulumi.IntInput) WorkloadCon
 }
 
 type WorkloadFirewallSpec struct {
-	External *WorkloadFirewallSpecExternal `pulumi:"external"`
-	Internal *WorkloadFirewallSpecInternal `pulumi:"internal"`
+	_sentinel *bool                         `pulumi:"_sentinel"`
+	External  *WorkloadFirewallSpecExternal `pulumi:"external"`
+	Internal  *WorkloadFirewallSpecInternal `pulumi:"internal"`
 }
 
 // WorkloadFirewallSpecInput is an input type that accepts WorkloadFirewallSpecArgs and WorkloadFirewallSpecOutput values.
@@ -30036,8 +30220,9 @@ type WorkloadFirewallSpecInput interface {
 }
 
 type WorkloadFirewallSpecArgs struct {
-	External WorkloadFirewallSpecExternalPtrInput `pulumi:"external"`
-	Internal WorkloadFirewallSpecInternalPtrInput `pulumi:"internal"`
+	_sentinel pulumi.BoolPtrInput                  `pulumi:"_sentinel"`
+	External  WorkloadFirewallSpecExternalPtrInput `pulumi:"external"`
+	Internal  WorkloadFirewallSpecInternalPtrInput `pulumi:"internal"`
 }
 
 func (WorkloadFirewallSpecArgs) ElementType() reflect.Type {
@@ -30135,6 +30320,10 @@ func (o WorkloadFirewallSpecOutput) ToOutput(ctx context.Context) pulumix.Output
 	}
 }
 
+func (o WorkloadFirewallSpecOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadFirewallSpec) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
 func (o WorkloadFirewallSpecOutput) External() WorkloadFirewallSpecExternalPtrOutput {
 	return o.ApplyT(func(v WorkloadFirewallSpec) *WorkloadFirewallSpecExternal { return v.External }).(WorkloadFirewallSpecExternalPtrOutput)
 }
@@ -30171,6 +30360,15 @@ func (o WorkloadFirewallSpecPtrOutput) Elem() WorkloadFirewallSpecOutput {
 		var ret WorkloadFirewallSpec
 		return ret
 	}).(WorkloadFirewallSpecOutput)
+}
+
+func (o WorkloadFirewallSpecPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *WorkloadFirewallSpec) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
 }
 
 func (o WorkloadFirewallSpecPtrOutput) External() WorkloadFirewallSpecExternalPtrOutput {
@@ -30909,6 +31107,7 @@ func (o WorkloadJobPtrOutput) Schedule() pulumi.StringPtrOutput {
 }
 
 type WorkloadLoadBalancer struct {
+	_sentinel   *bool                            `pulumi:"_sentinel"`
 	Direct      *WorkloadLoadBalancerDirect      `pulumi:"direct"`
 	GeoLocation *WorkloadLoadBalancerGeoLocation `pulumi:"geoLocation"`
 }
@@ -30925,6 +31124,7 @@ type WorkloadLoadBalancerInput interface {
 }
 
 type WorkloadLoadBalancerArgs struct {
+	_sentinel   pulumi.BoolPtrInput                     `pulumi:"_sentinel"`
 	Direct      WorkloadLoadBalancerDirectPtrInput      `pulumi:"direct"`
 	GeoLocation WorkloadLoadBalancerGeoLocationPtrInput `pulumi:"geoLocation"`
 }
@@ -31024,6 +31224,10 @@ func (o WorkloadLoadBalancerOutput) ToOutput(ctx context.Context) pulumix.Output
 	}
 }
 
+func (o WorkloadLoadBalancerOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadLoadBalancer) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
 func (o WorkloadLoadBalancerOutput) Direct() WorkloadLoadBalancerDirectPtrOutput {
 	return o.ApplyT(func(v WorkloadLoadBalancer) *WorkloadLoadBalancerDirect { return v.Direct }).(WorkloadLoadBalancerDirectPtrOutput)
 }
@@ -31060,6 +31264,15 @@ func (o WorkloadLoadBalancerPtrOutput) Elem() WorkloadLoadBalancerOutput {
 		var ret WorkloadLoadBalancer
 		return ret
 	}).(WorkloadLoadBalancerOutput)
+}
+
+func (o WorkloadLoadBalancerPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *WorkloadLoadBalancer) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
 }
 
 func (o WorkloadLoadBalancerPtrOutput) Direct() WorkloadLoadBalancerDirectPtrOutput {
@@ -31911,13 +32124,14 @@ func (o WorkloadLocalOptionArrayOutput) Index(i pulumi.IntInput) WorkloadLocalOp
 }
 
 type WorkloadLocalOptionAutoscaling struct {
-	MaxConcurrency   *int    `pulumi:"maxConcurrency"`
-	MaxScale         *int    `pulumi:"maxScale"`
-	Metric           *string `pulumi:"metric"`
-	MetricPercentile *string `pulumi:"metricPercentile"`
-	MinScale         *int    `pulumi:"minScale"`
-	ScaleToZeroDelay *int    `pulumi:"scaleToZeroDelay"`
-	Target           *int    `pulumi:"target"`
+	MaxConcurrency   *int                                  `pulumi:"maxConcurrency"`
+	MaxScale         *int                                  `pulumi:"maxScale"`
+	Metric           *string                               `pulumi:"metric"`
+	MetricPercentile *string                               `pulumi:"metricPercentile"`
+	MinScale         *int                                  `pulumi:"minScale"`
+	Multis           []WorkloadLocalOptionAutoscalingMulti `pulumi:"multis"`
+	ScaleToZeroDelay *int                                  `pulumi:"scaleToZeroDelay"`
+	Target           *int                                  `pulumi:"target"`
 }
 
 // WorkloadLocalOptionAutoscalingInput is an input type that accepts WorkloadLocalOptionAutoscalingArgs and WorkloadLocalOptionAutoscalingOutput values.
@@ -31932,13 +32146,14 @@ type WorkloadLocalOptionAutoscalingInput interface {
 }
 
 type WorkloadLocalOptionAutoscalingArgs struct {
-	MaxConcurrency   pulumi.IntPtrInput    `pulumi:"maxConcurrency"`
-	MaxScale         pulumi.IntPtrInput    `pulumi:"maxScale"`
-	Metric           pulumi.StringPtrInput `pulumi:"metric"`
-	MetricPercentile pulumi.StringPtrInput `pulumi:"metricPercentile"`
-	MinScale         pulumi.IntPtrInput    `pulumi:"minScale"`
-	ScaleToZeroDelay pulumi.IntPtrInput    `pulumi:"scaleToZeroDelay"`
-	Target           pulumi.IntPtrInput    `pulumi:"target"`
+	MaxConcurrency   pulumi.IntPtrInput                            `pulumi:"maxConcurrency"`
+	MaxScale         pulumi.IntPtrInput                            `pulumi:"maxScale"`
+	Metric           pulumi.StringPtrInput                         `pulumi:"metric"`
+	MetricPercentile pulumi.StringPtrInput                         `pulumi:"metricPercentile"`
+	MinScale         pulumi.IntPtrInput                            `pulumi:"minScale"`
+	Multis           WorkloadLocalOptionAutoscalingMultiArrayInput `pulumi:"multis"`
+	ScaleToZeroDelay pulumi.IntPtrInput                            `pulumi:"scaleToZeroDelay"`
+	Target           pulumi.IntPtrInput                            `pulumi:"target"`
 }
 
 func (WorkloadLocalOptionAutoscalingArgs) ElementType() reflect.Type {
@@ -32056,6 +32271,10 @@ func (o WorkloadLocalOptionAutoscalingOutput) MinScale() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadLocalOptionAutoscaling) *int { return v.MinScale }).(pulumi.IntPtrOutput)
 }
 
+func (o WorkloadLocalOptionAutoscalingOutput) Multis() WorkloadLocalOptionAutoscalingMultiArrayOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscaling) []WorkloadLocalOptionAutoscalingMulti { return v.Multis }).(WorkloadLocalOptionAutoscalingMultiArrayOutput)
+}
+
 func (o WorkloadLocalOptionAutoscalingOutput) ScaleToZeroDelay() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadLocalOptionAutoscaling) *int { return v.ScaleToZeroDelay }).(pulumi.IntPtrOutput)
 }
@@ -32139,6 +32358,15 @@ func (o WorkloadLocalOptionAutoscalingPtrOutput) MinScale() pulumi.IntPtrOutput 
 	}).(pulumi.IntPtrOutput)
 }
 
+func (o WorkloadLocalOptionAutoscalingPtrOutput) Multis() WorkloadLocalOptionAutoscalingMultiArrayOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscaling) []WorkloadLocalOptionAutoscalingMulti {
+		if v == nil {
+			return nil
+		}
+		return v.Multis
+	}).(WorkloadLocalOptionAutoscalingMultiArrayOutput)
+}
+
 func (o WorkloadLocalOptionAutoscalingPtrOutput) ScaleToZeroDelay() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *WorkloadLocalOptionAutoscaling) *int {
 		if v == nil {
@@ -32155,6 +32383,130 @@ func (o WorkloadLocalOptionAutoscalingPtrOutput) Target() pulumi.IntPtrOutput {
 		}
 		return v.Target
 	}).(pulumi.IntPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingMulti struct {
+	Metric *string `pulumi:"metric"`
+	Target *int    `pulumi:"target"`
+}
+
+// WorkloadLocalOptionAutoscalingMultiInput is an input type that accepts WorkloadLocalOptionAutoscalingMultiArgs and WorkloadLocalOptionAutoscalingMultiOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingMultiInput` via:
+//
+//	WorkloadLocalOptionAutoscalingMultiArgs{...}
+type WorkloadLocalOptionAutoscalingMultiInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingMultiOutput() WorkloadLocalOptionAutoscalingMultiOutput
+	ToWorkloadLocalOptionAutoscalingMultiOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingMultiOutput
+}
+
+type WorkloadLocalOptionAutoscalingMultiArgs struct {
+	Metric pulumi.StringPtrInput `pulumi:"metric"`
+	Target pulumi.IntPtrInput    `pulumi:"target"`
+}
+
+func (WorkloadLocalOptionAutoscalingMultiArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingMulti)(nil)).Elem()
+}
+
+func (i WorkloadLocalOptionAutoscalingMultiArgs) ToWorkloadLocalOptionAutoscalingMultiOutput() WorkloadLocalOptionAutoscalingMultiOutput {
+	return i.ToWorkloadLocalOptionAutoscalingMultiOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingMultiArgs) ToWorkloadLocalOptionAutoscalingMultiOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingMultiOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingMultiOutput)
+}
+
+func (i WorkloadLocalOptionAutoscalingMultiArgs) ToOutput(ctx context.Context) pulumix.Output[WorkloadLocalOptionAutoscalingMulti] {
+	return pulumix.Output[WorkloadLocalOptionAutoscalingMulti]{
+		OutputState: i.ToWorkloadLocalOptionAutoscalingMultiOutputWithContext(ctx).OutputState,
+	}
+}
+
+// WorkloadLocalOptionAutoscalingMultiArrayInput is an input type that accepts WorkloadLocalOptionAutoscalingMultiArray and WorkloadLocalOptionAutoscalingMultiArrayOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingMultiArrayInput` via:
+//
+//	WorkloadLocalOptionAutoscalingMultiArray{ WorkloadLocalOptionAutoscalingMultiArgs{...} }
+type WorkloadLocalOptionAutoscalingMultiArrayInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingMultiArrayOutput() WorkloadLocalOptionAutoscalingMultiArrayOutput
+	ToWorkloadLocalOptionAutoscalingMultiArrayOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingMultiArrayOutput
+}
+
+type WorkloadLocalOptionAutoscalingMultiArray []WorkloadLocalOptionAutoscalingMultiInput
+
+func (WorkloadLocalOptionAutoscalingMultiArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadLocalOptionAutoscalingMulti)(nil)).Elem()
+}
+
+func (i WorkloadLocalOptionAutoscalingMultiArray) ToWorkloadLocalOptionAutoscalingMultiArrayOutput() WorkloadLocalOptionAutoscalingMultiArrayOutput {
+	return i.ToWorkloadLocalOptionAutoscalingMultiArrayOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingMultiArray) ToWorkloadLocalOptionAutoscalingMultiArrayOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingMultiArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingMultiArrayOutput)
+}
+
+func (i WorkloadLocalOptionAutoscalingMultiArray) ToOutput(ctx context.Context) pulumix.Output[[]WorkloadLocalOptionAutoscalingMulti] {
+	return pulumix.Output[[]WorkloadLocalOptionAutoscalingMulti]{
+		OutputState: i.ToWorkloadLocalOptionAutoscalingMultiArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type WorkloadLocalOptionAutoscalingMultiOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingMultiOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingMulti)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingMultiOutput) ToWorkloadLocalOptionAutoscalingMultiOutput() WorkloadLocalOptionAutoscalingMultiOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingMultiOutput) ToWorkloadLocalOptionAutoscalingMultiOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingMultiOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingMultiOutput) ToOutput(ctx context.Context) pulumix.Output[WorkloadLocalOptionAutoscalingMulti] {
+	return pulumix.Output[WorkloadLocalOptionAutoscalingMulti]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadLocalOptionAutoscalingMultiOutput) Metric() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingMulti) *string { return v.Metric }).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadLocalOptionAutoscalingMultiOutput) Target() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingMulti) *int { return v.Target }).(pulumi.IntPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingMultiArrayOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingMultiArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadLocalOptionAutoscalingMulti)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingMultiArrayOutput) ToWorkloadLocalOptionAutoscalingMultiArrayOutput() WorkloadLocalOptionAutoscalingMultiArrayOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingMultiArrayOutput) ToWorkloadLocalOptionAutoscalingMultiArrayOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingMultiArrayOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingMultiArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]WorkloadLocalOptionAutoscalingMulti] {
+	return pulumix.Output[[]WorkloadLocalOptionAutoscalingMulti]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadLocalOptionAutoscalingMultiArrayOutput) Index(i pulumi.IntInput) WorkloadLocalOptionAutoscalingMultiOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadLocalOptionAutoscalingMulti {
+		return vs[0].([]WorkloadLocalOptionAutoscalingMulti)[vs[1].(int)]
+	}).(WorkloadLocalOptionAutoscalingMultiOutput)
 }
 
 type WorkloadOptions struct {
@@ -32375,13 +32727,14 @@ func (o WorkloadOptionsPtrOutput) TimeoutSeconds() pulumi.IntPtrOutput {
 }
 
 type WorkloadOptionsAutoscaling struct {
-	MaxConcurrency   *int    `pulumi:"maxConcurrency"`
-	MaxScale         *int    `pulumi:"maxScale"`
-	Metric           *string `pulumi:"metric"`
-	MetricPercentile *string `pulumi:"metricPercentile"`
-	MinScale         *int    `pulumi:"minScale"`
-	ScaleToZeroDelay *int    `pulumi:"scaleToZeroDelay"`
-	Target           *int    `pulumi:"target"`
+	MaxConcurrency   *int                              `pulumi:"maxConcurrency"`
+	MaxScale         *int                              `pulumi:"maxScale"`
+	Metric           *string                           `pulumi:"metric"`
+	MetricPercentile *string                           `pulumi:"metricPercentile"`
+	MinScale         *int                              `pulumi:"minScale"`
+	Multis           []WorkloadOptionsAutoscalingMulti `pulumi:"multis"`
+	ScaleToZeroDelay *int                              `pulumi:"scaleToZeroDelay"`
+	Target           *int                              `pulumi:"target"`
 }
 
 // WorkloadOptionsAutoscalingInput is an input type that accepts WorkloadOptionsAutoscalingArgs and WorkloadOptionsAutoscalingOutput values.
@@ -32396,13 +32749,14 @@ type WorkloadOptionsAutoscalingInput interface {
 }
 
 type WorkloadOptionsAutoscalingArgs struct {
-	MaxConcurrency   pulumi.IntPtrInput    `pulumi:"maxConcurrency"`
-	MaxScale         pulumi.IntPtrInput    `pulumi:"maxScale"`
-	Metric           pulumi.StringPtrInput `pulumi:"metric"`
-	MetricPercentile pulumi.StringPtrInput `pulumi:"metricPercentile"`
-	MinScale         pulumi.IntPtrInput    `pulumi:"minScale"`
-	ScaleToZeroDelay pulumi.IntPtrInput    `pulumi:"scaleToZeroDelay"`
-	Target           pulumi.IntPtrInput    `pulumi:"target"`
+	MaxConcurrency   pulumi.IntPtrInput                        `pulumi:"maxConcurrency"`
+	MaxScale         pulumi.IntPtrInput                        `pulumi:"maxScale"`
+	Metric           pulumi.StringPtrInput                     `pulumi:"metric"`
+	MetricPercentile pulumi.StringPtrInput                     `pulumi:"metricPercentile"`
+	MinScale         pulumi.IntPtrInput                        `pulumi:"minScale"`
+	Multis           WorkloadOptionsAutoscalingMultiArrayInput `pulumi:"multis"`
+	ScaleToZeroDelay pulumi.IntPtrInput                        `pulumi:"scaleToZeroDelay"`
+	Target           pulumi.IntPtrInput                        `pulumi:"target"`
 }
 
 func (WorkloadOptionsAutoscalingArgs) ElementType() reflect.Type {
@@ -32520,6 +32874,10 @@ func (o WorkloadOptionsAutoscalingOutput) MinScale() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadOptionsAutoscaling) *int { return v.MinScale }).(pulumi.IntPtrOutput)
 }
 
+func (o WorkloadOptionsAutoscalingOutput) Multis() WorkloadOptionsAutoscalingMultiArrayOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscaling) []WorkloadOptionsAutoscalingMulti { return v.Multis }).(WorkloadOptionsAutoscalingMultiArrayOutput)
+}
+
 func (o WorkloadOptionsAutoscalingOutput) ScaleToZeroDelay() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadOptionsAutoscaling) *int { return v.ScaleToZeroDelay }).(pulumi.IntPtrOutput)
 }
@@ -32603,6 +32961,15 @@ func (o WorkloadOptionsAutoscalingPtrOutput) MinScale() pulumi.IntPtrOutput {
 	}).(pulumi.IntPtrOutput)
 }
 
+func (o WorkloadOptionsAutoscalingPtrOutput) Multis() WorkloadOptionsAutoscalingMultiArrayOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscaling) []WorkloadOptionsAutoscalingMulti {
+		if v == nil {
+			return nil
+		}
+		return v.Multis
+	}).(WorkloadOptionsAutoscalingMultiArrayOutput)
+}
+
 func (o WorkloadOptionsAutoscalingPtrOutput) ScaleToZeroDelay() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *WorkloadOptionsAutoscaling) *int {
 		if v == nil {
@@ -32619,6 +32986,130 @@ func (o WorkloadOptionsAutoscalingPtrOutput) Target() pulumi.IntPtrOutput {
 		}
 		return v.Target
 	}).(pulumi.IntPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingMulti struct {
+	Metric *string `pulumi:"metric"`
+	Target *int    `pulumi:"target"`
+}
+
+// WorkloadOptionsAutoscalingMultiInput is an input type that accepts WorkloadOptionsAutoscalingMultiArgs and WorkloadOptionsAutoscalingMultiOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingMultiInput` via:
+//
+//	WorkloadOptionsAutoscalingMultiArgs{...}
+type WorkloadOptionsAutoscalingMultiInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingMultiOutput() WorkloadOptionsAutoscalingMultiOutput
+	ToWorkloadOptionsAutoscalingMultiOutputWithContext(context.Context) WorkloadOptionsAutoscalingMultiOutput
+}
+
+type WorkloadOptionsAutoscalingMultiArgs struct {
+	Metric pulumi.StringPtrInput `pulumi:"metric"`
+	Target pulumi.IntPtrInput    `pulumi:"target"`
+}
+
+func (WorkloadOptionsAutoscalingMultiArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingMulti)(nil)).Elem()
+}
+
+func (i WorkloadOptionsAutoscalingMultiArgs) ToWorkloadOptionsAutoscalingMultiOutput() WorkloadOptionsAutoscalingMultiOutput {
+	return i.ToWorkloadOptionsAutoscalingMultiOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingMultiArgs) ToWorkloadOptionsAutoscalingMultiOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingMultiOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingMultiOutput)
+}
+
+func (i WorkloadOptionsAutoscalingMultiArgs) ToOutput(ctx context.Context) pulumix.Output[WorkloadOptionsAutoscalingMulti] {
+	return pulumix.Output[WorkloadOptionsAutoscalingMulti]{
+		OutputState: i.ToWorkloadOptionsAutoscalingMultiOutputWithContext(ctx).OutputState,
+	}
+}
+
+// WorkloadOptionsAutoscalingMultiArrayInput is an input type that accepts WorkloadOptionsAutoscalingMultiArray and WorkloadOptionsAutoscalingMultiArrayOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingMultiArrayInput` via:
+//
+//	WorkloadOptionsAutoscalingMultiArray{ WorkloadOptionsAutoscalingMultiArgs{...} }
+type WorkloadOptionsAutoscalingMultiArrayInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingMultiArrayOutput() WorkloadOptionsAutoscalingMultiArrayOutput
+	ToWorkloadOptionsAutoscalingMultiArrayOutputWithContext(context.Context) WorkloadOptionsAutoscalingMultiArrayOutput
+}
+
+type WorkloadOptionsAutoscalingMultiArray []WorkloadOptionsAutoscalingMultiInput
+
+func (WorkloadOptionsAutoscalingMultiArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadOptionsAutoscalingMulti)(nil)).Elem()
+}
+
+func (i WorkloadOptionsAutoscalingMultiArray) ToWorkloadOptionsAutoscalingMultiArrayOutput() WorkloadOptionsAutoscalingMultiArrayOutput {
+	return i.ToWorkloadOptionsAutoscalingMultiArrayOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingMultiArray) ToWorkloadOptionsAutoscalingMultiArrayOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingMultiArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingMultiArrayOutput)
+}
+
+func (i WorkloadOptionsAutoscalingMultiArray) ToOutput(ctx context.Context) pulumix.Output[[]WorkloadOptionsAutoscalingMulti] {
+	return pulumix.Output[[]WorkloadOptionsAutoscalingMulti]{
+		OutputState: i.ToWorkloadOptionsAutoscalingMultiArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
+type WorkloadOptionsAutoscalingMultiOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingMultiOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingMulti)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingMultiOutput) ToWorkloadOptionsAutoscalingMultiOutput() WorkloadOptionsAutoscalingMultiOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingMultiOutput) ToWorkloadOptionsAutoscalingMultiOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingMultiOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingMultiOutput) ToOutput(ctx context.Context) pulumix.Output[WorkloadOptionsAutoscalingMulti] {
+	return pulumix.Output[WorkloadOptionsAutoscalingMulti]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadOptionsAutoscalingMultiOutput) Metric() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingMulti) *string { return v.Metric }).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadOptionsAutoscalingMultiOutput) Target() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingMulti) *int { return v.Target }).(pulumi.IntPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingMultiArrayOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingMultiArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadOptionsAutoscalingMulti)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingMultiArrayOutput) ToWorkloadOptionsAutoscalingMultiArrayOutput() WorkloadOptionsAutoscalingMultiArrayOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingMultiArrayOutput) ToWorkloadOptionsAutoscalingMultiArrayOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingMultiArrayOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingMultiArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]WorkloadOptionsAutoscalingMulti] {
+	return pulumix.Output[[]WorkloadOptionsAutoscalingMulti]{
+		OutputState: o.OutputState,
+	}
+}
+
+func (o WorkloadOptionsAutoscalingMultiArrayOutput) Index(i pulumi.IntInput) WorkloadOptionsAutoscalingMultiOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadOptionsAutoscalingMulti {
+		return vs[0].([]WorkloadOptionsAutoscalingMulti)[vs[1].(int)]
+	}).(WorkloadOptionsAutoscalingMultiOutput)
 }
 
 type WorkloadRolloutOptions struct {
@@ -32824,7 +33315,8 @@ func (o WorkloadRolloutOptionsPtrOutput) ScalingPolicy() pulumi.StringPtrOutput 
 }
 
 type WorkloadSecurityOptions struct {
-	FileSystemGroupId *int `pulumi:"fileSystemGroupId"`
+	_sentinel         *bool `pulumi:"_sentinel"`
+	FileSystemGroupId *int  `pulumi:"fileSystemGroupId"`
 }
 
 // WorkloadSecurityOptionsInput is an input type that accepts WorkloadSecurityOptionsArgs and WorkloadSecurityOptionsOutput values.
@@ -32839,7 +33331,8 @@ type WorkloadSecurityOptionsInput interface {
 }
 
 type WorkloadSecurityOptionsArgs struct {
-	FileSystemGroupId pulumi.IntPtrInput `pulumi:"fileSystemGroupId"`
+	_sentinel         pulumi.BoolPtrInput `pulumi:"_sentinel"`
+	FileSystemGroupId pulumi.IntPtrInput  `pulumi:"fileSystemGroupId"`
 }
 
 func (WorkloadSecurityOptionsArgs) ElementType() reflect.Type {
@@ -32937,6 +33430,10 @@ func (o WorkloadSecurityOptionsOutput) ToOutput(ctx context.Context) pulumix.Out
 	}
 }
 
+func (o WorkloadSecurityOptionsOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadSecurityOptions) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
 func (o WorkloadSecurityOptionsOutput) FileSystemGroupId() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadSecurityOptions) *int { return v.FileSystemGroupId }).(pulumi.IntPtrOutput)
 }
@@ -32969,6 +33466,15 @@ func (o WorkloadSecurityOptionsPtrOutput) Elem() WorkloadSecurityOptionsOutput {
 		var ret WorkloadSecurityOptions
 		return ret
 	}).(WorkloadSecurityOptionsOutput)
+}
+
+func (o WorkloadSecurityOptionsPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *WorkloadSecurityOptions) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
 }
 
 func (o WorkloadSecurityOptionsPtrOutput) FileSystemGroupId() pulumi.IntPtrOutput {
@@ -34342,7 +34848,7 @@ func (o GetGvcLightstepTracingPtrOutput) Sampling() pulumi.Float64PtrOutput {
 }
 
 type GetGvcLoadBalancer struct {
-	Dedicated      bool                        `pulumi:"dedicated"`
+	Dedicated      *bool                       `pulumi:"dedicated"`
 	Redirect       *GetGvcLoadBalancerRedirect `pulumi:"redirect"`
 	TrustedProxies *int                        `pulumi:"trustedProxies"`
 }
@@ -34359,7 +34865,7 @@ type GetGvcLoadBalancerInput interface {
 }
 
 type GetGvcLoadBalancerArgs struct {
-	Dedicated      pulumi.BoolInput                   `pulumi:"dedicated"`
+	Dedicated      pulumi.BoolPtrInput                `pulumi:"dedicated"`
 	Redirect       GetGvcLoadBalancerRedirectPtrInput `pulumi:"redirect"`
 	TrustedProxies pulumi.IntPtrInput                 `pulumi:"trustedProxies"`
 }
@@ -34459,8 +34965,8 @@ func (o GetGvcLoadBalancerOutput) ToOutput(ctx context.Context) pulumix.Output[G
 	}
 }
 
-func (o GetGvcLoadBalancerOutput) Dedicated() pulumi.BoolOutput {
-	return o.ApplyT(func(v GetGvcLoadBalancer) bool { return v.Dedicated }).(pulumi.BoolOutput)
+func (o GetGvcLoadBalancerOutput) Dedicated() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v GetGvcLoadBalancer) *bool { return v.Dedicated }).(pulumi.BoolPtrOutput)
 }
 
 func (o GetGvcLoadBalancerOutput) Redirect() GetGvcLoadBalancerRedirectPtrOutput {
@@ -34506,7 +35012,7 @@ func (o GetGvcLoadBalancerPtrOutput) Dedicated() pulumi.BoolPtrOutput {
 		if v == nil {
 			return nil
 		}
-		return &v.Dedicated
+		return v.Dedicated
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -34529,7 +35035,8 @@ func (o GetGvcLoadBalancerPtrOutput) TrustedProxies() pulumi.IntPtrOutput {
 }
 
 type GetGvcLoadBalancerRedirect struct {
-	Class *GetGvcLoadBalancerRedirectClass `pulumi:"class"`
+	_sentinel *bool                            `pulumi:"_sentinel"`
+	Class     *GetGvcLoadBalancerRedirectClass `pulumi:"class"`
 }
 
 // GetGvcLoadBalancerRedirectInput is an input type that accepts GetGvcLoadBalancerRedirectArgs and GetGvcLoadBalancerRedirectOutput values.
@@ -34544,7 +35051,8 @@ type GetGvcLoadBalancerRedirectInput interface {
 }
 
 type GetGvcLoadBalancerRedirectArgs struct {
-	Class GetGvcLoadBalancerRedirectClassPtrInput `pulumi:"class"`
+	_sentinel pulumi.BoolPtrInput                     `pulumi:"_sentinel"`
+	Class     GetGvcLoadBalancerRedirectClassPtrInput `pulumi:"class"`
 }
 
 func (GetGvcLoadBalancerRedirectArgs) ElementType() reflect.Type {
@@ -34642,6 +35150,10 @@ func (o GetGvcLoadBalancerRedirectOutput) ToOutput(ctx context.Context) pulumix.
 	}
 }
 
+func (o GetGvcLoadBalancerRedirectOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v GetGvcLoadBalancerRedirect) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
 func (o GetGvcLoadBalancerRedirectOutput) Class() GetGvcLoadBalancerRedirectClassPtrOutput {
 	return o.ApplyT(func(v GetGvcLoadBalancerRedirect) *GetGvcLoadBalancerRedirectClass { return v.Class }).(GetGvcLoadBalancerRedirectClassPtrOutput)
 }
@@ -34676,6 +35188,15 @@ func (o GetGvcLoadBalancerRedirectPtrOutput) Elem() GetGvcLoadBalancerRedirectOu
 	}).(GetGvcLoadBalancerRedirectOutput)
 }
 
+func (o GetGvcLoadBalancerRedirectPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *GetGvcLoadBalancerRedirect) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
+}
+
 func (o GetGvcLoadBalancerRedirectPtrOutput) Class() GetGvcLoadBalancerRedirectClassPtrOutput {
 	return o.ApplyT(func(v *GetGvcLoadBalancerRedirect) *GetGvcLoadBalancerRedirectClass {
 		if v == nil {
@@ -34686,6 +35207,7 @@ func (o GetGvcLoadBalancerRedirectPtrOutput) Class() GetGvcLoadBalancerRedirectC
 }
 
 type GetGvcLoadBalancerRedirectClass struct {
+	_sentinel *bool   `pulumi:"_sentinel"`
 	Status5xx *string `pulumi:"status5xx"`
 }
 
@@ -34701,6 +35223,7 @@ type GetGvcLoadBalancerRedirectClassInput interface {
 }
 
 type GetGvcLoadBalancerRedirectClassArgs struct {
+	_sentinel pulumi.BoolPtrInput   `pulumi:"_sentinel"`
 	Status5xx pulumi.StringPtrInput `pulumi:"status5xx"`
 }
 
@@ -34799,6 +35322,10 @@ func (o GetGvcLoadBalancerRedirectClassOutput) ToOutput(ctx context.Context) pul
 	}
 }
 
+func (o GetGvcLoadBalancerRedirectClassOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v GetGvcLoadBalancerRedirectClass) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+}
+
 func (o GetGvcLoadBalancerRedirectClassOutput) Status5xx() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetGvcLoadBalancerRedirectClass) *string { return v.Status5xx }).(pulumi.StringPtrOutput)
 }
@@ -34831,6 +35358,15 @@ func (o GetGvcLoadBalancerRedirectClassPtrOutput) Elem() GetGvcLoadBalancerRedir
 		var ret GetGvcLoadBalancerRedirectClass
 		return ret
 	}).(GetGvcLoadBalancerRedirectClassOutput)
+}
+
+func (o GetGvcLoadBalancerRedirectClassPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *GetGvcLoadBalancerRedirectClass) *bool {
+		if v == nil {
+			return nil
+		}
+		return v._sentinel
+	}).(pulumi.BoolPtrOutput)
 }
 
 func (o GetGvcLoadBalancerRedirectClassPtrOutput) Status5xx() pulumi.StringPtrOutput {
@@ -38967,10 +39503,14 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionArrayInput)(nil)).Elem(), WorkloadLocalOptionArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingPtrInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingMultiInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingMultiArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingMultiArrayInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingMultiArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsInput)(nil)).Elem(), WorkloadOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsPtrInput)(nil)).Elem(), WorkloadOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingInput)(nil)).Elem(), WorkloadOptionsAutoscalingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingPtrInput)(nil)).Elem(), WorkloadOptionsAutoscalingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingMultiInput)(nil)).Elem(), WorkloadOptionsAutoscalingMultiArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingMultiArrayInput)(nil)).Elem(), WorkloadOptionsAutoscalingMultiArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadRolloutOptionsInput)(nil)).Elem(), WorkloadRolloutOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadRolloutOptionsPtrInput)(nil)).Elem(), WorkloadRolloutOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadSecurityOptionsInput)(nil)).Elem(), WorkloadSecurityOptionsArgs{})
@@ -39423,10 +39963,14 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadLocalOptionArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingMultiOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingMultiArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingMultiOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingMultiArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadRolloutOptionsOutput{})
 	pulumi.RegisterOutputType(WorkloadRolloutOptionsPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadSecurityOptionsOutput{})

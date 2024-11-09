@@ -14,15 +14,19 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadLoadBalancer
     {
+        public readonly bool? _sentinel;
         public readonly Outputs.WorkloadLoadBalancerDirect? Direct;
         public readonly Outputs.WorkloadLoadBalancerGeoLocation? GeoLocation;
 
         [OutputConstructor]
         private WorkloadLoadBalancer(
+            bool? _sentinel,
+
             Outputs.WorkloadLoadBalancerDirect? direct,
 
             Outputs.WorkloadLoadBalancerGeoLocation? geoLocation)
         {
+            this._sentinel = _sentinel;
             Direct = direct;
             GeoLocation = geoLocation;
         }

@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class IdentityAzureAccessPolicyRoleAssignmentGetArgs : global::Pulumi.ResourceArgs
     {
+        [Input("_sentinel")]
+        public Input<bool>? _sentinel { get; set; }
+
         [Input("roles")]
         private InputList<string>? _roles;
         public InputList<string> Roles

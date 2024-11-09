@@ -22,10 +22,12 @@ export interface CloudAccountNgs {
 }
 
 export interface DomainRouteHeaders {
+    _sentinel?: pulumi.Input<boolean>;
     request?: pulumi.Input<inputs.DomainRouteHeadersRequest>;
 }
 
 export interface DomainRouteHeadersRequest {
+    _sentinel?: pulumi.Input<boolean>;
     set?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }
 
@@ -122,30 +124,34 @@ export interface GetGvcLightstepTracingArgs {
 }
 
 export interface GetGvcLoadBalancer {
-    dedicated: boolean;
+    dedicated?: boolean;
     redirect?: inputs.GetGvcLoadBalancerRedirect;
     trustedProxies?: number;
 }
 
 export interface GetGvcLoadBalancerArgs {
-    dedicated: pulumi.Input<boolean>;
+    dedicated?: pulumi.Input<boolean>;
     redirect?: pulumi.Input<inputs.GetGvcLoadBalancerRedirectArgs>;
     trustedProxies?: pulumi.Input<number>;
 }
 
 export interface GetGvcLoadBalancerRedirect {
+    _sentinel?: boolean;
     class?: inputs.GetGvcLoadBalancerRedirectClass;
 }
 
 export interface GetGvcLoadBalancerRedirectArgs {
+    _sentinel?: pulumi.Input<boolean>;
     class?: pulumi.Input<inputs.GetGvcLoadBalancerRedirectClassArgs>;
 }
 
 export interface GetGvcLoadBalancerRedirectClass {
+    _sentinel?: boolean;
     status5xx?: string;
 }
 
 export interface GetGvcLoadBalancerRedirectClassArgs {
+    _sentinel?: pulumi.Input<boolean>;
     status5xx?: pulumi.Input<string>;
 }
 
@@ -337,16 +343,18 @@ export interface GvcLightstepTracing {
 }
 
 export interface GvcLoadBalancer {
-    dedicated: pulumi.Input<boolean>;
+    dedicated?: pulumi.Input<boolean>;
     redirect?: pulumi.Input<inputs.GvcLoadBalancerRedirect>;
     trustedProxies?: pulumi.Input<number>;
 }
 
 export interface GvcLoadBalancerRedirect {
+    _sentinel?: pulumi.Input<boolean>;
     class?: pulumi.Input<inputs.GvcLoadBalancerRedirectClass>;
 }
 
 export interface GvcLoadBalancerRedirectClass {
+    _sentinel?: pulumi.Input<boolean>;
     status5xx?: pulumi.Input<string>;
 }
 
@@ -372,6 +380,7 @@ export interface IdentityAzureAccessPolicy {
 }
 
 export interface IdentityAzureAccessPolicyRoleAssignment {
+    _sentinel?: pulumi.Input<boolean>;
     roles?: pulumi.Input<pulumi.Input<string>[]>;
     scope?: pulumi.Input<string>;
 }
@@ -384,6 +393,7 @@ export interface IdentityGcpAccessPolicy {
 }
 
 export interface IdentityGcpAccessPolicyBinding {
+    _sentinel?: pulumi.Input<boolean>;
     resource?: pulumi.Input<string>;
     roles?: pulumi.Input<pulumi.Input<string>[]>;
 }
@@ -405,11 +415,11 @@ export interface IdentityNativeNetworkResourceGcpServiceConnect {
 }
 
 export interface IdentityNetworkResource {
-    agentLink: pulumi.Input<string>;
+    agentLink?: pulumi.Input<string>;
     fqdn?: pulumi.Input<string>;
     ips?: pulumi.Input<pulumi.Input<string>[]>;
     name: pulumi.Input<string>;
-    ports?: pulumi.Input<pulumi.Input<number>[]>;
+    ports: pulumi.Input<pulumi.Input<number>[]>;
     resolverIp?: pulumi.Input<string>;
 }
 
@@ -541,6 +551,7 @@ export interface Mk8sAwsProvider {
     deployRoleArn: pulumi.Input<string>;
     deployRoleChains?: pulumi.Input<pulumi.Input<inputs.Mk8sAwsProviderDeployRoleChain>[]>;
     diskEncryptionKeyArn?: pulumi.Input<string>;
+    extraNodePolicies?: pulumi.Input<pulumi.Input<string>[]>;
     image: pulumi.Input<inputs.Mk8sAwsProviderImage>;
     keyPair?: pulumi.Input<string>;
     networking: pulumi.Input<inputs.Mk8sAwsProviderNetworking>;
@@ -1060,6 +1071,7 @@ export interface OrgLoggingDatadogLogging {
 }
 
 export interface OrgLoggingElasticLogging {
+    _sentinel?: pulumi.Input<boolean>;
     aws?: pulumi.Input<inputs.OrgLoggingElasticLoggingAws>;
     elasticCloud?: pulumi.Input<inputs.OrgLoggingElasticLoggingElasticCloud>;
     generic?: pulumi.Input<inputs.OrgLoggingElasticLoggingGeneric>;
@@ -1127,17 +1139,18 @@ export interface OrgObservability {
 }
 
 export interface OrgSecurity {
+    _sentinel?: pulumi.Input<boolean>;
     threatDetection?: pulumi.Input<inputs.OrgSecurityThreatDetection>;
 }
 
 export interface OrgSecurityThreatDetection {
-    enabled?: pulumi.Input<boolean>;
+    enabled: pulumi.Input<boolean>;
     minimumSeverity?: pulumi.Input<string>;
     syslog?: pulumi.Input<inputs.OrgSecurityThreatDetectionSyslog>;
 }
 
 export interface OrgSecurityThreatDetectionSyslog {
-    host?: pulumi.Input<string>;
+    host: pulumi.Input<string>;
     port: pulumi.Input<number>;
     transport?: pulumi.Input<string>;
 }
@@ -1237,9 +1250,9 @@ export interface SecretUserpass {
 }
 
 export interface VolumeSetAutoscaling {
-    maxCapacity: pulumi.Input<number>;
-    minFreePercentage: pulumi.Input<number>;
-    scalingFactor: pulumi.Input<number>;
+    maxCapacity?: pulumi.Input<number>;
+    minFreePercentage?: pulumi.Input<number>;
+    scalingFactor?: pulumi.Input<number>;
 }
 
 export interface VolumeSetSnapshots {
@@ -1286,6 +1299,7 @@ export interface WorkloadContainerGpuNvidia {
 }
 
 export interface WorkloadContainerLifecycle {
+    _sentinel?: pulumi.Input<boolean>;
     postStart?: pulumi.Input<inputs.WorkloadContainerLifecyclePostStart>;
     preStop?: pulumi.Input<inputs.WorkloadContainerLifecyclePreStop>;
 }
@@ -1323,6 +1337,7 @@ export interface WorkloadContainerLivenessProbeExec {
 }
 
 export interface WorkloadContainerLivenessProbeGrpc {
+    _sentinel?: pulumi.Input<boolean>;
     port?: pulumi.Input<number>;
 }
 
@@ -1334,6 +1349,7 @@ export interface WorkloadContainerLivenessProbeHttpGet {
 }
 
 export interface WorkloadContainerLivenessProbeTcpSocket {
+    _sentinel?: pulumi.Input<boolean>;
     port?: pulumi.Input<number>;
 }
 
@@ -1364,6 +1380,7 @@ export interface WorkloadContainerReadinessProbeExec {
 }
 
 export interface WorkloadContainerReadinessProbeGrpc {
+    _sentinel?: pulumi.Input<boolean>;
     port?: pulumi.Input<number>;
 }
 
@@ -1375,6 +1392,7 @@ export interface WorkloadContainerReadinessProbeHttpGet {
 }
 
 export interface WorkloadContainerReadinessProbeTcpSocket {
+    _sentinel?: pulumi.Input<boolean>;
     port?: pulumi.Input<number>;
 }
 
@@ -1385,6 +1403,7 @@ export interface WorkloadContainerVolume {
 }
 
 export interface WorkloadFirewallSpec {
+    _sentinel?: pulumi.Input<boolean>;
     external?: pulumi.Input<inputs.WorkloadFirewallSpecExternal>;
     internal?: pulumi.Input<inputs.WorkloadFirewallSpecInternal>;
 }
@@ -1415,6 +1434,7 @@ export interface WorkloadJob {
 }
 
 export interface WorkloadLoadBalancer {
+    _sentinel?: pulumi.Input<boolean>;
     direct?: pulumi.Input<inputs.WorkloadLoadBalancerDirect>;
     geoLocation?: pulumi.Input<inputs.WorkloadLoadBalancerGeoLocation>;
 }
@@ -1458,7 +1478,13 @@ export interface WorkloadLocalOptionAutoscaling {
     metric?: pulumi.Input<string>;
     metricPercentile?: pulumi.Input<string>;
     minScale?: pulumi.Input<number>;
+    multis?: pulumi.Input<pulumi.Input<inputs.WorkloadLocalOptionAutoscalingMulti>[]>;
     scaleToZeroDelay?: pulumi.Input<number>;
+    target?: pulumi.Input<number>;
+}
+
+export interface WorkloadLocalOptionAutoscalingMulti {
+    metric?: pulumi.Input<string>;
     target?: pulumi.Input<number>;
 }
 
@@ -1476,7 +1502,13 @@ export interface WorkloadOptionsAutoscaling {
     metric?: pulumi.Input<string>;
     metricPercentile?: pulumi.Input<string>;
     minScale?: pulumi.Input<number>;
+    multis?: pulumi.Input<pulumi.Input<inputs.WorkloadOptionsAutoscalingMulti>[]>;
     scaleToZeroDelay?: pulumi.Input<number>;
+    target?: pulumi.Input<number>;
+}
+
+export interface WorkloadOptionsAutoscalingMulti {
+    metric?: pulumi.Input<string>;
     target?: pulumi.Input<number>;
 }
 
@@ -1488,6 +1520,7 @@ export interface WorkloadRolloutOptions {
 }
 
 export interface WorkloadSecurityOptions {
+    _sentinel?: pulumi.Input<boolean>;
     fileSystemGroupId?: pulumi.Input<number>;
 }
 

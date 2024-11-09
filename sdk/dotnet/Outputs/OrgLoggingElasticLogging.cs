@@ -14,18 +14,22 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgLoggingElasticLogging
     {
+        public readonly bool? _sentinel;
         public readonly Outputs.OrgLoggingElasticLoggingAws? Aws;
         public readonly Outputs.OrgLoggingElasticLoggingElasticCloud? ElasticCloud;
         public readonly Outputs.OrgLoggingElasticLoggingGeneric? Generic;
 
         [OutputConstructor]
         private OrgLoggingElasticLogging(
+            bool? _sentinel,
+
             Outputs.OrgLoggingElasticLoggingAws? aws,
 
             Outputs.OrgLoggingElasticLoggingElasticCloud? elasticCloud,
 
             Outputs.OrgLoggingElasticLoggingGeneric? generic)
         {
+            this._sentinel = _sentinel;
             Aws = aws;
             ElasticCloud = elasticCloud;
             Generic = generic;

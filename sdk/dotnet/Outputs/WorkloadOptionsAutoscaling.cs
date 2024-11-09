@@ -19,6 +19,7 @@ namespace Pulumiverse.Cpln.Outputs
         public readonly string? Metric;
         public readonly string? MetricPercentile;
         public readonly int? MinScale;
+        public readonly ImmutableArray<Outputs.WorkloadOptionsAutoscalingMulti> Multis;
         public readonly int? ScaleToZeroDelay;
         public readonly int? Target;
 
@@ -34,6 +35,8 @@ namespace Pulumiverse.Cpln.Outputs
 
             int? minScale,
 
+            ImmutableArray<Outputs.WorkloadOptionsAutoscalingMulti> multis,
+
             int? scaleToZeroDelay,
 
             int? target)
@@ -43,6 +46,7 @@ namespace Pulumiverse.Cpln.Outputs
             Metric = metric;
             MetricPercentile = metricPercentile;
             MinScale = minScale;
+            Multis = multis;
             ScaleToZeroDelay = scaleToZeroDelay;
             Target = target;
         }

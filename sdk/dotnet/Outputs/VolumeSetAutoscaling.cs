@@ -14,17 +14,17 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class VolumeSetAutoscaling
     {
-        public readonly int MaxCapacity;
-        public readonly int MinFreePercentage;
-        public readonly double ScalingFactor;
+        public readonly int? MaxCapacity;
+        public readonly int? MinFreePercentage;
+        public readonly double? ScalingFactor;
 
         [OutputConstructor]
         private VolumeSetAutoscaling(
-            int maxCapacity,
+            int? maxCapacity,
 
-            int minFreePercentage,
+            int? minFreePercentage,
 
-            double scalingFactor)
+            double? scalingFactor)
         {
             MaxCapacity = maxCapacity;
             MinFreePercentage = minFreePercentage;

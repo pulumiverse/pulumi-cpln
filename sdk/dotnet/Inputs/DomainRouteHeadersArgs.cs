@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class DomainRouteHeadersArgs : global::Pulumi.ResourceArgs
     {
+        [Input("_sentinel")]
+        public Input<bool>? _sentinel { get; set; }
+
         [Input("request")]
         public Input<Inputs.DomainRouteHeadersRequestArgs>? Request { get; set; }
 
