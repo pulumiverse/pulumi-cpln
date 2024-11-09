@@ -1076,8 +1076,8 @@ github.com/containers/ocicrypt v1.0.1/go.mod h1:MeJDzk1RJHv89LjsH0Sp5KTY3ZYkjXO/
 github.com/containers/ocicrypt v1.1.0/go.mod h1:b8AOe0YR67uU8OqfVNcznfFpAzu3rdgUV4GP9qXPfu4=
 github.com/containers/ocicrypt v1.1.1/go.mod h1:Dm55fwWm1YZAjYRaJ94z2mfZikIyIN4B0oB3dj3jFxY=
 github.com/containers/ocicrypt v1.1.2/go.mod h1:Dm55fwWm1YZAjYRaJ94z2mfZikIyIN4B0oB3dj3jFxY=
-github.com/controlplane-com/terraform-provider-cpln v1.1.39 h1:M3cxrbEa/KiAv5fSN2NUEejLfd5jXZl+ND9l+F7jDDM=
-github.com/controlplane-com/terraform-provider-cpln v1.1.39/go.mod h1:Db+m7s416DdFWcu0Ifc2XDn9yhE+MFuEQvArBxNGc60=
+github.com/controlplane-com/terraform-provider-cpln v1.1.40 h1:qNfUSLnGISRJqJ7vkjikm7LCXWKWgcxF1fP9xUrJaZo=
+github.com/controlplane-com/terraform-provider-cpln v1.1.40/go.mod h1:Db+m7s416DdFWcu0Ifc2XDn9yhE+MFuEQvArBxNGc60=
 github.com/coreos/bbolt v1.3.2/go.mod h1:iRUV2dpdMOn7Bo10OQBFzIJO9kkE559Wcmn+qkEiiKk=
 github.com/coreos/etcd v3.3.10+incompatible/go.mod h1:uF7uidLiAD3TWHmW31ZFd/JWoc32PjwdhPthX9715RE=
 github.com/coreos/etcd v3.3.13+incompatible/go.mod h1:uF7uidLiAD3TWHmW31ZFd/JWoc32PjwdhPthX9715RE=
