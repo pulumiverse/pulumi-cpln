@@ -13,9 +13,15 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class OrgLoggingLogzioLoggingArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Full link to referenced Opaque Secret.
+        /// </summary>
         [Input("credentials", required: true)]
         public Input<string> Credentials { get; set; } = null!;
 
+        /// <summary>
+        /// Logzio listener host URI.
+        /// </summary>
         [Input("listenerHost", required: true)]
         public Input<string> ListenerHost { get; set; } = null!;
 

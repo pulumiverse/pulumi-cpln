@@ -13,24 +13,45 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class IdentityNgsAccessPolicyArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Full link to referenced cloud account.
+        /// </summary>
         [Input("cloudAccountLink", required: true)]
         public Input<string> CloudAccountLink { get; set; } = null!;
 
+        /// <summary>
+        /// Max number of bytes a connection can send. Default: -1
+        /// </summary>
         [Input("data")]
         public Input<int>? Data { get; set; }
 
+        /// <summary>
+        /// Max message payload. Default: -1
+        /// </summary>
         [Input("payload")]
         public Input<int>? Payload { get; set; }
 
+        /// <summary>
+        /// Pub Permission.
+        /// </summary>
         [Input("pub")]
         public Input<Inputs.IdentityNgsAccessPolicyPubArgs>? Pub { get; set; }
 
+        /// <summary>
+        /// Reponses.
+        /// </summary>
         [Input("resp")]
         public Input<Inputs.IdentityNgsAccessPolicyRespArgs>? Resp { get; set; }
 
+        /// <summary>
+        /// Sub Permission.
+        /// </summary>
         [Input("sub")]
         public Input<Inputs.IdentityNgsAccessPolicySubArgs>? Sub { get; set; }
 
+        /// <summary>
+        /// Max number of subscriptions per connection. Default: -1
+        /// </summary>
         [Input("subs")]
         public Input<int>? Subs { get; set; }
 

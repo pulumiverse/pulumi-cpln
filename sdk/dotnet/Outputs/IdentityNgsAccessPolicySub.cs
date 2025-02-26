@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class IdentityNgsAccessPolicySub
     {
+        /// <summary>
+        /// List of allow subjects.
+        /// </summary>
         public readonly ImmutableArray<string> Allows;
+        /// <summary>
+        /// List of deny subjects.
+        /// </summary>
         public readonly ImmutableArray<string> Denies;
 
         [OutputConstructor]

@@ -14,15 +14,30 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sTritonProviderNodePool
     {
+        /// <summary>
+        /// Labels to attach to nodes of a node pool.
+        /// </summary>
         public readonly ImmutableDictionary<string, string>? Labels;
         public readonly int? MaxSize;
         public readonly int? MinSize;
         public readonly string Name;
         public readonly string? OverrideImageId;
         public readonly string PackageId;
+        /// <summary>
+        /// More private networks to join.
+        /// </summary>
         public readonly ImmutableArray<string> PrivateNetworkIds;
+        /// <summary>
+        /// If set, machine will also get a public IP.
+        /// </summary>
         public readonly string? PublicNetworkId;
+        /// <summary>
+        /// Taint for the nodes of a pool.
+        /// </summary>
         public readonly ImmutableArray<Outputs.Mk8sTritonProviderNodePoolTaint> Taints;
+        /// <summary>
+        /// Extra tags to attach to instances from a node pool.
+        /// </summary>
         public readonly ImmutableDictionary<string, string>? TritonTags;
 
         [OutputConstructor]

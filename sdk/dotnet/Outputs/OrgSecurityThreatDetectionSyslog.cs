@@ -14,8 +14,17 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgSecurityThreatDetectionSyslog
     {
+        /// <summary>
+        /// The hostname to send syslog messages to.
+        /// </summary>
         public readonly string Host;
+        /// <summary>
+        /// The port to send syslog messages to.
+        /// </summary>
         public readonly int Port;
+        /// <summary>
+        /// The transport-layer protocol to send the syslog messages over. If TCP is chosen, messages will be sent with TLS. Default: `tcp`.
+        /// </summary>
         public readonly string? Transport;
 
         [OutputConstructor]

@@ -13,18 +13,30 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class GetImagesQuerySpecTermArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `exists`, `!exists`. Default: `=`.
+        /// </summary>
         [Input("op")]
         public string? Op { get; set; }
 
+        /// <summary>
+        /// Property to use for query evaluation.
+        /// </summary>
         [Input("property")]
         public string? Property { get; set; }
 
         [Input("rel")]
         public string? Rel { get; set; }
 
+        /// <summary>
+        /// Tag key to use for query evaluation.
+        /// </summary>
         [Input("tag")]
         public string? Tag { get; set; }
 
+        /// <summary>
+        /// Testing value for query evaluation.
+        /// </summary>
         [Input("value")]
         public string? Value { get; set; }
 

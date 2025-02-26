@@ -16,13 +16,34 @@ namespace Pulumiverse.Cpln.Outputs
     {
         public readonly Outputs.Mk8sTritonProviderAutoscaler? Autoscaler;
         public readonly Outputs.Mk8sTritonProviderConnection Connection;
+        /// <summary>
+        /// Enable firewall for the instances deployed.
+        /// </summary>
         public readonly bool? FirewallEnabled;
+        /// <summary>
+        /// Default image for all nodes.
+        /// </summary>
         public readonly string ImageId;
+        /// <summary>
+        /// Control Plane location that will host the K8s components. Prefer one that is closest to the Triton datacenter.
+        /// </summary>
         public readonly string Location;
         public readonly Outputs.Mk8sTritonProviderNetworking Networking;
+        /// <summary>
+        /// List of node pools.
+        /// </summary>
         public readonly ImmutableArray<Outputs.Mk8sTritonProviderNodePool> NodePools;
+        /// <summary>
+        /// Optional shell script that will be run before K8s is installed. Supports SSM.
+        /// </summary>
         public readonly string? PreInstallScript;
+        /// <summary>
+        /// ID of the private Fabric/Network.
+        /// </summary>
         public readonly string PrivateNetworkId;
+        /// <summary>
+        /// Extra SSH keys to provision for user root.
+        /// </summary>
         public readonly ImmutableArray<string> SshKeys;
 
         [OutputConstructor]

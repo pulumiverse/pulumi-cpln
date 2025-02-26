@@ -16,12 +16,21 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("_sentinel")]
         public Input<bool>? _sentinel { get; set; }
 
+        /// <summary>
+        /// For targeting Amazon Web Services (AWS) ElasticSearch.
+        /// </summary>
         [Input("aws")]
         public Input<Inputs.OrgLoggingElasticLoggingAwsArgs>? Aws { get; set; }
 
+        /// <summary>
+        /// For targeting Elastic Cloud.
+        /// </summary>
         [Input("elasticCloud")]
         public Input<Inputs.OrgLoggingElasticLoggingElasticCloudArgs>? ElasticCloud { get; set; }
 
+        /// <summary>
+        /// For targeting generic Elastic Search providers.
+        /// </summary>
         [Input("generic")]
         public Input<Inputs.OrgLoggingElasticLoggingGenericArgs>? Generic { get; set; }
 

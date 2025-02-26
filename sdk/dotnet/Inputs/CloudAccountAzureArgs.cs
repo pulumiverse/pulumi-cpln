@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class CloudAccountAzureArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Full link to an Azure secret. (e.g., /org/ORG_NAME/secret/AZURE_SECRET).
+        /// </summary>
         [Input("secretLink", required: true)]
         public Input<string> SecretLink { get; set; } = null!;
 

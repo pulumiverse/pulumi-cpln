@@ -125,9 +125,7 @@ namespace Pulumiverse.Cpln
         /// - **password** (String, Sensitive) Password.
         /// - **username** (String) Username.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
@@ -148,8 +146,6 @@ namespace Pulumiverse.Cpln
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetSecretResult> InvokeAsync(GetSecretArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetSecretResult>("cpln:index/getSecret:getSecret", args ?? new GetSecretArgs(), options.WithDefaults());
@@ -267,9 +263,7 @@ namespace Pulumiverse.Cpln
         /// - **password** (String, Sensitive) Password.
         /// - **username** (String) Username.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
@@ -290,8 +284,6 @@ namespace Pulumiverse.Cpln
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetSecretResult> Invoke(GetSecretInvokeArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetSecretResult>("cpln:index/getSecret:getSecret", args ?? new GetSecretInvokeArgs(), options.WithDefaults());
@@ -476,7 +468,7 @@ namespace Pulumiverse.Cpln
         public readonly string CplnId;
         public readonly string? Description;
         public readonly ImmutableDictionary<string, string>? Dictionary;
-        public readonly ImmutableDictionary<string, object> DictionaryAsEnvs;
+        public readonly ImmutableDictionary<string, string> DictionaryAsEnvs;
         public readonly string? Docker;
         public readonly Outputs.GetSecretEcrResult? Ecr;
         public readonly string? Gcp;
@@ -508,7 +500,7 @@ namespace Pulumiverse.Cpln
 
             ImmutableDictionary<string, string>? dictionary,
 
-            ImmutableDictionary<string, object> dictionaryAsEnvs,
+            ImmutableDictionary<string, string> dictionaryAsEnvs,
 
             string? docker,
 

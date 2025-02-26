@@ -13,9 +13,15 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadContainerGpuNvidiaArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// GPU Model (i.e.: t4)
+        /// </summary>
         [Input("model", required: true)]
         public Input<string> Model { get; set; } = null!;
 
+        /// <summary>
+        /// Number of GPUs.
+        /// </summary>
         [Input("quantity", required: true)]
         public Input<int> Quantity { get; set; } = null!;
 

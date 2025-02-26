@@ -14,8 +14,17 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class GetGvcLoadBalancerResult
     {
+        /// <summary>
+        /// Creates a dedicated load balancer in each location and enables additional Domain features: custom ports, protocols and wildcard hostnames. Charges apply for each location.
+        /// </summary>
         public readonly bool? Dedicated;
+        /// <summary>
+        /// Specify the url to be redirected to for different http status codes.
+        /// </summary>
         public readonly Outputs.GetGvcLoadBalancerRedirectResult? Redirect;
+        /// <summary>
+        /// Controls the address used for request logging and for setting the X-Envoy-External-Address header. If set to 1, then the last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If set to 2, then the second to last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If the XFF header does not have at least two addresses or does not exist then the source client IP address will be used instead.
+        /// </summary>
         public readonly int? TrustedProxies;
 
         [OutputConstructor]

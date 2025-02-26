@@ -49,9 +49,7 @@ namespace Pulumiverse.Cpln
         /// - **city** (String) City.
         /// - **continent** (String) Continent.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
@@ -69,8 +67,6 @@ namespace Pulumiverse.Cpln
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetLocationsResult> InvokeAsync(InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetLocationsResult>("cpln:index/getLocations:getLocations", InvokeArgs.Empty, options.WithDefaults());
@@ -112,9 +108,7 @@ namespace Pulumiverse.Cpln
         /// - **city** (String) City.
         /// - **continent** (String) Continent.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
@@ -132,8 +126,6 @@ namespace Pulumiverse.Cpln
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetLocationsResult> Invoke(InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetLocationsResult>("cpln:index/getLocations:getLocations", InvokeArgs.Empty, options.WithDefaults());

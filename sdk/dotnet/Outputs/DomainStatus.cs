@@ -14,11 +14,26 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class DomainStatus
     {
+        /// <summary>
+        /// List of required DNS record entries.
+        /// </summary>
         public readonly ImmutableArray<Outputs.DomainStatusDnsConfig> DnsConfigs;
+        /// <summary>
+        /// List of configured domain endpoints.
+        /// </summary>
         public readonly ImmutableArray<Outputs.DomainStatusEndpoint> Endpoints;
         public readonly string? Fingerprint;
+        /// <summary>
+        /// Contains the cloud provider name, region, and certificate status.
+        /// </summary>
         public readonly ImmutableArray<Outputs.DomainStatusLocation> Locations;
+        /// <summary>
+        /// Status of Domain. Possible values: `initializing`, `ready`, `pendingDnsConfig`, `pendingCertificate`, `usedByGvc`.
+        /// </summary>
         public readonly string? Status;
+        /// <summary>
+        /// Warning message.
+        /// </summary>
         public readonly string? Warning;
 
         [OutputConstructor]

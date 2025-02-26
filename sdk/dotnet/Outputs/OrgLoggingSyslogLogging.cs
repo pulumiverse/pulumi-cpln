@@ -14,10 +14,25 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgLoggingSyslogLogging
     {
+        /// <summary>
+        /// Log Format. Valid values: RFC3164 or RFC5424.
+        /// </summary>
         public readonly string? Format;
+        /// <summary>
+        /// Hostname of Syslog Endpoint.
+        /// </summary>
         public readonly string Host;
+        /// <summary>
+        /// Log Mode. Valid values: TCP, TLS, or UDP.
+        /// </summary>
         public readonly string? Mode;
+        /// <summary>
+        /// Port of Syslog Endpoint.
+        /// </summary>
         public readonly int Port;
+        /// <summary>
+        /// Severity Level. See documentation for details. Valid values: 0 to 7.
+        /// </summary>
         public readonly int? Severity;
 
         [OutputConstructor]

@@ -76,7 +76,6 @@ import * as utilities from "./utilities";
  * ```
  */
 export function getGvc(args: GetGvcArgs, opts?: pulumi.InvokeOptions): Promise<GetGvcResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("cpln:index/getGvc:getGvc", {
         "controlplaneTracing": args.controlplaneTracing,
@@ -212,7 +211,21 @@ export interface GetGvcResult {
  * ```
  */
 export function getGvcOutput(args: GetGvcOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetGvcResult> {
-    return pulumi.output(args).apply((a: any) => getGvc(a, opts))
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("cpln:index/getGvc:getGvc", {
+        "controlplaneTracing": args.controlplaneTracing,
+        "description": args.description,
+        "domain": args.domain,
+        "env": args.env,
+        "lightstepTracing": args.lightstepTracing,
+        "loadBalancer": args.loadBalancer,
+        "locations": args.locations,
+        "name": args.name,
+        "otelTracing": args.otelTracing,
+        "pullSecrets": args.pullSecrets,
+        "sidecar": args.sidecar,
+        "tags": args.tags,
+    }, opts);
 }
 
 /**

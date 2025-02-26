@@ -13,9 +13,15 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class OrgLoggingDatadogLoggingArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Full link to referenced Opaque Secret.
+        /// </summary>
         [Input("credentials", required: true)]
         public Input<string> Credentials { get; set; } = null!;
 
+        /// <summary>
+        /// Datadog host URI.
+        /// </summary>
         [Input("host", required: true)]
         public Input<string> Host { get; set; } = null!;
 

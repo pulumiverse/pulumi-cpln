@@ -54,7 +54,7 @@ namespace Pulumiverse.Cpln
         /// cpln://secret/SECRET_NAME.key`.
         /// </summary>
         [Output("dictionaryAsEnvs")]
-        public Output<ImmutableDictionary<string, object>> DictionaryAsEnvs { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>> DictionaryAsEnvs { get; private set; } = null!;
 
         /// <summary>
         /// JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
@@ -374,15 +374,15 @@ namespace Pulumiverse.Cpln
         }
 
         [Input("dictionaryAsEnvs")]
-        private InputMap<object>? _dictionaryAsEnvs;
+        private InputMap<string>? _dictionaryAsEnvs;
 
         /// <summary>
         /// If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
         /// cpln://secret/SECRET_NAME.key`.
         /// </summary>
-        public InputMap<object> DictionaryAsEnvs
+        public InputMap<string> DictionaryAsEnvs
         {
-            get => _dictionaryAsEnvs ?? (_dictionaryAsEnvs = new InputMap<object>());
+            get => _dictionaryAsEnvs ?? (_dictionaryAsEnvs = new InputMap<string>());
             set => _dictionaryAsEnvs = value;
         }
 

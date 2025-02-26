@@ -13,20 +13,36 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class IdentityNativeNetworkResourceGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// A feature provided by AWS that enables private connectivity between private VPCs and compute running at Control Plane without traversing the public internet.
+        /// </summary>
         [Input("awsPrivateLink")]
         public Input<Inputs.IdentityNativeNetworkResourceAwsPrivateLinkGetArgs>? AwsPrivateLink { get; set; }
 
+        /// <summary>
+        /// Fully qualified domain name.
+        /// </summary>
         [Input("fqdn", required: true)]
         public Input<string> Fqdn { get; set; } = null!;
 
+        /// <summary>
+        /// Capability provided by GCP that allows private communication between private VPC networks and compute running at Control Plane.
+        /// </summary>
         [Input("gcpServiceConnect")]
         public Input<Inputs.IdentityNativeNetworkResourceGcpServiceConnectGetArgs>? GcpServiceConnect { get; set; }
 
+        /// <summary>
+        /// Name of the Native Network Resource.
+        /// </summary>
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 
         [Input("ports", required: true)]
         private InputList<int>? _ports;
+
+        /// <summary>
+        /// Ports to expose. At least one port is required.
+        /// </summary>
         public InputList<int> Ports
         {
             get => _ports ?? (_ports = new InputList<int>());

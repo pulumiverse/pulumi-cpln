@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadFirewallSpecExternalOutboundAllowPort
     {
+        /// <summary>
+        /// Port number. Max: 65000
+        /// </summary>
         public readonly int Number;
+        /// <summary>
+        /// Either `http`, `https` or `tcp`. Default: `tcp`.
+        /// </summary>
         public readonly string Protocol;
 
         [OutputConstructor]

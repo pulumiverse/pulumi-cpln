@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -38,56 +43,23 @@ class PolicyArgs:
         :param pulumi.Input[Sequence[pulumi.Input[str]]] target_links: List of the targets this policy will be applied to. Not used if `target` is set to `all`.
         :param pulumi.Input['PolicyTargetQueryArgs'] target_query: A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
         """
-        PolicyArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            target_kind=target_kind,
-            bindings=bindings,
-            description=description,
-            gvc=gvc,
-            name=name,
-            tags=tags,
-            target=target,
-            target_links=target_links,
-            target_query=target_query,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             target_kind: pulumi.Input[str],
-             bindings: Optional[pulumi.Input[Sequence[pulumi.Input['PolicyBindingArgs']]]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             gvc: Optional[pulumi.Input[str]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             target: Optional[pulumi.Input[str]] = None,
-             target_links: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             target_query: Optional[pulumi.Input['PolicyTargetQueryArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'targetKind' in kwargs:
-            target_kind = kwargs['targetKind']
-        if 'targetLinks' in kwargs:
-            target_links = kwargs['targetLinks']
-        if 'targetQuery' in kwargs:
-            target_query = kwargs['targetQuery']
-
-        _setter("target_kind", target_kind)
+        pulumi.set(__self__, "target_kind", target_kind)
         if bindings is not None:
-            _setter("bindings", bindings)
+            pulumi.set(__self__, "bindings", bindings)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if gvc is not None:
-            _setter("gvc", gvc)
+            pulumi.set(__self__, "gvc", gvc)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
         if target is not None:
-            _setter("target", target)
+            pulumi.set(__self__, "target", target)
         if target_links is not None:
-            _setter("target_links", target_links)
+            pulumi.set(__self__, "target_links", target_links)
         if target_query is not None:
-            _setter("target_query", target_query)
+            pulumi.set(__self__, "target_query", target_query)
 
     @property
     @pulumi.getter(name="targetKind")
@@ -230,73 +202,30 @@ class _PolicyState:
         :param pulumi.Input[Sequence[pulumi.Input[str]]] target_links: List of the targets this policy will be applied to. Not used if `target` is set to `all`.
         :param pulumi.Input['PolicyTargetQueryArgs'] target_query: A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
         """
-        _PolicyState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            bindings=bindings,
-            cpln_id=cpln_id,
-            description=description,
-            gvc=gvc,
-            name=name,
-            origin=origin,
-            self_link=self_link,
-            tags=tags,
-            target=target,
-            target_kind=target_kind,
-            target_links=target_links,
-            target_query=target_query,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             bindings: Optional[pulumi.Input[Sequence[pulumi.Input['PolicyBindingArgs']]]] = None,
-             cpln_id: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             gvc: Optional[pulumi.Input[str]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             origin: Optional[pulumi.Input[str]] = None,
-             self_link: Optional[pulumi.Input[str]] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             target: Optional[pulumi.Input[str]] = None,
-             target_kind: Optional[pulumi.Input[str]] = None,
-             target_links: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             target_query: Optional[pulumi.Input['PolicyTargetQueryArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'cplnId' in kwargs:
-            cpln_id = kwargs['cplnId']
-        if 'selfLink' in kwargs:
-            self_link = kwargs['selfLink']
-        if 'targetKind' in kwargs:
-            target_kind = kwargs['targetKind']
-        if 'targetLinks' in kwargs:
-            target_links = kwargs['targetLinks']
-        if 'targetQuery' in kwargs:
-            target_query = kwargs['targetQuery']
-
         if bindings is not None:
-            _setter("bindings", bindings)
+            pulumi.set(__self__, "bindings", bindings)
         if cpln_id is not None:
-            _setter("cpln_id", cpln_id)
+            pulumi.set(__self__, "cpln_id", cpln_id)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if gvc is not None:
-            _setter("gvc", gvc)
+            pulumi.set(__self__, "gvc", gvc)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if origin is not None:
-            _setter("origin", origin)
+            pulumi.set(__self__, "origin", origin)
         if self_link is not None:
-            _setter("self_link", self_link)
+            pulumi.set(__self__, "self_link", self_link)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
         if target is not None:
-            _setter("target", target)
+            pulumi.set(__self__, "target", target)
         if target_kind is not None:
-            _setter("target_kind", target_kind)
+            pulumi.set(__self__, "target_kind", target_kind)
         if target_links is not None:
-            _setter("target_links", target_links)
+            pulumi.set(__self__, "target_links", target_links)
         if target_query is not None:
-            _setter("target_query", target_query)
+            pulumi.set(__self__, "target_query", target_query)
 
     @property
     @pulumi.getter
@@ -449,7 +378,7 @@ class Policy(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 bindings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['PolicyBindingArgs']]]]] = None,
+                 bindings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['PolicyBindingArgs', 'PolicyBindingArgsDict']]]]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  gvc: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
@@ -457,13 +386,13 @@ class Policy(pulumi.CustomResource):
                  target: Optional[pulumi.Input[str]] = None,
                  target_kind: Optional[pulumi.Input[str]] = None,
                  target_links: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                 target_query: Optional[pulumi.Input[pulumi.InputType['PolicyTargetQueryArgs']]] = None,
+                 target_query: Optional[pulumi.Input[Union['PolicyTargetQueryArgs', 'PolicyTargetQueryArgsDict']]] = None,
                  __props__=None):
         """
         Create a Policy resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['PolicyBindingArgs']]]] bindings: The association between a target kind and the bound permissions to service principals.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['PolicyBindingArgs', 'PolicyBindingArgsDict']]]] bindings: The association between a target kind and the bound permissions to service principals.
         :param pulumi.Input[str] description: Description of the Policy.
         :param pulumi.Input[str] gvc: The GVC for `identity`, `workload` and `volumeset` target kinds only.
         :param pulumi.Input[str] name: Name of the Policy.
@@ -472,7 +401,7 @@ class Policy(pulumi.CustomResource):
                do not include the attribute.
         :param pulumi.Input[str] target_kind: The kind of resource to target (e.g., gvc, serviceaccount, etc.).
         :param pulumi.Input[Sequence[pulumi.Input[str]]] target_links: List of the targets this policy will be applied to. Not used if `target` is set to `all`.
-        :param pulumi.Input[pulumi.InputType['PolicyTargetQueryArgs']] target_query: A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
+        :param pulumi.Input[Union['PolicyTargetQueryArgs', 'PolicyTargetQueryArgsDict']] target_query: A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
         """
         ...
     @overload
@@ -492,16 +421,12 @@ class Policy(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            PolicyArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 bindings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['PolicyBindingArgs']]]]] = None,
+                 bindings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['PolicyBindingArgs', 'PolicyBindingArgsDict']]]]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  gvc: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
@@ -509,7 +434,7 @@ class Policy(pulumi.CustomResource):
                  target: Optional[pulumi.Input[str]] = None,
                  target_kind: Optional[pulumi.Input[str]] = None,
                  target_links: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                 target_query: Optional[pulumi.Input[pulumi.InputType['PolicyTargetQueryArgs']]] = None,
+                 target_query: Optional[pulumi.Input[Union['PolicyTargetQueryArgs', 'PolicyTargetQueryArgsDict']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -529,11 +454,6 @@ class Policy(pulumi.CustomResource):
                 raise TypeError("Missing required property 'target_kind'")
             __props__.__dict__["target_kind"] = target_kind
             __props__.__dict__["target_links"] = target_links
-            if target_query is not None and not isinstance(target_query, PolicyTargetQueryArgs):
-                target_query = target_query or {}
-                def _setter(key, value):
-                    target_query[key] = value
-                PolicyTargetQueryArgs._configure(_setter, **target_query)
             __props__.__dict__["target_query"] = target_query
             __props__.__dict__["cpln_id"] = None
             __props__.__dict__["origin"] = None
@@ -548,7 +468,7 @@ class Policy(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            bindings: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['PolicyBindingArgs']]]]] = None,
+            bindings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['PolicyBindingArgs', 'PolicyBindingArgsDict']]]]] = None,
             cpln_id: Optional[pulumi.Input[str]] = None,
             description: Optional[pulumi.Input[str]] = None,
             gvc: Optional[pulumi.Input[str]] = None,
@@ -559,7 +479,7 @@ class Policy(pulumi.CustomResource):
             target: Optional[pulumi.Input[str]] = None,
             target_kind: Optional[pulumi.Input[str]] = None,
             target_links: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-            target_query: Optional[pulumi.Input[pulumi.InputType['PolicyTargetQueryArgs']]] = None) -> 'Policy':
+            target_query: Optional[pulumi.Input[Union['PolicyTargetQueryArgs', 'PolicyTargetQueryArgsDict']]] = None) -> 'Policy':
         """
         Get an existing Policy resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -567,7 +487,7 @@ class Policy(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['PolicyBindingArgs']]]] bindings: The association between a target kind and the bound permissions to service principals.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['PolicyBindingArgs', 'PolicyBindingArgsDict']]]] bindings: The association between a target kind and the bound permissions to service principals.
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Policy.
         :param pulumi.Input[str] description: Description of the Policy.
         :param pulumi.Input[str] gvc: The GVC for `identity`, `workload` and `volumeset` target kinds only.
@@ -579,7 +499,7 @@ class Policy(pulumi.CustomResource):
                do not include the attribute.
         :param pulumi.Input[str] target_kind: The kind of resource to target (e.g., gvc, serviceaccount, etc.).
         :param pulumi.Input[Sequence[pulumi.Input[str]]] target_links: List of the targets this policy will be applied to. Not used if `target` is set to `all`.
-        :param pulumi.Input[pulumi.InputType['PolicyTargetQueryArgs']] target_query: A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
+        :param pulumi.Input[Union['PolicyTargetQueryArgs', 'PolicyTargetQueryArgsDict']] target_query: A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 

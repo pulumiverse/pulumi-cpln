@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -39,100 +44,37 @@ class Mk8sArgs:
         :param pulumi.Input[str] name: Name of the Mk8s.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
-        Mk8sArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            version=version,
-            add_ons=add_ons,
-            aws_provider=aws_provider,
-            description=description,
-            digital_ocean_provider=digital_ocean_provider,
-            ephemeral_provider=ephemeral_provider,
-            firewalls=firewalls,
-            generic_provider=generic_provider,
-            hetzner_provider=hetzner_provider,
-            lambdalabs_provider=lambdalabs_provider,
-            linode_provider=linode_provider,
-            name=name,
-            oblivus_provider=oblivus_provider,
-            paperspace_provider=paperspace_provider,
-            tags=tags,
-            triton_provider=triton_provider,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             version: pulumi.Input[str],
-             add_ons: Optional[pulumi.Input['Mk8sAddOnsArgs']] = None,
-             aws_provider: Optional[pulumi.Input['Mk8sAwsProviderArgs']] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             digital_ocean_provider: Optional[pulumi.Input['Mk8sDigitalOceanProviderArgs']] = None,
-             ephemeral_provider: Optional[pulumi.Input['Mk8sEphemeralProviderArgs']] = None,
-             firewalls: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sFirewallArgs']]]] = None,
-             generic_provider: Optional[pulumi.Input['Mk8sGenericProviderArgs']] = None,
-             hetzner_provider: Optional[pulumi.Input['Mk8sHetznerProviderArgs']] = None,
-             lambdalabs_provider: Optional[pulumi.Input['Mk8sLambdalabsProviderArgs']] = None,
-             linode_provider: Optional[pulumi.Input['Mk8sLinodeProviderArgs']] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             oblivus_provider: Optional[pulumi.Input['Mk8sOblivusProviderArgs']] = None,
-             paperspace_provider: Optional[pulumi.Input['Mk8sPaperspaceProviderArgs']] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             triton_provider: Optional[pulumi.Input['Mk8sTritonProviderArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'addOns' in kwargs:
-            add_ons = kwargs['addOns']
-        if 'awsProvider' in kwargs:
-            aws_provider = kwargs['awsProvider']
-        if 'digitalOceanProvider' in kwargs:
-            digital_ocean_provider = kwargs['digitalOceanProvider']
-        if 'ephemeralProvider' in kwargs:
-            ephemeral_provider = kwargs['ephemeralProvider']
-        if 'genericProvider' in kwargs:
-            generic_provider = kwargs['genericProvider']
-        if 'hetznerProvider' in kwargs:
-            hetzner_provider = kwargs['hetznerProvider']
-        if 'lambdalabsProvider' in kwargs:
-            lambdalabs_provider = kwargs['lambdalabsProvider']
-        if 'linodeProvider' in kwargs:
-            linode_provider = kwargs['linodeProvider']
-        if 'oblivusProvider' in kwargs:
-            oblivus_provider = kwargs['oblivusProvider']
-        if 'paperspaceProvider' in kwargs:
-            paperspace_provider = kwargs['paperspaceProvider']
-        if 'tritonProvider' in kwargs:
-            triton_provider = kwargs['tritonProvider']
-
-        _setter("version", version)
+        pulumi.set(__self__, "version", version)
         if add_ons is not None:
-            _setter("add_ons", add_ons)
+            pulumi.set(__self__, "add_ons", add_ons)
         if aws_provider is not None:
-            _setter("aws_provider", aws_provider)
+            pulumi.set(__self__, "aws_provider", aws_provider)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if digital_ocean_provider is not None:
-            _setter("digital_ocean_provider", digital_ocean_provider)
+            pulumi.set(__self__, "digital_ocean_provider", digital_ocean_provider)
         if ephemeral_provider is not None:
-            _setter("ephemeral_provider", ephemeral_provider)
+            pulumi.set(__self__, "ephemeral_provider", ephemeral_provider)
         if firewalls is not None:
-            _setter("firewalls", firewalls)
+            pulumi.set(__self__, "firewalls", firewalls)
         if generic_provider is not None:
-            _setter("generic_provider", generic_provider)
+            pulumi.set(__self__, "generic_provider", generic_provider)
         if hetzner_provider is not None:
-            _setter("hetzner_provider", hetzner_provider)
+            pulumi.set(__self__, "hetzner_provider", hetzner_provider)
         if lambdalabs_provider is not None:
-            _setter("lambdalabs_provider", lambdalabs_provider)
+            pulumi.set(__self__, "lambdalabs_provider", lambdalabs_provider)
         if linode_provider is not None:
-            _setter("linode_provider", linode_provider)
+            pulumi.set(__self__, "linode_provider", linode_provider)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if oblivus_provider is not None:
-            _setter("oblivus_provider", oblivus_provider)
+            pulumi.set(__self__, "oblivus_provider", oblivus_provider)
         if paperspace_provider is not None:
-            _setter("paperspace_provider", paperspace_provider)
+            pulumi.set(__self__, "paperspace_provider", paperspace_provider)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
         if triton_provider is not None:
-            _setter("triton_provider", triton_provider)
+            pulumi.set(__self__, "triton_provider", triton_provider)
 
     @property
     @pulumi.getter
@@ -325,121 +267,46 @@ class _Mk8sState:
         :param pulumi.Input[Sequence[pulumi.Input['Mk8sStatusArgs']]] statuses: Status of the mk8s.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
-        _Mk8sState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            add_ons=add_ons,
-            alias=alias,
-            aws_provider=aws_provider,
-            cpln_id=cpln_id,
-            description=description,
-            digital_ocean_provider=digital_ocean_provider,
-            ephemeral_provider=ephemeral_provider,
-            firewalls=firewalls,
-            generic_provider=generic_provider,
-            hetzner_provider=hetzner_provider,
-            lambdalabs_provider=lambdalabs_provider,
-            linode_provider=linode_provider,
-            name=name,
-            oblivus_provider=oblivus_provider,
-            paperspace_provider=paperspace_provider,
-            self_link=self_link,
-            statuses=statuses,
-            tags=tags,
-            triton_provider=triton_provider,
-            version=version,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             add_ons: Optional[pulumi.Input['Mk8sAddOnsArgs']] = None,
-             alias: Optional[pulumi.Input[str]] = None,
-             aws_provider: Optional[pulumi.Input['Mk8sAwsProviderArgs']] = None,
-             cpln_id: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             digital_ocean_provider: Optional[pulumi.Input['Mk8sDigitalOceanProviderArgs']] = None,
-             ephemeral_provider: Optional[pulumi.Input['Mk8sEphemeralProviderArgs']] = None,
-             firewalls: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sFirewallArgs']]]] = None,
-             generic_provider: Optional[pulumi.Input['Mk8sGenericProviderArgs']] = None,
-             hetzner_provider: Optional[pulumi.Input['Mk8sHetznerProviderArgs']] = None,
-             lambdalabs_provider: Optional[pulumi.Input['Mk8sLambdalabsProviderArgs']] = None,
-             linode_provider: Optional[pulumi.Input['Mk8sLinodeProviderArgs']] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             oblivus_provider: Optional[pulumi.Input['Mk8sOblivusProviderArgs']] = None,
-             paperspace_provider: Optional[pulumi.Input['Mk8sPaperspaceProviderArgs']] = None,
-             self_link: Optional[pulumi.Input[str]] = None,
-             statuses: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusArgs']]]] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             triton_provider: Optional[pulumi.Input['Mk8sTritonProviderArgs']] = None,
-             version: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'addOns' in kwargs:
-            add_ons = kwargs['addOns']
-        if 'awsProvider' in kwargs:
-            aws_provider = kwargs['awsProvider']
-        if 'cplnId' in kwargs:
-            cpln_id = kwargs['cplnId']
-        if 'digitalOceanProvider' in kwargs:
-            digital_ocean_provider = kwargs['digitalOceanProvider']
-        if 'ephemeralProvider' in kwargs:
-            ephemeral_provider = kwargs['ephemeralProvider']
-        if 'genericProvider' in kwargs:
-            generic_provider = kwargs['genericProvider']
-        if 'hetznerProvider' in kwargs:
-            hetzner_provider = kwargs['hetznerProvider']
-        if 'lambdalabsProvider' in kwargs:
-            lambdalabs_provider = kwargs['lambdalabsProvider']
-        if 'linodeProvider' in kwargs:
-            linode_provider = kwargs['linodeProvider']
-        if 'oblivusProvider' in kwargs:
-            oblivus_provider = kwargs['oblivusProvider']
-        if 'paperspaceProvider' in kwargs:
-            paperspace_provider = kwargs['paperspaceProvider']
-        if 'selfLink' in kwargs:
-            self_link = kwargs['selfLink']
-        if 'tritonProvider' in kwargs:
-            triton_provider = kwargs['tritonProvider']
-
         if add_ons is not None:
-            _setter("add_ons", add_ons)
+            pulumi.set(__self__, "add_ons", add_ons)
         if alias is not None:
-            _setter("alias", alias)
+            pulumi.set(__self__, "alias", alias)
         if aws_provider is not None:
-            _setter("aws_provider", aws_provider)
+            pulumi.set(__self__, "aws_provider", aws_provider)
         if cpln_id is not None:
-            _setter("cpln_id", cpln_id)
+            pulumi.set(__self__, "cpln_id", cpln_id)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if digital_ocean_provider is not None:
-            _setter("digital_ocean_provider", digital_ocean_provider)
+            pulumi.set(__self__, "digital_ocean_provider", digital_ocean_provider)
         if ephemeral_provider is not None:
-            _setter("ephemeral_provider", ephemeral_provider)
+            pulumi.set(__self__, "ephemeral_provider", ephemeral_provider)
         if firewalls is not None:
-            _setter("firewalls", firewalls)
+            pulumi.set(__self__, "firewalls", firewalls)
         if generic_provider is not None:
-            _setter("generic_provider", generic_provider)
+            pulumi.set(__self__, "generic_provider", generic_provider)
         if hetzner_provider is not None:
-            _setter("hetzner_provider", hetzner_provider)
+            pulumi.set(__self__, "hetzner_provider", hetzner_provider)
         if lambdalabs_provider is not None:
-            _setter("lambdalabs_provider", lambdalabs_provider)
+            pulumi.set(__self__, "lambdalabs_provider", lambdalabs_provider)
         if linode_provider is not None:
-            _setter("linode_provider", linode_provider)
+            pulumi.set(__self__, "linode_provider", linode_provider)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if oblivus_provider is not None:
-            _setter("oblivus_provider", oblivus_provider)
+            pulumi.set(__self__, "oblivus_provider", oblivus_provider)
         if paperspace_provider is not None:
-            _setter("paperspace_provider", paperspace_provider)
+            pulumi.set(__self__, "paperspace_provider", paperspace_provider)
         if self_link is not None:
-            _setter("self_link", self_link)
+            pulumi.set(__self__, "self_link", self_link)
         if statuses is not None:
-            _setter("statuses", statuses)
+            pulumi.set(__self__, "statuses", statuses)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
         if triton_provider is not None:
-            _setter("triton_provider", triton_provider)
+            pulumi.set(__self__, "triton_provider", triton_provider)
         if version is not None:
-            _setter("version", version)
+            pulumi.set(__self__, "version", version)
 
     @property
     @pulumi.getter(name="addOns")
@@ -651,21 +518,21 @@ class Mk8s(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 add_ons: Optional[pulumi.Input[pulumi.InputType['Mk8sAddOnsArgs']]] = None,
-                 aws_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sAwsProviderArgs']]] = None,
+                 add_ons: Optional[pulumi.Input[Union['Mk8sAddOnsArgs', 'Mk8sAddOnsArgsDict']]] = None,
+                 aws_provider: Optional[pulumi.Input[Union['Mk8sAwsProviderArgs', 'Mk8sAwsProviderArgsDict']]] = None,
                  description: Optional[pulumi.Input[str]] = None,
-                 digital_ocean_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sDigitalOceanProviderArgs']]] = None,
-                 ephemeral_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sEphemeralProviderArgs']]] = None,
-                 firewalls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['Mk8sFirewallArgs']]]]] = None,
-                 generic_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sGenericProviderArgs']]] = None,
-                 hetzner_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sHetznerProviderArgs']]] = None,
-                 lambdalabs_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sLambdalabsProviderArgs']]] = None,
-                 linode_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sLinodeProviderArgs']]] = None,
+                 digital_ocean_provider: Optional[pulumi.Input[Union['Mk8sDigitalOceanProviderArgs', 'Mk8sDigitalOceanProviderArgsDict']]] = None,
+                 ephemeral_provider: Optional[pulumi.Input[Union['Mk8sEphemeralProviderArgs', 'Mk8sEphemeralProviderArgsDict']]] = None,
+                 firewalls: Optional[pulumi.Input[Sequence[pulumi.Input[Union['Mk8sFirewallArgs', 'Mk8sFirewallArgsDict']]]]] = None,
+                 generic_provider: Optional[pulumi.Input[Union['Mk8sGenericProviderArgs', 'Mk8sGenericProviderArgsDict']]] = None,
+                 hetzner_provider: Optional[pulumi.Input[Union['Mk8sHetznerProviderArgs', 'Mk8sHetznerProviderArgsDict']]] = None,
+                 lambdalabs_provider: Optional[pulumi.Input[Union['Mk8sLambdalabsProviderArgs', 'Mk8sLambdalabsProviderArgsDict']]] = None,
+                 linode_provider: Optional[pulumi.Input[Union['Mk8sLinodeProviderArgs', 'Mk8sLinodeProviderArgsDict']]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 oblivus_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sOblivusProviderArgs']]] = None,
-                 paperspace_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sPaperspaceProviderArgs']]] = None,
+                 oblivus_provider: Optional[pulumi.Input[Union['Mk8sOblivusProviderArgs', 'Mk8sOblivusProviderArgsDict']]] = None,
+                 paperspace_provider: Optional[pulumi.Input[Union['Mk8sPaperspaceProviderArgs', 'Mk8sPaperspaceProviderArgsDict']]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 triton_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sTritonProviderArgs']]] = None,
+                 triton_provider: Optional[pulumi.Input[Union['Mk8sTritonProviderArgs', 'Mk8sTritonProviderArgsDict']]] = None,
                  version: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -673,7 +540,7 @@ class Mk8s(pulumi.CustomResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] description: Description of the Mk8s.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['Mk8sFirewallArgs']]]] firewalls: Allow-list.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['Mk8sFirewallArgs', 'Mk8sFirewallArgsDict']]]] firewalls: Allow-list.
         :param pulumi.Input[str] name: Name of the Mk8s.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
@@ -695,30 +562,26 @@ class Mk8s(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            Mk8sArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 add_ons: Optional[pulumi.Input[pulumi.InputType['Mk8sAddOnsArgs']]] = None,
-                 aws_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sAwsProviderArgs']]] = None,
+                 add_ons: Optional[pulumi.Input[Union['Mk8sAddOnsArgs', 'Mk8sAddOnsArgsDict']]] = None,
+                 aws_provider: Optional[pulumi.Input[Union['Mk8sAwsProviderArgs', 'Mk8sAwsProviderArgsDict']]] = None,
                  description: Optional[pulumi.Input[str]] = None,
-                 digital_ocean_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sDigitalOceanProviderArgs']]] = None,
-                 ephemeral_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sEphemeralProviderArgs']]] = None,
-                 firewalls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['Mk8sFirewallArgs']]]]] = None,
-                 generic_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sGenericProviderArgs']]] = None,
-                 hetzner_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sHetznerProviderArgs']]] = None,
-                 lambdalabs_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sLambdalabsProviderArgs']]] = None,
-                 linode_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sLinodeProviderArgs']]] = None,
+                 digital_ocean_provider: Optional[pulumi.Input[Union['Mk8sDigitalOceanProviderArgs', 'Mk8sDigitalOceanProviderArgsDict']]] = None,
+                 ephemeral_provider: Optional[pulumi.Input[Union['Mk8sEphemeralProviderArgs', 'Mk8sEphemeralProviderArgsDict']]] = None,
+                 firewalls: Optional[pulumi.Input[Sequence[pulumi.Input[Union['Mk8sFirewallArgs', 'Mk8sFirewallArgsDict']]]]] = None,
+                 generic_provider: Optional[pulumi.Input[Union['Mk8sGenericProviderArgs', 'Mk8sGenericProviderArgsDict']]] = None,
+                 hetzner_provider: Optional[pulumi.Input[Union['Mk8sHetznerProviderArgs', 'Mk8sHetznerProviderArgsDict']]] = None,
+                 lambdalabs_provider: Optional[pulumi.Input[Union['Mk8sLambdalabsProviderArgs', 'Mk8sLambdalabsProviderArgsDict']]] = None,
+                 linode_provider: Optional[pulumi.Input[Union['Mk8sLinodeProviderArgs', 'Mk8sLinodeProviderArgsDict']]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 oblivus_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sOblivusProviderArgs']]] = None,
-                 paperspace_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sPaperspaceProviderArgs']]] = None,
+                 oblivus_provider: Optional[pulumi.Input[Union['Mk8sOblivusProviderArgs', 'Mk8sOblivusProviderArgsDict']]] = None,
+                 paperspace_provider: Optional[pulumi.Input[Union['Mk8sPaperspaceProviderArgs', 'Mk8sPaperspaceProviderArgsDict']]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 triton_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sTritonProviderArgs']]] = None,
+                 triton_provider: Optional[pulumi.Input[Union['Mk8sTritonProviderArgs', 'Mk8sTritonProviderArgsDict']]] = None,
                  version: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -729,75 +592,20 @@ class Mk8s(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = Mk8sArgs.__new__(Mk8sArgs)
 
-            if add_ons is not None and not isinstance(add_ons, Mk8sAddOnsArgs):
-                add_ons = add_ons or {}
-                def _setter(key, value):
-                    add_ons[key] = value
-                Mk8sAddOnsArgs._configure(_setter, **add_ons)
             __props__.__dict__["add_ons"] = add_ons
-            if aws_provider is not None and not isinstance(aws_provider, Mk8sAwsProviderArgs):
-                aws_provider = aws_provider or {}
-                def _setter(key, value):
-                    aws_provider[key] = value
-                Mk8sAwsProviderArgs._configure(_setter, **aws_provider)
             __props__.__dict__["aws_provider"] = aws_provider
             __props__.__dict__["description"] = description
-            if digital_ocean_provider is not None and not isinstance(digital_ocean_provider, Mk8sDigitalOceanProviderArgs):
-                digital_ocean_provider = digital_ocean_provider or {}
-                def _setter(key, value):
-                    digital_ocean_provider[key] = value
-                Mk8sDigitalOceanProviderArgs._configure(_setter, **digital_ocean_provider)
             __props__.__dict__["digital_ocean_provider"] = digital_ocean_provider
-            if ephemeral_provider is not None and not isinstance(ephemeral_provider, Mk8sEphemeralProviderArgs):
-                ephemeral_provider = ephemeral_provider or {}
-                def _setter(key, value):
-                    ephemeral_provider[key] = value
-                Mk8sEphemeralProviderArgs._configure(_setter, **ephemeral_provider)
             __props__.__dict__["ephemeral_provider"] = ephemeral_provider
             __props__.__dict__["firewalls"] = firewalls
-            if generic_provider is not None and not isinstance(generic_provider, Mk8sGenericProviderArgs):
-                generic_provider = generic_provider or {}
-                def _setter(key, value):
-                    generic_provider[key] = value
-                Mk8sGenericProviderArgs._configure(_setter, **generic_provider)
             __props__.__dict__["generic_provider"] = generic_provider
-            if hetzner_provider is not None and not isinstance(hetzner_provider, Mk8sHetznerProviderArgs):
-                hetzner_provider = hetzner_provider or {}
-                def _setter(key, value):
-                    hetzner_provider[key] = value
-                Mk8sHetznerProviderArgs._configure(_setter, **hetzner_provider)
             __props__.__dict__["hetzner_provider"] = hetzner_provider
-            if lambdalabs_provider is not None and not isinstance(lambdalabs_provider, Mk8sLambdalabsProviderArgs):
-                lambdalabs_provider = lambdalabs_provider or {}
-                def _setter(key, value):
-                    lambdalabs_provider[key] = value
-                Mk8sLambdalabsProviderArgs._configure(_setter, **lambdalabs_provider)
             __props__.__dict__["lambdalabs_provider"] = lambdalabs_provider
-            if linode_provider is not None and not isinstance(linode_provider, Mk8sLinodeProviderArgs):
-                linode_provider = linode_provider or {}
-                def _setter(key, value):
-                    linode_provider[key] = value
-                Mk8sLinodeProviderArgs._configure(_setter, **linode_provider)
             __props__.__dict__["linode_provider"] = linode_provider
             __props__.__dict__["name"] = name
-            if oblivus_provider is not None and not isinstance(oblivus_provider, Mk8sOblivusProviderArgs):
-                oblivus_provider = oblivus_provider or {}
-                def _setter(key, value):
-                    oblivus_provider[key] = value
-                Mk8sOblivusProviderArgs._configure(_setter, **oblivus_provider)
             __props__.__dict__["oblivus_provider"] = oblivus_provider
-            if paperspace_provider is not None and not isinstance(paperspace_provider, Mk8sPaperspaceProviderArgs):
-                paperspace_provider = paperspace_provider or {}
-                def _setter(key, value):
-                    paperspace_provider[key] = value
-                Mk8sPaperspaceProviderArgs._configure(_setter, **paperspace_provider)
             __props__.__dict__["paperspace_provider"] = paperspace_provider
             __props__.__dict__["tags"] = tags
-            if triton_provider is not None and not isinstance(triton_provider, Mk8sTritonProviderArgs):
-                triton_provider = triton_provider or {}
-                def _setter(key, value):
-                    triton_provider[key] = value
-                Mk8sTritonProviderArgs._configure(_setter, **triton_provider)
             __props__.__dict__["triton_provider"] = triton_provider
             if version is None and not opts.urn:
                 raise TypeError("Missing required property 'version'")
@@ -816,25 +624,25 @@ class Mk8s(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            add_ons: Optional[pulumi.Input[pulumi.InputType['Mk8sAddOnsArgs']]] = None,
+            add_ons: Optional[pulumi.Input[Union['Mk8sAddOnsArgs', 'Mk8sAddOnsArgsDict']]] = None,
             alias: Optional[pulumi.Input[str]] = None,
-            aws_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sAwsProviderArgs']]] = None,
+            aws_provider: Optional[pulumi.Input[Union['Mk8sAwsProviderArgs', 'Mk8sAwsProviderArgsDict']]] = None,
             cpln_id: Optional[pulumi.Input[str]] = None,
             description: Optional[pulumi.Input[str]] = None,
-            digital_ocean_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sDigitalOceanProviderArgs']]] = None,
-            ephemeral_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sEphemeralProviderArgs']]] = None,
-            firewalls: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['Mk8sFirewallArgs']]]]] = None,
-            generic_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sGenericProviderArgs']]] = None,
-            hetzner_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sHetznerProviderArgs']]] = None,
-            lambdalabs_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sLambdalabsProviderArgs']]] = None,
-            linode_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sLinodeProviderArgs']]] = None,
+            digital_ocean_provider: Optional[pulumi.Input[Union['Mk8sDigitalOceanProviderArgs', 'Mk8sDigitalOceanProviderArgsDict']]] = None,
+            ephemeral_provider: Optional[pulumi.Input[Union['Mk8sEphemeralProviderArgs', 'Mk8sEphemeralProviderArgsDict']]] = None,
+            firewalls: Optional[pulumi.Input[Sequence[pulumi.Input[Union['Mk8sFirewallArgs', 'Mk8sFirewallArgsDict']]]]] = None,
+            generic_provider: Optional[pulumi.Input[Union['Mk8sGenericProviderArgs', 'Mk8sGenericProviderArgsDict']]] = None,
+            hetzner_provider: Optional[pulumi.Input[Union['Mk8sHetznerProviderArgs', 'Mk8sHetznerProviderArgsDict']]] = None,
+            lambdalabs_provider: Optional[pulumi.Input[Union['Mk8sLambdalabsProviderArgs', 'Mk8sLambdalabsProviderArgsDict']]] = None,
+            linode_provider: Optional[pulumi.Input[Union['Mk8sLinodeProviderArgs', 'Mk8sLinodeProviderArgsDict']]] = None,
             name: Optional[pulumi.Input[str]] = None,
-            oblivus_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sOblivusProviderArgs']]] = None,
-            paperspace_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sPaperspaceProviderArgs']]] = None,
+            oblivus_provider: Optional[pulumi.Input[Union['Mk8sOblivusProviderArgs', 'Mk8sOblivusProviderArgsDict']]] = None,
+            paperspace_provider: Optional[pulumi.Input[Union['Mk8sPaperspaceProviderArgs', 'Mk8sPaperspaceProviderArgsDict']]] = None,
             self_link: Optional[pulumi.Input[str]] = None,
-            statuses: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['Mk8sStatusArgs']]]]] = None,
+            statuses: Optional[pulumi.Input[Sequence[pulumi.Input[Union['Mk8sStatusArgs', 'Mk8sStatusArgsDict']]]]] = None,
             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-            triton_provider: Optional[pulumi.Input[pulumi.InputType['Mk8sTritonProviderArgs']]] = None,
+            triton_provider: Optional[pulumi.Input[Union['Mk8sTritonProviderArgs', 'Mk8sTritonProviderArgsDict']]] = None,
             version: Optional[pulumi.Input[str]] = None) -> 'Mk8s':
         """
         Get an existing Mk8s resource's state with the given name, id, and optional extra
@@ -846,10 +654,10 @@ class Mk8s(pulumi.CustomResource):
         :param pulumi.Input[str] alias: The alias name of the Mk8s.
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Mk8s.
         :param pulumi.Input[str] description: Description of the Mk8s.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['Mk8sFirewallArgs']]]] firewalls: Allow-list.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['Mk8sFirewallArgs', 'Mk8sFirewallArgsDict']]]] firewalls: Allow-list.
         :param pulumi.Input[str] name: Name of the Mk8s.
         :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['Mk8sStatusArgs']]]] statuses: Status of the mk8s.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['Mk8sStatusArgs', 'Mk8sStatusArgsDict']]]] statuses: Status of the mk8s.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))

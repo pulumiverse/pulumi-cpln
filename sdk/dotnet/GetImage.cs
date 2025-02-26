@@ -55,9 +55,7 @@ namespace Pulumiverse.Cpln
         /// - **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.
         /// - **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
@@ -84,8 +82,6 @@ namespace Pulumiverse.Cpln
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetImageResult> InvokeAsync(GetImageArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetImageResult>("cpln:index/getImage:getImage", args ?? new GetImageArgs(), options.WithDefaults());
@@ -133,9 +129,7 @@ namespace Pulumiverse.Cpln
         /// - **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.
         /// - **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
@@ -162,8 +156,6 @@ namespace Pulumiverse.Cpln
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetImageResult> Invoke(GetImageInvokeArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetImageResult>("cpln:index/getImage:getImage", args ?? new GetImageInvokeArgs(), options.WithDefaults());

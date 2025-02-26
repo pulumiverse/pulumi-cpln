@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgStatus
     {
+        /// <summary>
+        /// The link of the account the org belongs to.
+        /// </summary>
         public readonly string? AccountLink;
+        /// <summary>
+        /// Indicates whether the org is active or not.
+        /// </summary>
         public readonly bool? Active;
 
         [OutputConstructor]

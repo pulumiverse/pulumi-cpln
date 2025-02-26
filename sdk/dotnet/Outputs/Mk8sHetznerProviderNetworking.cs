@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sHetznerProviderNetworking
     {
+        /// <summary>
+        /// The CIDR of the pod network.
+        /// </summary>
         public readonly string? PodNetwork;
+        /// <summary>
+        /// The CIDR of the service network.
+        /// </summary>
         public readonly string? ServiceNetwork;
 
         [OutputConstructor]

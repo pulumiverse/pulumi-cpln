@@ -14,6 +14,9 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class CloudAccountGcp
     {
+        /// <summary>
+        /// GCP project ID. Obtained from the GCP cloud console.
+        /// </summary>
         public readonly string ProjectId;
 
         [OutputConstructor]

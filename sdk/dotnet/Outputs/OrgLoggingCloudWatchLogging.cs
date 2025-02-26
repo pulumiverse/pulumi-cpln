@@ -14,11 +14,29 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgLoggingCloudWatchLogging
     {
+        /// <summary>
+        /// Full Link to a secret of type `opaque`.
+        /// </summary>
         public readonly string Credentials;
+        /// <summary>
+        /// Enable custom data extraction from log entries for enhanced querying and analysis.
+        /// </summary>
         public readonly ImmutableDictionary<string, string>? ExtractFields;
+        /// <summary>
+        /// A container for log streams with common settings like retention. Used to categorize logs by application or service type.
+        /// </summary>
         public readonly string GroupName;
+        /// <summary>
+        /// Valid AWS region.
+        /// </summary>
         public readonly string Region;
+        /// <summary>
+        /// Length, in days, for how log data is kept before it is automatically deleted.
+        /// </summary>
         public readonly int? RetentionDays;
+        /// <summary>
+        /// A sequence of log events from the same source within a log group. Typically represents individual instances of services or applications.
+        /// </summary>
         public readonly string StreamName;
 
         [OutputConstructor]

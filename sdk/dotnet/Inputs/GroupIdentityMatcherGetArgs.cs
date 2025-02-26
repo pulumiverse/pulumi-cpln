@@ -13,9 +13,15 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class GroupIdentityMatcherGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged in with SAML providers.
+        /// </summary>
         [Input("expression", required: true)]
         public Input<string> Expression { get; set; } = null!;
 
+        /// <summary>
+        /// Language of the expression. Either `jmespath` or `javascript`. Default: `jmespath`.
+        /// </summary>
         [Input("language")]
         public Input<string>? Language { get; set; }
 

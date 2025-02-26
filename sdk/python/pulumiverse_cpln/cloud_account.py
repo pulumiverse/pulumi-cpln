@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -32,43 +37,20 @@ class CloudAccountArgs:
         :param pulumi.Input[str] name: Name of the Cloud Account.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
-        CloudAccountArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            aws=aws,
-            azure=azure,
-            description=description,
-            gcp=gcp,
-            name=name,
-            ngs=ngs,
-            tags=tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             aws: Optional[pulumi.Input['CloudAccountAwsArgs']] = None,
-             azure: Optional[pulumi.Input['CloudAccountAzureArgs']] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             gcp: Optional[pulumi.Input['CloudAccountGcpArgs']] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             ngs: Optional[pulumi.Input['CloudAccountNgsArgs']] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if aws is not None:
-            _setter("aws", aws)
+            pulumi.set(__self__, "aws", aws)
         if azure is not None:
-            _setter("azure", azure)
+            pulumi.set(__self__, "azure", azure)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if gcp is not None:
-            _setter("gcp", gcp)
+            pulumi.set(__self__, "gcp", gcp)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if ngs is not None:
-            _setter("ngs", ngs)
+            pulumi.set(__self__, "ngs", ngs)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
 
     @property
     @pulumi.getter
@@ -177,67 +159,28 @@ class _CloudAccountState:
         :param pulumi.Input[str] name: Name of the Cloud Account.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
-        _CloudAccountState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            aws=aws,
-            azure=azure,
-            cpln_id=cpln_id,
-            description=description,
-            gcp=gcp,
-            gcp_roles=gcp_roles,
-            gcp_service_account_name=gcp_service_account_name,
-            name=name,
-            ngs=ngs,
-            self_link=self_link,
-            tags=tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             aws: Optional[pulumi.Input['CloudAccountAwsArgs']] = None,
-             azure: Optional[pulumi.Input['CloudAccountAzureArgs']] = None,
-             cpln_id: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             gcp: Optional[pulumi.Input['CloudAccountGcpArgs']] = None,
-             gcp_roles: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             gcp_service_account_name: Optional[pulumi.Input[str]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             ngs: Optional[pulumi.Input['CloudAccountNgsArgs']] = None,
-             self_link: Optional[pulumi.Input[str]] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'cplnId' in kwargs:
-            cpln_id = kwargs['cplnId']
-        if 'gcpRoles' in kwargs:
-            gcp_roles = kwargs['gcpRoles']
-        if 'gcpServiceAccountName' in kwargs:
-            gcp_service_account_name = kwargs['gcpServiceAccountName']
-        if 'selfLink' in kwargs:
-            self_link = kwargs['selfLink']
-
         if aws is not None:
-            _setter("aws", aws)
+            pulumi.set(__self__, "aws", aws)
         if azure is not None:
-            _setter("azure", azure)
+            pulumi.set(__self__, "azure", azure)
         if cpln_id is not None:
-            _setter("cpln_id", cpln_id)
+            pulumi.set(__self__, "cpln_id", cpln_id)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if gcp is not None:
-            _setter("gcp", gcp)
+            pulumi.set(__self__, "gcp", gcp)
         if gcp_roles is not None:
-            _setter("gcp_roles", gcp_roles)
+            pulumi.set(__self__, "gcp_roles", gcp_roles)
         if gcp_service_account_name is not None:
-            _setter("gcp_service_account_name", gcp_service_account_name)
+            pulumi.set(__self__, "gcp_service_account_name", gcp_service_account_name)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if ngs is not None:
-            _setter("ngs", ngs)
+            pulumi.set(__self__, "ngs", ngs)
         if self_link is not None:
-            _setter("self_link", self_link)
+            pulumi.set(__self__, "self_link", self_link)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
 
     @property
     @pulumi.getter
@@ -368,22 +311,22 @@ class CloudAccount(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 aws: Optional[pulumi.Input[pulumi.InputType['CloudAccountAwsArgs']]] = None,
-                 azure: Optional[pulumi.Input[pulumi.InputType['CloudAccountAzureArgs']]] = None,
+                 aws: Optional[pulumi.Input[Union['CloudAccountAwsArgs', 'CloudAccountAwsArgsDict']]] = None,
+                 azure: Optional[pulumi.Input[Union['CloudAccountAzureArgs', 'CloudAccountAzureArgsDict']]] = None,
                  description: Optional[pulumi.Input[str]] = None,
-                 gcp: Optional[pulumi.Input[pulumi.InputType['CloudAccountGcpArgs']]] = None,
+                 gcp: Optional[pulumi.Input[Union['CloudAccountGcpArgs', 'CloudAccountGcpArgsDict']]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 ngs: Optional[pulumi.Input[pulumi.InputType['CloudAccountNgsArgs']]] = None,
+                 ngs: Optional[pulumi.Input[Union['CloudAccountNgsArgs', 'CloudAccountNgsArgsDict']]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
         """
         Create a CloudAccount resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[pulumi.InputType['CloudAccountAwsArgs']] aws: Contains AWS cloud account configuration.
-        :param pulumi.Input[pulumi.InputType['CloudAccountAzureArgs']] azure: Contains Azure cloud account configuration.
+        :param pulumi.Input[Union['CloudAccountAwsArgs', 'CloudAccountAwsArgsDict']] aws: Contains AWS cloud account configuration.
+        :param pulumi.Input[Union['CloudAccountAzureArgs', 'CloudAccountAzureArgsDict']] azure: Contains Azure cloud account configuration.
         :param pulumi.Input[str] description: Description of the Cloud Account.
-        :param pulumi.Input[pulumi.InputType['CloudAccountGcpArgs']] gcp: Contains GCP cloud account configuration.
+        :param pulumi.Input[Union['CloudAccountGcpArgs', 'CloudAccountGcpArgsDict']] gcp: Contains GCP cloud account configuration.
         :param pulumi.Input[str] name: Name of the Cloud Account.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
@@ -405,21 +348,17 @@ class CloudAccount(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            CloudAccountArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 aws: Optional[pulumi.Input[pulumi.InputType['CloudAccountAwsArgs']]] = None,
-                 azure: Optional[pulumi.Input[pulumi.InputType['CloudAccountAzureArgs']]] = None,
+                 aws: Optional[pulumi.Input[Union['CloudAccountAwsArgs', 'CloudAccountAwsArgsDict']]] = None,
+                 azure: Optional[pulumi.Input[Union['CloudAccountAzureArgs', 'CloudAccountAzureArgsDict']]] = None,
                  description: Optional[pulumi.Input[str]] = None,
-                 gcp: Optional[pulumi.Input[pulumi.InputType['CloudAccountGcpArgs']]] = None,
+                 gcp: Optional[pulumi.Input[Union['CloudAccountGcpArgs', 'CloudAccountGcpArgsDict']]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 ngs: Optional[pulumi.Input[pulumi.InputType['CloudAccountNgsArgs']]] = None,
+                 ngs: Optional[pulumi.Input[Union['CloudAccountNgsArgs', 'CloudAccountNgsArgsDict']]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -430,31 +369,11 @@ class CloudAccount(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = CloudAccountArgs.__new__(CloudAccountArgs)
 
-            if aws is not None and not isinstance(aws, CloudAccountAwsArgs):
-                aws = aws or {}
-                def _setter(key, value):
-                    aws[key] = value
-                CloudAccountAwsArgs._configure(_setter, **aws)
             __props__.__dict__["aws"] = aws
-            if azure is not None and not isinstance(azure, CloudAccountAzureArgs):
-                azure = azure or {}
-                def _setter(key, value):
-                    azure[key] = value
-                CloudAccountAzureArgs._configure(_setter, **azure)
             __props__.__dict__["azure"] = azure
             __props__.__dict__["description"] = description
-            if gcp is not None and not isinstance(gcp, CloudAccountGcpArgs):
-                gcp = gcp or {}
-                def _setter(key, value):
-                    gcp[key] = value
-                CloudAccountGcpArgs._configure(_setter, **gcp)
             __props__.__dict__["gcp"] = gcp
             __props__.__dict__["name"] = name
-            if ngs is not None and not isinstance(ngs, CloudAccountNgsArgs):
-                ngs = ngs or {}
-                def _setter(key, value):
-                    ngs[key] = value
-                CloudAccountNgsArgs._configure(_setter, **ngs)
             __props__.__dict__["ngs"] = ngs
             __props__.__dict__["tags"] = tags
             __props__.__dict__["cpln_id"] = None
@@ -471,15 +390,15 @@ class CloudAccount(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            aws: Optional[pulumi.Input[pulumi.InputType['CloudAccountAwsArgs']]] = None,
-            azure: Optional[pulumi.Input[pulumi.InputType['CloudAccountAzureArgs']]] = None,
+            aws: Optional[pulumi.Input[Union['CloudAccountAwsArgs', 'CloudAccountAwsArgsDict']]] = None,
+            azure: Optional[pulumi.Input[Union['CloudAccountAzureArgs', 'CloudAccountAzureArgsDict']]] = None,
             cpln_id: Optional[pulumi.Input[str]] = None,
             description: Optional[pulumi.Input[str]] = None,
-            gcp: Optional[pulumi.Input[pulumi.InputType['CloudAccountGcpArgs']]] = None,
+            gcp: Optional[pulumi.Input[Union['CloudAccountGcpArgs', 'CloudAccountGcpArgsDict']]] = None,
             gcp_roles: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             gcp_service_account_name: Optional[pulumi.Input[str]] = None,
             name: Optional[pulumi.Input[str]] = None,
-            ngs: Optional[pulumi.Input[pulumi.InputType['CloudAccountNgsArgs']]] = None,
+            ngs: Optional[pulumi.Input[Union['CloudAccountNgsArgs', 'CloudAccountNgsArgsDict']]] = None,
             self_link: Optional[pulumi.Input[str]] = None,
             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None) -> 'CloudAccount':
         """
@@ -489,11 +408,11 @@ class CloudAccount(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[pulumi.InputType['CloudAccountAwsArgs']] aws: Contains AWS cloud account configuration.
-        :param pulumi.Input[pulumi.InputType['CloudAccountAzureArgs']] azure: Contains Azure cloud account configuration.
+        :param pulumi.Input[Union['CloudAccountAwsArgs', 'CloudAccountAwsArgsDict']] aws: Contains AWS cloud account configuration.
+        :param pulumi.Input[Union['CloudAccountAzureArgs', 'CloudAccountAzureArgsDict']] azure: Contains Azure cloud account configuration.
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Cloud Account.
         :param pulumi.Input[str] description: Description of the Cloud Account.
-        :param pulumi.Input[pulumi.InputType['CloudAccountGcpArgs']] gcp: Contains GCP cloud account configuration.
+        :param pulumi.Input[Union['CloudAccountGcpArgs', 'CloudAccountGcpArgsDict']] gcp: Contains GCP cloud account configuration.
         :param pulumi.Input[str] gcp_service_account_name: GCP service account name used during the configuration of the cloud account at GCP.
         :param pulumi.Input[str] name: Name of the Cloud Account.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.

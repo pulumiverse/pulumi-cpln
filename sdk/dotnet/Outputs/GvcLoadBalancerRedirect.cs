@@ -15,6 +15,9 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class GvcLoadBalancerRedirect
     {
         public readonly bool? _sentinel;
+        /// <summary>
+        /// Specify the redirect url for all status codes in a class.
+        /// </summary>
         public readonly Outputs.GvcLoadBalancerRedirectClass? Class;
 
         [OutputConstructor]

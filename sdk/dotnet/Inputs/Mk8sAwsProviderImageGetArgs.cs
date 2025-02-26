@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class Mk8sAwsProviderImageGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Support SSM.
+        /// </summary>
         [Input("exact")]
         public Input<string>? Exact { get; set; }
 

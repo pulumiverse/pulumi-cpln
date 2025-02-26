@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = [
@@ -78,9 +83,6 @@ def get_cloud_account(opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableG
     return AwaitableGetCloudAccountResult(
         aws_identifiers=pulumi.get(__ret__, 'aws_identifiers'),
         id=pulumi.get(__ret__, 'id'))
-
-
-@_utilities.lift_output_func(get_cloud_account)
 def get_cloud_account_output(opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetCloudAccountResult]:
     """
     Use this data source to access information about an existing [Cloud Account](https://docs.controlplane.com/reference/cloudaccount) within Control Plane.
@@ -99,4 +101,9 @@ def get_cloud_account_output(opts: Optional[pulumi.InvokeOptions] = None) -> pul
     pulumi.export("cloudAccount", this.aws_identifiers)
     ```
     """
-    ...
+    __args__ = dict()
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('cpln:index/getCloudAccount:getCloudAccount', __args__, opts=opts, typ=GetCloudAccountResult)
+    return __ret__.apply(lambda __response__: GetCloudAccountResult(
+        aws_identifiers=pulumi.get(__response__, 'aws_identifiers'),
+        id=pulumi.get(__response__, 'id')))

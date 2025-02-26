@@ -14,6 +14,9 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class IdentityNativeNetworkResourceAwsPrivateLink
     {
+        /// <summary>
+        /// Endpoint service name.
+        /// </summary>
         public readonly string EndpointServiceName;
 
         [OutputConstructor]

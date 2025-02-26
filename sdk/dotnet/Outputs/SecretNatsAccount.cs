@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class SecretNatsAccount
     {
+        /// <summary>
+        /// Account ID.
+        /// </summary>
         public readonly string AccountId;
+        /// <summary>
+        /// Private Key.
+        /// </summary>
         public readonly string PrivateKey;
 
         [OutputConstructor]

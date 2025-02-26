@@ -14,8 +14,14 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sPaperspaceProviderUnmanagedNodePool
     {
+        /// <summary>
+        /// Labels to attach to nodes of a node pool.
+        /// </summary>
         public readonly ImmutableDictionary<string, string>? Labels;
         public readonly string Name;
+        /// <summary>
+        /// Taint for the nodes of a pool.
+        /// </summary>
         public readonly ImmutableArray<Outputs.Mk8sPaperspaceProviderUnmanagedNodePoolTaint> Taints;
 
         [OutputConstructor]

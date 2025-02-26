@@ -4,257 +4,487 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = [
     'CloudAccountAwsArgs',
+    'CloudAccountAwsArgsDict',
     'CloudAccountAzureArgs',
+    'CloudAccountAzureArgsDict',
     'CloudAccountGcpArgs',
+    'CloudAccountGcpArgsDict',
     'CloudAccountNgsArgs',
+    'CloudAccountNgsArgsDict',
     'DomainRouteHeadersArgs',
+    'DomainRouteHeadersArgsDict',
     'DomainRouteHeadersRequestArgs',
+    'DomainRouteHeadersRequestArgsDict',
     'DomainSpecArgs',
+    'DomainSpecArgsDict',
     'DomainSpecPortArgs',
+    'DomainSpecPortArgsDict',
     'DomainSpecPortCorsArgs',
+    'DomainSpecPortCorsArgsDict',
     'DomainSpecPortCorsAllowOriginArgs',
+    'DomainSpecPortCorsAllowOriginArgsDict',
     'DomainSpecPortTlsArgs',
+    'DomainSpecPortTlsArgsDict',
     'DomainSpecPortTlsClientCertificateArgs',
+    'DomainSpecPortTlsClientCertificateArgsDict',
     'DomainSpecPortTlsServerCertificateArgs',
+    'DomainSpecPortTlsServerCertificateArgsDict',
     'DomainStatusArgs',
+    'DomainStatusArgsDict',
     'DomainStatusDnsConfigArgs',
+    'DomainStatusDnsConfigArgsDict',
     'DomainStatusEndpointArgs',
+    'DomainStatusEndpointArgsDict',
     'DomainStatusLocationArgs',
+    'DomainStatusLocationArgsDict',
     'GroupIdentityMatcherArgs',
+    'GroupIdentityMatcherArgsDict',
     'GroupMemberQueryArgs',
+    'GroupMemberQueryArgsDict',
     'GroupMemberQuerySpecArgs',
+    'GroupMemberQuerySpecArgsDict',
     'GroupMemberQuerySpecTermArgs',
+    'GroupMemberQuerySpecTermArgsDict',
     'GvcControlplaneTracingArgs',
+    'GvcControlplaneTracingArgsDict',
     'GvcLightstepTracingArgs',
+    'GvcLightstepTracingArgsDict',
     'GvcLoadBalancerArgs',
+    'GvcLoadBalancerArgsDict',
     'GvcLoadBalancerRedirectArgs',
+    'GvcLoadBalancerRedirectArgsDict',
     'GvcLoadBalancerRedirectClassArgs',
+    'GvcLoadBalancerRedirectClassArgsDict',
     'GvcOtelTracingArgs',
+    'GvcOtelTracingArgsDict',
     'GvcSidecarArgs',
+    'GvcSidecarArgsDict',
     'IdentityAwsAccessPolicyArgs',
+    'IdentityAwsAccessPolicyArgsDict',
     'IdentityAzureAccessPolicyArgs',
+    'IdentityAzureAccessPolicyArgsDict',
     'IdentityAzureAccessPolicyRoleAssignmentArgs',
+    'IdentityAzureAccessPolicyRoleAssignmentArgsDict',
     'IdentityGcpAccessPolicyArgs',
+    'IdentityGcpAccessPolicyArgsDict',
     'IdentityGcpAccessPolicyBindingArgs',
+    'IdentityGcpAccessPolicyBindingArgsDict',
     'IdentityNativeNetworkResourceArgs',
+    'IdentityNativeNetworkResourceArgsDict',
     'IdentityNativeNetworkResourceAwsPrivateLinkArgs',
+    'IdentityNativeNetworkResourceAwsPrivateLinkArgsDict',
     'IdentityNativeNetworkResourceGcpServiceConnectArgs',
+    'IdentityNativeNetworkResourceGcpServiceConnectArgsDict',
     'IdentityNetworkResourceArgs',
+    'IdentityNetworkResourceArgsDict',
     'IdentityNgsAccessPolicyArgs',
+    'IdentityNgsAccessPolicyArgsDict',
     'IdentityNgsAccessPolicyPubArgs',
+    'IdentityNgsAccessPolicyPubArgsDict',
     'IdentityNgsAccessPolicyRespArgs',
+    'IdentityNgsAccessPolicyRespArgsDict',
     'IdentityNgsAccessPolicySubArgs',
+    'IdentityNgsAccessPolicySubArgsDict',
     'IpSetLocationArgs',
+    'IpSetLocationArgsDict',
     'IpSetStatusArgs',
+    'IpSetStatusArgsDict',
     'IpSetStatusIpAddressArgs',
+    'IpSetStatusIpAddressArgsDict',
     'LocationGeoArgs',
+    'LocationGeoArgsDict',
     'Mk8sAddOnsArgs',
+    'Mk8sAddOnsArgsDict',
     'Mk8sAddOnsAwsEcrArgs',
+    'Mk8sAddOnsAwsEcrArgsDict',
     'Mk8sAddOnsAwsEfsArgs',
+    'Mk8sAddOnsAwsEfsArgsDict',
     'Mk8sAddOnsAwsElbArgs',
+    'Mk8sAddOnsAwsElbArgsDict',
     'Mk8sAddOnsAzureAcrArgs',
+    'Mk8sAddOnsAzureAcrArgsDict',
     'Mk8sAddOnsAzureWorkloadIdentityArgs',
+    'Mk8sAddOnsAzureWorkloadIdentityArgsDict',
     'Mk8sAddOnsLogsArgs',
+    'Mk8sAddOnsLogsArgsDict',
     'Mk8sAddOnsMetricsArgs',
+    'Mk8sAddOnsMetricsArgsDict',
     'Mk8sAddOnsMetricsScrapeAnnotatedArgs',
+    'Mk8sAddOnsMetricsScrapeAnnotatedArgsDict',
     'Mk8sAddOnsNvidiaArgs',
+    'Mk8sAddOnsNvidiaArgsDict',
     'Mk8sAwsProviderArgs',
+    'Mk8sAwsProviderArgsDict',
     'Mk8sAwsProviderAutoscalerArgs',
+    'Mk8sAwsProviderAutoscalerArgsDict',
     'Mk8sAwsProviderDeployRoleChainArgs',
+    'Mk8sAwsProviderDeployRoleChainArgsDict',
     'Mk8sAwsProviderImageArgs',
+    'Mk8sAwsProviderImageArgsDict',
     'Mk8sAwsProviderNetworkingArgs',
+    'Mk8sAwsProviderNetworkingArgsDict',
     'Mk8sAwsProviderNodePoolArgs',
+    'Mk8sAwsProviderNodePoolArgsDict',
     'Mk8sAwsProviderNodePoolOverrideImageArgs',
+    'Mk8sAwsProviderNodePoolOverrideImageArgsDict',
     'Mk8sAwsProviderNodePoolTaintArgs',
+    'Mk8sAwsProviderNodePoolTaintArgsDict',
     'Mk8sDigitalOceanProviderArgs',
+    'Mk8sDigitalOceanProviderArgsDict',
     'Mk8sDigitalOceanProviderAutoscalerArgs',
+    'Mk8sDigitalOceanProviderAutoscalerArgsDict',
     'Mk8sDigitalOceanProviderNetworkingArgs',
+    'Mk8sDigitalOceanProviderNetworkingArgsDict',
     'Mk8sDigitalOceanProviderNodePoolArgs',
+    'Mk8sDigitalOceanProviderNodePoolArgsDict',
     'Mk8sDigitalOceanProviderNodePoolTaintArgs',
+    'Mk8sDigitalOceanProviderNodePoolTaintArgsDict',
     'Mk8sEphemeralProviderArgs',
+    'Mk8sEphemeralProviderArgsDict',
     'Mk8sEphemeralProviderNodePoolArgs',
+    'Mk8sEphemeralProviderNodePoolArgsDict',
     'Mk8sEphemeralProviderNodePoolTaintArgs',
+    'Mk8sEphemeralProviderNodePoolTaintArgsDict',
     'Mk8sFirewallArgs',
+    'Mk8sFirewallArgsDict',
     'Mk8sGenericProviderArgs',
+    'Mk8sGenericProviderArgsDict',
     'Mk8sGenericProviderNetworkingArgs',
+    'Mk8sGenericProviderNetworkingArgsDict',
     'Mk8sGenericProviderNodePoolArgs',
+    'Mk8sGenericProviderNodePoolArgsDict',
     'Mk8sGenericProviderNodePoolTaintArgs',
+    'Mk8sGenericProviderNodePoolTaintArgsDict',
     'Mk8sHetznerProviderArgs',
+    'Mk8sHetznerProviderArgsDict',
     'Mk8sHetznerProviderAutoscalerArgs',
+    'Mk8sHetznerProviderAutoscalerArgsDict',
     'Mk8sHetznerProviderDedicatedServerNodePoolArgs',
+    'Mk8sHetznerProviderDedicatedServerNodePoolArgsDict',
     'Mk8sHetznerProviderDedicatedServerNodePoolTaintArgs',
+    'Mk8sHetznerProviderDedicatedServerNodePoolTaintArgsDict',
     'Mk8sHetznerProviderNetworkingArgs',
+    'Mk8sHetznerProviderNetworkingArgsDict',
     'Mk8sHetznerProviderNodePoolArgs',
+    'Mk8sHetznerProviderNodePoolArgsDict',
     'Mk8sHetznerProviderNodePoolTaintArgs',
+    'Mk8sHetznerProviderNodePoolTaintArgsDict',
     'Mk8sLambdalabsProviderArgs',
+    'Mk8sLambdalabsProviderArgsDict',
     'Mk8sLambdalabsProviderAutoscalerArgs',
+    'Mk8sLambdalabsProviderAutoscalerArgsDict',
     'Mk8sLambdalabsProviderNodePoolArgs',
+    'Mk8sLambdalabsProviderNodePoolArgsDict',
     'Mk8sLambdalabsProviderNodePoolTaintArgs',
+    'Mk8sLambdalabsProviderNodePoolTaintArgsDict',
     'Mk8sLambdalabsProviderUnmanagedNodePoolArgs',
+    'Mk8sLambdalabsProviderUnmanagedNodePoolArgsDict',
     'Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgs',
+    'Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgsDict',
     'Mk8sLinodeProviderArgs',
+    'Mk8sLinodeProviderArgsDict',
     'Mk8sLinodeProviderAutoscalerArgs',
+    'Mk8sLinodeProviderAutoscalerArgsDict',
     'Mk8sLinodeProviderNetworkingArgs',
+    'Mk8sLinodeProviderNetworkingArgsDict',
     'Mk8sLinodeProviderNodePoolArgs',
+    'Mk8sLinodeProviderNodePoolArgsDict',
     'Mk8sLinodeProviderNodePoolTaintArgs',
+    'Mk8sLinodeProviderNodePoolTaintArgsDict',
     'Mk8sOblivusProviderArgs',
+    'Mk8sOblivusProviderArgsDict',
     'Mk8sOblivusProviderAutoscalerArgs',
+    'Mk8sOblivusProviderAutoscalerArgsDict',
     'Mk8sOblivusProviderNodePoolArgs',
+    'Mk8sOblivusProviderNodePoolArgsDict',
     'Mk8sOblivusProviderNodePoolTaintArgs',
+    'Mk8sOblivusProviderNodePoolTaintArgsDict',
     'Mk8sOblivusProviderUnmanagedNodePoolArgs',
+    'Mk8sOblivusProviderUnmanagedNodePoolArgsDict',
     'Mk8sOblivusProviderUnmanagedNodePoolTaintArgs',
+    'Mk8sOblivusProviderUnmanagedNodePoolTaintArgsDict',
     'Mk8sPaperspaceProviderArgs',
+    'Mk8sPaperspaceProviderArgsDict',
     'Mk8sPaperspaceProviderAutoscalerArgs',
+    'Mk8sPaperspaceProviderAutoscalerArgsDict',
     'Mk8sPaperspaceProviderNodePoolArgs',
+    'Mk8sPaperspaceProviderNodePoolArgsDict',
     'Mk8sPaperspaceProviderNodePoolTaintArgs',
+    'Mk8sPaperspaceProviderNodePoolTaintArgsDict',
     'Mk8sPaperspaceProviderUnmanagedNodePoolArgs',
+    'Mk8sPaperspaceProviderUnmanagedNodePoolArgsDict',
     'Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgs',
+    'Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgsDict',
     'Mk8sStatusArgs',
+    'Mk8sStatusArgsDict',
     'Mk8sStatusAddOnArgs',
+    'Mk8sStatusAddOnArgsDict',
     'Mk8sStatusAddOnAwsEcrArgs',
+    'Mk8sStatusAddOnAwsEcrArgsDict',
     'Mk8sStatusAddOnAwsEfArgs',
+    'Mk8sStatusAddOnAwsEfArgsDict',
     'Mk8sStatusAddOnAwsElbArgs',
+    'Mk8sStatusAddOnAwsElbArgsDict',
     'Mk8sStatusAddOnAwsWorkloadIdentityArgs',
+    'Mk8sStatusAddOnAwsWorkloadIdentityArgsDict',
     'Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfigArgs',
+    'Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfigArgsDict',
     'Mk8sStatusAddOnDashboardArgs',
+    'Mk8sStatusAddOnDashboardArgsDict',
     'Mk8sStatusAddOnLogArgs',
+    'Mk8sStatusAddOnLogArgsDict',
     'Mk8sStatusAddOnMetricArgs',
+    'Mk8sStatusAddOnMetricArgsDict',
     'Mk8sTritonProviderArgs',
+    'Mk8sTritonProviderArgsDict',
     'Mk8sTritonProviderAutoscalerArgs',
+    'Mk8sTritonProviderAutoscalerArgsDict',
     'Mk8sTritonProviderConnectionArgs',
+    'Mk8sTritonProviderConnectionArgsDict',
     'Mk8sTritonProviderNetworkingArgs',
+    'Mk8sTritonProviderNetworkingArgsDict',
     'Mk8sTritonProviderNodePoolArgs',
+    'Mk8sTritonProviderNodePoolArgsDict',
     'Mk8sTritonProviderNodePoolTaintArgs',
+    'Mk8sTritonProviderNodePoolTaintArgsDict',
     'OrgAuthConfigArgs',
+    'OrgAuthConfigArgsDict',
     'OrgLoggingCloudWatchLoggingArgs',
+    'OrgLoggingCloudWatchLoggingArgsDict',
     'OrgLoggingCoralogixLoggingArgs',
+    'OrgLoggingCoralogixLoggingArgsDict',
     'OrgLoggingDatadogLoggingArgs',
+    'OrgLoggingDatadogLoggingArgsDict',
     'OrgLoggingElasticLoggingArgs',
+    'OrgLoggingElasticLoggingArgsDict',
     'OrgLoggingElasticLoggingAwsArgs',
+    'OrgLoggingElasticLoggingAwsArgsDict',
     'OrgLoggingElasticLoggingElasticCloudArgs',
+    'OrgLoggingElasticLoggingElasticCloudArgsDict',
     'OrgLoggingElasticLoggingGenericArgs',
+    'OrgLoggingElasticLoggingGenericArgsDict',
     'OrgLoggingFluentdLoggingArgs',
+    'OrgLoggingFluentdLoggingArgsDict',
     'OrgLoggingLogzioLoggingArgs',
+    'OrgLoggingLogzioLoggingArgsDict',
     'OrgLoggingS3LoggingArgs',
+    'OrgLoggingS3LoggingArgsDict',
     'OrgLoggingStackdriverLoggingArgs',
+    'OrgLoggingStackdriverLoggingArgsDict',
     'OrgLoggingSyslogLoggingArgs',
+    'OrgLoggingSyslogLoggingArgsDict',
     'OrgObservabilityArgs',
+    'OrgObservabilityArgsDict',
     'OrgSecurityArgs',
+    'OrgSecurityArgsDict',
     'OrgSecurityThreatDetectionArgs',
+    'OrgSecurityThreatDetectionArgsDict',
     'OrgSecurityThreatDetectionSyslogArgs',
+    'OrgSecurityThreatDetectionSyslogArgsDict',
     'OrgStatusArgs',
+    'OrgStatusArgsDict',
     'OrgTracingControlplaneTracingArgs',
+    'OrgTracingControlplaneTracingArgsDict',
     'OrgTracingLightstepTracingArgs',
+    'OrgTracingLightstepTracingArgsDict',
     'OrgTracingOtelTracingArgs',
+    'OrgTracingOtelTracingArgsDict',
     'PolicyBindingArgs',
+    'PolicyBindingArgsDict',
     'PolicyTargetQueryArgs',
+    'PolicyTargetQueryArgsDict',
     'PolicyTargetQuerySpecArgs',
+    'PolicyTargetQuerySpecArgsDict',
     'PolicyTargetQuerySpecTermArgs',
+    'PolicyTargetQuerySpecTermArgsDict',
     'SecretAwsArgs',
+    'SecretAwsArgsDict',
     'SecretAzureConnectorArgs',
+    'SecretAzureConnectorArgsDict',
     'SecretEcrArgs',
+    'SecretEcrArgsDict',
     'SecretKeypairArgs',
+    'SecretKeypairArgsDict',
     'SecretNatsAccountArgs',
+    'SecretNatsAccountArgsDict',
     'SecretOpaqueArgs',
+    'SecretOpaqueArgsDict',
     'SecretTlsArgs',
+    'SecretTlsArgsDict',
     'SecretUserpassArgs',
+    'SecretUserpassArgsDict',
     'VolumeSetAutoscalingArgs',
+    'VolumeSetAutoscalingArgsDict',
     'VolumeSetSnapshotsArgs',
+    'VolumeSetSnapshotsArgsDict',
     'VolumeSetStatusArgs',
+    'VolumeSetStatusArgsDict',
     'WorkloadContainerArgs',
+    'WorkloadContainerArgsDict',
     'WorkloadContainerGpuNvidiaArgs',
+    'WorkloadContainerGpuNvidiaArgsDict',
     'WorkloadContainerLifecycleArgs',
+    'WorkloadContainerLifecycleArgsDict',
     'WorkloadContainerLifecyclePostStartArgs',
+    'WorkloadContainerLifecyclePostStartArgsDict',
     'WorkloadContainerLifecyclePostStartExecArgs',
+    'WorkloadContainerLifecyclePostStartExecArgsDict',
     'WorkloadContainerLifecyclePreStopArgs',
+    'WorkloadContainerLifecyclePreStopArgsDict',
     'WorkloadContainerLifecyclePreStopExecArgs',
+    'WorkloadContainerLifecyclePreStopExecArgsDict',
     'WorkloadContainerLivenessProbeArgs',
+    'WorkloadContainerLivenessProbeArgsDict',
     'WorkloadContainerLivenessProbeExecArgs',
+    'WorkloadContainerLivenessProbeExecArgsDict',
     'WorkloadContainerLivenessProbeGrpcArgs',
+    'WorkloadContainerLivenessProbeGrpcArgsDict',
     'WorkloadContainerLivenessProbeHttpGetArgs',
+    'WorkloadContainerLivenessProbeHttpGetArgsDict',
     'WorkloadContainerLivenessProbeTcpSocketArgs',
+    'WorkloadContainerLivenessProbeTcpSocketArgsDict',
     'WorkloadContainerMetricsArgs',
+    'WorkloadContainerMetricsArgsDict',
     'WorkloadContainerPortArgs',
+    'WorkloadContainerPortArgsDict',
     'WorkloadContainerReadinessProbeArgs',
+    'WorkloadContainerReadinessProbeArgsDict',
     'WorkloadContainerReadinessProbeExecArgs',
+    'WorkloadContainerReadinessProbeExecArgsDict',
     'WorkloadContainerReadinessProbeGrpcArgs',
+    'WorkloadContainerReadinessProbeGrpcArgsDict',
     'WorkloadContainerReadinessProbeHttpGetArgs',
+    'WorkloadContainerReadinessProbeHttpGetArgsDict',
     'WorkloadContainerReadinessProbeTcpSocketArgs',
+    'WorkloadContainerReadinessProbeTcpSocketArgsDict',
     'WorkloadContainerVolumeArgs',
+    'WorkloadContainerVolumeArgsDict',
     'WorkloadFirewallSpecArgs',
+    'WorkloadFirewallSpecArgsDict',
     'WorkloadFirewallSpecExternalArgs',
+    'WorkloadFirewallSpecExternalArgsDict',
     'WorkloadFirewallSpecExternalOutboundAllowPortArgs',
+    'WorkloadFirewallSpecExternalOutboundAllowPortArgsDict',
     'WorkloadFirewallSpecInternalArgs',
+    'WorkloadFirewallSpecInternalArgsDict',
     'WorkloadJobArgs',
+    'WorkloadJobArgsDict',
     'WorkloadLoadBalancerArgs',
+    'WorkloadLoadBalancerArgsDict',
     'WorkloadLoadBalancerDirectArgs',
+    'WorkloadLoadBalancerDirectArgsDict',
     'WorkloadLoadBalancerDirectPortArgs',
+    'WorkloadLoadBalancerDirectPortArgsDict',
     'WorkloadLoadBalancerGeoLocationArgs',
+    'WorkloadLoadBalancerGeoLocationArgsDict',
     'WorkloadLoadBalancerGeoLocationHeadersArgs',
+    'WorkloadLoadBalancerGeoLocationHeadersArgsDict',
     'WorkloadLocalOptionArgs',
+    'WorkloadLocalOptionArgsDict',
     'WorkloadLocalOptionAutoscalingArgs',
+    'WorkloadLocalOptionAutoscalingArgsDict',
     'WorkloadLocalOptionAutoscalingMultiArgs',
+    'WorkloadLocalOptionAutoscalingMultiArgsDict',
     'WorkloadOptionsArgs',
+    'WorkloadOptionsArgsDict',
     'WorkloadOptionsAutoscalingArgs',
+    'WorkloadOptionsAutoscalingArgsDict',
     'WorkloadOptionsAutoscalingMultiArgs',
+    'WorkloadOptionsAutoscalingMultiArgsDict',
     'WorkloadRolloutOptionsArgs',
+    'WorkloadRolloutOptionsArgsDict',
     'WorkloadSecurityOptionsArgs',
+    'WorkloadSecurityOptionsArgsDict',
     'WorkloadSidecarArgs',
+    'WorkloadSidecarArgsDict',
     'WorkloadStatusArgs',
+    'WorkloadStatusArgsDict',
     'WorkloadStatusHealthCheckArgs',
+    'WorkloadStatusHealthCheckArgsDict',
     'WorkloadStatusLoadBalancerArgs',
+    'WorkloadStatusLoadBalancerArgsDict',
     'WorkloadStatusResolvedImageArgs',
+    'WorkloadStatusResolvedImageArgsDict',
     'WorkloadStatusResolvedImageImageArgs',
+    'WorkloadStatusResolvedImageImageArgsDict',
     'WorkloadStatusResolvedImageImageManifestArgs',
+    'WorkloadStatusResolvedImageImageManifestArgsDict',
     'GetGvcControlplaneTracingArgs',
+    'GetGvcControlplaneTracingArgsDict',
     'GetGvcLightstepTracingArgs',
+    'GetGvcLightstepTracingArgsDict',
     'GetGvcLoadBalancerArgs',
+    'GetGvcLoadBalancerArgsDict',
     'GetGvcLoadBalancerRedirectArgs',
+    'GetGvcLoadBalancerRedirectArgsDict',
     'GetGvcLoadBalancerRedirectClassArgs',
+    'GetGvcLoadBalancerRedirectClassArgsDict',
     'GetGvcOtelTracingArgs',
+    'GetGvcOtelTracingArgsDict',
     'GetGvcSidecarArgs',
+    'GetGvcSidecarArgsDict',
     'GetImagesQueryArgs',
+    'GetImagesQueryArgsDict',
     'GetImagesQuerySpecArgs',
+    'GetImagesQuerySpecArgsDict',
     'GetImagesQuerySpecTermArgs',
+    'GetImagesQuerySpecTermArgsDict',
     'GetSecretAwsArgs',
+    'GetSecretAwsArgsDict',
     'GetSecretAzureConnectorArgs',
+    'GetSecretAzureConnectorArgsDict',
     'GetSecretEcrArgs',
+    'GetSecretEcrArgsDict',
     'GetSecretKeypairArgs',
+    'GetSecretKeypairArgsDict',
     'GetSecretNatsAccountArgs',
+    'GetSecretNatsAccountArgsDict',
     'GetSecretOpaqueArgs',
+    'GetSecretOpaqueArgsDict',
     'GetSecretTlsArgs',
+    'GetSecretTlsArgsDict',
     'GetSecretUserpassArgs',
+    'GetSecretUserpassArgsDict',
 ]
+
+MYPY = False
+
+if not MYPY:
+    class CloudAccountAwsArgsDict(TypedDict):
+        role_arn: pulumi.Input[str]
+        """
+        Amazon Resource Name (ARN) Role.
+        """
+elif False:
+    CloudAccountAwsArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class CloudAccountAwsArgs:
     def __init__(__self__, *,
                  role_arn: pulumi.Input[str]):
-        CloudAccountAwsArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            role_arn=role_arn,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             role_arn: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'roleArn' in kwargs:
-            role_arn = kwargs['roleArn']
-
-        _setter("role_arn", role_arn)
+        """
+        :param pulumi.Input[str] role_arn: Amazon Resource Name (ARN) Role.
+        """
+        pulumi.set(__self__, "role_arn", role_arn)
 
     @property
     @pulumi.getter(name="roleArn")
     def role_arn(self) -> pulumi.Input[str]:
+        """
+        Amazon Resource Name (ARN) Role.
+        """
         return pulumi.get(self, "role_arn")
 
     @role_arn.setter
@@ -262,28 +492,30 @@ class CloudAccountAwsArgs:
         pulumi.set(self, "role_arn", value)
 
 
+if not MYPY:
+    class CloudAccountAzureArgsDict(TypedDict):
+        secret_link: pulumi.Input[str]
+        """
+        Full link to an Azure secret. (e.g., /org/ORG_NAME/secret/AZURE_SECRET).
+        """
+elif False:
+    CloudAccountAzureArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class CloudAccountAzureArgs:
     def __init__(__self__, *,
                  secret_link: pulumi.Input[str]):
-        CloudAccountAzureArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            secret_link=secret_link,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             secret_link: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'secretLink' in kwargs:
-            secret_link = kwargs['secretLink']
-
-        _setter("secret_link", secret_link)
+        """
+        :param pulumi.Input[str] secret_link: Full link to an Azure secret. (e.g., /org/ORG_NAME/secret/AZURE_SECRET).
+        """
+        pulumi.set(__self__, "secret_link", secret_link)
 
     @property
     @pulumi.getter(name="secretLink")
     def secret_link(self) -> pulumi.Input[str]:
+        """
+        Full link to an Azure secret. (e.g., /org/ORG_NAME/secret/AZURE_SECRET).
+        """
         return pulumi.get(self, "secret_link")
 
     @secret_link.setter
@@ -291,28 +523,30 @@ class CloudAccountAzureArgs:
         pulumi.set(self, "secret_link", value)
 
 
+if not MYPY:
+    class CloudAccountGcpArgsDict(TypedDict):
+        project_id: pulumi.Input[str]
+        """
+        GCP project ID. Obtained from the GCP cloud console.
+        """
+elif False:
+    CloudAccountGcpArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class CloudAccountGcpArgs:
     def __init__(__self__, *,
                  project_id: pulumi.Input[str]):
-        CloudAccountGcpArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            project_id=project_id,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             project_id: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'projectId' in kwargs:
-            project_id = kwargs['projectId']
-
-        _setter("project_id", project_id)
+        """
+        :param pulumi.Input[str] project_id: GCP project ID. Obtained from the GCP cloud console.
+        """
+        pulumi.set(__self__, "project_id", project_id)
 
     @property
     @pulumi.getter(name="projectId")
     def project_id(self) -> pulumi.Input[str]:
+        """
+        GCP project ID. Obtained from the GCP cloud console.
+        """
         return pulumi.get(self, "project_id")
 
     @project_id.setter
@@ -320,28 +554,30 @@ class CloudAccountGcpArgs:
         pulumi.set(self, "project_id", value)
 
 
+if not MYPY:
+    class CloudAccountNgsArgsDict(TypedDict):
+        secret_link: pulumi.Input[str]
+        """
+        Full link to a NATS Account Secret secret. (e.g., /org/ORG_NAME/secret/NATS_ACCOUNT_SECRET).
+        """
+elif False:
+    CloudAccountNgsArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class CloudAccountNgsArgs:
     def __init__(__self__, *,
                  secret_link: pulumi.Input[str]):
-        CloudAccountNgsArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            secret_link=secret_link,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             secret_link: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'secretLink' in kwargs:
-            secret_link = kwargs['secretLink']
-
-        _setter("secret_link", secret_link)
+        """
+        :param pulumi.Input[str] secret_link: Full link to a NATS Account Secret secret. (e.g., /org/ORG_NAME/secret/NATS_ACCOUNT_SECRET).
+        """
+        pulumi.set(__self__, "secret_link", secret_link)
 
     @property
     @pulumi.getter(name="secretLink")
     def secret_link(self) -> pulumi.Input[str]:
+        """
+        Full link to a NATS Account Secret secret. (e.g., /org/ORG_NAME/secret/NATS_ACCOUNT_SECRET).
+        """
         return pulumi.get(self, "secret_link")
 
     @secret_link.setter
@@ -349,28 +585,28 @@ class CloudAccountNgsArgs:
         pulumi.set(self, "secret_link", value)
 
 
+if not MYPY:
+    class DomainRouteHeadersArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        request: NotRequired[pulumi.Input['DomainRouteHeadersRequestArgsDict']]
+        """
+        Manipulates HTTP headers.
+        """
+elif False:
+    DomainRouteHeadersArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class DomainRouteHeadersArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  request: Optional[pulumi.Input['DomainRouteHeadersRequestArgs']] = None):
-        DomainRouteHeadersArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            request=request,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             request: Optional[pulumi.Input['DomainRouteHeadersRequestArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input['DomainRouteHeadersRequestArgs'] request: Manipulates HTTP headers.
+        """
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if request is not None:
-            _setter("request", request)
+            pulumi.set(__self__, "request", request)
 
     @property
     @pulumi.getter
@@ -384,6 +620,9 @@ class DomainRouteHeadersArgs:
     @property
     @pulumi.getter
     def request(self) -> Optional[pulumi.Input['DomainRouteHeadersRequestArgs']]:
+        """
+        Manipulates HTTP headers.
+        """
         return pulumi.get(self, "request")
 
     @request.setter
@@ -391,28 +630,28 @@ class DomainRouteHeadersArgs:
         pulumi.set(self, "request", value)
 
 
+if not MYPY:
+    class DomainRouteHeadersRequestArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        set: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Sets or overrides headers to all http requests for this route.
+        """
+elif False:
+    DomainRouteHeadersRequestArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class DomainRouteHeadersRequestArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  set: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
-        DomainRouteHeadersRequestArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            set=set,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             set: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] set: Sets or overrides headers to all http requests for this route.
+        """
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if set is not None:
-            _setter("set", set)
+            pulumi.set(__self__, "set", set)
 
     @property
     @pulumi.getter
@@ -426,12 +665,36 @@ class DomainRouteHeadersRequestArgs:
     @property
     @pulumi.getter
     def set(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Sets or overrides headers to all http requests for this route.
+        """
         return pulumi.get(self, "set")
 
     @set.setter
     def set(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "set", value)
 
+
+if not MYPY:
+    class DomainSpecArgsDict(TypedDict):
+        ports: pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgsDict']]]
+        """
+        Domain port specifications.
+        """
+        accept_all_hosts: NotRequired[pulumi.Input[bool]]
+        """
+        Allows domain to accept wildcards. The associated GVC must have dedicated load balancing enabled.
+        """
+        dns_mode: NotRequired[pulumi.Input[str]]
+        """
+        In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
+        """
+        gvc_link: NotRequired[pulumi.Input[str]]
+        """
+        This value is set to a target GVC (using a full link) for use by subdomain based routing. Each workload in the GVC will receive a subdomain in the form ${workload.name}.${domain.name}. **Do not include if path based routing is used.**
+        """
+elif False:
+    DomainSpecArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class DomainSpecArgs:
@@ -440,40 +703,26 @@ class DomainSpecArgs:
                  accept_all_hosts: Optional[pulumi.Input[bool]] = None,
                  dns_mode: Optional[pulumi.Input[str]] = None,
                  gvc_link: Optional[pulumi.Input[str]] = None):
-        DomainSpecArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            ports=ports,
-            accept_all_hosts=accept_all_hosts,
-            dns_mode=dns_mode,
-            gvc_link=gvc_link,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             ports: pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgs']]],
-             accept_all_hosts: Optional[pulumi.Input[bool]] = None,
-             dns_mode: Optional[pulumi.Input[str]] = None,
-             gvc_link: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'acceptAllHosts' in kwargs:
-            accept_all_hosts = kwargs['acceptAllHosts']
-        if 'dnsMode' in kwargs:
-            dns_mode = kwargs['dnsMode']
-        if 'gvcLink' in kwargs:
-            gvc_link = kwargs['gvcLink']
-
-        _setter("ports", ports)
+        """
+        :param pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgs']]] ports: Domain port specifications.
+        :param pulumi.Input[bool] accept_all_hosts: Allows domain to accept wildcards. The associated GVC must have dedicated load balancing enabled.
+        :param pulumi.Input[str] dns_mode: In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
+        :param pulumi.Input[str] gvc_link: This value is set to a target GVC (using a full link) for use by subdomain based routing. Each workload in the GVC will receive a subdomain in the form ${workload.name}.${domain.name}. **Do not include if path based routing is used.**
+        """
+        pulumi.set(__self__, "ports", ports)
         if accept_all_hosts is not None:
-            _setter("accept_all_hosts", accept_all_hosts)
+            pulumi.set(__self__, "accept_all_hosts", accept_all_hosts)
         if dns_mode is not None:
-            _setter("dns_mode", dns_mode)
+            pulumi.set(__self__, "dns_mode", dns_mode)
         if gvc_link is not None:
-            _setter("gvc_link", gvc_link)
+            pulumi.set(__self__, "gvc_link", gvc_link)
 
     @property
     @pulumi.getter
     def ports(self) -> pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgs']]]:
+        """
+        Domain port specifications.
+        """
         return pulumi.get(self, "ports")
 
     @ports.setter
@@ -483,6 +732,9 @@ class DomainSpecArgs:
     @property
     @pulumi.getter(name="acceptAllHosts")
     def accept_all_hosts(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Allows domain to accept wildcards. The associated GVC must have dedicated load balancing enabled.
+        """
         return pulumi.get(self, "accept_all_hosts")
 
     @accept_all_hosts.setter
@@ -492,6 +744,9 @@ class DomainSpecArgs:
     @property
     @pulumi.getter(name="dnsMode")
     def dns_mode(self) -> Optional[pulumi.Input[str]]:
+        """
+        In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
+        """
         return pulumi.get(self, "dns_mode")
 
     @dns_mode.setter
@@ -501,12 +756,33 @@ class DomainSpecArgs:
     @property
     @pulumi.getter(name="gvcLink")
     def gvc_link(self) -> Optional[pulumi.Input[str]]:
+        """
+        This value is set to a target GVC (using a full link) for use by subdomain based routing. Each workload in the GVC will receive a subdomain in the form ${workload.name}.${domain.name}. **Do not include if path based routing is used.**
+        """
         return pulumi.get(self, "gvc_link")
 
     @gvc_link.setter
     def gvc_link(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "gvc_link", value)
 
+
+if not MYPY:
+    class DomainSpecPortArgsDict(TypedDict):
+        tls: pulumi.Input['DomainSpecPortTlsArgsDict']
+        cors: NotRequired[pulumi.Input['DomainSpecPortCorsArgsDict']]
+        """
+        A security feature implemented by web browsers to allow resources on a web page to be requested from another domain outside the domain from which the resource originated.
+        """
+        number: NotRequired[pulumi.Input[int]]
+        """
+        Port to expose externally. Values: `80`, `443`. Default: `443`.
+        """
+        protocol: NotRequired[pulumi.Input[str]]
+        """
+        Allowed protocol. Valid values: `http`, `http2`, `tcp`. Default: `http2`.
+        """
+elif False:
+    DomainSpecPortArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class DomainSpecPortArgs:
@@ -515,30 +791,18 @@ class DomainSpecPortArgs:
                  cors: Optional[pulumi.Input['DomainSpecPortCorsArgs']] = None,
                  number: Optional[pulumi.Input[int]] = None,
                  protocol: Optional[pulumi.Input[str]] = None):
-        DomainSpecPortArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            tls=tls,
-            cors=cors,
-            number=number,
-            protocol=protocol,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             tls: pulumi.Input['DomainSpecPortTlsArgs'],
-             cors: Optional[pulumi.Input['DomainSpecPortCorsArgs']] = None,
-             number: Optional[pulumi.Input[int]] = None,
-             protocol: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("tls", tls)
+        """
+        :param pulumi.Input['DomainSpecPortCorsArgs'] cors: A security feature implemented by web browsers to allow resources on a web page to be requested from another domain outside the domain from which the resource originated.
+        :param pulumi.Input[int] number: Port to expose externally. Values: `80`, `443`. Default: `443`.
+        :param pulumi.Input[str] protocol: Allowed protocol. Valid values: `http`, `http2`, `tcp`. Default: `http2`.
+        """
+        pulumi.set(__self__, "tls", tls)
         if cors is not None:
-            _setter("cors", cors)
+            pulumi.set(__self__, "cors", cors)
         if number is not None:
-            _setter("number", number)
+            pulumi.set(__self__, "number", number)
         if protocol is not None:
-            _setter("protocol", protocol)
+            pulumi.set(__self__, "protocol", protocol)
 
     @property
     @pulumi.getter
@@ -552,6 +816,9 @@ class DomainSpecPortArgs:
     @property
     @pulumi.getter
     def cors(self) -> Optional[pulumi.Input['DomainSpecPortCorsArgs']]:
+        """
+        A security feature implemented by web browsers to allow resources on a web page to be requested from another domain outside the domain from which the resource originated.
+        """
         return pulumi.get(self, "cors")
 
     @cors.setter
@@ -561,6 +828,9 @@ class DomainSpecPortArgs:
     @property
     @pulumi.getter
     def number(self) -> Optional[pulumi.Input[int]]:
+        """
+        Port to expose externally. Values: `80`, `443`. Default: `443`.
+        """
         return pulumi.get(self, "number")
 
     @number.setter
@@ -570,12 +840,44 @@ class DomainSpecPortArgs:
     @property
     @pulumi.getter
     def protocol(self) -> Optional[pulumi.Input[str]]:
+        """
+        Allowed protocol. Valid values: `http`, `http2`, `tcp`. Default: `http2`.
+        """
         return pulumi.get(self, "protocol")
 
     @protocol.setter
     def protocol(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "protocol", value)
 
+
+if not MYPY:
+    class DomainSpecPortCorsArgsDict(TypedDict):
+        allow_credentials: NotRequired[pulumi.Input[bool]]
+        """
+        Determines whether the client-side code (typically running in a web browser) is allowed to include credentials (such as cookies, HTTP authentication, or client-side SSL certificates) in cross-origin requests.
+        """
+        allow_headers: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        Specifies the custom HTTP headers that are allowed in a cross-origin request to a specific resource.
+        """
+        allow_methods: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        Specifies the HTTP methods (such as `GET`, `POST`, `PUT`, `DELETE`, etc.) that are allowed for a cross-origin request to a specific resource.
+        """
+        allow_origins: NotRequired[pulumi.Input[Sequence[pulumi.Input['DomainSpecPortCorsAllowOriginArgsDict']]]]
+        """
+        Determines which origins are allowed to access a particular resource on a server from a web browser.
+        """
+        expose_headers: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        The HTTP headers that a server allows to be exposed to the client in response to a cross-origin request. These headers provide additional information about the server's capabilities or requirements, aiding in proper handling of the request by the client's browser or application.
+        """
+        max_age: NotRequired[pulumi.Input[str]]
+        """
+        Maximum amount of time that a preflight request result can be cached by the client browser. Input is expected as a duration string (i.e, 24h, 20m, etc.).
+        """
+elif False:
+    DomainSpecPortCorsArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class DomainSpecPortCorsArgs:
@@ -586,55 +888,33 @@ class DomainSpecPortCorsArgs:
                  allow_origins: Optional[pulumi.Input[Sequence[pulumi.Input['DomainSpecPortCorsAllowOriginArgs']]]] = None,
                  expose_headers: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  max_age: Optional[pulumi.Input[str]] = None):
-        DomainSpecPortCorsArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            allow_credentials=allow_credentials,
-            allow_headers=allow_headers,
-            allow_methods=allow_methods,
-            allow_origins=allow_origins,
-            expose_headers=expose_headers,
-            max_age=max_age,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             allow_credentials: Optional[pulumi.Input[bool]] = None,
-             allow_headers: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             allow_methods: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             allow_origins: Optional[pulumi.Input[Sequence[pulumi.Input['DomainSpecPortCorsAllowOriginArgs']]]] = None,
-             expose_headers: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             max_age: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'allowCredentials' in kwargs:
-            allow_credentials = kwargs['allowCredentials']
-        if 'allowHeaders' in kwargs:
-            allow_headers = kwargs['allowHeaders']
-        if 'allowMethods' in kwargs:
-            allow_methods = kwargs['allowMethods']
-        if 'allowOrigins' in kwargs:
-            allow_origins = kwargs['allowOrigins']
-        if 'exposeHeaders' in kwargs:
-            expose_headers = kwargs['exposeHeaders']
-        if 'maxAge' in kwargs:
-            max_age = kwargs['maxAge']
-
+        """
+        :param pulumi.Input[bool] allow_credentials: Determines whether the client-side code (typically running in a web browser) is allowed to include credentials (such as cookies, HTTP authentication, or client-side SSL certificates) in cross-origin requests.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] allow_headers: Specifies the custom HTTP headers that are allowed in a cross-origin request to a specific resource.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] allow_methods: Specifies the HTTP methods (such as `GET`, `POST`, `PUT`, `DELETE`, etc.) that are allowed for a cross-origin request to a specific resource.
+        :param pulumi.Input[Sequence[pulumi.Input['DomainSpecPortCorsAllowOriginArgs']]] allow_origins: Determines which origins are allowed to access a particular resource on a server from a web browser.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] expose_headers: The HTTP headers that a server allows to be exposed to the client in response to a cross-origin request. These headers provide additional information about the server's capabilities or requirements, aiding in proper handling of the request by the client's browser or application.
+        :param pulumi.Input[str] max_age: Maximum amount of time that a preflight request result can be cached by the client browser. Input is expected as a duration string (i.e, 24h, 20m, etc.).
+        """
         if allow_credentials is not None:
-            _setter("allow_credentials", allow_credentials)
+            pulumi.set(__self__, "allow_credentials", allow_credentials)
         if allow_headers is not None:
-            _setter("allow_headers", allow_headers)
+            pulumi.set(__self__, "allow_headers", allow_headers)
         if allow_methods is not None:
-            _setter("allow_methods", allow_methods)
+            pulumi.set(__self__, "allow_methods", allow_methods)
         if allow_origins is not None:
-            _setter("allow_origins", allow_origins)
+            pulumi.set(__self__, "allow_origins", allow_origins)
         if expose_headers is not None:
-            _setter("expose_headers", expose_headers)
+            pulumi.set(__self__, "expose_headers", expose_headers)
         if max_age is not None:
-            _setter("max_age", max_age)
+            pulumi.set(__self__, "max_age", max_age)
 
     @property
     @pulumi.getter(name="allowCredentials")
     def allow_credentials(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Determines whether the client-side code (typically running in a web browser) is allowed to include credentials (such as cookies, HTTP authentication, or client-side SSL certificates) in cross-origin requests.
+        """
         return pulumi.get(self, "allow_credentials")
 
     @allow_credentials.setter
@@ -644,6 +924,9 @@ class DomainSpecPortCorsArgs:
     @property
     @pulumi.getter(name="allowHeaders")
     def allow_headers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Specifies the custom HTTP headers that are allowed in a cross-origin request to a specific resource.
+        """
         return pulumi.get(self, "allow_headers")
 
     @allow_headers.setter
@@ -653,6 +936,9 @@ class DomainSpecPortCorsArgs:
     @property
     @pulumi.getter(name="allowMethods")
     def allow_methods(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Specifies the HTTP methods (such as `GET`, `POST`, `PUT`, `DELETE`, etc.) that are allowed for a cross-origin request to a specific resource.
+        """
         return pulumi.get(self, "allow_methods")
 
     @allow_methods.setter
@@ -662,6 +948,9 @@ class DomainSpecPortCorsArgs:
     @property
     @pulumi.getter(name="allowOrigins")
     def allow_origins(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['DomainSpecPortCorsAllowOriginArgs']]]]:
+        """
+        Determines which origins are allowed to access a particular resource on a server from a web browser.
+        """
         return pulumi.get(self, "allow_origins")
 
     @allow_origins.setter
@@ -671,6 +960,9 @@ class DomainSpecPortCorsArgs:
     @property
     @pulumi.getter(name="exposeHeaders")
     def expose_headers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        The HTTP headers that a server allows to be exposed to the client in response to a cross-origin request. These headers provide additional information about the server's capabilities or requirements, aiding in proper handling of the request by the client's browser or application.
+        """
         return pulumi.get(self, "expose_headers")
 
     @expose_headers.setter
@@ -680,6 +972,9 @@ class DomainSpecPortCorsArgs:
     @property
     @pulumi.getter(name="maxAge")
     def max_age(self) -> Optional[pulumi.Input[str]]:
+        """
+        Maximum amount of time that a preflight request result can be cached by the client browser. Input is expected as a duration string (i.e, 24h, 20m, etc.).
+        """
         return pulumi.get(self, "max_age")
 
     @max_age.setter
@@ -687,32 +982,57 @@ class DomainSpecPortCorsArgs:
         pulumi.set(self, "max_age", value)
 
 
+if not MYPY:
+    class DomainSpecPortCorsAllowOriginArgsDict(TypedDict):
+        exact: pulumi.Input[str]
+        """
+        Value of allowed origin.
+        """
+elif False:
+    DomainSpecPortCorsAllowOriginArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class DomainSpecPortCorsAllowOriginArgs:
     def __init__(__self__, *,
                  exact: pulumi.Input[str]):
-        DomainSpecPortCorsAllowOriginArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            exact=exact,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             exact: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("exact", exact)
+        """
+        :param pulumi.Input[str] exact: Value of allowed origin.
+        """
+        pulumi.set(__self__, "exact", exact)
 
     @property
     @pulumi.getter
     def exact(self) -> pulumi.Input[str]:
+        """
+        Value of allowed origin.
+        """
         return pulumi.get(self, "exact")
 
     @exact.setter
     def exact(self, value: pulumi.Input[str]):
         pulumi.set(self, "exact", value)
 
+
+if not MYPY:
+    class DomainSpecPortTlsArgsDict(TypedDict):
+        cipher_suites: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        Allowed cipher suites. Refer to the [Domain Reference](https://docs.controlplane.com/reference/domain#cipher-suites) for details.
+        """
+        client_certificate: NotRequired[pulumi.Input['DomainSpecPortTlsClientCertificateArgsDict']]
+        """
+        The certificate authority PEM, stored as a TLS Secret, used to verify the authority of the client certificate. The only verification performed checks that the CN of the PEM matches the Domain (i.e., CN=*.DOMAIN).
+        """
+        min_protocol_version: NotRequired[pulumi.Input[str]]
+        """
+        Minimum TLS version to accept. Minimum is `1.0`. Default: `1.2`.
+        """
+        server_certificate: NotRequired[pulumi.Input['DomainSpecPortTlsServerCertificateArgsDict']]
+        """
+        Custom Server Certificate.
+        """
+elif False:
+    DomainSpecPortTlsArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class DomainSpecPortTlsArgs:
@@ -721,43 +1041,27 @@ class DomainSpecPortTlsArgs:
                  client_certificate: Optional[pulumi.Input['DomainSpecPortTlsClientCertificateArgs']] = None,
                  min_protocol_version: Optional[pulumi.Input[str]] = None,
                  server_certificate: Optional[pulumi.Input['DomainSpecPortTlsServerCertificateArgs']] = None):
-        DomainSpecPortTlsArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            cipher_suites=cipher_suites,
-            client_certificate=client_certificate,
-            min_protocol_version=min_protocol_version,
-            server_certificate=server_certificate,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             cipher_suites: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             client_certificate: Optional[pulumi.Input['DomainSpecPortTlsClientCertificateArgs']] = None,
-             min_protocol_version: Optional[pulumi.Input[str]] = None,
-             server_certificate: Optional[pulumi.Input['DomainSpecPortTlsServerCertificateArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'cipherSuites' in kwargs:
-            cipher_suites = kwargs['cipherSuites']
-        if 'clientCertificate' in kwargs:
-            client_certificate = kwargs['clientCertificate']
-        if 'minProtocolVersion' in kwargs:
-            min_protocol_version = kwargs['minProtocolVersion']
-        if 'serverCertificate' in kwargs:
-            server_certificate = kwargs['serverCertificate']
-
+        """
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] cipher_suites: Allowed cipher suites. Refer to the [Domain Reference](https://docs.controlplane.com/reference/domain#cipher-suites) for details.
+        :param pulumi.Input['DomainSpecPortTlsClientCertificateArgs'] client_certificate: The certificate authority PEM, stored as a TLS Secret, used to verify the authority of the client certificate. The only verification performed checks that the CN of the PEM matches the Domain (i.e., CN=*.DOMAIN).
+        :param pulumi.Input[str] min_protocol_version: Minimum TLS version to accept. Minimum is `1.0`. Default: `1.2`.
+        :param pulumi.Input['DomainSpecPortTlsServerCertificateArgs'] server_certificate: Custom Server Certificate.
+        """
         if cipher_suites is not None:
-            _setter("cipher_suites", cipher_suites)
+            pulumi.set(__self__, "cipher_suites", cipher_suites)
         if client_certificate is not None:
-            _setter("client_certificate", client_certificate)
+            pulumi.set(__self__, "client_certificate", client_certificate)
         if min_protocol_version is not None:
-            _setter("min_protocol_version", min_protocol_version)
+            pulumi.set(__self__, "min_protocol_version", min_protocol_version)
         if server_certificate is not None:
-            _setter("server_certificate", server_certificate)
+            pulumi.set(__self__, "server_certificate", server_certificate)
 
     @property
     @pulumi.getter(name="cipherSuites")
     def cipher_suites(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Allowed cipher suites. Refer to the [Domain Reference](https://docs.controlplane.com/reference/domain#cipher-suites) for details.
+        """
         return pulumi.get(self, "cipher_suites")
 
     @cipher_suites.setter
@@ -767,6 +1071,9 @@ class DomainSpecPortTlsArgs:
     @property
     @pulumi.getter(name="clientCertificate")
     def client_certificate(self) -> Optional[pulumi.Input['DomainSpecPortTlsClientCertificateArgs']]:
+        """
+        The certificate authority PEM, stored as a TLS Secret, used to verify the authority of the client certificate. The only verification performed checks that the CN of the PEM matches the Domain (i.e., CN=*.DOMAIN).
+        """
         return pulumi.get(self, "client_certificate")
 
     @client_certificate.setter
@@ -776,6 +1083,9 @@ class DomainSpecPortTlsArgs:
     @property
     @pulumi.getter(name="minProtocolVersion")
     def min_protocol_version(self) -> Optional[pulumi.Input[str]]:
+        """
+        Minimum TLS version to accept. Minimum is `1.0`. Default: `1.2`.
+        """
         return pulumi.get(self, "min_protocol_version")
 
     @min_protocol_version.setter
@@ -785,6 +1095,9 @@ class DomainSpecPortTlsArgs:
     @property
     @pulumi.getter(name="serverCertificate")
     def server_certificate(self) -> Optional[pulumi.Input['DomainSpecPortTlsServerCertificateArgs']]:
+        """
+        Custom Server Certificate.
+        """
         return pulumi.get(self, "server_certificate")
 
     @server_certificate.setter
@@ -792,65 +1105,95 @@ class DomainSpecPortTlsArgs:
         pulumi.set(self, "server_certificate", value)
 
 
+if not MYPY:
+    class DomainSpecPortTlsClientCertificateArgsDict(TypedDict):
+        secret_link: NotRequired[pulumi.Input[str]]
+        """
+        Full link to a TLS secret.
+        """
+elif False:
+    DomainSpecPortTlsClientCertificateArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class DomainSpecPortTlsClientCertificateArgs:
     def __init__(__self__, *,
                  secret_link: Optional[pulumi.Input[str]] = None):
-        DomainSpecPortTlsClientCertificateArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            secret_link=secret_link,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             secret_link: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'secretLink' in kwargs:
-            secret_link = kwargs['secretLink']
-
+        """
+        :param pulumi.Input[str] secret_link: Full link to a TLS secret.
+        """
         if secret_link is not None:
-            _setter("secret_link", secret_link)
+            pulumi.set(__self__, "secret_link", secret_link)
 
     @property
     @pulumi.getter(name="secretLink")
     def secret_link(self) -> Optional[pulumi.Input[str]]:
+        """
+        Full link to a TLS secret.
+        """
         return pulumi.get(self, "secret_link")
 
     @secret_link.setter
     def secret_link(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "secret_link", value)
 
+
+if not MYPY:
+    class DomainSpecPortTlsServerCertificateArgsDict(TypedDict):
+        secret_link: NotRequired[pulumi.Input[str]]
+        """
+        Full link to a TLS secret.
+        """
+elif False:
+    DomainSpecPortTlsServerCertificateArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class DomainSpecPortTlsServerCertificateArgs:
     def __init__(__self__, *,
                  secret_link: Optional[pulumi.Input[str]] = None):
-        DomainSpecPortTlsServerCertificateArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            secret_link=secret_link,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             secret_link: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'secretLink' in kwargs:
-            secret_link = kwargs['secretLink']
-
+        """
+        :param pulumi.Input[str] secret_link: Full link to a TLS secret.
+        """
         if secret_link is not None:
-            _setter("secret_link", secret_link)
+            pulumi.set(__self__, "secret_link", secret_link)
 
     @property
     @pulumi.getter(name="secretLink")
     def secret_link(self) -> Optional[pulumi.Input[str]]:
+        """
+        Full link to a TLS secret.
+        """
         return pulumi.get(self, "secret_link")
 
     @secret_link.setter
     def secret_link(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "secret_link", value)
 
+
+if not MYPY:
+    class DomainStatusArgsDict(TypedDict):
+        dns_configs: NotRequired[pulumi.Input[Sequence[pulumi.Input['DomainStatusDnsConfigArgsDict']]]]
+        """
+        List of required DNS record entries.
+        """
+        endpoints: NotRequired[pulumi.Input[Sequence[pulumi.Input['DomainStatusEndpointArgsDict']]]]
+        """
+        List of configured domain endpoints.
+        """
+        fingerprint: NotRequired[pulumi.Input[str]]
+        locations: NotRequired[pulumi.Input[Sequence[pulumi.Input['DomainStatusLocationArgsDict']]]]
+        """
+        Contains the cloud provider name, region, and certificate status.
+        """
+        status: NotRequired[pulumi.Input[str]]
+        """
+        Status of Domain. Possible values: `initializing`, `ready`, `pendingDnsConfig`, `pendingCertificate`, `usedByGvc`.
+        """
+        warning: NotRequired[pulumi.Input[str]]
+        """
+        Warning message.
+        """
+elif False:
+    DomainStatusArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class DomainStatusArgs:
@@ -861,45 +1204,32 @@ class DomainStatusArgs:
                  locations: Optional[pulumi.Input[Sequence[pulumi.Input['DomainStatusLocationArgs']]]] = None,
                  status: Optional[pulumi.Input[str]] = None,
                  warning: Optional[pulumi.Input[str]] = None):
-        DomainStatusArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            dns_configs=dns_configs,
-            endpoints=endpoints,
-            fingerprint=fingerprint,
-            locations=locations,
-            status=status,
-            warning=warning,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             dns_configs: Optional[pulumi.Input[Sequence[pulumi.Input['DomainStatusDnsConfigArgs']]]] = None,
-             endpoints: Optional[pulumi.Input[Sequence[pulumi.Input['DomainStatusEndpointArgs']]]] = None,
-             fingerprint: Optional[pulumi.Input[str]] = None,
-             locations: Optional[pulumi.Input[Sequence[pulumi.Input['DomainStatusLocationArgs']]]] = None,
-             status: Optional[pulumi.Input[str]] = None,
-             warning: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'dnsConfigs' in kwargs:
-            dns_configs = kwargs['dnsConfigs']
-
+        """
+        :param pulumi.Input[Sequence[pulumi.Input['DomainStatusDnsConfigArgs']]] dns_configs: List of required DNS record entries.
+        :param pulumi.Input[Sequence[pulumi.Input['DomainStatusEndpointArgs']]] endpoints: List of configured domain endpoints.
+        :param pulumi.Input[Sequence[pulumi.Input['DomainStatusLocationArgs']]] locations: Contains the cloud provider name, region, and certificate status.
+        :param pulumi.Input[str] status: Status of Domain. Possible values: `initializing`, `ready`, `pendingDnsConfig`, `pendingCertificate`, `usedByGvc`.
+        :param pulumi.Input[str] warning: Warning message.
+        """
         if dns_configs is not None:
-            _setter("dns_configs", dns_configs)
+            pulumi.set(__self__, "dns_configs", dns_configs)
         if endpoints is not None:
-            _setter("endpoints", endpoints)
+            pulumi.set(__self__, "endpoints", endpoints)
         if fingerprint is not None:
-            _setter("fingerprint", fingerprint)
+            pulumi.set(__self__, "fingerprint", fingerprint)
         if locations is not None:
-            _setter("locations", locations)
+            pulumi.set(__self__, "locations", locations)
         if status is not None:
-            _setter("status", status)
+            pulumi.set(__self__, "status", status)
         if warning is not None:
-            _setter("warning", warning)
+            pulumi.set(__self__, "warning", warning)
 
     @property
     @pulumi.getter(name="dnsConfigs")
     def dns_configs(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['DomainStatusDnsConfigArgs']]]]:
+        """
+        List of required DNS record entries.
+        """
         return pulumi.get(self, "dns_configs")
 
     @dns_configs.setter
@@ -909,6 +1239,9 @@ class DomainStatusArgs:
     @property
     @pulumi.getter
     def endpoints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['DomainStatusEndpointArgs']]]]:
+        """
+        List of configured domain endpoints.
+        """
         return pulumi.get(self, "endpoints")
 
     @endpoints.setter
@@ -927,6 +1260,9 @@ class DomainStatusArgs:
     @property
     @pulumi.getter
     def locations(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['DomainStatusLocationArgs']]]]:
+        """
+        Contains the cloud provider name, region, and certificate status.
+        """
         return pulumi.get(self, "locations")
 
     @locations.setter
@@ -936,6 +1272,9 @@ class DomainStatusArgs:
     @property
     @pulumi.getter
     def status(self) -> Optional[pulumi.Input[str]]:
+        """
+        Status of Domain. Possible values: `initializing`, `ready`, `pendingDnsConfig`, `pendingCertificate`, `usedByGvc`.
+        """
         return pulumi.get(self, "status")
 
     @status.setter
@@ -945,12 +1284,36 @@ class DomainStatusArgs:
     @property
     @pulumi.getter
     def warning(self) -> Optional[pulumi.Input[str]]:
+        """
+        Warning message.
+        """
         return pulumi.get(self, "warning")
 
     @warning.setter
     def warning(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "warning", value)
 
+
+if not MYPY:
+    class DomainStatusDnsConfigArgsDict(TypedDict):
+        host: NotRequired[pulumi.Input[str]]
+        """
+        The host in DNS terminology refers to the domain or subdomain that the DNS record is associated with. It's essentially the name that is being queried or managed. For example, in a DNS record for `www.example.com`, `www` is a host in the domain `example.com`.
+        """
+        ttl: NotRequired[pulumi.Input[int]]
+        """
+        Time to live (TTL) is a value that signifies how long (in seconds) a DNS record should be cached by a resolver or a browser before a new request should be sent to refresh the data. Lower TTL values mean records are updated more frequently, which is beneficial for dynamic DNS configurations or during DNS migrations. Higher TTL values reduce the load on DNS servers and improve the speed of name resolution for end users by relying on cached data.
+        """
+        type: NotRequired[pulumi.Input[str]]
+        """
+        The DNS record type specifies the type of data the DNS record contains. Valid values: `CNAME`, `NS`, `TXT`.
+        """
+        value: NotRequired[pulumi.Input[str]]
+        """
+        The value of a DNS record contains the data the record is meant to convey, based on the type of the record.
+        """
+elif False:
+    DomainStatusDnsConfigArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class DomainStatusDnsConfigArgs:
@@ -959,35 +1322,27 @@ class DomainStatusDnsConfigArgs:
                  ttl: Optional[pulumi.Input[int]] = None,
                  type: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
-        DomainStatusDnsConfigArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            host=host,
-            ttl=ttl,
-            type=type,
-            value=value,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             host: Optional[pulumi.Input[str]] = None,
-             ttl: Optional[pulumi.Input[int]] = None,
-             type: Optional[pulumi.Input[str]] = None,
-             value: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[str] host: The host in DNS terminology refers to the domain or subdomain that the DNS record is associated with. It's essentially the name that is being queried or managed. For example, in a DNS record for `www.example.com`, `www` is a host in the domain `example.com`.
+        :param pulumi.Input[int] ttl: Time to live (TTL) is a value that signifies how long (in seconds) a DNS record should be cached by a resolver or a browser before a new request should be sent to refresh the data. Lower TTL values mean records are updated more frequently, which is beneficial for dynamic DNS configurations or during DNS migrations. Higher TTL values reduce the load on DNS servers and improve the speed of name resolution for end users by relying on cached data.
+        :param pulumi.Input[str] type: The DNS record type specifies the type of data the DNS record contains. Valid values: `CNAME`, `NS`, `TXT`.
+        :param pulumi.Input[str] value: The value of a DNS record contains the data the record is meant to convey, based on the type of the record.
+        """
         if host is not None:
-            _setter("host", host)
+            pulumi.set(__self__, "host", host)
         if ttl is not None:
-            _setter("ttl", ttl)
+            pulumi.set(__self__, "ttl", ttl)
         if type is not None:
-            _setter("type", type)
+            pulumi.set(__self__, "type", type)
         if value is not None:
-            _setter("value", value)
+            pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
     def host(self) -> Optional[pulumi.Input[str]]:
+        """
+        The host in DNS terminology refers to the domain or subdomain that the DNS record is associated with. It's essentially the name that is being queried or managed. For example, in a DNS record for `www.example.com`, `www` is a host in the domain `example.com`.
+        """
         return pulumi.get(self, "host")
 
     @host.setter
@@ -997,6 +1352,9 @@ class DomainStatusDnsConfigArgs:
     @property
     @pulumi.getter
     def ttl(self) -> Optional[pulumi.Input[int]]:
+        """
+        Time to live (TTL) is a value that signifies how long (in seconds) a DNS record should be cached by a resolver or a browser before a new request should be sent to refresh the data. Lower TTL values mean records are updated more frequently, which is beneficial for dynamic DNS configurations or during DNS migrations. Higher TTL values reduce the load on DNS servers and improve the speed of name resolution for end users by relying on cached data.
+        """
         return pulumi.get(self, "ttl")
 
     @ttl.setter
@@ -1006,6 +1364,9 @@ class DomainStatusDnsConfigArgs:
     @property
     @pulumi.getter
     def type(self) -> Optional[pulumi.Input[str]]:
+        """
+        The DNS record type specifies the type of data the DNS record contains. Valid values: `CNAME`, `NS`, `TXT`.
+        """
         return pulumi.get(self, "type")
 
     @type.setter
@@ -1015,6 +1376,9 @@ class DomainStatusDnsConfigArgs:
     @property
     @pulumi.getter
     def value(self) -> Optional[pulumi.Input[str]]:
+        """
+        The value of a DNS record contains the data the record is meant to convey, based on the type of the record.
+        """
         return pulumi.get(self, "value")
 
     @value.setter
@@ -1022,34 +1386,39 @@ class DomainStatusDnsConfigArgs:
         pulumi.set(self, "value", value)
 
 
+if not MYPY:
+    class DomainStatusEndpointArgsDict(TypedDict):
+        url: NotRequired[pulumi.Input[str]]
+        """
+        URL of endpoint.
+        """
+        workload_link: NotRequired[pulumi.Input[str]]
+        """
+        Full link to associated workload.
+        """
+elif False:
+    DomainStatusEndpointArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class DomainStatusEndpointArgs:
     def __init__(__self__, *,
                  url: Optional[pulumi.Input[str]] = None,
                  workload_link: Optional[pulumi.Input[str]] = None):
-        DomainStatusEndpointArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            url=url,
-            workload_link=workload_link,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             url: Optional[pulumi.Input[str]] = None,
-             workload_link: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'workloadLink' in kwargs:
-            workload_link = kwargs['workloadLink']
-
+        """
+        :param pulumi.Input[str] url: URL of endpoint.
+        :param pulumi.Input[str] workload_link: Full link to associated workload.
+        """
         if url is not None:
-            _setter("url", url)
+            pulumi.set(__self__, "url", url)
         if workload_link is not None:
-            _setter("workload_link", workload_link)
+            pulumi.set(__self__, "workload_link", workload_link)
 
     @property
     @pulumi.getter
     def url(self) -> Optional[pulumi.Input[str]]:
+        """
+        URL of endpoint.
+        """
         return pulumi.get(self, "url")
 
     @url.setter
@@ -1059,6 +1428,9 @@ class DomainStatusEndpointArgs:
     @property
     @pulumi.getter(name="workloadLink")
     def workload_link(self) -> Optional[pulumi.Input[str]]:
+        """
+        Full link to associated workload.
+        """
         return pulumi.get(self, "workload_link")
 
     @workload_link.setter
@@ -1066,34 +1438,39 @@ class DomainStatusEndpointArgs:
         pulumi.set(self, "workload_link", value)
 
 
+if not MYPY:
+    class DomainStatusLocationArgsDict(TypedDict):
+        certificate_status: NotRequired[pulumi.Input[str]]
+        """
+        The current validity or status of the SSL/TLS certificate.
+        """
+        name: NotRequired[pulumi.Input[str]]
+        """
+        The name of the location.
+        """
+elif False:
+    DomainStatusLocationArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class DomainStatusLocationArgs:
     def __init__(__self__, *,
                  certificate_status: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None):
-        DomainStatusLocationArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            certificate_status=certificate_status,
-            name=name,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             certificate_status: Optional[pulumi.Input[str]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'certificateStatus' in kwargs:
-            certificate_status = kwargs['certificateStatus']
-
+        """
+        :param pulumi.Input[str] certificate_status: The current validity or status of the SSL/TLS certificate.
+        :param pulumi.Input[str] name: The name of the location.
+        """
         if certificate_status is not None:
-            _setter("certificate_status", certificate_status)
+            pulumi.set(__self__, "certificate_status", certificate_status)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
 
     @property
     @pulumi.getter(name="certificateStatus")
     def certificate_status(self) -> Optional[pulumi.Input[str]]:
+        """
+        The current validity or status of the SSL/TLS certificate.
+        """
         return pulumi.get(self, "certificate_status")
 
     @certificate_status.setter
@@ -1103,6 +1480,9 @@ class DomainStatusLocationArgs:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the location.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -1110,31 +1490,38 @@ class DomainStatusLocationArgs:
         pulumi.set(self, "name", value)
 
 
+if not MYPY:
+    class GroupIdentityMatcherArgsDict(TypedDict):
+        expression: pulumi.Input[str]
+        """
+        Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged in with SAML providers.
+        """
+        language: NotRequired[pulumi.Input[str]]
+        """
+        Language of the expression. Either `jmespath` or `javascript`. Default: `jmespath`.
+        """
+elif False:
+    GroupIdentityMatcherArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GroupIdentityMatcherArgs:
     def __init__(__self__, *,
                  expression: pulumi.Input[str],
                  language: Optional[pulumi.Input[str]] = None):
-        GroupIdentityMatcherArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            expression=expression,
-            language=language,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             expression: pulumi.Input[str],
-             language: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("expression", expression)
+        """
+        :param pulumi.Input[str] expression: Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged in with SAML providers.
+        :param pulumi.Input[str] language: Language of the expression. Either `jmespath` or `javascript`. Default: `jmespath`.
+        """
+        pulumi.set(__self__, "expression", expression)
         if language is not None:
-            _setter("language", language)
+            pulumi.set(__self__, "language", language)
 
     @property
     @pulumi.getter
     def expression(self) -> pulumi.Input[str]:
+        """
+        Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged in with SAML providers.
+        """
         return pulumi.get(self, "expression")
 
     @expression.setter
@@ -1144,6 +1531,9 @@ class GroupIdentityMatcherArgs:
     @property
     @pulumi.getter
     def language(self) -> Optional[pulumi.Input[str]]:
+        """
+        Language of the expression. Either `jmespath` or `javascript`. Default: `jmespath`.
+        """
         return pulumi.get(self, "language")
 
     @language.setter
@@ -1151,32 +1541,35 @@ class GroupIdentityMatcherArgs:
         pulumi.set(self, "language", value)
 
 
+if not MYPY:
+    class GroupMemberQueryArgsDict(TypedDict):
+        fetch: NotRequired[pulumi.Input[str]]
+        """
+        Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        """
+        spec: NotRequired[pulumi.Input['GroupMemberQuerySpecArgsDict']]
+elif False:
+    GroupMemberQueryArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GroupMemberQueryArgs:
     def __init__(__self__, *,
                  fetch: Optional[pulumi.Input[str]] = None,
                  spec: Optional[pulumi.Input['GroupMemberQuerySpecArgs']] = None):
-        GroupMemberQueryArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            fetch=fetch,
-            spec=spec,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             fetch: Optional[pulumi.Input[str]] = None,
-             spec: Optional[pulumi.Input['GroupMemberQuerySpecArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[str] fetch: Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        """
         if fetch is not None:
-            _setter("fetch", fetch)
+            pulumi.set(__self__, "fetch", fetch)
         if spec is not None:
-            _setter("spec", spec)
+            pulumi.set(__self__, "spec", spec)
 
     @property
     @pulumi.getter
     def fetch(self) -> Optional[pulumi.Input[str]]:
+        """
+        Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        """
         return pulumi.get(self, "fetch")
 
     @fetch.setter
@@ -1193,32 +1586,39 @@ class GroupMemberQueryArgs:
         pulumi.set(self, "spec", value)
 
 
+if not MYPY:
+    class GroupMemberQuerySpecArgsDict(TypedDict):
+        match: NotRequired[pulumi.Input[str]]
+        """
+        Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        """
+        terms: NotRequired[pulumi.Input[Sequence[pulumi.Input['GroupMemberQuerySpecTermArgsDict']]]]
+        """
+        Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        """
+elif False:
+    GroupMemberQuerySpecArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GroupMemberQuerySpecArgs:
     def __init__(__self__, *,
                  match: Optional[pulumi.Input[str]] = None,
                  terms: Optional[pulumi.Input[Sequence[pulumi.Input['GroupMemberQuerySpecTermArgs']]]] = None):
-        GroupMemberQuerySpecArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            match=match,
-            terms=terms,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             match: Optional[pulumi.Input[str]] = None,
-             terms: Optional[pulumi.Input[Sequence[pulumi.Input['GroupMemberQuerySpecTermArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[str] match: Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        :param pulumi.Input[Sequence[pulumi.Input['GroupMemberQuerySpecTermArgs']]] terms: Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        """
         if match is not None:
-            _setter("match", match)
+            pulumi.set(__self__, "match", match)
         if terms is not None:
-            _setter("terms", terms)
+            pulumi.set(__self__, "terms", terms)
 
     @property
     @pulumi.getter
     def match(self) -> Optional[pulumi.Input[str]]:
+        """
+        Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        """
         return pulumi.get(self, "match")
 
     @match.setter
@@ -1228,12 +1628,37 @@ class GroupMemberQuerySpecArgs:
     @property
     @pulumi.getter
     def terms(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['GroupMemberQuerySpecTermArgs']]]]:
+        """
+        Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        """
         return pulumi.get(self, "terms")
 
     @terms.setter
     def terms(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['GroupMemberQuerySpecTermArgs']]]]):
         pulumi.set(self, "terms", value)
 
+
+if not MYPY:
+    class GroupMemberQuerySpecTermArgsDict(TypedDict):
+        op: NotRequired[pulumi.Input[str]]
+        """
+        Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+        """
+        property: NotRequired[pulumi.Input[str]]
+        """
+        Property to use for query evaluation.
+        """
+        rel: NotRequired[pulumi.Input[str]]
+        tag: NotRequired[pulumi.Input[str]]
+        """
+        Tag key to use for query evaluation.
+        """
+        value: NotRequired[pulumi.Input[str]]
+        """
+        Testing value for query evaluation.
+        """
+elif False:
+    GroupMemberQuerySpecTermArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GroupMemberQuerySpecTermArgs:
@@ -1243,39 +1668,29 @@ class GroupMemberQuerySpecTermArgs:
                  rel: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
-        GroupMemberQuerySpecTermArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            op=op,
-            property=property,
-            rel=rel,
-            tag=tag,
-            value=value,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             op: Optional[pulumi.Input[str]] = None,
-             property: Optional[pulumi.Input[str]] = None,
-             rel: Optional[pulumi.Input[str]] = None,
-             tag: Optional[pulumi.Input[str]] = None,
-             value: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[str] op: Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+        :param pulumi.Input[str] property: Property to use for query evaluation.
+        :param pulumi.Input[str] tag: Tag key to use for query evaluation.
+        :param pulumi.Input[str] value: Testing value for query evaluation.
+        """
         if op is not None:
-            _setter("op", op)
+            pulumi.set(__self__, "op", op)
         if property is not None:
-            _setter("property", property)
+            pulumi.set(__self__, "property", property)
         if rel is not None:
-            _setter("rel", rel)
+            pulumi.set(__self__, "rel", rel)
         if tag is not None:
-            _setter("tag", tag)
+            pulumi.set(__self__, "tag", tag)
         if value is not None:
-            _setter("value", value)
+            pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
     def op(self) -> Optional[pulumi.Input[str]]:
+        """
+        Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+        """
         return pulumi.get(self, "op")
 
     @op.setter
@@ -1294,6 +1709,9 @@ class GroupMemberQuerySpecTermArgs:
     @property
     @pulumi.getter
     def tag(self) -> Optional[pulumi.Input[str]]:
+        """
+        Tag key to use for query evaluation.
+        """
         return pulumi.get(self, "tag")
 
     @tag.setter
@@ -1303,6 +1721,9 @@ class GroupMemberQuerySpecTermArgs:
     @property
     @pulumi.getter
     def value(self) -> Optional[pulumi.Input[str]]:
+        """
+        Testing value for query evaluation.
+        """
         return pulumi.get(self, "value")
 
     @value.setter
@@ -1312,6 +1733,9 @@ class GroupMemberQuerySpecTermArgs:
     @property
     @pulumi.getter
     def property(self) -> Optional[pulumi.Input[str]]:
+        """
+        Property to use for query evaluation.
+        """
         return pulumi.get(self, "property")
 
     @property.setter
@@ -1319,33 +1743,38 @@ class GroupMemberQuerySpecTermArgs:
         pulumi.set(self, "property", value)
 
 
+if not MYPY:
+    class GvcControlplaneTracingArgsDict(TypedDict):
+        sampling: pulumi.Input[float]
+        """
+        Determines what percentage of requests should be traced.
+        """
+        custom_tags: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Key-value map of custom tags.
+        """
+elif False:
+    GvcControlplaneTracingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GvcControlplaneTracingArgs:
     def __init__(__self__, *,
                  sampling: pulumi.Input[float],
                  custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
-        GvcControlplaneTracingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            sampling=sampling,
-            custom_tags=custom_tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             sampling: pulumi.Input[float],
-             custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'customTags' in kwargs:
-            custom_tags = kwargs['customTags']
-
-        _setter("sampling", sampling)
+        """
+        :param pulumi.Input[float] sampling: Determines what percentage of requests should be traced.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] custom_tags: Key-value map of custom tags.
+        """
+        pulumi.set(__self__, "sampling", sampling)
         if custom_tags is not None:
-            _setter("custom_tags", custom_tags)
+            pulumi.set(__self__, "custom_tags", custom_tags)
 
     @property
     @pulumi.getter
     def sampling(self) -> pulumi.Input[float]:
+        """
+        Determines what percentage of requests should be traced.
+        """
         return pulumi.get(self, "sampling")
 
     @sampling.setter
@@ -1355,12 +1784,36 @@ class GvcControlplaneTracingArgs:
     @property
     @pulumi.getter(name="customTags")
     def custom_tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of custom tags.
+        """
         return pulumi.get(self, "custom_tags")
 
     @custom_tags.setter
     def custom_tags(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "custom_tags", value)
 
+
+if not MYPY:
+    class GvcLightstepTracingArgsDict(TypedDict):
+        endpoint: pulumi.Input[str]
+        """
+        Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        """
+        sampling: pulumi.Input[float]
+        """
+        Determines what percentage of requests should be traced.
+        """
+        credentials: NotRequired[pulumi.Input[str]]
+        """
+        Full link to referenced Opaque Secret.
+        """
+        custom_tags: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Key-value map of custom tags.
+        """
+elif False:
+    GvcLightstepTracingArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GvcLightstepTracingArgs:
@@ -1369,35 +1822,25 @@ class GvcLightstepTracingArgs:
                  sampling: pulumi.Input[float],
                  credentials: Optional[pulumi.Input[str]] = None,
                  custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
-        GvcLightstepTracingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            endpoint=endpoint,
-            sampling=sampling,
-            credentials=credentials,
-            custom_tags=custom_tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             endpoint: pulumi.Input[str],
-             sampling: pulumi.Input[float],
-             credentials: Optional[pulumi.Input[str]] = None,
-             custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'customTags' in kwargs:
-            custom_tags = kwargs['customTags']
-
-        _setter("endpoint", endpoint)
-        _setter("sampling", sampling)
+        """
+        :param pulumi.Input[str] endpoint: Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        :param pulumi.Input[float] sampling: Determines what percentage of requests should be traced.
+        :param pulumi.Input[str] credentials: Full link to referenced Opaque Secret.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] custom_tags: Key-value map of custom tags.
+        """
+        pulumi.set(__self__, "endpoint", endpoint)
+        pulumi.set(__self__, "sampling", sampling)
         if credentials is not None:
-            _setter("credentials", credentials)
+            pulumi.set(__self__, "credentials", credentials)
         if custom_tags is not None:
-            _setter("custom_tags", custom_tags)
+            pulumi.set(__self__, "custom_tags", custom_tags)
 
     @property
     @pulumi.getter
     def endpoint(self) -> pulumi.Input[str]:
+        """
+        Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        """
         return pulumi.get(self, "endpoint")
 
     @endpoint.setter
@@ -1407,6 +1850,9 @@ class GvcLightstepTracingArgs:
     @property
     @pulumi.getter
     def sampling(self) -> pulumi.Input[float]:
+        """
+        Determines what percentage of requests should be traced.
+        """
         return pulumi.get(self, "sampling")
 
     @sampling.setter
@@ -1416,6 +1862,9 @@ class GvcLightstepTracingArgs:
     @property
     @pulumi.getter
     def credentials(self) -> Optional[pulumi.Input[str]]:
+        """
+        Full link to referenced Opaque Secret.
+        """
         return pulumi.get(self, "credentials")
 
     @credentials.setter
@@ -1425,6 +1874,9 @@ class GvcLightstepTracingArgs:
     @property
     @pulumi.getter(name="customTags")
     def custom_tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of custom tags.
+        """
         return pulumi.get(self, "custom_tags")
 
     @custom_tags.setter
@@ -1432,39 +1884,47 @@ class GvcLightstepTracingArgs:
         pulumi.set(self, "custom_tags", value)
 
 
+if not MYPY:
+    class GvcLoadBalancerArgsDict(TypedDict):
+        dedicated: NotRequired[pulumi.Input[bool]]
+        """
+        Creates a dedicated load balancer in each location and enables additional Domain features: custom ports, protocols and wildcard hostnames. Charges apply for each location.
+        """
+        redirect: NotRequired[pulumi.Input['GvcLoadBalancerRedirectArgsDict']]
+        """
+        Specify the url to be redirected to for different http status codes.
+        """
+        trusted_proxies: NotRequired[pulumi.Input[int]]
+        """
+        Controls the address used for request logging and for setting the X-Envoy-External-Address header. If set to 1, then the last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If set to 2, then the second to last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If the XFF header does not have at least two addresses or does not exist then the source client IP address will be used instead.
+        """
+elif False:
+    GvcLoadBalancerArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GvcLoadBalancerArgs:
     def __init__(__self__, *,
                  dedicated: Optional[pulumi.Input[bool]] = None,
                  redirect: Optional[pulumi.Input['GvcLoadBalancerRedirectArgs']] = None,
                  trusted_proxies: Optional[pulumi.Input[int]] = None):
-        GvcLoadBalancerArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            dedicated=dedicated,
-            redirect=redirect,
-            trusted_proxies=trusted_proxies,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             dedicated: Optional[pulumi.Input[bool]] = None,
-             redirect: Optional[pulumi.Input['GvcLoadBalancerRedirectArgs']] = None,
-             trusted_proxies: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'trustedProxies' in kwargs:
-            trusted_proxies = kwargs['trustedProxies']
-
+        """
+        :param pulumi.Input[bool] dedicated: Creates a dedicated load balancer in each location and enables additional Domain features: custom ports, protocols and wildcard hostnames. Charges apply for each location.
+        :param pulumi.Input['GvcLoadBalancerRedirectArgs'] redirect: Specify the url to be redirected to for different http status codes.
+        :param pulumi.Input[int] trusted_proxies: Controls the address used for request logging and for setting the X-Envoy-External-Address header. If set to 1, then the last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If set to 2, then the second to last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If the XFF header does not have at least two addresses or does not exist then the source client IP address will be used instead.
+        """
         if dedicated is not None:
-            _setter("dedicated", dedicated)
+            pulumi.set(__self__, "dedicated", dedicated)
         if redirect is not None:
-            _setter("redirect", redirect)
+            pulumi.set(__self__, "redirect", redirect)
         if trusted_proxies is not None:
-            _setter("trusted_proxies", trusted_proxies)
+            pulumi.set(__self__, "trusted_proxies", trusted_proxies)
 
     @property
     @pulumi.getter
     def dedicated(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Creates a dedicated load balancer in each location and enables additional Domain features: custom ports, protocols and wildcard hostnames. Charges apply for each location.
+        """
         return pulumi.get(self, "dedicated")
 
     @dedicated.setter
@@ -1474,6 +1934,9 @@ class GvcLoadBalancerArgs:
     @property
     @pulumi.getter
     def redirect(self) -> Optional[pulumi.Input['GvcLoadBalancerRedirectArgs']]:
+        """
+        Specify the url to be redirected to for different http status codes.
+        """
         return pulumi.get(self, "redirect")
 
     @redirect.setter
@@ -1483,6 +1946,9 @@ class GvcLoadBalancerArgs:
     @property
     @pulumi.getter(name="trustedProxies")
     def trusted_proxies(self) -> Optional[pulumi.Input[int]]:
+        """
+        Controls the address used for request logging and for setting the X-Envoy-External-Address header. If set to 1, then the last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If set to 2, then the second to last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If the XFF header does not have at least two addresses or does not exist then the source client IP address will be used instead.
+        """
         return pulumi.get(self, "trusted_proxies")
 
     @trusted_proxies.setter
@@ -1490,30 +1956,28 @@ class GvcLoadBalancerArgs:
         pulumi.set(self, "trusted_proxies", value)
 
 
+if not MYPY:
+    class GvcLoadBalancerRedirectArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        class_: NotRequired[pulumi.Input['GvcLoadBalancerRedirectClassArgsDict']]
+        """
+        Specify the redirect url for all status codes in a class.
+        """
+elif False:
+    GvcLoadBalancerRedirectArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GvcLoadBalancerRedirectArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  class_: Optional[pulumi.Input['GvcLoadBalancerRedirectClassArgs']] = None):
-        GvcLoadBalancerRedirectArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            class_=class_,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             class_: Optional[pulumi.Input['GvcLoadBalancerRedirectClassArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'class' in kwargs:
-            class_ = kwargs['class']
-
+        """
+        :param pulumi.Input['GvcLoadBalancerRedirectClassArgs'] class_: Specify the redirect url for all status codes in a class.
+        """
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if class_ is not None:
-            _setter("class_", class_)
+            pulumi.set(__self__, "class_", class_)
 
     @property
     @pulumi.getter
@@ -1527,6 +1991,9 @@ class GvcLoadBalancerRedirectArgs:
     @property
     @pulumi.getter(name="class")
     def class_(self) -> Optional[pulumi.Input['GvcLoadBalancerRedirectClassArgs']]:
+        """
+        Specify the redirect url for all status codes in a class.
+        """
         return pulumi.get(self, "class_")
 
     @class_.setter
@@ -1534,28 +2001,28 @@ class GvcLoadBalancerRedirectArgs:
         pulumi.set(self, "class_", value)
 
 
+if not MYPY:
+    class GvcLoadBalancerRedirectClassArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        status5xx: NotRequired[pulumi.Input[str]]
+        """
+        Specify the redirect url for any 500 level status code.
+        """
+elif False:
+    GvcLoadBalancerRedirectClassArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GvcLoadBalancerRedirectClassArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  status5xx: Optional[pulumi.Input[str]] = None):
-        GvcLoadBalancerRedirectClassArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            status5xx=status5xx,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             status5xx: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[str] status5xx: Specify the redirect url for any 500 level status code.
+        """
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if status5xx is not None:
-            _setter("status5xx", status5xx)
+            pulumi.set(__self__, "status5xx", status5xx)
 
     @property
     @pulumi.getter
@@ -1569,6 +2036,9 @@ class GvcLoadBalancerRedirectClassArgs:
     @property
     @pulumi.getter
     def status5xx(self) -> Optional[pulumi.Input[str]]:
+        """
+        Specify the redirect url for any 500 level status code.
+        """
         return pulumi.get(self, "status5xx")
 
     @status5xx.setter
@@ -1576,37 +2046,45 @@ class GvcLoadBalancerRedirectClassArgs:
         pulumi.set(self, "status5xx", value)
 
 
+if not MYPY:
+    class GvcOtelTracingArgsDict(TypedDict):
+        endpoint: pulumi.Input[str]
+        """
+        Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        """
+        sampling: pulumi.Input[float]
+        """
+        Determines what percentage of requests should be traced.
+        """
+        custom_tags: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Key-value map of custom tags.
+        """
+elif False:
+    GvcOtelTracingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GvcOtelTracingArgs:
     def __init__(__self__, *,
                  endpoint: pulumi.Input[str],
                  sampling: pulumi.Input[float],
                  custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
-        GvcOtelTracingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            endpoint=endpoint,
-            sampling=sampling,
-            custom_tags=custom_tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             endpoint: pulumi.Input[str],
-             sampling: pulumi.Input[float],
-             custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'customTags' in kwargs:
-            custom_tags = kwargs['customTags']
-
-        _setter("endpoint", endpoint)
-        _setter("sampling", sampling)
+        """
+        :param pulumi.Input[str] endpoint: Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        :param pulumi.Input[float] sampling: Determines what percentage of requests should be traced.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] custom_tags: Key-value map of custom tags.
+        """
+        pulumi.set(__self__, "endpoint", endpoint)
+        pulumi.set(__self__, "sampling", sampling)
         if custom_tags is not None:
-            _setter("custom_tags", custom_tags)
+            pulumi.set(__self__, "custom_tags", custom_tags)
 
     @property
     @pulumi.getter
     def endpoint(self) -> pulumi.Input[str]:
+        """
+        Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        """
         return pulumi.get(self, "endpoint")
 
     @endpoint.setter
@@ -1616,6 +2094,9 @@ class GvcOtelTracingArgs:
     @property
     @pulumi.getter
     def sampling(self) -> pulumi.Input[float]:
+        """
+        Determines what percentage of requests should be traced.
+        """
         return pulumi.get(self, "sampling")
 
     @sampling.setter
@@ -1625,6 +2106,9 @@ class GvcOtelTracingArgs:
     @property
     @pulumi.getter(name="customTags")
     def custom_tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of custom tags.
+        """
         return pulumi.get(self, "custom_tags")
 
     @custom_tags.setter
@@ -1632,22 +2116,17 @@ class GvcOtelTracingArgs:
         pulumi.set(self, "custom_tags", value)
 
 
+if not MYPY:
+    class GvcSidecarArgsDict(TypedDict):
+        envoy: pulumi.Input[str]
+elif False:
+    GvcSidecarArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GvcSidecarArgs:
     def __init__(__self__, *,
                  envoy: pulumi.Input[str]):
-        GvcSidecarArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            envoy=envoy,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             envoy: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("envoy", envoy)
+        pulumi.set(__self__, "envoy", envoy)
 
     @property
     @pulumi.getter
@@ -1659,42 +2138,46 @@ class GvcSidecarArgs:
         pulumi.set(self, "envoy", value)
 
 
+if not MYPY:
+    class IdentityAwsAccessPolicyArgsDict(TypedDict):
+        cloud_account_link: pulumi.Input[str]
+        """
+        Full link to referenced cloud account.
+        """
+        policy_refs: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        List of policies.
+        """
+        role_name: NotRequired[pulumi.Input[str]]
+        """
+        Role name.
+        """
+elif False:
+    IdentityAwsAccessPolicyArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class IdentityAwsAccessPolicyArgs:
     def __init__(__self__, *,
                  cloud_account_link: pulumi.Input[str],
                  policy_refs: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  role_name: Optional[pulumi.Input[str]] = None):
-        IdentityAwsAccessPolicyArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            cloud_account_link=cloud_account_link,
-            policy_refs=policy_refs,
-            role_name=role_name,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             cloud_account_link: pulumi.Input[str],
-             policy_refs: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             role_name: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'cloudAccountLink' in kwargs:
-            cloud_account_link = kwargs['cloudAccountLink']
-        if 'policyRefs' in kwargs:
-            policy_refs = kwargs['policyRefs']
-        if 'roleName' in kwargs:
-            role_name = kwargs['roleName']
-
-        _setter("cloud_account_link", cloud_account_link)
+        """
+        :param pulumi.Input[str] cloud_account_link: Full link to referenced cloud account.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] policy_refs: List of policies.
+        :param pulumi.Input[str] role_name: Role name.
+        """
+        pulumi.set(__self__, "cloud_account_link", cloud_account_link)
         if policy_refs is not None:
-            _setter("policy_refs", policy_refs)
+            pulumi.set(__self__, "policy_refs", policy_refs)
         if role_name is not None:
-            _setter("role_name", role_name)
+            pulumi.set(__self__, "role_name", role_name)
 
     @property
     @pulumi.getter(name="cloudAccountLink")
     def cloud_account_link(self) -> pulumi.Input[str]:
+        """
+        Full link to referenced cloud account.
+        """
         return pulumi.get(self, "cloud_account_link")
 
     @cloud_account_link.setter
@@ -1704,6 +2187,9 @@ class IdentityAwsAccessPolicyArgs:
     @property
     @pulumi.getter(name="policyRefs")
     def policy_refs(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of policies.
+        """
         return pulumi.get(self, "policy_refs")
 
     @policy_refs.setter
@@ -1713,6 +2199,9 @@ class IdentityAwsAccessPolicyArgs:
     @property
     @pulumi.getter(name="roleName")
     def role_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Role name.
+        """
         return pulumi.get(self, "role_name")
 
     @role_name.setter
@@ -1720,35 +2209,38 @@ class IdentityAwsAccessPolicyArgs:
         pulumi.set(self, "role_name", value)
 
 
+if not MYPY:
+    class IdentityAzureAccessPolicyArgsDict(TypedDict):
+        cloud_account_link: pulumi.Input[str]
+        """
+        Full link to referenced cloud account.
+        """
+        role_assignments: NotRequired[pulumi.Input[Sequence[pulumi.Input['IdentityAzureAccessPolicyRoleAssignmentArgsDict']]]]
+        """
+        The process of assigning specific roles or permissions to an entity, such as a user or a service principal, within the system.
+        """
+elif False:
+    IdentityAzureAccessPolicyArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class IdentityAzureAccessPolicyArgs:
     def __init__(__self__, *,
                  cloud_account_link: pulumi.Input[str],
                  role_assignments: Optional[pulumi.Input[Sequence[pulumi.Input['IdentityAzureAccessPolicyRoleAssignmentArgs']]]] = None):
-        IdentityAzureAccessPolicyArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            cloud_account_link=cloud_account_link,
-            role_assignments=role_assignments,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             cloud_account_link: pulumi.Input[str],
-             role_assignments: Optional[pulumi.Input[Sequence[pulumi.Input['IdentityAzureAccessPolicyRoleAssignmentArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'cloudAccountLink' in kwargs:
-            cloud_account_link = kwargs['cloudAccountLink']
-        if 'roleAssignments' in kwargs:
-            role_assignments = kwargs['roleAssignments']
-
-        _setter("cloud_account_link", cloud_account_link)
+        """
+        :param pulumi.Input[str] cloud_account_link: Full link to referenced cloud account.
+        :param pulumi.Input[Sequence[pulumi.Input['IdentityAzureAccessPolicyRoleAssignmentArgs']]] role_assignments: The process of assigning specific roles or permissions to an entity, such as a user or a service principal, within the system.
+        """
+        pulumi.set(__self__, "cloud_account_link", cloud_account_link)
         if role_assignments is not None:
-            _setter("role_assignments", role_assignments)
+            pulumi.set(__self__, "role_assignments", role_assignments)
 
     @property
     @pulumi.getter(name="cloudAccountLink")
     def cloud_account_link(self) -> pulumi.Input[str]:
+        """
+        Full link to referenced cloud account.
+        """
         return pulumi.get(self, "cloud_account_link")
 
     @cloud_account_link.setter
@@ -1758,6 +2250,9 @@ class IdentityAzureAccessPolicyArgs:
     @property
     @pulumi.getter(name="roleAssignments")
     def role_assignments(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['IdentityAzureAccessPolicyRoleAssignmentArgs']]]]:
+        """
+        The process of assigning specific roles or permissions to an entity, such as a user or a service principal, within the system.
+        """
         return pulumi.get(self, "role_assignments")
 
     @role_assignments.setter
@@ -1765,33 +2260,36 @@ class IdentityAzureAccessPolicyArgs:
         pulumi.set(self, "role_assignments", value)
 
 
+if not MYPY:
+    class IdentityAzureAccessPolicyRoleAssignmentArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        roles: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        List of assigned roles.
+        """
+        scope: NotRequired[pulumi.Input[str]]
+        """
+        Scope of roles.
+        """
+elif False:
+    IdentityAzureAccessPolicyRoleAssignmentArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class IdentityAzureAccessPolicyRoleAssignmentArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  roles: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  scope: Optional[pulumi.Input[str]] = None):
-        IdentityAzureAccessPolicyRoleAssignmentArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            roles=roles,
-            scope=scope,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             roles: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             scope: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] roles: List of assigned roles.
+        :param pulumi.Input[str] scope: Scope of roles.
+        """
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if roles is not None:
-            _setter("roles", roles)
+            pulumi.set(__self__, "roles", roles)
         if scope is not None:
-            _setter("scope", scope)
+            pulumi.set(__self__, "scope", scope)
 
     @property
     @pulumi.getter
@@ -1805,6 +2303,9 @@ class IdentityAzureAccessPolicyRoleAssignmentArgs:
     @property
     @pulumi.getter
     def roles(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of assigned roles.
+        """
         return pulumi.get(self, "roles")
 
     @roles.setter
@@ -1814,12 +2315,36 @@ class IdentityAzureAccessPolicyRoleAssignmentArgs:
     @property
     @pulumi.getter
     def scope(self) -> Optional[pulumi.Input[str]]:
+        """
+        Scope of roles.
+        """
         return pulumi.get(self, "scope")
 
     @scope.setter
     def scope(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "scope", value)
 
+
+if not MYPY:
+    class IdentityGcpAccessPolicyArgsDict(TypedDict):
+        cloud_account_link: pulumi.Input[str]
+        """
+        Full link to referenced cloud account.
+        """
+        bindings: NotRequired[pulumi.Input[Sequence[pulumi.Input['IdentityGcpAccessPolicyBindingArgsDict']]]]
+        """
+        The association or connection between a particular identity, such as a user or a group, and a set of permissions or roles within the system.
+        """
+        scopes: NotRequired[pulumi.Input[str]]
+        """
+        Comma delimited list of GCP scope URLs.
+        """
+        service_account: NotRequired[pulumi.Input[str]]
+        """
+        Name of existing GCP service account.
+        """
+elif False:
+    IdentityGcpAccessPolicyArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class IdentityGcpAccessPolicyArgs:
@@ -1828,38 +2353,26 @@ class IdentityGcpAccessPolicyArgs:
                  bindings: Optional[pulumi.Input[Sequence[pulumi.Input['IdentityGcpAccessPolicyBindingArgs']]]] = None,
                  scopes: Optional[pulumi.Input[str]] = None,
                  service_account: Optional[pulumi.Input[str]] = None):
-        IdentityGcpAccessPolicyArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            cloud_account_link=cloud_account_link,
-            bindings=bindings,
-            scopes=scopes,
-            service_account=service_account,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             cloud_account_link: pulumi.Input[str],
-             bindings: Optional[pulumi.Input[Sequence[pulumi.Input['IdentityGcpAccessPolicyBindingArgs']]]] = None,
-             scopes: Optional[pulumi.Input[str]] = None,
-             service_account: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'cloudAccountLink' in kwargs:
-            cloud_account_link = kwargs['cloudAccountLink']
-        if 'serviceAccount' in kwargs:
-            service_account = kwargs['serviceAccount']
-
-        _setter("cloud_account_link", cloud_account_link)
+        """
+        :param pulumi.Input[str] cloud_account_link: Full link to referenced cloud account.
+        :param pulumi.Input[Sequence[pulumi.Input['IdentityGcpAccessPolicyBindingArgs']]] bindings: The association or connection between a particular identity, such as a user or a group, and a set of permissions or roles within the system.
+        :param pulumi.Input[str] scopes: Comma delimited list of GCP scope URLs.
+        :param pulumi.Input[str] service_account: Name of existing GCP service account.
+        """
+        pulumi.set(__self__, "cloud_account_link", cloud_account_link)
         if bindings is not None:
-            _setter("bindings", bindings)
+            pulumi.set(__self__, "bindings", bindings)
         if scopes is not None:
-            _setter("scopes", scopes)
+            pulumi.set(__self__, "scopes", scopes)
         if service_account is not None:
-            _setter("service_account", service_account)
+            pulumi.set(__self__, "service_account", service_account)
 
     @property
     @pulumi.getter(name="cloudAccountLink")
     def cloud_account_link(self) -> pulumi.Input[str]:
+        """
+        Full link to referenced cloud account.
+        """
         return pulumi.get(self, "cloud_account_link")
 
     @cloud_account_link.setter
@@ -1869,6 +2382,9 @@ class IdentityGcpAccessPolicyArgs:
     @property
     @pulumi.getter
     def bindings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['IdentityGcpAccessPolicyBindingArgs']]]]:
+        """
+        The association or connection between a particular identity, such as a user or a group, and a set of permissions or roles within the system.
+        """
         return pulumi.get(self, "bindings")
 
     @bindings.setter
@@ -1878,6 +2394,9 @@ class IdentityGcpAccessPolicyArgs:
     @property
     @pulumi.getter
     def scopes(self) -> Optional[pulumi.Input[str]]:
+        """
+        Comma delimited list of GCP scope URLs.
+        """
         return pulumi.get(self, "scopes")
 
     @scopes.setter
@@ -1887,6 +2406,9 @@ class IdentityGcpAccessPolicyArgs:
     @property
     @pulumi.getter(name="serviceAccount")
     def service_account(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of existing GCP service account.
+        """
         return pulumi.get(self, "service_account")
 
     @service_account.setter
@@ -1894,33 +2416,36 @@ class IdentityGcpAccessPolicyArgs:
         pulumi.set(self, "service_account", value)
 
 
+if not MYPY:
+    class IdentityGcpAccessPolicyBindingArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        resource: NotRequired[pulumi.Input[str]]
+        """
+        Name of resource for binding.
+        """
+        roles: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        List of allowed roles.
+        """
+elif False:
+    IdentityGcpAccessPolicyBindingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class IdentityGcpAccessPolicyBindingArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  resource: Optional[pulumi.Input[str]] = None,
                  roles: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
-        IdentityGcpAccessPolicyBindingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            resource=resource,
-            roles=roles,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             resource: Optional[pulumi.Input[str]] = None,
-             roles: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[str] resource: Name of resource for binding.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] roles: List of allowed roles.
+        """
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if resource is not None:
-            _setter("resource", resource)
+            pulumi.set(__self__, "resource", resource)
         if roles is not None:
-            _setter("roles", roles)
+            pulumi.set(__self__, "roles", roles)
 
     @property
     @pulumi.getter
@@ -1934,6 +2459,9 @@ class IdentityGcpAccessPolicyBindingArgs:
     @property
     @pulumi.getter
     def resource(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of resource for binding.
+        """
         return pulumi.get(self, "resource")
 
     @resource.setter
@@ -1943,12 +2471,40 @@ class IdentityGcpAccessPolicyBindingArgs:
     @property
     @pulumi.getter
     def roles(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of allowed roles.
+        """
         return pulumi.get(self, "roles")
 
     @roles.setter
     def roles(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
         pulumi.set(self, "roles", value)
 
+
+if not MYPY:
+    class IdentityNativeNetworkResourceArgsDict(TypedDict):
+        fqdn: pulumi.Input[str]
+        """
+        Fully qualified domain name.
+        """
+        name: pulumi.Input[str]
+        """
+        Name of the Native Network Resource.
+        """
+        ports: pulumi.Input[Sequence[pulumi.Input[int]]]
+        """
+        Ports to expose. At least one port is required.
+        """
+        aws_private_link: NotRequired[pulumi.Input['IdentityNativeNetworkResourceAwsPrivateLinkArgsDict']]
+        """
+        A feature provided by AWS that enables private connectivity between private VPCs and compute running at Control Plane without traversing the public internet.
+        """
+        gcp_service_connect: NotRequired[pulumi.Input['IdentityNativeNetworkResourceGcpServiceConnectArgsDict']]
+        """
+        Capability provided by GCP that allows private communication between private VPC networks and compute running at Control Plane.
+        """
+elif False:
+    IdentityNativeNetworkResourceArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class IdentityNativeNetworkResourceArgs:
@@ -1958,40 +2514,27 @@ class IdentityNativeNetworkResourceArgs:
                  ports: pulumi.Input[Sequence[pulumi.Input[int]]],
                  aws_private_link: Optional[pulumi.Input['IdentityNativeNetworkResourceAwsPrivateLinkArgs']] = None,
                  gcp_service_connect: Optional[pulumi.Input['IdentityNativeNetworkResourceGcpServiceConnectArgs']] = None):
-        IdentityNativeNetworkResourceArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            fqdn=fqdn,
-            name=name,
-            ports=ports,
-            aws_private_link=aws_private_link,
-            gcp_service_connect=gcp_service_connect,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             fqdn: pulumi.Input[str],
-             name: pulumi.Input[str],
-             ports: pulumi.Input[Sequence[pulumi.Input[int]]],
-             aws_private_link: Optional[pulumi.Input['IdentityNativeNetworkResourceAwsPrivateLinkArgs']] = None,
-             gcp_service_connect: Optional[pulumi.Input['IdentityNativeNetworkResourceGcpServiceConnectArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'awsPrivateLink' in kwargs:
-            aws_private_link = kwargs['awsPrivateLink']
-        if 'gcpServiceConnect' in kwargs:
-            gcp_service_connect = kwargs['gcpServiceConnect']
-
-        _setter("fqdn", fqdn)
-        _setter("name", name)
-        _setter("ports", ports)
+        """
+        :param pulumi.Input[str] fqdn: Fully qualified domain name.
+        :param pulumi.Input[str] name: Name of the Native Network Resource.
+        :param pulumi.Input[Sequence[pulumi.Input[int]]] ports: Ports to expose. At least one port is required.
+        :param pulumi.Input['IdentityNativeNetworkResourceAwsPrivateLinkArgs'] aws_private_link: A feature provided by AWS that enables private connectivity between private VPCs and compute running at Control Plane without traversing the public internet.
+        :param pulumi.Input['IdentityNativeNetworkResourceGcpServiceConnectArgs'] gcp_service_connect: Capability provided by GCP that allows private communication between private VPC networks and compute running at Control Plane.
+        """
+        pulumi.set(__self__, "fqdn", fqdn)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "ports", ports)
         if aws_private_link is not None:
-            _setter("aws_private_link", aws_private_link)
+            pulumi.set(__self__, "aws_private_link", aws_private_link)
         if gcp_service_connect is not None:
-            _setter("gcp_service_connect", gcp_service_connect)
+            pulumi.set(__self__, "gcp_service_connect", gcp_service_connect)
 
     @property
     @pulumi.getter
     def fqdn(self) -> pulumi.Input[str]:
+        """
+        Fully qualified domain name.
+        """
         return pulumi.get(self, "fqdn")
 
     @fqdn.setter
@@ -2001,6 +2544,9 @@ class IdentityNativeNetworkResourceArgs:
     @property
     @pulumi.getter
     def name(self) -> pulumi.Input[str]:
+        """
+        Name of the Native Network Resource.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -2010,6 +2556,9 @@ class IdentityNativeNetworkResourceArgs:
     @property
     @pulumi.getter
     def ports(self) -> pulumi.Input[Sequence[pulumi.Input[int]]]:
+        """
+        Ports to expose. At least one port is required.
+        """
         return pulumi.get(self, "ports")
 
     @ports.setter
@@ -2019,6 +2568,9 @@ class IdentityNativeNetworkResourceArgs:
     @property
     @pulumi.getter(name="awsPrivateLink")
     def aws_private_link(self) -> Optional[pulumi.Input['IdentityNativeNetworkResourceAwsPrivateLinkArgs']]:
+        """
+        A feature provided by AWS that enables private connectivity between private VPCs and compute running at Control Plane without traversing the public internet.
+        """
         return pulumi.get(self, "aws_private_link")
 
     @aws_private_link.setter
@@ -2028,6 +2580,9 @@ class IdentityNativeNetworkResourceArgs:
     @property
     @pulumi.getter(name="gcpServiceConnect")
     def gcp_service_connect(self) -> Optional[pulumi.Input['IdentityNativeNetworkResourceGcpServiceConnectArgs']]:
+        """
+        Capability provided by GCP that allows private communication between private VPC networks and compute running at Control Plane.
+        """
         return pulumi.get(self, "gcp_service_connect")
 
     @gcp_service_connect.setter
@@ -2035,28 +2590,30 @@ class IdentityNativeNetworkResourceArgs:
         pulumi.set(self, "gcp_service_connect", value)
 
 
+if not MYPY:
+    class IdentityNativeNetworkResourceAwsPrivateLinkArgsDict(TypedDict):
+        endpoint_service_name: pulumi.Input[str]
+        """
+        Endpoint service name.
+        """
+elif False:
+    IdentityNativeNetworkResourceAwsPrivateLinkArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class IdentityNativeNetworkResourceAwsPrivateLinkArgs:
     def __init__(__self__, *,
                  endpoint_service_name: pulumi.Input[str]):
-        IdentityNativeNetworkResourceAwsPrivateLinkArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            endpoint_service_name=endpoint_service_name,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             endpoint_service_name: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'endpointServiceName' in kwargs:
-            endpoint_service_name = kwargs['endpointServiceName']
-
-        _setter("endpoint_service_name", endpoint_service_name)
+        """
+        :param pulumi.Input[str] endpoint_service_name: Endpoint service name.
+        """
+        pulumi.set(__self__, "endpoint_service_name", endpoint_service_name)
 
     @property
     @pulumi.getter(name="endpointServiceName")
     def endpoint_service_name(self) -> pulumi.Input[str]:
+        """
+        Endpoint service name.
+        """
         return pulumi.get(self, "endpoint_service_name")
 
     @endpoint_service_name.setter
@@ -2064,34 +2621,65 @@ class IdentityNativeNetworkResourceAwsPrivateLinkArgs:
         pulumi.set(self, "endpoint_service_name", value)
 
 
+if not MYPY:
+    class IdentityNativeNetworkResourceGcpServiceConnectArgsDict(TypedDict):
+        target_service: pulumi.Input[str]
+        """
+        Target service name.
+        """
+elif False:
+    IdentityNativeNetworkResourceGcpServiceConnectArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class IdentityNativeNetworkResourceGcpServiceConnectArgs:
     def __init__(__self__, *,
                  target_service: pulumi.Input[str]):
-        IdentityNativeNetworkResourceGcpServiceConnectArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            target_service=target_service,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             target_service: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'targetService' in kwargs:
-            target_service = kwargs['targetService']
-
-        _setter("target_service", target_service)
+        """
+        :param pulumi.Input[str] target_service: Target service name.
+        """
+        pulumi.set(__self__, "target_service", target_service)
 
     @property
     @pulumi.getter(name="targetService")
     def target_service(self) -> pulumi.Input[str]:
+        """
+        Target service name.
+        """
         return pulumi.get(self, "target_service")
 
     @target_service.setter
     def target_service(self, value: pulumi.Input[str]):
         pulumi.set(self, "target_service", value)
 
+
+if not MYPY:
+    class IdentityNetworkResourceArgsDict(TypedDict):
+        name: pulumi.Input[str]
+        """
+        Name of the Network Resource.
+        """
+        ports: pulumi.Input[Sequence[pulumi.Input[int]]]
+        """
+        Ports to expose.
+        """
+        agent_link: NotRequired[pulumi.Input[str]]
+        """
+        Full link to referenced Agent.
+        """
+        fqdn: NotRequired[pulumi.Input[str]]
+        """
+        Fully qualified domain name.
+        """
+        ips: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        List of IP addresses.
+        """
+        resolver_ip: NotRequired[pulumi.Input[str]]
+        """
+        Resolver IP.
+        """
+elif False:
+    IdentityNetworkResourceArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class IdentityNetworkResourceArgs:
@@ -2102,45 +2690,31 @@ class IdentityNetworkResourceArgs:
                  fqdn: Optional[pulumi.Input[str]] = None,
                  ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  resolver_ip: Optional[pulumi.Input[str]] = None):
-        IdentityNetworkResourceArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            ports=ports,
-            agent_link=agent_link,
-            fqdn=fqdn,
-            ips=ips,
-            resolver_ip=resolver_ip,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: pulumi.Input[str],
-             ports: pulumi.Input[Sequence[pulumi.Input[int]]],
-             agent_link: Optional[pulumi.Input[str]] = None,
-             fqdn: Optional[pulumi.Input[str]] = None,
-             ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             resolver_ip: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'agentLink' in kwargs:
-            agent_link = kwargs['agentLink']
-        if 'resolverIp' in kwargs:
-            resolver_ip = kwargs['resolverIp']
-
-        _setter("name", name)
-        _setter("ports", ports)
+        """
+        :param pulumi.Input[str] name: Name of the Network Resource.
+        :param pulumi.Input[Sequence[pulumi.Input[int]]] ports: Ports to expose.
+        :param pulumi.Input[str] agent_link: Full link to referenced Agent.
+        :param pulumi.Input[str] fqdn: Fully qualified domain name.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] ips: List of IP addresses.
+        :param pulumi.Input[str] resolver_ip: Resolver IP.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "ports", ports)
         if agent_link is not None:
-            _setter("agent_link", agent_link)
+            pulumi.set(__self__, "agent_link", agent_link)
         if fqdn is not None:
-            _setter("fqdn", fqdn)
+            pulumi.set(__self__, "fqdn", fqdn)
         if ips is not None:
-            _setter("ips", ips)
+            pulumi.set(__self__, "ips", ips)
         if resolver_ip is not None:
-            _setter("resolver_ip", resolver_ip)
+            pulumi.set(__self__, "resolver_ip", resolver_ip)
 
     @property
     @pulumi.getter
     def name(self) -> pulumi.Input[str]:
+        """
+        Name of the Network Resource.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -2150,6 +2724,9 @@ class IdentityNetworkResourceArgs:
     @property
     @pulumi.getter
     def ports(self) -> pulumi.Input[Sequence[pulumi.Input[int]]]:
+        """
+        Ports to expose.
+        """
         return pulumi.get(self, "ports")
 
     @ports.setter
@@ -2159,6 +2736,9 @@ class IdentityNetworkResourceArgs:
     @property
     @pulumi.getter(name="agentLink")
     def agent_link(self) -> Optional[pulumi.Input[str]]:
+        """
+        Full link to referenced Agent.
+        """
         return pulumi.get(self, "agent_link")
 
     @agent_link.setter
@@ -2168,6 +2748,9 @@ class IdentityNetworkResourceArgs:
     @property
     @pulumi.getter
     def fqdn(self) -> Optional[pulumi.Input[str]]:
+        """
+        Fully qualified domain name.
+        """
         return pulumi.get(self, "fqdn")
 
     @fqdn.setter
@@ -2177,6 +2760,9 @@ class IdentityNetworkResourceArgs:
     @property
     @pulumi.getter
     def ips(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of IP addresses.
+        """
         return pulumi.get(self, "ips")
 
     @ips.setter
@@ -2186,12 +2772,48 @@ class IdentityNetworkResourceArgs:
     @property
     @pulumi.getter(name="resolverIp")
     def resolver_ip(self) -> Optional[pulumi.Input[str]]:
+        """
+        Resolver IP.
+        """
         return pulumi.get(self, "resolver_ip")
 
     @resolver_ip.setter
     def resolver_ip(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "resolver_ip", value)
 
+
+if not MYPY:
+    class IdentityNgsAccessPolicyArgsDict(TypedDict):
+        cloud_account_link: pulumi.Input[str]
+        """
+        Full link to referenced cloud account.
+        """
+        data: NotRequired[pulumi.Input[int]]
+        """
+        Max number of bytes a connection can send. Default: -1
+        """
+        payload: NotRequired[pulumi.Input[int]]
+        """
+        Max message payload. Default: -1
+        """
+        pub: NotRequired[pulumi.Input['IdentityNgsAccessPolicyPubArgsDict']]
+        """
+        Pub Permission.
+        """
+        resp: NotRequired[pulumi.Input['IdentityNgsAccessPolicyRespArgsDict']]
+        """
+        Reponses.
+        """
+        sub: NotRequired[pulumi.Input['IdentityNgsAccessPolicySubArgsDict']]
+        """
+        Sub Permission.
+        """
+        subs: NotRequired[pulumi.Input[int]]
+        """
+        Max number of subscriptions per connection. Default: -1
+        """
+elif False:
+    IdentityNgsAccessPolicyArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class IdentityNgsAccessPolicyArgs:
@@ -2203,48 +2825,35 @@ class IdentityNgsAccessPolicyArgs:
                  resp: Optional[pulumi.Input['IdentityNgsAccessPolicyRespArgs']] = None,
                  sub: Optional[pulumi.Input['IdentityNgsAccessPolicySubArgs']] = None,
                  subs: Optional[pulumi.Input[int]] = None):
-        IdentityNgsAccessPolicyArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            cloud_account_link=cloud_account_link,
-            data=data,
-            payload=payload,
-            pub=pub,
-            resp=resp,
-            sub=sub,
-            subs=subs,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             cloud_account_link: pulumi.Input[str],
-             data: Optional[pulumi.Input[int]] = None,
-             payload: Optional[pulumi.Input[int]] = None,
-             pub: Optional[pulumi.Input['IdentityNgsAccessPolicyPubArgs']] = None,
-             resp: Optional[pulumi.Input['IdentityNgsAccessPolicyRespArgs']] = None,
-             sub: Optional[pulumi.Input['IdentityNgsAccessPolicySubArgs']] = None,
-             subs: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'cloudAccountLink' in kwargs:
-            cloud_account_link = kwargs['cloudAccountLink']
-
-        _setter("cloud_account_link", cloud_account_link)
+        """
+        :param pulumi.Input[str] cloud_account_link: Full link to referenced cloud account.
+        :param pulumi.Input[int] data: Max number of bytes a connection can send. Default: -1
+        :param pulumi.Input[int] payload: Max message payload. Default: -1
+        :param pulumi.Input['IdentityNgsAccessPolicyPubArgs'] pub: Pub Permission.
+        :param pulumi.Input['IdentityNgsAccessPolicyRespArgs'] resp: Reponses.
+        :param pulumi.Input['IdentityNgsAccessPolicySubArgs'] sub: Sub Permission.
+        :param pulumi.Input[int] subs: Max number of subscriptions per connection. Default: -1
+        """
+        pulumi.set(__self__, "cloud_account_link", cloud_account_link)
         if data is not None:
-            _setter("data", data)
+            pulumi.set(__self__, "data", data)
         if payload is not None:
-            _setter("payload", payload)
+            pulumi.set(__self__, "payload", payload)
         if pub is not None:
-            _setter("pub", pub)
+            pulumi.set(__self__, "pub", pub)
         if resp is not None:
-            _setter("resp", resp)
+            pulumi.set(__self__, "resp", resp)
         if sub is not None:
-            _setter("sub", sub)
+            pulumi.set(__self__, "sub", sub)
         if subs is not None:
-            _setter("subs", subs)
+            pulumi.set(__self__, "subs", subs)
 
     @property
     @pulumi.getter(name="cloudAccountLink")
     def cloud_account_link(self) -> pulumi.Input[str]:
+        """
+        Full link to referenced cloud account.
+        """
         return pulumi.get(self, "cloud_account_link")
 
     @cloud_account_link.setter
@@ -2254,6 +2863,9 @@ class IdentityNgsAccessPolicyArgs:
     @property
     @pulumi.getter
     def data(self) -> Optional[pulumi.Input[int]]:
+        """
+        Max number of bytes a connection can send. Default: -1
+        """
         return pulumi.get(self, "data")
 
     @data.setter
@@ -2263,6 +2875,9 @@ class IdentityNgsAccessPolicyArgs:
     @property
     @pulumi.getter
     def payload(self) -> Optional[pulumi.Input[int]]:
+        """
+        Max message payload. Default: -1
+        """
         return pulumi.get(self, "payload")
 
     @payload.setter
@@ -2272,6 +2887,9 @@ class IdentityNgsAccessPolicyArgs:
     @property
     @pulumi.getter
     def pub(self) -> Optional[pulumi.Input['IdentityNgsAccessPolicyPubArgs']]:
+        """
+        Pub Permission.
+        """
         return pulumi.get(self, "pub")
 
     @pub.setter
@@ -2281,6 +2899,9 @@ class IdentityNgsAccessPolicyArgs:
     @property
     @pulumi.getter
     def resp(self) -> Optional[pulumi.Input['IdentityNgsAccessPolicyRespArgs']]:
+        """
+        Reponses.
+        """
         return pulumi.get(self, "resp")
 
     @resp.setter
@@ -2290,6 +2911,9 @@ class IdentityNgsAccessPolicyArgs:
     @property
     @pulumi.getter
     def sub(self) -> Optional[pulumi.Input['IdentityNgsAccessPolicySubArgs']]:
+        """
+        Sub Permission.
+        """
         return pulumi.get(self, "sub")
 
     @sub.setter
@@ -2299,6 +2923,9 @@ class IdentityNgsAccessPolicyArgs:
     @property
     @pulumi.getter
     def subs(self) -> Optional[pulumi.Input[int]]:
+        """
+        Max number of subscriptions per connection. Default: -1
+        """
         return pulumi.get(self, "subs")
 
     @subs.setter
@@ -2306,32 +2933,39 @@ class IdentityNgsAccessPolicyArgs:
         pulumi.set(self, "subs", value)
 
 
+if not MYPY:
+    class IdentityNgsAccessPolicyPubArgsDict(TypedDict):
+        allows: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        List of allow subjects.
+        """
+        denies: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        List of deny subjects.
+        """
+elif False:
+    IdentityNgsAccessPolicyPubArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class IdentityNgsAccessPolicyPubArgs:
     def __init__(__self__, *,
                  allows: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  denies: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
-        IdentityNgsAccessPolicyPubArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            allows=allows,
-            denies=denies,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             allows: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             denies: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] allows: List of allow subjects.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] denies: List of deny subjects.
+        """
         if allows is not None:
-            _setter("allows", allows)
+            pulumi.set(__self__, "allows", allows)
         if denies is not None:
-            _setter("denies", denies)
+            pulumi.set(__self__, "denies", denies)
 
     @property
     @pulumi.getter
     def allows(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of allow subjects.
+        """
         return pulumi.get(self, "allows")
 
     @allows.setter
@@ -2341,6 +2975,9 @@ class IdentityNgsAccessPolicyPubArgs:
     @property
     @pulumi.getter
     def denies(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of deny subjects.
+        """
         return pulumi.get(self, "denies")
 
     @denies.setter
@@ -2348,32 +2985,39 @@ class IdentityNgsAccessPolicyPubArgs:
         pulumi.set(self, "denies", value)
 
 
+if not MYPY:
+    class IdentityNgsAccessPolicyRespArgsDict(TypedDict):
+        max: NotRequired[pulumi.Input[int]]
+        """
+        Number of responses allowed on the replyTo subject, -1 means no limit. Default: -1
+        """
+        ttl: NotRequired[pulumi.Input[str]]
+        """
+        Deadline to send replies on the replyTo subject [#ms(millis) | #s(econds) | m(inutes) | h(ours)]. -1 means no restriction.
+        """
+elif False:
+    IdentityNgsAccessPolicyRespArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class IdentityNgsAccessPolicyRespArgs:
     def __init__(__self__, *,
                  max: Optional[pulumi.Input[int]] = None,
                  ttl: Optional[pulumi.Input[str]] = None):
-        IdentityNgsAccessPolicyRespArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            max=max,
-            ttl=ttl,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             max: Optional[pulumi.Input[int]] = None,
-             ttl: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[int] max: Number of responses allowed on the replyTo subject, -1 means no limit. Default: -1
+        :param pulumi.Input[str] ttl: Deadline to send replies on the replyTo subject [#ms(millis) | #s(econds) | m(inutes) | h(ours)]. -1 means no restriction.
+        """
         if max is not None:
-            _setter("max", max)
+            pulumi.set(__self__, "max", max)
         if ttl is not None:
-            _setter("ttl", ttl)
+            pulumi.set(__self__, "ttl", ttl)
 
     @property
     @pulumi.getter
     def max(self) -> Optional[pulumi.Input[int]]:
+        """
+        Number of responses allowed on the replyTo subject, -1 means no limit. Default: -1
+        """
         return pulumi.get(self, "max")
 
     @max.setter
@@ -2383,6 +3027,9 @@ class IdentityNgsAccessPolicyRespArgs:
     @property
     @pulumi.getter
     def ttl(self) -> Optional[pulumi.Input[str]]:
+        """
+        Deadline to send replies on the replyTo subject [#ms(millis) | #s(econds) | m(inutes) | h(ours)]. -1 means no restriction.
+        """
         return pulumi.get(self, "ttl")
 
     @ttl.setter
@@ -2390,32 +3037,39 @@ class IdentityNgsAccessPolicyRespArgs:
         pulumi.set(self, "ttl", value)
 
 
+if not MYPY:
+    class IdentityNgsAccessPolicySubArgsDict(TypedDict):
+        allows: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        List of allow subjects.
+        """
+        denies: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        List of deny subjects.
+        """
+elif False:
+    IdentityNgsAccessPolicySubArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class IdentityNgsAccessPolicySubArgs:
     def __init__(__self__, *,
                  allows: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  denies: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
-        IdentityNgsAccessPolicySubArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            allows=allows,
-            denies=denies,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             allows: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             denies: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] allows: List of allow subjects.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] denies: List of deny subjects.
+        """
         if allows is not None:
-            _setter("allows", allows)
+            pulumi.set(__self__, "allows", allows)
         if denies is not None:
-            _setter("denies", denies)
+            pulumi.set(__self__, "denies", denies)
 
     @property
     @pulumi.getter
     def allows(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of allow subjects.
+        """
         return pulumi.get(self, "allows")
 
     @allows.setter
@@ -2425,6 +3079,9 @@ class IdentityNgsAccessPolicySubArgs:
     @property
     @pulumi.getter
     def denies(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        List of deny subjects.
+        """
         return pulumi.get(self, "denies")
 
     @denies.setter
@@ -2432,32 +3089,33 @@ class IdentityNgsAccessPolicySubArgs:
         pulumi.set(self, "denies", value)
 
 
+if not MYPY:
+    class IpSetLocationArgsDict(TypedDict):
+        name: pulumi.Input[str]
+        """
+        The self link of a location.
+        """
+        retention_policy: pulumi.Input[str]
+elif False:
+    IpSetLocationArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class IpSetLocationArgs:
     def __init__(__self__, *,
                  name: pulumi.Input[str],
                  retention_policy: pulumi.Input[str]):
-        IpSetLocationArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            retention_policy=retention_policy,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: pulumi.Input[str],
-             retention_policy: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'retentionPolicy' in kwargs:
-            retention_policy = kwargs['retentionPolicy']
-
-        _setter("name", name)
-        _setter("retention_policy", retention_policy)
+        """
+        :param pulumi.Input[str] name: The self link of a location.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "retention_policy", retention_policy)
 
     @property
     @pulumi.getter
     def name(self) -> pulumi.Input[str]:
+        """
+        The self link of a location.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -2474,30 +3132,22 @@ class IpSetLocationArgs:
         pulumi.set(self, "retention_policy", value)
 
 
+if not MYPY:
+    class IpSetStatusArgsDict(TypedDict):
+        error: NotRequired[pulumi.Input[str]]
+        ip_addresses: NotRequired[pulumi.Input[Sequence[pulumi.Input['IpSetStatusIpAddressArgsDict']]]]
+elif False:
+    IpSetStatusArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class IpSetStatusArgs:
     def __init__(__self__, *,
                  error: Optional[pulumi.Input[str]] = None,
                  ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input['IpSetStatusIpAddressArgs']]]] = None):
-        IpSetStatusArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            error=error,
-            ip_addresses=ip_addresses,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             error: Optional[pulumi.Input[str]] = None,
-             ip_addresses: Optional[pulumi.Input[Sequence[pulumi.Input['IpSetStatusIpAddressArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'ipAddresses' in kwargs:
-            ip_addresses = kwargs['ipAddresses']
-
         if error is not None:
-            _setter("error", error)
+            pulumi.set(__self__, "error", error)
         if ip_addresses is not None:
-            _setter("ip_addresses", ip_addresses)
+            pulumi.set(__self__, "ip_addresses", ip_addresses)
 
     @property
     @pulumi.getter
@@ -2518,6 +3168,16 @@ class IpSetStatusArgs:
         pulumi.set(self, "ip_addresses", value)
 
 
+if not MYPY:
+    class IpSetStatusIpAddressArgsDict(TypedDict):
+        created: NotRequired[pulumi.Input[str]]
+        id: NotRequired[pulumi.Input[str]]
+        ip: NotRequired[pulumi.Input[str]]
+        name: NotRequired[pulumi.Input[str]]
+        state: NotRequired[pulumi.Input[str]]
+elif False:
+    IpSetStatusIpAddressArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class IpSetStatusIpAddressArgs:
     def __init__(__self__, *,
@@ -2526,35 +3186,16 @@ class IpSetStatusIpAddressArgs:
                  ip: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  state: Optional[pulumi.Input[str]] = None):
-        IpSetStatusIpAddressArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            created=created,
-            id=id,
-            ip=ip,
-            name=name,
-            state=state,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             created: Optional[pulumi.Input[str]] = None,
-             id: Optional[pulumi.Input[str]] = None,
-             ip: Optional[pulumi.Input[str]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             state: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if created is not None:
-            _setter("created", created)
+            pulumi.set(__self__, "created", created)
         if id is not None:
-            _setter("id", id)
+            pulumi.set(__self__, "id", id)
         if ip is not None:
-            _setter("ip", ip)
+            pulumi.set(__self__, "ip", ip)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if state is not None:
-            _setter("state", state)
+            pulumi.set(__self__, "state", state)
 
     @property
     @pulumi.getter
@@ -2602,6 +3243,35 @@ class IpSetStatusIpAddressArgs:
         pulumi.set(self, "state", value)
 
 
+if not MYPY:
+    class LocationGeoArgsDict(TypedDict):
+        city: NotRequired[pulumi.Input[str]]
+        """
+        City.
+        """
+        continent: NotRequired[pulumi.Input[str]]
+        """
+        Continent.
+        """
+        country: NotRequired[pulumi.Input[str]]
+        """
+        Country.
+        """
+        lat: NotRequired[pulumi.Input[float]]
+        """
+        Latitude.
+        """
+        lon: NotRequired[pulumi.Input[float]]
+        """
+        Longitude.
+        """
+        state: NotRequired[pulumi.Input[str]]
+        """
+        State.
+        """
+elif False:
+    LocationGeoArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class LocationGeoArgs:
     def __init__(__self__, *,
@@ -2611,43 +3281,33 @@ class LocationGeoArgs:
                  lat: Optional[pulumi.Input[float]] = None,
                  lon: Optional[pulumi.Input[float]] = None,
                  state: Optional[pulumi.Input[str]] = None):
-        LocationGeoArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            city=city,
-            continent=continent,
-            country=country,
-            lat=lat,
-            lon=lon,
-            state=state,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             city: Optional[pulumi.Input[str]] = None,
-             continent: Optional[pulumi.Input[str]] = None,
-             country: Optional[pulumi.Input[str]] = None,
-             lat: Optional[pulumi.Input[float]] = None,
-             lon: Optional[pulumi.Input[float]] = None,
-             state: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[str] city: City.
+        :param pulumi.Input[str] continent: Continent.
+        :param pulumi.Input[str] country: Country.
+        :param pulumi.Input[float] lat: Latitude.
+        :param pulumi.Input[float] lon: Longitude.
+        :param pulumi.Input[str] state: State.
+        """
         if city is not None:
-            _setter("city", city)
+            pulumi.set(__self__, "city", city)
         if continent is not None:
-            _setter("continent", continent)
+            pulumi.set(__self__, "continent", continent)
         if country is not None:
-            _setter("country", country)
+            pulumi.set(__self__, "country", country)
         if lat is not None:
-            _setter("lat", lat)
+            pulumi.set(__self__, "lat", lat)
         if lon is not None:
-            _setter("lon", lon)
+            pulumi.set(__self__, "lon", lon)
         if state is not None:
-            _setter("state", state)
+            pulumi.set(__self__, "state", state)
 
     @property
     @pulumi.getter
     def city(self) -> Optional[pulumi.Input[str]]:
+        """
+        City.
+        """
         return pulumi.get(self, "city")
 
     @city.setter
@@ -2657,6 +3317,9 @@ class LocationGeoArgs:
     @property
     @pulumi.getter
     def continent(self) -> Optional[pulumi.Input[str]]:
+        """
+        Continent.
+        """
         return pulumi.get(self, "continent")
 
     @continent.setter
@@ -2666,6 +3329,9 @@ class LocationGeoArgs:
     @property
     @pulumi.getter
     def country(self) -> Optional[pulumi.Input[str]]:
+        """
+        Country.
+        """
         return pulumi.get(self, "country")
 
     @country.setter
@@ -2675,6 +3341,9 @@ class LocationGeoArgs:
     @property
     @pulumi.getter
     def lat(self) -> Optional[pulumi.Input[float]]:
+        """
+        Latitude.
+        """
         return pulumi.get(self, "lat")
 
     @lat.setter
@@ -2684,6 +3353,9 @@ class LocationGeoArgs:
     @property
     @pulumi.getter
     def lon(self) -> Optional[pulumi.Input[float]]:
+        """
+        Longitude.
+        """
         return pulumi.get(self, "lon")
 
     @lon.setter
@@ -2693,12 +3365,32 @@ class LocationGeoArgs:
     @property
     @pulumi.getter
     def state(self) -> Optional[pulumi.Input[str]]:
+        """
+        State.
+        """
         return pulumi.get(self, "state")
 
     @state.setter
     def state(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "state", value)
 
+
+if not MYPY:
+    class Mk8sAddOnsArgsDict(TypedDict):
+        aws_ecr: NotRequired[pulumi.Input['Mk8sAddOnsAwsEcrArgsDict']]
+        aws_efs: NotRequired[pulumi.Input['Mk8sAddOnsAwsEfsArgsDict']]
+        aws_elb: NotRequired[pulumi.Input['Mk8sAddOnsAwsElbArgsDict']]
+        aws_workload_identity: NotRequired[pulumi.Input[bool]]
+        azure_acr: NotRequired[pulumi.Input['Mk8sAddOnsAzureAcrArgsDict']]
+        azure_workload_identity: NotRequired[pulumi.Input['Mk8sAddOnsAzureWorkloadIdentityArgsDict']]
+        dashboard: NotRequired[pulumi.Input[bool]]
+        local_path_storage: NotRequired[pulumi.Input[bool]]
+        logs: NotRequired[pulumi.Input['Mk8sAddOnsLogsArgsDict']]
+        metrics: NotRequired[pulumi.Input['Mk8sAddOnsMetricsArgsDict']]
+        nvidia: NotRequired[pulumi.Input['Mk8sAddOnsNvidiaArgsDict']]
+        sysbox: NotRequired[pulumi.Input[bool]]
+elif False:
+    Mk8sAddOnsArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sAddOnsArgs:
@@ -2715,77 +3407,30 @@ class Mk8sAddOnsArgs:
                  metrics: Optional[pulumi.Input['Mk8sAddOnsMetricsArgs']] = None,
                  nvidia: Optional[pulumi.Input['Mk8sAddOnsNvidiaArgs']] = None,
                  sysbox: Optional[pulumi.Input[bool]] = None):
-        Mk8sAddOnsArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            aws_ecr=aws_ecr,
-            aws_efs=aws_efs,
-            aws_elb=aws_elb,
-            aws_workload_identity=aws_workload_identity,
-            azure_acr=azure_acr,
-            azure_workload_identity=azure_workload_identity,
-            dashboard=dashboard,
-            local_path_storage=local_path_storage,
-            logs=logs,
-            metrics=metrics,
-            nvidia=nvidia,
-            sysbox=sysbox,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             aws_ecr: Optional[pulumi.Input['Mk8sAddOnsAwsEcrArgs']] = None,
-             aws_efs: Optional[pulumi.Input['Mk8sAddOnsAwsEfsArgs']] = None,
-             aws_elb: Optional[pulumi.Input['Mk8sAddOnsAwsElbArgs']] = None,
-             aws_workload_identity: Optional[pulumi.Input[bool]] = None,
-             azure_acr: Optional[pulumi.Input['Mk8sAddOnsAzureAcrArgs']] = None,
-             azure_workload_identity: Optional[pulumi.Input['Mk8sAddOnsAzureWorkloadIdentityArgs']] = None,
-             dashboard: Optional[pulumi.Input[bool]] = None,
-             local_path_storage: Optional[pulumi.Input[bool]] = None,
-             logs: Optional[pulumi.Input['Mk8sAddOnsLogsArgs']] = None,
-             metrics: Optional[pulumi.Input['Mk8sAddOnsMetricsArgs']] = None,
-             nvidia: Optional[pulumi.Input['Mk8sAddOnsNvidiaArgs']] = None,
-             sysbox: Optional[pulumi.Input[bool]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'awsEcr' in kwargs:
-            aws_ecr = kwargs['awsEcr']
-        if 'awsEfs' in kwargs:
-            aws_efs = kwargs['awsEfs']
-        if 'awsElb' in kwargs:
-            aws_elb = kwargs['awsElb']
-        if 'awsWorkloadIdentity' in kwargs:
-            aws_workload_identity = kwargs['awsWorkloadIdentity']
-        if 'azureAcr' in kwargs:
-            azure_acr = kwargs['azureAcr']
-        if 'azureWorkloadIdentity' in kwargs:
-            azure_workload_identity = kwargs['azureWorkloadIdentity']
-        if 'localPathStorage' in kwargs:
-            local_path_storage = kwargs['localPathStorage']
-
         if aws_ecr is not None:
-            _setter("aws_ecr", aws_ecr)
+            pulumi.set(__self__, "aws_ecr", aws_ecr)
         if aws_efs is not None:
-            _setter("aws_efs", aws_efs)
+            pulumi.set(__self__, "aws_efs", aws_efs)
         if aws_elb is not None:
-            _setter("aws_elb", aws_elb)
+            pulumi.set(__self__, "aws_elb", aws_elb)
         if aws_workload_identity is not None:
-            _setter("aws_workload_identity", aws_workload_identity)
+            pulumi.set(__self__, "aws_workload_identity", aws_workload_identity)
         if azure_acr is not None:
-            _setter("azure_acr", azure_acr)
+            pulumi.set(__self__, "azure_acr", azure_acr)
         if azure_workload_identity is not None:
-            _setter("azure_workload_identity", azure_workload_identity)
+            pulumi.set(__self__, "azure_workload_identity", azure_workload_identity)
         if dashboard is not None:
-            _setter("dashboard", dashboard)
+            pulumi.set(__self__, "dashboard", dashboard)
         if local_path_storage is not None:
-            _setter("local_path_storage", local_path_storage)
+            pulumi.set(__self__, "local_path_storage", local_path_storage)
         if logs is not None:
-            _setter("logs", logs)
+            pulumi.set(__self__, "logs", logs)
         if metrics is not None:
-            _setter("metrics", metrics)
+            pulumi.set(__self__, "metrics", metrics)
         if nvidia is not None:
-            _setter("nvidia", nvidia)
+            pulumi.set(__self__, "nvidia", nvidia)
         if sysbox is not None:
-            _setter("sysbox", sysbox)
+            pulumi.set(__self__, "sysbox", sysbox)
 
     @property
     @pulumi.getter(name="awsEcr")
@@ -2896,30 +3541,28 @@ class Mk8sAddOnsArgs:
         pulumi.set(self, "sysbox", value)
 
 
+if not MYPY:
+    class Mk8sAddOnsAwsEcrArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        role_arn: NotRequired[pulumi.Input[str]]
+        """
+        Role to use when authorizing ECR pulls. Optional on AWS, in which case it will use the instance role to pull.
+        """
+elif False:
+    Mk8sAddOnsAwsEcrArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sAddOnsAwsEcrArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  role_arn: Optional[pulumi.Input[str]] = None):
-        Mk8sAddOnsAwsEcrArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            role_arn=role_arn,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             role_arn: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'roleArn' in kwargs:
-            role_arn = kwargs['roleArn']
-
+        """
+        :param pulumi.Input[str] role_arn: Role to use when authorizing ECR pulls. Optional on AWS, in which case it will use the instance role to pull.
+        """
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if role_arn is not None:
-            _setter("role_arn", role_arn)
+            pulumi.set(__self__, "role_arn", role_arn)
 
     @property
     @pulumi.getter
@@ -2933,37 +3576,38 @@ class Mk8sAddOnsAwsEcrArgs:
     @property
     @pulumi.getter(name="roleArn")
     def role_arn(self) -> Optional[pulumi.Input[str]]:
+        """
+        Role to use when authorizing ECR pulls. Optional on AWS, in which case it will use the instance role to pull.
+        """
         return pulumi.get(self, "role_arn")
 
     @role_arn.setter
     def role_arn(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "role_arn", value)
 
+
+if not MYPY:
+    class Mk8sAddOnsAwsEfsArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        role_arn: NotRequired[pulumi.Input[str]]
+        """
+        Use this role for EFS interaction.
+        """
+elif False:
+    Mk8sAddOnsAwsEfsArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sAddOnsAwsEfsArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  role_arn: Optional[pulumi.Input[str]] = None):
-        Mk8sAddOnsAwsEfsArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            role_arn=role_arn,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             role_arn: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'roleArn' in kwargs:
-            role_arn = kwargs['roleArn']
-
+        """
+        :param pulumi.Input[str] role_arn: Use this role for EFS interaction.
+        """
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if role_arn is not None:
-            _setter("role_arn", role_arn)
+            pulumi.set(__self__, "role_arn", role_arn)
 
     @property
     @pulumi.getter
@@ -2977,37 +3621,38 @@ class Mk8sAddOnsAwsEfsArgs:
     @property
     @pulumi.getter(name="roleArn")
     def role_arn(self) -> Optional[pulumi.Input[str]]:
+        """
+        Use this role for EFS interaction.
+        """
         return pulumi.get(self, "role_arn")
 
     @role_arn.setter
     def role_arn(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "role_arn", value)
 
+
+if not MYPY:
+    class Mk8sAddOnsAwsElbArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        role_arn: NotRequired[pulumi.Input[str]]
+        """
+        Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.
+        """
+elif False:
+    Mk8sAddOnsAwsElbArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sAddOnsAwsElbArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  role_arn: Optional[pulumi.Input[str]] = None):
-        Mk8sAddOnsAwsElbArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            role_arn=role_arn,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             role_arn: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'roleArn' in kwargs:
-            role_arn = kwargs['roleArn']
-
+        """
+        :param pulumi.Input[str] role_arn: Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.
+        """
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if role_arn is not None:
-            _setter("role_arn", role_arn)
+            pulumi.set(__self__, "role_arn", role_arn)
 
     @property
     @pulumi.getter
@@ -3021,6 +3666,9 @@ class Mk8sAddOnsAwsElbArgs:
     @property
     @pulumi.getter(name="roleArn")
     def role_arn(self) -> Optional[pulumi.Input[str]]:
+        """
+        Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.
+        """
         return pulumi.get(self, "role_arn")
 
     @role_arn.setter
@@ -3028,24 +3676,17 @@ class Mk8sAddOnsAwsElbArgs:
         pulumi.set(self, "role_arn", value)
 
 
+if not MYPY:
+    class Mk8sAddOnsAzureAcrArgsDict(TypedDict):
+        client_id: pulumi.Input[str]
+elif False:
+    Mk8sAddOnsAzureAcrArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sAddOnsAzureAcrArgs:
     def __init__(__self__, *,
                  client_id: pulumi.Input[str]):
-        Mk8sAddOnsAzureAcrArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            client_id=client_id,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             client_id: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'clientId' in kwargs:
-            client_id = kwargs['clientId']
-
-        _setter("client_id", client_id)
+        pulumi.set(__self__, "client_id", client_id)
 
     @property
     @pulumi.getter(name="clientId")
@@ -3057,30 +3698,28 @@ class Mk8sAddOnsAzureAcrArgs:
         pulumi.set(self, "client_id", value)
 
 
+if not MYPY:
+    class Mk8sAddOnsAzureWorkloadIdentityArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        tenant_id: NotRequired[pulumi.Input[str]]
+        """
+        Tenant ID to use for workload identity.
+        """
+elif False:
+    Mk8sAddOnsAzureWorkloadIdentityArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sAddOnsAzureWorkloadIdentityArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  tenant_id: Optional[pulumi.Input[str]] = None):
-        Mk8sAddOnsAzureWorkloadIdentityArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            tenant_id=tenant_id,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             tenant_id: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'tenantId' in kwargs:
-            tenant_id = kwargs['tenantId']
-
+        """
+        :param pulumi.Input[str] tenant_id: Tenant ID to use for workload identity.
+        """
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if tenant_id is not None:
-            _setter("tenant_id", tenant_id)
+            pulumi.set(__self__, "tenant_id", tenant_id)
 
     @property
     @pulumi.getter
@@ -3094,12 +3733,27 @@ class Mk8sAddOnsAzureWorkloadIdentityArgs:
     @property
     @pulumi.getter(name="tenantId")
     def tenant_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Tenant ID to use for workload identity.
+        """
         return pulumi.get(self, "tenant_id")
 
     @tenant_id.setter
     def tenant_id(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "tenant_id", value)
 
+
+if not MYPY:
+    class Mk8sAddOnsLogsArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        audit_enabled: NotRequired[pulumi.Input[bool]]
+        """
+        Collect k8s audit log as log events.
+        """
+        exclude_namespaces: NotRequired[pulumi.Input[str]]
+        include_namespaces: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sAddOnsLogsArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sAddOnsLogsArgs:
@@ -3108,37 +3762,17 @@ class Mk8sAddOnsLogsArgs:
                  audit_enabled: Optional[pulumi.Input[bool]] = None,
                  exclude_namespaces: Optional[pulumi.Input[str]] = None,
                  include_namespaces: Optional[pulumi.Input[str]] = None):
-        Mk8sAddOnsLogsArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            audit_enabled=audit_enabled,
-            exclude_namespaces=exclude_namespaces,
-            include_namespaces=include_namespaces,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             audit_enabled: Optional[pulumi.Input[bool]] = None,
-             exclude_namespaces: Optional[pulumi.Input[str]] = None,
-             include_namespaces: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'auditEnabled' in kwargs:
-            audit_enabled = kwargs['auditEnabled']
-        if 'excludeNamespaces' in kwargs:
-            exclude_namespaces = kwargs['excludeNamespaces']
-        if 'includeNamespaces' in kwargs:
-            include_namespaces = kwargs['includeNamespaces']
-
+        """
+        :param pulumi.Input[bool] audit_enabled: Collect k8s audit log as log events.
+        """
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if audit_enabled is not None:
-            _setter("audit_enabled", audit_enabled)
+            pulumi.set(__self__, "audit_enabled", audit_enabled)
         if exclude_namespaces is not None:
-            _setter("exclude_namespaces", exclude_namespaces)
+            pulumi.set(__self__, "exclude_namespaces", exclude_namespaces)
         if include_namespaces is not None:
-            _setter("include_namespaces", include_namespaces)
+            pulumi.set(__self__, "include_namespaces", include_namespaces)
 
     @property
     @pulumi.getter
@@ -3152,6 +3786,9 @@ class Mk8sAddOnsLogsArgs:
     @property
     @pulumi.getter(name="auditEnabled")
     def audit_enabled(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Collect k8s audit log as log events.
+        """
         return pulumi.get(self, "audit_enabled")
 
     @audit_enabled.setter
@@ -3177,6 +3814,40 @@ class Mk8sAddOnsLogsArgs:
         pulumi.set(self, "include_namespaces", value)
 
 
+if not MYPY:
+    class Mk8sAddOnsMetricsArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        api_server: NotRequired[pulumi.Input[bool]]
+        """
+        Enable scraping apiserver stats.
+        """
+        cadvisor: NotRequired[pulumi.Input[bool]]
+        """
+        Enable CNI-level container stats.
+        """
+        core_dns: NotRequired[pulumi.Input[bool]]
+        """
+        Enable scraping of core-dns service.
+        """
+        kube_state: NotRequired[pulumi.Input[bool]]
+        """
+        Enable kube-state metrics.
+        """
+        kubelet: NotRequired[pulumi.Input[bool]]
+        """
+        Enable scraping kubelet stats.
+        """
+        node_exporter: NotRequired[pulumi.Input[bool]]
+        """
+        Enable collecting node-level stats (disk, network, filesystem, etc).
+        """
+        scrape_annotated: NotRequired[pulumi.Input['Mk8sAddOnsMetricsScrapeAnnotatedArgsDict']]
+        """
+        Scrape pods annotated with prometheus.io/scrape=true.
+        """
+elif False:
+    Mk8sAddOnsMetricsArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sAddOnsMetricsArgs:
     def __init__(__self__, *,
@@ -3188,57 +3859,31 @@ class Mk8sAddOnsMetricsArgs:
                  kubelet: Optional[pulumi.Input[bool]] = None,
                  node_exporter: Optional[pulumi.Input[bool]] = None,
                  scrape_annotated: Optional[pulumi.Input['Mk8sAddOnsMetricsScrapeAnnotatedArgs']] = None):
-        Mk8sAddOnsMetricsArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            api_server=api_server,
-            cadvisor=cadvisor,
-            core_dns=core_dns,
-            kube_state=kube_state,
-            kubelet=kubelet,
-            node_exporter=node_exporter,
-            scrape_annotated=scrape_annotated,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             api_server: Optional[pulumi.Input[bool]] = None,
-             cadvisor: Optional[pulumi.Input[bool]] = None,
-             core_dns: Optional[pulumi.Input[bool]] = None,
-             kube_state: Optional[pulumi.Input[bool]] = None,
-             kubelet: Optional[pulumi.Input[bool]] = None,
-             node_exporter: Optional[pulumi.Input[bool]] = None,
-             scrape_annotated: Optional[pulumi.Input['Mk8sAddOnsMetricsScrapeAnnotatedArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'apiServer' in kwargs:
-            api_server = kwargs['apiServer']
-        if 'coreDns' in kwargs:
-            core_dns = kwargs['coreDns']
-        if 'kubeState' in kwargs:
-            kube_state = kwargs['kubeState']
-        if 'nodeExporter' in kwargs:
-            node_exporter = kwargs['nodeExporter']
-        if 'scrapeAnnotated' in kwargs:
-            scrape_annotated = kwargs['scrapeAnnotated']
-
+        """
+        :param pulumi.Input[bool] api_server: Enable scraping apiserver stats.
+        :param pulumi.Input[bool] cadvisor: Enable CNI-level container stats.
+        :param pulumi.Input[bool] core_dns: Enable scraping of core-dns service.
+        :param pulumi.Input[bool] kube_state: Enable kube-state metrics.
+        :param pulumi.Input[bool] kubelet: Enable scraping kubelet stats.
+        :param pulumi.Input[bool] node_exporter: Enable collecting node-level stats (disk, network, filesystem, etc).
+        :param pulumi.Input['Mk8sAddOnsMetricsScrapeAnnotatedArgs'] scrape_annotated: Scrape pods annotated with prometheus.io/scrape=true.
+        """
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if api_server is not None:
-            _setter("api_server", api_server)
+            pulumi.set(__self__, "api_server", api_server)
         if cadvisor is not None:
-            _setter("cadvisor", cadvisor)
+            pulumi.set(__self__, "cadvisor", cadvisor)
         if core_dns is not None:
-            _setter("core_dns", core_dns)
+            pulumi.set(__self__, "core_dns", core_dns)
         if kube_state is not None:
-            _setter("kube_state", kube_state)
+            pulumi.set(__self__, "kube_state", kube_state)
         if kubelet is not None:
-            _setter("kubelet", kubelet)
+            pulumi.set(__self__, "kubelet", kubelet)
         if node_exporter is not None:
-            _setter("node_exporter", node_exporter)
+            pulumi.set(__self__, "node_exporter", node_exporter)
         if scrape_annotated is not None:
-            _setter("scrape_annotated", scrape_annotated)
+            pulumi.set(__self__, "scrape_annotated", scrape_annotated)
 
     @property
     @pulumi.getter
@@ -3252,6 +3897,9 @@ class Mk8sAddOnsMetricsArgs:
     @property
     @pulumi.getter(name="apiServer")
     def api_server(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Enable scraping apiserver stats.
+        """
         return pulumi.get(self, "api_server")
 
     @api_server.setter
@@ -3261,6 +3909,9 @@ class Mk8sAddOnsMetricsArgs:
     @property
     @pulumi.getter
     def cadvisor(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Enable CNI-level container stats.
+        """
         return pulumi.get(self, "cadvisor")
 
     @cadvisor.setter
@@ -3270,6 +3921,9 @@ class Mk8sAddOnsMetricsArgs:
     @property
     @pulumi.getter(name="coreDns")
     def core_dns(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Enable scraping of core-dns service.
+        """
         return pulumi.get(self, "core_dns")
 
     @core_dns.setter
@@ -3279,6 +3933,9 @@ class Mk8sAddOnsMetricsArgs:
     @property
     @pulumi.getter(name="kubeState")
     def kube_state(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Enable kube-state metrics.
+        """
         return pulumi.get(self, "kube_state")
 
     @kube_state.setter
@@ -3288,6 +3945,9 @@ class Mk8sAddOnsMetricsArgs:
     @property
     @pulumi.getter
     def kubelet(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Enable scraping kubelet stats.
+        """
         return pulumi.get(self, "kubelet")
 
     @kubelet.setter
@@ -3297,6 +3957,9 @@ class Mk8sAddOnsMetricsArgs:
     @property
     @pulumi.getter(name="nodeExporter")
     def node_exporter(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Enable collecting node-level stats (disk, network, filesystem, etc).
+        """
         return pulumi.get(self, "node_exporter")
 
     @node_exporter.setter
@@ -3306,12 +3969,25 @@ class Mk8sAddOnsMetricsArgs:
     @property
     @pulumi.getter(name="scrapeAnnotated")
     def scrape_annotated(self) -> Optional[pulumi.Input['Mk8sAddOnsMetricsScrapeAnnotatedArgs']]:
+        """
+        Scrape pods annotated with prometheus.io/scrape=true.
+        """
         return pulumi.get(self, "scrape_annotated")
 
     @scrape_annotated.setter
     def scrape_annotated(self, value: Optional[pulumi.Input['Mk8sAddOnsMetricsScrapeAnnotatedArgs']]):
         pulumi.set(self, "scrape_annotated", value)
 
+
+if not MYPY:
+    class Mk8sAddOnsMetricsScrapeAnnotatedArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        exclude_namespaces: NotRequired[pulumi.Input[str]]
+        include_namespaces: NotRequired[pulumi.Input[str]]
+        interval_seconds: NotRequired[pulumi.Input[int]]
+        retain_labels: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sAddOnsMetricsScrapeAnnotatedArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sAddOnsMetricsScrapeAnnotatedArgs:
@@ -3321,43 +3997,16 @@ class Mk8sAddOnsMetricsScrapeAnnotatedArgs:
                  include_namespaces: Optional[pulumi.Input[str]] = None,
                  interval_seconds: Optional[pulumi.Input[int]] = None,
                  retain_labels: Optional[pulumi.Input[str]] = None):
-        Mk8sAddOnsMetricsScrapeAnnotatedArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            exclude_namespaces=exclude_namespaces,
-            include_namespaces=include_namespaces,
-            interval_seconds=interval_seconds,
-            retain_labels=retain_labels,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             exclude_namespaces: Optional[pulumi.Input[str]] = None,
-             include_namespaces: Optional[pulumi.Input[str]] = None,
-             interval_seconds: Optional[pulumi.Input[int]] = None,
-             retain_labels: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'excludeNamespaces' in kwargs:
-            exclude_namespaces = kwargs['excludeNamespaces']
-        if 'includeNamespaces' in kwargs:
-            include_namespaces = kwargs['includeNamespaces']
-        if 'intervalSeconds' in kwargs:
-            interval_seconds = kwargs['intervalSeconds']
-        if 'retainLabels' in kwargs:
-            retain_labels = kwargs['retainLabels']
-
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if exclude_namespaces is not None:
-            _setter("exclude_namespaces", exclude_namespaces)
+            pulumi.set(__self__, "exclude_namespaces", exclude_namespaces)
         if include_namespaces is not None:
-            _setter("include_namespaces", include_namespaces)
+            pulumi.set(__self__, "include_namespaces", include_namespaces)
         if interval_seconds is not None:
-            _setter("interval_seconds", interval_seconds)
+            pulumi.set(__self__, "interval_seconds", interval_seconds)
         if retain_labels is not None:
-            _setter("retain_labels", retain_labels)
+            pulumi.set(__self__, "retain_labels", retain_labels)
 
     @property
     @pulumi.getter
@@ -3405,30 +4054,22 @@ class Mk8sAddOnsMetricsScrapeAnnotatedArgs:
         pulumi.set(self, "retain_labels", value)
 
 
+if not MYPY:
+    class Mk8sAddOnsNvidiaArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        taint_gpu_nodes: NotRequired[pulumi.Input[bool]]
+elif False:
+    Mk8sAddOnsNvidiaArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sAddOnsNvidiaArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  taint_gpu_nodes: Optional[pulumi.Input[bool]] = None):
-        Mk8sAddOnsNvidiaArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            taint_gpu_nodes=taint_gpu_nodes,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             taint_gpu_nodes: Optional[pulumi.Input[bool]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'taintGpuNodes' in kwargs:
-            taint_gpu_nodes = kwargs['taintGpuNodes']
-
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if taint_gpu_nodes is not None:
-            _setter("taint_gpu_nodes", taint_gpu_nodes)
+            pulumi.set(__self__, "taint_gpu_nodes", taint_gpu_nodes)
 
     @property
     @pulumi.getter
@@ -3449,6 +4090,59 @@ class Mk8sAddOnsNvidiaArgs:
         pulumi.set(self, "taint_gpu_nodes", value)
 
 
+if not MYPY:
+    class Mk8sAwsProviderArgsDict(TypedDict):
+        deploy_role_arn: pulumi.Input[str]
+        """
+        Control Plane will set up the cluster by assuming this role.
+        """
+        image: pulumi.Input['Mk8sAwsProviderImageArgsDict']
+        """
+        Default image for all nodes.
+        """
+        networking: pulumi.Input['Mk8sAwsProviderNetworkingArgsDict']
+        region: pulumi.Input[str]
+        """
+        Region where the cluster nodes will live.
+        """
+        vpc_id: pulumi.Input[str]
+        """
+        The vpc where nodes will be deployed. Supports SSM.
+        """
+        autoscaler: NotRequired[pulumi.Input['Mk8sAwsProviderAutoscalerArgsDict']]
+        aws_tags: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Extra tags to attach to all created objects.
+        """
+        deploy_role_chains: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sAwsProviderDeployRoleChainArgsDict']]]]
+        disk_encryption_key_arn: NotRequired[pulumi.Input[str]]
+        """
+        KMS key used to encrypt volumes. Supports SSM.
+        """
+        extra_node_policies: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        key_pair: NotRequired[pulumi.Input[str]]
+        """
+        Name of keyPair. Supports SSM
+        """
+        node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sAwsProviderNodePoolArgsDict']]]]
+        """
+        List of node pools.
+        """
+        pre_install_script: NotRequired[pulumi.Input[str]]
+        """
+        Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
+        security_group_ids: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        Security groups to deploy nodes to. Security groups control if the cluster is multi-zone or single-zon.
+        """
+        skip_create_roles: NotRequired[pulumi.Input[bool]]
+        """
+        If true, Control Plane will not create any roles.
+        """
+elif False:
+    Mk8sAwsProviderArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sAwsProviderArgs:
     def __init__(__self__, *,
@@ -3467,96 +4161,51 @@ class Mk8sAwsProviderArgs:
                  pre_install_script: Optional[pulumi.Input[str]] = None,
                  security_group_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  skip_create_roles: Optional[pulumi.Input[bool]] = None):
-        Mk8sAwsProviderArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            deploy_role_arn=deploy_role_arn,
-            image=image,
-            networking=networking,
-            region=region,
-            vpc_id=vpc_id,
-            autoscaler=autoscaler,
-            aws_tags=aws_tags,
-            deploy_role_chains=deploy_role_chains,
-            disk_encryption_key_arn=disk_encryption_key_arn,
-            extra_node_policies=extra_node_policies,
-            key_pair=key_pair,
-            node_pools=node_pools,
-            pre_install_script=pre_install_script,
-            security_group_ids=security_group_ids,
-            skip_create_roles=skip_create_roles,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             deploy_role_arn: pulumi.Input[str],
-             image: pulumi.Input['Mk8sAwsProviderImageArgs'],
-             networking: pulumi.Input['Mk8sAwsProviderNetworkingArgs'],
-             region: pulumi.Input[str],
-             vpc_id: pulumi.Input[str],
-             autoscaler: Optional[pulumi.Input['Mk8sAwsProviderAutoscalerArgs']] = None,
-             aws_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             deploy_role_chains: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sAwsProviderDeployRoleChainArgs']]]] = None,
-             disk_encryption_key_arn: Optional[pulumi.Input[str]] = None,
-             extra_node_policies: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             key_pair: Optional[pulumi.Input[str]] = None,
-             node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sAwsProviderNodePoolArgs']]]] = None,
-             pre_install_script: Optional[pulumi.Input[str]] = None,
-             security_group_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             skip_create_roles: Optional[pulumi.Input[bool]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'deployRoleArn' in kwargs:
-            deploy_role_arn = kwargs['deployRoleArn']
-        if 'vpcId' in kwargs:
-            vpc_id = kwargs['vpcId']
-        if 'awsTags' in kwargs:
-            aws_tags = kwargs['awsTags']
-        if 'deployRoleChains' in kwargs:
-            deploy_role_chains = kwargs['deployRoleChains']
-        if 'diskEncryptionKeyArn' in kwargs:
-            disk_encryption_key_arn = kwargs['diskEncryptionKeyArn']
-        if 'extraNodePolicies' in kwargs:
-            extra_node_policies = kwargs['extraNodePolicies']
-        if 'keyPair' in kwargs:
-            key_pair = kwargs['keyPair']
-        if 'nodePools' in kwargs:
-            node_pools = kwargs['nodePools']
-        if 'preInstallScript' in kwargs:
-            pre_install_script = kwargs['preInstallScript']
-        if 'securityGroupIds' in kwargs:
-            security_group_ids = kwargs['securityGroupIds']
-        if 'skipCreateRoles' in kwargs:
-            skip_create_roles = kwargs['skipCreateRoles']
-
-        _setter("deploy_role_arn", deploy_role_arn)
-        _setter("image", image)
-        _setter("networking", networking)
-        _setter("region", region)
-        _setter("vpc_id", vpc_id)
+        """
+        :param pulumi.Input[str] deploy_role_arn: Control Plane will set up the cluster by assuming this role.
+        :param pulumi.Input['Mk8sAwsProviderImageArgs'] image: Default image for all nodes.
+        :param pulumi.Input[str] region: Region where the cluster nodes will live.
+        :param pulumi.Input[str] vpc_id: The vpc where nodes will be deployed. Supports SSM.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] aws_tags: Extra tags to attach to all created objects.
+        :param pulumi.Input[str] disk_encryption_key_arn: KMS key used to encrypt volumes. Supports SSM.
+        :param pulumi.Input[str] key_pair: Name of keyPair. Supports SSM
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sAwsProviderNodePoolArgs']]] node_pools: List of node pools.
+        :param pulumi.Input[str] pre_install_script: Optional shell script that will be run before K8s is installed. Supports SSM.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] security_group_ids: Security groups to deploy nodes to. Security groups control if the cluster is multi-zone or single-zon.
+        :param pulumi.Input[bool] skip_create_roles: If true, Control Plane will not create any roles.
+        """
+        pulumi.set(__self__, "deploy_role_arn", deploy_role_arn)
+        pulumi.set(__self__, "image", image)
+        pulumi.set(__self__, "networking", networking)
+        pulumi.set(__self__, "region", region)
+        pulumi.set(__self__, "vpc_id", vpc_id)
         if autoscaler is not None:
-            _setter("autoscaler", autoscaler)
+            pulumi.set(__self__, "autoscaler", autoscaler)
         if aws_tags is not None:
-            _setter("aws_tags", aws_tags)
+            pulumi.set(__self__, "aws_tags", aws_tags)
         if deploy_role_chains is not None:
-            _setter("deploy_role_chains", deploy_role_chains)
+            pulumi.set(__self__, "deploy_role_chains", deploy_role_chains)
         if disk_encryption_key_arn is not None:
-            _setter("disk_encryption_key_arn", disk_encryption_key_arn)
+            pulumi.set(__self__, "disk_encryption_key_arn", disk_encryption_key_arn)
         if extra_node_policies is not None:
-            _setter("extra_node_policies", extra_node_policies)
+            pulumi.set(__self__, "extra_node_policies", extra_node_policies)
         if key_pair is not None:
-            _setter("key_pair", key_pair)
+            pulumi.set(__self__, "key_pair", key_pair)
         if node_pools is not None:
-            _setter("node_pools", node_pools)
+            pulumi.set(__self__, "node_pools", node_pools)
         if pre_install_script is not None:
-            _setter("pre_install_script", pre_install_script)
+            pulumi.set(__self__, "pre_install_script", pre_install_script)
         if security_group_ids is not None:
-            _setter("security_group_ids", security_group_ids)
+            pulumi.set(__self__, "security_group_ids", security_group_ids)
         if skip_create_roles is not None:
-            _setter("skip_create_roles", skip_create_roles)
+            pulumi.set(__self__, "skip_create_roles", skip_create_roles)
 
     @property
     @pulumi.getter(name="deployRoleArn")
     def deploy_role_arn(self) -> pulumi.Input[str]:
+        """
+        Control Plane will set up the cluster by assuming this role.
+        """
         return pulumi.get(self, "deploy_role_arn")
 
     @deploy_role_arn.setter
@@ -3566,6 +4215,9 @@ class Mk8sAwsProviderArgs:
     @property
     @pulumi.getter
     def image(self) -> pulumi.Input['Mk8sAwsProviderImageArgs']:
+        """
+        Default image for all nodes.
+        """
         return pulumi.get(self, "image")
 
     @image.setter
@@ -3584,6 +4236,9 @@ class Mk8sAwsProviderArgs:
     @property
     @pulumi.getter
     def region(self) -> pulumi.Input[str]:
+        """
+        Region where the cluster nodes will live.
+        """
         return pulumi.get(self, "region")
 
     @region.setter
@@ -3593,6 +4248,9 @@ class Mk8sAwsProviderArgs:
     @property
     @pulumi.getter(name="vpcId")
     def vpc_id(self) -> pulumi.Input[str]:
+        """
+        The vpc where nodes will be deployed. Supports SSM.
+        """
         return pulumi.get(self, "vpc_id")
 
     @vpc_id.setter
@@ -3611,6 +4269,9 @@ class Mk8sAwsProviderArgs:
     @property
     @pulumi.getter(name="awsTags")
     def aws_tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Extra tags to attach to all created objects.
+        """
         return pulumi.get(self, "aws_tags")
 
     @aws_tags.setter
@@ -3629,6 +4290,9 @@ class Mk8sAwsProviderArgs:
     @property
     @pulumi.getter(name="diskEncryptionKeyArn")
     def disk_encryption_key_arn(self) -> Optional[pulumi.Input[str]]:
+        """
+        KMS key used to encrypt volumes. Supports SSM.
+        """
         return pulumi.get(self, "disk_encryption_key_arn")
 
     @disk_encryption_key_arn.setter
@@ -3647,6 +4311,9 @@ class Mk8sAwsProviderArgs:
     @property
     @pulumi.getter(name="keyPair")
     def key_pair(self) -> Optional[pulumi.Input[str]]:
+        """
+        Name of keyPair. Supports SSM
+        """
         return pulumi.get(self, "key_pair")
 
     @key_pair.setter
@@ -3656,6 +4323,9 @@ class Mk8sAwsProviderArgs:
     @property
     @pulumi.getter(name="nodePools")
     def node_pools(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sAwsProviderNodePoolArgs']]]]:
+        """
+        List of node pools.
+        """
         return pulumi.get(self, "node_pools")
 
     @node_pools.setter
@@ -3665,6 +4335,9 @@ class Mk8sAwsProviderArgs:
     @property
     @pulumi.getter(name="preInstallScript")
     def pre_install_script(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
         return pulumi.get(self, "pre_install_script")
 
     @pre_install_script.setter
@@ -3674,6 +4347,9 @@ class Mk8sAwsProviderArgs:
     @property
     @pulumi.getter(name="securityGroupIds")
     def security_group_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Security groups to deploy nodes to. Security groups control if the cluster is multi-zone or single-zon.
+        """
         return pulumi.get(self, "security_group_ids")
 
     @security_group_ids.setter
@@ -3683,12 +4359,24 @@ class Mk8sAwsProviderArgs:
     @property
     @pulumi.getter(name="skipCreateRoles")
     def skip_create_roles(self) -> Optional[pulumi.Input[bool]]:
+        """
+        If true, Control Plane will not create any roles.
+        """
         return pulumi.get(self, "skip_create_roles")
 
     @skip_create_roles.setter
     def skip_create_roles(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "skip_create_roles", value)
 
+
+if not MYPY:
+    class Mk8sAwsProviderAutoscalerArgsDict(TypedDict):
+        expanders: pulumi.Input[Sequence[pulumi.Input[str]]]
+        unneeded_time: NotRequired[pulumi.Input[str]]
+        unready_time: NotRequired[pulumi.Input[str]]
+        utilization_threshold: NotRequired[pulumi.Input[float]]
+elif False:
+    Mk8sAwsProviderAutoscalerArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sAwsProviderAutoscalerArgs:
@@ -3697,36 +4385,13 @@ class Mk8sAwsProviderAutoscalerArgs:
                  unneeded_time: Optional[pulumi.Input[str]] = None,
                  unready_time: Optional[pulumi.Input[str]] = None,
                  utilization_threshold: Optional[pulumi.Input[float]] = None):
-        Mk8sAwsProviderAutoscalerArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            expanders=expanders,
-            unneeded_time=unneeded_time,
-            unready_time=unready_time,
-            utilization_threshold=utilization_threshold,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             expanders: pulumi.Input[Sequence[pulumi.Input[str]]],
-             unneeded_time: Optional[pulumi.Input[str]] = None,
-             unready_time: Optional[pulumi.Input[str]] = None,
-             utilization_threshold: Optional[pulumi.Input[float]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'unneededTime' in kwargs:
-            unneeded_time = kwargs['unneededTime']
-        if 'unreadyTime' in kwargs:
-            unready_time = kwargs['unreadyTime']
-        if 'utilizationThreshold' in kwargs:
-            utilization_threshold = kwargs['utilizationThreshold']
-
-        _setter("expanders", expanders)
+        pulumi.set(__self__, "expanders", expanders)
         if unneeded_time is not None:
-            _setter("unneeded_time", unneeded_time)
+            pulumi.set(__self__, "unneeded_time", unneeded_time)
         if unready_time is not None:
-            _setter("unready_time", unready_time)
+            pulumi.set(__self__, "unready_time", unready_time)
         if utilization_threshold is not None:
-            _setter("utilization_threshold", utilization_threshold)
+            pulumi.set(__self__, "utilization_threshold", utilization_threshold)
 
     @property
     @pulumi.getter
@@ -3765,38 +4430,31 @@ class Mk8sAwsProviderAutoscalerArgs:
         pulumi.set(self, "utilization_threshold", value)
 
 
+if not MYPY:
+    class Mk8sAwsProviderDeployRoleChainArgsDict(TypedDict):
+        role_arn: pulumi.Input[str]
+        external_id: NotRequired[pulumi.Input[str]]
+        session_name_prefix: NotRequired[pulumi.Input[str]]
+        """
+        Control Plane will append random.
+        """
+elif False:
+    Mk8sAwsProviderDeployRoleChainArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sAwsProviderDeployRoleChainArgs:
     def __init__(__self__, *,
                  role_arn: pulumi.Input[str],
                  external_id: Optional[pulumi.Input[str]] = None,
                  session_name_prefix: Optional[pulumi.Input[str]] = None):
-        Mk8sAwsProviderDeployRoleChainArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            role_arn=role_arn,
-            external_id=external_id,
-            session_name_prefix=session_name_prefix,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             role_arn: pulumi.Input[str],
-             external_id: Optional[pulumi.Input[str]] = None,
-             session_name_prefix: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'roleArn' in kwargs:
-            role_arn = kwargs['roleArn']
-        if 'externalId' in kwargs:
-            external_id = kwargs['externalId']
-        if 'sessionNamePrefix' in kwargs:
-            session_name_prefix = kwargs['sessionNamePrefix']
-
-        _setter("role_arn", role_arn)
+        """
+        :param pulumi.Input[str] session_name_prefix: Control Plane will append random.
+        """
+        pulumi.set(__self__, "role_arn", role_arn)
         if external_id is not None:
-            _setter("external_id", external_id)
+            pulumi.set(__self__, "external_id", external_id)
         if session_name_prefix is not None:
-            _setter("session_name_prefix", session_name_prefix)
+            pulumi.set(__self__, "session_name_prefix", session_name_prefix)
 
     @property
     @pulumi.getter(name="roleArn")
@@ -3819,6 +4477,9 @@ class Mk8sAwsProviderDeployRoleChainArgs:
     @property
     @pulumi.getter(name="sessionNamePrefix")
     def session_name_prefix(self) -> Optional[pulumi.Input[str]]:
+        """
+        Control Plane will append random.
+        """
         return pulumi.get(self, "session_name_prefix")
 
     @session_name_prefix.setter
@@ -3826,32 +4487,35 @@ class Mk8sAwsProviderDeployRoleChainArgs:
         pulumi.set(self, "session_name_prefix", value)
 
 
+if not MYPY:
+    class Mk8sAwsProviderImageArgsDict(TypedDict):
+        exact: NotRequired[pulumi.Input[str]]
+        """
+        Support SSM.
+        """
+        recommended: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sAwsProviderImageArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sAwsProviderImageArgs:
     def __init__(__self__, *,
                  exact: Optional[pulumi.Input[str]] = None,
                  recommended: Optional[pulumi.Input[str]] = None):
-        Mk8sAwsProviderImageArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            exact=exact,
-            recommended=recommended,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             exact: Optional[pulumi.Input[str]] = None,
-             recommended: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[str] exact: Support SSM.
+        """
         if exact is not None:
-            _setter("exact", exact)
+            pulumi.set(__self__, "exact", exact)
         if recommended is not None:
-            _setter("recommended", recommended)
+            pulumi.set(__self__, "recommended", recommended)
 
     @property
     @pulumi.getter
     def exact(self) -> Optional[pulumi.Input[str]]:
+        """
+        Support SSM.
+        """
         return pulumi.get(self, "exact")
 
     @exact.setter
@@ -3868,36 +4532,39 @@ class Mk8sAwsProviderImageArgs:
         pulumi.set(self, "recommended", value)
 
 
+if not MYPY:
+    class Mk8sAwsProviderNetworkingArgsDict(TypedDict):
+        pod_network: NotRequired[pulumi.Input[str]]
+        """
+        The CIDR of the pod network.
+        """
+        service_network: NotRequired[pulumi.Input[str]]
+        """
+        The CIDR of the service network.
+        """
+elif False:
+    Mk8sAwsProviderNetworkingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sAwsProviderNetworkingArgs:
     def __init__(__self__, *,
                  pod_network: Optional[pulumi.Input[str]] = None,
                  service_network: Optional[pulumi.Input[str]] = None):
-        Mk8sAwsProviderNetworkingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            pod_network=pod_network,
-            service_network=service_network,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             pod_network: Optional[pulumi.Input[str]] = None,
-             service_network: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'podNetwork' in kwargs:
-            pod_network = kwargs['podNetwork']
-        if 'serviceNetwork' in kwargs:
-            service_network = kwargs['serviceNetwork']
-
+        """
+        :param pulumi.Input[str] pod_network: The CIDR of the pod network.
+        :param pulumi.Input[str] service_network: The CIDR of the service network.
+        """
         if pod_network is not None:
-            _setter("pod_network", pod_network)
+            pulumi.set(__self__, "pod_network", pod_network)
         if service_network is not None:
-            _setter("service_network", service_network)
+            pulumi.set(__self__, "service_network", service_network)
 
     @property
     @pulumi.getter(name="podNetwork")
     def pod_network(self) -> Optional[pulumi.Input[str]]:
+        """
+        The CIDR of the pod network.
+        """
         return pulumi.get(self, "pod_network")
 
     @pod_network.setter
@@ -3907,12 +4574,45 @@ class Mk8sAwsProviderNetworkingArgs:
     @property
     @pulumi.getter(name="serviceNetwork")
     def service_network(self) -> Optional[pulumi.Input[str]]:
+        """
+        The CIDR of the service network.
+        """
         return pulumi.get(self, "service_network")
 
     @service_network.setter
     def service_network(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "service_network", value)
 
+
+if not MYPY:
+    class Mk8sAwsProviderNodePoolArgsDict(TypedDict):
+        instance_types: pulumi.Input[Sequence[pulumi.Input[str]]]
+        name: pulumi.Input[str]
+        override_image: pulumi.Input['Mk8sAwsProviderNodePoolOverrideImageArgsDict']
+        """
+        Default image for all nodes.
+        """
+        subnet_ids: pulumi.Input[Sequence[pulumi.Input[str]]]
+        boot_disk_size: NotRequired[pulumi.Input[int]]
+        """
+        Size in GB.
+        """
+        extra_security_group_ids: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Labels to attach to nodes of a node pool.
+        """
+        max_size: NotRequired[pulumi.Input[int]]
+        min_size: NotRequired[pulumi.Input[int]]
+        on_demand_base_capacity: NotRequired[pulumi.Input[int]]
+        on_demand_percentage_above_base_capacity: NotRequired[pulumi.Input[int]]
+        spot_allocation_strategy: NotRequired[pulumi.Input[str]]
+        taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sAwsProviderNodePoolTaintArgsDict']]]]
+        """
+        Taint for the nodes of a pool.
+        """
+elif False:
+    Mk8sAwsProviderNodePoolArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sAwsProviderNodePoolArgs:
@@ -3930,83 +4630,34 @@ class Mk8sAwsProviderNodePoolArgs:
                  on_demand_percentage_above_base_capacity: Optional[pulumi.Input[int]] = None,
                  spot_allocation_strategy: Optional[pulumi.Input[str]] = None,
                  taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sAwsProviderNodePoolTaintArgs']]]] = None):
-        Mk8sAwsProviderNodePoolArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            instance_types=instance_types,
-            name=name,
-            override_image=override_image,
-            subnet_ids=subnet_ids,
-            boot_disk_size=boot_disk_size,
-            extra_security_group_ids=extra_security_group_ids,
-            labels=labels,
-            max_size=max_size,
-            min_size=min_size,
-            on_demand_base_capacity=on_demand_base_capacity,
-            on_demand_percentage_above_base_capacity=on_demand_percentage_above_base_capacity,
-            spot_allocation_strategy=spot_allocation_strategy,
-            taints=taints,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             instance_types: pulumi.Input[Sequence[pulumi.Input[str]]],
-             name: pulumi.Input[str],
-             override_image: pulumi.Input['Mk8sAwsProviderNodePoolOverrideImageArgs'],
-             subnet_ids: pulumi.Input[Sequence[pulumi.Input[str]]],
-             boot_disk_size: Optional[pulumi.Input[int]] = None,
-             extra_security_group_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             max_size: Optional[pulumi.Input[int]] = None,
-             min_size: Optional[pulumi.Input[int]] = None,
-             on_demand_base_capacity: Optional[pulumi.Input[int]] = None,
-             on_demand_percentage_above_base_capacity: Optional[pulumi.Input[int]] = None,
-             spot_allocation_strategy: Optional[pulumi.Input[str]] = None,
-             taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sAwsProviderNodePoolTaintArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'instanceTypes' in kwargs:
-            instance_types = kwargs['instanceTypes']
-        if 'overrideImage' in kwargs:
-            override_image = kwargs['overrideImage']
-        if 'subnetIds' in kwargs:
-            subnet_ids = kwargs['subnetIds']
-        if 'bootDiskSize' in kwargs:
-            boot_disk_size = kwargs['bootDiskSize']
-        if 'extraSecurityGroupIds' in kwargs:
-            extra_security_group_ids = kwargs['extraSecurityGroupIds']
-        if 'maxSize' in kwargs:
-            max_size = kwargs['maxSize']
-        if 'minSize' in kwargs:
-            min_size = kwargs['minSize']
-        if 'onDemandBaseCapacity' in kwargs:
-            on_demand_base_capacity = kwargs['onDemandBaseCapacity']
-        if 'onDemandPercentageAboveBaseCapacity' in kwargs:
-            on_demand_percentage_above_base_capacity = kwargs['onDemandPercentageAboveBaseCapacity']
-        if 'spotAllocationStrategy' in kwargs:
-            spot_allocation_strategy = kwargs['spotAllocationStrategy']
-
-        _setter("instance_types", instance_types)
-        _setter("name", name)
-        _setter("override_image", override_image)
-        _setter("subnet_ids", subnet_ids)
+        """
+        :param pulumi.Input['Mk8sAwsProviderNodePoolOverrideImageArgs'] override_image: Default image for all nodes.
+        :param pulumi.Input[int] boot_disk_size: Size in GB.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] labels: Labels to attach to nodes of a node pool.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sAwsProviderNodePoolTaintArgs']]] taints: Taint for the nodes of a pool.
+        """
+        pulumi.set(__self__, "instance_types", instance_types)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "override_image", override_image)
+        pulumi.set(__self__, "subnet_ids", subnet_ids)
         if boot_disk_size is not None:
-            _setter("boot_disk_size", boot_disk_size)
+            pulumi.set(__self__, "boot_disk_size", boot_disk_size)
         if extra_security_group_ids is not None:
-            _setter("extra_security_group_ids", extra_security_group_ids)
+            pulumi.set(__self__, "extra_security_group_ids", extra_security_group_ids)
         if labels is not None:
-            _setter("labels", labels)
+            pulumi.set(__self__, "labels", labels)
         if max_size is not None:
-            _setter("max_size", max_size)
+            pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
-            _setter("min_size", min_size)
+            pulumi.set(__self__, "min_size", min_size)
         if on_demand_base_capacity is not None:
-            _setter("on_demand_base_capacity", on_demand_base_capacity)
+            pulumi.set(__self__, "on_demand_base_capacity", on_demand_base_capacity)
         if on_demand_percentage_above_base_capacity is not None:
-            _setter("on_demand_percentage_above_base_capacity", on_demand_percentage_above_base_capacity)
+            pulumi.set(__self__, "on_demand_percentage_above_base_capacity", on_demand_percentage_above_base_capacity)
         if spot_allocation_strategy is not None:
-            _setter("spot_allocation_strategy", spot_allocation_strategy)
+            pulumi.set(__self__, "spot_allocation_strategy", spot_allocation_strategy)
         if taints is not None:
-            _setter("taints", taints)
+            pulumi.set(__self__, "taints", taints)
 
     @property
     @pulumi.getter(name="instanceTypes")
@@ -4029,6 +4680,9 @@ class Mk8sAwsProviderNodePoolArgs:
     @property
     @pulumi.getter(name="overrideImage")
     def override_image(self) -> pulumi.Input['Mk8sAwsProviderNodePoolOverrideImageArgs']:
+        """
+        Default image for all nodes.
+        """
         return pulumi.get(self, "override_image")
 
     @override_image.setter
@@ -4047,6 +4701,9 @@ class Mk8sAwsProviderNodePoolArgs:
     @property
     @pulumi.getter(name="bootDiskSize")
     def boot_disk_size(self) -> Optional[pulumi.Input[int]]:
+        """
+        Size in GB.
+        """
         return pulumi.get(self, "boot_disk_size")
 
     @boot_disk_size.setter
@@ -4065,6 +4722,9 @@ class Mk8sAwsProviderNodePoolArgs:
     @property
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Labels to attach to nodes of a node pool.
+        """
         return pulumi.get(self, "labels")
 
     @labels.setter
@@ -4119,6 +4779,9 @@ class Mk8sAwsProviderNodePoolArgs:
     @property
     @pulumi.getter
     def taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sAwsProviderNodePoolTaintArgs']]]]:
+        """
+        Taint for the nodes of a pool.
+        """
         return pulumi.get(self, "taints")
 
     @taints.setter
@@ -4126,32 +4789,35 @@ class Mk8sAwsProviderNodePoolArgs:
         pulumi.set(self, "taints", value)
 
 
+if not MYPY:
+    class Mk8sAwsProviderNodePoolOverrideImageArgsDict(TypedDict):
+        exact: NotRequired[pulumi.Input[str]]
+        """
+        Support SSM.
+        """
+        recommended: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sAwsProviderNodePoolOverrideImageArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sAwsProviderNodePoolOverrideImageArgs:
     def __init__(__self__, *,
                  exact: Optional[pulumi.Input[str]] = None,
                  recommended: Optional[pulumi.Input[str]] = None):
-        Mk8sAwsProviderNodePoolOverrideImageArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            exact=exact,
-            recommended=recommended,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             exact: Optional[pulumi.Input[str]] = None,
-             recommended: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[str] exact: Support SSM.
+        """
         if exact is not None:
-            _setter("exact", exact)
+            pulumi.set(__self__, "exact", exact)
         if recommended is not None:
-            _setter("recommended", recommended)
+            pulumi.set(__self__, "recommended", recommended)
 
     @property
     @pulumi.getter
     def exact(self) -> Optional[pulumi.Input[str]]:
+        """
+        Support SSM.
+        """
         return pulumi.get(self, "exact")
 
     @exact.setter
@@ -4168,33 +4834,26 @@ class Mk8sAwsProviderNodePoolOverrideImageArgs:
         pulumi.set(self, "recommended", value)
 
 
+if not MYPY:
+    class Mk8sAwsProviderNodePoolTaintArgsDict(TypedDict):
+        effect: NotRequired[pulumi.Input[str]]
+        key: NotRequired[pulumi.Input[str]]
+        value: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sAwsProviderNodePoolTaintArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sAwsProviderNodePoolTaintArgs:
     def __init__(__self__, *,
                  effect: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
-        Mk8sAwsProviderNodePoolTaintArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            effect=effect,
-            key=key,
-            value=value,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             effect: Optional[pulumi.Input[str]] = None,
-             key: Optional[pulumi.Input[str]] = None,
-             value: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if effect is not None:
-            _setter("effect", effect)
+            pulumi.set(__self__, "effect", effect)
         if key is not None:
-            _setter("key", key)
+            pulumi.set(__self__, "key", key)
         if value is not None:
-            _setter("value", value)
+            pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
@@ -4224,6 +4883,53 @@ class Mk8sAwsProviderNodePoolTaintArgs:
         pulumi.set(self, "value", value)
 
 
+if not MYPY:
+    class Mk8sDigitalOceanProviderArgsDict(TypedDict):
+        image: pulumi.Input[str]
+        """
+        Default image for all nodes.
+        """
+        networking: pulumi.Input['Mk8sDigitalOceanProviderNetworkingArgsDict']
+        region: pulumi.Input[str]
+        """
+        Region to deploy nodes to.
+        """
+        ssh_keys: pulumi.Input[Sequence[pulumi.Input[str]]]
+        """
+        SSH key name for accessing deployed nodes.
+        """
+        token_secret_link: pulumi.Input[str]
+        """
+        Link to a secret holding personal access token.
+        """
+        vpc_id: pulumi.Input[str]
+        """
+        ID of the Hetzner network to deploy nodes to.
+        """
+        autoscaler: NotRequired[pulumi.Input['Mk8sDigitalOceanProviderAutoscalerArgsDict']]
+        digital_ocean_tags: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        Extra tags to attach to droplets.
+        """
+        extra_ssh_keys: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        Extra SSH keys to provision for user root that are not registered in the DigitalOcean.
+        """
+        node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sDigitalOceanProviderNodePoolArgsDict']]]]
+        """
+        List of node pools.
+        """
+        pre_install_script: NotRequired[pulumi.Input[str]]
+        """
+        Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
+        reserved_ips: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        Optional set of IPs to assign as extra IPs for nodes of the cluster.
+        """
+elif False:
+    Mk8sDigitalOceanProviderArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sDigitalOceanProviderArgs:
     def __init__(__self__, *,
@@ -4239,77 +4945,43 @@ class Mk8sDigitalOceanProviderArgs:
                  node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sDigitalOceanProviderNodePoolArgs']]]] = None,
                  pre_install_script: Optional[pulumi.Input[str]] = None,
                  reserved_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
-        Mk8sDigitalOceanProviderArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            image=image,
-            networking=networking,
-            region=region,
-            ssh_keys=ssh_keys,
-            token_secret_link=token_secret_link,
-            vpc_id=vpc_id,
-            autoscaler=autoscaler,
-            digital_ocean_tags=digital_ocean_tags,
-            extra_ssh_keys=extra_ssh_keys,
-            node_pools=node_pools,
-            pre_install_script=pre_install_script,
-            reserved_ips=reserved_ips,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             image: pulumi.Input[str],
-             networking: pulumi.Input['Mk8sDigitalOceanProviderNetworkingArgs'],
-             region: pulumi.Input[str],
-             ssh_keys: pulumi.Input[Sequence[pulumi.Input[str]]],
-             token_secret_link: pulumi.Input[str],
-             vpc_id: pulumi.Input[str],
-             autoscaler: Optional[pulumi.Input['Mk8sDigitalOceanProviderAutoscalerArgs']] = None,
-             digital_ocean_tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             extra_ssh_keys: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sDigitalOceanProviderNodePoolArgs']]]] = None,
-             pre_install_script: Optional[pulumi.Input[str]] = None,
-             reserved_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'sshKeys' in kwargs:
-            ssh_keys = kwargs['sshKeys']
-        if 'tokenSecretLink' in kwargs:
-            token_secret_link = kwargs['tokenSecretLink']
-        if 'vpcId' in kwargs:
-            vpc_id = kwargs['vpcId']
-        if 'digitalOceanTags' in kwargs:
-            digital_ocean_tags = kwargs['digitalOceanTags']
-        if 'extraSshKeys' in kwargs:
-            extra_ssh_keys = kwargs['extraSshKeys']
-        if 'nodePools' in kwargs:
-            node_pools = kwargs['nodePools']
-        if 'preInstallScript' in kwargs:
-            pre_install_script = kwargs['preInstallScript']
-        if 'reservedIps' in kwargs:
-            reserved_ips = kwargs['reservedIps']
-
-        _setter("image", image)
-        _setter("networking", networking)
-        _setter("region", region)
-        _setter("ssh_keys", ssh_keys)
-        _setter("token_secret_link", token_secret_link)
-        _setter("vpc_id", vpc_id)
+        """
+        :param pulumi.Input[str] image: Default image for all nodes.
+        :param pulumi.Input[str] region: Region to deploy nodes to.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] ssh_keys: SSH key name for accessing deployed nodes.
+        :param pulumi.Input[str] token_secret_link: Link to a secret holding personal access token.
+        :param pulumi.Input[str] vpc_id: ID of the Hetzner network to deploy nodes to.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] digital_ocean_tags: Extra tags to attach to droplets.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] extra_ssh_keys: Extra SSH keys to provision for user root that are not registered in the DigitalOcean.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sDigitalOceanProviderNodePoolArgs']]] node_pools: List of node pools.
+        :param pulumi.Input[str] pre_install_script: Optional shell script that will be run before K8s is installed. Supports SSM.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] reserved_ips: Optional set of IPs to assign as extra IPs for nodes of the cluster.
+        """
+        pulumi.set(__self__, "image", image)
+        pulumi.set(__self__, "networking", networking)
+        pulumi.set(__self__, "region", region)
+        pulumi.set(__self__, "ssh_keys", ssh_keys)
+        pulumi.set(__self__, "token_secret_link", token_secret_link)
+        pulumi.set(__self__, "vpc_id", vpc_id)
         if autoscaler is not None:
-            _setter("autoscaler", autoscaler)
+            pulumi.set(__self__, "autoscaler", autoscaler)
         if digital_ocean_tags is not None:
-            _setter("digital_ocean_tags", digital_ocean_tags)
+            pulumi.set(__self__, "digital_ocean_tags", digital_ocean_tags)
         if extra_ssh_keys is not None:
-            _setter("extra_ssh_keys", extra_ssh_keys)
+            pulumi.set(__self__, "extra_ssh_keys", extra_ssh_keys)
         if node_pools is not None:
-            _setter("node_pools", node_pools)
+            pulumi.set(__self__, "node_pools", node_pools)
         if pre_install_script is not None:
-            _setter("pre_install_script", pre_install_script)
+            pulumi.set(__self__, "pre_install_script", pre_install_script)
         if reserved_ips is not None:
-            _setter("reserved_ips", reserved_ips)
+            pulumi.set(__self__, "reserved_ips", reserved_ips)
 
     @property
     @pulumi.getter
     def image(self) -> pulumi.Input[str]:
+        """
+        Default image for all nodes.
+        """
         return pulumi.get(self, "image")
 
     @image.setter
@@ -4328,6 +5000,9 @@ class Mk8sDigitalOceanProviderArgs:
     @property
     @pulumi.getter
     def region(self) -> pulumi.Input[str]:
+        """
+        Region to deploy nodes to.
+        """
         return pulumi.get(self, "region")
 
     @region.setter
@@ -4337,6 +5012,9 @@ class Mk8sDigitalOceanProviderArgs:
     @property
     @pulumi.getter(name="sshKeys")
     def ssh_keys(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+        """
+        SSH key name for accessing deployed nodes.
+        """
         return pulumi.get(self, "ssh_keys")
 
     @ssh_keys.setter
@@ -4346,6 +5024,9 @@ class Mk8sDigitalOceanProviderArgs:
     @property
     @pulumi.getter(name="tokenSecretLink")
     def token_secret_link(self) -> pulumi.Input[str]:
+        """
+        Link to a secret holding personal access token.
+        """
         return pulumi.get(self, "token_secret_link")
 
     @token_secret_link.setter
@@ -4355,6 +5036,9 @@ class Mk8sDigitalOceanProviderArgs:
     @property
     @pulumi.getter(name="vpcId")
     def vpc_id(self) -> pulumi.Input[str]:
+        """
+        ID of the Hetzner network to deploy nodes to.
+        """
         return pulumi.get(self, "vpc_id")
 
     @vpc_id.setter
@@ -4373,6 +5057,9 @@ class Mk8sDigitalOceanProviderArgs:
     @property
     @pulumi.getter(name="digitalOceanTags")
     def digital_ocean_tags(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Extra tags to attach to droplets.
+        """
         return pulumi.get(self, "digital_ocean_tags")
 
     @digital_ocean_tags.setter
@@ -4382,6 +5069,9 @@ class Mk8sDigitalOceanProviderArgs:
     @property
     @pulumi.getter(name="extraSshKeys")
     def extra_ssh_keys(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Extra SSH keys to provision for user root that are not registered in the DigitalOcean.
+        """
         return pulumi.get(self, "extra_ssh_keys")
 
     @extra_ssh_keys.setter
@@ -4391,6 +5081,9 @@ class Mk8sDigitalOceanProviderArgs:
     @property
     @pulumi.getter(name="nodePools")
     def node_pools(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sDigitalOceanProviderNodePoolArgs']]]]:
+        """
+        List of node pools.
+        """
         return pulumi.get(self, "node_pools")
 
     @node_pools.setter
@@ -4400,6 +5093,9 @@ class Mk8sDigitalOceanProviderArgs:
     @property
     @pulumi.getter(name="preInstallScript")
     def pre_install_script(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
         return pulumi.get(self, "pre_install_script")
 
     @pre_install_script.setter
@@ -4409,12 +5105,24 @@ class Mk8sDigitalOceanProviderArgs:
     @property
     @pulumi.getter(name="reservedIps")
     def reserved_ips(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Optional set of IPs to assign as extra IPs for nodes of the cluster.
+        """
         return pulumi.get(self, "reserved_ips")
 
     @reserved_ips.setter
     def reserved_ips(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
         pulumi.set(self, "reserved_ips", value)
 
+
+if not MYPY:
+    class Mk8sDigitalOceanProviderAutoscalerArgsDict(TypedDict):
+        expanders: pulumi.Input[Sequence[pulumi.Input[str]]]
+        unneeded_time: NotRequired[pulumi.Input[str]]
+        unready_time: NotRequired[pulumi.Input[str]]
+        utilization_threshold: NotRequired[pulumi.Input[float]]
+elif False:
+    Mk8sDigitalOceanProviderAutoscalerArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sDigitalOceanProviderAutoscalerArgs:
@@ -4423,36 +5131,13 @@ class Mk8sDigitalOceanProviderAutoscalerArgs:
                  unneeded_time: Optional[pulumi.Input[str]] = None,
                  unready_time: Optional[pulumi.Input[str]] = None,
                  utilization_threshold: Optional[pulumi.Input[float]] = None):
-        Mk8sDigitalOceanProviderAutoscalerArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            expanders=expanders,
-            unneeded_time=unneeded_time,
-            unready_time=unready_time,
-            utilization_threshold=utilization_threshold,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             expanders: pulumi.Input[Sequence[pulumi.Input[str]]],
-             unneeded_time: Optional[pulumi.Input[str]] = None,
-             unready_time: Optional[pulumi.Input[str]] = None,
-             utilization_threshold: Optional[pulumi.Input[float]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'unneededTime' in kwargs:
-            unneeded_time = kwargs['unneededTime']
-        if 'unreadyTime' in kwargs:
-            unready_time = kwargs['unreadyTime']
-        if 'utilizationThreshold' in kwargs:
-            utilization_threshold = kwargs['utilizationThreshold']
-
-        _setter("expanders", expanders)
+        pulumi.set(__self__, "expanders", expanders)
         if unneeded_time is not None:
-            _setter("unneeded_time", unneeded_time)
+            pulumi.set(__self__, "unneeded_time", unneeded_time)
         if unready_time is not None:
-            _setter("unready_time", unready_time)
+            pulumi.set(__self__, "unready_time", unready_time)
         if utilization_threshold is not None:
-            _setter("utilization_threshold", utilization_threshold)
+            pulumi.set(__self__, "utilization_threshold", utilization_threshold)
 
     @property
     @pulumi.getter
@@ -4491,36 +5176,39 @@ class Mk8sDigitalOceanProviderAutoscalerArgs:
         pulumi.set(self, "utilization_threshold", value)
 
 
+if not MYPY:
+    class Mk8sDigitalOceanProviderNetworkingArgsDict(TypedDict):
+        pod_network: NotRequired[pulumi.Input[str]]
+        """
+        The CIDR of the pod network.
+        """
+        service_network: NotRequired[pulumi.Input[str]]
+        """
+        The CIDR of the service network.
+        """
+elif False:
+    Mk8sDigitalOceanProviderNetworkingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sDigitalOceanProviderNetworkingArgs:
     def __init__(__self__, *,
                  pod_network: Optional[pulumi.Input[str]] = None,
                  service_network: Optional[pulumi.Input[str]] = None):
-        Mk8sDigitalOceanProviderNetworkingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            pod_network=pod_network,
-            service_network=service_network,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             pod_network: Optional[pulumi.Input[str]] = None,
-             service_network: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'podNetwork' in kwargs:
-            pod_network = kwargs['podNetwork']
-        if 'serviceNetwork' in kwargs:
-            service_network = kwargs['serviceNetwork']
-
+        """
+        :param pulumi.Input[str] pod_network: The CIDR of the pod network.
+        :param pulumi.Input[str] service_network: The CIDR of the service network.
+        """
         if pod_network is not None:
-            _setter("pod_network", pod_network)
+            pulumi.set(__self__, "pod_network", pod_network)
         if service_network is not None:
-            _setter("service_network", service_network)
+            pulumi.set(__self__, "service_network", service_network)
 
     @property
     @pulumi.getter(name="podNetwork")
     def pod_network(self) -> Optional[pulumi.Input[str]]:
+        """
+        The CIDR of the pod network.
+        """
         return pulumi.get(self, "pod_network")
 
     @pod_network.setter
@@ -4530,12 +5218,33 @@ class Mk8sDigitalOceanProviderNetworkingArgs:
     @property
     @pulumi.getter(name="serviceNetwork")
     def service_network(self) -> Optional[pulumi.Input[str]]:
+        """
+        The CIDR of the service network.
+        """
         return pulumi.get(self, "service_network")
 
     @service_network.setter
     def service_network(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "service_network", value)
 
+
+if not MYPY:
+    class Mk8sDigitalOceanProviderNodePoolArgsDict(TypedDict):
+        droplet_size: pulumi.Input[str]
+        name: pulumi.Input[str]
+        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Labels to attach to nodes of a node pool.
+        """
+        max_size: NotRequired[pulumi.Input[int]]
+        min_size: NotRequired[pulumi.Input[int]]
+        override_image: NotRequired[pulumi.Input[str]]
+        taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sDigitalOceanProviderNodePoolTaintArgsDict']]]]
+        """
+        Taint for the nodes of a pool.
+        """
+elif False:
+    Mk8sDigitalOceanProviderNodePoolArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sDigitalOceanProviderNodePoolArgs:
@@ -4547,49 +5256,22 @@ class Mk8sDigitalOceanProviderNodePoolArgs:
                  min_size: Optional[pulumi.Input[int]] = None,
                  override_image: Optional[pulumi.Input[str]] = None,
                  taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sDigitalOceanProviderNodePoolTaintArgs']]]] = None):
-        Mk8sDigitalOceanProviderNodePoolArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            droplet_size=droplet_size,
-            name=name,
-            labels=labels,
-            max_size=max_size,
-            min_size=min_size,
-            override_image=override_image,
-            taints=taints,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             droplet_size: pulumi.Input[str],
-             name: pulumi.Input[str],
-             labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             max_size: Optional[pulumi.Input[int]] = None,
-             min_size: Optional[pulumi.Input[int]] = None,
-             override_image: Optional[pulumi.Input[str]] = None,
-             taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sDigitalOceanProviderNodePoolTaintArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'dropletSize' in kwargs:
-            droplet_size = kwargs['dropletSize']
-        if 'maxSize' in kwargs:
-            max_size = kwargs['maxSize']
-        if 'minSize' in kwargs:
-            min_size = kwargs['minSize']
-        if 'overrideImage' in kwargs:
-            override_image = kwargs['overrideImage']
-
-        _setter("droplet_size", droplet_size)
-        _setter("name", name)
+        """
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] labels: Labels to attach to nodes of a node pool.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sDigitalOceanProviderNodePoolTaintArgs']]] taints: Taint for the nodes of a pool.
+        """
+        pulumi.set(__self__, "droplet_size", droplet_size)
+        pulumi.set(__self__, "name", name)
         if labels is not None:
-            _setter("labels", labels)
+            pulumi.set(__self__, "labels", labels)
         if max_size is not None:
-            _setter("max_size", max_size)
+            pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
-            _setter("min_size", min_size)
+            pulumi.set(__self__, "min_size", min_size)
         if override_image is not None:
-            _setter("override_image", override_image)
+            pulumi.set(__self__, "override_image", override_image)
         if taints is not None:
-            _setter("taints", taints)
+            pulumi.set(__self__, "taints", taints)
 
     @property
     @pulumi.getter(name="dropletSize")
@@ -4612,6 +5294,9 @@ class Mk8sDigitalOceanProviderNodePoolArgs:
     @property
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Labels to attach to nodes of a node pool.
+        """
         return pulumi.get(self, "labels")
 
     @labels.setter
@@ -4648,6 +5333,9 @@ class Mk8sDigitalOceanProviderNodePoolArgs:
     @property
     @pulumi.getter
     def taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sDigitalOceanProviderNodePoolTaintArgs']]]]:
+        """
+        Taint for the nodes of a pool.
+        """
         return pulumi.get(self, "taints")
 
     @taints.setter
@@ -4655,33 +5343,26 @@ class Mk8sDigitalOceanProviderNodePoolArgs:
         pulumi.set(self, "taints", value)
 
 
+if not MYPY:
+    class Mk8sDigitalOceanProviderNodePoolTaintArgsDict(TypedDict):
+        effect: NotRequired[pulumi.Input[str]]
+        key: NotRequired[pulumi.Input[str]]
+        value: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sDigitalOceanProviderNodePoolTaintArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sDigitalOceanProviderNodePoolTaintArgs:
     def __init__(__self__, *,
                  effect: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
-        Mk8sDigitalOceanProviderNodePoolTaintArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            effect=effect,
-            key=key,
-            value=value,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             effect: Optional[pulumi.Input[str]] = None,
-             key: Optional[pulumi.Input[str]] = None,
-             value: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if effect is not None:
-            _setter("effect", effect)
+            pulumi.set(__self__, "effect", effect)
         if key is not None:
-            _setter("key", key)
+            pulumi.set(__self__, "key", key)
         if value is not None:
-            _setter("value", value)
+            pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
@@ -4711,33 +5392,38 @@ class Mk8sDigitalOceanProviderNodePoolTaintArgs:
         pulumi.set(self, "value", value)
 
 
+if not MYPY:
+    class Mk8sEphemeralProviderArgsDict(TypedDict):
+        location: pulumi.Input[str]
+        """
+        Control Plane location that will host the K8s components. Prefer one that is closest to where the nodes are running.
+        """
+        node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sEphemeralProviderNodePoolArgsDict']]]]
+        """
+        List of node pools.
+        """
+elif False:
+    Mk8sEphemeralProviderArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sEphemeralProviderArgs:
     def __init__(__self__, *,
                  location: pulumi.Input[str],
                  node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sEphemeralProviderNodePoolArgs']]]] = None):
-        Mk8sEphemeralProviderArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            location=location,
-            node_pools=node_pools,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             location: pulumi.Input[str],
-             node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sEphemeralProviderNodePoolArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'nodePools' in kwargs:
-            node_pools = kwargs['nodePools']
-
-        _setter("location", location)
+        """
+        :param pulumi.Input[str] location: Control Plane location that will host the K8s components. Prefer one that is closest to where the nodes are running.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sEphemeralProviderNodePoolArgs']]] node_pools: List of node pools.
+        """
+        pulumi.set(__self__, "location", location)
         if node_pools is not None:
-            _setter("node_pools", node_pools)
+            pulumi.set(__self__, "node_pools", node_pools)
 
     @property
     @pulumi.getter
     def location(self) -> pulumi.Input[str]:
+        """
+        Control Plane location that will host the K8s components. Prefer one that is closest to where the nodes are running.
+        """
         return pulumi.get(self, "location")
 
     @location.setter
@@ -4747,12 +5433,49 @@ class Mk8sEphemeralProviderArgs:
     @property
     @pulumi.getter(name="nodePools")
     def node_pools(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sEphemeralProviderNodePoolArgs']]]]:
+        """
+        List of node pools.
+        """
         return pulumi.get(self, "node_pools")
 
     @node_pools.setter
     def node_pools(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sEphemeralProviderNodePoolArgs']]]]):
         pulumi.set(self, "node_pools", value)
 
+
+if not MYPY:
+    class Mk8sEphemeralProviderNodePoolArgsDict(TypedDict):
+        arch: pulumi.Input[str]
+        """
+        CPU architecture of the nodes.
+        """
+        count: pulumi.Input[int]
+        """
+        Number of nodes to deploy.
+        """
+        cpu: pulumi.Input[str]
+        """
+        Allocated CPU.
+        """
+        flavor: pulumi.Input[str]
+        """
+        Linux distro to use for ephemeral nodes.
+        """
+        memory: pulumi.Input[str]
+        """
+        Allocated memory.
+        """
+        name: pulumi.Input[str]
+        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Labels to attach to nodes of a node pool.
+        """
+        taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sEphemeralProviderNodePoolTaintArgsDict']]]]
+        """
+        Taint for the nodes of a pool.
+        """
+elif False:
+    Mk8sEphemeralProviderNodePoolArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sEphemeralProviderNodePoolArgs:
@@ -4765,45 +5488,32 @@ class Mk8sEphemeralProviderNodePoolArgs:
                  name: pulumi.Input[str],
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sEphemeralProviderNodePoolTaintArgs']]]] = None):
-        Mk8sEphemeralProviderNodePoolArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            arch=arch,
-            count=count,
-            cpu=cpu,
-            flavor=flavor,
-            memory=memory,
-            name=name,
-            labels=labels,
-            taints=taints,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             arch: pulumi.Input[str],
-             count: pulumi.Input[int],
-             cpu: pulumi.Input[str],
-             flavor: pulumi.Input[str],
-             memory: pulumi.Input[str],
-             name: pulumi.Input[str],
-             labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sEphemeralProviderNodePoolTaintArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("arch", arch)
-        _setter("count", count)
-        _setter("cpu", cpu)
-        _setter("flavor", flavor)
-        _setter("memory", memory)
-        _setter("name", name)
+        """
+        :param pulumi.Input[str] arch: CPU architecture of the nodes.
+        :param pulumi.Input[int] count: Number of nodes to deploy.
+        :param pulumi.Input[str] cpu: Allocated CPU.
+        :param pulumi.Input[str] flavor: Linux distro to use for ephemeral nodes.
+        :param pulumi.Input[str] memory: Allocated memory.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] labels: Labels to attach to nodes of a node pool.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sEphemeralProviderNodePoolTaintArgs']]] taints: Taint for the nodes of a pool.
+        """
+        pulumi.set(__self__, "arch", arch)
+        pulumi.set(__self__, "count", count)
+        pulumi.set(__self__, "cpu", cpu)
+        pulumi.set(__self__, "flavor", flavor)
+        pulumi.set(__self__, "memory", memory)
+        pulumi.set(__self__, "name", name)
         if labels is not None:
-            _setter("labels", labels)
+            pulumi.set(__self__, "labels", labels)
         if taints is not None:
-            _setter("taints", taints)
+            pulumi.set(__self__, "taints", taints)
 
     @property
     @pulumi.getter
     def arch(self) -> pulumi.Input[str]:
+        """
+        CPU architecture of the nodes.
+        """
         return pulumi.get(self, "arch")
 
     @arch.setter
@@ -4813,6 +5523,9 @@ class Mk8sEphemeralProviderNodePoolArgs:
     @property
     @pulumi.getter
     def count(self) -> pulumi.Input[int]:
+        """
+        Number of nodes to deploy.
+        """
         return pulumi.get(self, "count")
 
     @count.setter
@@ -4822,6 +5535,9 @@ class Mk8sEphemeralProviderNodePoolArgs:
     @property
     @pulumi.getter
     def cpu(self) -> pulumi.Input[str]:
+        """
+        Allocated CPU.
+        """
         return pulumi.get(self, "cpu")
 
     @cpu.setter
@@ -4831,6 +5547,9 @@ class Mk8sEphemeralProviderNodePoolArgs:
     @property
     @pulumi.getter
     def flavor(self) -> pulumi.Input[str]:
+        """
+        Linux distro to use for ephemeral nodes.
+        """
         return pulumi.get(self, "flavor")
 
     @flavor.setter
@@ -4840,6 +5559,9 @@ class Mk8sEphemeralProviderNodePoolArgs:
     @property
     @pulumi.getter
     def memory(self) -> pulumi.Input[str]:
+        """
+        Allocated memory.
+        """
         return pulumi.get(self, "memory")
 
     @memory.setter
@@ -4858,6 +5580,9 @@ class Mk8sEphemeralProviderNodePoolArgs:
     @property
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Labels to attach to nodes of a node pool.
+        """
         return pulumi.get(self, "labels")
 
     @labels.setter
@@ -4867,6 +5592,9 @@ class Mk8sEphemeralProviderNodePoolArgs:
     @property
     @pulumi.getter
     def taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sEphemeralProviderNodePoolTaintArgs']]]]:
+        """
+        Taint for the nodes of a pool.
+        """
         return pulumi.get(self, "taints")
 
     @taints.setter
@@ -4874,33 +5602,26 @@ class Mk8sEphemeralProviderNodePoolArgs:
         pulumi.set(self, "taints", value)
 
 
+if not MYPY:
+    class Mk8sEphemeralProviderNodePoolTaintArgsDict(TypedDict):
+        effect: NotRequired[pulumi.Input[str]]
+        key: NotRequired[pulumi.Input[str]]
+        value: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sEphemeralProviderNodePoolTaintArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sEphemeralProviderNodePoolTaintArgs:
     def __init__(__self__, *,
                  effect: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
-        Mk8sEphemeralProviderNodePoolTaintArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            effect=effect,
-            key=key,
-            value=value,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             effect: Optional[pulumi.Input[str]] = None,
-             key: Optional[pulumi.Input[str]] = None,
-             value: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if effect is not None:
-            _setter("effect", effect)
+            pulumi.set(__self__, "effect", effect)
         if key is not None:
-            _setter("key", key)
+            pulumi.set(__self__, "key", key)
         if value is not None:
-            _setter("value", value)
+            pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
@@ -4930,29 +5651,21 @@ class Mk8sEphemeralProviderNodePoolTaintArgs:
         pulumi.set(self, "value", value)
 
 
+if not MYPY:
+    class Mk8sFirewallArgsDict(TypedDict):
+        source_cidr: pulumi.Input[str]
+        description: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sFirewallArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sFirewallArgs:
     def __init__(__self__, *,
                  source_cidr: pulumi.Input[str],
                  description: Optional[pulumi.Input[str]] = None):
-        Mk8sFirewallArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            source_cidr=source_cidr,
-            description=description,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             source_cidr: pulumi.Input[str],
-             description: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'sourceCidr' in kwargs:
-            source_cidr = kwargs['sourceCidr']
-
-        _setter("source_cidr", source_cidr)
+        pulumi.set(__self__, "source_cidr", source_cidr)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
 
     @property
     @pulumi.getter(name="sourceCidr")
@@ -4973,37 +5686,41 @@ class Mk8sFirewallArgs:
         pulumi.set(self, "description", value)
 
 
+if not MYPY:
+    class Mk8sGenericProviderArgsDict(TypedDict):
+        location: pulumi.Input[str]
+        """
+        Control Plane location that will host the K8s components. Prefer one that is closest to where the nodes are running.
+        """
+        networking: pulumi.Input['Mk8sGenericProviderNetworkingArgsDict']
+        node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sGenericProviderNodePoolArgsDict']]]]
+        """
+        List of node pools.
+        """
+elif False:
+    Mk8sGenericProviderArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sGenericProviderArgs:
     def __init__(__self__, *,
                  location: pulumi.Input[str],
                  networking: pulumi.Input['Mk8sGenericProviderNetworkingArgs'],
                  node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sGenericProviderNodePoolArgs']]]] = None):
-        Mk8sGenericProviderArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            location=location,
-            networking=networking,
-            node_pools=node_pools,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             location: pulumi.Input[str],
-             networking: pulumi.Input['Mk8sGenericProviderNetworkingArgs'],
-             node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sGenericProviderNodePoolArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'nodePools' in kwargs:
-            node_pools = kwargs['nodePools']
-
-        _setter("location", location)
-        _setter("networking", networking)
+        """
+        :param pulumi.Input[str] location: Control Plane location that will host the K8s components. Prefer one that is closest to where the nodes are running.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sGenericProviderNodePoolArgs']]] node_pools: List of node pools.
+        """
+        pulumi.set(__self__, "location", location)
+        pulumi.set(__self__, "networking", networking)
         if node_pools is not None:
-            _setter("node_pools", node_pools)
+            pulumi.set(__self__, "node_pools", node_pools)
 
     @property
     @pulumi.getter
     def location(self) -> pulumi.Input[str]:
+        """
+        Control Plane location that will host the K8s components. Prefer one that is closest to where the nodes are running.
+        """
         return pulumi.get(self, "location")
 
     @location.setter
@@ -5022,6 +5739,9 @@ class Mk8sGenericProviderArgs:
     @property
     @pulumi.getter(name="nodePools")
     def node_pools(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sGenericProviderNodePoolArgs']]]]:
+        """
+        List of node pools.
+        """
         return pulumi.get(self, "node_pools")
 
     @node_pools.setter
@@ -5029,36 +5749,39 @@ class Mk8sGenericProviderArgs:
         pulumi.set(self, "node_pools", value)
 
 
+if not MYPY:
+    class Mk8sGenericProviderNetworkingArgsDict(TypedDict):
+        pod_network: NotRequired[pulumi.Input[str]]
+        """
+        The CIDR of the pod network.
+        """
+        service_network: NotRequired[pulumi.Input[str]]
+        """
+        The CIDR of the service network.
+        """
+elif False:
+    Mk8sGenericProviderNetworkingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sGenericProviderNetworkingArgs:
     def __init__(__self__, *,
                  pod_network: Optional[pulumi.Input[str]] = None,
                  service_network: Optional[pulumi.Input[str]] = None):
-        Mk8sGenericProviderNetworkingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            pod_network=pod_network,
-            service_network=service_network,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             pod_network: Optional[pulumi.Input[str]] = None,
-             service_network: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'podNetwork' in kwargs:
-            pod_network = kwargs['podNetwork']
-        if 'serviceNetwork' in kwargs:
-            service_network = kwargs['serviceNetwork']
-
+        """
+        :param pulumi.Input[str] pod_network: The CIDR of the pod network.
+        :param pulumi.Input[str] service_network: The CIDR of the service network.
+        """
         if pod_network is not None:
-            _setter("pod_network", pod_network)
+            pulumi.set(__self__, "pod_network", pod_network)
         if service_network is not None:
-            _setter("service_network", service_network)
+            pulumi.set(__self__, "service_network", service_network)
 
     @property
     @pulumi.getter(name="podNetwork")
     def pod_network(self) -> Optional[pulumi.Input[str]]:
+        """
+        The CIDR of the pod network.
+        """
         return pulumi.get(self, "pod_network")
 
     @pod_network.setter
@@ -5068,6 +5791,9 @@ class Mk8sGenericProviderNetworkingArgs:
     @property
     @pulumi.getter(name="serviceNetwork")
     def service_network(self) -> Optional[pulumi.Input[str]]:
+        """
+        The CIDR of the service network.
+        """
         return pulumi.get(self, "service_network")
 
     @service_network.setter
@@ -5075,32 +5801,35 @@ class Mk8sGenericProviderNetworkingArgs:
         pulumi.set(self, "service_network", value)
 
 
+if not MYPY:
+    class Mk8sGenericProviderNodePoolArgsDict(TypedDict):
+        name: pulumi.Input[str]
+        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Labels to attach to nodes of a node pool.
+        """
+        taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sGenericProviderNodePoolTaintArgsDict']]]]
+        """
+        Taint for the nodes of a pool.
+        """
+elif False:
+    Mk8sGenericProviderNodePoolArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sGenericProviderNodePoolArgs:
     def __init__(__self__, *,
                  name: pulumi.Input[str],
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sGenericProviderNodePoolTaintArgs']]]] = None):
-        Mk8sGenericProviderNodePoolArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            labels=labels,
-            taints=taints,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: pulumi.Input[str],
-             labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sGenericProviderNodePoolTaintArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
+        """
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] labels: Labels to attach to nodes of a node pool.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sGenericProviderNodePoolTaintArgs']]] taints: Taint for the nodes of a pool.
+        """
+        pulumi.set(__self__, "name", name)
         if labels is not None:
-            _setter("labels", labels)
+            pulumi.set(__self__, "labels", labels)
         if taints is not None:
-            _setter("taints", taints)
+            pulumi.set(__self__, "taints", taints)
 
     @property
     @pulumi.getter
@@ -5114,6 +5843,9 @@ class Mk8sGenericProviderNodePoolArgs:
     @property
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Labels to attach to nodes of a node pool.
+        """
         return pulumi.get(self, "labels")
 
     @labels.setter
@@ -5123,6 +5855,9 @@ class Mk8sGenericProviderNodePoolArgs:
     @property
     @pulumi.getter
     def taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sGenericProviderNodePoolTaintArgs']]]]:
+        """
+        Taint for the nodes of a pool.
+        """
         return pulumi.get(self, "taints")
 
     @taints.setter
@@ -5130,33 +5865,26 @@ class Mk8sGenericProviderNodePoolArgs:
         pulumi.set(self, "taints", value)
 
 
+if not MYPY:
+    class Mk8sGenericProviderNodePoolTaintArgsDict(TypedDict):
+        effect: NotRequired[pulumi.Input[str]]
+        key: NotRequired[pulumi.Input[str]]
+        value: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sGenericProviderNodePoolTaintArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sGenericProviderNodePoolTaintArgs:
     def __init__(__self__, *,
                  effect: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
-        Mk8sGenericProviderNodePoolTaintArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            effect=effect,
-            key=key,
-            value=value,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             effect: Optional[pulumi.Input[str]] = None,
-             key: Optional[pulumi.Input[str]] = None,
-             value: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if effect is not None:
-            _setter("effect", effect)
+            pulumi.set(__self__, "effect", effect)
         if key is not None:
-            _setter("key", key)
+            pulumi.set(__self__, "key", key)
         if value is not None:
-            _setter("value", value)
+            pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
@@ -5186,6 +5914,57 @@ class Mk8sGenericProviderNodePoolTaintArgs:
         pulumi.set(self, "value", value)
 
 
+if not MYPY:
+    class Mk8sHetznerProviderArgsDict(TypedDict):
+        network_id: pulumi.Input[str]
+        """
+        ID of the Hetzner network to deploy nodes to.
+        """
+        networking: pulumi.Input['Mk8sHetznerProviderNetworkingArgsDict']
+        region: pulumi.Input[str]
+        """
+        Hetzner region to deploy nodes to.
+        """
+        token_secret_link: pulumi.Input[str]
+        """
+        Link to a secret holding Hetzner access key.
+        """
+        autoscaler: NotRequired[pulumi.Input['Mk8sHetznerProviderAutoscalerArgsDict']]
+        dedicated_server_node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderDedicatedServerNodePoolArgsDict']]]]
+        """
+        Node pools that can configure dedicated Hetzner servers.
+        """
+        firewall_id: NotRequired[pulumi.Input[str]]
+        """
+        Optional firewall rule to attach to all nodes.
+        """
+        floating_ip_selector: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        If supplied, nodes will get assigned a random floating ip matching the selector.
+        """
+        hetzner_labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Extra labels to attach to servers.
+        """
+        image: NotRequired[pulumi.Input[str]]
+        """
+        Default image for all nodes.
+        """
+        node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderNodePoolArgsDict']]]]
+        """
+        List of node pools.
+        """
+        pre_install_script: NotRequired[pulumi.Input[str]]
+        """
+        Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
+        ssh_key: NotRequired[pulumi.Input[str]]
+        """
+        SSH key name for accessing deployed nodes.
+        """
+elif False:
+    Mk8sHetznerProviderArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sHetznerProviderArgs:
     def __init__(__self__, *,
@@ -5202,85 +5981,48 @@ class Mk8sHetznerProviderArgs:
                  node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderNodePoolArgs']]]] = None,
                  pre_install_script: Optional[pulumi.Input[str]] = None,
                  ssh_key: Optional[pulumi.Input[str]] = None):
-        Mk8sHetznerProviderArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            network_id=network_id,
-            networking=networking,
-            region=region,
-            token_secret_link=token_secret_link,
-            autoscaler=autoscaler,
-            dedicated_server_node_pools=dedicated_server_node_pools,
-            firewall_id=firewall_id,
-            floating_ip_selector=floating_ip_selector,
-            hetzner_labels=hetzner_labels,
-            image=image,
-            node_pools=node_pools,
-            pre_install_script=pre_install_script,
-            ssh_key=ssh_key,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             network_id: pulumi.Input[str],
-             networking: pulumi.Input['Mk8sHetznerProviderNetworkingArgs'],
-             region: pulumi.Input[str],
-             token_secret_link: pulumi.Input[str],
-             autoscaler: Optional[pulumi.Input['Mk8sHetznerProviderAutoscalerArgs']] = None,
-             dedicated_server_node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderDedicatedServerNodePoolArgs']]]] = None,
-             firewall_id: Optional[pulumi.Input[str]] = None,
-             floating_ip_selector: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             hetzner_labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             image: Optional[pulumi.Input[str]] = None,
-             node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderNodePoolArgs']]]] = None,
-             pre_install_script: Optional[pulumi.Input[str]] = None,
-             ssh_key: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'networkId' in kwargs:
-            network_id = kwargs['networkId']
-        if 'tokenSecretLink' in kwargs:
-            token_secret_link = kwargs['tokenSecretLink']
-        if 'dedicatedServerNodePools' in kwargs:
-            dedicated_server_node_pools = kwargs['dedicatedServerNodePools']
-        if 'firewallId' in kwargs:
-            firewall_id = kwargs['firewallId']
-        if 'floatingIpSelector' in kwargs:
-            floating_ip_selector = kwargs['floatingIpSelector']
-        if 'hetznerLabels' in kwargs:
-            hetzner_labels = kwargs['hetznerLabels']
-        if 'nodePools' in kwargs:
-            node_pools = kwargs['nodePools']
-        if 'preInstallScript' in kwargs:
-            pre_install_script = kwargs['preInstallScript']
-        if 'sshKey' in kwargs:
-            ssh_key = kwargs['sshKey']
-
-        _setter("network_id", network_id)
-        _setter("networking", networking)
-        _setter("region", region)
-        _setter("token_secret_link", token_secret_link)
+        """
+        :param pulumi.Input[str] network_id: ID of the Hetzner network to deploy nodes to.
+        :param pulumi.Input[str] region: Hetzner region to deploy nodes to.
+        :param pulumi.Input[str] token_secret_link: Link to a secret holding Hetzner access key.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderDedicatedServerNodePoolArgs']]] dedicated_server_node_pools: Node pools that can configure dedicated Hetzner servers.
+        :param pulumi.Input[str] firewall_id: Optional firewall rule to attach to all nodes.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] floating_ip_selector: If supplied, nodes will get assigned a random floating ip matching the selector.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] hetzner_labels: Extra labels to attach to servers.
+        :param pulumi.Input[str] image: Default image for all nodes.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderNodePoolArgs']]] node_pools: List of node pools.
+        :param pulumi.Input[str] pre_install_script: Optional shell script that will be run before K8s is installed. Supports SSM.
+        :param pulumi.Input[str] ssh_key: SSH key name for accessing deployed nodes.
+        """
+        pulumi.set(__self__, "network_id", network_id)
+        pulumi.set(__self__, "networking", networking)
+        pulumi.set(__self__, "region", region)
+        pulumi.set(__self__, "token_secret_link", token_secret_link)
         if autoscaler is not None:
-            _setter("autoscaler", autoscaler)
+            pulumi.set(__self__, "autoscaler", autoscaler)
         if dedicated_server_node_pools is not None:
-            _setter("dedicated_server_node_pools", dedicated_server_node_pools)
+            pulumi.set(__self__, "dedicated_server_node_pools", dedicated_server_node_pools)
         if firewall_id is not None:
-            _setter("firewall_id", firewall_id)
+            pulumi.set(__self__, "firewall_id", firewall_id)
         if floating_ip_selector is not None:
-            _setter("floating_ip_selector", floating_ip_selector)
+            pulumi.set(__self__, "floating_ip_selector", floating_ip_selector)
         if hetzner_labels is not None:
-            _setter("hetzner_labels", hetzner_labels)
+            pulumi.set(__self__, "hetzner_labels", hetzner_labels)
         if image is not None:
-            _setter("image", image)
+            pulumi.set(__self__, "image", image)
         if node_pools is not None:
-            _setter("node_pools", node_pools)
+            pulumi.set(__self__, "node_pools", node_pools)
         if pre_install_script is not None:
-            _setter("pre_install_script", pre_install_script)
+            pulumi.set(__self__, "pre_install_script", pre_install_script)
         if ssh_key is not None:
-            _setter("ssh_key", ssh_key)
+            pulumi.set(__self__, "ssh_key", ssh_key)
 
     @property
     @pulumi.getter(name="networkId")
     def network_id(self) -> pulumi.Input[str]:
+        """
+        ID of the Hetzner network to deploy nodes to.
+        """
         return pulumi.get(self, "network_id")
 
     @network_id.setter
@@ -5299,6 +6041,9 @@ class Mk8sHetznerProviderArgs:
     @property
     @pulumi.getter
     def region(self) -> pulumi.Input[str]:
+        """
+        Hetzner region to deploy nodes to.
+        """
         return pulumi.get(self, "region")
 
     @region.setter
@@ -5308,6 +6053,9 @@ class Mk8sHetznerProviderArgs:
     @property
     @pulumi.getter(name="tokenSecretLink")
     def token_secret_link(self) -> pulumi.Input[str]:
+        """
+        Link to a secret holding Hetzner access key.
+        """
         return pulumi.get(self, "token_secret_link")
 
     @token_secret_link.setter
@@ -5326,6 +6074,9 @@ class Mk8sHetznerProviderArgs:
     @property
     @pulumi.getter(name="dedicatedServerNodePools")
     def dedicated_server_node_pools(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderDedicatedServerNodePoolArgs']]]]:
+        """
+        Node pools that can configure dedicated Hetzner servers.
+        """
         return pulumi.get(self, "dedicated_server_node_pools")
 
     @dedicated_server_node_pools.setter
@@ -5335,6 +6086,9 @@ class Mk8sHetznerProviderArgs:
     @property
     @pulumi.getter(name="firewallId")
     def firewall_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional firewall rule to attach to all nodes.
+        """
         return pulumi.get(self, "firewall_id")
 
     @firewall_id.setter
@@ -5344,6 +6098,9 @@ class Mk8sHetznerProviderArgs:
     @property
     @pulumi.getter(name="floatingIpSelector")
     def floating_ip_selector(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        If supplied, nodes will get assigned a random floating ip matching the selector.
+        """
         return pulumi.get(self, "floating_ip_selector")
 
     @floating_ip_selector.setter
@@ -5353,6 +6110,9 @@ class Mk8sHetznerProviderArgs:
     @property
     @pulumi.getter(name="hetznerLabels")
     def hetzner_labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Extra labels to attach to servers.
+        """
         return pulumi.get(self, "hetzner_labels")
 
     @hetzner_labels.setter
@@ -5362,6 +6122,9 @@ class Mk8sHetznerProviderArgs:
     @property
     @pulumi.getter
     def image(self) -> Optional[pulumi.Input[str]]:
+        """
+        Default image for all nodes.
+        """
         return pulumi.get(self, "image")
 
     @image.setter
@@ -5371,6 +6134,9 @@ class Mk8sHetznerProviderArgs:
     @property
     @pulumi.getter(name="nodePools")
     def node_pools(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderNodePoolArgs']]]]:
+        """
+        List of node pools.
+        """
         return pulumi.get(self, "node_pools")
 
     @node_pools.setter
@@ -5380,6 +6146,9 @@ class Mk8sHetznerProviderArgs:
     @property
     @pulumi.getter(name="preInstallScript")
     def pre_install_script(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
         return pulumi.get(self, "pre_install_script")
 
     @pre_install_script.setter
@@ -5389,12 +6158,24 @@ class Mk8sHetznerProviderArgs:
     @property
     @pulumi.getter(name="sshKey")
     def ssh_key(self) -> Optional[pulumi.Input[str]]:
+        """
+        SSH key name for accessing deployed nodes.
+        """
         return pulumi.get(self, "ssh_key")
 
     @ssh_key.setter
     def ssh_key(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "ssh_key", value)
 
+
+if not MYPY:
+    class Mk8sHetznerProviderAutoscalerArgsDict(TypedDict):
+        expanders: pulumi.Input[Sequence[pulumi.Input[str]]]
+        unneeded_time: NotRequired[pulumi.Input[str]]
+        unready_time: NotRequired[pulumi.Input[str]]
+        utilization_threshold: NotRequired[pulumi.Input[float]]
+elif False:
+    Mk8sHetznerProviderAutoscalerArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sHetznerProviderAutoscalerArgs:
@@ -5403,36 +6184,13 @@ class Mk8sHetznerProviderAutoscalerArgs:
                  unneeded_time: Optional[pulumi.Input[str]] = None,
                  unready_time: Optional[pulumi.Input[str]] = None,
                  utilization_threshold: Optional[pulumi.Input[float]] = None):
-        Mk8sHetznerProviderAutoscalerArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            expanders=expanders,
-            unneeded_time=unneeded_time,
-            unready_time=unready_time,
-            utilization_threshold=utilization_threshold,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             expanders: pulumi.Input[Sequence[pulumi.Input[str]]],
-             unneeded_time: Optional[pulumi.Input[str]] = None,
-             unready_time: Optional[pulumi.Input[str]] = None,
-             utilization_threshold: Optional[pulumi.Input[float]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'unneededTime' in kwargs:
-            unneeded_time = kwargs['unneededTime']
-        if 'unreadyTime' in kwargs:
-            unready_time = kwargs['unreadyTime']
-        if 'utilizationThreshold' in kwargs:
-            utilization_threshold = kwargs['utilizationThreshold']
-
-        _setter("expanders", expanders)
+        pulumi.set(__self__, "expanders", expanders)
         if unneeded_time is not None:
-            _setter("unneeded_time", unneeded_time)
+            pulumi.set(__self__, "unneeded_time", unneeded_time)
         if unready_time is not None:
-            _setter("unready_time", unready_time)
+            pulumi.set(__self__, "unready_time", unready_time)
         if utilization_threshold is not None:
-            _setter("utilization_threshold", utilization_threshold)
+            pulumi.set(__self__, "utilization_threshold", utilization_threshold)
 
     @property
     @pulumi.getter
@@ -5471,32 +6229,35 @@ class Mk8sHetznerProviderAutoscalerArgs:
         pulumi.set(self, "utilization_threshold", value)
 
 
+if not MYPY:
+    class Mk8sHetznerProviderDedicatedServerNodePoolArgsDict(TypedDict):
+        name: pulumi.Input[str]
+        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Labels to attach to nodes of a node pool.
+        """
+        taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderDedicatedServerNodePoolTaintArgsDict']]]]
+        """
+        Taint for the nodes of a pool.
+        """
+elif False:
+    Mk8sHetznerProviderDedicatedServerNodePoolArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sHetznerProviderDedicatedServerNodePoolArgs:
     def __init__(__self__, *,
                  name: pulumi.Input[str],
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderDedicatedServerNodePoolTaintArgs']]]] = None):
-        Mk8sHetznerProviderDedicatedServerNodePoolArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            labels=labels,
-            taints=taints,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: pulumi.Input[str],
-             labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderDedicatedServerNodePoolTaintArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
+        """
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] labels: Labels to attach to nodes of a node pool.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderDedicatedServerNodePoolTaintArgs']]] taints: Taint for the nodes of a pool.
+        """
+        pulumi.set(__self__, "name", name)
         if labels is not None:
-            _setter("labels", labels)
+            pulumi.set(__self__, "labels", labels)
         if taints is not None:
-            _setter("taints", taints)
+            pulumi.set(__self__, "taints", taints)
 
     @property
     @pulumi.getter
@@ -5510,6 +6271,9 @@ class Mk8sHetznerProviderDedicatedServerNodePoolArgs:
     @property
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Labels to attach to nodes of a node pool.
+        """
         return pulumi.get(self, "labels")
 
     @labels.setter
@@ -5519,6 +6283,9 @@ class Mk8sHetznerProviderDedicatedServerNodePoolArgs:
     @property
     @pulumi.getter
     def taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderDedicatedServerNodePoolTaintArgs']]]]:
+        """
+        Taint for the nodes of a pool.
+        """
         return pulumi.get(self, "taints")
 
     @taints.setter
@@ -5526,33 +6293,26 @@ class Mk8sHetznerProviderDedicatedServerNodePoolArgs:
         pulumi.set(self, "taints", value)
 
 
+if not MYPY:
+    class Mk8sHetznerProviderDedicatedServerNodePoolTaintArgsDict(TypedDict):
+        effect: NotRequired[pulumi.Input[str]]
+        key: NotRequired[pulumi.Input[str]]
+        value: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sHetznerProviderDedicatedServerNodePoolTaintArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sHetznerProviderDedicatedServerNodePoolTaintArgs:
     def __init__(__self__, *,
                  effect: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
-        Mk8sHetznerProviderDedicatedServerNodePoolTaintArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            effect=effect,
-            key=key,
-            value=value,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             effect: Optional[pulumi.Input[str]] = None,
-             key: Optional[pulumi.Input[str]] = None,
-             value: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if effect is not None:
-            _setter("effect", effect)
+            pulumi.set(__self__, "effect", effect)
         if key is not None:
-            _setter("key", key)
+            pulumi.set(__self__, "key", key)
         if value is not None:
-            _setter("value", value)
+            pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
@@ -5582,36 +6342,39 @@ class Mk8sHetznerProviderDedicatedServerNodePoolTaintArgs:
         pulumi.set(self, "value", value)
 
 
+if not MYPY:
+    class Mk8sHetznerProviderNetworkingArgsDict(TypedDict):
+        pod_network: NotRequired[pulumi.Input[str]]
+        """
+        The CIDR of the pod network.
+        """
+        service_network: NotRequired[pulumi.Input[str]]
+        """
+        The CIDR of the service network.
+        """
+elif False:
+    Mk8sHetznerProviderNetworkingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sHetznerProviderNetworkingArgs:
     def __init__(__self__, *,
                  pod_network: Optional[pulumi.Input[str]] = None,
                  service_network: Optional[pulumi.Input[str]] = None):
-        Mk8sHetznerProviderNetworkingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            pod_network=pod_network,
-            service_network=service_network,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             pod_network: Optional[pulumi.Input[str]] = None,
-             service_network: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'podNetwork' in kwargs:
-            pod_network = kwargs['podNetwork']
-        if 'serviceNetwork' in kwargs:
-            service_network = kwargs['serviceNetwork']
-
+        """
+        :param pulumi.Input[str] pod_network: The CIDR of the pod network.
+        :param pulumi.Input[str] service_network: The CIDR of the service network.
+        """
         if pod_network is not None:
-            _setter("pod_network", pod_network)
+            pulumi.set(__self__, "pod_network", pod_network)
         if service_network is not None:
-            _setter("service_network", service_network)
+            pulumi.set(__self__, "service_network", service_network)
 
     @property
     @pulumi.getter(name="podNetwork")
     def pod_network(self) -> Optional[pulumi.Input[str]]:
+        """
+        The CIDR of the pod network.
+        """
         return pulumi.get(self, "pod_network")
 
     @pod_network.setter
@@ -5621,12 +6384,33 @@ class Mk8sHetznerProviderNetworkingArgs:
     @property
     @pulumi.getter(name="serviceNetwork")
     def service_network(self) -> Optional[pulumi.Input[str]]:
+        """
+        The CIDR of the service network.
+        """
         return pulumi.get(self, "service_network")
 
     @service_network.setter
     def service_network(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "service_network", value)
 
+
+if not MYPY:
+    class Mk8sHetznerProviderNodePoolArgsDict(TypedDict):
+        name: pulumi.Input[str]
+        server_type: pulumi.Input[str]
+        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Labels to attach to nodes of a node pool.
+        """
+        max_size: NotRequired[pulumi.Input[int]]
+        min_size: NotRequired[pulumi.Input[int]]
+        override_image: NotRequired[pulumi.Input[str]]
+        taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderNodePoolTaintArgsDict']]]]
+        """
+        Taint for the nodes of a pool.
+        """
+elif False:
+    Mk8sHetznerProviderNodePoolArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sHetznerProviderNodePoolArgs:
@@ -5638,49 +6422,22 @@ class Mk8sHetznerProviderNodePoolArgs:
                  min_size: Optional[pulumi.Input[int]] = None,
                  override_image: Optional[pulumi.Input[str]] = None,
                  taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderNodePoolTaintArgs']]]] = None):
-        Mk8sHetznerProviderNodePoolArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            server_type=server_type,
-            labels=labels,
-            max_size=max_size,
-            min_size=min_size,
-            override_image=override_image,
-            taints=taints,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: pulumi.Input[str],
-             server_type: pulumi.Input[str],
-             labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             max_size: Optional[pulumi.Input[int]] = None,
-             min_size: Optional[pulumi.Input[int]] = None,
-             override_image: Optional[pulumi.Input[str]] = None,
-             taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderNodePoolTaintArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'serverType' in kwargs:
-            server_type = kwargs['serverType']
-        if 'maxSize' in kwargs:
-            max_size = kwargs['maxSize']
-        if 'minSize' in kwargs:
-            min_size = kwargs['minSize']
-        if 'overrideImage' in kwargs:
-            override_image = kwargs['overrideImage']
-
-        _setter("name", name)
-        _setter("server_type", server_type)
+        """
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] labels: Labels to attach to nodes of a node pool.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderNodePoolTaintArgs']]] taints: Taint for the nodes of a pool.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "server_type", server_type)
         if labels is not None:
-            _setter("labels", labels)
+            pulumi.set(__self__, "labels", labels)
         if max_size is not None:
-            _setter("max_size", max_size)
+            pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
-            _setter("min_size", min_size)
+            pulumi.set(__self__, "min_size", min_size)
         if override_image is not None:
-            _setter("override_image", override_image)
+            pulumi.set(__self__, "override_image", override_image)
         if taints is not None:
-            _setter("taints", taints)
+            pulumi.set(__self__, "taints", taints)
 
     @property
     @pulumi.getter
@@ -5703,6 +6460,9 @@ class Mk8sHetznerProviderNodePoolArgs:
     @property
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Labels to attach to nodes of a node pool.
+        """
         return pulumi.get(self, "labels")
 
     @labels.setter
@@ -5739,6 +6499,9 @@ class Mk8sHetznerProviderNodePoolArgs:
     @property
     @pulumi.getter
     def taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderNodePoolTaintArgs']]]]:
+        """
+        Taint for the nodes of a pool.
+        """
         return pulumi.get(self, "taints")
 
     @taints.setter
@@ -5746,33 +6509,26 @@ class Mk8sHetznerProviderNodePoolArgs:
         pulumi.set(self, "taints", value)
 
 
+if not MYPY:
+    class Mk8sHetznerProviderNodePoolTaintArgsDict(TypedDict):
+        effect: NotRequired[pulumi.Input[str]]
+        key: NotRequired[pulumi.Input[str]]
+        value: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sHetznerProviderNodePoolTaintArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sHetznerProviderNodePoolTaintArgs:
     def __init__(__self__, *,
                  effect: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
-        Mk8sHetznerProviderNodePoolTaintArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            effect=effect,
-            key=key,
-            value=value,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             effect: Optional[pulumi.Input[str]] = None,
-             key: Optional[pulumi.Input[str]] = None,
-             value: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if effect is not None:
-            _setter("effect", effect)
+            pulumi.set(__self__, "effect", effect)
         if key is not None:
-            _setter("key", key)
+            pulumi.set(__self__, "key", key)
         if value is not None:
-            _setter("value", value)
+            pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
@@ -5802,6 +6558,33 @@ class Mk8sHetznerProviderNodePoolTaintArgs:
         pulumi.set(self, "value", value)
 
 
+if not MYPY:
+    class Mk8sLambdalabsProviderArgsDict(TypedDict):
+        region: pulumi.Input[str]
+        """
+        Region where the cluster nodes will live.
+        """
+        ssh_key: pulumi.Input[str]
+        """
+        SSH key name for accessing deployed nodes.
+        """
+        token_secret_link: pulumi.Input[str]
+        """
+        Link to a secret holding Lambdalabs access key.
+        """
+        autoscaler: NotRequired[pulumi.Input['Mk8sLambdalabsProviderAutoscalerArgsDict']]
+        node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sLambdalabsProviderNodePoolArgsDict']]]]
+        """
+        List of node pools.
+        """
+        pre_install_script: NotRequired[pulumi.Input[str]]
+        """
+        Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
+        unmanaged_node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sLambdalabsProviderUnmanagedNodePoolArgsDict']]]]
+elif False:
+    Mk8sLambdalabsProviderArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sLambdalabsProviderArgs:
     def __init__(__self__, *,
@@ -5812,54 +6595,31 @@ class Mk8sLambdalabsProviderArgs:
                  node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sLambdalabsProviderNodePoolArgs']]]] = None,
                  pre_install_script: Optional[pulumi.Input[str]] = None,
                  unmanaged_node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sLambdalabsProviderUnmanagedNodePoolArgs']]]] = None):
-        Mk8sLambdalabsProviderArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            region=region,
-            ssh_key=ssh_key,
-            token_secret_link=token_secret_link,
-            autoscaler=autoscaler,
-            node_pools=node_pools,
-            pre_install_script=pre_install_script,
-            unmanaged_node_pools=unmanaged_node_pools,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             region: pulumi.Input[str],
-             ssh_key: pulumi.Input[str],
-             token_secret_link: pulumi.Input[str],
-             autoscaler: Optional[pulumi.Input['Mk8sLambdalabsProviderAutoscalerArgs']] = None,
-             node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sLambdalabsProviderNodePoolArgs']]]] = None,
-             pre_install_script: Optional[pulumi.Input[str]] = None,
-             unmanaged_node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sLambdalabsProviderUnmanagedNodePoolArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'sshKey' in kwargs:
-            ssh_key = kwargs['sshKey']
-        if 'tokenSecretLink' in kwargs:
-            token_secret_link = kwargs['tokenSecretLink']
-        if 'nodePools' in kwargs:
-            node_pools = kwargs['nodePools']
-        if 'preInstallScript' in kwargs:
-            pre_install_script = kwargs['preInstallScript']
-        if 'unmanagedNodePools' in kwargs:
-            unmanaged_node_pools = kwargs['unmanagedNodePools']
-
-        _setter("region", region)
-        _setter("ssh_key", ssh_key)
-        _setter("token_secret_link", token_secret_link)
+        """
+        :param pulumi.Input[str] region: Region where the cluster nodes will live.
+        :param pulumi.Input[str] ssh_key: SSH key name for accessing deployed nodes.
+        :param pulumi.Input[str] token_secret_link: Link to a secret holding Lambdalabs access key.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sLambdalabsProviderNodePoolArgs']]] node_pools: List of node pools.
+        :param pulumi.Input[str] pre_install_script: Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
+        pulumi.set(__self__, "region", region)
+        pulumi.set(__self__, "ssh_key", ssh_key)
+        pulumi.set(__self__, "token_secret_link", token_secret_link)
         if autoscaler is not None:
-            _setter("autoscaler", autoscaler)
+            pulumi.set(__self__, "autoscaler", autoscaler)
         if node_pools is not None:
-            _setter("node_pools", node_pools)
+            pulumi.set(__self__, "node_pools", node_pools)
         if pre_install_script is not None:
-            _setter("pre_install_script", pre_install_script)
+            pulumi.set(__self__, "pre_install_script", pre_install_script)
         if unmanaged_node_pools is not None:
-            _setter("unmanaged_node_pools", unmanaged_node_pools)
+            pulumi.set(__self__, "unmanaged_node_pools", unmanaged_node_pools)
 
     @property
     @pulumi.getter
     def region(self) -> pulumi.Input[str]:
+        """
+        Region where the cluster nodes will live.
+        """
         return pulumi.get(self, "region")
 
     @region.setter
@@ -5869,6 +6629,9 @@ class Mk8sLambdalabsProviderArgs:
     @property
     @pulumi.getter(name="sshKey")
     def ssh_key(self) -> pulumi.Input[str]:
+        """
+        SSH key name for accessing deployed nodes.
+        """
         return pulumi.get(self, "ssh_key")
 
     @ssh_key.setter
@@ -5878,6 +6641,9 @@ class Mk8sLambdalabsProviderArgs:
     @property
     @pulumi.getter(name="tokenSecretLink")
     def token_secret_link(self) -> pulumi.Input[str]:
+        """
+        Link to a secret holding Lambdalabs access key.
+        """
         return pulumi.get(self, "token_secret_link")
 
     @token_secret_link.setter
@@ -5896,6 +6662,9 @@ class Mk8sLambdalabsProviderArgs:
     @property
     @pulumi.getter(name="nodePools")
     def node_pools(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sLambdalabsProviderNodePoolArgs']]]]:
+        """
+        List of node pools.
+        """
         return pulumi.get(self, "node_pools")
 
     @node_pools.setter
@@ -5905,6 +6674,9 @@ class Mk8sLambdalabsProviderArgs:
     @property
     @pulumi.getter(name="preInstallScript")
     def pre_install_script(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
         return pulumi.get(self, "pre_install_script")
 
     @pre_install_script.setter
@@ -5921,6 +6693,15 @@ class Mk8sLambdalabsProviderArgs:
         pulumi.set(self, "unmanaged_node_pools", value)
 
 
+if not MYPY:
+    class Mk8sLambdalabsProviderAutoscalerArgsDict(TypedDict):
+        expanders: pulumi.Input[Sequence[pulumi.Input[str]]]
+        unneeded_time: NotRequired[pulumi.Input[str]]
+        unready_time: NotRequired[pulumi.Input[str]]
+        utilization_threshold: NotRequired[pulumi.Input[float]]
+elif False:
+    Mk8sLambdalabsProviderAutoscalerArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sLambdalabsProviderAutoscalerArgs:
     def __init__(__self__, *,
@@ -5928,36 +6709,13 @@ class Mk8sLambdalabsProviderAutoscalerArgs:
                  unneeded_time: Optional[pulumi.Input[str]] = None,
                  unready_time: Optional[pulumi.Input[str]] = None,
                  utilization_threshold: Optional[pulumi.Input[float]] = None):
-        Mk8sLambdalabsProviderAutoscalerArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            expanders=expanders,
-            unneeded_time=unneeded_time,
-            unready_time=unready_time,
-            utilization_threshold=utilization_threshold,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             expanders: pulumi.Input[Sequence[pulumi.Input[str]]],
-             unneeded_time: Optional[pulumi.Input[str]] = None,
-             unready_time: Optional[pulumi.Input[str]] = None,
-             utilization_threshold: Optional[pulumi.Input[float]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'unneededTime' in kwargs:
-            unneeded_time = kwargs['unneededTime']
-        if 'unreadyTime' in kwargs:
-            unready_time = kwargs['unreadyTime']
-        if 'utilizationThreshold' in kwargs:
-            utilization_threshold = kwargs['utilizationThreshold']
-
-        _setter("expanders", expanders)
+        pulumi.set(__self__, "expanders", expanders)
         if unneeded_time is not None:
-            _setter("unneeded_time", unneeded_time)
+            pulumi.set(__self__, "unneeded_time", unneeded_time)
         if unready_time is not None:
-            _setter("unready_time", unready_time)
+            pulumi.set(__self__, "unready_time", unready_time)
         if utilization_threshold is not None:
-            _setter("utilization_threshold", utilization_threshold)
+            pulumi.set(__self__, "utilization_threshold", utilization_threshold)
 
     @property
     @pulumi.getter
@@ -5996,6 +6754,23 @@ class Mk8sLambdalabsProviderAutoscalerArgs:
         pulumi.set(self, "utilization_threshold", value)
 
 
+if not MYPY:
+    class Mk8sLambdalabsProviderNodePoolArgsDict(TypedDict):
+        instance_type: pulumi.Input[str]
+        name: pulumi.Input[str]
+        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Labels to attach to nodes of a node pool.
+        """
+        max_size: NotRequired[pulumi.Input[int]]
+        min_size: NotRequired[pulumi.Input[int]]
+        taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sLambdalabsProviderNodePoolTaintArgsDict']]]]
+        """
+        Taint for the nodes of a pool.
+        """
+elif False:
+    Mk8sLambdalabsProviderNodePoolArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sLambdalabsProviderNodePoolArgs:
     def __init__(__self__, *,
@@ -6005,43 +6780,20 @@ class Mk8sLambdalabsProviderNodePoolArgs:
                  max_size: Optional[pulumi.Input[int]] = None,
                  min_size: Optional[pulumi.Input[int]] = None,
                  taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sLambdalabsProviderNodePoolTaintArgs']]]] = None):
-        Mk8sLambdalabsProviderNodePoolArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            instance_type=instance_type,
-            name=name,
-            labels=labels,
-            max_size=max_size,
-            min_size=min_size,
-            taints=taints,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             instance_type: pulumi.Input[str],
-             name: pulumi.Input[str],
-             labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             max_size: Optional[pulumi.Input[int]] = None,
-             min_size: Optional[pulumi.Input[int]] = None,
-             taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sLambdalabsProviderNodePoolTaintArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'instanceType' in kwargs:
-            instance_type = kwargs['instanceType']
-        if 'maxSize' in kwargs:
-            max_size = kwargs['maxSize']
-        if 'minSize' in kwargs:
-            min_size = kwargs['minSize']
-
-        _setter("instance_type", instance_type)
-        _setter("name", name)
+        """
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] labels: Labels to attach to nodes of a node pool.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sLambdalabsProviderNodePoolTaintArgs']]] taints: Taint for the nodes of a pool.
+        """
+        pulumi.set(__self__, "instance_type", instance_type)
+        pulumi.set(__self__, "name", name)
         if labels is not None:
-            _setter("labels", labels)
+            pulumi.set(__self__, "labels", labels)
         if max_size is not None:
-            _setter("max_size", max_size)
+            pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
-            _setter("min_size", min_size)
+            pulumi.set(__self__, "min_size", min_size)
         if taints is not None:
-            _setter("taints", taints)
+            pulumi.set(__self__, "taints", taints)
 
     @property
     @pulumi.getter(name="instanceType")
@@ -6064,6 +6816,9 @@ class Mk8sLambdalabsProviderNodePoolArgs:
     @property
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Labels to attach to nodes of a node pool.
+        """
         return pulumi.get(self, "labels")
 
     @labels.setter
@@ -6091,6 +6846,9 @@ class Mk8sLambdalabsProviderNodePoolArgs:
     @property
     @pulumi.getter
     def taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sLambdalabsProviderNodePoolTaintArgs']]]]:
+        """
+        Taint for the nodes of a pool.
+        """
         return pulumi.get(self, "taints")
 
     @taints.setter
@@ -6098,33 +6856,26 @@ class Mk8sLambdalabsProviderNodePoolArgs:
         pulumi.set(self, "taints", value)
 
 
+if not MYPY:
+    class Mk8sLambdalabsProviderNodePoolTaintArgsDict(TypedDict):
+        effect: NotRequired[pulumi.Input[str]]
+        key: NotRequired[pulumi.Input[str]]
+        value: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sLambdalabsProviderNodePoolTaintArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sLambdalabsProviderNodePoolTaintArgs:
     def __init__(__self__, *,
                  effect: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
-        Mk8sLambdalabsProviderNodePoolTaintArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            effect=effect,
-            key=key,
-            value=value,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             effect: Optional[pulumi.Input[str]] = None,
-             key: Optional[pulumi.Input[str]] = None,
-             value: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if effect is not None:
-            _setter("effect", effect)
+            pulumi.set(__self__, "effect", effect)
         if key is not None:
-            _setter("key", key)
+            pulumi.set(__self__, "key", key)
         if value is not None:
-            _setter("value", value)
+            pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
@@ -6154,32 +6905,35 @@ class Mk8sLambdalabsProviderNodePoolTaintArgs:
         pulumi.set(self, "value", value)
 
 
+if not MYPY:
+    class Mk8sLambdalabsProviderUnmanagedNodePoolArgsDict(TypedDict):
+        name: pulumi.Input[str]
+        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Labels to attach to nodes of a node pool.
+        """
+        taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgsDict']]]]
+        """
+        Taint for the nodes of a pool.
+        """
+elif False:
+    Mk8sLambdalabsProviderUnmanagedNodePoolArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sLambdalabsProviderUnmanagedNodePoolArgs:
     def __init__(__self__, *,
                  name: pulumi.Input[str],
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgs']]]] = None):
-        Mk8sLambdalabsProviderUnmanagedNodePoolArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            labels=labels,
-            taints=taints,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: pulumi.Input[str],
-             labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
+        """
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] labels: Labels to attach to nodes of a node pool.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgs']]] taints: Taint for the nodes of a pool.
+        """
+        pulumi.set(__self__, "name", name)
         if labels is not None:
-            _setter("labels", labels)
+            pulumi.set(__self__, "labels", labels)
         if taints is not None:
-            _setter("taints", taints)
+            pulumi.set(__self__, "taints", taints)
 
     @property
     @pulumi.getter
@@ -6193,6 +6947,9 @@ class Mk8sLambdalabsProviderUnmanagedNodePoolArgs:
     @property
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Labels to attach to nodes of a node pool.
+        """
         return pulumi.get(self, "labels")
 
     @labels.setter
@@ -6202,6 +6959,9 @@ class Mk8sLambdalabsProviderUnmanagedNodePoolArgs:
     @property
     @pulumi.getter
     def taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgs']]]]:
+        """
+        Taint for the nodes of a pool.
+        """
         return pulumi.get(self, "taints")
 
     @taints.setter
@@ -6209,33 +6969,26 @@ class Mk8sLambdalabsProviderUnmanagedNodePoolArgs:
         pulumi.set(self, "taints", value)
 
 
+if not MYPY:
+    class Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgsDict(TypedDict):
+        effect: NotRequired[pulumi.Input[str]]
+        key: NotRequired[pulumi.Input[str]]
+        value: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgs:
     def __init__(__self__, *,
                  effect: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
-        Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            effect=effect,
-            key=key,
-            value=value,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             effect: Optional[pulumi.Input[str]] = None,
-             key: Optional[pulumi.Input[str]] = None,
-             value: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if effect is not None:
-            _setter("effect", effect)
+            pulumi.set(__self__, "effect", effect)
         if key is not None:
-            _setter("key", key)
+            pulumi.set(__self__, "key", key)
         if value is not None:
-            _setter("value", value)
+            pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
@@ -6264,6 +7017,43 @@ class Mk8sLambdalabsProviderUnmanagedNodePoolTaintArgs:
     def value(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "value", value)
 
+
+if not MYPY:
+    class Mk8sLinodeProviderArgsDict(TypedDict):
+        image: pulumi.Input[str]
+        """
+        Default image for all nodes.
+        """
+        networking: pulumi.Input['Mk8sLinodeProviderNetworkingArgsDict']
+        region: pulumi.Input[str]
+        """
+        Region where the cluster nodes will live.
+        """
+        token_secret_link: pulumi.Input[str]
+        """
+        Link to a secret holding Linode access key.
+        """
+        vpc_id: pulumi.Input[str]
+        """
+        The vpc where nodes will be deployed. Supports SSM.
+        """
+        authorized_keys: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        authorized_users: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        autoscaler: NotRequired[pulumi.Input['Mk8sLinodeProviderAutoscalerArgsDict']]
+        firewall_id: NotRequired[pulumi.Input[str]]
+        """
+        Optional firewall rule to attach to all nodes.
+        """
+        node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sLinodeProviderNodePoolArgsDict']]]]
+        """
+        List of node pools.
+        """
+        pre_install_script: NotRequired[pulumi.Input[str]]
+        """
+        Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
+elif False:
+    Mk8sLinodeProviderArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sLinodeProviderArgs:
@@ -6279,72 +7069,39 @@ class Mk8sLinodeProviderArgs:
                  firewall_id: Optional[pulumi.Input[str]] = None,
                  node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sLinodeProviderNodePoolArgs']]]] = None,
                  pre_install_script: Optional[pulumi.Input[str]] = None):
-        Mk8sLinodeProviderArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            image=image,
-            networking=networking,
-            region=region,
-            token_secret_link=token_secret_link,
-            vpc_id=vpc_id,
-            authorized_keys=authorized_keys,
-            authorized_users=authorized_users,
-            autoscaler=autoscaler,
-            firewall_id=firewall_id,
-            node_pools=node_pools,
-            pre_install_script=pre_install_script,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             image: pulumi.Input[str],
-             networking: pulumi.Input['Mk8sLinodeProviderNetworkingArgs'],
-             region: pulumi.Input[str],
-             token_secret_link: pulumi.Input[str],
-             vpc_id: pulumi.Input[str],
-             authorized_keys: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             authorized_users: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             autoscaler: Optional[pulumi.Input['Mk8sLinodeProviderAutoscalerArgs']] = None,
-             firewall_id: Optional[pulumi.Input[str]] = None,
-             node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sLinodeProviderNodePoolArgs']]]] = None,
-             pre_install_script: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'tokenSecretLink' in kwargs:
-            token_secret_link = kwargs['tokenSecretLink']
-        if 'vpcId' in kwargs:
-            vpc_id = kwargs['vpcId']
-        if 'authorizedKeys' in kwargs:
-            authorized_keys = kwargs['authorizedKeys']
-        if 'authorizedUsers' in kwargs:
-            authorized_users = kwargs['authorizedUsers']
-        if 'firewallId' in kwargs:
-            firewall_id = kwargs['firewallId']
-        if 'nodePools' in kwargs:
-            node_pools = kwargs['nodePools']
-        if 'preInstallScript' in kwargs:
-            pre_install_script = kwargs['preInstallScript']
-
-        _setter("image", image)
-        _setter("networking", networking)
-        _setter("region", region)
-        _setter("token_secret_link", token_secret_link)
-        _setter("vpc_id", vpc_id)
+        """
+        :param pulumi.Input[str] image: Default image for all nodes.
+        :param pulumi.Input[str] region: Region where the cluster nodes will live.
+        :param pulumi.Input[str] token_secret_link: Link to a secret holding Linode access key.
+        :param pulumi.Input[str] vpc_id: The vpc where nodes will be deployed. Supports SSM.
+        :param pulumi.Input[str] firewall_id: Optional firewall rule to attach to all nodes.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sLinodeProviderNodePoolArgs']]] node_pools: List of node pools.
+        :param pulumi.Input[str] pre_install_script: Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
+        pulumi.set(__self__, "image", image)
+        pulumi.set(__self__, "networking", networking)
+        pulumi.set(__self__, "region", region)
+        pulumi.set(__self__, "token_secret_link", token_secret_link)
+        pulumi.set(__self__, "vpc_id", vpc_id)
         if authorized_keys is not None:
-            _setter("authorized_keys", authorized_keys)
+            pulumi.set(__self__, "authorized_keys", authorized_keys)
         if authorized_users is not None:
-            _setter("authorized_users", authorized_users)
+            pulumi.set(__self__, "authorized_users", authorized_users)
         if autoscaler is not None:
-            _setter("autoscaler", autoscaler)
+            pulumi.set(__self__, "autoscaler", autoscaler)
         if firewall_id is not None:
-            _setter("firewall_id", firewall_id)
+            pulumi.set(__self__, "firewall_id", firewall_id)
         if node_pools is not None:
-            _setter("node_pools", node_pools)
+            pulumi.set(__self__, "node_pools", node_pools)
         if pre_install_script is not None:
-            _setter("pre_install_script", pre_install_script)
+            pulumi.set(__self__, "pre_install_script", pre_install_script)
 
     @property
     @pulumi.getter
     def image(self) -> pulumi.Input[str]:
+        """
+        Default image for all nodes.
+        """
         return pulumi.get(self, "image")
 
     @image.setter
@@ -6363,6 +7120,9 @@ class Mk8sLinodeProviderArgs:
     @property
     @pulumi.getter
     def region(self) -> pulumi.Input[str]:
+        """
+        Region where the cluster nodes will live.
+        """
         return pulumi.get(self, "region")
 
     @region.setter
@@ -6372,6 +7132,9 @@ class Mk8sLinodeProviderArgs:
     @property
     @pulumi.getter(name="tokenSecretLink")
     def token_secret_link(self) -> pulumi.Input[str]:
+        """
+        Link to a secret holding Linode access key.
+        """
         return pulumi.get(self, "token_secret_link")
 
     @token_secret_link.setter
@@ -6381,6 +7144,9 @@ class Mk8sLinodeProviderArgs:
     @property
     @pulumi.getter(name="vpcId")
     def vpc_id(self) -> pulumi.Input[str]:
+        """
+        The vpc where nodes will be deployed. Supports SSM.
+        """
         return pulumi.get(self, "vpc_id")
 
     @vpc_id.setter
@@ -6417,6 +7183,9 @@ class Mk8sLinodeProviderArgs:
     @property
     @pulumi.getter(name="firewallId")
     def firewall_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional firewall rule to attach to all nodes.
+        """
         return pulumi.get(self, "firewall_id")
 
     @firewall_id.setter
@@ -6426,6 +7195,9 @@ class Mk8sLinodeProviderArgs:
     @property
     @pulumi.getter(name="nodePools")
     def node_pools(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sLinodeProviderNodePoolArgs']]]]:
+        """
+        List of node pools.
+        """
         return pulumi.get(self, "node_pools")
 
     @node_pools.setter
@@ -6435,12 +7207,24 @@ class Mk8sLinodeProviderArgs:
     @property
     @pulumi.getter(name="preInstallScript")
     def pre_install_script(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
         return pulumi.get(self, "pre_install_script")
 
     @pre_install_script.setter
     def pre_install_script(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "pre_install_script", value)
 
+
+if not MYPY:
+    class Mk8sLinodeProviderAutoscalerArgsDict(TypedDict):
+        expanders: pulumi.Input[Sequence[pulumi.Input[str]]]
+        unneeded_time: NotRequired[pulumi.Input[str]]
+        unready_time: NotRequired[pulumi.Input[str]]
+        utilization_threshold: NotRequired[pulumi.Input[float]]
+elif False:
+    Mk8sLinodeProviderAutoscalerArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sLinodeProviderAutoscalerArgs:
@@ -6449,36 +7233,13 @@ class Mk8sLinodeProviderAutoscalerArgs:
                  unneeded_time: Optional[pulumi.Input[str]] = None,
                  unready_time: Optional[pulumi.Input[str]] = None,
                  utilization_threshold: Optional[pulumi.Input[float]] = None):
-        Mk8sLinodeProviderAutoscalerArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            expanders=expanders,
-            unneeded_time=unneeded_time,
-            unready_time=unready_time,
-            utilization_threshold=utilization_threshold,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             expanders: pulumi.Input[Sequence[pulumi.Input[str]]],
-             unneeded_time: Optional[pulumi.Input[str]] = None,
-             unready_time: Optional[pulumi.Input[str]] = None,
-             utilization_threshold: Optional[pulumi.Input[float]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'unneededTime' in kwargs:
-            unneeded_time = kwargs['unneededTime']
-        if 'unreadyTime' in kwargs:
-            unready_time = kwargs['unreadyTime']
-        if 'utilizationThreshold' in kwargs:
-            utilization_threshold = kwargs['utilizationThreshold']
-
-        _setter("expanders", expanders)
+        pulumi.set(__self__, "expanders", expanders)
         if unneeded_time is not None:
-            _setter("unneeded_time", unneeded_time)
+            pulumi.set(__self__, "unneeded_time", unneeded_time)
         if unready_time is not None:
-            _setter("unready_time", unready_time)
+            pulumi.set(__self__, "unready_time", unready_time)
         if utilization_threshold is not None:
-            _setter("utilization_threshold", utilization_threshold)
+            pulumi.set(__self__, "utilization_threshold", utilization_threshold)
 
     @property
     @pulumi.getter
@@ -6517,36 +7278,39 @@ class Mk8sLinodeProviderAutoscalerArgs:
         pulumi.set(self, "utilization_threshold", value)
 
 
+if not MYPY:
+    class Mk8sLinodeProviderNetworkingArgsDict(TypedDict):
+        pod_network: NotRequired[pulumi.Input[str]]
+        """
+        The CIDR of the pod network.
+        """
+        service_network: NotRequired[pulumi.Input[str]]
+        """
+        The CIDR of the service network.
+        """
+elif False:
+    Mk8sLinodeProviderNetworkingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sLinodeProviderNetworkingArgs:
     def __init__(__self__, *,
                  pod_network: Optional[pulumi.Input[str]] = None,
                  service_network: Optional[pulumi.Input[str]] = None):
-        Mk8sLinodeProviderNetworkingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            pod_network=pod_network,
-            service_network=service_network,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             pod_network: Optional[pulumi.Input[str]] = None,
-             service_network: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'podNetwork' in kwargs:
-            pod_network = kwargs['podNetwork']
-        if 'serviceNetwork' in kwargs:
-            service_network = kwargs['serviceNetwork']
-
+        """
+        :param pulumi.Input[str] pod_network: The CIDR of the pod network.
+        :param pulumi.Input[str] service_network: The CIDR of the service network.
+        """
         if pod_network is not None:
-            _setter("pod_network", pod_network)
+            pulumi.set(__self__, "pod_network", pod_network)
         if service_network is not None:
-            _setter("service_network", service_network)
+            pulumi.set(__self__, "service_network", service_network)
 
     @property
     @pulumi.getter(name="podNetwork")
     def pod_network(self) -> Optional[pulumi.Input[str]]:
+        """
+        The CIDR of the pod network.
+        """
         return pulumi.get(self, "pod_network")
 
     @pod_network.setter
@@ -6556,12 +7320,34 @@ class Mk8sLinodeProviderNetworkingArgs:
     @property
     @pulumi.getter(name="serviceNetwork")
     def service_network(self) -> Optional[pulumi.Input[str]]:
+        """
+        The CIDR of the service network.
+        """
         return pulumi.get(self, "service_network")
 
     @service_network.setter
     def service_network(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "service_network", value)
 
+
+if not MYPY:
+    class Mk8sLinodeProviderNodePoolArgsDict(TypedDict):
+        name: pulumi.Input[str]
+        server_type: pulumi.Input[str]
+        subnet_id: pulumi.Input[str]
+        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Labels to attach to nodes of a node pool.
+        """
+        max_size: NotRequired[pulumi.Input[int]]
+        min_size: NotRequired[pulumi.Input[int]]
+        override_image: NotRequired[pulumi.Input[str]]
+        taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sLinodeProviderNodePoolTaintArgsDict']]]]
+        """
+        Taint for the nodes of a pool.
+        """
+elif False:
+    Mk8sLinodeProviderNodePoolArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sLinodeProviderNodePoolArgs:
@@ -6574,54 +7360,23 @@ class Mk8sLinodeProviderNodePoolArgs:
                  min_size: Optional[pulumi.Input[int]] = None,
                  override_image: Optional[pulumi.Input[str]] = None,
                  taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sLinodeProviderNodePoolTaintArgs']]]] = None):
-        Mk8sLinodeProviderNodePoolArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            server_type=server_type,
-            subnet_id=subnet_id,
-            labels=labels,
-            max_size=max_size,
-            min_size=min_size,
-            override_image=override_image,
-            taints=taints,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: pulumi.Input[str],
-             server_type: pulumi.Input[str],
-             subnet_id: pulumi.Input[str],
-             labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             max_size: Optional[pulumi.Input[int]] = None,
-             min_size: Optional[pulumi.Input[int]] = None,
-             override_image: Optional[pulumi.Input[str]] = None,
-             taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sLinodeProviderNodePoolTaintArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'serverType' in kwargs:
-            server_type = kwargs['serverType']
-        if 'subnetId' in kwargs:
-            subnet_id = kwargs['subnetId']
-        if 'maxSize' in kwargs:
-            max_size = kwargs['maxSize']
-        if 'minSize' in kwargs:
-            min_size = kwargs['minSize']
-        if 'overrideImage' in kwargs:
-            override_image = kwargs['overrideImage']
-
-        _setter("name", name)
-        _setter("server_type", server_type)
-        _setter("subnet_id", subnet_id)
+        """
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] labels: Labels to attach to nodes of a node pool.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sLinodeProviderNodePoolTaintArgs']]] taints: Taint for the nodes of a pool.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "server_type", server_type)
+        pulumi.set(__self__, "subnet_id", subnet_id)
         if labels is not None:
-            _setter("labels", labels)
+            pulumi.set(__self__, "labels", labels)
         if max_size is not None:
-            _setter("max_size", max_size)
+            pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
-            _setter("min_size", min_size)
+            pulumi.set(__self__, "min_size", min_size)
         if override_image is not None:
-            _setter("override_image", override_image)
+            pulumi.set(__self__, "override_image", override_image)
         if taints is not None:
-            _setter("taints", taints)
+            pulumi.set(__self__, "taints", taints)
 
     @property
     @pulumi.getter
@@ -6653,6 +7408,9 @@ class Mk8sLinodeProviderNodePoolArgs:
     @property
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Labels to attach to nodes of a node pool.
+        """
         return pulumi.get(self, "labels")
 
     @labels.setter
@@ -6689,6 +7447,9 @@ class Mk8sLinodeProviderNodePoolArgs:
     @property
     @pulumi.getter
     def taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sLinodeProviderNodePoolTaintArgs']]]]:
+        """
+        Taint for the nodes of a pool.
+        """
         return pulumi.get(self, "taints")
 
     @taints.setter
@@ -6696,33 +7457,26 @@ class Mk8sLinodeProviderNodePoolArgs:
         pulumi.set(self, "taints", value)
 
 
+if not MYPY:
+    class Mk8sLinodeProviderNodePoolTaintArgsDict(TypedDict):
+        effect: NotRequired[pulumi.Input[str]]
+        key: NotRequired[pulumi.Input[str]]
+        value: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sLinodeProviderNodePoolTaintArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sLinodeProviderNodePoolTaintArgs:
     def __init__(__self__, *,
                  effect: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
-        Mk8sLinodeProviderNodePoolTaintArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            effect=effect,
-            key=key,
-            value=value,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             effect: Optional[pulumi.Input[str]] = None,
-             key: Optional[pulumi.Input[str]] = None,
-             value: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if effect is not None:
-            _setter("effect", effect)
+            pulumi.set(__self__, "effect", effect)
         if key is not None:
-            _setter("key", key)
+            pulumi.set(__self__, "key", key)
         if value is not None:
-            _setter("value", value)
+            pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
@@ -6752,6 +7506,27 @@ class Mk8sLinodeProviderNodePoolTaintArgs:
         pulumi.set(self, "value", value)
 
 
+if not MYPY:
+    class Mk8sOblivusProviderArgsDict(TypedDict):
+        datacenter: pulumi.Input[str]
+        token_secret_link: pulumi.Input[str]
+        """
+        Link to a secret holding Oblivus access key.
+        """
+        autoscaler: NotRequired[pulumi.Input['Mk8sOblivusProviderAutoscalerArgsDict']]
+        node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sOblivusProviderNodePoolArgsDict']]]]
+        """
+        List of node pools.
+        """
+        pre_install_script: NotRequired[pulumi.Input[str]]
+        """
+        Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
+        ssh_keys: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        unmanaged_node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sOblivusProviderUnmanagedNodePoolArgsDict']]]]
+elif False:
+    Mk8sOblivusProviderArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sOblivusProviderArgs:
     def __init__(__self__, *,
@@ -6762,51 +7537,23 @@ class Mk8sOblivusProviderArgs:
                  pre_install_script: Optional[pulumi.Input[str]] = None,
                  ssh_keys: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  unmanaged_node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sOblivusProviderUnmanagedNodePoolArgs']]]] = None):
-        Mk8sOblivusProviderArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            datacenter=datacenter,
-            token_secret_link=token_secret_link,
-            autoscaler=autoscaler,
-            node_pools=node_pools,
-            pre_install_script=pre_install_script,
-            ssh_keys=ssh_keys,
-            unmanaged_node_pools=unmanaged_node_pools,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             datacenter: pulumi.Input[str],
-             token_secret_link: pulumi.Input[str],
-             autoscaler: Optional[pulumi.Input['Mk8sOblivusProviderAutoscalerArgs']] = None,
-             node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sOblivusProviderNodePoolArgs']]]] = None,
-             pre_install_script: Optional[pulumi.Input[str]] = None,
-             ssh_keys: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             unmanaged_node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sOblivusProviderUnmanagedNodePoolArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'tokenSecretLink' in kwargs:
-            token_secret_link = kwargs['tokenSecretLink']
-        if 'nodePools' in kwargs:
-            node_pools = kwargs['nodePools']
-        if 'preInstallScript' in kwargs:
-            pre_install_script = kwargs['preInstallScript']
-        if 'sshKeys' in kwargs:
-            ssh_keys = kwargs['sshKeys']
-        if 'unmanagedNodePools' in kwargs:
-            unmanaged_node_pools = kwargs['unmanagedNodePools']
-
-        _setter("datacenter", datacenter)
-        _setter("token_secret_link", token_secret_link)
+        """
+        :param pulumi.Input[str] token_secret_link: Link to a secret holding Oblivus access key.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sOblivusProviderNodePoolArgs']]] node_pools: List of node pools.
+        :param pulumi.Input[str] pre_install_script: Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
+        pulumi.set(__self__, "datacenter", datacenter)
+        pulumi.set(__self__, "token_secret_link", token_secret_link)
         if autoscaler is not None:
-            _setter("autoscaler", autoscaler)
+            pulumi.set(__self__, "autoscaler", autoscaler)
         if node_pools is not None:
-            _setter("node_pools", node_pools)
+            pulumi.set(__self__, "node_pools", node_pools)
         if pre_install_script is not None:
-            _setter("pre_install_script", pre_install_script)
+            pulumi.set(__self__, "pre_install_script", pre_install_script)
         if ssh_keys is not None:
-            _setter("ssh_keys", ssh_keys)
+            pulumi.set(__self__, "ssh_keys", ssh_keys)
         if unmanaged_node_pools is not None:
-            _setter("unmanaged_node_pools", unmanaged_node_pools)
+            pulumi.set(__self__, "unmanaged_node_pools", unmanaged_node_pools)
 
     @property
     @pulumi.getter
@@ -6820,6 +7567,9 @@ class Mk8sOblivusProviderArgs:
     @property
     @pulumi.getter(name="tokenSecretLink")
     def token_secret_link(self) -> pulumi.Input[str]:
+        """
+        Link to a secret holding Oblivus access key.
+        """
         return pulumi.get(self, "token_secret_link")
 
     @token_secret_link.setter
@@ -6838,6 +7588,9 @@ class Mk8sOblivusProviderArgs:
     @property
     @pulumi.getter(name="nodePools")
     def node_pools(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sOblivusProviderNodePoolArgs']]]]:
+        """
+        List of node pools.
+        """
         return pulumi.get(self, "node_pools")
 
     @node_pools.setter
@@ -6847,6 +7600,9 @@ class Mk8sOblivusProviderArgs:
     @property
     @pulumi.getter(name="preInstallScript")
     def pre_install_script(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
         return pulumi.get(self, "pre_install_script")
 
     @pre_install_script.setter
@@ -6872,6 +7628,15 @@ class Mk8sOblivusProviderArgs:
         pulumi.set(self, "unmanaged_node_pools", value)
 
 
+if not MYPY:
+    class Mk8sOblivusProviderAutoscalerArgsDict(TypedDict):
+        expanders: pulumi.Input[Sequence[pulumi.Input[str]]]
+        unneeded_time: NotRequired[pulumi.Input[str]]
+        unready_time: NotRequired[pulumi.Input[str]]
+        utilization_threshold: NotRequired[pulumi.Input[float]]
+elif False:
+    Mk8sOblivusProviderAutoscalerArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sOblivusProviderAutoscalerArgs:
     def __init__(__self__, *,
@@ -6879,36 +7644,13 @@ class Mk8sOblivusProviderAutoscalerArgs:
                  unneeded_time: Optional[pulumi.Input[str]] = None,
                  unready_time: Optional[pulumi.Input[str]] = None,
                  utilization_threshold: Optional[pulumi.Input[float]] = None):
-        Mk8sOblivusProviderAutoscalerArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            expanders=expanders,
-            unneeded_time=unneeded_time,
-            unready_time=unready_time,
-            utilization_threshold=utilization_threshold,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             expanders: pulumi.Input[Sequence[pulumi.Input[str]]],
-             unneeded_time: Optional[pulumi.Input[str]] = None,
-             unready_time: Optional[pulumi.Input[str]] = None,
-             utilization_threshold: Optional[pulumi.Input[float]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'unneededTime' in kwargs:
-            unneeded_time = kwargs['unneededTime']
-        if 'unreadyTime' in kwargs:
-            unready_time = kwargs['unreadyTime']
-        if 'utilizationThreshold' in kwargs:
-            utilization_threshold = kwargs['utilizationThreshold']
-
-        _setter("expanders", expanders)
+        pulumi.set(__self__, "expanders", expanders)
         if unneeded_time is not None:
-            _setter("unneeded_time", unneeded_time)
+            pulumi.set(__self__, "unneeded_time", unneeded_time)
         if unready_time is not None:
-            _setter("unready_time", unready_time)
+            pulumi.set(__self__, "unready_time", unready_time)
         if utilization_threshold is not None:
-            _setter("utilization_threshold", utilization_threshold)
+            pulumi.set(__self__, "utilization_threshold", utilization_threshold)
 
     @property
     @pulumi.getter
@@ -6947,6 +7689,23 @@ class Mk8sOblivusProviderAutoscalerArgs:
         pulumi.set(self, "utilization_threshold", value)
 
 
+if not MYPY:
+    class Mk8sOblivusProviderNodePoolArgsDict(TypedDict):
+        flavor: pulumi.Input[str]
+        name: pulumi.Input[str]
+        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Labels to attach to nodes of a node pool.
+        """
+        max_size: NotRequired[pulumi.Input[int]]
+        min_size: NotRequired[pulumi.Input[int]]
+        taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sOblivusProviderNodePoolTaintArgsDict']]]]
+        """
+        Taint for the nodes of a pool.
+        """
+elif False:
+    Mk8sOblivusProviderNodePoolArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sOblivusProviderNodePoolArgs:
     def __init__(__self__, *,
@@ -6956,41 +7715,20 @@ class Mk8sOblivusProviderNodePoolArgs:
                  max_size: Optional[pulumi.Input[int]] = None,
                  min_size: Optional[pulumi.Input[int]] = None,
                  taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sOblivusProviderNodePoolTaintArgs']]]] = None):
-        Mk8sOblivusProviderNodePoolArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            flavor=flavor,
-            name=name,
-            labels=labels,
-            max_size=max_size,
-            min_size=min_size,
-            taints=taints,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             flavor: pulumi.Input[str],
-             name: pulumi.Input[str],
-             labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             max_size: Optional[pulumi.Input[int]] = None,
-             min_size: Optional[pulumi.Input[int]] = None,
-             taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sOblivusProviderNodePoolTaintArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'maxSize' in kwargs:
-            max_size = kwargs['maxSize']
-        if 'minSize' in kwargs:
-            min_size = kwargs['minSize']
-
-        _setter("flavor", flavor)
-        _setter("name", name)
+        """
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] labels: Labels to attach to nodes of a node pool.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sOblivusProviderNodePoolTaintArgs']]] taints: Taint for the nodes of a pool.
+        """
+        pulumi.set(__self__, "flavor", flavor)
+        pulumi.set(__self__, "name", name)
         if labels is not None:
-            _setter("labels", labels)
+            pulumi.set(__self__, "labels", labels)
         if max_size is not None:
-            _setter("max_size", max_size)
+            pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
-            _setter("min_size", min_size)
+            pulumi.set(__self__, "min_size", min_size)
         if taints is not None:
-            _setter("taints", taints)
+            pulumi.set(__self__, "taints", taints)
 
     @property
     @pulumi.getter
@@ -7013,6 +7751,9 @@ class Mk8sOblivusProviderNodePoolArgs:
     @property
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Labels to attach to nodes of a node pool.
+        """
         return pulumi.get(self, "labels")
 
     @labels.setter
@@ -7040,6 +7781,9 @@ class Mk8sOblivusProviderNodePoolArgs:
     @property
     @pulumi.getter
     def taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sOblivusProviderNodePoolTaintArgs']]]]:
+        """
+        Taint for the nodes of a pool.
+        """
         return pulumi.get(self, "taints")
 
     @taints.setter
@@ -7047,33 +7791,26 @@ class Mk8sOblivusProviderNodePoolArgs:
         pulumi.set(self, "taints", value)
 
 
+if not MYPY:
+    class Mk8sOblivusProviderNodePoolTaintArgsDict(TypedDict):
+        effect: NotRequired[pulumi.Input[str]]
+        key: NotRequired[pulumi.Input[str]]
+        value: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sOblivusProviderNodePoolTaintArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sOblivusProviderNodePoolTaintArgs:
     def __init__(__self__, *,
                  effect: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
-        Mk8sOblivusProviderNodePoolTaintArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            effect=effect,
-            key=key,
-            value=value,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             effect: Optional[pulumi.Input[str]] = None,
-             key: Optional[pulumi.Input[str]] = None,
-             value: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if effect is not None:
-            _setter("effect", effect)
+            pulumi.set(__self__, "effect", effect)
         if key is not None:
-            _setter("key", key)
+            pulumi.set(__self__, "key", key)
         if value is not None:
-            _setter("value", value)
+            pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
@@ -7103,32 +7840,35 @@ class Mk8sOblivusProviderNodePoolTaintArgs:
         pulumi.set(self, "value", value)
 
 
+if not MYPY:
+    class Mk8sOblivusProviderUnmanagedNodePoolArgsDict(TypedDict):
+        name: pulumi.Input[str]
+        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Labels to attach to nodes of a node pool.
+        """
+        taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sOblivusProviderUnmanagedNodePoolTaintArgsDict']]]]
+        """
+        Taint for the nodes of a pool.
+        """
+elif False:
+    Mk8sOblivusProviderUnmanagedNodePoolArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sOblivusProviderUnmanagedNodePoolArgs:
     def __init__(__self__, *,
                  name: pulumi.Input[str],
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sOblivusProviderUnmanagedNodePoolTaintArgs']]]] = None):
-        Mk8sOblivusProviderUnmanagedNodePoolArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            labels=labels,
-            taints=taints,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: pulumi.Input[str],
-             labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sOblivusProviderUnmanagedNodePoolTaintArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
+        """
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] labels: Labels to attach to nodes of a node pool.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sOblivusProviderUnmanagedNodePoolTaintArgs']]] taints: Taint for the nodes of a pool.
+        """
+        pulumi.set(__self__, "name", name)
         if labels is not None:
-            _setter("labels", labels)
+            pulumi.set(__self__, "labels", labels)
         if taints is not None:
-            _setter("taints", taints)
+            pulumi.set(__self__, "taints", taints)
 
     @property
     @pulumi.getter
@@ -7142,6 +7882,9 @@ class Mk8sOblivusProviderUnmanagedNodePoolArgs:
     @property
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Labels to attach to nodes of a node pool.
+        """
         return pulumi.get(self, "labels")
 
     @labels.setter
@@ -7151,6 +7894,9 @@ class Mk8sOblivusProviderUnmanagedNodePoolArgs:
     @property
     @pulumi.getter
     def taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sOblivusProviderUnmanagedNodePoolTaintArgs']]]]:
+        """
+        Taint for the nodes of a pool.
+        """
         return pulumi.get(self, "taints")
 
     @taints.setter
@@ -7158,33 +7904,26 @@ class Mk8sOblivusProviderUnmanagedNodePoolArgs:
         pulumi.set(self, "taints", value)
 
 
+if not MYPY:
+    class Mk8sOblivusProviderUnmanagedNodePoolTaintArgsDict(TypedDict):
+        effect: NotRequired[pulumi.Input[str]]
+        key: NotRequired[pulumi.Input[str]]
+        value: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sOblivusProviderUnmanagedNodePoolTaintArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sOblivusProviderUnmanagedNodePoolTaintArgs:
     def __init__(__self__, *,
                  effect: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
-        Mk8sOblivusProviderUnmanagedNodePoolTaintArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            effect=effect,
-            key=key,
-            value=value,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             effect: Optional[pulumi.Input[str]] = None,
-             key: Optional[pulumi.Input[str]] = None,
-             value: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if effect is not None:
-            _setter("effect", effect)
+            pulumi.set(__self__, "effect", effect)
         if key is not None:
-            _setter("key", key)
+            pulumi.set(__self__, "key", key)
         if value is not None:
-            _setter("value", value)
+            pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
@@ -7214,6 +7953,32 @@ class Mk8sOblivusProviderUnmanagedNodePoolTaintArgs:
         pulumi.set(self, "value", value)
 
 
+if not MYPY:
+    class Mk8sPaperspaceProviderArgsDict(TypedDict):
+        network_id: pulumi.Input[str]
+        region: pulumi.Input[str]
+        """
+        Region where the cluster nodes will live.
+        """
+        token_secret_link: pulumi.Input[str]
+        """
+        Link to a secret holding Paperspace access key.
+        """
+        autoscaler: NotRequired[pulumi.Input['Mk8sPaperspaceProviderAutoscalerArgsDict']]
+        node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sPaperspaceProviderNodePoolArgsDict']]]]
+        """
+        List of node pools.
+        """
+        pre_install_script: NotRequired[pulumi.Input[str]]
+        """
+        Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
+        shared_drives: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        unmanaged_node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sPaperspaceProviderUnmanagedNodePoolArgsDict']]]]
+        user_ids: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+elif False:
+    Mk8sPaperspaceProviderArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sPaperspaceProviderArgs:
     def __init__(__self__, *,
@@ -7226,62 +7991,27 @@ class Mk8sPaperspaceProviderArgs:
                  shared_drives: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  unmanaged_node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sPaperspaceProviderUnmanagedNodePoolArgs']]]] = None,
                  user_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
-        Mk8sPaperspaceProviderArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            network_id=network_id,
-            region=region,
-            token_secret_link=token_secret_link,
-            autoscaler=autoscaler,
-            node_pools=node_pools,
-            pre_install_script=pre_install_script,
-            shared_drives=shared_drives,
-            unmanaged_node_pools=unmanaged_node_pools,
-            user_ids=user_ids,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             network_id: pulumi.Input[str],
-             region: pulumi.Input[str],
-             token_secret_link: pulumi.Input[str],
-             autoscaler: Optional[pulumi.Input['Mk8sPaperspaceProviderAutoscalerArgs']] = None,
-             node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sPaperspaceProviderNodePoolArgs']]]] = None,
-             pre_install_script: Optional[pulumi.Input[str]] = None,
-             shared_drives: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             unmanaged_node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sPaperspaceProviderUnmanagedNodePoolArgs']]]] = None,
-             user_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'networkId' in kwargs:
-            network_id = kwargs['networkId']
-        if 'tokenSecretLink' in kwargs:
-            token_secret_link = kwargs['tokenSecretLink']
-        if 'nodePools' in kwargs:
-            node_pools = kwargs['nodePools']
-        if 'preInstallScript' in kwargs:
-            pre_install_script = kwargs['preInstallScript']
-        if 'sharedDrives' in kwargs:
-            shared_drives = kwargs['sharedDrives']
-        if 'unmanagedNodePools' in kwargs:
-            unmanaged_node_pools = kwargs['unmanagedNodePools']
-        if 'userIds' in kwargs:
-            user_ids = kwargs['userIds']
-
-        _setter("network_id", network_id)
-        _setter("region", region)
-        _setter("token_secret_link", token_secret_link)
+        """
+        :param pulumi.Input[str] region: Region where the cluster nodes will live.
+        :param pulumi.Input[str] token_secret_link: Link to a secret holding Paperspace access key.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sPaperspaceProviderNodePoolArgs']]] node_pools: List of node pools.
+        :param pulumi.Input[str] pre_install_script: Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
+        pulumi.set(__self__, "network_id", network_id)
+        pulumi.set(__self__, "region", region)
+        pulumi.set(__self__, "token_secret_link", token_secret_link)
         if autoscaler is not None:
-            _setter("autoscaler", autoscaler)
+            pulumi.set(__self__, "autoscaler", autoscaler)
         if node_pools is not None:
-            _setter("node_pools", node_pools)
+            pulumi.set(__self__, "node_pools", node_pools)
         if pre_install_script is not None:
-            _setter("pre_install_script", pre_install_script)
+            pulumi.set(__self__, "pre_install_script", pre_install_script)
         if shared_drives is not None:
-            _setter("shared_drives", shared_drives)
+            pulumi.set(__self__, "shared_drives", shared_drives)
         if unmanaged_node_pools is not None:
-            _setter("unmanaged_node_pools", unmanaged_node_pools)
+            pulumi.set(__self__, "unmanaged_node_pools", unmanaged_node_pools)
         if user_ids is not None:
-            _setter("user_ids", user_ids)
+            pulumi.set(__self__, "user_ids", user_ids)
 
     @property
     @pulumi.getter(name="networkId")
@@ -7295,6 +8025,9 @@ class Mk8sPaperspaceProviderArgs:
     @property
     @pulumi.getter
     def region(self) -> pulumi.Input[str]:
+        """
+        Region where the cluster nodes will live.
+        """
         return pulumi.get(self, "region")
 
     @region.setter
@@ -7304,6 +8037,9 @@ class Mk8sPaperspaceProviderArgs:
     @property
     @pulumi.getter(name="tokenSecretLink")
     def token_secret_link(self) -> pulumi.Input[str]:
+        """
+        Link to a secret holding Paperspace access key.
+        """
         return pulumi.get(self, "token_secret_link")
 
     @token_secret_link.setter
@@ -7322,6 +8058,9 @@ class Mk8sPaperspaceProviderArgs:
     @property
     @pulumi.getter(name="nodePools")
     def node_pools(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sPaperspaceProviderNodePoolArgs']]]]:
+        """
+        List of node pools.
+        """
         return pulumi.get(self, "node_pools")
 
     @node_pools.setter
@@ -7331,6 +8070,9 @@ class Mk8sPaperspaceProviderArgs:
     @property
     @pulumi.getter(name="preInstallScript")
     def pre_install_script(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
         return pulumi.get(self, "pre_install_script")
 
     @pre_install_script.setter
@@ -7365,6 +8107,15 @@ class Mk8sPaperspaceProviderArgs:
         pulumi.set(self, "user_ids", value)
 
 
+if not MYPY:
+    class Mk8sPaperspaceProviderAutoscalerArgsDict(TypedDict):
+        expanders: pulumi.Input[Sequence[pulumi.Input[str]]]
+        unneeded_time: NotRequired[pulumi.Input[str]]
+        unready_time: NotRequired[pulumi.Input[str]]
+        utilization_threshold: NotRequired[pulumi.Input[float]]
+elif False:
+    Mk8sPaperspaceProviderAutoscalerArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sPaperspaceProviderAutoscalerArgs:
     def __init__(__self__, *,
@@ -7372,36 +8123,13 @@ class Mk8sPaperspaceProviderAutoscalerArgs:
                  unneeded_time: Optional[pulumi.Input[str]] = None,
                  unready_time: Optional[pulumi.Input[str]] = None,
                  utilization_threshold: Optional[pulumi.Input[float]] = None):
-        Mk8sPaperspaceProviderAutoscalerArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            expanders=expanders,
-            unneeded_time=unneeded_time,
-            unready_time=unready_time,
-            utilization_threshold=utilization_threshold,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             expanders: pulumi.Input[Sequence[pulumi.Input[str]]],
-             unneeded_time: Optional[pulumi.Input[str]] = None,
-             unready_time: Optional[pulumi.Input[str]] = None,
-             utilization_threshold: Optional[pulumi.Input[float]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'unneededTime' in kwargs:
-            unneeded_time = kwargs['unneededTime']
-        if 'unreadyTime' in kwargs:
-            unready_time = kwargs['unreadyTime']
-        if 'utilizationThreshold' in kwargs:
-            utilization_threshold = kwargs['utilizationThreshold']
-
-        _setter("expanders", expanders)
+        pulumi.set(__self__, "expanders", expanders)
         if unneeded_time is not None:
-            _setter("unneeded_time", unneeded_time)
+            pulumi.set(__self__, "unneeded_time", unneeded_time)
         if unready_time is not None:
-            _setter("unready_time", unready_time)
+            pulumi.set(__self__, "unready_time", unready_time)
         if utilization_threshold is not None:
-            _setter("utilization_threshold", utilization_threshold)
+            pulumi.set(__self__, "utilization_threshold", utilization_threshold)
 
     @property
     @pulumi.getter
@@ -7440,6 +8168,25 @@ class Mk8sPaperspaceProviderAutoscalerArgs:
         pulumi.set(self, "utilization_threshold", value)
 
 
+if not MYPY:
+    class Mk8sPaperspaceProviderNodePoolArgsDict(TypedDict):
+        machine_type: pulumi.Input[str]
+        name: pulumi.Input[str]
+        public_ip_type: pulumi.Input[str]
+        boot_disk_size: NotRequired[pulumi.Input[int]]
+        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Labels to attach to nodes of a node pool.
+        """
+        max_size: NotRequired[pulumi.Input[int]]
+        min_size: NotRequired[pulumi.Input[int]]
+        taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sPaperspaceProviderNodePoolTaintArgsDict']]]]
+        """
+        Taint for the nodes of a pool.
+        """
+elif False:
+    Mk8sPaperspaceProviderNodePoolArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sPaperspaceProviderNodePoolArgs:
     def __init__(__self__, *,
@@ -7451,54 +8198,23 @@ class Mk8sPaperspaceProviderNodePoolArgs:
                  max_size: Optional[pulumi.Input[int]] = None,
                  min_size: Optional[pulumi.Input[int]] = None,
                  taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sPaperspaceProviderNodePoolTaintArgs']]]] = None):
-        Mk8sPaperspaceProviderNodePoolArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            machine_type=machine_type,
-            name=name,
-            public_ip_type=public_ip_type,
-            boot_disk_size=boot_disk_size,
-            labels=labels,
-            max_size=max_size,
-            min_size=min_size,
-            taints=taints,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             machine_type: pulumi.Input[str],
-             name: pulumi.Input[str],
-             public_ip_type: pulumi.Input[str],
-             boot_disk_size: Optional[pulumi.Input[int]] = None,
-             labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             max_size: Optional[pulumi.Input[int]] = None,
-             min_size: Optional[pulumi.Input[int]] = None,
-             taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sPaperspaceProviderNodePoolTaintArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'machineType' in kwargs:
-            machine_type = kwargs['machineType']
-        if 'publicIpType' in kwargs:
-            public_ip_type = kwargs['publicIpType']
-        if 'bootDiskSize' in kwargs:
-            boot_disk_size = kwargs['bootDiskSize']
-        if 'maxSize' in kwargs:
-            max_size = kwargs['maxSize']
-        if 'minSize' in kwargs:
-            min_size = kwargs['minSize']
-
-        _setter("machine_type", machine_type)
-        _setter("name", name)
-        _setter("public_ip_type", public_ip_type)
+        """
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] labels: Labels to attach to nodes of a node pool.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sPaperspaceProviderNodePoolTaintArgs']]] taints: Taint for the nodes of a pool.
+        """
+        pulumi.set(__self__, "machine_type", machine_type)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "public_ip_type", public_ip_type)
         if boot_disk_size is not None:
-            _setter("boot_disk_size", boot_disk_size)
+            pulumi.set(__self__, "boot_disk_size", boot_disk_size)
         if labels is not None:
-            _setter("labels", labels)
+            pulumi.set(__self__, "labels", labels)
         if max_size is not None:
-            _setter("max_size", max_size)
+            pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
-            _setter("min_size", min_size)
+            pulumi.set(__self__, "min_size", min_size)
         if taints is not None:
-            _setter("taints", taints)
+            pulumi.set(__self__, "taints", taints)
 
     @property
     @pulumi.getter(name="machineType")
@@ -7539,6 +8255,9 @@ class Mk8sPaperspaceProviderNodePoolArgs:
     @property
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Labels to attach to nodes of a node pool.
+        """
         return pulumi.get(self, "labels")
 
     @labels.setter
@@ -7566,6 +8285,9 @@ class Mk8sPaperspaceProviderNodePoolArgs:
     @property
     @pulumi.getter
     def taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sPaperspaceProviderNodePoolTaintArgs']]]]:
+        """
+        Taint for the nodes of a pool.
+        """
         return pulumi.get(self, "taints")
 
     @taints.setter
@@ -7573,33 +8295,26 @@ class Mk8sPaperspaceProviderNodePoolArgs:
         pulumi.set(self, "taints", value)
 
 
+if not MYPY:
+    class Mk8sPaperspaceProviderNodePoolTaintArgsDict(TypedDict):
+        effect: NotRequired[pulumi.Input[str]]
+        key: NotRequired[pulumi.Input[str]]
+        value: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sPaperspaceProviderNodePoolTaintArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sPaperspaceProviderNodePoolTaintArgs:
     def __init__(__self__, *,
                  effect: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
-        Mk8sPaperspaceProviderNodePoolTaintArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            effect=effect,
-            key=key,
-            value=value,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             effect: Optional[pulumi.Input[str]] = None,
-             key: Optional[pulumi.Input[str]] = None,
-             value: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if effect is not None:
-            _setter("effect", effect)
+            pulumi.set(__self__, "effect", effect)
         if key is not None:
-            _setter("key", key)
+            pulumi.set(__self__, "key", key)
         if value is not None:
-            _setter("value", value)
+            pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
@@ -7629,32 +8344,35 @@ class Mk8sPaperspaceProviderNodePoolTaintArgs:
         pulumi.set(self, "value", value)
 
 
+if not MYPY:
+    class Mk8sPaperspaceProviderUnmanagedNodePoolArgsDict(TypedDict):
+        name: pulumi.Input[str]
+        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Labels to attach to nodes of a node pool.
+        """
+        taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgsDict']]]]
+        """
+        Taint for the nodes of a pool.
+        """
+elif False:
+    Mk8sPaperspaceProviderUnmanagedNodePoolArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sPaperspaceProviderUnmanagedNodePoolArgs:
     def __init__(__self__, *,
                  name: pulumi.Input[str],
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgs']]]] = None):
-        Mk8sPaperspaceProviderUnmanagedNodePoolArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            labels=labels,
-            taints=taints,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: pulumi.Input[str],
-             labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
+        """
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] labels: Labels to attach to nodes of a node pool.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgs']]] taints: Taint for the nodes of a pool.
+        """
+        pulumi.set(__self__, "name", name)
         if labels is not None:
-            _setter("labels", labels)
+            pulumi.set(__self__, "labels", labels)
         if taints is not None:
-            _setter("taints", taints)
+            pulumi.set(__self__, "taints", taints)
 
     @property
     @pulumi.getter
@@ -7668,6 +8386,9 @@ class Mk8sPaperspaceProviderUnmanagedNodePoolArgs:
     @property
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Labels to attach to nodes of a node pool.
+        """
         return pulumi.get(self, "labels")
 
     @labels.setter
@@ -7677,6 +8398,9 @@ class Mk8sPaperspaceProviderUnmanagedNodePoolArgs:
     @property
     @pulumi.getter
     def taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgs']]]]:
+        """
+        Taint for the nodes of a pool.
+        """
         return pulumi.get(self, "taints")
 
     @taints.setter
@@ -7684,33 +8408,26 @@ class Mk8sPaperspaceProviderUnmanagedNodePoolArgs:
         pulumi.set(self, "taints", value)
 
 
+if not MYPY:
+    class Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgsDict(TypedDict):
+        effect: NotRequired[pulumi.Input[str]]
+        key: NotRequired[pulumi.Input[str]]
+        value: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgs:
     def __init__(__self__, *,
                  effect: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
-        Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            effect=effect,
-            key=key,
-            value=value,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             effect: Optional[pulumi.Input[str]] = None,
-             key: Optional[pulumi.Input[str]] = None,
-             value: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if effect is not None:
-            _setter("effect", effect)
+            pulumi.set(__self__, "effect", effect)
         if key is not None:
-            _setter("key", key)
+            pulumi.set(__self__, "key", key)
         if value is not None:
-            _setter("value", value)
+            pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
@@ -7740,6 +8457,15 @@ class Mk8sPaperspaceProviderUnmanagedNodePoolTaintArgs:
         pulumi.set(self, "value", value)
 
 
+if not MYPY:
+    class Mk8sStatusArgsDict(TypedDict):
+        add_ons: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnArgsDict']]]]
+        home_location: NotRequired[pulumi.Input[str]]
+        oidc_provider_url: NotRequired[pulumi.Input[str]]
+        server_url: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sStatusArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sStatusArgs:
     def __init__(__self__, *,
@@ -7747,39 +8473,14 @@ class Mk8sStatusArgs:
                  home_location: Optional[pulumi.Input[str]] = None,
                  oidc_provider_url: Optional[pulumi.Input[str]] = None,
                  server_url: Optional[pulumi.Input[str]] = None):
-        Mk8sStatusArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            add_ons=add_ons,
-            home_location=home_location,
-            oidc_provider_url=oidc_provider_url,
-            server_url=server_url,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             add_ons: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnArgs']]]] = None,
-             home_location: Optional[pulumi.Input[str]] = None,
-             oidc_provider_url: Optional[pulumi.Input[str]] = None,
-             server_url: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'addOns' in kwargs:
-            add_ons = kwargs['addOns']
-        if 'homeLocation' in kwargs:
-            home_location = kwargs['homeLocation']
-        if 'oidcProviderUrl' in kwargs:
-            oidc_provider_url = kwargs['oidcProviderUrl']
-        if 'serverUrl' in kwargs:
-            server_url = kwargs['serverUrl']
-
         if add_ons is not None:
-            _setter("add_ons", add_ons)
+            pulumi.set(__self__, "add_ons", add_ons)
         if home_location is not None:
-            _setter("home_location", home_location)
+            pulumi.set(__self__, "home_location", home_location)
         if oidc_provider_url is not None:
-            _setter("oidc_provider_url", oidc_provider_url)
+            pulumi.set(__self__, "oidc_provider_url", oidc_provider_url)
         if server_url is not None:
-            _setter("server_url", server_url)
+            pulumi.set(__self__, "server_url", server_url)
 
     @property
     @pulumi.getter(name="addOns")
@@ -7818,6 +8519,18 @@ class Mk8sStatusArgs:
         pulumi.set(self, "server_url", value)
 
 
+if not MYPY:
+    class Mk8sStatusAddOnArgsDict(TypedDict):
+        aws_ecrs: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnAwsEcrArgsDict']]]]
+        aws_efs: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnAwsEfArgsDict']]]]
+        aws_elbs: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnAwsElbArgsDict']]]]
+        aws_workload_identities: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnAwsWorkloadIdentityArgsDict']]]]
+        dashboards: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnDashboardArgsDict']]]]
+        logs: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnLogArgsDict']]]]
+        metrics: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnMetricArgsDict']]]]
+elif False:
+    Mk8sStatusAddOnArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sStatusAddOnArgs:
     def __init__(__self__, *,
@@ -7828,51 +8541,20 @@ class Mk8sStatusAddOnArgs:
                  dashboards: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnDashboardArgs']]]] = None,
                  logs: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnLogArgs']]]] = None,
                  metrics: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnMetricArgs']]]] = None):
-        Mk8sStatusAddOnArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            aws_ecrs=aws_ecrs,
-            aws_efs=aws_efs,
-            aws_elbs=aws_elbs,
-            aws_workload_identities=aws_workload_identities,
-            dashboards=dashboards,
-            logs=logs,
-            metrics=metrics,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             aws_ecrs: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnAwsEcrArgs']]]] = None,
-             aws_efs: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnAwsEfArgs']]]] = None,
-             aws_elbs: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnAwsElbArgs']]]] = None,
-             aws_workload_identities: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnAwsWorkloadIdentityArgs']]]] = None,
-             dashboards: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnDashboardArgs']]]] = None,
-             logs: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnLogArgs']]]] = None,
-             metrics: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnMetricArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'awsEcrs' in kwargs:
-            aws_ecrs = kwargs['awsEcrs']
-        if 'awsEfs' in kwargs:
-            aws_efs = kwargs['awsEfs']
-        if 'awsElbs' in kwargs:
-            aws_elbs = kwargs['awsElbs']
-        if 'awsWorkloadIdentities' in kwargs:
-            aws_workload_identities = kwargs['awsWorkloadIdentities']
-
         if aws_ecrs is not None:
-            _setter("aws_ecrs", aws_ecrs)
+            pulumi.set(__self__, "aws_ecrs", aws_ecrs)
         if aws_efs is not None:
-            _setter("aws_efs", aws_efs)
+            pulumi.set(__self__, "aws_efs", aws_efs)
         if aws_elbs is not None:
-            _setter("aws_elbs", aws_elbs)
+            pulumi.set(__self__, "aws_elbs", aws_elbs)
         if aws_workload_identities is not None:
-            _setter("aws_workload_identities", aws_workload_identities)
+            pulumi.set(__self__, "aws_workload_identities", aws_workload_identities)
         if dashboards is not None:
-            _setter("dashboards", dashboards)
+            pulumi.set(__self__, "dashboards", dashboards)
         if logs is not None:
-            _setter("logs", logs)
+            pulumi.set(__self__, "logs", logs)
         if metrics is not None:
-            _setter("metrics", metrics)
+            pulumi.set(__self__, "metrics", metrics)
 
     @property
     @pulumi.getter(name="awsEcrs")
@@ -7938,25 +8620,18 @@ class Mk8sStatusAddOnArgs:
         pulumi.set(self, "metrics", value)
 
 
+if not MYPY:
+    class Mk8sStatusAddOnAwsEcrArgsDict(TypedDict):
+        trust_policy: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sStatusAddOnAwsEcrArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sStatusAddOnAwsEcrArgs:
     def __init__(__self__, *,
                  trust_policy: Optional[pulumi.Input[str]] = None):
-        Mk8sStatusAddOnAwsEcrArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            trust_policy=trust_policy,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             trust_policy: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'trustPolicy' in kwargs:
-            trust_policy = kwargs['trustPolicy']
-
         if trust_policy is not None:
-            _setter("trust_policy", trust_policy)
+            pulumi.set(__self__, "trust_policy", trust_policy)
 
     @property
     @pulumi.getter(name="trustPolicy")
@@ -7967,26 +8642,19 @@ class Mk8sStatusAddOnAwsEcrArgs:
     def trust_policy(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "trust_policy", value)
 
+
+if not MYPY:
+    class Mk8sStatusAddOnAwsEfArgsDict(TypedDict):
+        trust_policy: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sStatusAddOnAwsEfArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sStatusAddOnAwsEfArgs:
     def __init__(__self__, *,
                  trust_policy: Optional[pulumi.Input[str]] = None):
-        Mk8sStatusAddOnAwsEfArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            trust_policy=trust_policy,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             trust_policy: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'trustPolicy' in kwargs:
-            trust_policy = kwargs['trustPolicy']
-
         if trust_policy is not None:
-            _setter("trust_policy", trust_policy)
+            pulumi.set(__self__, "trust_policy", trust_policy)
 
     @property
     @pulumi.getter(name="trustPolicy")
@@ -7997,26 +8665,19 @@ class Mk8sStatusAddOnAwsEfArgs:
     def trust_policy(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "trust_policy", value)
 
+
+if not MYPY:
+    class Mk8sStatusAddOnAwsElbArgsDict(TypedDict):
+        trust_policy: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sStatusAddOnAwsElbArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sStatusAddOnAwsElbArgs:
     def __init__(__self__, *,
                  trust_policy: Optional[pulumi.Input[str]] = None):
-        Mk8sStatusAddOnAwsElbArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            trust_policy=trust_policy,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             trust_policy: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'trustPolicy' in kwargs:
-            trust_policy = kwargs['trustPolicy']
-
         if trust_policy is not None:
-            _setter("trust_policy", trust_policy)
+            pulumi.set(__self__, "trust_policy", trust_policy)
 
     @property
     @pulumi.getter(name="trustPolicy")
@@ -8027,33 +8688,23 @@ class Mk8sStatusAddOnAwsElbArgs:
     def trust_policy(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "trust_policy", value)
 
+
+if not MYPY:
+    class Mk8sStatusAddOnAwsWorkloadIdentityArgsDict(TypedDict):
+        oidc_provider_configs: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfigArgsDict']]]]
+        trust_policy: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sStatusAddOnAwsWorkloadIdentityArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sStatusAddOnAwsWorkloadIdentityArgs:
     def __init__(__self__, *,
                  oidc_provider_configs: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfigArgs']]]] = None,
                  trust_policy: Optional[pulumi.Input[str]] = None):
-        Mk8sStatusAddOnAwsWorkloadIdentityArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            oidc_provider_configs=oidc_provider_configs,
-            trust_policy=trust_policy,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             oidc_provider_configs: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfigArgs']]]] = None,
-             trust_policy: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'oidcProviderConfigs' in kwargs:
-            oidc_provider_configs = kwargs['oidcProviderConfigs']
-        if 'trustPolicy' in kwargs:
-            trust_policy = kwargs['trustPolicy']
-
         if oidc_provider_configs is not None:
-            _setter("oidc_provider_configs", oidc_provider_configs)
+            pulumi.set(__self__, "oidc_provider_configs", oidc_provider_configs)
         if trust_policy is not None:
-            _setter("trust_policy", trust_policy)
+            pulumi.set(__self__, "trust_policy", trust_policy)
 
     @property
     @pulumi.getter(name="oidcProviderConfigs")
@@ -8074,30 +8725,22 @@ class Mk8sStatusAddOnAwsWorkloadIdentityArgs:
         pulumi.set(self, "trust_policy", value)
 
 
+if not MYPY:
+    class Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfigArgsDict(TypedDict):
+        audience: NotRequired[pulumi.Input[str]]
+        provider_url: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfigArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfigArgs:
     def __init__(__self__, *,
                  audience: Optional[pulumi.Input[str]] = None,
                  provider_url: Optional[pulumi.Input[str]] = None):
-        Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfigArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            audience=audience,
-            provider_url=provider_url,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             audience: Optional[pulumi.Input[str]] = None,
-             provider_url: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'providerUrl' in kwargs:
-            provider_url = kwargs['providerUrl']
-
         if audience is not None:
-            _setter("audience", audience)
+            pulumi.set(__self__, "audience", audience)
         if provider_url is not None:
-            _setter("provider_url", provider_url)
+            pulumi.set(__self__, "provider_url", provider_url)
 
     @property
     @pulumi.getter
@@ -8118,27 +8761,31 @@ class Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfigArgs:
         pulumi.set(self, "provider_url", value)
 
 
+if not MYPY:
+    class Mk8sStatusAddOnDashboardArgsDict(TypedDict):
+        url: NotRequired[pulumi.Input[str]]
+        """
+        Access to dashboard.
+        """
+elif False:
+    Mk8sStatusAddOnDashboardArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sStatusAddOnDashboardArgs:
     def __init__(__self__, *,
                  url: Optional[pulumi.Input[str]] = None):
-        Mk8sStatusAddOnDashboardArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            url=url,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             url: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[str] url: Access to dashboard.
+        """
         if url is not None:
-            _setter("url", url)
+            pulumi.set(__self__, "url", url)
 
     @property
     @pulumi.getter
     def url(self) -> Optional[pulumi.Input[str]]:
+        """
+        Access to dashboard.
+        """
         return pulumi.get(self, "url")
 
     @url.setter
@@ -8146,29 +8793,31 @@ class Mk8sStatusAddOnDashboardArgs:
         pulumi.set(self, "url", value)
 
 
+if not MYPY:
+    class Mk8sStatusAddOnLogArgsDict(TypedDict):
+        loki_address: NotRequired[pulumi.Input[str]]
+        """
+        Loki endpoint to query logs from.
+        """
+elif False:
+    Mk8sStatusAddOnLogArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sStatusAddOnLogArgs:
     def __init__(__self__, *,
                  loki_address: Optional[pulumi.Input[str]] = None):
-        Mk8sStatusAddOnLogArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            loki_address=loki_address,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             loki_address: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'lokiAddress' in kwargs:
-            loki_address = kwargs['lokiAddress']
-
+        """
+        :param pulumi.Input[str] loki_address: Loki endpoint to query logs from.
+        """
         if loki_address is not None:
-            _setter("loki_address", loki_address)
+            pulumi.set(__self__, "loki_address", loki_address)
 
     @property
     @pulumi.getter(name="lokiAddress")
     def loki_address(self) -> Optional[pulumi.Input[str]]:
+        """
+        Loki endpoint to query logs from.
+        """
         return pulumi.get(self, "loki_address")
 
     @loki_address.setter
@@ -8176,32 +8825,22 @@ class Mk8sStatusAddOnLogArgs:
         pulumi.set(self, "loki_address", value)
 
 
+if not MYPY:
+    class Mk8sStatusAddOnMetricArgsDict(TypedDict):
+        prometheus_endpoint: NotRequired[pulumi.Input[str]]
+        remote_write_config: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sStatusAddOnMetricArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sStatusAddOnMetricArgs:
     def __init__(__self__, *,
                  prometheus_endpoint: Optional[pulumi.Input[str]] = None,
                  remote_write_config: Optional[pulumi.Input[str]] = None):
-        Mk8sStatusAddOnMetricArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            prometheus_endpoint=prometheus_endpoint,
-            remote_write_config=remote_write_config,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             prometheus_endpoint: Optional[pulumi.Input[str]] = None,
-             remote_write_config: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'prometheusEndpoint' in kwargs:
-            prometheus_endpoint = kwargs['prometheusEndpoint']
-        if 'remoteWriteConfig' in kwargs:
-            remote_write_config = kwargs['remoteWriteConfig']
-
         if prometheus_endpoint is not None:
-            _setter("prometheus_endpoint", prometheus_endpoint)
+            pulumi.set(__self__, "prometheus_endpoint", prometheus_endpoint)
         if remote_write_config is not None:
-            _setter("remote_write_config", remote_write_config)
+            pulumi.set(__self__, "remote_write_config", remote_write_config)
 
     @property
     @pulumi.getter(name="prometheusEndpoint")
@@ -8222,6 +8861,42 @@ class Mk8sStatusAddOnMetricArgs:
         pulumi.set(self, "remote_write_config", value)
 
 
+if not MYPY:
+    class Mk8sTritonProviderArgsDict(TypedDict):
+        connection: pulumi.Input['Mk8sTritonProviderConnectionArgsDict']
+        image_id: pulumi.Input[str]
+        """
+        Default image for all nodes.
+        """
+        location: pulumi.Input[str]
+        """
+        Control Plane location that will host the K8s components. Prefer one that is closest to the Triton datacenter.
+        """
+        networking: pulumi.Input['Mk8sTritonProviderNetworkingArgsDict']
+        private_network_id: pulumi.Input[str]
+        """
+        ID of the private Fabric/Network.
+        """
+        autoscaler: NotRequired[pulumi.Input['Mk8sTritonProviderAutoscalerArgsDict']]
+        firewall_enabled: NotRequired[pulumi.Input[bool]]
+        """
+        Enable firewall for the instances deployed.
+        """
+        node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sTritonProviderNodePoolArgsDict']]]]
+        """
+        List of node pools.
+        """
+        pre_install_script: NotRequired[pulumi.Input[str]]
+        """
+        Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
+        ssh_keys: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        Extra SSH keys to provision for user root.
+        """
+elif False:
+    Mk8sTritonProviderArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sTritonProviderArgs:
     def __init__(__self__, *,
@@ -8235,62 +8910,30 @@ class Mk8sTritonProviderArgs:
                  node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sTritonProviderNodePoolArgs']]]] = None,
                  pre_install_script: Optional[pulumi.Input[str]] = None,
                  ssh_keys: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
-        Mk8sTritonProviderArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            connection=connection,
-            image_id=image_id,
-            location=location,
-            networking=networking,
-            private_network_id=private_network_id,
-            autoscaler=autoscaler,
-            firewall_enabled=firewall_enabled,
-            node_pools=node_pools,
-            pre_install_script=pre_install_script,
-            ssh_keys=ssh_keys,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             connection: pulumi.Input['Mk8sTritonProviderConnectionArgs'],
-             image_id: pulumi.Input[str],
-             location: pulumi.Input[str],
-             networking: pulumi.Input['Mk8sTritonProviderNetworkingArgs'],
-             private_network_id: pulumi.Input[str],
-             autoscaler: Optional[pulumi.Input['Mk8sTritonProviderAutoscalerArgs']] = None,
-             firewall_enabled: Optional[pulumi.Input[bool]] = None,
-             node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sTritonProviderNodePoolArgs']]]] = None,
-             pre_install_script: Optional[pulumi.Input[str]] = None,
-             ssh_keys: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'imageId' in kwargs:
-            image_id = kwargs['imageId']
-        if 'privateNetworkId' in kwargs:
-            private_network_id = kwargs['privateNetworkId']
-        if 'firewallEnabled' in kwargs:
-            firewall_enabled = kwargs['firewallEnabled']
-        if 'nodePools' in kwargs:
-            node_pools = kwargs['nodePools']
-        if 'preInstallScript' in kwargs:
-            pre_install_script = kwargs['preInstallScript']
-        if 'sshKeys' in kwargs:
-            ssh_keys = kwargs['sshKeys']
-
-        _setter("connection", connection)
-        _setter("image_id", image_id)
-        _setter("location", location)
-        _setter("networking", networking)
-        _setter("private_network_id", private_network_id)
+        """
+        :param pulumi.Input[str] image_id: Default image for all nodes.
+        :param pulumi.Input[str] location: Control Plane location that will host the K8s components. Prefer one that is closest to the Triton datacenter.
+        :param pulumi.Input[str] private_network_id: ID of the private Fabric/Network.
+        :param pulumi.Input[bool] firewall_enabled: Enable firewall for the instances deployed.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sTritonProviderNodePoolArgs']]] node_pools: List of node pools.
+        :param pulumi.Input[str] pre_install_script: Optional shell script that will be run before K8s is installed. Supports SSM.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] ssh_keys: Extra SSH keys to provision for user root.
+        """
+        pulumi.set(__self__, "connection", connection)
+        pulumi.set(__self__, "image_id", image_id)
+        pulumi.set(__self__, "location", location)
+        pulumi.set(__self__, "networking", networking)
+        pulumi.set(__self__, "private_network_id", private_network_id)
         if autoscaler is not None:
-            _setter("autoscaler", autoscaler)
+            pulumi.set(__self__, "autoscaler", autoscaler)
         if firewall_enabled is not None:
-            _setter("firewall_enabled", firewall_enabled)
+            pulumi.set(__self__, "firewall_enabled", firewall_enabled)
         if node_pools is not None:
-            _setter("node_pools", node_pools)
+            pulumi.set(__self__, "node_pools", node_pools)
         if pre_install_script is not None:
-            _setter("pre_install_script", pre_install_script)
+            pulumi.set(__self__, "pre_install_script", pre_install_script)
         if ssh_keys is not None:
-            _setter("ssh_keys", ssh_keys)
+            pulumi.set(__self__, "ssh_keys", ssh_keys)
 
     @property
     @pulumi.getter
@@ -8304,6 +8947,9 @@ class Mk8sTritonProviderArgs:
     @property
     @pulumi.getter(name="imageId")
     def image_id(self) -> pulumi.Input[str]:
+        """
+        Default image for all nodes.
+        """
         return pulumi.get(self, "image_id")
 
     @image_id.setter
@@ -8313,6 +8959,9 @@ class Mk8sTritonProviderArgs:
     @property
     @pulumi.getter
     def location(self) -> pulumi.Input[str]:
+        """
+        Control Plane location that will host the K8s components. Prefer one that is closest to the Triton datacenter.
+        """
         return pulumi.get(self, "location")
 
     @location.setter
@@ -8331,6 +8980,9 @@ class Mk8sTritonProviderArgs:
     @property
     @pulumi.getter(name="privateNetworkId")
     def private_network_id(self) -> pulumi.Input[str]:
+        """
+        ID of the private Fabric/Network.
+        """
         return pulumi.get(self, "private_network_id")
 
     @private_network_id.setter
@@ -8349,6 +9001,9 @@ class Mk8sTritonProviderArgs:
     @property
     @pulumi.getter(name="firewallEnabled")
     def firewall_enabled(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Enable firewall for the instances deployed.
+        """
         return pulumi.get(self, "firewall_enabled")
 
     @firewall_enabled.setter
@@ -8358,6 +9013,9 @@ class Mk8sTritonProviderArgs:
     @property
     @pulumi.getter(name="nodePools")
     def node_pools(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sTritonProviderNodePoolArgs']]]]:
+        """
+        List of node pools.
+        """
         return pulumi.get(self, "node_pools")
 
     @node_pools.setter
@@ -8367,6 +9025,9 @@ class Mk8sTritonProviderArgs:
     @property
     @pulumi.getter(name="preInstallScript")
     def pre_install_script(self) -> Optional[pulumi.Input[str]]:
+        """
+        Optional shell script that will be run before K8s is installed. Supports SSM.
+        """
         return pulumi.get(self, "pre_install_script")
 
     @pre_install_script.setter
@@ -8376,12 +9037,24 @@ class Mk8sTritonProviderArgs:
     @property
     @pulumi.getter(name="sshKeys")
     def ssh_keys(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Extra SSH keys to provision for user root.
+        """
         return pulumi.get(self, "ssh_keys")
 
     @ssh_keys.setter
     def ssh_keys(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
         pulumi.set(self, "ssh_keys", value)
 
+
+if not MYPY:
+    class Mk8sTritonProviderAutoscalerArgsDict(TypedDict):
+        expanders: pulumi.Input[Sequence[pulumi.Input[str]]]
+        unneeded_time: NotRequired[pulumi.Input[str]]
+        unready_time: NotRequired[pulumi.Input[str]]
+        utilization_threshold: NotRequired[pulumi.Input[float]]
+elif False:
+    Mk8sTritonProviderAutoscalerArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sTritonProviderAutoscalerArgs:
@@ -8390,36 +9063,13 @@ class Mk8sTritonProviderAutoscalerArgs:
                  unneeded_time: Optional[pulumi.Input[str]] = None,
                  unready_time: Optional[pulumi.Input[str]] = None,
                  utilization_threshold: Optional[pulumi.Input[float]] = None):
-        Mk8sTritonProviderAutoscalerArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            expanders=expanders,
-            unneeded_time=unneeded_time,
-            unready_time=unready_time,
-            utilization_threshold=utilization_threshold,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             expanders: pulumi.Input[Sequence[pulumi.Input[str]]],
-             unneeded_time: Optional[pulumi.Input[str]] = None,
-             unready_time: Optional[pulumi.Input[str]] = None,
-             utilization_threshold: Optional[pulumi.Input[float]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'unneededTime' in kwargs:
-            unneeded_time = kwargs['unneededTime']
-        if 'unreadyTime' in kwargs:
-            unready_time = kwargs['unreadyTime']
-        if 'utilizationThreshold' in kwargs:
-            utilization_threshold = kwargs['utilizationThreshold']
-
-        _setter("expanders", expanders)
+        pulumi.set(__self__, "expanders", expanders)
         if unneeded_time is not None:
-            _setter("unneeded_time", unneeded_time)
+            pulumi.set(__self__, "unneeded_time", unneeded_time)
         if unready_time is not None:
-            _setter("unready_time", unready_time)
+            pulumi.set(__self__, "unready_time", unready_time)
         if utilization_threshold is not None:
-            _setter("utilization_threshold", utilization_threshold)
+            pulumi.set(__self__, "utilization_threshold", utilization_threshold)
 
     @property
     @pulumi.getter
@@ -8458,6 +9108,18 @@ class Mk8sTritonProviderAutoscalerArgs:
         pulumi.set(self, "utilization_threshold", value)
 
 
+if not MYPY:
+    class Mk8sTritonProviderConnectionArgsDict(TypedDict):
+        account: pulumi.Input[str]
+        private_key_secret_link: pulumi.Input[str]
+        """
+        Link to a SSH or opaque secret.
+        """
+        url: pulumi.Input[str]
+        user: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sTritonProviderConnectionArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sTritonProviderConnectionArgs:
     def __init__(__self__, *,
@@ -8465,30 +9127,14 @@ class Mk8sTritonProviderConnectionArgs:
                  private_key_secret_link: pulumi.Input[str],
                  url: pulumi.Input[str],
                  user: Optional[pulumi.Input[str]] = None):
-        Mk8sTritonProviderConnectionArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            account=account,
-            private_key_secret_link=private_key_secret_link,
-            url=url,
-            user=user,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             account: pulumi.Input[str],
-             private_key_secret_link: pulumi.Input[str],
-             url: pulumi.Input[str],
-             user: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'privateKeySecretLink' in kwargs:
-            private_key_secret_link = kwargs['privateKeySecretLink']
-
-        _setter("account", account)
-        _setter("private_key_secret_link", private_key_secret_link)
-        _setter("url", url)
+        """
+        :param pulumi.Input[str] private_key_secret_link: Link to a SSH or opaque secret.
+        """
+        pulumi.set(__self__, "account", account)
+        pulumi.set(__self__, "private_key_secret_link", private_key_secret_link)
+        pulumi.set(__self__, "url", url)
         if user is not None:
-            _setter("user", user)
+            pulumi.set(__self__, "user", user)
 
     @property
     @pulumi.getter
@@ -8502,6 +9148,9 @@ class Mk8sTritonProviderConnectionArgs:
     @property
     @pulumi.getter(name="privateKeySecretLink")
     def private_key_secret_link(self) -> pulumi.Input[str]:
+        """
+        Link to a SSH or opaque secret.
+        """
         return pulumi.get(self, "private_key_secret_link")
 
     @private_key_secret_link.setter
@@ -8527,36 +9176,39 @@ class Mk8sTritonProviderConnectionArgs:
         pulumi.set(self, "user", value)
 
 
+if not MYPY:
+    class Mk8sTritonProviderNetworkingArgsDict(TypedDict):
+        pod_network: NotRequired[pulumi.Input[str]]
+        """
+        The CIDR of the pod network.
+        """
+        service_network: NotRequired[pulumi.Input[str]]
+        """
+        The CIDR of the service network.
+        """
+elif False:
+    Mk8sTritonProviderNetworkingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sTritonProviderNetworkingArgs:
     def __init__(__self__, *,
                  pod_network: Optional[pulumi.Input[str]] = None,
                  service_network: Optional[pulumi.Input[str]] = None):
-        Mk8sTritonProviderNetworkingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            pod_network=pod_network,
-            service_network=service_network,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             pod_network: Optional[pulumi.Input[str]] = None,
-             service_network: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'podNetwork' in kwargs:
-            pod_network = kwargs['podNetwork']
-        if 'serviceNetwork' in kwargs:
-            service_network = kwargs['serviceNetwork']
-
+        """
+        :param pulumi.Input[str] pod_network: The CIDR of the pod network.
+        :param pulumi.Input[str] service_network: The CIDR of the service network.
+        """
         if pod_network is not None:
-            _setter("pod_network", pod_network)
+            pulumi.set(__self__, "pod_network", pod_network)
         if service_network is not None:
-            _setter("service_network", service_network)
+            pulumi.set(__self__, "service_network", service_network)
 
     @property
     @pulumi.getter(name="podNetwork")
     def pod_network(self) -> Optional[pulumi.Input[str]]:
+        """
+        The CIDR of the pod network.
+        """
         return pulumi.get(self, "pod_network")
 
     @pod_network.setter
@@ -8566,12 +9218,45 @@ class Mk8sTritonProviderNetworkingArgs:
     @property
     @pulumi.getter(name="serviceNetwork")
     def service_network(self) -> Optional[pulumi.Input[str]]:
+        """
+        The CIDR of the service network.
+        """
         return pulumi.get(self, "service_network")
 
     @service_network.setter
     def service_network(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "service_network", value)
 
+
+if not MYPY:
+    class Mk8sTritonProviderNodePoolArgsDict(TypedDict):
+        name: pulumi.Input[str]
+        package_id: pulumi.Input[str]
+        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Labels to attach to nodes of a node pool.
+        """
+        max_size: NotRequired[pulumi.Input[int]]
+        min_size: NotRequired[pulumi.Input[int]]
+        override_image_id: NotRequired[pulumi.Input[str]]
+        private_network_ids: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        More private networks to join.
+        """
+        public_network_id: NotRequired[pulumi.Input[str]]
+        """
+        If set, machine will also get a public IP.
+        """
+        taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sTritonProviderNodePoolTaintArgsDict']]]]
+        """
+        Taint for the nodes of a pool.
+        """
+        triton_tags: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Extra tags to attach to instances from a node pool.
+        """
+elif False:
+    Mk8sTritonProviderNodePoolArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sTritonProviderNodePoolArgs:
@@ -8586,67 +9271,31 @@ class Mk8sTritonProviderNodePoolArgs:
                  public_network_id: Optional[pulumi.Input[str]] = None,
                  taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sTritonProviderNodePoolTaintArgs']]]] = None,
                  triton_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
-        Mk8sTritonProviderNodePoolArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            package_id=package_id,
-            labels=labels,
-            max_size=max_size,
-            min_size=min_size,
-            override_image_id=override_image_id,
-            private_network_ids=private_network_ids,
-            public_network_id=public_network_id,
-            taints=taints,
-            triton_tags=triton_tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: pulumi.Input[str],
-             package_id: pulumi.Input[str],
-             labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             max_size: Optional[pulumi.Input[int]] = None,
-             min_size: Optional[pulumi.Input[int]] = None,
-             override_image_id: Optional[pulumi.Input[str]] = None,
-             private_network_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             public_network_id: Optional[pulumi.Input[str]] = None,
-             taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sTritonProviderNodePoolTaintArgs']]]] = None,
-             triton_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'packageId' in kwargs:
-            package_id = kwargs['packageId']
-        if 'maxSize' in kwargs:
-            max_size = kwargs['maxSize']
-        if 'minSize' in kwargs:
-            min_size = kwargs['minSize']
-        if 'overrideImageId' in kwargs:
-            override_image_id = kwargs['overrideImageId']
-        if 'privateNetworkIds' in kwargs:
-            private_network_ids = kwargs['privateNetworkIds']
-        if 'publicNetworkId' in kwargs:
-            public_network_id = kwargs['publicNetworkId']
-        if 'tritonTags' in kwargs:
-            triton_tags = kwargs['tritonTags']
-
-        _setter("name", name)
-        _setter("package_id", package_id)
+        """
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] labels: Labels to attach to nodes of a node pool.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] private_network_ids: More private networks to join.
+        :param pulumi.Input[str] public_network_id: If set, machine will also get a public IP.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sTritonProviderNodePoolTaintArgs']]] taints: Taint for the nodes of a pool.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] triton_tags: Extra tags to attach to instances from a node pool.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "package_id", package_id)
         if labels is not None:
-            _setter("labels", labels)
+            pulumi.set(__self__, "labels", labels)
         if max_size is not None:
-            _setter("max_size", max_size)
+            pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
-            _setter("min_size", min_size)
+            pulumi.set(__self__, "min_size", min_size)
         if override_image_id is not None:
-            _setter("override_image_id", override_image_id)
+            pulumi.set(__self__, "override_image_id", override_image_id)
         if private_network_ids is not None:
-            _setter("private_network_ids", private_network_ids)
+            pulumi.set(__self__, "private_network_ids", private_network_ids)
         if public_network_id is not None:
-            _setter("public_network_id", public_network_id)
+            pulumi.set(__self__, "public_network_id", public_network_id)
         if taints is not None:
-            _setter("taints", taints)
+            pulumi.set(__self__, "taints", taints)
         if triton_tags is not None:
-            _setter("triton_tags", triton_tags)
+            pulumi.set(__self__, "triton_tags", triton_tags)
 
     @property
     @pulumi.getter
@@ -8669,6 +9318,9 @@ class Mk8sTritonProviderNodePoolArgs:
     @property
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Labels to attach to nodes of a node pool.
+        """
         return pulumi.get(self, "labels")
 
     @labels.setter
@@ -8705,6 +9357,9 @@ class Mk8sTritonProviderNodePoolArgs:
     @property
     @pulumi.getter(name="privateNetworkIds")
     def private_network_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        More private networks to join.
+        """
         return pulumi.get(self, "private_network_ids")
 
     @private_network_ids.setter
@@ -8714,6 +9369,9 @@ class Mk8sTritonProviderNodePoolArgs:
     @property
     @pulumi.getter(name="publicNetworkId")
     def public_network_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        If set, machine will also get a public IP.
+        """
         return pulumi.get(self, "public_network_id")
 
     @public_network_id.setter
@@ -8723,6 +9381,9 @@ class Mk8sTritonProviderNodePoolArgs:
     @property
     @pulumi.getter
     def taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sTritonProviderNodePoolTaintArgs']]]]:
+        """
+        Taint for the nodes of a pool.
+        """
         return pulumi.get(self, "taints")
 
     @taints.setter
@@ -8732,6 +9393,9 @@ class Mk8sTritonProviderNodePoolArgs:
     @property
     @pulumi.getter(name="tritonTags")
     def triton_tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Extra tags to attach to instances from a node pool.
+        """
         return pulumi.get(self, "triton_tags")
 
     @triton_tags.setter
@@ -8739,33 +9403,26 @@ class Mk8sTritonProviderNodePoolArgs:
         pulumi.set(self, "triton_tags", value)
 
 
+if not MYPY:
+    class Mk8sTritonProviderNodePoolTaintArgsDict(TypedDict):
+        effect: NotRequired[pulumi.Input[str]]
+        key: NotRequired[pulumi.Input[str]]
+        value: NotRequired[pulumi.Input[str]]
+elif False:
+    Mk8sTritonProviderNodePoolTaintArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class Mk8sTritonProviderNodePoolTaintArgs:
     def __init__(__self__, *,
                  effect: Optional[pulumi.Input[str]] = None,
                  key: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
-        Mk8sTritonProviderNodePoolTaintArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            effect=effect,
-            key=key,
-            value=value,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             effect: Optional[pulumi.Input[str]] = None,
-             key: Optional[pulumi.Input[str]] = None,
-             value: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if effect is not None:
-            _setter("effect", effect)
+            pulumi.set(__self__, "effect", effect)
         if key is not None:
-            _setter("key", key)
+            pulumi.set(__self__, "key", key)
         if value is not None:
-            _setter("value", value)
+            pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
@@ -8795,35 +9452,38 @@ class Mk8sTritonProviderNodePoolTaintArgs:
         pulumi.set(self, "value", value)
 
 
+if not MYPY:
+    class OrgAuthConfigArgsDict(TypedDict):
+        domain_auto_members: pulumi.Input[Sequence[pulumi.Input[str]]]
+        """
+        List of domains which will auto-provision users when authenticating using SAML.
+        """
+        saml_only: NotRequired[pulumi.Input[bool]]
+        """
+        Enforce SAML only authentication.
+        """
+elif False:
+    OrgAuthConfigArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class OrgAuthConfigArgs:
     def __init__(__self__, *,
                  domain_auto_members: pulumi.Input[Sequence[pulumi.Input[str]]],
                  saml_only: Optional[pulumi.Input[bool]] = None):
-        OrgAuthConfigArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            domain_auto_members=domain_auto_members,
-            saml_only=saml_only,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             domain_auto_members: pulumi.Input[Sequence[pulumi.Input[str]]],
-             saml_only: Optional[pulumi.Input[bool]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'domainAutoMembers' in kwargs:
-            domain_auto_members = kwargs['domainAutoMembers']
-        if 'samlOnly' in kwargs:
-            saml_only = kwargs['samlOnly']
-
-        _setter("domain_auto_members", domain_auto_members)
+        """
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] domain_auto_members: List of domains which will auto-provision users when authenticating using SAML.
+        :param pulumi.Input[bool] saml_only: Enforce SAML only authentication.
+        """
+        pulumi.set(__self__, "domain_auto_members", domain_auto_members)
         if saml_only is not None:
-            _setter("saml_only", saml_only)
+            pulumi.set(__self__, "saml_only", saml_only)
 
     @property
     @pulumi.getter(name="domainAutoMembers")
     def domain_auto_members(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+        """
+        List of domains which will auto-provision users when authenticating using SAML.
+        """
         return pulumi.get(self, "domain_auto_members")
 
     @domain_auto_members.setter
@@ -8833,12 +9493,44 @@ class OrgAuthConfigArgs:
     @property
     @pulumi.getter(name="samlOnly")
     def saml_only(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Enforce SAML only authentication.
+        """
         return pulumi.get(self, "saml_only")
 
     @saml_only.setter
     def saml_only(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "saml_only", value)
 
+
+if not MYPY:
+    class OrgLoggingCloudWatchLoggingArgsDict(TypedDict):
+        credentials: pulumi.Input[str]
+        """
+        Full Link to a secret of type `opaque`.
+        """
+        group_name: pulumi.Input[str]
+        """
+        A container for log streams with common settings like retention. Used to categorize logs by application or service type.
+        """
+        region: pulumi.Input[str]
+        """
+        Valid AWS region.
+        """
+        stream_name: pulumi.Input[str]
+        """
+        A sequence of log events from the same source within a log group. Typically represents individual instances of services or applications.
+        """
+        extract_fields: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Enable custom data extraction from log entries for enhanced querying and analysis.
+        """
+        retention_days: NotRequired[pulumi.Input[int]]
+        """
+        Length, in days, for how log data is kept before it is automatically deleted.
+        """
+elif False:
+    OrgLoggingCloudWatchLoggingArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class OrgLoggingCloudWatchLoggingArgs:
@@ -8849,47 +9541,29 @@ class OrgLoggingCloudWatchLoggingArgs:
                  stream_name: pulumi.Input[str],
                  extract_fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  retention_days: Optional[pulumi.Input[int]] = None):
-        OrgLoggingCloudWatchLoggingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            credentials=credentials,
-            group_name=group_name,
-            region=region,
-            stream_name=stream_name,
-            extract_fields=extract_fields,
-            retention_days=retention_days,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             credentials: pulumi.Input[str],
-             group_name: pulumi.Input[str],
-             region: pulumi.Input[str],
-             stream_name: pulumi.Input[str],
-             extract_fields: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             retention_days: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'groupName' in kwargs:
-            group_name = kwargs['groupName']
-        if 'streamName' in kwargs:
-            stream_name = kwargs['streamName']
-        if 'extractFields' in kwargs:
-            extract_fields = kwargs['extractFields']
-        if 'retentionDays' in kwargs:
-            retention_days = kwargs['retentionDays']
-
-        _setter("credentials", credentials)
-        _setter("group_name", group_name)
-        _setter("region", region)
-        _setter("stream_name", stream_name)
+        """
+        :param pulumi.Input[str] credentials: Full Link to a secret of type `opaque`.
+        :param pulumi.Input[str] group_name: A container for log streams with common settings like retention. Used to categorize logs by application or service type.
+        :param pulumi.Input[str] region: Valid AWS region.
+        :param pulumi.Input[str] stream_name: A sequence of log events from the same source within a log group. Typically represents individual instances of services or applications.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] extract_fields: Enable custom data extraction from log entries for enhanced querying and analysis.
+        :param pulumi.Input[int] retention_days: Length, in days, for how log data is kept before it is automatically deleted.
+        """
+        pulumi.set(__self__, "credentials", credentials)
+        pulumi.set(__self__, "group_name", group_name)
+        pulumi.set(__self__, "region", region)
+        pulumi.set(__self__, "stream_name", stream_name)
         if extract_fields is not None:
-            _setter("extract_fields", extract_fields)
+            pulumi.set(__self__, "extract_fields", extract_fields)
         if retention_days is not None:
-            _setter("retention_days", retention_days)
+            pulumi.set(__self__, "retention_days", retention_days)
 
     @property
     @pulumi.getter
     def credentials(self) -> pulumi.Input[str]:
+        """
+        Full Link to a secret of type `opaque`.
+        """
         return pulumi.get(self, "credentials")
 
     @credentials.setter
@@ -8899,6 +9573,9 @@ class OrgLoggingCloudWatchLoggingArgs:
     @property
     @pulumi.getter(name="groupName")
     def group_name(self) -> pulumi.Input[str]:
+        """
+        A container for log streams with common settings like retention. Used to categorize logs by application or service type.
+        """
         return pulumi.get(self, "group_name")
 
     @group_name.setter
@@ -8908,6 +9585,9 @@ class OrgLoggingCloudWatchLoggingArgs:
     @property
     @pulumi.getter
     def region(self) -> pulumi.Input[str]:
+        """
+        Valid AWS region.
+        """
         return pulumi.get(self, "region")
 
     @region.setter
@@ -8917,6 +9597,9 @@ class OrgLoggingCloudWatchLoggingArgs:
     @property
     @pulumi.getter(name="streamName")
     def stream_name(self) -> pulumi.Input[str]:
+        """
+        A sequence of log events from the same source within a log group. Typically represents individual instances of services or applications.
+        """
         return pulumi.get(self, "stream_name")
 
     @stream_name.setter
@@ -8926,6 +9609,9 @@ class OrgLoggingCloudWatchLoggingArgs:
     @property
     @pulumi.getter(name="extractFields")
     def extract_fields(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Enable custom data extraction from log entries for enhanced querying and analysis.
+        """
         return pulumi.get(self, "extract_fields")
 
     @extract_fields.setter
@@ -8935,12 +9621,36 @@ class OrgLoggingCloudWatchLoggingArgs:
     @property
     @pulumi.getter(name="retentionDays")
     def retention_days(self) -> Optional[pulumi.Input[int]]:
+        """
+        Length, in days, for how log data is kept before it is automatically deleted.
+        """
         return pulumi.get(self, "retention_days")
 
     @retention_days.setter
     def retention_days(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "retention_days", value)
 
+
+if not MYPY:
+    class OrgLoggingCoralogixLoggingArgsDict(TypedDict):
+        app: pulumi.Input[str]
+        """
+        App name to be displayed in Coralogix dashboard.
+        """
+        cluster: pulumi.Input[str]
+        """
+        Coralogix cluster URI.
+        """
+        credentials: pulumi.Input[str]
+        """
+        Full link to referenced Opaque Secret.
+        """
+        subsystem: pulumi.Input[str]
+        """
+        Subsystem name to be displayed in Coralogix dashboard.
+        """
+elif False:
+    OrgLoggingCoralogixLoggingArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class OrgLoggingCoralogixLoggingArgs:
@@ -8949,31 +9659,23 @@ class OrgLoggingCoralogixLoggingArgs:
                  cluster: pulumi.Input[str],
                  credentials: pulumi.Input[str],
                  subsystem: pulumi.Input[str]):
-        OrgLoggingCoralogixLoggingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            app=app,
-            cluster=cluster,
-            credentials=credentials,
-            subsystem=subsystem,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             app: pulumi.Input[str],
-             cluster: pulumi.Input[str],
-             credentials: pulumi.Input[str],
-             subsystem: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("app", app)
-        _setter("cluster", cluster)
-        _setter("credentials", credentials)
-        _setter("subsystem", subsystem)
+        """
+        :param pulumi.Input[str] app: App name to be displayed in Coralogix dashboard.
+        :param pulumi.Input[str] cluster: Coralogix cluster URI.
+        :param pulumi.Input[str] credentials: Full link to referenced Opaque Secret.
+        :param pulumi.Input[str] subsystem: Subsystem name to be displayed in Coralogix dashboard.
+        """
+        pulumi.set(__self__, "app", app)
+        pulumi.set(__self__, "cluster", cluster)
+        pulumi.set(__self__, "credentials", credentials)
+        pulumi.set(__self__, "subsystem", subsystem)
 
     @property
     @pulumi.getter
     def app(self) -> pulumi.Input[str]:
+        """
+        App name to be displayed in Coralogix dashboard.
+        """
         return pulumi.get(self, "app")
 
     @app.setter
@@ -8983,6 +9685,9 @@ class OrgLoggingCoralogixLoggingArgs:
     @property
     @pulumi.getter
     def cluster(self) -> pulumi.Input[str]:
+        """
+        Coralogix cluster URI.
+        """
         return pulumi.get(self, "cluster")
 
     @cluster.setter
@@ -8992,6 +9697,9 @@ class OrgLoggingCoralogixLoggingArgs:
     @property
     @pulumi.getter
     def credentials(self) -> pulumi.Input[str]:
+        """
+        Full link to referenced Opaque Secret.
+        """
         return pulumi.get(self, "credentials")
 
     @credentials.setter
@@ -9001,6 +9709,9 @@ class OrgLoggingCoralogixLoggingArgs:
     @property
     @pulumi.getter
     def subsystem(self) -> pulumi.Input[str]:
+        """
+        Subsystem name to be displayed in Coralogix dashboard.
+        """
         return pulumi.get(self, "subsystem")
 
     @subsystem.setter
@@ -9008,30 +9719,37 @@ class OrgLoggingCoralogixLoggingArgs:
         pulumi.set(self, "subsystem", value)
 
 
+if not MYPY:
+    class OrgLoggingDatadogLoggingArgsDict(TypedDict):
+        credentials: pulumi.Input[str]
+        """
+        Full link to referenced Opaque Secret.
+        """
+        host: pulumi.Input[str]
+        """
+        Datadog host URI.
+        """
+elif False:
+    OrgLoggingDatadogLoggingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class OrgLoggingDatadogLoggingArgs:
     def __init__(__self__, *,
                  credentials: pulumi.Input[str],
                  host: pulumi.Input[str]):
-        OrgLoggingDatadogLoggingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            credentials=credentials,
-            host=host,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             credentials: pulumi.Input[str],
-             host: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("credentials", credentials)
-        _setter("host", host)
+        """
+        :param pulumi.Input[str] credentials: Full link to referenced Opaque Secret.
+        :param pulumi.Input[str] host: Datadog host URI.
+        """
+        pulumi.set(__self__, "credentials", credentials)
+        pulumi.set(__self__, "host", host)
 
     @property
     @pulumi.getter
     def credentials(self) -> pulumi.Input[str]:
+        """
+        Full link to referenced Opaque Secret.
+        """
         return pulumi.get(self, "credentials")
 
     @credentials.setter
@@ -9041,12 +9759,33 @@ class OrgLoggingDatadogLoggingArgs:
     @property
     @pulumi.getter
     def host(self) -> pulumi.Input[str]:
+        """
+        Datadog host URI.
+        """
         return pulumi.get(self, "host")
 
     @host.setter
     def host(self, value: pulumi.Input[str]):
         pulumi.set(self, "host", value)
 
+
+if not MYPY:
+    class OrgLoggingElasticLoggingArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        aws: NotRequired[pulumi.Input['OrgLoggingElasticLoggingAwsArgsDict']]
+        """
+        For targeting Amazon Web Services (AWS) ElasticSearch.
+        """
+        elastic_cloud: NotRequired[pulumi.Input['OrgLoggingElasticLoggingElasticCloudArgsDict']]
+        """
+        For targeting Elastic Cloud.
+        """
+        generic: NotRequired[pulumi.Input['OrgLoggingElasticLoggingGenericArgsDict']]
+        """
+        For targeting generic Elastic Search providers.
+        """
+elif False:
+    OrgLoggingElasticLoggingArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class OrgLoggingElasticLoggingArgs:
@@ -9055,33 +9794,19 @@ class OrgLoggingElasticLoggingArgs:
                  aws: Optional[pulumi.Input['OrgLoggingElasticLoggingAwsArgs']] = None,
                  elastic_cloud: Optional[pulumi.Input['OrgLoggingElasticLoggingElasticCloudArgs']] = None,
                  generic: Optional[pulumi.Input['OrgLoggingElasticLoggingGenericArgs']] = None):
-        OrgLoggingElasticLoggingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            aws=aws,
-            elastic_cloud=elastic_cloud,
-            generic=generic,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             aws: Optional[pulumi.Input['OrgLoggingElasticLoggingAwsArgs']] = None,
-             elastic_cloud: Optional[pulumi.Input['OrgLoggingElasticLoggingElasticCloudArgs']] = None,
-             generic: Optional[pulumi.Input['OrgLoggingElasticLoggingGenericArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'elasticCloud' in kwargs:
-            elastic_cloud = kwargs['elasticCloud']
-
+        """
+        :param pulumi.Input['OrgLoggingElasticLoggingAwsArgs'] aws: For targeting Amazon Web Services (AWS) ElasticSearch.
+        :param pulumi.Input['OrgLoggingElasticLoggingElasticCloudArgs'] elastic_cloud: For targeting Elastic Cloud.
+        :param pulumi.Input['OrgLoggingElasticLoggingGenericArgs'] generic: For targeting generic Elastic Search providers.
+        """
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if aws is not None:
-            _setter("aws", aws)
+            pulumi.set(__self__, "aws", aws)
         if elastic_cloud is not None:
-            _setter("elastic_cloud", elastic_cloud)
+            pulumi.set(__self__, "elastic_cloud", elastic_cloud)
         if generic is not None:
-            _setter("generic", generic)
+            pulumi.set(__self__, "generic", generic)
 
     @property
     @pulumi.getter
@@ -9095,6 +9820,9 @@ class OrgLoggingElasticLoggingArgs:
     @property
     @pulumi.getter
     def aws(self) -> Optional[pulumi.Input['OrgLoggingElasticLoggingAwsArgs']]:
+        """
+        For targeting Amazon Web Services (AWS) ElasticSearch.
+        """
         return pulumi.get(self, "aws")
 
     @aws.setter
@@ -9104,6 +9832,9 @@ class OrgLoggingElasticLoggingArgs:
     @property
     @pulumi.getter(name="elasticCloud")
     def elastic_cloud(self) -> Optional[pulumi.Input['OrgLoggingElasticLoggingElasticCloudArgs']]:
+        """
+        For targeting Elastic Cloud.
+        """
         return pulumi.get(self, "elastic_cloud")
 
     @elastic_cloud.setter
@@ -9113,12 +9844,44 @@ class OrgLoggingElasticLoggingArgs:
     @property
     @pulumi.getter
     def generic(self) -> Optional[pulumi.Input['OrgLoggingElasticLoggingGenericArgs']]:
+        """
+        For targeting generic Elastic Search providers.
+        """
         return pulumi.get(self, "generic")
 
     @generic.setter
     def generic(self, value: Optional[pulumi.Input['OrgLoggingElasticLoggingGenericArgs']]):
         pulumi.set(self, "generic", value)
 
+
+if not MYPY:
+    class OrgLoggingElasticLoggingAwsArgsDict(TypedDict):
+        credentials: pulumi.Input[str]
+        """
+        Full Link to a secret of type `aws`.
+        """
+        host: pulumi.Input[str]
+        """
+        A valid AWS ElasticSearch hostname (must end with es.amazonaws.com).
+        """
+        index: pulumi.Input[str]
+        """
+        Logging Index.
+        """
+        port: pulumi.Input[int]
+        """
+        Port. Default: 443
+        """
+        region: pulumi.Input[str]
+        """
+        Valid AWS region.
+        """
+        type: pulumi.Input[str]
+        """
+        Logging Type.
+        """
+elif False:
+    OrgLoggingElasticLoggingAwsArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class OrgLoggingElasticLoggingAwsArgs:
@@ -9129,37 +9892,27 @@ class OrgLoggingElasticLoggingAwsArgs:
                  port: pulumi.Input[int],
                  region: pulumi.Input[str],
                  type: pulumi.Input[str]):
-        OrgLoggingElasticLoggingAwsArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            credentials=credentials,
-            host=host,
-            index=index,
-            port=port,
-            region=region,
-            type=type,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             credentials: pulumi.Input[str],
-             host: pulumi.Input[str],
-             index: pulumi.Input[str],
-             port: pulumi.Input[int],
-             region: pulumi.Input[str],
-             type: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("credentials", credentials)
-        _setter("host", host)
-        _setter("index", index)
-        _setter("port", port)
-        _setter("region", region)
-        _setter("type", type)
+        """
+        :param pulumi.Input[str] credentials: Full Link to a secret of type `aws`.
+        :param pulumi.Input[str] host: A valid AWS ElasticSearch hostname (must end with es.amazonaws.com).
+        :param pulumi.Input[str] index: Logging Index.
+        :param pulumi.Input[int] port: Port. Default: 443
+        :param pulumi.Input[str] region: Valid AWS region.
+        :param pulumi.Input[str] type: Logging Type.
+        """
+        pulumi.set(__self__, "credentials", credentials)
+        pulumi.set(__self__, "host", host)
+        pulumi.set(__self__, "index", index)
+        pulumi.set(__self__, "port", port)
+        pulumi.set(__self__, "region", region)
+        pulumi.set(__self__, "type", type)
 
     @property
     @pulumi.getter
     def credentials(self) -> pulumi.Input[str]:
+        """
+        Full Link to a secret of type `aws`.
+        """
         return pulumi.get(self, "credentials")
 
     @credentials.setter
@@ -9169,6 +9922,9 @@ class OrgLoggingElasticLoggingAwsArgs:
     @property
     @pulumi.getter
     def host(self) -> pulumi.Input[str]:
+        """
+        A valid AWS ElasticSearch hostname (must end with es.amazonaws.com).
+        """
         return pulumi.get(self, "host")
 
     @host.setter
@@ -9178,6 +9934,9 @@ class OrgLoggingElasticLoggingAwsArgs:
     @property
     @pulumi.getter
     def index(self) -> pulumi.Input[str]:
+        """
+        Logging Index.
+        """
         return pulumi.get(self, "index")
 
     @index.setter
@@ -9187,6 +9946,9 @@ class OrgLoggingElasticLoggingAwsArgs:
     @property
     @pulumi.getter
     def port(self) -> pulumi.Input[int]:
+        """
+        Port. Default: 443
+        """
         return pulumi.get(self, "port")
 
     @port.setter
@@ -9196,6 +9958,9 @@ class OrgLoggingElasticLoggingAwsArgs:
     @property
     @pulumi.getter
     def region(self) -> pulumi.Input[str]:
+        """
+        Valid AWS region.
+        """
         return pulumi.get(self, "region")
 
     @region.setter
@@ -9205,12 +9970,36 @@ class OrgLoggingElasticLoggingAwsArgs:
     @property
     @pulumi.getter
     def type(self) -> pulumi.Input[str]:
+        """
+        Logging Type.
+        """
         return pulumi.get(self, "type")
 
     @type.setter
     def type(self, value: pulumi.Input[str]):
         pulumi.set(self, "type", value)
 
+
+if not MYPY:
+    class OrgLoggingElasticLoggingElasticCloudArgsDict(TypedDict):
+        cloud_id: pulumi.Input[str]
+        """
+        [Cloud ID](https://www.elastic.co/guide/en/cloud/current/ec-cloud-id.html)
+        """
+        credentials: pulumi.Input[str]
+        """
+        Full Link to a secret of type `userpass`.
+        """
+        index: pulumi.Input[str]
+        """
+        Logging Index.
+        """
+        type: pulumi.Input[str]
+        """
+        Logging Type.
+        """
+elif False:
+    OrgLoggingElasticLoggingElasticCloudArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class OrgLoggingElasticLoggingElasticCloudArgs:
@@ -9219,33 +10008,23 @@ class OrgLoggingElasticLoggingElasticCloudArgs:
                  credentials: pulumi.Input[str],
                  index: pulumi.Input[str],
                  type: pulumi.Input[str]):
-        OrgLoggingElasticLoggingElasticCloudArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            cloud_id=cloud_id,
-            credentials=credentials,
-            index=index,
-            type=type,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             cloud_id: pulumi.Input[str],
-             credentials: pulumi.Input[str],
-             index: pulumi.Input[str],
-             type: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'cloudId' in kwargs:
-            cloud_id = kwargs['cloudId']
-
-        _setter("cloud_id", cloud_id)
-        _setter("credentials", credentials)
-        _setter("index", index)
-        _setter("type", type)
+        """
+        :param pulumi.Input[str] cloud_id: [Cloud ID](https://www.elastic.co/guide/en/cloud/current/ec-cloud-id.html)
+        :param pulumi.Input[str] credentials: Full Link to a secret of type `userpass`.
+        :param pulumi.Input[str] index: Logging Index.
+        :param pulumi.Input[str] type: Logging Type.
+        """
+        pulumi.set(__self__, "cloud_id", cloud_id)
+        pulumi.set(__self__, "credentials", credentials)
+        pulumi.set(__self__, "index", index)
+        pulumi.set(__self__, "type", type)
 
     @property
     @pulumi.getter(name="cloudId")
     def cloud_id(self) -> pulumi.Input[str]:
+        """
+        [Cloud ID](https://www.elastic.co/guide/en/cloud/current/ec-cloud-id.html)
+        """
         return pulumi.get(self, "cloud_id")
 
     @cloud_id.setter
@@ -9255,6 +10034,9 @@ class OrgLoggingElasticLoggingElasticCloudArgs:
     @property
     @pulumi.getter
     def credentials(self) -> pulumi.Input[str]:
+        """
+        Full Link to a secret of type `userpass`.
+        """
         return pulumi.get(self, "credentials")
 
     @credentials.setter
@@ -9264,6 +10046,9 @@ class OrgLoggingElasticLoggingElasticCloudArgs:
     @property
     @pulumi.getter
     def index(self) -> pulumi.Input[str]:
+        """
+        Logging Index.
+        """
         return pulumi.get(self, "index")
 
     @index.setter
@@ -9273,12 +10058,44 @@ class OrgLoggingElasticLoggingElasticCloudArgs:
     @property
     @pulumi.getter
     def type(self) -> pulumi.Input[str]:
+        """
+        Logging Type.
+        """
         return pulumi.get(self, "type")
 
     @type.setter
     def type(self, value: pulumi.Input[str]):
         pulumi.set(self, "type", value)
 
+
+if not MYPY:
+    class OrgLoggingElasticLoggingGenericArgsDict(TypedDict):
+        credentials: pulumi.Input[str]
+        """
+        Full Link to a secret of type `userpass`.
+        """
+        host: pulumi.Input[str]
+        """
+        A valid Elastic Search provider hostname.
+        """
+        index: pulumi.Input[str]
+        """
+        Logging Index.
+        """
+        path: pulumi.Input[str]
+        """
+        Logging path.
+        """
+        port: pulumi.Input[int]
+        """
+        Port. Default: 443
+        """
+        type: pulumi.Input[str]
+        """
+        Logging Type.
+        """
+elif False:
+    OrgLoggingElasticLoggingGenericArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class OrgLoggingElasticLoggingGenericArgs:
@@ -9289,37 +10106,27 @@ class OrgLoggingElasticLoggingGenericArgs:
                  path: pulumi.Input[str],
                  port: pulumi.Input[int],
                  type: pulumi.Input[str]):
-        OrgLoggingElasticLoggingGenericArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            credentials=credentials,
-            host=host,
-            index=index,
-            path=path,
-            port=port,
-            type=type,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             credentials: pulumi.Input[str],
-             host: pulumi.Input[str],
-             index: pulumi.Input[str],
-             path: pulumi.Input[str],
-             port: pulumi.Input[int],
-             type: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("credentials", credentials)
-        _setter("host", host)
-        _setter("index", index)
-        _setter("path", path)
-        _setter("port", port)
-        _setter("type", type)
+        """
+        :param pulumi.Input[str] credentials: Full Link to a secret of type `userpass`.
+        :param pulumi.Input[str] host: A valid Elastic Search provider hostname.
+        :param pulumi.Input[str] index: Logging Index.
+        :param pulumi.Input[str] path: Logging path.
+        :param pulumi.Input[int] port: Port. Default: 443
+        :param pulumi.Input[str] type: Logging Type.
+        """
+        pulumi.set(__self__, "credentials", credentials)
+        pulumi.set(__self__, "host", host)
+        pulumi.set(__self__, "index", index)
+        pulumi.set(__self__, "path", path)
+        pulumi.set(__self__, "port", port)
+        pulumi.set(__self__, "type", type)
 
     @property
     @pulumi.getter
     def credentials(self) -> pulumi.Input[str]:
+        """
+        Full Link to a secret of type `userpass`.
+        """
         return pulumi.get(self, "credentials")
 
     @credentials.setter
@@ -9329,6 +10136,9 @@ class OrgLoggingElasticLoggingGenericArgs:
     @property
     @pulumi.getter
     def host(self) -> pulumi.Input[str]:
+        """
+        A valid Elastic Search provider hostname.
+        """
         return pulumi.get(self, "host")
 
     @host.setter
@@ -9338,6 +10148,9 @@ class OrgLoggingElasticLoggingGenericArgs:
     @property
     @pulumi.getter
     def index(self) -> pulumi.Input[str]:
+        """
+        Logging Index.
+        """
         return pulumi.get(self, "index")
 
     @index.setter
@@ -9347,6 +10160,9 @@ class OrgLoggingElasticLoggingGenericArgs:
     @property
     @pulumi.getter
     def path(self) -> pulumi.Input[str]:
+        """
+        Logging path.
+        """
         return pulumi.get(self, "path")
 
     @path.setter
@@ -9356,6 +10172,9 @@ class OrgLoggingElasticLoggingGenericArgs:
     @property
     @pulumi.getter
     def port(self) -> pulumi.Input[int]:
+        """
+        Port. Default: 443
+        """
         return pulumi.get(self, "port")
 
     @port.setter
@@ -9365,6 +10184,9 @@ class OrgLoggingElasticLoggingGenericArgs:
     @property
     @pulumi.getter
     def type(self) -> pulumi.Input[str]:
+        """
+        Logging Type.
+        """
         return pulumi.get(self, "type")
 
     @type.setter
@@ -9372,31 +10194,38 @@ class OrgLoggingElasticLoggingGenericArgs:
         pulumi.set(self, "type", value)
 
 
+if not MYPY:
+    class OrgLoggingFluentdLoggingArgsDict(TypedDict):
+        host: pulumi.Input[str]
+        """
+        The hostname or IP address of a remote log storage system.
+        """
+        port: NotRequired[pulumi.Input[int]]
+        """
+        Port. Default: 24224
+        """
+elif False:
+    OrgLoggingFluentdLoggingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class OrgLoggingFluentdLoggingArgs:
     def __init__(__self__, *,
                  host: pulumi.Input[str],
                  port: Optional[pulumi.Input[int]] = None):
-        OrgLoggingFluentdLoggingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            host=host,
-            port=port,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             host: pulumi.Input[str],
-             port: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("host", host)
+        """
+        :param pulumi.Input[str] host: The hostname or IP address of a remote log storage system.
+        :param pulumi.Input[int] port: Port. Default: 24224
+        """
+        pulumi.set(__self__, "host", host)
         if port is not None:
-            _setter("port", port)
+            pulumi.set(__self__, "port", port)
 
     @property
     @pulumi.getter
     def host(self) -> pulumi.Input[str]:
+        """
+        The hostname or IP address of a remote log storage system.
+        """
         return pulumi.get(self, "host")
 
     @host.setter
@@ -9406,6 +10235,9 @@ class OrgLoggingFluentdLoggingArgs:
     @property
     @pulumi.getter
     def port(self) -> Optional[pulumi.Input[int]]:
+        """
+        Port. Default: 24224
+        """
         return pulumi.get(self, "port")
 
     @port.setter
@@ -9413,32 +10245,37 @@ class OrgLoggingFluentdLoggingArgs:
         pulumi.set(self, "port", value)
 
 
+if not MYPY:
+    class OrgLoggingLogzioLoggingArgsDict(TypedDict):
+        credentials: pulumi.Input[str]
+        """
+        Full link to referenced Opaque Secret.
+        """
+        listener_host: pulumi.Input[str]
+        """
+        Logzio listener host URI.
+        """
+elif False:
+    OrgLoggingLogzioLoggingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class OrgLoggingLogzioLoggingArgs:
     def __init__(__self__, *,
                  credentials: pulumi.Input[str],
                  listener_host: pulumi.Input[str]):
-        OrgLoggingLogzioLoggingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            credentials=credentials,
-            listener_host=listener_host,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             credentials: pulumi.Input[str],
-             listener_host: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'listenerHost' in kwargs:
-            listener_host = kwargs['listenerHost']
-
-        _setter("credentials", credentials)
-        _setter("listener_host", listener_host)
+        """
+        :param pulumi.Input[str] credentials: Full link to referenced Opaque Secret.
+        :param pulumi.Input[str] listener_host: Logzio listener host URI.
+        """
+        pulumi.set(__self__, "credentials", credentials)
+        pulumi.set(__self__, "listener_host", listener_host)
 
     @property
     @pulumi.getter
     def credentials(self) -> pulumi.Input[str]:
+        """
+        Full link to referenced Opaque Secret.
+        """
         return pulumi.get(self, "credentials")
 
     @credentials.setter
@@ -9448,12 +10285,36 @@ class OrgLoggingLogzioLoggingArgs:
     @property
     @pulumi.getter(name="listenerHost")
     def listener_host(self) -> pulumi.Input[str]:
+        """
+        Logzio listener host URI.
+        """
         return pulumi.get(self, "listener_host")
 
     @listener_host.setter
     def listener_host(self, value: pulumi.Input[str]):
         pulumi.set(self, "listener_host", value)
 
+
+if not MYPY:
+    class OrgLoggingS3LoggingArgsDict(TypedDict):
+        bucket: pulumi.Input[str]
+        """
+        Name of S3 bucket.
+        """
+        credentials: pulumi.Input[str]
+        """
+        Full link to referenced AWS Secret.
+        """
+        region: pulumi.Input[str]
+        """
+        AWS region where bucket is located.
+        """
+        prefix: NotRequired[pulumi.Input[str]]
+        """
+        Bucket path prefix. Default: "/".
+        """
+elif False:
+    OrgLoggingS3LoggingArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class OrgLoggingS3LoggingArgs:
@@ -9462,32 +10323,24 @@ class OrgLoggingS3LoggingArgs:
                  credentials: pulumi.Input[str],
                  region: pulumi.Input[str],
                  prefix: Optional[pulumi.Input[str]] = None):
-        OrgLoggingS3LoggingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            bucket=bucket,
-            credentials=credentials,
-            region=region,
-            prefix=prefix,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             bucket: pulumi.Input[str],
-             credentials: pulumi.Input[str],
-             region: pulumi.Input[str],
-             prefix: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("bucket", bucket)
-        _setter("credentials", credentials)
-        _setter("region", region)
+        """
+        :param pulumi.Input[str] bucket: Name of S3 bucket.
+        :param pulumi.Input[str] credentials: Full link to referenced AWS Secret.
+        :param pulumi.Input[str] region: AWS region where bucket is located.
+        :param pulumi.Input[str] prefix: Bucket path prefix. Default: "/".
+        """
+        pulumi.set(__self__, "bucket", bucket)
+        pulumi.set(__self__, "credentials", credentials)
+        pulumi.set(__self__, "region", region)
         if prefix is not None:
-            _setter("prefix", prefix)
+            pulumi.set(__self__, "prefix", prefix)
 
     @property
     @pulumi.getter
     def bucket(self) -> pulumi.Input[str]:
+        """
+        Name of S3 bucket.
+        """
         return pulumi.get(self, "bucket")
 
     @bucket.setter
@@ -9497,6 +10350,9 @@ class OrgLoggingS3LoggingArgs:
     @property
     @pulumi.getter
     def credentials(self) -> pulumi.Input[str]:
+        """
+        Full link to referenced AWS Secret.
+        """
         return pulumi.get(self, "credentials")
 
     @credentials.setter
@@ -9506,6 +10362,9 @@ class OrgLoggingS3LoggingArgs:
     @property
     @pulumi.getter
     def region(self) -> pulumi.Input[str]:
+        """
+        AWS region where bucket is located.
+        """
         return pulumi.get(self, "region")
 
     @region.setter
@@ -9515,6 +10374,9 @@ class OrgLoggingS3LoggingArgs:
     @property
     @pulumi.getter
     def prefix(self) -> Optional[pulumi.Input[str]]:
+        """
+        Bucket path prefix. Default: "/".
+        """
         return pulumi.get(self, "prefix")
 
     @prefix.setter
@@ -9522,30 +10384,37 @@ class OrgLoggingS3LoggingArgs:
         pulumi.set(self, "prefix", value)
 
 
+if not MYPY:
+    class OrgLoggingStackdriverLoggingArgsDict(TypedDict):
+        credentials: pulumi.Input[str]
+        """
+        Full Link to a secret of type `opaque`.
+        """
+        location: pulumi.Input[str]
+        """
+        A Google Cloud Provider region.
+        """
+elif False:
+    OrgLoggingStackdriverLoggingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class OrgLoggingStackdriverLoggingArgs:
     def __init__(__self__, *,
                  credentials: pulumi.Input[str],
                  location: pulumi.Input[str]):
-        OrgLoggingStackdriverLoggingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            credentials=credentials,
-            location=location,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             credentials: pulumi.Input[str],
-             location: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("credentials", credentials)
-        _setter("location", location)
+        """
+        :param pulumi.Input[str] credentials: Full Link to a secret of type `opaque`.
+        :param pulumi.Input[str] location: A Google Cloud Provider region.
+        """
+        pulumi.set(__self__, "credentials", credentials)
+        pulumi.set(__self__, "location", location)
 
     @property
     @pulumi.getter
     def credentials(self) -> pulumi.Input[str]:
+        """
+        Full Link to a secret of type `opaque`.
+        """
         return pulumi.get(self, "credentials")
 
     @credentials.setter
@@ -9555,12 +10424,40 @@ class OrgLoggingStackdriverLoggingArgs:
     @property
     @pulumi.getter
     def location(self) -> pulumi.Input[str]:
+        """
+        A Google Cloud Provider region.
+        """
         return pulumi.get(self, "location")
 
     @location.setter
     def location(self, value: pulumi.Input[str]):
         pulumi.set(self, "location", value)
 
+
+if not MYPY:
+    class OrgLoggingSyslogLoggingArgsDict(TypedDict):
+        host: pulumi.Input[str]
+        """
+        Hostname of Syslog Endpoint.
+        """
+        port: pulumi.Input[int]
+        """
+        Port of Syslog Endpoint.
+        """
+        format: NotRequired[pulumi.Input[str]]
+        """
+        Log Format. Valid values: RFC3164 or RFC5424.
+        """
+        mode: NotRequired[pulumi.Input[str]]
+        """
+        Log Mode. Valid values: TCP, TLS, or UDP.
+        """
+        severity: NotRequired[pulumi.Input[int]]
+        """
+        Severity Level. See documentation for details. Valid values: 0 to 7.
+        """
+elif False:
+    OrgLoggingSyslogLoggingArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class OrgLoggingSyslogLoggingArgs:
@@ -9570,37 +10467,28 @@ class OrgLoggingSyslogLoggingArgs:
                  format: Optional[pulumi.Input[str]] = None,
                  mode: Optional[pulumi.Input[str]] = None,
                  severity: Optional[pulumi.Input[int]] = None):
-        OrgLoggingSyslogLoggingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            host=host,
-            port=port,
-            format=format,
-            mode=mode,
-            severity=severity,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             host: pulumi.Input[str],
-             port: pulumi.Input[int],
-             format: Optional[pulumi.Input[str]] = None,
-             mode: Optional[pulumi.Input[str]] = None,
-             severity: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("host", host)
-        _setter("port", port)
+        """
+        :param pulumi.Input[str] host: Hostname of Syslog Endpoint.
+        :param pulumi.Input[int] port: Port of Syslog Endpoint.
+        :param pulumi.Input[str] format: Log Format. Valid values: RFC3164 or RFC5424.
+        :param pulumi.Input[str] mode: Log Mode. Valid values: TCP, TLS, or UDP.
+        :param pulumi.Input[int] severity: Severity Level. See documentation for details. Valid values: 0 to 7.
+        """
+        pulumi.set(__self__, "host", host)
+        pulumi.set(__self__, "port", port)
         if format is not None:
-            _setter("format", format)
+            pulumi.set(__self__, "format", format)
         if mode is not None:
-            _setter("mode", mode)
+            pulumi.set(__self__, "mode", mode)
         if severity is not None:
-            _setter("severity", severity)
+            pulumi.set(__self__, "severity", severity)
 
     @property
     @pulumi.getter
     def host(self) -> pulumi.Input[str]:
+        """
+        Hostname of Syslog Endpoint.
+        """
         return pulumi.get(self, "host")
 
     @host.setter
@@ -9610,6 +10498,9 @@ class OrgLoggingSyslogLoggingArgs:
     @property
     @pulumi.getter
     def port(self) -> pulumi.Input[int]:
+        """
+        Port of Syslog Endpoint.
+        """
         return pulumi.get(self, "port")
 
     @port.setter
@@ -9619,6 +10510,9 @@ class OrgLoggingSyslogLoggingArgs:
     @property
     @pulumi.getter
     def format(self) -> Optional[pulumi.Input[str]]:
+        """
+        Log Format. Valid values: RFC3164 or RFC5424.
+        """
         return pulumi.get(self, "format")
 
     @format.setter
@@ -9628,6 +10522,9 @@ class OrgLoggingSyslogLoggingArgs:
     @property
     @pulumi.getter
     def mode(self) -> Optional[pulumi.Input[str]]:
+        """
+        Log Mode. Valid values: TCP, TLS, or UDP.
+        """
         return pulumi.get(self, "mode")
 
     @mode.setter
@@ -9637,6 +10534,9 @@ class OrgLoggingSyslogLoggingArgs:
     @property
     @pulumi.getter
     def severity(self) -> Optional[pulumi.Input[int]]:
+        """
+        Severity Level. See documentation for details. Valid values: 0 to 7.
+        """
         return pulumi.get(self, "severity")
 
     @severity.setter
@@ -9644,43 +10544,47 @@ class OrgLoggingSyslogLoggingArgs:
         pulumi.set(self, "severity", value)
 
 
+if not MYPY:
+    class OrgObservabilityArgsDict(TypedDict):
+        logs_retention_days: NotRequired[pulumi.Input[int]]
+        """
+        Log retention days. Default: 30
+        """
+        metrics_retention_days: NotRequired[pulumi.Input[int]]
+        """
+        Metrics retention days. Default: 30
+        """
+        traces_retention_days: NotRequired[pulumi.Input[int]]
+        """
+        Traces retention days. Default: 30
+        """
+elif False:
+    OrgObservabilityArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class OrgObservabilityArgs:
     def __init__(__self__, *,
                  logs_retention_days: Optional[pulumi.Input[int]] = None,
                  metrics_retention_days: Optional[pulumi.Input[int]] = None,
                  traces_retention_days: Optional[pulumi.Input[int]] = None):
-        OrgObservabilityArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            logs_retention_days=logs_retention_days,
-            metrics_retention_days=metrics_retention_days,
-            traces_retention_days=traces_retention_days,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             logs_retention_days: Optional[pulumi.Input[int]] = None,
-             metrics_retention_days: Optional[pulumi.Input[int]] = None,
-             traces_retention_days: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'logsRetentionDays' in kwargs:
-            logs_retention_days = kwargs['logsRetentionDays']
-        if 'metricsRetentionDays' in kwargs:
-            metrics_retention_days = kwargs['metricsRetentionDays']
-        if 'tracesRetentionDays' in kwargs:
-            traces_retention_days = kwargs['tracesRetentionDays']
-
+        """
+        :param pulumi.Input[int] logs_retention_days: Log retention days. Default: 30
+        :param pulumi.Input[int] metrics_retention_days: Metrics retention days. Default: 30
+        :param pulumi.Input[int] traces_retention_days: Traces retention days. Default: 30
+        """
         if logs_retention_days is not None:
-            _setter("logs_retention_days", logs_retention_days)
+            pulumi.set(__self__, "logs_retention_days", logs_retention_days)
         if metrics_retention_days is not None:
-            _setter("metrics_retention_days", metrics_retention_days)
+            pulumi.set(__self__, "metrics_retention_days", metrics_retention_days)
         if traces_retention_days is not None:
-            _setter("traces_retention_days", traces_retention_days)
+            pulumi.set(__self__, "traces_retention_days", traces_retention_days)
 
     @property
     @pulumi.getter(name="logsRetentionDays")
     def logs_retention_days(self) -> Optional[pulumi.Input[int]]:
+        """
+        Log retention days. Default: 30
+        """
         return pulumi.get(self, "logs_retention_days")
 
     @logs_retention_days.setter
@@ -9690,6 +10594,9 @@ class OrgObservabilityArgs:
     @property
     @pulumi.getter(name="metricsRetentionDays")
     def metrics_retention_days(self) -> Optional[pulumi.Input[int]]:
+        """
+        Metrics retention days. Default: 30
+        """
         return pulumi.get(self, "metrics_retention_days")
 
     @metrics_retention_days.setter
@@ -9699,6 +10606,9 @@ class OrgObservabilityArgs:
     @property
     @pulumi.getter(name="tracesRetentionDays")
     def traces_retention_days(self) -> Optional[pulumi.Input[int]]:
+        """
+        Traces retention days. Default: 30
+        """
         return pulumi.get(self, "traces_retention_days")
 
     @traces_retention_days.setter
@@ -9706,30 +10616,22 @@ class OrgObservabilityArgs:
         pulumi.set(self, "traces_retention_days", value)
 
 
+if not MYPY:
+    class OrgSecurityArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        threat_detection: NotRequired[pulumi.Input['OrgSecurityThreatDetectionArgsDict']]
+elif False:
+    OrgSecurityArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class OrgSecurityArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  threat_detection: Optional[pulumi.Input['OrgSecurityThreatDetectionArgs']] = None):
-        OrgSecurityArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            threat_detection=threat_detection,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             threat_detection: Optional[pulumi.Input['OrgSecurityThreatDetectionArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'threatDetection' in kwargs:
-            threat_detection = kwargs['threatDetection']
-
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if threat_detection is not None:
-            _setter("threat_detection", threat_detection)
+            pulumi.set(__self__, "threat_detection", threat_detection)
 
     @property
     @pulumi.getter
@@ -9750,38 +10652,46 @@ class OrgSecurityArgs:
         pulumi.set(self, "threat_detection", value)
 
 
+if not MYPY:
+    class OrgSecurityThreatDetectionArgsDict(TypedDict):
+        enabled: pulumi.Input[bool]
+        """
+        Indicates whether threat detection should be forwarded or not.
+        """
+        minimum_severity: NotRequired[pulumi.Input[str]]
+        """
+        Any threats with this severity and more severe will be sent. Others will be ignored. Valid values: `warning`, `error`, or `critical`.
+        """
+        syslog: NotRequired[pulumi.Input['OrgSecurityThreatDetectionSyslogArgsDict']]
+        """
+        Configuration for syslog forwarding.
+        """
+elif False:
+    OrgSecurityThreatDetectionArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class OrgSecurityThreatDetectionArgs:
     def __init__(__self__, *,
                  enabled: pulumi.Input[bool],
                  minimum_severity: Optional[pulumi.Input[str]] = None,
                  syslog: Optional[pulumi.Input['OrgSecurityThreatDetectionSyslogArgs']] = None):
-        OrgSecurityThreatDetectionArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            enabled=enabled,
-            minimum_severity=minimum_severity,
-            syslog=syslog,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             enabled: pulumi.Input[bool],
-             minimum_severity: Optional[pulumi.Input[str]] = None,
-             syslog: Optional[pulumi.Input['OrgSecurityThreatDetectionSyslogArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'minimumSeverity' in kwargs:
-            minimum_severity = kwargs['minimumSeverity']
-
-        _setter("enabled", enabled)
+        """
+        :param pulumi.Input[bool] enabled: Indicates whether threat detection should be forwarded or not.
+        :param pulumi.Input[str] minimum_severity: Any threats with this severity and more severe will be sent. Others will be ignored. Valid values: `warning`, `error`, or `critical`.
+        :param pulumi.Input['OrgSecurityThreatDetectionSyslogArgs'] syslog: Configuration for syslog forwarding.
+        """
+        pulumi.set(__self__, "enabled", enabled)
         if minimum_severity is not None:
-            _setter("minimum_severity", minimum_severity)
+            pulumi.set(__self__, "minimum_severity", minimum_severity)
         if syslog is not None:
-            _setter("syslog", syslog)
+            pulumi.set(__self__, "syslog", syslog)
 
     @property
     @pulumi.getter
     def enabled(self) -> pulumi.Input[bool]:
+        """
+        Indicates whether threat detection should be forwarded or not.
+        """
         return pulumi.get(self, "enabled")
 
     @enabled.setter
@@ -9791,6 +10701,9 @@ class OrgSecurityThreatDetectionArgs:
     @property
     @pulumi.getter(name="minimumSeverity")
     def minimum_severity(self) -> Optional[pulumi.Input[str]]:
+        """
+        Any threats with this severity and more severe will be sent. Others will be ignored. Valid values: `warning`, `error`, or `critical`.
+        """
         return pulumi.get(self, "minimum_severity")
 
     @minimum_severity.setter
@@ -9800,6 +10713,9 @@ class OrgSecurityThreatDetectionArgs:
     @property
     @pulumi.getter
     def syslog(self) -> Optional[pulumi.Input['OrgSecurityThreatDetectionSyslogArgs']]:
+        """
+        Configuration for syslog forwarding.
+        """
         return pulumi.get(self, "syslog")
 
     @syslog.setter
@@ -9807,35 +10723,45 @@ class OrgSecurityThreatDetectionArgs:
         pulumi.set(self, "syslog", value)
 
 
+if not MYPY:
+    class OrgSecurityThreatDetectionSyslogArgsDict(TypedDict):
+        host: pulumi.Input[str]
+        """
+        The hostname to send syslog messages to.
+        """
+        port: pulumi.Input[int]
+        """
+        The port to send syslog messages to.
+        """
+        transport: NotRequired[pulumi.Input[str]]
+        """
+        The transport-layer protocol to send the syslog messages over. If TCP is chosen, messages will be sent with TLS. Default: `tcp`.
+        """
+elif False:
+    OrgSecurityThreatDetectionSyslogArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class OrgSecurityThreatDetectionSyslogArgs:
     def __init__(__self__, *,
                  host: pulumi.Input[str],
                  port: pulumi.Input[int],
                  transport: Optional[pulumi.Input[str]] = None):
-        OrgSecurityThreatDetectionSyslogArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            host=host,
-            port=port,
-            transport=transport,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             host: pulumi.Input[str],
-             port: pulumi.Input[int],
-             transport: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("host", host)
-        _setter("port", port)
+        """
+        :param pulumi.Input[str] host: The hostname to send syslog messages to.
+        :param pulumi.Input[int] port: The port to send syslog messages to.
+        :param pulumi.Input[str] transport: The transport-layer protocol to send the syslog messages over. If TCP is chosen, messages will be sent with TLS. Default: `tcp`.
+        """
+        pulumi.set(__self__, "host", host)
+        pulumi.set(__self__, "port", port)
         if transport is not None:
-            _setter("transport", transport)
+            pulumi.set(__self__, "transport", transport)
 
     @property
     @pulumi.getter
     def host(self) -> pulumi.Input[str]:
+        """
+        The hostname to send syslog messages to.
+        """
         return pulumi.get(self, "host")
 
     @host.setter
@@ -9845,6 +10771,9 @@ class OrgSecurityThreatDetectionSyslogArgs:
     @property
     @pulumi.getter
     def port(self) -> pulumi.Input[int]:
+        """
+        The port to send syslog messages to.
+        """
         return pulumi.get(self, "port")
 
     @port.setter
@@ -9854,6 +10783,9 @@ class OrgSecurityThreatDetectionSyslogArgs:
     @property
     @pulumi.getter
     def transport(self) -> Optional[pulumi.Input[str]]:
+        """
+        The transport-layer protocol to send the syslog messages over. If TCP is chosen, messages will be sent with TLS. Default: `tcp`.
+        """
         return pulumi.get(self, "transport")
 
     @transport.setter
@@ -9861,34 +10793,39 @@ class OrgSecurityThreatDetectionSyslogArgs:
         pulumi.set(self, "transport", value)
 
 
+if not MYPY:
+    class OrgStatusArgsDict(TypedDict):
+        account_link: NotRequired[pulumi.Input[str]]
+        """
+        The link of the account the org belongs to.
+        """
+        active: NotRequired[pulumi.Input[bool]]
+        """
+        Indicates whether the org is active or not.
+        """
+elif False:
+    OrgStatusArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class OrgStatusArgs:
     def __init__(__self__, *,
                  account_link: Optional[pulumi.Input[str]] = None,
                  active: Optional[pulumi.Input[bool]] = None):
-        OrgStatusArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            account_link=account_link,
-            active=active,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             account_link: Optional[pulumi.Input[str]] = None,
-             active: Optional[pulumi.Input[bool]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'accountLink' in kwargs:
-            account_link = kwargs['accountLink']
-
+        """
+        :param pulumi.Input[str] account_link: The link of the account the org belongs to.
+        :param pulumi.Input[bool] active: Indicates whether the org is active or not.
+        """
         if account_link is not None:
-            _setter("account_link", account_link)
+            pulumi.set(__self__, "account_link", account_link)
         if active is not None:
-            _setter("active", active)
+            pulumi.set(__self__, "active", active)
 
     @property
     @pulumi.getter(name="accountLink")
     def account_link(self) -> Optional[pulumi.Input[str]]:
+        """
+        The link of the account the org belongs to.
+        """
         return pulumi.get(self, "account_link")
 
     @account_link.setter
@@ -9898,6 +10835,9 @@ class OrgStatusArgs:
     @property
     @pulumi.getter
     def active(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Indicates whether the org is active or not.
+        """
         return pulumi.get(self, "active")
 
     @active.setter
@@ -9905,33 +10845,38 @@ class OrgStatusArgs:
         pulumi.set(self, "active", value)
 
 
+if not MYPY:
+    class OrgTracingControlplaneTracingArgsDict(TypedDict):
+        sampling: pulumi.Input[float]
+        """
+        Determines what percentage of requests should be traced.
+        """
+        custom_tags: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Key-value map of custom tags.
+        """
+elif False:
+    OrgTracingControlplaneTracingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class OrgTracingControlplaneTracingArgs:
     def __init__(__self__, *,
                  sampling: pulumi.Input[float],
                  custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
-        OrgTracingControlplaneTracingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            sampling=sampling,
-            custom_tags=custom_tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             sampling: pulumi.Input[float],
-             custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'customTags' in kwargs:
-            custom_tags = kwargs['customTags']
-
-        _setter("sampling", sampling)
+        """
+        :param pulumi.Input[float] sampling: Determines what percentage of requests should be traced.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] custom_tags: Key-value map of custom tags.
+        """
+        pulumi.set(__self__, "sampling", sampling)
         if custom_tags is not None:
-            _setter("custom_tags", custom_tags)
+            pulumi.set(__self__, "custom_tags", custom_tags)
 
     @property
     @pulumi.getter
     def sampling(self) -> pulumi.Input[float]:
+        """
+        Determines what percentage of requests should be traced.
+        """
         return pulumi.get(self, "sampling")
 
     @sampling.setter
@@ -9941,12 +10886,36 @@ class OrgTracingControlplaneTracingArgs:
     @property
     @pulumi.getter(name="customTags")
     def custom_tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of custom tags.
+        """
         return pulumi.get(self, "custom_tags")
 
     @custom_tags.setter
     def custom_tags(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "custom_tags", value)
 
+
+if not MYPY:
+    class OrgTracingLightstepTracingArgsDict(TypedDict):
+        endpoint: pulumi.Input[str]
+        """
+        Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        """
+        sampling: pulumi.Input[float]
+        """
+        Determines what percentage of requests should be traced.
+        """
+        credentials: NotRequired[pulumi.Input[str]]
+        """
+        Full link to referenced Opaque Secret.
+        """
+        custom_tags: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Key-value map of custom tags.
+        """
+elif False:
+    OrgTracingLightstepTracingArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class OrgTracingLightstepTracingArgs:
@@ -9955,35 +10924,25 @@ class OrgTracingLightstepTracingArgs:
                  sampling: pulumi.Input[float],
                  credentials: Optional[pulumi.Input[str]] = None,
                  custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
-        OrgTracingLightstepTracingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            endpoint=endpoint,
-            sampling=sampling,
-            credentials=credentials,
-            custom_tags=custom_tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             endpoint: pulumi.Input[str],
-             sampling: pulumi.Input[float],
-             credentials: Optional[pulumi.Input[str]] = None,
-             custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'customTags' in kwargs:
-            custom_tags = kwargs['customTags']
-
-        _setter("endpoint", endpoint)
-        _setter("sampling", sampling)
+        """
+        :param pulumi.Input[str] endpoint: Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        :param pulumi.Input[float] sampling: Determines what percentage of requests should be traced.
+        :param pulumi.Input[str] credentials: Full link to referenced Opaque Secret.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] custom_tags: Key-value map of custom tags.
+        """
+        pulumi.set(__self__, "endpoint", endpoint)
+        pulumi.set(__self__, "sampling", sampling)
         if credentials is not None:
-            _setter("credentials", credentials)
+            pulumi.set(__self__, "credentials", credentials)
         if custom_tags is not None:
-            _setter("custom_tags", custom_tags)
+            pulumi.set(__self__, "custom_tags", custom_tags)
 
     @property
     @pulumi.getter
     def endpoint(self) -> pulumi.Input[str]:
+        """
+        Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        """
         return pulumi.get(self, "endpoint")
 
     @endpoint.setter
@@ -9993,6 +10952,9 @@ class OrgTracingLightstepTracingArgs:
     @property
     @pulumi.getter
     def sampling(self) -> pulumi.Input[float]:
+        """
+        Determines what percentage of requests should be traced.
+        """
         return pulumi.get(self, "sampling")
 
     @sampling.setter
@@ -10002,6 +10964,9 @@ class OrgTracingLightstepTracingArgs:
     @property
     @pulumi.getter
     def credentials(self) -> Optional[pulumi.Input[str]]:
+        """
+        Full link to referenced Opaque Secret.
+        """
         return pulumi.get(self, "credentials")
 
     @credentials.setter
@@ -10011,6 +10976,9 @@ class OrgTracingLightstepTracingArgs:
     @property
     @pulumi.getter(name="customTags")
     def custom_tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of custom tags.
+        """
         return pulumi.get(self, "custom_tags")
 
     @custom_tags.setter
@@ -10018,37 +10986,45 @@ class OrgTracingLightstepTracingArgs:
         pulumi.set(self, "custom_tags", value)
 
 
+if not MYPY:
+    class OrgTracingOtelTracingArgsDict(TypedDict):
+        endpoint: pulumi.Input[str]
+        """
+        Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        """
+        sampling: pulumi.Input[float]
+        """
+        Determines what percentage of requests should be traced.
+        """
+        custom_tags: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Key-value map of custom tags.
+        """
+elif False:
+    OrgTracingOtelTracingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class OrgTracingOtelTracingArgs:
     def __init__(__self__, *,
                  endpoint: pulumi.Input[str],
                  sampling: pulumi.Input[float],
                  custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
-        OrgTracingOtelTracingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            endpoint=endpoint,
-            sampling=sampling,
-            custom_tags=custom_tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             endpoint: pulumi.Input[str],
-             sampling: pulumi.Input[float],
-             custom_tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'customTags' in kwargs:
-            custom_tags = kwargs['customTags']
-
-        _setter("endpoint", endpoint)
-        _setter("sampling", sampling)
+        """
+        :param pulumi.Input[str] endpoint: Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        :param pulumi.Input[float] sampling: Determines what percentage of requests should be traced.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] custom_tags: Key-value map of custom tags.
+        """
+        pulumi.set(__self__, "endpoint", endpoint)
+        pulumi.set(__self__, "sampling", sampling)
         if custom_tags is not None:
-            _setter("custom_tags", custom_tags)
+            pulumi.set(__self__, "custom_tags", custom_tags)
 
     @property
     @pulumi.getter
     def endpoint(self) -> pulumi.Input[str]:
+        """
+        Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        """
         return pulumi.get(self, "endpoint")
 
     @endpoint.setter
@@ -10058,6 +11034,9 @@ class OrgTracingOtelTracingArgs:
     @property
     @pulumi.getter
     def sampling(self) -> pulumi.Input[float]:
+        """
+        Determines what percentage of requests should be traced.
+        """
         return pulumi.get(self, "sampling")
 
     @sampling.setter
@@ -10067,6 +11046,9 @@ class OrgTracingOtelTracingArgs:
     @property
     @pulumi.getter(name="customTags")
     def custom_tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of custom tags.
+        """
         return pulumi.get(self, "custom_tags")
 
     @custom_tags.setter
@@ -10074,32 +11056,37 @@ class OrgTracingOtelTracingArgs:
         pulumi.set(self, "custom_tags", value)
 
 
+if not MYPY:
+    class PolicyBindingArgsDict(TypedDict):
+        permissions: pulumi.Input[Sequence[pulumi.Input[str]]]
+        """
+        List of permissions to allow.
+        """
+        principal_links: pulumi.Input[Sequence[pulumi.Input[str]]]
+        """
+        List of the principals this binding will be applied to. Principal links format: `group/GROUP_NAME`, `user/USER_EMAIL`, `gvc/GVC_NAME/identity/IDENTITY_NAME`, `serviceaccount/SERVICE_ACCOUNT_NAME`.
+        """
+elif False:
+    PolicyBindingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class PolicyBindingArgs:
     def __init__(__self__, *,
                  permissions: pulumi.Input[Sequence[pulumi.Input[str]]],
                  principal_links: pulumi.Input[Sequence[pulumi.Input[str]]]):
-        PolicyBindingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            permissions=permissions,
-            principal_links=principal_links,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             permissions: pulumi.Input[Sequence[pulumi.Input[str]]],
-             principal_links: pulumi.Input[Sequence[pulumi.Input[str]]],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'principalLinks' in kwargs:
-            principal_links = kwargs['principalLinks']
-
-        _setter("permissions", permissions)
-        _setter("principal_links", principal_links)
+        """
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] permissions: List of permissions to allow.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] principal_links: List of the principals this binding will be applied to. Principal links format: `group/GROUP_NAME`, `user/USER_EMAIL`, `gvc/GVC_NAME/identity/IDENTITY_NAME`, `serviceaccount/SERVICE_ACCOUNT_NAME`.
+        """
+        pulumi.set(__self__, "permissions", permissions)
+        pulumi.set(__self__, "principal_links", principal_links)
 
     @property
     @pulumi.getter
     def permissions(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+        """
+        List of permissions to allow.
+        """
         return pulumi.get(self, "permissions")
 
     @permissions.setter
@@ -10109,6 +11096,9 @@ class PolicyBindingArgs:
     @property
     @pulumi.getter(name="principalLinks")
     def principal_links(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+        """
+        List of the principals this binding will be applied to. Principal links format: `group/GROUP_NAME`, `user/USER_EMAIL`, `gvc/GVC_NAME/identity/IDENTITY_NAME`, `serviceaccount/SERVICE_ACCOUNT_NAME`.
+        """
         return pulumi.get(self, "principal_links")
 
     @principal_links.setter
@@ -10116,32 +11106,35 @@ class PolicyBindingArgs:
         pulumi.set(self, "principal_links", value)
 
 
+if not MYPY:
+    class PolicyTargetQueryArgsDict(TypedDict):
+        fetch: NotRequired[pulumi.Input[str]]
+        """
+        Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        """
+        spec: NotRequired[pulumi.Input['PolicyTargetQuerySpecArgsDict']]
+elif False:
+    PolicyTargetQueryArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class PolicyTargetQueryArgs:
     def __init__(__self__, *,
                  fetch: Optional[pulumi.Input[str]] = None,
                  spec: Optional[pulumi.Input['PolicyTargetQuerySpecArgs']] = None):
-        PolicyTargetQueryArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            fetch=fetch,
-            spec=spec,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             fetch: Optional[pulumi.Input[str]] = None,
-             spec: Optional[pulumi.Input['PolicyTargetQuerySpecArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[str] fetch: Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        """
         if fetch is not None:
-            _setter("fetch", fetch)
+            pulumi.set(__self__, "fetch", fetch)
         if spec is not None:
-            _setter("spec", spec)
+            pulumi.set(__self__, "spec", spec)
 
     @property
     @pulumi.getter
     def fetch(self) -> Optional[pulumi.Input[str]]:
+        """
+        Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        """
         return pulumi.get(self, "fetch")
 
     @fetch.setter
@@ -10158,32 +11151,39 @@ class PolicyTargetQueryArgs:
         pulumi.set(self, "spec", value)
 
 
+if not MYPY:
+    class PolicyTargetQuerySpecArgsDict(TypedDict):
+        match: NotRequired[pulumi.Input[str]]
+        """
+        Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        """
+        terms: NotRequired[pulumi.Input[Sequence[pulumi.Input['PolicyTargetQuerySpecTermArgsDict']]]]
+        """
+        Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        """
+elif False:
+    PolicyTargetQuerySpecArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class PolicyTargetQuerySpecArgs:
     def __init__(__self__, *,
                  match: Optional[pulumi.Input[str]] = None,
                  terms: Optional[pulumi.Input[Sequence[pulumi.Input['PolicyTargetQuerySpecTermArgs']]]] = None):
-        PolicyTargetQuerySpecArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            match=match,
-            terms=terms,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             match: Optional[pulumi.Input[str]] = None,
-             terms: Optional[pulumi.Input[Sequence[pulumi.Input['PolicyTargetQuerySpecTermArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[str] match: Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        :param pulumi.Input[Sequence[pulumi.Input['PolicyTargetQuerySpecTermArgs']]] terms: Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        """
         if match is not None:
-            _setter("match", match)
+            pulumi.set(__self__, "match", match)
         if terms is not None:
-            _setter("terms", terms)
+            pulumi.set(__self__, "terms", terms)
 
     @property
     @pulumi.getter
     def match(self) -> Optional[pulumi.Input[str]]:
+        """
+        Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        """
         return pulumi.get(self, "match")
 
     @match.setter
@@ -10193,12 +11193,37 @@ class PolicyTargetQuerySpecArgs:
     @property
     @pulumi.getter
     def terms(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['PolicyTargetQuerySpecTermArgs']]]]:
+        """
+        Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        """
         return pulumi.get(self, "terms")
 
     @terms.setter
     def terms(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['PolicyTargetQuerySpecTermArgs']]]]):
         pulumi.set(self, "terms", value)
 
+
+if not MYPY:
+    class PolicyTargetQuerySpecTermArgsDict(TypedDict):
+        op: NotRequired[pulumi.Input[str]]
+        """
+        Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+        """
+        property: NotRequired[pulumi.Input[str]]
+        """
+        Property to use for query evaluation.
+        """
+        rel: NotRequired[pulumi.Input[str]]
+        tag: NotRequired[pulumi.Input[str]]
+        """
+        Tag key to use for query evaluation.
+        """
+        value: NotRequired[pulumi.Input[str]]
+        """
+        Testing value for query evaluation.
+        """
+elif False:
+    PolicyTargetQuerySpecTermArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class PolicyTargetQuerySpecTermArgs:
@@ -10208,39 +11233,29 @@ class PolicyTargetQuerySpecTermArgs:
                  rel: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
                  value: Optional[pulumi.Input[str]] = None):
-        PolicyTargetQuerySpecTermArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            op=op,
-            property=property,
-            rel=rel,
-            tag=tag,
-            value=value,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             op: Optional[pulumi.Input[str]] = None,
-             property: Optional[pulumi.Input[str]] = None,
-             rel: Optional[pulumi.Input[str]] = None,
-             tag: Optional[pulumi.Input[str]] = None,
-             value: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[str] op: Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+        :param pulumi.Input[str] property: Property to use for query evaluation.
+        :param pulumi.Input[str] tag: Tag key to use for query evaluation.
+        :param pulumi.Input[str] value: Testing value for query evaluation.
+        """
         if op is not None:
-            _setter("op", op)
+            pulumi.set(__self__, "op", op)
         if property is not None:
-            _setter("property", property)
+            pulumi.set(__self__, "property", property)
         if rel is not None:
-            _setter("rel", rel)
+            pulumi.set(__self__, "rel", rel)
         if tag is not None:
-            _setter("tag", tag)
+            pulumi.set(__self__, "tag", tag)
         if value is not None:
-            _setter("value", value)
+            pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
     def op(self) -> Optional[pulumi.Input[str]]:
+        """
+        Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+        """
         return pulumi.get(self, "op")
 
     @op.setter
@@ -10259,6 +11274,9 @@ class PolicyTargetQuerySpecTermArgs:
     @property
     @pulumi.getter
     def tag(self) -> Optional[pulumi.Input[str]]:
+        """
+        Tag key to use for query evaluation.
+        """
         return pulumi.get(self, "tag")
 
     @tag.setter
@@ -10268,6 +11286,9 @@ class PolicyTargetQuerySpecTermArgs:
     @property
     @pulumi.getter
     def value(self) -> Optional[pulumi.Input[str]]:
+        """
+        Testing value for query evaluation.
+        """
         return pulumi.get(self, "value")
 
     @value.setter
@@ -10277,12 +11298,36 @@ class PolicyTargetQuerySpecTermArgs:
     @property
     @pulumi.getter
     def property(self) -> Optional[pulumi.Input[str]]:
+        """
+        Property to use for query evaluation.
+        """
         return pulumi.get(self, "property")
 
     @property.setter
     def property(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "property", value)
 
+
+if not MYPY:
+    class SecretAwsArgsDict(TypedDict):
+        access_key: pulumi.Input[str]
+        """
+        Access Key provided by AWS.
+        """
+        secret_key: pulumi.Input[str]
+        """
+        Secret Key provided by AWS.
+        """
+        external_id: NotRequired[pulumi.Input[str]]
+        """
+        AWS IAM Role External ID.
+        """
+        role_arn: NotRequired[pulumi.Input[str]]
+        """
+        Role ARN provided by AWS.
+        """
+elif False:
+    SecretAwsArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class SecretAwsArgs:
@@ -10291,41 +11336,25 @@ class SecretAwsArgs:
                  secret_key: pulumi.Input[str],
                  external_id: Optional[pulumi.Input[str]] = None,
                  role_arn: Optional[pulumi.Input[str]] = None):
-        SecretAwsArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            access_key=access_key,
-            secret_key=secret_key,
-            external_id=external_id,
-            role_arn=role_arn,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             access_key: pulumi.Input[str],
-             secret_key: pulumi.Input[str],
-             external_id: Optional[pulumi.Input[str]] = None,
-             role_arn: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'accessKey' in kwargs:
-            access_key = kwargs['accessKey']
-        if 'secretKey' in kwargs:
-            secret_key = kwargs['secretKey']
-        if 'externalId' in kwargs:
-            external_id = kwargs['externalId']
-        if 'roleArn' in kwargs:
-            role_arn = kwargs['roleArn']
-
-        _setter("access_key", access_key)
-        _setter("secret_key", secret_key)
+        """
+        :param pulumi.Input[str] access_key: Access Key provided by AWS.
+        :param pulumi.Input[str] secret_key: Secret Key provided by AWS.
+        :param pulumi.Input[str] external_id: AWS IAM Role External ID.
+        :param pulumi.Input[str] role_arn: Role ARN provided by AWS.
+        """
+        pulumi.set(__self__, "access_key", access_key)
+        pulumi.set(__self__, "secret_key", secret_key)
         if external_id is not None:
-            _setter("external_id", external_id)
+            pulumi.set(__self__, "external_id", external_id)
         if role_arn is not None:
-            _setter("role_arn", role_arn)
+            pulumi.set(__self__, "role_arn", role_arn)
 
     @property
     @pulumi.getter(name="accessKey")
     def access_key(self) -> pulumi.Input[str]:
+        """
+        Access Key provided by AWS.
+        """
         return pulumi.get(self, "access_key")
 
     @access_key.setter
@@ -10335,6 +11364,9 @@ class SecretAwsArgs:
     @property
     @pulumi.getter(name="secretKey")
     def secret_key(self) -> pulumi.Input[str]:
+        """
+        Secret Key provided by AWS.
+        """
         return pulumi.get(self, "secret_key")
 
     @secret_key.setter
@@ -10344,6 +11376,9 @@ class SecretAwsArgs:
     @property
     @pulumi.getter(name="externalId")
     def external_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        AWS IAM Role External ID.
+        """
         return pulumi.get(self, "external_id")
 
     @external_id.setter
@@ -10353,6 +11388,9 @@ class SecretAwsArgs:
     @property
     @pulumi.getter(name="roleArn")
     def role_arn(self) -> Optional[pulumi.Input[str]]:
+        """
+        Role ARN provided by AWS.
+        """
         return pulumi.get(self, "role_arn")
 
     @role_arn.setter
@@ -10360,30 +11398,37 @@ class SecretAwsArgs:
         pulumi.set(self, "role_arn", value)
 
 
+if not MYPY:
+    class SecretAzureConnectorArgsDict(TypedDict):
+        code: pulumi.Input[str]
+        """
+        Code/Key to authenticate to deployment URL.
+        """
+        url: pulumi.Input[str]
+        """
+        Deployment URL.
+        """
+elif False:
+    SecretAzureConnectorArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class SecretAzureConnectorArgs:
     def __init__(__self__, *,
                  code: pulumi.Input[str],
                  url: pulumi.Input[str]):
-        SecretAzureConnectorArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            code=code,
-            url=url,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             code: pulumi.Input[str],
-             url: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("code", code)
-        _setter("url", url)
+        """
+        :param pulumi.Input[str] code: Code/Key to authenticate to deployment URL.
+        :param pulumi.Input[str] url: Deployment URL.
+        """
+        pulumi.set(__self__, "code", code)
+        pulumi.set(__self__, "url", url)
 
     @property
     @pulumi.getter
     def code(self) -> pulumi.Input[str]:
+        """
+        Code/Key to authenticate to deployment URL.
+        """
         return pulumi.get(self, "code")
 
     @code.setter
@@ -10393,12 +11438,40 @@ class SecretAzureConnectorArgs:
     @property
     @pulumi.getter
     def url(self) -> pulumi.Input[str]:
+        """
+        Deployment URL.
+        """
         return pulumi.get(self, "url")
 
     @url.setter
     def url(self, value: pulumi.Input[str]):
         pulumi.set(self, "url", value)
 
+
+if not MYPY:
+    class SecretEcrArgsDict(TypedDict):
+        access_key: pulumi.Input[str]
+        """
+        Access Key provided by AWS.
+        """
+        repos: pulumi.Input[Sequence[pulumi.Input[str]]]
+        """
+        List of ECR repositories.
+        """
+        secret_key: pulumi.Input[str]
+        """
+        Secret Key provided by AWS.
+        """
+        external_id: NotRequired[pulumi.Input[str]]
+        """
+        AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
+        """
+        role_arn: NotRequired[pulumi.Input[str]]
+        """
+        Role ARN provided by AWS.
+        """
+elif False:
+    SecretEcrArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class SecretEcrArgs:
@@ -10408,44 +11481,27 @@ class SecretEcrArgs:
                  secret_key: pulumi.Input[str],
                  external_id: Optional[pulumi.Input[str]] = None,
                  role_arn: Optional[pulumi.Input[str]] = None):
-        SecretEcrArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            access_key=access_key,
-            repos=repos,
-            secret_key=secret_key,
-            external_id=external_id,
-            role_arn=role_arn,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             access_key: pulumi.Input[str],
-             repos: pulumi.Input[Sequence[pulumi.Input[str]]],
-             secret_key: pulumi.Input[str],
-             external_id: Optional[pulumi.Input[str]] = None,
-             role_arn: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'accessKey' in kwargs:
-            access_key = kwargs['accessKey']
-        if 'secretKey' in kwargs:
-            secret_key = kwargs['secretKey']
-        if 'externalId' in kwargs:
-            external_id = kwargs['externalId']
-        if 'roleArn' in kwargs:
-            role_arn = kwargs['roleArn']
-
-        _setter("access_key", access_key)
-        _setter("repos", repos)
-        _setter("secret_key", secret_key)
+        """
+        :param pulumi.Input[str] access_key: Access Key provided by AWS.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] repos: List of ECR repositories.
+        :param pulumi.Input[str] secret_key: Secret Key provided by AWS.
+        :param pulumi.Input[str] external_id: AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
+        :param pulumi.Input[str] role_arn: Role ARN provided by AWS.
+        """
+        pulumi.set(__self__, "access_key", access_key)
+        pulumi.set(__self__, "repos", repos)
+        pulumi.set(__self__, "secret_key", secret_key)
         if external_id is not None:
-            _setter("external_id", external_id)
+            pulumi.set(__self__, "external_id", external_id)
         if role_arn is not None:
-            _setter("role_arn", role_arn)
+            pulumi.set(__self__, "role_arn", role_arn)
 
     @property
     @pulumi.getter(name="accessKey")
     def access_key(self) -> pulumi.Input[str]:
+        """
+        Access Key provided by AWS.
+        """
         return pulumi.get(self, "access_key")
 
     @access_key.setter
@@ -10455,6 +11511,9 @@ class SecretEcrArgs:
     @property
     @pulumi.getter
     def repos(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+        """
+        List of ECR repositories.
+        """
         return pulumi.get(self, "repos")
 
     @repos.setter
@@ -10464,6 +11523,9 @@ class SecretEcrArgs:
     @property
     @pulumi.getter(name="secretKey")
     def secret_key(self) -> pulumi.Input[str]:
+        """
+        Secret Key provided by AWS.
+        """
         return pulumi.get(self, "secret_key")
 
     @secret_key.setter
@@ -10473,6 +11535,9 @@ class SecretEcrArgs:
     @property
     @pulumi.getter(name="externalId")
     def external_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
+        """
         return pulumi.get(self, "external_id")
 
     @external_id.setter
@@ -10482,6 +11547,9 @@ class SecretEcrArgs:
     @property
     @pulumi.getter(name="roleArn")
     def role_arn(self) -> Optional[pulumi.Input[str]]:
+        """
+        Role ARN provided by AWS.
+        """
         return pulumi.get(self, "role_arn")
 
     @role_arn.setter
@@ -10489,40 +11557,46 @@ class SecretEcrArgs:
         pulumi.set(self, "role_arn", value)
 
 
+if not MYPY:
+    class SecretKeypairArgsDict(TypedDict):
+        secret_key: pulumi.Input[str]
+        """
+        Secret/Private Key.
+        """
+        passphrase: NotRequired[pulumi.Input[str]]
+        """
+        Passphrase for private key.
+        """
+        public_key: NotRequired[pulumi.Input[str]]
+        """
+        Public Key.
+        """
+elif False:
+    SecretKeypairArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class SecretKeypairArgs:
     def __init__(__self__, *,
                  secret_key: pulumi.Input[str],
                  passphrase: Optional[pulumi.Input[str]] = None,
                  public_key: Optional[pulumi.Input[str]] = None):
-        SecretKeypairArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            secret_key=secret_key,
-            passphrase=passphrase,
-            public_key=public_key,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             secret_key: pulumi.Input[str],
-             passphrase: Optional[pulumi.Input[str]] = None,
-             public_key: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'secretKey' in kwargs:
-            secret_key = kwargs['secretKey']
-        if 'publicKey' in kwargs:
-            public_key = kwargs['publicKey']
-
-        _setter("secret_key", secret_key)
+        """
+        :param pulumi.Input[str] secret_key: Secret/Private Key.
+        :param pulumi.Input[str] passphrase: Passphrase for private key.
+        :param pulumi.Input[str] public_key: Public Key.
+        """
+        pulumi.set(__self__, "secret_key", secret_key)
         if passphrase is not None:
-            _setter("passphrase", passphrase)
+            pulumi.set(__self__, "passphrase", passphrase)
         if public_key is not None:
-            _setter("public_key", public_key)
+            pulumi.set(__self__, "public_key", public_key)
 
     @property
     @pulumi.getter(name="secretKey")
     def secret_key(self) -> pulumi.Input[str]:
+        """
+        Secret/Private Key.
+        """
         return pulumi.get(self, "secret_key")
 
     @secret_key.setter
@@ -10532,6 +11606,9 @@ class SecretKeypairArgs:
     @property
     @pulumi.getter
     def passphrase(self) -> Optional[pulumi.Input[str]]:
+        """
+        Passphrase for private key.
+        """
         return pulumi.get(self, "passphrase")
 
     @passphrase.setter
@@ -10541,6 +11618,9 @@ class SecretKeypairArgs:
     @property
     @pulumi.getter(name="publicKey")
     def public_key(self) -> Optional[pulumi.Input[str]]:
+        """
+        Public Key.
+        """
         return pulumi.get(self, "public_key")
 
     @public_key.setter
@@ -10548,34 +11628,37 @@ class SecretKeypairArgs:
         pulumi.set(self, "public_key", value)
 
 
+if not MYPY:
+    class SecretNatsAccountArgsDict(TypedDict):
+        account_id: pulumi.Input[str]
+        """
+        Account ID.
+        """
+        private_key: pulumi.Input[str]
+        """
+        Private Key.
+        """
+elif False:
+    SecretNatsAccountArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class SecretNatsAccountArgs:
     def __init__(__self__, *,
                  account_id: pulumi.Input[str],
                  private_key: pulumi.Input[str]):
-        SecretNatsAccountArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            account_id=account_id,
-            private_key=private_key,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             account_id: pulumi.Input[str],
-             private_key: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'accountId' in kwargs:
-            account_id = kwargs['accountId']
-        if 'privateKey' in kwargs:
-            private_key = kwargs['privateKey']
-
-        _setter("account_id", account_id)
-        _setter("private_key", private_key)
+        """
+        :param pulumi.Input[str] account_id: Account ID.
+        :param pulumi.Input[str] private_key: Private Key.
+        """
+        pulumi.set(__self__, "account_id", account_id)
+        pulumi.set(__self__, "private_key", private_key)
 
     @property
     @pulumi.getter(name="accountId")
     def account_id(self) -> pulumi.Input[str]:
+        """
+        Account ID.
+        """
         return pulumi.get(self, "account_id")
 
     @account_id.setter
@@ -10585,6 +11668,9 @@ class SecretNatsAccountArgs:
     @property
     @pulumi.getter(name="privateKey")
     def private_key(self) -> pulumi.Input[str]:
+        """
+        Private Key.
+        """
         return pulumi.get(self, "private_key")
 
     @private_key.setter
@@ -10592,31 +11678,38 @@ class SecretNatsAccountArgs:
         pulumi.set(self, "private_key", value)
 
 
+if not MYPY:
+    class SecretOpaqueArgsDict(TypedDict):
+        payload: pulumi.Input[str]
+        """
+        Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.
+        """
+        encoding: NotRequired[pulumi.Input[str]]
+        """
+        Available encodings: `plain`, `base64`. Default: `plain`.
+        """
+elif False:
+    SecretOpaqueArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class SecretOpaqueArgs:
     def __init__(__self__, *,
                  payload: pulumi.Input[str],
                  encoding: Optional[pulumi.Input[str]] = None):
-        SecretOpaqueArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            payload=payload,
-            encoding=encoding,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             payload: pulumi.Input[str],
-             encoding: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("payload", payload)
+        """
+        :param pulumi.Input[str] payload: Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.
+        :param pulumi.Input[str] encoding: Available encodings: `plain`, `base64`. Default: `plain`.
+        """
+        pulumi.set(__self__, "payload", payload)
         if encoding is not None:
-            _setter("encoding", encoding)
+            pulumi.set(__self__, "encoding", encoding)
 
     @property
     @pulumi.getter
     def payload(self) -> pulumi.Input[str]:
+        """
+        Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.
+        """
         return pulumi.get(self, "payload")
 
     @payload.setter
@@ -10626,6 +11719,9 @@ class SecretOpaqueArgs:
     @property
     @pulumi.getter
     def encoding(self) -> Optional[pulumi.Input[str]]:
+        """
+        Available encodings: `plain`, `base64`. Default: `plain`.
+        """
         return pulumi.get(self, "encoding")
 
     @encoding.setter
@@ -10633,35 +11729,45 @@ class SecretOpaqueArgs:
         pulumi.set(self, "encoding", value)
 
 
+if not MYPY:
+    class SecretTlsArgsDict(TypedDict):
+        cert: pulumi.Input[str]
+        """
+        Public Certificate.
+        """
+        key: pulumi.Input[str]
+        """
+        Private Certificate.
+        """
+        chain: NotRequired[pulumi.Input[str]]
+        """
+        Chain Certificate.
+        """
+elif False:
+    SecretTlsArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class SecretTlsArgs:
     def __init__(__self__, *,
                  cert: pulumi.Input[str],
                  key: pulumi.Input[str],
                  chain: Optional[pulumi.Input[str]] = None):
-        SecretTlsArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            cert=cert,
-            key=key,
-            chain=chain,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             cert: pulumi.Input[str],
-             key: pulumi.Input[str],
-             chain: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("cert", cert)
-        _setter("key", key)
+        """
+        :param pulumi.Input[str] cert: Public Certificate.
+        :param pulumi.Input[str] key: Private Certificate.
+        :param pulumi.Input[str] chain: Chain Certificate.
+        """
+        pulumi.set(__self__, "cert", cert)
+        pulumi.set(__self__, "key", key)
         if chain is not None:
-            _setter("chain", chain)
+            pulumi.set(__self__, "chain", chain)
 
     @property
     @pulumi.getter
     def cert(self) -> pulumi.Input[str]:
+        """
+        Public Certificate.
+        """
         return pulumi.get(self, "cert")
 
     @cert.setter
@@ -10671,6 +11777,9 @@ class SecretTlsArgs:
     @property
     @pulumi.getter
     def key(self) -> pulumi.Input[str]:
+        """
+        Private Certificate.
+        """
         return pulumi.get(self, "key")
 
     @key.setter
@@ -10680,6 +11789,9 @@ class SecretTlsArgs:
     @property
     @pulumi.getter
     def chain(self) -> Optional[pulumi.Input[str]]:
+        """
+        Chain Certificate.
+        """
         return pulumi.get(self, "chain")
 
     @chain.setter
@@ -10687,35 +11799,45 @@ class SecretTlsArgs:
         pulumi.set(self, "chain", value)
 
 
+if not MYPY:
+    class SecretUserpassArgsDict(TypedDict):
+        password: pulumi.Input[str]
+        """
+        Password.
+        """
+        username: pulumi.Input[str]
+        """
+        Username.
+        """
+        encoding: NotRequired[pulumi.Input[str]]
+        """
+        Available encodings: `plain`, `base64`. Default: `plain`.
+        """
+elif False:
+    SecretUserpassArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class SecretUserpassArgs:
     def __init__(__self__, *,
                  password: pulumi.Input[str],
                  username: pulumi.Input[str],
                  encoding: Optional[pulumi.Input[str]] = None):
-        SecretUserpassArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            password=password,
-            username=username,
-            encoding=encoding,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             password: pulumi.Input[str],
-             username: pulumi.Input[str],
-             encoding: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("password", password)
-        _setter("username", username)
+        """
+        :param pulumi.Input[str] password: Password.
+        :param pulumi.Input[str] username: Username.
+        :param pulumi.Input[str] encoding: Available encodings: `plain`, `base64`. Default: `plain`.
+        """
+        pulumi.set(__self__, "password", password)
+        pulumi.set(__self__, "username", username)
         if encoding is not None:
-            _setter("encoding", encoding)
+            pulumi.set(__self__, "encoding", encoding)
 
     @property
     @pulumi.getter
     def password(self) -> pulumi.Input[str]:
+        """
+        Password.
+        """
         return pulumi.get(self, "password")
 
     @password.setter
@@ -10725,6 +11847,9 @@ class SecretUserpassArgs:
     @property
     @pulumi.getter
     def username(self) -> pulumi.Input[str]:
+        """
+        Username.
+        """
         return pulumi.get(self, "username")
 
     @username.setter
@@ -10734,6 +11859,9 @@ class SecretUserpassArgs:
     @property
     @pulumi.getter
     def encoding(self) -> Optional[pulumi.Input[str]]:
+        """
+        Available encodings: `plain`, `base64`. Default: `plain`.
+        """
         return pulumi.get(self, "encoding")
 
     @encoding.setter
@@ -10741,43 +11869,47 @@ class SecretUserpassArgs:
         pulumi.set(self, "encoding", value)
 
 
+if not MYPY:
+    class VolumeSetAutoscalingArgsDict(TypedDict):
+        max_capacity: NotRequired[pulumi.Input[int]]
+        """
+        The maximum size in GB for a volume in this set. A volume cannot grow to be bigger than this value. Minimum value: `10`.
+        """
+        min_free_percentage: NotRequired[pulumi.Input[int]]
+        """
+        The guaranteed free space on the volume as a percentage of the volume's total size. Control Plane will try to maintain at least that many percent free by scaling up the total size. Minimum percentage: `1`. Maximum Percentage: `100`.
+        """
+        scaling_factor: NotRequired[pulumi.Input[float]]
+        """
+        When scaling is necessary, then `new_capacity = current_capacity * storageScalingFactor`. Minimum value: `1.1`.
+        """
+elif False:
+    VolumeSetAutoscalingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class VolumeSetAutoscalingArgs:
     def __init__(__self__, *,
                  max_capacity: Optional[pulumi.Input[int]] = None,
                  min_free_percentage: Optional[pulumi.Input[int]] = None,
                  scaling_factor: Optional[pulumi.Input[float]] = None):
-        VolumeSetAutoscalingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            max_capacity=max_capacity,
-            min_free_percentage=min_free_percentage,
-            scaling_factor=scaling_factor,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             max_capacity: Optional[pulumi.Input[int]] = None,
-             min_free_percentage: Optional[pulumi.Input[int]] = None,
-             scaling_factor: Optional[pulumi.Input[float]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'maxCapacity' in kwargs:
-            max_capacity = kwargs['maxCapacity']
-        if 'minFreePercentage' in kwargs:
-            min_free_percentage = kwargs['minFreePercentage']
-        if 'scalingFactor' in kwargs:
-            scaling_factor = kwargs['scalingFactor']
-
+        """
+        :param pulumi.Input[int] max_capacity: The maximum size in GB for a volume in this set. A volume cannot grow to be bigger than this value. Minimum value: `10`.
+        :param pulumi.Input[int] min_free_percentage: The guaranteed free space on the volume as a percentage of the volume's total size. Control Plane will try to maintain at least that many percent free by scaling up the total size. Minimum percentage: `1`. Maximum Percentage: `100`.
+        :param pulumi.Input[float] scaling_factor: When scaling is necessary, then `new_capacity = current_capacity * storageScalingFactor`. Minimum value: `1.1`.
+        """
         if max_capacity is not None:
-            _setter("max_capacity", max_capacity)
+            pulumi.set(__self__, "max_capacity", max_capacity)
         if min_free_percentage is not None:
-            _setter("min_free_percentage", min_free_percentage)
+            pulumi.set(__self__, "min_free_percentage", min_free_percentage)
         if scaling_factor is not None:
-            _setter("scaling_factor", scaling_factor)
+            pulumi.set(__self__, "scaling_factor", scaling_factor)
 
     @property
     @pulumi.getter(name="maxCapacity")
     def max_capacity(self) -> Optional[pulumi.Input[int]]:
+        """
+        The maximum size in GB for a volume in this set. A volume cannot grow to be bigger than this value. Minimum value: `10`.
+        """
         return pulumi.get(self, "max_capacity")
 
     @max_capacity.setter
@@ -10787,6 +11919,9 @@ class VolumeSetAutoscalingArgs:
     @property
     @pulumi.getter(name="minFreePercentage")
     def min_free_percentage(self) -> Optional[pulumi.Input[int]]:
+        """
+        The guaranteed free space on the volume as a percentage of the volume's total size. Control Plane will try to maintain at least that many percent free by scaling up the total size. Minimum percentage: `1`. Maximum Percentage: `100`.
+        """
         return pulumi.get(self, "min_free_percentage")
 
     @min_free_percentage.setter
@@ -10796,6 +11931,9 @@ class VolumeSetAutoscalingArgs:
     @property
     @pulumi.getter(name="scalingFactor")
     def scaling_factor(self) -> Optional[pulumi.Input[float]]:
+        """
+        When scaling is necessary, then `new_capacity = current_capacity * storageScalingFactor`. Minimum value: `1.1`.
+        """
         return pulumi.get(self, "scaling_factor")
 
     @scaling_factor.setter
@@ -10803,41 +11941,47 @@ class VolumeSetAutoscalingArgs:
         pulumi.set(self, "scaling_factor", value)
 
 
+if not MYPY:
+    class VolumeSetSnapshotsArgsDict(TypedDict):
+        create_final_snapshot: NotRequired[pulumi.Input[bool]]
+        """
+        If true, a volume snapshot will be created immediately before deletion of any volume in this set. Default: `true`
+        """
+        retention_duration: NotRequired[pulumi.Input[str]]
+        """
+        The default retention period for volume snapshots. This string should contain a floating point number followed by either d, h, or m. For example, "10d" would retain snapshots for 10 days.
+        """
+        schedule: NotRequired[pulumi.Input[str]]
+        """
+        A standard cron schedule expression used to determine when a snapshot will be taken. (i.e., `0 * * * *` Every hour). Note: snapshots cannot be scheduled more often than once per hour.
+        """
+elif False:
+    VolumeSetSnapshotsArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class VolumeSetSnapshotsArgs:
     def __init__(__self__, *,
                  create_final_snapshot: Optional[pulumi.Input[bool]] = None,
                  retention_duration: Optional[pulumi.Input[str]] = None,
                  schedule: Optional[pulumi.Input[str]] = None):
-        VolumeSetSnapshotsArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            create_final_snapshot=create_final_snapshot,
-            retention_duration=retention_duration,
-            schedule=schedule,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             create_final_snapshot: Optional[pulumi.Input[bool]] = None,
-             retention_duration: Optional[pulumi.Input[str]] = None,
-             schedule: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'createFinalSnapshot' in kwargs:
-            create_final_snapshot = kwargs['createFinalSnapshot']
-        if 'retentionDuration' in kwargs:
-            retention_duration = kwargs['retentionDuration']
-
+        """
+        :param pulumi.Input[bool] create_final_snapshot: If true, a volume snapshot will be created immediately before deletion of any volume in this set. Default: `true`
+        :param pulumi.Input[str] retention_duration: The default retention period for volume snapshots. This string should contain a floating point number followed by either d, h, or m. For example, "10d" would retain snapshots for 10 days.
+        :param pulumi.Input[str] schedule: A standard cron schedule expression used to determine when a snapshot will be taken. (i.e., `0 * * * *` Every hour). Note: snapshots cannot be scheduled more often than once per hour.
+        """
         if create_final_snapshot is not None:
-            _setter("create_final_snapshot", create_final_snapshot)
+            pulumi.set(__self__, "create_final_snapshot", create_final_snapshot)
         if retention_duration is not None:
-            _setter("retention_duration", retention_duration)
+            pulumi.set(__self__, "retention_duration", retention_duration)
         if schedule is not None:
-            _setter("schedule", schedule)
+            pulumi.set(__self__, "schedule", schedule)
 
     @property
     @pulumi.getter(name="createFinalSnapshot")
     def create_final_snapshot(self) -> Optional[pulumi.Input[bool]]:
+        """
+        If true, a volume snapshot will be created immediately before deletion of any volume in this set. Default: `true`
+        """
         return pulumi.get(self, "create_final_snapshot")
 
     @create_final_snapshot.setter
@@ -10847,6 +11991,9 @@ class VolumeSetSnapshotsArgs:
     @property
     @pulumi.getter(name="retentionDuration")
     def retention_duration(self) -> Optional[pulumi.Input[str]]:
+        """
+        The default retention period for volume snapshots. This string should contain a floating point number followed by either d, h, or m. For example, "10d" would retain snapshots for 10 days.
+        """
         return pulumi.get(self, "retention_duration")
 
     @retention_duration.setter
@@ -10856,12 +12003,36 @@ class VolumeSetSnapshotsArgs:
     @property
     @pulumi.getter
     def schedule(self) -> Optional[pulumi.Input[str]]:
+        """
+        A standard cron schedule expression used to determine when a snapshot will be taken. (i.e., `0 * * * *` Every hour). Note: snapshots cannot be scheduled more often than once per hour.
+        """
         return pulumi.get(self, "schedule")
 
     @schedule.setter
     def schedule(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "schedule", value)
 
+
+if not MYPY:
+    class VolumeSetStatusArgsDict(TypedDict):
+        binding_id: NotRequired[pulumi.Input[str]]
+        """
+        Uniquely identifies the connection between the volume set and its workload. Every time a new connection is made, a new id is generated (e.g., If a workload is updated to remove the volume set, then updated again to reattach it, the volume set will have a new binding id).
+        """
+        locations: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        Contains a list of actual volumes grouped by location.
+        """
+        parent_id: NotRequired[pulumi.Input[str]]
+        """
+        The GVC ID.
+        """
+        used_by_workload: NotRequired[pulumi.Input[str]]
+        """
+        The url of the workload currently using this volume set (if any).
+        """
+elif False:
+    VolumeSetStatusArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class VolumeSetStatusArgs:
@@ -10870,41 +12041,27 @@ class VolumeSetStatusArgs:
                  locations: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  parent_id: Optional[pulumi.Input[str]] = None,
                  used_by_workload: Optional[pulumi.Input[str]] = None):
-        VolumeSetStatusArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            binding_id=binding_id,
-            locations=locations,
-            parent_id=parent_id,
-            used_by_workload=used_by_workload,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             binding_id: Optional[pulumi.Input[str]] = None,
-             locations: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             parent_id: Optional[pulumi.Input[str]] = None,
-             used_by_workload: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'bindingId' in kwargs:
-            binding_id = kwargs['bindingId']
-        if 'parentId' in kwargs:
-            parent_id = kwargs['parentId']
-        if 'usedByWorkload' in kwargs:
-            used_by_workload = kwargs['usedByWorkload']
-
+        """
+        :param pulumi.Input[str] binding_id: Uniquely identifies the connection between the volume set and its workload. Every time a new connection is made, a new id is generated (e.g., If a workload is updated to remove the volume set, then updated again to reattach it, the volume set will have a new binding id).
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] locations: Contains a list of actual volumes grouped by location.
+        :param pulumi.Input[str] parent_id: The GVC ID.
+        :param pulumi.Input[str] used_by_workload: The url of the workload currently using this volume set (if any).
+        """
         if binding_id is not None:
-            _setter("binding_id", binding_id)
+            pulumi.set(__self__, "binding_id", binding_id)
         if locations is not None:
-            _setter("locations", locations)
+            pulumi.set(__self__, "locations", locations)
         if parent_id is not None:
-            _setter("parent_id", parent_id)
+            pulumi.set(__self__, "parent_id", parent_id)
         if used_by_workload is not None:
-            _setter("used_by_workload", used_by_workload)
+            pulumi.set(__self__, "used_by_workload", used_by_workload)
 
     @property
     @pulumi.getter(name="bindingId")
     def binding_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        Uniquely identifies the connection between the volume set and its workload. Every time a new connection is made, a new id is generated (e.g., If a workload is updated to remove the volume set, then updated again to reattach it, the volume set will have a new binding id).
+        """
         return pulumi.get(self, "binding_id")
 
     @binding_id.setter
@@ -10914,6 +12071,9 @@ class VolumeSetStatusArgs:
     @property
     @pulumi.getter
     def locations(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Contains a list of actual volumes grouped by location.
+        """
         return pulumi.get(self, "locations")
 
     @locations.setter
@@ -10923,6 +12083,9 @@ class VolumeSetStatusArgs:
     @property
     @pulumi.getter(name="parentId")
     def parent_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The GVC ID.
+        """
         return pulumi.get(self, "parent_id")
 
     @parent_id.setter
@@ -10932,12 +12095,96 @@ class VolumeSetStatusArgs:
     @property
     @pulumi.getter(name="usedByWorkload")
     def used_by_workload(self) -> Optional[pulumi.Input[str]]:
+        """
+        The url of the workload currently using this volume set (if any).
+        """
         return pulumi.get(self, "used_by_workload")
 
     @used_by_workload.setter
     def used_by_workload(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "used_by_workload", value)
 
+
+if not MYPY:
+    class WorkloadContainerArgsDict(TypedDict):
+        image: pulumi.Input[str]
+        """
+        The full image and tag path.
+        """
+        name: pulumi.Input[str]
+        """
+        Name of the container.
+        """
+        args: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        Command line arguments passed to the container at runtime.
+        """
+        command: NotRequired[pulumi.Input[str]]
+        """
+        Override the entry point.
+        """
+        cpu: NotRequired[pulumi.Input[str]]
+        """
+        Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
+        """
+        env: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Name-Value list of environment variables.
+        """
+        gpu_nvidia: NotRequired[pulumi.Input['WorkloadContainerGpuNvidiaArgsDict']]
+        """
+        GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
+        """
+        inherit_env: NotRequired[pulumi.Input[bool]]
+        """
+        Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
+        """
+        lifecycle: NotRequired[pulumi.Input['WorkloadContainerLifecycleArgsDict']]
+        """
+        Lifecycle [Reference Page](https://docs.controlplane.com/reference/workload#lifecycle).
+        """
+        liveness_probe: NotRequired[pulumi.Input['WorkloadContainerLivenessProbeArgsDict']]
+        """
+        Liveness Probe
+        """
+        memory: NotRequired[pulumi.Input[str]]
+        """
+        Reserved memory of the workload when capacityAI is disabled. Maximum memory when CapacityAI is enabled. Default: "128Mi".
+        """
+        metrics: NotRequired[pulumi.Input['WorkloadContainerMetricsArgsDict']]
+        """
+        [Reference Page](https://docs.controlplane.com/reference/workload#metrics).
+        """
+        min_cpu: NotRequired[pulumi.Input[str]]
+        """
+        Minimum CPU when capacity AI is enabled.
+        """
+        min_memory: NotRequired[pulumi.Input[str]]
+        """
+        Minimum memory when capacity AI is enabled.
+        """
+        port: NotRequired[pulumi.Input[int]]
+        """
+        The port the container exposes. Only one container is allowed to specify a port. Min: `80`. Max: `65535`. Used by `serverless` Workload type. **DEPRECATED - Use `ports`.**
+        """
+        ports: NotRequired[pulumi.Input[Sequence[pulumi.Input['WorkloadContainerPortArgsDict']]]]
+        """
+        Communication endpoints used by the workload to send and receive network traffic.
+        """
+        readiness_probe: NotRequired[pulumi.Input['WorkloadContainerReadinessProbeArgsDict']]
+        """
+        Readiness Probe
+        """
+        volumes: NotRequired[pulumi.Input[Sequence[pulumi.Input['WorkloadContainerVolumeArgsDict']]]]
+        """
+        [Reference Page](https://docs.controlplane.com/reference/workload#volumes).
+        """
+        working_directory: NotRequired[pulumi.Input[str]]
+        """
+        Override the working directory. Must be an absolute path.
+        """
+elif False:
+    WorkloadContainerArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class WorkloadContainerArgs:
@@ -10961,110 +12208,73 @@ class WorkloadContainerArgs:
                  readiness_probe: Optional[pulumi.Input['WorkloadContainerReadinessProbeArgs']] = None,
                  volumes: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadContainerVolumeArgs']]]] = None,
                  working_directory: Optional[pulumi.Input[str]] = None):
-        WorkloadContainerArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            image=image,
-            name=name,
-            args=args,
-            command=command,
-            cpu=cpu,
-            env=env,
-            gpu_nvidia=gpu_nvidia,
-            inherit_env=inherit_env,
-            lifecycle=lifecycle,
-            liveness_probe=liveness_probe,
-            memory=memory,
-            metrics=metrics,
-            min_cpu=min_cpu,
-            min_memory=min_memory,
-            port=port,
-            ports=ports,
-            readiness_probe=readiness_probe,
-            volumes=volumes,
-            working_directory=working_directory,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             image: pulumi.Input[str],
-             name: pulumi.Input[str],
-             args: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             command: Optional[pulumi.Input[str]] = None,
-             cpu: Optional[pulumi.Input[str]] = None,
-             env: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             gpu_nvidia: Optional[pulumi.Input['WorkloadContainerGpuNvidiaArgs']] = None,
-             inherit_env: Optional[pulumi.Input[bool]] = None,
-             lifecycle: Optional[pulumi.Input['WorkloadContainerLifecycleArgs']] = None,
-             liveness_probe: Optional[pulumi.Input['WorkloadContainerLivenessProbeArgs']] = None,
-             memory: Optional[pulumi.Input[str]] = None,
-             metrics: Optional[pulumi.Input['WorkloadContainerMetricsArgs']] = None,
-             min_cpu: Optional[pulumi.Input[str]] = None,
-             min_memory: Optional[pulumi.Input[str]] = None,
-             port: Optional[pulumi.Input[int]] = None,
-             ports: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadContainerPortArgs']]]] = None,
-             readiness_probe: Optional[pulumi.Input['WorkloadContainerReadinessProbeArgs']] = None,
-             volumes: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadContainerVolumeArgs']]]] = None,
-             working_directory: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'gpuNvidia' in kwargs:
-            gpu_nvidia = kwargs['gpuNvidia']
-        if 'inheritEnv' in kwargs:
-            inherit_env = kwargs['inheritEnv']
-        if 'livenessProbe' in kwargs:
-            liveness_probe = kwargs['livenessProbe']
-        if 'minCpu' in kwargs:
-            min_cpu = kwargs['minCpu']
-        if 'minMemory' in kwargs:
-            min_memory = kwargs['minMemory']
-        if 'readinessProbe' in kwargs:
-            readiness_probe = kwargs['readinessProbe']
-        if 'workingDirectory' in kwargs:
-            working_directory = kwargs['workingDirectory']
-
-        _setter("image", image)
-        _setter("name", name)
+        """
+        :param pulumi.Input[str] image: The full image and tag path.
+        :param pulumi.Input[str] name: Name of the container.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] args: Command line arguments passed to the container at runtime.
+        :param pulumi.Input[str] command: Override the entry point.
+        :param pulumi.Input[str] cpu: Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] env: Name-Value list of environment variables.
+        :param pulumi.Input['WorkloadContainerGpuNvidiaArgs'] gpu_nvidia: GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
+        :param pulumi.Input[bool] inherit_env: Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
+        :param pulumi.Input['WorkloadContainerLifecycleArgs'] lifecycle: Lifecycle [Reference Page](https://docs.controlplane.com/reference/workload#lifecycle).
+        :param pulumi.Input['WorkloadContainerLivenessProbeArgs'] liveness_probe: Liveness Probe
+        :param pulumi.Input[str] memory: Reserved memory of the workload when capacityAI is disabled. Maximum memory when CapacityAI is enabled. Default: "128Mi".
+        :param pulumi.Input['WorkloadContainerMetricsArgs'] metrics: [Reference Page](https://docs.controlplane.com/reference/workload#metrics).
+        :param pulumi.Input[str] min_cpu: Minimum CPU when capacity AI is enabled.
+        :param pulumi.Input[str] min_memory: Minimum memory when capacity AI is enabled.
+        :param pulumi.Input[int] port: The port the container exposes. Only one container is allowed to specify a port. Min: `80`. Max: `65535`. Used by `serverless` Workload type. **DEPRECATED - Use `ports`.**
+        :param pulumi.Input[Sequence[pulumi.Input['WorkloadContainerPortArgs']]] ports: Communication endpoints used by the workload to send and receive network traffic.
+        :param pulumi.Input['WorkloadContainerReadinessProbeArgs'] readiness_probe: Readiness Probe
+        :param pulumi.Input[Sequence[pulumi.Input['WorkloadContainerVolumeArgs']]] volumes: [Reference Page](https://docs.controlplane.com/reference/workload#volumes).
+        :param pulumi.Input[str] working_directory: Override the working directory. Must be an absolute path.
+        """
+        pulumi.set(__self__, "image", image)
+        pulumi.set(__self__, "name", name)
         if args is not None:
-            _setter("args", args)
+            pulumi.set(__self__, "args", args)
         if command is not None:
-            _setter("command", command)
+            pulumi.set(__self__, "command", command)
         if cpu is not None:
-            _setter("cpu", cpu)
+            pulumi.set(__self__, "cpu", cpu)
         if env is not None:
-            _setter("env", env)
+            pulumi.set(__self__, "env", env)
         if gpu_nvidia is not None:
-            _setter("gpu_nvidia", gpu_nvidia)
+            pulumi.set(__self__, "gpu_nvidia", gpu_nvidia)
         if inherit_env is not None:
-            _setter("inherit_env", inherit_env)
+            pulumi.set(__self__, "inherit_env", inherit_env)
         if lifecycle is not None:
-            _setter("lifecycle", lifecycle)
+            pulumi.set(__self__, "lifecycle", lifecycle)
         if liveness_probe is not None:
-            _setter("liveness_probe", liveness_probe)
+            pulumi.set(__self__, "liveness_probe", liveness_probe)
         if memory is not None:
-            _setter("memory", memory)
+            pulumi.set(__self__, "memory", memory)
         if metrics is not None:
-            _setter("metrics", metrics)
+            pulumi.set(__self__, "metrics", metrics)
         if min_cpu is not None:
-            _setter("min_cpu", min_cpu)
+            pulumi.set(__self__, "min_cpu", min_cpu)
         if min_memory is not None:
-            _setter("min_memory", min_memory)
+            pulumi.set(__self__, "min_memory", min_memory)
         if port is not None:
             warnings.warn("""The 'port' attribute will be deprecated in the next major version. Use the 'ports' attribute instead.""", DeprecationWarning)
             pulumi.log.warn("""port is deprecated: The 'port' attribute will be deprecated in the next major version. Use the 'ports' attribute instead.""")
         if port is not None:
-            _setter("port", port)
+            pulumi.set(__self__, "port", port)
         if ports is not None:
-            _setter("ports", ports)
+            pulumi.set(__self__, "ports", ports)
         if readiness_probe is not None:
-            _setter("readiness_probe", readiness_probe)
+            pulumi.set(__self__, "readiness_probe", readiness_probe)
         if volumes is not None:
-            _setter("volumes", volumes)
+            pulumi.set(__self__, "volumes", volumes)
         if working_directory is not None:
-            _setter("working_directory", working_directory)
+            pulumi.set(__self__, "working_directory", working_directory)
 
     @property
     @pulumi.getter
     def image(self) -> pulumi.Input[str]:
+        """
+        The full image and tag path.
+        """
         return pulumi.get(self, "image")
 
     @image.setter
@@ -11074,6 +12284,9 @@ class WorkloadContainerArgs:
     @property
     @pulumi.getter
     def name(self) -> pulumi.Input[str]:
+        """
+        Name of the container.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -11083,6 +12296,9 @@ class WorkloadContainerArgs:
     @property
     @pulumi.getter
     def args(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        Command line arguments passed to the container at runtime.
+        """
         return pulumi.get(self, "args")
 
     @args.setter
@@ -11092,6 +12308,9 @@ class WorkloadContainerArgs:
     @property
     @pulumi.getter
     def command(self) -> Optional[pulumi.Input[str]]:
+        """
+        Override the entry point.
+        """
         return pulumi.get(self, "command")
 
     @command.setter
@@ -11101,6 +12320,9 @@ class WorkloadContainerArgs:
     @property
     @pulumi.getter
     def cpu(self) -> Optional[pulumi.Input[str]]:
+        """
+        Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
+        """
         return pulumi.get(self, "cpu")
 
     @cpu.setter
@@ -11110,6 +12332,9 @@ class WorkloadContainerArgs:
     @property
     @pulumi.getter
     def env(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Name-Value list of environment variables.
+        """
         return pulumi.get(self, "env")
 
     @env.setter
@@ -11119,6 +12344,9 @@ class WorkloadContainerArgs:
     @property
     @pulumi.getter(name="gpuNvidia")
     def gpu_nvidia(self) -> Optional[pulumi.Input['WorkloadContainerGpuNvidiaArgs']]:
+        """
+        GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
+        """
         return pulumi.get(self, "gpu_nvidia")
 
     @gpu_nvidia.setter
@@ -11128,6 +12356,9 @@ class WorkloadContainerArgs:
     @property
     @pulumi.getter(name="inheritEnv")
     def inherit_env(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
+        """
         return pulumi.get(self, "inherit_env")
 
     @inherit_env.setter
@@ -11137,6 +12368,9 @@ class WorkloadContainerArgs:
     @property
     @pulumi.getter
     def lifecycle(self) -> Optional[pulumi.Input['WorkloadContainerLifecycleArgs']]:
+        """
+        Lifecycle [Reference Page](https://docs.controlplane.com/reference/workload#lifecycle).
+        """
         return pulumi.get(self, "lifecycle")
 
     @lifecycle.setter
@@ -11146,6 +12380,9 @@ class WorkloadContainerArgs:
     @property
     @pulumi.getter(name="livenessProbe")
     def liveness_probe(self) -> Optional[pulumi.Input['WorkloadContainerLivenessProbeArgs']]:
+        """
+        Liveness Probe
+        """
         return pulumi.get(self, "liveness_probe")
 
     @liveness_probe.setter
@@ -11155,6 +12392,9 @@ class WorkloadContainerArgs:
     @property
     @pulumi.getter
     def memory(self) -> Optional[pulumi.Input[str]]:
+        """
+        Reserved memory of the workload when capacityAI is disabled. Maximum memory when CapacityAI is enabled. Default: "128Mi".
+        """
         return pulumi.get(self, "memory")
 
     @memory.setter
@@ -11164,6 +12404,9 @@ class WorkloadContainerArgs:
     @property
     @pulumi.getter
     def metrics(self) -> Optional[pulumi.Input['WorkloadContainerMetricsArgs']]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/workload#metrics).
+        """
         return pulumi.get(self, "metrics")
 
     @metrics.setter
@@ -11173,6 +12416,9 @@ class WorkloadContainerArgs:
     @property
     @pulumi.getter(name="minCpu")
     def min_cpu(self) -> Optional[pulumi.Input[str]]:
+        """
+        Minimum CPU when capacity AI is enabled.
+        """
         return pulumi.get(self, "min_cpu")
 
     @min_cpu.setter
@@ -11182,6 +12428,9 @@ class WorkloadContainerArgs:
     @property
     @pulumi.getter(name="minMemory")
     def min_memory(self) -> Optional[pulumi.Input[str]]:
+        """
+        Minimum memory when capacity AI is enabled.
+        """
         return pulumi.get(self, "min_memory")
 
     @min_memory.setter
@@ -11190,10 +12439,11 @@ class WorkloadContainerArgs:
 
     @property
     @pulumi.getter
+    @_utilities.deprecated("""The 'port' attribute will be deprecated in the next major version. Use the 'ports' attribute instead.""")
     def port(self) -> Optional[pulumi.Input[int]]:
-        warnings.warn("""The 'port' attribute will be deprecated in the next major version. Use the 'ports' attribute instead.""", DeprecationWarning)
-        pulumi.log.warn("""port is deprecated: The 'port' attribute will be deprecated in the next major version. Use the 'ports' attribute instead.""")
-
+        """
+        The port the container exposes. Only one container is allowed to specify a port. Min: `80`. Max: `65535`. Used by `serverless` Workload type. **DEPRECATED - Use `ports`.**
+        """
         return pulumi.get(self, "port")
 
     @port.setter
@@ -11203,6 +12453,9 @@ class WorkloadContainerArgs:
     @property
     @pulumi.getter
     def ports(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadContainerPortArgs']]]]:
+        """
+        Communication endpoints used by the workload to send and receive network traffic.
+        """
         return pulumi.get(self, "ports")
 
     @ports.setter
@@ -11212,6 +12465,9 @@ class WorkloadContainerArgs:
     @property
     @pulumi.getter(name="readinessProbe")
     def readiness_probe(self) -> Optional[pulumi.Input['WorkloadContainerReadinessProbeArgs']]:
+        """
+        Readiness Probe
+        """
         return pulumi.get(self, "readiness_probe")
 
     @readiness_probe.setter
@@ -11221,6 +12477,9 @@ class WorkloadContainerArgs:
     @property
     @pulumi.getter
     def volumes(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadContainerVolumeArgs']]]]:
+        """
+        [Reference Page](https://docs.controlplane.com/reference/workload#volumes).
+        """
         return pulumi.get(self, "volumes")
 
     @volumes.setter
@@ -11230,6 +12489,9 @@ class WorkloadContainerArgs:
     @property
     @pulumi.getter(name="workingDirectory")
     def working_directory(self) -> Optional[pulumi.Input[str]]:
+        """
+        Override the working directory. Must be an absolute path.
+        """
         return pulumi.get(self, "working_directory")
 
     @working_directory.setter
@@ -11237,30 +12499,37 @@ class WorkloadContainerArgs:
         pulumi.set(self, "working_directory", value)
 
 
+if not MYPY:
+    class WorkloadContainerGpuNvidiaArgsDict(TypedDict):
+        model: pulumi.Input[str]
+        """
+        GPU Model (i.e.: t4)
+        """
+        quantity: pulumi.Input[int]
+        """
+        Number of GPUs.
+        """
+elif False:
+    WorkloadContainerGpuNvidiaArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadContainerGpuNvidiaArgs:
     def __init__(__self__, *,
                  model: pulumi.Input[str],
                  quantity: pulumi.Input[int]):
-        WorkloadContainerGpuNvidiaArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            model=model,
-            quantity=quantity,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             model: pulumi.Input[str],
-             quantity: pulumi.Input[int],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("model", model)
-        _setter("quantity", quantity)
+        """
+        :param pulumi.Input[str] model: GPU Model (i.e.: t4)
+        :param pulumi.Input[int] quantity: Number of GPUs.
+        """
+        pulumi.set(__self__, "model", model)
+        pulumi.set(__self__, "quantity", quantity)
 
     @property
     @pulumi.getter
     def model(self) -> pulumi.Input[str]:
+        """
+        GPU Model (i.e.: t4)
+        """
         return pulumi.get(self, "model")
 
     @model.setter
@@ -11270,6 +12539,9 @@ class WorkloadContainerGpuNvidiaArgs:
     @property
     @pulumi.getter
     def quantity(self) -> pulumi.Input[int]:
+        """
+        Number of GPUs.
+        """
         return pulumi.get(self, "quantity")
 
     @quantity.setter
@@ -11277,37 +12549,26 @@ class WorkloadContainerGpuNvidiaArgs:
         pulumi.set(self, "quantity", value)
 
 
+if not MYPY:
+    class WorkloadContainerLifecycleArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        post_start: NotRequired[pulumi.Input['WorkloadContainerLifecyclePostStartArgsDict']]
+        pre_stop: NotRequired[pulumi.Input['WorkloadContainerLifecyclePreStopArgsDict']]
+elif False:
+    WorkloadContainerLifecycleArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadContainerLifecycleArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  post_start: Optional[pulumi.Input['WorkloadContainerLifecyclePostStartArgs']] = None,
                  pre_stop: Optional[pulumi.Input['WorkloadContainerLifecyclePreStopArgs']] = None):
-        WorkloadContainerLifecycleArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            post_start=post_start,
-            pre_stop=pre_stop,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             post_start: Optional[pulumi.Input['WorkloadContainerLifecyclePostStartArgs']] = None,
-             pre_stop: Optional[pulumi.Input['WorkloadContainerLifecyclePreStopArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'postStart' in kwargs:
-            post_start = kwargs['postStart']
-        if 'preStop' in kwargs:
-            pre_stop = kwargs['preStop']
-
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if post_start is not None:
-            _setter("post_start", post_start)
+            pulumi.set(__self__, "post_start", post_start)
         if pre_stop is not None:
-            _setter("pre_stop", pre_stop)
+            pulumi.set(__self__, "pre_stop", pre_stop)
 
     @property
     @pulumi.getter
@@ -11337,24 +12598,17 @@ class WorkloadContainerLifecycleArgs:
         pulumi.set(self, "pre_stop", value)
 
 
+if not MYPY:
+    class WorkloadContainerLifecyclePostStartArgsDict(TypedDict):
+        exec_: pulumi.Input['WorkloadContainerLifecyclePostStartExecArgsDict']
+elif False:
+    WorkloadContainerLifecyclePostStartArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadContainerLifecyclePostStartArgs:
     def __init__(__self__, *,
                  exec_: pulumi.Input['WorkloadContainerLifecyclePostStartExecArgs']):
-        WorkloadContainerLifecyclePostStartArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            exec_=exec_,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             exec_: pulumi.Input['WorkloadContainerLifecyclePostStartExecArgs'],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'exec' in kwargs:
-            exec_ = kwargs['exec']
-
-        _setter("exec_", exec_)
+        pulumi.set(__self__, "exec_", exec_)
 
     @property
     @pulumi.getter(name="exec")
@@ -11366,22 +12620,17 @@ class WorkloadContainerLifecyclePostStartArgs:
         pulumi.set(self, "exec_", value)
 
 
+if not MYPY:
+    class WorkloadContainerLifecyclePostStartExecArgsDict(TypedDict):
+        commands: pulumi.Input[Sequence[pulumi.Input[str]]]
+elif False:
+    WorkloadContainerLifecyclePostStartExecArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadContainerLifecyclePostStartExecArgs:
     def __init__(__self__, *,
                  commands: pulumi.Input[Sequence[pulumi.Input[str]]]):
-        WorkloadContainerLifecyclePostStartExecArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            commands=commands,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             commands: pulumi.Input[Sequence[pulumi.Input[str]]],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("commands", commands)
+        pulumi.set(__self__, "commands", commands)
 
     @property
     @pulumi.getter
@@ -11393,24 +12642,17 @@ class WorkloadContainerLifecyclePostStartExecArgs:
         pulumi.set(self, "commands", value)
 
 
+if not MYPY:
+    class WorkloadContainerLifecyclePreStopArgsDict(TypedDict):
+        exec_: pulumi.Input['WorkloadContainerLifecyclePreStopExecArgsDict']
+elif False:
+    WorkloadContainerLifecyclePreStopArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadContainerLifecyclePreStopArgs:
     def __init__(__self__, *,
                  exec_: pulumi.Input['WorkloadContainerLifecyclePreStopExecArgs']):
-        WorkloadContainerLifecyclePreStopArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            exec_=exec_,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             exec_: pulumi.Input['WorkloadContainerLifecyclePreStopExecArgs'],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'exec' in kwargs:
-            exec_ = kwargs['exec']
-
-        _setter("exec_", exec_)
+        pulumi.set(__self__, "exec_", exec_)
 
     @property
     @pulumi.getter(name="exec")
@@ -11422,22 +12664,17 @@ class WorkloadContainerLifecyclePreStopArgs:
         pulumi.set(self, "exec_", value)
 
 
+if not MYPY:
+    class WorkloadContainerLifecyclePreStopExecArgsDict(TypedDict):
+        commands: pulumi.Input[Sequence[pulumi.Input[str]]]
+elif False:
+    WorkloadContainerLifecyclePreStopExecArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadContainerLifecyclePreStopExecArgs:
     def __init__(__self__, *,
                  commands: pulumi.Input[Sequence[pulumi.Input[str]]]):
-        WorkloadContainerLifecyclePreStopExecArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            commands=commands,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             commands: pulumi.Input[Sequence[pulumi.Input[str]]],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("commands", commands)
+        pulumi.set(__self__, "commands", commands)
 
     @property
     @pulumi.getter
@@ -11448,6 +12685,20 @@ class WorkloadContainerLifecyclePreStopExecArgs:
     def commands(self, value: pulumi.Input[Sequence[pulumi.Input[str]]]):
         pulumi.set(self, "commands", value)
 
+
+if not MYPY:
+    class WorkloadContainerLivenessProbeArgsDict(TypedDict):
+        exec_: NotRequired[pulumi.Input['WorkloadContainerLivenessProbeExecArgsDict']]
+        failure_threshold: NotRequired[pulumi.Input[int]]
+        grpc: NotRequired[pulumi.Input['WorkloadContainerLivenessProbeGrpcArgsDict']]
+        http_get: NotRequired[pulumi.Input['WorkloadContainerLivenessProbeHttpGetArgsDict']]
+        initial_delay_seconds: NotRequired[pulumi.Input[int]]
+        period_seconds: NotRequired[pulumi.Input[int]]
+        success_threshold: NotRequired[pulumi.Input[int]]
+        tcp_socket: NotRequired[pulumi.Input['WorkloadContainerLivenessProbeTcpSocketArgsDict']]
+        timeout_seconds: NotRequired[pulumi.Input[int]]
+elif False:
+    WorkloadContainerLivenessProbeArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class WorkloadContainerLivenessProbeArgs:
@@ -11461,67 +12712,24 @@ class WorkloadContainerLivenessProbeArgs:
                  success_threshold: Optional[pulumi.Input[int]] = None,
                  tcp_socket: Optional[pulumi.Input['WorkloadContainerLivenessProbeTcpSocketArgs']] = None,
                  timeout_seconds: Optional[pulumi.Input[int]] = None):
-        WorkloadContainerLivenessProbeArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            exec_=exec_,
-            failure_threshold=failure_threshold,
-            grpc=grpc,
-            http_get=http_get,
-            initial_delay_seconds=initial_delay_seconds,
-            period_seconds=period_seconds,
-            success_threshold=success_threshold,
-            tcp_socket=tcp_socket,
-            timeout_seconds=timeout_seconds,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             exec_: Optional[pulumi.Input['WorkloadContainerLivenessProbeExecArgs']] = None,
-             failure_threshold: Optional[pulumi.Input[int]] = None,
-             grpc: Optional[pulumi.Input['WorkloadContainerLivenessProbeGrpcArgs']] = None,
-             http_get: Optional[pulumi.Input['WorkloadContainerLivenessProbeHttpGetArgs']] = None,
-             initial_delay_seconds: Optional[pulumi.Input[int]] = None,
-             period_seconds: Optional[pulumi.Input[int]] = None,
-             success_threshold: Optional[pulumi.Input[int]] = None,
-             tcp_socket: Optional[pulumi.Input['WorkloadContainerLivenessProbeTcpSocketArgs']] = None,
-             timeout_seconds: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'exec' in kwargs:
-            exec_ = kwargs['exec']
-        if 'failureThreshold' in kwargs:
-            failure_threshold = kwargs['failureThreshold']
-        if 'httpGet' in kwargs:
-            http_get = kwargs['httpGet']
-        if 'initialDelaySeconds' in kwargs:
-            initial_delay_seconds = kwargs['initialDelaySeconds']
-        if 'periodSeconds' in kwargs:
-            period_seconds = kwargs['periodSeconds']
-        if 'successThreshold' in kwargs:
-            success_threshold = kwargs['successThreshold']
-        if 'tcpSocket' in kwargs:
-            tcp_socket = kwargs['tcpSocket']
-        if 'timeoutSeconds' in kwargs:
-            timeout_seconds = kwargs['timeoutSeconds']
-
         if exec_ is not None:
-            _setter("exec_", exec_)
+            pulumi.set(__self__, "exec_", exec_)
         if failure_threshold is not None:
-            _setter("failure_threshold", failure_threshold)
+            pulumi.set(__self__, "failure_threshold", failure_threshold)
         if grpc is not None:
-            _setter("grpc", grpc)
+            pulumi.set(__self__, "grpc", grpc)
         if http_get is not None:
-            _setter("http_get", http_get)
+            pulumi.set(__self__, "http_get", http_get)
         if initial_delay_seconds is not None:
-            _setter("initial_delay_seconds", initial_delay_seconds)
+            pulumi.set(__self__, "initial_delay_seconds", initial_delay_seconds)
         if period_seconds is not None:
-            _setter("period_seconds", period_seconds)
+            pulumi.set(__self__, "period_seconds", period_seconds)
         if success_threshold is not None:
-            _setter("success_threshold", success_threshold)
+            pulumi.set(__self__, "success_threshold", success_threshold)
         if tcp_socket is not None:
-            _setter("tcp_socket", tcp_socket)
+            pulumi.set(__self__, "tcp_socket", tcp_socket)
         if timeout_seconds is not None:
-            _setter("timeout_seconds", timeout_seconds)
+            pulumi.set(__self__, "timeout_seconds", timeout_seconds)
 
     @property
     @pulumi.getter(name="exec")
@@ -11605,22 +12813,17 @@ class WorkloadContainerLivenessProbeArgs:
         pulumi.set(self, "timeout_seconds", value)
 
 
+if not MYPY:
+    class WorkloadContainerLivenessProbeExecArgsDict(TypedDict):
+        commands: pulumi.Input[Sequence[pulumi.Input[str]]]
+elif False:
+    WorkloadContainerLivenessProbeExecArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadContainerLivenessProbeExecArgs:
     def __init__(__self__, *,
                  commands: pulumi.Input[Sequence[pulumi.Input[str]]]):
-        WorkloadContainerLivenessProbeExecArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            commands=commands,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             commands: pulumi.Input[Sequence[pulumi.Input[str]]],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("commands", commands)
+        pulumi.set(__self__, "commands", commands)
 
     @property
     @pulumi.getter
@@ -11632,28 +12835,22 @@ class WorkloadContainerLivenessProbeExecArgs:
         pulumi.set(self, "commands", value)
 
 
+if not MYPY:
+    class WorkloadContainerLivenessProbeGrpcArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        port: NotRequired[pulumi.Input[int]]
+elif False:
+    WorkloadContainerLivenessProbeGrpcArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadContainerLivenessProbeGrpcArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  port: Optional[pulumi.Input[int]] = None):
-        WorkloadContainerLivenessProbeGrpcArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            port=port,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             port: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if port is not None:
-            _setter("port", port)
+            pulumi.set(__self__, "port", port)
 
     @property
     @pulumi.getter
@@ -11674,6 +12871,15 @@ class WorkloadContainerLivenessProbeGrpcArgs:
         pulumi.set(self, "port", value)
 
 
+if not MYPY:
+    class WorkloadContainerLivenessProbeHttpGetArgsDict(TypedDict):
+        http_headers: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        path: NotRequired[pulumi.Input[str]]
+        port: NotRequired[pulumi.Input[int]]
+        scheme: NotRequired[pulumi.Input[str]]
+elif False:
+    WorkloadContainerLivenessProbeHttpGetArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadContainerLivenessProbeHttpGetArgs:
     def __init__(__self__, *,
@@ -11681,33 +12887,14 @@ class WorkloadContainerLivenessProbeHttpGetArgs:
                  path: Optional[pulumi.Input[str]] = None,
                  port: Optional[pulumi.Input[int]] = None,
                  scheme: Optional[pulumi.Input[str]] = None):
-        WorkloadContainerLivenessProbeHttpGetArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            http_headers=http_headers,
-            path=path,
-            port=port,
-            scheme=scheme,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             http_headers: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             path: Optional[pulumi.Input[str]] = None,
-             port: Optional[pulumi.Input[int]] = None,
-             scheme: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'httpHeaders' in kwargs:
-            http_headers = kwargs['httpHeaders']
-
         if http_headers is not None:
-            _setter("http_headers", http_headers)
+            pulumi.set(__self__, "http_headers", http_headers)
         if path is not None:
-            _setter("path", path)
+            pulumi.set(__self__, "path", path)
         if port is not None:
-            _setter("port", port)
+            pulumi.set(__self__, "port", port)
         if scheme is not None:
-            _setter("scheme", scheme)
+            pulumi.set(__self__, "scheme", scheme)
 
     @property
     @pulumi.getter(name="httpHeaders")
@@ -11746,28 +12933,22 @@ class WorkloadContainerLivenessProbeHttpGetArgs:
         pulumi.set(self, "scheme", value)
 
 
+if not MYPY:
+    class WorkloadContainerLivenessProbeTcpSocketArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        port: NotRequired[pulumi.Input[int]]
+elif False:
+    WorkloadContainerLivenessProbeTcpSocketArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadContainerLivenessProbeTcpSocketArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  port: Optional[pulumi.Input[int]] = None):
-        WorkloadContainerLivenessProbeTcpSocketArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            port=port,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             port: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if port is not None:
-            _setter("port", port)
+            pulumi.set(__self__, "port", port)
 
     @property
     @pulumi.getter
@@ -11788,30 +12969,37 @@ class WorkloadContainerLivenessProbeTcpSocketArgs:
         pulumi.set(self, "port", value)
 
 
+if not MYPY:
+    class WorkloadContainerMetricsArgsDict(TypedDict):
+        path: pulumi.Input[str]
+        """
+        Path from container emitting custom metrics
+        """
+        port: pulumi.Input[int]
+        """
+        Port from container emitting custom metrics
+        """
+elif False:
+    WorkloadContainerMetricsArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadContainerMetricsArgs:
     def __init__(__self__, *,
                  path: pulumi.Input[str],
                  port: pulumi.Input[int]):
-        WorkloadContainerMetricsArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            path=path,
-            port=port,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             path: pulumi.Input[str],
-             port: pulumi.Input[int],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("path", path)
-        _setter("port", port)
+        """
+        :param pulumi.Input[str] path: Path from container emitting custom metrics
+        :param pulumi.Input[int] port: Port from container emitting custom metrics
+        """
+        pulumi.set(__self__, "path", path)
+        pulumi.set(__self__, "port", port)
 
     @property
     @pulumi.getter
     def path(self) -> pulumi.Input[str]:
+        """
+        Path from container emitting custom metrics
+        """
         return pulumi.get(self, "path")
 
     @path.setter
@@ -11821,6 +13009,9 @@ class WorkloadContainerMetricsArgs:
     @property
     @pulumi.getter
     def port(self) -> pulumi.Input[int]:
+        """
+        Port from container emitting custom metrics
+        """
         return pulumi.get(self, "port")
 
     @port.setter
@@ -11828,31 +13019,38 @@ class WorkloadContainerMetricsArgs:
         pulumi.set(self, "port", value)
 
 
+if not MYPY:
+    class WorkloadContainerPortArgsDict(TypedDict):
+        number: pulumi.Input[int]
+        """
+        Port to expose.
+        """
+        protocol: NotRequired[pulumi.Input[str]]
+        """
+        Protocol. Choice of: `http`, `http2`, `tcp`, or `grpc`.
+        """
+elif False:
+    WorkloadContainerPortArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadContainerPortArgs:
     def __init__(__self__, *,
                  number: pulumi.Input[int],
                  protocol: Optional[pulumi.Input[str]] = None):
-        WorkloadContainerPortArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            number=number,
-            protocol=protocol,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             number: pulumi.Input[int],
-             protocol: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("number", number)
+        """
+        :param pulumi.Input[int] number: Port to expose.
+        :param pulumi.Input[str] protocol: Protocol. Choice of: `http`, `http2`, `tcp`, or `grpc`.
+        """
+        pulumi.set(__self__, "number", number)
         if protocol is not None:
-            _setter("protocol", protocol)
+            pulumi.set(__self__, "protocol", protocol)
 
     @property
     @pulumi.getter
     def number(self) -> pulumi.Input[int]:
+        """
+        Port to expose.
+        """
         return pulumi.get(self, "number")
 
     @number.setter
@@ -11862,12 +13060,29 @@ class WorkloadContainerPortArgs:
     @property
     @pulumi.getter
     def protocol(self) -> Optional[pulumi.Input[str]]:
+        """
+        Protocol. Choice of: `http`, `http2`, `tcp`, or `grpc`.
+        """
         return pulumi.get(self, "protocol")
 
     @protocol.setter
     def protocol(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "protocol", value)
 
+
+if not MYPY:
+    class WorkloadContainerReadinessProbeArgsDict(TypedDict):
+        exec_: NotRequired[pulumi.Input['WorkloadContainerReadinessProbeExecArgsDict']]
+        failure_threshold: NotRequired[pulumi.Input[int]]
+        grpc: NotRequired[pulumi.Input['WorkloadContainerReadinessProbeGrpcArgsDict']]
+        http_get: NotRequired[pulumi.Input['WorkloadContainerReadinessProbeHttpGetArgsDict']]
+        initial_delay_seconds: NotRequired[pulumi.Input[int]]
+        period_seconds: NotRequired[pulumi.Input[int]]
+        success_threshold: NotRequired[pulumi.Input[int]]
+        tcp_socket: NotRequired[pulumi.Input['WorkloadContainerReadinessProbeTcpSocketArgsDict']]
+        timeout_seconds: NotRequired[pulumi.Input[int]]
+elif False:
+    WorkloadContainerReadinessProbeArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class WorkloadContainerReadinessProbeArgs:
@@ -11881,67 +13096,24 @@ class WorkloadContainerReadinessProbeArgs:
                  success_threshold: Optional[pulumi.Input[int]] = None,
                  tcp_socket: Optional[pulumi.Input['WorkloadContainerReadinessProbeTcpSocketArgs']] = None,
                  timeout_seconds: Optional[pulumi.Input[int]] = None):
-        WorkloadContainerReadinessProbeArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            exec_=exec_,
-            failure_threshold=failure_threshold,
-            grpc=grpc,
-            http_get=http_get,
-            initial_delay_seconds=initial_delay_seconds,
-            period_seconds=period_seconds,
-            success_threshold=success_threshold,
-            tcp_socket=tcp_socket,
-            timeout_seconds=timeout_seconds,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             exec_: Optional[pulumi.Input['WorkloadContainerReadinessProbeExecArgs']] = None,
-             failure_threshold: Optional[pulumi.Input[int]] = None,
-             grpc: Optional[pulumi.Input['WorkloadContainerReadinessProbeGrpcArgs']] = None,
-             http_get: Optional[pulumi.Input['WorkloadContainerReadinessProbeHttpGetArgs']] = None,
-             initial_delay_seconds: Optional[pulumi.Input[int]] = None,
-             period_seconds: Optional[pulumi.Input[int]] = None,
-             success_threshold: Optional[pulumi.Input[int]] = None,
-             tcp_socket: Optional[pulumi.Input['WorkloadContainerReadinessProbeTcpSocketArgs']] = None,
-             timeout_seconds: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'exec' in kwargs:
-            exec_ = kwargs['exec']
-        if 'failureThreshold' in kwargs:
-            failure_threshold = kwargs['failureThreshold']
-        if 'httpGet' in kwargs:
-            http_get = kwargs['httpGet']
-        if 'initialDelaySeconds' in kwargs:
-            initial_delay_seconds = kwargs['initialDelaySeconds']
-        if 'periodSeconds' in kwargs:
-            period_seconds = kwargs['periodSeconds']
-        if 'successThreshold' in kwargs:
-            success_threshold = kwargs['successThreshold']
-        if 'tcpSocket' in kwargs:
-            tcp_socket = kwargs['tcpSocket']
-        if 'timeoutSeconds' in kwargs:
-            timeout_seconds = kwargs['timeoutSeconds']
-
         if exec_ is not None:
-            _setter("exec_", exec_)
+            pulumi.set(__self__, "exec_", exec_)
         if failure_threshold is not None:
-            _setter("failure_threshold", failure_threshold)
+            pulumi.set(__self__, "failure_threshold", failure_threshold)
         if grpc is not None:
-            _setter("grpc", grpc)
+            pulumi.set(__self__, "grpc", grpc)
         if http_get is not None:
-            _setter("http_get", http_get)
+            pulumi.set(__self__, "http_get", http_get)
         if initial_delay_seconds is not None:
-            _setter("initial_delay_seconds", initial_delay_seconds)
+            pulumi.set(__self__, "initial_delay_seconds", initial_delay_seconds)
         if period_seconds is not None:
-            _setter("period_seconds", period_seconds)
+            pulumi.set(__self__, "period_seconds", period_seconds)
         if success_threshold is not None:
-            _setter("success_threshold", success_threshold)
+            pulumi.set(__self__, "success_threshold", success_threshold)
         if tcp_socket is not None:
-            _setter("tcp_socket", tcp_socket)
+            pulumi.set(__self__, "tcp_socket", tcp_socket)
         if timeout_seconds is not None:
-            _setter("timeout_seconds", timeout_seconds)
+            pulumi.set(__self__, "timeout_seconds", timeout_seconds)
 
     @property
     @pulumi.getter(name="exec")
@@ -12025,22 +13197,17 @@ class WorkloadContainerReadinessProbeArgs:
         pulumi.set(self, "timeout_seconds", value)
 
 
+if not MYPY:
+    class WorkloadContainerReadinessProbeExecArgsDict(TypedDict):
+        commands: pulumi.Input[Sequence[pulumi.Input[str]]]
+elif False:
+    WorkloadContainerReadinessProbeExecArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadContainerReadinessProbeExecArgs:
     def __init__(__self__, *,
                  commands: pulumi.Input[Sequence[pulumi.Input[str]]]):
-        WorkloadContainerReadinessProbeExecArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            commands=commands,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             commands: pulumi.Input[Sequence[pulumi.Input[str]]],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("commands", commands)
+        pulumi.set(__self__, "commands", commands)
 
     @property
     @pulumi.getter
@@ -12052,28 +13219,22 @@ class WorkloadContainerReadinessProbeExecArgs:
         pulumi.set(self, "commands", value)
 
 
+if not MYPY:
+    class WorkloadContainerReadinessProbeGrpcArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        port: NotRequired[pulumi.Input[int]]
+elif False:
+    WorkloadContainerReadinessProbeGrpcArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadContainerReadinessProbeGrpcArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  port: Optional[pulumi.Input[int]] = None):
-        WorkloadContainerReadinessProbeGrpcArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            port=port,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             port: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if port is not None:
-            _setter("port", port)
+            pulumi.set(__self__, "port", port)
 
     @property
     @pulumi.getter
@@ -12094,6 +13255,15 @@ class WorkloadContainerReadinessProbeGrpcArgs:
         pulumi.set(self, "port", value)
 
 
+if not MYPY:
+    class WorkloadContainerReadinessProbeHttpGetArgsDict(TypedDict):
+        http_headers: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        path: NotRequired[pulumi.Input[str]]
+        port: NotRequired[pulumi.Input[int]]
+        scheme: NotRequired[pulumi.Input[str]]
+elif False:
+    WorkloadContainerReadinessProbeHttpGetArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadContainerReadinessProbeHttpGetArgs:
     def __init__(__self__, *,
@@ -12101,33 +13271,14 @@ class WorkloadContainerReadinessProbeHttpGetArgs:
                  path: Optional[pulumi.Input[str]] = None,
                  port: Optional[pulumi.Input[int]] = None,
                  scheme: Optional[pulumi.Input[str]] = None):
-        WorkloadContainerReadinessProbeHttpGetArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            http_headers=http_headers,
-            path=path,
-            port=port,
-            scheme=scheme,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             http_headers: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             path: Optional[pulumi.Input[str]] = None,
-             port: Optional[pulumi.Input[int]] = None,
-             scheme: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'httpHeaders' in kwargs:
-            http_headers = kwargs['httpHeaders']
-
         if http_headers is not None:
-            _setter("http_headers", http_headers)
+            pulumi.set(__self__, "http_headers", http_headers)
         if path is not None:
-            _setter("path", path)
+            pulumi.set(__self__, "path", path)
         if port is not None:
-            _setter("port", port)
+            pulumi.set(__self__, "port", port)
         if scheme is not None:
-            _setter("scheme", scheme)
+            pulumi.set(__self__, "scheme", scheme)
 
     @property
     @pulumi.getter(name="httpHeaders")
@@ -12166,28 +13317,22 @@ class WorkloadContainerReadinessProbeHttpGetArgs:
         pulumi.set(self, "scheme", value)
 
 
+if not MYPY:
+    class WorkloadContainerReadinessProbeTcpSocketArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        port: NotRequired[pulumi.Input[int]]
+elif False:
+    WorkloadContainerReadinessProbeTcpSocketArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadContainerReadinessProbeTcpSocketArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  port: Optional[pulumi.Input[int]] = None):
-        WorkloadContainerReadinessProbeTcpSocketArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            port=port,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             port: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if port is not None:
-            _setter("port", port)
+            pulumi.set(__self__, "port", port)
 
     @property
     @pulumi.getter
@@ -12208,37 +13353,45 @@ class WorkloadContainerReadinessProbeTcpSocketArgs:
         pulumi.set(self, "port", value)
 
 
+if not MYPY:
+    class WorkloadContainerVolumeArgsDict(TypedDict):
+        path: pulumi.Input[str]
+        """
+        File path added to workload pointing to the volume.
+        """
+        uri: pulumi.Input[str]
+        """
+        URI of a volume hosted at Control Plane (Volume Set) or at a cloud provider (AWS, Azure, GCP).
+        """
+        recovery_policy: NotRequired[pulumi.Input[str]]
+        """
+        Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
+        """
+elif False:
+    WorkloadContainerVolumeArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadContainerVolumeArgs:
     def __init__(__self__, *,
                  path: pulumi.Input[str],
                  uri: pulumi.Input[str],
                  recovery_policy: Optional[pulumi.Input[str]] = None):
-        WorkloadContainerVolumeArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            path=path,
-            uri=uri,
-            recovery_policy=recovery_policy,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             path: pulumi.Input[str],
-             uri: pulumi.Input[str],
-             recovery_policy: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'recoveryPolicy' in kwargs:
-            recovery_policy = kwargs['recoveryPolicy']
-
-        _setter("path", path)
-        _setter("uri", uri)
+        """
+        :param pulumi.Input[str] path: File path added to workload pointing to the volume.
+        :param pulumi.Input[str] uri: URI of a volume hosted at Control Plane (Volume Set) or at a cloud provider (AWS, Azure, GCP).
+        :param pulumi.Input[str] recovery_policy: Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
+        """
+        pulumi.set(__self__, "path", path)
+        pulumi.set(__self__, "uri", uri)
         if recovery_policy is not None:
-            _setter("recovery_policy", recovery_policy)
+            pulumi.set(__self__, "recovery_policy", recovery_policy)
 
     @property
     @pulumi.getter
     def path(self) -> pulumi.Input[str]:
+        """
+        File path added to workload pointing to the volume.
+        """
         return pulumi.get(self, "path")
 
     @path.setter
@@ -12248,6 +13401,9 @@ class WorkloadContainerVolumeArgs:
     @property
     @pulumi.getter
     def uri(self) -> pulumi.Input[str]:
+        """
+        URI of a volume hosted at Control Plane (Volume Set) or at a cloud provider (AWS, Azure, GCP).
+        """
         return pulumi.get(self, "uri")
 
     @uri.setter
@@ -12257,6 +13413,9 @@ class WorkloadContainerVolumeArgs:
     @property
     @pulumi.getter(name="recoveryPolicy")
     def recovery_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
+        """
         return pulumi.get(self, "recovery_policy")
 
     @recovery_policy.setter
@@ -12264,33 +13423,36 @@ class WorkloadContainerVolumeArgs:
         pulumi.set(self, "recovery_policy", value)
 
 
+if not MYPY:
+    class WorkloadFirewallSpecArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        external: NotRequired[pulumi.Input['WorkloadFirewallSpecExternalArgsDict']]
+        """
+        The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
+        """
+        internal: NotRequired[pulumi.Input['WorkloadFirewallSpecInternalArgsDict']]
+        """
+        The internal firewall is used to control access between workloads.
+        """
+elif False:
+    WorkloadFirewallSpecArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadFirewallSpecArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  external: Optional[pulumi.Input['WorkloadFirewallSpecExternalArgs']] = None,
                  internal: Optional[pulumi.Input['WorkloadFirewallSpecInternalArgs']] = None):
-        WorkloadFirewallSpecArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            external=external,
-            internal=internal,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             external: Optional[pulumi.Input['WorkloadFirewallSpecExternalArgs']] = None,
-             internal: Optional[pulumi.Input['WorkloadFirewallSpecInternalArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input['WorkloadFirewallSpecExternalArgs'] external: The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
+        :param pulumi.Input['WorkloadFirewallSpecInternalArgs'] internal: The internal firewall is used to control access between workloads.
+        """
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if external is not None:
-            _setter("external", external)
+            pulumi.set(__self__, "external", external)
         if internal is not None:
-            _setter("internal", internal)
+            pulumi.set(__self__, "internal", internal)
 
     @property
     @pulumi.getter
@@ -12304,6 +13466,9 @@ class WorkloadFirewallSpecArgs:
     @property
     @pulumi.getter
     def external(self) -> Optional[pulumi.Input['WorkloadFirewallSpecExternalArgs']]:
+        """
+        The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
+        """
         return pulumi.get(self, "external")
 
     @external.setter
@@ -12313,12 +13478,36 @@ class WorkloadFirewallSpecArgs:
     @property
     @pulumi.getter
     def internal(self) -> Optional[pulumi.Input['WorkloadFirewallSpecInternalArgs']]:
+        """
+        The internal firewall is used to control access between workloads.
+        """
         return pulumi.get(self, "internal")
 
     @internal.setter
     def internal(self, value: Optional[pulumi.Input['WorkloadFirewallSpecInternalArgs']]):
         pulumi.set(self, "internal", value)
 
+
+if not MYPY:
+    class WorkloadFirewallSpecExternalArgsDict(TypedDict):
+        inbound_allow_cidrs: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+        """
+        outbound_allow_cidrs: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        The list of ipv4/ipv6 addresses or cidr blocks that this workload is allowed reach. No outbound access is allowed by default. Specify '0.0.0.0/0' to allow outbound access to the public internet.
+        """
+        outbound_allow_hostnames: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        The list of public hostnames that this workload is allowed to reach. No outbound access is allowed by default. A wildcard `*` is allowed on the prefix of the hostname only, ex: `*.amazonaws.com`. Use `outboundAllowCIDR` to allow access to all external websites.
+        """
+        outbound_allow_ports: NotRequired[pulumi.Input[Sequence[pulumi.Input['WorkloadFirewallSpecExternalOutboundAllowPortArgsDict']]]]
+        """
+        Allow outbound access to specific ports and protocols. When not specified, communication to address ranges in outboundAllowCIDR is allowed on all ports and communication to names in outboundAllowHostname is allowed on ports 80/443.
+        """
+elif False:
+    WorkloadFirewallSpecExternalArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class WorkloadFirewallSpecExternalArgs:
@@ -12327,43 +13516,27 @@ class WorkloadFirewallSpecExternalArgs:
                  outbound_allow_cidrs: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  outbound_allow_hostnames: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  outbound_allow_ports: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadFirewallSpecExternalOutboundAllowPortArgs']]]] = None):
-        WorkloadFirewallSpecExternalArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            inbound_allow_cidrs=inbound_allow_cidrs,
-            outbound_allow_cidrs=outbound_allow_cidrs,
-            outbound_allow_hostnames=outbound_allow_hostnames,
-            outbound_allow_ports=outbound_allow_ports,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             inbound_allow_cidrs: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             outbound_allow_cidrs: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             outbound_allow_hostnames: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             outbound_allow_ports: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadFirewallSpecExternalOutboundAllowPortArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'inboundAllowCidrs' in kwargs:
-            inbound_allow_cidrs = kwargs['inboundAllowCidrs']
-        if 'outboundAllowCidrs' in kwargs:
-            outbound_allow_cidrs = kwargs['outboundAllowCidrs']
-        if 'outboundAllowHostnames' in kwargs:
-            outbound_allow_hostnames = kwargs['outboundAllowHostnames']
-        if 'outboundAllowPorts' in kwargs:
-            outbound_allow_ports = kwargs['outboundAllowPorts']
-
+        """
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] inbound_allow_cidrs: The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] outbound_allow_cidrs: The list of ipv4/ipv6 addresses or cidr blocks that this workload is allowed reach. No outbound access is allowed by default. Specify '0.0.0.0/0' to allow outbound access to the public internet.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] outbound_allow_hostnames: The list of public hostnames that this workload is allowed to reach. No outbound access is allowed by default. A wildcard `*` is allowed on the prefix of the hostname only, ex: `*.amazonaws.com`. Use `outboundAllowCIDR` to allow access to all external websites.
+        :param pulumi.Input[Sequence[pulumi.Input['WorkloadFirewallSpecExternalOutboundAllowPortArgs']]] outbound_allow_ports: Allow outbound access to specific ports and protocols. When not specified, communication to address ranges in outboundAllowCIDR is allowed on all ports and communication to names in outboundAllowHostname is allowed on ports 80/443.
+        """
         if inbound_allow_cidrs is not None:
-            _setter("inbound_allow_cidrs", inbound_allow_cidrs)
+            pulumi.set(__self__, "inbound_allow_cidrs", inbound_allow_cidrs)
         if outbound_allow_cidrs is not None:
-            _setter("outbound_allow_cidrs", outbound_allow_cidrs)
+            pulumi.set(__self__, "outbound_allow_cidrs", outbound_allow_cidrs)
         if outbound_allow_hostnames is not None:
-            _setter("outbound_allow_hostnames", outbound_allow_hostnames)
+            pulumi.set(__self__, "outbound_allow_hostnames", outbound_allow_hostnames)
         if outbound_allow_ports is not None:
-            _setter("outbound_allow_ports", outbound_allow_ports)
+            pulumi.set(__self__, "outbound_allow_ports", outbound_allow_ports)
 
     @property
     @pulumi.getter(name="inboundAllowCidrs")
     def inbound_allow_cidrs(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+        """
         return pulumi.get(self, "inbound_allow_cidrs")
 
     @inbound_allow_cidrs.setter
@@ -12373,6 +13546,9 @@ class WorkloadFirewallSpecExternalArgs:
     @property
     @pulumi.getter(name="outboundAllowCidrs")
     def outbound_allow_cidrs(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        The list of ipv4/ipv6 addresses or cidr blocks that this workload is allowed reach. No outbound access is allowed by default. Specify '0.0.0.0/0' to allow outbound access to the public internet.
+        """
         return pulumi.get(self, "outbound_allow_cidrs")
 
     @outbound_allow_cidrs.setter
@@ -12382,6 +13558,9 @@ class WorkloadFirewallSpecExternalArgs:
     @property
     @pulumi.getter(name="outboundAllowHostnames")
     def outbound_allow_hostnames(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        The list of public hostnames that this workload is allowed to reach. No outbound access is allowed by default. A wildcard `*` is allowed on the prefix of the hostname only, ex: `*.amazonaws.com`. Use `outboundAllowCIDR` to allow access to all external websites.
+        """
         return pulumi.get(self, "outbound_allow_hostnames")
 
     @outbound_allow_hostnames.setter
@@ -12391,6 +13570,9 @@ class WorkloadFirewallSpecExternalArgs:
     @property
     @pulumi.getter(name="outboundAllowPorts")
     def outbound_allow_ports(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadFirewallSpecExternalOutboundAllowPortArgs']]]]:
+        """
+        Allow outbound access to specific ports and protocols. When not specified, communication to address ranges in outboundAllowCIDR is allowed on all ports and communication to names in outboundAllowHostname is allowed on ports 80/443.
+        """
         return pulumi.get(self, "outbound_allow_ports")
 
     @outbound_allow_ports.setter
@@ -12398,30 +13580,37 @@ class WorkloadFirewallSpecExternalArgs:
         pulumi.set(self, "outbound_allow_ports", value)
 
 
+if not MYPY:
+    class WorkloadFirewallSpecExternalOutboundAllowPortArgsDict(TypedDict):
+        number: pulumi.Input[int]
+        """
+        Port number. Max: 65000
+        """
+        protocol: pulumi.Input[str]
+        """
+        Either `http`, `https` or `tcp`. Default: `tcp`.
+        """
+elif False:
+    WorkloadFirewallSpecExternalOutboundAllowPortArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadFirewallSpecExternalOutboundAllowPortArgs:
     def __init__(__self__, *,
                  number: pulumi.Input[int],
                  protocol: pulumi.Input[str]):
-        WorkloadFirewallSpecExternalOutboundAllowPortArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            number=number,
-            protocol=protocol,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             number: pulumi.Input[int],
-             protocol: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("number", number)
-        _setter("protocol", protocol)
+        """
+        :param pulumi.Input[int] number: Port number. Max: 65000
+        :param pulumi.Input[str] protocol: Either `http`, `https` or `tcp`. Default: `tcp`.
+        """
+        pulumi.set(__self__, "number", number)
+        pulumi.set(__self__, "protocol", protocol)
 
     @property
     @pulumi.getter
     def number(self) -> pulumi.Input[int]:
+        """
+        Port number. Max: 65000
+        """
         return pulumi.get(self, "number")
 
     @number.setter
@@ -12431,6 +13620,9 @@ class WorkloadFirewallSpecExternalOutboundAllowPortArgs:
     @property
     @pulumi.getter
     def protocol(self) -> pulumi.Input[str]:
+        """
+        Either `http`, `https` or `tcp`. Default: `tcp`.
+        """
         return pulumi.get(self, "protocol")
 
     @protocol.setter
@@ -12438,36 +13630,39 @@ class WorkloadFirewallSpecExternalOutboundAllowPortArgs:
         pulumi.set(self, "protocol", value)
 
 
+if not MYPY:
+    class WorkloadFirewallSpecInternalArgsDict(TypedDict):
+        inbound_allow_type: NotRequired[pulumi.Input[str]]
+        """
+        Used to control the internal firewall configuration and mutual tls. Allowed Values: "none", "same-gvc", "same-org", "workload-list".
+        """
+        inbound_allow_workloads: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        A list of specific workloads which are allowed to access this workload internally. This list is only used if the 'inboundAllowType' is set to 'workload-list'.
+        """
+elif False:
+    WorkloadFirewallSpecInternalArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadFirewallSpecInternalArgs:
     def __init__(__self__, *,
                  inbound_allow_type: Optional[pulumi.Input[str]] = None,
                  inbound_allow_workloads: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
-        WorkloadFirewallSpecInternalArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            inbound_allow_type=inbound_allow_type,
-            inbound_allow_workloads=inbound_allow_workloads,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             inbound_allow_type: Optional[pulumi.Input[str]] = None,
-             inbound_allow_workloads: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'inboundAllowType' in kwargs:
-            inbound_allow_type = kwargs['inboundAllowType']
-        if 'inboundAllowWorkloads' in kwargs:
-            inbound_allow_workloads = kwargs['inboundAllowWorkloads']
-
+        """
+        :param pulumi.Input[str] inbound_allow_type: Used to control the internal firewall configuration and mutual tls. Allowed Values: "none", "same-gvc", "same-org", "workload-list".
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] inbound_allow_workloads: A list of specific workloads which are allowed to access this workload internally. This list is only used if the 'inboundAllowType' is set to 'workload-list'.
+        """
         if inbound_allow_type is not None:
-            _setter("inbound_allow_type", inbound_allow_type)
+            pulumi.set(__self__, "inbound_allow_type", inbound_allow_type)
         if inbound_allow_workloads is not None:
-            _setter("inbound_allow_workloads", inbound_allow_workloads)
+            pulumi.set(__self__, "inbound_allow_workloads", inbound_allow_workloads)
 
     @property
     @pulumi.getter(name="inboundAllowType")
     def inbound_allow_type(self) -> Optional[pulumi.Input[str]]:
+        """
+        Used to control the internal firewall configuration and mutual tls. Allowed Values: "none", "same-gvc", "same-org", "workload-list".
+        """
         return pulumi.get(self, "inbound_allow_type")
 
     @inbound_allow_type.setter
@@ -12477,12 +13672,40 @@ class WorkloadFirewallSpecInternalArgs:
     @property
     @pulumi.getter(name="inboundAllowWorkloads")
     def inbound_allow_workloads(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        A list of specific workloads which are allowed to access this workload internally. This list is only used if the 'inboundAllowType' is set to 'workload-list'.
+        """
         return pulumi.get(self, "inbound_allow_workloads")
 
     @inbound_allow_workloads.setter
     def inbound_allow_workloads(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
         pulumi.set(self, "inbound_allow_workloads", value)
 
+
+if not MYPY:
+    class WorkloadJobArgsDict(TypedDict):
+        schedule: pulumi.Input[str]
+        """
+        A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
+        """
+        active_deadline_seconds: NotRequired[pulumi.Input[int]]
+        """
+        The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
+        """
+        concurrency_policy: NotRequired[pulumi.Input[str]]
+        """
+        Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`
+        """
+        history_limit: NotRequired[pulumi.Input[int]]
+        """
+        The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`
+        """
+        restart_policy: NotRequired[pulumi.Input[str]]
+        """
+        Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`
+        """
+elif False:
+    WorkloadJobArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class WorkloadJobArgs:
@@ -12492,46 +13715,29 @@ class WorkloadJobArgs:
                  concurrency_policy: Optional[pulumi.Input[str]] = None,
                  history_limit: Optional[pulumi.Input[int]] = None,
                  restart_policy: Optional[pulumi.Input[str]] = None):
-        WorkloadJobArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            schedule=schedule,
-            active_deadline_seconds=active_deadline_seconds,
-            concurrency_policy=concurrency_policy,
-            history_limit=history_limit,
-            restart_policy=restart_policy,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             schedule: pulumi.Input[str],
-             active_deadline_seconds: Optional[pulumi.Input[int]] = None,
-             concurrency_policy: Optional[pulumi.Input[str]] = None,
-             history_limit: Optional[pulumi.Input[int]] = None,
-             restart_policy: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'activeDeadlineSeconds' in kwargs:
-            active_deadline_seconds = kwargs['activeDeadlineSeconds']
-        if 'concurrencyPolicy' in kwargs:
-            concurrency_policy = kwargs['concurrencyPolicy']
-        if 'historyLimit' in kwargs:
-            history_limit = kwargs['historyLimit']
-        if 'restartPolicy' in kwargs:
-            restart_policy = kwargs['restartPolicy']
-
-        _setter("schedule", schedule)
+        """
+        :param pulumi.Input[str] schedule: A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
+        :param pulumi.Input[int] active_deadline_seconds: The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
+        :param pulumi.Input[str] concurrency_policy: Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`
+        :param pulumi.Input[int] history_limit: The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`
+        :param pulumi.Input[str] restart_policy: Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`
+        """
+        pulumi.set(__self__, "schedule", schedule)
         if active_deadline_seconds is not None:
-            _setter("active_deadline_seconds", active_deadline_seconds)
+            pulumi.set(__self__, "active_deadline_seconds", active_deadline_seconds)
         if concurrency_policy is not None:
-            _setter("concurrency_policy", concurrency_policy)
+            pulumi.set(__self__, "concurrency_policy", concurrency_policy)
         if history_limit is not None:
-            _setter("history_limit", history_limit)
+            pulumi.set(__self__, "history_limit", history_limit)
         if restart_policy is not None:
-            _setter("restart_policy", restart_policy)
+            pulumi.set(__self__, "restart_policy", restart_policy)
 
     @property
     @pulumi.getter
     def schedule(self) -> pulumi.Input[str]:
+        """
+        A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
+        """
         return pulumi.get(self, "schedule")
 
     @schedule.setter
@@ -12541,6 +13747,9 @@ class WorkloadJobArgs:
     @property
     @pulumi.getter(name="activeDeadlineSeconds")
     def active_deadline_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
+        """
         return pulumi.get(self, "active_deadline_seconds")
 
     @active_deadline_seconds.setter
@@ -12550,6 +13759,9 @@ class WorkloadJobArgs:
     @property
     @pulumi.getter(name="concurrencyPolicy")
     def concurrency_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`
+        """
         return pulumi.get(self, "concurrency_policy")
 
     @concurrency_policy.setter
@@ -12559,6 +13771,9 @@ class WorkloadJobArgs:
     @property
     @pulumi.getter(name="historyLimit")
     def history_limit(self) -> Optional[pulumi.Input[int]]:
+        """
+        The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`
+        """
         return pulumi.get(self, "history_limit")
 
     @history_limit.setter
@@ -12568,6 +13783,9 @@ class WorkloadJobArgs:
     @property
     @pulumi.getter(name="restartPolicy")
     def restart_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`
+        """
         return pulumi.get(self, "restart_policy")
 
     @restart_policy.setter
@@ -12575,35 +13793,26 @@ class WorkloadJobArgs:
         pulumi.set(self, "restart_policy", value)
 
 
+if not MYPY:
+    class WorkloadLoadBalancerArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        direct: NotRequired[pulumi.Input['WorkloadLoadBalancerDirectArgsDict']]
+        geo_location: NotRequired[pulumi.Input['WorkloadLoadBalancerGeoLocationArgsDict']]
+elif False:
+    WorkloadLoadBalancerArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadLoadBalancerArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  direct: Optional[pulumi.Input['WorkloadLoadBalancerDirectArgs']] = None,
                  geo_location: Optional[pulumi.Input['WorkloadLoadBalancerGeoLocationArgs']] = None):
-        WorkloadLoadBalancerArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            direct=direct,
-            geo_location=geo_location,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             direct: Optional[pulumi.Input['WorkloadLoadBalancerDirectArgs']] = None,
-             geo_location: Optional[pulumi.Input['WorkloadLoadBalancerGeoLocationArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'geoLocation' in kwargs:
-            geo_location = kwargs['geoLocation']
-
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if direct is not None:
-            _setter("direct", direct)
+            pulumi.set(__self__, "direct", direct)
         if geo_location is not None:
-            _setter("geo_location", geo_location)
+            pulumi.set(__self__, "geo_location", geo_location)
 
     @property
     @pulumi.getter
@@ -12633,27 +13842,21 @@ class WorkloadLoadBalancerArgs:
         pulumi.set(self, "geo_location", value)
 
 
+if not MYPY:
+    class WorkloadLoadBalancerDirectArgsDict(TypedDict):
+        enabled: pulumi.Input[bool]
+        ports: NotRequired[pulumi.Input[Sequence[pulumi.Input['WorkloadLoadBalancerDirectPortArgsDict']]]]
+elif False:
+    WorkloadLoadBalancerDirectArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadLoadBalancerDirectArgs:
     def __init__(__self__, *,
                  enabled: pulumi.Input[bool],
                  ports: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadLoadBalancerDirectPortArgs']]]] = None):
-        WorkloadLoadBalancerDirectArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            enabled=enabled,
-            ports=ports,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             enabled: pulumi.Input[bool],
-             ports: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadLoadBalancerDirectPortArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("enabled", enabled)
+        pulumi.set(__self__, "enabled", enabled)
         if ports is not None:
-            _setter("ports", ports)
+            pulumi.set(__self__, "ports", ports)
 
     @property
     @pulumi.getter
@@ -12674,6 +13877,18 @@ class WorkloadLoadBalancerDirectArgs:
         pulumi.set(self, "ports", value)
 
 
+if not MYPY:
+    class WorkloadLoadBalancerDirectPortArgsDict(TypedDict):
+        external_port: pulumi.Input[int]
+        protocol: pulumi.Input[str]
+        container_port: NotRequired[pulumi.Input[int]]
+        scheme: NotRequired[pulumi.Input[str]]
+        """
+        Override the default `https` url scheme.
+        """
+elif False:
+    WorkloadLoadBalancerDirectPortArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadLoadBalancerDirectPortArgs:
     def __init__(__self__, *,
@@ -12681,33 +13896,15 @@ class WorkloadLoadBalancerDirectPortArgs:
                  protocol: pulumi.Input[str],
                  container_port: Optional[pulumi.Input[int]] = None,
                  scheme: Optional[pulumi.Input[str]] = None):
-        WorkloadLoadBalancerDirectPortArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            external_port=external_port,
-            protocol=protocol,
-            container_port=container_port,
-            scheme=scheme,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             external_port: pulumi.Input[int],
-             protocol: pulumi.Input[str],
-             container_port: Optional[pulumi.Input[int]] = None,
-             scheme: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'externalPort' in kwargs:
-            external_port = kwargs['externalPort']
-        if 'containerPort' in kwargs:
-            container_port = kwargs['containerPort']
-
-        _setter("external_port", external_port)
-        _setter("protocol", protocol)
+        """
+        :param pulumi.Input[str] scheme: Override the default `https` url scheme.
+        """
+        pulumi.set(__self__, "external_port", external_port)
+        pulumi.set(__self__, "protocol", protocol)
         if container_port is not None:
-            _setter("container_port", container_port)
+            pulumi.set(__self__, "container_port", container_port)
         if scheme is not None:
-            _setter("scheme", scheme)
+            pulumi.set(__self__, "scheme", scheme)
 
     @property
     @pulumi.getter(name="externalPort")
@@ -12739,6 +13936,9 @@ class WorkloadLoadBalancerDirectPortArgs:
     @property
     @pulumi.getter
     def scheme(self) -> Optional[pulumi.Input[str]]:
+        """
+        Override the default `https` url scheme.
+        """
         return pulumi.get(self, "scheme")
 
     @scheme.setter
@@ -12746,32 +13946,35 @@ class WorkloadLoadBalancerDirectPortArgs:
         pulumi.set(self, "scheme", value)
 
 
+if not MYPY:
+    class WorkloadLoadBalancerGeoLocationArgsDict(TypedDict):
+        enabled: NotRequired[pulumi.Input[bool]]
+        """
+        When enabled, geo location headers will be included on inbound http requests. Existing headers will be replaced.
+        """
+        headers: NotRequired[pulumi.Input['WorkloadLoadBalancerGeoLocationHeadersArgsDict']]
+elif False:
+    WorkloadLoadBalancerGeoLocationArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadLoadBalancerGeoLocationArgs:
     def __init__(__self__, *,
                  enabled: Optional[pulumi.Input[bool]] = None,
                  headers: Optional[pulumi.Input['WorkloadLoadBalancerGeoLocationHeadersArgs']] = None):
-        WorkloadLoadBalancerGeoLocationArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            enabled=enabled,
-            headers=headers,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             enabled: Optional[pulumi.Input[bool]] = None,
-             headers: Optional[pulumi.Input['WorkloadLoadBalancerGeoLocationHeadersArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[bool] enabled: When enabled, geo location headers will be included on inbound http requests. Existing headers will be replaced.
+        """
         if enabled is not None:
-            _setter("enabled", enabled)
+            pulumi.set(__self__, "enabled", enabled)
         if headers is not None:
-            _setter("headers", headers)
+            pulumi.set(__self__, "headers", headers)
 
     @property
     @pulumi.getter
     def enabled(self) -> Optional[pulumi.Input[bool]]:
+        """
+        When enabled, geo location headers will be included on inbound http requests. Existing headers will be replaced.
+        """
         return pulumi.get(self, "enabled")
 
     @enabled.setter
@@ -12788,6 +13991,27 @@ class WorkloadLoadBalancerGeoLocationArgs:
         pulumi.set(self, "headers", value)
 
 
+if not MYPY:
+    class WorkloadLoadBalancerGeoLocationHeadersArgsDict(TypedDict):
+        asn: NotRequired[pulumi.Input[str]]
+        """
+        The geo asn header.
+        """
+        city: NotRequired[pulumi.Input[str]]
+        """
+        The geo city header.
+        """
+        country: NotRequired[pulumi.Input[str]]
+        """
+        The geo country header.
+        """
+        region: NotRequired[pulumi.Input[str]]
+        """
+        The geo region header.
+        """
+elif False:
+    WorkloadLoadBalancerGeoLocationHeadersArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadLoadBalancerGeoLocationHeadersArgs:
     def __init__(__self__, *,
@@ -12795,35 +14019,27 @@ class WorkloadLoadBalancerGeoLocationHeadersArgs:
                  city: Optional[pulumi.Input[str]] = None,
                  country: Optional[pulumi.Input[str]] = None,
                  region: Optional[pulumi.Input[str]] = None):
-        WorkloadLoadBalancerGeoLocationHeadersArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            asn=asn,
-            city=city,
-            country=country,
-            region=region,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             asn: Optional[pulumi.Input[str]] = None,
-             city: Optional[pulumi.Input[str]] = None,
-             country: Optional[pulumi.Input[str]] = None,
-             region: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[str] asn: The geo asn header.
+        :param pulumi.Input[str] city: The geo city header.
+        :param pulumi.Input[str] country: The geo country header.
+        :param pulumi.Input[str] region: The geo region header.
+        """
         if asn is not None:
-            _setter("asn", asn)
+            pulumi.set(__self__, "asn", asn)
         if city is not None:
-            _setter("city", city)
+            pulumi.set(__self__, "city", city)
         if country is not None:
-            _setter("country", country)
+            pulumi.set(__self__, "country", country)
         if region is not None:
-            _setter("region", region)
+            pulumi.set(__self__, "region", region)
 
     @property
     @pulumi.getter
     def asn(self) -> Optional[pulumi.Input[str]]:
+        """
+        The geo asn header.
+        """
         return pulumi.get(self, "asn")
 
     @asn.setter
@@ -12833,6 +14049,9 @@ class WorkloadLoadBalancerGeoLocationHeadersArgs:
     @property
     @pulumi.getter
     def city(self) -> Optional[pulumi.Input[str]]:
+        """
+        The geo city header.
+        """
         return pulumi.get(self, "city")
 
     @city.setter
@@ -12842,6 +14061,9 @@ class WorkloadLoadBalancerGeoLocationHeadersArgs:
     @property
     @pulumi.getter
     def country(self) -> Optional[pulumi.Input[str]]:
+        """
+        The geo country header.
+        """
         return pulumi.get(self, "country")
 
     @country.setter
@@ -12851,12 +14073,44 @@ class WorkloadLoadBalancerGeoLocationHeadersArgs:
     @property
     @pulumi.getter
     def region(self) -> Optional[pulumi.Input[str]]:
+        """
+        The geo region header.
+        """
         return pulumi.get(self, "region")
 
     @region.setter
     def region(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "region", value)
 
+
+if not MYPY:
+    class WorkloadLocalOptionArgsDict(TypedDict):
+        location: pulumi.Input[str]
+        """
+        Valid only for `local_options`. Override options for a specific location.
+        """
+        autoscaling: NotRequired[pulumi.Input['WorkloadLocalOptionAutoscalingArgsDict']]
+        """
+        Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+        """
+        capacity_ai: NotRequired[pulumi.Input[bool]]
+        """
+        Capacity AI. Default: `true`.
+        """
+        debug: NotRequired[pulumi.Input[bool]]
+        """
+        Debug mode. Default: `false`
+        """
+        suspend: NotRequired[pulumi.Input[bool]]
+        """
+        Workload suspend. Default: `false`
+        """
+        timeout_seconds: NotRequired[pulumi.Input[int]]
+        """
+        Timeout in seconds. Default: `5`.
+        """
+elif False:
+    WorkloadLocalOptionArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class WorkloadLocalOptionArgs:
@@ -12867,46 +14121,32 @@ class WorkloadLocalOptionArgs:
                  debug: Optional[pulumi.Input[bool]] = None,
                  suspend: Optional[pulumi.Input[bool]] = None,
                  timeout_seconds: Optional[pulumi.Input[int]] = None):
-        WorkloadLocalOptionArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            location=location,
-            autoscaling=autoscaling,
-            capacity_ai=capacity_ai,
-            debug=debug,
-            suspend=suspend,
-            timeout_seconds=timeout_seconds,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             location: pulumi.Input[str],
-             autoscaling: Optional[pulumi.Input['WorkloadLocalOptionAutoscalingArgs']] = None,
-             capacity_ai: Optional[pulumi.Input[bool]] = None,
-             debug: Optional[pulumi.Input[bool]] = None,
-             suspend: Optional[pulumi.Input[bool]] = None,
-             timeout_seconds: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'capacityAi' in kwargs:
-            capacity_ai = kwargs['capacityAi']
-        if 'timeoutSeconds' in kwargs:
-            timeout_seconds = kwargs['timeoutSeconds']
-
-        _setter("location", location)
+        """
+        :param pulumi.Input[str] location: Valid only for `local_options`. Override options for a specific location.
+        :param pulumi.Input['WorkloadLocalOptionAutoscalingArgs'] autoscaling: Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+        :param pulumi.Input[bool] capacity_ai: Capacity AI. Default: `true`.
+        :param pulumi.Input[bool] debug: Debug mode. Default: `false`
+        :param pulumi.Input[bool] suspend: Workload suspend. Default: `false`
+        :param pulumi.Input[int] timeout_seconds: Timeout in seconds. Default: `5`.
+        """
+        pulumi.set(__self__, "location", location)
         if autoscaling is not None:
-            _setter("autoscaling", autoscaling)
+            pulumi.set(__self__, "autoscaling", autoscaling)
         if capacity_ai is not None:
-            _setter("capacity_ai", capacity_ai)
+            pulumi.set(__self__, "capacity_ai", capacity_ai)
         if debug is not None:
-            _setter("debug", debug)
+            pulumi.set(__self__, "debug", debug)
         if suspend is not None:
-            _setter("suspend", suspend)
+            pulumi.set(__self__, "suspend", suspend)
         if timeout_seconds is not None:
-            _setter("timeout_seconds", timeout_seconds)
+            pulumi.set(__self__, "timeout_seconds", timeout_seconds)
 
     @property
     @pulumi.getter
     def location(self) -> pulumi.Input[str]:
+        """
+        Valid only for `local_options`. Override options for a specific location.
+        """
         return pulumi.get(self, "location")
 
     @location.setter
@@ -12916,6 +14156,9 @@ class WorkloadLocalOptionArgs:
     @property
     @pulumi.getter
     def autoscaling(self) -> Optional[pulumi.Input['WorkloadLocalOptionAutoscalingArgs']]:
+        """
+        Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+        """
         return pulumi.get(self, "autoscaling")
 
     @autoscaling.setter
@@ -12925,6 +14168,9 @@ class WorkloadLocalOptionArgs:
     @property
     @pulumi.getter(name="capacityAi")
     def capacity_ai(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Capacity AI. Default: `true`.
+        """
         return pulumi.get(self, "capacity_ai")
 
     @capacity_ai.setter
@@ -12934,6 +14180,9 @@ class WorkloadLocalOptionArgs:
     @property
     @pulumi.getter
     def debug(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Debug mode. Default: `false`
+        """
         return pulumi.get(self, "debug")
 
     @debug.setter
@@ -12943,6 +14192,9 @@ class WorkloadLocalOptionArgs:
     @property
     @pulumi.getter
     def suspend(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Workload suspend. Default: `false`
+        """
         return pulumi.get(self, "suspend")
 
     @suspend.setter
@@ -12952,12 +14204,49 @@ class WorkloadLocalOptionArgs:
     @property
     @pulumi.getter(name="timeoutSeconds")
     def timeout_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        Timeout in seconds. Default: `5`.
+        """
         return pulumi.get(self, "timeout_seconds")
 
     @timeout_seconds.setter
     def timeout_seconds(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "timeout_seconds", value)
 
+
+if not MYPY:
+    class WorkloadLocalOptionAutoscalingArgsDict(TypedDict):
+        max_concurrency: NotRequired[pulumi.Input[int]]
+        """
+        A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+        """
+        max_scale: NotRequired[pulumi.Input[int]]
+        """
+        The maximum allowed number of replicas. Min: `0`. Default `5`.
+        """
+        metric: NotRequired[pulumi.Input[str]]
+        """
+        Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+        """
+        metric_percentile: NotRequired[pulumi.Input[str]]
+        """
+        For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+        """
+        min_scale: NotRequired[pulumi.Input[int]]
+        """
+        The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `max_scale`. Default `1`.
+        """
+        multis: NotRequired[pulumi.Input[Sequence[pulumi.Input['WorkloadLocalOptionAutoscalingMultiArgsDict']]]]
+        scale_to_zero_delay: NotRequired[pulumi.Input[int]]
+        """
+        The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+        """
+        target: NotRequired[pulumi.Input[int]]
+        """
+        Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+        """
+elif False:
+    WorkloadLocalOptionAutoscalingArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class WorkloadLocalOptionAutoscalingArgs:
@@ -12970,61 +14259,38 @@ class WorkloadLocalOptionAutoscalingArgs:
                  multis: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadLocalOptionAutoscalingMultiArgs']]]] = None,
                  scale_to_zero_delay: Optional[pulumi.Input[int]] = None,
                  target: Optional[pulumi.Input[int]] = None):
-        WorkloadLocalOptionAutoscalingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            max_concurrency=max_concurrency,
-            max_scale=max_scale,
-            metric=metric,
-            metric_percentile=metric_percentile,
-            min_scale=min_scale,
-            multis=multis,
-            scale_to_zero_delay=scale_to_zero_delay,
-            target=target,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             max_concurrency: Optional[pulumi.Input[int]] = None,
-             max_scale: Optional[pulumi.Input[int]] = None,
-             metric: Optional[pulumi.Input[str]] = None,
-             metric_percentile: Optional[pulumi.Input[str]] = None,
-             min_scale: Optional[pulumi.Input[int]] = None,
-             multis: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadLocalOptionAutoscalingMultiArgs']]]] = None,
-             scale_to_zero_delay: Optional[pulumi.Input[int]] = None,
-             target: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'maxConcurrency' in kwargs:
-            max_concurrency = kwargs['maxConcurrency']
-        if 'maxScale' in kwargs:
-            max_scale = kwargs['maxScale']
-        if 'metricPercentile' in kwargs:
-            metric_percentile = kwargs['metricPercentile']
-        if 'minScale' in kwargs:
-            min_scale = kwargs['minScale']
-        if 'scaleToZeroDelay' in kwargs:
-            scale_to_zero_delay = kwargs['scaleToZeroDelay']
-
+        """
+        :param pulumi.Input[int] max_concurrency: A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+        :param pulumi.Input[int] max_scale: The maximum allowed number of replicas. Min: `0`. Default `5`.
+        :param pulumi.Input[str] metric: Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+        :param pulumi.Input[str] metric_percentile: For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+        :param pulumi.Input[int] min_scale: The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `max_scale`. Default `1`.
+        :param pulumi.Input[int] scale_to_zero_delay: The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+        :param pulumi.Input[int] target: Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+        """
         if max_concurrency is not None:
-            _setter("max_concurrency", max_concurrency)
+            pulumi.set(__self__, "max_concurrency", max_concurrency)
         if max_scale is not None:
-            _setter("max_scale", max_scale)
+            pulumi.set(__self__, "max_scale", max_scale)
         if metric is not None:
-            _setter("metric", metric)
+            pulumi.set(__self__, "metric", metric)
         if metric_percentile is not None:
-            _setter("metric_percentile", metric_percentile)
+            pulumi.set(__self__, "metric_percentile", metric_percentile)
         if min_scale is not None:
-            _setter("min_scale", min_scale)
+            pulumi.set(__self__, "min_scale", min_scale)
         if multis is not None:
-            _setter("multis", multis)
+            pulumi.set(__self__, "multis", multis)
         if scale_to_zero_delay is not None:
-            _setter("scale_to_zero_delay", scale_to_zero_delay)
+            pulumi.set(__self__, "scale_to_zero_delay", scale_to_zero_delay)
         if target is not None:
-            _setter("target", target)
+            pulumi.set(__self__, "target", target)
 
     @property
     @pulumi.getter(name="maxConcurrency")
     def max_concurrency(self) -> Optional[pulumi.Input[int]]:
+        """
+        A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+        """
         return pulumi.get(self, "max_concurrency")
 
     @max_concurrency.setter
@@ -13034,6 +14300,9 @@ class WorkloadLocalOptionAutoscalingArgs:
     @property
     @pulumi.getter(name="maxScale")
     def max_scale(self) -> Optional[pulumi.Input[int]]:
+        """
+        The maximum allowed number of replicas. Min: `0`. Default `5`.
+        """
         return pulumi.get(self, "max_scale")
 
     @max_scale.setter
@@ -13043,6 +14312,9 @@ class WorkloadLocalOptionAutoscalingArgs:
     @property
     @pulumi.getter
     def metric(self) -> Optional[pulumi.Input[str]]:
+        """
+        Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+        """
         return pulumi.get(self, "metric")
 
     @metric.setter
@@ -13052,6 +14324,9 @@ class WorkloadLocalOptionAutoscalingArgs:
     @property
     @pulumi.getter(name="metricPercentile")
     def metric_percentile(self) -> Optional[pulumi.Input[str]]:
+        """
+        For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+        """
         return pulumi.get(self, "metric_percentile")
 
     @metric_percentile.setter
@@ -13061,6 +14336,9 @@ class WorkloadLocalOptionAutoscalingArgs:
     @property
     @pulumi.getter(name="minScale")
     def min_scale(self) -> Optional[pulumi.Input[int]]:
+        """
+        The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `max_scale`. Default `1`.
+        """
         return pulumi.get(self, "min_scale")
 
     @min_scale.setter
@@ -13079,6 +14357,9 @@ class WorkloadLocalOptionAutoscalingArgs:
     @property
     @pulumi.getter(name="scaleToZeroDelay")
     def scale_to_zero_delay(self) -> Optional[pulumi.Input[int]]:
+        """
+        The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+        """
         return pulumi.get(self, "scale_to_zero_delay")
 
     @scale_to_zero_delay.setter
@@ -13088,6 +14369,9 @@ class WorkloadLocalOptionAutoscalingArgs:
     @property
     @pulumi.getter
     def target(self) -> Optional[pulumi.Input[int]]:
+        """
+        Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+        """
         return pulumi.get(self, "target")
 
     @target.setter
@@ -13095,32 +14379,39 @@ class WorkloadLocalOptionAutoscalingArgs:
         pulumi.set(self, "target", value)
 
 
+if not MYPY:
+    class WorkloadLocalOptionAutoscalingMultiArgsDict(TypedDict):
+        metric: NotRequired[pulumi.Input[str]]
+        """
+        Valid values: `cpu` or `memory`.
+        """
+        target: NotRequired[pulumi.Input[int]]
+        """
+        Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+        """
+elif False:
+    WorkloadLocalOptionAutoscalingMultiArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadLocalOptionAutoscalingMultiArgs:
     def __init__(__self__, *,
                  metric: Optional[pulumi.Input[str]] = None,
                  target: Optional[pulumi.Input[int]] = None):
-        WorkloadLocalOptionAutoscalingMultiArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            metric=metric,
-            target=target,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             metric: Optional[pulumi.Input[str]] = None,
-             target: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[str] metric: Valid values: `cpu` or `memory`.
+        :param pulumi.Input[int] target: Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+        """
         if metric is not None:
-            _setter("metric", metric)
+            pulumi.set(__self__, "metric", metric)
         if target is not None:
-            _setter("target", target)
+            pulumi.set(__self__, "target", target)
 
     @property
     @pulumi.getter
     def metric(self) -> Optional[pulumi.Input[str]]:
+        """
+        Valid values: `cpu` or `memory`.
+        """
         return pulumi.get(self, "metric")
 
     @metric.setter
@@ -13130,12 +14421,40 @@ class WorkloadLocalOptionAutoscalingMultiArgs:
     @property
     @pulumi.getter
     def target(self) -> Optional[pulumi.Input[int]]:
+        """
+        Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+        """
         return pulumi.get(self, "target")
 
     @target.setter
     def target(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "target", value)
 
+
+if not MYPY:
+    class WorkloadOptionsArgsDict(TypedDict):
+        autoscaling: NotRequired[pulumi.Input['WorkloadOptionsAutoscalingArgsDict']]
+        """
+        Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+        """
+        capacity_ai: NotRequired[pulumi.Input[bool]]
+        """
+        Capacity AI. Default: `true`.
+        """
+        debug: NotRequired[pulumi.Input[bool]]
+        """
+        Debug mode. Default: `false`
+        """
+        suspend: NotRequired[pulumi.Input[bool]]
+        """
+        Workload suspend. Default: `false`
+        """
+        timeout_seconds: NotRequired[pulumi.Input[int]]
+        """
+        Timeout in seconds. Default: `5`.
+        """
+elif False:
+    WorkloadOptionsArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class WorkloadOptionsArgs:
@@ -13145,43 +14464,30 @@ class WorkloadOptionsArgs:
                  debug: Optional[pulumi.Input[bool]] = None,
                  suspend: Optional[pulumi.Input[bool]] = None,
                  timeout_seconds: Optional[pulumi.Input[int]] = None):
-        WorkloadOptionsArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            autoscaling=autoscaling,
-            capacity_ai=capacity_ai,
-            debug=debug,
-            suspend=suspend,
-            timeout_seconds=timeout_seconds,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             autoscaling: Optional[pulumi.Input['WorkloadOptionsAutoscalingArgs']] = None,
-             capacity_ai: Optional[pulumi.Input[bool]] = None,
-             debug: Optional[pulumi.Input[bool]] = None,
-             suspend: Optional[pulumi.Input[bool]] = None,
-             timeout_seconds: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'capacityAi' in kwargs:
-            capacity_ai = kwargs['capacityAi']
-        if 'timeoutSeconds' in kwargs:
-            timeout_seconds = kwargs['timeoutSeconds']
-
+        """
+        :param pulumi.Input['WorkloadOptionsAutoscalingArgs'] autoscaling: Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+        :param pulumi.Input[bool] capacity_ai: Capacity AI. Default: `true`.
+        :param pulumi.Input[bool] debug: Debug mode. Default: `false`
+        :param pulumi.Input[bool] suspend: Workload suspend. Default: `false`
+        :param pulumi.Input[int] timeout_seconds: Timeout in seconds. Default: `5`.
+        """
         if autoscaling is not None:
-            _setter("autoscaling", autoscaling)
+            pulumi.set(__self__, "autoscaling", autoscaling)
         if capacity_ai is not None:
-            _setter("capacity_ai", capacity_ai)
+            pulumi.set(__self__, "capacity_ai", capacity_ai)
         if debug is not None:
-            _setter("debug", debug)
+            pulumi.set(__self__, "debug", debug)
         if suspend is not None:
-            _setter("suspend", suspend)
+            pulumi.set(__self__, "suspend", suspend)
         if timeout_seconds is not None:
-            _setter("timeout_seconds", timeout_seconds)
+            pulumi.set(__self__, "timeout_seconds", timeout_seconds)
 
     @property
     @pulumi.getter
     def autoscaling(self) -> Optional[pulumi.Input['WorkloadOptionsAutoscalingArgs']]:
+        """
+        Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+        """
         return pulumi.get(self, "autoscaling")
 
     @autoscaling.setter
@@ -13191,6 +14497,9 @@ class WorkloadOptionsArgs:
     @property
     @pulumi.getter(name="capacityAi")
     def capacity_ai(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Capacity AI. Default: `true`.
+        """
         return pulumi.get(self, "capacity_ai")
 
     @capacity_ai.setter
@@ -13200,6 +14509,9 @@ class WorkloadOptionsArgs:
     @property
     @pulumi.getter
     def debug(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Debug mode. Default: `false`
+        """
         return pulumi.get(self, "debug")
 
     @debug.setter
@@ -13209,6 +14521,9 @@ class WorkloadOptionsArgs:
     @property
     @pulumi.getter
     def suspend(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Workload suspend. Default: `false`
+        """
         return pulumi.get(self, "suspend")
 
     @suspend.setter
@@ -13218,12 +14533,49 @@ class WorkloadOptionsArgs:
     @property
     @pulumi.getter(name="timeoutSeconds")
     def timeout_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        Timeout in seconds. Default: `5`.
+        """
         return pulumi.get(self, "timeout_seconds")
 
     @timeout_seconds.setter
     def timeout_seconds(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "timeout_seconds", value)
 
+
+if not MYPY:
+    class WorkloadOptionsAutoscalingArgsDict(TypedDict):
+        max_concurrency: NotRequired[pulumi.Input[int]]
+        """
+        A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+        """
+        max_scale: NotRequired[pulumi.Input[int]]
+        """
+        The maximum allowed number of replicas. Min: `0`. Default `5`.
+        """
+        metric: NotRequired[pulumi.Input[str]]
+        """
+        Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+        """
+        metric_percentile: NotRequired[pulumi.Input[str]]
+        """
+        For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+        """
+        min_scale: NotRequired[pulumi.Input[int]]
+        """
+        The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `max_scale`. Default `1`.
+        """
+        multis: NotRequired[pulumi.Input[Sequence[pulumi.Input['WorkloadOptionsAutoscalingMultiArgsDict']]]]
+        scale_to_zero_delay: NotRequired[pulumi.Input[int]]
+        """
+        The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+        """
+        target: NotRequired[pulumi.Input[int]]
+        """
+        Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+        """
+elif False:
+    WorkloadOptionsAutoscalingArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class WorkloadOptionsAutoscalingArgs:
@@ -13236,61 +14588,38 @@ class WorkloadOptionsAutoscalingArgs:
                  multis: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadOptionsAutoscalingMultiArgs']]]] = None,
                  scale_to_zero_delay: Optional[pulumi.Input[int]] = None,
                  target: Optional[pulumi.Input[int]] = None):
-        WorkloadOptionsAutoscalingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            max_concurrency=max_concurrency,
-            max_scale=max_scale,
-            metric=metric,
-            metric_percentile=metric_percentile,
-            min_scale=min_scale,
-            multis=multis,
-            scale_to_zero_delay=scale_to_zero_delay,
-            target=target,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             max_concurrency: Optional[pulumi.Input[int]] = None,
-             max_scale: Optional[pulumi.Input[int]] = None,
-             metric: Optional[pulumi.Input[str]] = None,
-             metric_percentile: Optional[pulumi.Input[str]] = None,
-             min_scale: Optional[pulumi.Input[int]] = None,
-             multis: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadOptionsAutoscalingMultiArgs']]]] = None,
-             scale_to_zero_delay: Optional[pulumi.Input[int]] = None,
-             target: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'maxConcurrency' in kwargs:
-            max_concurrency = kwargs['maxConcurrency']
-        if 'maxScale' in kwargs:
-            max_scale = kwargs['maxScale']
-        if 'metricPercentile' in kwargs:
-            metric_percentile = kwargs['metricPercentile']
-        if 'minScale' in kwargs:
-            min_scale = kwargs['minScale']
-        if 'scaleToZeroDelay' in kwargs:
-            scale_to_zero_delay = kwargs['scaleToZeroDelay']
-
+        """
+        :param pulumi.Input[int] max_concurrency: A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+        :param pulumi.Input[int] max_scale: The maximum allowed number of replicas. Min: `0`. Default `5`.
+        :param pulumi.Input[str] metric: Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+        :param pulumi.Input[str] metric_percentile: For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+        :param pulumi.Input[int] min_scale: The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `max_scale`. Default `1`.
+        :param pulumi.Input[int] scale_to_zero_delay: The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+        :param pulumi.Input[int] target: Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+        """
         if max_concurrency is not None:
-            _setter("max_concurrency", max_concurrency)
+            pulumi.set(__self__, "max_concurrency", max_concurrency)
         if max_scale is not None:
-            _setter("max_scale", max_scale)
+            pulumi.set(__self__, "max_scale", max_scale)
         if metric is not None:
-            _setter("metric", metric)
+            pulumi.set(__self__, "metric", metric)
         if metric_percentile is not None:
-            _setter("metric_percentile", metric_percentile)
+            pulumi.set(__self__, "metric_percentile", metric_percentile)
         if min_scale is not None:
-            _setter("min_scale", min_scale)
+            pulumi.set(__self__, "min_scale", min_scale)
         if multis is not None:
-            _setter("multis", multis)
+            pulumi.set(__self__, "multis", multis)
         if scale_to_zero_delay is not None:
-            _setter("scale_to_zero_delay", scale_to_zero_delay)
+            pulumi.set(__self__, "scale_to_zero_delay", scale_to_zero_delay)
         if target is not None:
-            _setter("target", target)
+            pulumi.set(__self__, "target", target)
 
     @property
     @pulumi.getter(name="maxConcurrency")
     def max_concurrency(self) -> Optional[pulumi.Input[int]]:
+        """
+        A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+        """
         return pulumi.get(self, "max_concurrency")
 
     @max_concurrency.setter
@@ -13300,6 +14629,9 @@ class WorkloadOptionsAutoscalingArgs:
     @property
     @pulumi.getter(name="maxScale")
     def max_scale(self) -> Optional[pulumi.Input[int]]:
+        """
+        The maximum allowed number of replicas. Min: `0`. Default `5`.
+        """
         return pulumi.get(self, "max_scale")
 
     @max_scale.setter
@@ -13309,6 +14641,9 @@ class WorkloadOptionsAutoscalingArgs:
     @property
     @pulumi.getter
     def metric(self) -> Optional[pulumi.Input[str]]:
+        """
+        Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+        """
         return pulumi.get(self, "metric")
 
     @metric.setter
@@ -13318,6 +14653,9 @@ class WorkloadOptionsAutoscalingArgs:
     @property
     @pulumi.getter(name="metricPercentile")
     def metric_percentile(self) -> Optional[pulumi.Input[str]]:
+        """
+        For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+        """
         return pulumi.get(self, "metric_percentile")
 
     @metric_percentile.setter
@@ -13327,6 +14665,9 @@ class WorkloadOptionsAutoscalingArgs:
     @property
     @pulumi.getter(name="minScale")
     def min_scale(self) -> Optional[pulumi.Input[int]]:
+        """
+        The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `max_scale`. Default `1`.
+        """
         return pulumi.get(self, "min_scale")
 
     @min_scale.setter
@@ -13345,6 +14686,9 @@ class WorkloadOptionsAutoscalingArgs:
     @property
     @pulumi.getter(name="scaleToZeroDelay")
     def scale_to_zero_delay(self) -> Optional[pulumi.Input[int]]:
+        """
+        The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+        """
         return pulumi.get(self, "scale_to_zero_delay")
 
     @scale_to_zero_delay.setter
@@ -13354,6 +14698,9 @@ class WorkloadOptionsAutoscalingArgs:
     @property
     @pulumi.getter
     def target(self) -> Optional[pulumi.Input[int]]:
+        """
+        Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+        """
         return pulumi.get(self, "target")
 
     @target.setter
@@ -13361,32 +14708,39 @@ class WorkloadOptionsAutoscalingArgs:
         pulumi.set(self, "target", value)
 
 
+if not MYPY:
+    class WorkloadOptionsAutoscalingMultiArgsDict(TypedDict):
+        metric: NotRequired[pulumi.Input[str]]
+        """
+        Valid values: `cpu` or `memory`.
+        """
+        target: NotRequired[pulumi.Input[int]]
+        """
+        Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+        """
+elif False:
+    WorkloadOptionsAutoscalingMultiArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadOptionsAutoscalingMultiArgs:
     def __init__(__self__, *,
                  metric: Optional[pulumi.Input[str]] = None,
                  target: Optional[pulumi.Input[int]] = None):
-        WorkloadOptionsAutoscalingMultiArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            metric=metric,
-            target=target,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             metric: Optional[pulumi.Input[str]] = None,
-             target: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[str] metric: Valid values: `cpu` or `memory`.
+        :param pulumi.Input[int] target: Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+        """
         if metric is not None:
-            _setter("metric", metric)
+            pulumi.set(__self__, "metric", metric)
         if target is not None:
-            _setter("target", target)
+            pulumi.set(__self__, "target", target)
 
     @property
     @pulumi.getter
     def metric(self) -> Optional[pulumi.Input[str]]:
+        """
+        Valid values: `cpu` or `memory`.
+        """
         return pulumi.get(self, "metric")
 
     @metric.setter
@@ -13396,12 +14750,36 @@ class WorkloadOptionsAutoscalingMultiArgs:
     @property
     @pulumi.getter
     def target(self) -> Optional[pulumi.Input[int]]:
+        """
+        Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+        """
         return pulumi.get(self, "target")
 
     @target.setter
     def target(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "target", value)
 
+
+if not MYPY:
+    class WorkloadRolloutOptionsArgsDict(TypedDict):
+        max_surge_replicas: NotRequired[pulumi.Input[str]]
+        """
+        The number of replicas that can be created above the desired amount of replicas during an update.
+        """
+        max_unavailable_replicas: NotRequired[pulumi.Input[str]]
+        """
+        The number of replicas that can be unavailable during the update process.
+        """
+        min_ready_seconds: NotRequired[pulumi.Input[int]]
+        """
+        The minimum number of seconds a container must run without crashing to be considered available
+        """
+        scaling_policy: NotRequired[pulumi.Input[str]]
+        """
+        The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+        """
+elif False:
+    WorkloadRolloutOptionsArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class WorkloadRolloutOptionsArgs:
@@ -13410,43 +14788,27 @@ class WorkloadRolloutOptionsArgs:
                  max_unavailable_replicas: Optional[pulumi.Input[str]] = None,
                  min_ready_seconds: Optional[pulumi.Input[int]] = None,
                  scaling_policy: Optional[pulumi.Input[str]] = None):
-        WorkloadRolloutOptionsArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            max_surge_replicas=max_surge_replicas,
-            max_unavailable_replicas=max_unavailable_replicas,
-            min_ready_seconds=min_ready_seconds,
-            scaling_policy=scaling_policy,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             max_surge_replicas: Optional[pulumi.Input[str]] = None,
-             max_unavailable_replicas: Optional[pulumi.Input[str]] = None,
-             min_ready_seconds: Optional[pulumi.Input[int]] = None,
-             scaling_policy: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'maxSurgeReplicas' in kwargs:
-            max_surge_replicas = kwargs['maxSurgeReplicas']
-        if 'maxUnavailableReplicas' in kwargs:
-            max_unavailable_replicas = kwargs['maxUnavailableReplicas']
-        if 'minReadySeconds' in kwargs:
-            min_ready_seconds = kwargs['minReadySeconds']
-        if 'scalingPolicy' in kwargs:
-            scaling_policy = kwargs['scalingPolicy']
-
+        """
+        :param pulumi.Input[str] max_surge_replicas: The number of replicas that can be created above the desired amount of replicas during an update.
+        :param pulumi.Input[str] max_unavailable_replicas: The number of replicas that can be unavailable during the update process.
+        :param pulumi.Input[int] min_ready_seconds: The minimum number of seconds a container must run without crashing to be considered available
+        :param pulumi.Input[str] scaling_policy: The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+        """
         if max_surge_replicas is not None:
-            _setter("max_surge_replicas", max_surge_replicas)
+            pulumi.set(__self__, "max_surge_replicas", max_surge_replicas)
         if max_unavailable_replicas is not None:
-            _setter("max_unavailable_replicas", max_unavailable_replicas)
+            pulumi.set(__self__, "max_unavailable_replicas", max_unavailable_replicas)
         if min_ready_seconds is not None:
-            _setter("min_ready_seconds", min_ready_seconds)
+            pulumi.set(__self__, "min_ready_seconds", min_ready_seconds)
         if scaling_policy is not None:
-            _setter("scaling_policy", scaling_policy)
+            pulumi.set(__self__, "scaling_policy", scaling_policy)
 
     @property
     @pulumi.getter(name="maxSurgeReplicas")
     def max_surge_replicas(self) -> Optional[pulumi.Input[str]]:
+        """
+        The number of replicas that can be created above the desired amount of replicas during an update.
+        """
         return pulumi.get(self, "max_surge_replicas")
 
     @max_surge_replicas.setter
@@ -13456,6 +14818,9 @@ class WorkloadRolloutOptionsArgs:
     @property
     @pulumi.getter(name="maxUnavailableReplicas")
     def max_unavailable_replicas(self) -> Optional[pulumi.Input[str]]:
+        """
+        The number of replicas that can be unavailable during the update process.
+        """
         return pulumi.get(self, "max_unavailable_replicas")
 
     @max_unavailable_replicas.setter
@@ -13465,6 +14830,9 @@ class WorkloadRolloutOptionsArgs:
     @property
     @pulumi.getter(name="minReadySeconds")
     def min_ready_seconds(self) -> Optional[pulumi.Input[int]]:
+        """
+        The minimum number of seconds a container must run without crashing to be considered available
+        """
         return pulumi.get(self, "min_ready_seconds")
 
     @min_ready_seconds.setter
@@ -13474,6 +14842,9 @@ class WorkloadRolloutOptionsArgs:
     @property
     @pulumi.getter(name="scalingPolicy")
     def scaling_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+        """
         return pulumi.get(self, "scaling_policy")
 
     @scaling_policy.setter
@@ -13481,30 +14852,28 @@ class WorkloadRolloutOptionsArgs:
         pulumi.set(self, "scaling_policy", value)
 
 
+if not MYPY:
+    class WorkloadSecurityOptionsArgsDict(TypedDict):
+        _sentinel: NotRequired[pulumi.Input[bool]]
+        file_system_group_id: NotRequired[pulumi.Input[int]]
+        """
+        The group id assigned to any mounted volume.
+        """
+elif False:
+    WorkloadSecurityOptionsArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadSecurityOptionsArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[pulumi.Input[bool]] = None,
                  file_system_group_id: Optional[pulumi.Input[int]] = None):
-        WorkloadSecurityOptionsArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            file_system_group_id=file_system_group_id,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[pulumi.Input[bool]] = None,
-             file_system_group_id: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'fileSystemGroupId' in kwargs:
-            file_system_group_id = kwargs['fileSystemGroupId']
-
+        """
+        :param pulumi.Input[int] file_system_group_id: The group id assigned to any mounted volume.
+        """
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if file_system_group_id is not None:
-            _setter("file_system_group_id", file_system_group_id)
+            pulumi.set(__self__, "file_system_group_id", file_system_group_id)
 
     @property
     @pulumi.getter
@@ -13518,6 +14887,9 @@ class WorkloadSecurityOptionsArgs:
     @property
     @pulumi.getter(name="fileSystemGroupId")
     def file_system_group_id(self) -> Optional[pulumi.Input[int]]:
+        """
+        The group id assigned to any mounted volume.
+        """
         return pulumi.get(self, "file_system_group_id")
 
     @file_system_group_id.setter
@@ -13525,22 +14897,17 @@ class WorkloadSecurityOptionsArgs:
         pulumi.set(self, "file_system_group_id", value)
 
 
+if not MYPY:
+    class WorkloadSidecarArgsDict(TypedDict):
+        envoy: pulumi.Input[str]
+elif False:
+    WorkloadSidecarArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadSidecarArgs:
     def __init__(__self__, *,
                  envoy: pulumi.Input[str]):
-        WorkloadSidecarArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            envoy=envoy,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             envoy: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("envoy", envoy)
+        pulumi.set(__self__, "envoy", envoy)
 
     @property
     @pulumi.getter
@@ -13551,6 +14918,40 @@ class WorkloadSidecarArgs:
     def envoy(self, value: pulumi.Input[str]):
         pulumi.set(self, "envoy", value)
 
+
+if not MYPY:
+    class WorkloadStatusArgsDict(TypedDict):
+        canonical_endpoint: NotRequired[pulumi.Input[str]]
+        """
+        Canonical endpoint for the workload.
+        """
+        current_replica_count: NotRequired[pulumi.Input[int]]
+        """
+        Current amount of replicas deployed.
+        """
+        endpoint: NotRequired[pulumi.Input[str]]
+        """
+        Endpoint for the workload.
+        """
+        health_checks: NotRequired[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusHealthCheckArgsDict']]]]
+        """
+        Current health status.
+        """
+        internal_name: NotRequired[pulumi.Input[str]]
+        """
+        Internal hostname for the workload. Used for service-to-service requests.
+        """
+        load_balancers: NotRequired[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusLoadBalancerArgsDict']]]]
+        parent_id: NotRequired[pulumi.Input[str]]
+        """
+        ID of the parent object.
+        """
+        resolved_images: NotRequired[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageArgsDict']]]]
+        """
+        Resolved images for workloads with dynamic tags enabled.
+        """
+elif False:
+    WorkloadStatusArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class WorkloadStatusArgs:
@@ -13563,65 +14964,38 @@ class WorkloadStatusArgs:
                  load_balancers: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusLoadBalancerArgs']]]] = None,
                  parent_id: Optional[pulumi.Input[str]] = None,
                  resolved_images: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageArgs']]]] = None):
-        WorkloadStatusArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            canonical_endpoint=canonical_endpoint,
-            current_replica_count=current_replica_count,
-            endpoint=endpoint,
-            health_checks=health_checks,
-            internal_name=internal_name,
-            load_balancers=load_balancers,
-            parent_id=parent_id,
-            resolved_images=resolved_images,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             canonical_endpoint: Optional[pulumi.Input[str]] = None,
-             current_replica_count: Optional[pulumi.Input[int]] = None,
-             endpoint: Optional[pulumi.Input[str]] = None,
-             health_checks: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusHealthCheckArgs']]]] = None,
-             internal_name: Optional[pulumi.Input[str]] = None,
-             load_balancers: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusLoadBalancerArgs']]]] = None,
-             parent_id: Optional[pulumi.Input[str]] = None,
-             resolved_images: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'canonicalEndpoint' in kwargs:
-            canonical_endpoint = kwargs['canonicalEndpoint']
-        if 'currentReplicaCount' in kwargs:
-            current_replica_count = kwargs['currentReplicaCount']
-        if 'healthChecks' in kwargs:
-            health_checks = kwargs['healthChecks']
-        if 'internalName' in kwargs:
-            internal_name = kwargs['internalName']
-        if 'loadBalancers' in kwargs:
-            load_balancers = kwargs['loadBalancers']
-        if 'parentId' in kwargs:
-            parent_id = kwargs['parentId']
-        if 'resolvedImages' in kwargs:
-            resolved_images = kwargs['resolvedImages']
-
+        """
+        :param pulumi.Input[str] canonical_endpoint: Canonical endpoint for the workload.
+        :param pulumi.Input[int] current_replica_count: Current amount of replicas deployed.
+        :param pulumi.Input[str] endpoint: Endpoint for the workload.
+        :param pulumi.Input[Sequence[pulumi.Input['WorkloadStatusHealthCheckArgs']]] health_checks: Current health status.
+        :param pulumi.Input[str] internal_name: Internal hostname for the workload. Used for service-to-service requests.
+        :param pulumi.Input[str] parent_id: ID of the parent object.
+        :param pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageArgs']]] resolved_images: Resolved images for workloads with dynamic tags enabled.
+        """
         if canonical_endpoint is not None:
-            _setter("canonical_endpoint", canonical_endpoint)
+            pulumi.set(__self__, "canonical_endpoint", canonical_endpoint)
         if current_replica_count is not None:
-            _setter("current_replica_count", current_replica_count)
+            pulumi.set(__self__, "current_replica_count", current_replica_count)
         if endpoint is not None:
-            _setter("endpoint", endpoint)
+            pulumi.set(__self__, "endpoint", endpoint)
         if health_checks is not None:
-            _setter("health_checks", health_checks)
+            pulumi.set(__self__, "health_checks", health_checks)
         if internal_name is not None:
-            _setter("internal_name", internal_name)
+            pulumi.set(__self__, "internal_name", internal_name)
         if load_balancers is not None:
-            _setter("load_balancers", load_balancers)
+            pulumi.set(__self__, "load_balancers", load_balancers)
         if parent_id is not None:
-            _setter("parent_id", parent_id)
+            pulumi.set(__self__, "parent_id", parent_id)
         if resolved_images is not None:
-            _setter("resolved_images", resolved_images)
+            pulumi.set(__self__, "resolved_images", resolved_images)
 
     @property
     @pulumi.getter(name="canonicalEndpoint")
     def canonical_endpoint(self) -> Optional[pulumi.Input[str]]:
+        """
+        Canonical endpoint for the workload.
+        """
         return pulumi.get(self, "canonical_endpoint")
 
     @canonical_endpoint.setter
@@ -13631,6 +15005,9 @@ class WorkloadStatusArgs:
     @property
     @pulumi.getter(name="currentReplicaCount")
     def current_replica_count(self) -> Optional[pulumi.Input[int]]:
+        """
+        Current amount of replicas deployed.
+        """
         return pulumi.get(self, "current_replica_count")
 
     @current_replica_count.setter
@@ -13640,6 +15017,9 @@ class WorkloadStatusArgs:
     @property
     @pulumi.getter
     def endpoint(self) -> Optional[pulumi.Input[str]]:
+        """
+        Endpoint for the workload.
+        """
         return pulumi.get(self, "endpoint")
 
     @endpoint.setter
@@ -13649,6 +15029,9 @@ class WorkloadStatusArgs:
     @property
     @pulumi.getter(name="healthChecks")
     def health_checks(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusHealthCheckArgs']]]]:
+        """
+        Current health status.
+        """
         return pulumi.get(self, "health_checks")
 
     @health_checks.setter
@@ -13658,6 +15041,9 @@ class WorkloadStatusArgs:
     @property
     @pulumi.getter(name="internalName")
     def internal_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        Internal hostname for the workload. Used for service-to-service requests.
+        """
         return pulumi.get(self, "internal_name")
 
     @internal_name.setter
@@ -13676,6 +15062,9 @@ class WorkloadStatusArgs:
     @property
     @pulumi.getter(name="parentId")
     def parent_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        ID of the parent object.
+        """
         return pulumi.get(self, "parent_id")
 
     @parent_id.setter
@@ -13685,12 +15074,48 @@ class WorkloadStatusArgs:
     @property
     @pulumi.getter(name="resolvedImages")
     def resolved_images(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageArgs']]]]:
+        """
+        Resolved images for workloads with dynamic tags enabled.
+        """
         return pulumi.get(self, "resolved_images")
 
     @resolved_images.setter
     def resolved_images(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageArgs']]]]):
         pulumi.set(self, "resolved_images", value)
 
+
+if not MYPY:
+    class WorkloadStatusHealthCheckArgsDict(TypedDict):
+        active: pulumi.Input[bool]
+        """
+        Active boolean for the associated workload.
+        """
+        code: NotRequired[pulumi.Input[int]]
+        """
+        Current output code for the associated workload.
+        """
+        failures: NotRequired[pulumi.Input[int]]
+        """
+        Failure integer for the associated workload.
+        """
+        last_checked: NotRequired[pulumi.Input[str]]
+        """
+        Timestamp in UTC of the last health check.
+        """
+        message: NotRequired[pulumi.Input[str]]
+        """
+        Current health status for the associated workload.
+        """
+        success: NotRequired[pulumi.Input[bool]]
+        """
+        Success boolean for the associated workload.
+        """
+        successes: NotRequired[pulumi.Input[int]]
+        """
+        Success integer for the associated workload.
+        """
+elif False:
+    WorkloadStatusHealthCheckArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class WorkloadStatusHealthCheckArgs:
@@ -13702,48 +15127,35 @@ class WorkloadStatusHealthCheckArgs:
                  message: Optional[pulumi.Input[str]] = None,
                  success: Optional[pulumi.Input[bool]] = None,
                  successes: Optional[pulumi.Input[int]] = None):
-        WorkloadStatusHealthCheckArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            active=active,
-            code=code,
-            failures=failures,
-            last_checked=last_checked,
-            message=message,
-            success=success,
-            successes=successes,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             active: pulumi.Input[bool],
-             code: Optional[pulumi.Input[int]] = None,
-             failures: Optional[pulumi.Input[int]] = None,
-             last_checked: Optional[pulumi.Input[str]] = None,
-             message: Optional[pulumi.Input[str]] = None,
-             success: Optional[pulumi.Input[bool]] = None,
-             successes: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'lastChecked' in kwargs:
-            last_checked = kwargs['lastChecked']
-
-        _setter("active", active)
+        """
+        :param pulumi.Input[bool] active: Active boolean for the associated workload.
+        :param pulumi.Input[int] code: Current output code for the associated workload.
+        :param pulumi.Input[int] failures: Failure integer for the associated workload.
+        :param pulumi.Input[str] last_checked: Timestamp in UTC of the last health check.
+        :param pulumi.Input[str] message: Current health status for the associated workload.
+        :param pulumi.Input[bool] success: Success boolean for the associated workload.
+        :param pulumi.Input[int] successes: Success integer for the associated workload.
+        """
+        pulumi.set(__self__, "active", active)
         if code is not None:
-            _setter("code", code)
+            pulumi.set(__self__, "code", code)
         if failures is not None:
-            _setter("failures", failures)
+            pulumi.set(__self__, "failures", failures)
         if last_checked is not None:
-            _setter("last_checked", last_checked)
+            pulumi.set(__self__, "last_checked", last_checked)
         if message is not None:
-            _setter("message", message)
+            pulumi.set(__self__, "message", message)
         if success is not None:
-            _setter("success", success)
+            pulumi.set(__self__, "success", success)
         if successes is not None:
-            _setter("successes", successes)
+            pulumi.set(__self__, "successes", successes)
 
     @property
     @pulumi.getter
     def active(self) -> pulumi.Input[bool]:
+        """
+        Active boolean for the associated workload.
+        """
         return pulumi.get(self, "active")
 
     @active.setter
@@ -13753,6 +15165,9 @@ class WorkloadStatusHealthCheckArgs:
     @property
     @pulumi.getter
     def code(self) -> Optional[pulumi.Input[int]]:
+        """
+        Current output code for the associated workload.
+        """
         return pulumi.get(self, "code")
 
     @code.setter
@@ -13762,6 +15177,9 @@ class WorkloadStatusHealthCheckArgs:
     @property
     @pulumi.getter
     def failures(self) -> Optional[pulumi.Input[int]]:
+        """
+        Failure integer for the associated workload.
+        """
         return pulumi.get(self, "failures")
 
     @failures.setter
@@ -13771,6 +15189,9 @@ class WorkloadStatusHealthCheckArgs:
     @property
     @pulumi.getter(name="lastChecked")
     def last_checked(self) -> Optional[pulumi.Input[str]]:
+        """
+        Timestamp in UTC of the last health check.
+        """
         return pulumi.get(self, "last_checked")
 
     @last_checked.setter
@@ -13780,6 +15201,9 @@ class WorkloadStatusHealthCheckArgs:
     @property
     @pulumi.getter
     def message(self) -> Optional[pulumi.Input[str]]:
+        """
+        Current health status for the associated workload.
+        """
         return pulumi.get(self, "message")
 
     @message.setter
@@ -13789,6 +15213,9 @@ class WorkloadStatusHealthCheckArgs:
     @property
     @pulumi.getter
     def success(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Success boolean for the associated workload.
+        """
         return pulumi.get(self, "success")
 
     @success.setter
@@ -13798,6 +15225,9 @@ class WorkloadStatusHealthCheckArgs:
     @property
     @pulumi.getter
     def successes(self) -> Optional[pulumi.Input[int]]:
+        """
+        Success integer for the associated workload.
+        """
         return pulumi.get(self, "successes")
 
     @successes.setter
@@ -13805,28 +15235,22 @@ class WorkloadStatusHealthCheckArgs:
         pulumi.set(self, "successes", value)
 
 
+if not MYPY:
+    class WorkloadStatusLoadBalancerArgsDict(TypedDict):
+        origin: NotRequired[pulumi.Input[str]]
+        url: NotRequired[pulumi.Input[str]]
+elif False:
+    WorkloadStatusLoadBalancerArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadStatusLoadBalancerArgs:
     def __init__(__self__, *,
                  origin: Optional[pulumi.Input[str]] = None,
                  url: Optional[pulumi.Input[str]] = None):
-        WorkloadStatusLoadBalancerArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            origin=origin,
-            url=url,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             origin: Optional[pulumi.Input[str]] = None,
-             url: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if origin is not None:
-            _setter("origin", origin)
+            pulumi.set(__self__, "origin", origin)
         if url is not None:
-            _setter("url", url)
+            pulumi.set(__self__, "url", url)
 
     @property
     @pulumi.getter
@@ -13847,41 +15271,47 @@ class WorkloadStatusLoadBalancerArgs:
         pulumi.set(self, "url", value)
 
 
+if not MYPY:
+    class WorkloadStatusResolvedImageArgsDict(TypedDict):
+        images: NotRequired[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageImageArgsDict']]]]
+        """
+        A list of images that were resolved.
+        """
+        resolved_at: NotRequired[pulumi.Input[str]]
+        """
+        UTC Time when the images were resolved.
+        """
+        resolved_for_version: NotRequired[pulumi.Input[int]]
+        """
+        Workload version the images were resolved for.
+        """
+elif False:
+    WorkloadStatusResolvedImageArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadStatusResolvedImageArgs:
     def __init__(__self__, *,
                  images: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageImageArgs']]]] = None,
                  resolved_at: Optional[pulumi.Input[str]] = None,
                  resolved_for_version: Optional[pulumi.Input[int]] = None):
-        WorkloadStatusResolvedImageArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            images=images,
-            resolved_at=resolved_at,
-            resolved_for_version=resolved_for_version,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             images: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageImageArgs']]]] = None,
-             resolved_at: Optional[pulumi.Input[str]] = None,
-             resolved_for_version: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'resolvedAt' in kwargs:
-            resolved_at = kwargs['resolvedAt']
-        if 'resolvedForVersion' in kwargs:
-            resolved_for_version = kwargs['resolvedForVersion']
-
+        """
+        :param pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageImageArgs']]] images: A list of images that were resolved.
+        :param pulumi.Input[str] resolved_at: UTC Time when the images were resolved.
+        :param pulumi.Input[int] resolved_for_version: Workload version the images were resolved for.
+        """
         if images is not None:
-            _setter("images", images)
+            pulumi.set(__self__, "images", images)
         if resolved_at is not None:
-            _setter("resolved_at", resolved_at)
+            pulumi.set(__self__, "resolved_at", resolved_at)
         if resolved_for_version is not None:
-            _setter("resolved_for_version", resolved_for_version)
+            pulumi.set(__self__, "resolved_for_version", resolved_for_version)
 
     @property
     @pulumi.getter
     def images(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageImageArgs']]]]:
+        """
+        A list of images that were resolved.
+        """
         return pulumi.get(self, "images")
 
     @images.setter
@@ -13891,6 +15321,9 @@ class WorkloadStatusResolvedImageArgs:
     @property
     @pulumi.getter(name="resolvedAt")
     def resolved_at(self) -> Optional[pulumi.Input[str]]:
+        """
+        UTC Time when the images were resolved.
+        """
         return pulumi.get(self, "resolved_at")
 
     @resolved_at.setter
@@ -13900,6 +15333,9 @@ class WorkloadStatusResolvedImageArgs:
     @property
     @pulumi.getter(name="resolvedForVersion")
     def resolved_for_version(self) -> Optional[pulumi.Input[int]]:
+        """
+        Workload version the images were resolved for.
+        """
         return pulumi.get(self, "resolved_for_version")
 
     @resolved_for_version.setter
@@ -13907,32 +15343,35 @@ class WorkloadStatusResolvedImageArgs:
         pulumi.set(self, "resolved_for_version", value)
 
 
+if not MYPY:
+    class WorkloadStatusResolvedImageImageArgsDict(TypedDict):
+        digest: NotRequired[pulumi.Input[str]]
+        """
+        A unique SHA256 hash value that identifies a specific image content. This digest serves as a fingerprint of the image's content, ensuring the image you pull or run is exactly what you expect, without any modifications or corruptions.
+        """
+        manifests: NotRequired[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageImageManifestArgsDict']]]]
+elif False:
+    WorkloadStatusResolvedImageImageArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadStatusResolvedImageImageArgs:
     def __init__(__self__, *,
                  digest: Optional[pulumi.Input[str]] = None,
                  manifests: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageImageManifestArgs']]]] = None):
-        WorkloadStatusResolvedImageImageArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            digest=digest,
-            manifests=manifests,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             digest: Optional[pulumi.Input[str]] = None,
-             manifests: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageImageManifestArgs']]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param pulumi.Input[str] digest: A unique SHA256 hash value that identifies a specific image content. This digest serves as a fingerprint of the image's content, ensuring the image you pull or run is exactly what you expect, without any modifications or corruptions.
+        """
         if digest is not None:
-            _setter("digest", digest)
+            pulumi.set(__self__, "digest", digest)
         if manifests is not None:
-            _setter("manifests", manifests)
+            pulumi.set(__self__, "manifests", manifests)
 
     @property
     @pulumi.getter
     def digest(self) -> Optional[pulumi.Input[str]]:
+        """
+        A unique SHA256 hash value that identifies a specific image content. This digest serves as a fingerprint of the image's content, ensuring the image you pull or run is exactly what you expect, without any modifications or corruptions.
+        """
         return pulumi.get(self, "digest")
 
     @digest.setter
@@ -13949,6 +15388,27 @@ class WorkloadStatusResolvedImageImageArgs:
         pulumi.set(self, "manifests", value)
 
 
+if not MYPY:
+    class WorkloadStatusResolvedImageImageManifestArgsDict(TypedDict):
+        digest: NotRequired[pulumi.Input[str]]
+        """
+        A SHA256 hash that uniquely identifies the specific image manifest.
+        """
+        image: NotRequired[pulumi.Input[str]]
+        """
+        The name and tag of the resolved image.
+        """
+        media_type: NotRequired[pulumi.Input[str]]
+        """
+        The MIME type used in the Docker Registry HTTP API to specify the format of the data being sent or received. Docker uses media types to distinguish between different kinds of JSON objects and binary data formats within the registry protocol, enabling the Docker client and registry to understand and process different components of Docker images correctly.
+        """
+        platform: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        Key-value map of strings. The combination of the operating system and architecture for which the image is built.
+        """
+elif False:
+    WorkloadStatusResolvedImageImageManifestArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class WorkloadStatusResolvedImageImageManifestArgs:
     def __init__(__self__, *,
@@ -13956,37 +15416,27 @@ class WorkloadStatusResolvedImageImageManifestArgs:
                  image: Optional[pulumi.Input[str]] = None,
                  media_type: Optional[pulumi.Input[str]] = None,
                  platform: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
-        WorkloadStatusResolvedImageImageManifestArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            digest=digest,
-            image=image,
-            media_type=media_type,
-            platform=platform,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             digest: Optional[pulumi.Input[str]] = None,
-             image: Optional[pulumi.Input[str]] = None,
-             media_type: Optional[pulumi.Input[str]] = None,
-             platform: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'mediaType' in kwargs:
-            media_type = kwargs['mediaType']
-
+        """
+        :param pulumi.Input[str] digest: A SHA256 hash that uniquely identifies the specific image manifest.
+        :param pulumi.Input[str] image: The name and tag of the resolved image.
+        :param pulumi.Input[str] media_type: The MIME type used in the Docker Registry HTTP API to specify the format of the data being sent or received. Docker uses media types to distinguish between different kinds of JSON objects and binary data formats within the registry protocol, enabling the Docker client and registry to understand and process different components of Docker images correctly.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] platform: Key-value map of strings. The combination of the operating system and architecture for which the image is built.
+        """
         if digest is not None:
-            _setter("digest", digest)
+            pulumi.set(__self__, "digest", digest)
         if image is not None:
-            _setter("image", image)
+            pulumi.set(__self__, "image", image)
         if media_type is not None:
-            _setter("media_type", media_type)
+            pulumi.set(__self__, "media_type", media_type)
         if platform is not None:
-            _setter("platform", platform)
+            pulumi.set(__self__, "platform", platform)
 
     @property
     @pulumi.getter
     def digest(self) -> Optional[pulumi.Input[str]]:
+        """
+        A SHA256 hash that uniquely identifies the specific image manifest.
+        """
         return pulumi.get(self, "digest")
 
     @digest.setter
@@ -13996,6 +15446,9 @@ class WorkloadStatusResolvedImageImageManifestArgs:
     @property
     @pulumi.getter
     def image(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name and tag of the resolved image.
+        """
         return pulumi.get(self, "image")
 
     @image.setter
@@ -14005,6 +15458,9 @@ class WorkloadStatusResolvedImageImageManifestArgs:
     @property
     @pulumi.getter(name="mediaType")
     def media_type(self) -> Optional[pulumi.Input[str]]:
+        """
+        The MIME type used in the Docker Registry HTTP API to specify the format of the data being sent or received. Docker uses media types to distinguish between different kinds of JSON objects and binary data formats within the registry protocol, enabling the Docker client and registry to understand and process different components of Docker images correctly.
+        """
         return pulumi.get(self, "media_type")
 
     @media_type.setter
@@ -14014,6 +15470,9 @@ class WorkloadStatusResolvedImageImageManifestArgs:
     @property
     @pulumi.getter
     def platform(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        Key-value map of strings. The combination of the operating system and architecture for which the image is built.
+        """
         return pulumi.get(self, "platform")
 
     @platform.setter
@@ -14021,33 +15480,38 @@ class WorkloadStatusResolvedImageImageManifestArgs:
         pulumi.set(self, "platform", value)
 
 
+if not MYPY:
+    class GetGvcControlplaneTracingArgsDict(TypedDict):
+        sampling: float
+        """
+        Determines what percentage of requests should be traced.
+        """
+        custom_tags: NotRequired[Mapping[str, str]]
+        """
+        Key-value map of custom tags.
+        """
+elif False:
+    GetGvcControlplaneTracingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetGvcControlplaneTracingArgs:
     def __init__(__self__, *,
                  sampling: float,
                  custom_tags: Optional[Mapping[str, str]] = None):
-        GetGvcControlplaneTracingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            sampling=sampling,
-            custom_tags=custom_tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             sampling: float,
-             custom_tags: Optional[Mapping[str, str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'customTags' in kwargs:
-            custom_tags = kwargs['customTags']
-
-        _setter("sampling", sampling)
+        """
+        :param float sampling: Determines what percentage of requests should be traced.
+        :param Mapping[str, str] custom_tags: Key-value map of custom tags.
+        """
+        pulumi.set(__self__, "sampling", sampling)
         if custom_tags is not None:
-            _setter("custom_tags", custom_tags)
+            pulumi.set(__self__, "custom_tags", custom_tags)
 
     @property
     @pulumi.getter
     def sampling(self) -> float:
+        """
+        Determines what percentage of requests should be traced.
+        """
         return pulumi.get(self, "sampling")
 
     @sampling.setter
@@ -14057,12 +15521,36 @@ class GetGvcControlplaneTracingArgs:
     @property
     @pulumi.getter(name="customTags")
     def custom_tags(self) -> Optional[Mapping[str, str]]:
+        """
+        Key-value map of custom tags.
+        """
         return pulumi.get(self, "custom_tags")
 
     @custom_tags.setter
     def custom_tags(self, value: Optional[Mapping[str, str]]):
         pulumi.set(self, "custom_tags", value)
 
+
+if not MYPY:
+    class GetGvcLightstepTracingArgsDict(TypedDict):
+        endpoint: str
+        """
+        Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        """
+        sampling: float
+        """
+        Determines what percentage of requests should be traced.
+        """
+        credentials: NotRequired[str]
+        """
+        Full link to referenced Opaque Secret.
+        """
+        custom_tags: NotRequired[Mapping[str, str]]
+        """
+        Key-value map of custom tags.
+        """
+elif False:
+    GetGvcLightstepTracingArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetGvcLightstepTracingArgs:
@@ -14071,35 +15559,25 @@ class GetGvcLightstepTracingArgs:
                  sampling: float,
                  credentials: Optional[str] = None,
                  custom_tags: Optional[Mapping[str, str]] = None):
-        GetGvcLightstepTracingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            endpoint=endpoint,
-            sampling=sampling,
-            credentials=credentials,
-            custom_tags=custom_tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             endpoint: str,
-             sampling: float,
-             credentials: Optional[str] = None,
-             custom_tags: Optional[Mapping[str, str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'customTags' in kwargs:
-            custom_tags = kwargs['customTags']
-
-        _setter("endpoint", endpoint)
-        _setter("sampling", sampling)
+        """
+        :param str endpoint: Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        :param float sampling: Determines what percentage of requests should be traced.
+        :param str credentials: Full link to referenced Opaque Secret.
+        :param Mapping[str, str] custom_tags: Key-value map of custom tags.
+        """
+        pulumi.set(__self__, "endpoint", endpoint)
+        pulumi.set(__self__, "sampling", sampling)
         if credentials is not None:
-            _setter("credentials", credentials)
+            pulumi.set(__self__, "credentials", credentials)
         if custom_tags is not None:
-            _setter("custom_tags", custom_tags)
+            pulumi.set(__self__, "custom_tags", custom_tags)
 
     @property
     @pulumi.getter
     def endpoint(self) -> str:
+        """
+        Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        """
         return pulumi.get(self, "endpoint")
 
     @endpoint.setter
@@ -14109,6 +15587,9 @@ class GetGvcLightstepTracingArgs:
     @property
     @pulumi.getter
     def sampling(self) -> float:
+        """
+        Determines what percentage of requests should be traced.
+        """
         return pulumi.get(self, "sampling")
 
     @sampling.setter
@@ -14118,6 +15599,9 @@ class GetGvcLightstepTracingArgs:
     @property
     @pulumi.getter
     def credentials(self) -> Optional[str]:
+        """
+        Full link to referenced Opaque Secret.
+        """
         return pulumi.get(self, "credentials")
 
     @credentials.setter
@@ -14127,6 +15611,9 @@ class GetGvcLightstepTracingArgs:
     @property
     @pulumi.getter(name="customTags")
     def custom_tags(self) -> Optional[Mapping[str, str]]:
+        """
+        Key-value map of custom tags.
+        """
         return pulumi.get(self, "custom_tags")
 
     @custom_tags.setter
@@ -14134,39 +15621,47 @@ class GetGvcLightstepTracingArgs:
         pulumi.set(self, "custom_tags", value)
 
 
+if not MYPY:
+    class GetGvcLoadBalancerArgsDict(TypedDict):
+        dedicated: NotRequired[bool]
+        """
+        Creates a dedicated load balancer in each location and enables additional Domain features: custom ports, protocols and wildcard hostnames. Charges apply for each location.
+        """
+        redirect: NotRequired['GetGvcLoadBalancerRedirectArgsDict']
+        """
+        Specify the url to be redirected to for different http status codes.
+        """
+        trusted_proxies: NotRequired[int]
+        """
+        Controls the address used for request logging and for setting the X-Envoy-External-Address header. If set to 1, then the last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If set to 2, then the second to last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If the XFF header does not have at least two addresses or does not exist then the source client IP address will be used instead.
+        """
+elif False:
+    GetGvcLoadBalancerArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetGvcLoadBalancerArgs:
     def __init__(__self__, *,
                  dedicated: Optional[bool] = None,
                  redirect: Optional['GetGvcLoadBalancerRedirectArgs'] = None,
                  trusted_proxies: Optional[int] = None):
-        GetGvcLoadBalancerArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            dedicated=dedicated,
-            redirect=redirect,
-            trusted_proxies=trusted_proxies,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             dedicated: Optional[bool] = None,
-             redirect: Optional['GetGvcLoadBalancerRedirectArgs'] = None,
-             trusted_proxies: Optional[int] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'trustedProxies' in kwargs:
-            trusted_proxies = kwargs['trustedProxies']
-
+        """
+        :param bool dedicated: Creates a dedicated load balancer in each location and enables additional Domain features: custom ports, protocols and wildcard hostnames. Charges apply for each location.
+        :param 'GetGvcLoadBalancerRedirectArgs' redirect: Specify the url to be redirected to for different http status codes.
+        :param int trusted_proxies: Controls the address used for request logging and for setting the X-Envoy-External-Address header. If set to 1, then the last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If set to 2, then the second to last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If the XFF header does not have at least two addresses or does not exist then the source client IP address will be used instead.
+        """
         if dedicated is not None:
-            _setter("dedicated", dedicated)
+            pulumi.set(__self__, "dedicated", dedicated)
         if redirect is not None:
-            _setter("redirect", redirect)
+            pulumi.set(__self__, "redirect", redirect)
         if trusted_proxies is not None:
-            _setter("trusted_proxies", trusted_proxies)
+            pulumi.set(__self__, "trusted_proxies", trusted_proxies)
 
     @property
     @pulumi.getter
     def dedicated(self) -> Optional[bool]:
+        """
+        Creates a dedicated load balancer in each location and enables additional Domain features: custom ports, protocols and wildcard hostnames. Charges apply for each location.
+        """
         return pulumi.get(self, "dedicated")
 
     @dedicated.setter
@@ -14176,6 +15671,9 @@ class GetGvcLoadBalancerArgs:
     @property
     @pulumi.getter
     def redirect(self) -> Optional['GetGvcLoadBalancerRedirectArgs']:
+        """
+        Specify the url to be redirected to for different http status codes.
+        """
         return pulumi.get(self, "redirect")
 
     @redirect.setter
@@ -14185,6 +15683,9 @@ class GetGvcLoadBalancerArgs:
     @property
     @pulumi.getter(name="trustedProxies")
     def trusted_proxies(self) -> Optional[int]:
+        """
+        Controls the address used for request logging and for setting the X-Envoy-External-Address header. If set to 1, then the last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If set to 2, then the second to last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If the XFF header does not have at least two addresses or does not exist then the source client IP address will be used instead.
+        """
         return pulumi.get(self, "trusted_proxies")
 
     @trusted_proxies.setter
@@ -14192,30 +15693,28 @@ class GetGvcLoadBalancerArgs:
         pulumi.set(self, "trusted_proxies", value)
 
 
+if not MYPY:
+    class GetGvcLoadBalancerRedirectArgsDict(TypedDict):
+        _sentinel: NotRequired[bool]
+        class_: NotRequired['GetGvcLoadBalancerRedirectClassArgsDict']
+        """
+        Specify the redirect url for all status codes in a class.
+        """
+elif False:
+    GetGvcLoadBalancerRedirectArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetGvcLoadBalancerRedirectArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[bool] = None,
                  class_: Optional['GetGvcLoadBalancerRedirectClassArgs'] = None):
-        GetGvcLoadBalancerRedirectArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            class_=class_,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[bool] = None,
-             class_: Optional['GetGvcLoadBalancerRedirectClassArgs'] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'class' in kwargs:
-            class_ = kwargs['class']
-
+        """
+        :param 'GetGvcLoadBalancerRedirectClassArgs' class_: Specify the redirect url for all status codes in a class.
+        """
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if class_ is not None:
-            _setter("class_", class_)
+            pulumi.set(__self__, "class_", class_)
 
     @property
     @pulumi.getter
@@ -14229,6 +15728,9 @@ class GetGvcLoadBalancerRedirectArgs:
     @property
     @pulumi.getter(name="class")
     def class_(self) -> Optional['GetGvcLoadBalancerRedirectClassArgs']:
+        """
+        Specify the redirect url for all status codes in a class.
+        """
         return pulumi.get(self, "class_")
 
     @class_.setter
@@ -14236,28 +15738,28 @@ class GetGvcLoadBalancerRedirectArgs:
         pulumi.set(self, "class_", value)
 
 
+if not MYPY:
+    class GetGvcLoadBalancerRedirectClassArgsDict(TypedDict):
+        _sentinel: NotRequired[bool]
+        status5xx: NotRequired[str]
+        """
+        Specify the redirect url for any 500 level status code.
+        """
+elif False:
+    GetGvcLoadBalancerRedirectClassArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetGvcLoadBalancerRedirectClassArgs:
     def __init__(__self__, *,
                  _sentinel: Optional[bool] = None,
                  status5xx: Optional[str] = None):
-        GetGvcLoadBalancerRedirectClassArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            _sentinel=_sentinel,
-            status5xx=status5xx,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             _sentinel: Optional[bool] = None,
-             status5xx: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param str status5xx: Specify the redirect url for any 500 level status code.
+        """
         if _sentinel is not None:
-            _setter("_sentinel", _sentinel)
+            pulumi.set(__self__, "_sentinel", _sentinel)
         if status5xx is not None:
-            _setter("status5xx", status5xx)
+            pulumi.set(__self__, "status5xx", status5xx)
 
     @property
     @pulumi.getter
@@ -14271,6 +15773,9 @@ class GetGvcLoadBalancerRedirectClassArgs:
     @property
     @pulumi.getter
     def status5xx(self) -> Optional[str]:
+        """
+        Specify the redirect url for any 500 level status code.
+        """
         return pulumi.get(self, "status5xx")
 
     @status5xx.setter
@@ -14278,37 +15783,45 @@ class GetGvcLoadBalancerRedirectClassArgs:
         pulumi.set(self, "status5xx", value)
 
 
+if not MYPY:
+    class GetGvcOtelTracingArgsDict(TypedDict):
+        endpoint: str
+        """
+        Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        """
+        sampling: float
+        """
+        Determines what percentage of requests should be traced.
+        """
+        custom_tags: NotRequired[Mapping[str, str]]
+        """
+        Key-value map of custom tags.
+        """
+elif False:
+    GetGvcOtelTracingArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetGvcOtelTracingArgs:
     def __init__(__self__, *,
                  endpoint: str,
                  sampling: float,
                  custom_tags: Optional[Mapping[str, str]] = None):
-        GetGvcOtelTracingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            endpoint=endpoint,
-            sampling=sampling,
-            custom_tags=custom_tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             endpoint: str,
-             sampling: float,
-             custom_tags: Optional[Mapping[str, str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'customTags' in kwargs:
-            custom_tags = kwargs['customTags']
-
-        _setter("endpoint", endpoint)
-        _setter("sampling", sampling)
+        """
+        :param str endpoint: Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        :param float sampling: Determines what percentage of requests should be traced.
+        :param Mapping[str, str] custom_tags: Key-value map of custom tags.
+        """
+        pulumi.set(__self__, "endpoint", endpoint)
+        pulumi.set(__self__, "sampling", sampling)
         if custom_tags is not None:
-            _setter("custom_tags", custom_tags)
+            pulumi.set(__self__, "custom_tags", custom_tags)
 
     @property
     @pulumi.getter
     def endpoint(self) -> str:
+        """
+        Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        """
         return pulumi.get(self, "endpoint")
 
     @endpoint.setter
@@ -14318,6 +15831,9 @@ class GetGvcOtelTracingArgs:
     @property
     @pulumi.getter
     def sampling(self) -> float:
+        """
+        Determines what percentage of requests should be traced.
+        """
         return pulumi.get(self, "sampling")
 
     @sampling.setter
@@ -14327,6 +15843,9 @@ class GetGvcOtelTracingArgs:
     @property
     @pulumi.getter(name="customTags")
     def custom_tags(self) -> Optional[Mapping[str, str]]:
+        """
+        Key-value map of custom tags.
+        """
         return pulumi.get(self, "custom_tags")
 
     @custom_tags.setter
@@ -14334,22 +15853,17 @@ class GetGvcOtelTracingArgs:
         pulumi.set(self, "custom_tags", value)
 
 
+if not MYPY:
+    class GetGvcSidecarArgsDict(TypedDict):
+        envoy: str
+elif False:
+    GetGvcSidecarArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetGvcSidecarArgs:
     def __init__(__self__, *,
                  envoy: str):
-        GetGvcSidecarArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            envoy=envoy,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             envoy: str,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("envoy", envoy)
+        pulumi.set(__self__, "envoy", envoy)
 
     @property
     @pulumi.getter
@@ -14361,32 +15875,35 @@ class GetGvcSidecarArgs:
         pulumi.set(self, "envoy", value)
 
 
+if not MYPY:
+    class GetImagesQueryArgsDict(TypedDict):
+        fetch: NotRequired[str]
+        """
+        Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        """
+        spec: NotRequired['GetImagesQuerySpecArgsDict']
+elif False:
+    GetImagesQueryArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetImagesQueryArgs:
     def __init__(__self__, *,
                  fetch: Optional[str] = None,
                  spec: Optional['GetImagesQuerySpecArgs'] = None):
-        GetImagesQueryArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            fetch=fetch,
-            spec=spec,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             fetch: Optional[str] = None,
-             spec: Optional['GetImagesQuerySpecArgs'] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param str fetch: Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        """
         if fetch is not None:
-            _setter("fetch", fetch)
+            pulumi.set(__self__, "fetch", fetch)
         if spec is not None:
-            _setter("spec", spec)
+            pulumi.set(__self__, "spec", spec)
 
     @property
     @pulumi.getter
     def fetch(self) -> Optional[str]:
+        """
+        Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        """
         return pulumi.get(self, "fetch")
 
     @fetch.setter
@@ -14403,32 +15920,39 @@ class GetImagesQueryArgs:
         pulumi.set(self, "spec", value)
 
 
+if not MYPY:
+    class GetImagesQuerySpecArgsDict(TypedDict):
+        match: NotRequired[str]
+        """
+        Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        """
+        terms: NotRequired[Sequence['GetImagesQuerySpecTermArgsDict']]
+        """
+        Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        """
+elif False:
+    GetImagesQuerySpecArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetImagesQuerySpecArgs:
     def __init__(__self__, *,
                  match: Optional[str] = None,
                  terms: Optional[Sequence['GetImagesQuerySpecTermArgs']] = None):
-        GetImagesQuerySpecArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            match=match,
-            terms=terms,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             match: Optional[str] = None,
-             terms: Optional[Sequence['GetImagesQuerySpecTermArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param str match: Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        :param Sequence['GetImagesQuerySpecTermArgs'] terms: Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        """
         if match is not None:
-            _setter("match", match)
+            pulumi.set(__self__, "match", match)
         if terms is not None:
-            _setter("terms", terms)
+            pulumi.set(__self__, "terms", terms)
 
     @property
     @pulumi.getter
     def match(self) -> Optional[str]:
+        """
+        Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        """
         return pulumi.get(self, "match")
 
     @match.setter
@@ -14438,12 +15962,37 @@ class GetImagesQuerySpecArgs:
     @property
     @pulumi.getter
     def terms(self) -> Optional[Sequence['GetImagesQuerySpecTermArgs']]:
+        """
+        Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        """
         return pulumi.get(self, "terms")
 
     @terms.setter
     def terms(self, value: Optional[Sequence['GetImagesQuerySpecTermArgs']]):
         pulumi.set(self, "terms", value)
 
+
+if not MYPY:
+    class GetImagesQuerySpecTermArgsDict(TypedDict):
+        op: NotRequired[str]
+        """
+        Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+        """
+        property: NotRequired[str]
+        """
+        Property to use for query evaluation.
+        """
+        rel: NotRequired[str]
+        tag: NotRequired[str]
+        """
+        Tag key to use for query evaluation.
+        """
+        value: NotRequired[str]
+        """
+        Testing value for query evaluation.
+        """
+elif False:
+    GetImagesQuerySpecTermArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetImagesQuerySpecTermArgs:
@@ -14453,39 +16002,29 @@ class GetImagesQuerySpecTermArgs:
                  rel: Optional[str] = None,
                  tag: Optional[str] = None,
                  value: Optional[str] = None):
-        GetImagesQuerySpecTermArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            op=op,
-            property=property,
-            rel=rel,
-            tag=tag,
-            value=value,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             op: Optional[str] = None,
-             property: Optional[str] = None,
-             rel: Optional[str] = None,
-             tag: Optional[str] = None,
-             value: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
+        """
+        :param str op: Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+        :param str property: Property to use for query evaluation.
+        :param str tag: Tag key to use for query evaluation.
+        :param str value: Testing value for query evaluation.
+        """
         if op is not None:
-            _setter("op", op)
+            pulumi.set(__self__, "op", op)
         if property is not None:
-            _setter("property", property)
+            pulumi.set(__self__, "property", property)
         if rel is not None:
-            _setter("rel", rel)
+            pulumi.set(__self__, "rel", rel)
         if tag is not None:
-            _setter("tag", tag)
+            pulumi.set(__self__, "tag", tag)
         if value is not None:
-            _setter("value", value)
+            pulumi.set(__self__, "value", value)
 
     @property
     @pulumi.getter
     def op(self) -> Optional[str]:
+        """
+        Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+        """
         return pulumi.get(self, "op")
 
     @op.setter
@@ -14504,6 +16043,9 @@ class GetImagesQuerySpecTermArgs:
     @property
     @pulumi.getter
     def tag(self) -> Optional[str]:
+        """
+        Tag key to use for query evaluation.
+        """
         return pulumi.get(self, "tag")
 
     @tag.setter
@@ -14513,6 +16055,9 @@ class GetImagesQuerySpecTermArgs:
     @property
     @pulumi.getter
     def value(self) -> Optional[str]:
+        """
+        Testing value for query evaluation.
+        """
         return pulumi.get(self, "value")
 
     @value.setter
@@ -14522,12 +16067,36 @@ class GetImagesQuerySpecTermArgs:
     @property
     @pulumi.getter
     def property(self) -> Optional[str]:
+        """
+        Property to use for query evaluation.
+        """
         return pulumi.get(self, "property")
 
     @property.setter
     def property(self, value: Optional[str]):
         pulumi.set(self, "property", value)
 
+
+if not MYPY:
+    class GetSecretAwsArgsDict(TypedDict):
+        access_key: str
+        """
+        Access Key provided by AWS.
+        """
+        secret_key: str
+        """
+        Secret Key provided by AWS.
+        """
+        external_id: NotRequired[str]
+        """
+        AWS IAM Role External ID.
+        """
+        role_arn: NotRequired[str]
+        """
+        Role ARN provided by AWS.
+        """
+elif False:
+    GetSecretAwsArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetSecretAwsArgs:
@@ -14536,41 +16105,25 @@ class GetSecretAwsArgs:
                  secret_key: str,
                  external_id: Optional[str] = None,
                  role_arn: Optional[str] = None):
-        GetSecretAwsArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            access_key=access_key,
-            secret_key=secret_key,
-            external_id=external_id,
-            role_arn=role_arn,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             access_key: str,
-             secret_key: str,
-             external_id: Optional[str] = None,
-             role_arn: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'accessKey' in kwargs:
-            access_key = kwargs['accessKey']
-        if 'secretKey' in kwargs:
-            secret_key = kwargs['secretKey']
-        if 'externalId' in kwargs:
-            external_id = kwargs['externalId']
-        if 'roleArn' in kwargs:
-            role_arn = kwargs['roleArn']
-
-        _setter("access_key", access_key)
-        _setter("secret_key", secret_key)
+        """
+        :param str access_key: Access Key provided by AWS.
+        :param str secret_key: Secret Key provided by AWS.
+        :param str external_id: AWS IAM Role External ID.
+        :param str role_arn: Role ARN provided by AWS.
+        """
+        pulumi.set(__self__, "access_key", access_key)
+        pulumi.set(__self__, "secret_key", secret_key)
         if external_id is not None:
-            _setter("external_id", external_id)
+            pulumi.set(__self__, "external_id", external_id)
         if role_arn is not None:
-            _setter("role_arn", role_arn)
+            pulumi.set(__self__, "role_arn", role_arn)
 
     @property
     @pulumi.getter(name="accessKey")
     def access_key(self) -> str:
+        """
+        Access Key provided by AWS.
+        """
         return pulumi.get(self, "access_key")
 
     @access_key.setter
@@ -14580,6 +16133,9 @@ class GetSecretAwsArgs:
     @property
     @pulumi.getter(name="secretKey")
     def secret_key(self) -> str:
+        """
+        Secret Key provided by AWS.
+        """
         return pulumi.get(self, "secret_key")
 
     @secret_key.setter
@@ -14589,6 +16145,9 @@ class GetSecretAwsArgs:
     @property
     @pulumi.getter(name="externalId")
     def external_id(self) -> Optional[str]:
+        """
+        AWS IAM Role External ID.
+        """
         return pulumi.get(self, "external_id")
 
     @external_id.setter
@@ -14598,6 +16157,9 @@ class GetSecretAwsArgs:
     @property
     @pulumi.getter(name="roleArn")
     def role_arn(self) -> Optional[str]:
+        """
+        Role ARN provided by AWS.
+        """
         return pulumi.get(self, "role_arn")
 
     @role_arn.setter
@@ -14605,30 +16167,37 @@ class GetSecretAwsArgs:
         pulumi.set(self, "role_arn", value)
 
 
+if not MYPY:
+    class GetSecretAzureConnectorArgsDict(TypedDict):
+        code: str
+        """
+        Code/Key to authenticate to deployment URL.
+        """
+        url: str
+        """
+        Deployment URL.
+        """
+elif False:
+    GetSecretAzureConnectorArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetSecretAzureConnectorArgs:
     def __init__(__self__, *,
                  code: str,
                  url: str):
-        GetSecretAzureConnectorArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            code=code,
-            url=url,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             code: str,
-             url: str,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("code", code)
-        _setter("url", url)
+        """
+        :param str code: Code/Key to authenticate to deployment URL.
+        :param str url: Deployment URL.
+        """
+        pulumi.set(__self__, "code", code)
+        pulumi.set(__self__, "url", url)
 
     @property
     @pulumi.getter
     def code(self) -> str:
+        """
+        Code/Key to authenticate to deployment URL.
+        """
         return pulumi.get(self, "code")
 
     @code.setter
@@ -14638,12 +16207,40 @@ class GetSecretAzureConnectorArgs:
     @property
     @pulumi.getter
     def url(self) -> str:
+        """
+        Deployment URL.
+        """
         return pulumi.get(self, "url")
 
     @url.setter
     def url(self, value: str):
         pulumi.set(self, "url", value)
 
+
+if not MYPY:
+    class GetSecretEcrArgsDict(TypedDict):
+        access_key: str
+        """
+        Access Key provided by AWS.
+        """
+        repos: Sequence[str]
+        """
+        List of ECR repositories.
+        """
+        secret_key: str
+        """
+        Secret Key provided by AWS.
+        """
+        external_id: NotRequired[str]
+        """
+        AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
+        """
+        role_arn: NotRequired[str]
+        """
+        Role ARN provided by AWS.
+        """
+elif False:
+    GetSecretEcrArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetSecretEcrArgs:
@@ -14653,44 +16250,27 @@ class GetSecretEcrArgs:
                  secret_key: str,
                  external_id: Optional[str] = None,
                  role_arn: Optional[str] = None):
-        GetSecretEcrArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            access_key=access_key,
-            repos=repos,
-            secret_key=secret_key,
-            external_id=external_id,
-            role_arn=role_arn,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             access_key: str,
-             repos: Sequence[str],
-             secret_key: str,
-             external_id: Optional[str] = None,
-             role_arn: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'accessKey' in kwargs:
-            access_key = kwargs['accessKey']
-        if 'secretKey' in kwargs:
-            secret_key = kwargs['secretKey']
-        if 'externalId' in kwargs:
-            external_id = kwargs['externalId']
-        if 'roleArn' in kwargs:
-            role_arn = kwargs['roleArn']
-
-        _setter("access_key", access_key)
-        _setter("repos", repos)
-        _setter("secret_key", secret_key)
+        """
+        :param str access_key: Access Key provided by AWS.
+        :param Sequence[str] repos: List of ECR repositories.
+        :param str secret_key: Secret Key provided by AWS.
+        :param str external_id: AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
+        :param str role_arn: Role ARN provided by AWS.
+        """
+        pulumi.set(__self__, "access_key", access_key)
+        pulumi.set(__self__, "repos", repos)
+        pulumi.set(__self__, "secret_key", secret_key)
         if external_id is not None:
-            _setter("external_id", external_id)
+            pulumi.set(__self__, "external_id", external_id)
         if role_arn is not None:
-            _setter("role_arn", role_arn)
+            pulumi.set(__self__, "role_arn", role_arn)
 
     @property
     @pulumi.getter(name="accessKey")
     def access_key(self) -> str:
+        """
+        Access Key provided by AWS.
+        """
         return pulumi.get(self, "access_key")
 
     @access_key.setter
@@ -14700,6 +16280,9 @@ class GetSecretEcrArgs:
     @property
     @pulumi.getter
     def repos(self) -> Sequence[str]:
+        """
+        List of ECR repositories.
+        """
         return pulumi.get(self, "repos")
 
     @repos.setter
@@ -14709,6 +16292,9 @@ class GetSecretEcrArgs:
     @property
     @pulumi.getter(name="secretKey")
     def secret_key(self) -> str:
+        """
+        Secret Key provided by AWS.
+        """
         return pulumi.get(self, "secret_key")
 
     @secret_key.setter
@@ -14718,6 +16304,9 @@ class GetSecretEcrArgs:
     @property
     @pulumi.getter(name="externalId")
     def external_id(self) -> Optional[str]:
+        """
+        AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
+        """
         return pulumi.get(self, "external_id")
 
     @external_id.setter
@@ -14727,6 +16316,9 @@ class GetSecretEcrArgs:
     @property
     @pulumi.getter(name="roleArn")
     def role_arn(self) -> Optional[str]:
+        """
+        Role ARN provided by AWS.
+        """
         return pulumi.get(self, "role_arn")
 
     @role_arn.setter
@@ -14734,40 +16326,46 @@ class GetSecretEcrArgs:
         pulumi.set(self, "role_arn", value)
 
 
+if not MYPY:
+    class GetSecretKeypairArgsDict(TypedDict):
+        secret_key: str
+        """
+        Secret/Private Key.
+        """
+        passphrase: NotRequired[str]
+        """
+        Passphrase for private key.
+        """
+        public_key: NotRequired[str]
+        """
+        Public Key.
+        """
+elif False:
+    GetSecretKeypairArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetSecretKeypairArgs:
     def __init__(__self__, *,
                  secret_key: str,
                  passphrase: Optional[str] = None,
                  public_key: Optional[str] = None):
-        GetSecretKeypairArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            secret_key=secret_key,
-            passphrase=passphrase,
-            public_key=public_key,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             secret_key: str,
-             passphrase: Optional[str] = None,
-             public_key: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'secretKey' in kwargs:
-            secret_key = kwargs['secretKey']
-        if 'publicKey' in kwargs:
-            public_key = kwargs['publicKey']
-
-        _setter("secret_key", secret_key)
+        """
+        :param str secret_key: Secret/Private Key.
+        :param str passphrase: Passphrase for private key.
+        :param str public_key: Public Key.
+        """
+        pulumi.set(__self__, "secret_key", secret_key)
         if passphrase is not None:
-            _setter("passphrase", passphrase)
+            pulumi.set(__self__, "passphrase", passphrase)
         if public_key is not None:
-            _setter("public_key", public_key)
+            pulumi.set(__self__, "public_key", public_key)
 
     @property
     @pulumi.getter(name="secretKey")
     def secret_key(self) -> str:
+        """
+        Secret/Private Key.
+        """
         return pulumi.get(self, "secret_key")
 
     @secret_key.setter
@@ -14777,6 +16375,9 @@ class GetSecretKeypairArgs:
     @property
     @pulumi.getter
     def passphrase(self) -> Optional[str]:
+        """
+        Passphrase for private key.
+        """
         return pulumi.get(self, "passphrase")
 
     @passphrase.setter
@@ -14786,6 +16387,9 @@ class GetSecretKeypairArgs:
     @property
     @pulumi.getter(name="publicKey")
     def public_key(self) -> Optional[str]:
+        """
+        Public Key.
+        """
         return pulumi.get(self, "public_key")
 
     @public_key.setter
@@ -14793,34 +16397,37 @@ class GetSecretKeypairArgs:
         pulumi.set(self, "public_key", value)
 
 
+if not MYPY:
+    class GetSecretNatsAccountArgsDict(TypedDict):
+        account_id: str
+        """
+        Account ID.
+        """
+        private_key: str
+        """
+        Private Key.
+        """
+elif False:
+    GetSecretNatsAccountArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetSecretNatsAccountArgs:
     def __init__(__self__, *,
                  account_id: str,
                  private_key: str):
-        GetSecretNatsAccountArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            account_id=account_id,
-            private_key=private_key,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             account_id: str,
-             private_key: str,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'accountId' in kwargs:
-            account_id = kwargs['accountId']
-        if 'privateKey' in kwargs:
-            private_key = kwargs['privateKey']
-
-        _setter("account_id", account_id)
-        _setter("private_key", private_key)
+        """
+        :param str account_id: Account ID.
+        :param str private_key: Private Key.
+        """
+        pulumi.set(__self__, "account_id", account_id)
+        pulumi.set(__self__, "private_key", private_key)
 
     @property
     @pulumi.getter(name="accountId")
     def account_id(self) -> str:
+        """
+        Account ID.
+        """
         return pulumi.get(self, "account_id")
 
     @account_id.setter
@@ -14830,6 +16437,9 @@ class GetSecretNatsAccountArgs:
     @property
     @pulumi.getter(name="privateKey")
     def private_key(self) -> str:
+        """
+        Private Key.
+        """
         return pulumi.get(self, "private_key")
 
     @private_key.setter
@@ -14837,31 +16447,38 @@ class GetSecretNatsAccountArgs:
         pulumi.set(self, "private_key", value)
 
 
+if not MYPY:
+    class GetSecretOpaqueArgsDict(TypedDict):
+        payload: str
+        """
+        Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.
+        """
+        encoding: NotRequired[str]
+        """
+        Available encodings: `plain`, `base64`. Default: `plain`.
+        """
+elif False:
+    GetSecretOpaqueArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetSecretOpaqueArgs:
     def __init__(__self__, *,
                  payload: str,
                  encoding: Optional[str] = None):
-        GetSecretOpaqueArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            payload=payload,
-            encoding=encoding,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             payload: str,
-             encoding: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("payload", payload)
+        """
+        :param str payload: Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.
+        :param str encoding: Available encodings: `plain`, `base64`. Default: `plain`.
+        """
+        pulumi.set(__self__, "payload", payload)
         if encoding is not None:
-            _setter("encoding", encoding)
+            pulumi.set(__self__, "encoding", encoding)
 
     @property
     @pulumi.getter
     def payload(self) -> str:
+        """
+        Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.
+        """
         return pulumi.get(self, "payload")
 
     @payload.setter
@@ -14871,6 +16488,9 @@ class GetSecretOpaqueArgs:
     @property
     @pulumi.getter
     def encoding(self) -> Optional[str]:
+        """
+        Available encodings: `plain`, `base64`. Default: `plain`.
+        """
         return pulumi.get(self, "encoding")
 
     @encoding.setter
@@ -14878,35 +16498,45 @@ class GetSecretOpaqueArgs:
         pulumi.set(self, "encoding", value)
 
 
+if not MYPY:
+    class GetSecretTlsArgsDict(TypedDict):
+        cert: str
+        """
+        Public Certificate.
+        """
+        key: str
+        """
+        Private Certificate.
+        """
+        chain: NotRequired[str]
+        """
+        Chain Certificate.
+        """
+elif False:
+    GetSecretTlsArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetSecretTlsArgs:
     def __init__(__self__, *,
                  cert: str,
                  key: str,
                  chain: Optional[str] = None):
-        GetSecretTlsArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            cert=cert,
-            key=key,
-            chain=chain,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             cert: str,
-             key: str,
-             chain: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("cert", cert)
-        _setter("key", key)
+        """
+        :param str cert: Public Certificate.
+        :param str key: Private Certificate.
+        :param str chain: Chain Certificate.
+        """
+        pulumi.set(__self__, "cert", cert)
+        pulumi.set(__self__, "key", key)
         if chain is not None:
-            _setter("chain", chain)
+            pulumi.set(__self__, "chain", chain)
 
     @property
     @pulumi.getter
     def cert(self) -> str:
+        """
+        Public Certificate.
+        """
         return pulumi.get(self, "cert")
 
     @cert.setter
@@ -14916,6 +16546,9 @@ class GetSecretTlsArgs:
     @property
     @pulumi.getter
     def key(self) -> str:
+        """
+        Private Certificate.
+        """
         return pulumi.get(self, "key")
 
     @key.setter
@@ -14925,6 +16558,9 @@ class GetSecretTlsArgs:
     @property
     @pulumi.getter
     def chain(self) -> Optional[str]:
+        """
+        Chain Certificate.
+        """
         return pulumi.get(self, "chain")
 
     @chain.setter
@@ -14932,35 +16568,45 @@ class GetSecretTlsArgs:
         pulumi.set(self, "chain", value)
 
 
+if not MYPY:
+    class GetSecretUserpassArgsDict(TypedDict):
+        password: str
+        """
+        Password.
+        """
+        username: str
+        """
+        Username.
+        """
+        encoding: NotRequired[str]
+        """
+        Available encodings: `plain`, `base64`. Default: `plain`.
+        """
+elif False:
+    GetSecretUserpassArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetSecretUserpassArgs:
     def __init__(__self__, *,
                  password: str,
                  username: str,
                  encoding: Optional[str] = None):
-        GetSecretUserpassArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            password=password,
-            username=username,
-            encoding=encoding,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             password: str,
-             username: str,
-             encoding: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("password", password)
-        _setter("username", username)
+        """
+        :param str password: Password.
+        :param str username: Username.
+        :param str encoding: Available encodings: `plain`, `base64`. Default: `plain`.
+        """
+        pulumi.set(__self__, "password", password)
+        pulumi.set(__self__, "username", username)
         if encoding is not None:
-            _setter("encoding", encoding)
+            pulumi.set(__self__, "encoding", encoding)
 
     @property
     @pulumi.getter
     def password(self) -> str:
+        """
+        Password.
+        """
         return pulumi.get(self, "password")
 
     @password.setter
@@ -14970,6 +16616,9 @@ class GetSecretUserpassArgs:
     @property
     @pulumi.getter
     def username(self) -> str:
+        """
+        Username.
+        """
         return pulumi.get(self, "username")
 
     @username.setter
@@ -14979,6 +16628,9 @@ class GetSecretUserpassArgs:
     @property
     @pulumi.getter
     def encoding(self) -> Optional[str]:
+        """
+        Available encodings: `plain`, `base64`. Default: `plain`.
+        """
         return pulumi.get(self, "encoding")
 
     @encoding.setter

@@ -22,7 +22,6 @@ import * as utilities from "./utilities";
  * ```
  */
 export function getCloudAccount(opts?: pulumi.InvokeOptions): Promise<GetCloudAccountResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("cpln:index/getCloudAccount:getCloudAccount", {
     }, opts);
@@ -56,5 +55,7 @@ export interface GetCloudAccountResult {
  * ```
  */
 export function getCloudAccountOutput(opts?: pulumi.InvokeOptions): pulumi.Output<GetCloudAccountResult> {
-    return pulumi.output(getCloudAccount(opts))
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("cpln:index/getCloudAccount:getCloudAccount", {
+    }, opts);
 }

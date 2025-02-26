@@ -14,8 +14,17 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgSecurityThreatDetection
     {
+        /// <summary>
+        /// Indicates whether threat detection should be forwarded or not.
+        /// </summary>
         public readonly bool Enabled;
+        /// <summary>
+        /// Any threats with this severity and more severe will be sent. Others will be ignored. Valid values: `warning`, `error`, or `critical`.
+        /// </summary>
         public readonly string? MinimumSeverity;
+        /// <summary>
+        /// Configuration for syslog forwarding.
+        /// </summary>
         public readonly Outputs.OrgSecurityThreatDetectionSyslog? Syslog;
 
         [OutputConstructor]

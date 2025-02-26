@@ -18,6 +18,10 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("digitalOceanTags")]
         private InputList<string>? _digitalOceanTags;
+
+        /// <summary>
+        /// Extra tags to attach to droplets.
+        /// </summary>
         public InputList<string> DigitalOceanTags
         {
             get => _digitalOceanTags ?? (_digitalOceanTags = new InputList<string>());
@@ -26,12 +30,19 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("extraSshKeys")]
         private InputList<string>? _extraSshKeys;
+
+        /// <summary>
+        /// Extra SSH keys to provision for user root that are not registered in the DigitalOcean.
+        /// </summary>
         public InputList<string> ExtraSshKeys
         {
             get => _extraSshKeys ?? (_extraSshKeys = new InputList<string>());
             set => _extraSshKeys = value;
         }
 
+        /// <summary>
+        /// Default image for all nodes.
+        /// </summary>
         [Input("image", required: true)]
         public Input<string> Image { get; set; } = null!;
 
@@ -40,20 +51,34 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("nodePools")]
         private InputList<Inputs.Mk8sDigitalOceanProviderNodePoolGetArgs>? _nodePools;
+
+        /// <summary>
+        /// List of node pools.
+        /// </summary>
         public InputList<Inputs.Mk8sDigitalOceanProviderNodePoolGetArgs> NodePools
         {
             get => _nodePools ?? (_nodePools = new InputList<Inputs.Mk8sDigitalOceanProviderNodePoolGetArgs>());
             set => _nodePools = value;
         }
 
+        /// <summary>
+        /// Optional shell script that will be run before K8s is installed. Supports SSM.
+        /// </summary>
         [Input("preInstallScript")]
         public Input<string>? PreInstallScript { get; set; }
 
+        /// <summary>
+        /// Region to deploy nodes to.
+        /// </summary>
         [Input("region", required: true)]
         public Input<string> Region { get; set; } = null!;
 
         [Input("reservedIps")]
         private InputList<string>? _reservedIps;
+
+        /// <summary>
+        /// Optional set of IPs to assign as extra IPs for nodes of the cluster.
+        /// </summary>
         public InputList<string> ReservedIps
         {
             get => _reservedIps ?? (_reservedIps = new InputList<string>());
@@ -62,15 +87,25 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("sshKeys", required: true)]
         private InputList<string>? _sshKeys;
+
+        /// <summary>
+        /// SSH key name for accessing deployed nodes.
+        /// </summary>
         public InputList<string> SshKeys
         {
             get => _sshKeys ?? (_sshKeys = new InputList<string>());
             set => _sshKeys = value;
         }
 
+        /// <summary>
+        /// Link to a secret holding personal access token.
+        /// </summary>
         [Input("tokenSecretLink", required: true)]
         public Input<string> TokenSecretLink { get; set; } = null!;
 
+        /// <summary>
+        /// ID of the Hetzner network to deploy nodes to.
+        /// </summary>
         [Input("vpcId", required: true)]
         public Input<string> VpcId { get; set; } = null!;
 

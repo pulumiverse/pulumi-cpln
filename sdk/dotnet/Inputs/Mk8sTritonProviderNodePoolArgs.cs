@@ -15,6 +15,10 @@ namespace Pulumiverse.Cpln.Inputs
     {
         [Input("labels")]
         private InputMap<string>? _labels;
+
+        /// <summary>
+        /// Labels to attach to nodes of a node pool.
+        /// </summary>
         public InputMap<string> Labels
         {
             get => _labels ?? (_labels = new InputMap<string>());
@@ -38,17 +42,28 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("privateNetworkIds")]
         private InputList<string>? _privateNetworkIds;
+
+        /// <summary>
+        /// More private networks to join.
+        /// </summary>
         public InputList<string> PrivateNetworkIds
         {
             get => _privateNetworkIds ?? (_privateNetworkIds = new InputList<string>());
             set => _privateNetworkIds = value;
         }
 
+        /// <summary>
+        /// If set, machine will also get a public IP.
+        /// </summary>
         [Input("publicNetworkId")]
         public Input<string>? PublicNetworkId { get; set; }
 
         [Input("taints")]
         private InputList<Inputs.Mk8sTritonProviderNodePoolTaintArgs>? _taints;
+
+        /// <summary>
+        /// Taint for the nodes of a pool.
+        /// </summary>
         public InputList<Inputs.Mk8sTritonProviderNodePoolTaintArgs> Taints
         {
             get => _taints ?? (_taints = new InputList<Inputs.Mk8sTritonProviderNodePoolTaintArgs>());
@@ -57,6 +72,10 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("tritonTags")]
         private InputMap<string>? _tritonTags;
+
+        /// <summary>
+        /// Extra tags to attach to instances from a node pool.
+        /// </summary>
         public InputMap<string> TritonTags
         {
             get => _tritonTags ?? (_tritonTags = new InputMap<string>());

@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadFirewallSpecInternal
     {
+        /// <summary>
+        /// Used to control the internal firewall configuration and mutual tls. Allowed Values: "none", "same-gvc", "same-org", "workload-list".
+        /// </summary>
         public readonly string? InboundAllowType;
+        /// <summary>
+        /// A list of specific workloads which are allowed to access this workload internally. This list is only used if the 'inboundAllowType' is set to 'workload-list'.
+        /// </summary>
         public readonly ImmutableArray<string> InboundAllowWorkloads;
 
         [OutputConstructor]

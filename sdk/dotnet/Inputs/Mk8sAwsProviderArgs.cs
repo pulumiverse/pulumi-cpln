@@ -18,12 +18,19 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("awsTags")]
         private InputMap<string>? _awsTags;
+
+        /// <summary>
+        /// Extra tags to attach to all created objects.
+        /// </summary>
         public InputMap<string> AwsTags
         {
             get => _awsTags ?? (_awsTags = new InputMap<string>());
             set => _awsTags = value;
         }
 
+        /// <summary>
+        /// Control Plane will set up the cluster by assuming this role.
+        /// </summary>
         [Input("deployRoleArn", required: true)]
         public Input<string> DeployRoleArn { get; set; } = null!;
 
@@ -35,6 +42,9 @@ namespace Pulumiverse.Cpln.Inputs
             set => _deployRoleChains = value;
         }
 
+        /// <summary>
+        /// KMS key used to encrypt volumes. Supports SSM.
+        /// </summary>
         [Input("diskEncryptionKeyArn")]
         public Input<string>? DiskEncryptionKeyArn { get; set; }
 
@@ -46,9 +56,15 @@ namespace Pulumiverse.Cpln.Inputs
             set => _extraNodePolicies = value;
         }
 
+        /// <summary>
+        /// Default image for all nodes.
+        /// </summary>
         [Input("image", required: true)]
         public Input<Inputs.Mk8sAwsProviderImageArgs> Image { get; set; } = null!;
 
+        /// <summary>
+        /// Name of keyPair. Supports SSM
+        /// </summary>
         [Input("keyPair")]
         public Input<string>? KeyPair { get; set; }
 
@@ -57,29 +73,49 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("nodePools")]
         private InputList<Inputs.Mk8sAwsProviderNodePoolArgs>? _nodePools;
+
+        /// <summary>
+        /// List of node pools.
+        /// </summary>
         public InputList<Inputs.Mk8sAwsProviderNodePoolArgs> NodePools
         {
             get => _nodePools ?? (_nodePools = new InputList<Inputs.Mk8sAwsProviderNodePoolArgs>());
             set => _nodePools = value;
         }
 
+        /// <summary>
+        /// Optional shell script that will be run before K8s is installed. Supports SSM.
+        /// </summary>
         [Input("preInstallScript")]
         public Input<string>? PreInstallScript { get; set; }
 
+        /// <summary>
+        /// Region where the cluster nodes will live.
+        /// </summary>
         [Input("region", required: true)]
         public Input<string> Region { get; set; } = null!;
 
         [Input("securityGroupIds")]
         private InputList<string>? _securityGroupIds;
+
+        /// <summary>
+        /// Security groups to deploy nodes to. Security groups control if the cluster is multi-zone or single-zon.
+        /// </summary>
         public InputList<string> SecurityGroupIds
         {
             get => _securityGroupIds ?? (_securityGroupIds = new InputList<string>());
             set => _securityGroupIds = value;
         }
 
+        /// <summary>
+        /// If true, Control Plane will not create any roles.
+        /// </summary>
         [Input("skipCreateRoles")]
         public Input<bool>? SkipCreateRoles { get; set; }
 
+        /// <summary>
+        /// The vpc where nodes will be deployed. Supports SSM.
+        /// </summary>
         [Input("vpcId", required: true)]
         public Input<string> VpcId { get; set; } = null!;
 

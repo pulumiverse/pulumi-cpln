@@ -14,12 +14,33 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadStatusHealthCheck
     {
+        /// <summary>
+        /// Active boolean for the associated workload.
+        /// </summary>
         public readonly bool Active;
+        /// <summary>
+        /// Current output code for the associated workload.
+        /// </summary>
         public readonly int? Code;
+        /// <summary>
+        /// Failure integer for the associated workload.
+        /// </summary>
         public readonly int? Failures;
+        /// <summary>
+        /// Timestamp in UTC of the last health check.
+        /// </summary>
         public readonly string? LastChecked;
+        /// <summary>
+        /// Current health status for the associated workload.
+        /// </summary>
         public readonly string? Message;
+        /// <summary>
+        /// Success boolean for the associated workload.
+        /// </summary>
         public readonly bool? Success;
+        /// <summary>
+        /// Success integer for the associated workload.
+        /// </summary>
         public readonly int? Successes;
 
         [OutputConstructor]

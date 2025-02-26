@@ -15,6 +15,9 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class Mk8sTritonProviderConnection
     {
         public readonly string Account;
+        /// <summary>
+        /// Link to a SSH or opaque secret.
+        /// </summary>
         public readonly string PrivateKeySecretLink;
         public readonly string Url;
         public readonly string? User;

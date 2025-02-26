@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -117,7 +122,7 @@ class GetSecretResult:
 
     @property
     @pulumi.getter(name="dictionaryAsEnvs")
-    def dictionary_as_envs(self) -> Mapping[str, Any]:
+    def dictionary_as_envs(self) -> Mapping[str, str]:
         return pulumi.get(self, "dictionary_as_envs")
 
     @property
@@ -217,21 +222,21 @@ class AwaitableGetSecretResult(GetSecretResult):
             userpass=self.userpass)
 
 
-def get_secret(aws: Optional[pulumi.InputType['GetSecretAwsArgs']] = None,
-               azure_connector: Optional[pulumi.InputType['GetSecretAzureConnectorArgs']] = None,
+def get_secret(aws: Optional[Union['GetSecretAwsArgs', 'GetSecretAwsArgsDict']] = None,
+               azure_connector: Optional[Union['GetSecretAzureConnectorArgs', 'GetSecretAzureConnectorArgsDict']] = None,
                azure_sdk: Optional[str] = None,
                description: Optional[str] = None,
                dictionary: Optional[Mapping[str, str]] = None,
                docker: Optional[str] = None,
-               ecr: Optional[pulumi.InputType['GetSecretEcrArgs']] = None,
+               ecr: Optional[Union['GetSecretEcrArgs', 'GetSecretEcrArgsDict']] = None,
                gcp: Optional[str] = None,
-               keypair: Optional[pulumi.InputType['GetSecretKeypairArgs']] = None,
+               keypair: Optional[Union['GetSecretKeypairArgs', 'GetSecretKeypairArgsDict']] = None,
                name: Optional[str] = None,
-               nats_account: Optional[pulumi.InputType['GetSecretNatsAccountArgs']] = None,
-               opaque: Optional[pulumi.InputType['GetSecretOpaqueArgs']] = None,
+               nats_account: Optional[Union['GetSecretNatsAccountArgs', 'GetSecretNatsAccountArgsDict']] = None,
+               opaque: Optional[Union['GetSecretOpaqueArgs', 'GetSecretOpaqueArgsDict']] = None,
                tags: Optional[Mapping[str, str]] = None,
-               tls: Optional[pulumi.InputType['GetSecretTlsArgs']] = None,
-               userpass: Optional[pulumi.InputType['GetSecretUserpassArgs']] = None,
+               tls: Optional[Union['GetSecretTlsArgs', 'GetSecretTlsArgsDict']] = None,
+               userpass: Optional[Union['GetSecretUserpassArgs', 'GetSecretUserpassArgsDict']] = None,
                opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetSecretResult:
     """
     Use this data source to access information about a [Secret](https://docs.controlplane.com/reference/secret) within Control Plane.
@@ -396,24 +401,21 @@ def get_secret(aws: Optional[pulumi.InputType['GetSecretAwsArgs']] = None,
         tags=pulumi.get(__ret__, 'tags'),
         tls=pulumi.get(__ret__, 'tls'),
         userpass=pulumi.get(__ret__, 'userpass'))
-
-
-@_utilities.lift_output_func(get_secret)
-def get_secret_output(aws: Optional[pulumi.Input[Optional[pulumi.InputType['GetSecretAwsArgs']]]] = None,
-                      azure_connector: Optional[pulumi.Input[Optional[pulumi.InputType['GetSecretAzureConnectorArgs']]]] = None,
+def get_secret_output(aws: Optional[pulumi.Input[Optional[Union['GetSecretAwsArgs', 'GetSecretAwsArgsDict']]]] = None,
+                      azure_connector: Optional[pulumi.Input[Optional[Union['GetSecretAzureConnectorArgs', 'GetSecretAzureConnectorArgsDict']]]] = None,
                       azure_sdk: Optional[pulumi.Input[Optional[str]]] = None,
                       description: Optional[pulumi.Input[Optional[str]]] = None,
                       dictionary: Optional[pulumi.Input[Optional[Mapping[str, str]]]] = None,
                       docker: Optional[pulumi.Input[Optional[str]]] = None,
-                      ecr: Optional[pulumi.Input[Optional[pulumi.InputType['GetSecretEcrArgs']]]] = None,
+                      ecr: Optional[pulumi.Input[Optional[Union['GetSecretEcrArgs', 'GetSecretEcrArgsDict']]]] = None,
                       gcp: Optional[pulumi.Input[Optional[str]]] = None,
-                      keypair: Optional[pulumi.Input[Optional[pulumi.InputType['GetSecretKeypairArgs']]]] = None,
+                      keypair: Optional[pulumi.Input[Optional[Union['GetSecretKeypairArgs', 'GetSecretKeypairArgsDict']]]] = None,
                       name: Optional[pulumi.Input[str]] = None,
-                      nats_account: Optional[pulumi.Input[Optional[pulumi.InputType['GetSecretNatsAccountArgs']]]] = None,
-                      opaque: Optional[pulumi.Input[Optional[pulumi.InputType['GetSecretOpaqueArgs']]]] = None,
+                      nats_account: Optional[pulumi.Input[Optional[Union['GetSecretNatsAccountArgs', 'GetSecretNatsAccountArgsDict']]]] = None,
+                      opaque: Optional[pulumi.Input[Optional[Union['GetSecretOpaqueArgs', 'GetSecretOpaqueArgsDict']]]] = None,
                       tags: Optional[pulumi.Input[Optional[Mapping[str, str]]]] = None,
-                      tls: Optional[pulumi.Input[Optional[pulumi.InputType['GetSecretTlsArgs']]]] = None,
-                      userpass: Optional[pulumi.Input[Optional[pulumi.InputType['GetSecretUserpassArgs']]]] = None,
+                      tls: Optional[pulumi.Input[Optional[Union['GetSecretTlsArgs', 'GetSecretTlsArgsDict']]]] = None,
+                      userpass: Optional[pulumi.Input[Optional[Union['GetSecretUserpassArgs', 'GetSecretUserpassArgsDict']]]] = None,
                       opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetSecretResult]:
     """
     Use this data source to access information about a [Secret](https://docs.controlplane.com/reference/secret) within Control Plane.
@@ -538,4 +540,42 @@ def get_secret_output(aws: Optional[pulumi.Input[Optional[pulumi.InputType['GetS
     pulumi.export("example-secret-payload", example.opaque.payload)
     ```
     """
-    ...
+    __args__ = dict()
+    __args__['aws'] = aws
+    __args__['azureConnector'] = azure_connector
+    __args__['azureSdk'] = azure_sdk
+    __args__['description'] = description
+    __args__['dictionary'] = dictionary
+    __args__['docker'] = docker
+    __args__['ecr'] = ecr
+    __args__['gcp'] = gcp
+    __args__['keypair'] = keypair
+    __args__['name'] = name
+    __args__['natsAccount'] = nats_account
+    __args__['opaque'] = opaque
+    __args__['tags'] = tags
+    __args__['tls'] = tls
+    __args__['userpass'] = userpass
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('cpln:index/getSecret:getSecret', __args__, opts=opts, typ=GetSecretResult)
+    return __ret__.apply(lambda __response__: GetSecretResult(
+        aws=pulumi.get(__response__, 'aws'),
+        azure_connector=pulumi.get(__response__, 'azure_connector'),
+        azure_sdk=pulumi.get(__response__, 'azure_sdk'),
+        cpln_id=pulumi.get(__response__, 'cpln_id'),
+        description=pulumi.get(__response__, 'description'),
+        dictionary=pulumi.get(__response__, 'dictionary'),
+        dictionary_as_envs=pulumi.get(__response__, 'dictionary_as_envs'),
+        docker=pulumi.get(__response__, 'docker'),
+        ecr=pulumi.get(__response__, 'ecr'),
+        gcp=pulumi.get(__response__, 'gcp'),
+        id=pulumi.get(__response__, 'id'),
+        keypair=pulumi.get(__response__, 'keypair'),
+        name=pulumi.get(__response__, 'name'),
+        nats_account=pulumi.get(__response__, 'nats_account'),
+        opaque=pulumi.get(__response__, 'opaque'),
+        secret_link=pulumi.get(__response__, 'secret_link'),
+        self_link=pulumi.get(__response__, 'self_link'),
+        tags=pulumi.get(__response__, 'tags'),
+        tls=pulumi.get(__response__, 'tls'),
+        userpass=pulumi.get(__response__, 'userpass')))

@@ -14,9 +14,21 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class GetImagesImageManifestResult
     {
+        /// <summary>
+        /// The config is a JSON blob that contains the image configuration data which includes environment variables, default command to run, and other settings necessary to run the container based on this image.
+        /// </summary>
         public readonly ImmutableArray<Outputs.GetImagesImageManifestConfigResult> Configs;
+        /// <summary>
+        /// Layers lists the digests of the image's layers. These layers are filesystem changes or additions made in each step of the Docker image's creation process. The layers are stored separately and pulled as needed, which allows for efficient storage and transfer of images. Each layer is represented by a SHA256 digest, ensuring the integrity and authenticity of the image.
+        /// </summary>
         public readonly ImmutableArray<Outputs.GetImagesImageManifestLayerResult> Layers;
+        /// <summary>
+        /// Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.
+        /// </summary>
         public readonly string MediaType;
+        /// <summary>
+        /// The version of the Docker Image Manifest format.
+        /// </summary>
         public readonly int SchemaVersion;
 
         [OutputConstructor]

@@ -8,7 +8,6 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
@@ -125,12 +124,6 @@ func (i *OrgTracing) ToOrgTracingOutputWithContext(ctx context.Context) OrgTraci
 	return pulumi.ToOutputWithContext(ctx, i).(OrgTracingOutput)
 }
 
-func (i *OrgTracing) ToOutput(ctx context.Context) pulumix.Output[*OrgTracing] {
-	return pulumix.Output[*OrgTracing]{
-		OutputState: i.ToOrgTracingOutputWithContext(ctx).OutputState,
-	}
-}
-
 // OrgTracingArrayInput is an input type that accepts OrgTracingArray and OrgTracingArrayOutput values.
 // You can construct a concrete instance of `OrgTracingArrayInput` via:
 //
@@ -154,12 +147,6 @@ func (i OrgTracingArray) ToOrgTracingArrayOutput() OrgTracingArrayOutput {
 
 func (i OrgTracingArray) ToOrgTracingArrayOutputWithContext(ctx context.Context) OrgTracingArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(OrgTracingArrayOutput)
-}
-
-func (i OrgTracingArray) ToOutput(ctx context.Context) pulumix.Output[[]*OrgTracing] {
-	return pulumix.Output[[]*OrgTracing]{
-		OutputState: i.ToOrgTracingArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // OrgTracingMapInput is an input type that accepts OrgTracingMap and OrgTracingMapOutput values.
@@ -187,12 +174,6 @@ func (i OrgTracingMap) ToOrgTracingMapOutputWithContext(ctx context.Context) Org
 	return pulumi.ToOutputWithContext(ctx, i).(OrgTracingMapOutput)
 }
 
-func (i OrgTracingMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*OrgTracing] {
-	return pulumix.Output[map[string]*OrgTracing]{
-		OutputState: i.ToOrgTracingMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type OrgTracingOutput struct{ *pulumi.OutputState }
 
 func (OrgTracingOutput) ElementType() reflect.Type {
@@ -205,12 +186,6 @@ func (o OrgTracingOutput) ToOrgTracingOutput() OrgTracingOutput {
 
 func (o OrgTracingOutput) ToOrgTracingOutputWithContext(ctx context.Context) OrgTracingOutput {
 	return o
-}
-
-func (o OrgTracingOutput) ToOutput(ctx context.Context) pulumix.Output[*OrgTracing] {
-	return pulumix.Output[*OrgTracing]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o OrgTracingOutput) ControlplaneTracing() OrgTracingControlplaneTracingPtrOutput {
@@ -259,12 +234,6 @@ func (o OrgTracingArrayOutput) ToOrgTracingArrayOutputWithContext(ctx context.Co
 	return o
 }
 
-func (o OrgTracingArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*OrgTracing] {
-	return pulumix.Output[[]*OrgTracing]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o OrgTracingArrayOutput) Index(i pulumi.IntInput) OrgTracingOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *OrgTracing {
 		return vs[0].([]*OrgTracing)[vs[1].(int)]
@@ -283,12 +252,6 @@ func (o OrgTracingMapOutput) ToOrgTracingMapOutput() OrgTracingMapOutput {
 
 func (o OrgTracingMapOutput) ToOrgTracingMapOutputWithContext(ctx context.Context) OrgTracingMapOutput {
 	return o
-}
-
-func (o OrgTracingMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*OrgTracing] {
-	return pulumix.Output[map[string]*OrgTracing]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o OrgTracingMapOutput) MapIndex(k pulumi.StringInput) OrgTracingOutput {

@@ -14,18 +14,30 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sAwsProviderNodePool
     {
+        /// <summary>
+        /// Size in GB.
+        /// </summary>
         public readonly int? BootDiskSize;
         public readonly ImmutableArray<string> ExtraSecurityGroupIds;
         public readonly ImmutableArray<string> InstanceTypes;
+        /// <summary>
+        /// Labels to attach to nodes of a node pool.
+        /// </summary>
         public readonly ImmutableDictionary<string, string>? Labels;
         public readonly int? MaxSize;
         public readonly int? MinSize;
         public readonly string Name;
         public readonly int? OnDemandBaseCapacity;
         public readonly int? OnDemandPercentageAboveBaseCapacity;
+        /// <summary>
+        /// Default image for all nodes.
+        /// </summary>
         public readonly Outputs.Mk8sAwsProviderNodePoolOverrideImage OverrideImage;
         public readonly string? SpotAllocationStrategy;
         public readonly ImmutableArray<string> SubnetIds;
+        /// <summary>
+        /// Taint for the nodes of a pool.
+        /// </summary>
         public readonly ImmutableArray<Outputs.Mk8sAwsProviderNodePoolTaint> Taints;
 
         [OutputConstructor]

@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 
@@ -109,9 +114,6 @@ def get_locations(opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetLo
     return AwaitableGetLocationsResult(
         id=pulumi.get(__ret__, 'id'),
         locations=pulumi.get(__ret__, 'locations'))
-
-
-@_utilities.lift_output_func(get_locations)
 def get_locations_output(opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetLocationsResult]:
     """
     Use this data source to access information about all [Locations](https://docs.controlplane.com/reference/location) within Control Plane.
@@ -160,4 +162,9 @@ def get_locations_output(opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.
     pulumi.export("locations", locations_locations.locations)
     ```
     """
-    ...
+    __args__ = dict()
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('cpln:index/getLocations:getLocations', __args__, opts=opts, typ=GetLocationsResult)
+    return __ret__.apply(lambda __response__: GetLocationsResult(
+        id=pulumi.get(__response__, 'id'),
+        locations=pulumi.get(__response__, 'locations')))

@@ -14,9 +14,21 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadLoadBalancerGeoLocationHeaders
     {
+        /// <summary>
+        /// The geo asn header.
+        /// </summary>
         public readonly string? Asn;
+        /// <summary>
+        /// The geo city header.
+        /// </summary>
         public readonly string? City;
+        /// <summary>
+        /// The geo country header.
+        /// </summary>
         public readonly string? Country;
+        /// <summary>
+        /// The geo region header.
+        /// </summary>
         public readonly string? Region;
 
         [OutputConstructor]

@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class IpSetLocationArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The self link of a location.
+        /// </summary>
         [Input("name", required: true)]
         public Input<string> Name { get; set; } = null!;
 

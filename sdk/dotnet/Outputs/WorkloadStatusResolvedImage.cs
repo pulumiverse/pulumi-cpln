@@ -14,8 +14,17 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadStatusResolvedImage
     {
+        /// <summary>
+        /// A list of images that were resolved.
+        /// </summary>
         public readonly ImmutableArray<Outputs.WorkloadStatusResolvedImageImage> Images;
+        /// <summary>
+        /// UTC Time when the images were resolved.
+        /// </summary>
         public readonly string? ResolvedAt;
+        /// <summary>
+        /// Workload version the images were resolved for.
+        /// </summary>
         public readonly int? ResolvedForVersion;
 
         [OutputConstructor]

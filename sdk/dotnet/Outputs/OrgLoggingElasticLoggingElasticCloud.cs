@@ -14,9 +14,21 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgLoggingElasticLoggingElasticCloud
     {
+        /// <summary>
+        /// [Cloud ID](https://www.elastic.co/guide/en/cloud/current/ec-cloud-id.html)
+        /// </summary>
         public readonly string CloudId;
+        /// <summary>
+        /// Full Link to a secret of type `userpass`.
+        /// </summary>
         public readonly string Credentials;
+        /// <summary>
+        /// Logging Index.
+        /// </summary>
         public readonly string Index;
+        /// <summary>
+        /// Logging Type.
+        /// </summary>
         public readonly string Type;
 
         [OutputConstructor]

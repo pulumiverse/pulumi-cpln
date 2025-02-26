@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class PolicyBinding
     {
+        /// <summary>
+        /// List of permissions to allow.
+        /// </summary>
         public readonly ImmutableArray<string> Permissions;
+        /// <summary>
+        /// List of the principals this binding will be applied to. Principal links format: `group/GROUP_NAME`, `user/USER_EMAIL`, `gvc/GVC_NAME/identity/IDENTITY_NAME`, `serviceaccount/SERVICE_ACCOUNT_NAME`.
+        /// </summary>
         public readonly ImmutableArray<string> PrincipalLinks;
 
         [OutputConstructor]

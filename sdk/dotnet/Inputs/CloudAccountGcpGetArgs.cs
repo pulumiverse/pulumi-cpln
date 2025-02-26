@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class CloudAccountGcpGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// GCP project ID. Obtained from the GCP cloud console.
+        /// </summary>
         [Input("projectId", required: true)]
         public Input<string> ProjectId { get; set; } = null!;
 

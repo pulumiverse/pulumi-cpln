@@ -15,17 +15,50 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class Mk8sHetznerProvider
     {
         public readonly Outputs.Mk8sHetznerProviderAutoscaler? Autoscaler;
+        /// <summary>
+        /// Node pools that can configure dedicated Hetzner servers.
+        /// </summary>
         public readonly ImmutableArray<Outputs.Mk8sHetznerProviderDedicatedServerNodePool> DedicatedServerNodePools;
+        /// <summary>
+        /// Optional firewall rule to attach to all nodes.
+        /// </summary>
         public readonly string? FirewallId;
+        /// <summary>
+        /// If supplied, nodes will get assigned a random floating ip matching the selector.
+        /// </summary>
         public readonly ImmutableDictionary<string, string>? FloatingIpSelector;
+        /// <summary>
+        /// Extra labels to attach to servers.
+        /// </summary>
         public readonly ImmutableDictionary<string, string>? HetznerLabels;
+        /// <summary>
+        /// Default image for all nodes.
+        /// </summary>
         public readonly string? Image;
+        /// <summary>
+        /// ID of the Hetzner network to deploy nodes to.
+        /// </summary>
         public readonly string NetworkId;
         public readonly Outputs.Mk8sHetznerProviderNetworking Networking;
+        /// <summary>
+        /// List of node pools.
+        /// </summary>
         public readonly ImmutableArray<Outputs.Mk8sHetznerProviderNodePool> NodePools;
+        /// <summary>
+        /// Optional shell script that will be run before K8s is installed. Supports SSM.
+        /// </summary>
         public readonly string? PreInstallScript;
+        /// <summary>
+        /// Hetzner region to deploy nodes to.
+        /// </summary>
         public readonly string Region;
+        /// <summary>
+        /// SSH key name for accessing deployed nodes.
+        /// </summary>
         public readonly string? SshKey;
+        /// <summary>
+        /// Link to a secret holding Hetzner access key.
+        /// </summary>
         public readonly string TokenSecretLink;
 
         [OutputConstructor]

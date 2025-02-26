@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadLoadBalancerGeoLocationGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// When enabled, geo location headers will be included on inbound http requests. Existing headers will be replaced.
+        /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }
 

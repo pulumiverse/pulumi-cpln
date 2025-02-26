@@ -13,12 +13,21 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class OrgObservabilityGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Log retention days. Default: 30
+        /// </summary>
         [Input("logsRetentionDays")]
         public Input<int>? LogsRetentionDays { get; set; }
 
+        /// <summary>
+        /// Metrics retention days. Default: 30
+        /// </summary>
         [Input("metricsRetentionDays")]
         public Input<int>? MetricsRetentionDays { get; set; }
 
+        /// <summary>
+        /// Traces retention days. Default: 30
+        /// </summary>
         [Input("tracesRetentionDays")]
         public Input<int>? TracesRetentionDays { get; set; }
 

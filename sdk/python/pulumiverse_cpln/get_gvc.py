@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -95,10 +100,8 @@ class GetGvcResult:
 
     @property
     @pulumi.getter
+    @_utilities.deprecated("""Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.""")
     def domain(self) -> Optional[str]:
-        warnings.warn("""Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.""", DeprecationWarning)
-        pulumi.log.warn("""domain is deprecated: Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.""")
-
         return pulumi.get(self, "domain")
 
     @property
@@ -184,17 +187,17 @@ class AwaitableGetGvcResult(GetGvcResult):
             tags=self.tags)
 
 
-def get_gvc(controlplane_tracing: Optional[pulumi.InputType['GetGvcControlplaneTracingArgs']] = None,
+def get_gvc(controlplane_tracing: Optional[Union['GetGvcControlplaneTracingArgs', 'GetGvcControlplaneTracingArgsDict']] = None,
             description: Optional[str] = None,
             domain: Optional[str] = None,
             env: Optional[Mapping[str, str]] = None,
-            lightstep_tracing: Optional[pulumi.InputType['GetGvcLightstepTracingArgs']] = None,
-            load_balancer: Optional[pulumi.InputType['GetGvcLoadBalancerArgs']] = None,
+            lightstep_tracing: Optional[Union['GetGvcLightstepTracingArgs', 'GetGvcLightstepTracingArgsDict']] = None,
+            load_balancer: Optional[Union['GetGvcLoadBalancerArgs', 'GetGvcLoadBalancerArgsDict']] = None,
             locations: Optional[Sequence[str]] = None,
             name: Optional[str] = None,
-            otel_tracing: Optional[pulumi.InputType['GetGvcOtelTracingArgs']] = None,
+            otel_tracing: Optional[Union['GetGvcOtelTracingArgs', 'GetGvcOtelTracingArgsDict']] = None,
             pull_secrets: Optional[Sequence[str]] = None,
-            sidecar: Optional[pulumi.InputType['GetGvcSidecarArgs']] = None,
+            sidecar: Optional[Union['GetGvcSidecarArgs', 'GetGvcSidecarArgsDict']] = None,
             tags: Optional[Mapping[str, str]] = None,
             opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetGvcResult:
     """
@@ -297,20 +300,17 @@ def get_gvc(controlplane_tracing: Optional[pulumi.InputType['GetGvcControlplaneT
         self_link=pulumi.get(__ret__, 'self_link'),
         sidecar=pulumi.get(__ret__, 'sidecar'),
         tags=pulumi.get(__ret__, 'tags'))
-
-
-@_utilities.lift_output_func(get_gvc)
-def get_gvc_output(controlplane_tracing: Optional[pulumi.Input[Optional[pulumi.InputType['GetGvcControlplaneTracingArgs']]]] = None,
+def get_gvc_output(controlplane_tracing: Optional[pulumi.Input[Optional[Union['GetGvcControlplaneTracingArgs', 'GetGvcControlplaneTracingArgsDict']]]] = None,
                    description: Optional[pulumi.Input[Optional[str]]] = None,
                    domain: Optional[pulumi.Input[Optional[str]]] = None,
                    env: Optional[pulumi.Input[Optional[Mapping[str, str]]]] = None,
-                   lightstep_tracing: Optional[pulumi.Input[Optional[pulumi.InputType['GetGvcLightstepTracingArgs']]]] = None,
-                   load_balancer: Optional[pulumi.Input[Optional[pulumi.InputType['GetGvcLoadBalancerArgs']]]] = None,
+                   lightstep_tracing: Optional[pulumi.Input[Optional[Union['GetGvcLightstepTracingArgs', 'GetGvcLightstepTracingArgsDict']]]] = None,
+                   load_balancer: Optional[pulumi.Input[Optional[Union['GetGvcLoadBalancerArgs', 'GetGvcLoadBalancerArgsDict']]]] = None,
                    locations: Optional[pulumi.Input[Optional[Sequence[str]]]] = None,
                    name: Optional[pulumi.Input[str]] = None,
-                   otel_tracing: Optional[pulumi.Input[Optional[pulumi.InputType['GetGvcOtelTracingArgs']]]] = None,
+                   otel_tracing: Optional[pulumi.Input[Optional[Union['GetGvcOtelTracingArgs', 'GetGvcOtelTracingArgsDict']]]] = None,
                    pull_secrets: Optional[pulumi.Input[Optional[Sequence[str]]]] = None,
-                   sidecar: Optional[pulumi.Input[Optional[pulumi.InputType['GetGvcSidecarArgs']]]] = None,
+                   sidecar: Optional[pulumi.Input[Optional[Union['GetGvcSidecarArgs', 'GetGvcSidecarArgsDict']]]] = None,
                    tags: Optional[pulumi.Input[Optional[Mapping[str, str]]]] = None,
                    opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetGvcResult]:
     """
@@ -380,4 +380,35 @@ def get_gvc_output(controlplane_tracing: Optional[pulumi.Input[Optional[pulumi.I
     pulumi.export("gvcLocations", gvc.locations)
     ```
     """
-    ...
+    __args__ = dict()
+    __args__['controlplaneTracing'] = controlplane_tracing
+    __args__['description'] = description
+    __args__['domain'] = domain
+    __args__['env'] = env
+    __args__['lightstepTracing'] = lightstep_tracing
+    __args__['loadBalancer'] = load_balancer
+    __args__['locations'] = locations
+    __args__['name'] = name
+    __args__['otelTracing'] = otel_tracing
+    __args__['pullSecrets'] = pull_secrets
+    __args__['sidecar'] = sidecar
+    __args__['tags'] = tags
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('cpln:index/getGvc:getGvc', __args__, opts=opts, typ=GetGvcResult)
+    return __ret__.apply(lambda __response__: GetGvcResult(
+        alias=pulumi.get(__response__, 'alias'),
+        controlplane_tracing=pulumi.get(__response__, 'controlplane_tracing'),
+        cpln_id=pulumi.get(__response__, 'cpln_id'),
+        description=pulumi.get(__response__, 'description'),
+        domain=pulumi.get(__response__, 'domain'),
+        env=pulumi.get(__response__, 'env'),
+        id=pulumi.get(__response__, 'id'),
+        lightstep_tracing=pulumi.get(__response__, 'lightstep_tracing'),
+        load_balancer=pulumi.get(__response__, 'load_balancer'),
+        locations=pulumi.get(__response__, 'locations'),
+        name=pulumi.get(__response__, 'name'),
+        otel_tracing=pulumi.get(__response__, 'otel_tracing'),
+        pull_secrets=pulumi.get(__response__, 'pull_secrets'),
+        self_link=pulumi.get(__response__, 'self_link'),
+        sidecar=pulumi.get(__response__, 'sidecar'),
+        tags=pulumi.get(__response__, 'tags')))

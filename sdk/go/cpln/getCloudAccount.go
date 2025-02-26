@@ -8,7 +8,6 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
@@ -32,7 +31,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			this, err := cpln.LookupCloudAccount(ctx, nil, nil)
+//			this, err := cpln.LookupCloudAccount(ctx, map[string]interface{}{}, nil)
 //			if err != nil {
 //				return err
 //			}
@@ -60,13 +59,19 @@ type LookupCloudAccountResult struct {
 }
 
 func LookupCloudAccountOutput(ctx *pulumi.Context, opts ...pulumi.InvokeOption) LookupCloudAccountResultOutput {
-	return pulumi.ToOutput(0).ApplyT(func(int) (LookupCloudAccountResult, error) {
-		r, err := LookupCloudAccount(ctx, opts...)
-		var s LookupCloudAccountResult
-		if r != nil {
-			s = *r
+	return pulumi.ToOutput(0).ApplyT(func(int) (LookupCloudAccountResultOutput, error) {
+		opts = internal.PkgInvokeDefaultOpts(opts)
+		var rv LookupCloudAccountResult
+		secret, err := ctx.InvokePackageRaw("cpln:index/getCloudAccount:getCloudAccount", nil, &rv, "", opts...)
+		if err != nil {
+			return LookupCloudAccountResultOutput{}, err
 		}
-		return s, err
+
+		output := pulumi.ToOutput(rv).(LookupCloudAccountResultOutput)
+		if secret {
+			return pulumi.ToSecret(output).(LookupCloudAccountResultOutput), nil
+		}
+		return output, nil
 	}).(LookupCloudAccountResultOutput)
 }
 
@@ -83,12 +88,6 @@ func (o LookupCloudAccountResultOutput) ToLookupCloudAccountResultOutput() Looku
 
 func (o LookupCloudAccountResultOutput) ToLookupCloudAccountResultOutputWithContext(ctx context.Context) LookupCloudAccountResultOutput {
 	return o
-}
-
-func (o LookupCloudAccountResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupCloudAccountResult] {
-	return pulumix.Output[LookupCloudAccountResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o LookupCloudAccountResultOutput) AwsIdentifiers() pulumi.StringArrayOutput {

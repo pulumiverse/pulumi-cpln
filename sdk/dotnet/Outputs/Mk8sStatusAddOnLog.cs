@@ -14,6 +14,9 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sStatusAddOnLog
     {
+        /// <summary>
+        /// Loki endpoint to query logs from.
+        /// </summary>
         public readonly string? LokiAddress;
 
         [OutputConstructor]

@@ -14,8 +14,17 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class IdentityAwsAccessPolicy
     {
+        /// <summary>
+        /// Full link to referenced cloud account.
+        /// </summary>
         public readonly string CloudAccountLink;
+        /// <summary>
+        /// List of policies.
+        /// </summary>
         public readonly ImmutableArray<string> PolicyRefs;
+        /// <summary>
+        /// Role name.
+        /// </summary>
         public readonly string? RoleName;
 
         [OutputConstructor]

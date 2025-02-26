@@ -16,6 +16,9 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("_sentinel")]
         public Input<bool>? _sentinel { get; set; }
 
+        /// <summary>
+        /// The group id assigned to any mounted volume.
+        /// </summary>
         [Input("fileSystemGroupId")]
         public Input<int>? FileSystemGroupId { get; set; }
 

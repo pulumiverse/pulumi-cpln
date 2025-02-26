@@ -14,12 +14,33 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class IdentityNgsAccessPolicy
     {
+        /// <summary>
+        /// Full link to referenced cloud account.
+        /// </summary>
         public readonly string CloudAccountLink;
+        /// <summary>
+        /// Max number of bytes a connection can send. Default: -1
+        /// </summary>
         public readonly int? Data;
+        /// <summary>
+        /// Max message payload. Default: -1
+        /// </summary>
         public readonly int? Payload;
+        /// <summary>
+        /// Pub Permission.
+        /// </summary>
         public readonly Outputs.IdentityNgsAccessPolicyPub? Pub;
+        /// <summary>
+        /// Reponses.
+        /// </summary>
         public readonly Outputs.IdentityNgsAccessPolicyResp? Resp;
+        /// <summary>
+        /// Sub Permission.
+        /// </summary>
         public readonly Outputs.IdentityNgsAccessPolicySub? Sub;
+        /// <summary>
+        /// Max number of subscriptions per connection. Default: -1
+        /// </summary>
         public readonly int? Subs;
 
         [OutputConstructor]

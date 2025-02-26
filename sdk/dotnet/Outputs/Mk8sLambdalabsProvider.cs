@@ -15,10 +15,25 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class Mk8sLambdalabsProvider
     {
         public readonly Outputs.Mk8sLambdalabsProviderAutoscaler? Autoscaler;
+        /// <summary>
+        /// List of node pools.
+        /// </summary>
         public readonly ImmutableArray<Outputs.Mk8sLambdalabsProviderNodePool> NodePools;
+        /// <summary>
+        /// Optional shell script that will be run before K8s is installed. Supports SSM.
+        /// </summary>
         public readonly string? PreInstallScript;
+        /// <summary>
+        /// Region where the cluster nodes will live.
+        /// </summary>
         public readonly string Region;
+        /// <summary>
+        /// SSH key name for accessing deployed nodes.
+        /// </summary>
         public readonly string SshKey;
+        /// <summary>
+        /// Link to a secret holding Lambdalabs access key.
+        /// </summary>
         public readonly string TokenSecretLink;
         public readonly ImmutableArray<Outputs.Mk8sLambdalabsProviderUnmanagedNodePool> UnmanagedNodePools;
 

@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgLoggingLogzioLogging
     {
+        /// <summary>
+        /// Full link to referenced Opaque Secret.
+        /// </summary>
         public readonly string Credentials;
+        /// <summary>
+        /// Logzio listener host URI.
+        /// </summary>
         public readonly string ListenerHost;
 
         [OutputConstructor]

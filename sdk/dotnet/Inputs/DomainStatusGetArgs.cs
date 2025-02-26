@@ -15,6 +15,10 @@ namespace Pulumiverse.Cpln.Inputs
     {
         [Input("dnsConfigs")]
         private InputList<Inputs.DomainStatusDnsConfigGetArgs>? _dnsConfigs;
+
+        /// <summary>
+        /// List of required DNS record entries.
+        /// </summary>
         public InputList<Inputs.DomainStatusDnsConfigGetArgs> DnsConfigs
         {
             get => _dnsConfigs ?? (_dnsConfigs = new InputList<Inputs.DomainStatusDnsConfigGetArgs>());
@@ -23,6 +27,10 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("endpoints")]
         private InputList<Inputs.DomainStatusEndpointGetArgs>? _endpoints;
+
+        /// <summary>
+        /// List of configured domain endpoints.
+        /// </summary>
         public InputList<Inputs.DomainStatusEndpointGetArgs> Endpoints
         {
             get => _endpoints ?? (_endpoints = new InputList<Inputs.DomainStatusEndpointGetArgs>());
@@ -34,15 +42,25 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("locations")]
         private InputList<Inputs.DomainStatusLocationGetArgs>? _locations;
+
+        /// <summary>
+        /// Contains the cloud provider name, region, and certificate status.
+        /// </summary>
         public InputList<Inputs.DomainStatusLocationGetArgs> Locations
         {
             get => _locations ?? (_locations = new InputList<Inputs.DomainStatusLocationGetArgs>());
             set => _locations = value;
         }
 
+        /// <summary>
+        /// Status of Domain. Possible values: `initializing`, `ready`, `pendingDnsConfig`, `pendingCertificate`, `usedByGvc`.
+        /// </summary>
         [Input("status")]
         public Input<string>? Status { get; set; }
 
+        /// <summary>
+        /// Warning message.
+        /// </summary>
         [Input("warning")]
         public Input<string>? Warning { get; set; }
 

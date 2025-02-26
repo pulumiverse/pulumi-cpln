@@ -13,15 +13,27 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadRolloutOptionsArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The number of replicas that can be created above the desired amount of replicas during an update.
+        /// </summary>
         [Input("maxSurgeReplicas")]
         public Input<string>? MaxSurgeReplicas { get; set; }
 
+        /// <summary>
+        /// The number of replicas that can be unavailable during the update process.
+        /// </summary>
         [Input("maxUnavailableReplicas")]
         public Input<string>? MaxUnavailableReplicas { get; set; }
 
+        /// <summary>
+        /// The minimum number of seconds a container must run without crashing to be considered available
+        /// </summary>
         [Input("minReadySeconds")]
         public Input<int>? MinReadySeconds { get; set; }
 
+        /// <summary>
+        /// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+        /// </summary>
         [Input("scalingPolicy")]
         public Input<string>? ScalingPolicy { get; set; }
 

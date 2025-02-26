@@ -14,9 +14,21 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class DomainSpecPortTls
     {
+        /// <summary>
+        /// Allowed cipher suites. Refer to the [Domain Reference](https://docs.controlplane.com/reference/domain#cipher-suites) for details.
+        /// </summary>
         public readonly ImmutableArray<string> CipherSuites;
+        /// <summary>
+        /// The certificate authority PEM, stored as a TLS Secret, used to verify the authority of the client certificate. The only verification performed checks that the CN of the PEM matches the Domain (i.e., CN=*.DOMAIN).
+        /// </summary>
         public readonly Outputs.DomainSpecPortTlsClientCertificate? ClientCertificate;
+        /// <summary>
+        /// Minimum TLS version to accept. Minimum is `1.0`. Default: `1.2`.
+        /// </summary>
         public readonly string? MinProtocolVersion;
+        /// <summary>
+        /// Custom Server Certificate.
+        /// </summary>
         public readonly Outputs.DomainSpecPortTlsServerCertificate? ServerCertificate;
 
         [OutputConstructor]

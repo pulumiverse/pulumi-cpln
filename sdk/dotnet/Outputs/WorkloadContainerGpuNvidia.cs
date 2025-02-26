@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadContainerGpuNvidia
     {
+        /// <summary>
+        /// GPU Model (i.e.: t4)
+        /// </summary>
         public readonly string Model;
+        /// <summary>
+        /// Number of GPUs.
+        /// </summary>
         public readonly int Quantity;
 
         [OutputConstructor]

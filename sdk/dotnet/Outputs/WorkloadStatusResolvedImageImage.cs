@@ -14,6 +14,9 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadStatusResolvedImageImage
     {
+        /// <summary>
+        /// A unique SHA256 hash value that identifies a specific image content. This digest serves as a fingerprint of the image's content, ensuring the image you pull or run is exactly what you expect, without any modifications or corruptions.
+        /// </summary>
         public readonly string? Digest;
         public readonly ImmutableArray<Outputs.WorkloadStatusResolvedImageImageManifest> Manifests;
 

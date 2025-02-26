@@ -13,17 +13,30 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class DomainSpecGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Allows domain to accept wildcards. The associated GVC must have dedicated load balancing enabled.
+        /// </summary>
         [Input("acceptAllHosts")]
         public Input<bool>? AcceptAllHosts { get; set; }
 
+        /// <summary>
+        /// In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
+        /// </summary>
         [Input("dnsMode")]
         public Input<string>? DnsMode { get; set; }
 
+        /// <summary>
+        /// This value is set to a target GVC (using a full link) for use by subdomain based routing. Each workload in the GVC will receive a subdomain in the form ${workload.name}.${domain.name}. **Do not include if path based routing is used.**
+        /// </summary>
         [Input("gvcLink")]
         public Input<string>? GvcLink { get; set; }
 
         [Input("ports", required: true)]
         private InputList<Inputs.DomainSpecPortGetArgs>? _ports;
+
+        /// <summary>
+        /// Domain port specifications.
+        /// </summary>
         public InputList<Inputs.DomainSpecPortGetArgs> Ports
         {
             get => _ports ?? (_ports = new InputList<Inputs.DomainSpecPortGetArgs>());

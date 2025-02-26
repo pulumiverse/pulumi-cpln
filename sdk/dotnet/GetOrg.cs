@@ -22,9 +22,7 @@ namespace Pulumiverse.Cpln
         /// - **cpln_id** (String) The ID, in GUID format, of the org.
         /// - **name** (String) The name of org.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
@@ -43,8 +41,6 @@ namespace Pulumiverse.Cpln
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetOrgResult> InvokeAsync(InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetOrgResult>("cpln:index/getOrg:getOrg", InvokeArgs.Empty, options.WithDefaults());
@@ -59,9 +55,7 @@ namespace Pulumiverse.Cpln
         /// - **cpln_id** (String) The ID, in GUID format, of the org.
         /// - **name** (String) The name of org.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
@@ -80,8 +74,6 @@ namespace Pulumiverse.Cpln
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetOrgResult> Invoke(InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetOrgResult>("cpln:index/getOrg:getOrg", InvokeArgs.Empty, options.WithDefaults());

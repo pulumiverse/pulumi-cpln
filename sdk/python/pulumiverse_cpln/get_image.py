@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 
@@ -189,9 +194,6 @@ def get_image(name: Optional[str] = None,
         self_link=pulumi.get(__ret__, 'self_link'),
         tag=pulumi.get(__ret__, 'tag'),
         tags=pulumi.get(__ret__, 'tags'))
-
-
-@_utilities.lift_output_func(get_image)
 def get_image_output(name: Optional[pulumi.Input[str]] = None,
                      opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetImageResult]:
     """
@@ -249,4 +251,17 @@ def get_image_output(name: Optional[pulumi.Input[str]] = None,
     pulumi.export("specificImage", image_name_with_tag)
     ```
     """
-    ...
+    __args__ = dict()
+    __args__['name'] = name
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('cpln:index/getImage:getImage', __args__, opts=opts, typ=GetImageResult)
+    return __ret__.apply(lambda __response__: GetImageResult(
+        cpln_id=pulumi.get(__response__, 'cpln_id'),
+        digest=pulumi.get(__response__, 'digest'),
+        id=pulumi.get(__response__, 'id'),
+        manifests=pulumi.get(__response__, 'manifests'),
+        name=pulumi.get(__response__, 'name'),
+        repository=pulumi.get(__response__, 'repository'),
+        self_link=pulumi.get(__response__, 'self_link'),
+        tag=pulumi.get(__response__, 'tag'),
+        tags=pulumi.get(__response__, 'tags')))

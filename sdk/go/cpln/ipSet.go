@@ -8,7 +8,6 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
@@ -66,40 +65,6 @@ import (
 // - **created** (String)
 //
 // ## Example Usage
-//
-// ```go
-// package main
-//
-// import (
-//
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln"
-//
-// )
-//
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := cpln.NewIpSet(ctx, "new", &cpln.IpSetArgs{
-//				Description: pulumi.String("example"),
-//				Link:        pulumi.String("SELF_LINK_TO_WORKLOAD"),
-//				Locations: cpln.IpSetLocationArray{
-//					&cpln.IpSetLocationArgs{
-//						Name:            pulumi.String("SELF_LINK_TO_LOCATION"),
-//						RetentionPolicy: pulumi.String("keep"),
-//					},
-//				},
-//				Tags: pulumi.StringMap{
-//					"terraform_generated": pulumi.String("true"),
-//				},
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			return nil
-//		})
-//	}
-//
-// ```
 type IpSet struct {
 	pulumi.CustomResourceState
 
@@ -237,12 +202,6 @@ func (i *IpSet) ToIpSetOutputWithContext(ctx context.Context) IpSetOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(IpSetOutput)
 }
 
-func (i *IpSet) ToOutput(ctx context.Context) pulumix.Output[*IpSet] {
-	return pulumix.Output[*IpSet]{
-		OutputState: i.ToIpSetOutputWithContext(ctx).OutputState,
-	}
-}
-
 // IpSetArrayInput is an input type that accepts IpSetArray and IpSetArrayOutput values.
 // You can construct a concrete instance of `IpSetArrayInput` via:
 //
@@ -266,12 +225,6 @@ func (i IpSetArray) ToIpSetArrayOutput() IpSetArrayOutput {
 
 func (i IpSetArray) ToIpSetArrayOutputWithContext(ctx context.Context) IpSetArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(IpSetArrayOutput)
-}
-
-func (i IpSetArray) ToOutput(ctx context.Context) pulumix.Output[[]*IpSet] {
-	return pulumix.Output[[]*IpSet]{
-		OutputState: i.ToIpSetArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // IpSetMapInput is an input type that accepts IpSetMap and IpSetMapOutput values.
@@ -299,12 +252,6 @@ func (i IpSetMap) ToIpSetMapOutputWithContext(ctx context.Context) IpSetMapOutpu
 	return pulumi.ToOutputWithContext(ctx, i).(IpSetMapOutput)
 }
 
-func (i IpSetMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*IpSet] {
-	return pulumix.Output[map[string]*IpSet]{
-		OutputState: i.ToIpSetMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type IpSetOutput struct{ *pulumi.OutputState }
 
 func (IpSetOutput) ElementType() reflect.Type {
@@ -317,12 +264,6 @@ func (o IpSetOutput) ToIpSetOutput() IpSetOutput {
 
 func (o IpSetOutput) ToIpSetOutputWithContext(ctx context.Context) IpSetOutput {
 	return o
-}
-
-func (o IpSetOutput) ToOutput(ctx context.Context) pulumix.Output[*IpSet] {
-	return pulumix.Output[*IpSet]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The ID, in GUID format, of the IpSet.
@@ -378,12 +319,6 @@ func (o IpSetArrayOutput) ToIpSetArrayOutputWithContext(ctx context.Context) IpS
 	return o
 }
 
-func (o IpSetArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*IpSet] {
-	return pulumix.Output[[]*IpSet]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o IpSetArrayOutput) Index(i pulumi.IntInput) IpSetOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *IpSet {
 		return vs[0].([]*IpSet)[vs[1].(int)]
@@ -402,12 +337,6 @@ func (o IpSetMapOutput) ToIpSetMapOutput() IpSetMapOutput {
 
 func (o IpSetMapOutput) ToIpSetMapOutputWithContext(ctx context.Context) IpSetMapOutput {
 	return o
-}
-
-func (o IpSetMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*IpSet] {
-	return pulumix.Output[map[string]*IpSet]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o IpSetMapOutput) MapIndex(k pulumi.StringInput) IpSetOutput {

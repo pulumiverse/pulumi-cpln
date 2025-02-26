@@ -8,7 +8,6 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
@@ -35,7 +34,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			org, err := cpln.LookupOrg(ctx, nil, nil)
+//			org, err := cpln.LookupOrg(ctx, map[string]interface{}{}, nil)
 //			if err != nil {
 //				return err
 //			}
@@ -65,13 +64,19 @@ type LookupOrgResult struct {
 }
 
 func LookupOrgOutput(ctx *pulumi.Context, opts ...pulumi.InvokeOption) LookupOrgResultOutput {
-	return pulumi.ToOutput(0).ApplyT(func(int) (LookupOrgResult, error) {
-		r, err := LookupOrg(ctx, opts...)
-		var s LookupOrgResult
-		if r != nil {
-			s = *r
+	return pulumi.ToOutput(0).ApplyT(func(int) (LookupOrgResultOutput, error) {
+		opts = internal.PkgInvokeDefaultOpts(opts)
+		var rv LookupOrgResult
+		secret, err := ctx.InvokePackageRaw("cpln:index/getOrg:getOrg", nil, &rv, "", opts...)
+		if err != nil {
+			return LookupOrgResultOutput{}, err
 		}
-		return s, err
+
+		output := pulumi.ToOutput(rv).(LookupOrgResultOutput)
+		if secret {
+			return pulumi.ToSecret(output).(LookupOrgResultOutput), nil
+		}
+		return output, nil
 	}).(LookupOrgResultOutput)
 }
 
@@ -88,12 +93,6 @@ func (o LookupOrgResultOutput) ToLookupOrgResultOutput() LookupOrgResultOutput {
 
 func (o LookupOrgResultOutput) ToLookupOrgResultOutputWithContext(ctx context.Context) LookupOrgResultOutput {
 	return o
-}
-
-func (o LookupOrgResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupOrgResult] {
-	return pulumix.Output[LookupOrgResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o LookupOrgResultOutput) CplnId() pulumi.StringOutput {

@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class CloudAccountNgsGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Full link to a NATS Account Secret secret. (e.g., /org/ORG_NAME/secret/NATS_ACCOUNT_SECRET).
+        /// </summary>
         [Input("secretLink", required: true)]
         public Input<string> SecretLink { get; set; } = null!;
 

@@ -14,9 +14,21 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadRolloutOptions
     {
+        /// <summary>
+        /// The number of replicas that can be created above the desired amount of replicas during an update.
+        /// </summary>
         public readonly string? MaxSurgeReplicas;
+        /// <summary>
+        /// The number of replicas that can be unavailable during the update process.
+        /// </summary>
         public readonly string? MaxUnavailableReplicas;
+        /// <summary>
+        /// The minimum number of seconds a container must run without crashing to be considered available
+        /// </summary>
         public readonly int? MinReadySeconds;
+        /// <summary>
+        /// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+        /// </summary>
         public readonly string? ScalingPolicy;
 
         [OutputConstructor]

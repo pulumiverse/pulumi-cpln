@@ -15,8 +15,17 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class OrgLoggingElasticLogging
     {
         public readonly bool? _sentinel;
+        /// <summary>
+        /// For targeting Amazon Web Services (AWS) ElasticSearch.
+        /// </summary>
         public readonly Outputs.OrgLoggingElasticLoggingAws? Aws;
+        /// <summary>
+        /// For targeting Elastic Cloud.
+        /// </summary>
         public readonly Outputs.OrgLoggingElasticLoggingElasticCloud? ElasticCloud;
+        /// <summary>
+        /// For targeting generic Elastic Search providers.
+        /// </summary>
         public readonly Outputs.OrgLoggingElasticLoggingGeneric? Generic;
 
         [OutputConstructor]

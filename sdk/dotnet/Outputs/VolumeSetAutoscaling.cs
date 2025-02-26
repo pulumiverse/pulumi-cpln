@@ -14,8 +14,17 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class VolumeSetAutoscaling
     {
+        /// <summary>
+        /// The maximum size in GB for a volume in this set. A volume cannot grow to be bigger than this value. Minimum value: `10`.
+        /// </summary>
         public readonly int? MaxCapacity;
+        /// <summary>
+        /// The guaranteed free space on the volume as a percentage of the volume's total size. Control Plane will try to maintain at least that many percent free by scaling up the total size. Minimum percentage: `1`. Maximum Percentage: `100`.
+        /// </summary>
         public readonly int? MinFreePercentage;
+        /// <summary>
+        /// When scaling is necessary, then `new_capacity = current_capacity * storageScalingFactor`. Minimum value: `1.1`.
+        /// </summary>
         public readonly double? ScalingFactor;
 
         [OutputConstructor]

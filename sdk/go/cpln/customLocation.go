@@ -9,7 +9,6 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
@@ -155,12 +154,6 @@ func (i *CustomLocation) ToCustomLocationOutputWithContext(ctx context.Context) 
 	return pulumi.ToOutputWithContext(ctx, i).(CustomLocationOutput)
 }
 
-func (i *CustomLocation) ToOutput(ctx context.Context) pulumix.Output[*CustomLocation] {
-	return pulumix.Output[*CustomLocation]{
-		OutputState: i.ToCustomLocationOutputWithContext(ctx).OutputState,
-	}
-}
-
 // CustomLocationArrayInput is an input type that accepts CustomLocationArray and CustomLocationArrayOutput values.
 // You can construct a concrete instance of `CustomLocationArrayInput` via:
 //
@@ -184,12 +177,6 @@ func (i CustomLocationArray) ToCustomLocationArrayOutput() CustomLocationArrayOu
 
 func (i CustomLocationArray) ToCustomLocationArrayOutputWithContext(ctx context.Context) CustomLocationArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(CustomLocationArrayOutput)
-}
-
-func (i CustomLocationArray) ToOutput(ctx context.Context) pulumix.Output[[]*CustomLocation] {
-	return pulumix.Output[[]*CustomLocation]{
-		OutputState: i.ToCustomLocationArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // CustomLocationMapInput is an input type that accepts CustomLocationMap and CustomLocationMapOutput values.
@@ -217,12 +204,6 @@ func (i CustomLocationMap) ToCustomLocationMapOutputWithContext(ctx context.Cont
 	return pulumi.ToOutputWithContext(ctx, i).(CustomLocationMapOutput)
 }
 
-func (i CustomLocationMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*CustomLocation] {
-	return pulumix.Output[map[string]*CustomLocation]{
-		OutputState: i.ToCustomLocationMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type CustomLocationOutput struct{ *pulumi.OutputState }
 
 func (CustomLocationOutput) ElementType() reflect.Type {
@@ -235,12 +216,6 @@ func (o CustomLocationOutput) ToCustomLocationOutput() CustomLocationOutput {
 
 func (o CustomLocationOutput) ToCustomLocationOutputWithContext(ctx context.Context) CustomLocationOutput {
 	return o
-}
-
-func (o CustomLocationOutput) ToOutput(ctx context.Context) pulumix.Output[*CustomLocation] {
-	return pulumix.Output[*CustomLocation]{
-		OutputState: o.OutputState,
-	}
 }
 
 // Cloud Provider of the custom location.
@@ -292,12 +267,6 @@ func (o CustomLocationArrayOutput) ToCustomLocationArrayOutputWithContext(ctx co
 	return o
 }
 
-func (o CustomLocationArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*CustomLocation] {
-	return pulumix.Output[[]*CustomLocation]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o CustomLocationArrayOutput) Index(i pulumi.IntInput) CustomLocationOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *CustomLocation {
 		return vs[0].([]*CustomLocation)[vs[1].(int)]
@@ -316,12 +285,6 @@ func (o CustomLocationMapOutput) ToCustomLocationMapOutput() CustomLocationMapOu
 
 func (o CustomLocationMapOutput) ToCustomLocationMapOutputWithContext(ctx context.Context) CustomLocationMapOutput {
 	return o
-}
-
-func (o CustomLocationMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*CustomLocation] {
-	return pulumix.Output[map[string]*CustomLocation]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o CustomLocationMapOutput) MapIndex(k pulumi.StringInput) CustomLocationOutput {

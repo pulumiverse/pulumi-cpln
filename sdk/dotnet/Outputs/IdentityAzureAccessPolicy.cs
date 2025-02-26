@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class IdentityAzureAccessPolicy
     {
+        /// <summary>
+        /// Full link to referenced cloud account.
+        /// </summary>
         public readonly string CloudAccountLink;
+        /// <summary>
+        /// The process of assigning specific roles or permissions to an entity, such as a user or a service principal, within the system.
+        /// </summary>
         public readonly ImmutableArray<Outputs.IdentityAzureAccessPolicyRoleAssignment> RoleAssignments;
 
         [OutputConstructor]

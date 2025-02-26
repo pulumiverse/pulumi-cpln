@@ -13,15 +13,27 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class OrgLoggingCoralogixLoggingArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// App name to be displayed in Coralogix dashboard.
+        /// </summary>
         [Input("app", required: true)]
         public Input<string> App { get; set; } = null!;
 
+        /// <summary>
+        /// Coralogix cluster URI.
+        /// </summary>
         [Input("cluster", required: true)]
         public Input<string> Cluster { get; set; } = null!;
 
+        /// <summary>
+        /// Full link to referenced Opaque Secret.
+        /// </summary>
         [Input("credentials", required: true)]
         public Input<string> Credentials { get; set; } = null!;
 
+        /// <summary>
+        /// Subsystem name to be displayed in Coralogix dashboard.
+        /// </summary>
         [Input("subsystem", required: true)]
         public Input<string> Subsystem { get; set; } = null!;
 

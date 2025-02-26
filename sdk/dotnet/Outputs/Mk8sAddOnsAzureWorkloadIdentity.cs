@@ -15,6 +15,9 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class Mk8sAddOnsAzureWorkloadIdentity
     {
         public readonly bool? _sentinel;
+        /// <summary>
+        /// Tenant ID to use for workload identity.
+        /// </summary>
         public readonly string? TenantId;
 
         [OutputConstructor]

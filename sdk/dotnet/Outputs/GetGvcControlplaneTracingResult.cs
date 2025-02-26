@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class GetGvcControlplaneTracingResult
     {
+        /// <summary>
+        /// Key-value map of custom tags.
+        /// </summary>
         public readonly ImmutableDictionary<string, string>? CustomTags;
+        /// <summary>
+        /// Determines what percentage of requests should be traced.
+        /// </summary>
         public readonly double Sampling;
 
         [OutputConstructor]

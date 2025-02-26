@@ -136,7 +136,6 @@ import * as utilities from "./utilities";
  * ```
  */
 export function getSecret(args: GetSecretArgs, opts?: pulumi.InvokeOptions): Promise<GetSecretResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("cpln:index/getSecret:getSecret", {
         "aws": args.aws,
@@ -188,7 +187,7 @@ export interface GetSecretResult {
     readonly cplnId: string;
     readonly description?: string;
     readonly dictionary?: {[key: string]: string};
-    readonly dictionaryAsEnvs: {[key: string]: any};
+    readonly dictionaryAsEnvs: {[key: string]: string};
     readonly docker?: string;
     readonly ecr?: outputs.GetSecretEcr;
     readonly gcp?: string;
@@ -336,7 +335,24 @@ export interface GetSecretResult {
  * ```
  */
 export function getSecretOutput(args: GetSecretOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetSecretResult> {
-    return pulumi.output(args).apply((a: any) => getSecret(a, opts))
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("cpln:index/getSecret:getSecret", {
+        "aws": args.aws,
+        "azureConnector": args.azureConnector,
+        "azureSdk": args.azureSdk,
+        "description": args.description,
+        "dictionary": args.dictionary,
+        "docker": args.docker,
+        "ecr": args.ecr,
+        "gcp": args.gcp,
+        "keypair": args.keypair,
+        "name": args.name,
+        "natsAccount": args.natsAccount,
+        "opaque": args.opaque,
+        "tags": args.tags,
+        "tls": args.tls,
+        "userpass": args.userpass,
+    }, opts);
 }
 
 /**

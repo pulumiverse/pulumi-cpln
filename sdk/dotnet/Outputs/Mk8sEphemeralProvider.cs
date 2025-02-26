@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sEphemeralProvider
     {
+        /// <summary>
+        /// Control Plane location that will host the K8s components. Prefer one that is closest to where the nodes are running.
+        /// </summary>
         public readonly string Location;
+        /// <summary>
+        /// List of node pools.
+        /// </summary>
         public readonly ImmutableArray<Outputs.Mk8sEphemeralProviderNodePool> NodePools;
 
         [OutputConstructor]

@@ -9,7 +9,6 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
@@ -240,12 +239,6 @@ func (i *VolumeSet) ToVolumeSetOutputWithContext(ctx context.Context) VolumeSetO
 	return pulumi.ToOutputWithContext(ctx, i).(VolumeSetOutput)
 }
 
-func (i *VolumeSet) ToOutput(ctx context.Context) pulumix.Output[*VolumeSet] {
-	return pulumix.Output[*VolumeSet]{
-		OutputState: i.ToVolumeSetOutputWithContext(ctx).OutputState,
-	}
-}
-
 // VolumeSetArrayInput is an input type that accepts VolumeSetArray and VolumeSetArrayOutput values.
 // You can construct a concrete instance of `VolumeSetArrayInput` via:
 //
@@ -269,12 +262,6 @@ func (i VolumeSetArray) ToVolumeSetArrayOutput() VolumeSetArrayOutput {
 
 func (i VolumeSetArray) ToVolumeSetArrayOutputWithContext(ctx context.Context) VolumeSetArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(VolumeSetArrayOutput)
-}
-
-func (i VolumeSetArray) ToOutput(ctx context.Context) pulumix.Output[[]*VolumeSet] {
-	return pulumix.Output[[]*VolumeSet]{
-		OutputState: i.ToVolumeSetArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // VolumeSetMapInput is an input type that accepts VolumeSetMap and VolumeSetMapOutput values.
@@ -302,12 +289,6 @@ func (i VolumeSetMap) ToVolumeSetMapOutputWithContext(ctx context.Context) Volum
 	return pulumi.ToOutputWithContext(ctx, i).(VolumeSetMapOutput)
 }
 
-func (i VolumeSetMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*VolumeSet] {
-	return pulumix.Output[map[string]*VolumeSet]{
-		OutputState: i.ToVolumeSetMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type VolumeSetOutput struct{ *pulumi.OutputState }
 
 func (VolumeSetOutput) ElementType() reflect.Type {
@@ -320,12 +301,6 @@ func (o VolumeSetOutput) ToVolumeSetOutput() VolumeSetOutput {
 
 func (o VolumeSetOutput) ToVolumeSetOutputWithContext(ctx context.Context) VolumeSetOutput {
 	return o
-}
-
-func (o VolumeSetOutput) ToOutput(ctx context.Context) pulumix.Output[*VolumeSet] {
-	return pulumix.Output[*VolumeSet]{
-		OutputState: o.OutputState,
-	}
 }
 
 // Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
@@ -416,12 +391,6 @@ func (o VolumeSetArrayOutput) ToVolumeSetArrayOutputWithContext(ctx context.Cont
 	return o
 }
 
-func (o VolumeSetArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*VolumeSet] {
-	return pulumix.Output[[]*VolumeSet]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o VolumeSetArrayOutput) Index(i pulumi.IntInput) VolumeSetOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *VolumeSet {
 		return vs[0].([]*VolumeSet)[vs[1].(int)]
@@ -440,12 +409,6 @@ func (o VolumeSetMapOutput) ToVolumeSetMapOutput() VolumeSetMapOutput {
 
 func (o VolumeSetMapOutput) ToVolumeSetMapOutputWithContext(ctx context.Context) VolumeSetMapOutput {
 	return o
-}
-
-func (o VolumeSetMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*VolumeSet] {
-	return pulumix.Output[map[string]*VolumeSet]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o VolumeSetMapOutput) MapIndex(k pulumi.StringInput) VolumeSetOutput {

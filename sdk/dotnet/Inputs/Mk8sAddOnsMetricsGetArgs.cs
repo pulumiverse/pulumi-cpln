@@ -16,24 +16,45 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("_sentinel")]
         public Input<bool>? _sentinel { get; set; }
 
+        /// <summary>
+        /// Enable scraping apiserver stats.
+        /// </summary>
         [Input("apiServer")]
         public Input<bool>? ApiServer { get; set; }
 
+        /// <summary>
+        /// Enable CNI-level container stats.
+        /// </summary>
         [Input("cadvisor")]
         public Input<bool>? Cadvisor { get; set; }
 
+        /// <summary>
+        /// Enable scraping of core-dns service.
+        /// </summary>
         [Input("coreDns")]
         public Input<bool>? CoreDns { get; set; }
 
+        /// <summary>
+        /// Enable kube-state metrics.
+        /// </summary>
         [Input("kubeState")]
         public Input<bool>? KubeState { get; set; }
 
+        /// <summary>
+        /// Enable scraping kubelet stats.
+        /// </summary>
         [Input("kubelet")]
         public Input<bool>? Kubelet { get; set; }
 
+        /// <summary>
+        /// Enable collecting node-level stats (disk, network, filesystem, etc).
+        /// </summary>
         [Input("nodeExporter")]
         public Input<bool>? NodeExporter { get; set; }
 
+        /// <summary>
+        /// Scrape pods annotated with prometheus.io/scrape=true.
+        /// </summary>
         [Input("scrapeAnnotated")]
         public Input<Inputs.Mk8sAddOnsMetricsScrapeAnnotatedGetArgs>? ScrapeAnnotated { get; set; }
 

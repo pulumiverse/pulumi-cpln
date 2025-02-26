@@ -14,8 +14,17 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgObservability
     {
+        /// <summary>
+        /// Log retention days. Default: 30
+        /// </summary>
         public readonly int? LogsRetentionDays;
+        /// <summary>
+        /// Metrics retention days. Default: 30
+        /// </summary>
         public readonly int? MetricsRetentionDays;
+        /// <summary>
+        /// Traces retention days. Default: 30
+        /// </summary>
         public readonly int? TracesRetentionDays;
 
         [OutputConstructor]

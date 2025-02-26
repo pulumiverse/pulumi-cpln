@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -28,35 +33,16 @@ class IpSetArgs:
         :param pulumi.Input[str] name: Name of the IpSet.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
-        IpSetArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            description=description,
-            link=link,
-            locations=locations,
-            name=name,
-            tags=tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             description: Optional[pulumi.Input[str]] = None,
-             link: Optional[pulumi.Input[str]] = None,
-             locations: Optional[pulumi.Input[Sequence[pulumi.Input['IpSetLocationArgs']]]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if link is not None:
-            _setter("link", link)
+            pulumi.set(__self__, "link", link)
         if locations is not None:
-            _setter("locations", locations)
+            pulumi.set(__self__, "locations", locations)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
 
     @property
     @pulumi.getter
@@ -137,51 +123,22 @@ class _IpSetState:
         :param pulumi.Input[Sequence[pulumi.Input['IpSetStatusArgs']]] statuses: Status of the IpSet.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
-        _IpSetState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            cpln_id=cpln_id,
-            description=description,
-            link=link,
-            locations=locations,
-            name=name,
-            self_link=self_link,
-            statuses=statuses,
-            tags=tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             cpln_id: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             link: Optional[pulumi.Input[str]] = None,
-             locations: Optional[pulumi.Input[Sequence[pulumi.Input['IpSetLocationArgs']]]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             self_link: Optional[pulumi.Input[str]] = None,
-             statuses: Optional[pulumi.Input[Sequence[pulumi.Input['IpSetStatusArgs']]]] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'cplnId' in kwargs:
-            cpln_id = kwargs['cplnId']
-        if 'selfLink' in kwargs:
-            self_link = kwargs['selfLink']
-
         if cpln_id is not None:
-            _setter("cpln_id", cpln_id)
+            pulumi.set(__self__, "cpln_id", cpln_id)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if link is not None:
-            _setter("link", link)
+            pulumi.set(__self__, "link", link)
         if locations is not None:
-            _setter("locations", locations)
+            pulumi.set(__self__, "locations", locations)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if self_link is not None:
-            _setter("self_link", self_link)
+            pulumi.set(__self__, "self_link", self_link)
         if statuses is not None:
-            _setter("statuses", statuses)
+            pulumi.set(__self__, "statuses", statuses)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
 
     @property
     @pulumi.getter(name="cplnId")
@@ -284,7 +241,7 @@ class IpSet(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  link: Optional[pulumi.Input[str]] = None,
-                 locations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IpSetLocationArgs']]]]] = None,
+                 locations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['IpSetLocationArgs', 'IpSetLocationArgsDict']]]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
@@ -343,22 +300,6 @@ class IpSet(pulumi.CustomResource):
         - **created** (String)
 
         ## Example Usage
-
-        ```python
-        import pulumi
-        import pulumiverse_cpln as cpln
-
-        new = cpln.IpSet("new",
-            description="example",
-            link="SELF_LINK_TO_WORKLOAD",
-            locations=[cpln.IpSetLocationArgs(
-                name="SELF_LINK_TO_LOCATION",
-                retention_policy="keep",
-            )],
-            tags={
-                "terraform_generated": "true",
-            })
-        ```
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -429,22 +370,6 @@ class IpSet(pulumi.CustomResource):
 
         ## Example Usage
 
-        ```python
-        import pulumi
-        import pulumiverse_cpln as cpln
-
-        new = cpln.IpSet("new",
-            description="example",
-            link="SELF_LINK_TO_WORKLOAD",
-            locations=[cpln.IpSetLocationArgs(
-                name="SELF_LINK_TO_LOCATION",
-                retention_policy="keep",
-            )],
-            tags={
-                "terraform_generated": "true",
-            })
-        ```
-
         :param str resource_name: The name of the resource.
         :param IpSetArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -455,10 +380,6 @@ class IpSet(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            IpSetArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
@@ -466,7 +387,7 @@ class IpSet(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  link: Optional[pulumi.Input[str]] = None,
-                 locations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IpSetLocationArgs']]]]] = None,
+                 locations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['IpSetLocationArgs', 'IpSetLocationArgsDict']]]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
@@ -499,10 +420,10 @@ class IpSet(pulumi.CustomResource):
             cpln_id: Optional[pulumi.Input[str]] = None,
             description: Optional[pulumi.Input[str]] = None,
             link: Optional[pulumi.Input[str]] = None,
-            locations: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IpSetLocationArgs']]]]] = None,
+            locations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['IpSetLocationArgs', 'IpSetLocationArgsDict']]]]] = None,
             name: Optional[pulumi.Input[str]] = None,
             self_link: Optional[pulumi.Input[str]] = None,
-            statuses: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IpSetStatusArgs']]]]] = None,
+            statuses: Optional[pulumi.Input[Sequence[pulumi.Input[Union['IpSetStatusArgs', 'IpSetStatusArgsDict']]]]] = None,
             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None) -> 'IpSet':
         """
         Get an existing IpSet resource's state with the given name, id, and optional extra
@@ -516,7 +437,7 @@ class IpSet(pulumi.CustomResource):
         :param pulumi.Input[str] link: The self link of a workload.
         :param pulumi.Input[str] name: Name of the IpSet.
         :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IpSetStatusArgs']]]] statuses: Status of the IpSet.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['IpSetStatusArgs', 'IpSetStatusArgsDict']]]] statuses: Status of the IpSet.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))

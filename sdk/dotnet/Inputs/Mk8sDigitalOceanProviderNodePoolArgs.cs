@@ -18,6 +18,10 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("labels")]
         private InputMap<string>? _labels;
+
+        /// <summary>
+        /// Labels to attach to nodes of a node pool.
+        /// </summary>
         public InputMap<string> Labels
         {
             get => _labels ?? (_labels = new InputMap<string>());
@@ -38,6 +42,10 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("taints")]
         private InputList<Inputs.Mk8sDigitalOceanProviderNodePoolTaintArgs>? _taints;
+
+        /// <summary>
+        /// Taint for the nodes of a pool.
+        /// </summary>
         public InputList<Inputs.Mk8sDigitalOceanProviderNodePoolTaintArgs> Taints
         {
             get => _taints ?? (_taints = new InputList<Inputs.Mk8sDigitalOceanProviderNodePoolTaintArgs>());

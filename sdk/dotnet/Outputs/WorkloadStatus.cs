@@ -14,13 +14,34 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadStatus
     {
+        /// <summary>
+        /// Canonical endpoint for the workload.
+        /// </summary>
         public readonly string? CanonicalEndpoint;
+        /// <summary>
+        /// Current amount of replicas deployed.
+        /// </summary>
         public readonly int? CurrentReplicaCount;
+        /// <summary>
+        /// Endpoint for the workload.
+        /// </summary>
         public readonly string? Endpoint;
+        /// <summary>
+        /// Current health status.
+        /// </summary>
         public readonly ImmutableArray<Outputs.WorkloadStatusHealthCheck> HealthChecks;
+        /// <summary>
+        /// Internal hostname for the workload. Used for service-to-service requests.
+        /// </summary>
         public readonly string? InternalName;
         public readonly ImmutableArray<Outputs.WorkloadStatusLoadBalancer> LoadBalancers;
+        /// <summary>
+        /// ID of the parent object.
+        /// </summary>
         public readonly string? ParentId;
+        /// <summary>
+        /// Resolved images for workloads with dynamic tags enabled.
+        /// </summary>
         public readonly ImmutableArray<Outputs.WorkloadStatusResolvedImage> ResolvedImages;
 
         [OutputConstructor]

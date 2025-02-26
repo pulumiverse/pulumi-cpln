@@ -14,10 +14,22 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class PolicyTargetQuerySpecTerm
     {
+        /// <summary>
+        /// Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `exists`, `!exists`. Default: `=`.
+        /// </summary>
         public readonly string? Op;
+        /// <summary>
+        /// Property to use for query evaluation.
+        /// </summary>
         public readonly string? Property;
         public readonly string? Rel;
+        /// <summary>
+        /// Tag key to use for query evaluation.
+        /// </summary>
         public readonly string? Tag;
+        /// <summary>
+        /// Testing value for query evaluation.
+        /// </summary>
         public readonly string? Value;
 
         [OutputConstructor]

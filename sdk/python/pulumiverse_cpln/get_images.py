@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -64,7 +69,7 @@ class AwaitableGetImagesResult(GetImagesResult):
             query=self.query)
 
 
-def get_images(query: Optional[pulumi.InputType['GetImagesQueryArgs']] = None,
+def get_images(query: Optional[Union['GetImagesQueryArgs', 'GetImagesQueryArgsDict']] = None,
                opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetImagesResult:
     """
     Use this data source to access information about all [Images](https://docs.controlplane.com/reference/image) within Control Plane.
@@ -159,10 +164,7 @@ def get_images(query: Optional[pulumi.InputType['GetImagesQueryArgs']] = None,
         id=pulumi.get(__ret__, 'id'),
         images=pulumi.get(__ret__, 'images'),
         query=pulumi.get(__ret__, 'query'))
-
-
-@_utilities.lift_output_func(get_images)
-def get_images_output(query: Optional[pulumi.Input[Optional[pulumi.InputType['GetImagesQueryArgs']]]] = None,
+def get_images_output(query: Optional[pulumi.Input[Optional[Union['GetImagesQueryArgs', 'GetImagesQueryArgsDict']]]] = None,
                       opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetImagesResult]:
     """
     Use this data source to access information about all [Images](https://docs.controlplane.com/reference/image) within Control Plane.
@@ -248,4 +250,11 @@ def get_images_output(query: Optional[pulumi.Input[Optional[pulumi.InputType['Ge
     - **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.
     - **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.
     """
-    ...
+    __args__ = dict()
+    __args__['query'] = query
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('cpln:index/getImages:getImages', __args__, opts=opts, typ=GetImagesResult)
+    return __ret__.apply(lambda __response__: GetImagesResult(
+        id=pulumi.get(__response__, 'id'),
+        images=pulumi.get(__response__, 'images'),
+        query=pulumi.get(__response__, 'query')))

@@ -13,14 +13,24 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class GetSecretTlsInputArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Public Certificate.
+        /// </summary>
         [Input("cert", required: true)]
         public Input<string> Cert { get; set; } = null!;
 
+        /// <summary>
+        /// Chain Certificate.
+        /// </summary>
         [Input("chain")]
         public Input<string>? Chain { get; set; }
 
         [Input("key", required: true)]
         private Input<string>? _key;
+
+        /// <summary>
+        /// Private Certificate.
+        /// </summary>
         public Input<string>? Key
         {
             get => _key;

@@ -19,9 +19,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// - **aws_identifiers** (String)
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
@@ -39,8 +37,6 @@ namespace Pulumiverse.Cpln
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetCloudAccountResult> InvokeAsync(InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetCloudAccountResult>("cpln:index/getCloudAccount:getCloudAccount", InvokeArgs.Empty, options.WithDefaults());
@@ -52,9 +48,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// - **aws_identifiers** (String)
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
@@ -72,8 +66,6 @@ namespace Pulumiverse.Cpln
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetCloudAccountResult> Invoke(InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetCloudAccountResult>("cpln:index/getCloudAccount:getCloudAccount", InvokeArgs.Empty, options.WithDefaults());

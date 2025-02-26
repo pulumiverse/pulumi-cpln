@@ -61,23 +61,6 @@ import * as utilities from "./utilities";
  * - **created** (String)
  *
  * ## Example Usage
- *
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as cpln from "@pulumiverse/cpln";
- *
- * const _new = new cpln.IpSet("new", {
- *     description: "example",
- *     link: "SELF_LINK_TO_WORKLOAD",
- *     locations: [{
- *         name: "SELF_LINK_TO_LOCATION",
- *         retentionPolicy: "keep",
- *     }],
- *     tags: {
- *         terraform_generated: "true",
- *     },
- * });
- * ```
  */
 export class IpSet extends pulumi.CustomResource {
     /**

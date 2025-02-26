@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadContainerMetrics
     {
+        /// <summary>
+        /// Path from container emitting custom metrics
+        /// </summary>
         public readonly string Path;
+        /// <summary>
+        /// Port from container emitting custom metrics
+        /// </summary>
         public readonly int Port;
 
         [OutputConstructor]

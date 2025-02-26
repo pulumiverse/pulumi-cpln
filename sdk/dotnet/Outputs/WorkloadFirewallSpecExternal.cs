@@ -14,9 +14,21 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadFirewallSpecExternal
     {
+        /// <summary>
+        /// The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+        /// </summary>
         public readonly ImmutableArray<string> InboundAllowCidrs;
+        /// <summary>
+        /// The list of ipv4/ipv6 addresses or cidr blocks that this workload is allowed reach. No outbound access is allowed by default. Specify '0.0.0.0/0' to allow outbound access to the public internet.
+        /// </summary>
         public readonly ImmutableArray<string> OutboundAllowCidrs;
+        /// <summary>
+        /// The list of public hostnames that this workload is allowed to reach. No outbound access is allowed by default. A wildcard `*` is allowed on the prefix of the hostname only, ex: `*.amazonaws.com`. Use `outboundAllowCIDR` to allow access to all external websites.
+        /// </summary>
         public readonly ImmutableArray<string> OutboundAllowHostnames;
+        /// <summary>
+        /// Allow outbound access to specific ports and protocols. When not specified, communication to address ranges in outboundAllowCIDR is allowed on all ports and communication to names in outboundAllowHostname is allowed on ports 80/443.
+        /// </summary>
         public readonly ImmutableArray<Outputs.WorkloadFirewallSpecExternalOutboundAllowPort> OutboundAllowPorts;
 
         [OutputConstructor]

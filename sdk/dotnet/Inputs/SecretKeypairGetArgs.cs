@@ -15,6 +15,10 @@ namespace Pulumiverse.Cpln.Inputs
     {
         [Input("passphrase")]
         private Input<string>? _passphrase;
+
+        /// <summary>
+        /// Passphrase for private key.
+        /// </summary>
         public Input<string>? Passphrase
         {
             get => _passphrase;
@@ -25,11 +29,18 @@ namespace Pulumiverse.Cpln.Inputs
             }
         }
 
+        /// <summary>
+        /// Public Key.
+        /// </summary>
         [Input("publicKey")]
         public Input<string>? PublicKey { get; set; }
 
         [Input("secretKey", required: true)]
         private Input<string>? _secretKey;
+
+        /// <summary>
+        /// Secret/Private Key.
+        /// </summary>
         public Input<string>? SecretKey
         {
             get => _secretKey;
