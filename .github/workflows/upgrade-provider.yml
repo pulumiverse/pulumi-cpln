@@ -17,7 +17,7 @@ jobs:
       issues: write
     steps:
       - name: Call upgrade provider action
-        uses: pulumi/pulumi-upgrade-provider-action@v0.0.13
+        uses: pulumi/pulumi-upgrade-provider-action@main
         with:
           # Upgrading all libs increases the chance of the build to fail.
           # So, we upgrade only provider to reduce the number of human interventions.
