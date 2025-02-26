@@ -4,20 +4,20 @@ on:
   push:
     branches-ignore:
       # release workflow will build main anyway. No need to do it twice.
-      - 'main'
+      - "main"
   workflow_dispatch:
 
 jobs:
   prerequisites:
     permissions:
       pull-requests: write
-    uses: pulumiverse/infra/.github/workflows/provider-prerequisites.yaml@actions-workflows-v0.0.4
+    uses: pulumiverse/infra/.github/workflows/provider-prerequisites.yaml@main
     with:
       provider: cpln
       goversion: 1.22.x
   build:
     needs: prerequisites
-    uses: pulumiverse/infra/.github/workflows/provider-build-sdk.yaml@actions-workflows-v0.0.4
+    uses: pulumiverse/infra/.github/workflows/provider-build-sdk.yaml@main
     with:
       provider: cpln
       goversion: 1.22.x
