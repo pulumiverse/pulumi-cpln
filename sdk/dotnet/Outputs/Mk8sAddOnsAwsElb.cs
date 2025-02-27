@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sAddOnsAwsElb
     {
-        public readonly bool? _sentinel;
+        public readonly bool? PlaceholderAttribute;
         /// <summary>
         /// Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.
         /// </summary>
@@ -22,11 +22,11 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private Mk8sAddOnsAwsElb(
-            bool? _sentinel,
+            bool? placeholderAttribute,
 
             string? roleArn)
         {
-            this._sentinel = _sentinel;
+            PlaceholderAttribute = placeholderAttribute;
             RoleArn = roleArn;
         }
     }

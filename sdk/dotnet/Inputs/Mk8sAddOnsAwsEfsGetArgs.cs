@@ -13,8 +13,8 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class Mk8sAddOnsAwsEfsGetArgs : global::Pulumi.ResourceArgs
     {
-        [Input("_sentinel")]
-        public Input<bool>? _sentinel { get; set; }
+        [Input("placeholderAttribute")]
+        public Input<bool>? PlaceholderAttribute { get; set; }
 
         /// <summary>
         /// Use this role for EFS interaction.

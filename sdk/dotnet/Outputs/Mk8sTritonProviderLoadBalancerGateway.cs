@@ -14,12 +14,12 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sTritonProviderLoadBalancerGateway
     {
-        public readonly bool? _sentinel;
+        public readonly bool? PlaceholderAttribute;
 
         [OutputConstructor]
-        private Mk8sTritonProviderLoadBalancerGateway(bool? _sentinel)
+        private Mk8sTritonProviderLoadBalancerGateway(bool? placeholderAttribute)
         {
-            this._sentinel = _sentinel;
+            PlaceholderAttribute = placeholderAttribute;
         }
     }
 }

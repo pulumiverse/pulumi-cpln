@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class IdentityGcpAccessPolicyBinding
     {
-        public readonly bool? _sentinel;
+        public readonly bool? PlaceholderAttribute;
         /// <summary>
         /// Name of resource for binding.
         /// </summary>
@@ -26,13 +26,13 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private IdentityGcpAccessPolicyBinding(
-            bool? _sentinel,
+            bool? placeholderAttribute,
 
             string? resource,
 
             ImmutableArray<string> roles)
         {
-            this._sentinel = _sentinel;
+            PlaceholderAttribute = placeholderAttribute;
             Resource = resource;
             Roles = roles;
         }

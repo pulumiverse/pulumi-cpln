@@ -14,7 +14,6 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgLoggingElasticLogging
     {
-        public readonly bool? _sentinel;
         /// <summary>
         /// For targeting Amazon Web Services (AWS) ElasticSearch.
         /// </summary>
@@ -27,21 +26,22 @@ namespace Pulumiverse.Cpln.Outputs
         /// For targeting generic Elastic Search providers.
         /// </summary>
         public readonly Outputs.OrgLoggingElasticLoggingGeneric? Generic;
+        public readonly bool? PlaceholderAttribute;
 
         [OutputConstructor]
         private OrgLoggingElasticLogging(
-            bool? _sentinel,
-
             Outputs.OrgLoggingElasticLoggingAws? aws,
 
             Outputs.OrgLoggingElasticLoggingElasticCloud? elasticCloud,
 
-            Outputs.OrgLoggingElasticLoggingGeneric? generic)
+            Outputs.OrgLoggingElasticLoggingGeneric? generic,
+
+            bool? placeholderAttribute)
         {
-            this._sentinel = _sentinel;
             Aws = aws;
             ElasticCloud = elasticCloud;
             Generic = generic;
+            PlaceholderAttribute = placeholderAttribute;
         }
     }
 }

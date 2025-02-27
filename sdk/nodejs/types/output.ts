@@ -34,7 +34,7 @@ export interface CloudAccountNgs {
 }
 
 export interface DomainRouteHeaders {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
     /**
      * Manipulates HTTP headers.
      */
@@ -42,7 +42,7 @@ export interface DomainRouteHeaders {
 }
 
 export interface DomainRouteHeadersRequest {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
     /**
      * Sets or overrides headers to all http requests for this route.
      */
@@ -262,15 +262,15 @@ export interface GetGvcLoadBalancer {
 }
 
 export interface GetGvcLoadBalancerRedirect {
-    _sentinel?: boolean;
     /**
      * Specify the redirect url for all status codes in a class.
      */
     class?: outputs.GetGvcLoadBalancerRedirectClass;
+    placeholderAttribute?: boolean;
 }
 
 export interface GetGvcLoadBalancerRedirectClass {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
     /**
      * Specify the redirect url for any 500 level status code.
      */
@@ -778,15 +778,15 @@ export interface GvcLoadBalancer {
 }
 
 export interface GvcLoadBalancerRedirect {
-    _sentinel?: boolean;
     /**
      * Specify the redirect url for all status codes in a class.
      */
     class?: outputs.GvcLoadBalancerRedirectClass;
+    placeholderAttribute?: boolean;
 }
 
 export interface GvcLoadBalancerRedirectClass {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
     /**
      * Specify the redirect url for any 500 level status code.
      */
@@ -839,7 +839,7 @@ export interface IdentityAzureAccessPolicy {
 }
 
 export interface IdentityAzureAccessPolicyRoleAssignment {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
     /**
      * List of assigned roles.
      */
@@ -870,7 +870,7 @@ export interface IdentityGcpAccessPolicy {
 }
 
 export interface IdentityGcpAccessPolicyBinding {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
     /**
      * Name of resource for binding.
      */
@@ -1073,7 +1073,7 @@ export interface Mk8sAddOns {
 }
 
 export interface Mk8sAddOnsAwsEcr {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
     /**
      * Role to use when authorizing ECR pulls. Optional on AWS, in which case it will use the instance role to pull.
      */
@@ -1081,7 +1081,7 @@ export interface Mk8sAddOnsAwsEcr {
 }
 
 export interface Mk8sAddOnsAwsEfs {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
     /**
      * Use this role for EFS interaction.
      */
@@ -1089,7 +1089,7 @@ export interface Mk8sAddOnsAwsEfs {
 }
 
 export interface Mk8sAddOnsAwsElb {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
     /**
      * Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.
      */
@@ -1101,7 +1101,7 @@ export interface Mk8sAddOnsAzureAcr {
 }
 
 export interface Mk8sAddOnsAzureWorkloadIdentity {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
     /**
      * Tenant ID to use for workload identity.
      */
@@ -1109,17 +1109,16 @@ export interface Mk8sAddOnsAzureWorkloadIdentity {
 }
 
 export interface Mk8sAddOnsLogs {
-    _sentinel?: boolean;
     /**
      * Collect k8s audit log as log events.
      */
     auditEnabled?: boolean;
     excludeNamespaces?: string;
     includeNamespaces?: string;
+    placeholderAttribute?: boolean;
 }
 
 export interface Mk8sAddOnsMetrics {
-    _sentinel?: boolean;
     /**
      * Enable scraping apiserver stats.
      */
@@ -1144,6 +1143,7 @@ export interface Mk8sAddOnsMetrics {
      * Enable collecting node-level stats (disk, network, filesystem, etc).
      */
     nodeExporter?: boolean;
+    placeholderAttribute?: boolean;
     /**
      * Scrape pods annotated with prometheus.io/scrape=true.
      */
@@ -1151,15 +1151,15 @@ export interface Mk8sAddOnsMetrics {
 }
 
 export interface Mk8sAddOnsMetricsScrapeAnnotated {
-    _sentinel?: boolean;
     excludeNamespaces?: string;
     includeNamespaces?: string;
     intervalSeconds?: number;
+    placeholderAttribute?: boolean;
     retainLabels?: string;
 }
 
 export interface Mk8sAddOnsNvidia {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
     taintGpuNodes?: boolean;
 }
 
@@ -1978,7 +1978,7 @@ export interface Mk8sTritonProviderLoadBalancer {
 }
 
 export interface Mk8sTritonProviderLoadBalancerGateway {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
 }
 
 export interface Mk8sTritonProviderLoadBalancerManual {
@@ -2119,7 +2119,6 @@ export interface OrgLoggingDatadogLogging {
 }
 
 export interface OrgLoggingElasticLogging {
-    _sentinel?: boolean;
     /**
      * For targeting Amazon Web Services (AWS) ElasticSearch.
      */
@@ -2132,6 +2131,7 @@ export interface OrgLoggingElasticLogging {
      * For targeting generic Elastic Search providers.
      */
     generic?: outputs.OrgLoggingElasticLoggingGeneric;
+    placeholderAttribute?: boolean;
 }
 
 export interface OrgLoggingElasticLoggingAws {
@@ -2298,7 +2298,7 @@ export interface OrgObservability {
 }
 
 export interface OrgSecurity {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
     threatDetection?: outputs.OrgSecurityThreatDetection;
 }
 
@@ -2700,7 +2700,7 @@ export interface WorkloadContainerGpuNvidia {
 }
 
 export interface WorkloadContainerLifecycle {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
     postStart?: outputs.WorkloadContainerLifecyclePostStart;
     preStop?: outputs.WorkloadContainerLifecyclePreStop;
 }
@@ -2738,7 +2738,7 @@ export interface WorkloadContainerLivenessProbeExec {
 }
 
 export interface WorkloadContainerLivenessProbeGrpc {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
     port?: number;
 }
 
@@ -2750,7 +2750,7 @@ export interface WorkloadContainerLivenessProbeHttpGet {
 }
 
 export interface WorkloadContainerLivenessProbeTcpSocket {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
     port?: number;
 }
 
@@ -2793,7 +2793,7 @@ export interface WorkloadContainerReadinessProbeExec {
 }
 
 export interface WorkloadContainerReadinessProbeGrpc {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
     port?: number;
 }
 
@@ -2805,7 +2805,7 @@ export interface WorkloadContainerReadinessProbeHttpGet {
 }
 
 export interface WorkloadContainerReadinessProbeTcpSocket {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
     port?: number;
 }
 
@@ -2825,7 +2825,6 @@ export interface WorkloadContainerVolume {
 }
 
 export interface WorkloadFirewallSpec {
-    _sentinel?: boolean;
     /**
      * The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
      */
@@ -2834,6 +2833,7 @@ export interface WorkloadFirewallSpec {
      * The internal firewall is used to control access between workloads.
      */
     internal?: outputs.WorkloadFirewallSpecInternal;
+    placeholderAttribute?: boolean;
 }
 
 export interface WorkloadFirewallSpecExternal {
@@ -2901,9 +2901,9 @@ export interface WorkloadJob {
 }
 
 export interface WorkloadLoadBalancer {
-    _sentinel?: boolean;
     direct?: outputs.WorkloadLoadBalancerDirect;
     geoLocation?: outputs.WorkloadLoadBalancerGeoLocation;
+    placeholderAttribute?: boolean;
 }
 
 export interface WorkloadLoadBalancerDirect {
@@ -3104,11 +3104,11 @@ export interface WorkloadRolloutOptions {
 }
 
 export interface WorkloadSecurityOptions {
-    _sentinel?: boolean;
     /**
      * The group id assigned to any mounted volume.
      */
     fileSystemGroupId?: number;
+    placeholderAttribute?: boolean;
 }
 
 export interface WorkloadSidecar {

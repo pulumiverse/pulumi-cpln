@@ -14,16 +14,16 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sAddOnsNvidia
     {
-        public readonly bool? _sentinel;
+        public readonly bool? PlaceholderAttribute;
         public readonly bool? TaintGpuNodes;
 
         [OutputConstructor]
         private Mk8sAddOnsNvidia(
-            bool? _sentinel,
+            bool? placeholderAttribute,
 
             bool? taintGpuNodes)
         {
-            this._sentinel = _sentinel;
+            PlaceholderAttribute = placeholderAttribute;
             TaintGpuNodes = taintGpuNodes;
         }
     }

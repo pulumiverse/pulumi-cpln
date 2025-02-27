@@ -14,20 +14,20 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class GvcLoadBalancerRedirect
     {
-        public readonly bool? _sentinel;
         /// <summary>
         /// Specify the redirect url for all status codes in a class.
         /// </summary>
         public readonly Outputs.GvcLoadBalancerRedirectClass? Class;
+        public readonly bool? PlaceholderAttribute;
 
         [OutputConstructor]
         private GvcLoadBalancerRedirect(
-            bool? _sentinel,
+            Outputs.GvcLoadBalancerRedirectClass? @class,
 
-            Outputs.GvcLoadBalancerRedirectClass? @class)
+            bool? placeholderAttribute)
         {
-            this._sentinel = _sentinel;
             Class = @class;
+            PlaceholderAttribute = placeholderAttribute;
         }
     }
 }

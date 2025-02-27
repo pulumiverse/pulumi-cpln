@@ -13,8 +13,8 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class GetGvcLoadBalancerRedirectClassArgs : global::Pulumi.InvokeArgs
     {
-        [Input("_sentinel")]
-        public bool? _sentinel { get; set; }
+        [Input("placeholderAttribute")]
+        public bool? PlaceholderAttribute { get; set; }
 
         /// <summary>
         /// Specify the redirect url for any 500 level status code.

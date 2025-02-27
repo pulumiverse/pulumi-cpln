@@ -13,8 +13,8 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class DomainRouteHeadersRequestArgs : global::Pulumi.ResourceArgs
     {
-        [Input("_sentinel")]
-        public Input<bool>? _sentinel { get; set; }
+        [Input("placeholderAttribute")]
+        public Input<bool>? PlaceholderAttribute { get; set; }
 
         [Input("set")]
         private InputMap<string>? _set;

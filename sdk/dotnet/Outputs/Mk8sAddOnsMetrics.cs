@@ -14,7 +14,6 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sAddOnsMetrics
     {
-        public readonly bool? _sentinel;
         /// <summary>
         /// Enable scraping apiserver stats.
         /// </summary>
@@ -39,6 +38,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// Enable collecting node-level stats (disk, network, filesystem, etc).
         /// </summary>
         public readonly bool? NodeExporter;
+        public readonly bool? PlaceholderAttribute;
         /// <summary>
         /// Scrape pods annotated with prometheus.io/scrape=true.
         /// </summary>
@@ -46,8 +46,6 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private Mk8sAddOnsMetrics(
-            bool? _sentinel,
-
             bool? apiServer,
 
             bool? cadvisor,
@@ -60,15 +58,17 @@ namespace Pulumiverse.Cpln.Outputs
 
             bool? nodeExporter,
 
+            bool? placeholderAttribute,
+
             Outputs.Mk8sAddOnsMetricsScrapeAnnotated? scrapeAnnotated)
         {
-            this._sentinel = _sentinel;
             ApiServer = apiServer;
             Cadvisor = cadvisor;
             CoreDns = coreDns;
             KubeState = kubeState;
             Kubelet = kubelet;
             NodeExporter = nodeExporter;
+            PlaceholderAttribute = placeholderAttribute;
             ScrapeAnnotated = scrapeAnnotated;
         }
     }

@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class DomainRouteHeaders
     {
-        public readonly bool? _sentinel;
+        public readonly bool? PlaceholderAttribute;
         /// <summary>
         /// Manipulates HTTP headers.
         /// </summary>
@@ -22,11 +22,11 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private DomainRouteHeaders(
-            bool? _sentinel,
+            bool? placeholderAttribute,
 
             Outputs.DomainRouteHeadersRequest? request)
         {
-            this._sentinel = _sentinel;
+            PlaceholderAttribute = placeholderAttribute;
             Request = request;
         }
     }

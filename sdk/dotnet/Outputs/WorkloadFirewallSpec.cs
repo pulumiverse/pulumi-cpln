@@ -14,7 +14,6 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadFirewallSpec
     {
-        public readonly bool? _sentinel;
         /// <summary>
         /// The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
         /// </summary>
@@ -23,18 +22,19 @@ namespace Pulumiverse.Cpln.Outputs
         /// The internal firewall is used to control access between workloads.
         /// </summary>
         public readonly Outputs.WorkloadFirewallSpecInternal? Internal;
+        public readonly bool? PlaceholderAttribute;
 
         [OutputConstructor]
         private WorkloadFirewallSpec(
-            bool? _sentinel,
-
             Outputs.WorkloadFirewallSpecExternal? external,
 
-            Outputs.WorkloadFirewallSpecInternal? @internal)
+            Outputs.WorkloadFirewallSpecInternal? @internal,
+
+            bool? placeholderAttribute)
         {
-            this._sentinel = _sentinel;
             External = external;
             Internal = @internal;
+            PlaceholderAttribute = placeholderAttribute;
         }
     }
 }

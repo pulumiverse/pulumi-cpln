@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class DomainRouteHeadersRequest
     {
-        public readonly bool? _sentinel;
+        public readonly bool? PlaceholderAttribute;
         /// <summary>
         /// Sets or overrides headers to all http requests for this route.
         /// </summary>
@@ -22,11 +22,11 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private DomainRouteHeadersRequest(
-            bool? _sentinel,
+            bool? placeholderAttribute,
 
             ImmutableDictionary<string, string>? set)
         {
-            this._sentinel = _sentinel;
+            PlaceholderAttribute = placeholderAttribute;
             Set = set;
         }
     }

@@ -562,7 +562,7 @@ func (o CloudAccountNgsPtrOutput) SecretLink() pulumi.StringPtrOutput {
 }
 
 type DomainRouteHeaders struct {
-	_sentinel *bool `pulumi:"_sentinel"`
+	PlaceholderAttribute *bool `pulumi:"placeholderAttribute"`
 	// Manipulates HTTP headers.
 	Request *DomainRouteHeadersRequest `pulumi:"request"`
 }
@@ -579,7 +579,7 @@ type DomainRouteHeadersInput interface {
 }
 
 type DomainRouteHeadersArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
+	PlaceholderAttribute pulumi.BoolPtrInput `pulumi:"placeholderAttribute"`
 	// Manipulates HTTP headers.
 	Request DomainRouteHeadersRequestPtrInput `pulumi:"request"`
 }
@@ -661,8 +661,8 @@ func (o DomainRouteHeadersOutput) ToDomainRouteHeadersPtrOutputWithContext(ctx c
 	}).(DomainRouteHeadersPtrOutput)
 }
 
-func (o DomainRouteHeadersOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v DomainRouteHeaders) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+func (o DomainRouteHeadersOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v DomainRouteHeaders) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 // Manipulates HTTP headers.
@@ -694,12 +694,12 @@ func (o DomainRouteHeadersPtrOutput) Elem() DomainRouteHeadersOutput {
 	}).(DomainRouteHeadersOutput)
 }
 
-func (o DomainRouteHeadersPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+func (o DomainRouteHeadersPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *DomainRouteHeaders) *bool {
 		if v == nil {
 			return nil
 		}
-		return v._sentinel
+		return v.PlaceholderAttribute
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -714,7 +714,7 @@ func (o DomainRouteHeadersPtrOutput) Request() DomainRouteHeadersRequestPtrOutpu
 }
 
 type DomainRouteHeadersRequest struct {
-	_sentinel *bool `pulumi:"_sentinel"`
+	PlaceholderAttribute *bool `pulumi:"placeholderAttribute"`
 	// Sets or overrides headers to all http requests for this route.
 	Set map[string]string `pulumi:"set"`
 }
@@ -731,7 +731,7 @@ type DomainRouteHeadersRequestInput interface {
 }
 
 type DomainRouteHeadersRequestArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
+	PlaceholderAttribute pulumi.BoolPtrInput `pulumi:"placeholderAttribute"`
 	// Sets or overrides headers to all http requests for this route.
 	Set pulumi.StringMapInput `pulumi:"set"`
 }
@@ -813,8 +813,8 @@ func (o DomainRouteHeadersRequestOutput) ToDomainRouteHeadersRequestPtrOutputWit
 	}).(DomainRouteHeadersRequestPtrOutput)
 }
 
-func (o DomainRouteHeadersRequestOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v DomainRouteHeadersRequest) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+func (o DomainRouteHeadersRequestOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v DomainRouteHeadersRequest) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 // Sets or overrides headers to all http requests for this route.
@@ -846,12 +846,12 @@ func (o DomainRouteHeadersRequestPtrOutput) Elem() DomainRouteHeadersRequestOutp
 	}).(DomainRouteHeadersRequestOutput)
 }
 
-func (o DomainRouteHeadersRequestPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+func (o DomainRouteHeadersRequestPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *DomainRouteHeadersRequest) *bool {
 		if v == nil {
 			return nil
 		}
-		return v._sentinel
+		return v.PlaceholderAttribute
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -3457,9 +3457,9 @@ func (o GvcLoadBalancerPtrOutput) TrustedProxies() pulumi.IntPtrOutput {
 }
 
 type GvcLoadBalancerRedirect struct {
-	_sentinel *bool `pulumi:"_sentinel"`
 	// Specify the redirect url for all status codes in a class.
-	Class *GvcLoadBalancerRedirectClass `pulumi:"class"`
+	Class                *GvcLoadBalancerRedirectClass `pulumi:"class"`
+	PlaceholderAttribute *bool                         `pulumi:"placeholderAttribute"`
 }
 
 // GvcLoadBalancerRedirectInput is an input type that accepts GvcLoadBalancerRedirectArgs and GvcLoadBalancerRedirectOutput values.
@@ -3474,9 +3474,9 @@ type GvcLoadBalancerRedirectInput interface {
 }
 
 type GvcLoadBalancerRedirectArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
 	// Specify the redirect url for all status codes in a class.
-	Class GvcLoadBalancerRedirectClassPtrInput `pulumi:"class"`
+	Class                GvcLoadBalancerRedirectClassPtrInput `pulumi:"class"`
+	PlaceholderAttribute pulumi.BoolPtrInput                  `pulumi:"placeholderAttribute"`
 }
 
 func (GvcLoadBalancerRedirectArgs) ElementType() reflect.Type {
@@ -3556,13 +3556,13 @@ func (o GvcLoadBalancerRedirectOutput) ToGvcLoadBalancerRedirectPtrOutputWithCon
 	}).(GvcLoadBalancerRedirectPtrOutput)
 }
 
-func (o GvcLoadBalancerRedirectOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v GvcLoadBalancerRedirect) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
-}
-
 // Specify the redirect url for all status codes in a class.
 func (o GvcLoadBalancerRedirectOutput) Class() GvcLoadBalancerRedirectClassPtrOutput {
 	return o.ApplyT(func(v GvcLoadBalancerRedirect) *GvcLoadBalancerRedirectClass { return v.Class }).(GvcLoadBalancerRedirectClassPtrOutput)
+}
+
+func (o GvcLoadBalancerRedirectOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v GvcLoadBalancerRedirect) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 type GvcLoadBalancerRedirectPtrOutput struct{ *pulumi.OutputState }
@@ -3589,15 +3589,6 @@ func (o GvcLoadBalancerRedirectPtrOutput) Elem() GvcLoadBalancerRedirectOutput {
 	}).(GvcLoadBalancerRedirectOutput)
 }
 
-func (o GvcLoadBalancerRedirectPtrOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *GvcLoadBalancerRedirect) *bool {
-		if v == nil {
-			return nil
-		}
-		return v._sentinel
-	}).(pulumi.BoolPtrOutput)
-}
-
 // Specify the redirect url for all status codes in a class.
 func (o GvcLoadBalancerRedirectPtrOutput) Class() GvcLoadBalancerRedirectClassPtrOutput {
 	return o.ApplyT(func(v *GvcLoadBalancerRedirect) *GvcLoadBalancerRedirectClass {
@@ -3608,8 +3599,17 @@ func (o GvcLoadBalancerRedirectPtrOutput) Class() GvcLoadBalancerRedirectClassPt
 	}).(GvcLoadBalancerRedirectClassPtrOutput)
 }
 
+func (o GvcLoadBalancerRedirectPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *GvcLoadBalancerRedirect) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.PlaceholderAttribute
+	}).(pulumi.BoolPtrOutput)
+}
+
 type GvcLoadBalancerRedirectClass struct {
-	_sentinel *bool `pulumi:"_sentinel"`
+	PlaceholderAttribute *bool `pulumi:"placeholderAttribute"`
 	// Specify the redirect url for any 500 level status code.
 	Status5xx *string `pulumi:"status5xx"`
 }
@@ -3626,7 +3626,7 @@ type GvcLoadBalancerRedirectClassInput interface {
 }
 
 type GvcLoadBalancerRedirectClassArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
+	PlaceholderAttribute pulumi.BoolPtrInput `pulumi:"placeholderAttribute"`
 	// Specify the redirect url for any 500 level status code.
 	Status5xx pulumi.StringPtrInput `pulumi:"status5xx"`
 }
@@ -3708,8 +3708,8 @@ func (o GvcLoadBalancerRedirectClassOutput) ToGvcLoadBalancerRedirectClassPtrOut
 	}).(GvcLoadBalancerRedirectClassPtrOutput)
 }
 
-func (o GvcLoadBalancerRedirectClassOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v GvcLoadBalancerRedirectClass) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+func (o GvcLoadBalancerRedirectClassOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v GvcLoadBalancerRedirectClass) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 // Specify the redirect url for any 500 level status code.
@@ -3741,12 +3741,12 @@ func (o GvcLoadBalancerRedirectClassPtrOutput) Elem() GvcLoadBalancerRedirectCla
 	}).(GvcLoadBalancerRedirectClassOutput)
 }
 
-func (o GvcLoadBalancerRedirectClassPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+func (o GvcLoadBalancerRedirectClassPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *GvcLoadBalancerRedirectClass) *bool {
 		if v == nil {
 			return nil
 		}
-		return v._sentinel
+		return v.PlaceholderAttribute
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -4400,7 +4400,7 @@ func (o IdentityAzureAccessPolicyPtrOutput) RoleAssignments() IdentityAzureAcces
 }
 
 type IdentityAzureAccessPolicyRoleAssignment struct {
-	_sentinel *bool `pulumi:"_sentinel"`
+	PlaceholderAttribute *bool `pulumi:"placeholderAttribute"`
 	// List of assigned roles.
 	Roles []string `pulumi:"roles"`
 	// Scope of roles.
@@ -4419,7 +4419,7 @@ type IdentityAzureAccessPolicyRoleAssignmentInput interface {
 }
 
 type IdentityAzureAccessPolicyRoleAssignmentArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
+	PlaceholderAttribute pulumi.BoolPtrInput `pulumi:"placeholderAttribute"`
 	// List of assigned roles.
 	Roles pulumi.StringArrayInput `pulumi:"roles"`
 	// Scope of roles.
@@ -4477,8 +4477,8 @@ func (o IdentityAzureAccessPolicyRoleAssignmentOutput) ToIdentityAzureAccessPoli
 	return o
 }
 
-func (o IdentityAzureAccessPolicyRoleAssignmentOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v IdentityAzureAccessPolicyRoleAssignment) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+func (o IdentityAzureAccessPolicyRoleAssignmentOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v IdentityAzureAccessPolicyRoleAssignment) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 // List of assigned roles.
@@ -4706,7 +4706,7 @@ func (o IdentityGcpAccessPolicyPtrOutput) ServiceAccount() pulumi.StringPtrOutpu
 }
 
 type IdentityGcpAccessPolicyBinding struct {
-	_sentinel *bool `pulumi:"_sentinel"`
+	PlaceholderAttribute *bool `pulumi:"placeholderAttribute"`
 	// Name of resource for binding.
 	Resource *string `pulumi:"resource"`
 	// List of allowed roles.
@@ -4725,7 +4725,7 @@ type IdentityGcpAccessPolicyBindingInput interface {
 }
 
 type IdentityGcpAccessPolicyBindingArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
+	PlaceholderAttribute pulumi.BoolPtrInput `pulumi:"placeholderAttribute"`
 	// Name of resource for binding.
 	Resource pulumi.StringPtrInput `pulumi:"resource"`
 	// List of allowed roles.
@@ -4783,8 +4783,8 @@ func (o IdentityGcpAccessPolicyBindingOutput) ToIdentityGcpAccessPolicyBindingOu
 	return o
 }
 
-func (o IdentityGcpAccessPolicyBindingOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v IdentityGcpAccessPolicyBinding) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+func (o IdentityGcpAccessPolicyBindingOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v IdentityGcpAccessPolicyBinding) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 // Name of resource for binding.
@@ -6851,7 +6851,7 @@ func (o Mk8sAddOnsPtrOutput) Sysbox() pulumi.BoolPtrOutput {
 }
 
 type Mk8sAddOnsAwsEcr struct {
-	_sentinel *bool `pulumi:"_sentinel"`
+	PlaceholderAttribute *bool `pulumi:"placeholderAttribute"`
 	// Role to use when authorizing ECR pulls. Optional on AWS, in which case it will use the instance role to pull.
 	RoleArn *string `pulumi:"roleArn"`
 }
@@ -6868,7 +6868,7 @@ type Mk8sAddOnsAwsEcrInput interface {
 }
 
 type Mk8sAddOnsAwsEcrArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
+	PlaceholderAttribute pulumi.BoolPtrInput `pulumi:"placeholderAttribute"`
 	// Role to use when authorizing ECR pulls. Optional on AWS, in which case it will use the instance role to pull.
 	RoleArn pulumi.StringPtrInput `pulumi:"roleArn"`
 }
@@ -6950,8 +6950,8 @@ func (o Mk8sAddOnsAwsEcrOutput) ToMk8sAddOnsAwsEcrPtrOutputWithContext(ctx conte
 	}).(Mk8sAddOnsAwsEcrPtrOutput)
 }
 
-func (o Mk8sAddOnsAwsEcrOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v Mk8sAddOnsAwsEcr) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+func (o Mk8sAddOnsAwsEcrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsAwsEcr) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 // Role to use when authorizing ECR pulls. Optional on AWS, in which case it will use the instance role to pull.
@@ -6983,12 +6983,12 @@ func (o Mk8sAddOnsAwsEcrPtrOutput) Elem() Mk8sAddOnsAwsEcrOutput {
 	}).(Mk8sAddOnsAwsEcrOutput)
 }
 
-func (o Mk8sAddOnsAwsEcrPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+func (o Mk8sAddOnsAwsEcrPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsAwsEcr) *bool {
 		if v == nil {
 			return nil
 		}
-		return v._sentinel
+		return v.PlaceholderAttribute
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -7003,7 +7003,7 @@ func (o Mk8sAddOnsAwsEcrPtrOutput) RoleArn() pulumi.StringPtrOutput {
 }
 
 type Mk8sAddOnsAwsEfs struct {
-	_sentinel *bool `pulumi:"_sentinel"`
+	PlaceholderAttribute *bool `pulumi:"placeholderAttribute"`
 	// Use this role for EFS interaction.
 	RoleArn *string `pulumi:"roleArn"`
 }
@@ -7020,7 +7020,7 @@ type Mk8sAddOnsAwsEfsInput interface {
 }
 
 type Mk8sAddOnsAwsEfsArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
+	PlaceholderAttribute pulumi.BoolPtrInput `pulumi:"placeholderAttribute"`
 	// Use this role for EFS interaction.
 	RoleArn pulumi.StringPtrInput `pulumi:"roleArn"`
 }
@@ -7102,8 +7102,8 @@ func (o Mk8sAddOnsAwsEfsOutput) ToMk8sAddOnsAwsEfsPtrOutputWithContext(ctx conte
 	}).(Mk8sAddOnsAwsEfsPtrOutput)
 }
 
-func (o Mk8sAddOnsAwsEfsOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v Mk8sAddOnsAwsEfs) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+func (o Mk8sAddOnsAwsEfsOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsAwsEfs) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 // Use this role for EFS interaction.
@@ -7135,12 +7135,12 @@ func (o Mk8sAddOnsAwsEfsPtrOutput) Elem() Mk8sAddOnsAwsEfsOutput {
 	}).(Mk8sAddOnsAwsEfsOutput)
 }
 
-func (o Mk8sAddOnsAwsEfsPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+func (o Mk8sAddOnsAwsEfsPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsAwsEfs) *bool {
 		if v == nil {
 			return nil
 		}
-		return v._sentinel
+		return v.PlaceholderAttribute
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -7155,7 +7155,7 @@ func (o Mk8sAddOnsAwsEfsPtrOutput) RoleArn() pulumi.StringPtrOutput {
 }
 
 type Mk8sAddOnsAwsElb struct {
-	_sentinel *bool `pulumi:"_sentinel"`
+	PlaceholderAttribute *bool `pulumi:"placeholderAttribute"`
 	// Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.
 	RoleArn *string `pulumi:"roleArn"`
 }
@@ -7172,7 +7172,7 @@ type Mk8sAddOnsAwsElbInput interface {
 }
 
 type Mk8sAddOnsAwsElbArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
+	PlaceholderAttribute pulumi.BoolPtrInput `pulumi:"placeholderAttribute"`
 	// Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.
 	RoleArn pulumi.StringPtrInput `pulumi:"roleArn"`
 }
@@ -7254,8 +7254,8 @@ func (o Mk8sAddOnsAwsElbOutput) ToMk8sAddOnsAwsElbPtrOutputWithContext(ctx conte
 	}).(Mk8sAddOnsAwsElbPtrOutput)
 }
 
-func (o Mk8sAddOnsAwsElbOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v Mk8sAddOnsAwsElb) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+func (o Mk8sAddOnsAwsElbOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsAwsElb) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 // Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.
@@ -7287,12 +7287,12 @@ func (o Mk8sAddOnsAwsElbPtrOutput) Elem() Mk8sAddOnsAwsElbOutput {
 	}).(Mk8sAddOnsAwsElbOutput)
 }
 
-func (o Mk8sAddOnsAwsElbPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+func (o Mk8sAddOnsAwsElbPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsAwsElb) *bool {
 		if v == nil {
 			return nil
 		}
-		return v._sentinel
+		return v.PlaceholderAttribute
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -7440,7 +7440,7 @@ func (o Mk8sAddOnsAzureAcrPtrOutput) ClientId() pulumi.StringPtrOutput {
 }
 
 type Mk8sAddOnsAzureWorkloadIdentity struct {
-	_sentinel *bool `pulumi:"_sentinel"`
+	PlaceholderAttribute *bool `pulumi:"placeholderAttribute"`
 	// Tenant ID to use for workload identity.
 	TenantId *string `pulumi:"tenantId"`
 }
@@ -7457,7 +7457,7 @@ type Mk8sAddOnsAzureWorkloadIdentityInput interface {
 }
 
 type Mk8sAddOnsAzureWorkloadIdentityArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
+	PlaceholderAttribute pulumi.BoolPtrInput `pulumi:"placeholderAttribute"`
 	// Tenant ID to use for workload identity.
 	TenantId pulumi.StringPtrInput `pulumi:"tenantId"`
 }
@@ -7539,8 +7539,8 @@ func (o Mk8sAddOnsAzureWorkloadIdentityOutput) ToMk8sAddOnsAzureWorkloadIdentity
 	}).(Mk8sAddOnsAzureWorkloadIdentityPtrOutput)
 }
 
-func (o Mk8sAddOnsAzureWorkloadIdentityOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v Mk8sAddOnsAzureWorkloadIdentity) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+func (o Mk8sAddOnsAzureWorkloadIdentityOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsAzureWorkloadIdentity) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 // Tenant ID to use for workload identity.
@@ -7572,12 +7572,12 @@ func (o Mk8sAddOnsAzureWorkloadIdentityPtrOutput) Elem() Mk8sAddOnsAzureWorkload
 	}).(Mk8sAddOnsAzureWorkloadIdentityOutput)
 }
 
-func (o Mk8sAddOnsAzureWorkloadIdentityPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+func (o Mk8sAddOnsAzureWorkloadIdentityPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsAzureWorkloadIdentity) *bool {
 		if v == nil {
 			return nil
 		}
-		return v._sentinel
+		return v.PlaceholderAttribute
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -7592,11 +7592,11 @@ func (o Mk8sAddOnsAzureWorkloadIdentityPtrOutput) TenantId() pulumi.StringPtrOut
 }
 
 type Mk8sAddOnsLogs struct {
-	_sentinel *bool `pulumi:"_sentinel"`
 	// Collect k8s audit log as log events.
-	AuditEnabled      *bool   `pulumi:"auditEnabled"`
-	ExcludeNamespaces *string `pulumi:"excludeNamespaces"`
-	IncludeNamespaces *string `pulumi:"includeNamespaces"`
+	AuditEnabled         *bool   `pulumi:"auditEnabled"`
+	ExcludeNamespaces    *string `pulumi:"excludeNamespaces"`
+	IncludeNamespaces    *string `pulumi:"includeNamespaces"`
+	PlaceholderAttribute *bool   `pulumi:"placeholderAttribute"`
 }
 
 // Mk8sAddOnsLogsInput is an input type that accepts Mk8sAddOnsLogsArgs and Mk8sAddOnsLogsOutput values.
@@ -7611,11 +7611,11 @@ type Mk8sAddOnsLogsInput interface {
 }
 
 type Mk8sAddOnsLogsArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
 	// Collect k8s audit log as log events.
-	AuditEnabled      pulumi.BoolPtrInput   `pulumi:"auditEnabled"`
-	ExcludeNamespaces pulumi.StringPtrInput `pulumi:"excludeNamespaces"`
-	IncludeNamespaces pulumi.StringPtrInput `pulumi:"includeNamespaces"`
+	AuditEnabled         pulumi.BoolPtrInput   `pulumi:"auditEnabled"`
+	ExcludeNamespaces    pulumi.StringPtrInput `pulumi:"excludeNamespaces"`
+	IncludeNamespaces    pulumi.StringPtrInput `pulumi:"includeNamespaces"`
+	PlaceholderAttribute pulumi.BoolPtrInput   `pulumi:"placeholderAttribute"`
 }
 
 func (Mk8sAddOnsLogsArgs) ElementType() reflect.Type {
@@ -7695,10 +7695,6 @@ func (o Mk8sAddOnsLogsOutput) ToMk8sAddOnsLogsPtrOutputWithContext(ctx context.C
 	}).(Mk8sAddOnsLogsPtrOutput)
 }
 
-func (o Mk8sAddOnsLogsOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v Mk8sAddOnsLogs) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
-}
-
 // Collect k8s audit log as log events.
 func (o Mk8sAddOnsLogsOutput) AuditEnabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsLogs) *bool { return v.AuditEnabled }).(pulumi.BoolPtrOutput)
@@ -7710,6 +7706,10 @@ func (o Mk8sAddOnsLogsOutput) ExcludeNamespaces() pulumi.StringPtrOutput {
 
 func (o Mk8sAddOnsLogsOutput) IncludeNamespaces() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsLogs) *string { return v.IncludeNamespaces }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sAddOnsLogsOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsLogs) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 type Mk8sAddOnsLogsPtrOutput struct{ *pulumi.OutputState }
@@ -7734,15 +7734,6 @@ func (o Mk8sAddOnsLogsPtrOutput) Elem() Mk8sAddOnsLogsOutput {
 		var ret Mk8sAddOnsLogs
 		return ret
 	}).(Mk8sAddOnsLogsOutput)
-}
-
-func (o Mk8sAddOnsLogsPtrOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Mk8sAddOnsLogs) *bool {
-		if v == nil {
-			return nil
-		}
-		return v._sentinel
-	}).(pulumi.BoolPtrOutput)
 }
 
 // Collect k8s audit log as log events.
@@ -7773,8 +7764,16 @@ func (o Mk8sAddOnsLogsPtrOutput) IncludeNamespaces() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+func (o Mk8sAddOnsLogsPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsLogs) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.PlaceholderAttribute
+	}).(pulumi.BoolPtrOutput)
+}
+
 type Mk8sAddOnsMetrics struct {
-	_sentinel *bool `pulumi:"_sentinel"`
 	// Enable scraping apiserver stats.
 	ApiServer *bool `pulumi:"apiServer"`
 	// Enable CNI-level container stats.
@@ -7786,7 +7785,8 @@ type Mk8sAddOnsMetrics struct {
 	// Enable scraping kubelet stats.
 	Kubelet *bool `pulumi:"kubelet"`
 	// Enable collecting node-level stats (disk, network, filesystem, etc).
-	NodeExporter *bool `pulumi:"nodeExporter"`
+	NodeExporter         *bool `pulumi:"nodeExporter"`
+	PlaceholderAttribute *bool `pulumi:"placeholderAttribute"`
 	// Scrape pods annotated with prometheus.io/scrape=true.
 	ScrapeAnnotated *Mk8sAddOnsMetricsScrapeAnnotated `pulumi:"scrapeAnnotated"`
 }
@@ -7803,7 +7803,6 @@ type Mk8sAddOnsMetricsInput interface {
 }
 
 type Mk8sAddOnsMetricsArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
 	// Enable scraping apiserver stats.
 	ApiServer pulumi.BoolPtrInput `pulumi:"apiServer"`
 	// Enable CNI-level container stats.
@@ -7815,7 +7814,8 @@ type Mk8sAddOnsMetricsArgs struct {
 	// Enable scraping kubelet stats.
 	Kubelet pulumi.BoolPtrInput `pulumi:"kubelet"`
 	// Enable collecting node-level stats (disk, network, filesystem, etc).
-	NodeExporter pulumi.BoolPtrInput `pulumi:"nodeExporter"`
+	NodeExporter         pulumi.BoolPtrInput `pulumi:"nodeExporter"`
+	PlaceholderAttribute pulumi.BoolPtrInput `pulumi:"placeholderAttribute"`
 	// Scrape pods annotated with prometheus.io/scrape=true.
 	ScrapeAnnotated Mk8sAddOnsMetricsScrapeAnnotatedPtrInput `pulumi:"scrapeAnnotated"`
 }
@@ -7897,10 +7897,6 @@ func (o Mk8sAddOnsMetricsOutput) ToMk8sAddOnsMetricsPtrOutputWithContext(ctx con
 	}).(Mk8sAddOnsMetricsPtrOutput)
 }
 
-func (o Mk8sAddOnsMetricsOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v Mk8sAddOnsMetrics) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
-}
-
 // Enable scraping apiserver stats.
 func (o Mk8sAddOnsMetricsOutput) ApiServer() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsMetrics) *bool { return v.ApiServer }).(pulumi.BoolPtrOutput)
@@ -7931,6 +7927,10 @@ func (o Mk8sAddOnsMetricsOutput) NodeExporter() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsMetrics) *bool { return v.NodeExporter }).(pulumi.BoolPtrOutput)
 }
 
+func (o Mk8sAddOnsMetricsOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsMetrics) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
+}
+
 // Scrape pods annotated with prometheus.io/scrape=true.
 func (o Mk8sAddOnsMetricsOutput) ScrapeAnnotated() Mk8sAddOnsMetricsScrapeAnnotatedPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsMetrics) *Mk8sAddOnsMetricsScrapeAnnotated { return v.ScrapeAnnotated }).(Mk8sAddOnsMetricsScrapeAnnotatedPtrOutput)
@@ -7958,15 +7958,6 @@ func (o Mk8sAddOnsMetricsPtrOutput) Elem() Mk8sAddOnsMetricsOutput {
 		var ret Mk8sAddOnsMetrics
 		return ret
 	}).(Mk8sAddOnsMetricsOutput)
-}
-
-func (o Mk8sAddOnsMetricsPtrOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Mk8sAddOnsMetrics) *bool {
-		if v == nil {
-			return nil
-		}
-		return v._sentinel
-	}).(pulumi.BoolPtrOutput)
 }
 
 // Enable scraping apiserver stats.
@@ -8029,6 +8020,15 @@ func (o Mk8sAddOnsMetricsPtrOutput) NodeExporter() pulumi.BoolPtrOutput {
 	}).(pulumi.BoolPtrOutput)
 }
 
+func (o Mk8sAddOnsMetricsPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsMetrics) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.PlaceholderAttribute
+	}).(pulumi.BoolPtrOutput)
+}
+
 // Scrape pods annotated with prometheus.io/scrape=true.
 func (o Mk8sAddOnsMetricsPtrOutput) ScrapeAnnotated() Mk8sAddOnsMetricsScrapeAnnotatedPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsMetrics) *Mk8sAddOnsMetricsScrapeAnnotated {
@@ -8040,11 +8040,11 @@ func (o Mk8sAddOnsMetricsPtrOutput) ScrapeAnnotated() Mk8sAddOnsMetricsScrapeAnn
 }
 
 type Mk8sAddOnsMetricsScrapeAnnotated struct {
-	_sentinel         *bool   `pulumi:"_sentinel"`
-	ExcludeNamespaces *string `pulumi:"excludeNamespaces"`
-	IncludeNamespaces *string `pulumi:"includeNamespaces"`
-	IntervalSeconds   *int    `pulumi:"intervalSeconds"`
-	RetainLabels      *string `pulumi:"retainLabels"`
+	ExcludeNamespaces    *string `pulumi:"excludeNamespaces"`
+	IncludeNamespaces    *string `pulumi:"includeNamespaces"`
+	IntervalSeconds      *int    `pulumi:"intervalSeconds"`
+	PlaceholderAttribute *bool   `pulumi:"placeholderAttribute"`
+	RetainLabels         *string `pulumi:"retainLabels"`
 }
 
 // Mk8sAddOnsMetricsScrapeAnnotatedInput is an input type that accepts Mk8sAddOnsMetricsScrapeAnnotatedArgs and Mk8sAddOnsMetricsScrapeAnnotatedOutput values.
@@ -8059,11 +8059,11 @@ type Mk8sAddOnsMetricsScrapeAnnotatedInput interface {
 }
 
 type Mk8sAddOnsMetricsScrapeAnnotatedArgs struct {
-	_sentinel         pulumi.BoolPtrInput   `pulumi:"_sentinel"`
-	ExcludeNamespaces pulumi.StringPtrInput `pulumi:"excludeNamespaces"`
-	IncludeNamespaces pulumi.StringPtrInput `pulumi:"includeNamespaces"`
-	IntervalSeconds   pulumi.IntPtrInput    `pulumi:"intervalSeconds"`
-	RetainLabels      pulumi.StringPtrInput `pulumi:"retainLabels"`
+	ExcludeNamespaces    pulumi.StringPtrInput `pulumi:"excludeNamespaces"`
+	IncludeNamespaces    pulumi.StringPtrInput `pulumi:"includeNamespaces"`
+	IntervalSeconds      pulumi.IntPtrInput    `pulumi:"intervalSeconds"`
+	PlaceholderAttribute pulumi.BoolPtrInput   `pulumi:"placeholderAttribute"`
+	RetainLabels         pulumi.StringPtrInput `pulumi:"retainLabels"`
 }
 
 func (Mk8sAddOnsMetricsScrapeAnnotatedArgs) ElementType() reflect.Type {
@@ -8143,10 +8143,6 @@ func (o Mk8sAddOnsMetricsScrapeAnnotatedOutput) ToMk8sAddOnsMetricsScrapeAnnotat
 	}).(Mk8sAddOnsMetricsScrapeAnnotatedPtrOutput)
 }
 
-func (o Mk8sAddOnsMetricsScrapeAnnotatedOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v Mk8sAddOnsMetricsScrapeAnnotated) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
-}
-
 func (o Mk8sAddOnsMetricsScrapeAnnotatedOutput) ExcludeNamespaces() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsMetricsScrapeAnnotated) *string { return v.ExcludeNamespaces }).(pulumi.StringPtrOutput)
 }
@@ -8157,6 +8153,10 @@ func (o Mk8sAddOnsMetricsScrapeAnnotatedOutput) IncludeNamespaces() pulumi.Strin
 
 func (o Mk8sAddOnsMetricsScrapeAnnotatedOutput) IntervalSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsMetricsScrapeAnnotated) *int { return v.IntervalSeconds }).(pulumi.IntPtrOutput)
+}
+
+func (o Mk8sAddOnsMetricsScrapeAnnotatedOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsMetricsScrapeAnnotated) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 func (o Mk8sAddOnsMetricsScrapeAnnotatedOutput) RetainLabels() pulumi.StringPtrOutput {
@@ -8187,15 +8187,6 @@ func (o Mk8sAddOnsMetricsScrapeAnnotatedPtrOutput) Elem() Mk8sAddOnsMetricsScrap
 	}).(Mk8sAddOnsMetricsScrapeAnnotatedOutput)
 }
 
-func (o Mk8sAddOnsMetricsScrapeAnnotatedPtrOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Mk8sAddOnsMetricsScrapeAnnotated) *bool {
-		if v == nil {
-			return nil
-		}
-		return v._sentinel
-	}).(pulumi.BoolPtrOutput)
-}
-
 func (o Mk8sAddOnsMetricsScrapeAnnotatedPtrOutput) ExcludeNamespaces() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsMetricsScrapeAnnotated) *string {
 		if v == nil {
@@ -8223,6 +8214,15 @@ func (o Mk8sAddOnsMetricsScrapeAnnotatedPtrOutput) IntervalSeconds() pulumi.IntP
 	}).(pulumi.IntPtrOutput)
 }
 
+func (o Mk8sAddOnsMetricsScrapeAnnotatedPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsMetricsScrapeAnnotated) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.PlaceholderAttribute
+	}).(pulumi.BoolPtrOutput)
+}
+
 func (o Mk8sAddOnsMetricsScrapeAnnotatedPtrOutput) RetainLabels() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsMetricsScrapeAnnotated) *string {
 		if v == nil {
@@ -8233,8 +8233,8 @@ func (o Mk8sAddOnsMetricsScrapeAnnotatedPtrOutput) RetainLabels() pulumi.StringP
 }
 
 type Mk8sAddOnsNvidia struct {
-	_sentinel     *bool `pulumi:"_sentinel"`
-	TaintGpuNodes *bool `pulumi:"taintGpuNodes"`
+	PlaceholderAttribute *bool `pulumi:"placeholderAttribute"`
+	TaintGpuNodes        *bool `pulumi:"taintGpuNodes"`
 }
 
 // Mk8sAddOnsNvidiaInput is an input type that accepts Mk8sAddOnsNvidiaArgs and Mk8sAddOnsNvidiaOutput values.
@@ -8249,8 +8249,8 @@ type Mk8sAddOnsNvidiaInput interface {
 }
 
 type Mk8sAddOnsNvidiaArgs struct {
-	_sentinel     pulumi.BoolPtrInput `pulumi:"_sentinel"`
-	TaintGpuNodes pulumi.BoolPtrInput `pulumi:"taintGpuNodes"`
+	PlaceholderAttribute pulumi.BoolPtrInput `pulumi:"placeholderAttribute"`
+	TaintGpuNodes        pulumi.BoolPtrInput `pulumi:"taintGpuNodes"`
 }
 
 func (Mk8sAddOnsNvidiaArgs) ElementType() reflect.Type {
@@ -8330,8 +8330,8 @@ func (o Mk8sAddOnsNvidiaOutput) ToMk8sAddOnsNvidiaPtrOutputWithContext(ctx conte
 	}).(Mk8sAddOnsNvidiaPtrOutput)
 }
 
-func (o Mk8sAddOnsNvidiaOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v Mk8sAddOnsNvidia) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+func (o Mk8sAddOnsNvidiaOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsNvidia) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 func (o Mk8sAddOnsNvidiaOutput) TaintGpuNodes() pulumi.BoolPtrOutput {
@@ -8362,12 +8362,12 @@ func (o Mk8sAddOnsNvidiaPtrOutput) Elem() Mk8sAddOnsNvidiaOutput {
 	}).(Mk8sAddOnsNvidiaOutput)
 }
 
-func (o Mk8sAddOnsNvidiaPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+func (o Mk8sAddOnsNvidiaPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsNvidia) *bool {
 		if v == nil {
 			return nil
 		}
-		return v._sentinel
+		return v.PlaceholderAttribute
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -18231,7 +18231,7 @@ func (o Mk8sTritonProviderLoadBalancerPtrOutput) Manual() Mk8sTritonProviderLoad
 }
 
 type Mk8sTritonProviderLoadBalancerGateway struct {
-	_sentinel *bool `pulumi:"_sentinel"`
+	PlaceholderAttribute *bool `pulumi:"placeholderAttribute"`
 }
 
 // Mk8sTritonProviderLoadBalancerGatewayInput is an input type that accepts Mk8sTritonProviderLoadBalancerGatewayArgs and Mk8sTritonProviderLoadBalancerGatewayOutput values.
@@ -18246,7 +18246,7 @@ type Mk8sTritonProviderLoadBalancerGatewayInput interface {
 }
 
 type Mk8sTritonProviderLoadBalancerGatewayArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
+	PlaceholderAttribute pulumi.BoolPtrInput `pulumi:"placeholderAttribute"`
 }
 
 func (Mk8sTritonProviderLoadBalancerGatewayArgs) ElementType() reflect.Type {
@@ -18326,8 +18326,8 @@ func (o Mk8sTritonProviderLoadBalancerGatewayOutput) ToMk8sTritonProviderLoadBal
 	}).(Mk8sTritonProviderLoadBalancerGatewayPtrOutput)
 }
 
-func (o Mk8sTritonProviderLoadBalancerGatewayOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v Mk8sTritonProviderLoadBalancerGateway) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+func (o Mk8sTritonProviderLoadBalancerGatewayOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderLoadBalancerGateway) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 type Mk8sTritonProviderLoadBalancerGatewayPtrOutput struct{ *pulumi.OutputState }
@@ -18354,12 +18354,12 @@ func (o Mk8sTritonProviderLoadBalancerGatewayPtrOutput) Elem() Mk8sTritonProvide
 	}).(Mk8sTritonProviderLoadBalancerGatewayOutput)
 }
 
-func (o Mk8sTritonProviderLoadBalancerGatewayPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+func (o Mk8sTritonProviderLoadBalancerGatewayPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Mk8sTritonProviderLoadBalancerGateway) *bool {
 		if v == nil {
 			return nil
 		}
-		return v._sentinel
+		return v.PlaceholderAttribute
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -19586,13 +19586,13 @@ func (o OrgLoggingDatadogLoggingArrayOutput) Index(i pulumi.IntInput) OrgLogging
 }
 
 type OrgLoggingElasticLogging struct {
-	_sentinel *bool `pulumi:"_sentinel"`
 	// For targeting Amazon Web Services (AWS) ElasticSearch.
 	Aws *OrgLoggingElasticLoggingAws `pulumi:"aws"`
 	// For targeting Elastic Cloud.
 	ElasticCloud *OrgLoggingElasticLoggingElasticCloud `pulumi:"elasticCloud"`
 	// For targeting generic Elastic Search providers.
-	Generic *OrgLoggingElasticLoggingGeneric `pulumi:"generic"`
+	Generic              *OrgLoggingElasticLoggingGeneric `pulumi:"generic"`
+	PlaceholderAttribute *bool                            `pulumi:"placeholderAttribute"`
 }
 
 // OrgLoggingElasticLoggingInput is an input type that accepts OrgLoggingElasticLoggingArgs and OrgLoggingElasticLoggingOutput values.
@@ -19607,13 +19607,13 @@ type OrgLoggingElasticLoggingInput interface {
 }
 
 type OrgLoggingElasticLoggingArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
 	// For targeting Amazon Web Services (AWS) ElasticSearch.
 	Aws OrgLoggingElasticLoggingAwsPtrInput `pulumi:"aws"`
 	// For targeting Elastic Cloud.
 	ElasticCloud OrgLoggingElasticLoggingElasticCloudPtrInput `pulumi:"elasticCloud"`
 	// For targeting generic Elastic Search providers.
-	Generic OrgLoggingElasticLoggingGenericPtrInput `pulumi:"generic"`
+	Generic              OrgLoggingElasticLoggingGenericPtrInput `pulumi:"generic"`
+	PlaceholderAttribute pulumi.BoolPtrInput                     `pulumi:"placeholderAttribute"`
 }
 
 func (OrgLoggingElasticLoggingArgs) ElementType() reflect.Type {
@@ -19667,10 +19667,6 @@ func (o OrgLoggingElasticLoggingOutput) ToOrgLoggingElasticLoggingOutputWithCont
 	return o
 }
 
-func (o OrgLoggingElasticLoggingOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v OrgLoggingElasticLogging) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
-}
-
 // For targeting Amazon Web Services (AWS) ElasticSearch.
 func (o OrgLoggingElasticLoggingOutput) Aws() OrgLoggingElasticLoggingAwsPtrOutput {
 	return o.ApplyT(func(v OrgLoggingElasticLogging) *OrgLoggingElasticLoggingAws { return v.Aws }).(OrgLoggingElasticLoggingAwsPtrOutput)
@@ -19684,6 +19680,10 @@ func (o OrgLoggingElasticLoggingOutput) ElasticCloud() OrgLoggingElasticLoggingE
 // For targeting generic Elastic Search providers.
 func (o OrgLoggingElasticLoggingOutput) Generic() OrgLoggingElasticLoggingGenericPtrOutput {
 	return o.ApplyT(func(v OrgLoggingElasticLogging) *OrgLoggingElasticLoggingGeneric { return v.Generic }).(OrgLoggingElasticLoggingGenericPtrOutput)
+}
+
+func (o OrgLoggingElasticLoggingOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v OrgLoggingElasticLogging) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 type OrgLoggingElasticLoggingArrayOutput struct{ *pulumi.OutputState }
@@ -21115,8 +21115,8 @@ func (o OrgObservabilityPtrOutput) TracesRetentionDays() pulumi.IntPtrOutput {
 }
 
 type OrgSecurity struct {
-	_sentinel       *bool                       `pulumi:"_sentinel"`
-	ThreatDetection *OrgSecurityThreatDetection `pulumi:"threatDetection"`
+	PlaceholderAttribute *bool                       `pulumi:"placeholderAttribute"`
+	ThreatDetection      *OrgSecurityThreatDetection `pulumi:"threatDetection"`
 }
 
 // OrgSecurityInput is an input type that accepts OrgSecurityArgs and OrgSecurityOutput values.
@@ -21131,8 +21131,8 @@ type OrgSecurityInput interface {
 }
 
 type OrgSecurityArgs struct {
-	_sentinel       pulumi.BoolPtrInput                `pulumi:"_sentinel"`
-	ThreatDetection OrgSecurityThreatDetectionPtrInput `pulumi:"threatDetection"`
+	PlaceholderAttribute pulumi.BoolPtrInput                `pulumi:"placeholderAttribute"`
+	ThreatDetection      OrgSecurityThreatDetectionPtrInput `pulumi:"threatDetection"`
 }
 
 func (OrgSecurityArgs) ElementType() reflect.Type {
@@ -21212,8 +21212,8 @@ func (o OrgSecurityOutput) ToOrgSecurityPtrOutputWithContext(ctx context.Context
 	}).(OrgSecurityPtrOutput)
 }
 
-func (o OrgSecurityOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v OrgSecurity) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+func (o OrgSecurityOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v OrgSecurity) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 func (o OrgSecurityOutput) ThreatDetection() OrgSecurityThreatDetectionPtrOutput {
@@ -21244,12 +21244,12 @@ func (o OrgSecurityPtrOutput) Elem() OrgSecurityOutput {
 	}).(OrgSecurityOutput)
 }
 
-func (o OrgSecurityPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+func (o OrgSecurityPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *OrgSecurity) *bool {
 		if v == nil {
 			return nil
 		}
-		return v._sentinel
+		return v.PlaceholderAttribute
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -25083,9 +25083,9 @@ func (o WorkloadContainerGpuNvidiaPtrOutput) Quantity() pulumi.IntPtrOutput {
 }
 
 type WorkloadContainerLifecycle struct {
-	_sentinel *bool                                `pulumi:"_sentinel"`
-	PostStart *WorkloadContainerLifecyclePostStart `pulumi:"postStart"`
-	PreStop   *WorkloadContainerLifecyclePreStop   `pulumi:"preStop"`
+	PlaceholderAttribute *bool                                `pulumi:"placeholderAttribute"`
+	PostStart            *WorkloadContainerLifecyclePostStart `pulumi:"postStart"`
+	PreStop              *WorkloadContainerLifecyclePreStop   `pulumi:"preStop"`
 }
 
 // WorkloadContainerLifecycleInput is an input type that accepts WorkloadContainerLifecycleArgs and WorkloadContainerLifecycleOutput values.
@@ -25100,9 +25100,9 @@ type WorkloadContainerLifecycleInput interface {
 }
 
 type WorkloadContainerLifecycleArgs struct {
-	_sentinel pulumi.BoolPtrInput                         `pulumi:"_sentinel"`
-	PostStart WorkloadContainerLifecyclePostStartPtrInput `pulumi:"postStart"`
-	PreStop   WorkloadContainerLifecyclePreStopPtrInput   `pulumi:"preStop"`
+	PlaceholderAttribute pulumi.BoolPtrInput                         `pulumi:"placeholderAttribute"`
+	PostStart            WorkloadContainerLifecyclePostStartPtrInput `pulumi:"postStart"`
+	PreStop              WorkloadContainerLifecyclePreStopPtrInput   `pulumi:"preStop"`
 }
 
 func (WorkloadContainerLifecycleArgs) ElementType() reflect.Type {
@@ -25182,8 +25182,8 @@ func (o WorkloadContainerLifecycleOutput) ToWorkloadContainerLifecyclePtrOutputW
 	}).(WorkloadContainerLifecyclePtrOutput)
 }
 
-func (o WorkloadContainerLifecycleOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v WorkloadContainerLifecycle) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+func (o WorkloadContainerLifecycleOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadContainerLifecycle) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 func (o WorkloadContainerLifecycleOutput) PostStart() WorkloadContainerLifecyclePostStartPtrOutput {
@@ -25218,12 +25218,12 @@ func (o WorkloadContainerLifecyclePtrOutput) Elem() WorkloadContainerLifecycleOu
 	}).(WorkloadContainerLifecycleOutput)
 }
 
-func (o WorkloadContainerLifecyclePtrOutput) _sentinel() pulumi.BoolPtrOutput {
+func (o WorkloadContainerLifecyclePtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *WorkloadContainerLifecycle) *bool {
 		if v == nil {
 			return nil
 		}
-		return v._sentinel
+		return v.PlaceholderAttribute
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -26164,8 +26164,8 @@ func (o WorkloadContainerLivenessProbeExecPtrOutput) Commands() pulumi.StringArr
 }
 
 type WorkloadContainerLivenessProbeGrpc struct {
-	_sentinel *bool `pulumi:"_sentinel"`
-	Port      *int  `pulumi:"port"`
+	PlaceholderAttribute *bool `pulumi:"placeholderAttribute"`
+	Port                 *int  `pulumi:"port"`
 }
 
 // WorkloadContainerLivenessProbeGrpcInput is an input type that accepts WorkloadContainerLivenessProbeGrpcArgs and WorkloadContainerLivenessProbeGrpcOutput values.
@@ -26180,8 +26180,8 @@ type WorkloadContainerLivenessProbeGrpcInput interface {
 }
 
 type WorkloadContainerLivenessProbeGrpcArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
-	Port      pulumi.IntPtrInput  `pulumi:"port"`
+	PlaceholderAttribute pulumi.BoolPtrInput `pulumi:"placeholderAttribute"`
+	Port                 pulumi.IntPtrInput  `pulumi:"port"`
 }
 
 func (WorkloadContainerLivenessProbeGrpcArgs) ElementType() reflect.Type {
@@ -26261,8 +26261,8 @@ func (o WorkloadContainerLivenessProbeGrpcOutput) ToWorkloadContainerLivenessPro
 	}).(WorkloadContainerLivenessProbeGrpcPtrOutput)
 }
 
-func (o WorkloadContainerLivenessProbeGrpcOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v WorkloadContainerLivenessProbeGrpc) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+func (o WorkloadContainerLivenessProbeGrpcOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadContainerLivenessProbeGrpc) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 func (o WorkloadContainerLivenessProbeGrpcOutput) Port() pulumi.IntPtrOutput {
@@ -26293,12 +26293,12 @@ func (o WorkloadContainerLivenessProbeGrpcPtrOutput) Elem() WorkloadContainerLiv
 	}).(WorkloadContainerLivenessProbeGrpcOutput)
 }
 
-func (o WorkloadContainerLivenessProbeGrpcPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+func (o WorkloadContainerLivenessProbeGrpcPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *WorkloadContainerLivenessProbeGrpc) *bool {
 		if v == nil {
 			return nil
 		}
-		return v._sentinel
+		return v.PlaceholderAttribute
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -26490,8 +26490,8 @@ func (o WorkloadContainerLivenessProbeHttpGetPtrOutput) Scheme() pulumi.StringPt
 }
 
 type WorkloadContainerLivenessProbeTcpSocket struct {
-	_sentinel *bool `pulumi:"_sentinel"`
-	Port      *int  `pulumi:"port"`
+	PlaceholderAttribute *bool `pulumi:"placeholderAttribute"`
+	Port                 *int  `pulumi:"port"`
 }
 
 // WorkloadContainerLivenessProbeTcpSocketInput is an input type that accepts WorkloadContainerLivenessProbeTcpSocketArgs and WorkloadContainerLivenessProbeTcpSocketOutput values.
@@ -26506,8 +26506,8 @@ type WorkloadContainerLivenessProbeTcpSocketInput interface {
 }
 
 type WorkloadContainerLivenessProbeTcpSocketArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
-	Port      pulumi.IntPtrInput  `pulumi:"port"`
+	PlaceholderAttribute pulumi.BoolPtrInput `pulumi:"placeholderAttribute"`
+	Port                 pulumi.IntPtrInput  `pulumi:"port"`
 }
 
 func (WorkloadContainerLivenessProbeTcpSocketArgs) ElementType() reflect.Type {
@@ -26587,8 +26587,8 @@ func (o WorkloadContainerLivenessProbeTcpSocketOutput) ToWorkloadContainerLivene
 	}).(WorkloadContainerLivenessProbeTcpSocketPtrOutput)
 }
 
-func (o WorkloadContainerLivenessProbeTcpSocketOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v WorkloadContainerLivenessProbeTcpSocket) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+func (o WorkloadContainerLivenessProbeTcpSocketOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadContainerLivenessProbeTcpSocket) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 func (o WorkloadContainerLivenessProbeTcpSocketOutput) Port() pulumi.IntPtrOutput {
@@ -26619,12 +26619,12 @@ func (o WorkloadContainerLivenessProbeTcpSocketPtrOutput) Elem() WorkloadContain
 	}).(WorkloadContainerLivenessProbeTcpSocketOutput)
 }
 
-func (o WorkloadContainerLivenessProbeTcpSocketPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+func (o WorkloadContainerLivenessProbeTcpSocketPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *WorkloadContainerLivenessProbeTcpSocket) *bool {
 		if v == nil {
 			return nil
 		}
-		return v._sentinel
+		return v.PlaceholderAttribute
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -27286,8 +27286,8 @@ func (o WorkloadContainerReadinessProbeExecPtrOutput) Commands() pulumi.StringAr
 }
 
 type WorkloadContainerReadinessProbeGrpc struct {
-	_sentinel *bool `pulumi:"_sentinel"`
-	Port      *int  `pulumi:"port"`
+	PlaceholderAttribute *bool `pulumi:"placeholderAttribute"`
+	Port                 *int  `pulumi:"port"`
 }
 
 // WorkloadContainerReadinessProbeGrpcInput is an input type that accepts WorkloadContainerReadinessProbeGrpcArgs and WorkloadContainerReadinessProbeGrpcOutput values.
@@ -27302,8 +27302,8 @@ type WorkloadContainerReadinessProbeGrpcInput interface {
 }
 
 type WorkloadContainerReadinessProbeGrpcArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
-	Port      pulumi.IntPtrInput  `pulumi:"port"`
+	PlaceholderAttribute pulumi.BoolPtrInput `pulumi:"placeholderAttribute"`
+	Port                 pulumi.IntPtrInput  `pulumi:"port"`
 }
 
 func (WorkloadContainerReadinessProbeGrpcArgs) ElementType() reflect.Type {
@@ -27383,8 +27383,8 @@ func (o WorkloadContainerReadinessProbeGrpcOutput) ToWorkloadContainerReadinessP
 	}).(WorkloadContainerReadinessProbeGrpcPtrOutput)
 }
 
-func (o WorkloadContainerReadinessProbeGrpcOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v WorkloadContainerReadinessProbeGrpc) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+func (o WorkloadContainerReadinessProbeGrpcOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadContainerReadinessProbeGrpc) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 func (o WorkloadContainerReadinessProbeGrpcOutput) Port() pulumi.IntPtrOutput {
@@ -27415,12 +27415,12 @@ func (o WorkloadContainerReadinessProbeGrpcPtrOutput) Elem() WorkloadContainerRe
 	}).(WorkloadContainerReadinessProbeGrpcOutput)
 }
 
-func (o WorkloadContainerReadinessProbeGrpcPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+func (o WorkloadContainerReadinessProbeGrpcPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *WorkloadContainerReadinessProbeGrpc) *bool {
 		if v == nil {
 			return nil
 		}
-		return v._sentinel
+		return v.PlaceholderAttribute
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -27612,8 +27612,8 @@ func (o WorkloadContainerReadinessProbeHttpGetPtrOutput) Scheme() pulumi.StringP
 }
 
 type WorkloadContainerReadinessProbeTcpSocket struct {
-	_sentinel *bool `pulumi:"_sentinel"`
-	Port      *int  `pulumi:"port"`
+	PlaceholderAttribute *bool `pulumi:"placeholderAttribute"`
+	Port                 *int  `pulumi:"port"`
 }
 
 // WorkloadContainerReadinessProbeTcpSocketInput is an input type that accepts WorkloadContainerReadinessProbeTcpSocketArgs and WorkloadContainerReadinessProbeTcpSocketOutput values.
@@ -27628,8 +27628,8 @@ type WorkloadContainerReadinessProbeTcpSocketInput interface {
 }
 
 type WorkloadContainerReadinessProbeTcpSocketArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
-	Port      pulumi.IntPtrInput  `pulumi:"port"`
+	PlaceholderAttribute pulumi.BoolPtrInput `pulumi:"placeholderAttribute"`
+	Port                 pulumi.IntPtrInput  `pulumi:"port"`
 }
 
 func (WorkloadContainerReadinessProbeTcpSocketArgs) ElementType() reflect.Type {
@@ -27709,8 +27709,8 @@ func (o WorkloadContainerReadinessProbeTcpSocketOutput) ToWorkloadContainerReadi
 	}).(WorkloadContainerReadinessProbeTcpSocketPtrOutput)
 }
 
-func (o WorkloadContainerReadinessProbeTcpSocketOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v WorkloadContainerReadinessProbeTcpSocket) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+func (o WorkloadContainerReadinessProbeTcpSocketOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadContainerReadinessProbeTcpSocket) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 func (o WorkloadContainerReadinessProbeTcpSocketOutput) Port() pulumi.IntPtrOutput {
@@ -27741,12 +27741,12 @@ func (o WorkloadContainerReadinessProbeTcpSocketPtrOutput) Elem() WorkloadContai
 	}).(WorkloadContainerReadinessProbeTcpSocketOutput)
 }
 
-func (o WorkloadContainerReadinessProbeTcpSocketPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+func (o WorkloadContainerReadinessProbeTcpSocketPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *WorkloadContainerReadinessProbeTcpSocket) *bool {
 		if v == nil {
 			return nil
 		}
-		return v._sentinel
+		return v.PlaceholderAttribute
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -27875,11 +27875,11 @@ func (o WorkloadContainerVolumeArrayOutput) Index(i pulumi.IntInput) WorkloadCon
 }
 
 type WorkloadFirewallSpec struct {
-	_sentinel *bool `pulumi:"_sentinel"`
 	// The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
 	External *WorkloadFirewallSpecExternal `pulumi:"external"`
 	// The internal firewall is used to control access between workloads.
-	Internal *WorkloadFirewallSpecInternal `pulumi:"internal"`
+	Internal             *WorkloadFirewallSpecInternal `pulumi:"internal"`
+	PlaceholderAttribute *bool                         `pulumi:"placeholderAttribute"`
 }
 
 // WorkloadFirewallSpecInput is an input type that accepts WorkloadFirewallSpecArgs and WorkloadFirewallSpecOutput values.
@@ -27894,11 +27894,11 @@ type WorkloadFirewallSpecInput interface {
 }
 
 type WorkloadFirewallSpecArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
 	// The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
 	External WorkloadFirewallSpecExternalPtrInput `pulumi:"external"`
 	// The internal firewall is used to control access between workloads.
-	Internal WorkloadFirewallSpecInternalPtrInput `pulumi:"internal"`
+	Internal             WorkloadFirewallSpecInternalPtrInput `pulumi:"internal"`
+	PlaceholderAttribute pulumi.BoolPtrInput                  `pulumi:"placeholderAttribute"`
 }
 
 func (WorkloadFirewallSpecArgs) ElementType() reflect.Type {
@@ -27978,10 +27978,6 @@ func (o WorkloadFirewallSpecOutput) ToWorkloadFirewallSpecPtrOutputWithContext(c
 	}).(WorkloadFirewallSpecPtrOutput)
 }
 
-func (o WorkloadFirewallSpecOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v WorkloadFirewallSpec) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
-}
-
 // The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
 func (o WorkloadFirewallSpecOutput) External() WorkloadFirewallSpecExternalPtrOutput {
 	return o.ApplyT(func(v WorkloadFirewallSpec) *WorkloadFirewallSpecExternal { return v.External }).(WorkloadFirewallSpecExternalPtrOutput)
@@ -27990,6 +27986,10 @@ func (o WorkloadFirewallSpecOutput) External() WorkloadFirewallSpecExternalPtrOu
 // The internal firewall is used to control access between workloads.
 func (o WorkloadFirewallSpecOutput) Internal() WorkloadFirewallSpecInternalPtrOutput {
 	return o.ApplyT(func(v WorkloadFirewallSpec) *WorkloadFirewallSpecInternal { return v.Internal }).(WorkloadFirewallSpecInternalPtrOutput)
+}
+
+func (o WorkloadFirewallSpecOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadFirewallSpec) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 type WorkloadFirewallSpecPtrOutput struct{ *pulumi.OutputState }
@@ -28016,15 +28016,6 @@ func (o WorkloadFirewallSpecPtrOutput) Elem() WorkloadFirewallSpecOutput {
 	}).(WorkloadFirewallSpecOutput)
 }
 
-func (o WorkloadFirewallSpecPtrOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *WorkloadFirewallSpec) *bool {
-		if v == nil {
-			return nil
-		}
-		return v._sentinel
-	}).(pulumi.BoolPtrOutput)
-}
-
 // The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
 func (o WorkloadFirewallSpecPtrOutput) External() WorkloadFirewallSpecExternalPtrOutput {
 	return o.ApplyT(func(v *WorkloadFirewallSpec) *WorkloadFirewallSpecExternal {
@@ -28043,6 +28034,15 @@ func (o WorkloadFirewallSpecPtrOutput) Internal() WorkloadFirewallSpecInternalPt
 		}
 		return v.Internal
 	}).(WorkloadFirewallSpecInternalPtrOutput)
+}
+
+func (o WorkloadFirewallSpecPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *WorkloadFirewallSpec) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.PlaceholderAttribute
+	}).(pulumi.BoolPtrOutput)
 }
 
 type WorkloadFirewallSpecExternal struct {
@@ -28717,9 +28717,9 @@ func (o WorkloadJobPtrOutput) Schedule() pulumi.StringPtrOutput {
 }
 
 type WorkloadLoadBalancer struct {
-	_sentinel   *bool                            `pulumi:"_sentinel"`
-	Direct      *WorkloadLoadBalancerDirect      `pulumi:"direct"`
-	GeoLocation *WorkloadLoadBalancerGeoLocation `pulumi:"geoLocation"`
+	Direct               *WorkloadLoadBalancerDirect      `pulumi:"direct"`
+	GeoLocation          *WorkloadLoadBalancerGeoLocation `pulumi:"geoLocation"`
+	PlaceholderAttribute *bool                            `pulumi:"placeholderAttribute"`
 }
 
 // WorkloadLoadBalancerInput is an input type that accepts WorkloadLoadBalancerArgs and WorkloadLoadBalancerOutput values.
@@ -28734,9 +28734,9 @@ type WorkloadLoadBalancerInput interface {
 }
 
 type WorkloadLoadBalancerArgs struct {
-	_sentinel   pulumi.BoolPtrInput                     `pulumi:"_sentinel"`
-	Direct      WorkloadLoadBalancerDirectPtrInput      `pulumi:"direct"`
-	GeoLocation WorkloadLoadBalancerGeoLocationPtrInput `pulumi:"geoLocation"`
+	Direct               WorkloadLoadBalancerDirectPtrInput      `pulumi:"direct"`
+	GeoLocation          WorkloadLoadBalancerGeoLocationPtrInput `pulumi:"geoLocation"`
+	PlaceholderAttribute pulumi.BoolPtrInput                     `pulumi:"placeholderAttribute"`
 }
 
 func (WorkloadLoadBalancerArgs) ElementType() reflect.Type {
@@ -28816,16 +28816,16 @@ func (o WorkloadLoadBalancerOutput) ToWorkloadLoadBalancerPtrOutputWithContext(c
 	}).(WorkloadLoadBalancerPtrOutput)
 }
 
-func (o WorkloadLoadBalancerOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v WorkloadLoadBalancer) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
-}
-
 func (o WorkloadLoadBalancerOutput) Direct() WorkloadLoadBalancerDirectPtrOutput {
 	return o.ApplyT(func(v WorkloadLoadBalancer) *WorkloadLoadBalancerDirect { return v.Direct }).(WorkloadLoadBalancerDirectPtrOutput)
 }
 
 func (o WorkloadLoadBalancerOutput) GeoLocation() WorkloadLoadBalancerGeoLocationPtrOutput {
 	return o.ApplyT(func(v WorkloadLoadBalancer) *WorkloadLoadBalancerGeoLocation { return v.GeoLocation }).(WorkloadLoadBalancerGeoLocationPtrOutput)
+}
+
+func (o WorkloadLoadBalancerOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadLoadBalancer) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 type WorkloadLoadBalancerPtrOutput struct{ *pulumi.OutputState }
@@ -28852,15 +28852,6 @@ func (o WorkloadLoadBalancerPtrOutput) Elem() WorkloadLoadBalancerOutput {
 	}).(WorkloadLoadBalancerOutput)
 }
 
-func (o WorkloadLoadBalancerPtrOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *WorkloadLoadBalancer) *bool {
-		if v == nil {
-			return nil
-		}
-		return v._sentinel
-	}).(pulumi.BoolPtrOutput)
-}
-
 func (o WorkloadLoadBalancerPtrOutput) Direct() WorkloadLoadBalancerDirectPtrOutput {
 	return o.ApplyT(func(v *WorkloadLoadBalancer) *WorkloadLoadBalancerDirect {
 		if v == nil {
@@ -28877,6 +28868,15 @@ func (o WorkloadLoadBalancerPtrOutput) GeoLocation() WorkloadLoadBalancerGeoLoca
 		}
 		return v.GeoLocation
 	}).(WorkloadLoadBalancerGeoLocationPtrOutput)
+}
+
+func (o WorkloadLoadBalancerPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *WorkloadLoadBalancer) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.PlaceholderAttribute
+	}).(pulumi.BoolPtrOutput)
 }
 
 type WorkloadLoadBalancerDirect struct {
@@ -30782,9 +30782,9 @@ func (o WorkloadRolloutOptionsPtrOutput) ScalingPolicy() pulumi.StringPtrOutput 
 }
 
 type WorkloadSecurityOptions struct {
-	_sentinel *bool `pulumi:"_sentinel"`
 	// The group id assigned to any mounted volume.
-	FileSystemGroupId *int `pulumi:"fileSystemGroupId"`
+	FileSystemGroupId    *int  `pulumi:"fileSystemGroupId"`
+	PlaceholderAttribute *bool `pulumi:"placeholderAttribute"`
 }
 
 // WorkloadSecurityOptionsInput is an input type that accepts WorkloadSecurityOptionsArgs and WorkloadSecurityOptionsOutput values.
@@ -30799,9 +30799,9 @@ type WorkloadSecurityOptionsInput interface {
 }
 
 type WorkloadSecurityOptionsArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
 	// The group id assigned to any mounted volume.
-	FileSystemGroupId pulumi.IntPtrInput `pulumi:"fileSystemGroupId"`
+	FileSystemGroupId    pulumi.IntPtrInput  `pulumi:"fileSystemGroupId"`
+	PlaceholderAttribute pulumi.BoolPtrInput `pulumi:"placeholderAttribute"`
 }
 
 func (WorkloadSecurityOptionsArgs) ElementType() reflect.Type {
@@ -30881,13 +30881,13 @@ func (o WorkloadSecurityOptionsOutput) ToWorkloadSecurityOptionsPtrOutputWithCon
 	}).(WorkloadSecurityOptionsPtrOutput)
 }
 
-func (o WorkloadSecurityOptionsOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v WorkloadSecurityOptions) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
-}
-
 // The group id assigned to any mounted volume.
 func (o WorkloadSecurityOptionsOutput) FileSystemGroupId() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadSecurityOptions) *int { return v.FileSystemGroupId }).(pulumi.IntPtrOutput)
+}
+
+func (o WorkloadSecurityOptionsOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadSecurityOptions) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 type WorkloadSecurityOptionsPtrOutput struct{ *pulumi.OutputState }
@@ -30914,15 +30914,6 @@ func (o WorkloadSecurityOptionsPtrOutput) Elem() WorkloadSecurityOptionsOutput {
 	}).(WorkloadSecurityOptionsOutput)
 }
 
-func (o WorkloadSecurityOptionsPtrOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *WorkloadSecurityOptions) *bool {
-		if v == nil {
-			return nil
-		}
-		return v._sentinel
-	}).(pulumi.BoolPtrOutput)
-}
-
 // The group id assigned to any mounted volume.
 func (o WorkloadSecurityOptionsPtrOutput) FileSystemGroupId() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *WorkloadSecurityOptions) *int {
@@ -30931,6 +30922,15 @@ func (o WorkloadSecurityOptionsPtrOutput) FileSystemGroupId() pulumi.IntPtrOutpu
 		}
 		return v.FileSystemGroupId
 	}).(pulumi.IntPtrOutput)
+}
+
+func (o WorkloadSecurityOptionsPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *WorkloadSecurityOptions) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.PlaceholderAttribute
+	}).(pulumi.BoolPtrOutput)
 }
 
 type WorkloadSidecar struct {
@@ -32344,9 +32344,9 @@ func (o GetGvcLoadBalancerPtrOutput) TrustedProxies() pulumi.IntPtrOutput {
 }
 
 type GetGvcLoadBalancerRedirect struct {
-	_sentinel *bool `pulumi:"_sentinel"`
 	// Specify the redirect url for all status codes in a class.
-	Class *GetGvcLoadBalancerRedirectClass `pulumi:"class"`
+	Class                *GetGvcLoadBalancerRedirectClass `pulumi:"class"`
+	PlaceholderAttribute *bool                            `pulumi:"placeholderAttribute"`
 }
 
 // GetGvcLoadBalancerRedirectInput is an input type that accepts GetGvcLoadBalancerRedirectArgs and GetGvcLoadBalancerRedirectOutput values.
@@ -32361,9 +32361,9 @@ type GetGvcLoadBalancerRedirectInput interface {
 }
 
 type GetGvcLoadBalancerRedirectArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
 	// Specify the redirect url for all status codes in a class.
-	Class GetGvcLoadBalancerRedirectClassPtrInput `pulumi:"class"`
+	Class                GetGvcLoadBalancerRedirectClassPtrInput `pulumi:"class"`
+	PlaceholderAttribute pulumi.BoolPtrInput                     `pulumi:"placeholderAttribute"`
 }
 
 func (GetGvcLoadBalancerRedirectArgs) ElementType() reflect.Type {
@@ -32443,13 +32443,13 @@ func (o GetGvcLoadBalancerRedirectOutput) ToGetGvcLoadBalancerRedirectPtrOutputW
 	}).(GetGvcLoadBalancerRedirectPtrOutput)
 }
 
-func (o GetGvcLoadBalancerRedirectOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v GetGvcLoadBalancerRedirect) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
-}
-
 // Specify the redirect url for all status codes in a class.
 func (o GetGvcLoadBalancerRedirectOutput) Class() GetGvcLoadBalancerRedirectClassPtrOutput {
 	return o.ApplyT(func(v GetGvcLoadBalancerRedirect) *GetGvcLoadBalancerRedirectClass { return v.Class }).(GetGvcLoadBalancerRedirectClassPtrOutput)
+}
+
+func (o GetGvcLoadBalancerRedirectOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v GetGvcLoadBalancerRedirect) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 type GetGvcLoadBalancerRedirectPtrOutput struct{ *pulumi.OutputState }
@@ -32476,15 +32476,6 @@ func (o GetGvcLoadBalancerRedirectPtrOutput) Elem() GetGvcLoadBalancerRedirectOu
 	}).(GetGvcLoadBalancerRedirectOutput)
 }
 
-func (o GetGvcLoadBalancerRedirectPtrOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *GetGvcLoadBalancerRedirect) *bool {
-		if v == nil {
-			return nil
-		}
-		return v._sentinel
-	}).(pulumi.BoolPtrOutput)
-}
-
 // Specify the redirect url for all status codes in a class.
 func (o GetGvcLoadBalancerRedirectPtrOutput) Class() GetGvcLoadBalancerRedirectClassPtrOutput {
 	return o.ApplyT(func(v *GetGvcLoadBalancerRedirect) *GetGvcLoadBalancerRedirectClass {
@@ -32495,8 +32486,17 @@ func (o GetGvcLoadBalancerRedirectPtrOutput) Class() GetGvcLoadBalancerRedirectC
 	}).(GetGvcLoadBalancerRedirectClassPtrOutput)
 }
 
+func (o GetGvcLoadBalancerRedirectPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *GetGvcLoadBalancerRedirect) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.PlaceholderAttribute
+	}).(pulumi.BoolPtrOutput)
+}
+
 type GetGvcLoadBalancerRedirectClass struct {
-	_sentinel *bool `pulumi:"_sentinel"`
+	PlaceholderAttribute *bool `pulumi:"placeholderAttribute"`
 	// Specify the redirect url for any 500 level status code.
 	Status5xx *string `pulumi:"status5xx"`
 }
@@ -32513,7 +32513,7 @@ type GetGvcLoadBalancerRedirectClassInput interface {
 }
 
 type GetGvcLoadBalancerRedirectClassArgs struct {
-	_sentinel pulumi.BoolPtrInput `pulumi:"_sentinel"`
+	PlaceholderAttribute pulumi.BoolPtrInput `pulumi:"placeholderAttribute"`
 	// Specify the redirect url for any 500 level status code.
 	Status5xx pulumi.StringPtrInput `pulumi:"status5xx"`
 }
@@ -32595,8 +32595,8 @@ func (o GetGvcLoadBalancerRedirectClassOutput) ToGetGvcLoadBalancerRedirectClass
 	}).(GetGvcLoadBalancerRedirectClassPtrOutput)
 }
 
-func (o GetGvcLoadBalancerRedirectClassOutput) _sentinel() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v GetGvcLoadBalancerRedirectClass) *bool { return v._sentinel }).(pulumi.BoolPtrOutput)
+func (o GetGvcLoadBalancerRedirectClassOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v GetGvcLoadBalancerRedirectClass) *bool { return v.PlaceholderAttribute }).(pulumi.BoolPtrOutput)
 }
 
 // Specify the redirect url for any 500 level status code.
@@ -32628,12 +32628,12 @@ func (o GetGvcLoadBalancerRedirectClassPtrOutput) Elem() GetGvcLoadBalancerRedir
 	}).(GetGvcLoadBalancerRedirectClassOutput)
 }
 
-func (o GetGvcLoadBalancerRedirectClassPtrOutput) _sentinel() pulumi.BoolPtrOutput {
+func (o GetGvcLoadBalancerRedirectClassPtrOutput) PlaceholderAttribute() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *GetGvcLoadBalancerRedirectClass) *bool {
 		if v == nil {
 			return nil
 		}
-		return v._sentinel
+		return v.PlaceholderAttribute
 	}).(pulumi.BoolPtrOutput)
 }
 

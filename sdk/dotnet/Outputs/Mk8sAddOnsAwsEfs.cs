@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sAddOnsAwsEfs
     {
-        public readonly bool? _sentinel;
+        public readonly bool? PlaceholderAttribute;
         /// <summary>
         /// Use this role for EFS interaction.
         /// </summary>
@@ -22,11 +22,11 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private Mk8sAddOnsAwsEfs(
-            bool? _sentinel,
+            bool? placeholderAttribute,
 
             string? roleArn)
         {
-            this._sentinel = _sentinel;
+            PlaceholderAttribute = placeholderAttribute;
             RoleArn = roleArn;
         }
     }

@@ -593,7 +593,7 @@ class CloudAccountNgsArgs:
 
 if not MYPY:
     class DomainRouteHeadersArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
         request: NotRequired[pulumi.Input['DomainRouteHeadersRequestArgsDict']]
         """
         Manipulates HTTP headers.
@@ -604,24 +604,24 @@ elif False:
 @pulumi.input_type
 class DomainRouteHeadersArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None,
                  request: Optional[pulumi.Input['DomainRouteHeadersRequestArgs']] = None):
         """
         :param pulumi.Input['DomainRouteHeadersRequestArgs'] request: Manipulates HTTP headers.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if request is not None:
             pulumi.set(__self__, "request", request)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
 
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
     @property
     @pulumi.getter
@@ -638,7 +638,7 @@ class DomainRouteHeadersArgs:
 
 if not MYPY:
     class DomainRouteHeadersRequestArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
         set: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
         """
         Sets or overrides headers to all http requests for this route.
@@ -649,24 +649,24 @@ elif False:
 @pulumi.input_type
 class DomainRouteHeadersRequestArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None,
                  set: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] set: Sets or overrides headers to all http requests for this route.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if set is not None:
             pulumi.set(__self__, "set", set)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
 
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
     @property
     @pulumi.getter
@@ -1964,35 +1964,26 @@ class GvcLoadBalancerArgs:
 
 if not MYPY:
     class GvcLoadBalancerRedirectArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
         class_: NotRequired[pulumi.Input['GvcLoadBalancerRedirectClassArgsDict']]
         """
         Specify the redirect url for all status codes in a class.
         """
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
 elif False:
     GvcLoadBalancerRedirectArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GvcLoadBalancerRedirectArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
-                 class_: Optional[pulumi.Input['GvcLoadBalancerRedirectClassArgs']] = None):
+                 class_: Optional[pulumi.Input['GvcLoadBalancerRedirectClassArgs']] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None):
         """
         :param pulumi.Input['GvcLoadBalancerRedirectClassArgs'] class_: Specify the redirect url for all status codes in a class.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
         if class_ is not None:
             pulumi.set(__self__, "class_", class_)
-
-    @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
-
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
 
     @property
     @pulumi.getter(name="class")
@@ -2006,10 +1997,19 @@ class GvcLoadBalancerRedirectArgs:
     def class_(self, value: Optional[pulumi.Input['GvcLoadBalancerRedirectClassArgs']]):
         pulumi.set(self, "class_", value)
 
+    @property
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
+
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
+
 
 if not MYPY:
     class GvcLoadBalancerRedirectClassArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
         status5xx: NotRequired[pulumi.Input[str]]
         """
         Specify the redirect url for any 500 level status code.
@@ -2020,24 +2020,24 @@ elif False:
 @pulumi.input_type
 class GvcLoadBalancerRedirectClassArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None,
                  status5xx: Optional[pulumi.Input[str]] = None):
         """
         :param pulumi.Input[str] status5xx: Specify the redirect url for any 500 level status code.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if status5xx is not None:
             pulumi.set(__self__, "status5xx", status5xx)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
 
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
     @property
     @pulumi.getter
@@ -2268,7 +2268,7 @@ class IdentityAzureAccessPolicyArgs:
 
 if not MYPY:
     class IdentityAzureAccessPolicyRoleAssignmentArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
         roles: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
         """
         List of assigned roles.
@@ -2283,28 +2283,28 @@ elif False:
 @pulumi.input_type
 class IdentityAzureAccessPolicyRoleAssignmentArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None,
                  roles: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  scope: Optional[pulumi.Input[str]] = None):
         """
         :param pulumi.Input[Sequence[pulumi.Input[str]]] roles: List of assigned roles.
         :param pulumi.Input[str] scope: Scope of roles.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if roles is not None:
             pulumi.set(__self__, "roles", roles)
         if scope is not None:
             pulumi.set(__self__, "scope", scope)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
 
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
     @property
     @pulumi.getter
@@ -2424,7 +2424,7 @@ class IdentityGcpAccessPolicyArgs:
 
 if not MYPY:
     class IdentityGcpAccessPolicyBindingArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
         resource: NotRequired[pulumi.Input[str]]
         """
         Name of resource for binding.
@@ -2439,28 +2439,28 @@ elif False:
 @pulumi.input_type
 class IdentityGcpAccessPolicyBindingArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None,
                  resource: Optional[pulumi.Input[str]] = None,
                  roles: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         :param pulumi.Input[str] resource: Name of resource for binding.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] roles: List of allowed roles.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if resource is not None:
             pulumi.set(__self__, "resource", resource)
         if roles is not None:
             pulumi.set(__self__, "roles", roles)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
 
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
     @property
     @pulumi.getter
@@ -3549,7 +3549,7 @@ class Mk8sAddOnsArgs:
 
 if not MYPY:
     class Mk8sAddOnsAwsEcrArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
         role_arn: NotRequired[pulumi.Input[str]]
         """
         Role to use when authorizing ECR pulls. Optional on AWS, in which case it will use the instance role to pull.
@@ -3560,24 +3560,24 @@ elif False:
 @pulumi.input_type
 class Mk8sAddOnsAwsEcrArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None,
                  role_arn: Optional[pulumi.Input[str]] = None):
         """
         :param pulumi.Input[str] role_arn: Role to use when authorizing ECR pulls. Optional on AWS, in which case it will use the instance role to pull.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if role_arn is not None:
             pulumi.set(__self__, "role_arn", role_arn)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
 
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
     @property
     @pulumi.getter(name="roleArn")
@@ -3594,7 +3594,7 @@ class Mk8sAddOnsAwsEcrArgs:
 
 if not MYPY:
     class Mk8sAddOnsAwsEfsArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
         role_arn: NotRequired[pulumi.Input[str]]
         """
         Use this role for EFS interaction.
@@ -3605,24 +3605,24 @@ elif False:
 @pulumi.input_type
 class Mk8sAddOnsAwsEfsArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None,
                  role_arn: Optional[pulumi.Input[str]] = None):
         """
         :param pulumi.Input[str] role_arn: Use this role for EFS interaction.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if role_arn is not None:
             pulumi.set(__self__, "role_arn", role_arn)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
 
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
     @property
     @pulumi.getter(name="roleArn")
@@ -3639,7 +3639,7 @@ class Mk8sAddOnsAwsEfsArgs:
 
 if not MYPY:
     class Mk8sAddOnsAwsElbArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
         role_arn: NotRequired[pulumi.Input[str]]
         """
         Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.
@@ -3650,24 +3650,24 @@ elif False:
 @pulumi.input_type
 class Mk8sAddOnsAwsElbArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None,
                  role_arn: Optional[pulumi.Input[str]] = None):
         """
         :param pulumi.Input[str] role_arn: Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if role_arn is not None:
             pulumi.set(__self__, "role_arn", role_arn)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
 
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
     @property
     @pulumi.getter(name="roleArn")
@@ -3706,7 +3706,7 @@ class Mk8sAddOnsAzureAcrArgs:
 
 if not MYPY:
     class Mk8sAddOnsAzureWorkloadIdentityArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
         tenant_id: NotRequired[pulumi.Input[str]]
         """
         Tenant ID to use for workload identity.
@@ -3717,24 +3717,24 @@ elif False:
 @pulumi.input_type
 class Mk8sAddOnsAzureWorkloadIdentityArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None,
                  tenant_id: Optional[pulumi.Input[str]] = None):
         """
         :param pulumi.Input[str] tenant_id: Tenant ID to use for workload identity.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if tenant_id is not None:
             pulumi.set(__self__, "tenant_id", tenant_id)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
 
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
     @property
     @pulumi.getter(name="tenantId")
@@ -3751,43 +3751,34 @@ class Mk8sAddOnsAzureWorkloadIdentityArgs:
 
 if not MYPY:
     class Mk8sAddOnsLogsArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
         audit_enabled: NotRequired[pulumi.Input[bool]]
         """
         Collect k8s audit log as log events.
         """
         exclude_namespaces: NotRequired[pulumi.Input[str]]
         include_namespaces: NotRequired[pulumi.Input[str]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
 elif False:
     Mk8sAddOnsLogsArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sAddOnsLogsArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
                  audit_enabled: Optional[pulumi.Input[bool]] = None,
                  exclude_namespaces: Optional[pulumi.Input[str]] = None,
-                 include_namespaces: Optional[pulumi.Input[str]] = None):
+                 include_namespaces: Optional[pulumi.Input[str]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None):
         """
         :param pulumi.Input[bool] audit_enabled: Collect k8s audit log as log events.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
         if audit_enabled is not None:
             pulumi.set(__self__, "audit_enabled", audit_enabled)
         if exclude_namespaces is not None:
             pulumi.set(__self__, "exclude_namespaces", exclude_namespaces)
         if include_namespaces is not None:
             pulumi.set(__self__, "include_namespaces", include_namespaces)
-
-    @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
-
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
 
     @property
     @pulumi.getter(name="auditEnabled")
@@ -3819,10 +3810,18 @@ class Mk8sAddOnsLogsArgs:
     def include_namespaces(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "include_namespaces", value)
 
+    @property
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
+
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
+
 
 if not MYPY:
     class Mk8sAddOnsMetricsArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
         api_server: NotRequired[pulumi.Input[bool]]
         """
         Enable scraping apiserver stats.
@@ -3847,6 +3846,7 @@ if not MYPY:
         """
         Enable collecting node-level stats (disk, network, filesystem, etc).
         """
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
         scrape_annotated: NotRequired[pulumi.Input['Mk8sAddOnsMetricsScrapeAnnotatedArgsDict']]
         """
         Scrape pods annotated with prometheus.io/scrape=true.
@@ -3857,13 +3857,13 @@ elif False:
 @pulumi.input_type
 class Mk8sAddOnsMetricsArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
                  api_server: Optional[pulumi.Input[bool]] = None,
                  cadvisor: Optional[pulumi.Input[bool]] = None,
                  core_dns: Optional[pulumi.Input[bool]] = None,
                  kube_state: Optional[pulumi.Input[bool]] = None,
                  kubelet: Optional[pulumi.Input[bool]] = None,
                  node_exporter: Optional[pulumi.Input[bool]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None,
                  scrape_annotated: Optional[pulumi.Input['Mk8sAddOnsMetricsScrapeAnnotatedArgs']] = None):
         """
         :param pulumi.Input[bool] api_server: Enable scraping apiserver stats.
@@ -3874,8 +3874,6 @@ class Mk8sAddOnsMetricsArgs:
         :param pulumi.Input[bool] node_exporter: Enable collecting node-level stats (disk, network, filesystem, etc).
         :param pulumi.Input['Mk8sAddOnsMetricsScrapeAnnotatedArgs'] scrape_annotated: Scrape pods annotated with prometheus.io/scrape=true.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
         if api_server is not None:
             pulumi.set(__self__, "api_server", api_server)
         if cadvisor is not None:
@@ -3888,17 +3886,10 @@ class Mk8sAddOnsMetricsArgs:
             pulumi.set(__self__, "kubelet", kubelet)
         if node_exporter is not None:
             pulumi.set(__self__, "node_exporter", node_exporter)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if scrape_annotated is not None:
             pulumi.set(__self__, "scrape_annotated", scrape_annotated)
-
-    @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
-
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
 
     @property
     @pulumi.getter(name="apiServer")
@@ -3973,6 +3964,15 @@ class Mk8sAddOnsMetricsArgs:
         pulumi.set(self, "node_exporter", value)
 
     @property
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
+
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
+
+    @property
     @pulumi.getter(name="scrapeAnnotated")
     def scrape_annotated(self) -> Optional[pulumi.Input['Mk8sAddOnsMetricsScrapeAnnotatedArgs']]:
         """
@@ -3987,10 +3987,10 @@ class Mk8sAddOnsMetricsArgs:
 
 if not MYPY:
     class Mk8sAddOnsMetricsScrapeAnnotatedArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
         exclude_namespaces: NotRequired[pulumi.Input[str]]
         include_namespaces: NotRequired[pulumi.Input[str]]
         interval_seconds: NotRequired[pulumi.Input[int]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
         retain_labels: NotRequired[pulumi.Input[str]]
 elif False:
     Mk8sAddOnsMetricsScrapeAnnotatedArgsDict: TypeAlias = Mapping[str, Any]
@@ -3998,30 +3998,21 @@ elif False:
 @pulumi.input_type
 class Mk8sAddOnsMetricsScrapeAnnotatedArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
                  exclude_namespaces: Optional[pulumi.Input[str]] = None,
                  include_namespaces: Optional[pulumi.Input[str]] = None,
                  interval_seconds: Optional[pulumi.Input[int]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None,
                  retain_labels: Optional[pulumi.Input[str]] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
         if exclude_namespaces is not None:
             pulumi.set(__self__, "exclude_namespaces", exclude_namespaces)
         if include_namespaces is not None:
             pulumi.set(__self__, "include_namespaces", include_namespaces)
         if interval_seconds is not None:
             pulumi.set(__self__, "interval_seconds", interval_seconds)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if retain_labels is not None:
             pulumi.set(__self__, "retain_labels", retain_labels)
-
-    @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
-
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
 
     @property
     @pulumi.getter(name="excludeNamespaces")
@@ -4051,6 +4042,15 @@ class Mk8sAddOnsMetricsScrapeAnnotatedArgs:
         pulumi.set(self, "interval_seconds", value)
 
     @property
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
+
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
+
+    @property
     @pulumi.getter(name="retainLabels")
     def retain_labels(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "retain_labels")
@@ -4062,7 +4062,7 @@ class Mk8sAddOnsMetricsScrapeAnnotatedArgs:
 
 if not MYPY:
     class Mk8sAddOnsNvidiaArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
         taint_gpu_nodes: NotRequired[pulumi.Input[bool]]
 elif False:
     Mk8sAddOnsNvidiaArgsDict: TypeAlias = Mapping[str, Any]
@@ -4070,21 +4070,21 @@ elif False:
 @pulumi.input_type
 class Mk8sAddOnsNvidiaArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None,
                  taint_gpu_nodes: Optional[pulumi.Input[bool]] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if taint_gpu_nodes is not None:
             pulumi.set(__self__, "taint_gpu_nodes", taint_gpu_nodes)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
 
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
     @property
     @pulumi.getter(name="taintGpuNodes")
@@ -9232,25 +9232,25 @@ class Mk8sTritonProviderLoadBalancerArgs:
 
 if not MYPY:
     class Mk8sTritonProviderLoadBalancerGatewayArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
 elif False:
     Mk8sTritonProviderLoadBalancerGatewayArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sTritonProviderLoadBalancerGatewayArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None):
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
 
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
 
 if not MYPY:
@@ -9999,7 +9999,6 @@ class OrgLoggingDatadogLoggingArgs:
 
 if not MYPY:
     class OrgLoggingElasticLoggingArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
         aws: NotRequired[pulumi.Input['OrgLoggingElasticLoggingAwsArgsDict']]
         """
         For targeting Amazon Web Services (AWS) ElasticSearch.
@@ -10012,38 +10011,30 @@ if not MYPY:
         """
         For targeting generic Elastic Search providers.
         """
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
 elif False:
     OrgLoggingElasticLoggingArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class OrgLoggingElasticLoggingArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
                  aws: Optional[pulumi.Input['OrgLoggingElasticLoggingAwsArgs']] = None,
                  elastic_cloud: Optional[pulumi.Input['OrgLoggingElasticLoggingElasticCloudArgs']] = None,
-                 generic: Optional[pulumi.Input['OrgLoggingElasticLoggingGenericArgs']] = None):
+                 generic: Optional[pulumi.Input['OrgLoggingElasticLoggingGenericArgs']] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None):
         """
         :param pulumi.Input['OrgLoggingElasticLoggingAwsArgs'] aws: For targeting Amazon Web Services (AWS) ElasticSearch.
         :param pulumi.Input['OrgLoggingElasticLoggingElasticCloudArgs'] elastic_cloud: For targeting Elastic Cloud.
         :param pulumi.Input['OrgLoggingElasticLoggingGenericArgs'] generic: For targeting generic Elastic Search providers.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
         if aws is not None:
             pulumi.set(__self__, "aws", aws)
         if elastic_cloud is not None:
             pulumi.set(__self__, "elastic_cloud", elastic_cloud)
         if generic is not None:
             pulumi.set(__self__, "generic", generic)
-
-    @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
-
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
 
     @property
     @pulumi.getter
@@ -10080,6 +10071,15 @@ class OrgLoggingElasticLoggingArgs:
     @generic.setter
     def generic(self, value: Optional[pulumi.Input['OrgLoggingElasticLoggingGenericArgs']]):
         pulumi.set(self, "generic", value)
+
+    @property
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
+
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
 
 if not MYPY:
@@ -10846,7 +10846,7 @@ class OrgObservabilityArgs:
 
 if not MYPY:
     class OrgSecurityArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
         threat_detection: NotRequired[pulumi.Input['OrgSecurityThreatDetectionArgsDict']]
 elif False:
     OrgSecurityArgsDict: TypeAlias = Mapping[str, Any]
@@ -10854,21 +10854,21 @@ elif False:
 @pulumi.input_type
 class OrgSecurityArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None,
                  threat_detection: Optional[pulumi.Input['OrgSecurityThreatDetectionArgs']] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if threat_detection is not None:
             pulumi.set(__self__, "threat_detection", threat_detection)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
 
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
     @property
     @pulumi.getter(name="threatDetection")
@@ -12779,7 +12779,7 @@ class WorkloadContainerGpuNvidiaArgs:
 
 if not MYPY:
     class WorkloadContainerLifecycleArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
         post_start: NotRequired[pulumi.Input['WorkloadContainerLifecyclePostStartArgsDict']]
         pre_stop: NotRequired[pulumi.Input['WorkloadContainerLifecyclePreStopArgsDict']]
 elif False:
@@ -12788,24 +12788,24 @@ elif False:
 @pulumi.input_type
 class WorkloadContainerLifecycleArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None,
                  post_start: Optional[pulumi.Input['WorkloadContainerLifecyclePostStartArgs']] = None,
                  pre_stop: Optional[pulumi.Input['WorkloadContainerLifecyclePreStopArgs']] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if post_start is not None:
             pulumi.set(__self__, "post_start", post_start)
         if pre_stop is not None:
             pulumi.set(__self__, "pre_stop", pre_stop)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
 
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
     @property
     @pulumi.getter(name="postStart")
@@ -13065,7 +13065,7 @@ class WorkloadContainerLivenessProbeExecArgs:
 
 if not MYPY:
     class WorkloadContainerLivenessProbeGrpcArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
         port: NotRequired[pulumi.Input[int]]
 elif False:
     WorkloadContainerLivenessProbeGrpcArgsDict: TypeAlias = Mapping[str, Any]
@@ -13073,21 +13073,21 @@ elif False:
 @pulumi.input_type
 class WorkloadContainerLivenessProbeGrpcArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None,
                  port: Optional[pulumi.Input[int]] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if port is not None:
             pulumi.set(__self__, "port", port)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
 
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
     @property
     @pulumi.getter
@@ -13163,7 +13163,7 @@ class WorkloadContainerLivenessProbeHttpGetArgs:
 
 if not MYPY:
     class WorkloadContainerLivenessProbeTcpSocketArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
         port: NotRequired[pulumi.Input[int]]
 elif False:
     WorkloadContainerLivenessProbeTcpSocketArgsDict: TypeAlias = Mapping[str, Any]
@@ -13171,21 +13171,21 @@ elif False:
 @pulumi.input_type
 class WorkloadContainerLivenessProbeTcpSocketArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None,
                  port: Optional[pulumi.Input[int]] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if port is not None:
             pulumi.set(__self__, "port", port)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
 
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
     @property
     @pulumi.getter
@@ -13449,7 +13449,7 @@ class WorkloadContainerReadinessProbeExecArgs:
 
 if not MYPY:
     class WorkloadContainerReadinessProbeGrpcArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
         port: NotRequired[pulumi.Input[int]]
 elif False:
     WorkloadContainerReadinessProbeGrpcArgsDict: TypeAlias = Mapping[str, Any]
@@ -13457,21 +13457,21 @@ elif False:
 @pulumi.input_type
 class WorkloadContainerReadinessProbeGrpcArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None,
                  port: Optional[pulumi.Input[int]] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if port is not None:
             pulumi.set(__self__, "port", port)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
 
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
     @property
     @pulumi.getter
@@ -13547,7 +13547,7 @@ class WorkloadContainerReadinessProbeHttpGetArgs:
 
 if not MYPY:
     class WorkloadContainerReadinessProbeTcpSocketArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
         port: NotRequired[pulumi.Input[int]]
 elif False:
     WorkloadContainerReadinessProbeTcpSocketArgsDict: TypeAlias = Mapping[str, Any]
@@ -13555,21 +13555,21 @@ elif False:
 @pulumi.input_type
 class WorkloadContainerReadinessProbeTcpSocketArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None,
                  port: Optional[pulumi.Input[int]] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if port is not None:
             pulumi.set(__self__, "port", port)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
 
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
     @property
     @pulumi.getter
@@ -13653,7 +13653,6 @@ class WorkloadContainerVolumeArgs:
 
 if not MYPY:
     class WorkloadFirewallSpecArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
         external: NotRequired[pulumi.Input['WorkloadFirewallSpecExternalArgsDict']]
         """
         The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
@@ -13662,34 +13661,26 @@ if not MYPY:
         """
         The internal firewall is used to control access between workloads.
         """
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
 elif False:
     WorkloadFirewallSpecArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class WorkloadFirewallSpecArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
                  external: Optional[pulumi.Input['WorkloadFirewallSpecExternalArgs']] = None,
-                 internal: Optional[pulumi.Input['WorkloadFirewallSpecInternalArgs']] = None):
+                 internal: Optional[pulumi.Input['WorkloadFirewallSpecInternalArgs']] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None):
         """
         :param pulumi.Input['WorkloadFirewallSpecExternalArgs'] external: The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
         :param pulumi.Input['WorkloadFirewallSpecInternalArgs'] internal: The internal firewall is used to control access between workloads.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
         if external is not None:
             pulumi.set(__self__, "external", external)
         if internal is not None:
             pulumi.set(__self__, "internal", internal)
-
-    @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
-
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
 
     @property
     @pulumi.getter
@@ -13714,6 +13705,15 @@ class WorkloadFirewallSpecArgs:
     @internal.setter
     def internal(self, value: Optional[pulumi.Input['WorkloadFirewallSpecInternalArgs']]):
         pulumi.set(self, "internal", value)
+
+    @property
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
+
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
 
 if not MYPY:
@@ -14023,33 +14023,24 @@ class WorkloadJobArgs:
 
 if not MYPY:
     class WorkloadLoadBalancerArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
         direct: NotRequired[pulumi.Input['WorkloadLoadBalancerDirectArgsDict']]
         geo_location: NotRequired[pulumi.Input['WorkloadLoadBalancerGeoLocationArgsDict']]
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
 elif False:
     WorkloadLoadBalancerArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class WorkloadLoadBalancerArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
                  direct: Optional[pulumi.Input['WorkloadLoadBalancerDirectArgs']] = None,
-                 geo_location: Optional[pulumi.Input['WorkloadLoadBalancerGeoLocationArgs']] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+                 geo_location: Optional[pulumi.Input['WorkloadLoadBalancerGeoLocationArgs']] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None):
         if direct is not None:
             pulumi.set(__self__, "direct", direct)
         if geo_location is not None:
             pulumi.set(__self__, "geo_location", geo_location)
-
-    @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
-
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
 
     @property
     @pulumi.getter
@@ -14068,6 +14059,15 @@ class WorkloadLoadBalancerArgs:
     @geo_location.setter
     def geo_location(self, value: Optional[pulumi.Input['WorkloadLoadBalancerGeoLocationArgs']]):
         pulumi.set(self, "geo_location", value)
+
+    @property
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
+
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
 
 if not MYPY:
@@ -15082,35 +15082,26 @@ class WorkloadRolloutOptionsArgs:
 
 if not MYPY:
     class WorkloadSecurityOptionsArgsDict(TypedDict):
-        _sentinel: NotRequired[pulumi.Input[bool]]
         file_system_group_id: NotRequired[pulumi.Input[int]]
         """
         The group id assigned to any mounted volume.
         """
+        placeholder_attribute: NotRequired[pulumi.Input[bool]]
 elif False:
     WorkloadSecurityOptionsArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class WorkloadSecurityOptionsArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[pulumi.Input[bool]] = None,
-                 file_system_group_id: Optional[pulumi.Input[int]] = None):
+                 file_system_group_id: Optional[pulumi.Input[int]] = None,
+                 placeholder_attribute: Optional[pulumi.Input[bool]] = None):
         """
         :param pulumi.Input[int] file_system_group_id: The group id assigned to any mounted volume.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
         if file_system_group_id is not None:
             pulumi.set(__self__, "file_system_group_id", file_system_group_id)
-
-    @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[pulumi.Input[bool]]:
-        return pulumi.get(self, "_sentinel")
-
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[pulumi.Input[bool]]):
-        pulumi.set(self, "_sentinel", value)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
 
     @property
     @pulumi.getter(name="fileSystemGroupId")
@@ -15123,6 +15114,15 @@ class WorkloadSecurityOptionsArgs:
     @file_system_group_id.setter
     def file_system_group_id(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "file_system_group_id", value)
+
+    @property
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "placeholder_attribute")
+
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "placeholder_attribute", value)
 
 
 if not MYPY:
@@ -15923,35 +15923,26 @@ class GetGvcLoadBalancerArgs:
 
 if not MYPY:
     class GetGvcLoadBalancerRedirectArgsDict(TypedDict):
-        _sentinel: NotRequired[bool]
         class_: NotRequired['GetGvcLoadBalancerRedirectClassArgsDict']
         """
         Specify the redirect url for all status codes in a class.
         """
+        placeholder_attribute: NotRequired[bool]
 elif False:
     GetGvcLoadBalancerRedirectArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetGvcLoadBalancerRedirectArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
-                 class_: Optional['GetGvcLoadBalancerRedirectClassArgs'] = None):
+                 class_: Optional['GetGvcLoadBalancerRedirectClassArgs'] = None,
+                 placeholder_attribute: Optional[bool] = None):
         """
         :param 'GetGvcLoadBalancerRedirectClassArgs' class_: Specify the redirect url for all status codes in a class.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
         if class_ is not None:
             pulumi.set(__self__, "class_", class_)
-
-    @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
-
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[bool]):
-        pulumi.set(self, "_sentinel", value)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
 
     @property
     @pulumi.getter(name="class")
@@ -15965,10 +15956,19 @@ class GetGvcLoadBalancerRedirectArgs:
     def class_(self, value: Optional['GetGvcLoadBalancerRedirectClassArgs']):
         pulumi.set(self, "class_", value)
 
+    @property
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
+
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[bool]):
+        pulumi.set(self, "placeholder_attribute", value)
+
 
 if not MYPY:
     class GetGvcLoadBalancerRedirectClassArgsDict(TypedDict):
-        _sentinel: NotRequired[bool]
+        placeholder_attribute: NotRequired[bool]
         status5xx: NotRequired[str]
         """
         Specify the redirect url for any 500 level status code.
@@ -15979,24 +15979,24 @@ elif False:
 @pulumi.input_type
 class GetGvcLoadBalancerRedirectClassArgs:
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  status5xx: Optional[str] = None):
         """
         :param str status5xx: Specify the redirect url for any 500 level status code.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if status5xx is not None:
             pulumi.set(__self__, "status5xx", status5xx)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
-    @_sentinel.setter
-    def _sentinel(self, value: Optional[bool]):
-        pulumi.set(self, "_sentinel", value)
+    @placeholder_attribute.setter
+    def placeholder_attribute(self, value: Optional[bool]):
+        pulumi.set(self, "placeholder_attribute", value)
 
     @property
     @pulumi.getter
