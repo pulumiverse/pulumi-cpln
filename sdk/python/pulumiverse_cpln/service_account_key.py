@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = ['ServiceAccountKeyArgs', 'ServiceAccountKey']
@@ -21,23 +26,8 @@ class ServiceAccountKeyArgs:
         :param pulumi.Input[str] description: Description of the Service Account Key.
         :param pulumi.Input[str] service_account_name: The name of an existing Service Account this key will belong to.
         """
-        ServiceAccountKeyArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            description=description,
-            service_account_name=service_account_name,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             description: pulumi.Input[str],
-             service_account_name: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'serviceAccountName' in kwargs:
-            service_account_name = kwargs['serviceAccountName']
-
-        _setter("description", description)
-        _setter("service_account_name", service_account_name)
+        pulumi.set(__self__, "description", description)
+        pulumi.set(__self__, "service_account_name", service_account_name)
 
     @property
     @pulumi.getter
@@ -80,37 +70,16 @@ class _ServiceAccountKeyState:
         :param pulumi.Input[str] name: The generated name of the key.
         :param pulumi.Input[str] service_account_name: The name of an existing Service Account this key will belong to.
         """
-        _ServiceAccountKeyState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            created=created,
-            description=description,
-            key=key,
-            name=name,
-            service_account_name=service_account_name,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             created: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             key: Optional[pulumi.Input[str]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             service_account_name: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'serviceAccountName' in kwargs:
-            service_account_name = kwargs['serviceAccountName']
-
         if created is not None:
-            _setter("created", created)
+            pulumi.set(__self__, "created", created)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if key is not None:
-            _setter("key", key)
+            pulumi.set(__self__, "key", key)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if service_account_name is not None:
-            _setter("service_account_name", service_account_name)
+            pulumi.set(__self__, "service_account_name", service_account_name)
 
     @property
     @pulumi.getter
@@ -206,10 +175,6 @@ class ServiceAccountKey(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            ServiceAccountKeyArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

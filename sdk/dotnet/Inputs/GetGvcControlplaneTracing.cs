@@ -15,12 +15,19 @@ namespace Pulumiverse.Cpln.Inputs
     {
         [Input("customTags")]
         private Dictionary<string, string>? _customTags;
+
+        /// <summary>
+        /// Key-value map of custom tags.
+        /// </summary>
         public Dictionary<string, string> CustomTags
         {
             get => _customTags ?? (_customTags = new Dictionary<string, string>());
             set => _customTags = value;
         }
 
+        /// <summary>
+        /// Determines what percentage of requests should be traced.
+        /// </summary>
         [Input("sampling", required: true)]
         public double Sampling { get; set; }
 

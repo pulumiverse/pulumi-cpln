@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -22,33 +27,12 @@ class OrgTracingArgs:
         """
         The set of arguments for constructing a OrgTracing resource.
         """
-        OrgTracingArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            controlplane_tracing=controlplane_tracing,
-            lightstep_tracing=lightstep_tracing,
-            otel_tracing=otel_tracing,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             controlplane_tracing: Optional[pulumi.Input['OrgTracingControlplaneTracingArgs']] = None,
-             lightstep_tracing: Optional[pulumi.Input['OrgTracingLightstepTracingArgs']] = None,
-             otel_tracing: Optional[pulumi.Input['OrgTracingOtelTracingArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'controlplaneTracing' in kwargs:
-            controlplane_tracing = kwargs['controlplaneTracing']
-        if 'lightstepTracing' in kwargs:
-            lightstep_tracing = kwargs['lightstepTracing']
-        if 'otelTracing' in kwargs:
-            otel_tracing = kwargs['otelTracing']
-
         if controlplane_tracing is not None:
-            _setter("controlplane_tracing", controlplane_tracing)
+            pulumi.set(__self__, "controlplane_tracing", controlplane_tracing)
         if lightstep_tracing is not None:
-            _setter("lightstep_tracing", lightstep_tracing)
+            pulumi.set(__self__, "lightstep_tracing", lightstep_tracing)
         if otel_tracing is not None:
-            _setter("otel_tracing", otel_tracing)
+            pulumi.set(__self__, "otel_tracing", otel_tracing)
 
     @property
     @pulumi.getter(name="controlplaneTracing")
@@ -95,51 +79,20 @@ class _OrgTracingState:
         :param pulumi.Input[str] name: The name of the org.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of the org's tags.
         """
-        _OrgTracingState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            controlplane_tracing=controlplane_tracing,
-            cpln_id=cpln_id,
-            description=description,
-            lightstep_tracing=lightstep_tracing,
-            name=name,
-            otel_tracing=otel_tracing,
-            tags=tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             controlplane_tracing: Optional[pulumi.Input['OrgTracingControlplaneTracingArgs']] = None,
-             cpln_id: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             lightstep_tracing: Optional[pulumi.Input['OrgTracingLightstepTracingArgs']] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             otel_tracing: Optional[pulumi.Input['OrgTracingOtelTracingArgs']] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'controlplaneTracing' in kwargs:
-            controlplane_tracing = kwargs['controlplaneTracing']
-        if 'cplnId' in kwargs:
-            cpln_id = kwargs['cplnId']
-        if 'lightstepTracing' in kwargs:
-            lightstep_tracing = kwargs['lightstepTracing']
-        if 'otelTracing' in kwargs:
-            otel_tracing = kwargs['otelTracing']
-
         if controlplane_tracing is not None:
-            _setter("controlplane_tracing", controlplane_tracing)
+            pulumi.set(__self__, "controlplane_tracing", controlplane_tracing)
         if cpln_id is not None:
-            _setter("cpln_id", cpln_id)
+            pulumi.set(__self__, "cpln_id", cpln_id)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if lightstep_tracing is not None:
-            _setter("lightstep_tracing", lightstep_tracing)
+            pulumi.set(__self__, "lightstep_tracing", lightstep_tracing)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if otel_tracing is not None:
-            _setter("otel_tracing", otel_tracing)
+            pulumi.set(__self__, "otel_tracing", otel_tracing)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
 
     @property
     @pulumi.getter(name="controlplaneTracing")
@@ -222,9 +175,9 @@ class OrgTracing(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 controlplane_tracing: Optional[pulumi.Input[pulumi.InputType['OrgTracingControlplaneTracingArgs']]] = None,
-                 lightstep_tracing: Optional[pulumi.Input[pulumi.InputType['OrgTracingLightstepTracingArgs']]] = None,
-                 otel_tracing: Optional[pulumi.Input[pulumi.InputType['OrgTracingOtelTracingArgs']]] = None,
+                 controlplane_tracing: Optional[pulumi.Input[Union['OrgTracingControlplaneTracingArgs', 'OrgTracingControlplaneTracingArgsDict']]] = None,
+                 lightstep_tracing: Optional[pulumi.Input[Union['OrgTracingLightstepTracingArgs', 'OrgTracingLightstepTracingArgsDict']]] = None,
+                 otel_tracing: Optional[pulumi.Input[Union['OrgTracingOtelTracingArgs', 'OrgTracingOtelTracingArgsDict']]] = None,
                  __props__=None):
         """
         Create a OrgTracing resource with the given unique name, props, and options.
@@ -249,18 +202,14 @@ class OrgTracing(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            OrgTracingArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 controlplane_tracing: Optional[pulumi.Input[pulumi.InputType['OrgTracingControlplaneTracingArgs']]] = None,
-                 lightstep_tracing: Optional[pulumi.Input[pulumi.InputType['OrgTracingLightstepTracingArgs']]] = None,
-                 otel_tracing: Optional[pulumi.Input[pulumi.InputType['OrgTracingOtelTracingArgs']]] = None,
+                 controlplane_tracing: Optional[pulumi.Input[Union['OrgTracingControlplaneTracingArgs', 'OrgTracingControlplaneTracingArgsDict']]] = None,
+                 lightstep_tracing: Optional[pulumi.Input[Union['OrgTracingLightstepTracingArgs', 'OrgTracingLightstepTracingArgsDict']]] = None,
+                 otel_tracing: Optional[pulumi.Input[Union['OrgTracingOtelTracingArgs', 'OrgTracingOtelTracingArgsDict']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -270,23 +219,8 @@ class OrgTracing(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = OrgTracingArgs.__new__(OrgTracingArgs)
 
-            if controlplane_tracing is not None and not isinstance(controlplane_tracing, OrgTracingControlplaneTracingArgs):
-                controlplane_tracing = controlplane_tracing or {}
-                def _setter(key, value):
-                    controlplane_tracing[key] = value
-                OrgTracingControlplaneTracingArgs._configure(_setter, **controlplane_tracing)
             __props__.__dict__["controlplane_tracing"] = controlplane_tracing
-            if lightstep_tracing is not None and not isinstance(lightstep_tracing, OrgTracingLightstepTracingArgs):
-                lightstep_tracing = lightstep_tracing or {}
-                def _setter(key, value):
-                    lightstep_tracing[key] = value
-                OrgTracingLightstepTracingArgs._configure(_setter, **lightstep_tracing)
             __props__.__dict__["lightstep_tracing"] = lightstep_tracing
-            if otel_tracing is not None and not isinstance(otel_tracing, OrgTracingOtelTracingArgs):
-                otel_tracing = otel_tracing or {}
-                def _setter(key, value):
-                    otel_tracing[key] = value
-                OrgTracingOtelTracingArgs._configure(_setter, **otel_tracing)
             __props__.__dict__["otel_tracing"] = otel_tracing
             __props__.__dict__["cpln_id"] = None
             __props__.__dict__["description"] = None
@@ -302,12 +236,12 @@ class OrgTracing(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            controlplane_tracing: Optional[pulumi.Input[pulumi.InputType['OrgTracingControlplaneTracingArgs']]] = None,
+            controlplane_tracing: Optional[pulumi.Input[Union['OrgTracingControlplaneTracingArgs', 'OrgTracingControlplaneTracingArgsDict']]] = None,
             cpln_id: Optional[pulumi.Input[str]] = None,
             description: Optional[pulumi.Input[str]] = None,
-            lightstep_tracing: Optional[pulumi.Input[pulumi.InputType['OrgTracingLightstepTracingArgs']]] = None,
+            lightstep_tracing: Optional[pulumi.Input[Union['OrgTracingLightstepTracingArgs', 'OrgTracingLightstepTracingArgsDict']]] = None,
             name: Optional[pulumi.Input[str]] = None,
-            otel_tracing: Optional[pulumi.Input[pulumi.InputType['OrgTracingOtelTracingArgs']]] = None,
+            otel_tracing: Optional[pulumi.Input[Union['OrgTracingOtelTracingArgs', 'OrgTracingOtelTracingArgsDict']]] = None,
             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None) -> 'OrgTracing':
         """
         Get an existing OrgTracing resource's state with the given name, id, and optional extra

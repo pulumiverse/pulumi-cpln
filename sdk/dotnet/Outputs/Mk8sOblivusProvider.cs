@@ -16,9 +16,18 @@ namespace Pulumiverse.Cpln.Outputs
     {
         public readonly Outputs.Mk8sOblivusProviderAutoscaler? Autoscaler;
         public readonly string Datacenter;
+        /// <summary>
+        /// List of node pools.
+        /// </summary>
         public readonly ImmutableArray<Outputs.Mk8sOblivusProviderNodePool> NodePools;
+        /// <summary>
+        /// Optional shell script that will be run before K8s is installed. Supports SSM.
+        /// </summary>
         public readonly string? PreInstallScript;
         public readonly ImmutableArray<string> SshKeys;
+        /// <summary>
+        /// Link to a secret holding Oblivus access key.
+        /// </summary>
         public readonly string TokenSecretLink;
         public readonly ImmutableArray<Outputs.Mk8sOblivusProviderUnmanagedNodePool> UnmanagedNodePools;
 

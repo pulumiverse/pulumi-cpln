@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -43,60 +48,23 @@ class VolumeSetArgs:
                {performanceClass}-{fileSystemType}
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
-        VolumeSetArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            gvc=gvc,
-            initial_capacity=initial_capacity,
-            performance_class=performance_class,
-            autoscaling=autoscaling,
-            description=description,
-            file_system_type=file_system_type,
-            name=name,
-            snapshots=snapshots,
-            storage_class_suffix=storage_class_suffix,
-            tags=tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             gvc: pulumi.Input[str],
-             initial_capacity: pulumi.Input[int],
-             performance_class: pulumi.Input[str],
-             autoscaling: Optional[pulumi.Input['VolumeSetAutoscalingArgs']] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             file_system_type: Optional[pulumi.Input[str]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             snapshots: Optional[pulumi.Input['VolumeSetSnapshotsArgs']] = None,
-             storage_class_suffix: Optional[pulumi.Input[str]] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'initialCapacity' in kwargs:
-            initial_capacity = kwargs['initialCapacity']
-        if 'performanceClass' in kwargs:
-            performance_class = kwargs['performanceClass']
-        if 'fileSystemType' in kwargs:
-            file_system_type = kwargs['fileSystemType']
-        if 'storageClassSuffix' in kwargs:
-            storage_class_suffix = kwargs['storageClassSuffix']
-
-        _setter("gvc", gvc)
-        _setter("initial_capacity", initial_capacity)
-        _setter("performance_class", performance_class)
+        pulumi.set(__self__, "gvc", gvc)
+        pulumi.set(__self__, "initial_capacity", initial_capacity)
+        pulumi.set(__self__, "performance_class", performance_class)
         if autoscaling is not None:
-            _setter("autoscaling", autoscaling)
+            pulumi.set(__self__, "autoscaling", autoscaling)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if file_system_type is not None:
-            _setter("file_system_type", file_system_type)
+            pulumi.set(__self__, "file_system_type", file_system_type)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if snapshots is not None:
-            _setter("snapshots", snapshots)
+            pulumi.set(__self__, "snapshots", snapshots)
         if storage_class_suffix is not None:
-            _setter("storage_class_suffix", storage_class_suffix)
+            pulumi.set(__self__, "storage_class_suffix", storage_class_suffix)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
 
     @property
     @pulumi.getter
@@ -261,85 +229,34 @@ class _VolumeSetState:
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         :param pulumi.Input[str] volumeset_link: Output used when linking a volume set to a workload.
         """
-        _VolumeSetState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            autoscaling=autoscaling,
-            cpln_id=cpln_id,
-            description=description,
-            file_system_type=file_system_type,
-            gvc=gvc,
-            initial_capacity=initial_capacity,
-            name=name,
-            performance_class=performance_class,
-            self_link=self_link,
-            snapshots=snapshots,
-            statuses=statuses,
-            storage_class_suffix=storage_class_suffix,
-            tags=tags,
-            volumeset_link=volumeset_link,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             autoscaling: Optional[pulumi.Input['VolumeSetAutoscalingArgs']] = None,
-             cpln_id: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             file_system_type: Optional[pulumi.Input[str]] = None,
-             gvc: Optional[pulumi.Input[str]] = None,
-             initial_capacity: Optional[pulumi.Input[int]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             performance_class: Optional[pulumi.Input[str]] = None,
-             self_link: Optional[pulumi.Input[str]] = None,
-             snapshots: Optional[pulumi.Input['VolumeSetSnapshotsArgs']] = None,
-             statuses: Optional[pulumi.Input[Sequence[pulumi.Input['VolumeSetStatusArgs']]]] = None,
-             storage_class_suffix: Optional[pulumi.Input[str]] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             volumeset_link: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'cplnId' in kwargs:
-            cpln_id = kwargs['cplnId']
-        if 'fileSystemType' in kwargs:
-            file_system_type = kwargs['fileSystemType']
-        if 'initialCapacity' in kwargs:
-            initial_capacity = kwargs['initialCapacity']
-        if 'performanceClass' in kwargs:
-            performance_class = kwargs['performanceClass']
-        if 'selfLink' in kwargs:
-            self_link = kwargs['selfLink']
-        if 'storageClassSuffix' in kwargs:
-            storage_class_suffix = kwargs['storageClassSuffix']
-        if 'volumesetLink' in kwargs:
-            volumeset_link = kwargs['volumesetLink']
-
         if autoscaling is not None:
-            _setter("autoscaling", autoscaling)
+            pulumi.set(__self__, "autoscaling", autoscaling)
         if cpln_id is not None:
-            _setter("cpln_id", cpln_id)
+            pulumi.set(__self__, "cpln_id", cpln_id)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if file_system_type is not None:
-            _setter("file_system_type", file_system_type)
+            pulumi.set(__self__, "file_system_type", file_system_type)
         if gvc is not None:
-            _setter("gvc", gvc)
+            pulumi.set(__self__, "gvc", gvc)
         if initial_capacity is not None:
-            _setter("initial_capacity", initial_capacity)
+            pulumi.set(__self__, "initial_capacity", initial_capacity)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if performance_class is not None:
-            _setter("performance_class", performance_class)
+            pulumi.set(__self__, "performance_class", performance_class)
         if self_link is not None:
-            _setter("self_link", self_link)
+            pulumi.set(__self__, "self_link", self_link)
         if snapshots is not None:
-            _setter("snapshots", snapshots)
+            pulumi.set(__self__, "snapshots", snapshots)
         if statuses is not None:
-            _setter("statuses", statuses)
+            pulumi.set(__self__, "statuses", statuses)
         if storage_class_suffix is not None:
-            _setter("storage_class_suffix", storage_class_suffix)
+            pulumi.set(__self__, "storage_class_suffix", storage_class_suffix)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
         if volumeset_link is not None:
-            _setter("volumeset_link", volumeset_link)
+            pulumi.set(__self__, "volumeset_link", volumeset_link)
 
     @property
     @pulumi.getter
@@ -519,14 +436,14 @@ class VolumeSet(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 autoscaling: Optional[pulumi.Input[pulumi.InputType['VolumeSetAutoscalingArgs']]] = None,
+                 autoscaling: Optional[pulumi.Input[Union['VolumeSetAutoscalingArgs', 'VolumeSetAutoscalingArgsDict']]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  file_system_type: Optional[pulumi.Input[str]] = None,
                  gvc: Optional[pulumi.Input[str]] = None,
                  initial_capacity: Optional[pulumi.Input[int]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  performance_class: Optional[pulumi.Input[str]] = None,
-                 snapshots: Optional[pulumi.Input[pulumi.InputType['VolumeSetSnapshotsArgs']]] = None,
+                 snapshots: Optional[pulumi.Input[Union['VolumeSetSnapshotsArgs', 'VolumeSetSnapshotsArgsDict']]] = None,
                  storage_class_suffix: Optional[pulumi.Input[str]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
@@ -534,7 +451,7 @@ class VolumeSet(pulumi.CustomResource):
         Create a VolumeSet resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[pulumi.InputType['VolumeSetAutoscalingArgs']] autoscaling: Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
+        :param pulumi.Input[Union['VolumeSetAutoscalingArgs', 'VolumeSetAutoscalingArgsDict']] autoscaling: Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
         :param pulumi.Input[str] description: Description of the Volume Set.
         :param pulumi.Input[str] file_system_type: Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
         :param pulumi.Input[str] gvc: Name of the associated GVC.
@@ -543,7 +460,7 @@ class VolumeSet(pulumi.CustomResource):
         :param pulumi.Input[str] name: Name of the Volume Set.
         :param pulumi.Input[str] performance_class: Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
                `high-throughput-ssd`
-        :param pulumi.Input[pulumi.InputType['VolumeSetSnapshotsArgs']] snapshots: Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
+        :param pulumi.Input[Union['VolumeSetSnapshotsArgs', 'VolumeSetSnapshotsArgsDict']] snapshots: Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
         :param pulumi.Input[str] storage_class_suffix: For self-hosted locations only. The storage class used for volumes in this set will be
                {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
                {performanceClass}-{fileSystemType}
@@ -567,23 +484,19 @@ class VolumeSet(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            VolumeSetArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 autoscaling: Optional[pulumi.Input[pulumi.InputType['VolumeSetAutoscalingArgs']]] = None,
+                 autoscaling: Optional[pulumi.Input[Union['VolumeSetAutoscalingArgs', 'VolumeSetAutoscalingArgsDict']]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  file_system_type: Optional[pulumi.Input[str]] = None,
                  gvc: Optional[pulumi.Input[str]] = None,
                  initial_capacity: Optional[pulumi.Input[int]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  performance_class: Optional[pulumi.Input[str]] = None,
-                 snapshots: Optional[pulumi.Input[pulumi.InputType['VolumeSetSnapshotsArgs']]] = None,
+                 snapshots: Optional[pulumi.Input[Union['VolumeSetSnapshotsArgs', 'VolumeSetSnapshotsArgsDict']]] = None,
                  storage_class_suffix: Optional[pulumi.Input[str]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
@@ -595,11 +508,6 @@ class VolumeSet(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = VolumeSetArgs.__new__(VolumeSetArgs)
 
-            if autoscaling is not None and not isinstance(autoscaling, VolumeSetAutoscalingArgs):
-                autoscaling = autoscaling or {}
-                def _setter(key, value):
-                    autoscaling[key] = value
-                VolumeSetAutoscalingArgs._configure(_setter, **autoscaling)
             __props__.__dict__["autoscaling"] = autoscaling
             __props__.__dict__["description"] = description
             __props__.__dict__["file_system_type"] = file_system_type
@@ -613,11 +521,6 @@ class VolumeSet(pulumi.CustomResource):
             if performance_class is None and not opts.urn:
                 raise TypeError("Missing required property 'performance_class'")
             __props__.__dict__["performance_class"] = performance_class
-            if snapshots is not None and not isinstance(snapshots, VolumeSetSnapshotsArgs):
-                snapshots = snapshots or {}
-                def _setter(key, value):
-                    snapshots[key] = value
-                VolumeSetSnapshotsArgs._configure(_setter, **snapshots)
             __props__.__dict__["snapshots"] = snapshots
             __props__.__dict__["storage_class_suffix"] = storage_class_suffix
             __props__.__dict__["tags"] = tags
@@ -635,7 +538,7 @@ class VolumeSet(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            autoscaling: Optional[pulumi.Input[pulumi.InputType['VolumeSetAutoscalingArgs']]] = None,
+            autoscaling: Optional[pulumi.Input[Union['VolumeSetAutoscalingArgs', 'VolumeSetAutoscalingArgsDict']]] = None,
             cpln_id: Optional[pulumi.Input[str]] = None,
             description: Optional[pulumi.Input[str]] = None,
             file_system_type: Optional[pulumi.Input[str]] = None,
@@ -644,8 +547,8 @@ class VolumeSet(pulumi.CustomResource):
             name: Optional[pulumi.Input[str]] = None,
             performance_class: Optional[pulumi.Input[str]] = None,
             self_link: Optional[pulumi.Input[str]] = None,
-            snapshots: Optional[pulumi.Input[pulumi.InputType['VolumeSetSnapshotsArgs']]] = None,
-            statuses: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['VolumeSetStatusArgs']]]]] = None,
+            snapshots: Optional[pulumi.Input[Union['VolumeSetSnapshotsArgs', 'VolumeSetSnapshotsArgsDict']]] = None,
+            statuses: Optional[pulumi.Input[Sequence[pulumi.Input[Union['VolumeSetStatusArgs', 'VolumeSetStatusArgsDict']]]]] = None,
             storage_class_suffix: Optional[pulumi.Input[str]] = None,
             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             volumeset_link: Optional[pulumi.Input[str]] = None) -> 'VolumeSet':
@@ -656,7 +559,7 @@ class VolumeSet(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[pulumi.InputType['VolumeSetAutoscalingArgs']] autoscaling: Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
+        :param pulumi.Input[Union['VolumeSetAutoscalingArgs', 'VolumeSetAutoscalingArgsDict']] autoscaling: Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
         :param pulumi.Input[str] cpln_id: ID, in GUID format, of the Volume Set.
         :param pulumi.Input[str] description: Description of the Volume Set.
         :param pulumi.Input[str] file_system_type: Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`
@@ -667,8 +570,8 @@ class VolumeSet(pulumi.CustomResource):
         :param pulumi.Input[str] performance_class: Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
                `high-throughput-ssd`
         :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
-        :param pulumi.Input[pulumi.InputType['VolumeSetSnapshotsArgs']] snapshots: Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['VolumeSetStatusArgs']]]] statuses: Status of the Volume Set.
+        :param pulumi.Input[Union['VolumeSetSnapshotsArgs', 'VolumeSetSnapshotsArgsDict']] snapshots: Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['VolumeSetStatusArgs', 'VolumeSetStatusArgsDict']]]] statuses: Status of the Volume Set.
         :param pulumi.Input[str] storage_class_suffix: For self-hosted locations only. The storage class used for volumes in this set will be
                {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
                {performanceClass}-{fileSystemType}

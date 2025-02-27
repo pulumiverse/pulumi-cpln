@@ -21,12 +21,19 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("nodePools")]
         private InputList<Inputs.Mk8sOblivusProviderNodePoolGetArgs>? _nodePools;
+
+        /// <summary>
+        /// List of node pools.
+        /// </summary>
         public InputList<Inputs.Mk8sOblivusProviderNodePoolGetArgs> NodePools
         {
             get => _nodePools ?? (_nodePools = new InputList<Inputs.Mk8sOblivusProviderNodePoolGetArgs>());
             set => _nodePools = value;
         }
 
+        /// <summary>
+        /// Optional shell script that will be run before K8s is installed. Supports SSM.
+        /// </summary>
         [Input("preInstallScript")]
         public Input<string>? PreInstallScript { get; set; }
 
@@ -38,6 +45,9 @@ namespace Pulumiverse.Cpln.Inputs
             set => _sshKeys = value;
         }
 
+        /// <summary>
+        /// Link to a secret holding Oblivus access key.
+        /// </summary>
         [Input("tokenSecretLink", required: true)]
         public Input<string> TokenSecretLink { get; set; } = null!;
 

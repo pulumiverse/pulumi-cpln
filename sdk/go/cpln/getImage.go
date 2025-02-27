@@ -8,7 +8,6 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
@@ -117,15 +116,11 @@ type GetImageResult struct {
 }
 
 func GetImageOutput(ctx *pulumi.Context, args GetImageOutputArgs, opts ...pulumi.InvokeOption) GetImageResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetImageResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (GetImageResultOutput, error) {
 			args := v.(GetImageArgs)
-			r, err := GetImage(ctx, &args, opts...)
-			var s GetImageResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("cpln:index/getImage:getImage", args, GetImageResultOutput{}, options).(GetImageResultOutput), nil
 		}).(GetImageResultOutput)
 }
 
@@ -151,12 +146,6 @@ func (o GetImageResultOutput) ToGetImageResultOutput() GetImageResultOutput {
 
 func (o GetImageResultOutput) ToGetImageResultOutputWithContext(ctx context.Context) GetImageResultOutput {
 	return o
-}
-
-func (o GetImageResultOutput) ToOutput(ctx context.Context) pulumix.Output[GetImageResult] {
-	return pulumix.Output[GetImageResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o GetImageResultOutput) CplnId() pulumi.StringOutput {

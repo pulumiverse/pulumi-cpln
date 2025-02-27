@@ -15,6 +15,9 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class DomainRouteHeadersRequest
     {
         public readonly bool? _sentinel;
+        /// <summary>
+        /// Sets or overrides headers to all http requests for this route.
+        /// </summary>
         public readonly ImmutableDictionary<string, string>? Set;
 
         [OutputConstructor]

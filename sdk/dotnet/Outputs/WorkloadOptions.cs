@@ -14,10 +14,25 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadOptions
     {
+        /// <summary>
+        /// Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+        /// </summary>
         public readonly Outputs.WorkloadOptionsAutoscaling? Autoscaling;
+        /// <summary>
+        /// Capacity AI. Default: `true`.
+        /// </summary>
         public readonly bool? CapacityAi;
+        /// <summary>
+        /// Debug mode. Default: `false`
+        /// </summary>
         public readonly bool? Debug;
+        /// <summary>
+        /// Workload suspend. Default: `false`
+        /// </summary>
         public readonly bool? Suspend;
+        /// <summary>
+        /// Timeout in seconds. Default: `5`.
+        /// </summary>
         public readonly int? TimeoutSeconds;
 
         [OutputConstructor]

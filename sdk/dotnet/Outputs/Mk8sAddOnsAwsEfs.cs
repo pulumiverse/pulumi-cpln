@@ -15,6 +15,9 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class Mk8sAddOnsAwsEfs
     {
         public readonly bool? _sentinel;
+        /// <summary>
+        /// Use this role for EFS interaction.
+        /// </summary>
         public readonly string? RoleArn;
 
         [OutputConstructor]

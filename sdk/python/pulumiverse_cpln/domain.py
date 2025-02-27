@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -28,30 +33,13 @@ class DomainArgs:
                DNS. Create and Update will fail if the required DNS entries cannot be validated.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
-        DomainArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            spec=spec,
-            description=description,
-            name=name,
-            tags=tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             spec: pulumi.Input['DomainSpecArgs'],
-             description: Optional[pulumi.Input[str]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("spec", spec)
+        pulumi.set(__self__, "spec", spec)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
 
     @property
     @pulumi.getter
@@ -123,47 +111,20 @@ class _DomainState:
         :param pulumi.Input['DomainSpecArgs'] spec: Domain specification.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
-        _DomainState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            cpln_id=cpln_id,
-            description=description,
-            name=name,
-            self_link=self_link,
-            spec=spec,
-            statuses=statuses,
-            tags=tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             cpln_id: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             self_link: Optional[pulumi.Input[str]] = None,
-             spec: Optional[pulumi.Input['DomainSpecArgs']] = None,
-             statuses: Optional[pulumi.Input[Sequence[pulumi.Input['DomainStatusArgs']]]] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'cplnId' in kwargs:
-            cpln_id = kwargs['cplnId']
-        if 'selfLink' in kwargs:
-            self_link = kwargs['selfLink']
-
         if cpln_id is not None:
-            _setter("cpln_id", cpln_id)
+            pulumi.set(__self__, "cpln_id", cpln_id)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if self_link is not None:
-            _setter("self_link", self_link)
+            pulumi.set(__self__, "self_link", self_link)
         if spec is not None:
-            _setter("spec", spec)
+            pulumi.set(__self__, "spec", spec)
         if statuses is not None:
-            _setter("statuses", statuses)
+            pulumi.set(__self__, "statuses", statuses)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
 
     @property
     @pulumi.getter(name="cplnId")
@@ -255,7 +216,7 @@ class Domain(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 spec: Optional[pulumi.Input[pulumi.InputType['DomainSpecArgs']]] = None,
+                 spec: Optional[pulumi.Input[Union['DomainSpecArgs', 'DomainSpecArgsDict']]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
         """
@@ -265,7 +226,7 @@ class Domain(pulumi.CustomResource):
         :param pulumi.Input[str] description: Description of the domain name.
         :param pulumi.Input[str] name: Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with
                DNS. Create and Update will fail if the required DNS entries cannot be validated.
-        :param pulumi.Input[pulumi.InputType['DomainSpecArgs']] spec: Domain specification.
+        :param pulumi.Input[Union['DomainSpecArgs', 'DomainSpecArgsDict']] spec: Domain specification.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         ...
@@ -286,10 +247,6 @@ class Domain(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            DomainArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
@@ -297,7 +254,7 @@ class Domain(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 spec: Optional[pulumi.Input[pulumi.InputType['DomainSpecArgs']]] = None,
+                 spec: Optional[pulumi.Input[Union['DomainSpecArgs', 'DomainSpecArgsDict']]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -310,11 +267,6 @@ class Domain(pulumi.CustomResource):
 
             __props__.__dict__["description"] = description
             __props__.__dict__["name"] = name
-            if spec is not None and not isinstance(spec, DomainSpecArgs):
-                spec = spec or {}
-                def _setter(key, value):
-                    spec[key] = value
-                DomainSpecArgs._configure(_setter, **spec)
             if spec is None and not opts.urn:
                 raise TypeError("Missing required property 'spec'")
             __props__.__dict__["spec"] = spec
@@ -336,8 +288,8 @@ class Domain(pulumi.CustomResource):
             description: Optional[pulumi.Input[str]] = None,
             name: Optional[pulumi.Input[str]] = None,
             self_link: Optional[pulumi.Input[str]] = None,
-            spec: Optional[pulumi.Input[pulumi.InputType['DomainSpecArgs']]] = None,
-            statuses: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['DomainStatusArgs']]]]] = None,
+            spec: Optional[pulumi.Input[Union['DomainSpecArgs', 'DomainSpecArgsDict']]] = None,
+            statuses: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DomainStatusArgs', 'DomainStatusArgsDict']]]]] = None,
             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None) -> 'Domain':
         """
         Get an existing Domain resource's state with the given name, id, and optional extra
@@ -351,7 +303,7 @@ class Domain(pulumi.CustomResource):
         :param pulumi.Input[str] name: Domain name. (e.g., `example.com` / `test.example.com`). Control Plane will validate the existence of the domain with
                DNS. Create and Update will fail if the required DNS entries cannot be validated.
         :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
-        :param pulumi.Input[pulumi.InputType['DomainSpecArgs']] spec: Domain specification.
+        :param pulumi.Input[Union['DomainSpecArgs', 'DomainSpecArgsDict']] spec: Domain specification.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))

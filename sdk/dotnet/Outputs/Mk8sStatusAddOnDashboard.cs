@@ -14,6 +14,9 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sStatusAddOnDashboard
     {
+        /// <summary>
+        /// Access to dashboard.
+        /// </summary>
         public readonly string? Url;
 
         [OutputConstructor]

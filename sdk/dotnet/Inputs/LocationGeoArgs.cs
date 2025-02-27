@@ -13,21 +13,39 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class LocationGeoArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// City.
+        /// </summary>
         [Input("city")]
         public Input<string>? City { get; set; }
 
+        /// <summary>
+        /// Continent.
+        /// </summary>
         [Input("continent")]
         public Input<string>? Continent { get; set; }
 
+        /// <summary>
+        /// Country.
+        /// </summary>
         [Input("country")]
         public Input<string>? Country { get; set; }
 
+        /// <summary>
+        /// Latitude.
+        /// </summary>
         [Input("lat")]
         public Input<double>? Lat { get; set; }
 
+        /// <summary>
+        /// Longitude.
+        /// </summary>
         [Input("lon")]
         public Input<double>? Lon { get; set; }
 
+        /// <summary>
+        /// State.
+        /// </summary>
         [Input("state")]
         public Input<string>? State { get; set; }
 

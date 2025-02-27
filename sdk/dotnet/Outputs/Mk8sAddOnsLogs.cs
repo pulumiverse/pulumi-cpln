@@ -15,6 +15,9 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class Mk8sAddOnsLogs
     {
         public readonly bool? _sentinel;
+        /// <summary>
+        /// Collect k8s audit log as log events.
+        /// </summary>
         public readonly bool? AuditEnabled;
         public readonly string? ExcludeNamespaces;
         public readonly string? IncludeNamespaces;

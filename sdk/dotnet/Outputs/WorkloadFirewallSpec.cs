@@ -15,7 +15,13 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class WorkloadFirewallSpec
     {
         public readonly bool? _sentinel;
+        /// <summary>
+        /// The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
+        /// </summary>
         public readonly Outputs.WorkloadFirewallSpecExternal? External;
+        /// <summary>
+        /// The internal firewall is used to control access between workloads.
+        /// </summary>
         public readonly Outputs.WorkloadFirewallSpecInternal? Internal;
 
         [OutputConstructor]

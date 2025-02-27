@@ -14,8 +14,17 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class GetSecretKeypairResult
     {
+        /// <summary>
+        /// Passphrase for private key.
+        /// </summary>
         public readonly string? Passphrase;
+        /// <summary>
+        /// Public Key.
+        /// </summary>
         public readonly string? PublicKey;
+        /// <summary>
+        /// Secret/Private Key.
+        /// </summary>
         public readonly string SecretKey;
 
         [OutputConstructor]

@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -40,76 +45,33 @@ class GvcArgs:
                private image repository referenced by Workloads within the GVC.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
-        GvcArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            controlplane_tracing=controlplane_tracing,
-            description=description,
-            domain=domain,
-            env=env,
-            lightstep_tracing=lightstep_tracing,
-            load_balancer=load_balancer,
-            locations=locations,
-            name=name,
-            otel_tracing=otel_tracing,
-            pull_secrets=pull_secrets,
-            sidecar=sidecar,
-            tags=tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             controlplane_tracing: Optional[pulumi.Input['GvcControlplaneTracingArgs']] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             domain: Optional[pulumi.Input[str]] = None,
-             env: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             lightstep_tracing: Optional[pulumi.Input['GvcLightstepTracingArgs']] = None,
-             load_balancer: Optional[pulumi.Input['GvcLoadBalancerArgs']] = None,
-             locations: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             otel_tracing: Optional[pulumi.Input['GvcOtelTracingArgs']] = None,
-             pull_secrets: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             sidecar: Optional[pulumi.Input['GvcSidecarArgs']] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'controlplaneTracing' in kwargs:
-            controlplane_tracing = kwargs['controlplaneTracing']
-        if 'lightstepTracing' in kwargs:
-            lightstep_tracing = kwargs['lightstepTracing']
-        if 'loadBalancer' in kwargs:
-            load_balancer = kwargs['loadBalancer']
-        if 'otelTracing' in kwargs:
-            otel_tracing = kwargs['otelTracing']
-        if 'pullSecrets' in kwargs:
-            pull_secrets = kwargs['pullSecrets']
-
         if controlplane_tracing is not None:
-            _setter("controlplane_tracing", controlplane_tracing)
+            pulumi.set(__self__, "controlplane_tracing", controlplane_tracing)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if domain is not None:
             warnings.warn("""Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.""", DeprecationWarning)
             pulumi.log.warn("""domain is deprecated: Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.""")
         if domain is not None:
-            _setter("domain", domain)
+            pulumi.set(__self__, "domain", domain)
         if env is not None:
-            _setter("env", env)
+            pulumi.set(__self__, "env", env)
         if lightstep_tracing is not None:
-            _setter("lightstep_tracing", lightstep_tracing)
+            pulumi.set(__self__, "lightstep_tracing", lightstep_tracing)
         if load_balancer is not None:
-            _setter("load_balancer", load_balancer)
+            pulumi.set(__self__, "load_balancer", load_balancer)
         if locations is not None:
-            _setter("locations", locations)
+            pulumi.set(__self__, "locations", locations)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if otel_tracing is not None:
-            _setter("otel_tracing", otel_tracing)
+            pulumi.set(__self__, "otel_tracing", otel_tracing)
         if pull_secrets is not None:
-            _setter("pull_secrets", pull_secrets)
+            pulumi.set(__self__, "pull_secrets", pull_secrets)
         if sidecar is not None:
-            _setter("sidecar", sidecar)
+            pulumi.set(__self__, "sidecar", sidecar)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
 
     @property
     @pulumi.getter(name="controlplaneTracing")
@@ -134,13 +96,11 @@ class GvcArgs:
 
     @property
     @pulumi.getter
+    @_utilities.deprecated("""Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.""")
     def domain(self) -> Optional[pulumi.Input[str]]:
         """
         Custom domain name used by associated workloads.
         """
-        warnings.warn("""Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.""", DeprecationWarning)
-        pulumi.log.warn("""domain is deprecated: Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.""")
-
         return pulumi.get(self, "domain")
 
     @domain.setter
@@ -281,92 +241,39 @@ class _GvcState:
         :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
-        _GvcState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            alias=alias,
-            controlplane_tracing=controlplane_tracing,
-            cpln_id=cpln_id,
-            description=description,
-            domain=domain,
-            env=env,
-            lightstep_tracing=lightstep_tracing,
-            load_balancer=load_balancer,
-            locations=locations,
-            name=name,
-            otel_tracing=otel_tracing,
-            pull_secrets=pull_secrets,
-            self_link=self_link,
-            sidecar=sidecar,
-            tags=tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             alias: Optional[pulumi.Input[str]] = None,
-             controlplane_tracing: Optional[pulumi.Input['GvcControlplaneTracingArgs']] = None,
-             cpln_id: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             domain: Optional[pulumi.Input[str]] = None,
-             env: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             lightstep_tracing: Optional[pulumi.Input['GvcLightstepTracingArgs']] = None,
-             load_balancer: Optional[pulumi.Input['GvcLoadBalancerArgs']] = None,
-             locations: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             otel_tracing: Optional[pulumi.Input['GvcOtelTracingArgs']] = None,
-             pull_secrets: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             self_link: Optional[pulumi.Input[str]] = None,
-             sidecar: Optional[pulumi.Input['GvcSidecarArgs']] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'controlplaneTracing' in kwargs:
-            controlplane_tracing = kwargs['controlplaneTracing']
-        if 'cplnId' in kwargs:
-            cpln_id = kwargs['cplnId']
-        if 'lightstepTracing' in kwargs:
-            lightstep_tracing = kwargs['lightstepTracing']
-        if 'loadBalancer' in kwargs:
-            load_balancer = kwargs['loadBalancer']
-        if 'otelTracing' in kwargs:
-            otel_tracing = kwargs['otelTracing']
-        if 'pullSecrets' in kwargs:
-            pull_secrets = kwargs['pullSecrets']
-        if 'selfLink' in kwargs:
-            self_link = kwargs['selfLink']
-
         if alias is not None:
-            _setter("alias", alias)
+            pulumi.set(__self__, "alias", alias)
         if controlplane_tracing is not None:
-            _setter("controlplane_tracing", controlplane_tracing)
+            pulumi.set(__self__, "controlplane_tracing", controlplane_tracing)
         if cpln_id is not None:
-            _setter("cpln_id", cpln_id)
+            pulumi.set(__self__, "cpln_id", cpln_id)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if domain is not None:
             warnings.warn("""Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.""", DeprecationWarning)
             pulumi.log.warn("""domain is deprecated: Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.""")
         if domain is not None:
-            _setter("domain", domain)
+            pulumi.set(__self__, "domain", domain)
         if env is not None:
-            _setter("env", env)
+            pulumi.set(__self__, "env", env)
         if lightstep_tracing is not None:
-            _setter("lightstep_tracing", lightstep_tracing)
+            pulumi.set(__self__, "lightstep_tracing", lightstep_tracing)
         if load_balancer is not None:
-            _setter("load_balancer", load_balancer)
+            pulumi.set(__self__, "load_balancer", load_balancer)
         if locations is not None:
-            _setter("locations", locations)
+            pulumi.set(__self__, "locations", locations)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if otel_tracing is not None:
-            _setter("otel_tracing", otel_tracing)
+            pulumi.set(__self__, "otel_tracing", otel_tracing)
         if pull_secrets is not None:
-            _setter("pull_secrets", pull_secrets)
+            pulumi.set(__self__, "pull_secrets", pull_secrets)
         if self_link is not None:
-            _setter("self_link", self_link)
+            pulumi.set(__self__, "self_link", self_link)
         if sidecar is not None:
-            _setter("sidecar", sidecar)
+            pulumi.set(__self__, "sidecar", sidecar)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
 
     @property
     @pulumi.getter
@@ -415,13 +322,11 @@ class _GvcState:
 
     @property
     @pulumi.getter
+    @_utilities.deprecated("""Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.""")
     def domain(self) -> Optional[pulumi.Input[str]]:
         """
         Custom domain name used by associated workloads.
         """
-        warnings.warn("""Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.""", DeprecationWarning)
-        pulumi.log.warn("""domain is deprecated: Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.""")
-
         return pulumi.get(self, "domain")
 
     @domain.setter
@@ -546,17 +451,17 @@ class Gvc(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 controlplane_tracing: Optional[pulumi.Input[pulumi.InputType['GvcControlplaneTracingArgs']]] = None,
+                 controlplane_tracing: Optional[pulumi.Input[Union['GvcControlplaneTracingArgs', 'GvcControlplaneTracingArgsDict']]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  domain: Optional[pulumi.Input[str]] = None,
                  env: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 lightstep_tracing: Optional[pulumi.Input[pulumi.InputType['GvcLightstepTracingArgs']]] = None,
-                 load_balancer: Optional[pulumi.Input[pulumi.InputType['GvcLoadBalancerArgs']]] = None,
+                 lightstep_tracing: Optional[pulumi.Input[Union['GvcLightstepTracingArgs', 'GvcLightstepTracingArgsDict']]] = None,
+                 load_balancer: Optional[pulumi.Input[Union['GvcLoadBalancerArgs', 'GvcLoadBalancerArgsDict']]] = None,
                  locations: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 otel_tracing: Optional[pulumi.Input[pulumi.InputType['GvcOtelTracingArgs']]] = None,
+                 otel_tracing: Optional[pulumi.Input[Union['GvcOtelTracingArgs', 'GvcOtelTracingArgsDict']]] = None,
                  pull_secrets: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                 sidecar: Optional[pulumi.Input[pulumi.InputType['GvcSidecarArgs']]] = None,
+                 sidecar: Optional[pulumi.Input[Union['GvcSidecarArgs', 'GvcSidecarArgsDict']]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
         """
@@ -566,7 +471,7 @@ class Gvc(pulumi.CustomResource):
         :param pulumi.Input[str] description: Description of the GVC.
         :param pulumi.Input[str] domain: Custom domain name used by associated workloads.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] env: Key-value array of resource env variables.
-        :param pulumi.Input[pulumi.InputType['GvcLoadBalancerArgs']] load_balancer: Dedicated load balancer configuration.
+        :param pulumi.Input[Union['GvcLoadBalancerArgs', 'GvcLoadBalancerArgsDict']] load_balancer: Dedicated load balancer configuration.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] locations: A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
         :param pulumi.Input[str] name: Name of the GVC.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] pull_secrets: A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
@@ -591,26 +496,22 @@ class Gvc(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            GvcArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 controlplane_tracing: Optional[pulumi.Input[pulumi.InputType['GvcControlplaneTracingArgs']]] = None,
+                 controlplane_tracing: Optional[pulumi.Input[Union['GvcControlplaneTracingArgs', 'GvcControlplaneTracingArgsDict']]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  domain: Optional[pulumi.Input[str]] = None,
                  env: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 lightstep_tracing: Optional[pulumi.Input[pulumi.InputType['GvcLightstepTracingArgs']]] = None,
-                 load_balancer: Optional[pulumi.Input[pulumi.InputType['GvcLoadBalancerArgs']]] = None,
+                 lightstep_tracing: Optional[pulumi.Input[Union['GvcLightstepTracingArgs', 'GvcLightstepTracingArgsDict']]] = None,
+                 load_balancer: Optional[pulumi.Input[Union['GvcLoadBalancerArgs', 'GvcLoadBalancerArgsDict']]] = None,
                  locations: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 otel_tracing: Optional[pulumi.Input[pulumi.InputType['GvcOtelTracingArgs']]] = None,
+                 otel_tracing: Optional[pulumi.Input[Union['GvcOtelTracingArgs', 'GvcOtelTracingArgsDict']]] = None,
                  pull_secrets: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-                 sidecar: Optional[pulumi.Input[pulumi.InputType['GvcSidecarArgs']]] = None,
+                 sidecar: Optional[pulumi.Input[Union['GvcSidecarArgs', 'GvcSidecarArgsDict']]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -621,41 +522,16 @@ class Gvc(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = GvcArgs.__new__(GvcArgs)
 
-            if controlplane_tracing is not None and not isinstance(controlplane_tracing, GvcControlplaneTracingArgs):
-                controlplane_tracing = controlplane_tracing or {}
-                def _setter(key, value):
-                    controlplane_tracing[key] = value
-                GvcControlplaneTracingArgs._configure(_setter, **controlplane_tracing)
             __props__.__dict__["controlplane_tracing"] = controlplane_tracing
             __props__.__dict__["description"] = description
             __props__.__dict__["domain"] = domain
             __props__.__dict__["env"] = env
-            if lightstep_tracing is not None and not isinstance(lightstep_tracing, GvcLightstepTracingArgs):
-                lightstep_tracing = lightstep_tracing or {}
-                def _setter(key, value):
-                    lightstep_tracing[key] = value
-                GvcLightstepTracingArgs._configure(_setter, **lightstep_tracing)
             __props__.__dict__["lightstep_tracing"] = lightstep_tracing
-            if load_balancer is not None and not isinstance(load_balancer, GvcLoadBalancerArgs):
-                load_balancer = load_balancer or {}
-                def _setter(key, value):
-                    load_balancer[key] = value
-                GvcLoadBalancerArgs._configure(_setter, **load_balancer)
             __props__.__dict__["load_balancer"] = load_balancer
             __props__.__dict__["locations"] = locations
             __props__.__dict__["name"] = name
-            if otel_tracing is not None and not isinstance(otel_tracing, GvcOtelTracingArgs):
-                otel_tracing = otel_tracing or {}
-                def _setter(key, value):
-                    otel_tracing[key] = value
-                GvcOtelTracingArgs._configure(_setter, **otel_tracing)
             __props__.__dict__["otel_tracing"] = otel_tracing
             __props__.__dict__["pull_secrets"] = pull_secrets
-            if sidecar is not None and not isinstance(sidecar, GvcSidecarArgs):
-                sidecar = sidecar or {}
-                def _setter(key, value):
-                    sidecar[key] = value
-                GvcSidecarArgs._configure(_setter, **sidecar)
             __props__.__dict__["sidecar"] = sidecar
             __props__.__dict__["tags"] = tags
             __props__.__dict__["alias"] = None
@@ -672,19 +548,19 @@ class Gvc(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             alias: Optional[pulumi.Input[str]] = None,
-            controlplane_tracing: Optional[pulumi.Input[pulumi.InputType['GvcControlplaneTracingArgs']]] = None,
+            controlplane_tracing: Optional[pulumi.Input[Union['GvcControlplaneTracingArgs', 'GvcControlplaneTracingArgsDict']]] = None,
             cpln_id: Optional[pulumi.Input[str]] = None,
             description: Optional[pulumi.Input[str]] = None,
             domain: Optional[pulumi.Input[str]] = None,
             env: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-            lightstep_tracing: Optional[pulumi.Input[pulumi.InputType['GvcLightstepTracingArgs']]] = None,
-            load_balancer: Optional[pulumi.Input[pulumi.InputType['GvcLoadBalancerArgs']]] = None,
+            lightstep_tracing: Optional[pulumi.Input[Union['GvcLightstepTracingArgs', 'GvcLightstepTracingArgsDict']]] = None,
+            load_balancer: Optional[pulumi.Input[Union['GvcLoadBalancerArgs', 'GvcLoadBalancerArgsDict']]] = None,
             locations: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             name: Optional[pulumi.Input[str]] = None,
-            otel_tracing: Optional[pulumi.Input[pulumi.InputType['GvcOtelTracingArgs']]] = None,
+            otel_tracing: Optional[pulumi.Input[Union['GvcOtelTracingArgs', 'GvcOtelTracingArgsDict']]] = None,
             pull_secrets: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             self_link: Optional[pulumi.Input[str]] = None,
-            sidecar: Optional[pulumi.Input[pulumi.InputType['GvcSidecarArgs']]] = None,
+            sidecar: Optional[pulumi.Input[Union['GvcSidecarArgs', 'GvcSidecarArgsDict']]] = None,
             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None) -> 'Gvc':
         """
         Get an existing Gvc resource's state with the given name, id, and optional extra
@@ -698,7 +574,7 @@ class Gvc(pulumi.CustomResource):
         :param pulumi.Input[str] description: Description of the GVC.
         :param pulumi.Input[str] domain: Custom domain name used by associated workloads.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] env: Key-value array of resource env variables.
-        :param pulumi.Input[pulumi.InputType['GvcLoadBalancerArgs']] load_balancer: Dedicated load balancer configuration.
+        :param pulumi.Input[Union['GvcLoadBalancerArgs', 'GvcLoadBalancerArgsDict']] load_balancer: Dedicated load balancer configuration.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] locations: A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
         :param pulumi.Input[str] name: Name of the GVC.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] pull_secrets: A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
@@ -758,13 +634,11 @@ class Gvc(pulumi.CustomResource):
 
     @property
     @pulumi.getter
+    @_utilities.deprecated("""Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.""")
     def domain(self) -> pulumi.Output[Optional[str]]:
         """
         Custom domain name used by associated workloads.
         """
-        warnings.warn("""Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.""", DeprecationWarning)
-        pulumi.log.warn("""domain is deprecated: Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.""")
-
         return pulumi.get(self, "domain")
 
     @property

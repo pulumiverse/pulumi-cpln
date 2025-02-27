@@ -15,6 +15,9 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class Mk8sAddOnsAwsElb
     {
         public readonly bool? _sentinel;
+        /// <summary>
+        /// Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.
+        /// </summary>
         public readonly string? RoleArn;
 
         [OutputConstructor]

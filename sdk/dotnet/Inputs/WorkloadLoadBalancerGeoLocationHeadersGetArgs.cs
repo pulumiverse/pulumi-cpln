@@ -13,15 +13,27 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadLoadBalancerGeoLocationHeadersGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The geo asn header.
+        /// </summary>
         [Input("asn")]
         public Input<string>? Asn { get; set; }
 
+        /// <summary>
+        /// The geo city header.
+        /// </summary>
         [Input("city")]
         public Input<string>? City { get; set; }
 
+        /// <summary>
+        /// The geo country header.
+        /// </summary>
         [Input("country")]
         public Input<string>? Country { get; set; }
 
+        /// <summary>
+        /// The geo region header.
+        /// </summary>
         [Input("region")]
         public Input<string>? Region { get; set; }
 

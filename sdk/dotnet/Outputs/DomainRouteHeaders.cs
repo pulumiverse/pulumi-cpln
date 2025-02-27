@@ -15,6 +15,9 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class DomainRouteHeaders
     {
         public readonly bool? _sentinel;
+        /// <summary>
+        /// Manipulates HTTP headers.
+        /// </summary>
         public readonly Outputs.DomainRouteHeadersRequest? Request;
 
         [OutputConstructor]

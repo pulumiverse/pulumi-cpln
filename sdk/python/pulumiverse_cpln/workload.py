@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -52,90 +57,35 @@ class WorkloadArgs:
                false.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
-        WorkloadArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            containers=containers,
-            gvc=gvc,
-            type=type,
-            description=description,
-            firewall_spec=firewall_spec,
-            identity_link=identity_link,
-            job=job,
-            load_balancer=load_balancer,
-            local_options=local_options,
-            name=name,
-            options=options,
-            rollout_options=rollout_options,
-            security_options=security_options,
-            sidecar=sidecar,
-            support_dynamic_tags=support_dynamic_tags,
-            tags=tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             containers: pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]],
-             gvc: pulumi.Input[str],
-             type: pulumi.Input[str],
-             description: Optional[pulumi.Input[str]] = None,
-             firewall_spec: Optional[pulumi.Input['WorkloadFirewallSpecArgs']] = None,
-             identity_link: Optional[pulumi.Input[str]] = None,
-             job: Optional[pulumi.Input['WorkloadJobArgs']] = None,
-             load_balancer: Optional[pulumi.Input['WorkloadLoadBalancerArgs']] = None,
-             local_options: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadLocalOptionArgs']]]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             options: Optional[pulumi.Input['WorkloadOptionsArgs']] = None,
-             rollout_options: Optional[pulumi.Input['WorkloadRolloutOptionsArgs']] = None,
-             security_options: Optional[pulumi.Input['WorkloadSecurityOptionsArgs']] = None,
-             sidecar: Optional[pulumi.Input['WorkloadSidecarArgs']] = None,
-             support_dynamic_tags: Optional[pulumi.Input[bool]] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'firewallSpec' in kwargs:
-            firewall_spec = kwargs['firewallSpec']
-        if 'identityLink' in kwargs:
-            identity_link = kwargs['identityLink']
-        if 'loadBalancer' in kwargs:
-            load_balancer = kwargs['loadBalancer']
-        if 'localOptions' in kwargs:
-            local_options = kwargs['localOptions']
-        if 'rolloutOptions' in kwargs:
-            rollout_options = kwargs['rolloutOptions']
-        if 'securityOptions' in kwargs:
-            security_options = kwargs['securityOptions']
-        if 'supportDynamicTags' in kwargs:
-            support_dynamic_tags = kwargs['supportDynamicTags']
-
-        _setter("containers", containers)
-        _setter("gvc", gvc)
-        _setter("type", type)
+        pulumi.set(__self__, "containers", containers)
+        pulumi.set(__self__, "gvc", gvc)
+        pulumi.set(__self__, "type", type)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if firewall_spec is not None:
-            _setter("firewall_spec", firewall_spec)
+            pulumi.set(__self__, "firewall_spec", firewall_spec)
         if identity_link is not None:
-            _setter("identity_link", identity_link)
+            pulumi.set(__self__, "identity_link", identity_link)
         if job is not None:
-            _setter("job", job)
+            pulumi.set(__self__, "job", job)
         if load_balancer is not None:
-            _setter("load_balancer", load_balancer)
+            pulumi.set(__self__, "load_balancer", load_balancer)
         if local_options is not None:
-            _setter("local_options", local_options)
+            pulumi.set(__self__, "local_options", local_options)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if options is not None:
-            _setter("options", options)
+            pulumi.set(__self__, "options", options)
         if rollout_options is not None:
-            _setter("rollout_options", rollout_options)
+            pulumi.set(__self__, "rollout_options", rollout_options)
         if security_options is not None:
-            _setter("security_options", security_options)
+            pulumi.set(__self__, "security_options", security_options)
         if sidecar is not None:
-            _setter("sidecar", sidecar)
+            pulumi.set(__self__, "sidecar", sidecar)
         if support_dynamic_tags is not None:
-            _setter("support_dynamic_tags", support_dynamic_tags)
+            pulumi.set(__self__, "support_dynamic_tags", support_dynamic_tags)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
 
     @property
     @pulumi.getter
@@ -370,109 +320,44 @@ class _WorkloadState:
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         :param pulumi.Input[str] type: Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
         """
-        _WorkloadState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            containers=containers,
-            cpln_id=cpln_id,
-            description=description,
-            firewall_spec=firewall_spec,
-            gvc=gvc,
-            identity_link=identity_link,
-            job=job,
-            load_balancer=load_balancer,
-            local_options=local_options,
-            name=name,
-            options=options,
-            rollout_options=rollout_options,
-            security_options=security_options,
-            self_link=self_link,
-            sidecar=sidecar,
-            statuses=statuses,
-            support_dynamic_tags=support_dynamic_tags,
-            tags=tags,
-            type=type,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             containers: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]]] = None,
-             cpln_id: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             firewall_spec: Optional[pulumi.Input['WorkloadFirewallSpecArgs']] = None,
-             gvc: Optional[pulumi.Input[str]] = None,
-             identity_link: Optional[pulumi.Input[str]] = None,
-             job: Optional[pulumi.Input['WorkloadJobArgs']] = None,
-             load_balancer: Optional[pulumi.Input['WorkloadLoadBalancerArgs']] = None,
-             local_options: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadLocalOptionArgs']]]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             options: Optional[pulumi.Input['WorkloadOptionsArgs']] = None,
-             rollout_options: Optional[pulumi.Input['WorkloadRolloutOptionsArgs']] = None,
-             security_options: Optional[pulumi.Input['WorkloadSecurityOptionsArgs']] = None,
-             self_link: Optional[pulumi.Input[str]] = None,
-             sidecar: Optional[pulumi.Input['WorkloadSidecarArgs']] = None,
-             statuses: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusArgs']]]] = None,
-             support_dynamic_tags: Optional[pulumi.Input[bool]] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             type: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'cplnId' in kwargs:
-            cpln_id = kwargs['cplnId']
-        if 'firewallSpec' in kwargs:
-            firewall_spec = kwargs['firewallSpec']
-        if 'identityLink' in kwargs:
-            identity_link = kwargs['identityLink']
-        if 'loadBalancer' in kwargs:
-            load_balancer = kwargs['loadBalancer']
-        if 'localOptions' in kwargs:
-            local_options = kwargs['localOptions']
-        if 'rolloutOptions' in kwargs:
-            rollout_options = kwargs['rolloutOptions']
-        if 'securityOptions' in kwargs:
-            security_options = kwargs['securityOptions']
-        if 'selfLink' in kwargs:
-            self_link = kwargs['selfLink']
-        if 'supportDynamicTags' in kwargs:
-            support_dynamic_tags = kwargs['supportDynamicTags']
-
         if containers is not None:
-            _setter("containers", containers)
+            pulumi.set(__self__, "containers", containers)
         if cpln_id is not None:
-            _setter("cpln_id", cpln_id)
+            pulumi.set(__self__, "cpln_id", cpln_id)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if firewall_spec is not None:
-            _setter("firewall_spec", firewall_spec)
+            pulumi.set(__self__, "firewall_spec", firewall_spec)
         if gvc is not None:
-            _setter("gvc", gvc)
+            pulumi.set(__self__, "gvc", gvc)
         if identity_link is not None:
-            _setter("identity_link", identity_link)
+            pulumi.set(__self__, "identity_link", identity_link)
         if job is not None:
-            _setter("job", job)
+            pulumi.set(__self__, "job", job)
         if load_balancer is not None:
-            _setter("load_balancer", load_balancer)
+            pulumi.set(__self__, "load_balancer", load_balancer)
         if local_options is not None:
-            _setter("local_options", local_options)
+            pulumi.set(__self__, "local_options", local_options)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if options is not None:
-            _setter("options", options)
+            pulumi.set(__self__, "options", options)
         if rollout_options is not None:
-            _setter("rollout_options", rollout_options)
+            pulumi.set(__self__, "rollout_options", rollout_options)
         if security_options is not None:
-            _setter("security_options", security_options)
+            pulumi.set(__self__, "security_options", security_options)
         if self_link is not None:
-            _setter("self_link", self_link)
+            pulumi.set(__self__, "self_link", self_link)
         if sidecar is not None:
-            _setter("sidecar", sidecar)
+            pulumi.set(__self__, "sidecar", sidecar)
         if statuses is not None:
-            _setter("statuses", statuses)
+            pulumi.set(__self__, "statuses", statuses)
         if support_dynamic_tags is not None:
-            _setter("support_dynamic_tags", support_dynamic_tags)
+            pulumi.set(__self__, "support_dynamic_tags", support_dynamic_tags)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
         if type is not None:
-            _setter("type", type)
+            pulumi.set(__self__, "type", type)
 
     @property
     @pulumi.getter
@@ -703,19 +588,19 @@ class Workload(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 containers: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['WorkloadContainerArgs']]]]] = None,
+                 containers: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadContainerArgs', 'WorkloadContainerArgsDict']]]]] = None,
                  description: Optional[pulumi.Input[str]] = None,
-                 firewall_spec: Optional[pulumi.Input[pulumi.InputType['WorkloadFirewallSpecArgs']]] = None,
+                 firewall_spec: Optional[pulumi.Input[Union['WorkloadFirewallSpecArgs', 'WorkloadFirewallSpecArgsDict']]] = None,
                  gvc: Optional[pulumi.Input[str]] = None,
                  identity_link: Optional[pulumi.Input[str]] = None,
-                 job: Optional[pulumi.Input[pulumi.InputType['WorkloadJobArgs']]] = None,
-                 load_balancer: Optional[pulumi.Input[pulumi.InputType['WorkloadLoadBalancerArgs']]] = None,
-                 local_options: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['WorkloadLocalOptionArgs']]]]] = None,
+                 job: Optional[pulumi.Input[Union['WorkloadJobArgs', 'WorkloadJobArgsDict']]] = None,
+                 load_balancer: Optional[pulumi.Input[Union['WorkloadLoadBalancerArgs', 'WorkloadLoadBalancerArgsDict']]] = None,
+                 local_options: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadLocalOptionArgs', 'WorkloadLocalOptionArgsDict']]]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 options: Optional[pulumi.Input[pulumi.InputType['WorkloadOptionsArgs']]] = None,
-                 rollout_options: Optional[pulumi.Input[pulumi.InputType['WorkloadRolloutOptionsArgs']]] = None,
-                 security_options: Optional[pulumi.Input[pulumi.InputType['WorkloadSecurityOptionsArgs']]] = None,
-                 sidecar: Optional[pulumi.Input[pulumi.InputType['WorkloadSidecarArgs']]] = None,
+                 options: Optional[pulumi.Input[Union['WorkloadOptionsArgs', 'WorkloadOptionsArgsDict']]] = None,
+                 rollout_options: Optional[pulumi.Input[Union['WorkloadRolloutOptionsArgs', 'WorkloadRolloutOptionsArgsDict']]] = None,
+                 security_options: Optional[pulumi.Input[Union['WorkloadSecurityOptionsArgs', 'WorkloadSecurityOptionsArgsDict']]] = None,
+                 sidecar: Optional[pulumi.Input[Union['WorkloadSidecarArgs', 'WorkloadSidecarArgsDict']]] = None,
                  support_dynamic_tags: Optional[pulumi.Input[bool]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  type: Optional[pulumi.Input[str]] = None,
@@ -724,19 +609,19 @@ class Workload(pulumi.CustomResource):
         Create a Workload resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['WorkloadContainerArgs']]]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['WorkloadContainerArgs', 'WorkloadContainerArgsDict']]]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
         :param pulumi.Input[str] description: Description of the Workload.
-        :param pulumi.Input[pulumi.InputType['WorkloadFirewallSpecArgs']] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+        :param pulumi.Input[Union['WorkloadFirewallSpecArgs', 'WorkloadFirewallSpecArgsDict']] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
                Access is restricted by default.
         :param pulumi.Input[str] gvc: Name of the associated GVC.
         :param pulumi.Input[str] identity_link: Full link to an Identity.
-        :param pulumi.Input[pulumi.InputType['WorkloadJobArgs']] job: [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+        :param pulumi.Input[Union['WorkloadJobArgs', 'WorkloadJobArgsDict']] job: [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
         :param pulumi.Input[str] name: Name of the Workload.
-        :param pulumi.Input[pulumi.InputType['WorkloadOptionsArgs']] options: Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+        :param pulumi.Input[Union['WorkloadOptionsArgs', 'WorkloadOptionsArgsDict']] options: Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
                characteristics of the workload.
-        :param pulumi.Input[pulumi.InputType['WorkloadRolloutOptionsArgs']] rollout_options: Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+        :param pulumi.Input[Union['WorkloadRolloutOptionsArgs', 'WorkloadRolloutOptionsArgsDict']] rollout_options: Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
                replicas, surge replicas, and scaling policies.
-        :param pulumi.Input[pulumi.InputType['WorkloadSecurityOptionsArgs']] security_options: Allows for the configuration of the `file system group id` and `geo location`
+        :param pulumi.Input[Union['WorkloadSecurityOptionsArgs', 'WorkloadSecurityOptionsArgsDict']] security_options: Allows for the configuration of the `file system group id` and `geo location`
         :param pulumi.Input[bool] support_dynamic_tags: Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
                false.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
@@ -760,28 +645,24 @@ class Workload(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            WorkloadArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 containers: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['WorkloadContainerArgs']]]]] = None,
+                 containers: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadContainerArgs', 'WorkloadContainerArgsDict']]]]] = None,
                  description: Optional[pulumi.Input[str]] = None,
-                 firewall_spec: Optional[pulumi.Input[pulumi.InputType['WorkloadFirewallSpecArgs']]] = None,
+                 firewall_spec: Optional[pulumi.Input[Union['WorkloadFirewallSpecArgs', 'WorkloadFirewallSpecArgsDict']]] = None,
                  gvc: Optional[pulumi.Input[str]] = None,
                  identity_link: Optional[pulumi.Input[str]] = None,
-                 job: Optional[pulumi.Input[pulumi.InputType['WorkloadJobArgs']]] = None,
-                 load_balancer: Optional[pulumi.Input[pulumi.InputType['WorkloadLoadBalancerArgs']]] = None,
-                 local_options: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['WorkloadLocalOptionArgs']]]]] = None,
+                 job: Optional[pulumi.Input[Union['WorkloadJobArgs', 'WorkloadJobArgsDict']]] = None,
+                 load_balancer: Optional[pulumi.Input[Union['WorkloadLoadBalancerArgs', 'WorkloadLoadBalancerArgsDict']]] = None,
+                 local_options: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadLocalOptionArgs', 'WorkloadLocalOptionArgsDict']]]]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 options: Optional[pulumi.Input[pulumi.InputType['WorkloadOptionsArgs']]] = None,
-                 rollout_options: Optional[pulumi.Input[pulumi.InputType['WorkloadRolloutOptionsArgs']]] = None,
-                 security_options: Optional[pulumi.Input[pulumi.InputType['WorkloadSecurityOptionsArgs']]] = None,
-                 sidecar: Optional[pulumi.Input[pulumi.InputType['WorkloadSidecarArgs']]] = None,
+                 options: Optional[pulumi.Input[Union['WorkloadOptionsArgs', 'WorkloadOptionsArgsDict']]] = None,
+                 rollout_options: Optional[pulumi.Input[Union['WorkloadRolloutOptionsArgs', 'WorkloadRolloutOptionsArgsDict']]] = None,
+                 security_options: Optional[pulumi.Input[Union['WorkloadSecurityOptionsArgs', 'WorkloadSecurityOptionsArgsDict']]] = None,
+                 sidecar: Optional[pulumi.Input[Union['WorkloadSidecarArgs', 'WorkloadSidecarArgsDict']]] = None,
                  support_dynamic_tags: Optional[pulumi.Input[bool]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  type: Optional[pulumi.Input[str]] = None,
@@ -798,53 +679,18 @@ class Workload(pulumi.CustomResource):
                 raise TypeError("Missing required property 'containers'")
             __props__.__dict__["containers"] = containers
             __props__.__dict__["description"] = description
-            if firewall_spec is not None and not isinstance(firewall_spec, WorkloadFirewallSpecArgs):
-                firewall_spec = firewall_spec or {}
-                def _setter(key, value):
-                    firewall_spec[key] = value
-                WorkloadFirewallSpecArgs._configure(_setter, **firewall_spec)
             __props__.__dict__["firewall_spec"] = firewall_spec
             if gvc is None and not opts.urn:
                 raise TypeError("Missing required property 'gvc'")
             __props__.__dict__["gvc"] = gvc
             __props__.__dict__["identity_link"] = identity_link
-            if job is not None and not isinstance(job, WorkloadJobArgs):
-                job = job or {}
-                def _setter(key, value):
-                    job[key] = value
-                WorkloadJobArgs._configure(_setter, **job)
             __props__.__dict__["job"] = job
-            if load_balancer is not None and not isinstance(load_balancer, WorkloadLoadBalancerArgs):
-                load_balancer = load_balancer or {}
-                def _setter(key, value):
-                    load_balancer[key] = value
-                WorkloadLoadBalancerArgs._configure(_setter, **load_balancer)
             __props__.__dict__["load_balancer"] = load_balancer
             __props__.__dict__["local_options"] = local_options
             __props__.__dict__["name"] = name
-            if options is not None and not isinstance(options, WorkloadOptionsArgs):
-                options = options or {}
-                def _setter(key, value):
-                    options[key] = value
-                WorkloadOptionsArgs._configure(_setter, **options)
             __props__.__dict__["options"] = options
-            if rollout_options is not None and not isinstance(rollout_options, WorkloadRolloutOptionsArgs):
-                rollout_options = rollout_options or {}
-                def _setter(key, value):
-                    rollout_options[key] = value
-                WorkloadRolloutOptionsArgs._configure(_setter, **rollout_options)
             __props__.__dict__["rollout_options"] = rollout_options
-            if security_options is not None and not isinstance(security_options, WorkloadSecurityOptionsArgs):
-                security_options = security_options or {}
-                def _setter(key, value):
-                    security_options[key] = value
-                WorkloadSecurityOptionsArgs._configure(_setter, **security_options)
             __props__.__dict__["security_options"] = security_options
-            if sidecar is not None and not isinstance(sidecar, WorkloadSidecarArgs):
-                sidecar = sidecar or {}
-                def _setter(key, value):
-                    sidecar[key] = value
-                WorkloadSidecarArgs._configure(_setter, **sidecar)
             __props__.__dict__["sidecar"] = sidecar
             __props__.__dict__["support_dynamic_tags"] = support_dynamic_tags
             __props__.__dict__["tags"] = tags
@@ -864,22 +710,22 @@ class Workload(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            containers: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['WorkloadContainerArgs']]]]] = None,
+            containers: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadContainerArgs', 'WorkloadContainerArgsDict']]]]] = None,
             cpln_id: Optional[pulumi.Input[str]] = None,
             description: Optional[pulumi.Input[str]] = None,
-            firewall_spec: Optional[pulumi.Input[pulumi.InputType['WorkloadFirewallSpecArgs']]] = None,
+            firewall_spec: Optional[pulumi.Input[Union['WorkloadFirewallSpecArgs', 'WorkloadFirewallSpecArgsDict']]] = None,
             gvc: Optional[pulumi.Input[str]] = None,
             identity_link: Optional[pulumi.Input[str]] = None,
-            job: Optional[pulumi.Input[pulumi.InputType['WorkloadJobArgs']]] = None,
-            load_balancer: Optional[pulumi.Input[pulumi.InputType['WorkloadLoadBalancerArgs']]] = None,
-            local_options: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['WorkloadLocalOptionArgs']]]]] = None,
+            job: Optional[pulumi.Input[Union['WorkloadJobArgs', 'WorkloadJobArgsDict']]] = None,
+            load_balancer: Optional[pulumi.Input[Union['WorkloadLoadBalancerArgs', 'WorkloadLoadBalancerArgsDict']]] = None,
+            local_options: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadLocalOptionArgs', 'WorkloadLocalOptionArgsDict']]]]] = None,
             name: Optional[pulumi.Input[str]] = None,
-            options: Optional[pulumi.Input[pulumi.InputType['WorkloadOptionsArgs']]] = None,
-            rollout_options: Optional[pulumi.Input[pulumi.InputType['WorkloadRolloutOptionsArgs']]] = None,
-            security_options: Optional[pulumi.Input[pulumi.InputType['WorkloadSecurityOptionsArgs']]] = None,
+            options: Optional[pulumi.Input[Union['WorkloadOptionsArgs', 'WorkloadOptionsArgsDict']]] = None,
+            rollout_options: Optional[pulumi.Input[Union['WorkloadRolloutOptionsArgs', 'WorkloadRolloutOptionsArgsDict']]] = None,
+            security_options: Optional[pulumi.Input[Union['WorkloadSecurityOptionsArgs', 'WorkloadSecurityOptionsArgsDict']]] = None,
             self_link: Optional[pulumi.Input[str]] = None,
-            sidecar: Optional[pulumi.Input[pulumi.InputType['WorkloadSidecarArgs']]] = None,
-            statuses: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['WorkloadStatusArgs']]]]] = None,
+            sidecar: Optional[pulumi.Input[Union['WorkloadSidecarArgs', 'WorkloadSidecarArgsDict']]] = None,
+            statuses: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadStatusArgs', 'WorkloadStatusArgsDict']]]]] = None,
             support_dynamic_tags: Optional[pulumi.Input[bool]] = None,
             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             type: Optional[pulumi.Input[str]] = None) -> 'Workload':
@@ -890,22 +736,22 @@ class Workload(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['WorkloadContainerArgs']]]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['WorkloadContainerArgs', 'WorkloadContainerArgsDict']]]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Workload.
         :param pulumi.Input[str] description: Description of the Workload.
-        :param pulumi.Input[pulumi.InputType['WorkloadFirewallSpecArgs']] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
+        :param pulumi.Input[Union['WorkloadFirewallSpecArgs', 'WorkloadFirewallSpecArgsDict']] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
                Access is restricted by default.
         :param pulumi.Input[str] gvc: Name of the associated GVC.
         :param pulumi.Input[str] identity_link: Full link to an Identity.
-        :param pulumi.Input[pulumi.InputType['WorkloadJobArgs']] job: [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
+        :param pulumi.Input[Union['WorkloadJobArgs', 'WorkloadJobArgsDict']] job: [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
         :param pulumi.Input[str] name: Name of the Workload.
-        :param pulumi.Input[pulumi.InputType['WorkloadOptionsArgs']] options: Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
+        :param pulumi.Input[Union['WorkloadOptionsArgs', 'WorkloadOptionsArgsDict']] options: Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
                characteristics of the workload.
-        :param pulumi.Input[pulumi.InputType['WorkloadRolloutOptionsArgs']] rollout_options: Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
+        :param pulumi.Input[Union['WorkloadRolloutOptionsArgs', 'WorkloadRolloutOptionsArgsDict']] rollout_options: Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
                replicas, surge replicas, and scaling policies.
-        :param pulumi.Input[pulumi.InputType['WorkloadSecurityOptionsArgs']] security_options: Allows for the configuration of the `file system group id` and `geo location`
+        :param pulumi.Input[Union['WorkloadSecurityOptionsArgs', 'WorkloadSecurityOptionsArgsDict']] security_options: Allows for the configuration of the `file system group id` and `geo location`
         :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['WorkloadStatusArgs']]]] statuses: Status of the workload.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['WorkloadStatusArgs', 'WorkloadStatusArgsDict']]]] statuses: Status of the workload.
         :param pulumi.Input[bool] support_dynamic_tags: Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
                false.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.

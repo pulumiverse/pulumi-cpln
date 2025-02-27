@@ -14,6 +14,9 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadLoadBalancerGeoLocation
     {
+        /// <summary>
+        /// When enabled, geo location headers will be included on inbound http requests. Existing headers will be replaced.
+        /// </summary>
         public readonly bool? Enabled;
         public readonly Outputs.WorkloadLoadBalancerGeoLocationHeaders? Headers;
 

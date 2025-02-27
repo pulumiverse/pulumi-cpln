@@ -13,20 +13,33 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class GetGvcLightstepTracingArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// Full link to referenced Opaque Secret.
+        /// </summary>
         [Input("credentials")]
         public string? Credentials { get; set; }
 
         [Input("customTags")]
         private Dictionary<string, string>? _customTags;
+
+        /// <summary>
+        /// Key-value map of custom tags.
+        /// </summary>
         public Dictionary<string, string> CustomTags
         {
             get => _customTags ?? (_customTags = new Dictionary<string, string>());
             set => _customTags = value;
         }
 
+        /// <summary>
+        /// Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        /// </summary>
         [Input("endpoint", required: true)]
         public string Endpoint { get; set; } = null!;
 
+        /// <summary>
+        /// Determines what percentage of requests should be traced.
+        /// </summary>
         [Input("sampling", required: true)]
         public double Sampling { get; set; }
 

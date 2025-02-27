@@ -16,6 +16,9 @@ namespace Pulumiverse.Cpln.Outputs
     {
         public readonly string? ExternalId;
         public readonly string RoleArn;
+        /// <summary>
+        /// Control Plane will append random.
+        /// </summary>
         public readonly string? SessionNamePrefix;
 
         [OutputConstructor]

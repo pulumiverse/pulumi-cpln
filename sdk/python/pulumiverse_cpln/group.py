@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -36,51 +41,20 @@ class GroupArgs:
         :param pulumi.Input[Sequence[pulumi.Input[str]]] user_ids_and_emails: List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
                if the user ID / email does not exist within the org.
         """
-        GroupArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            description=description,
-            identity_matcher=identity_matcher,
-            member_query=member_query,
-            name=name,
-            service_accounts=service_accounts,
-            tags=tags,
-            user_ids_and_emails=user_ids_and_emails,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             description: Optional[pulumi.Input[str]] = None,
-             identity_matcher: Optional[pulumi.Input['GroupIdentityMatcherArgs']] = None,
-             member_query: Optional[pulumi.Input['GroupMemberQueryArgs']] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             service_accounts: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             user_ids_and_emails: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'identityMatcher' in kwargs:
-            identity_matcher = kwargs['identityMatcher']
-        if 'memberQuery' in kwargs:
-            member_query = kwargs['memberQuery']
-        if 'serviceAccounts' in kwargs:
-            service_accounts = kwargs['serviceAccounts']
-        if 'userIdsAndEmails' in kwargs:
-            user_ids_and_emails = kwargs['userIdsAndEmails']
-
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if identity_matcher is not None:
-            _setter("identity_matcher", identity_matcher)
+            pulumi.set(__self__, "identity_matcher", identity_matcher)
         if member_query is not None:
-            _setter("member_query", member_query)
+            pulumi.set(__self__, "member_query", member_query)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if service_accounts is not None:
-            _setter("service_accounts", service_accounts)
+            pulumi.set(__self__, "service_accounts", service_accounts)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
         if user_ids_and_emails is not None:
-            _setter("user_ids_and_emails", user_ids_and_emails)
+            pulumi.set(__self__, "user_ids_and_emails", user_ids_and_emails)
 
     @property
     @pulumi.getter
@@ -199,67 +173,26 @@ class _GroupState:
         :param pulumi.Input[Sequence[pulumi.Input[str]]] user_ids_and_emails: List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
                if the user ID / email does not exist within the org.
         """
-        _GroupState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            cpln_id=cpln_id,
-            description=description,
-            identity_matcher=identity_matcher,
-            member_query=member_query,
-            name=name,
-            origin=origin,
-            self_link=self_link,
-            service_accounts=service_accounts,
-            tags=tags,
-            user_ids_and_emails=user_ids_and_emails,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             cpln_id: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             identity_matcher: Optional[pulumi.Input['GroupIdentityMatcherArgs']] = None,
-             member_query: Optional[pulumi.Input['GroupMemberQueryArgs']] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             origin: Optional[pulumi.Input[str]] = None,
-             self_link: Optional[pulumi.Input[str]] = None,
-             service_accounts: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             user_ids_and_emails: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'cplnId' in kwargs:
-            cpln_id = kwargs['cplnId']
-        if 'identityMatcher' in kwargs:
-            identity_matcher = kwargs['identityMatcher']
-        if 'memberQuery' in kwargs:
-            member_query = kwargs['memberQuery']
-        if 'selfLink' in kwargs:
-            self_link = kwargs['selfLink']
-        if 'serviceAccounts' in kwargs:
-            service_accounts = kwargs['serviceAccounts']
-        if 'userIdsAndEmails' in kwargs:
-            user_ids_and_emails = kwargs['userIdsAndEmails']
-
         if cpln_id is not None:
-            _setter("cpln_id", cpln_id)
+            pulumi.set(__self__, "cpln_id", cpln_id)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if identity_matcher is not None:
-            _setter("identity_matcher", identity_matcher)
+            pulumi.set(__self__, "identity_matcher", identity_matcher)
         if member_query is not None:
-            _setter("member_query", member_query)
+            pulumi.set(__self__, "member_query", member_query)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if origin is not None:
-            _setter("origin", origin)
+            pulumi.set(__self__, "origin", origin)
         if self_link is not None:
-            _setter("self_link", self_link)
+            pulumi.set(__self__, "self_link", self_link)
         if service_accounts is not None:
-            _setter("service_accounts", service_accounts)
+            pulumi.set(__self__, "service_accounts", service_accounts)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
         if user_ids_and_emails is not None:
-            _setter("user_ids_and_emails", user_ids_and_emails)
+            pulumi.set(__self__, "user_ids_and_emails", user_ids_and_emails)
 
     @property
     @pulumi.getter(name="cplnId")
@@ -391,8 +324,8 @@ class Group(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  description: Optional[pulumi.Input[str]] = None,
-                 identity_matcher: Optional[pulumi.Input[pulumi.InputType['GroupIdentityMatcherArgs']]] = None,
-                 member_query: Optional[pulumi.Input[pulumi.InputType['GroupMemberQueryArgs']]] = None,
+                 identity_matcher: Optional[pulumi.Input[Union['GroupIdentityMatcherArgs', 'GroupIdentityMatcherArgsDict']]] = None,
+                 member_query: Optional[pulumi.Input[Union['GroupMemberQueryArgs', 'GroupMemberQueryArgsDict']]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  service_accounts: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
@@ -403,9 +336,9 @@ class Group(pulumi.CustomResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] description: Description of Group.
-        :param pulumi.Input[pulumi.InputType['GroupIdentityMatcherArgs']] identity_matcher: Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+        :param pulumi.Input[Union['GroupIdentityMatcherArgs', 'GroupIdentityMatcherArgsDict']] identity_matcher: Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
                for managing the grouping of users logged-in with SAML providers.
-        :param pulumi.Input[pulumi.InputType['GroupMemberQueryArgs']] member_query: A predefined set of criteria or conditions used to query and retrieve members within the group.
+        :param pulumi.Input[Union['GroupMemberQueryArgs', 'GroupMemberQueryArgsDict']] member_query: A predefined set of criteria or conditions used to query and retrieve members within the group.
         :param pulumi.Input[str] name: Name of the Group.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] service_accounts: List of service accounts that exists within the configured org. Group membership will fail if the service account does
                not exits within the org.
@@ -431,18 +364,14 @@ class Group(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            GroupArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  description: Optional[pulumi.Input[str]] = None,
-                 identity_matcher: Optional[pulumi.Input[pulumi.InputType['GroupIdentityMatcherArgs']]] = None,
-                 member_query: Optional[pulumi.Input[pulumi.InputType['GroupMemberQueryArgs']]] = None,
+                 identity_matcher: Optional[pulumi.Input[Union['GroupIdentityMatcherArgs', 'GroupIdentityMatcherArgsDict']]] = None,
+                 member_query: Optional[pulumi.Input[Union['GroupMemberQueryArgs', 'GroupMemberQueryArgsDict']]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  service_accounts: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
@@ -457,17 +386,7 @@ class Group(pulumi.CustomResource):
             __props__ = GroupArgs.__new__(GroupArgs)
 
             __props__.__dict__["description"] = description
-            if identity_matcher is not None and not isinstance(identity_matcher, GroupIdentityMatcherArgs):
-                identity_matcher = identity_matcher or {}
-                def _setter(key, value):
-                    identity_matcher[key] = value
-                GroupIdentityMatcherArgs._configure(_setter, **identity_matcher)
             __props__.__dict__["identity_matcher"] = identity_matcher
-            if member_query is not None and not isinstance(member_query, GroupMemberQueryArgs):
-                member_query = member_query or {}
-                def _setter(key, value):
-                    member_query[key] = value
-                GroupMemberQueryArgs._configure(_setter, **member_query)
             __props__.__dict__["member_query"] = member_query
             __props__.__dict__["name"] = name
             __props__.__dict__["service_accounts"] = service_accounts
@@ -488,8 +407,8 @@ class Group(pulumi.CustomResource):
             opts: Optional[pulumi.ResourceOptions] = None,
             cpln_id: Optional[pulumi.Input[str]] = None,
             description: Optional[pulumi.Input[str]] = None,
-            identity_matcher: Optional[pulumi.Input[pulumi.InputType['GroupIdentityMatcherArgs']]] = None,
-            member_query: Optional[pulumi.Input[pulumi.InputType['GroupMemberQueryArgs']]] = None,
+            identity_matcher: Optional[pulumi.Input[Union['GroupIdentityMatcherArgs', 'GroupIdentityMatcherArgsDict']]] = None,
+            member_query: Optional[pulumi.Input[Union['GroupMemberQueryArgs', 'GroupMemberQueryArgsDict']]] = None,
             name: Optional[pulumi.Input[str]] = None,
             origin: Optional[pulumi.Input[str]] = None,
             self_link: Optional[pulumi.Input[str]] = None,
@@ -505,9 +424,9 @@ class Group(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Group.
         :param pulumi.Input[str] description: Description of Group.
-        :param pulumi.Input[pulumi.InputType['GroupIdentityMatcherArgs']] identity_matcher: Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
+        :param pulumi.Input[Union['GroupIdentityMatcherArgs', 'GroupIdentityMatcherArgsDict']] identity_matcher: Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
                for managing the grouping of users logged-in with SAML providers.
-        :param pulumi.Input[pulumi.InputType['GroupMemberQueryArgs']] member_query: A predefined set of criteria or conditions used to query and retrieve members within the group.
+        :param pulumi.Input[Union['GroupMemberQueryArgs', 'GroupMemberQueryArgsDict']] member_query: A predefined set of criteria or conditions used to query and retrieve members within the group.
         :param pulumi.Input[str] name: Name of the Group.
         :param pulumi.Input[str] origin: Origin of the service account. Either `builtin` or `default`.
         :param pulumi.Input[str] self_link: Fully qualified link to the this group.

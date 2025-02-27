@@ -13,9 +13,15 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class DomainStatusLocationArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The current validity or status of the SSL/TLS certificate.
+        /// </summary>
         [Input("certificateStatus")]
         public Input<string>? CertificateStatus { get; set; }
 
+        /// <summary>
+        /// The name of the location.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 

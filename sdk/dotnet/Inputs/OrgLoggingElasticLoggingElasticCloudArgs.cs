@@ -13,15 +13,27 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class OrgLoggingElasticLoggingElasticCloudArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// [Cloud ID](https://www.elastic.co/guide/en/cloud/current/ec-cloud-id.html)
+        /// </summary>
         [Input("cloudId", required: true)]
         public Input<string> CloudId { get; set; } = null!;
 
+        /// <summary>
+        /// Full Link to a secret of type `userpass`.
+        /// </summary>
         [Input("credentials", required: true)]
         public Input<string> Credentials { get; set; } = null!;
 
+        /// <summary>
+        /// Logging Index.
+        /// </summary>
         [Input("index", required: true)]
         public Input<string> Index { get; set; } = null!;
 
+        /// <summary>
+        /// Logging Type.
+        /// </summary>
         [Input("type", required: true)]
         public Input<string> Type { get; set; } = null!;
 

@@ -16,6 +16,9 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("account", required: true)]
         public Input<string> Account { get; set; } = null!;
 
+        /// <summary>
+        /// Link to a SSH or opaque secret.
+        /// </summary>
         [Input("privateKeySecretLink", required: true)]
         public Input<string> PrivateKeySecretLink { get; set; } = null!;
 

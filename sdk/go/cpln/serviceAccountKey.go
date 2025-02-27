@@ -9,7 +9,6 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
@@ -135,12 +134,6 @@ func (i *ServiceAccountKey) ToServiceAccountKeyOutputWithContext(ctx context.Con
 	return pulumi.ToOutputWithContext(ctx, i).(ServiceAccountKeyOutput)
 }
 
-func (i *ServiceAccountKey) ToOutput(ctx context.Context) pulumix.Output[*ServiceAccountKey] {
-	return pulumix.Output[*ServiceAccountKey]{
-		OutputState: i.ToServiceAccountKeyOutputWithContext(ctx).OutputState,
-	}
-}
-
 // ServiceAccountKeyArrayInput is an input type that accepts ServiceAccountKeyArray and ServiceAccountKeyArrayOutput values.
 // You can construct a concrete instance of `ServiceAccountKeyArrayInput` via:
 //
@@ -164,12 +157,6 @@ func (i ServiceAccountKeyArray) ToServiceAccountKeyArrayOutput() ServiceAccountK
 
 func (i ServiceAccountKeyArray) ToServiceAccountKeyArrayOutputWithContext(ctx context.Context) ServiceAccountKeyArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(ServiceAccountKeyArrayOutput)
-}
-
-func (i ServiceAccountKeyArray) ToOutput(ctx context.Context) pulumix.Output[[]*ServiceAccountKey] {
-	return pulumix.Output[[]*ServiceAccountKey]{
-		OutputState: i.ToServiceAccountKeyArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // ServiceAccountKeyMapInput is an input type that accepts ServiceAccountKeyMap and ServiceAccountKeyMapOutput values.
@@ -197,12 +184,6 @@ func (i ServiceAccountKeyMap) ToServiceAccountKeyMapOutputWithContext(ctx contex
 	return pulumi.ToOutputWithContext(ctx, i).(ServiceAccountKeyMapOutput)
 }
 
-func (i ServiceAccountKeyMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*ServiceAccountKey] {
-	return pulumix.Output[map[string]*ServiceAccountKey]{
-		OutputState: i.ToServiceAccountKeyMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type ServiceAccountKeyOutput struct{ *pulumi.OutputState }
 
 func (ServiceAccountKeyOutput) ElementType() reflect.Type {
@@ -215,12 +196,6 @@ func (o ServiceAccountKeyOutput) ToServiceAccountKeyOutput() ServiceAccountKeyOu
 
 func (o ServiceAccountKeyOutput) ToServiceAccountKeyOutputWithContext(ctx context.Context) ServiceAccountKeyOutput {
 	return o
-}
-
-func (o ServiceAccountKeyOutput) ToOutput(ctx context.Context) pulumix.Output[*ServiceAccountKey] {
-	return pulumix.Output[*ServiceAccountKey]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The timestamp, in UTC, when the key was created.
@@ -262,12 +237,6 @@ func (o ServiceAccountKeyArrayOutput) ToServiceAccountKeyArrayOutputWithContext(
 	return o
 }
 
-func (o ServiceAccountKeyArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*ServiceAccountKey] {
-	return pulumix.Output[[]*ServiceAccountKey]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o ServiceAccountKeyArrayOutput) Index(i pulumi.IntInput) ServiceAccountKeyOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *ServiceAccountKey {
 		return vs[0].([]*ServiceAccountKey)[vs[1].(int)]
@@ -286,12 +255,6 @@ func (o ServiceAccountKeyMapOutput) ToServiceAccountKeyMapOutput() ServiceAccoun
 
 func (o ServiceAccountKeyMapOutput) ToServiceAccountKeyMapOutputWithContext(ctx context.Context) ServiceAccountKeyMapOutput {
 	return o
-}
-
-func (o ServiceAccountKeyMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*ServiceAccountKey] {
-	return pulumix.Output[map[string]*ServiceAccountKey]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o ServiceAccountKeyMapOutput) MapIndex(k pulumi.StringInput) ServiceAccountKeyOutput {

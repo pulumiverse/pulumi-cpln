@@ -17,6 +17,9 @@ namespace Pulumiverse.Cpln.Outputs
         public readonly int? ContainerPort;
         public readonly int ExternalPort;
         public readonly string Protocol;
+        /// <summary>
+        /// Override the default `https` url scheme.
+        /// </summary>
         public readonly string? Scheme;
 
         [OutputConstructor]

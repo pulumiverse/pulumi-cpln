@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class Mk8sAwsProviderNodePoolGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Size in GB.
+        /// </summary>
         [Input("bootDiskSize")]
         public Input<int>? BootDiskSize { get; set; }
 
@@ -34,6 +37,10 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("labels")]
         private InputMap<string>? _labels;
+
+        /// <summary>
+        /// Labels to attach to nodes of a node pool.
+        /// </summary>
         public InputMap<string> Labels
         {
             get => _labels ?? (_labels = new InputMap<string>());
@@ -55,6 +62,9 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("onDemandPercentageAboveBaseCapacity")]
         public Input<int>? OnDemandPercentageAboveBaseCapacity { get; set; }
 
+        /// <summary>
+        /// Default image for all nodes.
+        /// </summary>
         [Input("overrideImage", required: true)]
         public Input<Inputs.Mk8sAwsProviderNodePoolOverrideImageGetArgs> OverrideImage { get; set; } = null!;
 
@@ -71,6 +81,10 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("taints")]
         private InputList<Inputs.Mk8sAwsProviderNodePoolTaintGetArgs>? _taints;
+
+        /// <summary>
+        /// Taint for the nodes of a pool.
+        /// </summary>
         public InputList<Inputs.Mk8sAwsProviderNodePoolTaintGetArgs> Taints
         {
             get => _taints ?? (_taints = new InputList<Inputs.Mk8sAwsProviderNodePoolTaintGetArgs>());

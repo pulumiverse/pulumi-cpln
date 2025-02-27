@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgLoggingStackdriverLogging
     {
+        /// <summary>
+        /// Full Link to a secret of type `opaque`.
+        /// </summary>
         public readonly string Credentials;
+        /// <summary>
+        /// A Google Cloud Provider region.
+        /// </summary>
         public readonly string Location;
 
         [OutputConstructor]

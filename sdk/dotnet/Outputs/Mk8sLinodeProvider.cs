@@ -17,13 +17,34 @@ namespace Pulumiverse.Cpln.Outputs
         public readonly ImmutableArray<string> AuthorizedKeys;
         public readonly ImmutableArray<string> AuthorizedUsers;
         public readonly Outputs.Mk8sLinodeProviderAutoscaler? Autoscaler;
+        /// <summary>
+        /// Optional firewall rule to attach to all nodes.
+        /// </summary>
         public readonly string? FirewallId;
+        /// <summary>
+        /// Default image for all nodes.
+        /// </summary>
         public readonly string Image;
         public readonly Outputs.Mk8sLinodeProviderNetworking Networking;
+        /// <summary>
+        /// List of node pools.
+        /// </summary>
         public readonly ImmutableArray<Outputs.Mk8sLinodeProviderNodePool> NodePools;
+        /// <summary>
+        /// Optional shell script that will be run before K8s is installed. Supports SSM.
+        /// </summary>
         public readonly string? PreInstallScript;
+        /// <summary>
+        /// Region where the cluster nodes will live.
+        /// </summary>
         public readonly string Region;
+        /// <summary>
+        /// Link to a secret holding Linode access key.
+        /// </summary>
         public readonly string TokenSecretLink;
+        /// <summary>
+        /// The vpc where nodes will be deployed. Supports SSM.
+        /// </summary>
         public readonly string VpcId;
 
         [OutputConstructor]

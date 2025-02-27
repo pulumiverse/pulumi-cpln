@@ -15,12 +15,19 @@ namespace Pulumiverse.Cpln.Inputs
     {
         [Input("domainAutoMembers", required: true)]
         private InputList<string>? _domainAutoMembers;
+
+        /// <summary>
+        /// List of domains which will auto-provision users when authenticating using SAML.
+        /// </summary>
         public InputList<string> DomainAutoMembers
         {
             get => _domainAutoMembers ?? (_domainAutoMembers = new InputList<string>());
             set => _domainAutoMembers = value;
         }
 
+        /// <summary>
+        /// Enforce SAML only authentication.
+        /// </summary>
         [Input("samlOnly")]
         public Input<bool>? SamlOnly { get; set; }
 

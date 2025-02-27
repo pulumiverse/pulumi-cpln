@@ -15,7 +15,13 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class IdentityAzureAccessPolicyRoleAssignment
     {
         public readonly bool? _sentinel;
+        /// <summary>
+        /// List of assigned roles.
+        /// </summary>
         public readonly ImmutableArray<string> Roles;
+        /// <summary>
+        /// Scope of roles.
+        /// </summary>
         public readonly string? Scope;
 
         [OutputConstructor]

@@ -13,11 +13,18 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class GetSecretNatsAccountArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// Account ID.
+        /// </summary>
         [Input("accountId", required: true)]
         public string AccountId { get; set; } = null!;
 
         [Input("privateKey", required: true)]
         private string? _privateKey;
+
+        /// <summary>
+        /// Private Key.
+        /// </summary>
         public string? PrivateKey
         {
             get => _privateKey;

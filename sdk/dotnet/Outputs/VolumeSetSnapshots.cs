@@ -14,8 +14,17 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class VolumeSetSnapshots
     {
+        /// <summary>
+        /// If true, a volume snapshot will be created immediately before deletion of any volume in this set. Default: `true`
+        /// </summary>
         public readonly bool? CreateFinalSnapshot;
+        /// <summary>
+        /// The default retention period for volume snapshots. This string should contain a floating point number followed by either d, h, or m. For example, "10d" would retain snapshots for 10 days.
+        /// </summary>
         public readonly string? RetentionDuration;
+        /// <summary>
+        /// A standard cron schedule expression used to determine when a snapshot will be taken. (i.e., `0 * * * *` Every hour). Note: snapshots cannot be scheduled more often than once per hour.
+        /// </summary>
         public readonly string? Schedule;
 
         [OutputConstructor]

@@ -16,11 +16,18 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("_sentinel")]
         public Input<bool>? _sentinel { get; set; }
 
+        /// <summary>
+        /// Name of resource for binding.
+        /// </summary>
         [Input("resource")]
         public Input<string>? Resource { get; set; }
 
         [Input("roles")]
         private InputList<string>? _roles;
+
+        /// <summary>
+        /// List of allowed roles.
+        /// </summary>
         public InputList<string> Roles
         {
             get => _roles ?? (_roles = new InputList<string>());

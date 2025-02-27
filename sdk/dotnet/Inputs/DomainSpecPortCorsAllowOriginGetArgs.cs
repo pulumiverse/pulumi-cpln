@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class DomainSpecPortCorsAllowOriginGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Value of allowed origin.
+        /// </summary>
         [Input("exact", required: true)]
         public Input<string> Exact { get; set; } = null!;
 

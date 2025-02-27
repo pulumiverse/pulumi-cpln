@@ -16,10 +16,22 @@ namespace Pulumiverse.Cpln.Outputs
     {
         public readonly Outputs.Mk8sPaperspaceProviderAutoscaler? Autoscaler;
         public readonly string NetworkId;
+        /// <summary>
+        /// List of node pools.
+        /// </summary>
         public readonly ImmutableArray<Outputs.Mk8sPaperspaceProviderNodePool> NodePools;
+        /// <summary>
+        /// Optional shell script that will be run before K8s is installed. Supports SSM.
+        /// </summary>
         public readonly string? PreInstallScript;
+        /// <summary>
+        /// Region where the cluster nodes will live.
+        /// </summary>
         public readonly string Region;
         public readonly ImmutableArray<string> SharedDrives;
+        /// <summary>
+        /// Link to a secret holding Paperspace access key.
+        /// </summary>
         public readonly string TokenSecretLink;
         public readonly ImmutableArray<Outputs.Mk8sPaperspaceProviderUnmanagedNodePool> UnmanagedNodePools;
         public readonly ImmutableArray<string> UserIds;

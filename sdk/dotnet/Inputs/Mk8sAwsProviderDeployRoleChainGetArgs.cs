@@ -19,6 +19,9 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("roleArn", required: true)]
         public Input<string> RoleArn { get; set; } = null!;
 
+        /// <summary>
+        /// Control Plane will append random.
+        /// </summary>
         [Input("sessionNamePrefix")]
         public Input<string>? SessionNamePrefix { get; set; }
 

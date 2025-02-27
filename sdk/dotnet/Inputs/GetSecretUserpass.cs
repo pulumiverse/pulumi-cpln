@@ -13,17 +13,27 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class GetSecretUserpassArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// Available encodings: `plain`, `base64`. Default: `plain`.
+        /// </summary>
         [Input("encoding")]
         public string? Encoding { get; set; }
 
         [Input("password", required: true)]
         private string? _password;
+
+        /// <summary>
+        /// Password.
+        /// </summary>
         public string? Password
         {
             get => _password;
             set => _password = value;
         }
 
+        /// <summary>
+        /// Username.
+        /// </summary>
         [Input("username", required: true)]
         public string Username { get; set; } = null!;
 

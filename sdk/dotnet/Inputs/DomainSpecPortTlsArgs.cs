@@ -15,18 +15,31 @@ namespace Pulumiverse.Cpln.Inputs
     {
         [Input("cipherSuites")]
         private InputList<string>? _cipherSuites;
+
+        /// <summary>
+        /// Allowed cipher suites. Refer to the [Domain Reference](https://docs.controlplane.com/reference/domain#cipher-suites) for details.
+        /// </summary>
         public InputList<string> CipherSuites
         {
             get => _cipherSuites ?? (_cipherSuites = new InputList<string>());
             set => _cipherSuites = value;
         }
 
+        /// <summary>
+        /// The certificate authority PEM, stored as a TLS Secret, used to verify the authority of the client certificate. The only verification performed checks that the CN of the PEM matches the Domain (i.e., CN=*.DOMAIN).
+        /// </summary>
         [Input("clientCertificate")]
         public Input<Inputs.DomainSpecPortTlsClientCertificateArgs>? ClientCertificate { get; set; }
 
+        /// <summary>
+        /// Minimum TLS version to accept. Minimum is `1.0`. Default: `1.2`.
+        /// </summary>
         [Input("minProtocolVersion")]
         public Input<string>? MinProtocolVersion { get; set; }
 
+        /// <summary>
+        /// Custom Server Certificate.
+        /// </summary>
         [Input("serverCertificate")]
         public Input<Inputs.DomainSpecPortTlsServerCertificateArgs>? ServerCertificate { get; set; }
 

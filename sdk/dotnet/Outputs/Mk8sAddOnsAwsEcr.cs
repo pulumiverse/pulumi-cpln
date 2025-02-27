@@ -15,6 +15,9 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class Mk8sAddOnsAwsEcr
     {
         public readonly bool? _sentinel;
+        /// <summary>
+        /// Role to use when authorizing ECR pulls. Optional on AWS, in which case it will use the instance role to pull.
+        /// </summary>
         public readonly string? RoleArn;
 
         [OutputConstructor]

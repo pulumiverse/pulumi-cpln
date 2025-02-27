@@ -13,11 +13,18 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class GetSecretOpaqueArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// Available encodings: `plain`, `base64`. Default: `plain`.
+        /// </summary>
         [Input("encoding")]
         public string? Encoding { get; set; }
 
         [Input("payload", required: true)]
         private string? _payload;
+
+        /// <summary>
+        /// Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.
+        /// </summary>
         public string? Payload
         {
             get => _payload;

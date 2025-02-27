@@ -14,6 +14,9 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class IpSetLocation
     {
+        /// <summary>
+        /// The self link of a location.
+        /// </summary>
         public readonly string Name;
         public readonly string RetentionPolicy;
 

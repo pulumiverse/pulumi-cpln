@@ -13,15 +13,27 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class OrgLoggingS3LoggingArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Name of S3 bucket.
+        /// </summary>
         [Input("bucket", required: true)]
         public Input<string> Bucket { get; set; } = null!;
 
+        /// <summary>
+        /// Full link to referenced AWS Secret.
+        /// </summary>
         [Input("credentials", required: true)]
         public Input<string> Credentials { get; set; } = null!;
 
+        /// <summary>
+        /// Bucket path prefix. Default: "/".
+        /// </summary>
         [Input("prefix")]
         public Input<string>? Prefix { get; set; }
 
+        /// <summary>
+        /// AWS region where bucket is located.
+        /// </summary>
         [Input("region", required: true)]
         public Input<string> Region { get; set; } = null!;
 

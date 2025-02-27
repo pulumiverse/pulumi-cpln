@@ -14,9 +14,21 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgLoggingCoralogixLogging
     {
+        /// <summary>
+        /// App name to be displayed in Coralogix dashboard.
+        /// </summary>
         public readonly string App;
+        /// <summary>
+        /// Coralogix cluster URI.
+        /// </summary>
         public readonly string Cluster;
+        /// <summary>
+        /// Full link to referenced Opaque Secret.
+        /// </summary>
         public readonly string Credentials;
+        /// <summary>
+        /// Subsystem name to be displayed in Coralogix dashboard.
+        /// </summary>
         public readonly string Subsystem;
 
         [OutputConstructor]

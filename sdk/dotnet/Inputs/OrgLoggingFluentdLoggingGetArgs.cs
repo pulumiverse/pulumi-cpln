@@ -13,9 +13,15 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class OrgLoggingFluentdLoggingGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The hostname or IP address of a remote log storage system.
+        /// </summary>
         [Input("host", required: true)]
         public Input<string> Host { get; set; } = null!;
 
+        /// <summary>
+        /// Port. Default: 24224
+        /// </summary>
         [Input("port")]
         public Input<int>? Port { get; set; }
 

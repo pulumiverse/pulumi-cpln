@@ -14,11 +14,29 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class IdentityNetworkResource
     {
+        /// <summary>
+        /// Full link to referenced Agent.
+        /// </summary>
         public readonly string? AgentLink;
+        /// <summary>
+        /// Fully qualified domain name.
+        /// </summary>
         public readonly string? Fqdn;
+        /// <summary>
+        /// List of IP addresses.
+        /// </summary>
         public readonly ImmutableArray<string> Ips;
+        /// <summary>
+        /// Name of the Network Resource.
+        /// </summary>
         public readonly string Name;
+        /// <summary>
+        /// Ports to expose.
+        /// </summary>
         public readonly ImmutableArray<int> Ports;
+        /// <summary>
+        /// Resolver IP.
+        /// </summary>
         public readonly string? ResolverIp;
 
         [OutputConstructor]

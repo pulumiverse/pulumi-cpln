@@ -15,12 +15,33 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class Mk8sAddOnsMetrics
     {
         public readonly bool? _sentinel;
+        /// <summary>
+        /// Enable scraping apiserver stats.
+        /// </summary>
         public readonly bool? ApiServer;
+        /// <summary>
+        /// Enable CNI-level container stats.
+        /// </summary>
         public readonly bool? Cadvisor;
+        /// <summary>
+        /// Enable scraping of core-dns service.
+        /// </summary>
         public readonly bool? CoreDns;
+        /// <summary>
+        /// Enable kube-state metrics.
+        /// </summary>
         public readonly bool? KubeState;
+        /// <summary>
+        /// Enable scraping kubelet stats.
+        /// </summary>
         public readonly bool? Kubelet;
+        /// <summary>
+        /// Enable collecting node-level stats (disk, network, filesystem, etc).
+        /// </summary>
         public readonly bool? NodeExporter;
+        /// <summary>
+        /// Scrape pods annotated with prometheus.io/scrape=true.
+        /// </summary>
         public readonly Outputs.Mk8sAddOnsMetricsScrapeAnnotated? ScrapeAnnotated;
 
         [OutputConstructor]

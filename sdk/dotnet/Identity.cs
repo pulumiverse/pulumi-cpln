@@ -58,7 +58,7 @@ namespace Pulumiverse.Cpln
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
-        /// ~&gt; **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        /// &gt; **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
         /// </summary>
         [Output("nativeNetworkResources")]
         public Output<ImmutableArray<Outputs.IdentityNativeNetworkResource>> NativeNetworkResources { get; private set; } = null!;
@@ -184,7 +184,7 @@ namespace Pulumiverse.Cpln
         private InputList<Inputs.IdentityNativeNetworkResourceArgs>? _nativeNetworkResources;
 
         /// <summary>
-        /// ~&gt; **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        /// &gt; **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
         /// </summary>
         public InputList<Inputs.IdentityNativeNetworkResourceArgs> NativeNetworkResources
         {
@@ -280,7 +280,7 @@ namespace Pulumiverse.Cpln
         private InputList<Inputs.IdentityNativeNetworkResourceGetArgs>? _nativeNetworkResources;
 
         /// <summary>
-        /// ~&gt; **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        /// &gt; **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
         /// </summary>
         public InputList<Inputs.IdentityNativeNetworkResourceGetArgs> NativeNetworkResources
         {

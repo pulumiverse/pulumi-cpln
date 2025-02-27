@@ -14,6 +14,9 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class CloudAccountAzure
     {
+        /// <summary>
+        /// Full link to an Azure secret. (e.g., /org/ORG_NAME/secret/AZURE_SECRET).
+        /// </summary>
         public readonly string SecretLink;
 
         [OutputConstructor]

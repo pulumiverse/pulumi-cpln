@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -25,26 +30,11 @@ class LocationArgs:
         :param pulumi.Input[str] name: Name of the Location.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
-        LocationArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            enabled=enabled,
-            name=name,
-            tags=tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             enabled: pulumi.Input[bool],
-             name: Optional[pulumi.Input[str]] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("enabled", enabled)
+        pulumi.set(__self__, "enabled", enabled)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
 
     @property
     @pulumi.getter
@@ -108,63 +98,26 @@ class _LocationState:
         :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
-        _LocationState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            cloud_provider=cloud_provider,
-            cpln_id=cpln_id,
-            description=description,
-            enabled=enabled,
-            geos=geos,
-            ip_ranges=ip_ranges,
-            name=name,
-            region=region,
-            self_link=self_link,
-            tags=tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             cloud_provider: Optional[pulumi.Input[str]] = None,
-             cpln_id: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             enabled: Optional[pulumi.Input[bool]] = None,
-             geos: Optional[pulumi.Input[Sequence[pulumi.Input['LocationGeoArgs']]]] = None,
-             ip_ranges: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             region: Optional[pulumi.Input[str]] = None,
-             self_link: Optional[pulumi.Input[str]] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'cloudProvider' in kwargs:
-            cloud_provider = kwargs['cloudProvider']
-        if 'cplnId' in kwargs:
-            cpln_id = kwargs['cplnId']
-        if 'ipRanges' in kwargs:
-            ip_ranges = kwargs['ipRanges']
-        if 'selfLink' in kwargs:
-            self_link = kwargs['selfLink']
-
         if cloud_provider is not None:
-            _setter("cloud_provider", cloud_provider)
+            pulumi.set(__self__, "cloud_provider", cloud_provider)
         if cpln_id is not None:
-            _setter("cpln_id", cpln_id)
+            pulumi.set(__self__, "cpln_id", cpln_id)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if enabled is not None:
-            _setter("enabled", enabled)
+            pulumi.set(__self__, "enabled", enabled)
         if geos is not None:
-            _setter("geos", geos)
+            pulumi.set(__self__, "geos", geos)
         if ip_ranges is not None:
-            _setter("ip_ranges", ip_ranges)
+            pulumi.set(__self__, "ip_ranges", ip_ranges)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if region is not None:
-            _setter("region", region)
+            pulumi.set(__self__, "region", region)
         if self_link is not None:
-            _setter("self_link", self_link)
+            pulumi.set(__self__, "self_link", self_link)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
 
     @property
     @pulumi.getter(name="cloudProvider")
@@ -319,10 +272,6 @@ class Location(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            LocationArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
@@ -366,7 +315,7 @@ class Location(pulumi.CustomResource):
             cpln_id: Optional[pulumi.Input[str]] = None,
             description: Optional[pulumi.Input[str]] = None,
             enabled: Optional[pulumi.Input[bool]] = None,
-            geos: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['LocationGeoArgs']]]]] = None,
+            geos: Optional[pulumi.Input[Sequence[pulumi.Input[Union['LocationGeoArgs', 'LocationGeoArgsDict']]]]] = None,
             ip_ranges: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             name: Optional[pulumi.Input[str]] = None,
             region: Optional[pulumi.Input[str]] = None,

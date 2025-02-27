@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadStatusResolvedImageImageGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// A unique SHA256 hash value that identifies a specific image content. This digest serves as a fingerprint of the image's content, ensuring the image you pull or run is exactly what you expect, without any modifications or corruptions.
+        /// </summary>
         [Input("digest")]
         public Input<string>? Digest { get; set; }
 

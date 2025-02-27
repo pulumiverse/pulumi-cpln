@@ -15,6 +15,9 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class WorkloadSecurityOptions
     {
         public readonly bool? _sentinel;
+        /// <summary>
+        /// The group id assigned to any mounted volume.
+        /// </summary>
         public readonly int? FileSystemGroupId;
 
         [OutputConstructor]

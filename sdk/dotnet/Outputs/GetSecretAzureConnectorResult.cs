@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class GetSecretAzureConnectorResult
     {
+        /// <summary>
+        /// Code/Key to authenticate to deployment URL.
+        /// </summary>
         public readonly string Code;
+        /// <summary>
+        /// Deployment URL.
+        /// </summary>
         public readonly string Url;
 
         [OutputConstructor]

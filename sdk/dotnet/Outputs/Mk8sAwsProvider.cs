@@ -15,19 +15,52 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class Mk8sAwsProvider
     {
         public readonly Outputs.Mk8sAwsProviderAutoscaler? Autoscaler;
+        /// <summary>
+        /// Extra tags to attach to all created objects.
+        /// </summary>
         public readonly ImmutableDictionary<string, string>? AwsTags;
+        /// <summary>
+        /// Control Plane will set up the cluster by assuming this role.
+        /// </summary>
         public readonly string DeployRoleArn;
         public readonly ImmutableArray<Outputs.Mk8sAwsProviderDeployRoleChain> DeployRoleChains;
+        /// <summary>
+        /// KMS key used to encrypt volumes. Supports SSM.
+        /// </summary>
         public readonly string? DiskEncryptionKeyArn;
         public readonly ImmutableArray<string> ExtraNodePolicies;
+        /// <summary>
+        /// Default image for all nodes.
+        /// </summary>
         public readonly Outputs.Mk8sAwsProviderImage Image;
+        /// <summary>
+        /// Name of keyPair. Supports SSM
+        /// </summary>
         public readonly string? KeyPair;
         public readonly Outputs.Mk8sAwsProviderNetworking Networking;
+        /// <summary>
+        /// List of node pools.
+        /// </summary>
         public readonly ImmutableArray<Outputs.Mk8sAwsProviderNodePool> NodePools;
+        /// <summary>
+        /// Optional shell script that will be run before K8s is installed. Supports SSM.
+        /// </summary>
         public readonly string? PreInstallScript;
+        /// <summary>
+        /// Region where the cluster nodes will live.
+        /// </summary>
         public readonly string Region;
+        /// <summary>
+        /// Security groups to deploy nodes to. Security groups control if the cluster is multi-zone or single-zon.
+        /// </summary>
         public readonly ImmutableArray<string> SecurityGroupIds;
+        /// <summary>
+        /// If true, Control Plane will not create any roles.
+        /// </summary>
         public readonly bool? SkipCreateRoles;
+        /// <summary>
+        /// The vpc where nodes will be deployed. Supports SSM.
+        /// </summary>
         public readonly string VpcId;
 
         [OutputConstructor]

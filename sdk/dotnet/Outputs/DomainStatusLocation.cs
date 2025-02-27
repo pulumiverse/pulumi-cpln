@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class DomainStatusLocation
     {
+        /// <summary>
+        /// The current validity or status of the SSL/TLS certificate.
+        /// </summary>
         public readonly string? CertificateStatus;
+        /// <summary>
+        /// The name of the location.
+        /// </summary>
         public readonly string? Name;
 
         [OutputConstructor]

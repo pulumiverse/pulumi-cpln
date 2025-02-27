@@ -22,9 +22,7 @@ namespace Pulumiverse.Cpln
         /// - **cpln_id** (String) The ID, in GUID format, of the org.
         /// - **name** (String) The name of org.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
@@ -43,8 +41,6 @@ namespace Pulumiverse.Cpln
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetOrgResult> InvokeAsync(InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetOrgResult>("cpln:index/getOrg:getOrg", InvokeArgs.Empty, options.WithDefaults());
@@ -59,9 +55,7 @@ namespace Pulumiverse.Cpln
         /// - **cpln_id** (String) The ID, in GUID format, of the org.
         /// - **name** (String) The name of org.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
@@ -80,10 +74,41 @@ namespace Pulumiverse.Cpln
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetOrgResult> Invoke(InvokeOptions? options = null)
+            => global::Pulumi.Deployment.Instance.Invoke<GetOrgResult>("cpln:index/getOrg:getOrg", InvokeArgs.Empty, options.WithDefaults());
+
+        /// <summary>
+        /// Output the ID and name of the current [org](https://docs.controlplane.com/reference/org). 
+        /// 
+        /// ## Outputs
+        /// 
+        /// The following attributes are exported:
+        /// 
+        /// - **cpln_id** (String) The ID, in GUID format, of the org.
+        /// - **name** (String) The name of org.
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```csharp
+        /// using System.Collections.Generic;
+        /// using System.Linq;
+        /// using Pulumi;
+        /// using Cpln = Pulumi.Cpln;
+        /// 
+        /// return await Deployment.RunAsync(() =&gt; 
+        /// {
+        ///     var org = Cpln.GetOrg.Invoke();
+        /// 
+        ///     return new Dictionary&lt;string, object?&gt;
+        ///     {
+        ///         ["orgId"] = org.Apply(getOrgResult =&gt; getOrgResult.Id),
+        ///         ["orgName"] = org.Apply(getOrgResult =&gt; getOrgResult.Name),
+        ///     };
+        /// });
+        /// ```
+        /// </summary>
+        public static Output<GetOrgResult> Invoke(InvokeOutputOptions options)
             => global::Pulumi.Deployment.Instance.Invoke<GetOrgResult>("cpln:index/getOrg:getOrg", InvokeArgs.Empty, options.WithDefaults());
     }
 

@@ -15,6 +15,9 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class GvcLoadBalancerRedirectClass
     {
         public readonly bool? _sentinel;
+        /// <summary>
+        /// Specify the redirect url for any 500 level status code.
+        /// </summary>
         public readonly string? Status5xx;
 
         [OutputConstructor]

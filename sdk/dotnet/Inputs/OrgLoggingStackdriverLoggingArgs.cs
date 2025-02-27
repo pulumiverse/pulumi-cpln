@@ -13,9 +13,15 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class OrgLoggingStackdriverLoggingArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Full Link to a secret of type `opaque`.
+        /// </summary>
         [Input("credentials", required: true)]
         public Input<string> Credentials { get; set; } = null!;
 
+        /// <summary>
+        /// A Google Cloud Provider region.
+        /// </summary>
         [Input("location", required: true)]
         public Input<string> Location { get; set; } = null!;
 

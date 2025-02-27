@@ -13,9 +13,15 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadContainerPortGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Port to expose.
+        /// </summary>
         [Input("number", required: true)]
         public Input<int> Number { get; set; } = null!;
 
+        /// <summary>
+        /// Protocol. Choice of: `http`, `http2`, `tcp`, or `grpc`.
+        /// </summary>
         [Input("protocol")]
         public Input<string>? Protocol { get; set; }
 

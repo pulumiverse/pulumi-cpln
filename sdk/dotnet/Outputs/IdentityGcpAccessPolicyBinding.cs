@@ -15,7 +15,13 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class IdentityGcpAccessPolicyBinding
     {
         public readonly bool? _sentinel;
+        /// <summary>
+        /// Name of resource for binding.
+        /// </summary>
         public readonly string? Resource;
+        /// <summary>
+        /// List of allowed roles.
+        /// </summary>
         public readonly ImmutableArray<string> Roles;
 
         [OutputConstructor]

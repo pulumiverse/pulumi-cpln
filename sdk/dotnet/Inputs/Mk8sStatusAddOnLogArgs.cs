@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class Mk8sStatusAddOnLogArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Loki endpoint to query logs from.
+        /// </summary>
         [Input("lokiAddress")]
         public Input<string>? LokiAddress { get; set; }
 

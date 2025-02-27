@@ -13,12 +13,21 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class OrgSecurityThreatDetectionGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Indicates whether threat detection should be forwarded or not.
+        /// </summary>
         [Input("enabled", required: true)]
         public Input<bool> Enabled { get; set; } = null!;
 
+        /// <summary>
+        /// Any threats with this severity and more severe will be sent. Others will be ignored. Valid values: `warning`, `error`, or `critical`.
+        /// </summary>
         [Input("minimumSeverity")]
         public Input<string>? MinimumSeverity { get; set; }
 
+        /// <summary>
+        /// Configuration for syslog forwarding.
+        /// </summary>
         [Input("syslog")]
         public Input<Inputs.OrgSecurityThreatDetectionSyslogGetArgs>? Syslog { get; set; }
 

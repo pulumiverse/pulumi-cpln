@@ -13,24 +13,45 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadStatusHealthCheckGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Active boolean for the associated workload.
+        /// </summary>
         [Input("active", required: true)]
         public Input<bool> Active { get; set; } = null!;
 
+        /// <summary>
+        /// Current output code for the associated workload.
+        /// </summary>
         [Input("code")]
         public Input<int>? Code { get; set; }
 
+        /// <summary>
+        /// Failure integer for the associated workload.
+        /// </summary>
         [Input("failures")]
         public Input<int>? Failures { get; set; }
 
+        /// <summary>
+        /// Timestamp in UTC of the last health check.
+        /// </summary>
         [Input("lastChecked")]
         public Input<string>? LastChecked { get; set; }
 
+        /// <summary>
+        /// Current health status for the associated workload.
+        /// </summary>
         [Input("message")]
         public Input<string>? Message { get; set; }
 
+        /// <summary>
+        /// Success boolean for the associated workload.
+        /// </summary>
         [Input("success")]
         public Input<bool>? Success { get; set; }
 
+        /// <summary>
+        /// Success integer for the associated workload.
+        /// </summary>
         [Input("successes")]
         public Input<int>? Successes { get; set; }
 

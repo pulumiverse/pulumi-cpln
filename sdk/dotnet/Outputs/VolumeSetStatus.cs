@@ -14,9 +14,21 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class VolumeSetStatus
     {
+        /// <summary>
+        /// Uniquely identifies the connection between the volume set and its workload. Every time a new connection is made, a new id is generated (e.g., If a workload is updated to remove the volume set, then updated again to reattach it, the volume set will have a new binding id).
+        /// </summary>
         public readonly string? BindingId;
+        /// <summary>
+        /// Contains a list of actual volumes grouped by location.
+        /// </summary>
         public readonly ImmutableArray<string> Locations;
+        /// <summary>
+        /// The GVC ID.
+        /// </summary>
         public readonly string? ParentId;
+        /// <summary>
+        /// The url of the workload currently using this volume set (if any).
+        /// </summary>
         public readonly string? UsedByWorkload;
 
         [OutputConstructor]

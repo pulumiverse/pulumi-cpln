@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgLoggingDatadogLogging
     {
+        /// <summary>
+        /// Full link to referenced Opaque Secret.
+        /// </summary>
         public readonly string Credentials;
+        /// <summary>
+        /// Datadog host URI.
+        /// </summary>
         public readonly string Host;
 
         [OutputConstructor]

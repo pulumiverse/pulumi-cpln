@@ -14,13 +14,34 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sEphemeralProviderNodePool
     {
+        /// <summary>
+        /// CPU architecture of the nodes.
+        /// </summary>
         public readonly string Arch;
+        /// <summary>
+        /// Number of nodes to deploy.
+        /// </summary>
         public readonly int Count;
+        /// <summary>
+        /// Allocated CPU.
+        /// </summary>
         public readonly string Cpu;
+        /// <summary>
+        /// Linux distro to use for ephemeral nodes.
+        /// </summary>
         public readonly string Flavor;
+        /// <summary>
+        /// Labels to attach to nodes of a node pool.
+        /// </summary>
         public readonly ImmutableDictionary<string, string>? Labels;
+        /// <summary>
+        /// Allocated memory.
+        /// </summary>
         public readonly string Memory;
         public readonly string Name;
+        /// <summary>
+        /// Taint for the nodes of a pool.
+        /// </summary>
         public readonly ImmutableArray<Outputs.Mk8sEphemeralProviderNodePoolTaint> Taints;
 
         [OutputConstructor]

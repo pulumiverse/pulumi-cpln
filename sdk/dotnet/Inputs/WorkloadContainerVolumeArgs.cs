@@ -13,12 +13,21 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadContainerVolumeArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// File path added to workload pointing to the volume.
+        /// </summary>
         [Input("path", required: true)]
         public Input<string> Path { get; set; } = null!;
 
+        /// <summary>
+        /// Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
+        /// </summary>
         [Input("recoveryPolicy")]
         public Input<string>? RecoveryPolicy { get; set; }
 
+        /// <summary>
+        /// URI of a volume hosted at Control Plane (Volume Set) or at a cloud provider (AWS, Azure, GCP).
+        /// </summary>
         [Input("uri", required: true)]
         public Input<string> Uri { get; set; } = null!;
 

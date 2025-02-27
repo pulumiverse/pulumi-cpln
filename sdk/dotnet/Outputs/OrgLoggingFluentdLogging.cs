@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgLoggingFluentdLogging
     {
+        /// <summary>
+        /// The hostname or IP address of a remote log storage system.
+        /// </summary>
         public readonly string Host;
+        /// <summary>
+        /// Port. Default: 24224
+        /// </summary>
         public readonly int? Port;
 
         [OutputConstructor]

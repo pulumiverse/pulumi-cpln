@@ -14,11 +14,29 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadLocalOption
     {
+        /// <summary>
+        /// Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+        /// </summary>
         public readonly Outputs.WorkloadLocalOptionAutoscaling? Autoscaling;
+        /// <summary>
+        /// Capacity AI. Default: `true`.
+        /// </summary>
         public readonly bool? CapacityAi;
+        /// <summary>
+        /// Debug mode. Default: `false`
+        /// </summary>
         public readonly bool? Debug;
+        /// <summary>
+        /// Valid only for `local_options`. Override options for a specific location.
+        /// </summary>
         public readonly string Location;
+        /// <summary>
+        /// Workload suspend. Default: `false`
+        /// </summary>
         public readonly bool? Suspend;
+        /// <summary>
+        /// Timeout in seconds. Default: `5`.
+        /// </summary>
         public readonly int? TimeoutSeconds;
 
         [OutputConstructor]

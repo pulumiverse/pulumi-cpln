@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class PolicyTargetQuerySpec
     {
+        /// <summary>
+        /// Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        /// </summary>
         public readonly string? Match;
+        /// <summary>
+        /// Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        /// </summary>
         public readonly ImmutableArray<Outputs.PolicyTargetQuerySpecTerm> Terms;
 
         [OutputConstructor]

@@ -14,11 +14,29 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgLoggingElasticLoggingGeneric
     {
+        /// <summary>
+        /// Full Link to a secret of type `userpass`.
+        /// </summary>
         public readonly string Credentials;
+        /// <summary>
+        /// A valid Elastic Search provider hostname.
+        /// </summary>
         public readonly string Host;
+        /// <summary>
+        /// Logging Index.
+        /// </summary>
         public readonly string Index;
+        /// <summary>
+        /// Logging path.
+        /// </summary>
         public readonly string Path;
+        /// <summary>
+        /// Port. Default: 443
+        /// </summary>
         public readonly int Port;
+        /// <summary>
+        /// Logging Type.
+        /// </summary>
         public readonly string Type;
 
         [OutputConstructor]

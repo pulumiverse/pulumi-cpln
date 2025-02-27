@@ -13,9 +13,15 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadContainerMetricsArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Path from container emitting custom metrics
+        /// </summary>
         [Input("path", required: true)]
         public Input<string> Path { get; set; } = null!;
 
+        /// <summary>
+        /// Port from container emitting custom metrics
+        /// </summary>
         [Input("port", required: true)]
         public Input<int> Port { get; set; } = null!;
 

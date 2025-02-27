@@ -14,6 +14,9 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sAwsProviderNodePoolOverrideImage
     {
+        /// <summary>
+        /// Support SSM.
+        /// </summary>
         public readonly string? Exact;
         public readonly string? Recommended;
 

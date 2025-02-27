@@ -14,6 +14,9 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class CloudAccountNgs
     {
+        /// <summary>
+        /// Full link to a NATS Account Secret secret. (e.g., /org/ORG_NAME/secret/NATS_ACCOUNT_SECRET).
+        /// </summary>
         public readonly string SecretLink;
 
         [OutputConstructor]
