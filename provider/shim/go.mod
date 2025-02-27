@@ -5,7 +5,7 @@ go 1.22.0
 toolchain go1.23.4
 
 require (
-	github.com/controlplane-com/terraform-provider-cpln v1.1.44
+	github.com/controlplane-com/terraform-provider-cpln v1.1.45
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.35.0
 )
 
