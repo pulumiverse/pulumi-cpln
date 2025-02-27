@@ -55,7 +55,6 @@ import * as utilities from "./utilities";
  * ```
  */
 export function getLocation(args: GetLocationArgs, opts?: pulumi.InvokeOptions): Promise<GetLocationResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("cpln:index/getLocation:getLocation", {
         "name": args.name,
@@ -136,8 +135,11 @@ export interface GetLocationResult {
  * export const locationEnabled = locationLocation.then(locationLocation => locationLocation.enabled);
  * ```
  */
-export function getLocationOutput(args: GetLocationOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetLocationResult> {
-    return pulumi.output(args).apply((a: any) => getLocation(a, opts))
+export function getLocationOutput(args: GetLocationOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetLocationResult> {
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("cpln:index/getLocation:getLocation", {
+        "name": args.name,
+    }, opts);
 }
 
 /**

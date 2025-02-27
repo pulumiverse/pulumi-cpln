@@ -17,12 +17,11 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as cpln from "@pulumi/cpln";
  *
- * const this = cpln.getCloudAccount({});
+ * const _this = cpln.getCloudAccount({});
  * export const cloudAccount = _this.then(_this => _this.awsIdentifiers);
  * ```
  */
 export function getCloudAccount(opts?: pulumi.InvokeOptions): Promise<GetCloudAccountResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("cpln:index/getCloudAccount:getCloudAccount", {
     }, opts);
@@ -51,10 +50,12 @@ export interface GetCloudAccountResult {
  * import * as pulumi from "@pulumi/pulumi";
  * import * as cpln from "@pulumi/cpln";
  *
- * const this = cpln.getCloudAccount({});
+ * const _this = cpln.getCloudAccount({});
  * export const cloudAccount = _this.then(_this => _this.awsIdentifiers);
  * ```
  */
-export function getCloudAccountOutput(opts?: pulumi.InvokeOptions): pulumi.Output<GetCloudAccountResult> {
-    return pulumi.output(getCloudAccount(opts))
+export function getCloudAccountOutput(opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetCloudAccountResult> {
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("cpln:index/getCloudAccount:getCloudAccount", {
+    }, opts);
 }
