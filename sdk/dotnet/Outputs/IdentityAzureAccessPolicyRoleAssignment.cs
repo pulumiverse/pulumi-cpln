@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class IdentityAzureAccessPolicyRoleAssignment
     {
-        public readonly bool? _sentinel;
+        public readonly bool? PlaceholderAttribute;
         /// <summary>
         /// List of assigned roles.
         /// </summary>
@@ -26,13 +26,13 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private IdentityAzureAccessPolicyRoleAssignment(
-            bool? _sentinel,
+            bool? placeholderAttribute,
 
             ImmutableArray<string> roles,
 
             string? scope)
         {
-            this._sentinel = _sentinel;
+            PlaceholderAttribute = placeholderAttribute;
             Roles = roles;
             Scope = scope;
         }

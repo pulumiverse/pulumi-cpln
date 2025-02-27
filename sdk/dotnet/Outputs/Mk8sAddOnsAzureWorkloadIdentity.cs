@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sAddOnsAzureWorkloadIdentity
     {
-        public readonly bool? _sentinel;
+        public readonly bool? PlaceholderAttribute;
         /// <summary>
         /// Tenant ID to use for workload identity.
         /// </summary>
@@ -22,11 +22,11 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private Mk8sAddOnsAzureWorkloadIdentity(
-            bool? _sentinel,
+            bool? placeholderAttribute,
 
             string? tenantId)
         {
-            this._sentinel = _sentinel;
+            PlaceholderAttribute = placeholderAttribute;
             TenantId = tenantId;
         }
     }

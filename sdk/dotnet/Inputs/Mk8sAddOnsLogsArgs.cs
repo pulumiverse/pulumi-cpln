@@ -13,9 +13,6 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class Mk8sAddOnsLogsArgs : global::Pulumi.ResourceArgs
     {
-        [Input("_sentinel")]
-        public Input<bool>? _sentinel { get; set; }
-
         /// <summary>
         /// Collect k8s audit log as log events.
         /// </summary>
@@ -27,6 +24,9 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("includeNamespaces")]
         public Input<string>? IncludeNamespaces { get; set; }
+
+        [Input("placeholderAttribute")]
+        public Input<bool>? PlaceholderAttribute { get; set; }
 
         public Mk8sAddOnsLogsArgs()
         {

@@ -13,9 +13,6 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class Mk8sAddOnsMetricsScrapeAnnotatedArgs : global::Pulumi.ResourceArgs
     {
-        [Input("_sentinel")]
-        public Input<bool>? _sentinel { get; set; }
-
         [Input("excludeNamespaces")]
         public Input<string>? ExcludeNamespaces { get; set; }
 
@@ -24,6 +21,9 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("intervalSeconds")]
         public Input<int>? IntervalSeconds { get; set; }
+
+        [Input("placeholderAttribute")]
+        public Input<bool>? PlaceholderAttribute { get; set; }
 
         [Input("retainLabels")]
         public Input<string>? RetainLabels { get; set; }

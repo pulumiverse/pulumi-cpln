@@ -13,9 +13,6 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadFirewallSpecGetArgs : global::Pulumi.ResourceArgs
     {
-        [Input("_sentinel")]
-        public Input<bool>? _sentinel { get; set; }
-
         /// <summary>
         /// The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
         /// </summary>
@@ -27,6 +24,9 @@ namespace Pulumiverse.Cpln.Inputs
         /// </summary>
         [Input("internal")]
         public Input<Inputs.WorkloadFirewallSpecInternalGetArgs>? Internal { get; set; }
+
+        [Input("placeholderAttribute")]
+        public Input<bool>? PlaceholderAttribute { get; set; }
 
         public WorkloadFirewallSpecGetArgs()
         {

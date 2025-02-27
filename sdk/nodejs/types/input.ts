@@ -34,7 +34,7 @@ export interface CloudAccountNgs {
 }
 
 export interface DomainRouteHeaders {
-    _sentinel?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     /**
      * Manipulates HTTP headers.
      */
@@ -42,7 +42,7 @@ export interface DomainRouteHeaders {
 }
 
 export interface DomainRouteHeadersRequest {
-    _sentinel?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     /**
      * Sets or overrides headers to all http requests for this route.
      */
@@ -307,23 +307,23 @@ export interface GetGvcLoadBalancerArgs {
 }
 
 export interface GetGvcLoadBalancerRedirect {
-    _sentinel?: boolean;
     /**
      * Specify the redirect url for all status codes in a class.
      */
     class?: inputs.GetGvcLoadBalancerRedirectClass;
+    placeholderAttribute?: boolean;
 }
 
 export interface GetGvcLoadBalancerRedirectArgs {
-    _sentinel?: pulumi.Input<boolean>;
     /**
      * Specify the redirect url for all status codes in a class.
      */
     class?: pulumi.Input<inputs.GetGvcLoadBalancerRedirectClassArgs>;
+    placeholderAttribute?: pulumi.Input<boolean>;
 }
 
 export interface GetGvcLoadBalancerRedirectClass {
-    _sentinel?: boolean;
+    placeholderAttribute?: boolean;
     /**
      * Specify the redirect url for any 500 level status code.
      */
@@ -331,7 +331,7 @@ export interface GetGvcLoadBalancerRedirectClass {
 }
 
 export interface GetGvcLoadBalancerRedirectClassArgs {
-    _sentinel?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     /**
      * Specify the redirect url for any 500 level status code.
      */
@@ -790,15 +790,15 @@ export interface GvcLoadBalancer {
 }
 
 export interface GvcLoadBalancerRedirect {
-    _sentinel?: pulumi.Input<boolean>;
     /**
      * Specify the redirect url for all status codes in a class.
      */
     class?: pulumi.Input<inputs.GvcLoadBalancerRedirectClass>;
+    placeholderAttribute?: pulumi.Input<boolean>;
 }
 
 export interface GvcLoadBalancerRedirectClass {
-    _sentinel?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     /**
      * Specify the redirect url for any 500 level status code.
      */
@@ -851,7 +851,7 @@ export interface IdentityAzureAccessPolicy {
 }
 
 export interface IdentityAzureAccessPolicyRoleAssignment {
-    _sentinel?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     /**
      * List of assigned roles.
      */
@@ -882,7 +882,7 @@ export interface IdentityGcpAccessPolicy {
 }
 
 export interface IdentityGcpAccessPolicyBinding {
-    _sentinel?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     /**
      * Name of resource for binding.
      */
@@ -1085,7 +1085,7 @@ export interface Mk8sAddOns {
 }
 
 export interface Mk8sAddOnsAwsEcr {
-    _sentinel?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     /**
      * Role to use when authorizing ECR pulls. Optional on AWS, in which case it will use the instance role to pull.
      */
@@ -1093,7 +1093,7 @@ export interface Mk8sAddOnsAwsEcr {
 }
 
 export interface Mk8sAddOnsAwsEfs {
-    _sentinel?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     /**
      * Use this role for EFS interaction.
      */
@@ -1101,7 +1101,7 @@ export interface Mk8sAddOnsAwsEfs {
 }
 
 export interface Mk8sAddOnsAwsElb {
-    _sentinel?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     /**
      * Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.
      */
@@ -1113,7 +1113,7 @@ export interface Mk8sAddOnsAzureAcr {
 }
 
 export interface Mk8sAddOnsAzureWorkloadIdentity {
-    _sentinel?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     /**
      * Tenant ID to use for workload identity.
      */
@@ -1121,17 +1121,16 @@ export interface Mk8sAddOnsAzureWorkloadIdentity {
 }
 
 export interface Mk8sAddOnsLogs {
-    _sentinel?: pulumi.Input<boolean>;
     /**
      * Collect k8s audit log as log events.
      */
     auditEnabled?: pulumi.Input<boolean>;
     excludeNamespaces?: pulumi.Input<string>;
     includeNamespaces?: pulumi.Input<string>;
+    placeholderAttribute?: pulumi.Input<boolean>;
 }
 
 export interface Mk8sAddOnsMetrics {
-    _sentinel?: pulumi.Input<boolean>;
     /**
      * Enable scraping apiserver stats.
      */
@@ -1156,6 +1155,7 @@ export interface Mk8sAddOnsMetrics {
      * Enable collecting node-level stats (disk, network, filesystem, etc).
      */
     nodeExporter?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     /**
      * Scrape pods annotated with prometheus.io/scrape=true.
      */
@@ -1163,15 +1163,15 @@ export interface Mk8sAddOnsMetrics {
 }
 
 export interface Mk8sAddOnsMetricsScrapeAnnotated {
-    _sentinel?: pulumi.Input<boolean>;
     excludeNamespaces?: pulumi.Input<string>;
     includeNamespaces?: pulumi.Input<string>;
     intervalSeconds?: pulumi.Input<number>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     retainLabels?: pulumi.Input<string>;
 }
 
 export interface Mk8sAddOnsNvidia {
-    _sentinel?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     taintGpuNodes?: pulumi.Input<boolean>;
 }
 
@@ -1990,7 +1990,7 @@ export interface Mk8sTritonProviderLoadBalancer {
 }
 
 export interface Mk8sTritonProviderLoadBalancerGateway {
-    _sentinel?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
 }
 
 export interface Mk8sTritonProviderLoadBalancerManual {
@@ -2131,7 +2131,6 @@ export interface OrgLoggingDatadogLogging {
 }
 
 export interface OrgLoggingElasticLogging {
-    _sentinel?: pulumi.Input<boolean>;
     /**
      * For targeting Amazon Web Services (AWS) ElasticSearch.
      */
@@ -2144,6 +2143,7 @@ export interface OrgLoggingElasticLogging {
      * For targeting generic Elastic Search providers.
      */
     generic?: pulumi.Input<inputs.OrgLoggingElasticLoggingGeneric>;
+    placeholderAttribute?: pulumi.Input<boolean>;
 }
 
 export interface OrgLoggingElasticLoggingAws {
@@ -2310,7 +2310,7 @@ export interface OrgObservability {
 }
 
 export interface OrgSecurity {
-    _sentinel?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     threatDetection?: pulumi.Input<inputs.OrgSecurityThreatDetection>;
 }
 
@@ -2712,7 +2712,7 @@ export interface WorkloadContainerGpuNvidia {
 }
 
 export interface WorkloadContainerLifecycle {
-    _sentinel?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     postStart?: pulumi.Input<inputs.WorkloadContainerLifecyclePostStart>;
     preStop?: pulumi.Input<inputs.WorkloadContainerLifecyclePreStop>;
 }
@@ -2750,7 +2750,7 @@ export interface WorkloadContainerLivenessProbeExec {
 }
 
 export interface WorkloadContainerLivenessProbeGrpc {
-    _sentinel?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     port?: pulumi.Input<number>;
 }
 
@@ -2762,7 +2762,7 @@ export interface WorkloadContainerLivenessProbeHttpGet {
 }
 
 export interface WorkloadContainerLivenessProbeTcpSocket {
-    _sentinel?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     port?: pulumi.Input<number>;
 }
 
@@ -2805,7 +2805,7 @@ export interface WorkloadContainerReadinessProbeExec {
 }
 
 export interface WorkloadContainerReadinessProbeGrpc {
-    _sentinel?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     port?: pulumi.Input<number>;
 }
 
@@ -2817,7 +2817,7 @@ export interface WorkloadContainerReadinessProbeHttpGet {
 }
 
 export interface WorkloadContainerReadinessProbeTcpSocket {
-    _sentinel?: pulumi.Input<boolean>;
+    placeholderAttribute?: pulumi.Input<boolean>;
     port?: pulumi.Input<number>;
 }
 
@@ -2837,7 +2837,6 @@ export interface WorkloadContainerVolume {
 }
 
 export interface WorkloadFirewallSpec {
-    _sentinel?: pulumi.Input<boolean>;
     /**
      * The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
      */
@@ -2846,6 +2845,7 @@ export interface WorkloadFirewallSpec {
      * The internal firewall is used to control access between workloads.
      */
     internal?: pulumi.Input<inputs.WorkloadFirewallSpecInternal>;
+    placeholderAttribute?: pulumi.Input<boolean>;
 }
 
 export interface WorkloadFirewallSpecExternal {
@@ -2913,9 +2913,9 @@ export interface WorkloadJob {
 }
 
 export interface WorkloadLoadBalancer {
-    _sentinel?: pulumi.Input<boolean>;
     direct?: pulumi.Input<inputs.WorkloadLoadBalancerDirect>;
     geoLocation?: pulumi.Input<inputs.WorkloadLoadBalancerGeoLocation>;
+    placeholderAttribute?: pulumi.Input<boolean>;
 }
 
 export interface WorkloadLoadBalancerDirect {
@@ -3116,11 +3116,11 @@ export interface WorkloadRolloutOptions {
 }
 
 export interface WorkloadSecurityOptions {
-    _sentinel?: pulumi.Input<boolean>;
     /**
      * The group id assigned to any mounted volume.
      */
     fileSystemGroupId?: pulumi.Input<number>;
+    placeholderAttribute?: pulumi.Input<boolean>;
 }
 
 export interface WorkloadSidecar {

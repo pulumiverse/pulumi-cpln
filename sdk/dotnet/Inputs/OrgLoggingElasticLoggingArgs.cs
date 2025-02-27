@@ -13,9 +13,6 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class OrgLoggingElasticLoggingArgs : global::Pulumi.ResourceArgs
     {
-        [Input("_sentinel")]
-        public Input<bool>? _sentinel { get; set; }
-
         /// <summary>
         /// For targeting Amazon Web Services (AWS) ElasticSearch.
         /// </summary>
@@ -33,6 +30,9 @@ namespace Pulumiverse.Cpln.Inputs
         /// </summary>
         [Input("generic")]
         public Input<Inputs.OrgLoggingElasticLoggingGenericArgs>? Generic { get; set; }
+
+        [Input("placeholderAttribute")]
+        public Input<bool>? PlaceholderAttribute { get; set; }
 
         public OrgLoggingElasticLoggingArgs()
         {

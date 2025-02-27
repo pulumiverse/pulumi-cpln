@@ -394,21 +394,38 @@ class CloudAccountNgs(dict):
 
 @pulumi.output_type
 class DomainRouteHeaders(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in DomainRouteHeaders. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        DomainRouteHeaders.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        DomainRouteHeaders.__key_warning(key)
+        return super().get(key, default)
+
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  request: Optional['outputs.DomainRouteHeadersRequest'] = None):
         """
         :param 'DomainRouteHeadersRequestArgs' request: Manipulates HTTP headers.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if request is not None:
             pulumi.set(__self__, "request", request)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
     @property
     @pulumi.getter
@@ -421,21 +438,38 @@ class DomainRouteHeaders(dict):
 
 @pulumi.output_type
 class DomainRouteHeadersRequest(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in DomainRouteHeadersRequest. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        DomainRouteHeadersRequest.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        DomainRouteHeadersRequest.__key_warning(key)
+        return super().get(key, default)
+
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  set: Optional[Mapping[str, str]] = None):
         """
         :param Mapping[str, str] set: Sets or overrides headers to all http requests for this route.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if set is not None:
             pulumi.set(__self__, "set", set)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
     @property
     @pulumi.getter
@@ -1423,6 +1457,8 @@ class GvcLoadBalancerRedirect(dict):
         suggest = None
         if key == "class":
             suggest = "class_"
+        elif key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in GvcLoadBalancerRedirect. Access the value via the '{suggest}' property getter instead.")
@@ -1436,20 +1472,15 @@ class GvcLoadBalancerRedirect(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
-                 class_: Optional['outputs.GvcLoadBalancerRedirectClass'] = None):
+                 class_: Optional['outputs.GvcLoadBalancerRedirectClass'] = None,
+                 placeholder_attribute: Optional[bool] = None):
         """
         :param 'GvcLoadBalancerRedirectClassArgs' class_: Specify the redirect url for all status codes in a class.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
         if class_ is not None:
             pulumi.set(__self__, "class_", class_)
-
-    @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
 
     @property
     @pulumi.getter(name="class")
@@ -1459,24 +1490,46 @@ class GvcLoadBalancerRedirect(dict):
         """
         return pulumi.get(self, "class_")
 
+    @property
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
+
 
 @pulumi.output_type
 class GvcLoadBalancerRedirectClass(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in GvcLoadBalancerRedirectClass. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        GvcLoadBalancerRedirectClass.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        GvcLoadBalancerRedirectClass.__key_warning(key)
+        return super().get(key, default)
+
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  status5xx: Optional[str] = None):
         """
         :param str status5xx: Specify the redirect url for any 500 level status code.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if status5xx is not None:
             pulumi.set(__self__, "status5xx", status5xx)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
     @property
     @pulumi.getter
@@ -1671,25 +1724,42 @@ class IdentityAzureAccessPolicy(dict):
 
 @pulumi.output_type
 class IdentityAzureAccessPolicyRoleAssignment(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in IdentityAzureAccessPolicyRoleAssignment. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        IdentityAzureAccessPolicyRoleAssignment.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        IdentityAzureAccessPolicyRoleAssignment.__key_warning(key)
+        return super().get(key, default)
+
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  roles: Optional[Sequence[str]] = None,
                  scope: Optional[str] = None):
         """
         :param Sequence[str] roles: List of assigned roles.
         :param str scope: Scope of roles.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if roles is not None:
             pulumi.set(__self__, "roles", roles)
         if scope is not None:
             pulumi.set(__self__, "scope", scope)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
     @property
     @pulumi.getter
@@ -1783,25 +1853,42 @@ class IdentityGcpAccessPolicy(dict):
 
 @pulumi.output_type
 class IdentityGcpAccessPolicyBinding(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in IdentityGcpAccessPolicyBinding. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        IdentityGcpAccessPolicyBinding.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        IdentityGcpAccessPolicyBinding.__key_warning(key)
+        return super().get(key, default)
+
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  resource: Optional[str] = None,
                  roles: Optional[Sequence[str]] = None):
         """
         :param str resource: Name of resource for binding.
         :param Sequence[str] roles: List of allowed roles.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if resource is not None:
             pulumi.set(__self__, "resource", resource)
         if roles is not None:
             pulumi.set(__self__, "roles", roles)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
     @property
     @pulumi.getter
@@ -2608,7 +2695,9 @@ class Mk8sAddOnsAwsEcr(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "roleArn":
+        if key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
+        elif key == "roleArn":
             suggest = "role_arn"
 
         if suggest:
@@ -2623,20 +2712,20 @@ class Mk8sAddOnsAwsEcr(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  role_arn: Optional[str] = None):
         """
         :param str role_arn: Role to use when authorizing ECR pulls. Optional on AWS, in which case it will use the instance role to pull.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if role_arn is not None:
             pulumi.set(__self__, "role_arn", role_arn)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
     @property
     @pulumi.getter(name="roleArn")
@@ -2652,7 +2741,9 @@ class Mk8sAddOnsAwsEfs(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "roleArn":
+        if key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
+        elif key == "roleArn":
             suggest = "role_arn"
 
         if suggest:
@@ -2667,20 +2758,20 @@ class Mk8sAddOnsAwsEfs(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  role_arn: Optional[str] = None):
         """
         :param str role_arn: Use this role for EFS interaction.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if role_arn is not None:
             pulumi.set(__self__, "role_arn", role_arn)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
     @property
     @pulumi.getter(name="roleArn")
@@ -2696,7 +2787,9 @@ class Mk8sAddOnsAwsElb(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "roleArn":
+        if key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
+        elif key == "roleArn":
             suggest = "role_arn"
 
         if suggest:
@@ -2711,20 +2804,20 @@ class Mk8sAddOnsAwsElb(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  role_arn: Optional[str] = None):
         """
         :param str role_arn: Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if role_arn is not None:
             pulumi.set(__self__, "role_arn", role_arn)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
     @property
     @pulumi.getter(name="roleArn")
@@ -2769,7 +2862,9 @@ class Mk8sAddOnsAzureWorkloadIdentity(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "tenantId":
+        if key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
+        elif key == "tenantId":
             suggest = "tenant_id"
 
         if suggest:
@@ -2784,20 +2879,20 @@ class Mk8sAddOnsAzureWorkloadIdentity(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  tenant_id: Optional[str] = None):
         """
         :param str tenant_id: Tenant ID to use for workload identity.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if tenant_id is not None:
             pulumi.set(__self__, "tenant_id", tenant_id)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
     @property
     @pulumi.getter(name="tenantId")
@@ -2819,6 +2914,8 @@ class Mk8sAddOnsLogs(dict):
             suggest = "exclude_namespaces"
         elif key == "includeNamespaces":
             suggest = "include_namespaces"
+        elif key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOnsLogs. Access the value via the '{suggest}' property getter instead.")
@@ -2832,26 +2929,21 @@ class Mk8sAddOnsLogs(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
                  audit_enabled: Optional[bool] = None,
                  exclude_namespaces: Optional[str] = None,
-                 include_namespaces: Optional[str] = None):
+                 include_namespaces: Optional[str] = None,
+                 placeholder_attribute: Optional[bool] = None):
         """
         :param bool audit_enabled: Collect k8s audit log as log events.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
         if audit_enabled is not None:
             pulumi.set(__self__, "audit_enabled", audit_enabled)
         if exclude_namespaces is not None:
             pulumi.set(__self__, "exclude_namespaces", exclude_namespaces)
         if include_namespaces is not None:
             pulumi.set(__self__, "include_namespaces", include_namespaces)
-
-    @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
 
     @property
     @pulumi.getter(name="auditEnabled")
@@ -2871,6 +2963,11 @@ class Mk8sAddOnsLogs(dict):
     def include_namespaces(self) -> Optional[str]:
         return pulumi.get(self, "include_namespaces")
 
+    @property
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
+
 
 @pulumi.output_type
 class Mk8sAddOnsMetrics(dict):
@@ -2885,6 +2982,8 @@ class Mk8sAddOnsMetrics(dict):
             suggest = "kube_state"
         elif key == "nodeExporter":
             suggest = "node_exporter"
+        elif key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
         elif key == "scrapeAnnotated":
             suggest = "scrape_annotated"
 
@@ -2900,13 +2999,13 @@ class Mk8sAddOnsMetrics(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
                  api_server: Optional[bool] = None,
                  cadvisor: Optional[bool] = None,
                  core_dns: Optional[bool] = None,
                  kube_state: Optional[bool] = None,
                  kubelet: Optional[bool] = None,
                  node_exporter: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  scrape_annotated: Optional['outputs.Mk8sAddOnsMetricsScrapeAnnotated'] = None):
         """
         :param bool api_server: Enable scraping apiserver stats.
@@ -2917,8 +3016,6 @@ class Mk8sAddOnsMetrics(dict):
         :param bool node_exporter: Enable collecting node-level stats (disk, network, filesystem, etc).
         :param 'Mk8sAddOnsMetricsScrapeAnnotatedArgs' scrape_annotated: Scrape pods annotated with prometheus.io/scrape=true.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
         if api_server is not None:
             pulumi.set(__self__, "api_server", api_server)
         if cadvisor is not None:
@@ -2931,13 +3028,10 @@ class Mk8sAddOnsMetrics(dict):
             pulumi.set(__self__, "kubelet", kubelet)
         if node_exporter is not None:
             pulumi.set(__self__, "node_exporter", node_exporter)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if scrape_annotated is not None:
             pulumi.set(__self__, "scrape_annotated", scrape_annotated)
-
-    @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter(name="apiServer")
@@ -2988,6 +3082,11 @@ class Mk8sAddOnsMetrics(dict):
         return pulumi.get(self, "node_exporter")
 
     @property
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
+
+    @property
     @pulumi.getter(name="scrapeAnnotated")
     def scrape_annotated(self) -> Optional['outputs.Mk8sAddOnsMetricsScrapeAnnotated']:
         """
@@ -3007,6 +3106,8 @@ class Mk8sAddOnsMetricsScrapeAnnotated(dict):
             suggest = "include_namespaces"
         elif key == "intervalSeconds":
             suggest = "interval_seconds"
+        elif key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
         elif key == "retainLabels":
             suggest = "retain_labels"
 
@@ -3022,26 +3123,21 @@ class Mk8sAddOnsMetricsScrapeAnnotated(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
                  exclude_namespaces: Optional[str] = None,
                  include_namespaces: Optional[str] = None,
                  interval_seconds: Optional[int] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  retain_labels: Optional[str] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
         if exclude_namespaces is not None:
             pulumi.set(__self__, "exclude_namespaces", exclude_namespaces)
         if include_namespaces is not None:
             pulumi.set(__self__, "include_namespaces", include_namespaces)
         if interval_seconds is not None:
             pulumi.set(__self__, "interval_seconds", interval_seconds)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if retain_labels is not None:
             pulumi.set(__self__, "retain_labels", retain_labels)
-
-    @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
 
     @property
     @pulumi.getter(name="excludeNamespaces")
@@ -3059,6 +3155,11 @@ class Mk8sAddOnsMetricsScrapeAnnotated(dict):
         return pulumi.get(self, "interval_seconds")
 
     @property
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
+
+    @property
     @pulumi.getter(name="retainLabels")
     def retain_labels(self) -> Optional[str]:
         return pulumi.get(self, "retain_labels")
@@ -3069,7 +3170,9 @@ class Mk8sAddOnsNvidia(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "taintGpuNodes":
+        if key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
+        elif key == "taintGpuNodes":
             suggest = "taint_gpu_nodes"
 
         if suggest:
@@ -3084,17 +3187,17 @@ class Mk8sAddOnsNvidia(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  taint_gpu_nodes: Optional[bool] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if taint_gpu_nodes is not None:
             pulumi.set(__self__, "taint_gpu_nodes", taint_gpu_nodes)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
     @property
     @pulumi.getter(name="taintGpuNodes")
@@ -7080,15 +7183,32 @@ class Mk8sTritonProviderLoadBalancer(dict):
 
 @pulumi.output_type
 class Mk8sTritonProviderLoadBalancerGateway(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sTritonProviderLoadBalancerGateway. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sTritonProviderLoadBalancerGateway.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sTritonProviderLoadBalancerGateway.__key_warning(key)
+        return super().get(key, default)
+
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+                 placeholder_attribute: Optional[bool] = None):
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
 
 @pulumi.output_type
@@ -7654,6 +7774,8 @@ class OrgLoggingElasticLogging(dict):
         suggest = None
         if key == "elasticCloud":
             suggest = "elastic_cloud"
+        elif key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in OrgLoggingElasticLogging. Access the value via the '{suggest}' property getter instead.")
@@ -7667,28 +7789,23 @@ class OrgLoggingElasticLogging(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
                  aws: Optional['outputs.OrgLoggingElasticLoggingAws'] = None,
                  elastic_cloud: Optional['outputs.OrgLoggingElasticLoggingElasticCloud'] = None,
-                 generic: Optional['outputs.OrgLoggingElasticLoggingGeneric'] = None):
+                 generic: Optional['outputs.OrgLoggingElasticLoggingGeneric'] = None,
+                 placeholder_attribute: Optional[bool] = None):
         """
         :param 'OrgLoggingElasticLoggingAwsArgs' aws: For targeting Amazon Web Services (AWS) ElasticSearch.
         :param 'OrgLoggingElasticLoggingElasticCloudArgs' elastic_cloud: For targeting Elastic Cloud.
         :param 'OrgLoggingElasticLoggingGenericArgs' generic: For targeting generic Elastic Search providers.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
         if aws is not None:
             pulumi.set(__self__, "aws", aws)
         if elastic_cloud is not None:
             pulumi.set(__self__, "elastic_cloud", elastic_cloud)
         if generic is not None:
             pulumi.set(__self__, "generic", generic)
-
-    @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
 
     @property
     @pulumi.getter
@@ -7713,6 +7830,11 @@ class OrgLoggingElasticLogging(dict):
         For targeting generic Elastic Search providers.
         """
         return pulumi.get(self, "generic")
+
+    @property
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
 
 @pulumi.output_type
@@ -8220,7 +8342,9 @@ class OrgSecurity(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "threatDetection":
+        if key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
+        elif key == "threatDetection":
             suggest = "threat_detection"
 
         if suggest:
@@ -8235,17 +8359,17 @@ class OrgSecurity(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  threat_detection: Optional['outputs.OrgSecurityThreatDetection'] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if threat_detection is not None:
             pulumi.set(__self__, "threat_detection", threat_detection)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
     @property
     @pulumi.getter(name="threatDetection")
@@ -9655,7 +9779,9 @@ class WorkloadContainerLifecycle(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "postStart":
+        if key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
+        elif key == "postStart":
             suggest = "post_start"
         elif key == "preStop":
             suggest = "pre_stop"
@@ -9672,20 +9798,20 @@ class WorkloadContainerLifecycle(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  post_start: Optional['outputs.WorkloadContainerLifecyclePostStart'] = None,
                  pre_stop: Optional['outputs.WorkloadContainerLifecyclePreStop'] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if post_start is not None:
             pulumi.set(__self__, "post_start", post_start)
         if pre_stop is not None:
             pulumi.set(__self__, "pre_stop", pre_stop)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
     @property
     @pulumi.getter(name="postStart")
@@ -9902,18 +10028,35 @@ class WorkloadContainerLivenessProbeExec(dict):
 
 @pulumi.output_type
 class WorkloadContainerLivenessProbeGrpc(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadContainerLivenessProbeGrpc. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadContainerLivenessProbeGrpc.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadContainerLivenessProbeGrpc.__key_warning(key)
+        return super().get(key, default)
+
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  port: Optional[int] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if port is not None:
             pulumi.set(__self__, "port", port)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
     @property
     @pulumi.getter
@@ -9977,18 +10120,35 @@ class WorkloadContainerLivenessProbeHttpGet(dict):
 
 @pulumi.output_type
 class WorkloadContainerLivenessProbeTcpSocket(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadContainerLivenessProbeTcpSocket. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadContainerLivenessProbeTcpSocket.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadContainerLivenessProbeTcpSocket.__key_warning(key)
+        return super().get(key, default)
+
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  port: Optional[int] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if port is not None:
             pulumi.set(__self__, "port", port)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
     @property
     @pulumi.getter
@@ -10177,18 +10337,35 @@ class WorkloadContainerReadinessProbeExec(dict):
 
 @pulumi.output_type
 class WorkloadContainerReadinessProbeGrpc(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadContainerReadinessProbeGrpc. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadContainerReadinessProbeGrpc.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadContainerReadinessProbeGrpc.__key_warning(key)
+        return super().get(key, default)
+
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  port: Optional[int] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if port is not None:
             pulumi.set(__self__, "port", port)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
     @property
     @pulumi.getter
@@ -10252,18 +10429,35 @@ class WorkloadContainerReadinessProbeHttpGet(dict):
 
 @pulumi.output_type
 class WorkloadContainerReadinessProbeTcpSocket(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadContainerReadinessProbeTcpSocket. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadContainerReadinessProbeTcpSocket.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadContainerReadinessProbeTcpSocket.__key_warning(key)
+        return super().get(key, default)
+
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  port: Optional[int] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if port is not None:
             pulumi.set(__self__, "port", port)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
     @property
     @pulumi.getter
@@ -10331,25 +10525,37 @@ class WorkloadContainerVolume(dict):
 
 @pulumi.output_type
 class WorkloadFirewallSpec(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadFirewallSpec. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadFirewallSpec.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadFirewallSpec.__key_warning(key)
+        return super().get(key, default)
+
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
                  external: Optional['outputs.WorkloadFirewallSpecExternal'] = None,
-                 internal: Optional['outputs.WorkloadFirewallSpecInternal'] = None):
+                 internal: Optional['outputs.WorkloadFirewallSpecInternal'] = None,
+                 placeholder_attribute: Optional[bool] = None):
         """
         :param 'WorkloadFirewallSpecExternalArgs' external: The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
         :param 'WorkloadFirewallSpecInternalArgs' internal: The internal firewall is used to control access between workloads.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
         if external is not None:
             pulumi.set(__self__, "external", external)
         if internal is not None:
             pulumi.set(__self__, "internal", internal)
-
-    @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
 
     @property
     @pulumi.getter
@@ -10366,6 +10572,11 @@ class WorkloadFirewallSpec(dict):
         The internal firewall is used to control access between workloads.
         """
         return pulumi.get(self, "internal")
+
+    @property
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
 
 @pulumi.output_type
@@ -10621,6 +10832,8 @@ class WorkloadLoadBalancer(dict):
         suggest = None
         if key == "geoLocation":
             suggest = "geo_location"
+        elif key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in WorkloadLoadBalancer. Access the value via the '{suggest}' property getter instead.")
@@ -10634,20 +10847,15 @@ class WorkloadLoadBalancer(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
                  direct: Optional['outputs.WorkloadLoadBalancerDirect'] = None,
-                 geo_location: Optional['outputs.WorkloadLoadBalancerGeoLocation'] = None):
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+                 geo_location: Optional['outputs.WorkloadLoadBalancerGeoLocation'] = None,
+                 placeholder_attribute: Optional[bool] = None):
         if direct is not None:
             pulumi.set(__self__, "direct", direct)
         if geo_location is not None:
             pulumi.set(__self__, "geo_location", geo_location)
-
-    @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
 
     @property
     @pulumi.getter
@@ -10658,6 +10866,11 @@ class WorkloadLoadBalancer(dict):
     @pulumi.getter(name="geoLocation")
     def geo_location(self) -> Optional['outputs.WorkloadLoadBalancerGeoLocation']:
         return pulumi.get(self, "geo_location")
+
+    @property
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
 
 @pulumi.output_type
@@ -11400,6 +11613,8 @@ class WorkloadSecurityOptions(dict):
         suggest = None
         if key == "fileSystemGroupId":
             suggest = "file_system_group_id"
+        elif key == "placeholderAttribute":
+            suggest = "placeholder_attribute"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in WorkloadSecurityOptions. Access the value via the '{suggest}' property getter instead.")
@@ -11413,20 +11628,15 @@ class WorkloadSecurityOptions(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
-                 file_system_group_id: Optional[int] = None):
+                 file_system_group_id: Optional[int] = None,
+                 placeholder_attribute: Optional[bool] = None):
         """
         :param int file_system_group_id: The group id assigned to any mounted volume.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
         if file_system_group_id is not None:
             pulumi.set(__self__, "file_system_group_id", file_system_group_id)
-
-    @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
 
     @property
     @pulumi.getter(name="fileSystemGroupId")
@@ -11435,6 +11645,11 @@ class WorkloadSecurityOptions(dict):
         The group id assigned to any mounted volume.
         """
         return pulumi.get(self, "file_system_group_id")
+
+    @property
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
 
 @pulumi.output_type
@@ -11995,20 +12210,15 @@ class GetGvcLoadBalancerResult(dict):
 @pulumi.output_type
 class GetGvcLoadBalancerRedirectResult(dict):
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
-                 class_: Optional['outputs.GetGvcLoadBalancerRedirectClassResult'] = None):
+                 class_: Optional['outputs.GetGvcLoadBalancerRedirectClassResult'] = None,
+                 placeholder_attribute: Optional[bool] = None):
         """
         :param 'GetGvcLoadBalancerRedirectClassArgs' class_: Specify the redirect url for all status codes in a class.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
         if class_ is not None:
             pulumi.set(__self__, "class_", class_)
-
-    @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
 
     @property
     @pulumi.getter(name="class")
@@ -12018,24 +12228,29 @@ class GetGvcLoadBalancerRedirectResult(dict):
         """
         return pulumi.get(self, "class_")
 
+    @property
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
+
 
 @pulumi.output_type
 class GetGvcLoadBalancerRedirectClassResult(dict):
     def __init__(__self__, *,
-                 _sentinel: Optional[bool] = None,
+                 placeholder_attribute: Optional[bool] = None,
                  status5xx: Optional[str] = None):
         """
         :param str status5xx: Specify the redirect url for any 500 level status code.
         """
-        if _sentinel is not None:
-            pulumi.set(__self__, "_sentinel", _sentinel)
+        if placeholder_attribute is not None:
+            pulumi.set(__self__, "placeholder_attribute", placeholder_attribute)
         if status5xx is not None:
             pulumi.set(__self__, "status5xx", status5xx)
 
     @property
-    @pulumi.getter
-    def _sentinel(self) -> Optional[bool]:
-        return pulumi.get(self, "_sentinel")
+    @pulumi.getter(name="placeholderAttribute")
+    def placeholder_attribute(self) -> Optional[bool]:
+        return pulumi.get(self, "placeholder_attribute")
 
     @property
     @pulumi.getter

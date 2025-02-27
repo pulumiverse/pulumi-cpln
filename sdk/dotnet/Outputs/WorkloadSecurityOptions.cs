@@ -14,20 +14,20 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadSecurityOptions
     {
-        public readonly bool? _sentinel;
         /// <summary>
         /// The group id assigned to any mounted volume.
         /// </summary>
         public readonly int? FileSystemGroupId;
+        public readonly bool? PlaceholderAttribute;
 
         [OutputConstructor]
         private WorkloadSecurityOptions(
-            bool? _sentinel,
+            int? fileSystemGroupId,
 
-            int? fileSystemGroupId)
+            bool? placeholderAttribute)
         {
-            this._sentinel = _sentinel;
             FileSystemGroupId = fileSystemGroupId;
+            PlaceholderAttribute = placeholderAttribute;
         }
     }
 }

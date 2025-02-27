@@ -13,8 +13,8 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class Mk8sAddOnsAwsElbArgs : global::Pulumi.ResourceArgs
     {
-        [Input("_sentinel")]
-        public Input<bool>? _sentinel { get; set; }
+        [Input("placeholderAttribute")]
+        public Input<bool>? PlaceholderAttribute { get; set; }
 
         /// <summary>
         /// Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.

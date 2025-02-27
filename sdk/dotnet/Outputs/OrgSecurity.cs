@@ -14,16 +14,16 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgSecurity
     {
-        public readonly bool? _sentinel;
+        public readonly bool? PlaceholderAttribute;
         public readonly Outputs.OrgSecurityThreatDetection? ThreatDetection;
 
         [OutputConstructor]
         private OrgSecurity(
-            bool? _sentinel,
+            bool? placeholderAttribute,
 
             Outputs.OrgSecurityThreatDetection? threatDetection)
         {
-            this._sentinel = _sentinel;
+            PlaceholderAttribute = placeholderAttribute;
             ThreatDetection = threatDetection;
         }
     }

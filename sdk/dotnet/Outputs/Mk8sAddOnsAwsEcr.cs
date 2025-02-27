@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sAddOnsAwsEcr
     {
-        public readonly bool? _sentinel;
+        public readonly bool? PlaceholderAttribute;
         /// <summary>
         /// Role to use when authorizing ECR pulls. Optional on AWS, in which case it will use the instance role to pull.
         /// </summary>
@@ -22,11 +22,11 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private Mk8sAddOnsAwsEcr(
-            bool? _sentinel,
+            bool? placeholderAttribute,
 
             string? roleArn)
         {
-            this._sentinel = _sentinel;
+            PlaceholderAttribute = placeholderAttribute;
             RoleArn = roleArn;
         }
     }

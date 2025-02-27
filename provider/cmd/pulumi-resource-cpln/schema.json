@@ -131,7 +131,7 @@
         },
         "cpln:index/DomainRouteHeaders:DomainRouteHeaders": {
             "properties": {
-                "_sentinel": {
+                "placeholderAttribute": {
                     "type": "boolean"
                 },
                 "request": {
@@ -143,7 +143,7 @@
         },
         "cpln:index/DomainRouteHeadersRequest:DomainRouteHeadersRequest": {
             "properties": {
-                "_sentinel": {
+                "placeholderAttribute": {
                     "type": "boolean"
                 },
                 "set": {
@@ -519,19 +519,19 @@
         },
         "cpln:index/GvcLoadBalancerRedirect:GvcLoadBalancerRedirect": {
             "properties": {
-                "_sentinel": {
-                    "type": "boolean"
-                },
                 "class": {
                     "$ref": "#/types/cpln:index/GvcLoadBalancerRedirectClass:GvcLoadBalancerRedirectClass",
                     "description": "Specify the redirect url for all status codes in a class.\n"
+                },
+                "placeholderAttribute": {
+                    "type": "boolean"
                 }
             },
             "type": "object"
         },
         "cpln:index/GvcLoadBalancerRedirectClass:GvcLoadBalancerRedirectClass": {
             "properties": {
-                "_sentinel": {
+                "placeholderAttribute": {
                     "type": "boolean"
                 },
                 "status5xx": {
@@ -620,7 +620,7 @@
         },
         "cpln:index/IdentityAzureAccessPolicyRoleAssignment:IdentityAzureAccessPolicyRoleAssignment": {
             "properties": {
-                "_sentinel": {
+                "placeholderAttribute": {
                     "type": "boolean"
                 },
                 "roles": {
@@ -666,7 +666,7 @@
         },
         "cpln:index/IdentityGcpAccessPolicyBinding:IdentityGcpAccessPolicyBinding": {
             "properties": {
-                "_sentinel": {
+                "placeholderAttribute": {
                     "type": "boolean"
                 },
                 "resource": {
@@ -1007,7 +1007,7 @@
         },
         "cpln:index/Mk8sAddOnsAwsEcr:Mk8sAddOnsAwsEcr": {
             "properties": {
-                "_sentinel": {
+                "placeholderAttribute": {
                     "type": "boolean"
                 },
                 "roleArn": {
@@ -1019,7 +1019,7 @@
         },
         "cpln:index/Mk8sAddOnsAwsEfs:Mk8sAddOnsAwsEfs": {
             "properties": {
-                "_sentinel": {
+                "placeholderAttribute": {
                     "type": "boolean"
                 },
                 "roleArn": {
@@ -1031,7 +1031,7 @@
         },
         "cpln:index/Mk8sAddOnsAwsElb:Mk8sAddOnsAwsElb": {
             "properties": {
-                "_sentinel": {
+                "placeholderAttribute": {
                     "type": "boolean"
                 },
                 "roleArn": {
@@ -1054,7 +1054,7 @@
         },
         "cpln:index/Mk8sAddOnsAzureWorkloadIdentity:Mk8sAddOnsAzureWorkloadIdentity": {
             "properties": {
-                "_sentinel": {
+                "placeholderAttribute": {
                     "type": "boolean"
                 },
                 "tenantId": {
@@ -1066,9 +1066,6 @@
         },
         "cpln:index/Mk8sAddOnsLogs:Mk8sAddOnsLogs": {
             "properties": {
-                "_sentinel": {
-                    "type": "boolean"
-                },
                 "auditEnabled": {
                     "type": "boolean",
                     "description": "Collect k8s audit log as log events.\n"
@@ -1078,15 +1075,15 @@
                 },
                 "includeNamespaces": {
                     "type": "string"
+                },
+                "placeholderAttribute": {
+                    "type": "boolean"
                 }
             },
             "type": "object"
         },
         "cpln:index/Mk8sAddOnsMetrics:Mk8sAddOnsMetrics": {
             "properties": {
-                "_sentinel": {
-                    "type": "boolean"
-                },
                 "apiServer": {
                     "type": "boolean",
                     "description": "Enable scraping apiserver stats.\n"
@@ -1111,6 +1108,9 @@
                     "type": "boolean",
                     "description": "Enable collecting node-level stats (disk, network, filesystem, etc).\n"
                 },
+                "placeholderAttribute": {
+                    "type": "boolean"
+                },
                 "scrapeAnnotated": {
                     "$ref": "#/types/cpln:index/Mk8sAddOnsMetricsScrapeAnnotated:Mk8sAddOnsMetricsScrapeAnnotated",
                     "description": "Scrape pods annotated with prometheus.io/scrape=true.\n"
@@ -1120,9 +1120,6 @@
         },
         "cpln:index/Mk8sAddOnsMetricsScrapeAnnotated:Mk8sAddOnsMetricsScrapeAnnotated": {
             "properties": {
-                "_sentinel": {
-                    "type": "boolean"
-                },
                 "excludeNamespaces": {
                     "type": "string"
                 },
@@ -1132,6 +1129,9 @@
                 "intervalSeconds": {
                     "type": "integer"
                 },
+                "placeholderAttribute": {
+                    "type": "boolean"
+                },
                 "retainLabels": {
                     "type": "string"
                 }
@@ -1140,7 +1140,7 @@
         },
         "cpln:index/Mk8sAddOnsNvidia:Mk8sAddOnsNvidia": {
             "properties": {
-                "_sentinel": {
+                "placeholderAttribute": {
                     "type": "boolean"
                 },
                 "taintGpuNodes": {
@@ -2902,7 +2902,7 @@
         },
         "cpln:index/Mk8sTritonProviderLoadBalancerGateway:Mk8sTritonProviderLoadBalancerGateway": {
             "properties": {
-                "_sentinel": {
+                "placeholderAttribute": {
                     "type": "boolean"
                 }
             },
@@ -3147,9 +3147,6 @@
         },
         "cpln:index/OrgLoggingElasticLogging:OrgLoggingElasticLogging": {
             "properties": {
-                "_sentinel": {
-                    "type": "boolean"
-                },
                 "aws": {
                     "$ref": "#/types/cpln:index/OrgLoggingElasticLoggingAws:OrgLoggingElasticLoggingAws",
                     "description": "For targeting Amazon Web Services (AWS) ElasticSearch.\n"
@@ -3161,6 +3158,9 @@
                 "generic": {
                     "$ref": "#/types/cpln:index/OrgLoggingElasticLoggingGeneric:OrgLoggingElasticLoggingGeneric",
                     "description": "For targeting generic Elastic Search providers.\n"
+                },
+                "placeholderAttribute": {
+                    "type": "boolean"
                 }
             },
             "type": "object"
@@ -3390,7 +3390,7 @@
         },
         "cpln:index/OrgSecurity:OrgSecurity": {
             "properties": {
-                "_sentinel": {
+                "placeholderAttribute": {
                     "type": "boolean"
                 },
                 "threatDetection": {
@@ -3965,7 +3965,7 @@
         },
         "cpln:index/WorkloadContainerLifecycle:WorkloadContainerLifecycle": {
             "properties": {
-                "_sentinel": {
+                "placeholderAttribute": {
                     "type": "boolean"
                 },
                 "postStart": {
@@ -4075,7 +4075,7 @@
         },
         "cpln:index/WorkloadContainerLivenessProbeGrpc:WorkloadContainerLivenessProbeGrpc": {
             "properties": {
-                "_sentinel": {
+                "placeholderAttribute": {
                     "type": "boolean"
                 },
                 "port": {
@@ -4106,7 +4106,7 @@
         },
         "cpln:index/WorkloadContainerLivenessProbeTcpSocket:WorkloadContainerLivenessProbeTcpSocket": {
             "properties": {
-                "_sentinel": {
+                "placeholderAttribute": {
                     "type": "boolean"
                 },
                 "port": {
@@ -4196,7 +4196,7 @@
         },
         "cpln:index/WorkloadContainerReadinessProbeGrpc:WorkloadContainerReadinessProbeGrpc": {
             "properties": {
-                "_sentinel": {
+                "placeholderAttribute": {
                     "type": "boolean"
                 },
                 "port": {
@@ -4227,7 +4227,7 @@
         },
         "cpln:index/WorkloadContainerReadinessProbeTcpSocket:WorkloadContainerReadinessProbeTcpSocket": {
             "properties": {
-                "_sentinel": {
+                "placeholderAttribute": {
                     "type": "boolean"
                 },
                 "port": {
@@ -4259,9 +4259,6 @@
         },
         "cpln:index/WorkloadFirewallSpec:WorkloadFirewallSpec": {
             "properties": {
-                "_sentinel": {
-                    "type": "boolean"
-                },
                 "external": {
                     "$ref": "#/types/cpln:index/WorkloadFirewallSpecExternal:WorkloadFirewallSpecExternal",
                     "description": "The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.\n"
@@ -4269,6 +4266,9 @@
                 "internal": {
                     "$ref": "#/types/cpln:index/WorkloadFirewallSpecInternal:WorkloadFirewallSpecInternal",
                     "description": "The internal firewall is used to control access between workloads.\n"
+                },
+                "placeholderAttribute": {
+                    "type": "boolean"
                 }
             },
             "type": "object"
@@ -4369,14 +4369,14 @@
         },
         "cpln:index/WorkloadLoadBalancer:WorkloadLoadBalancer": {
             "properties": {
-                "_sentinel": {
-                    "type": "boolean"
-                },
                 "direct": {
                     "$ref": "#/types/cpln:index/WorkloadLoadBalancerDirect:WorkloadLoadBalancerDirect"
                 },
                 "geoLocation": {
                     "$ref": "#/types/cpln:index/WorkloadLoadBalancerGeoLocation:WorkloadLoadBalancerGeoLocation"
+                },
+                "placeholderAttribute": {
+                    "type": "boolean"
                 }
             },
             "type": "object"
@@ -4637,12 +4637,12 @@
         },
         "cpln:index/WorkloadSecurityOptions:WorkloadSecurityOptions": {
             "properties": {
-                "_sentinel": {
-                    "type": "boolean"
-                },
                 "fileSystemGroupId": {
                     "type": "integer",
                     "description": "The group id assigned to any mounted volume.\n"
+                },
+                "placeholderAttribute": {
+                    "type": "boolean"
                 }
             },
             "type": "object"
@@ -4875,19 +4875,19 @@
         },
         "cpln:index/getGvcLoadBalancerRedirect:getGvcLoadBalancerRedirect": {
             "properties": {
-                "_sentinel": {
-                    "type": "boolean"
-                },
                 "class": {
                     "$ref": "#/types/cpln:index/getGvcLoadBalancerRedirectClass:getGvcLoadBalancerRedirectClass",
                     "description": "Specify the redirect url for all status codes in a class.\n"
+                },
+                "placeholderAttribute": {
+                    "type": "boolean"
                 }
             },
             "type": "object"
         },
         "cpln:index/getGvcLoadBalancerRedirectClass:getGvcLoadBalancerRedirectClass": {
             "properties": {
-                "_sentinel": {
+                "placeholderAttribute": {
                     "type": "boolean"
                 },
                 "status5xx": {

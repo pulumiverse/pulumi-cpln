@@ -13,14 +13,14 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class GetGvcLoadBalancerRedirectArgs : global::Pulumi.InvokeArgs
     {
-        [Input("_sentinel")]
-        public bool? _sentinel { get; set; }
-
         /// <summary>
         /// Specify the redirect url for all status codes in a class.
         /// </summary>
         [Input("class")]
         public Inputs.GetGvcLoadBalancerRedirectClassArgs? Class { get; set; }
+
+        [Input("placeholderAttribute")]
+        public bool? PlaceholderAttribute { get; set; }
 
         public GetGvcLoadBalancerRedirectArgs()
         {

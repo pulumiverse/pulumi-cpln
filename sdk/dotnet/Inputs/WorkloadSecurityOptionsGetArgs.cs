@@ -13,14 +13,14 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadSecurityOptionsGetArgs : global::Pulumi.ResourceArgs
     {
-        [Input("_sentinel")]
-        public Input<bool>? _sentinel { get; set; }
-
         /// <summary>
         /// The group id assigned to any mounted volume.
         /// </summary>
         [Input("fileSystemGroupId")]
         public Input<int>? FileSystemGroupId { get; set; }
+
+        [Input("placeholderAttribute")]
+        public Input<bool>? PlaceholderAttribute { get; set; }
 
         public WorkloadSecurityOptionsGetArgs()
         {

@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class GvcLoadBalancerRedirectClass
     {
-        public readonly bool? _sentinel;
+        public readonly bool? PlaceholderAttribute;
         /// <summary>
         /// Specify the redirect url for any 500 level status code.
         /// </summary>
@@ -22,11 +22,11 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private GvcLoadBalancerRedirectClass(
-            bool? _sentinel,
+            bool? placeholderAttribute,
 
             string? status5xx)
         {
-            this._sentinel = _sentinel;
+            PlaceholderAttribute = placeholderAttribute;
             Status5xx = status5xx;
         }
     }

@@ -13,9 +13,6 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class Mk8sAddOnsMetricsGetArgs : global::Pulumi.ResourceArgs
     {
-        [Input("_sentinel")]
-        public Input<bool>? _sentinel { get; set; }
-
         /// <summary>
         /// Enable scraping apiserver stats.
         /// </summary>
@@ -51,6 +48,9 @@ namespace Pulumiverse.Cpln.Inputs
         /// </summary>
         [Input("nodeExporter")]
         public Input<bool>? NodeExporter { get; set; }
+
+        [Input("placeholderAttribute")]
+        public Input<bool>? PlaceholderAttribute { get; set; }
 
         /// <summary>
         /// Scrape pods annotated with prometheus.io/scrape=true.
