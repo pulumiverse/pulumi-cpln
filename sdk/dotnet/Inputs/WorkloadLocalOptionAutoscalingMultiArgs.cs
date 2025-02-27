@@ -13,9 +13,15 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadLocalOptionAutoscalingMultiArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Valid values: `cpu` or `memory`.
+        /// </summary>
         [Input("metric")]
         public Input<string>? Metric { get; set; }
 
+        /// <summary>
+        /// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+        /// </summary>
         [Input("target")]
         public Input<int>? Target { get; set; }
 

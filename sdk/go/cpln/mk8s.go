@@ -9,7 +9,6 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
@@ -214,12 +213,6 @@ func (i *Mk8s) ToMk8sOutputWithContext(ctx context.Context) Mk8sOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(Mk8sOutput)
 }
 
-func (i *Mk8s) ToOutput(ctx context.Context) pulumix.Output[*Mk8s] {
-	return pulumix.Output[*Mk8s]{
-		OutputState: i.ToMk8sOutputWithContext(ctx).OutputState,
-	}
-}
-
 // Mk8sArrayInput is an input type that accepts Mk8sArray and Mk8sArrayOutput values.
 // You can construct a concrete instance of `Mk8sArrayInput` via:
 //
@@ -243,12 +236,6 @@ func (i Mk8sArray) ToMk8sArrayOutput() Mk8sArrayOutput {
 
 func (i Mk8sArray) ToMk8sArrayOutputWithContext(ctx context.Context) Mk8sArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(Mk8sArrayOutput)
-}
-
-func (i Mk8sArray) ToOutput(ctx context.Context) pulumix.Output[[]*Mk8s] {
-	return pulumix.Output[[]*Mk8s]{
-		OutputState: i.ToMk8sArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // Mk8sMapInput is an input type that accepts Mk8sMap and Mk8sMapOutput values.
@@ -276,12 +263,6 @@ func (i Mk8sMap) ToMk8sMapOutputWithContext(ctx context.Context) Mk8sMapOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(Mk8sMapOutput)
 }
 
-func (i Mk8sMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*Mk8s] {
-	return pulumix.Output[map[string]*Mk8s]{
-		OutputState: i.ToMk8sMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type Mk8sOutput struct{ *pulumi.OutputState }
 
 func (Mk8sOutput) ElementType() reflect.Type {
@@ -294,12 +275,6 @@ func (o Mk8sOutput) ToMk8sOutput() Mk8sOutput {
 
 func (o Mk8sOutput) ToMk8sOutputWithContext(ctx context.Context) Mk8sOutput {
 	return o
-}
-
-func (o Mk8sOutput) ToOutput(ctx context.Context) pulumix.Output[*Mk8s] {
-	return pulumix.Output[*Mk8s]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o Mk8sOutput) AddOns() Mk8sAddOnsPtrOutput {
@@ -404,12 +379,6 @@ func (o Mk8sArrayOutput) ToMk8sArrayOutputWithContext(ctx context.Context) Mk8sA
 	return o
 }
 
-func (o Mk8sArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*Mk8s] {
-	return pulumix.Output[[]*Mk8s]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o Mk8sArrayOutput) Index(i pulumi.IntInput) Mk8sOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *Mk8s {
 		return vs[0].([]*Mk8s)[vs[1].(int)]
@@ -428,12 +397,6 @@ func (o Mk8sMapOutput) ToMk8sMapOutput() Mk8sMapOutput {
 
 func (o Mk8sMapOutput) ToMk8sMapOutputWithContext(ctx context.Context) Mk8sMapOutput {
 	return o
-}
-
-func (o Mk8sMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*Mk8s] {
-	return pulumix.Output[map[string]*Mk8s]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o Mk8sMapOutput) MapIndex(k pulumi.StringInput) Mk8sOutput {

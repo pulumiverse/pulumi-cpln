@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class DomainStatusEndpoint
     {
+        /// <summary>
+        /// URL of endpoint.
+        /// </summary>
         public readonly string? Url;
+        /// <summary>
+        /// Full link to associated workload.
+        /// </summary>
         public readonly string? WorkloadLink;
 
         [OutputConstructor]

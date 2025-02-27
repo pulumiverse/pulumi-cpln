@@ -14,6 +14,9 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class DomainSpecPortCorsAllowOrigin
     {
+        /// <summary>
+        /// Value of allowed origin.
+        /// </summary>
         public readonly string Exact;
 
         [OutputConstructor]

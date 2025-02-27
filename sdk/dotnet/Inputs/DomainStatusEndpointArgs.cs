@@ -13,9 +13,15 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class DomainStatusEndpointArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// URL of endpoint.
+        /// </summary>
         [Input("url")]
         public Input<string>? Url { get; set; }
 
+        /// <summary>
+        /// Full link to associated workload.
+        /// </summary>
         [Input("workloadLink")]
         public Input<string>? WorkloadLink { get; set; }
 

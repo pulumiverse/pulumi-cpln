@@ -13,9 +13,15 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class IdentityNgsAccessPolicyRespArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Number of responses allowed on the replyTo subject, -1 means no limit. Default: -1
+        /// </summary>
         [Input("max")]
         public Input<int>? Max { get; set; }
 
+        /// <summary>
+        /// Deadline to send replies on the replyTo subject [#ms(millis) | #s(econds) | m(inutes) | h(ours)]. -1 means no restriction.
+        /// </summary>
         [Input("ttl")]
         public Input<string>? Ttl { get; set; }
 

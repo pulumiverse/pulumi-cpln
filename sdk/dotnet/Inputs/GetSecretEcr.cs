@@ -13,25 +13,42 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class GetSecretEcrArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// Access Key provided by AWS.
+        /// </summary>
         [Input("accessKey", required: true)]
         public string AccessKey { get; set; } = null!;
 
+        /// <summary>
+        /// AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
+        /// </summary>
         [Input("externalId")]
         public string? ExternalId { get; set; }
 
         [Input("repos", required: true)]
         private List<string>? _repos;
+
+        /// <summary>
+        /// List of ECR repositories.
+        /// </summary>
         public List<string> Repos
         {
             get => _repos ?? (_repos = new List<string>());
             set => _repos = value;
         }
 
+        /// <summary>
+        /// Role ARN provided by AWS.
+        /// </summary>
         [Input("roleArn")]
         public string? RoleArn { get; set; }
 
         [Input("secretKey", required: true)]
         private string? _secretKey;
+
+        /// <summary>
+        /// Secret Key provided by AWS.
+        /// </summary>
         public string? SecretKey
         {
             get => _secretKey;

@@ -47,9 +47,7 @@ namespace Pulumiverse.Cpln
         /// - **city** (String) City.
         /// - **continent** (String) Continent.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
@@ -71,8 +69,6 @@ namespace Pulumiverse.Cpln
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetLocationResult> InvokeAsync(GetLocationArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetLocationResult>("cpln:index/getLocation:getLocation", args ?? new GetLocationArgs(), options.WithDefaults());
@@ -112,9 +108,7 @@ namespace Pulumiverse.Cpln
         /// - **city** (String) City.
         /// - **continent** (String) Continent.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
@@ -136,10 +130,69 @@ namespace Pulumiverse.Cpln
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetLocationResult> Invoke(GetLocationInvokeArgs args, InvokeOptions? options = null)
+            => global::Pulumi.Deployment.Instance.Invoke<GetLocationResult>("cpln:index/getLocation:getLocation", args ?? new GetLocationInvokeArgs(), options.WithDefaults());
+
+        /// <summary>
+        /// Use this data source to access information about a [Location](https://docs.controlplane.com/reference/location) within Control Plane.
+        /// 
+        /// ## Required
+        /// 
+        /// - **name** (String) Name of the location (i.e. `aws-us-west-2`).
+        /// 
+        /// ## Outputs
+        /// 
+        /// The following attributes are exported:
+        /// 
+        /// - **cpln_id** (String) The ID, in GUID format, of the location.
+        /// - **name** (String) Name of the location.
+        /// - **description** (String) Description of the location.
+        /// - **tags** (Map of String) Key-value map of resource tags.
+        /// - **cloud_provider** (String) Cloud Provider of the location.
+        /// - **region** (String) Region of the location.
+        /// - **enabled** (Boolean) Indication if location is enabled.
+        /// - **geo** (Block List, Max: 1) (see below)
+        /// - **ip_ranges** (List of String) A list of IP ranges of the location.
+        /// - **self_link** (String) Full link to this resource. Can be referenced by other resources.
+        /// 
+        /// &lt;a id="nestedblock--geo"&gt;&lt;/a&gt;
+        /// 
+        /// ### `geo`
+        /// 
+        /// Location geographical details
+        /// 
+        /// - **lat** (Number) Latitude.
+        /// - **lon** (Number) Longitude.
+        /// - **country** (String) Country.
+        /// - **state** (String) State.
+        /// - **city** (String) City.
+        /// - **continent** (String) Continent.
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```csharp
+        /// using System.Collections.Generic;
+        /// using System.Linq;
+        /// using Pulumi;
+        /// using Cpln = Pulumi.Cpln;
+        /// 
+        /// return await Deployment.RunAsync(() =&gt; 
+        /// {
+        ///     var locationLocation = Cpln.GetLocation.Invoke(new()
+        ///     {
+        ///         Name = "aws-us-west-2",
+        ///     });
+        /// 
+        ///     return new Dictionary&lt;string, object?&gt;
+        ///     {
+        ///         ["location"] = locationLocation,
+        ///         ["locationEnabled"] = locationLocation.Apply(getLocationResult =&gt; getLocationResult.Enabled),
+        ///     };
+        /// });
+        /// ```
+        /// </summary>
+        public static Output<GetLocationResult> Invoke(GetLocationInvokeArgs args, InvokeOutputOptions options)
             => global::Pulumi.Deployment.Instance.Invoke<GetLocationResult>("cpln:index/getLocation:getLocation", args ?? new GetLocationInvokeArgs(), options.WithDefaults());
     }
 

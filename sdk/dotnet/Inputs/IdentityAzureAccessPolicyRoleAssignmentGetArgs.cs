@@ -18,12 +18,19 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("roles")]
         private InputList<string>? _roles;
+
+        /// <summary>
+        /// List of assigned roles.
+        /// </summary>
         public InputList<string> Roles
         {
             get => _roles ?? (_roles = new InputList<string>());
             set => _roles = value;
         }
 
+        /// <summary>
+        /// Scope of roles.
+        /// </summary>
         [Input("scope")]
         public Input<string>? Scope { get; set; }
 

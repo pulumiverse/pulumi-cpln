@@ -16,9 +16,15 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("_sentinel")]
         public Input<bool>? _sentinel { get; set; }
 
+        /// <summary>
+        /// The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
+        /// </summary>
         [Input("external")]
         public Input<Inputs.WorkloadFirewallSpecExternalArgs>? External { get; set; }
 
+        /// <summary>
+        /// The internal firewall is used to control access between workloads.
+        /// </summary>
         [Input("internal")]
         public Input<Inputs.WorkloadFirewallSpecInternalArgs>? Internal { get; set; }
 

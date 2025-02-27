@@ -14,11 +14,29 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class GetLocationGeoResult
     {
+        /// <summary>
+        /// City.
+        /// </summary>
         public readonly string? City;
+        /// <summary>
+        /// Continent.
+        /// </summary>
         public readonly string? Continent;
+        /// <summary>
+        /// Country.
+        /// </summary>
         public readonly string? Country;
+        /// <summary>
+        /// Latitude.
+        /// </summary>
         public readonly double? Lat;
+        /// <summary>
+        /// Longitude.
+        /// </summary>
         public readonly double? Lon;
+        /// <summary>
+        /// State.
+        /// </summary>
         public readonly string? State;
 
         [OutputConstructor]

@@ -55,10 +55,10 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as cpln from "@pulumi/cpln";
  *
- * const image-name-only = cpln.getImage({
+ * const image_name_only = cpln.getImage({
  *     name: "IMAGE_NAME",
  * });
- * const image-name-with-tag = cpln.getImage({
+ * const image_name_with_tag = cpln.getImage({
  *     name: "IMAGE_NAME:TAG",
  * });
  * export const latestImage = image_name_only;
@@ -66,7 +66,6 @@ import * as utilities from "./utilities";
  * ```
  */
 export function getImage(args: GetImageArgs, opts?: pulumi.InvokeOptions): Promise<GetImageResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("cpln:index/getImage:getImage", {
         "name": args.name,
@@ -146,18 +145,21 @@ export interface GetImageResult {
  * import * as pulumi from "@pulumi/pulumi";
  * import * as cpln from "@pulumi/cpln";
  *
- * const image-name-only = cpln.getImage({
+ * const image_name_only = cpln.getImage({
  *     name: "IMAGE_NAME",
  * });
- * const image-name-with-tag = cpln.getImage({
+ * const image_name_with_tag = cpln.getImage({
  *     name: "IMAGE_NAME:TAG",
  * });
  * export const latestImage = image_name_only;
  * export const specificImage = image_name_with_tag;
  * ```
  */
-export function getImageOutput(args: GetImageOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetImageResult> {
-    return pulumi.output(args).apply((a: any) => getImage(a, opts))
+export function getImageOutput(args: GetImageOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetImageResult> {
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("cpln:index/getImage:getImage", {
+        "name": args.name,
+    }, opts);
 }
 
 /**

@@ -8,7 +8,6 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
@@ -128,12 +127,6 @@ func (i *AuditContext) ToAuditContextOutputWithContext(ctx context.Context) Audi
 	return pulumi.ToOutputWithContext(ctx, i).(AuditContextOutput)
 }
 
-func (i *AuditContext) ToOutput(ctx context.Context) pulumix.Output[*AuditContext] {
-	return pulumix.Output[*AuditContext]{
-		OutputState: i.ToAuditContextOutputWithContext(ctx).OutputState,
-	}
-}
-
 // AuditContextArrayInput is an input type that accepts AuditContextArray and AuditContextArrayOutput values.
 // You can construct a concrete instance of `AuditContextArrayInput` via:
 //
@@ -157,12 +150,6 @@ func (i AuditContextArray) ToAuditContextArrayOutput() AuditContextArrayOutput {
 
 func (i AuditContextArray) ToAuditContextArrayOutputWithContext(ctx context.Context) AuditContextArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(AuditContextArrayOutput)
-}
-
-func (i AuditContextArray) ToOutput(ctx context.Context) pulumix.Output[[]*AuditContext] {
-	return pulumix.Output[[]*AuditContext]{
-		OutputState: i.ToAuditContextArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // AuditContextMapInput is an input type that accepts AuditContextMap and AuditContextMapOutput values.
@@ -190,12 +177,6 @@ func (i AuditContextMap) ToAuditContextMapOutputWithContext(ctx context.Context)
 	return pulumi.ToOutputWithContext(ctx, i).(AuditContextMapOutput)
 }
 
-func (i AuditContextMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*AuditContext] {
-	return pulumix.Output[map[string]*AuditContext]{
-		OutputState: i.ToAuditContextMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type AuditContextOutput struct{ *pulumi.OutputState }
 
 func (AuditContextOutput) ElementType() reflect.Type {
@@ -208,12 +189,6 @@ func (o AuditContextOutput) ToAuditContextOutput() AuditContextOutput {
 
 func (o AuditContextOutput) ToAuditContextOutputWithContext(ctx context.Context) AuditContextOutput {
 	return o
-}
-
-func (o AuditContextOutput) ToOutput(ctx context.Context) pulumix.Output[*AuditContext] {
-	return pulumix.Output[*AuditContext]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The ID, in GUID format, of the Audit Context.
@@ -255,12 +230,6 @@ func (o AuditContextArrayOutput) ToAuditContextArrayOutputWithContext(ctx contex
 	return o
 }
 
-func (o AuditContextArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*AuditContext] {
-	return pulumix.Output[[]*AuditContext]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o AuditContextArrayOutput) Index(i pulumi.IntInput) AuditContextOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *AuditContext {
 		return vs[0].([]*AuditContext)[vs[1].(int)]
@@ -279,12 +248,6 @@ func (o AuditContextMapOutput) ToAuditContextMapOutput() AuditContextMapOutput {
 
 func (o AuditContextMapOutput) ToAuditContextMapOutputWithContext(ctx context.Context) AuditContextMapOutput {
 	return o
-}
-
-func (o AuditContextMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*AuditContext] {
-	return pulumix.Output[map[string]*AuditContext]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o AuditContextMapOutput) MapIndex(k pulumi.StringInput) AuditContextOutput {

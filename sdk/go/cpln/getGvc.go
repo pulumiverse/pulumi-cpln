@@ -8,7 +8,6 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
@@ -144,15 +143,11 @@ type LookupGvcResult struct {
 }
 
 func LookupGvcOutput(ctx *pulumi.Context, args LookupGvcOutputArgs, opts ...pulumi.InvokeOption) LookupGvcResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupGvcResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (LookupGvcResultOutput, error) {
 			args := v.(LookupGvcArgs)
-			r, err := LookupGvc(ctx, &args, opts...)
-			var s LookupGvcResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("cpln:index/getGvc:getGvc", args, LookupGvcResultOutput{}, options).(LookupGvcResultOutput), nil
 		}).(LookupGvcResultOutput)
 }
 
@@ -190,12 +185,6 @@ func (o LookupGvcResultOutput) ToLookupGvcResultOutput() LookupGvcResultOutput {
 
 func (o LookupGvcResultOutput) ToLookupGvcResultOutputWithContext(ctx context.Context) LookupGvcResultOutput {
 	return o
-}
-
-func (o LookupGvcResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupGvcResult] {
-	return pulumix.Output[LookupGvcResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o LookupGvcResultOutput) Alias() pulumi.StringOutput {

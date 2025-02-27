@@ -15,6 +15,10 @@ namespace Pulumiverse.Cpln.Inputs
     {
         [Input("permissions", required: true)]
         private InputList<string>? _permissions;
+
+        /// <summary>
+        /// List of permissions to allow.
+        /// </summary>
         public InputList<string> Permissions
         {
             get => _permissions ?? (_permissions = new InputList<string>());
@@ -23,6 +27,10 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("principalLinks", required: true)]
         private InputList<string>? _principalLinks;
+
+        /// <summary>
+        /// List of the principals this binding will be applied to. Principal links format: `group/GROUP_NAME`, `user/USER_EMAIL`, `gvc/GVC_NAME/identity/IDENTITY_NAME`, `serviceaccount/SERVICE_ACCOUNT_NAME`.
+        /// </summary>
         public InputList<string> PrincipalLinks
         {
             get => _principalLinks ?? (_principalLinks = new InputList<string>());

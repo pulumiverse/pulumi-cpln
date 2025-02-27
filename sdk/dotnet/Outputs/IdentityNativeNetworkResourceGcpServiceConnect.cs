@@ -14,6 +14,9 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class IdentityNativeNetworkResourceGcpServiceConnect
     {
+        /// <summary>
+        /// Target service name.
+        /// </summary>
         public readonly string TargetService;
 
         [OutputConstructor]

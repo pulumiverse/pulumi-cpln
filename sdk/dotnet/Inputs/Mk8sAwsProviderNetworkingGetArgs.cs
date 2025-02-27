@@ -13,9 +13,15 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class Mk8sAwsProviderNetworkingGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The CIDR of the pod network.
+        /// </summary>
         [Input("podNetwork")]
         public Input<string>? PodNetwork { get; set; }
 
+        /// <summary>
+        /// The CIDR of the service network.
+        /// </summary>
         [Input("serviceNetwork")]
         public Input<string>? ServiceNetwork { get; set; }
 

@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class IdentityNgsAccessPolicyResp
     {
+        /// <summary>
+        /// Number of responses allowed on the replyTo subject, -1 means no limit. Default: -1
+        /// </summary>
         public readonly int? Max;
+        /// <summary>
+        /// Deadline to send replies on the replyTo subject [#ms(millis) | #s(econds) | m(inutes) | h(ours)]. -1 means no restriction.
+        /// </summary>
         public readonly string? Ttl;
 
         [OutputConstructor]

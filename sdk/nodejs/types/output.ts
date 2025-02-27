@@ -6,130 +6,289 @@ import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 
 export interface CloudAccountAws {
+    /**
+     * Amazon Resource Name (ARN) Role.
+     */
     roleArn: string;
 }
 
 export interface CloudAccountAzure {
+    /**
+     * Full link to an Azure secret. (e.g., /org/ORG_NAME/secret/AZURE_SECRET).
+     */
     secretLink: string;
 }
 
 export interface CloudAccountGcp {
+    /**
+     * GCP project ID. Obtained from the GCP cloud console.
+     */
     projectId: string;
 }
 
 export interface CloudAccountNgs {
+    /**
+     * Full link to a NATS Account Secret secret. (e.g., /org/ORG_NAME/secret/NATS_ACCOUNT_SECRET).
+     */
     secretLink: string;
 }
 
 export interface DomainRouteHeaders {
     _sentinel?: boolean;
+    /**
+     * Manipulates HTTP headers.
+     */
     request?: outputs.DomainRouteHeadersRequest;
 }
 
 export interface DomainRouteHeadersRequest {
     _sentinel?: boolean;
+    /**
+     * Sets or overrides headers to all http requests for this route.
+     */
     set?: {[key: string]: string};
 }
 
 export interface DomainSpec {
+    /**
+     * Allows domain to accept wildcards. The associated GVC must have dedicated load balancing enabled.
+     */
     acceptAllHosts?: boolean;
+    /**
+     * In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
+     */
     dnsMode?: string;
+    /**
+     * This value is set to a target GVC (using a full link) for use by subdomain based routing. Each workload in the GVC will receive a subdomain in the form ${workload.name}.${domain.name}. **Do not include if path based routing is used.**
+     */
     gvcLink?: string;
+    /**
+     * Domain port specifications.
+     */
     ports: outputs.DomainSpecPort[];
 }
 
 export interface DomainSpecPort {
+    /**
+     * A security feature implemented by web browsers to allow resources on a web page to be requested from another domain outside the domain from which the resource originated.
+     */
     cors?: outputs.DomainSpecPortCors;
+    /**
+     * Port to expose externally. Values: `80`, `443`. Default: `443`.
+     */
     number?: number;
+    /**
+     * Allowed protocol. Valid values: `http`, `http2`, `tcp`. Default: `http2`.
+     */
     protocol?: string;
     tls: outputs.DomainSpecPortTls;
 }
 
 export interface DomainSpecPortCors {
+    /**
+     * Determines whether the client-side code (typically running in a web browser) is allowed to include credentials (such as cookies, HTTP authentication, or client-side SSL certificates) in cross-origin requests.
+     */
     allowCredentials?: boolean;
+    /**
+     * Specifies the custom HTTP headers that are allowed in a cross-origin request to a specific resource.
+     */
     allowHeaders?: string[];
+    /**
+     * Specifies the HTTP methods (such as `GET`, `POST`, `PUT`, `DELETE`, etc.) that are allowed for a cross-origin request to a specific resource.
+     */
     allowMethods?: string[];
+    /**
+     * Determines which origins are allowed to access a particular resource on a server from a web browser.
+     */
     allowOrigins?: outputs.DomainSpecPortCorsAllowOrigin[];
+    /**
+     * The HTTP headers that a server allows to be exposed to the client in response to a cross-origin request. These headers provide additional information about the server's capabilities or requirements, aiding in proper handling of the request by the client's browser or application.
+     */
     exposeHeaders?: string[];
+    /**
+     * Maximum amount of time that a preflight request result can be cached by the client browser. Input is expected as a duration string (i.e, 24h, 20m, etc.).
+     */
     maxAge?: string;
 }
 
 export interface DomainSpecPortCorsAllowOrigin {
+    /**
+     * Value of allowed origin.
+     */
     exact: string;
 }
 
 export interface DomainSpecPortTls {
+    /**
+     * Allowed cipher suites. Refer to the [Domain Reference](https://docs.controlplane.com/reference/domain#cipher-suites) for details.
+     */
     cipherSuites?: string[];
+    /**
+     * The certificate authority PEM, stored as a TLS Secret, used to verify the authority of the client certificate. The only verification performed checks that the CN of the PEM matches the Domain (i.e., CN=*.DOMAIN).
+     */
     clientCertificate?: outputs.DomainSpecPortTlsClientCertificate;
+    /**
+     * Minimum TLS version to accept. Minimum is `1.0`. Default: `1.2`.
+     */
     minProtocolVersion?: string;
+    /**
+     * Custom Server Certificate.
+     */
     serverCertificate?: outputs.DomainSpecPortTlsServerCertificate;
 }
 
 export interface DomainSpecPortTlsClientCertificate {
+    /**
+     * Full link to a TLS secret.
+     */
     secretLink?: string;
 }
 
 export interface DomainSpecPortTlsServerCertificate {
+    /**
+     * Full link to a TLS secret.
+     */
     secretLink?: string;
 }
 
 export interface DomainStatus {
+    /**
+     * List of required DNS record entries.
+     */
     dnsConfigs?: outputs.DomainStatusDnsConfig[];
+    /**
+     * List of configured domain endpoints.
+     */
     endpoints?: outputs.DomainStatusEndpoint[];
     fingerprint?: string;
+    /**
+     * Contains the cloud provider name, region, and certificate status.
+     */
     locations?: outputs.DomainStatusLocation[];
+    /**
+     * Status of Domain. Possible values: `initializing`, `ready`, `pendingDnsConfig`, `pendingCertificate`, `usedByGvc`.
+     */
     status?: string;
+    /**
+     * Warning message.
+     */
     warning?: string;
 }
 
 export interface DomainStatusDnsConfig {
+    /**
+     * The host in DNS terminology refers to the domain or subdomain that the DNS record is associated with. It's essentially the name that is being queried or managed. For example, in a DNS record for `www.example.com`, `www` is a host in the domain `example.com`.
+     */
     host?: string;
+    /**
+     * Time to live (TTL) is a value that signifies how long (in seconds) a DNS record should be cached by a resolver or a browser before a new request should be sent to refresh the data. Lower TTL values mean records are updated more frequently, which is beneficial for dynamic DNS configurations or during DNS migrations. Higher TTL values reduce the load on DNS servers and improve the speed of name resolution for end users by relying on cached data.
+     */
     ttl?: number;
+    /**
+     * The DNS record type specifies the type of data the DNS record contains. Valid values: `CNAME`, `NS`, `TXT`.
+     */
     type?: string;
+    /**
+     * The value of a DNS record contains the data the record is meant to convey, based on the type of the record.
+     */
     value?: string;
 }
 
 export interface DomainStatusEndpoint {
+    /**
+     * URL of endpoint.
+     */
     url?: string;
+    /**
+     * Full link to associated workload.
+     */
     workloadLink?: string;
 }
 
 export interface DomainStatusLocation {
+    /**
+     * The current validity or status of the SSL/TLS certificate.
+     */
     certificateStatus?: string;
+    /**
+     * The name of the location.
+     */
     name?: string;
 }
 
 export interface GetGvcControlplaneTracing {
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: {[key: string]: string};
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: number;
 }
 
 export interface GetGvcLightstepTracing {
+    /**
+     * Full link to referenced Opaque Secret.
+     */
     credentials?: string;
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: {[key: string]: string};
+    /**
+     * Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+     */
     endpoint: string;
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: number;
 }
 
 export interface GetGvcLoadBalancer {
+    /**
+     * Creates a dedicated load balancer in each location and enables additional Domain features: custom ports, protocols and wildcard hostnames. Charges apply for each location.
+     */
     dedicated?: boolean;
+    /**
+     * Specify the url to be redirected to for different http status codes.
+     */
     redirect?: outputs.GetGvcLoadBalancerRedirect;
+    /**
+     * Controls the address used for request logging and for setting the X-Envoy-External-Address header. If set to 1, then the last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If set to 2, then the second to last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If the XFF header does not have at least two addresses or does not exist then the source client IP address will be used instead.
+     */
     trustedProxies?: number;
 }
 
 export interface GetGvcLoadBalancerRedirect {
     _sentinel?: boolean;
+    /**
+     * Specify the redirect url for all status codes in a class.
+     */
     class?: outputs.GetGvcLoadBalancerRedirectClass;
 }
 
 export interface GetGvcLoadBalancerRedirectClass {
     _sentinel?: boolean;
+    /**
+     * Specify the redirect url for any 500 level status code.
+     */
     status5xx?: string;
 }
 
 export interface GetGvcOtelTracing {
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: {[key: string]: string};
+    /**
+     * Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+     */
     endpoint: string;
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: number;
 }
 
@@ -138,205 +297,514 @@ export interface GetGvcSidecar {
 }
 
 export interface GetImageManifest {
+    /**
+     * The config is a JSON blob that contains the image configuration data which includes environment variables, default command to run, and other settings necessary to run the container based on this image.
+     */
     configs: outputs.GetImageManifestConfig[];
+    /**
+     * Layers lists the digests of the image's layers. These layers are filesystem changes or additions made in each step of the Docker image's creation process. The layers are stored separately and pulled as needed, which allows for efficient storage and transfer of images. Each layer is represented by a SHA256 digest, ensuring the integrity and authenticity of the image.
+     */
     layers: outputs.GetImageManifestLayer[];
+    /**
+     * Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.
+     */
     mediaType: string;
+    /**
+     * The version of the Docker Image Manifest format.
+     */
     schemaVersion: number;
 }
 
 export interface GetImageManifestConfig {
+    /**
+     * A unique SHA256 hash used to identify a specific image version within the image registry.
+     */
     digest: string;
+    /**
+     * Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.
+     */
     mediaType: string;
+    /**
+     * The size of the image or layer in bytes. This helps in estimating the space required and the download time.
+     */
     size: number;
 }
 
 export interface GetImageManifestLayer {
+    /**
+     * A unique SHA256 hash used to identify a specific image version within the image registry.
+     */
     digest: string;
+    /**
+     * Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.
+     */
     mediaType: string;
+    /**
+     * The size of the image or layer in bytes. This helps in estimating the space required and the download time.
+     */
     size: number;
 }
 
 export interface GetImagesImage {
+    /**
+     * The ID, in GUID format, of the Image.
+     */
     cplnId: string;
+    /**
+     * A unique SHA256 hash used to identify a specific image version within the image registry.
+     */
     digest: string;
+    /**
+     * The manifest provides configuration and layers information about the image. It plays a crucial role in the Docker image distribution system, enabling image creation, verification, and replication in a consistent and secure manner.
+     */
     manifests: outputs.GetImagesImageManifest[];
+    /**
+     * Name of the Image.
+     */
     name: string;
+    /**
+     * Respository name of the image.
+     */
     repository: string;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     selfLink: string;
+    /**
+     * Tag of the image.
+     */
     tag: string;
+    /**
+     * Key-value map of resource tags.
+     */
     tags: {[key: string]: string};
 }
 
 export interface GetImagesImageManifest {
+    /**
+     * The config is a JSON blob that contains the image configuration data which includes environment variables, default command to run, and other settings necessary to run the container based on this image.
+     */
     configs: outputs.GetImagesImageManifestConfig[];
+    /**
+     * Layers lists the digests of the image's layers. These layers are filesystem changes or additions made in each step of the Docker image's creation process. The layers are stored separately and pulled as needed, which allows for efficient storage and transfer of images. Each layer is represented by a SHA256 digest, ensuring the integrity and authenticity of the image.
+     */
     layers: outputs.GetImagesImageManifestLayer[];
+    /**
+     * Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.
+     */
     mediaType: string;
+    /**
+     * The version of the Docker Image Manifest format.
+     */
     schemaVersion: number;
 }
 
 export interface GetImagesImageManifestConfig {
+    /**
+     * A unique SHA256 hash used to identify a specific image version within the image registry.
+     */
     digest: string;
+    /**
+     * Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.
+     */
     mediaType: string;
+    /**
+     * The size of the image or layer in bytes. This helps in estimating the space required and the download time.
+     */
     size: number;
 }
 
 export interface GetImagesImageManifestLayer {
+    /**
+     * A unique SHA256 hash used to identify a specific image version within the image registry.
+     */
     digest: string;
+    /**
+     * Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.
+     */
     mediaType: string;
+    /**
+     * The size of the image or layer in bytes. This helps in estimating the space required and the download time.
+     */
     size: number;
 }
 
 export interface GetImagesQuery {
+    /**
+     * Type of fetch. Specify either: `links` or `items`. Default: `items`.
+     */
     fetch?: string;
     spec?: outputs.GetImagesQuerySpec;
 }
 
 export interface GetImagesQuerySpec {
+    /**
+     * Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+     */
     match?: string;
+    /**
+     * Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+     */
     terms?: outputs.GetImagesQuerySpecTerm[];
 }
 
 export interface GetImagesQuerySpecTerm {
+    /**
+     * Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+     */
     op?: string;
+    /**
+     * Property to use for query evaluation.
+     */
     property?: string;
     rel?: string;
+    /**
+     * Tag key to use for query evaluation.
+     */
     tag?: string;
+    /**
+     * Testing value for query evaluation.
+     */
     value?: string;
 }
 
 export interface GetLocationGeo {
+    /**
+     * City.
+     */
     city?: string;
+    /**
+     * Continent.
+     */
     continent?: string;
+    /**
+     * Country.
+     */
     country?: string;
+    /**
+     * Latitude.
+     */
     lat?: number;
+    /**
+     * Longitude.
+     */
     lon?: number;
+    /**
+     * State.
+     */
     state?: string;
 }
 
 export interface GetLocationsLocation {
+    /**
+     * Cloud Provider of the location.
+     */
     cloudProvider: string;
+    /**
+     * The ID, in GUID format, of the location.
+     */
     cplnId: string;
+    /**
+     * Description of the location.
+     */
     description: string;
+    /**
+     * Indication if location is enabled.
+     */
     enabled: boolean;
     geos: outputs.GetLocationsLocationGeo[];
+    /**
+     * A list of IP ranges of the location.
+     */
     ipRanges: string[];
+    /**
+     * Name of the location.
+     */
     name: string;
+    /**
+     * Region of the location.
+     */
     region: string;
+    /**
+     * Full link to this resource. Can be referenced by other resources.
+     */
     selfLink: string;
+    /**
+     * Key-value map of resource tags.
+     */
     tags: {[key: string]: string};
 }
 
 export interface GetLocationsLocationGeo {
+    /**
+     * City.
+     */
     city?: string;
+    /**
+     * Continent.
+     */
     continent?: string;
+    /**
+     * Country.
+     */
     country?: string;
+    /**
+     * Latitude.
+     */
     lat?: number;
+    /**
+     * Longitude.
+     */
     lon?: number;
+    /**
+     * State.
+     */
     state?: string;
 }
 
 export interface GetSecretAws {
+    /**
+     * Access Key provided by AWS.
+     */
     accessKey: string;
+    /**
+     * AWS IAM Role External ID.
+     */
     externalId?: string;
+    /**
+     * Role ARN provided by AWS.
+     */
     roleArn?: string;
+    /**
+     * Secret Key provided by AWS.
+     */
     secretKey: string;
 }
 
 export interface GetSecretAzureConnector {
+    /**
+     * Code/Key to authenticate to deployment URL.
+     */
     code: string;
+    /**
+     * Deployment URL.
+     */
     url: string;
 }
 
 export interface GetSecretEcr {
+    /**
+     * Access Key provided by AWS.
+     */
     accessKey: string;
+    /**
+     * AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
+     */
     externalId?: string;
+    /**
+     * List of ECR repositories.
+     */
     repos: string[];
+    /**
+     * Role ARN provided by AWS.
+     */
     roleArn?: string;
+    /**
+     * Secret Key provided by AWS.
+     */
     secretKey: string;
 }
 
 export interface GetSecretKeypair {
+    /**
+     * Passphrase for private key.
+     */
     passphrase?: string;
+    /**
+     * Public Key.
+     */
     publicKey?: string;
+    /**
+     * Secret/Private Key.
+     */
     secretKey: string;
 }
 
 export interface GetSecretNatsAccount {
+    /**
+     * Account ID.
+     */
     accountId: string;
+    /**
+     * Private Key.
+     */
     privateKey: string;
 }
 
 export interface GetSecretOpaque {
+    /**
+     * Available encodings: `plain`, `base64`. Default: `plain`.
+     */
     encoding?: string;
+    /**
+     * Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.
+     */
     payload: string;
 }
 
 export interface GetSecretTls {
+    /**
+     * Public Certificate.
+     */
     cert: string;
+    /**
+     * Chain Certificate.
+     */
     chain?: string;
+    /**
+     * Private Certificate.
+     */
     key: string;
 }
 
 export interface GetSecretUserpass {
+    /**
+     * Available encodings: `plain`, `base64`. Default: `plain`.
+     */
     encoding?: string;
+    /**
+     * Password.
+     */
     password: string;
+    /**
+     * Username.
+     */
     username: string;
 }
 
 export interface GroupIdentityMatcher {
+    /**
+     * Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged in with SAML providers.
+     */
     expression: string;
+    /**
+     * Language of the expression. Either `jmespath` or `javascript`. Default: `jmespath`.
+     */
     language?: string;
 }
 
 export interface GroupMemberQuery {
+    /**
+     * Type of fetch. Specify either: `links` or `items`. Default: `items`.
+     */
     fetch?: string;
     spec?: outputs.GroupMemberQuerySpec;
 }
 
 export interface GroupMemberQuerySpec {
+    /**
+     * Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+     */
     match?: string;
+    /**
+     * Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+     */
     terms?: outputs.GroupMemberQuerySpecTerm[];
 }
 
 export interface GroupMemberQuerySpecTerm {
+    /**
+     * Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+     */
     op?: string;
+    /**
+     * Property to use for query evaluation.
+     */
     property?: string;
     rel?: string;
+    /**
+     * Tag key to use for query evaluation.
+     */
     tag?: string;
+    /**
+     * Testing value for query evaluation.
+     */
     value?: string;
 }
 
 export interface GvcControlplaneTracing {
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: {[key: string]: string};
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: number;
 }
 
 export interface GvcLightstepTracing {
+    /**
+     * Full link to referenced Opaque Secret.
+     */
     credentials?: string;
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: {[key: string]: string};
+    /**
+     * Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+     */
     endpoint: string;
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: number;
 }
 
 export interface GvcLoadBalancer {
+    /**
+     * Creates a dedicated load balancer in each location and enables additional Domain features: custom ports, protocols and wildcard hostnames. Charges apply for each location.
+     */
     dedicated?: boolean;
+    /**
+     * Specify the url to be redirected to for different http status codes.
+     */
     redirect?: outputs.GvcLoadBalancerRedirect;
+    /**
+     * Controls the address used for request logging and for setting the X-Envoy-External-Address header. If set to 1, then the last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If set to 2, then the second to last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If the XFF header does not have at least two addresses or does not exist then the source client IP address will be used instead.
+     */
     trustedProxies?: number;
 }
 
 export interface GvcLoadBalancerRedirect {
     _sentinel?: boolean;
+    /**
+     * Specify the redirect url for all status codes in a class.
+     */
     class?: outputs.GvcLoadBalancerRedirectClass;
 }
 
 export interface GvcLoadBalancerRedirectClass {
     _sentinel?: boolean;
+    /**
+     * Specify the redirect url for any 500 level status code.
+     */
     status5xx?: string;
 }
 
 export interface GvcOtelTracing {
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: {[key: string]: string};
+    /**
+     * Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+     */
     endpoint: string;
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: number;
 }
 
@@ -345,86 +813,206 @@ export interface GvcSidecar {
 }
 
 export interface IdentityAwsAccessPolicy {
+    /**
+     * Full link to referenced cloud account.
+     */
     cloudAccountLink: string;
+    /**
+     * List of policies.
+     */
     policyRefs?: string[];
+    /**
+     * Role name.
+     */
     roleName?: string;
 }
 
 export interface IdentityAzureAccessPolicy {
+    /**
+     * Full link to referenced cloud account.
+     */
     cloudAccountLink: string;
+    /**
+     * The process of assigning specific roles or permissions to an entity, such as a user or a service principal, within the system.
+     */
     roleAssignments?: outputs.IdentityAzureAccessPolicyRoleAssignment[];
 }
 
 export interface IdentityAzureAccessPolicyRoleAssignment {
     _sentinel?: boolean;
+    /**
+     * List of assigned roles.
+     */
     roles?: string[];
+    /**
+     * Scope of roles.
+     */
     scope?: string;
 }
 
 export interface IdentityGcpAccessPolicy {
+    /**
+     * The association or connection between a particular identity, such as a user or a group, and a set of permissions or roles within the system.
+     */
     bindings?: outputs.IdentityGcpAccessPolicyBinding[];
+    /**
+     * Full link to referenced cloud account.
+     */
     cloudAccountLink: string;
+    /**
+     * Comma delimited list of GCP scope URLs.
+     */
     scopes?: string;
+    /**
+     * Name of existing GCP service account.
+     */
     serviceAccount?: string;
 }
 
 export interface IdentityGcpAccessPolicyBinding {
     _sentinel?: boolean;
+    /**
+     * Name of resource for binding.
+     */
     resource?: string;
+    /**
+     * List of allowed roles.
+     */
     roles?: string[];
 }
 
 export interface IdentityNativeNetworkResource {
+    /**
+     * A feature provided by AWS that enables private connectivity between private VPCs and compute running at Control Plane without traversing the public internet.
+     */
     awsPrivateLink?: outputs.IdentityNativeNetworkResourceAwsPrivateLink;
+    /**
+     * Fully qualified domain name.
+     */
     fqdn: string;
+    /**
+     * Capability provided by GCP that allows private communication between private VPC networks and compute running at Control Plane.
+     */
     gcpServiceConnect?: outputs.IdentityNativeNetworkResourceGcpServiceConnect;
+    /**
+     * Name of the Native Network Resource.
+     */
     name: string;
+    /**
+     * Ports to expose. At least one port is required.
+     */
     ports: number[];
 }
 
 export interface IdentityNativeNetworkResourceAwsPrivateLink {
+    /**
+     * Endpoint service name.
+     */
     endpointServiceName: string;
 }
 
 export interface IdentityNativeNetworkResourceGcpServiceConnect {
+    /**
+     * Target service name.
+     */
     targetService: string;
 }
 
 export interface IdentityNetworkResource {
+    /**
+     * Full link to referenced Agent.
+     */
     agentLink?: string;
+    /**
+     * Fully qualified domain name.
+     */
     fqdn?: string;
+    /**
+     * List of IP addresses.
+     */
     ips?: string[];
+    /**
+     * Name of the Network Resource.
+     */
     name: string;
+    /**
+     * Ports to expose.
+     */
     ports: number[];
+    /**
+     * Resolver IP.
+     */
     resolverIp?: string;
 }
 
 export interface IdentityNgsAccessPolicy {
+    /**
+     * Full link to referenced cloud account.
+     */
     cloudAccountLink: string;
+    /**
+     * Max number of bytes a connection can send. Default: -1
+     */
     data?: number;
+    /**
+     * Max message payload. Default: -1
+     */
     payload?: number;
+    /**
+     * Pub Permission.
+     */
     pub?: outputs.IdentityNgsAccessPolicyPub;
+    /**
+     * Reponses.
+     */
     resp?: outputs.IdentityNgsAccessPolicyResp;
+    /**
+     * Sub Permission.
+     */
     sub?: outputs.IdentityNgsAccessPolicySub;
+    /**
+     * Max number of subscriptions per connection. Default: -1
+     */
     subs?: number;
 }
 
 export interface IdentityNgsAccessPolicyPub {
+    /**
+     * List of allow subjects.
+     */
     allows?: string[];
+    /**
+     * List of deny subjects.
+     */
     denies?: string[];
 }
 
 export interface IdentityNgsAccessPolicyResp {
+    /**
+     * Number of responses allowed on the replyTo subject, -1 means no limit. Default: -1
+     */
     max?: number;
+    /**
+     * Deadline to send replies on the replyTo subject [#ms(millis) | #s(econds) | m(inutes) | h(ours)]. -1 means no restriction.
+     */
     ttl?: string;
 }
 
 export interface IdentityNgsAccessPolicySub {
+    /**
+     * List of allow subjects.
+     */
     allows?: string[];
+    /**
+     * List of deny subjects.
+     */
     denies?: string[];
 }
 
 export interface IpSetLocation {
+    /**
+     * The self link of a location.
+     */
     name: string;
     retentionPolicy: string;
 }
@@ -443,11 +1031,29 @@ export interface IpSetStatusIpAddress {
 }
 
 export interface LocationGeo {
+    /**
+     * City.
+     */
     city?: string;
+    /**
+     * Continent.
+     */
     continent?: string;
+    /**
+     * Country.
+     */
     country?: string;
+    /**
+     * Latitude.
+     */
     lat?: number;
+    /**
+     * Longitude.
+     */
     lon?: number;
+    /**
+     * State.
+     */
     state?: string;
 }
 
@@ -468,16 +1074,25 @@ export interface Mk8sAddOns {
 
 export interface Mk8sAddOnsAwsEcr {
     _sentinel?: boolean;
+    /**
+     * Role to use when authorizing ECR pulls. Optional on AWS, in which case it will use the instance role to pull.
+     */
     roleArn?: string;
 }
 
 export interface Mk8sAddOnsAwsEfs {
     _sentinel?: boolean;
+    /**
+     * Use this role for EFS interaction.
+     */
     roleArn?: string;
 }
 
 export interface Mk8sAddOnsAwsElb {
     _sentinel?: boolean;
+    /**
+     * Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.
+     */
     roleArn?: string;
 }
 
@@ -487,11 +1102,17 @@ export interface Mk8sAddOnsAzureAcr {
 
 export interface Mk8sAddOnsAzureWorkloadIdentity {
     _sentinel?: boolean;
+    /**
+     * Tenant ID to use for workload identity.
+     */
     tenantId?: string;
 }
 
 export interface Mk8sAddOnsLogs {
     _sentinel?: boolean;
+    /**
+     * Collect k8s audit log as log events.
+     */
     auditEnabled?: boolean;
     excludeNamespaces?: string;
     includeNamespaces?: string;
@@ -499,12 +1120,33 @@ export interface Mk8sAddOnsLogs {
 
 export interface Mk8sAddOnsMetrics {
     _sentinel?: boolean;
+    /**
+     * Enable scraping apiserver stats.
+     */
     apiServer?: boolean;
+    /**
+     * Enable CNI-level container stats.
+     */
     cadvisor?: boolean;
+    /**
+     * Enable scraping of core-dns service.
+     */
     coreDns?: boolean;
+    /**
+     * Enable kube-state metrics.
+     */
     kubeState?: boolean;
+    /**
+     * Enable scraping kubelet stats.
+     */
     kubelet?: boolean;
+    /**
+     * Enable collecting node-level stats (disk, network, filesystem, etc).
+     */
     nodeExporter?: boolean;
+    /**
+     * Scrape pods annotated with prometheus.io/scrape=true.
+     */
     scrapeAnnotated?: outputs.Mk8sAddOnsMetricsScrapeAnnotated;
 }
 
@@ -523,19 +1165,52 @@ export interface Mk8sAddOnsNvidia {
 
 export interface Mk8sAwsProvider {
     autoscaler?: outputs.Mk8sAwsProviderAutoscaler;
+    /**
+     * Extra tags to attach to all created objects.
+     */
     awsTags?: {[key: string]: string};
+    /**
+     * Control Plane will set up the cluster by assuming this role.
+     */
     deployRoleArn: string;
     deployRoleChains?: outputs.Mk8sAwsProviderDeployRoleChain[];
+    /**
+     * KMS key used to encrypt volumes. Supports SSM.
+     */
     diskEncryptionKeyArn?: string;
     extraNodePolicies?: string[];
+    /**
+     * Default image for all nodes.
+     */
     image: outputs.Mk8sAwsProviderImage;
+    /**
+     * Name of keyPair. Supports SSM
+     */
     keyPair?: string;
     networking: outputs.Mk8sAwsProviderNetworking;
+    /**
+     * List of node pools.
+     */
     nodePools?: outputs.Mk8sAwsProviderNodePool[];
+    /**
+     * Optional shell script that will be run before K8s is installed. Supports SSM.
+     */
     preInstallScript?: string;
+    /**
+     * Region where the cluster nodes will live.
+     */
     region: string;
+    /**
+     * Security groups to deploy nodes to. Security groups control if the cluster is multi-zone or single-zon.
+     */
     securityGroupIds?: string[];
+    /**
+     * If true, Control Plane will not create any roles.
+     */
     skipCreateRoles?: boolean;
+    /**
+     * The vpc where nodes will be deployed. Supports SSM.
+     */
     vpcId: string;
 }
 
@@ -549,36 +1224,63 @@ export interface Mk8sAwsProviderAutoscaler {
 export interface Mk8sAwsProviderDeployRoleChain {
     externalId?: string;
     roleArn: string;
+    /**
+     * Control Plane will append random.
+     */
     sessionNamePrefix?: string;
 }
 
 export interface Mk8sAwsProviderImage {
+    /**
+     * Support SSM.
+     */
     exact?: string;
     recommended?: string;
 }
 
 export interface Mk8sAwsProviderNetworking {
+    /**
+     * The CIDR of the pod network.
+     */
     podNetwork?: string;
+    /**
+     * The CIDR of the service network.
+     */
     serviceNetwork?: string;
 }
 
 export interface Mk8sAwsProviderNodePool {
+    /**
+     * Size in GB.
+     */
     bootDiskSize?: number;
     extraSecurityGroupIds?: string[];
     instanceTypes: string[];
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: {[key: string]: string};
     maxSize?: number;
     minSize?: number;
     name: string;
     onDemandBaseCapacity?: number;
     onDemandPercentageAboveBaseCapacity?: number;
+    /**
+     * Default image for all nodes.
+     */
     overrideImage: outputs.Mk8sAwsProviderNodePoolOverrideImage;
     spotAllocationStrategy?: string;
     subnetIds: string[];
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: outputs.Mk8sAwsProviderNodePoolTaint[];
 }
 
 export interface Mk8sAwsProviderNodePoolOverrideImage {
+    /**
+     * Support SSM.
+     */
     exact?: string;
     recommended?: string;
 }
@@ -591,16 +1293,46 @@ export interface Mk8sAwsProviderNodePoolTaint {
 
 export interface Mk8sDigitalOceanProvider {
     autoscaler?: outputs.Mk8sDigitalOceanProviderAutoscaler;
+    /**
+     * Extra tags to attach to droplets.
+     */
     digitalOceanTags?: string[];
+    /**
+     * Extra SSH keys to provision for user root that are not registered in the DigitalOcean.
+     */
     extraSshKeys?: string[];
+    /**
+     * Default image for all nodes.
+     */
     image: string;
     networking: outputs.Mk8sDigitalOceanProviderNetworking;
+    /**
+     * List of node pools.
+     */
     nodePools?: outputs.Mk8sDigitalOceanProviderNodePool[];
+    /**
+     * Optional shell script that will be run before K8s is installed. Supports SSM.
+     */
     preInstallScript?: string;
+    /**
+     * Region to deploy nodes to.
+     */
     region: string;
+    /**
+     * Optional set of IPs to assign as extra IPs for nodes of the cluster.
+     */
     reservedIps?: string[];
+    /**
+     * SSH key name for accessing deployed nodes.
+     */
     sshKeys: string[];
+    /**
+     * Link to a secret holding personal access token.
+     */
     tokenSecretLink: string;
+    /**
+     * ID of the Hetzner network to deploy nodes to.
+     */
     vpcId: string;
 }
 
@@ -612,17 +1344,29 @@ export interface Mk8sDigitalOceanProviderAutoscaler {
 }
 
 export interface Mk8sDigitalOceanProviderNetworking {
+    /**
+     * The CIDR of the pod network.
+     */
     podNetwork?: string;
+    /**
+     * The CIDR of the service network.
+     */
     serviceNetwork?: string;
 }
 
 export interface Mk8sDigitalOceanProviderNodePool {
     dropletSize: string;
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: {[key: string]: string};
     maxSize?: number;
     minSize?: number;
     name: string;
     overrideImage?: string;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: outputs.Mk8sDigitalOceanProviderNodePoolTaint[];
 }
 
@@ -633,18 +1377,45 @@ export interface Mk8sDigitalOceanProviderNodePoolTaint {
 }
 
 export interface Mk8sEphemeralProvider {
+    /**
+     * Control Plane location that will host the K8s components. Prefer one that is closest to where the nodes are running.
+     */
     location: string;
+    /**
+     * List of node pools.
+     */
     nodePools?: outputs.Mk8sEphemeralProviderNodePool[];
 }
 
 export interface Mk8sEphemeralProviderNodePool {
+    /**
+     * CPU architecture of the nodes.
+     */
     arch: string;
+    /**
+     * Number of nodes to deploy.
+     */
     count: number;
+    /**
+     * Allocated CPU.
+     */
     cpu: string;
+    /**
+     * Linux distro to use for ephemeral nodes.
+     */
     flavor: string;
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: {[key: string]: string};
+    /**
+     * Allocated memory.
+     */
     memory: string;
     name: string;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: outputs.Mk8sEphemeralProviderNodePoolTaint[];
 }
 
@@ -660,19 +1431,37 @@ export interface Mk8sFirewall {
 }
 
 export interface Mk8sGenericProvider {
+    /**
+     * Control Plane location that will host the K8s components. Prefer one that is closest to where the nodes are running.
+     */
     location: string;
     networking: outputs.Mk8sGenericProviderNetworking;
+    /**
+     * List of node pools.
+     */
     nodePools?: outputs.Mk8sGenericProviderNodePool[];
 }
 
 export interface Mk8sGenericProviderNetworking {
+    /**
+     * The CIDR of the pod network.
+     */
     podNetwork?: string;
+    /**
+     * The CIDR of the service network.
+     */
     serviceNetwork?: string;
 }
 
 export interface Mk8sGenericProviderNodePool {
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: {[key: string]: string};
     name: string;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: outputs.Mk8sGenericProviderNodePoolTaint[];
 }
 
@@ -684,17 +1473,50 @@ export interface Mk8sGenericProviderNodePoolTaint {
 
 export interface Mk8sHetznerProvider {
     autoscaler?: outputs.Mk8sHetznerProviderAutoscaler;
+    /**
+     * Node pools that can configure dedicated Hetzner servers.
+     */
     dedicatedServerNodePools?: outputs.Mk8sHetznerProviderDedicatedServerNodePool[];
+    /**
+     * Optional firewall rule to attach to all nodes.
+     */
     firewallId?: string;
+    /**
+     * If supplied, nodes will get assigned a random floating ip matching the selector.
+     */
     floatingIpSelector?: {[key: string]: string};
+    /**
+     * Extra labels to attach to servers.
+     */
     hetznerLabels?: {[key: string]: string};
+    /**
+     * Default image for all nodes.
+     */
     image?: string;
+    /**
+     * ID of the Hetzner network to deploy nodes to.
+     */
     networkId: string;
     networking: outputs.Mk8sHetznerProviderNetworking;
+    /**
+     * List of node pools.
+     */
     nodePools?: outputs.Mk8sHetznerProviderNodePool[];
+    /**
+     * Optional shell script that will be run before K8s is installed. Supports SSM.
+     */
     preInstallScript?: string;
+    /**
+     * Hetzner region to deploy nodes to.
+     */
     region: string;
+    /**
+     * SSH key name for accessing deployed nodes.
+     */
     sshKey?: string;
+    /**
+     * Link to a secret holding Hetzner access key.
+     */
     tokenSecretLink: string;
 }
 
@@ -706,8 +1528,14 @@ export interface Mk8sHetznerProviderAutoscaler {
 }
 
 export interface Mk8sHetznerProviderDedicatedServerNodePool {
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: {[key: string]: string};
     name: string;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: outputs.Mk8sHetznerProviderDedicatedServerNodePoolTaint[];
 }
 
@@ -718,17 +1546,29 @@ export interface Mk8sHetznerProviderDedicatedServerNodePoolTaint {
 }
 
 export interface Mk8sHetznerProviderNetworking {
+    /**
+     * The CIDR of the pod network.
+     */
     podNetwork?: string;
+    /**
+     * The CIDR of the service network.
+     */
     serviceNetwork?: string;
 }
 
 export interface Mk8sHetznerProviderNodePool {
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: {[key: string]: string};
     maxSize?: number;
     minSize?: number;
     name: string;
     overrideImage?: string;
     serverType: string;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: outputs.Mk8sHetznerProviderNodePoolTaint[];
 }
 
@@ -740,10 +1580,25 @@ export interface Mk8sHetznerProviderNodePoolTaint {
 
 export interface Mk8sLambdalabsProvider {
     autoscaler?: outputs.Mk8sLambdalabsProviderAutoscaler;
+    /**
+     * List of node pools.
+     */
     nodePools?: outputs.Mk8sLambdalabsProviderNodePool[];
+    /**
+     * Optional shell script that will be run before K8s is installed. Supports SSM.
+     */
     preInstallScript?: string;
+    /**
+     * Region where the cluster nodes will live.
+     */
     region: string;
+    /**
+     * SSH key name for accessing deployed nodes.
+     */
     sshKey: string;
+    /**
+     * Link to a secret holding Lambdalabs access key.
+     */
     tokenSecretLink: string;
     unmanagedNodePools?: outputs.Mk8sLambdalabsProviderUnmanagedNodePool[];
 }
@@ -757,10 +1612,16 @@ export interface Mk8sLambdalabsProviderAutoscaler {
 
 export interface Mk8sLambdalabsProviderNodePool {
     instanceType: string;
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: {[key: string]: string};
     maxSize?: number;
     minSize?: number;
     name: string;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: outputs.Mk8sLambdalabsProviderNodePoolTaint[];
 }
 
@@ -771,8 +1632,14 @@ export interface Mk8sLambdalabsProviderNodePoolTaint {
 }
 
 export interface Mk8sLambdalabsProviderUnmanagedNodePool {
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: {[key: string]: string};
     name: string;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: outputs.Mk8sLambdalabsProviderUnmanagedNodePoolTaint[];
 }
 
@@ -786,13 +1653,34 @@ export interface Mk8sLinodeProvider {
     authorizedKeys?: string[];
     authorizedUsers?: string[];
     autoscaler?: outputs.Mk8sLinodeProviderAutoscaler;
+    /**
+     * Optional firewall rule to attach to all nodes.
+     */
     firewallId?: string;
+    /**
+     * Default image for all nodes.
+     */
     image: string;
     networking: outputs.Mk8sLinodeProviderNetworking;
+    /**
+     * List of node pools.
+     */
     nodePools?: outputs.Mk8sLinodeProviderNodePool[];
+    /**
+     * Optional shell script that will be run before K8s is installed. Supports SSM.
+     */
     preInstallScript?: string;
+    /**
+     * Region where the cluster nodes will live.
+     */
     region: string;
+    /**
+     * Link to a secret holding Linode access key.
+     */
     tokenSecretLink: string;
+    /**
+     * The vpc where nodes will be deployed. Supports SSM.
+     */
     vpcId: string;
 }
 
@@ -804,11 +1692,20 @@ export interface Mk8sLinodeProviderAutoscaler {
 }
 
 export interface Mk8sLinodeProviderNetworking {
+    /**
+     * The CIDR of the pod network.
+     */
     podNetwork?: string;
+    /**
+     * The CIDR of the service network.
+     */
     serviceNetwork?: string;
 }
 
 export interface Mk8sLinodeProviderNodePool {
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: {[key: string]: string};
     maxSize?: number;
     minSize?: number;
@@ -816,6 +1713,9 @@ export interface Mk8sLinodeProviderNodePool {
     overrideImage?: string;
     serverType: string;
     subnetId: string;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: outputs.Mk8sLinodeProviderNodePoolTaint[];
 }
 
@@ -828,9 +1728,18 @@ export interface Mk8sLinodeProviderNodePoolTaint {
 export interface Mk8sOblivusProvider {
     autoscaler?: outputs.Mk8sOblivusProviderAutoscaler;
     datacenter: string;
+    /**
+     * List of node pools.
+     */
     nodePools?: outputs.Mk8sOblivusProviderNodePool[];
+    /**
+     * Optional shell script that will be run before K8s is installed. Supports SSM.
+     */
     preInstallScript?: string;
     sshKeys?: string[];
+    /**
+     * Link to a secret holding Oblivus access key.
+     */
     tokenSecretLink: string;
     unmanagedNodePools?: outputs.Mk8sOblivusProviderUnmanagedNodePool[];
 }
@@ -844,10 +1753,16 @@ export interface Mk8sOblivusProviderAutoscaler {
 
 export interface Mk8sOblivusProviderNodePool {
     flavor: string;
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: {[key: string]: string};
     maxSize?: number;
     minSize?: number;
     name: string;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: outputs.Mk8sOblivusProviderNodePoolTaint[];
 }
 
@@ -858,8 +1773,14 @@ export interface Mk8sOblivusProviderNodePoolTaint {
 }
 
 export interface Mk8sOblivusProviderUnmanagedNodePool {
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: {[key: string]: string};
     name: string;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: outputs.Mk8sOblivusProviderUnmanagedNodePoolTaint[];
 }
 
@@ -872,10 +1793,22 @@ export interface Mk8sOblivusProviderUnmanagedNodePoolTaint {
 export interface Mk8sPaperspaceProvider {
     autoscaler?: outputs.Mk8sPaperspaceProviderAutoscaler;
     networkId: string;
+    /**
+     * List of node pools.
+     */
     nodePools?: outputs.Mk8sPaperspaceProviderNodePool[];
+    /**
+     * Optional shell script that will be run before K8s is installed. Supports SSM.
+     */
     preInstallScript?: string;
+    /**
+     * Region where the cluster nodes will live.
+     */
     region: string;
     sharedDrives?: string[];
+    /**
+     * Link to a secret holding Paperspace access key.
+     */
     tokenSecretLink: string;
     unmanagedNodePools?: outputs.Mk8sPaperspaceProviderUnmanagedNodePool[];
     userIds?: string[];
@@ -890,12 +1823,18 @@ export interface Mk8sPaperspaceProviderAutoscaler {
 
 export interface Mk8sPaperspaceProviderNodePool {
     bootDiskSize?: number;
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: {[key: string]: string};
     machineType: string;
     maxSize?: number;
     minSize?: number;
     name: string;
     publicIpType: string;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: outputs.Mk8sPaperspaceProviderNodePoolTaint[];
 }
 
@@ -906,8 +1845,14 @@ export interface Mk8sPaperspaceProviderNodePoolTaint {
 }
 
 export interface Mk8sPaperspaceProviderUnmanagedNodePool {
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: {[key: string]: string};
     name: string;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: outputs.Mk8sPaperspaceProviderUnmanagedNodePoolTaint[];
 }
 
@@ -957,10 +1902,16 @@ export interface Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig {
 }
 
 export interface Mk8sStatusAddOnDashboard {
+    /**
+     * Access to dashboard.
+     */
     url: string;
 }
 
 export interface Mk8sStatusAddOnLog {
+    /**
+     * Loki endpoint to query logs from.
+     */
     lokiAddress: string;
 }
 
@@ -972,13 +1923,35 @@ export interface Mk8sStatusAddOnMetric {
 export interface Mk8sTritonProvider {
     autoscaler?: outputs.Mk8sTritonProviderAutoscaler;
     connection: outputs.Mk8sTritonProviderConnection;
+    /**
+     * Enable firewall for the instances deployed.
+     */
     firewallEnabled?: boolean;
+    /**
+     * Default image for all nodes.
+     */
     imageId: string;
+    loadBalancer: outputs.Mk8sTritonProviderLoadBalancer;
+    /**
+     * Control Plane location that will host the K8s components. Prefer one that is closest to the Triton datacenter.
+     */
     location: string;
     networking: outputs.Mk8sTritonProviderNetworking;
+    /**
+     * List of node pools.
+     */
     nodePools?: outputs.Mk8sTritonProviderNodePool[];
+    /**
+     * Optional shell script that will be run before K8s is installed. Supports SSM.
+     */
     preInstallScript?: string;
+    /**
+     * ID of the private Fabric/Network.
+     */
     privateNetworkId: string;
+    /**
+     * Extra SSH keys to provision for user root.
+     */
     sshKeys?: string[];
 }
 
@@ -991,26 +1964,83 @@ export interface Mk8sTritonProviderAutoscaler {
 
 export interface Mk8sTritonProviderConnection {
     account: string;
+    /**
+     * Link to a SSH or opaque secret.
+     */
     privateKeySecretLink: string;
     url: string;
     user?: string;
 }
 
+export interface Mk8sTritonProviderLoadBalancer {
+    gateway?: outputs.Mk8sTritonProviderLoadBalancerGateway;
+    manual?: outputs.Mk8sTritonProviderLoadBalancerManual;
+}
+
+export interface Mk8sTritonProviderLoadBalancerGateway {
+    _sentinel?: boolean;
+}
+
+export interface Mk8sTritonProviderLoadBalancerManual {
+    cnsInternalDomain: string;
+    cnsPublicDomain: string;
+    count: number;
+    imageId: string;
+    /**
+     * Extra tags to attach to instances from a node pool.
+     */
+    metadata?: {[key: string]: string};
+    packageId: string;
+    /**
+     * More private networks to join.
+     */
+    privateNetworkIds?: string[];
+    /**
+     * If set, machine will also get a public IP.
+     */
+    publicNetworkId: string;
+    /**
+     * Extra tags to attach to instances from a node pool.
+     */
+    tags?: {[key: string]: string};
+}
+
 export interface Mk8sTritonProviderNetworking {
+    /**
+     * The CIDR of the pod network.
+     */
     podNetwork?: string;
+    /**
+     * The CIDR of the service network.
+     */
     serviceNetwork?: string;
 }
 
 export interface Mk8sTritonProviderNodePool {
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: {[key: string]: string};
     maxSize?: number;
     minSize?: number;
     name: string;
     overrideImageId?: string;
     packageId: string;
+    /**
+     * More private networks to join.
+     */
     privateNetworkIds?: string[];
+    /**
+     * If set, machine will also get a public IP.
+     */
     publicNetworkId?: string;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: outputs.Mk8sTritonProviderNodePoolTaint[];
+    /**
+     * Extra tags to attach to instances from a node pool.
+     */
     tritonTags?: {[key: string]: string};
 }
 
@@ -1021,96 +2051,249 @@ export interface Mk8sTritonProviderNodePoolTaint {
 }
 
 export interface OrgAuthConfig {
+    /**
+     * List of domains which will auto-provision users when authenticating using SAML.
+     */
     domainAutoMembers: string[];
+    /**
+     * Enforce SAML only authentication.
+     */
     samlOnly?: boolean;
 }
 
 export interface OrgLoggingCloudWatchLogging {
+    /**
+     * Full Link to a secret of type `opaque`.
+     */
     credentials: string;
+    /**
+     * Enable custom data extraction from log entries for enhanced querying and analysis.
+     */
     extractFields?: {[key: string]: string};
+    /**
+     * A container for log streams with common settings like retention. Used to categorize logs by application or service type.
+     */
     groupName: string;
+    /**
+     * Valid AWS region.
+     */
     region: string;
+    /**
+     * Length, in days, for how log data is kept before it is automatically deleted.
+     */
     retentionDays?: number;
+    /**
+     * A sequence of log events from the same source within a log group. Typically represents individual instances of services or applications.
+     */
     streamName: string;
 }
 
 export interface OrgLoggingCoralogixLogging {
+    /**
+     * App name to be displayed in Coralogix dashboard.
+     */
     app: string;
+    /**
+     * Coralogix cluster URI.
+     */
     cluster: string;
+    /**
+     * Full link to referenced Opaque Secret.
+     */
     credentials: string;
+    /**
+     * Subsystem name to be displayed in Coralogix dashboard.
+     */
     subsystem: string;
 }
 
 export interface OrgLoggingDatadogLogging {
+    /**
+     * Full link to referenced Opaque Secret.
+     */
     credentials: string;
+    /**
+     * Datadog host URI.
+     */
     host: string;
 }
 
 export interface OrgLoggingElasticLogging {
     _sentinel?: boolean;
+    /**
+     * For targeting Amazon Web Services (AWS) ElasticSearch.
+     */
     aws?: outputs.OrgLoggingElasticLoggingAws;
+    /**
+     * For targeting Elastic Cloud.
+     */
     elasticCloud?: outputs.OrgLoggingElasticLoggingElasticCloud;
+    /**
+     * For targeting generic Elastic Search providers.
+     */
     generic?: outputs.OrgLoggingElasticLoggingGeneric;
 }
 
 export interface OrgLoggingElasticLoggingAws {
+    /**
+     * Full Link to a secret of type `aws`.
+     */
     credentials: string;
+    /**
+     * A valid AWS ElasticSearch hostname (must end with es.amazonaws.com).
+     */
     host: string;
+    /**
+     * Logging Index.
+     */
     index: string;
+    /**
+     * Port. Default: 443
+     */
     port: number;
+    /**
+     * Valid AWS region.
+     */
     region: string;
+    /**
+     * Logging Type.
+     */
     type: string;
 }
 
 export interface OrgLoggingElasticLoggingElasticCloud {
+    /**
+     * [Cloud ID](https://www.elastic.co/guide/en/cloud/current/ec-cloud-id.html)
+     */
     cloudId: string;
+    /**
+     * Full Link to a secret of type `userpass`.
+     */
     credentials: string;
+    /**
+     * Logging Index.
+     */
     index: string;
+    /**
+     * Logging Type.
+     */
     type: string;
 }
 
 export interface OrgLoggingElasticLoggingGeneric {
+    /**
+     * Full Link to a secret of type `userpass`.
+     */
     credentials: string;
+    /**
+     * A valid Elastic Search provider hostname.
+     */
     host: string;
+    /**
+     * Logging Index.
+     */
     index: string;
+    /**
+     * Logging path.
+     */
     path: string;
+    /**
+     * Port. Default: 443
+     */
     port: number;
+    /**
+     * Logging Type.
+     */
     type: string;
 }
 
 export interface OrgLoggingFluentdLogging {
+    /**
+     * The hostname or IP address of a remote log storage system.
+     */
     host: string;
+    /**
+     * Port. Default: 24224
+     */
     port?: number;
 }
 
 export interface OrgLoggingLogzioLogging {
+    /**
+     * Full link to referenced Opaque Secret.
+     */
     credentials: string;
+    /**
+     * Logzio listener host URI.
+     */
     listenerHost: string;
 }
 
 export interface OrgLoggingS3Logging {
+    /**
+     * Name of S3 bucket.
+     */
     bucket: string;
+    /**
+     * Full link to referenced AWS Secret.
+     */
     credentials: string;
+    /**
+     * Bucket path prefix. Default: "/".
+     */
     prefix?: string;
+    /**
+     * AWS region where bucket is located.
+     */
     region: string;
 }
 
 export interface OrgLoggingStackdriverLogging {
+    /**
+     * Full Link to a secret of type `opaque`.
+     */
     credentials: string;
+    /**
+     * A Google Cloud Provider region.
+     */
     location: string;
 }
 
 export interface OrgLoggingSyslogLogging {
+    /**
+     * Log Format. Valid values: RFC3164 or RFC5424.
+     */
     format?: string;
+    /**
+     * Hostname of Syslog Endpoint.
+     */
     host: string;
+    /**
+     * Log Mode. Valid values: TCP, TLS, or UDP.
+     */
     mode?: string;
+    /**
+     * Port of Syslog Endpoint.
+     */
     port: number;
+    /**
+     * Severity Level. See documentation for details. Valid values: 0 to 7.
+     */
     severity?: number;
 }
 
 export interface OrgObservability {
+    /**
+     * Log retention days. Default: 30
+     */
     logsRetentionDays?: number;
+    /**
+     * Metrics retention days. Default: 30
+     */
     metricsRetentionDays?: number;
+    /**
+     * Traces retention days. Default: 30
+     */
     tracesRetentionDays?: number;
 }
 
@@ -1120,157 +2303,399 @@ export interface OrgSecurity {
 }
 
 export interface OrgSecurityThreatDetection {
+    /**
+     * Indicates whether threat detection should be forwarded or not.
+     */
     enabled: boolean;
+    /**
+     * Any threats with this severity and more severe will be sent. Others will be ignored. Valid values: `warning`, `error`, or `critical`.
+     */
     minimumSeverity?: string;
+    /**
+     * Configuration for syslog forwarding.
+     */
     syslog?: outputs.OrgSecurityThreatDetectionSyslog;
 }
 
 export interface OrgSecurityThreatDetectionSyslog {
+    /**
+     * The hostname to send syslog messages to.
+     */
     host: string;
+    /**
+     * The port to send syslog messages to.
+     */
     port: number;
+    /**
+     * The transport-layer protocol to send the syslog messages over. If TCP is chosen, messages will be sent with TLS. Default: `tcp`.
+     */
     transport?: string;
 }
 
 export interface OrgStatus {
+    /**
+     * The link of the account the org belongs to.
+     */
     accountLink?: string;
+    /**
+     * Indicates whether the org is active or not.
+     */
     active?: boolean;
 }
 
 export interface OrgTracingControlplaneTracing {
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: {[key: string]: string};
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: number;
 }
 
 export interface OrgTracingLightstepTracing {
+    /**
+     * Full link to referenced Opaque Secret.
+     */
     credentials?: string;
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: {[key: string]: string};
+    /**
+     * Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+     */
     endpoint: string;
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: number;
 }
 
 export interface OrgTracingOtelTracing {
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: {[key: string]: string};
+    /**
+     * Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+     */
     endpoint: string;
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: number;
 }
 
 export interface PolicyBinding {
+    /**
+     * List of permissions to allow.
+     */
     permissions: string[];
+    /**
+     * List of the principals this binding will be applied to. Principal links format: `group/GROUP_NAME`, `user/USER_EMAIL`, `gvc/GVC_NAME/identity/IDENTITY_NAME`, `serviceaccount/SERVICE_ACCOUNT_NAME`.
+     */
     principalLinks: string[];
 }
 
 export interface PolicyTargetQuery {
+    /**
+     * Type of fetch. Specify either: `links` or `items`. Default: `items`.
+     */
     fetch?: string;
     spec?: outputs.PolicyTargetQuerySpec;
 }
 
 export interface PolicyTargetQuerySpec {
+    /**
+     * Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+     */
     match?: string;
+    /**
+     * Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+     */
     terms?: outputs.PolicyTargetQuerySpecTerm[];
 }
 
 export interface PolicyTargetQuerySpecTerm {
+    /**
+     * Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+     */
     op?: string;
+    /**
+     * Property to use for query evaluation.
+     */
     property?: string;
     rel?: string;
+    /**
+     * Tag key to use for query evaluation.
+     */
     tag?: string;
+    /**
+     * Testing value for query evaluation.
+     */
     value?: string;
 }
 
 export interface SecretAws {
+    /**
+     * Access Key provided by AWS.
+     */
     accessKey: string;
+    /**
+     * AWS IAM Role External ID.
+     */
     externalId?: string;
+    /**
+     * Role ARN provided by AWS.
+     */
     roleArn?: string;
+    /**
+     * Secret Key provided by AWS.
+     */
     secretKey: string;
 }
 
 export interface SecretAzureConnector {
+    /**
+     * Code/Key to authenticate to deployment URL.
+     */
     code: string;
+    /**
+     * Deployment URL.
+     */
     url: string;
 }
 
 export interface SecretEcr {
+    /**
+     * Access Key provided by AWS.
+     */
     accessKey: string;
+    /**
+     * AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
+     */
     externalId?: string;
+    /**
+     * List of ECR repositories.
+     */
     repos: string[];
+    /**
+     * Role ARN provided by AWS.
+     */
     roleArn?: string;
+    /**
+     * Secret Key provided by AWS.
+     */
     secretKey: string;
 }
 
 export interface SecretKeypair {
+    /**
+     * Passphrase for private key.
+     */
     passphrase?: string;
+    /**
+     * Public Key.
+     */
     publicKey?: string;
+    /**
+     * Secret/Private Key.
+     */
     secretKey: string;
 }
 
 export interface SecretNatsAccount {
+    /**
+     * Account ID.
+     */
     accountId: string;
+    /**
+     * Private Key.
+     */
     privateKey: string;
 }
 
 export interface SecretOpaque {
+    /**
+     * Available encodings: `plain`, `base64`. Default: `plain`.
+     */
     encoding?: string;
+    /**
+     * Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.
+     */
     payload: string;
 }
 
 export interface SecretTls {
+    /**
+     * Public Certificate.
+     */
     cert: string;
+    /**
+     * Chain Certificate.
+     */
     chain?: string;
+    /**
+     * Private Certificate.
+     */
     key: string;
 }
 
 export interface SecretUserpass {
+    /**
+     * Available encodings: `plain`, `base64`. Default: `plain`.
+     */
     encoding?: string;
+    /**
+     * Password.
+     */
     password: string;
+    /**
+     * Username.
+     */
     username: string;
 }
 
 export interface VolumeSetAutoscaling {
+    /**
+     * The maximum size in GB for a volume in this set. A volume cannot grow to be bigger than this value. Minimum value: `10`.
+     */
     maxCapacity?: number;
+    /**
+     * The guaranteed free space on the volume as a percentage of the volume's total size. Control Plane will try to maintain at least that many percent free by scaling up the total size. Minimum percentage: `1`. Maximum Percentage: `100`.
+     */
     minFreePercentage?: number;
+    /**
+     * When scaling is necessary, then `newCapacity = currentCapacity * storageScalingFactor`. Minimum value: `1.1`.
+     */
     scalingFactor?: number;
 }
 
 export interface VolumeSetSnapshots {
+    /**
+     * If true, a volume snapshot will be created immediately before deletion of any volume in this set. Default: `true`
+     */
     createFinalSnapshot?: boolean;
+    /**
+     * The default retention period for volume snapshots. This string should contain a floating point number followed by either d, h, or m. For example, "10d" would retain snapshots for 10 days.
+     */
     retentionDuration?: string;
+    /**
+     * A standard cron schedule expression used to determine when a snapshot will be taken. (i.e., `0 * * * *` Every hour). Note: snapshots cannot be scheduled more often than once per hour.
+     */
     schedule?: string;
 }
 
 export interface VolumeSetStatus {
+    /**
+     * Uniquely identifies the connection between the volume set and its workload. Every time a new connection is made, a new id is generated (e.g., If a workload is updated to remove the volume set, then updated again to reattach it, the volume set will have a new binding id).
+     */
     bindingId: string;
+    /**
+     * Contains a list of actual volumes grouped by location.
+     */
     locations: string[];
+    /**
+     * The GVC ID.
+     */
     parentId: string;
+    /**
+     * The url of the workload currently using this volume set (if any).
+     */
     usedByWorkload: string;
 }
 
 export interface WorkloadContainer {
+    /**
+     * Command line arguments passed to the container at runtime.
+     */
     args?: string[];
+    /**
+     * Override the entry point.
+     */
     command?: string;
+    /**
+     * Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
+     */
     cpu?: string;
+    /**
+     * Name-Value list of environment variables.
+     */
     env?: {[key: string]: string};
+    /**
+     * GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
+     */
     gpuNvidia?: outputs.WorkloadContainerGpuNvidia;
+    /**
+     * The full image and tag path.
+     */
     image: string;
+    /**
+     * Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
+     */
     inheritEnv?: boolean;
+    /**
+     * Lifecycle [Reference Page](https://docs.controlplane.com/reference/workload#lifecycle).
+     */
     lifecycle?: outputs.WorkloadContainerLifecycle;
+    /**
+     * Liveness Probe
+     */
     livenessProbe?: outputs.WorkloadContainerLivenessProbe;
+    /**
+     * Reserved memory of the workload when capacityAI is disabled. Maximum memory when CapacityAI is enabled. Default: "128Mi".
+     */
     memory?: string;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/workload#metrics).
+     */
     metrics?: outputs.WorkloadContainerMetrics;
+    /**
+     * Minimum CPU when capacity AI is enabled.
+     */
     minCpu?: string;
+    /**
+     * Minimum memory when capacity AI is enabled.
+     */
     minMemory?: string;
+    /**
+     * Name of the container.
+     */
     name: string;
     /**
+     * The port the container exposes. Only one container is allowed to specify a port. Min: `80`. Max: `65535`. Used by `serverless` Workload type. **DEPRECATED - Use `ports`.**
+     *
      * @deprecated The 'port' attribute will be deprecated in the next major version. Use the 'ports' attribute instead.
      */
     port?: number;
+    /**
+     * Communication endpoints used by the workload to send and receive network traffic.
+     */
     ports?: outputs.WorkloadContainerPort[];
+    /**
+     * Readiness Probe
+     */
     readinessProbe?: outputs.WorkloadContainerReadinessProbe;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/workload#volumes).
+     */
     volumes?: outputs.WorkloadContainerVolume[];
+    /**
+     * Override the working directory. Must be an absolute path.
+     */
     workingDirectory?: string;
 }
 
 export interface WorkloadContainerGpuNvidia {
+    /**
+     * GPU Model (i.e.: t4)
+     */
     model: string;
+    /**
+     * Number of GPUs.
+     */
     quantity: number;
 }
 
@@ -1330,12 +2755,24 @@ export interface WorkloadContainerLivenessProbeTcpSocket {
 }
 
 export interface WorkloadContainerMetrics {
+    /**
+     * Path from container emitting custom metrics
+     */
     path: string;
+    /**
+     * Port from container emitting custom metrics
+     */
     port: number;
 }
 
 export interface WorkloadContainerPort {
+    /**
+     * Port to expose.
+     */
     number: number;
+    /**
+     * Protocol. Choice of: `http`, `http2`, `tcp`, or `grpc`.
+     */
     protocol?: string;
 }
 
@@ -1373,39 +2810,93 @@ export interface WorkloadContainerReadinessProbeTcpSocket {
 }
 
 export interface WorkloadContainerVolume {
+    /**
+     * File path added to workload pointing to the volume.
+     */
     path: string;
+    /**
+     * Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
+     */
     recoveryPolicy?: string;
+    /**
+     * URI of a volume hosted at Control Plane (Volume Set) or at a cloud provider (AWS, Azure, GCP).
+     */
     uri: string;
 }
 
 export interface WorkloadFirewallSpec {
     _sentinel?: boolean;
+    /**
+     * The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
+     */
     external?: outputs.WorkloadFirewallSpecExternal;
+    /**
+     * The internal firewall is used to control access between workloads.
+     */
     internal?: outputs.WorkloadFirewallSpecInternal;
 }
 
 export interface WorkloadFirewallSpecExternal {
+    /**
+     * The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+     */
     inboundAllowCidrs?: string[];
+    /**
+     * The list of ipv4/ipv6 addresses or cidr blocks that this workload is allowed reach. No outbound access is allowed by default. Specify '0.0.0.0/0' to allow outbound access to the public internet.
+     */
     outboundAllowCidrs?: string[];
+    /**
+     * The list of public hostnames that this workload is allowed to reach. No outbound access is allowed by default. A wildcard `*` is allowed on the prefix of the hostname only, ex: `*.amazonaws.com`. Use `outboundAllowCIDR` to allow access to all external websites.
+     */
     outboundAllowHostnames?: string[];
+    /**
+     * Allow outbound access to specific ports and protocols. When not specified, communication to address ranges in outboundAllowCIDR is allowed on all ports and communication to names in outboundAllowHostname is allowed on ports 80/443.
+     */
     outboundAllowPorts?: outputs.WorkloadFirewallSpecExternalOutboundAllowPort[];
 }
 
 export interface WorkloadFirewallSpecExternalOutboundAllowPort {
+    /**
+     * Port number. Max: 65000
+     */
     number: number;
+    /**
+     * Either `http`, `https` or `tcp`. Default: `tcp`.
+     */
     protocol: string;
 }
 
 export interface WorkloadFirewallSpecInternal {
+    /**
+     * Used to control the internal firewall configuration and mutual tls. Allowed Values: "none", "same-gvc", "same-org", "workload-list".
+     */
     inboundAllowType?: string;
+    /**
+     * A list of specific workloads which are allowed to access this workload internally. This list is only used if the 'inboundAllowType' is set to 'workload-list'.
+     */
     inboundAllowWorkloads?: string[];
 }
 
 export interface WorkloadJob {
+    /**
+     * The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
+     */
     activeDeadlineSeconds?: number;
+    /**
+     * Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`
+     */
     concurrencyPolicy?: string;
+    /**
+     * The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`
+     */
     historyLimit?: number;
+    /**
+     * Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`
+     */
     restartPolicy?: string;
+    /**
+     * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
+     */
     schedule: string;
 }
 
@@ -1424,79 +2915,199 @@ export interface WorkloadLoadBalancerDirectPort {
     containerPort?: number;
     externalPort: number;
     protocol: string;
+    /**
+     * Override the default `https` url scheme.
+     */
     scheme?: string;
 }
 
 export interface WorkloadLoadBalancerGeoLocation {
+    /**
+     * When enabled, geo location headers will be included on inbound http requests. Existing headers will be replaced.
+     */
     enabled?: boolean;
     headers?: outputs.WorkloadLoadBalancerGeoLocationHeaders;
 }
 
 export interface WorkloadLoadBalancerGeoLocationHeaders {
+    /**
+     * The geo asn header.
+     */
     asn?: string;
+    /**
+     * The geo city header.
+     */
     city?: string;
+    /**
+     * The geo country header.
+     */
     country?: string;
+    /**
+     * The geo region header.
+     */
     region?: string;
 }
 
 export interface WorkloadLocalOption {
+    /**
+     * Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+     */
     autoscaling?: outputs.WorkloadLocalOptionAutoscaling;
+    /**
+     * Capacity AI. Default: `true`.
+     */
     capacityAi?: boolean;
+    /**
+     * Debug mode. Default: `false`
+     */
     debug?: boolean;
+    /**
+     * Valid only for `localOptions`. Override options for a specific location.
+     */
     location: string;
+    /**
+     * Workload suspend. Default: `false`
+     */
     suspend?: boolean;
+    /**
+     * Timeout in seconds. Default: `5`.
+     */
     timeoutSeconds?: number;
 }
 
 export interface WorkloadLocalOptionAutoscaling {
+    /**
+     * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+     */
     maxConcurrency?: number;
+    /**
+     * The maximum allowed number of replicas. Min: `0`. Default `5`.
+     */
     maxScale?: number;
+    /**
+     * Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+     */
     metric?: string;
+    /**
+     * For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+     */
     metricPercentile?: string;
+    /**
+     * The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `maxScale`. Default `1`.
+     */
     minScale?: number;
     multis?: outputs.WorkloadLocalOptionAutoscalingMulti[];
+    /**
+     * The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+     */
     scaleToZeroDelay?: number;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+     */
     target?: number;
 }
 
 export interface WorkloadLocalOptionAutoscalingMulti {
+    /**
+     * Valid values: `cpu` or `memory`.
+     */
     metric?: string;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+     */
     target?: number;
 }
 
 export interface WorkloadOptions {
+    /**
+     * Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+     */
     autoscaling?: outputs.WorkloadOptionsAutoscaling;
+    /**
+     * Capacity AI. Default: `true`.
+     */
     capacityAi?: boolean;
+    /**
+     * Debug mode. Default: `false`
+     */
     debug?: boolean;
+    /**
+     * Workload suspend. Default: `false`
+     */
     suspend?: boolean;
+    /**
+     * Timeout in seconds. Default: `5`.
+     */
     timeoutSeconds?: number;
 }
 
 export interface WorkloadOptionsAutoscaling {
+    /**
+     * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+     */
     maxConcurrency?: number;
+    /**
+     * The maximum allowed number of replicas. Min: `0`. Default `5`.
+     */
     maxScale?: number;
+    /**
+     * Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+     */
     metric?: string;
+    /**
+     * For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+     */
     metricPercentile?: string;
+    /**
+     * The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `maxScale`. Default `1`.
+     */
     minScale?: number;
     multis?: outputs.WorkloadOptionsAutoscalingMulti[];
+    /**
+     * The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+     */
     scaleToZeroDelay?: number;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+     */
     target?: number;
 }
 
 export interface WorkloadOptionsAutoscalingMulti {
+    /**
+     * Valid values: `cpu` or `memory`.
+     */
     metric?: string;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+     */
     target?: number;
 }
 
 export interface WorkloadRolloutOptions {
+    /**
+     * The number of replicas that can be created above the desired amount of replicas during an update.
+     */
     maxSurgeReplicas?: string;
+    /**
+     * The number of replicas that can be unavailable during the update process.
+     */
     maxUnavailableReplicas?: string;
+    /**
+     * The minimum number of seconds a container must run without crashing to be considered available
+     */
     minReadySeconds?: number;
+    /**
+     * The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+     */
     scalingPolicy?: string;
 }
 
 export interface WorkloadSecurityOptions {
     _sentinel?: boolean;
+    /**
+     * The group id assigned to any mounted volume.
+     */
     fileSystemGroupId?: number;
 }
 
@@ -1505,23 +3116,65 @@ export interface WorkloadSidecar {
 }
 
 export interface WorkloadStatus {
+    /**
+     * Canonical endpoint for the workload.
+     */
     canonicalEndpoint?: string;
+    /**
+     * Current amount of replicas deployed.
+     */
     currentReplicaCount?: number;
+    /**
+     * Endpoint for the workload.
+     */
     endpoint?: string;
+    /**
+     * Current health status.
+     */
     healthChecks?: outputs.WorkloadStatusHealthCheck[];
+    /**
+     * Internal hostname for the workload. Used for service-to-service requests.
+     */
     internalName?: string;
     loadBalancers?: outputs.WorkloadStatusLoadBalancer[];
+    /**
+     * ID of the parent object.
+     */
     parentId?: string;
+    /**
+     * Resolved images for workloads with dynamic tags enabled.
+     */
     resolvedImages?: outputs.WorkloadStatusResolvedImage[];
 }
 
 export interface WorkloadStatusHealthCheck {
+    /**
+     * Active boolean for the associated workload.
+     */
     active: boolean;
+    /**
+     * Current output code for the associated workload.
+     */
     code?: number;
+    /**
+     * Failure integer for the associated workload.
+     */
     failures?: number;
+    /**
+     * Timestamp in UTC of the last health check.
+     */
     lastChecked?: string;
+    /**
+     * Current health status for the associated workload.
+     */
     message?: string;
+    /**
+     * Success boolean for the associated workload.
+     */
     success?: boolean;
+    /**
+     * Success integer for the associated workload.
+     */
     successes?: number;
 }
 
@@ -1531,20 +3184,44 @@ export interface WorkloadStatusLoadBalancer {
 }
 
 export interface WorkloadStatusResolvedImage {
+    /**
+     * A list of images that were resolved.
+     */
     images?: outputs.WorkloadStatusResolvedImageImage[];
+    /**
+     * UTC Time when the images were resolved.
+     */
     resolvedAt?: string;
+    /**
+     * Workload version the images were resolved for.
+     */
     resolvedForVersion?: number;
 }
 
 export interface WorkloadStatusResolvedImageImage {
+    /**
+     * A unique SHA256 hash value that identifies a specific image content. This digest serves as a fingerprint of the image's content, ensuring the image you pull or run is exactly what you expect, without any modifications or corruptions.
+     */
     digest?: string;
     manifests?: outputs.WorkloadStatusResolvedImageImageManifest[];
 }
 
 export interface WorkloadStatusResolvedImageImageManifest {
+    /**
+     * A SHA256 hash that uniquely identifies the specific image manifest.
+     */
     digest?: string;
+    /**
+     * The name and tag of the resolved image.
+     */
     image?: string;
+    /**
+     * The MIME type used in the Docker Registry HTTP API to specify the format of the data being sent or received. Docker uses media types to distinguish between different kinds of JSON objects and binary data formats within the registry protocol, enabling the Docker client and registry to understand and process different components of Docker images correctly.
+     */
     mediaType?: string;
+    /**
+     * Key-value map of strings. The combination of the operating system and architecture for which the image is built.
+     */
     platform?: {[key: string]: string};
 }
 

@@ -26,7 +26,6 @@ import * as utilities from "./utilities";
  * ```
  */
 export function getOrg(opts?: pulumi.InvokeOptions): Promise<GetOrgResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("cpln:index/getOrg:getOrg", {
     }, opts);
@@ -64,6 +63,8 @@ export interface GetOrgResult {
  * export const orgName = org.then(org => org.name);
  * ```
  */
-export function getOrgOutput(opts?: pulumi.InvokeOptions): pulumi.Output<GetOrgResult> {
-    return pulumi.output(getOrg(opts))
+export function getOrgOutput(opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetOrgResult> {
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("cpln:index/getOrg:getOrg", {
+    }, opts);
 }

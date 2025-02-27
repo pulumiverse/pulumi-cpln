@@ -13,9 +13,15 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class OrgStatusGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The link of the account the org belongs to.
+        /// </summary>
         [Input("accountLink")]
         public Input<string>? AccountLink { get; set; }
 
+        /// <summary>
+        /// Indicates whether the org is active or not.
+        /// </summary>
         [Input("active")]
         public Input<bool>? Active { get; set; }
 

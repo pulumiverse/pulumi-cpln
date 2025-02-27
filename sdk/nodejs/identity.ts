@@ -53,7 +53,7 @@ export class Identity extends pulumi.CustomResource {
      */
     public readonly description!: pulumi.Output<string | undefined>;
     /**
-     * The GCP access policy can either contain an existing service_account or multiple bindings.
+     * The GCP access policy can either contain an existing serviceAccount or multiple bindings.
      */
     public readonly gcpAccessPolicy!: pulumi.Output<outputs.IdentityGcpAccessPolicy | undefined>;
     /**
@@ -65,7 +65,7 @@ export class Identity extends pulumi.CustomResource {
      */
     public readonly name!: pulumi.Output<string>;
     /**
-     * ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+     * > **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
      */
     public readonly nativeNetworkResources!: pulumi.Output<outputs.IdentityNativeNetworkResource[] | undefined>;
     /**
@@ -164,7 +164,7 @@ export interface IdentityState {
      */
     description?: pulumi.Input<string>;
     /**
-     * The GCP access policy can either contain an existing service_account or multiple bindings.
+     * The GCP access policy can either contain an existing serviceAccount or multiple bindings.
      */
     gcpAccessPolicy?: pulumi.Input<inputs.IdentityGcpAccessPolicy>;
     /**
@@ -176,7 +176,7 @@ export interface IdentityState {
      */
     name?: pulumi.Input<string>;
     /**
-     * ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+     * > **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
      */
     nativeNetworkResources?: pulumi.Input<pulumi.Input<inputs.IdentityNativeNetworkResource>[]>;
     /**
@@ -222,7 +222,7 @@ export interface IdentityArgs {
      */
     description?: pulumi.Input<string>;
     /**
-     * The GCP access policy can either contain an existing service_account or multiple bindings.
+     * The GCP access policy can either contain an existing serviceAccount or multiple bindings.
      */
     gcpAccessPolicy?: pulumi.Input<inputs.IdentityGcpAccessPolicy>;
     /**
@@ -234,7 +234,7 @@ export interface IdentityArgs {
      */
     name?: pulumi.Input<string>;
     /**
-     * ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+     * > **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
      */
     nativeNetworkResources?: pulumi.Input<pulumi.Input<inputs.IdentityNativeNetworkResource>[]>;
     /**

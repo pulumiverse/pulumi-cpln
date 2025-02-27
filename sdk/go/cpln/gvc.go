@@ -8,7 +8,6 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
@@ -219,12 +218,6 @@ func (i *Gvc) ToGvcOutputWithContext(ctx context.Context) GvcOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(GvcOutput)
 }
 
-func (i *Gvc) ToOutput(ctx context.Context) pulumix.Output[*Gvc] {
-	return pulumix.Output[*Gvc]{
-		OutputState: i.ToGvcOutputWithContext(ctx).OutputState,
-	}
-}
-
 // GvcArrayInput is an input type that accepts GvcArray and GvcArrayOutput values.
 // You can construct a concrete instance of `GvcArrayInput` via:
 //
@@ -248,12 +241,6 @@ func (i GvcArray) ToGvcArrayOutput() GvcArrayOutput {
 
 func (i GvcArray) ToGvcArrayOutputWithContext(ctx context.Context) GvcArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(GvcArrayOutput)
-}
-
-func (i GvcArray) ToOutput(ctx context.Context) pulumix.Output[[]*Gvc] {
-	return pulumix.Output[[]*Gvc]{
-		OutputState: i.ToGvcArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // GvcMapInput is an input type that accepts GvcMap and GvcMapOutput values.
@@ -281,12 +268,6 @@ func (i GvcMap) ToGvcMapOutputWithContext(ctx context.Context) GvcMapOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(GvcMapOutput)
 }
 
-func (i GvcMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*Gvc] {
-	return pulumix.Output[map[string]*Gvc]{
-		OutputState: i.ToGvcMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type GvcOutput struct{ *pulumi.OutputState }
 
 func (GvcOutput) ElementType() reflect.Type {
@@ -299,12 +280,6 @@ func (o GvcOutput) ToGvcOutput() GvcOutput {
 
 func (o GvcOutput) ToGvcOutputWithContext(ctx context.Context) GvcOutput {
 	return o
-}
-
-func (o GvcOutput) ToOutput(ctx context.Context) pulumix.Output[*Gvc] {
-	return pulumix.Output[*Gvc]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The alias name of the GVC.
@@ -395,12 +370,6 @@ func (o GvcArrayOutput) ToGvcArrayOutputWithContext(ctx context.Context) GvcArra
 	return o
 }
 
-func (o GvcArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*Gvc] {
-	return pulumix.Output[[]*Gvc]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o GvcArrayOutput) Index(i pulumi.IntInput) GvcOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *Gvc {
 		return vs[0].([]*Gvc)[vs[1].(int)]
@@ -419,12 +388,6 @@ func (o GvcMapOutput) ToGvcMapOutput() GvcMapOutput {
 
 func (o GvcMapOutput) ToGvcMapOutputWithContext(ctx context.Context) GvcMapOutput {
 	return o
-}
-
-func (o GvcMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*Gvc] {
-	return pulumix.Output[map[string]*Gvc]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o GvcMapOutput) MapIndex(k pulumi.StringInput) GvcOutput {

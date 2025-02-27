@@ -14,6 +14,9 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class CloudAccountAws
     {
+        /// <summary>
+        /// Amazon Resource Name (ARN) Role.
+        /// </summary>
         public readonly string RoleArn;
 
         [OutputConstructor]

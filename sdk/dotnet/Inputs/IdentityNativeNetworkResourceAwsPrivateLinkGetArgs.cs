@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class IdentityNativeNetworkResourceAwsPrivateLinkGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Endpoint service name.
+        /// </summary>
         [Input("endpointServiceName", required: true)]
         public Input<string> EndpointServiceName { get; set; } = null!;
 

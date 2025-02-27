@@ -15,20 +15,34 @@ namespace Pulumiverse.Cpln.Inputs
     {
         [Input("accessKey", required: true)]
         private string? _accessKey;
+
+        /// <summary>
+        /// Access Key provided by AWS.
+        /// </summary>
         public string? AccessKey
         {
             get => _accessKey;
             set => _accessKey = value;
         }
 
+        /// <summary>
+        /// AWS IAM Role External ID.
+        /// </summary>
         [Input("externalId")]
         public string? ExternalId { get; set; }
 
+        /// <summary>
+        /// Role ARN provided by AWS.
+        /// </summary>
         [Input("roleArn")]
         public string? RoleArn { get; set; }
 
         [Input("secretKey", required: true)]
         private string? _secretKey;
+
+        /// <summary>
+        /// Secret Key provided by AWS.
+        /// </summary>
         public string? SecretKey
         {
             get => _secretKey;

@@ -14,9 +14,21 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgLoggingS3Logging
     {
+        /// <summary>
+        /// Name of S3 bucket.
+        /// </summary>
         public readonly string Bucket;
+        /// <summary>
+        /// Full link to referenced AWS Secret.
+        /// </summary>
         public readonly string Credentials;
+        /// <summary>
+        /// Bucket path prefix. Default: "/".
+        /// </summary>
         public readonly string? Prefix;
+        /// <summary>
+        /// AWS region where bucket is located.
+        /// </summary>
         public readonly string Region;
 
         [OutputConstructor]

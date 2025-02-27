@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class GetImagesQueryArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        /// </summary>
         [Input("fetch")]
         public string? Fetch { get; set; }
 

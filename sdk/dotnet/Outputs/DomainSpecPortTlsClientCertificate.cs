@@ -14,6 +14,9 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class DomainSpecPortTlsClientCertificate
     {
+        /// <summary>
+        /// Full link to a TLS secret.
+        /// </summary>
         public readonly string? SecretLink;
 
         [OutputConstructor]

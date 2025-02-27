@@ -16,6 +16,9 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("_sentinel")]
         public Input<bool>? _sentinel { get; set; }
 
+        /// <summary>
+        /// Manipulates HTTP headers.
+        /// </summary>
         [Input("request")]
         public Input<Inputs.DomainRouteHeadersRequestGetArgs>? Request { get; set; }
 

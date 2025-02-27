@@ -15,10 +15,16 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class Mk8sLambdalabsProviderNodePool
     {
         public readonly string InstanceType;
+        /// <summary>
+        /// Labels to attach to nodes of a node pool.
+        /// </summary>
         public readonly ImmutableDictionary<string, string>? Labels;
         public readonly int? MaxSize;
         public readonly int? MinSize;
         public readonly string Name;
+        /// <summary>
+        /// Taint for the nodes of a pool.
+        /// </summary>
         public readonly ImmutableArray<Outputs.Mk8sLambdalabsProviderNodePoolTaint> Taints;
 
         [OutputConstructor]

@@ -15,12 +15,18 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class Mk8sPaperspaceProviderNodePool
     {
         public readonly int? BootDiskSize;
+        /// <summary>
+        /// Labels to attach to nodes of a node pool.
+        /// </summary>
         public readonly ImmutableDictionary<string, string>? Labels;
         public readonly string MachineType;
         public readonly int? MaxSize;
         public readonly int? MinSize;
         public readonly string Name;
         public readonly string PublicIpType;
+        /// <summary>
+        /// Taint for the nodes of a pool.
+        /// </summary>
         public readonly ImmutableArray<Outputs.Mk8sPaperspaceProviderNodePoolTaint> Taints;
 
         [OutputConstructor]

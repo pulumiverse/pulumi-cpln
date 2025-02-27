@@ -14,8 +14,17 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class GetSecretUserpassResult
     {
+        /// <summary>
+        /// Available encodings: `plain`, `base64`. Default: `plain`.
+        /// </summary>
         public readonly string? Encoding;
+        /// <summary>
+        /// Password.
+        /// </summary>
         public readonly string Password;
+        /// <summary>
+        /// Username.
+        /// </summary>
         public readonly string Username;
 
         [OutputConstructor]

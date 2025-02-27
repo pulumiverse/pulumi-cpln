@@ -14,11 +14,29 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgLoggingElasticLoggingAws
     {
+        /// <summary>
+        /// Full Link to a secret of type `aws`.
+        /// </summary>
         public readonly string Credentials;
+        /// <summary>
+        /// A valid AWS ElasticSearch hostname (must end with es.amazonaws.com).
+        /// </summary>
         public readonly string Host;
+        /// <summary>
+        /// Logging Index.
+        /// </summary>
         public readonly string Index;
+        /// <summary>
+        /// Port. Default: 443
+        /// </summary>
         public readonly int Port;
+        /// <summary>
+        /// Valid AWS region.
+        /// </summary>
         public readonly string Region;
+        /// <summary>
+        /// Logging Type.
+        /// </summary>
         public readonly string Type;
 
         [OutputConstructor]

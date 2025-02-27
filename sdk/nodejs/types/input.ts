@@ -6,164 +6,365 @@ import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 
 export interface CloudAccountAws {
+    /**
+     * Amazon Resource Name (ARN) Role.
+     */
     roleArn: pulumi.Input<string>;
 }
 
 export interface CloudAccountAzure {
+    /**
+     * Full link to an Azure secret. (e.g., /org/ORG_NAME/secret/AZURE_SECRET).
+     */
     secretLink: pulumi.Input<string>;
 }
 
 export interface CloudAccountGcp {
+    /**
+     * GCP project ID. Obtained from the GCP cloud console.
+     */
     projectId: pulumi.Input<string>;
 }
 
 export interface CloudAccountNgs {
+    /**
+     * Full link to a NATS Account Secret secret. (e.g., /org/ORG_NAME/secret/NATS_ACCOUNT_SECRET).
+     */
     secretLink: pulumi.Input<string>;
 }
 
 export interface DomainRouteHeaders {
     _sentinel?: pulumi.Input<boolean>;
+    /**
+     * Manipulates HTTP headers.
+     */
     request?: pulumi.Input<inputs.DomainRouteHeadersRequest>;
 }
 
 export interface DomainRouteHeadersRequest {
     _sentinel?: pulumi.Input<boolean>;
+    /**
+     * Sets or overrides headers to all http requests for this route.
+     */
     set?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }
 
 export interface DomainSpec {
+    /**
+     * Allows domain to accept wildcards. The associated GVC must have dedicated load balancing enabled.
+     */
     acceptAllHosts?: pulumi.Input<boolean>;
+    /**
+     * In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
+     */
     dnsMode?: pulumi.Input<string>;
+    /**
+     * This value is set to a target GVC (using a full link) for use by subdomain based routing. Each workload in the GVC will receive a subdomain in the form ${workload.name}.${domain.name}. **Do not include if path based routing is used.**
+     */
     gvcLink?: pulumi.Input<string>;
+    /**
+     * Domain port specifications.
+     */
     ports: pulumi.Input<pulumi.Input<inputs.DomainSpecPort>[]>;
 }
 
 export interface DomainSpecPort {
+    /**
+     * A security feature implemented by web browsers to allow resources on a web page to be requested from another domain outside the domain from which the resource originated.
+     */
     cors?: pulumi.Input<inputs.DomainSpecPortCors>;
+    /**
+     * Port to expose externally. Values: `80`, `443`. Default: `443`.
+     */
     number?: pulumi.Input<number>;
+    /**
+     * Allowed protocol. Valid values: `http`, `http2`, `tcp`. Default: `http2`.
+     */
     protocol?: pulumi.Input<string>;
     tls: pulumi.Input<inputs.DomainSpecPortTls>;
 }
 
 export interface DomainSpecPortCors {
+    /**
+     * Determines whether the client-side code (typically running in a web browser) is allowed to include credentials (such as cookies, HTTP authentication, or client-side SSL certificates) in cross-origin requests.
+     */
     allowCredentials?: pulumi.Input<boolean>;
+    /**
+     * Specifies the custom HTTP headers that are allowed in a cross-origin request to a specific resource.
+     */
     allowHeaders?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Specifies the HTTP methods (such as `GET`, `POST`, `PUT`, `DELETE`, etc.) that are allowed for a cross-origin request to a specific resource.
+     */
     allowMethods?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Determines which origins are allowed to access a particular resource on a server from a web browser.
+     */
     allowOrigins?: pulumi.Input<pulumi.Input<inputs.DomainSpecPortCorsAllowOrigin>[]>;
+    /**
+     * The HTTP headers that a server allows to be exposed to the client in response to a cross-origin request. These headers provide additional information about the server's capabilities or requirements, aiding in proper handling of the request by the client's browser or application.
+     */
     exposeHeaders?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Maximum amount of time that a preflight request result can be cached by the client browser. Input is expected as a duration string (i.e, 24h, 20m, etc.).
+     */
     maxAge?: pulumi.Input<string>;
 }
 
 export interface DomainSpecPortCorsAllowOrigin {
+    /**
+     * Value of allowed origin.
+     */
     exact: pulumi.Input<string>;
 }
 
 export interface DomainSpecPortTls {
+    /**
+     * Allowed cipher suites. Refer to the [Domain Reference](https://docs.controlplane.com/reference/domain#cipher-suites) for details.
+     */
     cipherSuites?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The certificate authority PEM, stored as a TLS Secret, used to verify the authority of the client certificate. The only verification performed checks that the CN of the PEM matches the Domain (i.e., CN=*.DOMAIN).
+     */
     clientCertificate?: pulumi.Input<inputs.DomainSpecPortTlsClientCertificate>;
+    /**
+     * Minimum TLS version to accept. Minimum is `1.0`. Default: `1.2`.
+     */
     minProtocolVersion?: pulumi.Input<string>;
+    /**
+     * Custom Server Certificate.
+     */
     serverCertificate?: pulumi.Input<inputs.DomainSpecPortTlsServerCertificate>;
 }
 
 export interface DomainSpecPortTlsClientCertificate {
+    /**
+     * Full link to a TLS secret.
+     */
     secretLink?: pulumi.Input<string>;
 }
 
 export interface DomainSpecPortTlsServerCertificate {
+    /**
+     * Full link to a TLS secret.
+     */
     secretLink?: pulumi.Input<string>;
 }
 
 export interface DomainStatus {
+    /**
+     * List of required DNS record entries.
+     */
     dnsConfigs?: pulumi.Input<pulumi.Input<inputs.DomainStatusDnsConfig>[]>;
+    /**
+     * List of configured domain endpoints.
+     */
     endpoints?: pulumi.Input<pulumi.Input<inputs.DomainStatusEndpoint>[]>;
     fingerprint?: pulumi.Input<string>;
+    /**
+     * Contains the cloud provider name, region, and certificate status.
+     */
     locations?: pulumi.Input<pulumi.Input<inputs.DomainStatusLocation>[]>;
+    /**
+     * Status of Domain. Possible values: `initializing`, `ready`, `pendingDnsConfig`, `pendingCertificate`, `usedByGvc`.
+     */
     status?: pulumi.Input<string>;
+    /**
+     * Warning message.
+     */
     warning?: pulumi.Input<string>;
 }
 
 export interface DomainStatusDnsConfig {
+    /**
+     * The host in DNS terminology refers to the domain or subdomain that the DNS record is associated with. It's essentially the name that is being queried or managed. For example, in a DNS record for `www.example.com`, `www` is a host in the domain `example.com`.
+     */
     host?: pulumi.Input<string>;
+    /**
+     * Time to live (TTL) is a value that signifies how long (in seconds) a DNS record should be cached by a resolver or a browser before a new request should be sent to refresh the data. Lower TTL values mean records are updated more frequently, which is beneficial for dynamic DNS configurations or during DNS migrations. Higher TTL values reduce the load on DNS servers and improve the speed of name resolution for end users by relying on cached data.
+     */
     ttl?: pulumi.Input<number>;
+    /**
+     * The DNS record type specifies the type of data the DNS record contains. Valid values: `CNAME`, `NS`, `TXT`.
+     */
     type?: pulumi.Input<string>;
+    /**
+     * The value of a DNS record contains the data the record is meant to convey, based on the type of the record.
+     */
     value?: pulumi.Input<string>;
 }
 
 export interface DomainStatusEndpoint {
+    /**
+     * URL of endpoint.
+     */
     url?: pulumi.Input<string>;
+    /**
+     * Full link to associated workload.
+     */
     workloadLink?: pulumi.Input<string>;
 }
 
 export interface DomainStatusLocation {
+    /**
+     * The current validity or status of the SSL/TLS certificate.
+     */
     certificateStatus?: pulumi.Input<string>;
+    /**
+     * The name of the location.
+     */
     name?: pulumi.Input<string>;
 }
 
 export interface GetGvcControlplaneTracing {
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: {[key: string]: string};
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: number;
 }
 
 export interface GetGvcControlplaneTracingArgs {
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: pulumi.Input<number>;
 }
 
 export interface GetGvcLightstepTracing {
+    /**
+     * Full link to referenced Opaque Secret.
+     */
     credentials?: string;
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: {[key: string]: string};
+    /**
+     * Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+     */
     endpoint: string;
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: number;
 }
 
 export interface GetGvcLightstepTracingArgs {
+    /**
+     * Full link to referenced Opaque Secret.
+     */
     credentials?: pulumi.Input<string>;
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+     */
     endpoint: pulumi.Input<string>;
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: pulumi.Input<number>;
 }
 
 export interface GetGvcLoadBalancer {
+    /**
+     * Creates a dedicated load balancer in each location and enables additional Domain features: custom ports, protocols and wildcard hostnames. Charges apply for each location.
+     */
     dedicated?: boolean;
+    /**
+     * Specify the url to be redirected to for different http status codes.
+     */
     redirect?: inputs.GetGvcLoadBalancerRedirect;
+    /**
+     * Controls the address used for request logging and for setting the X-Envoy-External-Address header. If set to 1, then the last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If set to 2, then the second to last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If the XFF header does not have at least two addresses or does not exist then the source client IP address will be used instead.
+     */
     trustedProxies?: number;
 }
 
 export interface GetGvcLoadBalancerArgs {
+    /**
+     * Creates a dedicated load balancer in each location and enables additional Domain features: custom ports, protocols and wildcard hostnames. Charges apply for each location.
+     */
     dedicated?: pulumi.Input<boolean>;
+    /**
+     * Specify the url to be redirected to for different http status codes.
+     */
     redirect?: pulumi.Input<inputs.GetGvcLoadBalancerRedirectArgs>;
+    /**
+     * Controls the address used for request logging and for setting the X-Envoy-External-Address header. If set to 1, then the last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If set to 2, then the second to last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If the XFF header does not have at least two addresses or does not exist then the source client IP address will be used instead.
+     */
     trustedProxies?: pulumi.Input<number>;
 }
 
 export interface GetGvcLoadBalancerRedirect {
     _sentinel?: boolean;
+    /**
+     * Specify the redirect url for all status codes in a class.
+     */
     class?: inputs.GetGvcLoadBalancerRedirectClass;
 }
 
 export interface GetGvcLoadBalancerRedirectArgs {
     _sentinel?: pulumi.Input<boolean>;
+    /**
+     * Specify the redirect url for all status codes in a class.
+     */
     class?: pulumi.Input<inputs.GetGvcLoadBalancerRedirectClassArgs>;
 }
 
 export interface GetGvcLoadBalancerRedirectClass {
     _sentinel?: boolean;
+    /**
+     * Specify the redirect url for any 500 level status code.
+     */
     status5xx?: string;
 }
 
 export interface GetGvcLoadBalancerRedirectClassArgs {
     _sentinel?: pulumi.Input<boolean>;
+    /**
+     * Specify the redirect url for any 500 level status code.
+     */
     status5xx?: pulumi.Input<string>;
 }
 
 export interface GetGvcOtelTracing {
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: {[key: string]: string};
+    /**
+     * Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+     */
     endpoint: string;
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: number;
 }
 
 export interface GetGvcOtelTracingArgs {
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+     */
     endpoint: pulumi.Input<string>;
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: pulumi.Input<number>;
 }
 
@@ -176,191 +377,446 @@ export interface GetGvcSidecarArgs {
 }
 
 export interface GetImagesQuery {
+    /**
+     * Type of fetch. Specify either: `links` or `items`. Default: `items`.
+     */
     fetch?: string;
     spec?: inputs.GetImagesQuerySpec;
 }
 
 export interface GetImagesQueryArgs {
+    /**
+     * Type of fetch. Specify either: `links` or `items`. Default: `items`.
+     */
     fetch?: pulumi.Input<string>;
     spec?: pulumi.Input<inputs.GetImagesQuerySpecArgs>;
 }
 
 export interface GetImagesQuerySpec {
+    /**
+     * Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+     */
     match?: string;
+    /**
+     * Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+     */
     terms?: inputs.GetImagesQuerySpecTerm[];
 }
 
 export interface GetImagesQuerySpecArgs {
+    /**
+     * Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+     */
     match?: pulumi.Input<string>;
+    /**
+     * Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+     */
     terms?: pulumi.Input<pulumi.Input<inputs.GetImagesQuerySpecTermArgs>[]>;
 }
 
 export interface GetImagesQuerySpecTerm {
+    /**
+     * Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+     */
     op?: string;
+    /**
+     * Property to use for query evaluation.
+     */
     property?: string;
     rel?: string;
+    /**
+     * Tag key to use for query evaluation.
+     */
     tag?: string;
+    /**
+     * Testing value for query evaluation.
+     */
     value?: string;
 }
 
 export interface GetImagesQuerySpecTermArgs {
+    /**
+     * Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+     */
     op?: pulumi.Input<string>;
+    /**
+     * Property to use for query evaluation.
+     */
     property?: pulumi.Input<string>;
     rel?: pulumi.Input<string>;
+    /**
+     * Tag key to use for query evaluation.
+     */
     tag?: pulumi.Input<string>;
+    /**
+     * Testing value for query evaluation.
+     */
     value?: pulumi.Input<string>;
 }
 
 export interface GetSecretAws {
+    /**
+     * Access Key provided by AWS.
+     */
     accessKey: string;
+    /**
+     * AWS IAM Role External ID.
+     */
     externalId?: string;
+    /**
+     * Role ARN provided by AWS.
+     */
     roleArn?: string;
+    /**
+     * Secret Key provided by AWS.
+     */
     secretKey: string;
 }
 
 export interface GetSecretAwsArgs {
+    /**
+     * Access Key provided by AWS.
+     */
     accessKey: pulumi.Input<string>;
+    /**
+     * AWS IAM Role External ID.
+     */
     externalId?: pulumi.Input<string>;
+    /**
+     * Role ARN provided by AWS.
+     */
     roleArn?: pulumi.Input<string>;
+    /**
+     * Secret Key provided by AWS.
+     */
     secretKey: pulumi.Input<string>;
 }
 
 export interface GetSecretAzureConnector {
+    /**
+     * Code/Key to authenticate to deployment URL.
+     */
     code: string;
+    /**
+     * Deployment URL.
+     */
     url: string;
 }
 
 export interface GetSecretAzureConnectorArgs {
+    /**
+     * Code/Key to authenticate to deployment URL.
+     */
     code: pulumi.Input<string>;
+    /**
+     * Deployment URL.
+     */
     url: pulumi.Input<string>;
 }
 
 export interface GetSecretEcr {
+    /**
+     * Access Key provided by AWS.
+     */
     accessKey: string;
+    /**
+     * AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
+     */
     externalId?: string;
+    /**
+     * List of ECR repositories.
+     */
     repos: string[];
+    /**
+     * Role ARN provided by AWS.
+     */
     roleArn?: string;
+    /**
+     * Secret Key provided by AWS.
+     */
     secretKey: string;
 }
 
 export interface GetSecretEcrArgs {
+    /**
+     * Access Key provided by AWS.
+     */
     accessKey: pulumi.Input<string>;
+    /**
+     * AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
+     */
     externalId?: pulumi.Input<string>;
+    /**
+     * List of ECR repositories.
+     */
     repos: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Role ARN provided by AWS.
+     */
     roleArn?: pulumi.Input<string>;
+    /**
+     * Secret Key provided by AWS.
+     */
     secretKey: pulumi.Input<string>;
 }
 
 export interface GetSecretKeypair {
+    /**
+     * Passphrase for private key.
+     */
     passphrase?: string;
+    /**
+     * Public Key.
+     */
     publicKey?: string;
+    /**
+     * Secret/Private Key.
+     */
     secretKey: string;
 }
 
 export interface GetSecretKeypairArgs {
+    /**
+     * Passphrase for private key.
+     */
     passphrase?: pulumi.Input<string>;
+    /**
+     * Public Key.
+     */
     publicKey?: pulumi.Input<string>;
+    /**
+     * Secret/Private Key.
+     */
     secretKey: pulumi.Input<string>;
 }
 
 export interface GetSecretNatsAccount {
+    /**
+     * Account ID.
+     */
     accountId: string;
+    /**
+     * Private Key.
+     */
     privateKey: string;
 }
 
 export interface GetSecretNatsAccountArgs {
+    /**
+     * Account ID.
+     */
     accountId: pulumi.Input<string>;
+    /**
+     * Private Key.
+     */
     privateKey: pulumi.Input<string>;
 }
 
 export interface GetSecretOpaque {
+    /**
+     * Available encodings: `plain`, `base64`. Default: `plain`.
+     */
     encoding?: string;
+    /**
+     * Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.
+     */
     payload: string;
 }
 
 export interface GetSecretOpaqueArgs {
+    /**
+     * Available encodings: `plain`, `base64`. Default: `plain`.
+     */
     encoding?: pulumi.Input<string>;
+    /**
+     * Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.
+     */
     payload: pulumi.Input<string>;
 }
 
 export interface GetSecretTls {
+    /**
+     * Public Certificate.
+     */
     cert: string;
+    /**
+     * Chain Certificate.
+     */
     chain?: string;
+    /**
+     * Private Certificate.
+     */
     key: string;
 }
 
 export interface GetSecretTlsArgs {
+    /**
+     * Public Certificate.
+     */
     cert: pulumi.Input<string>;
+    /**
+     * Chain Certificate.
+     */
     chain?: pulumi.Input<string>;
+    /**
+     * Private Certificate.
+     */
     key: pulumi.Input<string>;
 }
 
 export interface GetSecretUserpass {
+    /**
+     * Available encodings: `plain`, `base64`. Default: `plain`.
+     */
     encoding?: string;
+    /**
+     * Password.
+     */
     password: string;
+    /**
+     * Username.
+     */
     username: string;
 }
 
 export interface GetSecretUserpassArgs {
+    /**
+     * Available encodings: `plain`, `base64`. Default: `plain`.
+     */
     encoding?: pulumi.Input<string>;
+    /**
+     * Password.
+     */
     password: pulumi.Input<string>;
+    /**
+     * Username.
+     */
     username: pulumi.Input<string>;
 }
 
 export interface GroupIdentityMatcher {
+    /**
+     * Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged in with SAML providers.
+     */
     expression: pulumi.Input<string>;
+    /**
+     * Language of the expression. Either `jmespath` or `javascript`. Default: `jmespath`.
+     */
     language?: pulumi.Input<string>;
 }
 
 export interface GroupMemberQuery {
+    /**
+     * Type of fetch. Specify either: `links` or `items`. Default: `items`.
+     */
     fetch?: pulumi.Input<string>;
     spec?: pulumi.Input<inputs.GroupMemberQuerySpec>;
 }
 
 export interface GroupMemberQuerySpec {
+    /**
+     * Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+     */
     match?: pulumi.Input<string>;
+    /**
+     * Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+     */
     terms?: pulumi.Input<pulumi.Input<inputs.GroupMemberQuerySpecTerm>[]>;
 }
 
 export interface GroupMemberQuerySpecTerm {
+    /**
+     * Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+     */
     op?: pulumi.Input<string>;
+    /**
+     * Property to use for query evaluation.
+     */
     property?: pulumi.Input<string>;
     rel?: pulumi.Input<string>;
+    /**
+     * Tag key to use for query evaluation.
+     */
     tag?: pulumi.Input<string>;
+    /**
+     * Testing value for query evaluation.
+     */
     value?: pulumi.Input<string>;
 }
 
 export interface GvcControlplaneTracing {
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: pulumi.Input<number>;
 }
 
 export interface GvcLightstepTracing {
+    /**
+     * Full link to referenced Opaque Secret.
+     */
     credentials?: pulumi.Input<string>;
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+     */
     endpoint: pulumi.Input<string>;
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: pulumi.Input<number>;
 }
 
 export interface GvcLoadBalancer {
+    /**
+     * Creates a dedicated load balancer in each location and enables additional Domain features: custom ports, protocols and wildcard hostnames. Charges apply for each location.
+     */
     dedicated?: pulumi.Input<boolean>;
+    /**
+     * Specify the url to be redirected to for different http status codes.
+     */
     redirect?: pulumi.Input<inputs.GvcLoadBalancerRedirect>;
+    /**
+     * Controls the address used for request logging and for setting the X-Envoy-External-Address header. If set to 1, then the last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If set to 2, then the second to last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If the XFF header does not have at least two addresses or does not exist then the source client IP address will be used instead.
+     */
     trustedProxies?: pulumi.Input<number>;
 }
 
 export interface GvcLoadBalancerRedirect {
     _sentinel?: pulumi.Input<boolean>;
+    /**
+     * Specify the redirect url for all status codes in a class.
+     */
     class?: pulumi.Input<inputs.GvcLoadBalancerRedirectClass>;
 }
 
 export interface GvcLoadBalancerRedirectClass {
     _sentinel?: pulumi.Input<boolean>;
+    /**
+     * Specify the redirect url for any 500 level status code.
+     */
     status5xx?: pulumi.Input<string>;
 }
 
 export interface GvcOtelTracing {
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+     */
     endpoint: pulumi.Input<string>;
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: pulumi.Input<number>;
 }
 
@@ -369,86 +825,206 @@ export interface GvcSidecar {
 }
 
 export interface IdentityAwsAccessPolicy {
+    /**
+     * Full link to referenced cloud account.
+     */
     cloudAccountLink: pulumi.Input<string>;
+    /**
+     * List of policies.
+     */
     policyRefs?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Role name.
+     */
     roleName?: pulumi.Input<string>;
 }
 
 export interface IdentityAzureAccessPolicy {
+    /**
+     * Full link to referenced cloud account.
+     */
     cloudAccountLink: pulumi.Input<string>;
+    /**
+     * The process of assigning specific roles or permissions to an entity, such as a user or a service principal, within the system.
+     */
     roleAssignments?: pulumi.Input<pulumi.Input<inputs.IdentityAzureAccessPolicyRoleAssignment>[]>;
 }
 
 export interface IdentityAzureAccessPolicyRoleAssignment {
     _sentinel?: pulumi.Input<boolean>;
+    /**
+     * List of assigned roles.
+     */
     roles?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Scope of roles.
+     */
     scope?: pulumi.Input<string>;
 }
 
 export interface IdentityGcpAccessPolicy {
+    /**
+     * The association or connection between a particular identity, such as a user or a group, and a set of permissions or roles within the system.
+     */
     bindings?: pulumi.Input<pulumi.Input<inputs.IdentityGcpAccessPolicyBinding>[]>;
+    /**
+     * Full link to referenced cloud account.
+     */
     cloudAccountLink: pulumi.Input<string>;
+    /**
+     * Comma delimited list of GCP scope URLs.
+     */
     scopes?: pulumi.Input<string>;
+    /**
+     * Name of existing GCP service account.
+     */
     serviceAccount?: pulumi.Input<string>;
 }
 
 export interface IdentityGcpAccessPolicyBinding {
     _sentinel?: pulumi.Input<boolean>;
+    /**
+     * Name of resource for binding.
+     */
     resource?: pulumi.Input<string>;
+    /**
+     * List of allowed roles.
+     */
     roles?: pulumi.Input<pulumi.Input<string>[]>;
 }
 
 export interface IdentityNativeNetworkResource {
+    /**
+     * A feature provided by AWS that enables private connectivity between private VPCs and compute running at Control Plane without traversing the public internet.
+     */
     awsPrivateLink?: pulumi.Input<inputs.IdentityNativeNetworkResourceAwsPrivateLink>;
+    /**
+     * Fully qualified domain name.
+     */
     fqdn: pulumi.Input<string>;
+    /**
+     * Capability provided by GCP that allows private communication between private VPC networks and compute running at Control Plane.
+     */
     gcpServiceConnect?: pulumi.Input<inputs.IdentityNativeNetworkResourceGcpServiceConnect>;
+    /**
+     * Name of the Native Network Resource.
+     */
     name: pulumi.Input<string>;
+    /**
+     * Ports to expose. At least one port is required.
+     */
     ports: pulumi.Input<pulumi.Input<number>[]>;
 }
 
 export interface IdentityNativeNetworkResourceAwsPrivateLink {
+    /**
+     * Endpoint service name.
+     */
     endpointServiceName: pulumi.Input<string>;
 }
 
 export interface IdentityNativeNetworkResourceGcpServiceConnect {
+    /**
+     * Target service name.
+     */
     targetService: pulumi.Input<string>;
 }
 
 export interface IdentityNetworkResource {
+    /**
+     * Full link to referenced Agent.
+     */
     agentLink?: pulumi.Input<string>;
+    /**
+     * Fully qualified domain name.
+     */
     fqdn?: pulumi.Input<string>;
+    /**
+     * List of IP addresses.
+     */
     ips?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Name of the Network Resource.
+     */
     name: pulumi.Input<string>;
+    /**
+     * Ports to expose.
+     */
     ports: pulumi.Input<pulumi.Input<number>[]>;
+    /**
+     * Resolver IP.
+     */
     resolverIp?: pulumi.Input<string>;
 }
 
 export interface IdentityNgsAccessPolicy {
+    /**
+     * Full link to referenced cloud account.
+     */
     cloudAccountLink: pulumi.Input<string>;
+    /**
+     * Max number of bytes a connection can send. Default: -1
+     */
     data?: pulumi.Input<number>;
+    /**
+     * Max message payload. Default: -1
+     */
     payload?: pulumi.Input<number>;
+    /**
+     * Pub Permission.
+     */
     pub?: pulumi.Input<inputs.IdentityNgsAccessPolicyPub>;
+    /**
+     * Reponses.
+     */
     resp?: pulumi.Input<inputs.IdentityNgsAccessPolicyResp>;
+    /**
+     * Sub Permission.
+     */
     sub?: pulumi.Input<inputs.IdentityNgsAccessPolicySub>;
+    /**
+     * Max number of subscriptions per connection. Default: -1
+     */
     subs?: pulumi.Input<number>;
 }
 
 export interface IdentityNgsAccessPolicyPub {
+    /**
+     * List of allow subjects.
+     */
     allows?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * List of deny subjects.
+     */
     denies?: pulumi.Input<pulumi.Input<string>[]>;
 }
 
 export interface IdentityNgsAccessPolicyResp {
+    /**
+     * Number of responses allowed on the replyTo subject, -1 means no limit. Default: -1
+     */
     max?: pulumi.Input<number>;
+    /**
+     * Deadline to send replies on the replyTo subject [#ms(millis) | #s(econds) | m(inutes) | h(ours)]. -1 means no restriction.
+     */
     ttl?: pulumi.Input<string>;
 }
 
 export interface IdentityNgsAccessPolicySub {
+    /**
+     * List of allow subjects.
+     */
     allows?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * List of deny subjects.
+     */
     denies?: pulumi.Input<pulumi.Input<string>[]>;
 }
 
 export interface IpSetLocation {
+    /**
+     * The self link of a location.
+     */
     name: pulumi.Input<string>;
     retentionPolicy: pulumi.Input<string>;
 }
@@ -467,11 +1043,29 @@ export interface IpSetStatusIpAddress {
 }
 
 export interface LocationGeo {
+    /**
+     * City.
+     */
     city?: pulumi.Input<string>;
+    /**
+     * Continent.
+     */
     continent?: pulumi.Input<string>;
+    /**
+     * Country.
+     */
     country?: pulumi.Input<string>;
+    /**
+     * Latitude.
+     */
     lat?: pulumi.Input<number>;
+    /**
+     * Longitude.
+     */
     lon?: pulumi.Input<number>;
+    /**
+     * State.
+     */
     state?: pulumi.Input<string>;
 }
 
@@ -492,16 +1086,25 @@ export interface Mk8sAddOns {
 
 export interface Mk8sAddOnsAwsEcr {
     _sentinel?: pulumi.Input<boolean>;
+    /**
+     * Role to use when authorizing ECR pulls. Optional on AWS, in which case it will use the instance role to pull.
+     */
     roleArn?: pulumi.Input<string>;
 }
 
 export interface Mk8sAddOnsAwsEfs {
     _sentinel?: pulumi.Input<boolean>;
+    /**
+     * Use this role for EFS interaction.
+     */
     roleArn?: pulumi.Input<string>;
 }
 
 export interface Mk8sAddOnsAwsElb {
     _sentinel?: pulumi.Input<boolean>;
+    /**
+     * Role to use when authorizing calls to EC2 ELB. Optional on AWS, when not provided it will create the recommended role.
+     */
     roleArn?: pulumi.Input<string>;
 }
 
@@ -511,11 +1114,17 @@ export interface Mk8sAddOnsAzureAcr {
 
 export interface Mk8sAddOnsAzureWorkloadIdentity {
     _sentinel?: pulumi.Input<boolean>;
+    /**
+     * Tenant ID to use for workload identity.
+     */
     tenantId?: pulumi.Input<string>;
 }
 
 export interface Mk8sAddOnsLogs {
     _sentinel?: pulumi.Input<boolean>;
+    /**
+     * Collect k8s audit log as log events.
+     */
     auditEnabled?: pulumi.Input<boolean>;
     excludeNamespaces?: pulumi.Input<string>;
     includeNamespaces?: pulumi.Input<string>;
@@ -523,12 +1132,33 @@ export interface Mk8sAddOnsLogs {
 
 export interface Mk8sAddOnsMetrics {
     _sentinel?: pulumi.Input<boolean>;
+    /**
+     * Enable scraping apiserver stats.
+     */
     apiServer?: pulumi.Input<boolean>;
+    /**
+     * Enable CNI-level container stats.
+     */
     cadvisor?: pulumi.Input<boolean>;
+    /**
+     * Enable scraping of core-dns service.
+     */
     coreDns?: pulumi.Input<boolean>;
+    /**
+     * Enable kube-state metrics.
+     */
     kubeState?: pulumi.Input<boolean>;
+    /**
+     * Enable scraping kubelet stats.
+     */
     kubelet?: pulumi.Input<boolean>;
+    /**
+     * Enable collecting node-level stats (disk, network, filesystem, etc).
+     */
     nodeExporter?: pulumi.Input<boolean>;
+    /**
+     * Scrape pods annotated with prometheus.io/scrape=true.
+     */
     scrapeAnnotated?: pulumi.Input<inputs.Mk8sAddOnsMetricsScrapeAnnotated>;
 }
 
@@ -547,19 +1177,52 @@ export interface Mk8sAddOnsNvidia {
 
 export interface Mk8sAwsProvider {
     autoscaler?: pulumi.Input<inputs.Mk8sAwsProviderAutoscaler>;
+    /**
+     * Extra tags to attach to all created objects.
+     */
     awsTags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Control Plane will set up the cluster by assuming this role.
+     */
     deployRoleArn: pulumi.Input<string>;
     deployRoleChains?: pulumi.Input<pulumi.Input<inputs.Mk8sAwsProviderDeployRoleChain>[]>;
+    /**
+     * KMS key used to encrypt volumes. Supports SSM.
+     */
     diskEncryptionKeyArn?: pulumi.Input<string>;
     extraNodePolicies?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Default image for all nodes.
+     */
     image: pulumi.Input<inputs.Mk8sAwsProviderImage>;
+    /**
+     * Name of keyPair. Supports SSM
+     */
     keyPair?: pulumi.Input<string>;
     networking: pulumi.Input<inputs.Mk8sAwsProviderNetworking>;
+    /**
+     * List of node pools.
+     */
     nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sAwsProviderNodePool>[]>;
+    /**
+     * Optional shell script that will be run before K8s is installed. Supports SSM.
+     */
     preInstallScript?: pulumi.Input<string>;
+    /**
+     * Region where the cluster nodes will live.
+     */
     region: pulumi.Input<string>;
+    /**
+     * Security groups to deploy nodes to. Security groups control if the cluster is multi-zone or single-zon.
+     */
     securityGroupIds?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * If true, Control Plane will not create any roles.
+     */
     skipCreateRoles?: pulumi.Input<boolean>;
+    /**
+     * The vpc where nodes will be deployed. Supports SSM.
+     */
     vpcId: pulumi.Input<string>;
 }
 
@@ -573,36 +1236,63 @@ export interface Mk8sAwsProviderAutoscaler {
 export interface Mk8sAwsProviderDeployRoleChain {
     externalId?: pulumi.Input<string>;
     roleArn: pulumi.Input<string>;
+    /**
+     * Control Plane will append random.
+     */
     sessionNamePrefix?: pulumi.Input<string>;
 }
 
 export interface Mk8sAwsProviderImage {
+    /**
+     * Support SSM.
+     */
     exact?: pulumi.Input<string>;
     recommended?: pulumi.Input<string>;
 }
 
 export interface Mk8sAwsProviderNetworking {
+    /**
+     * The CIDR of the pod network.
+     */
     podNetwork?: pulumi.Input<string>;
+    /**
+     * The CIDR of the service network.
+     */
     serviceNetwork?: pulumi.Input<string>;
 }
 
 export interface Mk8sAwsProviderNodePool {
+    /**
+     * Size in GB.
+     */
     bootDiskSize?: pulumi.Input<number>;
     extraSecurityGroupIds?: pulumi.Input<pulumi.Input<string>[]>;
     instanceTypes: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     maxSize?: pulumi.Input<number>;
     minSize?: pulumi.Input<number>;
     name: pulumi.Input<string>;
     onDemandBaseCapacity?: pulumi.Input<number>;
     onDemandPercentageAboveBaseCapacity?: pulumi.Input<number>;
+    /**
+     * Default image for all nodes.
+     */
     overrideImage: pulumi.Input<inputs.Mk8sAwsProviderNodePoolOverrideImage>;
     spotAllocationStrategy?: pulumi.Input<string>;
     subnetIds: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: pulumi.Input<pulumi.Input<inputs.Mk8sAwsProviderNodePoolTaint>[]>;
 }
 
 export interface Mk8sAwsProviderNodePoolOverrideImage {
+    /**
+     * Support SSM.
+     */
     exact?: pulumi.Input<string>;
     recommended?: pulumi.Input<string>;
 }
@@ -615,16 +1305,46 @@ export interface Mk8sAwsProviderNodePoolTaint {
 
 export interface Mk8sDigitalOceanProvider {
     autoscaler?: pulumi.Input<inputs.Mk8sDigitalOceanProviderAutoscaler>;
+    /**
+     * Extra tags to attach to droplets.
+     */
     digitalOceanTags?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Extra SSH keys to provision for user root that are not registered in the DigitalOcean.
+     */
     extraSshKeys?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Default image for all nodes.
+     */
     image: pulumi.Input<string>;
     networking: pulumi.Input<inputs.Mk8sDigitalOceanProviderNetworking>;
+    /**
+     * List of node pools.
+     */
     nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sDigitalOceanProviderNodePool>[]>;
+    /**
+     * Optional shell script that will be run before K8s is installed. Supports SSM.
+     */
     preInstallScript?: pulumi.Input<string>;
+    /**
+     * Region to deploy nodes to.
+     */
     region: pulumi.Input<string>;
+    /**
+     * Optional set of IPs to assign as extra IPs for nodes of the cluster.
+     */
     reservedIps?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * SSH key name for accessing deployed nodes.
+     */
     sshKeys: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Link to a secret holding personal access token.
+     */
     tokenSecretLink: pulumi.Input<string>;
+    /**
+     * ID of the Hetzner network to deploy nodes to.
+     */
     vpcId: pulumi.Input<string>;
 }
 
@@ -636,17 +1356,29 @@ export interface Mk8sDigitalOceanProviderAutoscaler {
 }
 
 export interface Mk8sDigitalOceanProviderNetworking {
+    /**
+     * The CIDR of the pod network.
+     */
     podNetwork?: pulumi.Input<string>;
+    /**
+     * The CIDR of the service network.
+     */
     serviceNetwork?: pulumi.Input<string>;
 }
 
 export interface Mk8sDigitalOceanProviderNodePool {
     dropletSize: pulumi.Input<string>;
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     maxSize?: pulumi.Input<number>;
     minSize?: pulumi.Input<number>;
     name: pulumi.Input<string>;
     overrideImage?: pulumi.Input<string>;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: pulumi.Input<pulumi.Input<inputs.Mk8sDigitalOceanProviderNodePoolTaint>[]>;
 }
 
@@ -657,18 +1389,45 @@ export interface Mk8sDigitalOceanProviderNodePoolTaint {
 }
 
 export interface Mk8sEphemeralProvider {
+    /**
+     * Control Plane location that will host the K8s components. Prefer one that is closest to where the nodes are running.
+     */
     location: pulumi.Input<string>;
+    /**
+     * List of node pools.
+     */
     nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sEphemeralProviderNodePool>[]>;
 }
 
 export interface Mk8sEphemeralProviderNodePool {
+    /**
+     * CPU architecture of the nodes.
+     */
     arch: pulumi.Input<string>;
+    /**
+     * Number of nodes to deploy.
+     */
     count: pulumi.Input<number>;
+    /**
+     * Allocated CPU.
+     */
     cpu: pulumi.Input<string>;
+    /**
+     * Linux distro to use for ephemeral nodes.
+     */
     flavor: pulumi.Input<string>;
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Allocated memory.
+     */
     memory: pulumi.Input<string>;
     name: pulumi.Input<string>;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: pulumi.Input<pulumi.Input<inputs.Mk8sEphemeralProviderNodePoolTaint>[]>;
 }
 
@@ -684,19 +1443,37 @@ export interface Mk8sFirewall {
 }
 
 export interface Mk8sGenericProvider {
+    /**
+     * Control Plane location that will host the K8s components. Prefer one that is closest to where the nodes are running.
+     */
     location: pulumi.Input<string>;
     networking: pulumi.Input<inputs.Mk8sGenericProviderNetworking>;
+    /**
+     * List of node pools.
+     */
     nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sGenericProviderNodePool>[]>;
 }
 
 export interface Mk8sGenericProviderNetworking {
+    /**
+     * The CIDR of the pod network.
+     */
     podNetwork?: pulumi.Input<string>;
+    /**
+     * The CIDR of the service network.
+     */
     serviceNetwork?: pulumi.Input<string>;
 }
 
 export interface Mk8sGenericProviderNodePool {
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     name: pulumi.Input<string>;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: pulumi.Input<pulumi.Input<inputs.Mk8sGenericProviderNodePoolTaint>[]>;
 }
 
@@ -708,17 +1485,50 @@ export interface Mk8sGenericProviderNodePoolTaint {
 
 export interface Mk8sHetznerProvider {
     autoscaler?: pulumi.Input<inputs.Mk8sHetznerProviderAutoscaler>;
+    /**
+     * Node pools that can configure dedicated Hetzner servers.
+     */
     dedicatedServerNodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sHetznerProviderDedicatedServerNodePool>[]>;
+    /**
+     * Optional firewall rule to attach to all nodes.
+     */
     firewallId?: pulumi.Input<string>;
+    /**
+     * If supplied, nodes will get assigned a random floating ip matching the selector.
+     */
     floatingIpSelector?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Extra labels to attach to servers.
+     */
     hetznerLabels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Default image for all nodes.
+     */
     image?: pulumi.Input<string>;
+    /**
+     * ID of the Hetzner network to deploy nodes to.
+     */
     networkId: pulumi.Input<string>;
     networking: pulumi.Input<inputs.Mk8sHetznerProviderNetworking>;
+    /**
+     * List of node pools.
+     */
     nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sHetznerProviderNodePool>[]>;
+    /**
+     * Optional shell script that will be run before K8s is installed. Supports SSM.
+     */
     preInstallScript?: pulumi.Input<string>;
+    /**
+     * Hetzner region to deploy nodes to.
+     */
     region: pulumi.Input<string>;
+    /**
+     * SSH key name for accessing deployed nodes.
+     */
     sshKey?: pulumi.Input<string>;
+    /**
+     * Link to a secret holding Hetzner access key.
+     */
     tokenSecretLink: pulumi.Input<string>;
 }
 
@@ -730,8 +1540,14 @@ export interface Mk8sHetznerProviderAutoscaler {
 }
 
 export interface Mk8sHetznerProviderDedicatedServerNodePool {
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     name: pulumi.Input<string>;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: pulumi.Input<pulumi.Input<inputs.Mk8sHetznerProviderDedicatedServerNodePoolTaint>[]>;
 }
 
@@ -742,17 +1558,29 @@ export interface Mk8sHetznerProviderDedicatedServerNodePoolTaint {
 }
 
 export interface Mk8sHetznerProviderNetworking {
+    /**
+     * The CIDR of the pod network.
+     */
     podNetwork?: pulumi.Input<string>;
+    /**
+     * The CIDR of the service network.
+     */
     serviceNetwork?: pulumi.Input<string>;
 }
 
 export interface Mk8sHetznerProviderNodePool {
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     maxSize?: pulumi.Input<number>;
     minSize?: pulumi.Input<number>;
     name: pulumi.Input<string>;
     overrideImage?: pulumi.Input<string>;
     serverType: pulumi.Input<string>;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: pulumi.Input<pulumi.Input<inputs.Mk8sHetznerProviderNodePoolTaint>[]>;
 }
 
@@ -764,10 +1592,25 @@ export interface Mk8sHetznerProviderNodePoolTaint {
 
 export interface Mk8sLambdalabsProvider {
     autoscaler?: pulumi.Input<inputs.Mk8sLambdalabsProviderAutoscaler>;
+    /**
+     * List of node pools.
+     */
     nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sLambdalabsProviderNodePool>[]>;
+    /**
+     * Optional shell script that will be run before K8s is installed. Supports SSM.
+     */
     preInstallScript?: pulumi.Input<string>;
+    /**
+     * Region where the cluster nodes will live.
+     */
     region: pulumi.Input<string>;
+    /**
+     * SSH key name for accessing deployed nodes.
+     */
     sshKey: pulumi.Input<string>;
+    /**
+     * Link to a secret holding Lambdalabs access key.
+     */
     tokenSecretLink: pulumi.Input<string>;
     unmanagedNodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sLambdalabsProviderUnmanagedNodePool>[]>;
 }
@@ -781,10 +1624,16 @@ export interface Mk8sLambdalabsProviderAutoscaler {
 
 export interface Mk8sLambdalabsProviderNodePool {
     instanceType: pulumi.Input<string>;
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     maxSize?: pulumi.Input<number>;
     minSize?: pulumi.Input<number>;
     name: pulumi.Input<string>;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: pulumi.Input<pulumi.Input<inputs.Mk8sLambdalabsProviderNodePoolTaint>[]>;
 }
 
@@ -795,8 +1644,14 @@ export interface Mk8sLambdalabsProviderNodePoolTaint {
 }
 
 export interface Mk8sLambdalabsProviderUnmanagedNodePool {
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     name: pulumi.Input<string>;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: pulumi.Input<pulumi.Input<inputs.Mk8sLambdalabsProviderUnmanagedNodePoolTaint>[]>;
 }
 
@@ -810,13 +1665,34 @@ export interface Mk8sLinodeProvider {
     authorizedKeys?: pulumi.Input<pulumi.Input<string>[]>;
     authorizedUsers?: pulumi.Input<pulumi.Input<string>[]>;
     autoscaler?: pulumi.Input<inputs.Mk8sLinodeProviderAutoscaler>;
+    /**
+     * Optional firewall rule to attach to all nodes.
+     */
     firewallId?: pulumi.Input<string>;
+    /**
+     * Default image for all nodes.
+     */
     image: pulumi.Input<string>;
     networking: pulumi.Input<inputs.Mk8sLinodeProviderNetworking>;
+    /**
+     * List of node pools.
+     */
     nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sLinodeProviderNodePool>[]>;
+    /**
+     * Optional shell script that will be run before K8s is installed. Supports SSM.
+     */
     preInstallScript?: pulumi.Input<string>;
+    /**
+     * Region where the cluster nodes will live.
+     */
     region: pulumi.Input<string>;
+    /**
+     * Link to a secret holding Linode access key.
+     */
     tokenSecretLink: pulumi.Input<string>;
+    /**
+     * The vpc where nodes will be deployed. Supports SSM.
+     */
     vpcId: pulumi.Input<string>;
 }
 
@@ -828,11 +1704,20 @@ export interface Mk8sLinodeProviderAutoscaler {
 }
 
 export interface Mk8sLinodeProviderNetworking {
+    /**
+     * The CIDR of the pod network.
+     */
     podNetwork?: pulumi.Input<string>;
+    /**
+     * The CIDR of the service network.
+     */
     serviceNetwork?: pulumi.Input<string>;
 }
 
 export interface Mk8sLinodeProviderNodePool {
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     maxSize?: pulumi.Input<number>;
     minSize?: pulumi.Input<number>;
@@ -840,6 +1725,9 @@ export interface Mk8sLinodeProviderNodePool {
     overrideImage?: pulumi.Input<string>;
     serverType: pulumi.Input<string>;
     subnetId: pulumi.Input<string>;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: pulumi.Input<pulumi.Input<inputs.Mk8sLinodeProviderNodePoolTaint>[]>;
 }
 
@@ -852,9 +1740,18 @@ export interface Mk8sLinodeProviderNodePoolTaint {
 export interface Mk8sOblivusProvider {
     autoscaler?: pulumi.Input<inputs.Mk8sOblivusProviderAutoscaler>;
     datacenter: pulumi.Input<string>;
+    /**
+     * List of node pools.
+     */
     nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sOblivusProviderNodePool>[]>;
+    /**
+     * Optional shell script that will be run before K8s is installed. Supports SSM.
+     */
     preInstallScript?: pulumi.Input<string>;
     sshKeys?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Link to a secret holding Oblivus access key.
+     */
     tokenSecretLink: pulumi.Input<string>;
     unmanagedNodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sOblivusProviderUnmanagedNodePool>[]>;
 }
@@ -868,10 +1765,16 @@ export interface Mk8sOblivusProviderAutoscaler {
 
 export interface Mk8sOblivusProviderNodePool {
     flavor: pulumi.Input<string>;
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     maxSize?: pulumi.Input<number>;
     minSize?: pulumi.Input<number>;
     name: pulumi.Input<string>;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: pulumi.Input<pulumi.Input<inputs.Mk8sOblivusProviderNodePoolTaint>[]>;
 }
 
@@ -882,8 +1785,14 @@ export interface Mk8sOblivusProviderNodePoolTaint {
 }
 
 export interface Mk8sOblivusProviderUnmanagedNodePool {
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     name: pulumi.Input<string>;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: pulumi.Input<pulumi.Input<inputs.Mk8sOblivusProviderUnmanagedNodePoolTaint>[]>;
 }
 
@@ -896,10 +1805,22 @@ export interface Mk8sOblivusProviderUnmanagedNodePoolTaint {
 export interface Mk8sPaperspaceProvider {
     autoscaler?: pulumi.Input<inputs.Mk8sPaperspaceProviderAutoscaler>;
     networkId: pulumi.Input<string>;
+    /**
+     * List of node pools.
+     */
     nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sPaperspaceProviderNodePool>[]>;
+    /**
+     * Optional shell script that will be run before K8s is installed. Supports SSM.
+     */
     preInstallScript?: pulumi.Input<string>;
+    /**
+     * Region where the cluster nodes will live.
+     */
     region: pulumi.Input<string>;
     sharedDrives?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Link to a secret holding Paperspace access key.
+     */
     tokenSecretLink: pulumi.Input<string>;
     unmanagedNodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sPaperspaceProviderUnmanagedNodePool>[]>;
     userIds?: pulumi.Input<pulumi.Input<string>[]>;
@@ -914,12 +1835,18 @@ export interface Mk8sPaperspaceProviderAutoscaler {
 
 export interface Mk8sPaperspaceProviderNodePool {
     bootDiskSize?: pulumi.Input<number>;
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     machineType: pulumi.Input<string>;
     maxSize?: pulumi.Input<number>;
     minSize?: pulumi.Input<number>;
     name: pulumi.Input<string>;
     publicIpType: pulumi.Input<string>;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: pulumi.Input<pulumi.Input<inputs.Mk8sPaperspaceProviderNodePoolTaint>[]>;
 }
 
@@ -930,8 +1857,14 @@ export interface Mk8sPaperspaceProviderNodePoolTaint {
 }
 
 export interface Mk8sPaperspaceProviderUnmanagedNodePool {
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     name: pulumi.Input<string>;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: pulumi.Input<pulumi.Input<inputs.Mk8sPaperspaceProviderUnmanagedNodePoolTaint>[]>;
 }
 
@@ -981,10 +1914,16 @@ export interface Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig {
 }
 
 export interface Mk8sStatusAddOnDashboard {
+    /**
+     * Access to dashboard.
+     */
     url?: pulumi.Input<string>;
 }
 
 export interface Mk8sStatusAddOnLog {
+    /**
+     * Loki endpoint to query logs from.
+     */
     lokiAddress?: pulumi.Input<string>;
 }
 
@@ -996,13 +1935,35 @@ export interface Mk8sStatusAddOnMetric {
 export interface Mk8sTritonProvider {
     autoscaler?: pulumi.Input<inputs.Mk8sTritonProviderAutoscaler>;
     connection: pulumi.Input<inputs.Mk8sTritonProviderConnection>;
+    /**
+     * Enable firewall for the instances deployed.
+     */
     firewallEnabled?: pulumi.Input<boolean>;
+    /**
+     * Default image for all nodes.
+     */
     imageId: pulumi.Input<string>;
+    loadBalancer: pulumi.Input<inputs.Mk8sTritonProviderLoadBalancer>;
+    /**
+     * Control Plane location that will host the K8s components. Prefer one that is closest to the Triton datacenter.
+     */
     location: pulumi.Input<string>;
     networking: pulumi.Input<inputs.Mk8sTritonProviderNetworking>;
+    /**
+     * List of node pools.
+     */
     nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sTritonProviderNodePool>[]>;
+    /**
+     * Optional shell script that will be run before K8s is installed. Supports SSM.
+     */
     preInstallScript?: pulumi.Input<string>;
+    /**
+     * ID of the private Fabric/Network.
+     */
     privateNetworkId: pulumi.Input<string>;
+    /**
+     * Extra SSH keys to provision for user root.
+     */
     sshKeys?: pulumi.Input<pulumi.Input<string>[]>;
 }
 
@@ -1015,26 +1976,83 @@ export interface Mk8sTritonProviderAutoscaler {
 
 export interface Mk8sTritonProviderConnection {
     account: pulumi.Input<string>;
+    /**
+     * Link to a SSH or opaque secret.
+     */
     privateKeySecretLink: pulumi.Input<string>;
     url: pulumi.Input<string>;
     user?: pulumi.Input<string>;
 }
 
+export interface Mk8sTritonProviderLoadBalancer {
+    gateway?: pulumi.Input<inputs.Mk8sTritonProviderLoadBalancerGateway>;
+    manual?: pulumi.Input<inputs.Mk8sTritonProviderLoadBalancerManual>;
+}
+
+export interface Mk8sTritonProviderLoadBalancerGateway {
+    _sentinel?: pulumi.Input<boolean>;
+}
+
+export interface Mk8sTritonProviderLoadBalancerManual {
+    cnsInternalDomain: pulumi.Input<string>;
+    cnsPublicDomain: pulumi.Input<string>;
+    count: pulumi.Input<number>;
+    imageId: pulumi.Input<string>;
+    /**
+     * Extra tags to attach to instances from a node pool.
+     */
+    metadata?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    packageId: pulumi.Input<string>;
+    /**
+     * More private networks to join.
+     */
+    privateNetworkIds?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * If set, machine will also get a public IP.
+     */
+    publicNetworkId: pulumi.Input<string>;
+    /**
+     * Extra tags to attach to instances from a node pool.
+     */
+    tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+}
+
 export interface Mk8sTritonProviderNetworking {
+    /**
+     * The CIDR of the pod network.
+     */
     podNetwork?: pulumi.Input<string>;
+    /**
+     * The CIDR of the service network.
+     */
     serviceNetwork?: pulumi.Input<string>;
 }
 
 export interface Mk8sTritonProviderNodePool {
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     maxSize?: pulumi.Input<number>;
     minSize?: pulumi.Input<number>;
     name: pulumi.Input<string>;
     overrideImageId?: pulumi.Input<string>;
     packageId: pulumi.Input<string>;
+    /**
+     * More private networks to join.
+     */
     privateNetworkIds?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * If set, machine will also get a public IP.
+     */
     publicNetworkId?: pulumi.Input<string>;
+    /**
+     * Taint for the nodes of a pool.
+     */
     taints?: pulumi.Input<pulumi.Input<inputs.Mk8sTritonProviderNodePoolTaint>[]>;
+    /**
+     * Extra tags to attach to instances from a node pool.
+     */
     tritonTags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }
 
@@ -1045,96 +2063,249 @@ export interface Mk8sTritonProviderNodePoolTaint {
 }
 
 export interface OrgAuthConfig {
+    /**
+     * List of domains which will auto-provision users when authenticating using SAML.
+     */
     domainAutoMembers: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Enforce SAML only authentication.
+     */
     samlOnly?: pulumi.Input<boolean>;
 }
 
 export interface OrgLoggingCloudWatchLogging {
+    /**
+     * Full Link to a secret of type `opaque`.
+     */
     credentials: pulumi.Input<string>;
+    /**
+     * Enable custom data extraction from log entries for enhanced querying and analysis.
+     */
     extractFields?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * A container for log streams with common settings like retention. Used to categorize logs by application or service type.
+     */
     groupName: pulumi.Input<string>;
+    /**
+     * Valid AWS region.
+     */
     region: pulumi.Input<string>;
+    /**
+     * Length, in days, for how log data is kept before it is automatically deleted.
+     */
     retentionDays?: pulumi.Input<number>;
+    /**
+     * A sequence of log events from the same source within a log group. Typically represents individual instances of services or applications.
+     */
     streamName: pulumi.Input<string>;
 }
 
 export interface OrgLoggingCoralogixLogging {
+    /**
+     * App name to be displayed in Coralogix dashboard.
+     */
     app: pulumi.Input<string>;
+    /**
+     * Coralogix cluster URI.
+     */
     cluster: pulumi.Input<string>;
+    /**
+     * Full link to referenced Opaque Secret.
+     */
     credentials: pulumi.Input<string>;
+    /**
+     * Subsystem name to be displayed in Coralogix dashboard.
+     */
     subsystem: pulumi.Input<string>;
 }
 
 export interface OrgLoggingDatadogLogging {
+    /**
+     * Full link to referenced Opaque Secret.
+     */
     credentials: pulumi.Input<string>;
+    /**
+     * Datadog host URI.
+     */
     host: pulumi.Input<string>;
 }
 
 export interface OrgLoggingElasticLogging {
     _sentinel?: pulumi.Input<boolean>;
+    /**
+     * For targeting Amazon Web Services (AWS) ElasticSearch.
+     */
     aws?: pulumi.Input<inputs.OrgLoggingElasticLoggingAws>;
+    /**
+     * For targeting Elastic Cloud.
+     */
     elasticCloud?: pulumi.Input<inputs.OrgLoggingElasticLoggingElasticCloud>;
+    /**
+     * For targeting generic Elastic Search providers.
+     */
     generic?: pulumi.Input<inputs.OrgLoggingElasticLoggingGeneric>;
 }
 
 export interface OrgLoggingElasticLoggingAws {
+    /**
+     * Full Link to a secret of type `aws`.
+     */
     credentials: pulumi.Input<string>;
+    /**
+     * A valid AWS ElasticSearch hostname (must end with es.amazonaws.com).
+     */
     host: pulumi.Input<string>;
+    /**
+     * Logging Index.
+     */
     index: pulumi.Input<string>;
+    /**
+     * Port. Default: 443
+     */
     port: pulumi.Input<number>;
+    /**
+     * Valid AWS region.
+     */
     region: pulumi.Input<string>;
+    /**
+     * Logging Type.
+     */
     type: pulumi.Input<string>;
 }
 
 export interface OrgLoggingElasticLoggingElasticCloud {
+    /**
+     * [Cloud ID](https://www.elastic.co/guide/en/cloud/current/ec-cloud-id.html)
+     */
     cloudId: pulumi.Input<string>;
+    /**
+     * Full Link to a secret of type `userpass`.
+     */
     credentials: pulumi.Input<string>;
+    /**
+     * Logging Index.
+     */
     index: pulumi.Input<string>;
+    /**
+     * Logging Type.
+     */
     type: pulumi.Input<string>;
 }
 
 export interface OrgLoggingElasticLoggingGeneric {
+    /**
+     * Full Link to a secret of type `userpass`.
+     */
     credentials: pulumi.Input<string>;
+    /**
+     * A valid Elastic Search provider hostname.
+     */
     host: pulumi.Input<string>;
+    /**
+     * Logging Index.
+     */
     index: pulumi.Input<string>;
+    /**
+     * Logging path.
+     */
     path: pulumi.Input<string>;
+    /**
+     * Port. Default: 443
+     */
     port: pulumi.Input<number>;
+    /**
+     * Logging Type.
+     */
     type: pulumi.Input<string>;
 }
 
 export interface OrgLoggingFluentdLogging {
+    /**
+     * The hostname or IP address of a remote log storage system.
+     */
     host: pulumi.Input<string>;
+    /**
+     * Port. Default: 24224
+     */
     port?: pulumi.Input<number>;
 }
 
 export interface OrgLoggingLogzioLogging {
+    /**
+     * Full link to referenced Opaque Secret.
+     */
     credentials: pulumi.Input<string>;
+    /**
+     * Logzio listener host URI.
+     */
     listenerHost: pulumi.Input<string>;
 }
 
 export interface OrgLoggingS3Logging {
+    /**
+     * Name of S3 bucket.
+     */
     bucket: pulumi.Input<string>;
+    /**
+     * Full link to referenced AWS Secret.
+     */
     credentials: pulumi.Input<string>;
+    /**
+     * Bucket path prefix. Default: "/".
+     */
     prefix?: pulumi.Input<string>;
+    /**
+     * AWS region where bucket is located.
+     */
     region: pulumi.Input<string>;
 }
 
 export interface OrgLoggingStackdriverLogging {
+    /**
+     * Full Link to a secret of type `opaque`.
+     */
     credentials: pulumi.Input<string>;
+    /**
+     * A Google Cloud Provider region.
+     */
     location: pulumi.Input<string>;
 }
 
 export interface OrgLoggingSyslogLogging {
+    /**
+     * Log Format. Valid values: RFC3164 or RFC5424.
+     */
     format?: pulumi.Input<string>;
+    /**
+     * Hostname of Syslog Endpoint.
+     */
     host: pulumi.Input<string>;
+    /**
+     * Log Mode. Valid values: TCP, TLS, or UDP.
+     */
     mode?: pulumi.Input<string>;
+    /**
+     * Port of Syslog Endpoint.
+     */
     port: pulumi.Input<number>;
+    /**
+     * Severity Level. See documentation for details. Valid values: 0 to 7.
+     */
     severity?: pulumi.Input<number>;
 }
 
 export interface OrgObservability {
+    /**
+     * Log retention days. Default: 30
+     */
     logsRetentionDays?: pulumi.Input<number>;
+    /**
+     * Metrics retention days. Default: 30
+     */
     metricsRetentionDays?: pulumi.Input<number>;
+    /**
+     * Traces retention days. Default: 30
+     */
     tracesRetentionDays?: pulumi.Input<number>;
 }
 
@@ -1144,157 +2315,399 @@ export interface OrgSecurity {
 }
 
 export interface OrgSecurityThreatDetection {
+    /**
+     * Indicates whether threat detection should be forwarded or not.
+     */
     enabled: pulumi.Input<boolean>;
+    /**
+     * Any threats with this severity and more severe will be sent. Others will be ignored. Valid values: `warning`, `error`, or `critical`.
+     */
     minimumSeverity?: pulumi.Input<string>;
+    /**
+     * Configuration for syslog forwarding.
+     */
     syslog?: pulumi.Input<inputs.OrgSecurityThreatDetectionSyslog>;
 }
 
 export interface OrgSecurityThreatDetectionSyslog {
+    /**
+     * The hostname to send syslog messages to.
+     */
     host: pulumi.Input<string>;
+    /**
+     * The port to send syslog messages to.
+     */
     port: pulumi.Input<number>;
+    /**
+     * The transport-layer protocol to send the syslog messages over. If TCP is chosen, messages will be sent with TLS. Default: `tcp`.
+     */
     transport?: pulumi.Input<string>;
 }
 
 export interface OrgStatus {
+    /**
+     * The link of the account the org belongs to.
+     */
     accountLink?: pulumi.Input<string>;
+    /**
+     * Indicates whether the org is active or not.
+     */
     active?: pulumi.Input<boolean>;
 }
 
 export interface OrgTracingControlplaneTracing {
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: pulumi.Input<number>;
 }
 
 export interface OrgTracingLightstepTracing {
+    /**
+     * Full link to referenced Opaque Secret.
+     */
     credentials?: pulumi.Input<string>;
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+     */
     endpoint: pulumi.Input<string>;
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: pulumi.Input<number>;
 }
 
 export interface OrgTracingOtelTracing {
+    /**
+     * Key-value map of custom tags.
+     */
     customTags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+     */
     endpoint: pulumi.Input<string>;
+    /**
+     * Determines what percentage of requests should be traced.
+     */
     sampling: pulumi.Input<number>;
 }
 
 export interface PolicyBinding {
+    /**
+     * List of permissions to allow.
+     */
     permissions: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * List of the principals this binding will be applied to. Principal links format: `group/GROUP_NAME`, `user/USER_EMAIL`, `gvc/GVC_NAME/identity/IDENTITY_NAME`, `serviceaccount/SERVICE_ACCOUNT_NAME`.
+     */
     principalLinks: pulumi.Input<pulumi.Input<string>[]>;
 }
 
 export interface PolicyTargetQuery {
+    /**
+     * Type of fetch. Specify either: `links` or `items`. Default: `items`.
+     */
     fetch?: pulumi.Input<string>;
     spec?: pulumi.Input<inputs.PolicyTargetQuerySpec>;
 }
 
 export interface PolicyTargetQuerySpec {
+    /**
+     * Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+     */
     match?: pulumi.Input<string>;
+    /**
+     * Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+     */
     terms?: pulumi.Input<pulumi.Input<inputs.PolicyTargetQuerySpecTerm>[]>;
 }
 
 export interface PolicyTargetQuerySpecTerm {
+    /**
+     * Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+     */
     op?: pulumi.Input<string>;
+    /**
+     * Property to use for query evaluation.
+     */
     property?: pulumi.Input<string>;
     rel?: pulumi.Input<string>;
+    /**
+     * Tag key to use for query evaluation.
+     */
     tag?: pulumi.Input<string>;
+    /**
+     * Testing value for query evaluation.
+     */
     value?: pulumi.Input<string>;
 }
 
 export interface SecretAws {
+    /**
+     * Access Key provided by AWS.
+     */
     accessKey: pulumi.Input<string>;
+    /**
+     * AWS IAM Role External ID.
+     */
     externalId?: pulumi.Input<string>;
+    /**
+     * Role ARN provided by AWS.
+     */
     roleArn?: pulumi.Input<string>;
+    /**
+     * Secret Key provided by AWS.
+     */
     secretKey: pulumi.Input<string>;
 }
 
 export interface SecretAzureConnector {
+    /**
+     * Code/Key to authenticate to deployment URL.
+     */
     code: pulumi.Input<string>;
+    /**
+     * Deployment URL.
+     */
     url: pulumi.Input<string>;
 }
 
 export interface SecretEcr {
+    /**
+     * Access Key provided by AWS.
+     */
     accessKey: pulumi.Input<string>;
+    /**
+     * AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
+     */
     externalId?: pulumi.Input<string>;
+    /**
+     * List of ECR repositories.
+     */
     repos: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Role ARN provided by AWS.
+     */
     roleArn?: pulumi.Input<string>;
+    /**
+     * Secret Key provided by AWS.
+     */
     secretKey: pulumi.Input<string>;
 }
 
 export interface SecretKeypair {
+    /**
+     * Passphrase for private key.
+     */
     passphrase?: pulumi.Input<string>;
+    /**
+     * Public Key.
+     */
     publicKey?: pulumi.Input<string>;
+    /**
+     * Secret/Private Key.
+     */
     secretKey: pulumi.Input<string>;
 }
 
 export interface SecretNatsAccount {
+    /**
+     * Account ID.
+     */
     accountId: pulumi.Input<string>;
+    /**
+     * Private Key.
+     */
     privateKey: pulumi.Input<string>;
 }
 
 export interface SecretOpaque {
+    /**
+     * Available encodings: `plain`, `base64`. Default: `plain`.
+     */
     encoding?: pulumi.Input<string>;
+    /**
+     * Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.
+     */
     payload: pulumi.Input<string>;
 }
 
 export interface SecretTls {
+    /**
+     * Public Certificate.
+     */
     cert: pulumi.Input<string>;
+    /**
+     * Chain Certificate.
+     */
     chain?: pulumi.Input<string>;
+    /**
+     * Private Certificate.
+     */
     key: pulumi.Input<string>;
 }
 
 export interface SecretUserpass {
+    /**
+     * Available encodings: `plain`, `base64`. Default: `plain`.
+     */
     encoding?: pulumi.Input<string>;
+    /**
+     * Password.
+     */
     password: pulumi.Input<string>;
+    /**
+     * Username.
+     */
     username: pulumi.Input<string>;
 }
 
 export interface VolumeSetAutoscaling {
+    /**
+     * The maximum size in GB for a volume in this set. A volume cannot grow to be bigger than this value. Minimum value: `10`.
+     */
     maxCapacity?: pulumi.Input<number>;
+    /**
+     * The guaranteed free space on the volume as a percentage of the volume's total size. Control Plane will try to maintain at least that many percent free by scaling up the total size. Minimum percentage: `1`. Maximum Percentage: `100`.
+     */
     minFreePercentage?: pulumi.Input<number>;
+    /**
+     * When scaling is necessary, then `newCapacity = currentCapacity * storageScalingFactor`. Minimum value: `1.1`.
+     */
     scalingFactor?: pulumi.Input<number>;
 }
 
 export interface VolumeSetSnapshots {
+    /**
+     * If true, a volume snapshot will be created immediately before deletion of any volume in this set. Default: `true`
+     */
     createFinalSnapshot?: pulumi.Input<boolean>;
+    /**
+     * The default retention period for volume snapshots. This string should contain a floating point number followed by either d, h, or m. For example, "10d" would retain snapshots for 10 days.
+     */
     retentionDuration?: pulumi.Input<string>;
+    /**
+     * A standard cron schedule expression used to determine when a snapshot will be taken. (i.e., `0 * * * *` Every hour). Note: snapshots cannot be scheduled more often than once per hour.
+     */
     schedule?: pulumi.Input<string>;
 }
 
 export interface VolumeSetStatus {
+    /**
+     * Uniquely identifies the connection between the volume set and its workload. Every time a new connection is made, a new id is generated (e.g., If a workload is updated to remove the volume set, then updated again to reattach it, the volume set will have a new binding id).
+     */
     bindingId?: pulumi.Input<string>;
+    /**
+     * Contains a list of actual volumes grouped by location.
+     */
     locations?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The GVC ID.
+     */
     parentId?: pulumi.Input<string>;
+    /**
+     * The url of the workload currently using this volume set (if any).
+     */
     usedByWorkload?: pulumi.Input<string>;
 }
 
 export interface WorkloadContainer {
+    /**
+     * Command line arguments passed to the container at runtime.
+     */
     args?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Override the entry point.
+     */
     command?: pulumi.Input<string>;
+    /**
+     * Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
+     */
     cpu?: pulumi.Input<string>;
+    /**
+     * Name-Value list of environment variables.
+     */
     env?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
+     */
     gpuNvidia?: pulumi.Input<inputs.WorkloadContainerGpuNvidia>;
+    /**
+     * The full image and tag path.
+     */
     image: pulumi.Input<string>;
+    /**
+     * Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
+     */
     inheritEnv?: pulumi.Input<boolean>;
+    /**
+     * Lifecycle [Reference Page](https://docs.controlplane.com/reference/workload#lifecycle).
+     */
     lifecycle?: pulumi.Input<inputs.WorkloadContainerLifecycle>;
+    /**
+     * Liveness Probe
+     */
     livenessProbe?: pulumi.Input<inputs.WorkloadContainerLivenessProbe>;
+    /**
+     * Reserved memory of the workload when capacityAI is disabled. Maximum memory when CapacityAI is enabled. Default: "128Mi".
+     */
     memory?: pulumi.Input<string>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/workload#metrics).
+     */
     metrics?: pulumi.Input<inputs.WorkloadContainerMetrics>;
+    /**
+     * Minimum CPU when capacity AI is enabled.
+     */
     minCpu?: pulumi.Input<string>;
+    /**
+     * Minimum memory when capacity AI is enabled.
+     */
     minMemory?: pulumi.Input<string>;
+    /**
+     * Name of the container.
+     */
     name: pulumi.Input<string>;
     /**
+     * The port the container exposes. Only one container is allowed to specify a port. Min: `80`. Max: `65535`. Used by `serverless` Workload type. **DEPRECATED - Use `ports`.**
+     *
      * @deprecated The 'port' attribute will be deprecated in the next major version. Use the 'ports' attribute instead.
      */
     port?: pulumi.Input<number>;
+    /**
+     * Communication endpoints used by the workload to send and receive network traffic.
+     */
     ports?: pulumi.Input<pulumi.Input<inputs.WorkloadContainerPort>[]>;
+    /**
+     * Readiness Probe
+     */
     readinessProbe?: pulumi.Input<inputs.WorkloadContainerReadinessProbe>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/workload#volumes).
+     */
     volumes?: pulumi.Input<pulumi.Input<inputs.WorkloadContainerVolume>[]>;
+    /**
+     * Override the working directory. Must be an absolute path.
+     */
     workingDirectory?: pulumi.Input<string>;
 }
 
 export interface WorkloadContainerGpuNvidia {
+    /**
+     * GPU Model (i.e.: t4)
+     */
     model: pulumi.Input<string>;
+    /**
+     * Number of GPUs.
+     */
     quantity: pulumi.Input<number>;
 }
 
@@ -1354,12 +2767,24 @@ export interface WorkloadContainerLivenessProbeTcpSocket {
 }
 
 export interface WorkloadContainerMetrics {
+    /**
+     * Path from container emitting custom metrics
+     */
     path: pulumi.Input<string>;
+    /**
+     * Port from container emitting custom metrics
+     */
     port: pulumi.Input<number>;
 }
 
 export interface WorkloadContainerPort {
+    /**
+     * Port to expose.
+     */
     number: pulumi.Input<number>;
+    /**
+     * Protocol. Choice of: `http`, `http2`, `tcp`, or `grpc`.
+     */
     protocol?: pulumi.Input<string>;
 }
 
@@ -1397,39 +2822,93 @@ export interface WorkloadContainerReadinessProbeTcpSocket {
 }
 
 export interface WorkloadContainerVolume {
+    /**
+     * File path added to workload pointing to the volume.
+     */
     path: pulumi.Input<string>;
+    /**
+     * Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
+     */
     recoveryPolicy?: pulumi.Input<string>;
+    /**
+     * URI of a volume hosted at Control Plane (Volume Set) or at a cloud provider (AWS, Azure, GCP).
+     */
     uri: pulumi.Input<string>;
 }
 
 export interface WorkloadFirewallSpec {
     _sentinel?: pulumi.Input<boolean>;
+    /**
+     * The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
+     */
     external?: pulumi.Input<inputs.WorkloadFirewallSpecExternal>;
+    /**
+     * The internal firewall is used to control access between workloads.
+     */
     internal?: pulumi.Input<inputs.WorkloadFirewallSpecInternal>;
 }
 
 export interface WorkloadFirewallSpecExternal {
+    /**
+     * The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+     */
     inboundAllowCidrs?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The list of ipv4/ipv6 addresses or cidr blocks that this workload is allowed reach. No outbound access is allowed by default. Specify '0.0.0.0/0' to allow outbound access to the public internet.
+     */
     outboundAllowCidrs?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The list of public hostnames that this workload is allowed to reach. No outbound access is allowed by default. A wildcard `*` is allowed on the prefix of the hostname only, ex: `*.amazonaws.com`. Use `outboundAllowCIDR` to allow access to all external websites.
+     */
     outboundAllowHostnames?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Allow outbound access to specific ports and protocols. When not specified, communication to address ranges in outboundAllowCIDR is allowed on all ports and communication to names in outboundAllowHostname is allowed on ports 80/443.
+     */
     outboundAllowPorts?: pulumi.Input<pulumi.Input<inputs.WorkloadFirewallSpecExternalOutboundAllowPort>[]>;
 }
 
 export interface WorkloadFirewallSpecExternalOutboundAllowPort {
+    /**
+     * Port number. Max: 65000
+     */
     number: pulumi.Input<number>;
+    /**
+     * Either `http`, `https` or `tcp`. Default: `tcp`.
+     */
     protocol: pulumi.Input<string>;
 }
 
 export interface WorkloadFirewallSpecInternal {
+    /**
+     * Used to control the internal firewall configuration and mutual tls. Allowed Values: "none", "same-gvc", "same-org", "workload-list".
+     */
     inboundAllowType?: pulumi.Input<string>;
+    /**
+     * A list of specific workloads which are allowed to access this workload internally. This list is only used if the 'inboundAllowType' is set to 'workload-list'.
+     */
     inboundAllowWorkloads?: pulumi.Input<pulumi.Input<string>[]>;
 }
 
 export interface WorkloadJob {
+    /**
+     * The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
+     */
     activeDeadlineSeconds?: pulumi.Input<number>;
+    /**
+     * Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`
+     */
     concurrencyPolicy?: pulumi.Input<string>;
+    /**
+     * The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`
+     */
     historyLimit?: pulumi.Input<number>;
+    /**
+     * Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`
+     */
     restartPolicy?: pulumi.Input<string>;
+    /**
+     * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
+     */
     schedule: pulumi.Input<string>;
 }
 
@@ -1448,79 +2927,199 @@ export interface WorkloadLoadBalancerDirectPort {
     containerPort?: pulumi.Input<number>;
     externalPort: pulumi.Input<number>;
     protocol: pulumi.Input<string>;
+    /**
+     * Override the default `https` url scheme.
+     */
     scheme?: pulumi.Input<string>;
 }
 
 export interface WorkloadLoadBalancerGeoLocation {
+    /**
+     * When enabled, geo location headers will be included on inbound http requests. Existing headers will be replaced.
+     */
     enabled?: pulumi.Input<boolean>;
     headers?: pulumi.Input<inputs.WorkloadLoadBalancerGeoLocationHeaders>;
 }
 
 export interface WorkloadLoadBalancerGeoLocationHeaders {
+    /**
+     * The geo asn header.
+     */
     asn?: pulumi.Input<string>;
+    /**
+     * The geo city header.
+     */
     city?: pulumi.Input<string>;
+    /**
+     * The geo country header.
+     */
     country?: pulumi.Input<string>;
+    /**
+     * The geo region header.
+     */
     region?: pulumi.Input<string>;
 }
 
 export interface WorkloadLocalOption {
+    /**
+     * Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+     */
     autoscaling?: pulumi.Input<inputs.WorkloadLocalOptionAutoscaling>;
+    /**
+     * Capacity AI. Default: `true`.
+     */
     capacityAi?: pulumi.Input<boolean>;
+    /**
+     * Debug mode. Default: `false`
+     */
     debug?: pulumi.Input<boolean>;
+    /**
+     * Valid only for `localOptions`. Override options for a specific location.
+     */
     location: pulumi.Input<string>;
+    /**
+     * Workload suspend. Default: `false`
+     */
     suspend?: pulumi.Input<boolean>;
+    /**
+     * Timeout in seconds. Default: `5`.
+     */
     timeoutSeconds?: pulumi.Input<number>;
 }
 
 export interface WorkloadLocalOptionAutoscaling {
+    /**
+     * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+     */
     maxConcurrency?: pulumi.Input<number>;
+    /**
+     * The maximum allowed number of replicas. Min: `0`. Default `5`.
+     */
     maxScale?: pulumi.Input<number>;
+    /**
+     * Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+     */
     metric?: pulumi.Input<string>;
+    /**
+     * For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+     */
     metricPercentile?: pulumi.Input<string>;
+    /**
+     * The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `maxScale`. Default `1`.
+     */
     minScale?: pulumi.Input<number>;
     multis?: pulumi.Input<pulumi.Input<inputs.WorkloadLocalOptionAutoscalingMulti>[]>;
+    /**
+     * The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+     */
     scaleToZeroDelay?: pulumi.Input<number>;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+     */
     target?: pulumi.Input<number>;
 }
 
 export interface WorkloadLocalOptionAutoscalingMulti {
+    /**
+     * Valid values: `cpu` or `memory`.
+     */
     metric?: pulumi.Input<string>;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+     */
     target?: pulumi.Input<number>;
 }
 
 export interface WorkloadOptions {
+    /**
+     * Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+     */
     autoscaling?: pulumi.Input<inputs.WorkloadOptionsAutoscaling>;
+    /**
+     * Capacity AI. Default: `true`.
+     */
     capacityAi?: pulumi.Input<boolean>;
+    /**
+     * Debug mode. Default: `false`
+     */
     debug?: pulumi.Input<boolean>;
+    /**
+     * Workload suspend. Default: `false`
+     */
     suspend?: pulumi.Input<boolean>;
+    /**
+     * Timeout in seconds. Default: `5`.
+     */
     timeoutSeconds?: pulumi.Input<number>;
 }
 
 export interface WorkloadOptionsAutoscaling {
+    /**
+     * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+     */
     maxConcurrency?: pulumi.Input<number>;
+    /**
+     * The maximum allowed number of replicas. Min: `0`. Default `5`.
+     */
     maxScale?: pulumi.Input<number>;
+    /**
+     * Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+     */
     metric?: pulumi.Input<string>;
+    /**
+     * For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+     */
     metricPercentile?: pulumi.Input<string>;
+    /**
+     * The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `maxScale`. Default `1`.
+     */
     minScale?: pulumi.Input<number>;
     multis?: pulumi.Input<pulumi.Input<inputs.WorkloadOptionsAutoscalingMulti>[]>;
+    /**
+     * The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+     */
     scaleToZeroDelay?: pulumi.Input<number>;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+     */
     target?: pulumi.Input<number>;
 }
 
 export interface WorkloadOptionsAutoscalingMulti {
+    /**
+     * Valid values: `cpu` or `memory`.
+     */
     metric?: pulumi.Input<string>;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+     */
     target?: pulumi.Input<number>;
 }
 
 export interface WorkloadRolloutOptions {
+    /**
+     * The number of replicas that can be created above the desired amount of replicas during an update.
+     */
     maxSurgeReplicas?: pulumi.Input<string>;
+    /**
+     * The number of replicas that can be unavailable during the update process.
+     */
     maxUnavailableReplicas?: pulumi.Input<string>;
+    /**
+     * The minimum number of seconds a container must run without crashing to be considered available
+     */
     minReadySeconds?: pulumi.Input<number>;
+    /**
+     * The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+     */
     scalingPolicy?: pulumi.Input<string>;
 }
 
 export interface WorkloadSecurityOptions {
     _sentinel?: pulumi.Input<boolean>;
+    /**
+     * The group id assigned to any mounted volume.
+     */
     fileSystemGroupId?: pulumi.Input<number>;
 }
 
@@ -1529,23 +3128,65 @@ export interface WorkloadSidecar {
 }
 
 export interface WorkloadStatus {
+    /**
+     * Canonical endpoint for the workload.
+     */
     canonicalEndpoint?: pulumi.Input<string>;
+    /**
+     * Current amount of replicas deployed.
+     */
     currentReplicaCount?: pulumi.Input<number>;
+    /**
+     * Endpoint for the workload.
+     */
     endpoint?: pulumi.Input<string>;
+    /**
+     * Current health status.
+     */
     healthChecks?: pulumi.Input<pulumi.Input<inputs.WorkloadStatusHealthCheck>[]>;
+    /**
+     * Internal hostname for the workload. Used for service-to-service requests.
+     */
     internalName?: pulumi.Input<string>;
     loadBalancers?: pulumi.Input<pulumi.Input<inputs.WorkloadStatusLoadBalancer>[]>;
+    /**
+     * ID of the parent object.
+     */
     parentId?: pulumi.Input<string>;
+    /**
+     * Resolved images for workloads with dynamic tags enabled.
+     */
     resolvedImages?: pulumi.Input<pulumi.Input<inputs.WorkloadStatusResolvedImage>[]>;
 }
 
 export interface WorkloadStatusHealthCheck {
+    /**
+     * Active boolean for the associated workload.
+     */
     active: pulumi.Input<boolean>;
+    /**
+     * Current output code for the associated workload.
+     */
     code?: pulumi.Input<number>;
+    /**
+     * Failure integer for the associated workload.
+     */
     failures?: pulumi.Input<number>;
+    /**
+     * Timestamp in UTC of the last health check.
+     */
     lastChecked?: pulumi.Input<string>;
+    /**
+     * Current health status for the associated workload.
+     */
     message?: pulumi.Input<string>;
+    /**
+     * Success boolean for the associated workload.
+     */
     success?: pulumi.Input<boolean>;
+    /**
+     * Success integer for the associated workload.
+     */
     successes?: pulumi.Input<number>;
 }
 
@@ -1555,19 +3196,43 @@ export interface WorkloadStatusLoadBalancer {
 }
 
 export interface WorkloadStatusResolvedImage {
+    /**
+     * A list of images that were resolved.
+     */
     images?: pulumi.Input<pulumi.Input<inputs.WorkloadStatusResolvedImageImage>[]>;
+    /**
+     * UTC Time when the images were resolved.
+     */
     resolvedAt?: pulumi.Input<string>;
+    /**
+     * Workload version the images were resolved for.
+     */
     resolvedForVersion?: pulumi.Input<number>;
 }
 
 export interface WorkloadStatusResolvedImageImage {
+    /**
+     * A unique SHA256 hash value that identifies a specific image content. This digest serves as a fingerprint of the image's content, ensuring the image you pull or run is exactly what you expect, without any modifications or corruptions.
+     */
     digest?: pulumi.Input<string>;
     manifests?: pulumi.Input<pulumi.Input<inputs.WorkloadStatusResolvedImageImageManifest>[]>;
 }
 
 export interface WorkloadStatusResolvedImageImageManifest {
+    /**
+     * A SHA256 hash that uniquely identifies the specific image manifest.
+     */
     digest?: pulumi.Input<string>;
+    /**
+     * The name and tag of the resolved image.
+     */
     image?: pulumi.Input<string>;
+    /**
+     * The MIME type used in the Docker Registry HTTP API to specify the format of the data being sent or received. Docker uses media types to distinguish between different kinds of JSON objects and binary data formats within the registry protocol, enabling the Docker client and registry to understand and process different components of Docker images correctly.
+     */
     mediaType?: pulumi.Input<string>;
+    /**
+     * Key-value map of strings. The combination of the operating system and architecture for which the image is built.
+     */
     platform?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }

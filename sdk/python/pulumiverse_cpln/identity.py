@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -36,73 +41,32 @@ class IdentityArgs:
         :param pulumi.Input[str] description: Description of the Identity.
         :param pulumi.Input['IdentityGcpAccessPolicyArgs'] gcp_access_policy: The GCP access policy can either contain an existing service_account or multiple bindings.
         :param pulumi.Input[str] name: Name of the Identity.
-        :param pulumi.Input[Sequence[pulumi.Input['IdentityNativeNetworkResourceArgs']]] native_network_resources: ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        :param pulumi.Input[Sequence[pulumi.Input['IdentityNativeNetworkResourceArgs']]] native_network_resources: > **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
         :param pulumi.Input[Sequence[pulumi.Input['IdentityNetworkResourceArgs']]] network_resources: A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
                ports. - IP's and ports.
         :param pulumi.Input['IdentityNgsAccessPolicyArgs'] ngs_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an NGA
                environment.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
-        IdentityArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            gvc=gvc,
-            aws_access_policy=aws_access_policy,
-            azure_access_policy=azure_access_policy,
-            description=description,
-            gcp_access_policy=gcp_access_policy,
-            name=name,
-            native_network_resources=native_network_resources,
-            network_resources=network_resources,
-            ngs_access_policy=ngs_access_policy,
-            tags=tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             gvc: pulumi.Input[str],
-             aws_access_policy: Optional[pulumi.Input['IdentityAwsAccessPolicyArgs']] = None,
-             azure_access_policy: Optional[pulumi.Input['IdentityAzureAccessPolicyArgs']] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             gcp_access_policy: Optional[pulumi.Input['IdentityGcpAccessPolicyArgs']] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             native_network_resources: Optional[pulumi.Input[Sequence[pulumi.Input['IdentityNativeNetworkResourceArgs']]]] = None,
-             network_resources: Optional[pulumi.Input[Sequence[pulumi.Input['IdentityNetworkResourceArgs']]]] = None,
-             ngs_access_policy: Optional[pulumi.Input['IdentityNgsAccessPolicyArgs']] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'awsAccessPolicy' in kwargs:
-            aws_access_policy = kwargs['awsAccessPolicy']
-        if 'azureAccessPolicy' in kwargs:
-            azure_access_policy = kwargs['azureAccessPolicy']
-        if 'gcpAccessPolicy' in kwargs:
-            gcp_access_policy = kwargs['gcpAccessPolicy']
-        if 'nativeNetworkResources' in kwargs:
-            native_network_resources = kwargs['nativeNetworkResources']
-        if 'networkResources' in kwargs:
-            network_resources = kwargs['networkResources']
-        if 'ngsAccessPolicy' in kwargs:
-            ngs_access_policy = kwargs['ngsAccessPolicy']
-
-        _setter("gvc", gvc)
+        pulumi.set(__self__, "gvc", gvc)
         if aws_access_policy is not None:
-            _setter("aws_access_policy", aws_access_policy)
+            pulumi.set(__self__, "aws_access_policy", aws_access_policy)
         if azure_access_policy is not None:
-            _setter("azure_access_policy", azure_access_policy)
+            pulumi.set(__self__, "azure_access_policy", azure_access_policy)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if gcp_access_policy is not None:
-            _setter("gcp_access_policy", gcp_access_policy)
+            pulumi.set(__self__, "gcp_access_policy", gcp_access_policy)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if native_network_resources is not None:
-            _setter("native_network_resources", native_network_resources)
+            pulumi.set(__self__, "native_network_resources", native_network_resources)
         if network_resources is not None:
-            _setter("network_resources", network_resources)
+            pulumi.set(__self__, "network_resources", network_resources)
         if ngs_access_policy is not None:
-            _setter("ngs_access_policy", ngs_access_policy)
+            pulumi.set(__self__, "ngs_access_policy", ngs_access_policy)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
 
     @property
     @pulumi.getter
@@ -182,7 +146,7 @@ class IdentityArgs:
     @pulumi.getter(name="nativeNetworkResources")
     def native_network_resources(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['IdentityNativeNetworkResourceArgs']]]]:
         """
-        ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        > **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
         """
         return pulumi.get(self, "native_network_resources")
 
@@ -256,7 +220,7 @@ class _IdentityState:
         :param pulumi.Input['IdentityGcpAccessPolicyArgs'] gcp_access_policy: The GCP access policy can either contain an existing service_account or multiple bindings.
         :param pulumi.Input[str] gvc: Name of the GVC.
         :param pulumi.Input[str] name: Name of the Identity.
-        :param pulumi.Input[Sequence[pulumi.Input['IdentityNativeNetworkResourceArgs']]] native_network_resources: ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        :param pulumi.Input[Sequence[pulumi.Input['IdentityNativeNetworkResourceArgs']]] native_network_resources: > **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
         :param pulumi.Input[Sequence[pulumi.Input['IdentityNetworkResourceArgs']]] network_resources: A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
                ports. - IP's and ports.
         :param pulumi.Input['IdentityNgsAccessPolicyArgs'] ngs_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an NGA
@@ -265,83 +229,32 @@ class _IdentityState:
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] status: Key-value map of identity status. Available fields: `objectName`.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
-        _IdentityState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            aws_access_policy=aws_access_policy,
-            azure_access_policy=azure_access_policy,
-            cpln_id=cpln_id,
-            description=description,
-            gcp_access_policy=gcp_access_policy,
-            gvc=gvc,
-            name=name,
-            native_network_resources=native_network_resources,
-            network_resources=network_resources,
-            ngs_access_policy=ngs_access_policy,
-            self_link=self_link,
-            status=status,
-            tags=tags,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             aws_access_policy: Optional[pulumi.Input['IdentityAwsAccessPolicyArgs']] = None,
-             azure_access_policy: Optional[pulumi.Input['IdentityAzureAccessPolicyArgs']] = None,
-             cpln_id: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             gcp_access_policy: Optional[pulumi.Input['IdentityGcpAccessPolicyArgs']] = None,
-             gvc: Optional[pulumi.Input[str]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             native_network_resources: Optional[pulumi.Input[Sequence[pulumi.Input['IdentityNativeNetworkResourceArgs']]]] = None,
-             network_resources: Optional[pulumi.Input[Sequence[pulumi.Input['IdentityNetworkResourceArgs']]]] = None,
-             ngs_access_policy: Optional[pulumi.Input['IdentityNgsAccessPolicyArgs']] = None,
-             self_link: Optional[pulumi.Input[str]] = None,
-             status: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'awsAccessPolicy' in kwargs:
-            aws_access_policy = kwargs['awsAccessPolicy']
-        if 'azureAccessPolicy' in kwargs:
-            azure_access_policy = kwargs['azureAccessPolicy']
-        if 'cplnId' in kwargs:
-            cpln_id = kwargs['cplnId']
-        if 'gcpAccessPolicy' in kwargs:
-            gcp_access_policy = kwargs['gcpAccessPolicy']
-        if 'nativeNetworkResources' in kwargs:
-            native_network_resources = kwargs['nativeNetworkResources']
-        if 'networkResources' in kwargs:
-            network_resources = kwargs['networkResources']
-        if 'ngsAccessPolicy' in kwargs:
-            ngs_access_policy = kwargs['ngsAccessPolicy']
-        if 'selfLink' in kwargs:
-            self_link = kwargs['selfLink']
-
         if aws_access_policy is not None:
-            _setter("aws_access_policy", aws_access_policy)
+            pulumi.set(__self__, "aws_access_policy", aws_access_policy)
         if azure_access_policy is not None:
-            _setter("azure_access_policy", azure_access_policy)
+            pulumi.set(__self__, "azure_access_policy", azure_access_policy)
         if cpln_id is not None:
-            _setter("cpln_id", cpln_id)
+            pulumi.set(__self__, "cpln_id", cpln_id)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if gcp_access_policy is not None:
-            _setter("gcp_access_policy", gcp_access_policy)
+            pulumi.set(__self__, "gcp_access_policy", gcp_access_policy)
         if gvc is not None:
-            _setter("gvc", gvc)
+            pulumi.set(__self__, "gvc", gvc)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if native_network_resources is not None:
-            _setter("native_network_resources", native_network_resources)
+            pulumi.set(__self__, "native_network_resources", native_network_resources)
         if network_resources is not None:
-            _setter("network_resources", network_resources)
+            pulumi.set(__self__, "network_resources", network_resources)
         if ngs_access_policy is not None:
-            _setter("ngs_access_policy", ngs_access_policy)
+            pulumi.set(__self__, "ngs_access_policy", ngs_access_policy)
         if self_link is not None:
-            _setter("self_link", self_link)
+            pulumi.set(__self__, "self_link", self_link)
         if status is not None:
-            _setter("status", status)
+            pulumi.set(__self__, "status", status)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
 
     @property
     @pulumi.getter(name="awsAccessPolicy")
@@ -433,7 +346,7 @@ class _IdentityState:
     @pulumi.getter(name="nativeNetworkResources")
     def native_network_resources(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['IdentityNativeNetworkResourceArgs']]]]:
         """
-        ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        > **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
         """
         return pulumi.get(self, "native_network_resources")
 
@@ -509,33 +422,33 @@ class Identity(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 aws_access_policy: Optional[pulumi.Input[pulumi.InputType['IdentityAwsAccessPolicyArgs']]] = None,
-                 azure_access_policy: Optional[pulumi.Input[pulumi.InputType['IdentityAzureAccessPolicyArgs']]] = None,
+                 aws_access_policy: Optional[pulumi.Input[Union['IdentityAwsAccessPolicyArgs', 'IdentityAwsAccessPolicyArgsDict']]] = None,
+                 azure_access_policy: Optional[pulumi.Input[Union['IdentityAzureAccessPolicyArgs', 'IdentityAzureAccessPolicyArgsDict']]] = None,
                  description: Optional[pulumi.Input[str]] = None,
-                 gcp_access_policy: Optional[pulumi.Input[pulumi.InputType['IdentityGcpAccessPolicyArgs']]] = None,
+                 gcp_access_policy: Optional[pulumi.Input[Union['IdentityGcpAccessPolicyArgs', 'IdentityGcpAccessPolicyArgsDict']]] = None,
                  gvc: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 native_network_resources: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IdentityNativeNetworkResourceArgs']]]]] = None,
-                 network_resources: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IdentityNetworkResourceArgs']]]]] = None,
-                 ngs_access_policy: Optional[pulumi.Input[pulumi.InputType['IdentityNgsAccessPolicyArgs']]] = None,
+                 native_network_resources: Optional[pulumi.Input[Sequence[pulumi.Input[Union['IdentityNativeNetworkResourceArgs', 'IdentityNativeNetworkResourceArgsDict']]]]] = None,
+                 network_resources: Optional[pulumi.Input[Sequence[pulumi.Input[Union['IdentityNetworkResourceArgs', 'IdentityNetworkResourceArgsDict']]]]] = None,
+                 ngs_access_policy: Optional[pulumi.Input[Union['IdentityNgsAccessPolicyArgs', 'IdentityNgsAccessPolicyArgsDict']]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
         """
         Create a Identity resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[pulumi.InputType['IdentityAwsAccessPolicyArgs']] aws_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+        :param pulumi.Input[Union['IdentityAwsAccessPolicyArgs', 'IdentityAwsAccessPolicyArgsDict']] aws_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an AWS
                environment.
-        :param pulumi.Input[pulumi.InputType['IdentityAzureAccessPolicyArgs']] azure_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+        :param pulumi.Input[Union['IdentityAzureAccessPolicyArgs', 'IdentityAzureAccessPolicyArgsDict']] azure_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an Azure
                environment.
         :param pulumi.Input[str] description: Description of the Identity.
-        :param pulumi.Input[pulumi.InputType['IdentityGcpAccessPolicyArgs']] gcp_access_policy: The GCP access policy can either contain an existing service_account or multiple bindings.
+        :param pulumi.Input[Union['IdentityGcpAccessPolicyArgs', 'IdentityGcpAccessPolicyArgsDict']] gcp_access_policy: The GCP access policy can either contain an existing service_account or multiple bindings.
         :param pulumi.Input[str] gvc: Name of the GVC.
         :param pulumi.Input[str] name: Name of the Identity.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IdentityNativeNetworkResourceArgs']]]] native_network_resources: ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IdentityNetworkResourceArgs']]]] network_resources: A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+        :param pulumi.Input[Sequence[pulumi.Input[Union['IdentityNativeNetworkResourceArgs', 'IdentityNativeNetworkResourceArgsDict']]]] native_network_resources: > **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['IdentityNetworkResourceArgs', 'IdentityNetworkResourceArgsDict']]]] network_resources: A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
                ports. - IP's and ports.
-        :param pulumi.Input[pulumi.InputType['IdentityNgsAccessPolicyArgs']] ngs_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+        :param pulumi.Input[Union['IdentityNgsAccessPolicyArgs', 'IdentityNgsAccessPolicyArgsDict']] ngs_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an NGA
                environment.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
         """
@@ -557,24 +470,20 @@ class Identity(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            IdentityArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 aws_access_policy: Optional[pulumi.Input[pulumi.InputType['IdentityAwsAccessPolicyArgs']]] = None,
-                 azure_access_policy: Optional[pulumi.Input[pulumi.InputType['IdentityAzureAccessPolicyArgs']]] = None,
+                 aws_access_policy: Optional[pulumi.Input[Union['IdentityAwsAccessPolicyArgs', 'IdentityAwsAccessPolicyArgsDict']]] = None,
+                 azure_access_policy: Optional[pulumi.Input[Union['IdentityAzureAccessPolicyArgs', 'IdentityAzureAccessPolicyArgsDict']]] = None,
                  description: Optional[pulumi.Input[str]] = None,
-                 gcp_access_policy: Optional[pulumi.Input[pulumi.InputType['IdentityGcpAccessPolicyArgs']]] = None,
+                 gcp_access_policy: Optional[pulumi.Input[Union['IdentityGcpAccessPolicyArgs', 'IdentityGcpAccessPolicyArgsDict']]] = None,
                  gvc: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 native_network_resources: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IdentityNativeNetworkResourceArgs']]]]] = None,
-                 network_resources: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IdentityNetworkResourceArgs']]]]] = None,
-                 ngs_access_policy: Optional[pulumi.Input[pulumi.InputType['IdentityNgsAccessPolicyArgs']]] = None,
+                 native_network_resources: Optional[pulumi.Input[Sequence[pulumi.Input[Union['IdentityNativeNetworkResourceArgs', 'IdentityNativeNetworkResourceArgsDict']]]]] = None,
+                 network_resources: Optional[pulumi.Input[Sequence[pulumi.Input[Union['IdentityNetworkResourceArgs', 'IdentityNetworkResourceArgsDict']]]]] = None,
+                 ngs_access_policy: Optional[pulumi.Input[Union['IdentityNgsAccessPolicyArgs', 'IdentityNgsAccessPolicyArgsDict']]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -585,24 +494,9 @@ class Identity(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = IdentityArgs.__new__(IdentityArgs)
 
-            if aws_access_policy is not None and not isinstance(aws_access_policy, IdentityAwsAccessPolicyArgs):
-                aws_access_policy = aws_access_policy or {}
-                def _setter(key, value):
-                    aws_access_policy[key] = value
-                IdentityAwsAccessPolicyArgs._configure(_setter, **aws_access_policy)
             __props__.__dict__["aws_access_policy"] = aws_access_policy
-            if azure_access_policy is not None and not isinstance(azure_access_policy, IdentityAzureAccessPolicyArgs):
-                azure_access_policy = azure_access_policy or {}
-                def _setter(key, value):
-                    azure_access_policy[key] = value
-                IdentityAzureAccessPolicyArgs._configure(_setter, **azure_access_policy)
             __props__.__dict__["azure_access_policy"] = azure_access_policy
             __props__.__dict__["description"] = description
-            if gcp_access_policy is not None and not isinstance(gcp_access_policy, IdentityGcpAccessPolicyArgs):
-                gcp_access_policy = gcp_access_policy or {}
-                def _setter(key, value):
-                    gcp_access_policy[key] = value
-                IdentityGcpAccessPolicyArgs._configure(_setter, **gcp_access_policy)
             __props__.__dict__["gcp_access_policy"] = gcp_access_policy
             if gvc is None and not opts.urn:
                 raise TypeError("Missing required property 'gvc'")
@@ -610,11 +504,6 @@ class Identity(pulumi.CustomResource):
             __props__.__dict__["name"] = name
             __props__.__dict__["native_network_resources"] = native_network_resources
             __props__.__dict__["network_resources"] = network_resources
-            if ngs_access_policy is not None and not isinstance(ngs_access_policy, IdentityNgsAccessPolicyArgs):
-                ngs_access_policy = ngs_access_policy or {}
-                def _setter(key, value):
-                    ngs_access_policy[key] = value
-                IdentityNgsAccessPolicyArgs._configure(_setter, **ngs_access_policy)
             __props__.__dict__["ngs_access_policy"] = ngs_access_policy
             __props__.__dict__["tags"] = tags
             __props__.__dict__["cpln_id"] = None
@@ -630,16 +519,16 @@ class Identity(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            aws_access_policy: Optional[pulumi.Input[pulumi.InputType['IdentityAwsAccessPolicyArgs']]] = None,
-            azure_access_policy: Optional[pulumi.Input[pulumi.InputType['IdentityAzureAccessPolicyArgs']]] = None,
+            aws_access_policy: Optional[pulumi.Input[Union['IdentityAwsAccessPolicyArgs', 'IdentityAwsAccessPolicyArgsDict']]] = None,
+            azure_access_policy: Optional[pulumi.Input[Union['IdentityAzureAccessPolicyArgs', 'IdentityAzureAccessPolicyArgsDict']]] = None,
             cpln_id: Optional[pulumi.Input[str]] = None,
             description: Optional[pulumi.Input[str]] = None,
-            gcp_access_policy: Optional[pulumi.Input[pulumi.InputType['IdentityGcpAccessPolicyArgs']]] = None,
+            gcp_access_policy: Optional[pulumi.Input[Union['IdentityGcpAccessPolicyArgs', 'IdentityGcpAccessPolicyArgsDict']]] = None,
             gvc: Optional[pulumi.Input[str]] = None,
             name: Optional[pulumi.Input[str]] = None,
-            native_network_resources: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IdentityNativeNetworkResourceArgs']]]]] = None,
-            network_resources: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IdentityNetworkResourceArgs']]]]] = None,
-            ngs_access_policy: Optional[pulumi.Input[pulumi.InputType['IdentityNgsAccessPolicyArgs']]] = None,
+            native_network_resources: Optional[pulumi.Input[Sequence[pulumi.Input[Union['IdentityNativeNetworkResourceArgs', 'IdentityNativeNetworkResourceArgsDict']]]]] = None,
+            network_resources: Optional[pulumi.Input[Sequence[pulumi.Input[Union['IdentityNetworkResourceArgs', 'IdentityNetworkResourceArgsDict']]]]] = None,
+            ngs_access_policy: Optional[pulumi.Input[Union['IdentityNgsAccessPolicyArgs', 'IdentityNgsAccessPolicyArgsDict']]] = None,
             self_link: Optional[pulumi.Input[str]] = None,
             status: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None) -> 'Identity':
@@ -650,19 +539,19 @@ class Identity(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[pulumi.InputType['IdentityAwsAccessPolicyArgs']] aws_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an AWS
+        :param pulumi.Input[Union['IdentityAwsAccessPolicyArgs', 'IdentityAwsAccessPolicyArgsDict']] aws_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an AWS
                environment.
-        :param pulumi.Input[pulumi.InputType['IdentityAzureAccessPolicyArgs']] azure_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an Azure
+        :param pulumi.Input[Union['IdentityAzureAccessPolicyArgs', 'IdentityAzureAccessPolicyArgsDict']] azure_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an Azure
                environment.
         :param pulumi.Input[str] cpln_id: ID, in GUID format, of the Identity.
         :param pulumi.Input[str] description: Description of the Identity.
-        :param pulumi.Input[pulumi.InputType['IdentityGcpAccessPolicyArgs']] gcp_access_policy: The GCP access policy can either contain an existing service_account or multiple bindings.
+        :param pulumi.Input[Union['IdentityGcpAccessPolicyArgs', 'IdentityGcpAccessPolicyArgsDict']] gcp_access_policy: The GCP access policy can either contain an existing service_account or multiple bindings.
         :param pulumi.Input[str] gvc: Name of the GVC.
         :param pulumi.Input[str] name: Name of the Identity.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IdentityNativeNetworkResourceArgs']]]] native_network_resources: ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['IdentityNetworkResourceArgs']]]] network_resources: A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
+        :param pulumi.Input[Sequence[pulumi.Input[Union['IdentityNativeNetworkResourceArgs', 'IdentityNativeNetworkResourceArgsDict']]]] native_network_resources: > **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['IdentityNetworkResourceArgs', 'IdentityNetworkResourceArgsDict']]]] network_resources: A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
                ports. - IP's and ports.
-        :param pulumi.Input[pulumi.InputType['IdentityNgsAccessPolicyArgs']] ngs_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an NGA
+        :param pulumi.Input[Union['IdentityNgsAccessPolicyArgs', 'IdentityNgsAccessPolicyArgsDict']] ngs_access_policy: A set of access policy rules that defines the actions and resources that an identity can access within an NGA
                environment.
         :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] status: Key-value map of identity status. Available fields: `objectName`.
@@ -749,7 +638,7 @@ class Identity(pulumi.CustomResource):
     @pulumi.getter(name="nativeNetworkResources")
     def native_network_resources(self) -> pulumi.Output[Optional[Sequence['outputs.IdentityNativeNetworkResource']]]:
         """
-        ~> **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
+        > **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
         """
         return pulumi.get(self, "native_network_resources")
 

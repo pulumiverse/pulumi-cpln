@@ -8,7 +8,6 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
@@ -180,12 +179,6 @@ func (i *OrgLogging) ToOrgLoggingOutputWithContext(ctx context.Context) OrgLoggi
 	return pulumi.ToOutputWithContext(ctx, i).(OrgLoggingOutput)
 }
 
-func (i *OrgLogging) ToOutput(ctx context.Context) pulumix.Output[*OrgLogging] {
-	return pulumix.Output[*OrgLogging]{
-		OutputState: i.ToOrgLoggingOutputWithContext(ctx).OutputState,
-	}
-}
-
 // OrgLoggingArrayInput is an input type that accepts OrgLoggingArray and OrgLoggingArrayOutput values.
 // You can construct a concrete instance of `OrgLoggingArrayInput` via:
 //
@@ -209,12 +202,6 @@ func (i OrgLoggingArray) ToOrgLoggingArrayOutput() OrgLoggingArrayOutput {
 
 func (i OrgLoggingArray) ToOrgLoggingArrayOutputWithContext(ctx context.Context) OrgLoggingArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(OrgLoggingArrayOutput)
-}
-
-func (i OrgLoggingArray) ToOutput(ctx context.Context) pulumix.Output[[]*OrgLogging] {
-	return pulumix.Output[[]*OrgLogging]{
-		OutputState: i.ToOrgLoggingArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // OrgLoggingMapInput is an input type that accepts OrgLoggingMap and OrgLoggingMapOutput values.
@@ -242,12 +229,6 @@ func (i OrgLoggingMap) ToOrgLoggingMapOutputWithContext(ctx context.Context) Org
 	return pulumi.ToOutputWithContext(ctx, i).(OrgLoggingMapOutput)
 }
 
-func (i OrgLoggingMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*OrgLogging] {
-	return pulumix.Output[map[string]*OrgLogging]{
-		OutputState: i.ToOrgLoggingMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type OrgLoggingOutput struct{ *pulumi.OutputState }
 
 func (OrgLoggingOutput) ElementType() reflect.Type {
@@ -260,12 +241,6 @@ func (o OrgLoggingOutput) ToOrgLoggingOutput() OrgLoggingOutput {
 
 func (o OrgLoggingOutput) ToOrgLoggingOutputWithContext(ctx context.Context) OrgLoggingOutput {
 	return o
-}
-
-func (o OrgLoggingOutput) ToOutput(ctx context.Context) pulumix.Output[*OrgLogging] {
-	return pulumix.Output[*OrgLogging]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o OrgLoggingOutput) CloudWatchLoggings() OrgLoggingCloudWatchLoggingArrayOutput {
@@ -343,12 +318,6 @@ func (o OrgLoggingArrayOutput) ToOrgLoggingArrayOutputWithContext(ctx context.Co
 	return o
 }
 
-func (o OrgLoggingArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*OrgLogging] {
-	return pulumix.Output[[]*OrgLogging]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o OrgLoggingArrayOutput) Index(i pulumi.IntInput) OrgLoggingOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *OrgLogging {
 		return vs[0].([]*OrgLogging)[vs[1].(int)]
@@ -367,12 +336,6 @@ func (o OrgLoggingMapOutput) ToOrgLoggingMapOutput() OrgLoggingMapOutput {
 
 func (o OrgLoggingMapOutput) ToOrgLoggingMapOutputWithContext(ctx context.Context) OrgLoggingMapOutput {
 	return o
-}
-
-func (o OrgLoggingMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*OrgLogging] {
-	return pulumix.Output[map[string]*OrgLogging]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o OrgLoggingMapOutput) MapIndex(k pulumi.StringInput) OrgLoggingOutput {

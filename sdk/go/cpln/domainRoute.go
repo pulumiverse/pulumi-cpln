@@ -9,7 +9,6 @@ import (
 
 	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
@@ -193,12 +192,6 @@ func (i *DomainRoute) ToDomainRouteOutputWithContext(ctx context.Context) Domain
 	return pulumi.ToOutputWithContext(ctx, i).(DomainRouteOutput)
 }
 
-func (i *DomainRoute) ToOutput(ctx context.Context) pulumix.Output[*DomainRoute] {
-	return pulumix.Output[*DomainRoute]{
-		OutputState: i.ToDomainRouteOutputWithContext(ctx).OutputState,
-	}
-}
-
 // DomainRouteArrayInput is an input type that accepts DomainRouteArray and DomainRouteArrayOutput values.
 // You can construct a concrete instance of `DomainRouteArrayInput` via:
 //
@@ -222,12 +215,6 @@ func (i DomainRouteArray) ToDomainRouteArrayOutput() DomainRouteArrayOutput {
 
 func (i DomainRouteArray) ToDomainRouteArrayOutputWithContext(ctx context.Context) DomainRouteArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(DomainRouteArrayOutput)
-}
-
-func (i DomainRouteArray) ToOutput(ctx context.Context) pulumix.Output[[]*DomainRoute] {
-	return pulumix.Output[[]*DomainRoute]{
-		OutputState: i.ToDomainRouteArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // DomainRouteMapInput is an input type that accepts DomainRouteMap and DomainRouteMapOutput values.
@@ -255,12 +242,6 @@ func (i DomainRouteMap) ToDomainRouteMapOutputWithContext(ctx context.Context) D
 	return pulumi.ToOutputWithContext(ctx, i).(DomainRouteMapOutput)
 }
 
-func (i DomainRouteMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*DomainRoute] {
-	return pulumix.Output[map[string]*DomainRoute]{
-		OutputState: i.ToDomainRouteMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type DomainRouteOutput struct{ *pulumi.OutputState }
 
 func (DomainRouteOutput) ElementType() reflect.Type {
@@ -273,12 +254,6 @@ func (o DomainRouteOutput) ToDomainRouteOutput() DomainRouteOutput {
 
 func (o DomainRouteOutput) ToDomainRouteOutputWithContext(ctx context.Context) DomainRouteOutput {
 	return o
-}
-
-func (o DomainRouteOutput) ToOutput(ctx context.Context) pulumix.Output[*DomainRoute] {
-	return pulumix.Output[*DomainRoute]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The self link of the domain to add the route to.
@@ -342,12 +317,6 @@ func (o DomainRouteArrayOutput) ToDomainRouteArrayOutputWithContext(ctx context.
 	return o
 }
 
-func (o DomainRouteArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*DomainRoute] {
-	return pulumix.Output[[]*DomainRoute]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o DomainRouteArrayOutput) Index(i pulumi.IntInput) DomainRouteOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *DomainRoute {
 		return vs[0].([]*DomainRoute)[vs[1].(int)]
@@ -366,12 +335,6 @@ func (o DomainRouteMapOutput) ToDomainRouteMapOutput() DomainRouteMapOutput {
 
 func (o DomainRouteMapOutput) ToDomainRouteMapOutputWithContext(ctx context.Context) DomainRouteMapOutput {
 	return o
-}
-
-func (o DomainRouteMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*DomainRoute] {
-	return pulumix.Output[map[string]*DomainRoute]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o DomainRouteMapOutput) MapIndex(k pulumi.StringInput) DomainRouteOutput {

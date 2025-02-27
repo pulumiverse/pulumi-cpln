@@ -62,7 +62,7 @@ export class Secret extends pulumi.CustomResource {
      * If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
      * cpln://secret/SECRET_NAME.key`.
      */
-    public /*out*/ readonly dictionaryAsEnvs!: pulumi.Output<{[key: string]: any}>;
+    public /*out*/ readonly dictionaryAsEnvs!: pulumi.Output<{[key: string]: string}>;
     /**
      * JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
      */
@@ -205,7 +205,7 @@ export interface SecretState {
      * If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
      * cpln://secret/SECRET_NAME.key`.
      */
-    dictionaryAsEnvs?: pulumi.Input<{[key: string]: any}>;
+    dictionaryAsEnvs?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
      */

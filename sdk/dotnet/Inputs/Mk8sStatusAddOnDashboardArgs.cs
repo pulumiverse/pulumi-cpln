@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class Mk8sStatusAddOnDashboardArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Access to dashboard.
+        /// </summary>
         [Input("url")]
         public Input<string>? Url { get; set; }
 

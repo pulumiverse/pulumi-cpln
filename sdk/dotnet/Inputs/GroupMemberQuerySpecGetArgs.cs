@@ -13,11 +13,18 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class GroupMemberQuerySpecGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        /// </summary>
         [Input("match")]
         public Input<string>? Match { get; set; }
 
         [Input("terms")]
         private InputList<Inputs.GroupMemberQuerySpecTermGetArgs>? _terms;
+
+        /// <summary>
+        /// Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        /// </summary>
         public InputList<Inputs.GroupMemberQuerySpecTermGetArgs> Terms
         {
             get => _terms ?? (_terms = new InputList<Inputs.GroupMemberQuerySpecTermGetArgs>());

@@ -14,24 +14,81 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadContainer
     {
+        /// <summary>
+        /// Command line arguments passed to the container at runtime.
+        /// </summary>
         public readonly ImmutableArray<string> Args;
+        /// <summary>
+        /// Override the entry point.
+        /// </summary>
         public readonly string? Command;
+        /// <summary>
+        /// Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
+        /// </summary>
         public readonly string? Cpu;
+        /// <summary>
+        /// Name-Value list of environment variables.
+        /// </summary>
         public readonly ImmutableDictionary<string, string>? Env;
+        /// <summary>
+        /// GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
+        /// </summary>
         public readonly Outputs.WorkloadContainerGpuNvidia? GpuNvidia;
+        /// <summary>
+        /// The full image and tag path.
+        /// </summary>
         public readonly string Image;
+        /// <summary>
+        /// Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
+        /// </summary>
         public readonly bool? InheritEnv;
+        /// <summary>
+        /// Lifecycle [Reference Page](https://docs.controlplane.com/reference/workload#lifecycle).
+        /// </summary>
         public readonly Outputs.WorkloadContainerLifecycle? Lifecycle;
+        /// <summary>
+        /// Liveness Probe
+        /// </summary>
         public readonly Outputs.WorkloadContainerLivenessProbe? LivenessProbe;
+        /// <summary>
+        /// Reserved memory of the workload when capacityAI is disabled. Maximum memory when CapacityAI is enabled. Default: "128Mi".
+        /// </summary>
         public readonly string? Memory;
+        /// <summary>
+        /// [Reference Page](https://docs.controlplane.com/reference/workload#metrics).
+        /// </summary>
         public readonly Outputs.WorkloadContainerMetrics? Metrics;
+        /// <summary>
+        /// Minimum CPU when capacity AI is enabled.
+        /// </summary>
         public readonly string? MinCpu;
+        /// <summary>
+        /// Minimum memory when capacity AI is enabled.
+        /// </summary>
         public readonly string? MinMemory;
+        /// <summary>
+        /// Name of the container.
+        /// </summary>
         public readonly string Name;
+        /// <summary>
+        /// The port the container exposes. Only one container is allowed to specify a port. Min: `80`. Max: `65535`. Used by `serverless` Workload type. **DEPRECATED - Use `ports`.**
+        /// </summary>
         public readonly int? Port;
+        /// <summary>
+        /// Communication endpoints used by the workload to send and receive network traffic.
+        /// </summary>
         public readonly ImmutableArray<Outputs.WorkloadContainerPort> Ports;
+        /// <summary>
+        /// Readiness Probe
+        /// </summary>
         public readonly Outputs.WorkloadContainerReadinessProbe? ReadinessProbe;
+        /// <summary>
+        /// [Reference Page](https://docs.controlplane.com/reference/workload#volumes).
+        /// </summary>
         public readonly ImmutableArray<Outputs.WorkloadContainerVolume> Volumes;
+        /// <summary>
+        /// Override the working directory. Must be an absolute path.
+        /// </summary>
         public readonly string? WorkingDirectory;
 
         [OutputConstructor]

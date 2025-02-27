@@ -19,9 +19,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// - **aws_identifiers** (String)
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
@@ -39,8 +37,6 @@ namespace Pulumiverse.Cpln
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetCloudAccountResult> InvokeAsync(InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetCloudAccountResult>("cpln:index/getCloudAccount:getCloudAccount", InvokeArgs.Empty, options.WithDefaults());
@@ -52,9 +48,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// - **aws_identifiers** (String)
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
@@ -72,10 +66,37 @@ namespace Pulumiverse.Cpln
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetCloudAccountResult> Invoke(InvokeOptions? options = null)
+            => global::Pulumi.Deployment.Instance.Invoke<GetCloudAccountResult>("cpln:index/getCloudAccount:getCloudAccount", InvokeArgs.Empty, options.WithDefaults());
+
+        /// <summary>
+        /// Use this data source to access information about an existing [Cloud Account](https://docs.controlplane.com/reference/cloudaccount) within Control Plane.
+        /// 
+        /// ## Outputs
+        /// 
+        /// - **aws_identifiers** (String)
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```csharp
+        /// using System.Collections.Generic;
+        /// using System.Linq;
+        /// using Pulumi;
+        /// using Cpln = Pulumi.Cpln;
+        /// 
+        /// return await Deployment.RunAsync(() =&gt; 
+        /// {
+        ///     var @this = Cpln.GetCloudAccount.Invoke();
+        /// 
+        ///     return new Dictionary&lt;string, object?&gt;
+        ///     {
+        ///         ["cloudAccount"] = @this.Apply(@this =&gt; @this.Apply(getCloudAccountResult =&gt; getCloudAccountResult.AwsIdentifiers)),
+        ///     };
+        /// });
+        /// ```
+        /// </summary>
+        public static Output<GetCloudAccountResult> Invoke(InvokeOutputOptions options)
             => global::Pulumi.Deployment.Instance.Invoke<GetCloudAccountResult>("cpln:index/getCloudAccount:getCloudAccount", InvokeArgs.Empty, options.WithDefaults());
     }
 

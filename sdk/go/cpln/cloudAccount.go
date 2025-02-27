@@ -8,7 +8,6 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
@@ -169,12 +168,6 @@ func (i *CloudAccount) ToCloudAccountOutputWithContext(ctx context.Context) Clou
 	return pulumi.ToOutputWithContext(ctx, i).(CloudAccountOutput)
 }
 
-func (i *CloudAccount) ToOutput(ctx context.Context) pulumix.Output[*CloudAccount] {
-	return pulumix.Output[*CloudAccount]{
-		OutputState: i.ToCloudAccountOutputWithContext(ctx).OutputState,
-	}
-}
-
 // CloudAccountArrayInput is an input type that accepts CloudAccountArray and CloudAccountArrayOutput values.
 // You can construct a concrete instance of `CloudAccountArrayInput` via:
 //
@@ -198,12 +191,6 @@ func (i CloudAccountArray) ToCloudAccountArrayOutput() CloudAccountArrayOutput {
 
 func (i CloudAccountArray) ToCloudAccountArrayOutputWithContext(ctx context.Context) CloudAccountArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(CloudAccountArrayOutput)
-}
-
-func (i CloudAccountArray) ToOutput(ctx context.Context) pulumix.Output[[]*CloudAccount] {
-	return pulumix.Output[[]*CloudAccount]{
-		OutputState: i.ToCloudAccountArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // CloudAccountMapInput is an input type that accepts CloudAccountMap and CloudAccountMapOutput values.
@@ -231,12 +218,6 @@ func (i CloudAccountMap) ToCloudAccountMapOutputWithContext(ctx context.Context)
 	return pulumi.ToOutputWithContext(ctx, i).(CloudAccountMapOutput)
 }
 
-func (i CloudAccountMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*CloudAccount] {
-	return pulumix.Output[map[string]*CloudAccount]{
-		OutputState: i.ToCloudAccountMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type CloudAccountOutput struct{ *pulumi.OutputState }
 
 func (CloudAccountOutput) ElementType() reflect.Type {
@@ -249,12 +230,6 @@ func (o CloudAccountOutput) ToCloudAccountOutput() CloudAccountOutput {
 
 func (o CloudAccountOutput) ToCloudAccountOutputWithContext(ctx context.Context) CloudAccountOutput {
 	return o
-}
-
-func (o CloudAccountOutput) ToOutput(ctx context.Context) pulumix.Output[*CloudAccount] {
-	return pulumix.Output[*CloudAccount]{
-		OutputState: o.OutputState,
-	}
 }
 
 // Contains AWS cloud account configuration.
@@ -323,12 +298,6 @@ func (o CloudAccountArrayOutput) ToCloudAccountArrayOutputWithContext(ctx contex
 	return o
 }
 
-func (o CloudAccountArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*CloudAccount] {
-	return pulumix.Output[[]*CloudAccount]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o CloudAccountArrayOutput) Index(i pulumi.IntInput) CloudAccountOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *CloudAccount {
 		return vs[0].([]*CloudAccount)[vs[1].(int)]
@@ -347,12 +316,6 @@ func (o CloudAccountMapOutput) ToCloudAccountMapOutput() CloudAccountMapOutput {
 
 func (o CloudAccountMapOutput) ToCloudAccountMapOutputWithContext(ctx context.Context) CloudAccountMapOutput {
 	return o
-}
-
-func (o CloudAccountMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*CloudAccount] {
-	return pulumix.Output[map[string]*CloudAccount]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o CloudAccountMapOutput) MapIndex(k pulumi.StringInput) CloudAccountOutput {

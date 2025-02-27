@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class OrgAuthConfig
     {
+        /// <summary>
+        /// List of domains which will auto-provision users when authenticating using SAML.
+        /// </summary>
         public readonly ImmutableArray<string> DomainAutoMembers;
+        /// <summary>
+        /// Enforce SAML only authentication.
+        /// </summary>
         public readonly bool? SamlOnly;
 
         [OutputConstructor]

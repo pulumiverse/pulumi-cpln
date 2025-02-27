@@ -125,9 +125,7 @@ namespace Pulumiverse.Cpln
         /// - **password** (String, Sensitive) Password.
         /// - **username** (String) Username.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
@@ -148,8 +146,6 @@ namespace Pulumiverse.Cpln
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetSecretResult> InvokeAsync(GetSecretArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetSecretResult>("cpln:index/getSecret:getSecret", args ?? new GetSecretArgs(), options.WithDefaults());
@@ -267,9 +263,7 @@ namespace Pulumiverse.Cpln
         /// - **password** (String, Sensitive) Password.
         /// - **username** (String) Username.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
@@ -290,10 +284,146 @@ namespace Pulumiverse.Cpln
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetSecretResult> Invoke(GetSecretInvokeArgs args, InvokeOptions? options = null)
+            => global::Pulumi.Deployment.Instance.Invoke<GetSecretResult>("cpln:index/getSecret:getSecret", args ?? new GetSecretInvokeArgs(), options.WithDefaults());
+
+        /// <summary>
+        /// Use this data source to access information about a [Secret](https://docs.controlplane.com/reference/secret) within Control Plane.
+        /// 
+        /// ## Required
+        /// 
+        /// - **name** (String) Name of the secret.
+        /// 
+        /// ## Outputs
+        /// 
+        /// The following attributes are exported:
+        /// 
+        /// - **cpln_id** (String) The ID, in GUID format, of the secret.
+        /// - **name** (String) Name of the secret.
+        /// - **description** (String) Description of the secret.
+        /// - **tags** (Map of String) Key-value map of resource tags.
+        /// - **self_link** (String) Full link to this resource. Can be referenced by other resources.
+        /// - **secret_link** (String) Output used when linking a secret to an environment variable or volume, in the format: `cpln://secret/SECRET_NAME`.
+        /// - **dictionary_as_envs** (Map of String) If a dictionary secret is defined, this output will be a key-value map in the following format: `key = cpln://secret/SECRET_NAME.key`.
+        /// - **aws** (Block List, Max: 1) (see below) [Reference Page](https://docs.controlplane.com/reference/secret#aws).
+        /// - **azure_connector** (Block List, Max: 1) (see below) [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
+        /// - **azure_sdk** (String, Sensitive) JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
+        /// - **dictionary** (Map of String) List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
+        /// - **docker** (String, Sensitive) JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
+        /// - **ecr** (Block List, Max: 1) (see below).
+        /// - **gcp** (String, Sensitive) JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
+        /// - **keypair** (Block List, Max: 1) (see below) [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
+        /// - **nats_account** (Block List, Max: 1) (see below) [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
+        /// - **opaque** (Block List, Max: 1) (see below) [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
+        /// - **tls** (Block List, Max: 1) (see below) [Reference Page](https://docs.controlplane.com/reference/secret#tls).
+        /// - **userpass** (Block List, Max: 1) (see below) [Reference Page](https://docs.controlplane.com/reference/secret#username).
+        /// 
+        /// &lt;a id="nestedblock--aws"&gt;&lt;/a&gt;
+        /// 
+        /// ### `aws`
+        /// 
+        /// Optional:
+        /// 
+        /// - **access_key** (String, Sensitive) Access Key provided by AWS.
+        /// - **role_arn** (String) Role ARN provided by AWS.
+        /// - **secret_key** (String, Sensitive) Secret Key provided by AWS.
+        /// - **external_id** (String) AWS IAM Role External ID.
+        /// 
+        /// &lt;a id="nestedblock--azure_connector"&gt;&lt;/a&gt;
+        /// 
+        /// ### `azure_connector`
+        /// 
+        /// Optional:
+        /// 
+        /// - **code** (String, Sensitive) Code/Key to authenticate to deployment URL.
+        /// - **url** (String, Sensitive) Deployment URL.
+        /// 
+        /// &lt;a id="nestedblock--ecr"&gt;&lt;/a&gt;
+        /// 
+        /// ### `ecr`
+        /// 
+        /// [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
+        /// 
+        /// Optional:
+        /// 
+        /// - **access_key** (String) Access Key provided by AWS.
+        /// - **repos** (Set of String) List of ECR repositories.
+        /// - **role_arn** (String) Role ARN provided by AWS.
+        /// - **secret_key** (String, Sensitive) Secret Key provided by AWS.
+        /// - **external_id** (String) AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
+        /// 
+        /// &lt;a id="nestedblock--keypair"&gt;&lt;/a&gt;
+        /// 
+        /// ### `keypair`
+        /// 
+        /// Optional:
+        /// 
+        /// - **passphrase** (String, Sensitive) Passphrase for private key.
+        /// - **public_key** (String) Public Key.
+        /// - **secret_key** (String, Sensitive) Secret/Private Key.
+        /// 
+        /// &lt;a id="nestedblock--nats-account"&gt;&lt;/a&gt;
+        /// 
+        /// ### `nats_account`
+        /// 
+        /// Required:
+        /// 
+        /// - **account_id** (String) Account ID.
+        /// - **private_key** (String) Private Key.
+        /// 
+        /// &lt;a id="nestedblock--opaque"&gt;&lt;/a&gt;
+        /// 
+        /// ### `opaque`
+        /// 
+        /// Optional:
+        /// 
+        /// - **encoding** (String) Available encodings: `plain`, `base64`. Default: `plain`.
+        /// - **payload** (String, Sensitive) Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.
+        /// 
+        /// &lt;a id="nestedblock--tls"&gt;&lt;/a&gt;
+        /// 
+        /// ### `tls`
+        /// 
+        /// Optional:
+        /// 
+        /// - **cert** (String) Public Certificate.
+        /// - **chain** (String) Chain Certificate.
+        /// - **key** (String, Sensitive) Private Certificate.
+        /// 
+        /// &lt;a id="nestedblock--userpass"&gt;&lt;/a&gt;
+        /// 
+        /// ### `userpass`
+        /// 
+        /// Optional:
+        /// 
+        /// - **encoding** (String) Available encodings: `plain`, `base64`. Default: `plain`.
+        /// - **password** (String, Sensitive) Password.
+        /// - **username** (String) Username.
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```csharp
+        /// using System.Collections.Generic;
+        /// using System.Linq;
+        /// using Pulumi;
+        /// using Cpln = Pulumi.Cpln;
+        /// 
+        /// return await Deployment.RunAsync(() =&gt; 
+        /// {
+        ///     var example = Cpln.GetSecret.Invoke(new()
+        ///     {
+        ///         Name = "example-secret-opaque",
+        ///     });
+        /// 
+        ///     return new Dictionary&lt;string, object?&gt;
+        ///     {
+        ///         ["example-secret-payload"] = example.Apply(getSecretResult =&gt; getSecretResult.Opaque?.Payload),
+        ///     };
+        /// });
+        /// ```
+        /// </summary>
+        public static Output<GetSecretResult> Invoke(GetSecretInvokeArgs args, InvokeOutputOptions options)
             => global::Pulumi.Deployment.Instance.Invoke<GetSecretResult>("cpln:index/getSecret:getSecret", args ?? new GetSecretInvokeArgs(), options.WithDefaults());
     }
 
@@ -476,7 +606,7 @@ namespace Pulumiverse.Cpln
         public readonly string CplnId;
         public readonly string? Description;
         public readonly ImmutableDictionary<string, string>? Dictionary;
-        public readonly ImmutableDictionary<string, object> DictionaryAsEnvs;
+        public readonly ImmutableDictionary<string, string> DictionaryAsEnvs;
         public readonly string? Docker;
         public readonly Outputs.GetSecretEcrResult? Ecr;
         public readonly string? Gcp;
@@ -508,7 +638,7 @@ namespace Pulumiverse.Cpln
 
             ImmutableDictionary<string, string>? dictionary,
 
-            ImmutableDictionary<string, object> dictionaryAsEnvs,
+            ImmutableDictionary<string, string> dictionaryAsEnvs,
 
             string? docker,
 

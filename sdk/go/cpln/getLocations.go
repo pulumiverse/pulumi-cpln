@@ -8,7 +8,6 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
@@ -62,7 +61,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			locationsLocations, err := cpln.GetLocations(ctx, nil, nil)
+//			locationsLocations, err := cpln.GetLocations(ctx, map[string]interface{}{}, nil)
 //			if err != nil {
 //				return err
 //			}
@@ -90,13 +89,9 @@ type GetLocationsResult struct {
 }
 
 func GetLocationsOutput(ctx *pulumi.Context, opts ...pulumi.InvokeOption) GetLocationsResultOutput {
-	return pulumi.ToOutput(0).ApplyT(func(int) (GetLocationsResult, error) {
-		r, err := GetLocations(ctx, opts...)
-		var s GetLocationsResult
-		if r != nil {
-			s = *r
-		}
-		return s, err
+	return pulumi.ToOutput(0).ApplyT(func(int) (GetLocationsResultOutput, error) {
+		options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+		return ctx.InvokeOutput("cpln:index/getLocations:getLocations", nil, GetLocationsResultOutput{}, options).(GetLocationsResultOutput), nil
 	}).(GetLocationsResultOutput)
 }
 
@@ -113,12 +108,6 @@ func (o GetLocationsResultOutput) ToGetLocationsResultOutput() GetLocationsResul
 
 func (o GetLocationsResultOutput) ToGetLocationsResultOutputWithContext(ctx context.Context) GetLocationsResultOutput {
 	return o
-}
-
-func (o GetLocationsResultOutput) ToOutput(ctx context.Context) pulumix.Output[GetLocationsResult] {
-	return pulumix.Output[GetLocationsResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The provider-assigned unique ID for this managed resource.

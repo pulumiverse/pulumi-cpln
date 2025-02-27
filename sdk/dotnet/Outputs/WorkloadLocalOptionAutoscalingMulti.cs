@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadLocalOptionAutoscalingMulti
     {
+        /// <summary>
+        /// Valid values: `cpu` or `memory`.
+        /// </summary>
         public readonly string? Metric;
+        /// <summary>
+        /// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+        /// </summary>
         public readonly int? Target;
 
         [OutputConstructor]

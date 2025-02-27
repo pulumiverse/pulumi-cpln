@@ -14,8 +14,17 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class GvcOtelTracing
     {
+        /// <summary>
+        /// Key-value map of custom tags.
+        /// </summary>
         public readonly ImmutableDictionary<string, string>? CustomTags;
+        /// <summary>
+        /// Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
+        /// </summary>
         public readonly string Endpoint;
+        /// <summary>
+        /// Determines what percentage of requests should be traced.
+        /// </summary>
         public readonly double Sampling;
 
         [OutputConstructor]

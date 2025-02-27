@@ -14,10 +14,25 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class SecretEcr
     {
+        /// <summary>
+        /// Access Key provided by AWS.
+        /// </summary>
         public readonly string AccessKey;
+        /// <summary>
+        /// AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
+        /// </summary>
         public readonly string? ExternalId;
+        /// <summary>
+        /// List of ECR repositories.
+        /// </summary>
         public readonly ImmutableArray<string> Repos;
+        /// <summary>
+        /// Role ARN provided by AWS.
+        /// </summary>
         public readonly string? RoleArn;
+        /// <summary>
+        /// Secret Key provided by AWS.
+        /// </summary>
         public readonly string SecretKey;
 
         [OutputConstructor]

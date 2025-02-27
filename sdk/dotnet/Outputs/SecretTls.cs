@@ -14,8 +14,17 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class SecretTls
     {
+        /// <summary>
+        /// Public Certificate.
+        /// </summary>
         public readonly string Cert;
+        /// <summary>
+        /// Chain Certificate.
+        /// </summary>
         public readonly string? Chain;
+        /// <summary>
+        /// Private Certificate.
+        /// </summary>
         public readonly string Key;
 
         [OutputConstructor]

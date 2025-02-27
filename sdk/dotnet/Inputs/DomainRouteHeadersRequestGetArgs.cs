@@ -18,6 +18,10 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("set")]
         private InputMap<string>? _set;
+
+        /// <summary>
+        /// Sets or overrides headers to all http requests for this route.
+        /// </summary>
         public InputMap<string> Set
         {
             get => _set ?? (_set = new InputMap<string>());

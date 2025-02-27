@@ -8,7 +8,6 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
@@ -105,15 +104,11 @@ type LookupLocationResult struct {
 }
 
 func LookupLocationOutput(ctx *pulumi.Context, args LookupLocationOutputArgs, opts ...pulumi.InvokeOption) LookupLocationResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupLocationResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (LookupLocationResultOutput, error) {
 			args := v.(LookupLocationArgs)
-			r, err := LookupLocation(ctx, &args, opts...)
-			var s LookupLocationResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("cpln:index/getLocation:getLocation", args, LookupLocationResultOutput{}, options).(LookupLocationResultOutput), nil
 		}).(LookupLocationResultOutput)
 }
 
@@ -139,12 +134,6 @@ func (o LookupLocationResultOutput) ToLookupLocationResultOutput() LookupLocatio
 
 func (o LookupLocationResultOutput) ToLookupLocationResultOutputWithContext(ctx context.Context) LookupLocationResultOutput {
 	return o
-}
-
-func (o LookupLocationResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupLocationResult] {
-	return pulumix.Output[LookupLocationResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o LookupLocationResultOutput) CloudProvider() pulumi.StringOutput {

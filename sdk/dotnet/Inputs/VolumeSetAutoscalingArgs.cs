@@ -13,12 +13,21 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class VolumeSetAutoscalingArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The maximum size in GB for a volume in this set. A volume cannot grow to be bigger than this value. Minimum value: `10`.
+        /// </summary>
         [Input("maxCapacity")]
         public Input<int>? MaxCapacity { get; set; }
 
+        /// <summary>
+        /// The guaranteed free space on the volume as a percentage of the volume's total size. Control Plane will try to maintain at least that many percent free by scaling up the total size. Minimum percentage: `1`. Maximum Percentage: `100`.
+        /// </summary>
         [Input("minFreePercentage")]
         public Input<int>? MinFreePercentage { get; set; }
 
+        /// <summary>
+        /// When scaling is necessary, then `new_capacity = current_capacity * storageScalingFactor`. Minimum value: `1.1`.
+        /// </summary>
         [Input("scalingFactor")]
         public Input<double>? ScalingFactor { get; set; }
 

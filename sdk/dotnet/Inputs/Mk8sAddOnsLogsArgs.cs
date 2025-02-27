@@ -16,6 +16,9 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("_sentinel")]
         public Input<bool>? _sentinel { get; set; }
 
+        /// <summary>
+        /// Collect k8s audit log as log events.
+        /// </summary>
         [Input("auditEnabled")]
         public Input<bool>? AuditEnabled { get; set; }
 

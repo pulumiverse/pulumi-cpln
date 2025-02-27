@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class GroupIdentityMatcher
     {
+        /// <summary>
+        /// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged in with SAML providers.
+        /// </summary>
         public readonly string Expression;
+        /// <summary>
+        /// Language of the expression. Either `jmespath` or `javascript`. Default: `jmespath`.
+        /// </summary>
         public readonly string? Language;
 
         [OutputConstructor]

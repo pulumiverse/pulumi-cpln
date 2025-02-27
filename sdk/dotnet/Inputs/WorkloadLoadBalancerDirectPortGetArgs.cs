@@ -22,6 +22,9 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("protocol", required: true)]
         public Input<string> Protocol { get; set; } = null!;
 
+        /// <summary>
+        /// Override the default `https` url scheme.
+        /// </summary>
         [Input("scheme")]
         public Input<string>? Scheme { get; set; }
 

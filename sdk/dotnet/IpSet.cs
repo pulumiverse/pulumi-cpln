@@ -65,35 +65,6 @@ namespace Pulumiverse.Cpln
     /// - **created** (String)
     /// 
     /// ## Example Usage
-    /// 
-    /// ```csharp
-    /// using System.Collections.Generic;
-    /// using System.Linq;
-    /// using Pulumi;
-    /// using Cpln = Pulumiverse.Cpln;
-    /// 
-    /// return await Deployment.RunAsync(() =&gt; 
-    /// {
-    ///     var @new = new Cpln.IpSet("new", new()
-    ///     {
-    ///         Description = "example",
-    ///         Link = "SELF_LINK_TO_WORKLOAD",
-    ///         Locations = new[]
-    ///         {
-    ///             new Cpln.Inputs.IpSetLocationArgs
-    ///             {
-    ///                 Name = "SELF_LINK_TO_LOCATION",
-    ///                 RetentionPolicy = "keep",
-    ///             },
-    ///         },
-    ///         Tags = 
-    ///         {
-    ///             { "terraform_generated", "true" },
-    ///         },
-    ///     });
-    /// 
-    /// });
-    /// ```
     /// </summary>
     [CplnResourceType("cpln:index/ipSet:IpSet")]
     public partial class IpSet : global::Pulumi.CustomResource

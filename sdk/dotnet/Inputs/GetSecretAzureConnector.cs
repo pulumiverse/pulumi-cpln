@@ -15,6 +15,10 @@ namespace Pulumiverse.Cpln.Inputs
     {
         [Input("code", required: true)]
         private string? _code;
+
+        /// <summary>
+        /// Code/Key to authenticate to deployment URL.
+        /// </summary>
         public string? Code
         {
             get => _code;
@@ -23,6 +27,10 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("url", required: true)]
         private string? _url;
+
+        /// <summary>
+        /// Deployment URL.
+        /// </summary>
         public string? Url
         {
             get => _url;

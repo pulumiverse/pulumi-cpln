@@ -15,6 +15,10 @@ namespace Pulumiverse.Cpln.Inputs
     {
         [Input("allows")]
         private InputList<string>? _allows;
+
+        /// <summary>
+        /// List of allow subjects.
+        /// </summary>
         public InputList<string> Allows
         {
             get => _allows ?? (_allows = new InputList<string>());
@@ -23,6 +27,10 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("denies")]
         private InputList<string>? _denies;
+
+        /// <summary>
+        /// List of deny subjects.
+        /// </summary>
         public InputList<string> Denies
         {
             get => _denies ?? (_denies = new InputList<string>());

@@ -14,7 +14,13 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadContainerPort
     {
+        /// <summary>
+        /// Port to expose.
+        /// </summary>
         public readonly int Number;
+        /// <summary>
+        /// Protocol. Choice of: `http`, `http2`, `tcp`, or `grpc`.
+        /// </summary>
         public readonly string? Protocol;
 
         [OutputConstructor]

@@ -13,23 +13,39 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadStatusGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Canonical endpoint for the workload.
+        /// </summary>
         [Input("canonicalEndpoint")]
         public Input<string>? CanonicalEndpoint { get; set; }
 
+        /// <summary>
+        /// Current amount of replicas deployed.
+        /// </summary>
         [Input("currentReplicaCount")]
         public Input<int>? CurrentReplicaCount { get; set; }
 
+        /// <summary>
+        /// Endpoint for the workload.
+        /// </summary>
         [Input("endpoint")]
         public Input<string>? Endpoint { get; set; }
 
         [Input("healthChecks")]
         private InputList<Inputs.WorkloadStatusHealthCheckGetArgs>? _healthChecks;
+
+        /// <summary>
+        /// Current health status.
+        /// </summary>
         public InputList<Inputs.WorkloadStatusHealthCheckGetArgs> HealthChecks
         {
             get => _healthChecks ?? (_healthChecks = new InputList<Inputs.WorkloadStatusHealthCheckGetArgs>());
             set => _healthChecks = value;
         }
 
+        /// <summary>
+        /// Internal hostname for the workload. Used for service-to-service requests.
+        /// </summary>
         [Input("internalName")]
         public Input<string>? InternalName { get; set; }
 
@@ -41,11 +57,18 @@ namespace Pulumiverse.Cpln.Inputs
             set => _loadBalancers = value;
         }
 
+        /// <summary>
+        /// ID of the parent object.
+        /// </summary>
         [Input("parentId")]
         public Input<string>? ParentId { get; set; }
 
         [Input("resolvedImages")]
         private InputList<Inputs.WorkloadStatusResolvedImageGetArgs>? _resolvedImages;
+
+        /// <summary>
+        /// Resolved images for workloads with dynamic tags enabled.
+        /// </summary>
         public InputList<Inputs.WorkloadStatusResolvedImageGetArgs> ResolvedImages
         {
             get => _resolvedImages ?? (_resolvedImages = new InputList<Inputs.WorkloadStatusResolvedImageGetArgs>());

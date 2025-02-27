@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class IdentityNativeNetworkResourceGcpServiceConnectArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Target service name.
+        /// </summary>
         [Input("targetService", required: true)]
         public Input<string> TargetService { get; set; } = null!;
 

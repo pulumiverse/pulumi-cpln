@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -49,81 +54,36 @@ class SecretArgs:
         :param pulumi.Input['SecretTlsArgs'] tls: [Reference Page](https://docs.controlplane.com/reference/secret#tls).
         :param pulumi.Input['SecretUserpassArgs'] userpass: [Reference Page](https://docs.controlplane.com/reference/secret#username).
         """
-        SecretArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            aws=aws,
-            azure_connector=azure_connector,
-            azure_sdk=azure_sdk,
-            description=description,
-            dictionary=dictionary,
-            docker=docker,
-            ecr=ecr,
-            gcp=gcp,
-            keypair=keypair,
-            name=name,
-            nats_account=nats_account,
-            opaque=opaque,
-            tags=tags,
-            tls=tls,
-            userpass=userpass,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             aws: Optional[pulumi.Input['SecretAwsArgs']] = None,
-             azure_connector: Optional[pulumi.Input['SecretAzureConnectorArgs']] = None,
-             azure_sdk: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             dictionary: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             docker: Optional[pulumi.Input[str]] = None,
-             ecr: Optional[pulumi.Input['SecretEcrArgs']] = None,
-             gcp: Optional[pulumi.Input[str]] = None,
-             keypair: Optional[pulumi.Input['SecretKeypairArgs']] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             nats_account: Optional[pulumi.Input['SecretNatsAccountArgs']] = None,
-             opaque: Optional[pulumi.Input['SecretOpaqueArgs']] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             tls: Optional[pulumi.Input['SecretTlsArgs']] = None,
-             userpass: Optional[pulumi.Input['SecretUserpassArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'azureConnector' in kwargs:
-            azure_connector = kwargs['azureConnector']
-        if 'azureSdk' in kwargs:
-            azure_sdk = kwargs['azureSdk']
-        if 'natsAccount' in kwargs:
-            nats_account = kwargs['natsAccount']
-
         if aws is not None:
-            _setter("aws", aws)
+            pulumi.set(__self__, "aws", aws)
         if azure_connector is not None:
-            _setter("azure_connector", azure_connector)
+            pulumi.set(__self__, "azure_connector", azure_connector)
         if azure_sdk is not None:
-            _setter("azure_sdk", azure_sdk)
+            pulumi.set(__self__, "azure_sdk", azure_sdk)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if dictionary is not None:
-            _setter("dictionary", dictionary)
+            pulumi.set(__self__, "dictionary", dictionary)
         if docker is not None:
-            _setter("docker", docker)
+            pulumi.set(__self__, "docker", docker)
         if ecr is not None:
-            _setter("ecr", ecr)
+            pulumi.set(__self__, "ecr", ecr)
         if gcp is not None:
-            _setter("gcp", gcp)
+            pulumi.set(__self__, "gcp", gcp)
         if keypair is not None:
-            _setter("keypair", keypair)
+            pulumi.set(__self__, "keypair", keypair)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if nats_account is not None:
-            _setter("nats_account", nats_account)
+            pulumi.set(__self__, "nats_account", nats_account)
         if opaque is not None:
-            _setter("opaque", opaque)
+            pulumi.set(__self__, "opaque", opaque)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
         if tls is not None:
-            _setter("tls", tls)
+            pulumi.set(__self__, "tls", tls)
         if userpass is not None:
-            _setter("userpass", userpass)
+            pulumi.set(__self__, "userpass", userpass)
 
     @property
     @pulumi.getter
@@ -315,7 +275,7 @@ class _SecretState:
                  cpln_id: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  dictionary: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 dictionary_as_envs: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 dictionary_as_envs: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  docker: Optional[pulumi.Input[str]] = None,
                  ecr: Optional[pulumi.Input['SecretEcrArgs']] = None,
                  gcp: Optional[pulumi.Input[str]] = None,
@@ -336,7 +296,7 @@ class _SecretState:
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Secret.
         :param pulumi.Input[str] description: Description of the Secret.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] dictionary: List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
-        :param pulumi.Input[Mapping[str, Any]] dictionary_as_envs: If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] dictionary_as_envs: If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
                cpln://secret/SECRET_NAME.key`.
         :param pulumi.Input[str] docker: JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
         :param pulumi.Input['SecretEcrArgs'] ecr: [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
@@ -351,105 +311,44 @@ class _SecretState:
         :param pulumi.Input['SecretTlsArgs'] tls: [Reference Page](https://docs.controlplane.com/reference/secret#tls).
         :param pulumi.Input['SecretUserpassArgs'] userpass: [Reference Page](https://docs.controlplane.com/reference/secret#username).
         """
-        _SecretState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            aws=aws,
-            azure_connector=azure_connector,
-            azure_sdk=azure_sdk,
-            cpln_id=cpln_id,
-            description=description,
-            dictionary=dictionary,
-            dictionary_as_envs=dictionary_as_envs,
-            docker=docker,
-            ecr=ecr,
-            gcp=gcp,
-            keypair=keypair,
-            name=name,
-            nats_account=nats_account,
-            opaque=opaque,
-            secret_link=secret_link,
-            self_link=self_link,
-            tags=tags,
-            tls=tls,
-            userpass=userpass,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             aws: Optional[pulumi.Input['SecretAwsArgs']] = None,
-             azure_connector: Optional[pulumi.Input['SecretAzureConnectorArgs']] = None,
-             azure_sdk: Optional[pulumi.Input[str]] = None,
-             cpln_id: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             dictionary: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             dictionary_as_envs: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-             docker: Optional[pulumi.Input[str]] = None,
-             ecr: Optional[pulumi.Input['SecretEcrArgs']] = None,
-             gcp: Optional[pulumi.Input[str]] = None,
-             keypair: Optional[pulumi.Input['SecretKeypairArgs']] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             nats_account: Optional[pulumi.Input['SecretNatsAccountArgs']] = None,
-             opaque: Optional[pulumi.Input['SecretOpaqueArgs']] = None,
-             secret_link: Optional[pulumi.Input[str]] = None,
-             self_link: Optional[pulumi.Input[str]] = None,
-             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-             tls: Optional[pulumi.Input['SecretTlsArgs']] = None,
-             userpass: Optional[pulumi.Input['SecretUserpassArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'azureConnector' in kwargs:
-            azure_connector = kwargs['azureConnector']
-        if 'azureSdk' in kwargs:
-            azure_sdk = kwargs['azureSdk']
-        if 'cplnId' in kwargs:
-            cpln_id = kwargs['cplnId']
-        if 'dictionaryAsEnvs' in kwargs:
-            dictionary_as_envs = kwargs['dictionaryAsEnvs']
-        if 'natsAccount' in kwargs:
-            nats_account = kwargs['natsAccount']
-        if 'secretLink' in kwargs:
-            secret_link = kwargs['secretLink']
-        if 'selfLink' in kwargs:
-            self_link = kwargs['selfLink']
-
         if aws is not None:
-            _setter("aws", aws)
+            pulumi.set(__self__, "aws", aws)
         if azure_connector is not None:
-            _setter("azure_connector", azure_connector)
+            pulumi.set(__self__, "azure_connector", azure_connector)
         if azure_sdk is not None:
-            _setter("azure_sdk", azure_sdk)
+            pulumi.set(__self__, "azure_sdk", azure_sdk)
         if cpln_id is not None:
-            _setter("cpln_id", cpln_id)
+            pulumi.set(__self__, "cpln_id", cpln_id)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if dictionary is not None:
-            _setter("dictionary", dictionary)
+            pulumi.set(__self__, "dictionary", dictionary)
         if dictionary_as_envs is not None:
-            _setter("dictionary_as_envs", dictionary_as_envs)
+            pulumi.set(__self__, "dictionary_as_envs", dictionary_as_envs)
         if docker is not None:
-            _setter("docker", docker)
+            pulumi.set(__self__, "docker", docker)
         if ecr is not None:
-            _setter("ecr", ecr)
+            pulumi.set(__self__, "ecr", ecr)
         if gcp is not None:
-            _setter("gcp", gcp)
+            pulumi.set(__self__, "gcp", gcp)
         if keypair is not None:
-            _setter("keypair", keypair)
+            pulumi.set(__self__, "keypair", keypair)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if nats_account is not None:
-            _setter("nats_account", nats_account)
+            pulumi.set(__self__, "nats_account", nats_account)
         if opaque is not None:
-            _setter("opaque", opaque)
+            pulumi.set(__self__, "opaque", opaque)
         if secret_link is not None:
-            _setter("secret_link", secret_link)
+            pulumi.set(__self__, "secret_link", secret_link)
         if self_link is not None:
-            _setter("self_link", self_link)
+            pulumi.set(__self__, "self_link", self_link)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
         if tls is not None:
-            _setter("tls", tls)
+            pulumi.set(__self__, "tls", tls)
         if userpass is not None:
-            _setter("userpass", userpass)
+            pulumi.set(__self__, "userpass", userpass)
 
     @property
     @pulumi.getter
@@ -525,7 +424,7 @@ class _SecretState:
 
     @property
     @pulumi.getter(name="dictionaryAsEnvs")
-    def dictionary_as_envs(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def dictionary_as_envs(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
         cpln://secret/SECRET_NAME.key`.
@@ -533,7 +432,7 @@ class _SecretState:
         return pulumi.get(self, "dictionary_as_envs")
 
     @dictionary_as_envs.setter
-    def dictionary_as_envs(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def dictionary_as_envs(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "dictionary_as_envs", value)
 
     @property
@@ -686,41 +585,41 @@ class Secret(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 aws: Optional[pulumi.Input[pulumi.InputType['SecretAwsArgs']]] = None,
-                 azure_connector: Optional[pulumi.Input[pulumi.InputType['SecretAzureConnectorArgs']]] = None,
+                 aws: Optional[pulumi.Input[Union['SecretAwsArgs', 'SecretAwsArgsDict']]] = None,
+                 azure_connector: Optional[pulumi.Input[Union['SecretAzureConnectorArgs', 'SecretAzureConnectorArgsDict']]] = None,
                  azure_sdk: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  dictionary: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  docker: Optional[pulumi.Input[str]] = None,
-                 ecr: Optional[pulumi.Input[pulumi.InputType['SecretEcrArgs']]] = None,
+                 ecr: Optional[pulumi.Input[Union['SecretEcrArgs', 'SecretEcrArgsDict']]] = None,
                  gcp: Optional[pulumi.Input[str]] = None,
-                 keypair: Optional[pulumi.Input[pulumi.InputType['SecretKeypairArgs']]] = None,
+                 keypair: Optional[pulumi.Input[Union['SecretKeypairArgs', 'SecretKeypairArgsDict']]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 nats_account: Optional[pulumi.Input[pulumi.InputType['SecretNatsAccountArgs']]] = None,
-                 opaque: Optional[pulumi.Input[pulumi.InputType['SecretOpaqueArgs']]] = None,
+                 nats_account: Optional[pulumi.Input[Union['SecretNatsAccountArgs', 'SecretNatsAccountArgsDict']]] = None,
+                 opaque: Optional[pulumi.Input[Union['SecretOpaqueArgs', 'SecretOpaqueArgsDict']]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 tls: Optional[pulumi.Input[pulumi.InputType['SecretTlsArgs']]] = None,
-                 userpass: Optional[pulumi.Input[pulumi.InputType['SecretUserpassArgs']]] = None,
+                 tls: Optional[pulumi.Input[Union['SecretTlsArgs', 'SecretTlsArgsDict']]] = None,
+                 userpass: Optional[pulumi.Input[Union['SecretUserpassArgs', 'SecretUserpassArgsDict']]] = None,
                  __props__=None):
         """
         Create a Secret resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[pulumi.InputType['SecretAwsArgs']] aws: [Reference Page](https://docs.controlplane.com/reference/secret#aws).
-        :param pulumi.Input[pulumi.InputType['SecretAzureConnectorArgs']] azure_connector: [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
+        :param pulumi.Input[Union['SecretAwsArgs', 'SecretAwsArgsDict']] aws: [Reference Page](https://docs.controlplane.com/reference/secret#aws).
+        :param pulumi.Input[Union['SecretAzureConnectorArgs', 'SecretAzureConnectorArgsDict']] azure_connector: [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
         :param pulumi.Input[str] azure_sdk: JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
         :param pulumi.Input[str] description: Description of the Secret.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] dictionary: List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
         :param pulumi.Input[str] docker: JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
-        :param pulumi.Input[pulumi.InputType['SecretEcrArgs']] ecr: [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
+        :param pulumi.Input[Union['SecretEcrArgs', 'SecretEcrArgsDict']] ecr: [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
         :param pulumi.Input[str] gcp: JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
-        :param pulumi.Input[pulumi.InputType['SecretKeypairArgs']] keypair: [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
+        :param pulumi.Input[Union['SecretKeypairArgs', 'SecretKeypairArgsDict']] keypair: [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
         :param pulumi.Input[str] name: Name of the secret.
-        :param pulumi.Input[pulumi.InputType['SecretNatsAccountArgs']] nats_account: [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
-        :param pulumi.Input[pulumi.InputType['SecretOpaqueArgs']] opaque: [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
+        :param pulumi.Input[Union['SecretNatsAccountArgs', 'SecretNatsAccountArgsDict']] nats_account: [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
+        :param pulumi.Input[Union['SecretOpaqueArgs', 'SecretOpaqueArgsDict']] opaque: [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
-        :param pulumi.Input[pulumi.InputType['SecretTlsArgs']] tls: [Reference Page](https://docs.controlplane.com/reference/secret#tls).
-        :param pulumi.Input[pulumi.InputType['SecretUserpassArgs']] userpass: [Reference Page](https://docs.controlplane.com/reference/secret#username).
+        :param pulumi.Input[Union['SecretTlsArgs', 'SecretTlsArgsDict']] tls: [Reference Page](https://docs.controlplane.com/reference/secret#tls).
+        :param pulumi.Input[Union['SecretUserpassArgs', 'SecretUserpassArgsDict']] userpass: [Reference Page](https://docs.controlplane.com/reference/secret#username).
         """
         ...
     @overload
@@ -740,30 +639,26 @@ class Secret(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            SecretArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 aws: Optional[pulumi.Input[pulumi.InputType['SecretAwsArgs']]] = None,
-                 azure_connector: Optional[pulumi.Input[pulumi.InputType['SecretAzureConnectorArgs']]] = None,
+                 aws: Optional[pulumi.Input[Union['SecretAwsArgs', 'SecretAwsArgsDict']]] = None,
+                 azure_connector: Optional[pulumi.Input[Union['SecretAzureConnectorArgs', 'SecretAzureConnectorArgsDict']]] = None,
                  azure_sdk: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
                  dictionary: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  docker: Optional[pulumi.Input[str]] = None,
-                 ecr: Optional[pulumi.Input[pulumi.InputType['SecretEcrArgs']]] = None,
+                 ecr: Optional[pulumi.Input[Union['SecretEcrArgs', 'SecretEcrArgsDict']]] = None,
                  gcp: Optional[pulumi.Input[str]] = None,
-                 keypair: Optional[pulumi.Input[pulumi.InputType['SecretKeypairArgs']]] = None,
+                 keypair: Optional[pulumi.Input[Union['SecretKeypairArgs', 'SecretKeypairArgsDict']]] = None,
                  name: Optional[pulumi.Input[str]] = None,
-                 nats_account: Optional[pulumi.Input[pulumi.InputType['SecretNatsAccountArgs']]] = None,
-                 opaque: Optional[pulumi.Input[pulumi.InputType['SecretOpaqueArgs']]] = None,
+                 nats_account: Optional[pulumi.Input[Union['SecretNatsAccountArgs', 'SecretNatsAccountArgsDict']]] = None,
+                 opaque: Optional[pulumi.Input[Union['SecretOpaqueArgs', 'SecretOpaqueArgsDict']]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-                 tls: Optional[pulumi.Input[pulumi.InputType['SecretTlsArgs']]] = None,
-                 userpass: Optional[pulumi.Input[pulumi.InputType['SecretUserpassArgs']]] = None,
+                 tls: Optional[pulumi.Input[Union['SecretTlsArgs', 'SecretTlsArgsDict']]] = None,
+                 userpass: Optional[pulumi.Input[Union['SecretUserpassArgs', 'SecretUserpassArgsDict']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -773,60 +668,20 @@ class Secret(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = SecretArgs.__new__(SecretArgs)
 
-            if aws is not None and not isinstance(aws, SecretAwsArgs):
-                aws = aws or {}
-                def _setter(key, value):
-                    aws[key] = value
-                SecretAwsArgs._configure(_setter, **aws)
             __props__.__dict__["aws"] = aws
-            if azure_connector is not None and not isinstance(azure_connector, SecretAzureConnectorArgs):
-                azure_connector = azure_connector or {}
-                def _setter(key, value):
-                    azure_connector[key] = value
-                SecretAzureConnectorArgs._configure(_setter, **azure_connector)
             __props__.__dict__["azure_connector"] = azure_connector
             __props__.__dict__["azure_sdk"] = None if azure_sdk is None else pulumi.Output.secret(azure_sdk)
             __props__.__dict__["description"] = description
             __props__.__dict__["dictionary"] = dictionary
             __props__.__dict__["docker"] = None if docker is None else pulumi.Output.secret(docker)
-            if ecr is not None and not isinstance(ecr, SecretEcrArgs):
-                ecr = ecr or {}
-                def _setter(key, value):
-                    ecr[key] = value
-                SecretEcrArgs._configure(_setter, **ecr)
             __props__.__dict__["ecr"] = ecr
             __props__.__dict__["gcp"] = None if gcp is None else pulumi.Output.secret(gcp)
-            if keypair is not None and not isinstance(keypair, SecretKeypairArgs):
-                keypair = keypair or {}
-                def _setter(key, value):
-                    keypair[key] = value
-                SecretKeypairArgs._configure(_setter, **keypair)
             __props__.__dict__["keypair"] = keypair
             __props__.__dict__["name"] = name
-            if nats_account is not None and not isinstance(nats_account, SecretNatsAccountArgs):
-                nats_account = nats_account or {}
-                def _setter(key, value):
-                    nats_account[key] = value
-                SecretNatsAccountArgs._configure(_setter, **nats_account)
             __props__.__dict__["nats_account"] = nats_account
-            if opaque is not None and not isinstance(opaque, SecretOpaqueArgs):
-                opaque = opaque or {}
-                def _setter(key, value):
-                    opaque[key] = value
-                SecretOpaqueArgs._configure(_setter, **opaque)
             __props__.__dict__["opaque"] = opaque
             __props__.__dict__["tags"] = tags
-            if tls is not None and not isinstance(tls, SecretTlsArgs):
-                tls = tls or {}
-                def _setter(key, value):
-                    tls[key] = value
-                SecretTlsArgs._configure(_setter, **tls)
             __props__.__dict__["tls"] = tls
-            if userpass is not None and not isinstance(userpass, SecretUserpassArgs):
-                userpass = userpass or {}
-                def _setter(key, value):
-                    userpass[key] = value
-                SecretUserpassArgs._configure(_setter, **userpass)
             __props__.__dict__["userpass"] = userpass
             __props__.__dict__["cpln_id"] = None
             __props__.__dict__["dictionary_as_envs"] = None
@@ -844,25 +699,25 @@ class Secret(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            aws: Optional[pulumi.Input[pulumi.InputType['SecretAwsArgs']]] = None,
-            azure_connector: Optional[pulumi.Input[pulumi.InputType['SecretAzureConnectorArgs']]] = None,
+            aws: Optional[pulumi.Input[Union['SecretAwsArgs', 'SecretAwsArgsDict']]] = None,
+            azure_connector: Optional[pulumi.Input[Union['SecretAzureConnectorArgs', 'SecretAzureConnectorArgsDict']]] = None,
             azure_sdk: Optional[pulumi.Input[str]] = None,
             cpln_id: Optional[pulumi.Input[str]] = None,
             description: Optional[pulumi.Input[str]] = None,
             dictionary: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-            dictionary_as_envs: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            dictionary_as_envs: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             docker: Optional[pulumi.Input[str]] = None,
-            ecr: Optional[pulumi.Input[pulumi.InputType['SecretEcrArgs']]] = None,
+            ecr: Optional[pulumi.Input[Union['SecretEcrArgs', 'SecretEcrArgsDict']]] = None,
             gcp: Optional[pulumi.Input[str]] = None,
-            keypair: Optional[pulumi.Input[pulumi.InputType['SecretKeypairArgs']]] = None,
+            keypair: Optional[pulumi.Input[Union['SecretKeypairArgs', 'SecretKeypairArgsDict']]] = None,
             name: Optional[pulumi.Input[str]] = None,
-            nats_account: Optional[pulumi.Input[pulumi.InputType['SecretNatsAccountArgs']]] = None,
-            opaque: Optional[pulumi.Input[pulumi.InputType['SecretOpaqueArgs']]] = None,
+            nats_account: Optional[pulumi.Input[Union['SecretNatsAccountArgs', 'SecretNatsAccountArgsDict']]] = None,
+            opaque: Optional[pulumi.Input[Union['SecretOpaqueArgs', 'SecretOpaqueArgsDict']]] = None,
             secret_link: Optional[pulumi.Input[str]] = None,
             self_link: Optional[pulumi.Input[str]] = None,
             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
-            tls: Optional[pulumi.Input[pulumi.InputType['SecretTlsArgs']]] = None,
-            userpass: Optional[pulumi.Input[pulumi.InputType['SecretUserpassArgs']]] = None) -> 'Secret':
+            tls: Optional[pulumi.Input[Union['SecretTlsArgs', 'SecretTlsArgsDict']]] = None,
+            userpass: Optional[pulumi.Input[Union['SecretUserpassArgs', 'SecretUserpassArgsDict']]] = None) -> 'Secret':
         """
         Get an existing Secret resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -870,26 +725,26 @@ class Secret(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[pulumi.InputType['SecretAwsArgs']] aws: [Reference Page](https://docs.controlplane.com/reference/secret#aws).
-        :param pulumi.Input[pulumi.InputType['SecretAzureConnectorArgs']] azure_connector: [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
+        :param pulumi.Input[Union['SecretAwsArgs', 'SecretAwsArgsDict']] aws: [Reference Page](https://docs.controlplane.com/reference/secret#aws).
+        :param pulumi.Input[Union['SecretAzureConnectorArgs', 'SecretAzureConnectorArgsDict']] azure_connector: [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
         :param pulumi.Input[str] azure_sdk: JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Secret.
         :param pulumi.Input[str] description: Description of the Secret.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] dictionary: List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
-        :param pulumi.Input[Mapping[str, Any]] dictionary_as_envs: If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] dictionary_as_envs: If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
                cpln://secret/SECRET_NAME.key`.
         :param pulumi.Input[str] docker: JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
-        :param pulumi.Input[pulumi.InputType['SecretEcrArgs']] ecr: [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
+        :param pulumi.Input[Union['SecretEcrArgs', 'SecretEcrArgsDict']] ecr: [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
         :param pulumi.Input[str] gcp: JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
-        :param pulumi.Input[pulumi.InputType['SecretKeypairArgs']] keypair: [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
+        :param pulumi.Input[Union['SecretKeypairArgs', 'SecretKeypairArgsDict']] keypair: [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
         :param pulumi.Input[str] name: Name of the secret.
-        :param pulumi.Input[pulumi.InputType['SecretNatsAccountArgs']] nats_account: [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
-        :param pulumi.Input[pulumi.InputType['SecretOpaqueArgs']] opaque: [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
+        :param pulumi.Input[Union['SecretNatsAccountArgs', 'SecretNatsAccountArgsDict']] nats_account: [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
+        :param pulumi.Input[Union['SecretOpaqueArgs', 'SecretOpaqueArgsDict']] opaque: [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
         :param pulumi.Input[str] secret_link: Output used when linking a secret to an environment variable or volume.
         :param pulumi.Input[str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: Key-value map of resource tags.
-        :param pulumi.Input[pulumi.InputType['SecretTlsArgs']] tls: [Reference Page](https://docs.controlplane.com/reference/secret#tls).
-        :param pulumi.Input[pulumi.InputType['SecretUserpassArgs']] userpass: [Reference Page](https://docs.controlplane.com/reference/secret#username).
+        :param pulumi.Input[Union['SecretTlsArgs', 'SecretTlsArgsDict']] tls: [Reference Page](https://docs.controlplane.com/reference/secret#tls).
+        :param pulumi.Input[Union['SecretUserpassArgs', 'SecretUserpassArgsDict']] userpass: [Reference Page](https://docs.controlplane.com/reference/secret#username).
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -966,7 +821,7 @@ class Secret(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="dictionaryAsEnvs")
-    def dictionary_as_envs(self) -> pulumi.Output[Mapping[str, Any]]:
+    def dictionary_as_envs(self) -> pulumi.Output[Mapping[str, str]]:
         """
         If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
         cpln://secret/SECRET_NAME.key`.

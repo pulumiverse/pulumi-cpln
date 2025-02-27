@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class DomainSpecPortTlsServerCertificateGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Full link to a TLS secret.
+        /// </summary>
         [Input("secretLink")]
         public Input<string>? SecretLink { get; set; }
 

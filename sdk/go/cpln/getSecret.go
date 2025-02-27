@@ -8,7 +8,6 @@ import (
 	"reflect"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
 
@@ -187,7 +186,7 @@ type LookupSecretResult struct {
 	CplnId           string                   `pulumi:"cplnId"`
 	Description      *string                  `pulumi:"description"`
 	Dictionary       map[string]string        `pulumi:"dictionary"`
-	DictionaryAsEnvs map[string]interface{}   `pulumi:"dictionaryAsEnvs"`
+	DictionaryAsEnvs map[string]string        `pulumi:"dictionaryAsEnvs"`
 	Docker           *string                  `pulumi:"docker"`
 	Ecr              *GetSecretEcr            `pulumi:"ecr"`
 	Gcp              *string                  `pulumi:"gcp"`
@@ -205,15 +204,11 @@ type LookupSecretResult struct {
 }
 
 func LookupSecretOutput(ctx *pulumi.Context, args LookupSecretOutputArgs, opts ...pulumi.InvokeOption) LookupSecretResultOutput {
-	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupSecretResult, error) {
+	return pulumi.ToOutputWithContext(ctx.Context(), args).
+		ApplyT(func(v interface{}) (LookupSecretResultOutput, error) {
 			args := v.(LookupSecretArgs)
-			r, err := LookupSecret(ctx, &args, opts...)
-			var s LookupSecretResult
-			if r != nil {
-				s = *r
-			}
-			return s, err
+			options := pulumi.InvokeOutputOptions{InvokeOptions: internal.PkgInvokeDefaultOpts(opts)}
+			return ctx.InvokeOutput("cpln:index/getSecret:getSecret", args, LookupSecretResultOutput{}, options).(LookupSecretResultOutput), nil
 		}).(LookupSecretResultOutput)
 }
 
@@ -255,12 +250,6 @@ func (o LookupSecretResultOutput) ToLookupSecretResultOutputWithContext(ctx cont
 	return o
 }
 
-func (o LookupSecretResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupSecretResult] {
-	return pulumix.Output[LookupSecretResult]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o LookupSecretResultOutput) Aws() GetSecretAwsPtrOutput {
 	return o.ApplyT(func(v LookupSecretResult) *GetSecretAws { return v.Aws }).(GetSecretAwsPtrOutput)
 }
@@ -285,8 +274,8 @@ func (o LookupSecretResultOutput) Dictionary() pulumi.StringMapOutput {
 	return o.ApplyT(func(v LookupSecretResult) map[string]string { return v.Dictionary }).(pulumi.StringMapOutput)
 }
 
-func (o LookupSecretResultOutput) DictionaryAsEnvs() pulumi.MapOutput {
-	return o.ApplyT(func(v LookupSecretResult) map[string]interface{} { return v.DictionaryAsEnvs }).(pulumi.MapOutput)
+func (o LookupSecretResultOutput) DictionaryAsEnvs() pulumi.StringMapOutput {
+	return o.ApplyT(func(v LookupSecretResult) map[string]string { return v.DictionaryAsEnvs }).(pulumi.StringMapOutput)
 }
 
 func (o LookupSecretResultOutput) Docker() pulumi.StringPtrOutput {

@@ -14,10 +14,25 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class IdentityNativeNetworkResource
     {
+        /// <summary>
+        /// A feature provided by AWS that enables private connectivity between private VPCs and compute running at Control Plane without traversing the public internet.
+        /// </summary>
         public readonly Outputs.IdentityNativeNetworkResourceAwsPrivateLink? AwsPrivateLink;
+        /// <summary>
+        /// Fully qualified domain name.
+        /// </summary>
         public readonly string Fqdn;
+        /// <summary>
+        /// Capability provided by GCP that allows private communication between private VPC networks and compute running at Control Plane.
+        /// </summary>
         public readonly Outputs.IdentityNativeNetworkResourceGcpServiceConnect? GcpServiceConnect;
+        /// <summary>
+        /// Name of the Native Network Resource.
+        /// </summary>
         public readonly string Name;
+        /// <summary>
+        /// Ports to expose. At least one port is required.
+        /// </summary>
         public readonly ImmutableArray<int> Ports;
 
         [OutputConstructor]

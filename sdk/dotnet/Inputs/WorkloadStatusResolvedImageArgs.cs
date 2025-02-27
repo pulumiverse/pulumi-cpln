@@ -15,15 +15,25 @@ namespace Pulumiverse.Cpln.Inputs
     {
         [Input("images")]
         private InputList<Inputs.WorkloadStatusResolvedImageImageArgs>? _images;
+
+        /// <summary>
+        /// A list of images that were resolved.
+        /// </summary>
         public InputList<Inputs.WorkloadStatusResolvedImageImageArgs> Images
         {
             get => _images ?? (_images = new InputList<Inputs.WorkloadStatusResolvedImageImageArgs>());
             set => _images = value;
         }
 
+        /// <summary>
+        /// UTC Time when the images were resolved.
+        /// </summary>
         [Input("resolvedAt")]
         public Input<string>? ResolvedAt { get; set; }
 
+        /// <summary>
+        /// Workload version the images were resolved for.
+        /// </summary>
         [Input("resolvedForVersion")]
         public Input<int>? ResolvedForVersion { get; set; }
 

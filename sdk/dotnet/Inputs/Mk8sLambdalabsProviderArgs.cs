@@ -18,21 +18,37 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("nodePools")]
         private InputList<Inputs.Mk8sLambdalabsProviderNodePoolArgs>? _nodePools;
+
+        /// <summary>
+        /// List of node pools.
+        /// </summary>
         public InputList<Inputs.Mk8sLambdalabsProviderNodePoolArgs> NodePools
         {
             get => _nodePools ?? (_nodePools = new InputList<Inputs.Mk8sLambdalabsProviderNodePoolArgs>());
             set => _nodePools = value;
         }
 
+        /// <summary>
+        /// Optional shell script that will be run before K8s is installed. Supports SSM.
+        /// </summary>
         [Input("preInstallScript")]
         public Input<string>? PreInstallScript { get; set; }
 
+        /// <summary>
+        /// Region where the cluster nodes will live.
+        /// </summary>
         [Input("region", required: true)]
         public Input<string> Region { get; set; } = null!;
 
+        /// <summary>
+        /// SSH key name for accessing deployed nodes.
+        /// </summary>
         [Input("sshKey", required: true)]
         public Input<string> SshKey { get; set; } = null!;
 
+        /// <summary>
+        /// Link to a secret holding Lambdalabs access key.
+        /// </summary>
         [Input("tokenSecretLink", required: true)]
         public Input<string> TokenSecretLink { get; set; } = null!;
 

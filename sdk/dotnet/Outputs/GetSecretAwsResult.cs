@@ -14,9 +14,21 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class GetSecretAwsResult
     {
+        /// <summary>
+        /// Access Key provided by AWS.
+        /// </summary>
         public readonly string AccessKey;
+        /// <summary>
+        /// AWS IAM Role External ID.
+        /// </summary>
         public readonly string? ExternalId;
+        /// <summary>
+        /// Role ARN provided by AWS.
+        /// </summary>
         public readonly string? RoleArn;
+        /// <summary>
+        /// Secret Key provided by AWS.
+        /// </summary>
         public readonly string SecretKey;
 
         [OutputConstructor]

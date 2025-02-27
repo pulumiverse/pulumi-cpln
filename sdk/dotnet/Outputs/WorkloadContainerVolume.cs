@@ -14,8 +14,17 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class WorkloadContainerVolume
     {
+        /// <summary>
+        /// File path added to workload pointing to the volume.
+        /// </summary>
         public readonly string Path;
+        /// <summary>
+        /// Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
+        /// </summary>
         public readonly string? RecoveryPolicy;
+        /// <summary>
+        /// URI of a volume hosted at Control Plane (Volume Set) or at a cloud provider (AWS, Azure, GCP).
+        /// </summary>
         public readonly string Uri;
 
         [OutputConstructor]

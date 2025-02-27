@@ -15,18 +15,31 @@ namespace Pulumiverse.Cpln.Inputs
     {
         [Input("bindings")]
         private InputList<Inputs.IdentityGcpAccessPolicyBindingGetArgs>? _bindings;
+
+        /// <summary>
+        /// The association or connection between a particular identity, such as a user or a group, and a set of permissions or roles within the system.
+        /// </summary>
         public InputList<Inputs.IdentityGcpAccessPolicyBindingGetArgs> Bindings
         {
             get => _bindings ?? (_bindings = new InputList<Inputs.IdentityGcpAccessPolicyBindingGetArgs>());
             set => _bindings = value;
         }
 
+        /// <summary>
+        /// Full link to referenced cloud account.
+        /// </summary>
         [Input("cloudAccountLink", required: true)]
         public Input<string> CloudAccountLink { get; set; } = null!;
 
+        /// <summary>
+        /// Comma delimited list of GCP scope URLs.
+        /// </summary>
         [Input("scopes")]
         public Input<string>? Scopes { get; set; }
 
+        /// <summary>
+        /// Name of existing GCP service account.
+        /// </summary>
         [Input("serviceAccount")]
         public Input<string>? ServiceAccount { get; set; }
 

@@ -15,16 +15,46 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class Mk8sDigitalOceanProvider
     {
         public readonly Outputs.Mk8sDigitalOceanProviderAutoscaler? Autoscaler;
+        /// <summary>
+        /// Extra tags to attach to droplets.
+        /// </summary>
         public readonly ImmutableArray<string> DigitalOceanTags;
+        /// <summary>
+        /// Extra SSH keys to provision for user root that are not registered in the DigitalOcean.
+        /// </summary>
         public readonly ImmutableArray<string> ExtraSshKeys;
+        /// <summary>
+        /// Default image for all nodes.
+        /// </summary>
         public readonly string Image;
         public readonly Outputs.Mk8sDigitalOceanProviderNetworking Networking;
+        /// <summary>
+        /// List of node pools.
+        /// </summary>
         public readonly ImmutableArray<Outputs.Mk8sDigitalOceanProviderNodePool> NodePools;
+        /// <summary>
+        /// Optional shell script that will be run before K8s is installed. Supports SSM.
+        /// </summary>
         public readonly string? PreInstallScript;
+        /// <summary>
+        /// Region to deploy nodes to.
+        /// </summary>
         public readonly string Region;
+        /// <summary>
+        /// Optional set of IPs to assign as extra IPs for nodes of the cluster.
+        /// </summary>
         public readonly ImmutableArray<string> ReservedIps;
+        /// <summary>
+        /// SSH key name for accessing deployed nodes.
+        /// </summary>
         public readonly ImmutableArray<string> SshKeys;
+        /// <summary>
+        /// Link to a secret holding personal access token.
+        /// </summary>
         public readonly string TokenSecretLink;
+        /// <summary>
+        /// ID of the Hetzner network to deploy nodes to.
+        /// </summary>
         public readonly string VpcId;
 
         [OutputConstructor]

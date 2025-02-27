@@ -13,17 +13,27 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class IdentityAwsAccessPolicyArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Full link to referenced cloud account.
+        /// </summary>
         [Input("cloudAccountLink", required: true)]
         public Input<string> CloudAccountLink { get; set; } = null!;
 
         [Input("policyRefs")]
         private InputList<string>? _policyRefs;
+
+        /// <summary>
+        /// List of policies.
+        /// </summary>
         public InputList<string> PolicyRefs
         {
             get => _policyRefs ?? (_policyRefs = new InputList<string>());
             set => _policyRefs = value;
         }
 
+        /// <summary>
+        /// Role name.
+        /// </summary>
         [Input("roleName")]
         public Input<string>? RoleName { get; set; }
 

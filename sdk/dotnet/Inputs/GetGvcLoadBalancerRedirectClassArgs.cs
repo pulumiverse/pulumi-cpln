@@ -16,6 +16,9 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("_sentinel")]
         public Input<bool>? _sentinel { get; set; }
 
+        /// <summary>
+        /// Specify the redirect url for any 500 level status code.
+        /// </summary>
         [Input("status5xx")]
         public Input<string>? Status5xx { get; set; }
 

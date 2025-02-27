@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 
@@ -200,11 +205,8 @@ def get_location(name: Optional[str] = None,
         region=pulumi.get(__ret__, 'region'),
         self_link=pulumi.get(__ret__, 'self_link'),
         tags=pulumi.get(__ret__, 'tags'))
-
-
-@_utilities.lift_output_func(get_location)
 def get_location_output(name: Optional[pulumi.Input[str]] = None,
-                        opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetLocationResult]:
+                        opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetLocationResult]:
     """
     Use this data source to access information about a [Location](https://docs.controlplane.com/reference/location) within Control Plane.
 
@@ -251,4 +253,19 @@ def get_location_output(name: Optional[pulumi.Input[str]] = None,
     pulumi.export("locationEnabled", location_location.enabled)
     ```
     """
-    ...
+    __args__ = dict()
+    __args__['name'] = name
+    opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('cpln:index/getLocation:getLocation', __args__, opts=opts, typ=GetLocationResult)
+    return __ret__.apply(lambda __response__: GetLocationResult(
+        cloud_provider=pulumi.get(__response__, 'cloud_provider'),
+        cpln_id=pulumi.get(__response__, 'cpln_id'),
+        description=pulumi.get(__response__, 'description'),
+        enabled=pulumi.get(__response__, 'enabled'),
+        geos=pulumi.get(__response__, 'geos'),
+        id=pulumi.get(__response__, 'id'),
+        ip_ranges=pulumi.get(__response__, 'ip_ranges'),
+        name=pulumi.get(__response__, 'name'),
+        region=pulumi.get(__response__, 'region'),
+        self_link=pulumi.get(__response__, 'self_link'),
+        tags=pulumi.get(__response__, 'tags')))

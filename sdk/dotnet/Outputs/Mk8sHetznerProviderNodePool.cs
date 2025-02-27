@@ -14,12 +14,18 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sHetznerProviderNodePool
     {
+        /// <summary>
+        /// Labels to attach to nodes of a node pool.
+        /// </summary>
         public readonly ImmutableDictionary<string, string>? Labels;
         public readonly int? MaxSize;
         public readonly int? MinSize;
         public readonly string Name;
         public readonly string? OverrideImage;
         public readonly string ServerType;
+        /// <summary>
+        /// Taint for the nodes of a pool.
+        /// </summary>
         public readonly ImmutableArray<Outputs.Mk8sHetznerProviderNodePoolTaint> Taints;
 
         [OutputConstructor]

@@ -14,13 +14,37 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class GetImagesImageResult
     {
+        /// <summary>
+        /// The ID, in GUID format, of the Image.
+        /// </summary>
         public readonly string CplnId;
+        /// <summary>
+        /// A unique SHA256 hash used to identify a specific image version within the image registry.
+        /// </summary>
         public readonly string Digest;
+        /// <summary>
+        /// The manifest provides configuration and layers information about the image. It plays a crucial role in the Docker image distribution system, enabling image creation, verification, and replication in a consistent and secure manner.
+        /// </summary>
         public readonly ImmutableArray<Outputs.GetImagesImageManifestResult> Manifests;
+        /// <summary>
+        /// Name of the Image.
+        /// </summary>
         public readonly string Name;
+        /// <summary>
+        /// Respository name of the image.
+        /// </summary>
         public readonly string Repository;
+        /// <summary>
+        /// Full link to this resource. Can be referenced by other resources.
+        /// </summary>
         public readonly string SelfLink;
+        /// <summary>
+        /// Tag of the image.
+        /// </summary>
         public readonly string Tag;
+        /// <summary>
+        /// Key-value map of resource tags.
+        /// </summary>
         public readonly ImmutableDictionary<string, string> Tags;
 
         [OutputConstructor]

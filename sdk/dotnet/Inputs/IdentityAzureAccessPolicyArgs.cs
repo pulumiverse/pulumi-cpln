@@ -13,11 +13,18 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class IdentityAzureAccessPolicyArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Full link to referenced cloud account.
+        /// </summary>
         [Input("cloudAccountLink", required: true)]
         public Input<string> CloudAccountLink { get; set; } = null!;
 
         [Input("roleAssignments")]
         private InputList<Inputs.IdentityAzureAccessPolicyRoleAssignmentArgs>? _roleAssignments;
+
+        /// <summary>
+        /// The process of assigning specific roles or permissions to an entity, such as a user or a service principal, within the system.
+        /// </summary>
         public InputList<Inputs.IdentityAzureAccessPolicyRoleAssignmentArgs> RoleAssignments
         {
             get => _roleAssignments ?? (_roleAssignments = new InputList<Inputs.IdentityAzureAccessPolicyRoleAssignmentArgs>());

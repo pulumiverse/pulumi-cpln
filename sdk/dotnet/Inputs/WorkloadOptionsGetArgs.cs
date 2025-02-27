@@ -13,18 +13,33 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadOptionsGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+        /// </summary>
         [Input("autoscaling")]
         public Input<Inputs.WorkloadOptionsAutoscalingGetArgs>? Autoscaling { get; set; }
 
+        /// <summary>
+        /// Capacity AI. Default: `true`.
+        /// </summary>
         [Input("capacityAi")]
         public Input<bool>? CapacityAi { get; set; }
 
+        /// <summary>
+        /// Debug mode. Default: `false`
+        /// </summary>
         [Input("debug")]
         public Input<bool>? Debug { get; set; }
 
+        /// <summary>
+        /// Workload suspend. Default: `false`
+        /// </summary>
         [Input("suspend")]
         public Input<bool>? Suspend { get; set; }
 
+        /// <summary>
+        /// Timeout in seconds. Default: `5`.
+        /// </summary>
         [Input("timeoutSeconds")]
         public Input<int>? TimeoutSeconds { get; set; }
 
