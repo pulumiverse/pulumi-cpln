@@ -47,6 +47,10 @@ export class Workload extends pulumi.CustomResource {
      */
     public readonly description!: pulumi.Output<string | undefined>;
     /**
+     * Extra Kubernetes modifications. Only used for BYOK.
+     */
+    public readonly extras!: pulumi.Output<string | undefined>;
+    /**
      * Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
      * Access is restricted by default.
      */
@@ -122,6 +126,7 @@ export class Workload extends pulumi.CustomResource {
             resourceInputs["containers"] = state ? state.containers : undefined;
             resourceInputs["cplnId"] = state ? state.cplnId : undefined;
             resourceInputs["description"] = state ? state.description : undefined;
+            resourceInputs["extras"] = state ? state.extras : undefined;
             resourceInputs["firewallSpec"] = state ? state.firewallSpec : undefined;
             resourceInputs["gvc"] = state ? state.gvc : undefined;
             resourceInputs["identityLink"] = state ? state.identityLink : undefined;
@@ -151,6 +156,7 @@ export class Workload extends pulumi.CustomResource {
             }
             resourceInputs["containers"] = args ? args.containers : undefined;
             resourceInputs["description"] = args ? args.description : undefined;
+            resourceInputs["extras"] = args ? args.extras : undefined;
             resourceInputs["firewallSpec"] = args ? args.firewallSpec : undefined;
             resourceInputs["gvc"] = args ? args.gvc : undefined;
             resourceInputs["identityLink"] = args ? args.identityLink : undefined;
@@ -190,6 +196,10 @@ export interface WorkloadState {
      * Description of the Workload.
      */
     description?: pulumi.Input<string>;
+    /**
+     * Extra Kubernetes modifications. Only used for BYOK.
+     */
+    extras?: pulumi.Input<string>;
     /**
      * Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
      * Access is restricted by default.
@@ -263,6 +273,10 @@ export interface WorkloadArgs {
      * Description of the Workload.
      */
     description?: pulumi.Input<string>;
+    /**
+     * Extra Kubernetes modifications. Only used for BYOK.
+     */
+    extras?: pulumi.Input<string>;
     /**
      * Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
      * Access is restricted by default.

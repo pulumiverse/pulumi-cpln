@@ -21,6 +21,8 @@ type Workload struct {
 	CplnId pulumi.StringOutput `pulumi:"cplnId"`
 	// Description of the Workload.
 	Description pulumi.StringPtrOutput `pulumi:"description"`
+	// Extra Kubernetes modifications. Only used for BYOK.
+	Extras pulumi.StringPtrOutput `pulumi:"extras"`
 	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
 	// Access is restricted by default.
 	FirewallSpec WorkloadFirewallSpecPtrOutput `pulumi:"firewallSpec"`
@@ -101,6 +103,8 @@ type workloadState struct {
 	CplnId *string `pulumi:"cplnId"`
 	// Description of the Workload.
 	Description *string `pulumi:"description"`
+	// Extra Kubernetes modifications. Only used for BYOK.
+	Extras *string `pulumi:"extras"`
 	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
 	// Access is restricted by default.
 	FirewallSpec *WorkloadFirewallSpec `pulumi:"firewallSpec"`
@@ -143,6 +147,8 @@ type WorkloadState struct {
 	CplnId pulumi.StringPtrInput
 	// Description of the Workload.
 	Description pulumi.StringPtrInput
+	// Extra Kubernetes modifications. Only used for BYOK.
+	Extras pulumi.StringPtrInput
 	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
 	// Access is restricted by default.
 	FirewallSpec WorkloadFirewallSpecPtrInput
@@ -187,6 +193,8 @@ type workloadArgs struct {
 	Containers []WorkloadContainer `pulumi:"containers"`
 	// Description of the Workload.
 	Description *string `pulumi:"description"`
+	// Extra Kubernetes modifications. Only used for BYOK.
+	Extras *string `pulumi:"extras"`
 	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
 	// Access is restricted by default.
 	FirewallSpec *WorkloadFirewallSpec `pulumi:"firewallSpec"`
@@ -224,6 +232,8 @@ type WorkloadArgs struct {
 	Containers WorkloadContainerArrayInput
 	// Description of the Workload.
 	Description pulumi.StringPtrInput
+	// Extra Kubernetes modifications. Only used for BYOK.
+	Extras pulumi.StringPtrInput
 	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
 	// Access is restricted by default.
 	FirewallSpec WorkloadFirewallSpecPtrInput
@@ -355,6 +365,11 @@ func (o WorkloadOutput) CplnId() pulumi.StringOutput {
 // Description of the Workload.
 func (o WorkloadOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
+}
+
+// Extra Kubernetes modifications. Only used for BYOK.
+func (o WorkloadOutput) Extras() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Workload) pulumi.StringPtrOutput { return v.Extras }).(pulumi.StringPtrOutput)
 }
 
 // Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
