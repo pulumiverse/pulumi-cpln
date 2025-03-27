@@ -25,6 +25,7 @@ class WorkloadArgs:
                  gvc: pulumi.Input[str],
                  type: pulumi.Input[str],
                  description: Optional[pulumi.Input[str]] = None,
+                 extras: Optional[pulumi.Input[str]] = None,
                  firewall_spec: Optional[pulumi.Input['WorkloadFirewallSpecArgs']] = None,
                  identity_link: Optional[pulumi.Input[str]] = None,
                  job: Optional[pulumi.Input['WorkloadJobArgs']] = None,
@@ -43,6 +44,7 @@ class WorkloadArgs:
         :param pulumi.Input[str] gvc: Name of the associated GVC.
         :param pulumi.Input[str] type: Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
         :param pulumi.Input[str] description: Description of the Workload.
+        :param pulumi.Input[str] extras: Extra Kubernetes modifications. Only used for BYOK.
         :param pulumi.Input['WorkloadFirewallSpecArgs'] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
                Access is restricted by default.
         :param pulumi.Input[str] identity_link: Full link to an Identity.
@@ -62,6 +64,8 @@ class WorkloadArgs:
         pulumi.set(__self__, "type", type)
         if description is not None:
             pulumi.set(__self__, "description", description)
+        if extras is not None:
+            pulumi.set(__self__, "extras", extras)
         if firewall_spec is not None:
             pulumi.set(__self__, "firewall_spec", firewall_spec)
         if identity_link is not None:
@@ -134,6 +138,18 @@ class WorkloadArgs:
     @description.setter
     def description(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "description", value)
+
+    @property
+    @pulumi.getter
+    def extras(self) -> Optional[pulumi.Input[str]]:
+        """
+        Extra Kubernetes modifications. Only used for BYOK.
+        """
+        return pulumi.get(self, "extras")
+
+    @extras.setter
+    def extras(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "extras", value)
 
     @property
     @pulumi.getter(name="firewallSpec")
@@ -281,6 +297,7 @@ class _WorkloadState:
                  containers: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]]] = None,
                  cpln_id: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
+                 extras: Optional[pulumi.Input[str]] = None,
                  firewall_spec: Optional[pulumi.Input['WorkloadFirewallSpecArgs']] = None,
                  gvc: Optional[pulumi.Input[str]] = None,
                  identity_link: Optional[pulumi.Input[str]] = None,
@@ -302,6 +319,7 @@ class _WorkloadState:
         :param pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Workload.
         :param pulumi.Input[str] description: Description of the Workload.
+        :param pulumi.Input[str] extras: Extra Kubernetes modifications. Only used for BYOK.
         :param pulumi.Input['WorkloadFirewallSpecArgs'] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
                Access is restricted by default.
         :param pulumi.Input[str] gvc: Name of the associated GVC.
@@ -326,6 +344,8 @@ class _WorkloadState:
             pulumi.set(__self__, "cpln_id", cpln_id)
         if description is not None:
             pulumi.set(__self__, "description", description)
+        if extras is not None:
+            pulumi.set(__self__, "extras", extras)
         if firewall_spec is not None:
             pulumi.set(__self__, "firewall_spec", firewall_spec)
         if gvc is not None:
@@ -394,6 +414,18 @@ class _WorkloadState:
     @description.setter
     def description(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "description", value)
+
+    @property
+    @pulumi.getter
+    def extras(self) -> Optional[pulumi.Input[str]]:
+        """
+        Extra Kubernetes modifications. Only used for BYOK.
+        """
+        return pulumi.get(self, "extras")
+
+    @extras.setter
+    def extras(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "extras", value)
 
     @property
     @pulumi.getter(name="firewallSpec")
@@ -590,6 +622,7 @@ class Workload(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  containers: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadContainerArgs', 'WorkloadContainerArgsDict']]]]] = None,
                  description: Optional[pulumi.Input[str]] = None,
+                 extras: Optional[pulumi.Input[str]] = None,
                  firewall_spec: Optional[pulumi.Input[Union['WorkloadFirewallSpecArgs', 'WorkloadFirewallSpecArgsDict']]] = None,
                  gvc: Optional[pulumi.Input[str]] = None,
                  identity_link: Optional[pulumi.Input[str]] = None,
@@ -611,6 +644,7 @@ class Workload(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Sequence[pulumi.Input[Union['WorkloadContainerArgs', 'WorkloadContainerArgsDict']]]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
         :param pulumi.Input[str] description: Description of the Workload.
+        :param pulumi.Input[str] extras: Extra Kubernetes modifications. Only used for BYOK.
         :param pulumi.Input[Union['WorkloadFirewallSpecArgs', 'WorkloadFirewallSpecArgsDict']] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
                Access is restricted by default.
         :param pulumi.Input[str] gvc: Name of the associated GVC.
@@ -652,6 +686,7 @@ class Workload(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  containers: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadContainerArgs', 'WorkloadContainerArgsDict']]]]] = None,
                  description: Optional[pulumi.Input[str]] = None,
+                 extras: Optional[pulumi.Input[str]] = None,
                  firewall_spec: Optional[pulumi.Input[Union['WorkloadFirewallSpecArgs', 'WorkloadFirewallSpecArgsDict']]] = None,
                  gvc: Optional[pulumi.Input[str]] = None,
                  identity_link: Optional[pulumi.Input[str]] = None,
@@ -679,6 +714,7 @@ class Workload(pulumi.CustomResource):
                 raise TypeError("Missing required property 'containers'")
             __props__.__dict__["containers"] = containers
             __props__.__dict__["description"] = description
+            __props__.__dict__["extras"] = extras
             __props__.__dict__["firewall_spec"] = firewall_spec
             if gvc is None and not opts.urn:
                 raise TypeError("Missing required property 'gvc'")
@@ -713,6 +749,7 @@ class Workload(pulumi.CustomResource):
             containers: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadContainerArgs', 'WorkloadContainerArgsDict']]]]] = None,
             cpln_id: Optional[pulumi.Input[str]] = None,
             description: Optional[pulumi.Input[str]] = None,
+            extras: Optional[pulumi.Input[str]] = None,
             firewall_spec: Optional[pulumi.Input[Union['WorkloadFirewallSpecArgs', 'WorkloadFirewallSpecArgsDict']]] = None,
             gvc: Optional[pulumi.Input[str]] = None,
             identity_link: Optional[pulumi.Input[str]] = None,
@@ -739,6 +776,7 @@ class Workload(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[Union['WorkloadContainerArgs', 'WorkloadContainerArgsDict']]]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
         :param pulumi.Input[str] cpln_id: The ID, in GUID format, of the Workload.
         :param pulumi.Input[str] description: Description of the Workload.
+        :param pulumi.Input[str] extras: Extra Kubernetes modifications. Only used for BYOK.
         :param pulumi.Input[Union['WorkloadFirewallSpecArgs', 'WorkloadFirewallSpecArgsDict']] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
                Access is restricted by default.
         :param pulumi.Input[str] gvc: Name of the associated GVC.
@@ -764,6 +802,7 @@ class Workload(pulumi.CustomResource):
         __props__.__dict__["containers"] = containers
         __props__.__dict__["cpln_id"] = cpln_id
         __props__.__dict__["description"] = description
+        __props__.__dict__["extras"] = extras
         __props__.__dict__["firewall_spec"] = firewall_spec
         __props__.__dict__["gvc"] = gvc
         __props__.__dict__["identity_link"] = identity_link
@@ -805,6 +844,14 @@ class Workload(pulumi.CustomResource):
         Description of the Workload.
         """
         return pulumi.get(self, "description")
+
+    @property
+    @pulumi.getter
+    def extras(self) -> pulumi.Output[Optional[str]]:
+        """
+        Extra Kubernetes modifications. Only used for BYOK.
+        """
+        return pulumi.get(self, "extras")
 
     @property
     @pulumi.getter(name="firewallSpec")

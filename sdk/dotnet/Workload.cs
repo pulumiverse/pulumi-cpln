@@ -32,6 +32,12 @@ namespace Pulumiverse.Cpln
         public Output<string?> Description { get; private set; } = null!;
 
         /// <summary>
+        /// Extra Kubernetes modifications. Only used for BYOK.
+        /// </summary>
+        [Output("extras")]
+        public Output<string?> Extras { get; private set; } = null!;
+
+        /// <summary>
         /// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
         /// Access is restricted by default.
         /// </summary>
@@ -188,6 +194,12 @@ namespace Pulumiverse.Cpln
         public Input<string>? Description { get; set; }
 
         /// <summary>
+        /// Extra Kubernetes modifications. Only used for BYOK.
+        /// </summary>
+        [Input("extras")]
+        public Input<string>? Extras { get; set; }
+
+        /// <summary>
         /// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
         /// Access is restricted by default.
         /// </summary>
@@ -308,6 +320,12 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
+
+        /// <summary>
+        /// Extra Kubernetes modifications. Only used for BYOK.
+        /// </summary>
+        [Input("extras")]
+        public Input<string>? Extras { get; set; }
 
         /// <summary>
         /// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
