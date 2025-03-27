@@ -105,6 +105,7 @@ func Provider() tfbridge.ProviderInfo {
 			"cpln_ipset":               {Tok: tfbridge.MakeResource(mainPkg, mainMod, "IpSet")},
 			"cpln_location":            {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Location")},
 			"cpln_mk8s":                {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Mk8s")},
+			"cpln_mk8s_kubeconfig":     {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Mk8sKubeconfig")},
 			"cpln_org_logging":         {Tok: tfbridge.MakeResource(mainPkg, mainMod, "OrgLogging")},
 			"cpln_org_tracing":         {Tok: tfbridge.MakeResource(mainPkg, mainMod, "OrgTracing")},
 			"cpln_policy":              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Policy")},
