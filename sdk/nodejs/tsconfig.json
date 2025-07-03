@@ -36,6 +36,7 @@
         "ipSet.ts",
         "location.ts",
         "mk8s.ts",
+        "mk8sKubeconfig.ts",
         "org.ts",
         "orgLogging.ts",
         "orgTracing.ts",
