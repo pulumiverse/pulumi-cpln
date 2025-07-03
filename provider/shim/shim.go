@@ -1,11 +1,11 @@
 package shim
 
 import (
-	provider "github.com/controlplane-com/terraform-provider-cpln/internal/provider"
-
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	cpln "github.com/controlplane-com/terraform-provider-cpln/internal/provider"
+	"github.com/hashicorp/terraform-plugin-framework/provider"
 )
 
-func NewProvider() *schema.Provider {
-	return provider.Provider()
+func NewProvider() provider.Provider {
+	version := "1.2.0"
+	return cpln.New(version)()
 }
