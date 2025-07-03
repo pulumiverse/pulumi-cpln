@@ -8878,6 +8878,69 @@
                 "type": "object"
             }
         },
+        "cpln:index/mk8sKubeconfig:Mk8sKubeconfig": {
+            "description": "Obtain the Cluster’s Kubeconfig.\n\n## Declaration\n\n### Required\n\n- **name** (String) Name of the Mk8s.\n\n\u003e **Note** Only one of the below can be included in the resource.\n\n- **profile** (String) The name of the cpln profile used to generate the kubeconfig file for authenticating with your Kubernetes cluster.\n- **service_account** (String) The name of an existing service account for which a key will be generated, enabling kubeconfig-based authentication with your Kubernetes cluster.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **kubeconfig** (String) The Kubeconfig in YAML format.\n\n## Example Usage\n\n### Profile\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nexport = async () =\u003e {\n    const _new = new cpln.Mk8sKubeconfig(\"new\", {profile: \"default\"});\n    return {\n        \"generic-cluster-kubeconfig\": _new.kubeconfig,\n    };\n}\n```\n```python\nimport pulumi\nimport pulumiverse_cpln as cpln\n\nnew = cpln.Mk8sKubeconfig(\"new\", profile=\"default\")\npulumi.export(\"generic-cluster-kubeconfig\", new.kubeconfig)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumiverse.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var @new = new Cpln.Mk8sKubeconfig(\"new\", new()\n    {\n        Profile = \"default\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"generic-cluster-kubeconfig\"] = @new.Kubeconfig,\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tnew, err := cpln.NewMk8sKubeconfig(ctx, \"new\", \u0026cpln.Mk8sKubeconfigArgs{\n\t\t\tProfile: pulumi.String(\"default\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"generic-cluster-kubeconfig\", new.Kubeconfig)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.Mk8sKubeconfig;\nimport com.pulumi.cpln.Mk8sKubeconfigArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var new_ = new Mk8sKubeconfig(\"new\", Mk8sKubeconfigArgs.builder()\n            .profile(\"default\")\n            .build());\n\n        ctx.export(\"generic-cluster-kubeconfig\", new_.kubeconfig());\n    }\n}\n```\n```yaml\nresources:\n  new:\n    type: cpln:Mk8sKubeconfig\n    properties:\n      profile: default\noutputs:\n  generic-cluster-kubeconfig: ${new.kubeconfig}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\n### Service Account\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nexport = async () =\u003e {\n    const _new = new cpln.Mk8sKubeconfig(\"new\", {serviceAccount: \"devops-sa\"});\n    return {\n        \"generic-cluster-kubeconfig\": _new.kubeconfig,\n    };\n}\n```\n```python\nimport pulumi\nimport pulumiverse_cpln as cpln\n\nnew = cpln.Mk8sKubeconfig(\"new\", service_account=\"devops-sa\")\npulumi.export(\"generic-cluster-kubeconfig\", new.kubeconfig)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumiverse.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var @new = new Cpln.Mk8sKubeconfig(\"new\", new()\n    {\n        ServiceAccount = \"devops-sa\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"generic-cluster-kubeconfig\"] = @new.Kubeconfig,\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tnew, err := cpln.NewMk8sKubeconfig(ctx, \"new\", \u0026cpln.Mk8sKubeconfigArgs{\n\t\t\tServiceAccount: pulumi.String(\"devops-sa\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"generic-cluster-kubeconfig\", new.Kubeconfig)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.Mk8sKubeconfig;\nimport com.pulumi.cpln.Mk8sKubeconfigArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var new_ = new Mk8sKubeconfig(\"new\", Mk8sKubeconfigArgs.builder()\n            .serviceAccount(\"devops-sa\")\n            .build());\n\n        ctx.export(\"generic-cluster-kubeconfig\", new_.kubeconfig());\n    }\n}\n```\n```yaml\nresources:\n  new:\n    type: cpln:Mk8sKubeconfig\n    properties:\n      serviceAccount: devops-sa\noutputs:\n  generic-cluster-kubeconfig: ${new.kubeconfig}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "properties": {
+                "kubeconfig": {
+                    "type": "string",
+                    "description": "The Kubeconfig of your MK8s cluster in YAML format.\n",
+                    "secret": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the MK8s to create the Kubeconfig for.\n"
+                },
+                "profile": {
+                    "type": "string",
+                    "description": "Profile name to extract the token from.\n"
+                },
+                "serviceAccount": {
+                    "type": "string",
+                    "description": "A service account to add a key to.\n"
+                }
+            },
+            "required": [
+                "kubeconfig",
+                "name"
+            ],
+            "inputProperties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the MK8s to create the Kubeconfig for.\n"
+                },
+                "profile": {
+                    "type": "string",
+                    "description": "Profile name to extract the token from.\n"
+                },
+                "serviceAccount": {
+                    "type": "string",
+                    "description": "A service account to add a key to.\n"
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Mk8sKubeconfig resources.\n",
+                "properties": {
+                    "kubeconfig": {
+                        "type": "string",
+                        "description": "The Kubeconfig of your MK8s cluster in YAML format.\n",
+                        "secret": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the MK8s to create the Kubeconfig for.\n"
+                    },
+                    "profile": {
+                        "type": "string",
+                        "description": "Profile name to extract the token from.\n"
+                    },
+                    "serviceAccount": {
+                        "type": "string",
+                        "description": "A service account to add a key to.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "cpln:index/org:Org": {
             "properties": {
                 "accountId": {

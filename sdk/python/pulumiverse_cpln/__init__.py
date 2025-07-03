@@ -26,6 +26,7 @@ from .identity import *
 from .ip_set import *
 from .location import *
 from .mk8s import *
+from .mk8s_kubeconfig import *
 from .org import *
 from .org_logging import *
 from .org_tracing import *
@@ -143,6 +144,14 @@ _utilities.register(
   "fqn": "pulumiverse_cpln",
   "classes": {
    "cpln:index/mk8s:Mk8s": "Mk8s"
+  }
+ },
+ {
+  "pkg": "cpln",
+  "mod": "index/mk8sKubeconfig",
+  "fqn": "pulumiverse_cpln",
+  "classes": {
+   "cpln:index/mk8sKubeconfig:Mk8sKubeconfig": "Mk8sKubeconfig"
   }
  },
  {

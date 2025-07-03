@@ -45,6 +45,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &Location{}
 	case "cpln:index/mk8s:Mk8s":
 		r = &Mk8s{}
+	case "cpln:index/mk8sKubeconfig:Mk8sKubeconfig":
+		r = &Mk8sKubeconfig{}
 	case "cpln:index/org:Org":
 		r = &Org{}
 	case "cpln:index/orgLogging:OrgLogging":
@@ -152,6 +154,11 @@ func init() {
 	pulumi.RegisterResourceModule(
 		"cpln",
 		"index/mk8s",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"cpln",
+		"index/mk8sKubeconfig",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(
