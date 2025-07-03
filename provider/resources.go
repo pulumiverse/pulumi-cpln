@@ -19,10 +19,9 @@ import (
 	"path/filepath"
 
 	providerShim "github.com/controlplane-com/terraform-provider-cpln/shim"
-
+	pf "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfbridge"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 	shim "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim"
-	shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
 	"github.com/pulumiverse/pulumi-cpln/provider/pkg/version"
 )
@@ -47,7 +46,7 @@ func preConfigureCallback(vars resource.PropertyMap, c shim.ResourceConfig) erro
 // Provider returns additional overlaid schema and metadata associated with the provider..
 func Provider() tfbridge.ProviderInfo {
 	// Instantiate the Terraform provider
-	p := shimv2.NewProvider(providerShim.NewProvider())
+	p := pf.ShimProvider(providerShim.NewProvider())
 
 	// Create a Pulumi provider mapping
 	prov := tfbridge.ProviderInfo{
@@ -94,28 +93,28 @@ func Provider() tfbridge.ProviderInfo {
 		},
 		PreConfigureCallback: preConfigureCallback,
 		Resources: map[string]*tfbridge.ResourceInfo{
-			"cpln_agent":               {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Agent")},
-			"cpln_audit_context":       {Tok: tfbridge.MakeResource(mainPkg, mainMod, "AuditContext")},
-			"cpln_cloud_account":       {Tok: tfbridge.MakeResource(mainPkg, mainMod, "CloudAccount")},
-			"cpln_custom_location":     {Tok: tfbridge.MakeResource(mainPkg, mainMod, "CustomLocation")},
-			"cpln_domain_route":        {Tok: tfbridge.MakeResource(mainPkg, mainMod, "DomainRoute")},
-			"cpln_group":               {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Group")},
-			"cpln_gvc":                 {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Gvc")},
-			"cpln_identity":            {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Identity")},
-			"cpln_ipset":               {Tok: tfbridge.MakeResource(mainPkg, mainMod, "IpSet")},
-			"cpln_location":            {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Location")},
-			"cpln_mk8s":                {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Mk8s")},
-			"cpln_mk8s_kubeconfig":     {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Mk8sKubeconfig")},
+			"cpln_agent":           {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Agent")},
+			"cpln_audit_context":   {Tok: tfbridge.MakeResource(mainPkg, mainMod, "AuditContext")},
+			"cpln_cloud_account":   {Tok: tfbridge.MakeResource(mainPkg, mainMod, "CloudAccount")},
+			"cpln_custom_location": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "CustomLocation")},
+			"cpln_domain_route":    {Tok: tfbridge.MakeResource(mainPkg, mainMod, "DomainRoute")},
+			"cpln_domain":          {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Domain")},
+			"cpln_group":           {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Group")},
+			"cpln_gvc":             {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Gvc")},
+			"cpln_identity":        {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Identity")},
+			"cpln_ipset":           {Tok: tfbridge.MakeResource(mainPkg, mainMod, "IpSet")},
+			"cpln_location":        {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Location")},
+			"cpln_mk8s":            {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Mk8s")},
+			// "cpln_mk8s_kubeconfig":     {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Mk8sKubeconfig")},
 			"cpln_org_logging":         {Tok: tfbridge.MakeResource(mainPkg, mainMod, "OrgLogging")},
 			"cpln_org_tracing":         {Tok: tfbridge.MakeResource(mainPkg, mainMod, "OrgTracing")},
+			"cpln_org":                 {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Org")},
 			"cpln_policy":              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Policy")},
 			"cpln_secret":              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Secret")},
 			"cpln_service_account":     {Tok: tfbridge.MakeResource(mainPkg, mainMod, "ServiceAccount")},
 			"cpln_service_account_key": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "ServiceAccountKey")},
 			"cpln_volume_set":          {Tok: tfbridge.MakeResource(mainPkg, mainMod, "VolumeSet")},
 			"cpln_workload":            {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Workload")},
-			"cpln_org":                 {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Org")},
-			"cpln_domain":              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Domain")},
 		},
 		DataSources: map[string]*tfbridge.DataSourceInfo{
 			"cpln_cloud_account": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getCloudAccount")},
