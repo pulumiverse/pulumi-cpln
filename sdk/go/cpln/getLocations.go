@@ -61,11 +61,11 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			locationsLocations, err := cpln.GetLocations(ctx, map[string]interface{}{}, nil)
+//			locations, err := cpln.GetLocations(ctx, map[string]interface{}{}, nil)
 //			if err != nil {
 //				return err
 //			}
-//			ctx.Export("locations", locationsLocations.Locations)
+//			ctx.Export("locations", locations.Locations)
 //			return nil
 //		})
 //	}

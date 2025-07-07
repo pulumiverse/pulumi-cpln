@@ -47,6 +47,7 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			new, err := cpln.NewMk8sKubeconfig(ctx, "new", &cpln.Mk8sKubeconfigArgs{
+//				Name:    pulumi.String("generic-cluster"),
 //				Profile: pulumi.String("default"),
 //			})
 //			if err != nil {
@@ -74,6 +75,7 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			new, err := cpln.NewMk8sKubeconfig(ctx, "new", &cpln.Mk8sKubeconfigArgs{
+//				Name:           pulumi.String("generic-cluster"),
 //				ServiceAccount: pulumi.String("devops-sa"),
 //			})
 //			if err != nil {

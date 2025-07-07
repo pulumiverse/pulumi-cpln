@@ -18,12 +18,14 @@ import (
 	"fmt"
 	"path/filepath"
 
+	// embed is used to embed the schema files in the provider
+	_ "embed"
+
 	providerShim "github.com/controlplane-com/terraform-provider-cpln/shim"
 	pf "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfbridge"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 	shim "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
-	"github.com/pulumiverse/pulumi-cpln/provider/pkg/version"
 )
 
 // all of the token components used below.
@@ -35,6 +37,9 @@ const (
 	mainMod = "index" // the cpln module
 )
 
+//go:embed cmd/pulumi-resource-cpln/bridge-metadata.json
+var metadata []byte
+
 // preConfigureCallback is called before the providerConfigure function of the underlying provider.
 // It should validate that the provider can be configured, and provide actionable errors in the case
 // it cannot be. Configuration variables can be read from `vars` using the `stringValue` function -
@@ -44,9 +49,9 @@ func preConfigureCallback(vars resource.PropertyMap, c shim.ResourceConfig) erro
 }
 
 // Provider returns additional overlaid schema and metadata associated with the provider..
-func Provider() tfbridge.ProviderInfo {
+func Provider(version string) tfbridge.ProviderInfo {
 	// Instantiate the Terraform provider
-	p := pf.ShimProvider(providerShim.NewProvider())
+	p := pf.ShimProvider(providerShim.NewProvider(version))
 
 	// Create a Pulumi provider mapping
 	prov := tfbridge.ProviderInfo{
@@ -92,6 +97,7 @@ func Provider() tfbridge.ProviderInfo {
 			// },
 		},
 		PreConfigureCallback: preConfigureCallback,
+		MetadataInfo:         tfbridge.NewProviderMetadata(metadata),
 		Resources: map[string]*tfbridge.ResourceInfo{
 			"cpln_agent":               {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Agent")},
 			"cpln_audit_context":       {Tok: tfbridge.MakeResource(mainPkg, mainMod, "AuditContext")},
@@ -112,7 +118,7 @@ func Provider() tfbridge.ProviderInfo {
 			"cpln_policy":              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Policy")},
 			"cpln_secret":              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Secret")},
 			"cpln_service_account":     {Tok: tfbridge.MakeResource(mainPkg, mainMod, "ServiceAccount")},
-			"cpln_service_account_key": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "ServiceAccountKey")},
+			"cpln_service_account_key": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "ServiceAccountKey"), ComputeID: tfbridge.DelegateIDField(resource.PropertyKey("name"), mainPkg, "https://github.com/pulumiverse/pulumi-cpln")},
 			"cpln_volume_set":          {Tok: tfbridge.MakeResource(mainPkg, mainMod, "VolumeSet")},
 			"cpln_workload":            {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Workload")},
 		},
@@ -152,7 +158,7 @@ func Provider() tfbridge.ProviderInfo {
 		Golang: &tfbridge.GolangInfo{
 			ImportBasePath: filepath.Join(
 				fmt.Sprintf("github.com/pulumiverse/pulumi-%[1]s/sdk/", mainPkg),
-				tfbridge.GetModuleMajorVersion(version.Version),
+				tfbridge.GetModuleMajorVersion(version),
 				"go",
 				mainPkg,
 			),

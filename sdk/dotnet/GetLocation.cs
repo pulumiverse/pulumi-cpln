@@ -57,15 +57,15 @@ namespace Pulumiverse.Cpln
         /// 
         /// return await Deployment.RunAsync(() =&gt; 
         /// {
-        ///     var locationLocation = Cpln.GetLocation.Invoke(new()
+        ///     var location = Cpln.GetLocation.Invoke(new()
         ///     {
         ///         Name = "aws-us-west-2",
         ///     });
         /// 
         ///     return new Dictionary&lt;string, object?&gt;
         ///     {
-        ///         ["location"] = locationLocation,
-        ///         ["locationEnabled"] = locationLocation.Apply(getLocationResult =&gt; getLocationResult.Enabled),
+        ///         ["location"] = location,
+        ///         ["locationEnabled"] = location.Apply(getLocationResult =&gt; getLocationResult.Enabled),
         ///     };
         /// });
         /// ```
@@ -118,15 +118,15 @@ namespace Pulumiverse.Cpln
         /// 
         /// return await Deployment.RunAsync(() =&gt; 
         /// {
-        ///     var locationLocation = Cpln.GetLocation.Invoke(new()
+        ///     var location = Cpln.GetLocation.Invoke(new()
         ///     {
         ///         Name = "aws-us-west-2",
         ///     });
         /// 
         ///     return new Dictionary&lt;string, object?&gt;
         ///     {
-        ///         ["location"] = locationLocation,
-        ///         ["locationEnabled"] = locationLocation.Apply(getLocationResult =&gt; getLocationResult.Enabled),
+        ///         ["location"] = location,
+        ///         ["locationEnabled"] = location.Apply(getLocationResult =&gt; getLocationResult.Enabled),
         ///     };
         /// });
         /// ```
@@ -179,15 +179,15 @@ namespace Pulumiverse.Cpln
         /// 
         /// return await Deployment.RunAsync(() =&gt; 
         /// {
-        ///     var locationLocation = Cpln.GetLocation.Invoke(new()
+        ///     var location = Cpln.GetLocation.Invoke(new()
         ///     {
         ///         Name = "aws-us-west-2",
         ///     });
         /// 
         ///     return new Dictionary&lt;string, object?&gt;
         ///     {
-        ///         ["location"] = locationLocation,
-        ///         ["locationEnabled"] = locationLocation.Apply(getLocationResult =&gt; getLocationResult.Enabled),
+        ///         ["location"] = location,
+        ///         ["locationEnabled"] = location.Apply(getLocationResult =&gt; getLocationResult.Enabled),
         ///     };
         /// });
         /// ```

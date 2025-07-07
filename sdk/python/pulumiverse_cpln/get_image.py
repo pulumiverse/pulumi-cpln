@@ -181,7 +181,9 @@ def get_image(name: Optional[builtins.str] = None,
     import pulumi
     import pulumi_cpln as cpln
 
+    # Get latest image
     image_name_only = cpln.get_image(name="IMAGE_NAME")
+    # Get Specific image
     image_name_with_tag = cpln.get_image(name="IMAGE_NAME:TAG")
     pulumi.export("latestImage", image_name_only)
     pulumi.export("specificImage", image_name_with_tag)
@@ -256,7 +258,9 @@ def get_image_output(name: Optional[pulumi.Input[builtins.str]] = None,
     import pulumi
     import pulumi_cpln as cpln
 
+    # Get latest image
     image_name_only = cpln.get_image(name="IMAGE_NAME")
+    # Get Specific image
     image_name_with_tag = cpln.get_image(name="IMAGE_NAME:TAG")
     pulumi.export("latestImage", image_name_only)
     pulumi.export("specificImage", image_name_with_tag)

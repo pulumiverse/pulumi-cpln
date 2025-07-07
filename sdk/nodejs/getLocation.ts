@@ -47,11 +47,15 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as cpln from "@pulumiverse/cpln";
  *
- * const locationLocation = cpln.getLocation({
- *     name: "aws-us-west-2",
- * });
- * export const location = locationLocation;
- * export const locationEnabled = locationLocation.then(locationLocation => locationLocation.enabled);
+ * export = async () => {
+ *     const location = await cpln.getLocation({
+ *         name: "aws-us-west-2",
+ *     });
+ *     return {
+ *         location: location,
+ *         locationEnabled: location.enabled,
+ *     };
+ * }
  * ```
  */
 export function getLocation(args: GetLocationArgs, opts?: pulumi.InvokeOptions): Promise<GetLocationResult> {
@@ -127,11 +131,15 @@ export interface GetLocationResult {
  * import * as pulumi from "@pulumi/pulumi";
  * import * as cpln from "@pulumiverse/cpln";
  *
- * const locationLocation = cpln.getLocation({
- *     name: "aws-us-west-2",
- * });
- * export const location = locationLocation;
- * export const locationEnabled = locationLocation.then(locationLocation => locationLocation.enabled);
+ * export = async () => {
+ *     const location = await cpln.getLocation({
+ *         name: "aws-us-west-2",
+ *     });
+ *     return {
+ *         location: location,
+ *         locationEnabled: location.enabled,
+ *     };
+ * }
  * ```
  */
 export function getLocationOutput(args: GetLocationOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetLocationResult> {

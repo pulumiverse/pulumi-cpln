@@ -65,11 +65,13 @@ namespace Pulumiverse.Cpln
         /// 
         /// return await Deployment.RunAsync(() =&gt; 
         /// {
+        ///     // Get latest image
         ///     var image_name_only = Cpln.GetImage.Invoke(new()
         ///     {
         ///         Name = "IMAGE_NAME",
         ///     });
         /// 
+        ///     // Get Specific image
         ///     var image_name_with_tag = Cpln.GetImage.Invoke(new()
         ///     {
         ///         Name = "IMAGE_NAME:TAG",
@@ -139,11 +141,13 @@ namespace Pulumiverse.Cpln
         /// 
         /// return await Deployment.RunAsync(() =&gt; 
         /// {
+        ///     // Get latest image
         ///     var image_name_only = Cpln.GetImage.Invoke(new()
         ///     {
         ///         Name = "IMAGE_NAME",
         ///     });
         /// 
+        ///     // Get Specific image
         ///     var image_name_with_tag = Cpln.GetImage.Invoke(new()
         ///     {
         ///         Name = "IMAGE_NAME:TAG",
@@ -213,11 +217,13 @@ namespace Pulumiverse.Cpln
         /// 
         /// return await Deployment.RunAsync(() =&gt; 
         /// {
+        ///     // Get latest image
         ///     var image_name_only = Cpln.GetImage.Invoke(new()
         ///     {
         ///         Name = "IMAGE_NAME",
         ///     });
         /// 
+        ///     // Get Specific image
         ///     var image_name_with_tag = Cpln.GetImage.Invoke(new()
         ///     {
         ///         Name = "IMAGE_NAME:TAG",

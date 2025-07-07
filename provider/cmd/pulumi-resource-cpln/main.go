@@ -17,9 +17,10 @@
 package main
 
 import (
+	"context"
 	_ "embed"
 
-	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
+	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfbridge"
 	cpln "github.com/pulumiverse/pulumi-cpln/provider"
 	"github.com/pulumiverse/pulumi-cpln/provider/pkg/version"
 )
@@ -27,7 +28,15 @@ import (
 //go:embed schema-embed.json
 var pulumiSchema []byte
 
+//go:embed bridge-metadata.json
+var bridgeMetadata []byte
+
 func main() {
+	meta := tfbridge.ProviderMetadata{
+		PackageSchema:  pulumiSchema,
+		BridgeMetadata: bridgeMetadata,
+	}
+
 	// Modify the path to point to the new provider
-	tfbridge.Main("cpln", version.Version, cpln.Provider(), pulumiSchema)
+	tfbridge.Main(context.Background(), version.Version, cpln.Provider(version.Version), meta)
 }
