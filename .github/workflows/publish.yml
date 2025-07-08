@@ -83,7 +83,7 @@ jobs:
         shell: bash
         run: |
           # Get latest stable release. Return only first column from result (tag).
-          LAST_VERSION=$(gh release view --repo pulumi/pulumi-cpln --json tagName -q .tagName || echo "No stable release" )
+          LAST_VERSION=$(gh release view --repo pulumiverse/pulumi-cpln --json tagName -q .tagName || echo "No stable release" )
           {
             echo 'summary<<EOF'
             if [[ "$LAST_VERSION" != "No stable release" ]]; then
