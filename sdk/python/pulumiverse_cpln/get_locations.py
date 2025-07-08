@@ -104,8 +104,8 @@ def get_locations(opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetLo
     import pulumi
     import pulumi_cpln as cpln
 
-    locations_locations = cpln.get_locations()
-    pulumi.export("locations", locations_locations.locations)
+    locations = cpln.get_locations()
+    pulumi.export("locations", locations.locations)
     ```
     """
     __args__ = dict()
@@ -159,8 +159,8 @@ def get_locations_output(opts: Optional[Union[pulumi.InvokeOptions, pulumi.Invok
     import pulumi
     import pulumi_cpln as cpln
 
-    locations_locations = cpln.get_locations()
-    pulumi.export("locations", locations_locations.locations)
+    locations = cpln.get_locations()
+    pulumi.export("locations", locations.locations)
     ```
     """
     __args__ = dict()

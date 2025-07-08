@@ -59,14 +59,14 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			locationLocation, err := cpln.LookupLocation(ctx, &cpln.LookupLocationArgs{
+//			location, err := cpln.LookupLocation(ctx, &cpln.LookupLocationArgs{
 //				Name: "aws-us-west-2",
 //			}, nil)
 //			if err != nil {
 //				return err
 //			}
-//			ctx.Export("location", locationLocation)
-//			ctx.Export("locationEnabled", locationLocation.Enabled)
+//			ctx.Export("location", location)
+//			ctx.Export("locationEnabled", location.Enabled)
 //			return nil
 //		})
 //	}

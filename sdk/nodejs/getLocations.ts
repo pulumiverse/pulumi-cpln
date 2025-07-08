@@ -49,8 +49,12 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as cpln from "@pulumiverse/cpln";
  *
- * const locationsLocations = cpln.getLocations({});
- * export const locations = locationsLocations.then(locationsLocations => locationsLocations.locations);
+ * export = async () => {
+ *     const locations = await cpln.getLocations({});
+ *     return {
+ *         locations: locations.locations,
+ *     };
+ * }
  * ```
  */
 export function getLocations(opts?: pulumi.InvokeOptions): Promise<GetLocationsResult> {
@@ -112,8 +116,12 @@ export interface GetLocationsResult {
  * import * as pulumi from "@pulumi/pulumi";
  * import * as cpln from "@pulumiverse/cpln";
  *
- * const locationsLocations = cpln.getLocations({});
- * export const locations = locationsLocations.then(locationsLocations => locationsLocations.locations);
+ * export = async () => {
+ *     const locations = await cpln.getLocations({});
+ *     return {
+ *         locations: locations.locations,
+ *     };
+ * }
  * ```
  */
 export function getLocationsOutput(opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetLocationsResult> {

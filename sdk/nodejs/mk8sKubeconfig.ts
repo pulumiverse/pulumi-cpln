@@ -33,7 +33,10 @@ import * as utilities from "./utilities";
  * import * as cpln from "@pulumiverse/cpln";
  *
  * export = async () => {
- *     const _new = new cpln.Mk8sKubeconfig("new", {profile: "default"});
+ *     const _new = new cpln.Mk8sKubeconfig("new", {
+ *         name: "generic-cluster",
+ *         profile: "default",
+ *     });
  *     return {
  *         "generic-cluster-kubeconfig": _new.kubeconfig,
  *     };
@@ -47,7 +50,10 @@ import * as utilities from "./utilities";
  * import * as cpln from "@pulumiverse/cpln";
  *
  * export = async () => {
- *     const _new = new cpln.Mk8sKubeconfig("new", {serviceAccount: "devops-sa"});
+ *     const _new = new cpln.Mk8sKubeconfig("new", {
+ *         name: "generic-cluster",
+ *         serviceAccount: "devops-sa",
+ *     });
  *     return {
  *         "generic-cluster-kubeconfig": _new.kubeconfig,
  *     };

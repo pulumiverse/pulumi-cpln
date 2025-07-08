@@ -5,7 +5,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 )
 
-func NewProvider() provider.Provider {
-	version := "1.2.1"
+func NewProvider(version string) provider.Provider {
 	return cpln.New(version)()
 }

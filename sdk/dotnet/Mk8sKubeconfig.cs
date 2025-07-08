@@ -44,6 +44,7 @@ namespace Pulumiverse.Cpln
     /// {
     ///     var @new = new Cpln.Mk8sKubeconfig("new", new()
     ///     {
+    ///         Name = "generic-cluster",
     ///         Profile = "default",
     ///     });
     /// 
@@ -66,6 +67,7 @@ namespace Pulumiverse.Cpln
     /// {
     ///     var @new = new Cpln.Mk8sKubeconfig("new", new()
     ///     {
+    ///         Name = "generic-cluster",
     ///         ServiceAccount = "devops-sa",
     ///     });
     /// 

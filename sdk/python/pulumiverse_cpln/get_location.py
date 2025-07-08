@@ -182,9 +182,9 @@ def get_location(name: Optional[builtins.str] = None,
     import pulumi
     import pulumi_cpln as cpln
 
-    location_location = cpln.get_location(name="aws-us-west-2")
-    pulumi.export("location", location_location)
-    pulumi.export("locationEnabled", location_location.enabled)
+    location = cpln.get_location(name="aws-us-west-2")
+    pulumi.export("location", location)
+    pulumi.export("locationEnabled", location.enabled)
     ```
     """
     __args__ = dict()
@@ -249,9 +249,9 @@ def get_location_output(name: Optional[pulumi.Input[builtins.str]] = None,
     import pulumi
     import pulumi_cpln as cpln
 
-    location_location = cpln.get_location(name="aws-us-west-2")
-    pulumi.export("location", location_location)
-    pulumi.export("locationEnabled", location_location.enabled)
+    location = cpln.get_location(name="aws-us-west-2")
+    pulumi.export("location", location)
+    pulumi.export("locationEnabled", location.enabled)
     ```
     """
     __args__ = dict()

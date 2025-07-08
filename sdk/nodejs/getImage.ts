@@ -55,9 +55,11 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as cpln from "@pulumiverse/cpln";
  *
+ * // Get latest image
  * const image_name_only = cpln.getImage({
  *     name: "IMAGE_NAME",
  * });
+ * // Get Specific image
  * const image_name_with_tag = cpln.getImage({
  *     name: "IMAGE_NAME:TAG",
  * });
@@ -145,9 +147,11 @@ export interface GetImageResult {
  * import * as pulumi from "@pulumi/pulumi";
  * import * as cpln from "@pulumiverse/cpln";
  *
+ * // Get latest image
  * const image_name_only = cpln.getImage({
  *     name: "IMAGE_NAME",
  * });
+ * // Get Specific image
  * const image_name_with_tag = cpln.getImage({
  *     name: "IMAGE_NAME:TAG",
  * });

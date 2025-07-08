@@ -8879,7 +8879,7 @@
             }
         },
         "cpln:index/mk8sKubeconfig:Mk8sKubeconfig": {
-            "description": "Obtain the Cluster’s Kubeconfig.\n\n## Declaration\n\n### Required\n\n- **name** (String) Name of the Mk8s.\n\n\u003e **Note** Only one of the below can be included in the resource.\n\n- **profile** (String) The name of the cpln profile used to generate the kubeconfig file for authenticating with your Kubernetes cluster.\n- **service_account** (String) The name of an existing service account for which a key will be generated, enabling kubeconfig-based authentication with your Kubernetes cluster.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **kubeconfig** (String) The Kubeconfig in YAML format.\n\n## Example Usage\n\n### Profile\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nexport = async () =\u003e {\n    const _new = new cpln.Mk8sKubeconfig(\"new\", {profile: \"default\"});\n    return {\n        \"generic-cluster-kubeconfig\": _new.kubeconfig,\n    };\n}\n```\n```python\nimport pulumi\nimport pulumiverse_cpln as cpln\n\nnew = cpln.Mk8sKubeconfig(\"new\", profile=\"default\")\npulumi.export(\"generic-cluster-kubeconfig\", new.kubeconfig)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumiverse.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var @new = new Cpln.Mk8sKubeconfig(\"new\", new()\n    {\n        Profile = \"default\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"generic-cluster-kubeconfig\"] = @new.Kubeconfig,\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tnew, err := cpln.NewMk8sKubeconfig(ctx, \"new\", \u0026cpln.Mk8sKubeconfigArgs{\n\t\t\tProfile: pulumi.String(\"default\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"generic-cluster-kubeconfig\", new.Kubeconfig)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.Mk8sKubeconfig;\nimport com.pulumi.cpln.Mk8sKubeconfigArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var new_ = new Mk8sKubeconfig(\"new\", Mk8sKubeconfigArgs.builder()\n            .profile(\"default\")\n            .build());\n\n        ctx.export(\"generic-cluster-kubeconfig\", new_.kubeconfig());\n    }\n}\n```\n```yaml\nresources:\n  new:\n    type: cpln:Mk8sKubeconfig\n    properties:\n      profile: default\noutputs:\n  generic-cluster-kubeconfig: ${new.kubeconfig}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\n### Service Account\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nexport = async () =\u003e {\n    const _new = new cpln.Mk8sKubeconfig(\"new\", {serviceAccount: \"devops-sa\"});\n    return {\n        \"generic-cluster-kubeconfig\": _new.kubeconfig,\n    };\n}\n```\n```python\nimport pulumi\nimport pulumiverse_cpln as cpln\n\nnew = cpln.Mk8sKubeconfig(\"new\", service_account=\"devops-sa\")\npulumi.export(\"generic-cluster-kubeconfig\", new.kubeconfig)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumiverse.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var @new = new Cpln.Mk8sKubeconfig(\"new\", new()\n    {\n        ServiceAccount = \"devops-sa\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"generic-cluster-kubeconfig\"] = @new.Kubeconfig,\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tnew, err := cpln.NewMk8sKubeconfig(ctx, \"new\", \u0026cpln.Mk8sKubeconfigArgs{\n\t\t\tServiceAccount: pulumi.String(\"devops-sa\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"generic-cluster-kubeconfig\", new.Kubeconfig)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.Mk8sKubeconfig;\nimport com.pulumi.cpln.Mk8sKubeconfigArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var new_ = new Mk8sKubeconfig(\"new\", Mk8sKubeconfigArgs.builder()\n            .serviceAccount(\"devops-sa\")\n            .build());\n\n        ctx.export(\"generic-cluster-kubeconfig\", new_.kubeconfig());\n    }\n}\n```\n```yaml\nresources:\n  new:\n    type: cpln:Mk8sKubeconfig\n    properties:\n      serviceAccount: devops-sa\noutputs:\n  generic-cluster-kubeconfig: ${new.kubeconfig}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "description": "Obtain the Cluster’s Kubeconfig.\n\n## Declaration\n\n### Required\n\n- **name** (String) Name of the Mk8s.\n\n\u003e **Note** Only one of the below can be included in the resource.\n\n- **profile** (String) The name of the cpln profile used to generate the kubeconfig file for authenticating with your Kubernetes cluster.\n- **service_account** (String) The name of an existing service account for which a key will be generated, enabling kubeconfig-based authentication with your Kubernetes cluster.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **kubeconfig** (String) The Kubeconfig in YAML format.\n\n## Example Usage\n\n### Profile\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nexport = async () =\u003e {\n    const _new = new cpln.Mk8sKubeconfig(\"new\", {\n        name: \"generic-cluster\",\n        profile: \"default\",\n    });\n    return {\n        \"generic-cluster-kubeconfig\": _new.kubeconfig,\n    };\n}\n```\n```python\nimport pulumi\nimport pulumiverse_cpln as cpln\n\nnew = cpln.Mk8sKubeconfig(\"new\",\n    name=\"generic-cluster\",\n    profile=\"default\")\npulumi.export(\"generic-cluster-kubeconfig\", new.kubeconfig)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumiverse.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var @new = new Cpln.Mk8sKubeconfig(\"new\", new()\n    {\n        Name = \"generic-cluster\",\n        Profile = \"default\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"generic-cluster-kubeconfig\"] = @new.Kubeconfig,\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tnew, err := cpln.NewMk8sKubeconfig(ctx, \"new\", \u0026cpln.Mk8sKubeconfigArgs{\n\t\t\tName:    pulumi.String(\"generic-cluster\"),\n\t\t\tProfile: pulumi.String(\"default\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"generic-cluster-kubeconfig\", new.Kubeconfig)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.Mk8sKubeconfig;\nimport com.pulumi.cpln.Mk8sKubeconfigArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var new_ = new Mk8sKubeconfig(\"new\", Mk8sKubeconfigArgs.builder()\n            .name(\"generic-cluster\")\n            .profile(\"default\")\n            .build());\n\n        ctx.export(\"generic-cluster-kubeconfig\", new_.kubeconfig());\n    }\n}\n```\n```yaml\nresources:\n  new:\n    type: cpln:Mk8sKubeconfig\n    properties:\n      name: generic-cluster\n      profile: default\noutputs:\n  generic-cluster-kubeconfig: ${new.kubeconfig}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\n### Service Account\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nexport = async () =\u003e {\n    const _new = new cpln.Mk8sKubeconfig(\"new\", {\n        name: \"generic-cluster\",\n        serviceAccount: \"devops-sa\",\n    });\n    return {\n        \"generic-cluster-kubeconfig\": _new.kubeconfig,\n    };\n}\n```\n```python\nimport pulumi\nimport pulumiverse_cpln as cpln\n\nnew = cpln.Mk8sKubeconfig(\"new\",\n    name=\"generic-cluster\",\n    service_account=\"devops-sa\")\npulumi.export(\"generic-cluster-kubeconfig\", new.kubeconfig)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumiverse.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var @new = new Cpln.Mk8sKubeconfig(\"new\", new()\n    {\n        Name = \"generic-cluster\",\n        ServiceAccount = \"devops-sa\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"generic-cluster-kubeconfig\"] = @new.Kubeconfig,\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tnew, err := cpln.NewMk8sKubeconfig(ctx, \"new\", \u0026cpln.Mk8sKubeconfigArgs{\n\t\t\tName:           pulumi.String(\"generic-cluster\"),\n\t\t\tServiceAccount: pulumi.String(\"devops-sa\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"generic-cluster-kubeconfig\", new.Kubeconfig)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.Mk8sKubeconfig;\nimport com.pulumi.cpln.Mk8sKubeconfigArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var new_ = new Mk8sKubeconfig(\"new\", Mk8sKubeconfigArgs.builder()\n            .name(\"generic-cluster\")\n            .serviceAccount(\"devops-sa\")\n            .build());\n\n        ctx.export(\"generic-cluster-kubeconfig\", new_.kubeconfig());\n    }\n}\n```\n```yaml\nresources:\n  new:\n    type: cpln:Mk8sKubeconfig\n    properties:\n      name: generic-cluster\n      serviceAccount: devops-sa\noutputs:\n  generic-cluster-kubeconfig: ${new.kubeconfig}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
             "properties": {
                 "kubeconfig": {
                     "type": "string",
@@ -10581,20 +10581,20 @@
                 "description": "A collection of values returned by getCloudAccount.\n",
                 "properties": {
                     "awsIdentifiers": {
-                        "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "type": "array"
                     },
                     "id": {
                         "type": "string"
                     }
                 },
-                "type": "object",
                 "required": [
                     "awsIdentifiers",
                     "id"
-                ]
+                ],
+                "type": "object"
             }
         },
         "cpln:index/getGvc:getGvc": {
@@ -10673,17 +10673,17 @@
                         "type": "string"
                     },
                     "domain": {
-                        "type": "string",
-                        "deprecationMessage": "Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead."
+                        "deprecationMessage": "Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.",
+                        "type": "string"
                     },
                     "endpointNamingFormat": {
                         "type": "string"
                     },
                     "env": {
-                        "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "type": "object"
                     },
                     "id": {
                         "type": "string"
@@ -10695,10 +10695,10 @@
                         "$ref": "#/types/cpln:index/getGvcLoadBalancer:getGvcLoadBalancer"
                     },
                     "locations": {
-                        "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "type": "array"
                     },
                     "name": {
                         "type": "string"
@@ -10707,10 +10707,10 @@
                         "$ref": "#/types/cpln:index/getGvcOtelTracing:getGvcOtelTracing"
                     },
                     "pullSecrets": {
-                        "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "type": "array"
                     },
                     "selfLink": {
                         "type": "string"
@@ -10719,13 +10719,12 @@
                         "$ref": "#/types/cpln:index/getGvcSidecar:getGvcSidecar"
                     },
                     "tags": {
-                        "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "type": "object"
                     }
                 },
-                "type": "object",
                 "required": [
                     "alias",
                     "cplnId",
@@ -10735,11 +10734,12 @@
                     "name",
                     "selfLink",
                     "tags"
-                ]
+                ],
+                "type": "object"
             }
         },
         "cpln:index/getImage:getImage": {
-            "description": "Use this data source to access information about an [Image](https://docs.controlplane.com/reference/image) within Control Plane.\n\n## Required\n\n- **name** (String) Name of the image. If the tag of the image is not specified, the latest image will be fetched for this data source.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the Image.\n- **name** (String) Name of the Image.\n- **tags** (Map of String) Key-value map of resource tags.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n- **tag** (String) Tag of the image.\n- **repository** (String) Respository name of the image.\n- **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.\n- **manifest** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--manifest\"\u003e\u003c/a\u003e\n\n### `manifest`\n\n The manifest provides configuration and layers information about the image. It plays a crucial role in the Docker image distribution system, enabling image creation, verification, and replication in a consistent and secure manner.\n\n- **config** (Block List, Max: 1) (see below).\n- **layers** (Block List) (see below).\n- **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.\n- **schema_version** (Number) The version of the Docker Image Manifest format.\n\n\u003ca id=\"nestedblock--config--layers\"\u003e\u003c/a\u003e\n\n### `config` and `layers`\n\nThe config is a JSON blob that contains the image configuration data which includes environment variables, default command to run, and other settings necessary to run the container based on this image.\n\nLayers lists the digests of the image's layers. These layers are filesystem changes or additions made in each step of the Docker image's creation process. The layers are stored separately and pulled as needed, which allows for efficient storage and transfer of images. Each layer is represented by a SHA256 digest, ensuring the integrity and authenticity of the image.\n\n- **size** (Number) The size of the image or layer in bytes. This helps in estimating the space required and the download time.\n- **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.\n- **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nconst image_name_only = cpln.getImage({\n    name: \"IMAGE_NAME\",\n});\nconst image_name_with_tag = cpln.getImage({\n    name: \"IMAGE_NAME:TAG\",\n});\nexport const latestImage = image_name_only;\nexport const specificImage = image_name_with_tag;\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\nimage_name_only = cpln.get_image(name=\"IMAGE_NAME\")\nimage_name_with_tag = cpln.get_image(name=\"IMAGE_NAME:TAG\")\npulumi.export(\"latestImage\", image_name_only)\npulumi.export(\"specificImage\", image_name_with_tag)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var image_name_only = Cpln.GetImage.Invoke(new()\n    {\n        Name = \"IMAGE_NAME\",\n    });\n\n    var image_name_with_tag = Cpln.GetImage.Invoke(new()\n    {\n        Name = \"IMAGE_NAME:TAG\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"latestImage\"] = image_name_only,\n        [\"specificImage\"] = image_name_with_tag,\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\timage_name_only, err := cpln.GetImage(ctx, \u0026cpln.GetImageArgs{\n\t\t\tName: \"IMAGE_NAME\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\timage_name_with_tag, err := cpln.GetImage(ctx, \u0026cpln.GetImageArgs{\n\t\t\tName: \"IMAGE_NAME:TAG\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"latestImage\", image_name_only)\n\t\tctx.Export(\"specificImage\", image_name_with_tag)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport com.pulumi.cpln.inputs.GetImageArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var image-name-only = CplnFunctions.getImage(GetImageArgs.builder()\n            .name(\"IMAGE_NAME\")\n            .build());\n\n        final var image-name-with-tag = CplnFunctions.getImage(GetImageArgs.builder()\n            .name(\"IMAGE_NAME:TAG\")\n            .build());\n\n        ctx.export(\"latestImage\", image_name_only);\n        ctx.export(\"specificImage\", image_name_with_tag);\n    }\n}\n```\n```yaml\nvariables:\n  image-name-only:\n    fn::invoke:\n      function: cpln:getImage\n      arguments:\n        name: IMAGE_NAME\n  image-name-with-tag:\n    fn::invoke:\n      function: cpln:getImage\n      arguments:\n        name: IMAGE_NAME:TAG\noutputs:\n  latestImage: ${[\"image-name-only\"]}\n  specificImage: ${[\"image-name-with-tag\"]}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "description": "Use this data source to access information about an [Image](https://docs.controlplane.com/reference/image) within Control Plane.\n\n## Required\n\n- **name** (String) Name of the image. If the tag of the image is not specified, the latest image will be fetched for this data source.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the Image.\n- **name** (String) Name of the Image.\n- **tags** (Map of String) Key-value map of resource tags.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n- **tag** (String) Tag of the image.\n- **repository** (String) Respository name of the image.\n- **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.\n- **manifest** (Block List, Max: 1) (see below)\n\n\u003ca id=\"nestedblock--manifest\"\u003e\u003c/a\u003e\n\n### `manifest`\n\n The manifest provides configuration and layers information about the image. It plays a crucial role in the Docker image distribution system, enabling image creation, verification, and replication in a consistent and secure manner.\n\n- **config** (Block List, Max: 1) (see below).\n- **layers** (Block List) (see below).\n- **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.\n- **schema_version** (Number) The version of the Docker Image Manifest format.\n\n\u003ca id=\"nestedblock--config--layers\"\u003e\u003c/a\u003e\n\n### `config` and `layers`\n\nThe config is a JSON blob that contains the image configuration data which includes environment variables, default command to run, and other settings necessary to run the container based on this image.\n\nLayers lists the digests of the image's layers. These layers are filesystem changes or additions made in each step of the Docker image's creation process. The layers are stored separately and pulled as needed, which allows for efficient storage and transfer of images. Each layer is represented by a SHA256 digest, ensuring the integrity and authenticity of the image.\n\n- **size** (Number) The size of the image or layer in bytes. This helps in estimating the space required and the download time.\n- **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.\n- **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\n// Get latest image\nconst image_name_only = cpln.getImage({\n    name: \"IMAGE_NAME\",\n});\n// Get Specific image\nconst image_name_with_tag = cpln.getImage({\n    name: \"IMAGE_NAME:TAG\",\n});\nexport const latestImage = image_name_only;\nexport const specificImage = image_name_with_tag;\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\n# Get latest image\nimage_name_only = cpln.get_image(name=\"IMAGE_NAME\")\n# Get Specific image\nimage_name_with_tag = cpln.get_image(name=\"IMAGE_NAME:TAG\")\npulumi.export(\"latestImage\", image_name_only)\npulumi.export(\"specificImage\", image_name_with_tag)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    // Get latest image\n    var image_name_only = Cpln.GetImage.Invoke(new()\n    {\n        Name = \"IMAGE_NAME\",\n    });\n\n    // Get Specific image\n    var image_name_with_tag = Cpln.GetImage.Invoke(new()\n    {\n        Name = \"IMAGE_NAME:TAG\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"latestImage\"] = image_name_only,\n        [\"specificImage\"] = image_name_with_tag,\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t// Get latest image\n\t\timage_name_only, err := cpln.GetImage(ctx, \u0026cpln.GetImageArgs{\n\t\t\tName: \"IMAGE_NAME\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t// Get Specific image\n\t\timage_name_with_tag, err := cpln.GetImage(ctx, \u0026cpln.GetImageArgs{\n\t\t\tName: \"IMAGE_NAME:TAG\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"latestImage\", image_name_only)\n\t\tctx.Export(\"specificImage\", image_name_with_tag)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport com.pulumi.cpln.inputs.GetImageArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        // Get latest image\n        final var image-name-only = CplnFunctions.getImage(GetImageArgs.builder()\n            .name(\"IMAGE_NAME\")\n            .build());\n\n        // Get Specific image\n        final var image-name-with-tag = CplnFunctions.getImage(GetImageArgs.builder()\n            .name(\"IMAGE_NAME:TAG\")\n            .build());\n\n        ctx.export(\"latestImage\", image_name_only);\n        ctx.export(\"specificImage\", image_name_with_tag);\n    }\n}\n```\n```yaml\nvariables:\n  # Get latest image\n  image-name-only:\n    fn::invoke:\n      function: cpln:getImage\n      arguments:\n        name: IMAGE_NAME\n  # Get Specific image\n  image-name-with-tag:\n    fn::invoke:\n      function: cpln:getImage\n      arguments:\n        name: IMAGE_NAME:TAG\noutputs:\n  latestImage: ${[\"image-name-only\"]}\n  specificImage: ${[\"image-name-with-tag\"]}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getImage.\n",
                 "properties": {
@@ -10774,10 +10774,10 @@
                         "type": "string"
                     },
                     "manifests": {
-                        "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/getImageManifest:getImageManifest"
-                        }
+                        },
+                        "type": "array"
                     },
                     "name": {
                         "type": "string"
@@ -10792,13 +10792,12 @@
                         "type": "string"
                     },
                     "tags": {
-                        "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "type": "object"
                     }
                 },
-                "type": "object",
                 "required": [
                     "cplnId",
                     "description",
@@ -10810,7 +10809,8 @@
                     "selfLink",
                     "tag",
                     "tags"
-                ]
+                ],
+                "type": "object"
             }
         },
         "cpln:index/getImages:getImages": {
@@ -10831,31 +10831,31 @@
                 "description": "A collection of values returned by getImages.\n",
                 "properties": {
                     "id": {
-                        "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource.\n",
+                        "type": "string"
                     },
                     "images": {
-                        "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/getImagesImage:getImagesImage"
-                        }
+                        },
+                        "type": "array"
                     },
                     "queries": {
-                        "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/getImagesQuery:getImagesQuery"
-                        }
+                        },
+                        "type": "array"
                     }
                 },
-                "type": "object",
                 "required": [
                     "images",
                     "id"
-                ]
+                ],
+                "type": "object"
             }
         },
         "cpln:index/getLocation:getLocation": {
-            "description": "Use this data source to access information about a [Location](https://docs.controlplane.com/reference/location) within Control Plane.\n\n## Required\n\n- **name** (String) Name of the location (i.e. `aws-us-west-2`).\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the location.\n- **name** (String) Name of the location.\n- **description** (String) Description of the location.\n- **tags** (Map of String) Key-value map of resource tags.\n- **cloud_provider** (String) Cloud Provider of the location.\n- **region** (String) Region of the location.\n- **enabled** (Boolean) Indication if location is enabled.\n- **geo** (Block List, Max: 1) (see below)\n- **ip_ranges** (List of String) A list of IP ranges of the location.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n\n\u003ca id=\"nestedblock--geo\"\u003e\u003c/a\u003e\n\n### `geo`\n\nLocation geographical details\n\n- **lat** (Number) Latitude.\n- **lon** (Number) Longitude.\n- **country** (String) Country.\n- **state** (String) State.\n- **city** (String) City.\n- **continent** (String) Continent.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nconst locationLocation = cpln.getLocation({\n    name: \"aws-us-west-2\",\n});\nexport const location = locationLocation;\nexport const locationEnabled = locationLocation.then(locationLocation =\u003e locationLocation.enabled);\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\nlocation_location = cpln.get_location(name=\"aws-us-west-2\")\npulumi.export(\"location\", location_location)\npulumi.export(\"locationEnabled\", location_location.enabled)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var locationLocation = Cpln.GetLocation.Invoke(new()\n    {\n        Name = \"aws-us-west-2\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"location\"] = locationLocation,\n        [\"locationEnabled\"] = locationLocation.Apply(getLocationResult =\u003e getLocationResult.Enabled),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tlocationLocation, err := cpln.LookupLocation(ctx, \u0026cpln.LookupLocationArgs{\n\t\t\tName: \"aws-us-west-2\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"location\", locationLocation)\n\t\tctx.Export(\"locationEnabled\", locationLocation.Enabled)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport com.pulumi.cpln.inputs.GetLocationArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var locationLocation = CplnFunctions.getLocation(GetLocationArgs.builder()\n            .name(\"aws-us-west-2\")\n            .build());\n\n        ctx.export(\"location\", locationLocation);\n        ctx.export(\"locationEnabled\", locationLocation.enabled());\n    }\n}\n```\n```yaml\nvariables:\n  locationLocation:\n    fn::invoke:\n      function: cpln:getLocation\n      arguments:\n        name: aws-us-west-2\noutputs:\n  location: ${locationLocation}\n  locationEnabled: ${locationLocation.enabled}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "description": "Use this data source to access information about a [Location](https://docs.controlplane.com/reference/location) within Control Plane.\n\n## Required\n\n- **name** (String) Name of the location (i.e. `aws-us-west-2`).\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the location.\n- **name** (String) Name of the location.\n- **description** (String) Description of the location.\n- **tags** (Map of String) Key-value map of resource tags.\n- **cloud_provider** (String) Cloud Provider of the location.\n- **region** (String) Region of the location.\n- **enabled** (Boolean) Indication if location is enabled.\n- **geo** (Block List, Max: 1) (see below)\n- **ip_ranges** (List of String) A list of IP ranges of the location.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n\n\u003ca id=\"nestedblock--geo\"\u003e\u003c/a\u003e\n\n### `geo`\n\nLocation geographical details\n\n- **lat** (Number) Latitude.\n- **lon** (Number) Longitude.\n- **country** (String) Country.\n- **state** (String) State.\n- **city** (String) City.\n- **continent** (String) Continent.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nexport = async () =\u003e {\n    const location = await cpln.getLocation({\n        name: \"aws-us-west-2\",\n    });\n    return {\n        location: location,\n        locationEnabled: location.enabled,\n    };\n}\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\nlocation = cpln.get_location(name=\"aws-us-west-2\")\npulumi.export(\"location\", location)\npulumi.export(\"locationEnabled\", location.enabled)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var location = Cpln.GetLocation.Invoke(new()\n    {\n        Name = \"aws-us-west-2\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"location\"] = location,\n        [\"locationEnabled\"] = location.Apply(getLocationResult =\u003e getLocationResult.Enabled),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tlocation, err := cpln.LookupLocation(ctx, \u0026cpln.LookupLocationArgs{\n\t\t\tName: \"aws-us-west-2\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"location\", location)\n\t\tctx.Export(\"locationEnabled\", location.Enabled)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport com.pulumi.cpln.inputs.GetLocationArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var location = CplnFunctions.getLocation(GetLocationArgs.builder()\n            .name(\"aws-us-west-2\")\n            .build());\n\n        ctx.export(\"location\", location);\n        ctx.export(\"locationEnabled\", location.enabled());\n    }\n}\n```\n```yaml\nvariables:\n  location:\n    fn::invoke:\n      function: cpln:getLocation\n      arguments:\n        name: aws-us-west-2\noutputs:\n  location: ${location}\n  locationEnabled: ${location.enabled}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getLocation.\n",
                 "properties": {
@@ -10890,19 +10890,19 @@
                         "type": "boolean"
                     },
                     "geos": {
-                        "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/getLocationGeo:getLocationGeo"
-                        }
+                        },
+                        "type": "array"
                     },
                     "id": {
                         "type": "string"
                     },
                     "ipRanges": {
-                        "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "type": "array"
                     },
                     "name": {
                         "type": "string"
@@ -10914,13 +10914,12 @@
                         "type": "string"
                     },
                     "tags": {
-                        "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "type": "object"
                     }
                 },
-                "type": "object",
                 "required": [
                     "cloudProvider",
                     "cplnId",
@@ -10933,30 +10932,31 @@
                     "region",
                     "selfLink",
                     "tags"
-                ]
+                ],
+                "type": "object"
             }
         },
         "cpln:index/getLocations:getLocations": {
-            "description": "Use this data source to access information about all [Locations](https://docs.controlplane.com/reference/location) within Control Plane.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **locations** (Block List) (see below).\n\n\u003ca id=\"nestedblock--locations\"\u003e\u003c/a\u003e\n\n### `locations`\n\n- **cpln_id** (String) The ID, in GUID format, of the location.\n- **name** (String) Name of the location.\n- **description** (String) Description of the location.\n- **tags** (Map of String) Key-value map of resource tags.\n- **cloud_provider** (String) Cloud Provider of the location.\n- **region** (String) Region of the location.\n- **enabled** (Boolean) Indication if location is enabled.\n- **geo** (Block List, Max: 1) (see below)\n- **ip_ranges** (List of String) A list of IP ranges of the location.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n\n\u003ca id=\"nestedblock--geo\"\u003e\u003c/a\u003e\n\n### `geo`\n\nLocation geographical details\n\n- **lat** (Number) Latitude.\n- **lon** (Number) Longitude.\n- **country** (String) Country.\n- **state** (String) State.\n- **city** (String) City.\n- **continent** (String) Continent.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nconst locationsLocations = cpln.getLocations({});\nexport const locations = locationsLocations.then(locationsLocations =\u003e locationsLocations.locations);\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\nlocations_locations = cpln.get_locations()\npulumi.export(\"locations\", locations_locations.locations)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var locationsLocations = Cpln.GetLocations.Invoke();\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"locations\"] = locationsLocations.Apply(getLocationsResult =\u003e getLocationsResult.Locations),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tlocationsLocations, err := cpln.GetLocations(ctx, map[string]interface{}{}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"locations\", locationsLocations.Locations)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var locationsLocations = CplnFunctions.getLocations(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference);\n\n        ctx.export(\"locations\", locationsLocations.locations());\n    }\n}\n```\n```yaml\nvariables:\n  locationsLocations:\n    fn::invoke:\n      function: cpln:getLocations\n      arguments: {}\noutputs:\n  locations: ${locationsLocations.locations}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "description": "Use this data source to access information about all [Locations](https://docs.controlplane.com/reference/location) within Control Plane.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **locations** (Block List) (see below).\n\n\u003ca id=\"nestedblock--locations\"\u003e\u003c/a\u003e\n\n### `locations`\n\n- **cpln_id** (String) The ID, in GUID format, of the location.\n- **name** (String) Name of the location.\n- **description** (String) Description of the location.\n- **tags** (Map of String) Key-value map of resource tags.\n- **cloud_provider** (String) Cloud Provider of the location.\n- **region** (String) Region of the location.\n- **enabled** (Boolean) Indication if location is enabled.\n- **geo** (Block List, Max: 1) (see below)\n- **ip_ranges** (List of String) A list of IP ranges of the location.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n\n\u003ca id=\"nestedblock--geo\"\u003e\u003c/a\u003e\n\n### `geo`\n\nLocation geographical details\n\n- **lat** (Number) Latitude.\n- **lon** (Number) Longitude.\n- **country** (String) Country.\n- **state** (String) State.\n- **city** (String) City.\n- **continent** (String) Continent.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nexport = async () =\u003e {\n    const locations = await cpln.getLocations({});\n    return {\n        locations: locations.locations,\n    };\n}\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\nlocations = cpln.get_locations()\npulumi.export(\"locations\", locations.locations)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var locations = Cpln.GetLocations.Invoke();\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"locations\"] = locations.Apply(getLocationsResult =\u003e getLocationsResult.Locations),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tlocations, err := cpln.GetLocations(ctx, map[string]interface{}{}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"locations\", locations.Locations)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var locations = CplnFunctions.getLocations(%!v(PANIC=Format method: runtime error: invalid memory address or nil pointer dereference);\n\n        ctx.export(\"locations\", locations.locations());\n    }\n}\n```\n```yaml\nvariables:\n  locations:\n    fn::invoke:\n      function: cpln:getLocations\n      arguments: {}\noutputs:\n  locations: ${locations.locations}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
             "outputs": {
                 "description": "A collection of values returned by getLocations.\n",
                 "properties": {
                     "id": {
-                        "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource.\n",
+                        "type": "string"
                     },
                     "locations": {
-                        "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/getLocationsLocation:getLocationsLocation"
-                        }
+                        },
+                        "type": "array"
                     }
                 },
-                "type": "object",
                 "required": [
                     "locations",
                     "id"
-                ]
+                ],
+                "type": "object"
             }
         },
         "cpln:index/getOrg:getOrg": {
@@ -10995,10 +10995,10 @@
                         "type": "string"
                     },
                     "invitees": {
-                        "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "type": "array"
                     },
                     "name": {
                         "type": "string"
@@ -11016,19 +11016,18 @@
                         "type": "integer"
                     },
                     "statuses": {
-                        "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/getOrgStatus:getOrgStatus"
-                        }
+                        },
+                        "type": "array"
                     },
                     "tags": {
-                        "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "type": "object"
                     }
                 },
-                "type": "object",
                 "required": [
                     "accountId",
                     "cplnId",
@@ -11040,7 +11039,8 @@
                     "sessionTimeoutSeconds",
                     "statuses",
                     "tags"
-                ]
+                ],
+                "type": "object"
             }
         },
         "cpln:index/getSecret:getSecret": {
@@ -11109,20 +11109,20 @@
                 "description": "A collection of values returned by getSecret.\n",
                 "properties": {
                     "aws": {
-                        "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/getSecretAw:getSecretAw"
-                        }
+                        },
+                        "type": "array"
                     },
                     "azureConnectors": {
-                        "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/getSecretAzureConnector:getSecretAzureConnector"
-                        }
+                        },
+                        "type": "array"
                     },
                     "azureSdk": {
-                        "type": "string",
-                        "secret": true
+                        "secret": true,
+                        "type": "string"
                     },
                     "cplnId": {
                         "type": "string"
@@ -11131,54 +11131,54 @@
                         "type": "string"
                     },
                     "dictionary": {
-                        "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "type": "object"
                     },
                     "dictionaryAsEnvs": {
-                        "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "type": "object"
                     },
                     "docker": {
-                        "type": "string",
-                        "secret": true
+                        "secret": true,
+                        "type": "string"
                     },
                     "ecrs": {
-                        "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/getSecretEcr:getSecretEcr"
-                        }
+                        },
+                        "type": "array"
                     },
                     "gcp": {
-                        "type": "string",
-                        "secret": true
+                        "secret": true,
+                        "type": "string"
                     },
                     "id": {
                         "type": "string"
                     },
                     "keypairs": {
-                        "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/getSecretKeypair:getSecretKeypair"
-                        }
+                        },
+                        "type": "array"
                     },
                     "name": {
                         "type": "string"
                     },
                     "natsAccounts": {
-                        "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/getSecretNatsAccount:getSecretNatsAccount"
-                        }
+                        },
+                        "type": "array"
                     },
                     "opaques": {
-                        "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/getSecretOpaque:getSecretOpaque"
-                        }
+                        },
+                        "type": "array"
                     },
                     "secretLink": {
                         "type": "string"
@@ -11187,25 +11187,24 @@
                         "type": "string"
                     },
                     "tags": {
-                        "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        }
+                        },
+                        "type": "object"
                     },
                     "tls": {
-                        "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/getSecretTl:getSecretTl"
-                        }
+                        },
+                        "type": "array"
                     },
                     "userpasses": {
-                        "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/getSecretUserpass:getSecretUserpass"
-                        }
+                        },
+                        "type": "array"
                     }
                 },
-                "type": "object",
                 "required": [
                     "azureSdk",
                     "cplnId",
@@ -11219,7 +11218,8 @@
                     "secretLink",
                     "selfLink",
                     "tags"
-                ]
+                ],
+                "type": "object"
             }
         },
         "pulumi:providers:cpln/terraformConfig": {

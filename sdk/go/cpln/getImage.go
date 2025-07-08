@@ -67,12 +67,14 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
+//			// Get latest image
 //			image_name_only, err := cpln.GetImage(ctx, &cpln.GetImageArgs{
 //				Name: "IMAGE_NAME",
 //			}, nil)
 //			if err != nil {
 //				return err
 //			}
+//			// Get Specific image
 //			image_name_with_tag, err := cpln.GetImage(ctx, &cpln.GetImageArgs{
 //				Name: "IMAGE_NAME:TAG",
 //			}, nil)

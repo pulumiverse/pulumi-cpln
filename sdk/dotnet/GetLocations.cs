@@ -59,11 +59,11 @@ namespace Pulumiverse.Cpln
         /// 
         /// return await Deployment.RunAsync(() =&gt; 
         /// {
-        ///     var locationsLocations = Cpln.GetLocations.Invoke();
+        ///     var locations = Cpln.GetLocations.Invoke();
         /// 
         ///     return new Dictionary&lt;string, object?&gt;
         ///     {
-        ///         ["locations"] = locationsLocations.Apply(getLocationsResult =&gt; getLocationsResult.Locations),
+        ///         ["locations"] = locations.Apply(getLocationsResult =&gt; getLocationsResult.Locations),
         ///     };
         /// });
         /// ```
@@ -118,11 +118,11 @@ namespace Pulumiverse.Cpln
         /// 
         /// return await Deployment.RunAsync(() =&gt; 
         /// {
-        ///     var locationsLocations = Cpln.GetLocations.Invoke();
+        ///     var locations = Cpln.GetLocations.Invoke();
         /// 
         ///     return new Dictionary&lt;string, object?&gt;
         ///     {
-        ///         ["locations"] = locationsLocations.Apply(getLocationsResult =&gt; getLocationsResult.Locations),
+        ///         ["locations"] = locations.Apply(getLocationsResult =&gt; getLocationsResult.Locations),
         ///     };
         /// });
         /// ```
@@ -177,11 +177,11 @@ namespace Pulumiverse.Cpln
         /// 
         /// return await Deployment.RunAsync(() =&gt; 
         /// {
-        ///     var locationsLocations = Cpln.GetLocations.Invoke();
+        ///     var locations = Cpln.GetLocations.Invoke();
         /// 
         ///     return new Dictionary&lt;string, object?&gt;
         ///     {
-        ///         ["locations"] = locationsLocations.Apply(getLocationsResult =&gt; getLocationsResult.Locations),
+        ///         ["locations"] = locations.Apply(getLocationsResult =&gt; getLocationsResult.Locations),
         ///     };
         /// });
         /// ```

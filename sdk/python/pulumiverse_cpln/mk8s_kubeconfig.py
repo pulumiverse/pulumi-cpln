@@ -183,7 +183,9 @@ class Mk8sKubeconfig(pulumi.CustomResource):
         import pulumi
         import pulumiverse_cpln as cpln
 
-        new = cpln.Mk8sKubeconfig("new", profile="default")
+        new = cpln.Mk8sKubeconfig("new",
+            name="generic-cluster",
+            profile="default")
         pulumi.export("generic-cluster-kubeconfig", new.kubeconfig)
         ```
 
@@ -193,7 +195,9 @@ class Mk8sKubeconfig(pulumi.CustomResource):
         import pulumi
         import pulumiverse_cpln as cpln
 
-        new = cpln.Mk8sKubeconfig("new", service_account="devops-sa")
+        new = cpln.Mk8sKubeconfig("new",
+            name="generic-cluster",
+            service_account="devops-sa")
         pulumi.export("generic-cluster-kubeconfig", new.kubeconfig)
         ```
 
@@ -237,7 +241,9 @@ class Mk8sKubeconfig(pulumi.CustomResource):
         import pulumi
         import pulumiverse_cpln as cpln
 
-        new = cpln.Mk8sKubeconfig("new", profile="default")
+        new = cpln.Mk8sKubeconfig("new",
+            name="generic-cluster",
+            profile="default")
         pulumi.export("generic-cluster-kubeconfig", new.kubeconfig)
         ```
 
@@ -247,7 +253,9 @@ class Mk8sKubeconfig(pulumi.CustomResource):
         import pulumi
         import pulumiverse_cpln as cpln
 
-        new = cpln.Mk8sKubeconfig("new", service_account="devops-sa")
+        new = cpln.Mk8sKubeconfig("new",
+            name="generic-cluster",
+            service_account="devops-sa")
         pulumi.export("generic-cluster-kubeconfig", new.kubeconfig)
         ```
 
