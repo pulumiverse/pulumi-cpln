@@ -21,3 +21,15 @@ provider/**/schema-embed.json
 **/version.txt
 **/nuget
 **/dist
+_out
+
+go.work*
+
+__pycache__
+venv
+sdk/python/build
+sdk/python/*.egg-info
+
+
+# Ignore local build tracking directory
+.make
