@@ -31,11 +31,12 @@ jobs:
         with:
           author: pulumi-bot <bot@pulumi.com>
           base: main
-          body: This pull request was generated automatically by the resync-build workflow
+          body:
+            This pull request was generated automatically by the resync-build workflow
             in this repository.
           branch: chore/resync-${{ github.run_id }}
-          commit-message: Regenerate workflows for pulumi-xyz
+          commit-message: Regenerate workflows for pulumi-cpln
           committer: pulumi-bot <bot@pulumi.com>
           labels: impact/no-changelog-required
-          title: Regenerate Github Actions workflows for pulumi-xyz
+          title: Regenerate Github Actions workflows for pulumi-cpln
           token: ${{ env.GITHUB_TOKEN }}
