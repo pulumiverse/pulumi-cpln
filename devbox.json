@@ -10,9 +10,13 @@
     "curl@8"
   ],
   "shell": {
-    "init_hook": ["export PATH=\"$(pwd)/bin/:$PATH\""],
+    "init_hook": [
+      "export PATH=\"$(pwd)/bin/:$PATH\""
+    ],
     "scripts": {
-      "test": ["echo \"Error: no test specified\" && exit 1"]
+      "test": [
+        "echo \"Error: no test specified\" && exit 1"
+      ]
     }
   }
 }

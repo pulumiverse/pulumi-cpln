@@ -41,7 +41,7 @@ LDFLAGS=$(LDFLAGS_PROJ_VERSION) $(LDFLAGS_UPSTREAM_VERSION) $(LDFLAGS_EXTRAS) $(
 _ := $(shell mkdir -p .make bin .pulumi/bin)
 
 # Build the provider and all SDKs and install ready for testing
-build: install_plugins provider build_sdks install_sdks
+build: install_plugins provider build_sdks install_sdks build_registry_docs
 # Keep aliases for old targets to ensure backwards compatibility
 development: build
 only_build: build
@@ -49,7 +49,7 @@ only_build: build
 # Importantly this is run by CI ahead of restoring the bin directory and resuming SDK builds
 prepare_local_workspace: install_plugins upstream
 # Creates all generated files which need to be committed
-generate: generate_sdks schema
+generate: generate_sdks schema build_registry_docs
 generate_sdks: generate_dotnet generate_go generate_nodejs generate_python
 build_sdks: build_dotnet build_go build_nodejs build_python
 install_sdks: install_dotnet_sdk install_go_sdk install_nodejs_sdk install_python_sdk
@@ -140,10 +140,11 @@ build_java: .make/build_java
 generate_nodejs: .make/generate_nodejs
 build_nodejs: .make/build_nodejs
 .make/generate_nodejs: export PATH := $(WORKING_DIR)/.pulumi/bin:$(PATH)
-.make/generate_nodejs: export VERSION := $(PROVIDER_VERSION)
 .make/generate_nodejs: .make/install_plugins bin/$(CODEGEN)
-	$(GEN_ENVS) VERSION=$(PROVIDER_VERSION) \
-		$(WORKING_DIR)/bin/$(CODEGEN) nodejs --out sdk/nodejs/
+	$(GEN_ENVS) $(WORKING_DIR)/bin/$(CODEGEN) nodejs --out sdk/nodejs/
+	cd sdk/nodejs && \
+	  npm install --no-save && \
+	  npm version "$(PROVIDER_VERSION)" --no-git-tag-version
 	printf "module fake_nodejs_module // Exclude this directory from Go tools\n\ngo 1.17\n" > sdk/nodejs/go.mod
 	@touch $@
 .make/build_nodejs: .make/generate_nodejs
@@ -172,6 +173,12 @@ build_python: .make/build_python
 		../venv/bin/python -m build .
 	@touch $@
 .PHONY: generate_python build_python
+# Run the bridge's registry-docs command to generated the content of the installation docs/ folder at provider repo root
+build_registry_docs: .make/build_registry_docs
+.make/build_registry_docs: .make/install_plugins bin/$(CODEGEN)
+	bin/$(CODEGEN) registry-docs --out $(WORKING_DIR)/docs
+	@touch $@
+.PHONY: build_registry_docs
 
 clean:
 	rm -rf sdk/{dotnet,nodejs,go,python}

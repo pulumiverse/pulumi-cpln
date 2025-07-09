@@ -1,6 +1,6 @@
 {
     "name": "@pulumiverse/cpln",
-    "version": "${VERSION}",
+    "version": "0.0.0-alpha.0",
     "description": "A Pulumi package for creating and managing Control Plane (cpln) resources.",
     "keywords": [
         "pulumi",
