@@ -17,10 +17,9 @@ package main
 import (
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfgen"
 	cpln "github.com/pulumiverse/pulumi-cpln/provider"
-	"github.com/pulumiverse/pulumi-cpln/provider/pkg/version"
 )
 
 func main() {
 	// Modify the path to point to the new provider
-	tfgen.Main("cpln", cpln.Provider(version.Version))
+	tfgen.Main("cpln", cpln.Provider())
 }

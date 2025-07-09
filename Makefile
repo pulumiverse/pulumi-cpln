@@ -142,9 +142,6 @@ build_nodejs: .make/build_nodejs
 .make/generate_nodejs: export PATH := $(WORKING_DIR)/.pulumi/bin:$(PATH)
 .make/generate_nodejs: .make/install_plugins bin/$(CODEGEN)
 	$(GEN_ENVS) $(WORKING_DIR)/bin/$(CODEGEN) nodejs --out sdk/nodejs/
-	cd sdk/nodejs && \
-	  npm install --no-save && \
-	  npm version "$(PROVIDER_VERSION)" --no-git-tag-version
 	printf "module fake_nodejs_module // Exclude this directory from Go tools\n\ngo 1.17\n" > sdk/nodejs/go.mod
 	@touch $@
 .make/build_nodejs: .make/generate_nodejs
