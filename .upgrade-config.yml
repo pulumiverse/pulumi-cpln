@@ -1,2 +1,5 @@
 upstream-provider-name: terraform-provider-cpln
-pr-assign: MajidAbuRmila
+upstream-provider-org: controlplane-com
+remove-plugins: true
+pulumi-infer-version: true
+pr-reviewers: MajidAbuRmila

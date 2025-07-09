@@ -22,7 +22,6 @@ import (
 
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfbridge"
 	cpln "github.com/pulumiverse/pulumi-cpln/provider"
-	"github.com/pulumiverse/pulumi-cpln/provider/pkg/version"
 )
 
 //go:embed schema-embed.json
@@ -38,5 +37,5 @@ func main() {
 	}
 
 	// Modify the path to point to the new provider
-	tfbridge.Main(context.Background(), version.Version, cpln.Provider(version.Version), meta)
+	tfbridge.Main(context.Background(), "cpln", cpln.Provider(), meta)
 }

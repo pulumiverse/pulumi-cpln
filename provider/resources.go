@@ -25,8 +25,10 @@ import (
 
 	pf "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfbridge"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
+	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge/tokens"
 	shim "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
+	"github.com/pulumiverse/pulumi-cpln/provider/pkg/version"
 )
 
 // all of the token components used below.
@@ -50,9 +52,9 @@ func preConfigureCallback(_ resource.PropertyMap, _ shim.ResourceConfig) error {
 }
 
 // Provider returns additional overlaid schema and metadata associated with the provider..
-func Provider(version string) tfbridge.ProviderInfo {
+func Provider() tfbridge.ProviderInfo {
 	// Instantiate the Terraform provider
-	p := pf.ShimProvider(providerShim.NewProvider(version))
+	p := pf.ShimProvider(providerShim.NewProvider())
 
 	// Create a Pulumi provider mapping
 	prov := tfbridge.ProviderInfo{
@@ -82,7 +84,7 @@ func Provider(version string) tfbridge.ProviderInfo {
 		// https://www.pulumi.com/docs/guides/pulumi-packages/schema/#package.
 		Keywords:   []string{"pulumi", "cpln", "category/infrastructure"},
 		License:    "Apache-2.0",
-		Homepage:   "https://www.pulumi.com",
+		Homepage:   "https://www.controlplane.com",
 		Repository: "https://github.com/pulumiverse/pulumi-cpln",
 		// The GitHub Org for the provider - defaults to `terraform-providers`. Note that this
 		// should match the TF provider module's require directive, not any replace directives.
@@ -97,6 +99,7 @@ func Provider(version string) tfbridge.ProviderInfo {
 			// 	},
 			// },
 		},
+		Version:              version.Version,
 		PreConfigureCallback: preConfigureCallback,
 		MetadataInfo:         tfbridge.NewProviderMetadata(metadata),
 		Resources: map[string]*tfbridge.ResourceInfo{
@@ -148,11 +151,7 @@ func Provider(version string) tfbridge.ProviderInfo {
 				"@types/node": "^10.0.0", // so we can access strongly typed node definitions.
 				"@types/mime": "^2.0.0",
 			},
-
-			// See the documentation for tfbridge.OverlayInfo for how to lay out this
-			// section, or refer to the AWS provider. Delete this section if there are
-			// no overlay files.
-			//Overlay: &tfbridge.OverlayInfo{},
+			RespectSchemaVersion: true,
 		},
 		Python: &tfbridge.PythonInfo{
 			PackageName: "pulumiverse_cpln",
@@ -160,24 +159,38 @@ func Provider(version string) tfbridge.ProviderInfo {
 			Requires: map[string]string{
 				"pulumi": ">=3.0.0,<4.0.0",
 			},
+			PyProject:            struct{ Enabled bool }{true},
+			RespectSchemaVersion: true,
 		},
 		Golang: &tfbridge.GolangInfo{
 			ImportBasePath: filepath.Join(
 				fmt.Sprintf("github.com/pulumiverse/pulumi-%[1]s/sdk/", mainPkg),
-				tfbridge.GetModuleMajorVersion(version),
+				tfbridge.GetModuleMajorVersion(version.Version),
 				"go",
 				mainPkg,
 			),
 			GenerateResourceContainerTypes: true,
+			RespectSchemaVersion:           true,
 		},
 		CSharp: &tfbridge.CSharpInfo{
 			RootNamespace: "Pulumiverse",
 			PackageReferences: map[string]string{
 				"Pulumi": "3.*",
 			},
+			RespectSchemaVersion: true,
 		},
 	}
 
+	// MustComputeTokens maps all resources and datasources from the upstream provider into Pulumi.
+	//
+	// tokens.SingleModule puts every upstream item into your provider's main module.
+	//
+	// You shouldn't need to override anything, but if you do, use the [tfbridge.ProviderInfo.Resources]
+	// and [tfbridge.ProviderInfo.DataSources].
+	prov.MustComputeTokens(tokens.SingleModule("cpln_", mainMod,
+		tokens.MakeStandard(mainPkg)))
+
+	prov.MustApplyAutoAliases()
 	prov.SetAutonaming(255, "-")
 
 	return prov

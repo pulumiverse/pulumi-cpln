@@ -1,13 +1,13 @@
 {
     "name": "@pulumiverse/cpln",
-    "version": "0.0.0-alpha.0",
+    "version": "0.0.0-alpha.0+dev",
     "description": "A Pulumi package for creating and managing Control Plane (cpln) resources.",
     "keywords": [
         "pulumi",
         "cpln",
         "category/infrastructure"
     ],
-    "homepage": "https://www.pulumi.com",
+    "homepage": "https://www.controlplane.com",
     "repository": "https://github.com/pulumiverse/pulumi-cpln",
     "license": "Apache-2.0",
     "scripts": {
@@ -24,6 +24,7 @@
     "pulumi": {
         "resource": true,
         "name": "cpln",
+        "version": "0.0.0-alpha.0+dev",
         "server": "github://api.github.com/pulumiverse"
     }
 }
