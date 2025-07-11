@@ -43,7 +43,7 @@ require (
 	github.com/cheggaaa/pb v1.0.29 // indirect
 	github.com/cloudflare/circl v1.6.1 // indirect
 	github.com/containerd/console v1.0.4-0.20230313162750-1ae8d489ac81 // indirect
-	github.com/controlplane-com/terraform-provider-cpln v1.2.3 // indirect
+	github.com/controlplane-com/terraform-provider-cpln v1.2.4 // indirect
 	github.com/cyphar/filepath-securejoin v0.4.1 // indirect
 	github.com/deckarep/golang-set/v2 v2.5.0 // indirect
 	github.com/djherbis/times v1.5.0 // indirect
