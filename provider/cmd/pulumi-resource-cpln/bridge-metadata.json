@@ -382,6 +382,23 @@
                                 },
                                 "nvidia": {
                                     "maxItemsOne": true
+                                },
+                                "registry_mirror": {
+                                    "maxItemsOne": true,
+                                    "elem": {
+                                        "fields": {
+                                            "mirror": {
+                                                "maxItemsOne": false,
+                                                "elem": {
+                                                    "fields": {
+                                                        "mirrors": {
+                                                            "maxItemsOne": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -847,6 +864,9 @@
                                                 "maxItemsOne": true,
                                                 "elem": {
                                                     "fields": {
+                                                        "logging": {
+                                                            "maxItemsOne": true
+                                                        },
                                                         "private_network_ids": {
                                                             "maxItemsOne": false
                                                         }
