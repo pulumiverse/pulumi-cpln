@@ -23,7 +23,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly int? MaxScale;
         /// <summary>
-        /// Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+        /// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
         /// </summary>
         public readonly string? Metric;
         /// <summary>

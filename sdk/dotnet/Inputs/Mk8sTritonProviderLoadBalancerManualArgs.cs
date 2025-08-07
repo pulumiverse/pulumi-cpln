@@ -25,6 +25,9 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("imageId", required: true)]
         public Input<string> ImageId { get; set; } = null!;
 
+        [Input("logging")]
+        public Input<Inputs.Mk8sTritonProviderLoadBalancerManualLoggingArgs>? Logging { get; set; }
+
         [Input("metadata")]
         private InputMap<string>? _metadata;
 

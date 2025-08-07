@@ -1181,6 +1181,9 @@
                 "nvidia": {
                     "$ref": "#/types/cpln:index/Mk8sAddOnsNvidia:Mk8sAddOnsNvidia"
                 },
+                "registryMirror": {
+                    "$ref": "#/types/cpln:index/Mk8sAddOnsRegistryMirror:Mk8sAddOnsRegistryMirror"
+                },
                 "sysbox": {
                     "type": "boolean"
                 }
@@ -1328,6 +1331,34 @@
                 }
             },
             "type": "object"
+        },
+        "cpln:index/Mk8sAddOnsRegistryMirror:Mk8sAddOnsRegistryMirror": {
+            "properties": {
+                "mirrors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sAddOnsRegistryMirrorMirror:Mk8sAddOnsRegistryMirrorMirror"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/Mk8sAddOnsRegistryMirrorMirror:Mk8sAddOnsRegistryMirrorMirror": {
+            "properties": {
+                "mirrors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "registry": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "registry"
+            ]
         },
         "cpln:index/Mk8sAwsProvider:Mk8sAwsProvider": {
             "properties": {
@@ -3583,6 +3614,9 @@
                 "imageId": {
                     "type": "string"
                 },
+                "logging": {
+                    "$ref": "#/types/cpln:index/Mk8sTritonProviderLoadBalancerManualLogging:Mk8sTritonProviderLoadBalancerManualLogging"
+                },
                 "metadata": {
                     "type": "object",
                     "additionalProperties": {
@@ -3634,6 +3668,17 @@
                     ]
                 }
             }
+        },
+        "cpln:index/Mk8sTritonProviderLoadBalancerManualLogging:Mk8sTritonProviderLoadBalancerManualLogging": {
+            "properties": {
+                "externalSyslog": {
+                    "type": "string"
+                },
+                "nodePort": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
         },
         "cpln:index/Mk8sTritonProviderNetworking:Mk8sTritonProviderNetworking": {
             "properties": {
@@ -5549,7 +5594,7 @@
                 },
                 "metric": {
                     "type": "string",
-                    "description": "Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.\n"
+                    "description": "Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.\n"
                 },
                 "metricPercentile": {
                     "type": "string",
@@ -5666,7 +5711,7 @@
                 },
                 "metric": {
                     "type": "string",
-                    "description": "Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.\n"
+                    "description": "Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.\n"
                 },
                 "metricPercentile": {
                     "type": "string",
