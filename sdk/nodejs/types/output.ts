@@ -1194,6 +1194,7 @@ export interface Mk8sAddOns {
      */
     metrics?: outputs.Mk8sAddOnsMetrics;
     nvidia?: outputs.Mk8sAddOnsNvidia;
+    registryMirror?: outputs.Mk8sAddOnsRegistryMirror;
     sysbox?: boolean;
 }
 
@@ -1291,6 +1292,15 @@ export interface Mk8sAddOnsMetricsScrapeAnnotated {
 
 export interface Mk8sAddOnsNvidia {
     taintGpuNodes?: boolean;
+}
+
+export interface Mk8sAddOnsRegistryMirror {
+    mirrors?: outputs.Mk8sAddOnsRegistryMirrorMirror[];
+}
+
+export interface Mk8sAddOnsRegistryMirrorMirror {
+    mirrors?: string[];
+    registry: string;
 }
 
 export interface Mk8sAwsProvider {
@@ -2237,6 +2247,7 @@ export interface Mk8sTritonProviderLoadBalancerManual {
     cnsPublicDomain: string;
     count: number;
     imageId: string;
+    logging?: outputs.Mk8sTritonProviderLoadBalancerManualLogging;
     /**
      * Extra tags to attach to instances from a node pool.
      */
@@ -2254,6 +2265,11 @@ export interface Mk8sTritonProviderLoadBalancerManual {
      * Extra tags to attach to instances from a node pool.
      */
     tags?: {[key: string]: string};
+}
+
+export interface Mk8sTritonProviderLoadBalancerManualLogging {
+    externalSyslog?: string;
+    nodePort?: number;
 }
 
 export interface Mk8sTritonProviderNetworking {
@@ -3326,7 +3342,7 @@ export interface WorkloadLocalOptionAutoscaling {
      */
     maxScale: number;
     /**
-     * Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+     * Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
      */
     metric: string;
     /**
@@ -3397,7 +3413,7 @@ export interface WorkloadOptionsAutoscaling {
      */
     maxScale: number;
     /**
-     * Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+     * Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
      */
     metric: string;
     /**

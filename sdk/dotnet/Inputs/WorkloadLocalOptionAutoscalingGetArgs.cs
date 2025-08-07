@@ -26,7 +26,7 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<int>? MaxScale { get; set; }
 
         /// <summary>
-        /// Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+        /// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
         /// </summary>
         [Input("metric")]
         public Input<string>? Metric { get; set; }

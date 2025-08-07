@@ -130,6 +130,10 @@ __all__ = [
     'Mk8sAddOnsMetricsScrapeAnnotatedArgsDict',
     'Mk8sAddOnsNvidiaArgs',
     'Mk8sAddOnsNvidiaArgsDict',
+    'Mk8sAddOnsRegistryMirrorArgs',
+    'Mk8sAddOnsRegistryMirrorArgsDict',
+    'Mk8sAddOnsRegistryMirrorMirrorArgs',
+    'Mk8sAddOnsRegistryMirrorMirrorArgsDict',
     'Mk8sAwsProviderArgs',
     'Mk8sAwsProviderArgsDict',
     'Mk8sAwsProviderAutoscalerArgs',
@@ -282,6 +286,8 @@ __all__ = [
     'Mk8sTritonProviderLoadBalancerGatewayArgsDict',
     'Mk8sTritonProviderLoadBalancerManualArgs',
     'Mk8sTritonProviderLoadBalancerManualArgsDict',
+    'Mk8sTritonProviderLoadBalancerManualLoggingArgs',
+    'Mk8sTritonProviderLoadBalancerManualLoggingArgsDict',
     'Mk8sTritonProviderNetworkingArgs',
     'Mk8sTritonProviderNetworkingArgsDict',
     'Mk8sTritonProviderNodePoolArgs',
@@ -3565,6 +3571,7 @@ if not MYPY:
         Scrape pods annotated with prometheus.io/scrape=true
         """
         nvidia: NotRequired[pulumi.Input['Mk8sAddOnsNvidiaArgsDict']]
+        registry_mirror: NotRequired[pulumi.Input['Mk8sAddOnsRegistryMirrorArgsDict']]
         sysbox: NotRequired[pulumi.Input[builtins.bool]]
 elif False:
     Mk8sAddOnsArgsDict: TypeAlias = Mapping[str, Any]
@@ -3583,6 +3590,7 @@ class Mk8sAddOnsArgs:
                  logs: Optional[pulumi.Input['Mk8sAddOnsLogsArgs']] = None,
                  metrics: Optional[pulumi.Input['Mk8sAddOnsMetricsArgs']] = None,
                  nvidia: Optional[pulumi.Input['Mk8sAddOnsNvidiaArgs']] = None,
+                 registry_mirror: Optional[pulumi.Input['Mk8sAddOnsRegistryMirrorArgs']] = None,
                  sysbox: Optional[pulumi.Input[builtins.bool]] = None):
         """
         :param pulumi.Input['Mk8sAddOnsMetricsArgs'] metrics: Scrape pods annotated with prometheus.io/scrape=true
@@ -3609,6 +3617,8 @@ class Mk8sAddOnsArgs:
             pulumi.set(__self__, "metrics", metrics)
         if nvidia is not None:
             pulumi.set(__self__, "nvidia", nvidia)
+        if registry_mirror is not None:
+            pulumi.set(__self__, "registry_mirror", registry_mirror)
         if sysbox is not None:
             pulumi.set(__self__, "sysbox", sysbox)
 
@@ -3713,6 +3723,15 @@ class Mk8sAddOnsArgs:
     @nvidia.setter
     def nvidia(self, value: Optional[pulumi.Input['Mk8sAddOnsNvidiaArgs']]):
         pulumi.set(self, "nvidia", value)
+
+    @property
+    @pulumi.getter(name="registryMirror")
+    def registry_mirror(self) -> Optional[pulumi.Input['Mk8sAddOnsRegistryMirrorArgs']]:
+        return pulumi.get(self, "registry_mirror")
+
+    @registry_mirror.setter
+    def registry_mirror(self, value: Optional[pulumi.Input['Mk8sAddOnsRegistryMirrorArgs']]):
+        pulumi.set(self, "registry_mirror", value)
 
     @property
     @pulumi.getter
@@ -4240,6 +4259,64 @@ class Mk8sAddOnsNvidiaArgs:
     @taint_gpu_nodes.setter
     def taint_gpu_nodes(self, value: Optional[pulumi.Input[builtins.bool]]):
         pulumi.set(self, "taint_gpu_nodes", value)
+
+
+if not MYPY:
+    class Mk8sAddOnsRegistryMirrorArgsDict(TypedDict):
+        mirrors: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sAddOnsRegistryMirrorMirrorArgsDict']]]]
+elif False:
+    Mk8sAddOnsRegistryMirrorArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class Mk8sAddOnsRegistryMirrorArgs:
+    def __init__(__self__, *,
+                 mirrors: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sAddOnsRegistryMirrorMirrorArgs']]]] = None):
+        if mirrors is not None:
+            pulumi.set(__self__, "mirrors", mirrors)
+
+    @property
+    @pulumi.getter
+    def mirrors(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sAddOnsRegistryMirrorMirrorArgs']]]]:
+        return pulumi.get(self, "mirrors")
+
+    @mirrors.setter
+    def mirrors(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sAddOnsRegistryMirrorMirrorArgs']]]]):
+        pulumi.set(self, "mirrors", value)
+
+
+if not MYPY:
+    class Mk8sAddOnsRegistryMirrorMirrorArgsDict(TypedDict):
+        registry: pulumi.Input[builtins.str]
+        mirrors: NotRequired[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]
+elif False:
+    Mk8sAddOnsRegistryMirrorMirrorArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class Mk8sAddOnsRegistryMirrorMirrorArgs:
+    def __init__(__self__, *,
+                 registry: pulumi.Input[builtins.str],
+                 mirrors: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None):
+        pulumi.set(__self__, "registry", registry)
+        if mirrors is not None:
+            pulumi.set(__self__, "mirrors", mirrors)
+
+    @property
+    @pulumi.getter
+    def registry(self) -> pulumi.Input[builtins.str]:
+        return pulumi.get(self, "registry")
+
+    @registry.setter
+    def registry(self, value: pulumi.Input[builtins.str]):
+        pulumi.set(self, "registry", value)
+
+    @property
+    @pulumi.getter
+    def mirrors(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]:
+        return pulumi.get(self, "mirrors")
+
+    @mirrors.setter
+    def mirrors(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]):
+        pulumi.set(self, "mirrors", value)
 
 
 if not MYPY:
@@ -10254,6 +10331,7 @@ if not MYPY:
         If set, machine will also get a public IP.
         """
         count: NotRequired[pulumi.Input[builtins.int]]
+        logging: NotRequired[pulumi.Input['Mk8sTritonProviderLoadBalancerManualLoggingArgsDict']]
         metadata: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]]
         """
         Extra tags to attach to instances from a node pool.
@@ -10275,6 +10353,7 @@ class Mk8sTritonProviderLoadBalancerManualArgs:
                  private_network_ids: pulumi.Input[Sequence[pulumi.Input[builtins.str]]],
                  public_network_id: pulumi.Input[builtins.str],
                  count: Optional[pulumi.Input[builtins.int]] = None,
+                 logging: Optional[pulumi.Input['Mk8sTritonProviderLoadBalancerManualLoggingArgs']] = None,
                  metadata: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None):
         """
@@ -10291,6 +10370,8 @@ class Mk8sTritonProviderLoadBalancerManualArgs:
         pulumi.set(__self__, "public_network_id", public_network_id)
         if count is not None:
             pulumi.set(__self__, "count", count)
+        if logging is not None:
+            pulumi.set(__self__, "logging", logging)
         if metadata is not None:
             pulumi.set(__self__, "metadata", metadata)
         if tags is not None:
@@ -10367,6 +10448,15 @@ class Mk8sTritonProviderLoadBalancerManualArgs:
 
     @property
     @pulumi.getter
+    def logging(self) -> Optional[pulumi.Input['Mk8sTritonProviderLoadBalancerManualLoggingArgs']]:
+        return pulumi.get(self, "logging")
+
+    @logging.setter
+    def logging(self, value: Optional[pulumi.Input['Mk8sTritonProviderLoadBalancerManualLoggingArgs']]):
+        pulumi.set(self, "logging", value)
+
+    @property
+    @pulumi.getter
     def metadata(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]]:
         """
         Extra tags to attach to instances from a node pool.
@@ -10388,6 +10478,42 @@ class Mk8sTritonProviderLoadBalancerManualArgs:
     @tags.setter
     def tags(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]]):
         pulumi.set(self, "tags", value)
+
+
+if not MYPY:
+    class Mk8sTritonProviderLoadBalancerManualLoggingArgsDict(TypedDict):
+        external_syslog: NotRequired[pulumi.Input[builtins.str]]
+        node_port: NotRequired[pulumi.Input[builtins.int]]
+elif False:
+    Mk8sTritonProviderLoadBalancerManualLoggingArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class Mk8sTritonProviderLoadBalancerManualLoggingArgs:
+    def __init__(__self__, *,
+                 external_syslog: Optional[pulumi.Input[builtins.str]] = None,
+                 node_port: Optional[pulumi.Input[builtins.int]] = None):
+        if external_syslog is not None:
+            pulumi.set(__self__, "external_syslog", external_syslog)
+        if node_port is not None:
+            pulumi.set(__self__, "node_port", node_port)
+
+    @property
+    @pulumi.getter(name="externalSyslog")
+    def external_syslog(self) -> Optional[pulumi.Input[builtins.str]]:
+        return pulumi.get(self, "external_syslog")
+
+    @external_syslog.setter
+    def external_syslog(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "external_syslog", value)
+
+    @property
+    @pulumi.getter(name="nodePort")
+    def node_port(self) -> Optional[pulumi.Input[builtins.int]]:
+        return pulumi.get(self, "node_port")
+
+    @node_port.setter
+    def node_port(self, value: Optional[pulumi.Input[builtins.int]]):
+        pulumi.set(self, "node_port", value)
 
 
 if not MYPY:
@@ -15810,7 +15936,7 @@ if not MYPY:
         """
         metric: NotRequired[pulumi.Input[builtins.str]]
         """
-        Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+        Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
         """
         metric_percentile: NotRequired[pulumi.Input[builtins.str]]
         """
@@ -15846,7 +15972,7 @@ class WorkloadLocalOptionAutoscalingArgs:
         """
         :param pulumi.Input[builtins.int] max_concurrency: A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
         :param pulumi.Input[builtins.int] max_scale: The maximum allowed number of replicas. Min: `0`. Default `5`.
-        :param pulumi.Input[builtins.str] metric: Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+        :param pulumi.Input[builtins.str] metric: Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
         :param pulumi.Input[builtins.str] metric_percentile: For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
         :param pulumi.Input[builtins.int] min_scale: The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `max_scale`. Default `1`.
         :param pulumi.Input[builtins.int] scale_to_zero_delay: The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
@@ -15897,7 +16023,7 @@ class WorkloadLocalOptionAutoscalingArgs:
     @pulumi.getter
     def metric(self) -> Optional[pulumi.Input[builtins.str]]:
         """
-        Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+        Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
         """
         return pulumi.get(self, "metric")
 
@@ -16175,7 +16301,7 @@ if not MYPY:
         """
         metric: NotRequired[pulumi.Input[builtins.str]]
         """
-        Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+        Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
         """
         metric_percentile: NotRequired[pulumi.Input[builtins.str]]
         """
@@ -16211,7 +16337,7 @@ class WorkloadOptionsAutoscalingArgs:
         """
         :param pulumi.Input[builtins.int] max_concurrency: A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
         :param pulumi.Input[builtins.int] max_scale: The maximum allowed number of replicas. Min: `0`. Default `5`.
-        :param pulumi.Input[builtins.str] metric: Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+        :param pulumi.Input[builtins.str] metric: Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
         :param pulumi.Input[builtins.str] metric_percentile: For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
         :param pulumi.Input[builtins.int] min_scale: The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `max_scale`. Default `1`.
         :param pulumi.Input[builtins.int] scale_to_zero_delay: The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
@@ -16262,7 +16388,7 @@ class WorkloadOptionsAutoscalingArgs:
     @pulumi.getter
     def metric(self) -> Optional[pulumi.Input[builtins.str]]:
         """
-        Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+        Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
         """
         return pulumi.get(self, "metric")
 

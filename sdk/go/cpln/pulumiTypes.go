@@ -6895,9 +6895,10 @@ type Mk8sAddOns struct {
 	LocalPathStorage      *bool                            `pulumi:"localPathStorage"`
 	Logs                  *Mk8sAddOnsLogs                  `pulumi:"logs"`
 	// Scrape pods annotated with prometheus.io/scrape=true
-	Metrics *Mk8sAddOnsMetrics `pulumi:"metrics"`
-	Nvidia  *Mk8sAddOnsNvidia  `pulumi:"nvidia"`
-	Sysbox  *bool              `pulumi:"sysbox"`
+	Metrics        *Mk8sAddOnsMetrics        `pulumi:"metrics"`
+	Nvidia         *Mk8sAddOnsNvidia         `pulumi:"nvidia"`
+	RegistryMirror *Mk8sAddOnsRegistryMirror `pulumi:"registryMirror"`
+	Sysbox         *bool                     `pulumi:"sysbox"`
 }
 
 // Mk8sAddOnsInput is an input type that accepts Mk8sAddOnsArgs and Mk8sAddOnsOutput values.
@@ -6922,9 +6923,10 @@ type Mk8sAddOnsArgs struct {
 	LocalPathStorage      pulumi.BoolPtrInput                     `pulumi:"localPathStorage"`
 	Logs                  Mk8sAddOnsLogsPtrInput                  `pulumi:"logs"`
 	// Scrape pods annotated with prometheus.io/scrape=true
-	Metrics Mk8sAddOnsMetricsPtrInput `pulumi:"metrics"`
-	Nvidia  Mk8sAddOnsNvidiaPtrInput  `pulumi:"nvidia"`
-	Sysbox  pulumi.BoolPtrInput       `pulumi:"sysbox"`
+	Metrics        Mk8sAddOnsMetricsPtrInput        `pulumi:"metrics"`
+	Nvidia         Mk8sAddOnsNvidiaPtrInput         `pulumi:"nvidia"`
+	RegistryMirror Mk8sAddOnsRegistryMirrorPtrInput `pulumi:"registryMirror"`
+	Sysbox         pulumi.BoolPtrInput              `pulumi:"sysbox"`
 }
 
 func (Mk8sAddOnsArgs) ElementType() reflect.Type {
@@ -7047,6 +7049,10 @@ func (o Mk8sAddOnsOutput) Metrics() Mk8sAddOnsMetricsPtrOutput {
 
 func (o Mk8sAddOnsOutput) Nvidia() Mk8sAddOnsNvidiaPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOns) *Mk8sAddOnsNvidia { return v.Nvidia }).(Mk8sAddOnsNvidiaPtrOutput)
+}
+
+func (o Mk8sAddOnsOutput) RegistryMirror() Mk8sAddOnsRegistryMirrorPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOns) *Mk8sAddOnsRegistryMirror { return v.RegistryMirror }).(Mk8sAddOnsRegistryMirrorPtrOutput)
 }
 
 func (o Mk8sAddOnsOutput) Sysbox() pulumi.BoolPtrOutput {
@@ -7175,6 +7181,15 @@ func (o Mk8sAddOnsPtrOutput) Nvidia() Mk8sAddOnsNvidiaPtrOutput {
 		}
 		return v.Nvidia
 	}).(Mk8sAddOnsNvidiaPtrOutput)
+}
+
+func (o Mk8sAddOnsPtrOutput) RegistryMirror() Mk8sAddOnsRegistryMirrorPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOns) *Mk8sAddOnsRegistryMirror {
+		if v == nil {
+			return nil
+		}
+		return v.RegistryMirror
+	}).(Mk8sAddOnsRegistryMirrorPtrOutput)
 }
 
 func (o Mk8sAddOnsPtrOutput) Sysbox() pulumi.BoolPtrOutput {
@@ -8666,6 +8681,239 @@ func (o Mk8sAddOnsNvidiaPtrOutput) TaintGpuNodes() pulumi.BoolPtrOutput {
 		}
 		return v.TaintGpuNodes
 	}).(pulumi.BoolPtrOutput)
+}
+
+type Mk8sAddOnsRegistryMirror struct {
+	Mirrors []Mk8sAddOnsRegistryMirrorMirror `pulumi:"mirrors"`
+}
+
+// Mk8sAddOnsRegistryMirrorInput is an input type that accepts Mk8sAddOnsRegistryMirrorArgs and Mk8sAddOnsRegistryMirrorOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsRegistryMirrorInput` via:
+//
+//	Mk8sAddOnsRegistryMirrorArgs{...}
+type Mk8sAddOnsRegistryMirrorInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsRegistryMirrorOutput() Mk8sAddOnsRegistryMirrorOutput
+	ToMk8sAddOnsRegistryMirrorOutputWithContext(context.Context) Mk8sAddOnsRegistryMirrorOutput
+}
+
+type Mk8sAddOnsRegistryMirrorArgs struct {
+	Mirrors Mk8sAddOnsRegistryMirrorMirrorArrayInput `pulumi:"mirrors"`
+}
+
+func (Mk8sAddOnsRegistryMirrorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsRegistryMirror)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsRegistryMirrorArgs) ToMk8sAddOnsRegistryMirrorOutput() Mk8sAddOnsRegistryMirrorOutput {
+	return i.ToMk8sAddOnsRegistryMirrorOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsRegistryMirrorArgs) ToMk8sAddOnsRegistryMirrorOutputWithContext(ctx context.Context) Mk8sAddOnsRegistryMirrorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsRegistryMirrorOutput)
+}
+
+func (i Mk8sAddOnsRegistryMirrorArgs) ToMk8sAddOnsRegistryMirrorPtrOutput() Mk8sAddOnsRegistryMirrorPtrOutput {
+	return i.ToMk8sAddOnsRegistryMirrorPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsRegistryMirrorArgs) ToMk8sAddOnsRegistryMirrorPtrOutputWithContext(ctx context.Context) Mk8sAddOnsRegistryMirrorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsRegistryMirrorOutput).ToMk8sAddOnsRegistryMirrorPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsRegistryMirrorPtrInput is an input type that accepts Mk8sAddOnsRegistryMirrorArgs, Mk8sAddOnsRegistryMirrorPtr and Mk8sAddOnsRegistryMirrorPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsRegistryMirrorPtrInput` via:
+//
+//	        Mk8sAddOnsRegistryMirrorArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsRegistryMirrorPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsRegistryMirrorPtrOutput() Mk8sAddOnsRegistryMirrorPtrOutput
+	ToMk8sAddOnsRegistryMirrorPtrOutputWithContext(context.Context) Mk8sAddOnsRegistryMirrorPtrOutput
+}
+
+type mk8sAddOnsRegistryMirrorPtrType Mk8sAddOnsRegistryMirrorArgs
+
+func Mk8sAddOnsRegistryMirrorPtr(v *Mk8sAddOnsRegistryMirrorArgs) Mk8sAddOnsRegistryMirrorPtrInput {
+	return (*mk8sAddOnsRegistryMirrorPtrType)(v)
+}
+
+func (*mk8sAddOnsRegistryMirrorPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsRegistryMirror)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsRegistryMirrorPtrType) ToMk8sAddOnsRegistryMirrorPtrOutput() Mk8sAddOnsRegistryMirrorPtrOutput {
+	return i.ToMk8sAddOnsRegistryMirrorPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsRegistryMirrorPtrType) ToMk8sAddOnsRegistryMirrorPtrOutputWithContext(ctx context.Context) Mk8sAddOnsRegistryMirrorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsRegistryMirrorPtrOutput)
+}
+
+type Mk8sAddOnsRegistryMirrorOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsRegistryMirrorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsRegistryMirror)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsRegistryMirrorOutput) ToMk8sAddOnsRegistryMirrorOutput() Mk8sAddOnsRegistryMirrorOutput {
+	return o
+}
+
+func (o Mk8sAddOnsRegistryMirrorOutput) ToMk8sAddOnsRegistryMirrorOutputWithContext(ctx context.Context) Mk8sAddOnsRegistryMirrorOutput {
+	return o
+}
+
+func (o Mk8sAddOnsRegistryMirrorOutput) ToMk8sAddOnsRegistryMirrorPtrOutput() Mk8sAddOnsRegistryMirrorPtrOutput {
+	return o.ToMk8sAddOnsRegistryMirrorPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsRegistryMirrorOutput) ToMk8sAddOnsRegistryMirrorPtrOutputWithContext(ctx context.Context) Mk8sAddOnsRegistryMirrorPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsRegistryMirror) *Mk8sAddOnsRegistryMirror {
+		return &v
+	}).(Mk8sAddOnsRegistryMirrorPtrOutput)
+}
+
+func (o Mk8sAddOnsRegistryMirrorOutput) Mirrors() Mk8sAddOnsRegistryMirrorMirrorArrayOutput {
+	return o.ApplyT(func(v Mk8sAddOnsRegistryMirror) []Mk8sAddOnsRegistryMirrorMirror { return v.Mirrors }).(Mk8sAddOnsRegistryMirrorMirrorArrayOutput)
+}
+
+type Mk8sAddOnsRegistryMirrorPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsRegistryMirrorPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsRegistryMirror)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsRegistryMirrorPtrOutput) ToMk8sAddOnsRegistryMirrorPtrOutput() Mk8sAddOnsRegistryMirrorPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsRegistryMirrorPtrOutput) ToMk8sAddOnsRegistryMirrorPtrOutputWithContext(ctx context.Context) Mk8sAddOnsRegistryMirrorPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsRegistryMirrorPtrOutput) Elem() Mk8sAddOnsRegistryMirrorOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsRegistryMirror) Mk8sAddOnsRegistryMirror {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsRegistryMirror
+		return ret
+	}).(Mk8sAddOnsRegistryMirrorOutput)
+}
+
+func (o Mk8sAddOnsRegistryMirrorPtrOutput) Mirrors() Mk8sAddOnsRegistryMirrorMirrorArrayOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsRegistryMirror) []Mk8sAddOnsRegistryMirrorMirror {
+		if v == nil {
+			return nil
+		}
+		return v.Mirrors
+	}).(Mk8sAddOnsRegistryMirrorMirrorArrayOutput)
+}
+
+type Mk8sAddOnsRegistryMirrorMirror struct {
+	Mirrors  []string `pulumi:"mirrors"`
+	Registry string   `pulumi:"registry"`
+}
+
+// Mk8sAddOnsRegistryMirrorMirrorInput is an input type that accepts Mk8sAddOnsRegistryMirrorMirrorArgs and Mk8sAddOnsRegistryMirrorMirrorOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsRegistryMirrorMirrorInput` via:
+//
+//	Mk8sAddOnsRegistryMirrorMirrorArgs{...}
+type Mk8sAddOnsRegistryMirrorMirrorInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsRegistryMirrorMirrorOutput() Mk8sAddOnsRegistryMirrorMirrorOutput
+	ToMk8sAddOnsRegistryMirrorMirrorOutputWithContext(context.Context) Mk8sAddOnsRegistryMirrorMirrorOutput
+}
+
+type Mk8sAddOnsRegistryMirrorMirrorArgs struct {
+	Mirrors  pulumi.StringArrayInput `pulumi:"mirrors"`
+	Registry pulumi.StringInput      `pulumi:"registry"`
+}
+
+func (Mk8sAddOnsRegistryMirrorMirrorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsRegistryMirrorMirror)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsRegistryMirrorMirrorArgs) ToMk8sAddOnsRegistryMirrorMirrorOutput() Mk8sAddOnsRegistryMirrorMirrorOutput {
+	return i.ToMk8sAddOnsRegistryMirrorMirrorOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsRegistryMirrorMirrorArgs) ToMk8sAddOnsRegistryMirrorMirrorOutputWithContext(ctx context.Context) Mk8sAddOnsRegistryMirrorMirrorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsRegistryMirrorMirrorOutput)
+}
+
+// Mk8sAddOnsRegistryMirrorMirrorArrayInput is an input type that accepts Mk8sAddOnsRegistryMirrorMirrorArray and Mk8sAddOnsRegistryMirrorMirrorArrayOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsRegistryMirrorMirrorArrayInput` via:
+//
+//	Mk8sAddOnsRegistryMirrorMirrorArray{ Mk8sAddOnsRegistryMirrorMirrorArgs{...} }
+type Mk8sAddOnsRegistryMirrorMirrorArrayInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsRegistryMirrorMirrorArrayOutput() Mk8sAddOnsRegistryMirrorMirrorArrayOutput
+	ToMk8sAddOnsRegistryMirrorMirrorArrayOutputWithContext(context.Context) Mk8sAddOnsRegistryMirrorMirrorArrayOutput
+}
+
+type Mk8sAddOnsRegistryMirrorMirrorArray []Mk8sAddOnsRegistryMirrorMirrorInput
+
+func (Mk8sAddOnsRegistryMirrorMirrorArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sAddOnsRegistryMirrorMirror)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsRegistryMirrorMirrorArray) ToMk8sAddOnsRegistryMirrorMirrorArrayOutput() Mk8sAddOnsRegistryMirrorMirrorArrayOutput {
+	return i.ToMk8sAddOnsRegistryMirrorMirrorArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsRegistryMirrorMirrorArray) ToMk8sAddOnsRegistryMirrorMirrorArrayOutputWithContext(ctx context.Context) Mk8sAddOnsRegistryMirrorMirrorArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsRegistryMirrorMirrorArrayOutput)
+}
+
+type Mk8sAddOnsRegistryMirrorMirrorOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsRegistryMirrorMirrorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsRegistryMirrorMirror)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsRegistryMirrorMirrorOutput) ToMk8sAddOnsRegistryMirrorMirrorOutput() Mk8sAddOnsRegistryMirrorMirrorOutput {
+	return o
+}
+
+func (o Mk8sAddOnsRegistryMirrorMirrorOutput) ToMk8sAddOnsRegistryMirrorMirrorOutputWithContext(ctx context.Context) Mk8sAddOnsRegistryMirrorMirrorOutput {
+	return o
+}
+
+func (o Mk8sAddOnsRegistryMirrorMirrorOutput) Mirrors() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sAddOnsRegistryMirrorMirror) []string { return v.Mirrors }).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sAddOnsRegistryMirrorMirrorOutput) Registry() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sAddOnsRegistryMirrorMirror) string { return v.Registry }).(pulumi.StringOutput)
+}
+
+type Mk8sAddOnsRegistryMirrorMirrorArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsRegistryMirrorMirrorArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sAddOnsRegistryMirrorMirror)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsRegistryMirrorMirrorArrayOutput) ToMk8sAddOnsRegistryMirrorMirrorArrayOutput() Mk8sAddOnsRegistryMirrorMirrorArrayOutput {
+	return o
+}
+
+func (o Mk8sAddOnsRegistryMirrorMirrorArrayOutput) ToMk8sAddOnsRegistryMirrorMirrorArrayOutputWithContext(ctx context.Context) Mk8sAddOnsRegistryMirrorMirrorArrayOutput {
+	return o
+}
+
+func (o Mk8sAddOnsRegistryMirrorMirrorArrayOutput) Index(i pulumi.IntInput) Mk8sAddOnsRegistryMirrorMirrorOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sAddOnsRegistryMirrorMirror {
+		return vs[0].([]Mk8sAddOnsRegistryMirrorMirror)[vs[1].(int)]
+	}).(Mk8sAddOnsRegistryMirrorMirrorOutput)
 }
 
 type Mk8sAwsProvider struct {
@@ -20425,10 +20673,11 @@ func (o Mk8sTritonProviderLoadBalancerGatewayPtrOutput) Elem() Mk8sTritonProvide
 }
 
 type Mk8sTritonProviderLoadBalancerManual struct {
-	CnsInternalDomain string `pulumi:"cnsInternalDomain"`
-	CnsPublicDomain   string `pulumi:"cnsPublicDomain"`
-	Count             *int   `pulumi:"count"`
-	ImageId           string `pulumi:"imageId"`
+	CnsInternalDomain string                                       `pulumi:"cnsInternalDomain"`
+	CnsPublicDomain   string                                       `pulumi:"cnsPublicDomain"`
+	Count             *int                                         `pulumi:"count"`
+	ImageId           string                                       `pulumi:"imageId"`
+	Logging           *Mk8sTritonProviderLoadBalancerManualLogging `pulumi:"logging"`
 	// Extra tags to attach to instances from a node pool.
 	Metadata  map[string]string `pulumi:"metadata"`
 	PackageId string            `pulumi:"packageId"`
@@ -20452,10 +20701,11 @@ type Mk8sTritonProviderLoadBalancerManualInput interface {
 }
 
 type Mk8sTritonProviderLoadBalancerManualArgs struct {
-	CnsInternalDomain pulumi.StringInput `pulumi:"cnsInternalDomain"`
-	CnsPublicDomain   pulumi.StringInput `pulumi:"cnsPublicDomain"`
-	Count             pulumi.IntPtrInput `pulumi:"count"`
-	ImageId           pulumi.StringInput `pulumi:"imageId"`
+	CnsInternalDomain pulumi.StringInput                                  `pulumi:"cnsInternalDomain"`
+	CnsPublicDomain   pulumi.StringInput                                  `pulumi:"cnsPublicDomain"`
+	Count             pulumi.IntPtrInput                                  `pulumi:"count"`
+	ImageId           pulumi.StringInput                                  `pulumi:"imageId"`
+	Logging           Mk8sTritonProviderLoadBalancerManualLoggingPtrInput `pulumi:"logging"`
 	// Extra tags to attach to instances from a node pool.
 	Metadata  pulumi.StringMapInput `pulumi:"metadata"`
 	PackageId pulumi.StringInput    `pulumi:"packageId"`
@@ -20560,6 +20810,12 @@ func (o Mk8sTritonProviderLoadBalancerManualOutput) ImageId() pulumi.StringOutpu
 	return o.ApplyT(func(v Mk8sTritonProviderLoadBalancerManual) string { return v.ImageId }).(pulumi.StringOutput)
 }
 
+func (o Mk8sTritonProviderLoadBalancerManualOutput) Logging() Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderLoadBalancerManual) *Mk8sTritonProviderLoadBalancerManualLogging {
+		return v.Logging
+	}).(Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput)
+}
+
 // Extra tags to attach to instances from a node pool.
 func (o Mk8sTritonProviderLoadBalancerManualOutput) Metadata() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sTritonProviderLoadBalancerManual) map[string]string { return v.Metadata }).(pulumi.StringMapOutput)
@@ -20644,6 +20900,15 @@ func (o Mk8sTritonProviderLoadBalancerManualPtrOutput) ImageId() pulumi.StringPt
 	}).(pulumi.StringPtrOutput)
 }
 
+func (o Mk8sTritonProviderLoadBalancerManualPtrOutput) Logging() Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderLoadBalancerManual) *Mk8sTritonProviderLoadBalancerManualLogging {
+		if v == nil {
+			return nil
+		}
+		return v.Logging
+	}).(Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput)
+}
+
 // Extra tags to attach to instances from a node pool.
 func (o Mk8sTritonProviderLoadBalancerManualPtrOutput) Metadata() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Mk8sTritonProviderLoadBalancerManual) map[string]string {
@@ -20691,6 +20956,154 @@ func (o Mk8sTritonProviderLoadBalancerManualPtrOutput) Tags() pulumi.StringMapOu
 		}
 		return v.Tags
 	}).(pulumi.StringMapOutput)
+}
+
+type Mk8sTritonProviderLoadBalancerManualLogging struct {
+	ExternalSyslog *string `pulumi:"externalSyslog"`
+	NodePort       *int    `pulumi:"nodePort"`
+}
+
+// Mk8sTritonProviderLoadBalancerManualLoggingInput is an input type that accepts Mk8sTritonProviderLoadBalancerManualLoggingArgs and Mk8sTritonProviderLoadBalancerManualLoggingOutput values.
+// You can construct a concrete instance of `Mk8sTritonProviderLoadBalancerManualLoggingInput` via:
+//
+//	Mk8sTritonProviderLoadBalancerManualLoggingArgs{...}
+type Mk8sTritonProviderLoadBalancerManualLoggingInput interface {
+	pulumi.Input
+
+	ToMk8sTritonProviderLoadBalancerManualLoggingOutput() Mk8sTritonProviderLoadBalancerManualLoggingOutput
+	ToMk8sTritonProviderLoadBalancerManualLoggingOutputWithContext(context.Context) Mk8sTritonProviderLoadBalancerManualLoggingOutput
+}
+
+type Mk8sTritonProviderLoadBalancerManualLoggingArgs struct {
+	ExternalSyslog pulumi.StringPtrInput `pulumi:"externalSyslog"`
+	NodePort       pulumi.IntPtrInput    `pulumi:"nodePort"`
+}
+
+func (Mk8sTritonProviderLoadBalancerManualLoggingArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sTritonProviderLoadBalancerManualLogging)(nil)).Elem()
+}
+
+func (i Mk8sTritonProviderLoadBalancerManualLoggingArgs) ToMk8sTritonProviderLoadBalancerManualLoggingOutput() Mk8sTritonProviderLoadBalancerManualLoggingOutput {
+	return i.ToMk8sTritonProviderLoadBalancerManualLoggingOutputWithContext(context.Background())
+}
+
+func (i Mk8sTritonProviderLoadBalancerManualLoggingArgs) ToMk8sTritonProviderLoadBalancerManualLoggingOutputWithContext(ctx context.Context) Mk8sTritonProviderLoadBalancerManualLoggingOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderLoadBalancerManualLoggingOutput)
+}
+
+func (i Mk8sTritonProviderLoadBalancerManualLoggingArgs) ToMk8sTritonProviderLoadBalancerManualLoggingPtrOutput() Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput {
+	return i.ToMk8sTritonProviderLoadBalancerManualLoggingPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sTritonProviderLoadBalancerManualLoggingArgs) ToMk8sTritonProviderLoadBalancerManualLoggingPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderLoadBalancerManualLoggingOutput).ToMk8sTritonProviderLoadBalancerManualLoggingPtrOutputWithContext(ctx)
+}
+
+// Mk8sTritonProviderLoadBalancerManualLoggingPtrInput is an input type that accepts Mk8sTritonProviderLoadBalancerManualLoggingArgs, Mk8sTritonProviderLoadBalancerManualLoggingPtr and Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput values.
+// You can construct a concrete instance of `Mk8sTritonProviderLoadBalancerManualLoggingPtrInput` via:
+//
+//	        Mk8sTritonProviderLoadBalancerManualLoggingArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sTritonProviderLoadBalancerManualLoggingPtrInput interface {
+	pulumi.Input
+
+	ToMk8sTritonProviderLoadBalancerManualLoggingPtrOutput() Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput
+	ToMk8sTritonProviderLoadBalancerManualLoggingPtrOutputWithContext(context.Context) Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput
+}
+
+type mk8sTritonProviderLoadBalancerManualLoggingPtrType Mk8sTritonProviderLoadBalancerManualLoggingArgs
+
+func Mk8sTritonProviderLoadBalancerManualLoggingPtr(v *Mk8sTritonProviderLoadBalancerManualLoggingArgs) Mk8sTritonProviderLoadBalancerManualLoggingPtrInput {
+	return (*mk8sTritonProviderLoadBalancerManualLoggingPtrType)(v)
+}
+
+func (*mk8sTritonProviderLoadBalancerManualLoggingPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sTritonProviderLoadBalancerManualLogging)(nil)).Elem()
+}
+
+func (i *mk8sTritonProviderLoadBalancerManualLoggingPtrType) ToMk8sTritonProviderLoadBalancerManualLoggingPtrOutput() Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput {
+	return i.ToMk8sTritonProviderLoadBalancerManualLoggingPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sTritonProviderLoadBalancerManualLoggingPtrType) ToMk8sTritonProviderLoadBalancerManualLoggingPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput)
+}
+
+type Mk8sTritonProviderLoadBalancerManualLoggingOutput struct{ *pulumi.OutputState }
+
+func (Mk8sTritonProviderLoadBalancerManualLoggingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sTritonProviderLoadBalancerManualLogging)(nil)).Elem()
+}
+
+func (o Mk8sTritonProviderLoadBalancerManualLoggingOutput) ToMk8sTritonProviderLoadBalancerManualLoggingOutput() Mk8sTritonProviderLoadBalancerManualLoggingOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderLoadBalancerManualLoggingOutput) ToMk8sTritonProviderLoadBalancerManualLoggingOutputWithContext(ctx context.Context) Mk8sTritonProviderLoadBalancerManualLoggingOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderLoadBalancerManualLoggingOutput) ToMk8sTritonProviderLoadBalancerManualLoggingPtrOutput() Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput {
+	return o.ToMk8sTritonProviderLoadBalancerManualLoggingPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sTritonProviderLoadBalancerManualLoggingOutput) ToMk8sTritonProviderLoadBalancerManualLoggingPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sTritonProviderLoadBalancerManualLogging) *Mk8sTritonProviderLoadBalancerManualLogging {
+		return &v
+	}).(Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput)
+}
+
+func (o Mk8sTritonProviderLoadBalancerManualLoggingOutput) ExternalSyslog() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderLoadBalancerManualLogging) *string { return v.ExternalSyslog }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderLoadBalancerManualLoggingOutput) NodePort() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderLoadBalancerManualLogging) *int { return v.NodePort }).(pulumi.IntPtrOutput)
+}
+
+type Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sTritonProviderLoadBalancerManualLogging)(nil)).Elem()
+}
+
+func (o Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput) ToMk8sTritonProviderLoadBalancerManualLoggingPtrOutput() Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput) ToMk8sTritonProviderLoadBalancerManualLoggingPtrOutputWithContext(ctx context.Context) Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput) Elem() Mk8sTritonProviderLoadBalancerManualLoggingOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderLoadBalancerManualLogging) Mk8sTritonProviderLoadBalancerManualLogging {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sTritonProviderLoadBalancerManualLogging
+		return ret
+	}).(Mk8sTritonProviderLoadBalancerManualLoggingOutput)
+}
+
+func (o Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput) ExternalSyslog() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderLoadBalancerManualLogging) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ExternalSyslog
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput) NodePort() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderLoadBalancerManualLogging) *int {
+		if v == nil {
+			return nil
+		}
+		return v.NodePort
+	}).(pulumi.IntPtrOutput)
 }
 
 type Mk8sTritonProviderNetworking struct {
@@ -32399,7 +32812,7 @@ type WorkloadLocalOptionAutoscaling struct {
 	MaxConcurrency *int `pulumi:"maxConcurrency"`
 	// The maximum allowed number of replicas. Min: `0`. Default `5`.
 	MaxScale *int `pulumi:"maxScale"`
-	// Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+	// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
 	Metric *string `pulumi:"metric"`
 	// For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
 	MetricPercentile *string `pulumi:"metricPercentile"`
@@ -32428,7 +32841,7 @@ type WorkloadLocalOptionAutoscalingArgs struct {
 	MaxConcurrency pulumi.IntPtrInput `pulumi:"maxConcurrency"`
 	// The maximum allowed number of replicas. Min: `0`. Default `5`.
 	MaxScale pulumi.IntPtrInput `pulumi:"maxScale"`
-	// Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+	// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
 	Metric pulumi.StringPtrInput `pulumi:"metric"`
 	// For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
 	MetricPercentile pulumi.StringPtrInput `pulumi:"metricPercentile"`
@@ -32528,7 +32941,7 @@ func (o WorkloadLocalOptionAutoscalingOutput) MaxScale() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadLocalOptionAutoscaling) *int { return v.MaxScale }).(pulumi.IntPtrOutput)
 }
 
-// Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
 func (o WorkloadLocalOptionAutoscalingOutput) Metric() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v WorkloadLocalOptionAutoscaling) *string { return v.Metric }).(pulumi.StringPtrOutput)
 }
@@ -32601,7 +33014,7 @@ func (o WorkloadLocalOptionAutoscalingPtrOutput) MaxScale() pulumi.IntPtrOutput 
 	}).(pulumi.IntPtrOutput)
 }
 
-// Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
 func (o WorkloadLocalOptionAutoscalingPtrOutput) Metric() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *WorkloadLocalOptionAutoscaling) *string {
 		if v == nil {
@@ -33132,7 +33545,7 @@ type WorkloadOptionsAutoscaling struct {
 	MaxConcurrency *int `pulumi:"maxConcurrency"`
 	// The maximum allowed number of replicas. Min: `0`. Default `5`.
 	MaxScale *int `pulumi:"maxScale"`
-	// Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+	// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
 	Metric *string `pulumi:"metric"`
 	// For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
 	MetricPercentile *string `pulumi:"metricPercentile"`
@@ -33161,7 +33574,7 @@ type WorkloadOptionsAutoscalingArgs struct {
 	MaxConcurrency pulumi.IntPtrInput `pulumi:"maxConcurrency"`
 	// The maximum allowed number of replicas. Min: `0`. Default `5`.
 	MaxScale pulumi.IntPtrInput `pulumi:"maxScale"`
-	// Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+	// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
 	Metric pulumi.StringPtrInput `pulumi:"metric"`
 	// For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
 	MetricPercentile pulumi.StringPtrInput `pulumi:"metricPercentile"`
@@ -33261,7 +33674,7 @@ func (o WorkloadOptionsAutoscalingOutput) MaxScale() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadOptionsAutoscaling) *int { return v.MaxScale }).(pulumi.IntPtrOutput)
 }
 
-// Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
 func (o WorkloadOptionsAutoscalingOutput) Metric() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v WorkloadOptionsAutoscaling) *string { return v.Metric }).(pulumi.StringPtrOutput)
 }
@@ -33334,7 +33747,7 @@ func (o WorkloadOptionsAutoscalingPtrOutput) MaxScale() pulumi.IntPtrOutput {
 	}).(pulumi.IntPtrOutput)
 }
 
-// Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
 func (o WorkloadOptionsAutoscalingPtrOutput) Metric() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *WorkloadOptionsAutoscaling) *string {
 		if v == nil {
@@ -39930,6 +40343,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsMetricsScrapeAnnotatedPtrInput)(nil)).Elem(), Mk8sAddOnsMetricsScrapeAnnotatedArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsNvidiaInput)(nil)).Elem(), Mk8sAddOnsNvidiaArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsNvidiaPtrInput)(nil)).Elem(), Mk8sAddOnsNvidiaArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsRegistryMirrorInput)(nil)).Elem(), Mk8sAddOnsRegistryMirrorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsRegistryMirrorPtrInput)(nil)).Elem(), Mk8sAddOnsRegistryMirrorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsRegistryMirrorMirrorInput)(nil)).Elem(), Mk8sAddOnsRegistryMirrorMirrorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsRegistryMirrorMirrorArrayInput)(nil)).Elem(), Mk8sAddOnsRegistryMirrorMirrorArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderInput)(nil)).Elem(), Mk8sAwsProviderArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderPtrInput)(nil)).Elem(), Mk8sAwsProviderArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderAutoscalerInput)(nil)).Elem(), Mk8sAwsProviderAutoscalerArgs{})
@@ -40082,6 +40499,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderLoadBalancerGatewayPtrInput)(nil)).Elem(), Mk8sTritonProviderLoadBalancerGatewayArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderLoadBalancerManualInput)(nil)).Elem(), Mk8sTritonProviderLoadBalancerManualArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderLoadBalancerManualPtrInput)(nil)).Elem(), Mk8sTritonProviderLoadBalancerManualArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderLoadBalancerManualLoggingInput)(nil)).Elem(), Mk8sTritonProviderLoadBalancerManualLoggingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderLoadBalancerManualLoggingPtrInput)(nil)).Elem(), Mk8sTritonProviderLoadBalancerManualLoggingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderNetworkingInput)(nil)).Elem(), Mk8sTritonProviderNetworkingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderNetworkingPtrInput)(nil)).Elem(), Mk8sTritonProviderNetworkingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderNodePoolInput)(nil)).Elem(), Mk8sTritonProviderNodePoolArgs{})
@@ -40450,6 +40869,10 @@ func init() {
 	pulumi.RegisterOutputType(Mk8sAddOnsMetricsScrapeAnnotatedPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsNvidiaOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsNvidiaPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsRegistryMirrorOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsRegistryMirrorPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsRegistryMirrorMirrorOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsRegistryMirrorMirrorArrayOutput{})
 	pulumi.RegisterOutputType(Mk8sAwsProviderOutput{})
 	pulumi.RegisterOutputType(Mk8sAwsProviderPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAwsProviderAutoscalerOutput{})
@@ -40602,6 +41025,8 @@ func init() {
 	pulumi.RegisterOutputType(Mk8sTritonProviderLoadBalancerGatewayPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sTritonProviderLoadBalancerManualOutput{})
 	pulumi.RegisterOutputType(Mk8sTritonProviderLoadBalancerManualPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sTritonProviderLoadBalancerManualLoggingOutput{})
+	pulumi.RegisterOutputType(Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sTritonProviderNetworkingOutput{})
 	pulumi.RegisterOutputType(Mk8sTritonProviderNetworkingPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sTritonProviderNodePoolOutput{})

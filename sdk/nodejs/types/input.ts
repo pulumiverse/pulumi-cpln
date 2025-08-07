@@ -1276,6 +1276,7 @@ export interface Mk8sAddOns {
      */
     metrics?: pulumi.Input<inputs.Mk8sAddOnsMetrics>;
     nvidia?: pulumi.Input<inputs.Mk8sAddOnsNvidia>;
+    registryMirror?: pulumi.Input<inputs.Mk8sAddOnsRegistryMirror>;
     sysbox?: pulumi.Input<boolean>;
 }
 
@@ -1373,6 +1374,15 @@ export interface Mk8sAddOnsMetricsScrapeAnnotated {
 
 export interface Mk8sAddOnsNvidia {
     taintGpuNodes?: pulumi.Input<boolean>;
+}
+
+export interface Mk8sAddOnsRegistryMirror {
+    mirrors?: pulumi.Input<pulumi.Input<inputs.Mk8sAddOnsRegistryMirrorMirror>[]>;
+}
+
+export interface Mk8sAddOnsRegistryMirrorMirror {
+    mirrors?: pulumi.Input<pulumi.Input<string>[]>;
+    registry: pulumi.Input<string>;
 }
 
 export interface Mk8sAwsProvider {
@@ -2319,6 +2329,7 @@ export interface Mk8sTritonProviderLoadBalancerManual {
     cnsPublicDomain: pulumi.Input<string>;
     count?: pulumi.Input<number>;
     imageId: pulumi.Input<string>;
+    logging?: pulumi.Input<inputs.Mk8sTritonProviderLoadBalancerManualLogging>;
     /**
      * Extra tags to attach to instances from a node pool.
      */
@@ -2336,6 +2347,11 @@ export interface Mk8sTritonProviderLoadBalancerManual {
      * Extra tags to attach to instances from a node pool.
      */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+}
+
+export interface Mk8sTritonProviderLoadBalancerManualLogging {
+    externalSyslog?: pulumi.Input<string>;
+    nodePort?: pulumi.Input<number>;
 }
 
 export interface Mk8sTritonProviderNetworking {
@@ -3408,7 +3424,7 @@ export interface WorkloadLocalOptionAutoscaling {
      */
     maxScale?: pulumi.Input<number>;
     /**
-     * Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+     * Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
      */
     metric?: pulumi.Input<string>;
     /**
@@ -3479,7 +3495,7 @@ export interface WorkloadOptionsAutoscaling {
      */
     maxScale?: pulumi.Input<number>;
     /**
-     * Valid values: `disabled`, `concurrency`, `cpu`, `memory`, `latency`, or `rps`.
+     * Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
      */
     metric?: pulumi.Input<string>;
     /**

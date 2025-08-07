@@ -18,6 +18,7 @@ namespace Pulumiverse.Cpln.Outputs
         public readonly string CnsPublicDomain;
         public readonly int? Count;
         public readonly string ImageId;
+        public readonly Outputs.Mk8sTritonProviderLoadBalancerManualLogging? Logging;
         /// <summary>
         /// Extra tags to attach to instances from a node pool.
         /// </summary>
@@ -46,6 +47,8 @@ namespace Pulumiverse.Cpln.Outputs
 
             string imageId,
 
+            Outputs.Mk8sTritonProviderLoadBalancerManualLogging? logging,
+
             ImmutableDictionary<string, string>? metadata,
 
             string packageId,
@@ -60,6 +63,7 @@ namespace Pulumiverse.Cpln.Outputs
             CnsPublicDomain = cnsPublicDomain;
             Count = count;
             ImageId = imageId;
+            Logging = logging;
             Metadata = metadata;
             PackageId = packageId;
             PrivateNetworkIds = privateNetworkIds;
