@@ -984,7 +984,7 @@ export interface IdentityGcpAccessPolicy {
     /**
      * Comma delimited list of GCP scope URLs.
      */
-    scopes: string[];
+    scopes: string;
     /**
      * Name of existing GCP service account.
      */

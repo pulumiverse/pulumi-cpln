@@ -2515,7 +2515,7 @@ if not MYPY:
         """
         The association or connection between a particular identity, such as a user or a group, and a set of permissions or roles within the system.
         """
-        scopes: NotRequired[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]
+        scopes: NotRequired[pulumi.Input[builtins.str]]
         """
         Comma delimited list of GCP scope URLs.
         """
@@ -2531,12 +2531,12 @@ class IdentityGcpAccessPolicyArgs:
     def __init__(__self__, *,
                  cloud_account_link: pulumi.Input[builtins.str],
                  bindings: Optional[pulumi.Input[Sequence[pulumi.Input['IdentityGcpAccessPolicyBindingArgs']]]] = None,
-                 scopes: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
+                 scopes: Optional[pulumi.Input[builtins.str]] = None,
                  service_account: Optional[pulumi.Input[builtins.str]] = None):
         """
         :param pulumi.Input[builtins.str] cloud_account_link: Full link to referenced cloud account.
         :param pulumi.Input[Sequence[pulumi.Input['IdentityGcpAccessPolicyBindingArgs']]] bindings: The association or connection between a particular identity, such as a user or a group, and a set of permissions or roles within the system.
-        :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] scopes: Comma delimited list of GCP scope URLs.
+        :param pulumi.Input[builtins.str] scopes: Comma delimited list of GCP scope URLs.
         :param pulumi.Input[builtins.str] service_account: Name of existing GCP service account.
         """
         pulumi.set(__self__, "cloud_account_link", cloud_account_link)
@@ -2573,14 +2573,14 @@ class IdentityGcpAccessPolicyArgs:
 
     @property
     @pulumi.getter
-    def scopes(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]:
+    def scopes(self) -> Optional[pulumi.Input[builtins.str]]:
         """
         Comma delimited list of GCP scope URLs.
         """
         return pulumi.get(self, "scopes")
 
     @scopes.setter
-    def scopes(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]):
+    def scopes(self, value: Optional[pulumi.Input[builtins.str]]):
         pulumi.set(self, "scopes", value)
 
     @property

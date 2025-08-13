@@ -25,7 +25,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// <summary>
         /// Comma delimited list of GCP scope URLs.
         /// </summary>
-        public readonly ImmutableArray<string> Scopes;
+        public readonly string? Scopes;
         /// <summary>
         /// Name of existing GCP service account.
         /// </summary>
@@ -37,7 +37,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             string cloudAccountLink,
 
-            ImmutableArray<string> scopes,
+            string? scopes,
 
             string? serviceAccount)
         {
