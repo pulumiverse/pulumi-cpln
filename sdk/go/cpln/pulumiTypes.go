@@ -4849,7 +4849,7 @@ type IdentityGcpAccessPolicy struct {
 	// Full link to referenced cloud account.
 	CloudAccountLink string `pulumi:"cloudAccountLink"`
 	// Comma delimited list of GCP scope URLs.
-	Scopes []string `pulumi:"scopes"`
+	Scopes *string `pulumi:"scopes"`
 	// Name of existing GCP service account.
 	ServiceAccount *string `pulumi:"serviceAccount"`
 }
@@ -4871,7 +4871,7 @@ type IdentityGcpAccessPolicyArgs struct {
 	// Full link to referenced cloud account.
 	CloudAccountLink pulumi.StringInput `pulumi:"cloudAccountLink"`
 	// Comma delimited list of GCP scope URLs.
-	Scopes pulumi.StringArrayInput `pulumi:"scopes"`
+	Scopes pulumi.StringPtrInput `pulumi:"scopes"`
 	// Name of existing GCP service account.
 	ServiceAccount pulumi.StringPtrInput `pulumi:"serviceAccount"`
 }
@@ -4964,8 +4964,8 @@ func (o IdentityGcpAccessPolicyOutput) CloudAccountLink() pulumi.StringOutput {
 }
 
 // Comma delimited list of GCP scope URLs.
-func (o IdentityGcpAccessPolicyOutput) Scopes() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v IdentityGcpAccessPolicy) []string { return v.Scopes }).(pulumi.StringArrayOutput)
+func (o IdentityGcpAccessPolicyOutput) Scopes() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v IdentityGcpAccessPolicy) *string { return v.Scopes }).(pulumi.StringPtrOutput)
 }
 
 // Name of existing GCP service account.
@@ -5018,13 +5018,13 @@ func (o IdentityGcpAccessPolicyPtrOutput) CloudAccountLink() pulumi.StringPtrOut
 }
 
 // Comma delimited list of GCP scope URLs.
-func (o IdentityGcpAccessPolicyPtrOutput) Scopes() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v *IdentityGcpAccessPolicy) []string {
+func (o IdentityGcpAccessPolicyPtrOutput) Scopes() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *IdentityGcpAccessPolicy) *string {
 		if v == nil {
 			return nil
 		}
 		return v.Scopes
-	}).(pulumi.StringArrayOutput)
+	}).(pulumi.StringPtrOutput)
 }
 
 // Name of existing GCP service account.

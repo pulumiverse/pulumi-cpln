@@ -31,17 +31,11 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("cloudAccountLink", required: true)]
         public Input<string> CloudAccountLink { get; set; } = null!;
 
-        [Input("scopes")]
-        private InputList<string>? _scopes;
-
         /// <summary>
         /// Comma delimited list of GCP scope URLs.
         /// </summary>
-        public InputList<string> Scopes
-        {
-            get => _scopes ?? (_scopes = new InputList<string>());
-            set => _scopes = value;
-        }
+        [Input("scopes")]
+        public Input<string>? Scopes { get; set; }
 
         /// <summary>
         /// Name of existing GCP service account.

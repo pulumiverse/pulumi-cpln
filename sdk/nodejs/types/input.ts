@@ -1066,7 +1066,7 @@ export interface IdentityGcpAccessPolicy {
     /**
      * Comma delimited list of GCP scope URLs.
      */
-    scopes?: pulumi.Input<pulumi.Input<string>[]>;
+    scopes?: pulumi.Input<string>;
     /**
      * Name of existing GCP service account.
      */

@@ -1837,12 +1837,12 @@ class IdentityGcpAccessPolicy(dict):
     def __init__(__self__, *,
                  cloud_account_link: builtins.str,
                  bindings: Optional[Sequence['outputs.IdentityGcpAccessPolicyBinding']] = None,
-                 scopes: Optional[Sequence[builtins.str]] = None,
+                 scopes: Optional[builtins.str] = None,
                  service_account: Optional[builtins.str] = None):
         """
         :param builtins.str cloud_account_link: Full link to referenced cloud account.
         :param Sequence['IdentityGcpAccessPolicyBindingArgs'] bindings: The association or connection between a particular identity, such as a user or a group, and a set of permissions or roles within the system.
-        :param Sequence[builtins.str] scopes: Comma delimited list of GCP scope URLs.
+        :param builtins.str scopes: Comma delimited list of GCP scope URLs.
         :param builtins.str service_account: Name of existing GCP service account.
         """
         pulumi.set(__self__, "cloud_account_link", cloud_account_link)
@@ -1871,7 +1871,7 @@ class IdentityGcpAccessPolicy(dict):
 
     @property
     @pulumi.getter
-    def scopes(self) -> Optional[Sequence[builtins.str]]:
+    def scopes(self) -> Optional[builtins.str]:
         """
         Comma delimited list of GCP scope URLs.
         """
