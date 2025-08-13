@@ -791,10 +791,7 @@
                     "description": "Full link to referenced cloud account.\n"
                 },
                 "scopes": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
+                    "type": "string",
                     "description": "Comma delimited list of GCP scope URLs.\n"
                 },
                 "serviceAccount": {
