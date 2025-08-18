@@ -555,6 +555,26 @@
                 "sampling"
             ]
         },
+        "cpln:index/GvcKeda:GvcKeda": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.\n"
+                },
+                "identityLink": {
+                    "type": "string",
+                    "description": "A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.\n"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "enabled"
+                    ]
+                }
+            }
+        },
         "cpln:index/GvcLightstepTracing:GvcLightstepTracing": {
             "properties": {
                 "credentials": {
@@ -5581,6 +5601,10 @@
         },
         "cpln:index/WorkloadLocalOptionAutoscaling:WorkloadLocalOptionAutoscaling": {
             "properties": {
+                "keda": {
+                    "$ref": "#/types/cpln:index/WorkloadLocalOptionAutoscalingKeda:WorkloadLocalOptionAutoscalingKeda",
+                    "description": "KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.\n"
+                },
                 "maxConcurrency": {
                     "type": "integer",
                     "description": "A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.\n"
@@ -5591,7 +5615,7 @@
                 },
                 "metric": {
                     "type": "string",
-                    "description": "Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.\n"
+                    "description": "Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.\n"
                 },
                 "metricPercentile": {
                     "type": "string",
@@ -5629,6 +5653,95 @@
                     ]
                 }
             }
+        },
+        "cpln:index/WorkloadLocalOptionAutoscalingKeda:WorkloadLocalOptionAutoscalingKeda": {
+            "properties": {
+                "advanced": {
+                    "$ref": "#/types/cpln:index/WorkloadLocalOptionAutoscalingKedaAdvanced:WorkloadLocalOptionAutoscalingKedaAdvanced",
+                    "description": "Advanced configuration options for KEDA.\n"
+                },
+                "cooldownPeriod": {
+                    "type": "integer",
+                    "description": "The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.\n"
+                },
+                "initialCooldownPeriod": {
+                    "type": "integer",
+                    "description": "The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.\n"
+                },
+                "pollingInterval": {
+                    "type": "integer",
+                    "description": "The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.\n"
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadLocalOptionAutoscalingKedaTrigger:WorkloadLocalOptionAutoscalingKedaTrigger"
+                    },
+                    "description": "An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.\n"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadLocalOptionAutoscalingKedaAdvanced:WorkloadLocalOptionAutoscalingKedaAdvanced": {
+            "properties": {
+                "scalingModifiers": {
+                    "$ref": "#/types/cpln:index/WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers:WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers",
+                    "description": "Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.\n"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers:WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers": {
+            "properties": {
+                "activationTarget": {
+                    "type": "string",
+                    "description": "Defines the new activation target value to scale on for the composed metric.\n"
+                },
+                "formula": {
+                    "type": "string",
+                    "description": "Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.\n"
+                },
+                "metricType": {
+                    "type": "string",
+                    "description": "Defines metric type used for this new composite-metric.\n"
+                },
+                "target": {
+                    "type": "string",
+                    "description": "Defines new target value to scale on for the composed metric.\n"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadLocalOptionAutoscalingKedaTrigger:WorkloadLocalOptionAutoscalingKedaTrigger": {
+            "properties": {
+                "metadata": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "The configuration parameters that the trigger requires.\n"
+                },
+                "metricType": {
+                    "type": "string",
+                    "description": "The type of metric to be used for scaling.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.\n"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of KEDA trigger, e.g \"prometheus\", \"aws-sqs\", etc.\n"
+                },
+                "useCachedMetrics": {
+                    "type": "boolean",
+                    "description": "Enables caching of metric values during polling interval.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "type"
+            ]
         },
         "cpln:index/WorkloadLocalOptionAutoscalingMulti:WorkloadLocalOptionAutoscalingMulti": {
             "properties": {
@@ -5698,6 +5811,10 @@
         },
         "cpln:index/WorkloadOptionsAutoscaling:WorkloadOptionsAutoscaling": {
             "properties": {
+                "keda": {
+                    "$ref": "#/types/cpln:index/WorkloadOptionsAutoscalingKeda:WorkloadOptionsAutoscalingKeda",
+                    "description": "KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.\n"
+                },
                 "maxConcurrency": {
                     "type": "integer",
                     "description": "A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.\n"
@@ -5708,7 +5825,7 @@
                 },
                 "metric": {
                     "type": "string",
-                    "description": "Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.\n"
+                    "description": "Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.\n"
                 },
                 "metricPercentile": {
                     "type": "string",
@@ -5746,6 +5863,95 @@
                     ]
                 }
             }
+        },
+        "cpln:index/WorkloadOptionsAutoscalingKeda:WorkloadOptionsAutoscalingKeda": {
+            "properties": {
+                "advanced": {
+                    "$ref": "#/types/cpln:index/WorkloadOptionsAutoscalingKedaAdvanced:WorkloadOptionsAutoscalingKedaAdvanced",
+                    "description": "Advanced configuration options for KEDA.\n"
+                },
+                "cooldownPeriod": {
+                    "type": "integer",
+                    "description": "The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.\n"
+                },
+                "initialCooldownPeriod": {
+                    "type": "integer",
+                    "description": "The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.\n"
+                },
+                "pollingInterval": {
+                    "type": "integer",
+                    "description": "The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.\n"
+                },
+                "triggers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadOptionsAutoscalingKedaTrigger:WorkloadOptionsAutoscalingKedaTrigger"
+                    },
+                    "description": "An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.\n"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadOptionsAutoscalingKedaAdvanced:WorkloadOptionsAutoscalingKedaAdvanced": {
+            "properties": {
+                "scalingModifiers": {
+                    "$ref": "#/types/cpln:index/WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers:WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers",
+                    "description": "Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.\n"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers:WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers": {
+            "properties": {
+                "activationTarget": {
+                    "type": "string",
+                    "description": "Defines the new activation target value to scale on for the composed metric.\n"
+                },
+                "formula": {
+                    "type": "string",
+                    "description": "Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.\n"
+                },
+                "metricType": {
+                    "type": "string",
+                    "description": "Defines metric type used for this new composite-metric.\n"
+                },
+                "target": {
+                    "type": "string",
+                    "description": "Defines new target value to scale on for the composed metric.\n"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/WorkloadOptionsAutoscalingKedaTrigger:WorkloadOptionsAutoscalingKedaTrigger": {
+            "properties": {
+                "metadata": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "The configuration parameters that the trigger requires.\n"
+                },
+                "metricType": {
+                    "type": "string",
+                    "description": "The type of metric to be used for scaling.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.\n"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of KEDA trigger, e.g \"prometheus\", \"aws-sqs\", etc.\n"
+                },
+                "useCachedMetrics": {
+                    "type": "boolean",
+                    "description": "Enables caching of metric values during polling interval.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "type"
+            ]
         },
         "cpln:index/WorkloadOptionsAutoscalingMulti:WorkloadOptionsAutoscalingMulti": {
             "properties": {
@@ -6085,6 +6291,27 @@
             "required": [
                 "sampling"
             ]
+        },
+        "cpln:index/getGvcKeda:getGvcKeda": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.\n"
+                },
+                "identityLink": {
+                    "type": "string",
+                    "description": "A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "enabled"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
         },
         "cpln:index/getGvcLightstepTracing:getGvcLightstepTracing": {
             "properties": {
@@ -8020,6 +8247,10 @@
                     },
                     "description": "Key-value array of resource environment variables.\n"
                 },
+                "keda": {
+                    "$ref": "#/types/cpln:index/GvcKeda:GvcKeda",
+                    "description": "KEDA configuration for the GVC.\n"
+                },
                 "lightstepTracing": {
                     "$ref": "#/types/cpln:index/GvcLightstepTracing:GvcLightstepTracing"
                 },
@@ -8096,6 +8327,10 @@
                     },
                     "description": "Key-value array of resource environment variables.\n"
                 },
+                "keda": {
+                    "$ref": "#/types/cpln:index/GvcKeda:GvcKeda",
+                    "description": "KEDA configuration for the GVC.\n"
+                },
                 "lightstepTracing": {
                     "$ref": "#/types/cpln:index/GvcLightstepTracing:GvcLightstepTracing"
                 },
@@ -8168,6 +8403,10 @@
                             "type": "string"
                         },
                         "description": "Key-value array of resource environment variables.\n"
+                    },
+                    "keda": {
+                        "$ref": "#/types/cpln:index/GvcKeda:GvcKeda",
+                        "description": "KEDA configuration for the GVC.\n"
                     },
                     "lightstepTracing": {
                         "$ref": "#/types/cpln:index/GvcLightstepTracing:GvcLightstepTracing"
@@ -10666,6 +10905,9 @@
                             "type": "string"
                         }
                     },
+                    "keda": {
+                        "$ref": "#/types/cpln:index/getGvcKeda:getGvcKeda"
+                    },
                     "lightstepTracing": {
                         "$ref": "#/types/cpln:index/getGvcLightstepTracing:getGvcLightstepTracing"
                     },
@@ -10735,6 +10977,9 @@
                     },
                     "id": {
                         "type": "string"
+                    },
+                    "keda": {
+                        "$ref": "#/types/cpln:index/getGvcKeda:getGvcKeda"
                     },
                     "lightstepTracing": {
                         "$ref": "#/types/cpln:index/getGvcLightstepTracing:getGvcLightstepTracing"
