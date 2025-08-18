@@ -110,6 +110,7 @@ type LookupGvcArgs struct {
 	Domain               *string                 `pulumi:"domain"`
 	EndpointNamingFormat *string                 `pulumi:"endpointNamingFormat"`
 	Env                  map[string]string       `pulumi:"env"`
+	Keda                 *GetGvcKeda             `pulumi:"keda"`
 	LightstepTracing     *GetGvcLightstepTracing `pulumi:"lightstepTracing"`
 	LoadBalancer         *GetGvcLoadBalancer     `pulumi:"loadBalancer"`
 	Locations            []string                `pulumi:"locations"`
@@ -131,6 +132,7 @@ type LookupGvcResult struct {
 	EndpointNamingFormat string                  `pulumi:"endpointNamingFormat"`
 	Env                  map[string]string       `pulumi:"env"`
 	Id                   string                  `pulumi:"id"`
+	Keda                 *GetGvcKeda             `pulumi:"keda"`
 	LightstepTracing     *GetGvcLightstepTracing `pulumi:"lightstepTracing"`
 	LoadBalancer         *GetGvcLoadBalancer     `pulumi:"loadBalancer"`
 	Locations            []string                `pulumi:"locations"`
@@ -158,6 +160,7 @@ type LookupGvcOutputArgs struct {
 	Domain               pulumi.StringPtrInput          `pulumi:"domain"`
 	EndpointNamingFormat pulumi.StringPtrInput          `pulumi:"endpointNamingFormat"`
 	Env                  pulumi.StringMapInput          `pulumi:"env"`
+	Keda                 GetGvcKedaPtrInput             `pulumi:"keda"`
 	LightstepTracing     GetGvcLightstepTracingPtrInput `pulumi:"lightstepTracing"`
 	LoadBalancer         GetGvcLoadBalancerPtrInput     `pulumi:"loadBalancer"`
 	Locations            pulumi.StringArrayInput        `pulumi:"locations"`
@@ -218,6 +221,10 @@ func (o LookupGvcResultOutput) Env() pulumi.StringMapOutput {
 
 func (o LookupGvcResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupGvcResult) string { return v.Id }).(pulumi.StringOutput)
+}
+
+func (o LookupGvcResultOutput) Keda() GetGvcKedaPtrOutput {
+	return o.ApplyT(func(v LookupGvcResult) *GetGvcKeda { return v.Keda }).(GetGvcKedaPtrOutput)
 }
 
 func (o LookupGvcResultOutput) LightstepTracing() GetGvcLightstepTracingPtrOutput {

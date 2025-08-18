@@ -29,7 +29,7 @@ class GetGvcResult:
     """
     A collection of values returned by getGvc.
     """
-    def __init__(__self__, alias=None, controlplane_tracing=None, cpln_id=None, description=None, domain=None, endpoint_naming_format=None, env=None, id=None, lightstep_tracing=None, load_balancer=None, locations=None, name=None, otel_tracing=None, pull_secrets=None, self_link=None, sidecar=None, tags=None):
+    def __init__(__self__, alias=None, controlplane_tracing=None, cpln_id=None, description=None, domain=None, endpoint_naming_format=None, env=None, id=None, keda=None, lightstep_tracing=None, load_balancer=None, locations=None, name=None, otel_tracing=None, pull_secrets=None, self_link=None, sidecar=None, tags=None):
         if alias and not isinstance(alias, str):
             raise TypeError("Expected argument 'alias' to be a str")
         pulumi.set(__self__, "alias", alias)
@@ -54,6 +54,9 @@ class GetGvcResult:
         if id and not isinstance(id, str):
             raise TypeError("Expected argument 'id' to be a str")
         pulumi.set(__self__, "id", id)
+        if keda and not isinstance(keda, dict):
+            raise TypeError("Expected argument 'keda' to be a dict")
+        pulumi.set(__self__, "keda", keda)
         if lightstep_tracing and not isinstance(lightstep_tracing, dict):
             raise TypeError("Expected argument 'lightstep_tracing' to be a dict")
         pulumi.set(__self__, "lightstep_tracing", lightstep_tracing)
@@ -124,6 +127,11 @@ class GetGvcResult:
         return pulumi.get(self, "id")
 
     @property
+    @pulumi.getter
+    def keda(self) -> Optional['outputs.GetGvcKedaResult']:
+        return pulumi.get(self, "keda")
+
+    @property
     @pulumi.getter(name="lightstepTracing")
     def lightstep_tracing(self) -> Optional['outputs.GetGvcLightstepTracingResult']:
         return pulumi.get(self, "lightstep_tracing")
@@ -183,6 +191,7 @@ class AwaitableGetGvcResult(GetGvcResult):
             endpoint_naming_format=self.endpoint_naming_format,
             env=self.env,
             id=self.id,
+            keda=self.keda,
             lightstep_tracing=self.lightstep_tracing,
             load_balancer=self.load_balancer,
             locations=self.locations,
@@ -198,6 +207,7 @@ def get_gvc(controlplane_tracing: Optional[Union['GetGvcControlplaneTracingArgs'
             domain: Optional[builtins.str] = None,
             endpoint_naming_format: Optional[builtins.str] = None,
             env: Optional[Mapping[str, builtins.str]] = None,
+            keda: Optional[Union['GetGvcKedaArgs', 'GetGvcKedaArgsDict']] = None,
             lightstep_tracing: Optional[Union['GetGvcLightstepTracingArgs', 'GetGvcLightstepTracingArgsDict']] = None,
             load_balancer: Optional[Union['GetGvcLoadBalancerArgs', 'GetGvcLoadBalancerArgsDict']] = None,
             locations: Optional[Sequence[builtins.str]] = None,
@@ -279,6 +289,7 @@ def get_gvc(controlplane_tracing: Optional[Union['GetGvcControlplaneTracingArgs'
     __args__['domain'] = domain
     __args__['endpointNamingFormat'] = endpoint_naming_format
     __args__['env'] = env
+    __args__['keda'] = keda
     __args__['lightstepTracing'] = lightstep_tracing
     __args__['loadBalancer'] = load_balancer
     __args__['locations'] = locations
@@ -299,6 +310,7 @@ def get_gvc(controlplane_tracing: Optional[Union['GetGvcControlplaneTracingArgs'
         endpoint_naming_format=pulumi.get(__ret__, 'endpoint_naming_format'),
         env=pulumi.get(__ret__, 'env'),
         id=pulumi.get(__ret__, 'id'),
+        keda=pulumi.get(__ret__, 'keda'),
         lightstep_tracing=pulumi.get(__ret__, 'lightstep_tracing'),
         load_balancer=pulumi.get(__ret__, 'load_balancer'),
         locations=pulumi.get(__ret__, 'locations'),
@@ -312,6 +324,7 @@ def get_gvc_output(controlplane_tracing: Optional[pulumi.Input[Optional[Union['G
                    domain: Optional[pulumi.Input[Optional[builtins.str]]] = None,
                    endpoint_naming_format: Optional[pulumi.Input[Optional[builtins.str]]] = None,
                    env: Optional[pulumi.Input[Optional[Mapping[str, builtins.str]]]] = None,
+                   keda: Optional[pulumi.Input[Optional[Union['GetGvcKedaArgs', 'GetGvcKedaArgsDict']]]] = None,
                    lightstep_tracing: Optional[pulumi.Input[Optional[Union['GetGvcLightstepTracingArgs', 'GetGvcLightstepTracingArgsDict']]]] = None,
                    load_balancer: Optional[pulumi.Input[Optional[Union['GetGvcLoadBalancerArgs', 'GetGvcLoadBalancerArgsDict']]]] = None,
                    locations: Optional[pulumi.Input[Optional[Sequence[builtins.str]]]] = None,
@@ -393,6 +406,7 @@ def get_gvc_output(controlplane_tracing: Optional[pulumi.Input[Optional[Union['G
     __args__['domain'] = domain
     __args__['endpointNamingFormat'] = endpoint_naming_format
     __args__['env'] = env
+    __args__['keda'] = keda
     __args__['lightstepTracing'] = lightstep_tracing
     __args__['loadBalancer'] = load_balancer
     __args__['locations'] = locations
@@ -412,6 +426,7 @@ def get_gvc_output(controlplane_tracing: Optional[pulumi.Input[Optional[Union['G
         endpoint_naming_format=pulumi.get(__response__, 'endpoint_naming_format'),
         env=pulumi.get(__response__, 'env'),
         id=pulumi.get(__response__, 'id'),
+        keda=pulumi.get(__response__, 'keda'),
         lightstep_tracing=pulumi.get(__response__, 'lightstep_tracing'),
         load_balancer=pulumi.get(__response__, 'load_balancer'),
         locations=pulumi.get(__response__, 'locations'),

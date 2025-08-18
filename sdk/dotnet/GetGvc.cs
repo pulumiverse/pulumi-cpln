@@ -279,6 +279,9 @@ namespace Pulumiverse.Cpln
             set => _env = value;
         }
 
+        [Input("keda")]
+        public Inputs.GetGvcKedaArgs? Keda { get; set; }
+
         [Input("lightstepTracing")]
         public Inputs.GetGvcLightstepTracingArgs? LightstepTracing { get; set; }
 
@@ -343,6 +346,9 @@ namespace Pulumiverse.Cpln
             set => _env = value;
         }
 
+        [Input("keda")]
+        public Input<Inputs.GetGvcKedaInputArgs>? Keda { get; set; }
+
         [Input("lightstepTracing")]
         public Input<Inputs.GetGvcLightstepTracingInputArgs>? LightstepTracing { get; set; }
 
@@ -400,6 +406,7 @@ namespace Pulumiverse.Cpln
         public readonly string EndpointNamingFormat;
         public readonly ImmutableDictionary<string, string>? Env;
         public readonly string Id;
+        public readonly Outputs.GetGvcKedaResult? Keda;
         public readonly Outputs.GetGvcLightstepTracingResult? LightstepTracing;
         public readonly Outputs.GetGvcLoadBalancerResult? LoadBalancer;
         public readonly ImmutableArray<string> Locations;
@@ -428,6 +435,8 @@ namespace Pulumiverse.Cpln
 
             string id,
 
+            Outputs.GetGvcKedaResult? keda,
+
             Outputs.GetGvcLightstepTracingResult? lightstepTracing,
 
             Outputs.GetGvcLoadBalancerResult? loadBalancer,
@@ -454,6 +463,7 @@ namespace Pulumiverse.Cpln
             EndpointNamingFormat = endpointNamingFormat;
             Env = env;
             Id = id;
+            Keda = keda;
             LightstepTracing = lightstepTracing;
             LoadBalancer = loadBalancer;
             Locations = locations;

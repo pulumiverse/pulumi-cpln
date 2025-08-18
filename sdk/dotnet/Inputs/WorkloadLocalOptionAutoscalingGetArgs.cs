@@ -14,6 +14,12 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class WorkloadLocalOptionAutoscalingGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+        /// </summary>
+        [Input("keda")]
+        public Input<Inputs.WorkloadLocalOptionAutoscalingKedaGetArgs>? Keda { get; set; }
+
+        /// <summary>
         /// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
         /// </summary>
         [Input("maxConcurrency")]
@@ -26,7 +32,7 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<int>? MaxScale { get; set; }
 
         /// <summary>
-        /// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
+        /// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
         /// </summary>
         [Input("metric")]
         public Input<string>? Metric { get; set; }

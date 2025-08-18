@@ -62,6 +62,10 @@ export class Gvc extends pulumi.CustomResource {
      * Key-value array of resource environment variables.
      */
     public readonly env!: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
+     * KEDA configuration for the GVC.
+     */
+    public readonly keda!: pulumi.Output<outputs.GvcKeda | undefined>;
     public readonly lightstepTracing!: pulumi.Output<outputs.GvcLightstepTracing | undefined>;
     /**
      * Dedicated load balancer configuration.
@@ -111,6 +115,7 @@ export class Gvc extends pulumi.CustomResource {
             resourceInputs["domain"] = state ? state.domain : undefined;
             resourceInputs["endpointNamingFormat"] = state ? state.endpointNamingFormat : undefined;
             resourceInputs["env"] = state ? state.env : undefined;
+            resourceInputs["keda"] = state ? state.keda : undefined;
             resourceInputs["lightstepTracing"] = state ? state.lightstepTracing : undefined;
             resourceInputs["loadBalancer"] = state ? state.loadBalancer : undefined;
             resourceInputs["locations"] = state ? state.locations : undefined;
@@ -127,6 +132,7 @@ export class Gvc extends pulumi.CustomResource {
             resourceInputs["domain"] = args ? args.domain : undefined;
             resourceInputs["endpointNamingFormat"] = args ? args.endpointNamingFormat : undefined;
             resourceInputs["env"] = args ? args.env : undefined;
+            resourceInputs["keda"] = args ? args.keda : undefined;
             resourceInputs["lightstepTracing"] = args ? args.lightstepTracing : undefined;
             resourceInputs["loadBalancer"] = args ? args.loadBalancer : undefined;
             resourceInputs["locations"] = args ? args.locations : undefined;
@@ -176,6 +182,10 @@ export interface GvcState {
      * Key-value array of resource environment variables.
      */
     env?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * KEDA configuration for the GVC.
+     */
+    keda?: pulumi.Input<inputs.GvcKeda>;
     lightstepTracing?: pulumi.Input<inputs.GvcLightstepTracing>;
     /**
      * Dedicated load balancer configuration.
@@ -230,6 +240,10 @@ export interface GvcArgs {
      * Key-value array of resource environment variables.
      */
     env?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * KEDA configuration for the GVC.
+     */
+    keda?: pulumi.Input<inputs.GvcKeda>;
     lightstepTracing?: pulumi.Input<inputs.GvcLightstepTracing>;
     /**
      * Dedicated load balancer configuration.

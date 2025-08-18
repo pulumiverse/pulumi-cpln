@@ -39,6 +39,7 @@ __all__ = [
     'GroupMemberQuerySpec',
     'GroupMemberQuerySpecTerm',
     'GvcControlplaneTracing',
+    'GvcKeda',
     'GvcLightstepTracing',
     'GvcLoadBalancer',
     'GvcLoadBalancerMultiZone',
@@ -229,10 +230,18 @@ __all__ = [
     'WorkloadLoadBalancerGeoLocationHeaders',
     'WorkloadLocalOption',
     'WorkloadLocalOptionAutoscaling',
+    'WorkloadLocalOptionAutoscalingKeda',
+    'WorkloadLocalOptionAutoscalingKedaAdvanced',
+    'WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers',
+    'WorkloadLocalOptionAutoscalingKedaTrigger',
     'WorkloadLocalOptionAutoscalingMulti',
     'WorkloadLocalOptionMultiZone',
     'WorkloadOptions',
     'WorkloadOptionsAutoscaling',
+    'WorkloadOptionsAutoscalingKeda',
+    'WorkloadOptionsAutoscalingKedaAdvanced',
+    'WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers',
+    'WorkloadOptionsAutoscalingKedaTrigger',
     'WorkloadOptionsAutoscalingMulti',
     'WorkloadOptionsMultiZone',
     'WorkloadRequestRetryPolicy',
@@ -246,6 +255,7 @@ __all__ = [
     'WorkloadStatusResolvedImageImage',
     'WorkloadStatusResolvedImageImageManifest',
     'GetGvcControlplaneTracingResult',
+    'GetGvcKedaResult',
     'GetGvcLightstepTracingResult',
     'GetGvcLoadBalancerResult',
     'GetGvcLoadBalancerMultiZoneResult',
@@ -1321,6 +1331,54 @@ class GvcControlplaneTracing(dict):
         Key-value map of custom tags.
         """
         return pulumi.get(self, "custom_tags")
+
+
+@pulumi.output_type
+class GvcKeda(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "identityLink":
+            suggest = "identity_link"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in GvcKeda. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        GvcKeda.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        GvcKeda.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 enabled: Optional[builtins.bool] = None,
+                 identity_link: Optional[builtins.str] = None):
+        """
+        :param builtins.bool enabled: Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.
+        :param builtins.str identity_link: A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
+        """
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if identity_link is not None:
+            pulumi.set(__self__, "identity_link", identity_link)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[builtins.bool]:
+        """
+        Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.
+        """
+        return pulumi.get(self, "enabled")
+
+    @property
+    @pulumi.getter(name="identityLink")
+    def identity_link(self) -> Optional[builtins.str]:
+        """
+        A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
+        """
+        return pulumi.get(self, "identity_link")
 
 
 @pulumi.output_type
@@ -12053,6 +12111,7 @@ class WorkloadLocalOptionAutoscaling(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
+                 keda: Optional['outputs.WorkloadLocalOptionAutoscalingKeda'] = None,
                  max_concurrency: Optional[builtins.int] = None,
                  max_scale: Optional[builtins.int] = None,
                  metric: Optional[builtins.str] = None,
@@ -12062,14 +12121,17 @@ class WorkloadLocalOptionAutoscaling(dict):
                  scale_to_zero_delay: Optional[builtins.int] = None,
                  target: Optional[builtins.int] = None):
         """
+        :param 'WorkloadLocalOptionAutoscalingKedaArgs' keda: KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
         :param builtins.int max_concurrency: A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
         :param builtins.int max_scale: The maximum allowed number of replicas. Min: `0`. Default `5`.
-        :param builtins.str metric: Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
+        :param builtins.str metric: Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
         :param builtins.str metric_percentile: For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
         :param builtins.int min_scale: The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `max_scale`. Default `1`.
         :param builtins.int scale_to_zero_delay: The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
         :param builtins.int target: Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
         """
+        if keda is not None:
+            pulumi.set(__self__, "keda", keda)
         if max_concurrency is not None:
             pulumi.set(__self__, "max_concurrency", max_concurrency)
         if max_scale is not None:
@@ -12086,6 +12148,14 @@ class WorkloadLocalOptionAutoscaling(dict):
             pulumi.set(__self__, "scale_to_zero_delay", scale_to_zero_delay)
         if target is not None:
             pulumi.set(__self__, "target", target)
+
+    @property
+    @pulumi.getter
+    def keda(self) -> Optional['outputs.WorkloadLocalOptionAutoscalingKeda']:
+        """
+        KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+        """
+        return pulumi.get(self, "keda")
 
     @property
     @pulumi.getter(name="maxConcurrency")
@@ -12107,7 +12177,7 @@ class WorkloadLocalOptionAutoscaling(dict):
     @pulumi.getter
     def metric(self) -> Optional[builtins.str]:
         """
-        Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
+        Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
         """
         return pulumi.get(self, "metric")
 
@@ -12147,6 +12217,289 @@ class WorkloadLocalOptionAutoscaling(dict):
         Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
         """
         return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class WorkloadLocalOptionAutoscalingKeda(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "cooldownPeriod":
+            suggest = "cooldown_period"
+        elif key == "initialCooldownPeriod":
+            suggest = "initial_cooldown_period"
+        elif key == "pollingInterval":
+            suggest = "polling_interval"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadLocalOptionAutoscalingKeda. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadLocalOptionAutoscalingKeda.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadLocalOptionAutoscalingKeda.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 advanced: Optional['outputs.WorkloadLocalOptionAutoscalingKedaAdvanced'] = None,
+                 cooldown_period: Optional[builtins.int] = None,
+                 initial_cooldown_period: Optional[builtins.int] = None,
+                 polling_interval: Optional[builtins.int] = None,
+                 triggers: Optional[Sequence['outputs.WorkloadLocalOptionAutoscalingKedaTrigger']] = None):
+        """
+        :param 'WorkloadLocalOptionAutoscalingKedaAdvancedArgs' advanced: Advanced configuration options for KEDA.
+        :param builtins.int cooldown_period: The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+        :param builtins.int initial_cooldown_period: The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+        :param builtins.int polling_interval: The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+        :param Sequence['WorkloadLocalOptionAutoscalingKedaTriggerArgs'] triggers: An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+        """
+        if advanced is not None:
+            pulumi.set(__self__, "advanced", advanced)
+        if cooldown_period is not None:
+            pulumi.set(__self__, "cooldown_period", cooldown_period)
+        if initial_cooldown_period is not None:
+            pulumi.set(__self__, "initial_cooldown_period", initial_cooldown_period)
+        if polling_interval is not None:
+            pulumi.set(__self__, "polling_interval", polling_interval)
+        if triggers is not None:
+            pulumi.set(__self__, "triggers", triggers)
+
+    @property
+    @pulumi.getter
+    def advanced(self) -> Optional['outputs.WorkloadLocalOptionAutoscalingKedaAdvanced']:
+        """
+        Advanced configuration options for KEDA.
+        """
+        return pulumi.get(self, "advanced")
+
+    @property
+    @pulumi.getter(name="cooldownPeriod")
+    def cooldown_period(self) -> Optional[builtins.int]:
+        """
+        The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+        """
+        return pulumi.get(self, "cooldown_period")
+
+    @property
+    @pulumi.getter(name="initialCooldownPeriod")
+    def initial_cooldown_period(self) -> Optional[builtins.int]:
+        """
+        The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+        """
+        return pulumi.get(self, "initial_cooldown_period")
+
+    @property
+    @pulumi.getter(name="pollingInterval")
+    def polling_interval(self) -> Optional[builtins.int]:
+        """
+        The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+        """
+        return pulumi.get(self, "polling_interval")
+
+    @property
+    @pulumi.getter
+    def triggers(self) -> Optional[Sequence['outputs.WorkloadLocalOptionAutoscalingKedaTrigger']]:
+        """
+        An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+        """
+        return pulumi.get(self, "triggers")
+
+
+@pulumi.output_type
+class WorkloadLocalOptionAutoscalingKedaAdvanced(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "scalingModifiers":
+            suggest = "scaling_modifiers"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadLocalOptionAutoscalingKedaAdvanced. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadLocalOptionAutoscalingKedaAdvanced.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadLocalOptionAutoscalingKedaAdvanced.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 scaling_modifiers: Optional['outputs.WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers'] = None):
+        """
+        :param 'WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs' scaling_modifiers: Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+        """
+        if scaling_modifiers is not None:
+            pulumi.set(__self__, "scaling_modifiers", scaling_modifiers)
+
+    @property
+    @pulumi.getter(name="scalingModifiers")
+    def scaling_modifiers(self) -> Optional['outputs.WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers']:
+        """
+        Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+        """
+        return pulumi.get(self, "scaling_modifiers")
+
+
+@pulumi.output_type
+class WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "activationTarget":
+            suggest = "activation_target"
+        elif key == "metricType":
+            suggest = "metric_type"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 activation_target: Optional[builtins.str] = None,
+                 formula: Optional[builtins.str] = None,
+                 metric_type: Optional[builtins.str] = None,
+                 target: Optional[builtins.str] = None):
+        """
+        :param builtins.str activation_target: Defines the new activation target value to scale on for the composed metric.
+        :param builtins.str formula: Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+        :param builtins.str metric_type: Defines metric type used for this new composite-metric.
+        :param builtins.str target: Defines new target value to scale on for the composed metric.
+        """
+        if activation_target is not None:
+            pulumi.set(__self__, "activation_target", activation_target)
+        if formula is not None:
+            pulumi.set(__self__, "formula", formula)
+        if metric_type is not None:
+            pulumi.set(__self__, "metric_type", metric_type)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @property
+    @pulumi.getter(name="activationTarget")
+    def activation_target(self) -> Optional[builtins.str]:
+        """
+        Defines the new activation target value to scale on for the composed metric.
+        """
+        return pulumi.get(self, "activation_target")
+
+    @property
+    @pulumi.getter
+    def formula(self) -> Optional[builtins.str]:
+        """
+        Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+        """
+        return pulumi.get(self, "formula")
+
+    @property
+    @pulumi.getter(name="metricType")
+    def metric_type(self) -> Optional[builtins.str]:
+        """
+        Defines metric type used for this new composite-metric.
+        """
+        return pulumi.get(self, "metric_type")
+
+    @property
+    @pulumi.getter
+    def target(self) -> Optional[builtins.str]:
+        """
+        Defines new target value to scale on for the composed metric.
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class WorkloadLocalOptionAutoscalingKedaTrigger(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "metricType":
+            suggest = "metric_type"
+        elif key == "useCachedMetrics":
+            suggest = "use_cached_metrics"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadLocalOptionAutoscalingKedaTrigger. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadLocalOptionAutoscalingKedaTrigger.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadLocalOptionAutoscalingKedaTrigger.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 type: builtins.str,
+                 metadata: Optional[Mapping[str, builtins.str]] = None,
+                 metric_type: Optional[builtins.str] = None,
+                 name: Optional[builtins.str] = None,
+                 use_cached_metrics: Optional[builtins.bool] = None):
+        """
+        :param builtins.str type: The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+        :param Mapping[str, builtins.str] metadata: The configuration parameters that the trigger requires.
+        :param builtins.str metric_type: The type of metric to be used for scaling.
+        :param builtins.str name: An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+        :param builtins.bool use_cached_metrics: Enables caching of metric values during polling interval.
+        """
+        pulumi.set(__self__, "type", type)
+        if metadata is not None:
+            pulumi.set(__self__, "metadata", metadata)
+        if metric_type is not None:
+            pulumi.set(__self__, "metric_type", metric_type)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if use_cached_metrics is not None:
+            pulumi.set(__self__, "use_cached_metrics", use_cached_metrics)
+
+    @property
+    @pulumi.getter
+    def type(self) -> builtins.str:
+        """
+        The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+        """
+        return pulumi.get(self, "type")
+
+    @property
+    @pulumi.getter
+    def metadata(self) -> Optional[Mapping[str, builtins.str]]:
+        """
+        The configuration parameters that the trigger requires.
+        """
+        return pulumi.get(self, "metadata")
+
+    @property
+    @pulumi.getter(name="metricType")
+    def metric_type(self) -> Optional[builtins.str]:
+        """
+        The type of metric to be used for scaling.
+        """
+        return pulumi.get(self, "metric_type")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[builtins.str]:
+        """
+        An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="useCachedMetrics")
+    def use_cached_metrics(self) -> Optional[builtins.bool]:
+        """
+        Enables caching of metric values during polling interval.
+        """
+        return pulumi.get(self, "use_cached_metrics")
 
 
 @pulumi.output_type
@@ -12317,6 +12670,7 @@ class WorkloadOptionsAutoscaling(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
+                 keda: Optional['outputs.WorkloadOptionsAutoscalingKeda'] = None,
                  max_concurrency: Optional[builtins.int] = None,
                  max_scale: Optional[builtins.int] = None,
                  metric: Optional[builtins.str] = None,
@@ -12326,14 +12680,17 @@ class WorkloadOptionsAutoscaling(dict):
                  scale_to_zero_delay: Optional[builtins.int] = None,
                  target: Optional[builtins.int] = None):
         """
+        :param 'WorkloadOptionsAutoscalingKedaArgs' keda: KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
         :param builtins.int max_concurrency: A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
         :param builtins.int max_scale: The maximum allowed number of replicas. Min: `0`. Default `5`.
-        :param builtins.str metric: Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
+        :param builtins.str metric: Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
         :param builtins.str metric_percentile: For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
         :param builtins.int min_scale: The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `max_scale`. Default `1`.
         :param builtins.int scale_to_zero_delay: The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
         :param builtins.int target: Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
         """
+        if keda is not None:
+            pulumi.set(__self__, "keda", keda)
         if max_concurrency is not None:
             pulumi.set(__self__, "max_concurrency", max_concurrency)
         if max_scale is not None:
@@ -12350,6 +12707,14 @@ class WorkloadOptionsAutoscaling(dict):
             pulumi.set(__self__, "scale_to_zero_delay", scale_to_zero_delay)
         if target is not None:
             pulumi.set(__self__, "target", target)
+
+    @property
+    @pulumi.getter
+    def keda(self) -> Optional['outputs.WorkloadOptionsAutoscalingKeda']:
+        """
+        KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+        """
+        return pulumi.get(self, "keda")
 
     @property
     @pulumi.getter(name="maxConcurrency")
@@ -12371,7 +12736,7 @@ class WorkloadOptionsAutoscaling(dict):
     @pulumi.getter
     def metric(self) -> Optional[builtins.str]:
         """
-        Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
+        Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
         """
         return pulumi.get(self, "metric")
 
@@ -12411,6 +12776,289 @@ class WorkloadOptionsAutoscaling(dict):
         Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
         """
         return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class WorkloadOptionsAutoscalingKeda(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "cooldownPeriod":
+            suggest = "cooldown_period"
+        elif key == "initialCooldownPeriod":
+            suggest = "initial_cooldown_period"
+        elif key == "pollingInterval":
+            suggest = "polling_interval"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadOptionsAutoscalingKeda. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadOptionsAutoscalingKeda.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadOptionsAutoscalingKeda.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 advanced: Optional['outputs.WorkloadOptionsAutoscalingKedaAdvanced'] = None,
+                 cooldown_period: Optional[builtins.int] = None,
+                 initial_cooldown_period: Optional[builtins.int] = None,
+                 polling_interval: Optional[builtins.int] = None,
+                 triggers: Optional[Sequence['outputs.WorkloadOptionsAutoscalingKedaTrigger']] = None):
+        """
+        :param 'WorkloadOptionsAutoscalingKedaAdvancedArgs' advanced: Advanced configuration options for KEDA.
+        :param builtins.int cooldown_period: The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+        :param builtins.int initial_cooldown_period: The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+        :param builtins.int polling_interval: The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+        :param Sequence['WorkloadOptionsAutoscalingKedaTriggerArgs'] triggers: An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+        """
+        if advanced is not None:
+            pulumi.set(__self__, "advanced", advanced)
+        if cooldown_period is not None:
+            pulumi.set(__self__, "cooldown_period", cooldown_period)
+        if initial_cooldown_period is not None:
+            pulumi.set(__self__, "initial_cooldown_period", initial_cooldown_period)
+        if polling_interval is not None:
+            pulumi.set(__self__, "polling_interval", polling_interval)
+        if triggers is not None:
+            pulumi.set(__self__, "triggers", triggers)
+
+    @property
+    @pulumi.getter
+    def advanced(self) -> Optional['outputs.WorkloadOptionsAutoscalingKedaAdvanced']:
+        """
+        Advanced configuration options for KEDA.
+        """
+        return pulumi.get(self, "advanced")
+
+    @property
+    @pulumi.getter(name="cooldownPeriod")
+    def cooldown_period(self) -> Optional[builtins.int]:
+        """
+        The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+        """
+        return pulumi.get(self, "cooldown_period")
+
+    @property
+    @pulumi.getter(name="initialCooldownPeriod")
+    def initial_cooldown_period(self) -> Optional[builtins.int]:
+        """
+        The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+        """
+        return pulumi.get(self, "initial_cooldown_period")
+
+    @property
+    @pulumi.getter(name="pollingInterval")
+    def polling_interval(self) -> Optional[builtins.int]:
+        """
+        The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+        """
+        return pulumi.get(self, "polling_interval")
+
+    @property
+    @pulumi.getter
+    def triggers(self) -> Optional[Sequence['outputs.WorkloadOptionsAutoscalingKedaTrigger']]:
+        """
+        An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+        """
+        return pulumi.get(self, "triggers")
+
+
+@pulumi.output_type
+class WorkloadOptionsAutoscalingKedaAdvanced(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "scalingModifiers":
+            suggest = "scaling_modifiers"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadOptionsAutoscalingKedaAdvanced. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadOptionsAutoscalingKedaAdvanced.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadOptionsAutoscalingKedaAdvanced.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 scaling_modifiers: Optional['outputs.WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers'] = None):
+        """
+        :param 'WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs' scaling_modifiers: Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+        """
+        if scaling_modifiers is not None:
+            pulumi.set(__self__, "scaling_modifiers", scaling_modifiers)
+
+    @property
+    @pulumi.getter(name="scalingModifiers")
+    def scaling_modifiers(self) -> Optional['outputs.WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers']:
+        """
+        Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+        """
+        return pulumi.get(self, "scaling_modifiers")
+
+
+@pulumi.output_type
+class WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "activationTarget":
+            suggest = "activation_target"
+        elif key == "metricType":
+            suggest = "metric_type"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 activation_target: Optional[builtins.str] = None,
+                 formula: Optional[builtins.str] = None,
+                 metric_type: Optional[builtins.str] = None,
+                 target: Optional[builtins.str] = None):
+        """
+        :param builtins.str activation_target: Defines the new activation target value to scale on for the composed metric.
+        :param builtins.str formula: Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+        :param builtins.str metric_type: Defines metric type used for this new composite-metric.
+        :param builtins.str target: Defines new target value to scale on for the composed metric.
+        """
+        if activation_target is not None:
+            pulumi.set(__self__, "activation_target", activation_target)
+        if formula is not None:
+            pulumi.set(__self__, "formula", formula)
+        if metric_type is not None:
+            pulumi.set(__self__, "metric_type", metric_type)
+        if target is not None:
+            pulumi.set(__self__, "target", target)
+
+    @property
+    @pulumi.getter(name="activationTarget")
+    def activation_target(self) -> Optional[builtins.str]:
+        """
+        Defines the new activation target value to scale on for the composed metric.
+        """
+        return pulumi.get(self, "activation_target")
+
+    @property
+    @pulumi.getter
+    def formula(self) -> Optional[builtins.str]:
+        """
+        Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+        """
+        return pulumi.get(self, "formula")
+
+    @property
+    @pulumi.getter(name="metricType")
+    def metric_type(self) -> Optional[builtins.str]:
+        """
+        Defines metric type used for this new composite-metric.
+        """
+        return pulumi.get(self, "metric_type")
+
+    @property
+    @pulumi.getter
+    def target(self) -> Optional[builtins.str]:
+        """
+        Defines new target value to scale on for the composed metric.
+        """
+        return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class WorkloadOptionsAutoscalingKedaTrigger(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "metricType":
+            suggest = "metric_type"
+        elif key == "useCachedMetrics":
+            suggest = "use_cached_metrics"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadOptionsAutoscalingKedaTrigger. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadOptionsAutoscalingKedaTrigger.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadOptionsAutoscalingKedaTrigger.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 type: builtins.str,
+                 metadata: Optional[Mapping[str, builtins.str]] = None,
+                 metric_type: Optional[builtins.str] = None,
+                 name: Optional[builtins.str] = None,
+                 use_cached_metrics: Optional[builtins.bool] = None):
+        """
+        :param builtins.str type: The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+        :param Mapping[str, builtins.str] metadata: The configuration parameters that the trigger requires.
+        :param builtins.str metric_type: The type of metric to be used for scaling.
+        :param builtins.str name: An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+        :param builtins.bool use_cached_metrics: Enables caching of metric values during polling interval.
+        """
+        pulumi.set(__self__, "type", type)
+        if metadata is not None:
+            pulumi.set(__self__, "metadata", metadata)
+        if metric_type is not None:
+            pulumi.set(__self__, "metric_type", metric_type)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if use_cached_metrics is not None:
+            pulumi.set(__self__, "use_cached_metrics", use_cached_metrics)
+
+    @property
+    @pulumi.getter
+    def type(self) -> builtins.str:
+        """
+        The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+        """
+        return pulumi.get(self, "type")
+
+    @property
+    @pulumi.getter
+    def metadata(self) -> Optional[Mapping[str, builtins.str]]:
+        """
+        The configuration parameters that the trigger requires.
+        """
+        return pulumi.get(self, "metadata")
+
+    @property
+    @pulumi.getter(name="metricType")
+    def metric_type(self) -> Optional[builtins.str]:
+        """
+        The type of metric to be used for scaling.
+        """
+        return pulumi.get(self, "metric_type")
+
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[builtins.str]:
+        """
+        An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="useCachedMetrics")
+    def use_cached_metrics(self) -> Optional[builtins.bool]:
+        """
+        Enables caching of metric values during polling interval.
+        """
+        return pulumi.get(self, "use_cached_metrics")
 
 
 @pulumi.output_type
@@ -13091,6 +13739,36 @@ class GetGvcControlplaneTracingResult(dict):
         Key-value map of custom tags.
         """
         return pulumi.get(self, "custom_tags")
+
+
+@pulumi.output_type
+class GetGvcKedaResult(dict):
+    def __init__(__self__, *,
+                 enabled: builtins.bool,
+                 identity_link: Optional[builtins.str] = None):
+        """
+        :param builtins.bool enabled: Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.
+        :param builtins.str identity_link: A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
+        """
+        pulumi.set(__self__, "enabled", enabled)
+        if identity_link is not None:
+            pulumi.set(__self__, "identity_link", identity_link)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> builtins.bool:
+        """
+        Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.
+        """
+        return pulumi.get(self, "enabled")
+
+    @property
+    @pulumi.getter(name="identityLink")
+    def identity_link(self) -> Optional[builtins.str]:
+        """
+        A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
+        """
+        return pulumi.get(self, "identity_link")
 
 
 @pulumi.output_type

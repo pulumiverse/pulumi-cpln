@@ -29,7 +29,9 @@ type Gvc struct {
 	// '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
 	EndpointNamingFormat pulumi.StringOutput `pulumi:"endpointNamingFormat"`
 	// Key-value array of resource environment variables.
-	Env              pulumi.StringMapOutput       `pulumi:"env"`
+	Env pulumi.StringMapOutput `pulumi:"env"`
+	// KEDA configuration for the GVC.
+	Keda             GvcKedaPtrOutput             `pulumi:"keda"`
 	LightstepTracing GvcLightstepTracingPtrOutput `pulumi:"lightstepTracing"`
 	// Dedicated load balancer configuration.
 	LoadBalancer GvcLoadBalancerPtrOutput `pulumi:"loadBalancer"`
@@ -93,7 +95,9 @@ type gvcState struct {
 	// '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
 	EndpointNamingFormat *string `pulumi:"endpointNamingFormat"`
 	// Key-value array of resource environment variables.
-	Env              map[string]string    `pulumi:"env"`
+	Env map[string]string `pulumi:"env"`
+	// KEDA configuration for the GVC.
+	Keda             *GvcKeda             `pulumi:"keda"`
 	LightstepTracing *GvcLightstepTracing `pulumi:"lightstepTracing"`
 	// Dedicated load balancer configuration.
 	LoadBalancer *GvcLoadBalancer `pulumi:"loadBalancer"`
@@ -128,7 +132,9 @@ type GvcState struct {
 	// '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
 	EndpointNamingFormat pulumi.StringPtrInput
 	// Key-value array of resource environment variables.
-	Env              pulumi.StringMapInput
+	Env pulumi.StringMapInput
+	// KEDA configuration for the GVC.
+	Keda             GvcKedaPtrInput
 	LightstepTracing GvcLightstepTracingPtrInput
 	// Dedicated load balancer configuration.
 	LoadBalancer GvcLoadBalancerPtrInput
@@ -163,7 +169,9 @@ type gvcArgs struct {
 	// '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
 	EndpointNamingFormat *string `pulumi:"endpointNamingFormat"`
 	// Key-value array of resource environment variables.
-	Env              map[string]string    `pulumi:"env"`
+	Env map[string]string `pulumi:"env"`
+	// KEDA configuration for the GVC.
+	Keda             *GvcKeda             `pulumi:"keda"`
 	LightstepTracing *GvcLightstepTracing `pulumi:"lightstepTracing"`
 	// Dedicated load balancer configuration.
 	LoadBalancer *GvcLoadBalancer `pulumi:"loadBalancer"`
@@ -193,7 +201,9 @@ type GvcArgs struct {
 	// '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
 	EndpointNamingFormat pulumi.StringPtrInput
 	// Key-value array of resource environment variables.
-	Env              pulumi.StringMapInput
+	Env pulumi.StringMapInput
+	// KEDA configuration for the GVC.
+	Keda             GvcKedaPtrInput
 	LightstepTracing GvcLightstepTracingPtrInput
 	// Dedicated load balancer configuration.
 	LoadBalancer GvcLoadBalancerPtrInput
@@ -332,6 +342,11 @@ func (o GvcOutput) EndpointNamingFormat() pulumi.StringOutput {
 // Key-value array of resource environment variables.
 func (o GvcOutput) Env() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Gvc) pulumi.StringMapOutput { return v.Env }).(pulumi.StringMapOutput)
+}
+
+// KEDA configuration for the GVC.
+func (o GvcOutput) Keda() GvcKedaPtrOutput {
+	return o.ApplyT(func(v *Gvc) GvcKedaPtrOutput { return v.Keda }).(GvcKedaPtrOutput)
 }
 
 func (o GvcOutput) LightstepTracing() GvcLightstepTracingPtrOutput {
