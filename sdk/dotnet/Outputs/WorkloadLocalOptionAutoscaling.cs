@@ -15,6 +15,10 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class WorkloadLocalOptionAutoscaling
     {
         /// <summary>
+        /// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+        /// </summary>
+        public readonly Outputs.WorkloadLocalOptionAutoscalingKeda? Keda;
+        /// <summary>
         /// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
         /// </summary>
         public readonly int? MaxConcurrency;
@@ -23,7 +27,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly int? MaxScale;
         /// <summary>
-        /// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
+        /// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
         /// </summary>
         public readonly string? Metric;
         /// <summary>
@@ -46,6 +50,8 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private WorkloadLocalOptionAutoscaling(
+            Outputs.WorkloadLocalOptionAutoscalingKeda? keda,
+
             int? maxConcurrency,
 
             int? maxScale,
@@ -62,6 +68,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             int? target)
         {
+            Keda = keda;
             MaxConcurrency = maxConcurrency;
             MaxScale = maxScale;
             Metric = metric;

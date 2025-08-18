@@ -3144,6 +3144,162 @@ func (o GvcControlplaneTracingPtrOutput) Sampling() pulumi.Float64PtrOutput {
 	}).(pulumi.Float64PtrOutput)
 }
 
+type GvcKeda struct {
+	// Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.
+	Enabled *bool `pulumi:"enabled"`
+	// A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
+	IdentityLink *string `pulumi:"identityLink"`
+}
+
+// GvcKedaInput is an input type that accepts GvcKedaArgs and GvcKedaOutput values.
+// You can construct a concrete instance of `GvcKedaInput` via:
+//
+//	GvcKedaArgs{...}
+type GvcKedaInput interface {
+	pulumi.Input
+
+	ToGvcKedaOutput() GvcKedaOutput
+	ToGvcKedaOutputWithContext(context.Context) GvcKedaOutput
+}
+
+type GvcKedaArgs struct {
+	// Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
+	IdentityLink pulumi.StringPtrInput `pulumi:"identityLink"`
+}
+
+func (GvcKedaArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GvcKeda)(nil)).Elem()
+}
+
+func (i GvcKedaArgs) ToGvcKedaOutput() GvcKedaOutput {
+	return i.ToGvcKedaOutputWithContext(context.Background())
+}
+
+func (i GvcKedaArgs) ToGvcKedaOutputWithContext(ctx context.Context) GvcKedaOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcKedaOutput)
+}
+
+func (i GvcKedaArgs) ToGvcKedaPtrOutput() GvcKedaPtrOutput {
+	return i.ToGvcKedaPtrOutputWithContext(context.Background())
+}
+
+func (i GvcKedaArgs) ToGvcKedaPtrOutputWithContext(ctx context.Context) GvcKedaPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcKedaOutput).ToGvcKedaPtrOutputWithContext(ctx)
+}
+
+// GvcKedaPtrInput is an input type that accepts GvcKedaArgs, GvcKedaPtr and GvcKedaPtrOutput values.
+// You can construct a concrete instance of `GvcKedaPtrInput` via:
+//
+//	        GvcKedaArgs{...}
+//
+//	or:
+//
+//	        nil
+type GvcKedaPtrInput interface {
+	pulumi.Input
+
+	ToGvcKedaPtrOutput() GvcKedaPtrOutput
+	ToGvcKedaPtrOutputWithContext(context.Context) GvcKedaPtrOutput
+}
+
+type gvcKedaPtrType GvcKedaArgs
+
+func GvcKedaPtr(v *GvcKedaArgs) GvcKedaPtrInput {
+	return (*gvcKedaPtrType)(v)
+}
+
+func (*gvcKedaPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GvcKeda)(nil)).Elem()
+}
+
+func (i *gvcKedaPtrType) ToGvcKedaPtrOutput() GvcKedaPtrOutput {
+	return i.ToGvcKedaPtrOutputWithContext(context.Background())
+}
+
+func (i *gvcKedaPtrType) ToGvcKedaPtrOutputWithContext(ctx context.Context) GvcKedaPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcKedaPtrOutput)
+}
+
+type GvcKedaOutput struct{ *pulumi.OutputState }
+
+func (GvcKedaOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GvcKeda)(nil)).Elem()
+}
+
+func (o GvcKedaOutput) ToGvcKedaOutput() GvcKedaOutput {
+	return o
+}
+
+func (o GvcKedaOutput) ToGvcKedaOutputWithContext(ctx context.Context) GvcKedaOutput {
+	return o
+}
+
+func (o GvcKedaOutput) ToGvcKedaPtrOutput() GvcKedaPtrOutput {
+	return o.ToGvcKedaPtrOutputWithContext(context.Background())
+}
+
+func (o GvcKedaOutput) ToGvcKedaPtrOutputWithContext(ctx context.Context) GvcKedaPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GvcKeda) *GvcKeda {
+		return &v
+	}).(GvcKedaPtrOutput)
+}
+
+// Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.
+func (o GvcKedaOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v GvcKeda) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
+func (o GvcKedaOutput) IdentityLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GvcKeda) *string { return v.IdentityLink }).(pulumi.StringPtrOutput)
+}
+
+type GvcKedaPtrOutput struct{ *pulumi.OutputState }
+
+func (GvcKedaPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GvcKeda)(nil)).Elem()
+}
+
+func (o GvcKedaPtrOutput) ToGvcKedaPtrOutput() GvcKedaPtrOutput {
+	return o
+}
+
+func (o GvcKedaPtrOutput) ToGvcKedaPtrOutputWithContext(ctx context.Context) GvcKedaPtrOutput {
+	return o
+}
+
+func (o GvcKedaPtrOutput) Elem() GvcKedaOutput {
+	return o.ApplyT(func(v *GvcKeda) GvcKeda {
+		if v != nil {
+			return *v
+		}
+		var ret GvcKeda
+		return ret
+	}).(GvcKedaOutput)
+}
+
+// Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.
+func (o GvcKedaPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *GvcKeda) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
+func (o GvcKedaPtrOutput) IdentityLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GvcKeda) *string {
+		if v == nil {
+			return nil
+		}
+		return v.IdentityLink
+	}).(pulumi.StringPtrOutput)
+}
+
 type GvcLightstepTracing struct {
 	// Full link to referenced Opaque Secret.
 	Credentials *string `pulumi:"credentials"`
@@ -32808,11 +32964,13 @@ func (o WorkloadLocalOptionArrayOutput) Index(i pulumi.IntInput) WorkloadLocalOp
 }
 
 type WorkloadLocalOptionAutoscaling struct {
+	// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+	Keda *WorkloadLocalOptionAutoscalingKeda `pulumi:"keda"`
 	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
 	MaxConcurrency *int `pulumi:"maxConcurrency"`
 	// The maximum allowed number of replicas. Min: `0`. Default `5`.
 	MaxScale *int `pulumi:"maxScale"`
-	// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
+	// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
 	Metric *string `pulumi:"metric"`
 	// For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
 	MetricPercentile *string `pulumi:"metricPercentile"`
@@ -32837,11 +32995,13 @@ type WorkloadLocalOptionAutoscalingInput interface {
 }
 
 type WorkloadLocalOptionAutoscalingArgs struct {
+	// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+	Keda WorkloadLocalOptionAutoscalingKedaPtrInput `pulumi:"keda"`
 	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
 	MaxConcurrency pulumi.IntPtrInput `pulumi:"maxConcurrency"`
 	// The maximum allowed number of replicas. Min: `0`. Default `5`.
 	MaxScale pulumi.IntPtrInput `pulumi:"maxScale"`
-	// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
+	// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
 	Metric pulumi.StringPtrInput `pulumi:"metric"`
 	// For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
 	MetricPercentile pulumi.StringPtrInput `pulumi:"metricPercentile"`
@@ -32931,6 +33091,11 @@ func (o WorkloadLocalOptionAutoscalingOutput) ToWorkloadLocalOptionAutoscalingPt
 	}).(WorkloadLocalOptionAutoscalingPtrOutput)
 }
 
+// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+func (o WorkloadLocalOptionAutoscalingOutput) Keda() WorkloadLocalOptionAutoscalingKedaPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscaling) *WorkloadLocalOptionAutoscalingKeda { return v.Keda }).(WorkloadLocalOptionAutoscalingKedaPtrOutput)
+}
+
 // A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
 func (o WorkloadLocalOptionAutoscalingOutput) MaxConcurrency() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadLocalOptionAutoscaling) *int { return v.MaxConcurrency }).(pulumi.IntPtrOutput)
@@ -32941,7 +33106,7 @@ func (o WorkloadLocalOptionAutoscalingOutput) MaxScale() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadLocalOptionAutoscaling) *int { return v.MaxScale }).(pulumi.IntPtrOutput)
 }
 
-// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
+// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
 func (o WorkloadLocalOptionAutoscalingOutput) Metric() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v WorkloadLocalOptionAutoscaling) *string { return v.Metric }).(pulumi.StringPtrOutput)
 }
@@ -32994,6 +33159,16 @@ func (o WorkloadLocalOptionAutoscalingPtrOutput) Elem() WorkloadLocalOptionAutos
 	}).(WorkloadLocalOptionAutoscalingOutput)
 }
 
+// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+func (o WorkloadLocalOptionAutoscalingPtrOutput) Keda() WorkloadLocalOptionAutoscalingKedaPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscaling) *WorkloadLocalOptionAutoscalingKeda {
+		if v == nil {
+			return nil
+		}
+		return v.Keda
+	}).(WorkloadLocalOptionAutoscalingKedaPtrOutput)
+}
+
 // A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
 func (o WorkloadLocalOptionAutoscalingPtrOutput) MaxConcurrency() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *WorkloadLocalOptionAutoscaling) *int {
@@ -33014,7 +33189,7 @@ func (o WorkloadLocalOptionAutoscalingPtrOutput) MaxScale() pulumi.IntPtrOutput 
 	}).(pulumi.IntPtrOutput)
 }
 
-// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
+// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
 func (o WorkloadLocalOptionAutoscalingPtrOutput) Metric() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *WorkloadLocalOptionAutoscaling) *string {
 		if v == nil {
@@ -33071,6 +33246,689 @@ func (o WorkloadLocalOptionAutoscalingPtrOutput) Target() pulumi.IntPtrOutput {
 		}
 		return v.Target
 	}).(pulumi.IntPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKeda struct {
+	// Advanced configuration options for KEDA.
+	Advanced *WorkloadLocalOptionAutoscalingKedaAdvanced `pulumi:"advanced"`
+	// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+	CooldownPeriod *int `pulumi:"cooldownPeriod"`
+	// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+	InitialCooldownPeriod *int `pulumi:"initialCooldownPeriod"`
+	// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+	PollingInterval *int `pulumi:"pollingInterval"`
+	// An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+	Triggers []WorkloadLocalOptionAutoscalingKedaTrigger `pulumi:"triggers"`
+}
+
+// WorkloadLocalOptionAutoscalingKedaInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaArgs and WorkloadLocalOptionAutoscalingKedaOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaInput` via:
+//
+//	WorkloadLocalOptionAutoscalingKedaArgs{...}
+type WorkloadLocalOptionAutoscalingKedaInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaOutput() WorkloadLocalOptionAutoscalingKedaOutput
+	ToWorkloadLocalOptionAutoscalingKedaOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaOutput
+}
+
+type WorkloadLocalOptionAutoscalingKedaArgs struct {
+	// Advanced configuration options for KEDA.
+	Advanced WorkloadLocalOptionAutoscalingKedaAdvancedPtrInput `pulumi:"advanced"`
+	// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+	CooldownPeriod pulumi.IntPtrInput `pulumi:"cooldownPeriod"`
+	// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+	InitialCooldownPeriod pulumi.IntPtrInput `pulumi:"initialCooldownPeriod"`
+	// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+	PollingInterval pulumi.IntPtrInput `pulumi:"pollingInterval"`
+	// An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+	Triggers WorkloadLocalOptionAutoscalingKedaTriggerArrayInput `pulumi:"triggers"`
+}
+
+func (WorkloadLocalOptionAutoscalingKedaArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKeda)(nil)).Elem()
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaArgs) ToWorkloadLocalOptionAutoscalingKedaOutput() WorkloadLocalOptionAutoscalingKedaOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaArgs) ToWorkloadLocalOptionAutoscalingKedaOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaOutput)
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaArgs) ToWorkloadLocalOptionAutoscalingKedaPtrOutput() WorkloadLocalOptionAutoscalingKedaPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaArgs) ToWorkloadLocalOptionAutoscalingKedaPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaOutput).ToWorkloadLocalOptionAutoscalingKedaPtrOutputWithContext(ctx)
+}
+
+// WorkloadLocalOptionAutoscalingKedaPtrInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaArgs, WorkloadLocalOptionAutoscalingKedaPtr and WorkloadLocalOptionAutoscalingKedaPtrOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaPtrInput` via:
+//
+//	        WorkloadLocalOptionAutoscalingKedaArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadLocalOptionAutoscalingKedaPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaPtrOutput() WorkloadLocalOptionAutoscalingKedaPtrOutput
+	ToWorkloadLocalOptionAutoscalingKedaPtrOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaPtrOutput
+}
+
+type workloadLocalOptionAutoscalingKedaPtrType WorkloadLocalOptionAutoscalingKedaArgs
+
+func WorkloadLocalOptionAutoscalingKedaPtr(v *WorkloadLocalOptionAutoscalingKedaArgs) WorkloadLocalOptionAutoscalingKedaPtrInput {
+	return (*workloadLocalOptionAutoscalingKedaPtrType)(v)
+}
+
+func (*workloadLocalOptionAutoscalingKedaPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscalingKeda)(nil)).Elem()
+}
+
+func (i *workloadLocalOptionAutoscalingKedaPtrType) ToWorkloadLocalOptionAutoscalingKedaPtrOutput() WorkloadLocalOptionAutoscalingKedaPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadLocalOptionAutoscalingKedaPtrType) ToWorkloadLocalOptionAutoscalingKedaPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKeda)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaOutput) ToWorkloadLocalOptionAutoscalingKedaOutput() WorkloadLocalOptionAutoscalingKedaOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaOutput) ToWorkloadLocalOptionAutoscalingKedaOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaOutput) ToWorkloadLocalOptionAutoscalingKedaPtrOutput() WorkloadLocalOptionAutoscalingKedaPtrOutput {
+	return o.ToWorkloadLocalOptionAutoscalingKedaPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaOutput) ToWorkloadLocalOptionAutoscalingKedaPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadLocalOptionAutoscalingKeda) *WorkloadLocalOptionAutoscalingKeda {
+		return &v
+	}).(WorkloadLocalOptionAutoscalingKedaPtrOutput)
+}
+
+// Advanced configuration options for KEDA.
+func (o WorkloadLocalOptionAutoscalingKedaOutput) Advanced() WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKeda) *WorkloadLocalOptionAutoscalingKedaAdvanced {
+		return v.Advanced
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput)
+}
+
+// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+func (o WorkloadLocalOptionAutoscalingKedaOutput) CooldownPeriod() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKeda) *int { return v.CooldownPeriod }).(pulumi.IntPtrOutput)
+}
+
+// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+func (o WorkloadLocalOptionAutoscalingKedaOutput) InitialCooldownPeriod() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKeda) *int { return v.InitialCooldownPeriod }).(pulumi.IntPtrOutput)
+}
+
+// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+func (o WorkloadLocalOptionAutoscalingKedaOutput) PollingInterval() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKeda) *int { return v.PollingInterval }).(pulumi.IntPtrOutput)
+}
+
+// An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+func (o WorkloadLocalOptionAutoscalingKedaOutput) Triggers() WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKeda) []WorkloadLocalOptionAutoscalingKedaTrigger {
+		return v.Triggers
+	}).(WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscalingKeda)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaPtrOutput) ToWorkloadLocalOptionAutoscalingKedaPtrOutput() WorkloadLocalOptionAutoscalingKedaPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaPtrOutput) ToWorkloadLocalOptionAutoscalingKedaPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaPtrOutput) Elem() WorkloadLocalOptionAutoscalingKedaOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKeda) WorkloadLocalOptionAutoscalingKeda {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadLocalOptionAutoscalingKeda
+		return ret
+	}).(WorkloadLocalOptionAutoscalingKedaOutput)
+}
+
+// Advanced configuration options for KEDA.
+func (o WorkloadLocalOptionAutoscalingKedaPtrOutput) Advanced() WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKeda) *WorkloadLocalOptionAutoscalingKedaAdvanced {
+		if v == nil {
+			return nil
+		}
+		return v.Advanced
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput)
+}
+
+// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+func (o WorkloadLocalOptionAutoscalingKedaPtrOutput) CooldownPeriod() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKeda) *int {
+		if v == nil {
+			return nil
+		}
+		return v.CooldownPeriod
+	}).(pulumi.IntPtrOutput)
+}
+
+// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+func (o WorkloadLocalOptionAutoscalingKedaPtrOutput) InitialCooldownPeriod() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKeda) *int {
+		if v == nil {
+			return nil
+		}
+		return v.InitialCooldownPeriod
+	}).(pulumi.IntPtrOutput)
+}
+
+// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+func (o WorkloadLocalOptionAutoscalingKedaPtrOutput) PollingInterval() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKeda) *int {
+		if v == nil {
+			return nil
+		}
+		return v.PollingInterval
+	}).(pulumi.IntPtrOutput)
+}
+
+// An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+func (o WorkloadLocalOptionAutoscalingKedaPtrOutput) Triggers() WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKeda) []WorkloadLocalOptionAutoscalingKedaTrigger {
+		if v == nil {
+			return nil
+		}
+		return v.Triggers
+	}).(WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvanced struct {
+	// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+	ScalingModifiers *WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers `pulumi:"scalingModifiers"`
+}
+
+// WorkloadLocalOptionAutoscalingKedaAdvancedInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaAdvancedArgs and WorkloadLocalOptionAutoscalingKedaAdvancedOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaAdvancedInput` via:
+//
+//	WorkloadLocalOptionAutoscalingKedaAdvancedArgs{...}
+type WorkloadLocalOptionAutoscalingKedaAdvancedInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedOutput() WorkloadLocalOptionAutoscalingKedaAdvancedOutput
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedOutput
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedArgs struct {
+	// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+	ScalingModifiers WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrInput `pulumi:"scalingModifiers"`
+}
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvanced)(nil)).Elem()
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedOutput() WorkloadLocalOptionAutoscalingKedaAdvancedOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedOutput)
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedOutput).ToWorkloadLocalOptionAutoscalingKedaAdvancedPtrOutputWithContext(ctx)
+}
+
+// WorkloadLocalOptionAutoscalingKedaAdvancedPtrInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaAdvancedArgs, WorkloadLocalOptionAutoscalingKedaAdvancedPtr and WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaAdvancedPtrInput` via:
+//
+//	        WorkloadLocalOptionAutoscalingKedaAdvancedArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadLocalOptionAutoscalingKedaAdvancedPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedPtrOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput
+}
+
+type workloadLocalOptionAutoscalingKedaAdvancedPtrType WorkloadLocalOptionAutoscalingKedaAdvancedArgs
+
+func WorkloadLocalOptionAutoscalingKedaAdvancedPtr(v *WorkloadLocalOptionAutoscalingKedaAdvancedArgs) WorkloadLocalOptionAutoscalingKedaAdvancedPtrInput {
+	return (*workloadLocalOptionAutoscalingKedaAdvancedPtrType)(v)
+}
+
+func (*workloadLocalOptionAutoscalingKedaAdvancedPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscalingKedaAdvanced)(nil)).Elem()
+}
+
+func (i *workloadLocalOptionAutoscalingKedaAdvancedPtrType) ToWorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadLocalOptionAutoscalingKedaAdvancedPtrType) ToWorkloadLocalOptionAutoscalingKedaAdvancedPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvanced)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedOutput() WorkloadLocalOptionAutoscalingKedaAdvancedOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput {
+	return o.ToWorkloadLocalOptionAutoscalingKedaAdvancedPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadLocalOptionAutoscalingKedaAdvanced) *WorkloadLocalOptionAutoscalingKedaAdvanced {
+		return &v
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput)
+}
+
+// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedOutput) ScalingModifiers() WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvanced) *WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers {
+		return v.ScalingModifiers
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscalingKedaAdvanced)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput) Elem() WorkloadLocalOptionAutoscalingKedaAdvancedOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvanced) WorkloadLocalOptionAutoscalingKedaAdvanced {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadLocalOptionAutoscalingKedaAdvanced
+		return ret
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedOutput)
+}
+
+// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput) ScalingModifiers() WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvanced) *WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers {
+		if v == nil {
+			return nil
+		}
+		return v.ScalingModifiers
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers struct {
+	// Defines the new activation target value to scale on for the composed metric.
+	ActivationTarget *string `pulumi:"activationTarget"`
+	// Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+	Formula *string `pulumi:"formula"`
+	// Defines metric type used for this new composite-metric.
+	MetricType *string `pulumi:"metricType"`
+	// Defines new target value to scale on for the composed metric.
+	Target *string `pulumi:"target"`
+}
+
+// WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs and WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersInput` via:
+//
+//	WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs{...}
+type WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput() WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs struct {
+	// Defines the new activation target value to scale on for the composed metric.
+	ActivationTarget pulumi.StringPtrInput `pulumi:"activationTarget"`
+	// Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+	Formula pulumi.StringPtrInput `pulumi:"formula"`
+	// Defines metric type used for this new composite-metric.
+	MetricType pulumi.StringPtrInput `pulumi:"metricType"`
+	// Defines new target value to scale on for the composed metric.
+	Target pulumi.StringPtrInput `pulumi:"target"`
+}
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers)(nil)).Elem()
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput() WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput)
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput).ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutputWithContext(ctx)
+}
+
+// WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs, WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtr and WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrInput` via:
+//
+//	        WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput
+}
+
+type workloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrType WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs
+
+func WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtr(v *WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs) WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrInput {
+	return (*workloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrType)(v)
+}
+
+func (*workloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers)(nil)).Elem()
+}
+
+func (i *workloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrType) ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrType) ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput() WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return o.ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers) *WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers {
+		return &v
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput)
+}
+
+// Defines the new activation target value to scale on for the composed metric.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput) ActivationTarget() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers) *string { return v.ActivationTarget }).(pulumi.StringPtrOutput)
+}
+
+// Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput) Formula() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers) *string { return v.Formula }).(pulumi.StringPtrOutput)
+}
+
+// Defines metric type used for this new composite-metric.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput) MetricType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers) *string { return v.MetricType }).(pulumi.StringPtrOutput)
+}
+
+// Defines new target value to scale on for the composed metric.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput) Target() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers) *string { return v.Target }).(pulumi.StringPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput) Elem() WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers) WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers
+		return ret
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput)
+}
+
+// Defines the new activation target value to scale on for the composed metric.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput) ActivationTarget() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ActivationTarget
+	}).(pulumi.StringPtrOutput)
+}
+
+// Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput) Formula() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Formula
+	}).(pulumi.StringPtrOutput)
+}
+
+// Defines metric type used for this new composite-metric.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput) MetricType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MetricType
+	}).(pulumi.StringPtrOutput)
+}
+
+// Defines new target value to scale on for the composed metric.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput) Target() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Target
+	}).(pulumi.StringPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaTrigger struct {
+	// The configuration parameters that the trigger requires.
+	Metadata map[string]string `pulumi:"metadata"`
+	// The type of metric to be used for scaling.
+	MetricType *string `pulumi:"metricType"`
+	// An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+	Name *string `pulumi:"name"`
+	// The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+	Type string `pulumi:"type"`
+	// Enables caching of metric values during polling interval.
+	UseCachedMetrics *bool `pulumi:"useCachedMetrics"`
+}
+
+// WorkloadLocalOptionAutoscalingKedaTriggerInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaTriggerArgs and WorkloadLocalOptionAutoscalingKedaTriggerOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaTriggerInput` via:
+//
+//	WorkloadLocalOptionAutoscalingKedaTriggerArgs{...}
+type WorkloadLocalOptionAutoscalingKedaTriggerInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaTriggerOutput() WorkloadLocalOptionAutoscalingKedaTriggerOutput
+	ToWorkloadLocalOptionAutoscalingKedaTriggerOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaTriggerOutput
+}
+
+type WorkloadLocalOptionAutoscalingKedaTriggerArgs struct {
+	// The configuration parameters that the trigger requires.
+	Metadata pulumi.StringMapInput `pulumi:"metadata"`
+	// The type of metric to be used for scaling.
+	MetricType pulumi.StringPtrInput `pulumi:"metricType"`
+	// An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+	Type pulumi.StringInput `pulumi:"type"`
+	// Enables caching of metric values during polling interval.
+	UseCachedMetrics pulumi.BoolPtrInput `pulumi:"useCachedMetrics"`
+}
+
+func (WorkloadLocalOptionAutoscalingKedaTriggerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaTrigger)(nil)).Elem()
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaTriggerArgs) ToWorkloadLocalOptionAutoscalingKedaTriggerOutput() WorkloadLocalOptionAutoscalingKedaTriggerOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaTriggerOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaTriggerArgs) ToWorkloadLocalOptionAutoscalingKedaTriggerOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaTriggerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaTriggerOutput)
+}
+
+// WorkloadLocalOptionAutoscalingKedaTriggerArrayInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaTriggerArray and WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaTriggerArrayInput` via:
+//
+//	WorkloadLocalOptionAutoscalingKedaTriggerArray{ WorkloadLocalOptionAutoscalingKedaTriggerArgs{...} }
+type WorkloadLocalOptionAutoscalingKedaTriggerArrayInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput() WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput
+	ToWorkloadLocalOptionAutoscalingKedaTriggerArrayOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput
+}
+
+type WorkloadLocalOptionAutoscalingKedaTriggerArray []WorkloadLocalOptionAutoscalingKedaTriggerInput
+
+func (WorkloadLocalOptionAutoscalingKedaTriggerArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadLocalOptionAutoscalingKedaTrigger)(nil)).Elem()
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaTriggerArray) ToWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput() WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaTriggerArrayOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaTriggerArray) ToWorkloadLocalOptionAutoscalingKedaTriggerArrayOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaTriggerOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaTriggerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaTrigger)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaTriggerOutput) ToWorkloadLocalOptionAutoscalingKedaTriggerOutput() WorkloadLocalOptionAutoscalingKedaTriggerOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaTriggerOutput) ToWorkloadLocalOptionAutoscalingKedaTriggerOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaTriggerOutput {
+	return o
+}
+
+// The configuration parameters that the trigger requires.
+func (o WorkloadLocalOptionAutoscalingKedaTriggerOutput) Metadata() pulumi.StringMapOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaTrigger) map[string]string { return v.Metadata }).(pulumi.StringMapOutput)
+}
+
+// The type of metric to be used for scaling.
+func (o WorkloadLocalOptionAutoscalingKedaTriggerOutput) MetricType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaTrigger) *string { return v.MetricType }).(pulumi.StringPtrOutput)
+}
+
+// An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+func (o WorkloadLocalOptionAutoscalingKedaTriggerOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaTrigger) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+// The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+func (o WorkloadLocalOptionAutoscalingKedaTriggerOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaTrigger) string { return v.Type }).(pulumi.StringOutput)
+}
+
+// Enables caching of metric values during polling interval.
+func (o WorkloadLocalOptionAutoscalingKedaTriggerOutput) UseCachedMetrics() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaTrigger) *bool { return v.UseCachedMetrics }).(pulumi.BoolPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadLocalOptionAutoscalingKedaTrigger)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput) ToWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput() WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput) ToWorkloadLocalOptionAutoscalingKedaTriggerArrayOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput) Index(i pulumi.IntInput) WorkloadLocalOptionAutoscalingKedaTriggerOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadLocalOptionAutoscalingKedaTrigger {
+		return vs[0].([]WorkloadLocalOptionAutoscalingKedaTrigger)[vs[1].(int)]
+	}).(WorkloadLocalOptionAutoscalingKedaTriggerOutput)
 }
 
 type WorkloadLocalOptionAutoscalingMulti struct {
@@ -33541,11 +34399,13 @@ func (o WorkloadOptionsPtrOutput) TimeoutSeconds() pulumi.IntPtrOutput {
 }
 
 type WorkloadOptionsAutoscaling struct {
+	// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+	Keda *WorkloadOptionsAutoscalingKeda `pulumi:"keda"`
 	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
 	MaxConcurrency *int `pulumi:"maxConcurrency"`
 	// The maximum allowed number of replicas. Min: `0`. Default `5`.
 	MaxScale *int `pulumi:"maxScale"`
-	// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
+	// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
 	Metric *string `pulumi:"metric"`
 	// For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
 	MetricPercentile *string `pulumi:"metricPercentile"`
@@ -33570,11 +34430,13 @@ type WorkloadOptionsAutoscalingInput interface {
 }
 
 type WorkloadOptionsAutoscalingArgs struct {
+	// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+	Keda WorkloadOptionsAutoscalingKedaPtrInput `pulumi:"keda"`
 	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
 	MaxConcurrency pulumi.IntPtrInput `pulumi:"maxConcurrency"`
 	// The maximum allowed number of replicas. Min: `0`. Default `5`.
 	MaxScale pulumi.IntPtrInput `pulumi:"maxScale"`
-	// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
+	// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
 	Metric pulumi.StringPtrInput `pulumi:"metric"`
 	// For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
 	MetricPercentile pulumi.StringPtrInput `pulumi:"metricPercentile"`
@@ -33664,6 +34526,11 @@ func (o WorkloadOptionsAutoscalingOutput) ToWorkloadOptionsAutoscalingPtrOutputW
 	}).(WorkloadOptionsAutoscalingPtrOutput)
 }
 
+// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+func (o WorkloadOptionsAutoscalingOutput) Keda() WorkloadOptionsAutoscalingKedaPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscaling) *WorkloadOptionsAutoscalingKeda { return v.Keda }).(WorkloadOptionsAutoscalingKedaPtrOutput)
+}
+
 // A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
 func (o WorkloadOptionsAutoscalingOutput) MaxConcurrency() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadOptionsAutoscaling) *int { return v.MaxConcurrency }).(pulumi.IntPtrOutput)
@@ -33674,7 +34541,7 @@ func (o WorkloadOptionsAutoscalingOutput) MaxScale() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadOptionsAutoscaling) *int { return v.MaxScale }).(pulumi.IntPtrOutput)
 }
 
-// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
+// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
 func (o WorkloadOptionsAutoscalingOutput) Metric() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v WorkloadOptionsAutoscaling) *string { return v.Metric }).(pulumi.StringPtrOutput)
 }
@@ -33727,6 +34594,16 @@ func (o WorkloadOptionsAutoscalingPtrOutput) Elem() WorkloadOptionsAutoscalingOu
 	}).(WorkloadOptionsAutoscalingOutput)
 }
 
+// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+func (o WorkloadOptionsAutoscalingPtrOutput) Keda() WorkloadOptionsAutoscalingKedaPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscaling) *WorkloadOptionsAutoscalingKeda {
+		if v == nil {
+			return nil
+		}
+		return v.Keda
+	}).(WorkloadOptionsAutoscalingKedaPtrOutput)
+}
+
 // A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
 func (o WorkloadOptionsAutoscalingPtrOutput) MaxConcurrency() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *WorkloadOptionsAutoscaling) *int {
@@ -33747,7 +34624,7 @@ func (o WorkloadOptionsAutoscalingPtrOutput) MaxScale() pulumi.IntPtrOutput {
 	}).(pulumi.IntPtrOutput)
 }
 
-// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
+// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
 func (o WorkloadOptionsAutoscalingPtrOutput) Metric() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *WorkloadOptionsAutoscaling) *string {
 		if v == nil {
@@ -33804,6 +34681,685 @@ func (o WorkloadOptionsAutoscalingPtrOutput) Target() pulumi.IntPtrOutput {
 		}
 		return v.Target
 	}).(pulumi.IntPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKeda struct {
+	// Advanced configuration options for KEDA.
+	Advanced *WorkloadOptionsAutoscalingKedaAdvanced `pulumi:"advanced"`
+	// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+	CooldownPeriod *int `pulumi:"cooldownPeriod"`
+	// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+	InitialCooldownPeriod *int `pulumi:"initialCooldownPeriod"`
+	// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+	PollingInterval *int `pulumi:"pollingInterval"`
+	// An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+	Triggers []WorkloadOptionsAutoscalingKedaTrigger `pulumi:"triggers"`
+}
+
+// WorkloadOptionsAutoscalingKedaInput is an input type that accepts WorkloadOptionsAutoscalingKedaArgs and WorkloadOptionsAutoscalingKedaOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaInput` via:
+//
+//	WorkloadOptionsAutoscalingKedaArgs{...}
+type WorkloadOptionsAutoscalingKedaInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaOutput() WorkloadOptionsAutoscalingKedaOutput
+	ToWorkloadOptionsAutoscalingKedaOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaOutput
+}
+
+type WorkloadOptionsAutoscalingKedaArgs struct {
+	// Advanced configuration options for KEDA.
+	Advanced WorkloadOptionsAutoscalingKedaAdvancedPtrInput `pulumi:"advanced"`
+	// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+	CooldownPeriod pulumi.IntPtrInput `pulumi:"cooldownPeriod"`
+	// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+	InitialCooldownPeriod pulumi.IntPtrInput `pulumi:"initialCooldownPeriod"`
+	// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+	PollingInterval pulumi.IntPtrInput `pulumi:"pollingInterval"`
+	// An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+	Triggers WorkloadOptionsAutoscalingKedaTriggerArrayInput `pulumi:"triggers"`
+}
+
+func (WorkloadOptionsAutoscalingKedaArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKeda)(nil)).Elem()
+}
+
+func (i WorkloadOptionsAutoscalingKedaArgs) ToWorkloadOptionsAutoscalingKedaOutput() WorkloadOptionsAutoscalingKedaOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaArgs) ToWorkloadOptionsAutoscalingKedaOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaOutput)
+}
+
+func (i WorkloadOptionsAutoscalingKedaArgs) ToWorkloadOptionsAutoscalingKedaPtrOutput() WorkloadOptionsAutoscalingKedaPtrOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaArgs) ToWorkloadOptionsAutoscalingKedaPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaOutput).ToWorkloadOptionsAutoscalingKedaPtrOutputWithContext(ctx)
+}
+
+// WorkloadOptionsAutoscalingKedaPtrInput is an input type that accepts WorkloadOptionsAutoscalingKedaArgs, WorkloadOptionsAutoscalingKedaPtr and WorkloadOptionsAutoscalingKedaPtrOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaPtrInput` via:
+//
+//	        WorkloadOptionsAutoscalingKedaArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadOptionsAutoscalingKedaPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaPtrOutput() WorkloadOptionsAutoscalingKedaPtrOutput
+	ToWorkloadOptionsAutoscalingKedaPtrOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaPtrOutput
+}
+
+type workloadOptionsAutoscalingKedaPtrType WorkloadOptionsAutoscalingKedaArgs
+
+func WorkloadOptionsAutoscalingKedaPtr(v *WorkloadOptionsAutoscalingKedaArgs) WorkloadOptionsAutoscalingKedaPtrInput {
+	return (*workloadOptionsAutoscalingKedaPtrType)(v)
+}
+
+func (*workloadOptionsAutoscalingKedaPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadOptionsAutoscalingKeda)(nil)).Elem()
+}
+
+func (i *workloadOptionsAutoscalingKedaPtrType) ToWorkloadOptionsAutoscalingKedaPtrOutput() WorkloadOptionsAutoscalingKedaPtrOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadOptionsAutoscalingKedaPtrType) ToWorkloadOptionsAutoscalingKedaPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKeda)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaOutput) ToWorkloadOptionsAutoscalingKedaOutput() WorkloadOptionsAutoscalingKedaOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaOutput) ToWorkloadOptionsAutoscalingKedaOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaOutput) ToWorkloadOptionsAutoscalingKedaPtrOutput() WorkloadOptionsAutoscalingKedaPtrOutput {
+	return o.ToWorkloadOptionsAutoscalingKedaPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadOptionsAutoscalingKedaOutput) ToWorkloadOptionsAutoscalingKedaPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadOptionsAutoscalingKeda) *WorkloadOptionsAutoscalingKeda {
+		return &v
+	}).(WorkloadOptionsAutoscalingKedaPtrOutput)
+}
+
+// Advanced configuration options for KEDA.
+func (o WorkloadOptionsAutoscalingKedaOutput) Advanced() WorkloadOptionsAutoscalingKedaAdvancedPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKeda) *WorkloadOptionsAutoscalingKedaAdvanced { return v.Advanced }).(WorkloadOptionsAutoscalingKedaAdvancedPtrOutput)
+}
+
+// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+func (o WorkloadOptionsAutoscalingKedaOutput) CooldownPeriod() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKeda) *int { return v.CooldownPeriod }).(pulumi.IntPtrOutput)
+}
+
+// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+func (o WorkloadOptionsAutoscalingKedaOutput) InitialCooldownPeriod() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKeda) *int { return v.InitialCooldownPeriod }).(pulumi.IntPtrOutput)
+}
+
+// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+func (o WorkloadOptionsAutoscalingKedaOutput) PollingInterval() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKeda) *int { return v.PollingInterval }).(pulumi.IntPtrOutput)
+}
+
+// An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+func (o WorkloadOptionsAutoscalingKedaOutput) Triggers() WorkloadOptionsAutoscalingKedaTriggerArrayOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKeda) []WorkloadOptionsAutoscalingKedaTrigger { return v.Triggers }).(WorkloadOptionsAutoscalingKedaTriggerArrayOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadOptionsAutoscalingKeda)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaPtrOutput) ToWorkloadOptionsAutoscalingKedaPtrOutput() WorkloadOptionsAutoscalingKedaPtrOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaPtrOutput) ToWorkloadOptionsAutoscalingKedaPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaPtrOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaPtrOutput) Elem() WorkloadOptionsAutoscalingKedaOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKeda) WorkloadOptionsAutoscalingKeda {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadOptionsAutoscalingKeda
+		return ret
+	}).(WorkloadOptionsAutoscalingKedaOutput)
+}
+
+// Advanced configuration options for KEDA.
+func (o WorkloadOptionsAutoscalingKedaPtrOutput) Advanced() WorkloadOptionsAutoscalingKedaAdvancedPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKeda) *WorkloadOptionsAutoscalingKedaAdvanced {
+		if v == nil {
+			return nil
+		}
+		return v.Advanced
+	}).(WorkloadOptionsAutoscalingKedaAdvancedPtrOutput)
+}
+
+// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+func (o WorkloadOptionsAutoscalingKedaPtrOutput) CooldownPeriod() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKeda) *int {
+		if v == nil {
+			return nil
+		}
+		return v.CooldownPeriod
+	}).(pulumi.IntPtrOutput)
+}
+
+// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+func (o WorkloadOptionsAutoscalingKedaPtrOutput) InitialCooldownPeriod() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKeda) *int {
+		if v == nil {
+			return nil
+		}
+		return v.InitialCooldownPeriod
+	}).(pulumi.IntPtrOutput)
+}
+
+// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+func (o WorkloadOptionsAutoscalingKedaPtrOutput) PollingInterval() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKeda) *int {
+		if v == nil {
+			return nil
+		}
+		return v.PollingInterval
+	}).(pulumi.IntPtrOutput)
+}
+
+// An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+func (o WorkloadOptionsAutoscalingKedaPtrOutput) Triggers() WorkloadOptionsAutoscalingKedaTriggerArrayOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKeda) []WorkloadOptionsAutoscalingKedaTrigger {
+		if v == nil {
+			return nil
+		}
+		return v.Triggers
+	}).(WorkloadOptionsAutoscalingKedaTriggerArrayOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvanced struct {
+	// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+	ScalingModifiers *WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers `pulumi:"scalingModifiers"`
+}
+
+// WorkloadOptionsAutoscalingKedaAdvancedInput is an input type that accepts WorkloadOptionsAutoscalingKedaAdvancedArgs and WorkloadOptionsAutoscalingKedaAdvancedOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaAdvancedInput` via:
+//
+//	WorkloadOptionsAutoscalingKedaAdvancedArgs{...}
+type WorkloadOptionsAutoscalingKedaAdvancedInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaAdvancedOutput() WorkloadOptionsAutoscalingKedaAdvancedOutput
+	ToWorkloadOptionsAutoscalingKedaAdvancedOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaAdvancedOutput
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedArgs struct {
+	// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+	ScalingModifiers WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrInput `pulumi:"scalingModifiers"`
+}
+
+func (WorkloadOptionsAutoscalingKedaAdvancedArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvanced)(nil)).Elem()
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedArgs) ToWorkloadOptionsAutoscalingKedaAdvancedOutput() WorkloadOptionsAutoscalingKedaAdvancedOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedArgs) ToWorkloadOptionsAutoscalingKedaAdvancedOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedOutput)
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedArgs) ToWorkloadOptionsAutoscalingKedaAdvancedPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedPtrOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedArgs) ToWorkloadOptionsAutoscalingKedaAdvancedPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedOutput).ToWorkloadOptionsAutoscalingKedaAdvancedPtrOutputWithContext(ctx)
+}
+
+// WorkloadOptionsAutoscalingKedaAdvancedPtrInput is an input type that accepts WorkloadOptionsAutoscalingKedaAdvancedArgs, WorkloadOptionsAutoscalingKedaAdvancedPtr and WorkloadOptionsAutoscalingKedaAdvancedPtrOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaAdvancedPtrInput` via:
+//
+//	        WorkloadOptionsAutoscalingKedaAdvancedArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadOptionsAutoscalingKedaAdvancedPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaAdvancedPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedPtrOutput
+	ToWorkloadOptionsAutoscalingKedaAdvancedPtrOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaAdvancedPtrOutput
+}
+
+type workloadOptionsAutoscalingKedaAdvancedPtrType WorkloadOptionsAutoscalingKedaAdvancedArgs
+
+func WorkloadOptionsAutoscalingKedaAdvancedPtr(v *WorkloadOptionsAutoscalingKedaAdvancedArgs) WorkloadOptionsAutoscalingKedaAdvancedPtrInput {
+	return (*workloadOptionsAutoscalingKedaAdvancedPtrType)(v)
+}
+
+func (*workloadOptionsAutoscalingKedaAdvancedPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadOptionsAutoscalingKedaAdvanced)(nil)).Elem()
+}
+
+func (i *workloadOptionsAutoscalingKedaAdvancedPtrType) ToWorkloadOptionsAutoscalingKedaAdvancedPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedPtrOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadOptionsAutoscalingKedaAdvancedPtrType) ToWorkloadOptionsAutoscalingKedaAdvancedPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaAdvancedOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvanced)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedOutput) ToWorkloadOptionsAutoscalingKedaAdvancedOutput() WorkloadOptionsAutoscalingKedaAdvancedOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedOutput) ToWorkloadOptionsAutoscalingKedaAdvancedOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedOutput) ToWorkloadOptionsAutoscalingKedaAdvancedPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedPtrOutput {
+	return o.ToWorkloadOptionsAutoscalingKedaAdvancedPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedOutput) ToWorkloadOptionsAutoscalingKedaAdvancedPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadOptionsAutoscalingKedaAdvanced) *WorkloadOptionsAutoscalingKedaAdvanced {
+		return &v
+	}).(WorkloadOptionsAutoscalingKedaAdvancedPtrOutput)
+}
+
+// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+func (o WorkloadOptionsAutoscalingKedaAdvancedOutput) ScalingModifiers() WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvanced) *WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers {
+		return v.ScalingModifiers
+	}).(WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaAdvancedPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadOptionsAutoscalingKedaAdvanced)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedPtrOutput) ToWorkloadOptionsAutoscalingKedaAdvancedPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedPtrOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedPtrOutput) ToWorkloadOptionsAutoscalingKedaAdvancedPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedPtrOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedPtrOutput) Elem() WorkloadOptionsAutoscalingKedaAdvancedOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvanced) WorkloadOptionsAutoscalingKedaAdvanced {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadOptionsAutoscalingKedaAdvanced
+		return ret
+	}).(WorkloadOptionsAutoscalingKedaAdvancedOutput)
+}
+
+// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+func (o WorkloadOptionsAutoscalingKedaAdvancedPtrOutput) ScalingModifiers() WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvanced) *WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers {
+		if v == nil {
+			return nil
+		}
+		return v.ScalingModifiers
+	}).(WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers struct {
+	// Defines the new activation target value to scale on for the composed metric.
+	ActivationTarget *string `pulumi:"activationTarget"`
+	// Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+	Formula *string `pulumi:"formula"`
+	// Defines metric type used for this new composite-metric.
+	MetricType *string `pulumi:"metricType"`
+	// Defines new target value to scale on for the composed metric.
+	Target *string `pulumi:"target"`
+}
+
+// WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersInput is an input type that accepts WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs and WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersInput` via:
+//
+//	WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs{...}
+type WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput() WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput
+	ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs struct {
+	// Defines the new activation target value to scale on for the composed metric.
+	ActivationTarget pulumi.StringPtrInput `pulumi:"activationTarget"`
+	// Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+	Formula pulumi.StringPtrInput `pulumi:"formula"`
+	// Defines metric type used for this new composite-metric.
+	MetricType pulumi.StringPtrInput `pulumi:"metricType"`
+	// Defines new target value to scale on for the composed metric.
+	Target pulumi.StringPtrInput `pulumi:"target"`
+}
+
+func (WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers)(nil)).Elem()
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs) ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput() WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs) ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput)
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs) ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs) ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput).ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutputWithContext(ctx)
+}
+
+// WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrInput is an input type that accepts WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs, WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtr and WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrInput` via:
+//
+//	        WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput
+	ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput
+}
+
+type workloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrType WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs
+
+func WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtr(v *WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs) WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrInput {
+	return (*workloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrType)(v)
+}
+
+func (*workloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers)(nil)).Elem()
+}
+
+func (i *workloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrType) ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrType) ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput) ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput() WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput) ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput) ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return o.ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput) ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers) *WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers {
+		return &v
+	}).(WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput)
+}
+
+// Defines the new activation target value to scale on for the composed metric.
+func (o WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput) ActivationTarget() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers) *string { return v.ActivationTarget }).(pulumi.StringPtrOutput)
+}
+
+// Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+func (o WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput) Formula() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers) *string { return v.Formula }).(pulumi.StringPtrOutput)
+}
+
+// Defines metric type used for this new composite-metric.
+func (o WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput) MetricType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers) *string { return v.MetricType }).(pulumi.StringPtrOutput)
+}
+
+// Defines new target value to scale on for the composed metric.
+func (o WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput) Target() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers) *string { return v.Target }).(pulumi.StringPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput) ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput) ToWorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput) Elem() WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers) WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers
+		return ret
+	}).(WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput)
+}
+
+// Defines the new activation target value to scale on for the composed metric.
+func (o WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput) ActivationTarget() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ActivationTarget
+	}).(pulumi.StringPtrOutput)
+}
+
+// Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+func (o WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput) Formula() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Formula
+	}).(pulumi.StringPtrOutput)
+}
+
+// Defines metric type used for this new composite-metric.
+func (o WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput) MetricType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MetricType
+	}).(pulumi.StringPtrOutput)
+}
+
+// Defines new target value to scale on for the composed metric.
+func (o WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput) Target() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Target
+	}).(pulumi.StringPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaTrigger struct {
+	// The configuration parameters that the trigger requires.
+	Metadata map[string]string `pulumi:"metadata"`
+	// The type of metric to be used for scaling.
+	MetricType *string `pulumi:"metricType"`
+	// An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+	Name *string `pulumi:"name"`
+	// The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+	Type string `pulumi:"type"`
+	// Enables caching of metric values during polling interval.
+	UseCachedMetrics *bool `pulumi:"useCachedMetrics"`
+}
+
+// WorkloadOptionsAutoscalingKedaTriggerInput is an input type that accepts WorkloadOptionsAutoscalingKedaTriggerArgs and WorkloadOptionsAutoscalingKedaTriggerOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaTriggerInput` via:
+//
+//	WorkloadOptionsAutoscalingKedaTriggerArgs{...}
+type WorkloadOptionsAutoscalingKedaTriggerInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaTriggerOutput() WorkloadOptionsAutoscalingKedaTriggerOutput
+	ToWorkloadOptionsAutoscalingKedaTriggerOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaTriggerOutput
+}
+
+type WorkloadOptionsAutoscalingKedaTriggerArgs struct {
+	// The configuration parameters that the trigger requires.
+	Metadata pulumi.StringMapInput `pulumi:"metadata"`
+	// The type of metric to be used for scaling.
+	MetricType pulumi.StringPtrInput `pulumi:"metricType"`
+	// An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+	Type pulumi.StringInput `pulumi:"type"`
+	// Enables caching of metric values during polling interval.
+	UseCachedMetrics pulumi.BoolPtrInput `pulumi:"useCachedMetrics"`
+}
+
+func (WorkloadOptionsAutoscalingKedaTriggerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaTrigger)(nil)).Elem()
+}
+
+func (i WorkloadOptionsAutoscalingKedaTriggerArgs) ToWorkloadOptionsAutoscalingKedaTriggerOutput() WorkloadOptionsAutoscalingKedaTriggerOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaTriggerOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaTriggerArgs) ToWorkloadOptionsAutoscalingKedaTriggerOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaTriggerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaTriggerOutput)
+}
+
+// WorkloadOptionsAutoscalingKedaTriggerArrayInput is an input type that accepts WorkloadOptionsAutoscalingKedaTriggerArray and WorkloadOptionsAutoscalingKedaTriggerArrayOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaTriggerArrayInput` via:
+//
+//	WorkloadOptionsAutoscalingKedaTriggerArray{ WorkloadOptionsAutoscalingKedaTriggerArgs{...} }
+type WorkloadOptionsAutoscalingKedaTriggerArrayInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaTriggerArrayOutput() WorkloadOptionsAutoscalingKedaTriggerArrayOutput
+	ToWorkloadOptionsAutoscalingKedaTriggerArrayOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaTriggerArrayOutput
+}
+
+type WorkloadOptionsAutoscalingKedaTriggerArray []WorkloadOptionsAutoscalingKedaTriggerInput
+
+func (WorkloadOptionsAutoscalingKedaTriggerArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadOptionsAutoscalingKedaTrigger)(nil)).Elem()
+}
+
+func (i WorkloadOptionsAutoscalingKedaTriggerArray) ToWorkloadOptionsAutoscalingKedaTriggerArrayOutput() WorkloadOptionsAutoscalingKedaTriggerArrayOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaTriggerArrayOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaTriggerArray) ToWorkloadOptionsAutoscalingKedaTriggerArrayOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaTriggerArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaTriggerArrayOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaTriggerOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaTriggerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaTrigger)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaTriggerOutput) ToWorkloadOptionsAutoscalingKedaTriggerOutput() WorkloadOptionsAutoscalingKedaTriggerOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaTriggerOutput) ToWorkloadOptionsAutoscalingKedaTriggerOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaTriggerOutput {
+	return o
+}
+
+// The configuration parameters that the trigger requires.
+func (o WorkloadOptionsAutoscalingKedaTriggerOutput) Metadata() pulumi.StringMapOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaTrigger) map[string]string { return v.Metadata }).(pulumi.StringMapOutput)
+}
+
+// The type of metric to be used for scaling.
+func (o WorkloadOptionsAutoscalingKedaTriggerOutput) MetricType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaTrigger) *string { return v.MetricType }).(pulumi.StringPtrOutput)
+}
+
+// An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+func (o WorkloadOptionsAutoscalingKedaTriggerOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaTrigger) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+// The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+func (o WorkloadOptionsAutoscalingKedaTriggerOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaTrigger) string { return v.Type }).(pulumi.StringOutput)
+}
+
+// Enables caching of metric values during polling interval.
+func (o WorkloadOptionsAutoscalingKedaTriggerOutput) UseCachedMetrics() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaTrigger) *bool { return v.UseCachedMetrics }).(pulumi.BoolPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaTriggerArrayOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaTriggerArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadOptionsAutoscalingKedaTrigger)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaTriggerArrayOutput) ToWorkloadOptionsAutoscalingKedaTriggerArrayOutput() WorkloadOptionsAutoscalingKedaTriggerArrayOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaTriggerArrayOutput) ToWorkloadOptionsAutoscalingKedaTriggerArrayOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaTriggerArrayOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaTriggerArrayOutput) Index(i pulumi.IntInput) WorkloadOptionsAutoscalingKedaTriggerOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadOptionsAutoscalingKedaTrigger {
+		return vs[0].([]WorkloadOptionsAutoscalingKedaTrigger)[vs[1].(int)]
+	}).(WorkloadOptionsAutoscalingKedaTriggerOutput)
 }
 
 type WorkloadOptionsAutoscalingMulti struct {
@@ -35508,6 +37064,162 @@ func (o GetGvcControlplaneTracingPtrOutput) Sampling() pulumi.Float64PtrOutput {
 		}
 		return &v.Sampling
 	}).(pulumi.Float64PtrOutput)
+}
+
+type GetGvcKeda struct {
+	// Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.
+	Enabled bool `pulumi:"enabled"`
+	// A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
+	IdentityLink *string `pulumi:"identityLink"`
+}
+
+// GetGvcKedaInput is an input type that accepts GetGvcKedaArgs and GetGvcKedaOutput values.
+// You can construct a concrete instance of `GetGvcKedaInput` via:
+//
+//	GetGvcKedaArgs{...}
+type GetGvcKedaInput interface {
+	pulumi.Input
+
+	ToGetGvcKedaOutput() GetGvcKedaOutput
+	ToGetGvcKedaOutputWithContext(context.Context) GetGvcKedaOutput
+}
+
+type GetGvcKedaArgs struct {
+	// Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.
+	Enabled pulumi.BoolInput `pulumi:"enabled"`
+	// A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
+	IdentityLink pulumi.StringPtrInput `pulumi:"identityLink"`
+}
+
+func (GetGvcKedaArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetGvcKeda)(nil)).Elem()
+}
+
+func (i GetGvcKedaArgs) ToGetGvcKedaOutput() GetGvcKedaOutput {
+	return i.ToGetGvcKedaOutputWithContext(context.Background())
+}
+
+func (i GetGvcKedaArgs) ToGetGvcKedaOutputWithContext(ctx context.Context) GetGvcKedaOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetGvcKedaOutput)
+}
+
+func (i GetGvcKedaArgs) ToGetGvcKedaPtrOutput() GetGvcKedaPtrOutput {
+	return i.ToGetGvcKedaPtrOutputWithContext(context.Background())
+}
+
+func (i GetGvcKedaArgs) ToGetGvcKedaPtrOutputWithContext(ctx context.Context) GetGvcKedaPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetGvcKedaOutput).ToGetGvcKedaPtrOutputWithContext(ctx)
+}
+
+// GetGvcKedaPtrInput is an input type that accepts GetGvcKedaArgs, GetGvcKedaPtr and GetGvcKedaPtrOutput values.
+// You can construct a concrete instance of `GetGvcKedaPtrInput` via:
+//
+//	        GetGvcKedaArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetGvcKedaPtrInput interface {
+	pulumi.Input
+
+	ToGetGvcKedaPtrOutput() GetGvcKedaPtrOutput
+	ToGetGvcKedaPtrOutputWithContext(context.Context) GetGvcKedaPtrOutput
+}
+
+type getGvcKedaPtrType GetGvcKedaArgs
+
+func GetGvcKedaPtr(v *GetGvcKedaArgs) GetGvcKedaPtrInput {
+	return (*getGvcKedaPtrType)(v)
+}
+
+func (*getGvcKedaPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetGvcKeda)(nil)).Elem()
+}
+
+func (i *getGvcKedaPtrType) ToGetGvcKedaPtrOutput() GetGvcKedaPtrOutput {
+	return i.ToGetGvcKedaPtrOutputWithContext(context.Background())
+}
+
+func (i *getGvcKedaPtrType) ToGetGvcKedaPtrOutputWithContext(ctx context.Context) GetGvcKedaPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetGvcKedaPtrOutput)
+}
+
+type GetGvcKedaOutput struct{ *pulumi.OutputState }
+
+func (GetGvcKedaOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetGvcKeda)(nil)).Elem()
+}
+
+func (o GetGvcKedaOutput) ToGetGvcKedaOutput() GetGvcKedaOutput {
+	return o
+}
+
+func (o GetGvcKedaOutput) ToGetGvcKedaOutputWithContext(ctx context.Context) GetGvcKedaOutput {
+	return o
+}
+
+func (o GetGvcKedaOutput) ToGetGvcKedaPtrOutput() GetGvcKedaPtrOutput {
+	return o.ToGetGvcKedaPtrOutputWithContext(context.Background())
+}
+
+func (o GetGvcKedaOutput) ToGetGvcKedaPtrOutputWithContext(ctx context.Context) GetGvcKedaPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetGvcKeda) *GetGvcKeda {
+		return &v
+	}).(GetGvcKedaPtrOutput)
+}
+
+// Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.
+func (o GetGvcKedaOutput) Enabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetGvcKeda) bool { return v.Enabled }).(pulumi.BoolOutput)
+}
+
+// A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
+func (o GetGvcKedaOutput) IdentityLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetGvcKeda) *string { return v.IdentityLink }).(pulumi.StringPtrOutput)
+}
+
+type GetGvcKedaPtrOutput struct{ *pulumi.OutputState }
+
+func (GetGvcKedaPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetGvcKeda)(nil)).Elem()
+}
+
+func (o GetGvcKedaPtrOutput) ToGetGvcKedaPtrOutput() GetGvcKedaPtrOutput {
+	return o
+}
+
+func (o GetGvcKedaPtrOutput) ToGetGvcKedaPtrOutputWithContext(ctx context.Context) GetGvcKedaPtrOutput {
+	return o
+}
+
+func (o GetGvcKedaPtrOutput) Elem() GetGvcKedaOutput {
+	return o.ApplyT(func(v *GetGvcKeda) GetGvcKeda {
+		if v != nil {
+			return *v
+		}
+		var ret GetGvcKeda
+		return ret
+	}).(GetGvcKedaOutput)
+}
+
+// Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.
+func (o GetGvcKedaPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *GetGvcKeda) *bool {
+		if v == nil {
+			return nil
+		}
+		return &v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
+func (o GetGvcKedaPtrOutput) IdentityLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetGvcKeda) *string {
+		if v == nil {
+			return nil
+		}
+		return v.IdentityLink
+	}).(pulumi.StringPtrOutput)
 }
 
 type GetGvcLightstepTracing struct {
@@ -40273,6 +41985,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GroupMemberQuerySpecTermArrayInput)(nil)).Elem(), GroupMemberQuerySpecTermArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcControlplaneTracingInput)(nil)).Elem(), GvcControlplaneTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcControlplaneTracingPtrInput)(nil)).Elem(), GvcControlplaneTracingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GvcKedaInput)(nil)).Elem(), GvcKedaArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GvcKedaPtrInput)(nil)).Elem(), GvcKedaArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcLightstepTracingInput)(nil)).Elem(), GvcLightstepTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcLightstepTracingPtrInput)(nil)).Elem(), GvcLightstepTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcLoadBalancerInput)(nil)).Elem(), GvcLoadBalancerArgs{})
@@ -40653,6 +42367,14 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionArrayInput)(nil)).Elem(), WorkloadLocalOptionArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingPtrInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaPtrInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedPtrInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaTriggerInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaTriggerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaTriggerArrayInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaTriggerArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingMultiInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingMultiArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingMultiArrayInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingMultiArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionMultiZoneInput)(nil)).Elem(), WorkloadLocalOptionMultiZoneArgs{})
@@ -40661,6 +42383,14 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsPtrInput)(nil)).Elem(), WorkloadOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingInput)(nil)).Elem(), WorkloadOptionsAutoscalingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingPtrInput)(nil)).Elem(), WorkloadOptionsAutoscalingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaPtrInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedPtrInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaTriggerInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaTriggerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaTriggerArrayInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaTriggerArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingMultiInput)(nil)).Elem(), WorkloadOptionsAutoscalingMultiArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingMultiArrayInput)(nil)).Elem(), WorkloadOptionsAutoscalingMultiArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsMultiZoneInput)(nil)).Elem(), WorkloadOptionsMultiZoneArgs{})
@@ -40687,6 +42417,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadStatusResolvedImageImageManifestArrayInput)(nil)).Elem(), WorkloadStatusResolvedImageImageManifestArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcControlplaneTracingInput)(nil)).Elem(), GetGvcControlplaneTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcControlplaneTracingPtrInput)(nil)).Elem(), GetGvcControlplaneTracingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcKedaInput)(nil)).Elem(), GetGvcKedaArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcKedaPtrInput)(nil)).Elem(), GetGvcKedaArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLightstepTracingInput)(nil)).Elem(), GetGvcLightstepTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLightstepTracingPtrInput)(nil)).Elem(), GetGvcLightstepTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLoadBalancerInput)(nil)).Elem(), GetGvcLoadBalancerArgs{})
@@ -40799,6 +42531,8 @@ func init() {
 	pulumi.RegisterOutputType(GroupMemberQuerySpecTermArrayOutput{})
 	pulumi.RegisterOutputType(GvcControlplaneTracingOutput{})
 	pulumi.RegisterOutputType(GvcControlplaneTracingPtrOutput{})
+	pulumi.RegisterOutputType(GvcKedaOutput{})
+	pulumi.RegisterOutputType(GvcKedaPtrOutput{})
 	pulumi.RegisterOutputType(GvcLightstepTracingOutput{})
 	pulumi.RegisterOutputType(GvcLightstepTracingPtrOutput{})
 	pulumi.RegisterOutputType(GvcLoadBalancerOutput{})
@@ -41179,6 +42913,14 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadLocalOptionArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaTriggerOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingMultiOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingMultiArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionMultiZoneOutput{})
@@ -41187,6 +42929,14 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadOptionsPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaTriggerOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaTriggerArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingMultiOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingMultiArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsMultiZoneOutput{})
@@ -41213,6 +42963,8 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadStatusResolvedImageImageManifestArrayOutput{})
 	pulumi.RegisterOutputType(GetGvcControlplaneTracingOutput{})
 	pulumi.RegisterOutputType(GetGvcControlplaneTracingPtrOutput{})
+	pulumi.RegisterOutputType(GetGvcKedaOutput{})
+	pulumi.RegisterOutputType(GetGvcKedaPtrOutput{})
 	pulumi.RegisterOutputType(GetGvcLightstepTracingOutput{})
 	pulumi.RegisterOutputType(GetGvcLightstepTracingPtrOutput{})
 	pulumi.RegisterOutputType(GetGvcLoadBalancerOutput{})

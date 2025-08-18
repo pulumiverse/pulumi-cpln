@@ -240,6 +240,28 @@ export interface GetGvcControlplaneTracingArgs {
     sampling: pulumi.Input<number>;
 }
 
+export interface GetGvcKeda {
+    /**
+     * Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.
+     */
+    enabled?: boolean;
+    /**
+     * A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
+     */
+    identityLink?: string;
+}
+
+export interface GetGvcKedaArgs {
+    /**
+     * Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
+     */
+    identityLink?: pulumi.Input<string>;
+}
+
 export interface GetGvcLightstepTracing {
     /**
      * Full link to referenced Opaque Secret.
@@ -920,6 +942,17 @@ export interface GvcControlplaneTracing {
      * Determines what percentage of requests should be traced.
      */
     sampling: pulumi.Input<number>;
+}
+
+export interface GvcKeda {
+    /**
+     * Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
+     */
+    identityLink?: pulumi.Input<string>;
 }
 
 export interface GvcLightstepTracing {
@@ -3416,6 +3449,10 @@ export interface WorkloadLocalOption {
 
 export interface WorkloadLocalOptionAutoscaling {
     /**
+     * KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+     */
+    keda?: pulumi.Input<inputs.WorkloadLocalOptionAutoscalingKeda>;
+    /**
      * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
      */
     maxConcurrency?: pulumi.Input<number>;
@@ -3424,7 +3461,7 @@ export interface WorkloadLocalOptionAutoscaling {
      */
     maxScale?: pulumi.Input<number>;
     /**
-     * Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
+     * Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
      */
     metric?: pulumi.Input<string>;
     /**
@@ -3444,6 +3481,78 @@ export interface WorkloadLocalOptionAutoscaling {
      * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
      */
     target?: pulumi.Input<number>;
+}
+
+export interface WorkloadLocalOptionAutoscalingKeda {
+    /**
+     * Advanced configuration options for KEDA.
+     */
+    advanced?: pulumi.Input<inputs.WorkloadLocalOptionAutoscalingKedaAdvanced>;
+    /**
+     * The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+     */
+    cooldownPeriod?: pulumi.Input<number>;
+    /**
+     * The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+     */
+    initialCooldownPeriod?: pulumi.Input<number>;
+    /**
+     * The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+     */
+    pollingInterval?: pulumi.Input<number>;
+    /**
+     * An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+     */
+    triggers?: pulumi.Input<pulumi.Input<inputs.WorkloadLocalOptionAutoscalingKedaTrigger>[]>;
+}
+
+export interface WorkloadLocalOptionAutoscalingKedaAdvanced {
+    /**
+     * Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+     */
+    scalingModifiers?: pulumi.Input<inputs.WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers>;
+}
+
+export interface WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers {
+    /**
+     * Defines the new activation target value to scale on for the composed metric.
+     */
+    activationTarget?: pulumi.Input<string>;
+    /**
+     * Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+     */
+    formula?: pulumi.Input<string>;
+    /**
+     * Defines metric type used for this new composite-metric.
+     */
+    metricType?: pulumi.Input<string>;
+    /**
+     * Defines new target value to scale on for the composed metric.
+     */
+    target?: pulumi.Input<string>;
+}
+
+export interface WorkloadLocalOptionAutoscalingKedaTrigger {
+    /**
+     * The configuration parameters that the trigger requires.
+     */
+    metadata?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The type of metric to be used for scaling.
+     */
+    metricType?: pulumi.Input<string>;
+    /**
+     * An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+     */
+    name?: pulumi.Input<string>;
+    /**
+     * The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+     */
+    type: pulumi.Input<string>;
+    /**
+     * Enables caching of metric values during polling interval.
+     */
+    useCachedMetrics?: pulumi.Input<boolean>;
 }
 
 export interface WorkloadLocalOptionAutoscalingMulti {
@@ -3487,6 +3596,10 @@ export interface WorkloadOptions {
 
 export interface WorkloadOptionsAutoscaling {
     /**
+     * KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+     */
+    keda?: pulumi.Input<inputs.WorkloadOptionsAutoscalingKeda>;
+    /**
      * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
      */
     maxConcurrency?: pulumi.Input<number>;
@@ -3495,7 +3608,7 @@ export interface WorkloadOptionsAutoscaling {
      */
     maxScale?: pulumi.Input<number>;
     /**
-     * Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency` or `disabled`.
+     * Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
      */
     metric?: pulumi.Input<string>;
     /**
@@ -3515,6 +3628,78 @@ export interface WorkloadOptionsAutoscaling {
      * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
      */
     target?: pulumi.Input<number>;
+}
+
+export interface WorkloadOptionsAutoscalingKeda {
+    /**
+     * Advanced configuration options for KEDA.
+     */
+    advanced?: pulumi.Input<inputs.WorkloadOptionsAutoscalingKedaAdvanced>;
+    /**
+     * The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+     */
+    cooldownPeriod?: pulumi.Input<number>;
+    /**
+     * The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+     */
+    initialCooldownPeriod?: pulumi.Input<number>;
+    /**
+     * The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+     */
+    pollingInterval?: pulumi.Input<number>;
+    /**
+     * An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+     */
+    triggers?: pulumi.Input<pulumi.Input<inputs.WorkloadOptionsAutoscalingKedaTrigger>[]>;
+}
+
+export interface WorkloadOptionsAutoscalingKedaAdvanced {
+    /**
+     * Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+     */
+    scalingModifiers?: pulumi.Input<inputs.WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers>;
+}
+
+export interface WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers {
+    /**
+     * Defines the new activation target value to scale on for the composed metric.
+     */
+    activationTarget?: pulumi.Input<string>;
+    /**
+     * Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+     */
+    formula?: pulumi.Input<string>;
+    /**
+     * Defines metric type used for this new composite-metric.
+     */
+    metricType?: pulumi.Input<string>;
+    /**
+     * Defines new target value to scale on for the composed metric.
+     */
+    target?: pulumi.Input<string>;
+}
+
+export interface WorkloadOptionsAutoscalingKedaTrigger {
+    /**
+     * The configuration parameters that the trigger requires.
+     */
+    metadata?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The type of metric to be used for scaling.
+     */
+    metricType?: pulumi.Input<string>;
+    /**
+     * An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+     */
+    name?: pulumi.Input<string>;
+    /**
+     * The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+     */
+    type: pulumi.Input<string>;
+    /**
+     * Enables caching of metric values during polling interval.
+     */
+    useCachedMetrics?: pulumi.Input<boolean>;
 }
 
 export interface WorkloadOptionsAutoscalingMulti {

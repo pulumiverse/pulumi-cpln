@@ -27,6 +27,7 @@ class GvcArgs:
                  domain: Optional[pulumi.Input[builtins.str]] = None,
                  endpoint_naming_format: Optional[pulumi.Input[builtins.str]] = None,
                  env: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
+                 keda: Optional[pulumi.Input['GvcKedaArgs']] = None,
                  lightstep_tracing: Optional[pulumi.Input['GvcLightstepTracingArgs']] = None,
                  load_balancer: Optional[pulumi.Input['GvcLoadBalancerArgs']] = None,
                  locations: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
@@ -42,6 +43,7 @@ class GvcArgs:
         :param pulumi.Input[builtins.str] endpoint_naming_format: Customizes the subdomain format for the canonical workload endpoint. `default` leaves it as
                '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
         :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] env: Key-value array of resource environment variables.
+        :param pulumi.Input['GvcKedaArgs'] keda: KEDA configuration for the GVC.
         :param pulumi.Input['GvcLoadBalancerArgs'] load_balancer: Dedicated load balancer configuration.
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] locations: A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
         :param pulumi.Input[builtins.str] name: Name of the Global Virtual Cloud.
@@ -62,6 +64,8 @@ class GvcArgs:
             pulumi.set(__self__, "endpoint_naming_format", endpoint_naming_format)
         if env is not None:
             pulumi.set(__self__, "env", env)
+        if keda is not None:
+            pulumi.set(__self__, "keda", keda)
         if lightstep_tracing is not None:
             pulumi.set(__self__, "lightstep_tracing", lightstep_tracing)
         if load_balancer is not None:
@@ -137,6 +141,18 @@ class GvcArgs:
     @env.setter
     def env(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]]):
         pulumi.set(self, "env", value)
+
+    @property
+    @pulumi.getter
+    def keda(self) -> Optional[pulumi.Input['GvcKedaArgs']]:
+        """
+        KEDA configuration for the GVC.
+        """
+        return pulumi.get(self, "keda")
+
+    @keda.setter
+    def keda(self, value: Optional[pulumi.Input['GvcKedaArgs']]):
+        pulumi.set(self, "keda", value)
 
     @property
     @pulumi.getter(name="lightstepTracing")
@@ -237,6 +253,7 @@ class _GvcState:
                  domain: Optional[pulumi.Input[builtins.str]] = None,
                  endpoint_naming_format: Optional[pulumi.Input[builtins.str]] = None,
                  env: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
+                 keda: Optional[pulumi.Input['GvcKedaArgs']] = None,
                  lightstep_tracing: Optional[pulumi.Input['GvcLightstepTracingArgs']] = None,
                  load_balancer: Optional[pulumi.Input['GvcLoadBalancerArgs']] = None,
                  locations: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
@@ -255,6 +272,7 @@ class _GvcState:
         :param pulumi.Input[builtins.str] endpoint_naming_format: Customizes the subdomain format for the canonical workload endpoint. `default` leaves it as
                '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
         :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] env: Key-value array of resource environment variables.
+        :param pulumi.Input['GvcKedaArgs'] keda: KEDA configuration for the GVC.
         :param pulumi.Input['GvcLoadBalancerArgs'] load_balancer: Dedicated load balancer configuration.
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] locations: A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
         :param pulumi.Input[builtins.str] name: Name of the Global Virtual Cloud.
@@ -280,6 +298,8 @@ class _GvcState:
             pulumi.set(__self__, "endpoint_naming_format", endpoint_naming_format)
         if env is not None:
             pulumi.set(__self__, "env", env)
+        if keda is not None:
+            pulumi.set(__self__, "keda", keda)
         if lightstep_tracing is not None:
             pulumi.set(__self__, "lightstep_tracing", lightstep_tracing)
         if load_balancer is not None:
@@ -381,6 +401,18 @@ class _GvcState:
     @env.setter
     def env(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]]):
         pulumi.set(self, "env", value)
+
+    @property
+    @pulumi.getter
+    def keda(self) -> Optional[pulumi.Input['GvcKedaArgs']]:
+        """
+        KEDA configuration for the GVC.
+        """
+        return pulumi.get(self, "keda")
+
+    @keda.setter
+    def keda(self, value: Optional[pulumi.Input['GvcKedaArgs']]):
+        pulumi.set(self, "keda", value)
 
     @property
     @pulumi.getter(name="lightstepTracing")
@@ -494,6 +526,7 @@ class Gvc(pulumi.CustomResource):
                  domain: Optional[pulumi.Input[builtins.str]] = None,
                  endpoint_naming_format: Optional[pulumi.Input[builtins.str]] = None,
                  env: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
+                 keda: Optional[pulumi.Input[Union['GvcKedaArgs', 'GvcKedaArgsDict']]] = None,
                  lightstep_tracing: Optional[pulumi.Input[Union['GvcLightstepTracingArgs', 'GvcLightstepTracingArgsDict']]] = None,
                  load_balancer: Optional[pulumi.Input[Union['GvcLoadBalancerArgs', 'GvcLoadBalancerArgsDict']]] = None,
                  locations: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
@@ -512,6 +545,7 @@ class Gvc(pulumi.CustomResource):
         :param pulumi.Input[builtins.str] endpoint_naming_format: Customizes the subdomain format for the canonical workload endpoint. `default` leaves it as
                '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
         :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] env: Key-value array of resource environment variables.
+        :param pulumi.Input[Union['GvcKedaArgs', 'GvcKedaArgsDict']] keda: KEDA configuration for the GVC.
         :param pulumi.Input[Union['GvcLoadBalancerArgs', 'GvcLoadBalancerArgsDict']] load_balancer: Dedicated load balancer configuration.
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] locations: A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
         :param pulumi.Input[builtins.str] name: Name of the Global Virtual Cloud.
@@ -547,6 +581,7 @@ class Gvc(pulumi.CustomResource):
                  domain: Optional[pulumi.Input[builtins.str]] = None,
                  endpoint_naming_format: Optional[pulumi.Input[builtins.str]] = None,
                  env: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
+                 keda: Optional[pulumi.Input[Union['GvcKedaArgs', 'GvcKedaArgsDict']]] = None,
                  lightstep_tracing: Optional[pulumi.Input[Union['GvcLightstepTracingArgs', 'GvcLightstepTracingArgsDict']]] = None,
                  load_balancer: Optional[pulumi.Input[Union['GvcLoadBalancerArgs', 'GvcLoadBalancerArgsDict']]] = None,
                  locations: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
@@ -569,6 +604,7 @@ class Gvc(pulumi.CustomResource):
             __props__.__dict__["domain"] = domain
             __props__.__dict__["endpoint_naming_format"] = endpoint_naming_format
             __props__.__dict__["env"] = env
+            __props__.__dict__["keda"] = keda
             __props__.__dict__["lightstep_tracing"] = lightstep_tracing
             __props__.__dict__["load_balancer"] = load_balancer
             __props__.__dict__["locations"] = locations
@@ -597,6 +633,7 @@ class Gvc(pulumi.CustomResource):
             domain: Optional[pulumi.Input[builtins.str]] = None,
             endpoint_naming_format: Optional[pulumi.Input[builtins.str]] = None,
             env: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
+            keda: Optional[pulumi.Input[Union['GvcKedaArgs', 'GvcKedaArgsDict']]] = None,
             lightstep_tracing: Optional[pulumi.Input[Union['GvcLightstepTracingArgs', 'GvcLightstepTracingArgsDict']]] = None,
             load_balancer: Optional[pulumi.Input[Union['GvcLoadBalancerArgs', 'GvcLoadBalancerArgsDict']]] = None,
             locations: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
@@ -620,6 +657,7 @@ class Gvc(pulumi.CustomResource):
         :param pulumi.Input[builtins.str] endpoint_naming_format: Customizes the subdomain format for the canonical workload endpoint. `default` leaves it as
                '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
         :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] env: Key-value array of resource environment variables.
+        :param pulumi.Input[Union['GvcKedaArgs', 'GvcKedaArgsDict']] keda: KEDA configuration for the GVC.
         :param pulumi.Input[Union['GvcLoadBalancerArgs', 'GvcLoadBalancerArgsDict']] load_balancer: Dedicated load balancer configuration.
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] locations: A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
         :param pulumi.Input[builtins.str] name: Name of the Global Virtual Cloud.
@@ -639,6 +677,7 @@ class Gvc(pulumi.CustomResource):
         __props__.__dict__["domain"] = domain
         __props__.__dict__["endpoint_naming_format"] = endpoint_naming_format
         __props__.__dict__["env"] = env
+        __props__.__dict__["keda"] = keda
         __props__.__dict__["lightstep_tracing"] = lightstep_tracing
         __props__.__dict__["load_balancer"] = load_balancer
         __props__.__dict__["locations"] = locations
@@ -704,6 +743,14 @@ class Gvc(pulumi.CustomResource):
         Key-value array of resource environment variables.
         """
         return pulumi.get(self, "env")
+
+    @property
+    @pulumi.getter
+    def keda(self) -> pulumi.Output[Optional['outputs.GvcKeda']]:
+        """
+        KEDA configuration for the GVC.
+        """
+        return pulumi.get(self, "keda")
 
     @property
     @pulumi.getter(name="lightstepTracing")

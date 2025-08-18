@@ -82,6 +82,7 @@ export function getGvc(args: GetGvcArgs, opts?: pulumi.InvokeOptions): Promise<G
         "domain": args.domain,
         "endpointNamingFormat": args.endpointNamingFormat,
         "env": args.env,
+        "keda": args.keda,
         "lightstepTracing": args.lightstepTracing,
         "loadBalancer": args.loadBalancer,
         "locations": args.locations,
@@ -104,6 +105,7 @@ export interface GetGvcArgs {
     domain?: string;
     endpointNamingFormat?: string;
     env?: {[key: string]: string};
+    keda?: inputs.GetGvcKeda;
     lightstepTracing?: inputs.GetGvcLightstepTracing;
     loadBalancer?: inputs.GetGvcLoadBalancer;
     locations?: string[];
@@ -129,6 +131,7 @@ export interface GetGvcResult {
     readonly endpointNamingFormat: string;
     readonly env?: {[key: string]: string};
     readonly id: string;
+    readonly keda?: outputs.GetGvcKeda;
     readonly lightstepTracing?: outputs.GetGvcLightstepTracing;
     readonly loadBalancer?: outputs.GetGvcLoadBalancer;
     readonly locations?: string[];
@@ -215,6 +218,7 @@ export function getGvcOutput(args: GetGvcOutputArgs, opts?: pulumi.InvokeOutputO
         "domain": args.domain,
         "endpointNamingFormat": args.endpointNamingFormat,
         "env": args.env,
+        "keda": args.keda,
         "lightstepTracing": args.lightstepTracing,
         "loadBalancer": args.loadBalancer,
         "locations": args.locations,
@@ -237,6 +241,7 @@ export interface GetGvcOutputArgs {
     domain?: pulumi.Input<string>;
     endpointNamingFormat?: pulumi.Input<string>;
     env?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    keda?: pulumi.Input<inputs.GetGvcKedaArgs>;
     lightstepTracing?: pulumi.Input<inputs.GetGvcLightstepTracingArgs>;
     loadBalancer?: pulumi.Input<inputs.GetGvcLoadBalancerArgs>;
     locations?: pulumi.Input<pulumi.Input<string>[]>;

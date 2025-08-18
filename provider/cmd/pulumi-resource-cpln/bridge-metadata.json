@@ -152,6 +152,9 @@
                     "controlplane_tracing": {
                         "maxItemsOne": true
                     },
+                    "keda": {
+                        "maxItemsOne": true
+                    },
                     "lightstep_tracing": {
                         "maxItemsOne": true
                     },
@@ -1339,6 +1342,26 @@
                                     "maxItemsOne": true,
                                     "elem": {
                                         "fields": {
+                                            "keda": {
+                                                "maxItemsOne": true,
+                                                "elem": {
+                                                    "fields": {
+                                                        "advanced": {
+                                                            "maxItemsOne": true,
+                                                            "elem": {
+                                                                "fields": {
+                                                                    "scaling_modifiers": {
+                                                                        "maxItemsOne": true
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "trigger": {
+                                                            "maxItemsOne": false
+                                                        }
+                                                    }
+                                                }
+                                            },
                                             "multi": {
                                                 "maxItemsOne": false
                                             }
@@ -1359,6 +1382,26 @@
                                     "maxItemsOne": true,
                                     "elem": {
                                         "fields": {
+                                            "keda": {
+                                                "maxItemsOne": true,
+                                                "elem": {
+                                                    "fields": {
+                                                        "advanced": {
+                                                            "maxItemsOne": true,
+                                                            "elem": {
+                                                                "fields": {
+                                                                    "scaling_modifiers": {
+                                                                        "maxItemsOne": true
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "trigger": {
+                                                            "maxItemsOne": false
+                                                        }
+                                                    }
+                                                }
+                                            },
                                             "multi": {
                                                 "maxItemsOne": false
                                             }
@@ -1439,6 +1482,9 @@
                 "current": "cpln:index/getGvc:getGvc",
                 "fields": {
                     "controlplane_tracing": {
+                        "maxItemsOne": true
+                    },
+                    "keda": {
                         "maxItemsOne": true
                     },
                     "lightstep_tracing": {

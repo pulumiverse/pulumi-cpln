@@ -53,6 +53,12 @@ namespace Pulumiverse.Cpln
         [Output("env")]
         public Output<ImmutableDictionary<string, string>?> Env { get; private set; } = null!;
 
+        /// <summary>
+        /// KEDA configuration for the GVC.
+        /// </summary>
+        [Output("keda")]
+        public Output<Outputs.GvcKeda?> Keda { get; private set; } = null!;
+
         [Output("lightstepTracing")]
         public Output<Outputs.GvcLightstepTracing?> LightstepTracing { get; private set; } = null!;
 
@@ -180,6 +186,12 @@ namespace Pulumiverse.Cpln
             set => _env = value;
         }
 
+        /// <summary>
+        /// KEDA configuration for the GVC.
+        /// </summary>
+        [Input("keda")]
+        public Input<Inputs.GvcKedaArgs>? Keda { get; set; }
+
         [Input("lightstepTracing")]
         public Input<Inputs.GvcLightstepTracingArgs>? LightstepTracing { get; set; }
 
@@ -291,6 +303,12 @@ namespace Pulumiverse.Cpln
             get => _env ?? (_env = new InputMap<string>());
             set => _env = value;
         }
+
+        /// <summary>
+        /// KEDA configuration for the GVC.
+        /// </summary>
+        [Input("keda")]
+        public Input<Inputs.GvcKedaGetArgs>? Keda { get; set; }
 
         [Input("lightstepTracing")]
         public Input<Inputs.GvcLightstepTracingGetArgs>? LightstepTracing { get; set; }
