@@ -450,6 +450,8 @@ __all__ = [
     'WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgsDict',
     'WorkloadLocalOptionAutoscalingKedaTriggerArgs',
     'WorkloadLocalOptionAutoscalingKedaTriggerArgsDict',
+    'WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs',
+    'WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgsDict',
     'WorkloadLocalOptionAutoscalingMultiArgs',
     'WorkloadLocalOptionAutoscalingMultiArgsDict',
     'WorkloadLocalOptionMultiZoneArgs',
@@ -466,6 +468,8 @@ __all__ = [
     'WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgsDict',
     'WorkloadOptionsAutoscalingKedaTriggerArgs',
     'WorkloadOptionsAutoscalingKedaTriggerArgsDict',
+    'WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs',
+    'WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgsDict',
     'WorkloadOptionsAutoscalingMultiArgs',
     'WorkloadOptionsAutoscalingMultiArgsDict',
     'WorkloadOptionsMultiZoneArgs',
@@ -742,6 +746,14 @@ if not MYPY:
         """
         Allows domain to accept wildcards. The associated GVC must have dedicated load balancing enabled.
         """
+        accept_all_subdomains: NotRequired[pulumi.Input[builtins.bool]]
+        """
+        Accept all subdomains will accept any host that is a sub domain of the domain so *.$DOMAIN
+        """
+        cert_challenge_type: NotRequired[pulumi.Input[builtins.str]]
+        """
+        Defines the method used to prove domain ownership for certificate issuance.
+        """
         dns_mode: NotRequired[pulumi.Input[builtins.str]]
         """
         In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
@@ -754,6 +766,10 @@ if not MYPY:
         """
         Domain port specifications.
         """
+        workload_link: NotRequired[pulumi.Input[builtins.str]]
+        """
+        Creates a unique subdomain for each replica of a stateful workload, enabling direct access to individual instances.
+        """
 elif False:
     DomainSpecArgsDict: TypeAlias = Mapping[str, Any]
 
@@ -761,23 +777,35 @@ elif False:
 class DomainSpecArgs:
     def __init__(__self__, *,
                  accept_all_hosts: Optional[pulumi.Input[builtins.bool]] = None,
+                 accept_all_subdomains: Optional[pulumi.Input[builtins.bool]] = None,
+                 cert_challenge_type: Optional[pulumi.Input[builtins.str]] = None,
                  dns_mode: Optional[pulumi.Input[builtins.str]] = None,
                  gvc_link: Optional[pulumi.Input[builtins.str]] = None,
-                 ports: Optional[pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgs']]]] = None):
+                 ports: Optional[pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgs']]]] = None,
+                 workload_link: Optional[pulumi.Input[builtins.str]] = None):
         """
         :param pulumi.Input[builtins.bool] accept_all_hosts: Allows domain to accept wildcards. The associated GVC must have dedicated load balancing enabled.
+        :param pulumi.Input[builtins.bool] accept_all_subdomains: Accept all subdomains will accept any host that is a sub domain of the domain so *.$DOMAIN
+        :param pulumi.Input[builtins.str] cert_challenge_type: Defines the method used to prove domain ownership for certificate issuance.
         :param pulumi.Input[builtins.str] dns_mode: In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
         :param pulumi.Input[builtins.str] gvc_link: This value is set to a target GVC (using a full link) for use by subdomain based routing. Each workload in the GVC will receive a subdomain in the form ${workload.name}.${domain.name}. **Do not include if path based routing is used.**
         :param pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgs']]] ports: Domain port specifications.
+        :param pulumi.Input[builtins.str] workload_link: Creates a unique subdomain for each replica of a stateful workload, enabling direct access to individual instances.
         """
         if accept_all_hosts is not None:
             pulumi.set(__self__, "accept_all_hosts", accept_all_hosts)
+        if accept_all_subdomains is not None:
+            pulumi.set(__self__, "accept_all_subdomains", accept_all_subdomains)
+        if cert_challenge_type is not None:
+            pulumi.set(__self__, "cert_challenge_type", cert_challenge_type)
         if dns_mode is not None:
             pulumi.set(__self__, "dns_mode", dns_mode)
         if gvc_link is not None:
             pulumi.set(__self__, "gvc_link", gvc_link)
         if ports is not None:
             pulumi.set(__self__, "ports", ports)
+        if workload_link is not None:
+            pulumi.set(__self__, "workload_link", workload_link)
 
     @property
     @pulumi.getter(name="acceptAllHosts")
@@ -790,6 +818,30 @@ class DomainSpecArgs:
     @accept_all_hosts.setter
     def accept_all_hosts(self, value: Optional[pulumi.Input[builtins.bool]]):
         pulumi.set(self, "accept_all_hosts", value)
+
+    @property
+    @pulumi.getter(name="acceptAllSubdomains")
+    def accept_all_subdomains(self) -> Optional[pulumi.Input[builtins.bool]]:
+        """
+        Accept all subdomains will accept any host that is a sub domain of the domain so *.$DOMAIN
+        """
+        return pulumi.get(self, "accept_all_subdomains")
+
+    @accept_all_subdomains.setter
+    def accept_all_subdomains(self, value: Optional[pulumi.Input[builtins.bool]]):
+        pulumi.set(self, "accept_all_subdomains", value)
+
+    @property
+    @pulumi.getter(name="certChallengeType")
+    def cert_challenge_type(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        Defines the method used to prove domain ownership for certificate issuance.
+        """
+        return pulumi.get(self, "cert_challenge_type")
+
+    @cert_challenge_type.setter
+    def cert_challenge_type(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "cert_challenge_type", value)
 
     @property
     @pulumi.getter(name="dnsMode")
@@ -826,6 +878,18 @@ class DomainSpecArgs:
     @ports.setter
     def ports(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgs']]]]):
         pulumi.set(self, "ports", value)
+
+    @property
+    @pulumi.getter(name="workloadLink")
+    def workload_link(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        Creates a unique subdomain for each replica of a stateful workload, enabling direct access to individual instances.
+        """
+        return pulumi.get(self, "workload_link")
+
+    @workload_link.setter
+    def workload_link(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "workload_link", value)
 
 
 if not MYPY:
@@ -1895,6 +1959,10 @@ if not MYPY:
         """
         A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
         """
+        secrets: NotRequired[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]
+        """
+        A list of secrets to be used as TriggerAuthentication objects. The TriggerAuthentication object will be named after the secret and can be used by triggers on workloads in this GVC.
+        """
 elif False:
     GvcKedaArgsDict: TypeAlias = Mapping[str, Any]
 
@@ -1902,15 +1970,19 @@ elif False:
 class GvcKedaArgs:
     def __init__(__self__, *,
                  enabled: Optional[pulumi.Input[builtins.bool]] = None,
-                 identity_link: Optional[pulumi.Input[builtins.str]] = None):
+                 identity_link: Optional[pulumi.Input[builtins.str]] = None,
+                 secrets: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None):
         """
         :param pulumi.Input[builtins.bool] enabled: Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.
         :param pulumi.Input[builtins.str] identity_link: A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
+        :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] secrets: A list of secrets to be used as TriggerAuthentication objects. The TriggerAuthentication object will be named after the secret and can be used by triggers on workloads in this GVC.
         """
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
         if identity_link is not None:
             pulumi.set(__self__, "identity_link", identity_link)
+        if secrets is not None:
+            pulumi.set(__self__, "secrets", secrets)
 
     @property
     @pulumi.getter
@@ -1935,6 +2007,18 @@ class GvcKedaArgs:
     @identity_link.setter
     def identity_link(self, value: Optional[pulumi.Input[builtins.str]]):
         pulumi.set(self, "identity_link", value)
+
+    @property
+    @pulumi.getter
+    def secrets(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]:
+        """
+        A list of secrets to be used as TriggerAuthentication objects. The TriggerAuthentication object will be named after the secret and can be used by triggers on workloads in this GVC.
+        """
+        return pulumi.get(self, "secrets")
+
+    @secrets.setter
+    def secrets(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]):
+        pulumi.set(self, "secrets", value)
 
 
 if not MYPY:
@@ -16423,6 +16507,10 @@ if not MYPY:
         """
         The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
         """
+        authentication_ref: NotRequired[pulumi.Input['WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgsDict']]
+        """
+        Reference to a KEDA authentication object for secure access to external systems.
+        """
         metadata: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]]
         """
         The configuration parameters that the trigger requires.
@@ -16446,18 +16534,22 @@ elif False:
 class WorkloadLocalOptionAutoscalingKedaTriggerArgs:
     def __init__(__self__, *,
                  type: pulumi.Input[builtins.str],
+                 authentication_ref: Optional[pulumi.Input['WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs']] = None,
                  metadata: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
                  metric_type: Optional[pulumi.Input[builtins.str]] = None,
                  name: Optional[pulumi.Input[builtins.str]] = None,
                  use_cached_metrics: Optional[pulumi.Input[builtins.bool]] = None):
         """
         :param pulumi.Input[builtins.str] type: The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+        :param pulumi.Input['WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs'] authentication_ref: Reference to a KEDA authentication object for secure access to external systems.
         :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] metadata: The configuration parameters that the trigger requires.
         :param pulumi.Input[builtins.str] metric_type: The type of metric to be used for scaling.
         :param pulumi.Input[builtins.str] name: An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
         :param pulumi.Input[builtins.bool] use_cached_metrics: Enables caching of metric values during polling interval.
         """
         pulumi.set(__self__, "type", type)
+        if authentication_ref is not None:
+            pulumi.set(__self__, "authentication_ref", authentication_ref)
         if metadata is not None:
             pulumi.set(__self__, "metadata", metadata)
         if metric_type is not None:
@@ -16478,6 +16570,18 @@ class WorkloadLocalOptionAutoscalingKedaTriggerArgs:
     @type.setter
     def type(self, value: pulumi.Input[builtins.str]):
         pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter(name="authenticationRef")
+    def authentication_ref(self) -> Optional[pulumi.Input['WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs']]:
+        """
+        Reference to a KEDA authentication object for secure access to external systems.
+        """
+        return pulumi.get(self, "authentication_ref")
+
+    @authentication_ref.setter
+    def authentication_ref(self, value: Optional[pulumi.Input['WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs']]):
+        pulumi.set(self, "authentication_ref", value)
 
     @property
     @pulumi.getter
@@ -16526,6 +16630,37 @@ class WorkloadLocalOptionAutoscalingKedaTriggerArgs:
     @use_cached_metrics.setter
     def use_cached_metrics(self, value: Optional[pulumi.Input[builtins.bool]]):
         pulumi.set(self, "use_cached_metrics", value)
+
+
+if not MYPY:
+    class WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgsDict(TypedDict):
+        name: pulumi.Input[builtins.str]
+        """
+        The name of secret listed in the GVC spec.keda.secrets.
+        """
+elif False:
+    WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[builtins.str]):
+        """
+        :param pulumi.Input[builtins.str] name: The name of secret listed in the GVC spec.keda.secrets.
+        """
+        pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[builtins.str]:
+        """
+        The name of secret listed in the GVC spec.keda.secrets.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[builtins.str]):
+        pulumi.set(self, "name", value)
 
 
 if not MYPY:
@@ -17155,6 +17290,10 @@ if not MYPY:
         """
         The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
         """
+        authentication_ref: NotRequired[pulumi.Input['WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgsDict']]
+        """
+        Reference to a KEDA authentication object for secure access to external systems.
+        """
         metadata: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]]
         """
         The configuration parameters that the trigger requires.
@@ -17178,18 +17317,22 @@ elif False:
 class WorkloadOptionsAutoscalingKedaTriggerArgs:
     def __init__(__self__, *,
                  type: pulumi.Input[builtins.str],
+                 authentication_ref: Optional[pulumi.Input['WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs']] = None,
                  metadata: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
                  metric_type: Optional[pulumi.Input[builtins.str]] = None,
                  name: Optional[pulumi.Input[builtins.str]] = None,
                  use_cached_metrics: Optional[pulumi.Input[builtins.bool]] = None):
         """
         :param pulumi.Input[builtins.str] type: The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+        :param pulumi.Input['WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs'] authentication_ref: Reference to a KEDA authentication object for secure access to external systems.
         :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] metadata: The configuration parameters that the trigger requires.
         :param pulumi.Input[builtins.str] metric_type: The type of metric to be used for scaling.
         :param pulumi.Input[builtins.str] name: An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
         :param pulumi.Input[builtins.bool] use_cached_metrics: Enables caching of metric values during polling interval.
         """
         pulumi.set(__self__, "type", type)
+        if authentication_ref is not None:
+            pulumi.set(__self__, "authentication_ref", authentication_ref)
         if metadata is not None:
             pulumi.set(__self__, "metadata", metadata)
         if metric_type is not None:
@@ -17210,6 +17353,18 @@ class WorkloadOptionsAutoscalingKedaTriggerArgs:
     @type.setter
     def type(self, value: pulumi.Input[builtins.str]):
         pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter(name="authenticationRef")
+    def authentication_ref(self) -> Optional[pulumi.Input['WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs']]:
+        """
+        Reference to a KEDA authentication object for secure access to external systems.
+        """
+        return pulumi.get(self, "authentication_ref")
+
+    @authentication_ref.setter
+    def authentication_ref(self, value: Optional[pulumi.Input['WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs']]):
+        pulumi.set(self, "authentication_ref", value)
 
     @property
     @pulumi.getter
@@ -17258,6 +17413,37 @@ class WorkloadOptionsAutoscalingKedaTriggerArgs:
     @use_cached_metrics.setter
     def use_cached_metrics(self, value: Optional[pulumi.Input[builtins.bool]]):
         pulumi.set(self, "use_cached_metrics", value)
+
+
+if not MYPY:
+    class WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgsDict(TypedDict):
+        name: pulumi.Input[builtins.str]
+        """
+        The name of secret listed in the GVC spec.keda.secrets.
+        """
+elif False:
+    WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[builtins.str]):
+        """
+        :param pulumi.Input[builtins.str] name: The name of secret listed in the GVC spec.keda.secrets.
+        """
+        pulumi.set(__self__, "name", name)
+
+    @property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[builtins.str]:
+        """
+        The name of secret listed in the GVC spec.keda.secrets.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[builtins.str]):
+        pulumi.set(self, "name", value)
 
 
 if not MYPY:
@@ -18173,6 +18359,10 @@ if not MYPY:
         """
         A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
         """
+        secrets: NotRequired[Sequence[builtins.str]]
+        """
+        A list of secrets to be used as TriggerAuthentication objects. The TriggerAuthentication object will be named after the secret and can be used by triggers on workloads in this GVC.
+        """
 elif False:
     GetGvcKedaArgsDict: TypeAlias = Mapping[str, Any]
 
@@ -18180,14 +18370,18 @@ elif False:
 class GetGvcKedaArgs:
     def __init__(__self__, *,
                  enabled: builtins.bool,
-                 identity_link: Optional[builtins.str] = None):
+                 identity_link: Optional[builtins.str] = None,
+                 secrets: Optional[Sequence[builtins.str]] = None):
         """
         :param builtins.bool enabled: Enable KEDA for this GVC. KEDA is a Kubernetes-based event-driven autoscaler that allows you to scale workloads based on external events. When enabled, a keda operator will be deployed in the GVC and workloads in the GVC can use KEDA to scale based on external metrics.
         :param builtins.str identity_link: A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
+        :param Sequence[builtins.str] secrets: A list of secrets to be used as TriggerAuthentication objects. The TriggerAuthentication object will be named after the secret and can be used by triggers on workloads in this GVC.
         """
         pulumi.set(__self__, "enabled", enabled)
         if identity_link is not None:
             pulumi.set(__self__, "identity_link", identity_link)
+        if secrets is not None:
+            pulumi.set(__self__, "secrets", secrets)
 
     @property
     @pulumi.getter
@@ -18212,6 +18406,18 @@ class GetGvcKedaArgs:
     @identity_link.setter
     def identity_link(self, value: Optional[builtins.str]):
         pulumi.set(self, "identity_link", value)
+
+    @property
+    @pulumi.getter
+    def secrets(self) -> Optional[Sequence[builtins.str]]:
+        """
+        A list of secrets to be used as TriggerAuthentication objects. The TriggerAuthentication object will be named after the secret and can be used by triggers on workloads in this GVC.
+        """
+        return pulumi.get(self, "secrets")
+
+    @secrets.setter
+    def secrets(self, value: Optional[Sequence[builtins.str]]):
+        pulumi.set(self, "secrets", value)
 
 
 if not MYPY:

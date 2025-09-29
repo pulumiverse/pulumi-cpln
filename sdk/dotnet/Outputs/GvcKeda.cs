@@ -22,15 +22,22 @@ namespace Pulumiverse.Cpln.Outputs
         /// A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
         /// </summary>
         public readonly string? IdentityLink;
+        /// <summary>
+        /// A list of secrets to be used as TriggerAuthentication objects. The TriggerAuthentication object will be named after the secret and can be used by triggers on workloads in this GVC.
+        /// </summary>
+        public readonly ImmutableArray<string> Secrets;
 
         [OutputConstructor]
         private GvcKeda(
             bool? enabled,
 
-            string? identityLink)
+            string? identityLink,
+
+            ImmutableArray<string> secrets)
         {
             Enabled = enabled;
             IdentityLink = identityLink;
+            Secrets = secrets;
         }
     }
 }

@@ -13,6 +13,12 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadLocalOptionAutoscalingKedaTriggerArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Reference to a KEDA authentication object for secure access to external systems.
+        /// </summary>
+        [Input("authenticationRef")]
+        public Input<Inputs.WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs>? AuthenticationRef { get; set; }
+
         [Input("metadata")]
         private InputMap<string>? _metadata;
 

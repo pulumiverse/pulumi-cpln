@@ -153,7 +153,14 @@
                         "maxItemsOne": true
                     },
                     "keda": {
-                        "maxItemsOne": true
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "secrets": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
                     },
                     "lightstep_tracing": {
                         "maxItemsOne": true
@@ -1357,7 +1364,14 @@
                                                             }
                                                         },
                                                         "trigger": {
-                                                            "maxItemsOne": false
+                                                            "maxItemsOne": false,
+                                                            "elem": {
+                                                                "fields": {
+                                                                    "authentication_ref": {
+                                                                        "maxItemsOne": true
+                                                                    }
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -1397,7 +1411,14 @@
                                                             }
                                                         },
                                                         "trigger": {
-                                                            "maxItemsOne": false
+                                                            "maxItemsOne": false,
+                                                            "elem": {
+                                                                "fields": {
+                                                                    "authentication_ref": {
+                                                                        "maxItemsOne": true
+                                                                    }
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -1485,7 +1506,14 @@
                         "maxItemsOne": true
                     },
                     "keda": {
-                        "maxItemsOne": true
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "secrets": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
                     },
                     "lightstep_tracing": {
                         "maxItemsOne": true
@@ -1699,5 +1727,19 @@
             }
         }
     },
-    "auto-settings": {}
+    "auto-settings": {
+        "resources": {
+            "cpln_cloud_account": {
+                "maxItemsOneOverrides": {
+                    "azure": false
+                }
+            },
+            "cpln_workload": {
+                "maxItemsOneOverrides": {
+                    "job": false,
+                    "rollout_options": false
+                }
+            }
+        }
+    }
 }

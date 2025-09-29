@@ -15,6 +15,10 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class WorkloadLocalOptionAutoscalingKedaTrigger
     {
         /// <summary>
+        /// Reference to a KEDA authentication object for secure access to external systems.
+        /// </summary>
+        public readonly Outputs.WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef? AuthenticationRef;
+        /// <summary>
         /// The configuration parameters that the trigger requires.
         /// </summary>
         public readonly ImmutableDictionary<string, string>? Metadata;
@@ -37,6 +41,8 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private WorkloadLocalOptionAutoscalingKedaTrigger(
+            Outputs.WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef? authenticationRef,
+
             ImmutableDictionary<string, string>? metadata,
 
             string? metricType,
@@ -47,6 +53,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             bool? useCachedMetrics)
         {
+            AuthenticationRef = authenticationRef;
             Metadata = metadata;
             MetricType = metricType;
             Name = name;

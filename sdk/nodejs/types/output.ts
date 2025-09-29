@@ -53,6 +53,14 @@ export interface DomainSpec {
      */
     acceptAllHosts: boolean;
     /**
+     * Accept all subdomains will accept any host that is a sub domain of the domain so *.$DOMAIN
+     */
+    acceptAllSubdomains: boolean;
+    /**
+     * Defines the method used to prove domain ownership for certificate issuance.
+     */
+    certChallengeType?: string;
+    /**
      * In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
      */
     dnsMode: string;
@@ -64,6 +72,10 @@ export interface DomainSpec {
      * Domain port specifications.
      */
     ports?: outputs.DomainSpecPort[];
+    /**
+     * Creates a unique subdomain for each replica of a stateful workload, enabling direct access to individual instances.
+     */
+    workloadLink?: string;
 }
 
 export interface DomainSpecPort {
@@ -238,6 +250,10 @@ export interface GetGvcKeda {
      * A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
      */
     identityLink?: string;
+    /**
+     * A list of secrets to be used as TriggerAuthentication objects. The TriggerAuthentication object will be named after the secret and can be used by triggers on workloads in this GVC.
+     */
+    secrets?: string[];
 }
 
 export interface GetGvcLightstepTracing {
@@ -860,6 +876,10 @@ export interface GvcKeda {
      * A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
      */
     identityLink?: string;
+    /**
+     * A list of secrets to be used as TriggerAuthentication objects. The TriggerAuthentication object will be named after the secret and can be used by triggers on workloads in this GVC.
+     */
+    secrets?: string[];
 }
 
 export interface GvcLightstepTracing {
@@ -3441,6 +3461,10 @@ export interface WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers {
 
 export interface WorkloadLocalOptionAutoscalingKedaTrigger {
     /**
+     * Reference to a KEDA authentication object for secure access to external systems.
+     */
+    authenticationRef?: outputs.WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef;
+    /**
      * The configuration parameters that the trigger requires.
      */
     metadata?: {[key: string]: string};
@@ -3460,6 +3484,13 @@ export interface WorkloadLocalOptionAutoscalingKedaTrigger {
      * Enables caching of metric values during polling interval.
      */
     useCachedMetrics?: boolean;
+}
+
+export interface WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef {
+    /**
+     * The name of secret listed in the GVC spec.keda.secrets.
+     */
+    name: string;
 }
 
 export interface WorkloadLocalOptionAutoscalingMulti {
@@ -3588,6 +3619,10 @@ export interface WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers {
 
 export interface WorkloadOptionsAutoscalingKedaTrigger {
     /**
+     * Reference to a KEDA authentication object for secure access to external systems.
+     */
+    authenticationRef?: outputs.WorkloadOptionsAutoscalingKedaTriggerAuthenticationRef;
+    /**
      * The configuration parameters that the trigger requires.
      */
     metadata?: {[key: string]: string};
@@ -3607,6 +3642,13 @@ export interface WorkloadOptionsAutoscalingKedaTrigger {
      * Enables caching of metric values during polling interval.
      */
     useCachedMetrics?: boolean;
+}
+
+export interface WorkloadOptionsAutoscalingKedaTriggerAuthenticationRef {
+    /**
+     * The name of secret listed in the GVC spec.keda.secrets.
+     */
+    name: string;
 }
 
 export interface WorkloadOptionsAutoscalingMulti {
@@ -3649,7 +3691,7 @@ export interface WorkloadRolloutOption {
     /**
      * The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run.
      */
-    terminationGracePeriodSeconds?: number;
+    terminationGracePeriodSeconds: number;
 }
 
 export interface WorkloadSecurityOptions {
