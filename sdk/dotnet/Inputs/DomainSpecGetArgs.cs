@@ -20,6 +20,18 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<bool>? AcceptAllHosts { get; set; }
 
         /// <summary>
+        /// Accept all subdomains will accept any host that is a sub domain of the domain so *.$DOMAIN
+        /// </summary>
+        [Input("acceptAllSubdomains")]
+        public Input<bool>? AcceptAllSubdomains { get; set; }
+
+        /// <summary>
+        /// Defines the method used to prove domain ownership for certificate issuance.
+        /// </summary>
+        [Input("certChallengeType")]
+        public Input<string>? CertChallengeType { get; set; }
+
+        /// <summary>
         /// In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
         /// </summary>
         [Input("dnsMode")]
@@ -42,6 +54,12 @@ namespace Pulumiverse.Cpln.Inputs
             get => _ports ?? (_ports = new InputList<Inputs.DomainSpecPortGetArgs>());
             set => _ports = value;
         }
+
+        /// <summary>
+        /// Creates a unique subdomain for each replica of a stateful workload, enabling direct access to individual instances.
+        /// </summary>
+        [Input("workloadLink")]
+        public Input<string>? WorkloadLink { get; set; }
 
         public DomainSpecGetArgs()
         {

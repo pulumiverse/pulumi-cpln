@@ -25,6 +25,18 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("identityLink")]
         public string? IdentityLink { get; set; }
 
+        [Input("secrets")]
+        private List<string>? _secrets;
+
+        /// <summary>
+        /// A list of secrets to be used as TriggerAuthentication objects. The TriggerAuthentication object will be named after the secret and can be used by triggers on workloads in this GVC.
+        /// </summary>
+        public List<string> Secrets
+        {
+            get => _secrets ?? (_secrets = new List<string>());
+            set => _secrets = value;
+        }
+
         public GetGvcKedaArgs()
         {
         }

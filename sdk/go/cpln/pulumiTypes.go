@@ -798,12 +798,18 @@ func (o DomainRouteHeadersRequestPtrOutput) Set() pulumi.StringMapOutput {
 type DomainSpec struct {
 	// Allows domain to accept wildcards. The associated GVC must have dedicated load balancing enabled.
 	AcceptAllHosts *bool `pulumi:"acceptAllHosts"`
+	// Accept all subdomains will accept any host that is a sub domain of the domain so *.$DOMAIN
+	AcceptAllSubdomains *bool `pulumi:"acceptAllSubdomains"`
+	// Defines the method used to prove domain ownership for certificate issuance.
+	CertChallengeType *string `pulumi:"certChallengeType"`
 	// In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
 	DnsMode *string `pulumi:"dnsMode"`
 	// This value is set to a target GVC (using a full link) for use by subdomain based routing. Each workload in the GVC will receive a subdomain in the form ${workload.name}.${domain.name}. **Do not include if path based routing is used.**
 	GvcLink *string `pulumi:"gvcLink"`
 	// Domain port specifications.
 	Ports []DomainSpecPort `pulumi:"ports"`
+	// Creates a unique subdomain for each replica of a stateful workload, enabling direct access to individual instances.
+	WorkloadLink *string `pulumi:"workloadLink"`
 }
 
 // DomainSpecInput is an input type that accepts DomainSpecArgs and DomainSpecOutput values.
@@ -820,12 +826,18 @@ type DomainSpecInput interface {
 type DomainSpecArgs struct {
 	// Allows domain to accept wildcards. The associated GVC must have dedicated load balancing enabled.
 	AcceptAllHosts pulumi.BoolPtrInput `pulumi:"acceptAllHosts"`
+	// Accept all subdomains will accept any host that is a sub domain of the domain so *.$DOMAIN
+	AcceptAllSubdomains pulumi.BoolPtrInput `pulumi:"acceptAllSubdomains"`
+	// Defines the method used to prove domain ownership for certificate issuance.
+	CertChallengeType pulumi.StringPtrInput `pulumi:"certChallengeType"`
 	// In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
 	DnsMode pulumi.StringPtrInput `pulumi:"dnsMode"`
 	// This value is set to a target GVC (using a full link) for use by subdomain based routing. Each workload in the GVC will receive a subdomain in the form ${workload.name}.${domain.name}. **Do not include if path based routing is used.**
 	GvcLink pulumi.StringPtrInput `pulumi:"gvcLink"`
 	// Domain port specifications.
 	Ports DomainSpecPortArrayInput `pulumi:"ports"`
+	// Creates a unique subdomain for each replica of a stateful workload, enabling direct access to individual instances.
+	WorkloadLink pulumi.StringPtrInput `pulumi:"workloadLink"`
 }
 
 func (DomainSpecArgs) ElementType() reflect.Type {
@@ -910,6 +922,16 @@ func (o DomainSpecOutput) AcceptAllHosts() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v DomainSpec) *bool { return v.AcceptAllHosts }).(pulumi.BoolPtrOutput)
 }
 
+// Accept all subdomains will accept any host that is a sub domain of the domain so *.$DOMAIN
+func (o DomainSpecOutput) AcceptAllSubdomains() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v DomainSpec) *bool { return v.AcceptAllSubdomains }).(pulumi.BoolPtrOutput)
+}
+
+// Defines the method used to prove domain ownership for certificate issuance.
+func (o DomainSpecOutput) CertChallengeType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DomainSpec) *string { return v.CertChallengeType }).(pulumi.StringPtrOutput)
+}
+
 // In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
 func (o DomainSpecOutput) DnsMode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v DomainSpec) *string { return v.DnsMode }).(pulumi.StringPtrOutput)
@@ -923,6 +945,11 @@ func (o DomainSpecOutput) GvcLink() pulumi.StringPtrOutput {
 // Domain port specifications.
 func (o DomainSpecOutput) Ports() DomainSpecPortArrayOutput {
 	return o.ApplyT(func(v DomainSpec) []DomainSpecPort { return v.Ports }).(DomainSpecPortArrayOutput)
+}
+
+// Creates a unique subdomain for each replica of a stateful workload, enabling direct access to individual instances.
+func (o DomainSpecOutput) WorkloadLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DomainSpec) *string { return v.WorkloadLink }).(pulumi.StringPtrOutput)
 }
 
 type DomainSpecPtrOutput struct{ *pulumi.OutputState }
@@ -959,6 +986,26 @@ func (o DomainSpecPtrOutput) AcceptAllHosts() pulumi.BoolPtrOutput {
 	}).(pulumi.BoolPtrOutput)
 }
 
+// Accept all subdomains will accept any host that is a sub domain of the domain so *.$DOMAIN
+func (o DomainSpecPtrOutput) AcceptAllSubdomains() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *DomainSpec) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.AcceptAllSubdomains
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Defines the method used to prove domain ownership for certificate issuance.
+func (o DomainSpecPtrOutput) CertChallengeType() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *DomainSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.CertChallengeType
+	}).(pulumi.StringPtrOutput)
+}
+
 // In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
 func (o DomainSpecPtrOutput) DnsMode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *DomainSpec) *string {
@@ -987,6 +1034,16 @@ func (o DomainSpecPtrOutput) Ports() DomainSpecPortArrayOutput {
 		}
 		return v.Ports
 	}).(DomainSpecPortArrayOutput)
+}
+
+// Creates a unique subdomain for each replica of a stateful workload, enabling direct access to individual instances.
+func (o DomainSpecPtrOutput) WorkloadLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *DomainSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.WorkloadLink
+	}).(pulumi.StringPtrOutput)
 }
 
 type DomainSpecPort struct {
@@ -3149,6 +3206,8 @@ type GvcKeda struct {
 	Enabled *bool `pulumi:"enabled"`
 	// A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
 	IdentityLink *string `pulumi:"identityLink"`
+	// A list of secrets to be used as TriggerAuthentication objects. The TriggerAuthentication object will be named after the secret and can be used by triggers on workloads in this GVC.
+	Secrets []string `pulumi:"secrets"`
 }
 
 // GvcKedaInput is an input type that accepts GvcKedaArgs and GvcKedaOutput values.
@@ -3167,6 +3226,8 @@ type GvcKedaArgs struct {
 	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
 	// A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
 	IdentityLink pulumi.StringPtrInput `pulumi:"identityLink"`
+	// A list of secrets to be used as TriggerAuthentication objects. The TriggerAuthentication object will be named after the secret and can be used by triggers on workloads in this GVC.
+	Secrets pulumi.StringArrayInput `pulumi:"secrets"`
 }
 
 func (GvcKedaArgs) ElementType() reflect.Type {
@@ -3256,6 +3317,11 @@ func (o GvcKedaOutput) IdentityLink() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GvcKeda) *string { return v.IdentityLink }).(pulumi.StringPtrOutput)
 }
 
+// A list of secrets to be used as TriggerAuthentication objects. The TriggerAuthentication object will be named after the secret and can be used by triggers on workloads in this GVC.
+func (o GvcKedaOutput) Secrets() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GvcKeda) []string { return v.Secrets }).(pulumi.StringArrayOutput)
+}
+
 type GvcKedaPtrOutput struct{ *pulumi.OutputState }
 
 func (GvcKedaPtrOutput) ElementType() reflect.Type {
@@ -3298,6 +3364,16 @@ func (o GvcKedaPtrOutput) IdentityLink() pulumi.StringPtrOutput {
 		}
 		return v.IdentityLink
 	}).(pulumi.StringPtrOutput)
+}
+
+// A list of secrets to be used as TriggerAuthentication objects. The TriggerAuthentication object will be named after the secret and can be used by triggers on workloads in this GVC.
+func (o GvcKedaPtrOutput) Secrets() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *GvcKeda) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Secrets
+	}).(pulumi.StringArrayOutput)
 }
 
 type GvcLightstepTracing struct {
@@ -33799,6 +33875,8 @@ func (o WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput) Tar
 }
 
 type WorkloadLocalOptionAutoscalingKedaTrigger struct {
+	// Reference to a KEDA authentication object for secure access to external systems.
+	AuthenticationRef *WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef `pulumi:"authenticationRef"`
 	// The configuration parameters that the trigger requires.
 	Metadata map[string]string `pulumi:"metadata"`
 	// The type of metric to be used for scaling.
@@ -33823,6 +33901,8 @@ type WorkloadLocalOptionAutoscalingKedaTriggerInput interface {
 }
 
 type WorkloadLocalOptionAutoscalingKedaTriggerArgs struct {
+	// Reference to a KEDA authentication object for secure access to external systems.
+	AuthenticationRef WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrInput `pulumi:"authenticationRef"`
 	// The configuration parameters that the trigger requires.
 	Metadata pulumi.StringMapInput `pulumi:"metadata"`
 	// The type of metric to be used for scaling.
@@ -33886,6 +33966,13 @@ func (o WorkloadLocalOptionAutoscalingKedaTriggerOutput) ToWorkloadLocalOptionAu
 	return o
 }
 
+// Reference to a KEDA authentication object for secure access to external systems.
+func (o WorkloadLocalOptionAutoscalingKedaTriggerOutput) AuthenticationRef() WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaTrigger) *WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef {
+		return v.AuthenticationRef
+	}).(WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput)
+}
+
 // The configuration parameters that the trigger requires.
 func (o WorkloadLocalOptionAutoscalingKedaTriggerOutput) Metadata() pulumi.StringMapOutput {
 	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaTrigger) map[string]string { return v.Metadata }).(pulumi.StringMapOutput)
@@ -33929,6 +34016,143 @@ func (o WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput) Index(i pulumi.Int
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadLocalOptionAutoscalingKedaTrigger {
 		return vs[0].([]WorkloadLocalOptionAutoscalingKedaTrigger)[vs[1].(int)]
 	}).(WorkloadLocalOptionAutoscalingKedaTriggerOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef struct {
+	// The name of secret listed in the GVC spec.keda.secrets.
+	Name string `pulumi:"name"`
+}
+
+// WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs and WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefInput` via:
+//
+//	WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs{...}
+type WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput() WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput
+	ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput
+}
+
+type WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs struct {
+	// The name of secret listed in the GVC spec.keda.secrets.
+	Name pulumi.StringInput `pulumi:"name"`
+}
+
+func (WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef)(nil)).Elem()
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs) ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput() WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs) ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput)
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs) ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput() WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs) ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput).ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutputWithContext(ctx)
+}
+
+// WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs, WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtr and WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrInput` via:
+//
+//	        WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput() WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput
+	ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput
+}
+
+type workloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrType WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs
+
+func WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtr(v *WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs) WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrInput {
+	return (*workloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrType)(v)
+}
+
+func (*workloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef)(nil)).Elem()
+}
+
+func (i *workloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrType) ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput() WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrType) ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput) ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput() WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput) ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput) ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput() WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput {
+	return o.ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput) ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef) *WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef {
+		return &v
+	}).(WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput)
+}
+
+// The name of secret listed in the GVC spec.keda.secrets.
+func (o WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef) string { return v.Name }).(pulumi.StringOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput) ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput() WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput) ToWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput) Elem() WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef) WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef
+		return ret
+	}).(WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput)
+}
+
+// The name of secret listed in the GVC spec.keda.secrets.
+func (o WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Name
+	}).(pulumi.StringPtrOutput)
 }
 
 type WorkloadLocalOptionAutoscalingMulti struct {
@@ -35230,6 +35454,8 @@ func (o WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput) Target(
 }
 
 type WorkloadOptionsAutoscalingKedaTrigger struct {
+	// Reference to a KEDA authentication object for secure access to external systems.
+	AuthenticationRef *WorkloadOptionsAutoscalingKedaTriggerAuthenticationRef `pulumi:"authenticationRef"`
 	// The configuration parameters that the trigger requires.
 	Metadata map[string]string `pulumi:"metadata"`
 	// The type of metric to be used for scaling.
@@ -35254,6 +35480,8 @@ type WorkloadOptionsAutoscalingKedaTriggerInput interface {
 }
 
 type WorkloadOptionsAutoscalingKedaTriggerArgs struct {
+	// Reference to a KEDA authentication object for secure access to external systems.
+	AuthenticationRef WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrInput `pulumi:"authenticationRef"`
 	// The configuration parameters that the trigger requires.
 	Metadata pulumi.StringMapInput `pulumi:"metadata"`
 	// The type of metric to be used for scaling.
@@ -35317,6 +35545,13 @@ func (o WorkloadOptionsAutoscalingKedaTriggerOutput) ToWorkloadOptionsAutoscalin
 	return o
 }
 
+// Reference to a KEDA authentication object for secure access to external systems.
+func (o WorkloadOptionsAutoscalingKedaTriggerOutput) AuthenticationRef() WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaTrigger) *WorkloadOptionsAutoscalingKedaTriggerAuthenticationRef {
+		return v.AuthenticationRef
+	}).(WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput)
+}
+
 // The configuration parameters that the trigger requires.
 func (o WorkloadOptionsAutoscalingKedaTriggerOutput) Metadata() pulumi.StringMapOutput {
 	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaTrigger) map[string]string { return v.Metadata }).(pulumi.StringMapOutput)
@@ -35360,6 +35595,143 @@ func (o WorkloadOptionsAutoscalingKedaTriggerArrayOutput) Index(i pulumi.IntInpu
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadOptionsAutoscalingKedaTrigger {
 		return vs[0].([]WorkloadOptionsAutoscalingKedaTrigger)[vs[1].(int)]
 	}).(WorkloadOptionsAutoscalingKedaTriggerOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaTriggerAuthenticationRef struct {
+	// The name of secret listed in the GVC spec.keda.secrets.
+	Name string `pulumi:"name"`
+}
+
+// WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefInput is an input type that accepts WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs and WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefInput` via:
+//
+//	WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs{...}
+type WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput() WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput
+	ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput
+}
+
+type WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs struct {
+	// The name of secret listed in the GVC spec.keda.secrets.
+	Name pulumi.StringInput `pulumi:"name"`
+}
+
+func (WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaTriggerAuthenticationRef)(nil)).Elem()
+}
+
+func (i WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs) ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput() WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs) ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput)
+}
+
+func (i WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs) ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput() WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs) ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput).ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutputWithContext(ctx)
+}
+
+// WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrInput is an input type that accepts WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs, WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtr and WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrInput` via:
+//
+//	        WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput() WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput
+	ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput
+}
+
+type workloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrType WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs
+
+func WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtr(v *WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs) WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrInput {
+	return (*workloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrType)(v)
+}
+
+func (*workloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadOptionsAutoscalingKedaTriggerAuthenticationRef)(nil)).Elem()
+}
+
+func (i *workloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrType) ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput() WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrType) ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaTriggerAuthenticationRef)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput) ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput() WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput) ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput) ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput() WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput {
+	return o.ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput) ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadOptionsAutoscalingKedaTriggerAuthenticationRef) *WorkloadOptionsAutoscalingKedaTriggerAuthenticationRef {
+		return &v
+	}).(WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput)
+}
+
+// The name of secret listed in the GVC spec.keda.secrets.
+func (o WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaTriggerAuthenticationRef) string { return v.Name }).(pulumi.StringOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadOptionsAutoscalingKedaTriggerAuthenticationRef)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput) ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput() WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput) ToWorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput) Elem() WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaTriggerAuthenticationRef) WorkloadOptionsAutoscalingKedaTriggerAuthenticationRef {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadOptionsAutoscalingKedaTriggerAuthenticationRef
+		return ret
+	}).(WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput)
+}
+
+// The name of secret listed in the GVC spec.keda.secrets.
+func (o WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaTriggerAuthenticationRef) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Name
+	}).(pulumi.StringPtrOutput)
 }
 
 type WorkloadOptionsAutoscalingMulti struct {
@@ -37071,6 +37443,8 @@ type GetGvcKeda struct {
 	Enabled bool `pulumi:"enabled"`
 	// A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
 	IdentityLink *string `pulumi:"identityLink"`
+	// A list of secrets to be used as TriggerAuthentication objects. The TriggerAuthentication object will be named after the secret and can be used by triggers on workloads in this GVC.
+	Secrets []string `pulumi:"secrets"`
 }
 
 // GetGvcKedaInput is an input type that accepts GetGvcKedaArgs and GetGvcKedaOutput values.
@@ -37089,6 +37463,8 @@ type GetGvcKedaArgs struct {
 	Enabled pulumi.BoolInput `pulumi:"enabled"`
 	// A link to an Identity resource that will be used for KEDA. This will allow the keda operator to access cloud and network resources.
 	IdentityLink pulumi.StringPtrInput `pulumi:"identityLink"`
+	// A list of secrets to be used as TriggerAuthentication objects. The TriggerAuthentication object will be named after the secret and can be used by triggers on workloads in this GVC.
+	Secrets pulumi.StringArrayInput `pulumi:"secrets"`
 }
 
 func (GetGvcKedaArgs) ElementType() reflect.Type {
@@ -37178,6 +37554,11 @@ func (o GetGvcKedaOutput) IdentityLink() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetGvcKeda) *string { return v.IdentityLink }).(pulumi.StringPtrOutput)
 }
 
+// A list of secrets to be used as TriggerAuthentication objects. The TriggerAuthentication object will be named after the secret and can be used by triggers on workloads in this GVC.
+func (o GetGvcKedaOutput) Secrets() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetGvcKeda) []string { return v.Secrets }).(pulumi.StringArrayOutput)
+}
+
 type GetGvcKedaPtrOutput struct{ *pulumi.OutputState }
 
 func (GetGvcKedaPtrOutput) ElementType() reflect.Type {
@@ -37220,6 +37601,16 @@ func (o GetGvcKedaPtrOutput) IdentityLink() pulumi.StringPtrOutput {
 		}
 		return v.IdentityLink
 	}).(pulumi.StringPtrOutput)
+}
+
+// A list of secrets to be used as TriggerAuthentication objects. The TriggerAuthentication object will be named after the secret and can be used by triggers on workloads in this GVC.
+func (o GetGvcKedaPtrOutput) Secrets() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *GetGvcKeda) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Secrets
+	}).(pulumi.StringArrayOutput)
 }
 
 type GetGvcLightstepTracing struct {
@@ -42375,6 +42766,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaTriggerInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaTriggerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaTriggerArrayInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaTriggerArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingMultiInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingMultiArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingMultiArrayInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingMultiArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionMultiZoneInput)(nil)).Elem(), WorkloadLocalOptionMultiZoneArgs{})
@@ -42391,6 +42784,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaTriggerInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaTriggerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaTriggerArrayInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaTriggerArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingMultiInput)(nil)).Elem(), WorkloadOptionsAutoscalingMultiArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingMultiArrayInput)(nil)).Elem(), WorkloadOptionsAutoscalingMultiArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsMultiZoneInput)(nil)).Elem(), WorkloadOptionsMultiZoneArgs{})
@@ -42921,6 +43316,8 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaTriggerOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingMultiOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingMultiArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionMultiZoneOutput{})
@@ -42937,6 +43334,8 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaTriggerOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaTriggerArrayOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingMultiOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingMultiArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsMultiZoneOutput{})

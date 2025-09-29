@@ -19,6 +19,14 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly bool? AcceptAllHosts;
         /// <summary>
+        /// Accept all subdomains will accept any host that is a sub domain of the domain so *.$DOMAIN
+        /// </summary>
+        public readonly bool? AcceptAllSubdomains;
+        /// <summary>
+        /// Defines the method used to prove domain ownership for certificate issuance.
+        /// </summary>
+        public readonly string? CertChallengeType;
+        /// <summary>
         /// In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
         /// </summary>
         public readonly string? DnsMode;
@@ -30,21 +38,34 @@ namespace Pulumiverse.Cpln.Outputs
         /// Domain port specifications.
         /// </summary>
         public readonly ImmutableArray<Outputs.DomainSpecPort> Ports;
+        /// <summary>
+        /// Creates a unique subdomain for each replica of a stateful workload, enabling direct access to individual instances.
+        /// </summary>
+        public readonly string? WorkloadLink;
 
         [OutputConstructor]
         private DomainSpec(
             bool? acceptAllHosts,
 
+            bool? acceptAllSubdomains,
+
+            string? certChallengeType,
+
             string? dnsMode,
 
             string? gvcLink,
 
-            ImmutableArray<Outputs.DomainSpecPort> ports)
+            ImmutableArray<Outputs.DomainSpecPort> ports,
+
+            string? workloadLink)
         {
             AcceptAllHosts = acceptAllHosts;
+            AcceptAllSubdomains = acceptAllSubdomains;
+            CertChallengeType = certChallengeType;
             DnsMode = dnsMode;
             GvcLink = gvcLink;
             Ports = ports;
+            WorkloadLink = workloadLink;
         }
     }
 }
