@@ -1,5 +1,0 @@
-upstream-provider-name: terraform-provider-cpln
-upstream-provider-org: controlplane-com
-remove-plugins: true
-pulumi-infer-version: true
-pr-reviewers: MajidAbuRmila
