@@ -16,15 +16,19 @@ namespace Pulumiverse.Cpln.Outputs
     {
         public readonly Outputs.Mk8sTritonProviderLoadBalancerGateway? Gateway;
         public readonly Outputs.Mk8sTritonProviderLoadBalancerManual? Manual;
+        public readonly Outputs.Mk8sTritonProviderLoadBalancerNone? None;
 
         [OutputConstructor]
         private Mk8sTritonProviderLoadBalancer(
             Outputs.Mk8sTritonProviderLoadBalancerGateway? gateway,
 
-            Outputs.Mk8sTritonProviderLoadBalancerManual? manual)
+            Outputs.Mk8sTritonProviderLoadBalancerManual? manual,
+
+            Outputs.Mk8sTritonProviderLoadBalancerNone? none)
         {
             Gateway = gateway;
             Manual = manual;
+            None = none;
         }
     }
 }

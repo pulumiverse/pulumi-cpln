@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class SecretUserpassArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Available encodings: `plain`, `base64`. Default: `plain`.
+        /// Available encodings: `Plain`, `Base64`. Default: `Plain`.
         /// </summary>
         [Input("encoding")]
         public Input<string>? Encoding { get; set; }

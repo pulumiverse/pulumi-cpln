@@ -33,6 +33,9 @@ namespace Pulumiverse.Cpln.Inputs
             set => _images = value;
         }
 
+        [Input("nextRetryAt")]
+        public Input<string>? NextRetryAt { get; set; }
+
         /// <summary>
         /// UTC Time when the images were resolved.
         /// </summary>

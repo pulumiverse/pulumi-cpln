@@ -23,7 +23,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly int Port;
         /// <summary>
-        /// The transport-layer protocol to send the syslog messages over. If TCP is chosen, messages will be sent with TLS. Default: `tcp`.
+        /// The transport-layer protocol to send the syslog messages over. If TCP is chosen, messages will be sent with TLS. Default: `Tcp`.
         /// </summary>
         public readonly string Transport;
 

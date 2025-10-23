@@ -15,7 +15,7 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class WorkloadOptionsAutoscalingMulti
     {
         /// <summary>
-        /// Valid values: `cpu` or `memory`.
+        /// Valid values: `Cpu` or `Memory`.
         /// </summary>
         public readonly string? Metric;
         /// <summary>

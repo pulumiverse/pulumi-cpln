@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class GroupMemberQuerySpecTermGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `exists`, `!exists`. Default: `=`.
+        /// Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `Exists`, `!exists`. Default: `=`.
         /// </summary>
         [Input("op")]
         public Input<string>? Op { get; set; }

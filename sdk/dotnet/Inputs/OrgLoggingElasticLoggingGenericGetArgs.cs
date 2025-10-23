@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class OrgLoggingElasticLoggingGenericGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Full Link to a secret of type `userpass`.
+        /// Full Link to a secret of type `Userpass`.
         /// </summary>
         [Input("credentials", required: true)]
         public Input<string> Credentials { get; set; } = null!;

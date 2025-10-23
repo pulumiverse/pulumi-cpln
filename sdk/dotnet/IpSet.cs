@@ -28,12 +28,12 @@ namespace Pulumiverse.Cpln
     /// 
     /// &lt;a id="nestedblock--location"&gt;&lt;/a&gt;
     /// 
-    /// ### `location`
+    /// ### `Location`
     /// 
     /// Required:
     /// 
     /// - **name** (String) The self link of a location.
-    /// - **retention_policy** (String) Exactly one of: `keep` and `free`.
+    /// - **retention_policy** (String) Exactly one of: `Keep` and `Free`.
     /// 
     /// ## Outputs
     /// 
@@ -45,7 +45,7 @@ namespace Pulumiverse.Cpln
     /// 
     /// &lt;a id="nestedblock--status"&gt;&lt;/a&gt;
     /// 
-    /// ### `status`
+    /// ### `Status`
     /// 
     /// Status of the IpSet.
     /// 

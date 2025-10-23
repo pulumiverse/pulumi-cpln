@@ -25,8 +25,7 @@ type Gvc struct {
 	//
 	// Deprecated: Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.
 	Domain pulumi.StringPtrOutput `pulumi:"domain"`
-	// Customizes the subdomain format for the canonical workload endpoint. `default` leaves it as
-	// '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
+	// Customizes the subdomain format for the canonical workload endpoint. `legacy` leaves it as '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${orgEndpointPrefix}.cpln.app'.
 	EndpointNamingFormat pulumi.StringOutput `pulumi:"endpointNamingFormat"`
 	// Key-value array of resource environment variables.
 	Env pulumi.StringMapOutput `pulumi:"env"`
@@ -40,8 +39,7 @@ type Gvc struct {
 	// Name of the Global Virtual Cloud.
 	Name        pulumi.StringOutput     `pulumi:"name"`
 	OtelTracing GvcOtelTracingPtrOutput `pulumi:"otelTracing"`
-	// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
-	// private image repository referenced by Workloads within the GVC.
+	// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
 	PullSecrets pulumi.StringArrayOutput `pulumi:"pullSecrets"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
@@ -91,8 +89,7 @@ type gvcState struct {
 	//
 	// Deprecated: Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.
 	Domain *string `pulumi:"domain"`
-	// Customizes the subdomain format for the canonical workload endpoint. `default` leaves it as
-	// '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
+	// Customizes the subdomain format for the canonical workload endpoint. `legacy` leaves it as '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${orgEndpointPrefix}.cpln.app'.
 	EndpointNamingFormat *string `pulumi:"endpointNamingFormat"`
 	// Key-value array of resource environment variables.
 	Env map[string]string `pulumi:"env"`
@@ -106,8 +103,7 @@ type gvcState struct {
 	// Name of the Global Virtual Cloud.
 	Name        *string         `pulumi:"name"`
 	OtelTracing *GvcOtelTracing `pulumi:"otelTracing"`
-	// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
-	// private image repository referenced by Workloads within the GVC.
+	// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
 	PullSecrets []string `pulumi:"pullSecrets"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink *string     `pulumi:"selfLink"`
@@ -128,8 +124,7 @@ type GvcState struct {
 	//
 	// Deprecated: Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.
 	Domain pulumi.StringPtrInput
-	// Customizes the subdomain format for the canonical workload endpoint. `default` leaves it as
-	// '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
+	// Customizes the subdomain format for the canonical workload endpoint. `legacy` leaves it as '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${orgEndpointPrefix}.cpln.app'.
 	EndpointNamingFormat pulumi.StringPtrInput
 	// Key-value array of resource environment variables.
 	Env pulumi.StringMapInput
@@ -143,8 +138,7 @@ type GvcState struct {
 	// Name of the Global Virtual Cloud.
 	Name        pulumi.StringPtrInput
 	OtelTracing GvcOtelTracingPtrInput
-	// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
-	// private image repository referenced by Workloads within the GVC.
+	// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
 	PullSecrets pulumi.StringArrayInput
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringPtrInput
@@ -165,8 +159,7 @@ type gvcArgs struct {
 	//
 	// Deprecated: Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.
 	Domain *string `pulumi:"domain"`
-	// Customizes the subdomain format for the canonical workload endpoint. `default` leaves it as
-	// '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
+	// Customizes the subdomain format for the canonical workload endpoint. `legacy` leaves it as '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${orgEndpointPrefix}.cpln.app'.
 	EndpointNamingFormat *string `pulumi:"endpointNamingFormat"`
 	// Key-value array of resource environment variables.
 	Env map[string]string `pulumi:"env"`
@@ -180,8 +173,7 @@ type gvcArgs struct {
 	// Name of the Global Virtual Cloud.
 	Name        *string         `pulumi:"name"`
 	OtelTracing *GvcOtelTracing `pulumi:"otelTracing"`
-	// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
-	// private image repository referenced by Workloads within the GVC.
+	// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
 	PullSecrets []string    `pulumi:"pullSecrets"`
 	Sidecar     *GvcSidecar `pulumi:"sidecar"`
 	// Key-value map of resource tags.
@@ -197,8 +189,7 @@ type GvcArgs struct {
 	//
 	// Deprecated: Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.
 	Domain pulumi.StringPtrInput
-	// Customizes the subdomain format for the canonical workload endpoint. `default` leaves it as
-	// '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
+	// Customizes the subdomain format for the canonical workload endpoint. `legacy` leaves it as '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${orgEndpointPrefix}.cpln.app'.
 	EndpointNamingFormat pulumi.StringPtrInput
 	// Key-value array of resource environment variables.
 	Env pulumi.StringMapInput
@@ -212,8 +203,7 @@ type GvcArgs struct {
 	// Name of the Global Virtual Cloud.
 	Name        pulumi.StringPtrInput
 	OtelTracing GvcOtelTracingPtrInput
-	// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
-	// private image repository referenced by Workloads within the GVC.
+	// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
 	PullSecrets pulumi.StringArrayInput
 	Sidecar     GvcSidecarPtrInput
 	// Key-value map of resource tags.
@@ -333,8 +323,7 @@ func (o GvcOutput) Domain() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Gvc) pulumi.StringPtrOutput { return v.Domain }).(pulumi.StringPtrOutput)
 }
 
-// Customizes the subdomain format for the canonical workload endpoint. `default` leaves it as
-// '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
+// Customizes the subdomain format for the canonical workload endpoint. `legacy` leaves it as '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${orgEndpointPrefix}.cpln.app'.
 func (o GvcOutput) EndpointNamingFormat() pulumi.StringOutput {
 	return o.ApplyT(func(v *Gvc) pulumi.StringOutput { return v.EndpointNamingFormat }).(pulumi.StringOutput)
 }
@@ -372,8 +361,7 @@ func (o GvcOutput) OtelTracing() GvcOtelTracingPtrOutput {
 	return o.ApplyT(func(v *Gvc) GvcOtelTracingPtrOutput { return v.OtelTracing }).(GvcOtelTracingPtrOutput)
 }
 
-// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
-// private image repository referenced by Workloads within the GVC.
+// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
 func (o GvcOutput) PullSecrets() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Gvc) pulumi.StringArrayOutput { return v.PullSecrets }).(pulumi.StringArrayOutput)
 }

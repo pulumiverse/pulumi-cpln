@@ -582,6 +582,42 @@
                     "firewall": {
                         "maxItemsOne": false
                     },
+                    "gcp_provider": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "autoscaler": {
+                                    "maxItemsOne": true,
+                                    "elem": {
+                                        "fields": {
+                                            "expander": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                },
+                                "image": {
+                                    "maxItemsOne": true
+                                },
+                                "networking": {
+                                    "maxItemsOne": true
+                                },
+                                "node_pool": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "override_image": {
+                                                "maxItemsOne": true
+                                            },
+                                            "taint": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
                     "generic_provider": {
                         "maxItemsOne": true,
                         "elem": {
@@ -879,6 +915,9 @@
                                                         }
                                                     }
                                                 }
+                                            },
+                                            "none": {
+                                                "maxItemsOne": true
                                             }
                                         }
                                     }
@@ -1103,6 +1142,9 @@
                     "autoscaling": {
                         "maxItemsOne": true
                     },
+                    "custom_encryption": {
+                        "maxItemsOne": true
+                    },
                     "mount_options": {
                         "maxItemsOne": true,
                         "elem": {
@@ -1121,6 +1163,9 @@
                         "elem": {
                             "fields": {
                                 "locations": {
+                                    "maxItemsOne": false
+                                },
+                                "workload_links": {
                                     "maxItemsOne": false
                                 }
                             }
@@ -1212,7 +1257,14 @@
                                     }
                                 },
                                 "metrics": {
-                                    "maxItemsOne": true
+                                    "maxItemsOne": true,
+                                    "elem": {
+                                        "fields": {
+                                            "drop_metrics": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
                                 },
                                 "ports": {
                                     "maxItemsOne": false
@@ -1462,6 +1514,9 @@
                                     "maxItemsOne": false
                                 },
                                 "load_balancer": {
+                                    "maxItemsOne": false
+                                },
+                                "replica_internal_names": {
                                     "maxItemsOne": false
                                 },
                                 "resolved_images": {
@@ -1722,6 +1777,377 @@
                     },
                     "userpass": {
                         "maxItemsOne": false
+                    }
+                }
+            },
+            "cpln_workload": {
+                "current": "cpln:index/getWorkload:getWorkload",
+                "fields": {
+                    "container": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "args": {
+                                    "maxItemsOne": false
+                                },
+                                "gpu_custom": {
+                                    "maxItemsOne": false
+                                },
+                                "gpu_nvidia": {
+                                    "maxItemsOne": false
+                                },
+                                "lifecycle": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "post_start": {
+                                                "maxItemsOne": false,
+                                                "elem": {
+                                                    "fields": {
+                                                        "exec": {
+                                                            "maxItemsOne": false,
+                                                            "elem": {
+                                                                "fields": {
+                                                                    "command": {
+                                                                        "maxItemsOne": false
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "pre_stop": {
+                                                "maxItemsOne": false,
+                                                "elem": {
+                                                    "fields": {
+                                                        "exec": {
+                                                            "maxItemsOne": false,
+                                                            "elem": {
+                                                                "fields": {
+                                                                    "command": {
+                                                                        "maxItemsOne": false
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "liveness_probe": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "exec": {
+                                                "maxItemsOne": false,
+                                                "elem": {
+                                                    "fields": {
+                                                        "command": {
+                                                            "maxItemsOne": false
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "grpc": {
+                                                "maxItemsOne": false
+                                            },
+                                            "http_get": {
+                                                "maxItemsOne": false
+                                            },
+                                            "tcp_socket": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                },
+                                "metrics": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "drop_metrics": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                },
+                                "ports": {
+                                    "maxItemsOne": false
+                                },
+                                "readiness_probe": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "exec": {
+                                                "maxItemsOne": false,
+                                                "elem": {
+                                                    "fields": {
+                                                        "command": {
+                                                            "maxItemsOne": false
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "grpc": {
+                                                "maxItemsOne": false
+                                            },
+                                            "http_get": {
+                                                "maxItemsOne": false
+                                            },
+                                            "tcp_socket": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                },
+                                "volume": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "firewall_spec": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "external": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "http": {
+                                                "maxItemsOne": false,
+                                                "elem": {
+                                                    "fields": {
+                                                        "inbound_header_filter": {
+                                                            "maxItemsOne": false,
+                                                            "elem": {
+                                                                "fields": {
+                                                                    "allowed_values": {
+                                                                        "maxItemsOne": false
+                                                                    },
+                                                                    "blocked_values": {
+                                                                        "maxItemsOne": false
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "inbound_allow_cidr": {
+                                                "maxItemsOne": false
+                                            },
+                                            "inbound_blocked_cidr": {
+                                                "maxItemsOne": false
+                                            },
+                                            "outbound_allow_cidr": {
+                                                "maxItemsOne": false
+                                            },
+                                            "outbound_allow_hostname": {
+                                                "maxItemsOne": false
+                                            },
+                                            "outbound_allow_port": {
+                                                "maxItemsOne": false
+                                            },
+                                            "outbound_blocked_cidr": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                },
+                                "internal": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "inbound_allow_workload": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "job": {
+                        "maxItemsOne": false
+                    },
+                    "load_balancer": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "direct": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "port": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                },
+                                "geo_location": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "headers": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "local_options": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "autoscaling": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "keda": {
+                                                "maxItemsOne": false,
+                                                "elem": {
+                                                    "fields": {
+                                                        "advanced": {
+                                                            "maxItemsOne": false,
+                                                            "elem": {
+                                                                "fields": {
+                                                                    "scaling_modifiers": {
+                                                                        "maxItemsOne": false
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "trigger": {
+                                                            "maxItemsOne": false,
+                                                            "elem": {
+                                                                "fields": {
+                                                                    "authentication_ref": {
+                                                                        "maxItemsOne": false
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "multi": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                },
+                                "multi_zone": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "options": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "autoscaling": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "keda": {
+                                                "maxItemsOne": false,
+                                                "elem": {
+                                                    "fields": {
+                                                        "advanced": {
+                                                            "maxItemsOne": false,
+                                                            "elem": {
+                                                                "fields": {
+                                                                    "scaling_modifiers": {
+                                                                        "maxItemsOne": false
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "trigger": {
+                                                            "maxItemsOne": false,
+                                                            "elem": {
+                                                                "fields": {
+                                                                    "authentication_ref": {
+                                                                        "maxItemsOne": false
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "multi": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                },
+                                "multi_zone": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "request_retry_policy": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "retry_on": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "rollout_options": {
+                        "maxItemsOne": false
+                    },
+                    "security_options": {
+                        "maxItemsOne": false
+                    },
+                    "sidecar": {
+                        "maxItemsOne": false
+                    },
+                    "status": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "health_check": {
+                                    "maxItemsOne": false
+                                },
+                                "load_balancer": {
+                                    "maxItemsOne": false
+                                },
+                                "replica_internal_names": {
+                                    "maxItemsOne": false
+                                },
+                                "resolved_images": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "error_messages": {
+                                                "maxItemsOne": false
+                                            },
+                                            "images": {
+                                                "maxItemsOne": false,
+                                                "elem": {
+                                                    "fields": {
+                                                        "manifests": {
+                                                            "maxItemsOne": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

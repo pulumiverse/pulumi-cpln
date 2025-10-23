@@ -94,32 +94,32 @@ export class IpSet extends pulumi.CustomResource {
     /**
      * The ID, in GUID format, of the IP Set.
      */
-    public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    declare public /*out*/ readonly cplnId: pulumi.Output<string>;
     /**
      * Description of the IP Set.
      */
-    public readonly description!: pulumi.Output<string>;
+    declare public readonly description: pulumi.Output<string>;
     /**
      * The self link of a workload or a GVC.
      */
-    public readonly link!: pulumi.Output<string | undefined>;
-    public readonly locations!: pulumi.Output<outputs.IpSetLocation[] | undefined>;
+    declare public readonly link: pulumi.Output<string | undefined>;
+    declare public readonly locations: pulumi.Output<outputs.IpSetLocation[] | undefined>;
     /**
      * Name of the IP Set.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
-    public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    declare public /*out*/ readonly selfLink: pulumi.Output<string>;
     /**
      * The status of the IP Set.
      */
-    public /*out*/ readonly statuses!: pulumi.Output<outputs.IpSetStatus[]>;
+    declare public /*out*/ readonly statuses: pulumi.Output<outputs.IpSetStatus[]>;
     /**
      * Key-value map of resource tags.
      */
-    public readonly tags!: pulumi.Output<{[key: string]: string}>;
+    declare public readonly tags: pulumi.Output<{[key: string]: string}>;
 
     /**
      * Create a IpSet resource with the given unique name, arguments, and options.
@@ -134,21 +134,21 @@ export class IpSet extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as IpSetState | undefined;
-            resourceInputs["cplnId"] = state ? state.cplnId : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["link"] = state ? state.link : undefined;
-            resourceInputs["locations"] = state ? state.locations : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["selfLink"] = state ? state.selfLink : undefined;
-            resourceInputs["statuses"] = state ? state.statuses : undefined;
-            resourceInputs["tags"] = state ? state.tags : undefined;
+            resourceInputs["cplnId"] = state?.cplnId;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["link"] = state?.link;
+            resourceInputs["locations"] = state?.locations;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["selfLink"] = state?.selfLink;
+            resourceInputs["statuses"] = state?.statuses;
+            resourceInputs["tags"] = state?.tags;
         } else {
             const args = argsOrState as IpSetArgs | undefined;
-            resourceInputs["description"] = args ? args.description : undefined;
-            resourceInputs["link"] = args ? args.link : undefined;
-            resourceInputs["locations"] = args ? args.locations : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["tags"] = args ? args.tags : undefined;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["link"] = args?.link;
+            resourceInputs["locations"] = args?.locations;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["tags"] = args?.tags;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
             resourceInputs["statuses"] = undefined /*out*/;

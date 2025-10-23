@@ -30,6 +30,10 @@ namespace Pulumiverse.Cpln.Outputs
         /// The url of the workload currently using this volume set (if any).
         /// </summary>
         public readonly string? UsedByWorkload;
+        /// <summary>
+        /// Contains a list of workload links that are using this volume set.
+        /// </summary>
+        public readonly ImmutableArray<string> WorkloadLinks;
 
         [OutputConstructor]
         private VolumeSetStatus(
@@ -39,12 +43,15 @@ namespace Pulumiverse.Cpln.Outputs
 
             string? parentId,
 
-            string? usedByWorkload)
+            string? usedByWorkload,
+
+            ImmutableArray<string> workloadLinks)
         {
             BindingId = bindingId;
             Locations = locations;
             ParentId = parentId;
             UsedByWorkload = usedByWorkload;
+            WorkloadLinks = workloadLinks;
         }
     }
 }

@@ -41,8 +41,7 @@ namespace Pulumiverse.Cpln
         public Output<string?> Domain { get; private set; } = null!;
 
         /// <summary>
-        /// Customizes the subdomain format for the canonical workload endpoint. `default` leaves it as
-        /// '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
+        /// Customizes the subdomain format for the canonical workload endpoint. `Legacy` leaves it as '${workloadName}-${gvcName}.cpln.app'. `Org` follows the scheme '${workloadName}-${gvcName}.${orgEndpointPrefix}.cpln.app'.
         /// </summary>
         [Output("endpointNamingFormat")]
         public Output<string> EndpointNamingFormat { get; private set; } = null!;
@@ -84,8 +83,7 @@ namespace Pulumiverse.Cpln
         public Output<Outputs.GvcOtelTracing?> OtelTracing { get; private set; } = null!;
 
         /// <summary>
-        /// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
-        /// private image repository referenced by Workloads within the GVC.
+        /// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
         /// </summary>
         [Output("pullSecrets")]
         public Output<ImmutableArray<string>> PullSecrets { get; private set; } = null!;
@@ -168,8 +166,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Domain { get; set; }
 
         /// <summary>
-        /// Customizes the subdomain format for the canonical workload endpoint. `default` leaves it as
-        /// '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
+        /// Customizes the subdomain format for the canonical workload endpoint. `Legacy` leaves it as '${workloadName}-${gvcName}.cpln.app'. `Org` follows the scheme '${workloadName}-${gvcName}.${orgEndpointPrefix}.cpln.app'.
         /// </summary>
         [Input("endpointNamingFormat")]
         public Input<string>? EndpointNamingFormat { get; set; }
@@ -226,8 +223,7 @@ namespace Pulumiverse.Cpln
         private InputList<string>? _pullSecrets;
 
         /// <summary>
-        /// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
-        /// private image repository referenced by Workloads within the GVC.
+        /// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
         /// </summary>
         public InputList<string> PullSecrets
         {
@@ -286,8 +282,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Domain { get; set; }
 
         /// <summary>
-        /// Customizes the subdomain format for the canonical workload endpoint. `default` leaves it as
-        /// '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
+        /// Customizes the subdomain format for the canonical workload endpoint. `Legacy` leaves it as '${workloadName}-${gvcName}.cpln.app'. `Org` follows the scheme '${workloadName}-${gvcName}.${orgEndpointPrefix}.cpln.app'.
         /// </summary>
         [Input("endpointNamingFormat")]
         public Input<string>? EndpointNamingFormat { get; set; }
@@ -344,8 +339,7 @@ namespace Pulumiverse.Cpln
         private InputList<string>? _pullSecrets;
 
         /// <summary>
-        /// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
-        /// private image repository referenced by Workloads within the GVC.
+        /// A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
         /// </summary>
         public InputList<string> PullSecrets
         {

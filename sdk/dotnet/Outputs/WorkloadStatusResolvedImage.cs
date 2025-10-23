@@ -19,6 +19,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// A list of images that were resolved.
         /// </summary>
         public readonly ImmutableArray<Outputs.WorkloadStatusResolvedImageImage> Images;
+        public readonly string? NextRetryAt;
         /// <summary>
         /// UTC Time when the images were resolved.
         /// </summary>
@@ -34,12 +35,15 @@ namespace Pulumiverse.Cpln.Outputs
 
             ImmutableArray<Outputs.WorkloadStatusResolvedImageImage> images,
 
+            string? nextRetryAt,
+
             string? resolvedAt,
 
             int? resolvedForVersion)
         {
             ErrorMessages = errorMessages;
             Images = images;
+            NextRetryAt = nextRetryAt;
             ResolvedAt = resolvedAt;
             ResolvedForVersion = resolvedForVersion;
         }

@@ -31,6 +31,9 @@ namespace Pulumiverse.Cpln
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        [Output("origin")]
+        public Output<string> Origin { get; private set; } = null!;
+
         /// <summary>
         /// Full link to this resource. Can be referenced by other resources.
         /// </summary>
@@ -139,6 +142,9 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
+
+        [Input("origin")]
+        public Input<string>? Origin { get; set; }
 
         /// <summary>
         /// Full link to this resource. Can be referenced by other resources.

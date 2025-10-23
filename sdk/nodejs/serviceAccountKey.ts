@@ -35,23 +35,23 @@ export class ServiceAccountKey extends pulumi.CustomResource {
     /**
      * The timestamp, in UTC, when the key was created.
      */
-    public /*out*/ readonly created!: pulumi.Output<string>;
+    declare public /*out*/ readonly created: pulumi.Output<string>;
     /**
      * Description of the Service Account Key.
      */
-    public readonly description!: pulumi.Output<string>;
+    declare public readonly description: pulumi.Output<string>;
     /**
      * The generated key.
      */
-    public /*out*/ readonly key!: pulumi.Output<string>;
+    declare public /*out*/ readonly key: pulumi.Output<string>;
     /**
      * The generated name of the key.
      */
-    public /*out*/ readonly name!: pulumi.Output<string>;
+    declare public /*out*/ readonly name: pulumi.Output<string>;
     /**
      * The name of an existing Service Account this key will belong to.
      */
-    public readonly serviceAccountName!: pulumi.Output<string>;
+    declare public readonly serviceAccountName: pulumi.Output<string>;
 
     /**
      * Create a ServiceAccountKey resource with the given unique name, arguments, and options.
@@ -66,21 +66,21 @@ export class ServiceAccountKey extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as ServiceAccountKeyState | undefined;
-            resourceInputs["created"] = state ? state.created : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["key"] = state ? state.key : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["serviceAccountName"] = state ? state.serviceAccountName : undefined;
+            resourceInputs["created"] = state?.created;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["key"] = state?.key;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["serviceAccountName"] = state?.serviceAccountName;
         } else {
             const args = argsOrState as ServiceAccountKeyArgs | undefined;
-            if ((!args || args.description === undefined) && !opts.urn) {
+            if (args?.description === undefined && !opts.urn) {
                 throw new Error("Missing required property 'description'");
             }
-            if ((!args || args.serviceAccountName === undefined) && !opts.urn) {
+            if (args?.serviceAccountName === undefined && !opts.urn) {
                 throw new Error("Missing required property 'serviceAccountName'");
             }
-            resourceInputs["description"] = args ? args.description : undefined;
-            resourceInputs["serviceAccountName"] = args ? args.serviceAccountName : undefined;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["serviceAccountName"] = args?.serviceAccountName;
             resourceInputs["created"] = undefined /*out*/;
             resourceInputs["key"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;

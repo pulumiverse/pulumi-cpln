@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class PolicyTargetQueryGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        /// Type of fetch. Specify either: `Links` or `Items`. Default: `Items`.
         /// </summary>
         [Input("fetch")]
         public Input<string>? Fetch { get; set; }

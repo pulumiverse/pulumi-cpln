@@ -18,21 +18,15 @@ import (
 type Provider struct {
 	pulumi.ProviderResourceState
 
-	// The Control Plane Data Service API endpoint. Default is: https://api.cpln.io. Can be specified with the CPLN_ENDPOINT
-	// environment variable.
+	// The Control Plane Data Service API endpoint. Default is: https://api.cpln.io. Can be specified with the CPLN_ENDPOINT environment variable.
 	Endpoint pulumi.StringPtrOutput `pulumi:"endpoint"`
-	// The Control Plane org that this provider will perform actions against. Can be specified with the CPLN_ORG environment
-	// variable.
+	// The Control Plane org that this provider will perform actions against. Can be specified with the CPLN_ORG environment variable.
 	Org pulumi.StringPtrOutput `pulumi:"org"`
-	// The user/service account profile that this provider will use to authenticate to the data service. Can be specified with
-	// the CPLN_PROFILE environment variable.
+	// The user/service account profile that this provider will use to authenticate to the data service. Can be specified with the CPLN_PROFILE environment variable.
 	Profile pulumi.StringPtrOutput `pulumi:"profile"`
-	// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_REFRESH_TOKEN
-	// environment variable. Used when the provider is required to create an org or update the authConfig property. Refer to
-	// the section above on how to obtain the refresh token.
+	// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_REFRESH_TOKEN environment variable. Used when the provider is required to create an org or update the authConfig property. Refer to the section above on how to obtain the refresh token.
 	RefreshToken pulumi.StringPtrOutput `pulumi:"refreshToken"`
-	// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_TOKEN
-	// environment variable.
+	// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_TOKEN environment variable.
 	Token pulumi.StringPtrOutput `pulumi:"token"`
 }
 
@@ -64,41 +58,29 @@ func NewProvider(ctx *pulumi.Context,
 }
 
 type providerArgs struct {
-	// The Control Plane Data Service API endpoint. Default is: https://api.cpln.io. Can be specified with the CPLN_ENDPOINT
-	// environment variable.
+	// The Control Plane Data Service API endpoint. Default is: https://api.cpln.io. Can be specified with the CPLN_ENDPOINT environment variable.
 	Endpoint *string `pulumi:"endpoint"`
-	// The Control Plane org that this provider will perform actions against. Can be specified with the CPLN_ORG environment
-	// variable.
+	// The Control Plane org that this provider will perform actions against. Can be specified with the CPLN_ORG environment variable.
 	Org *string `pulumi:"org"`
-	// The user/service account profile that this provider will use to authenticate to the data service. Can be specified with
-	// the CPLN_PROFILE environment variable.
+	// The user/service account profile that this provider will use to authenticate to the data service. Can be specified with the CPLN_PROFILE environment variable.
 	Profile *string `pulumi:"profile"`
-	// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_REFRESH_TOKEN
-	// environment variable. Used when the provider is required to create an org or update the authConfig property. Refer to
-	// the section above on how to obtain the refresh token.
+	// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_REFRESH_TOKEN environment variable. Used when the provider is required to create an org or update the authConfig property. Refer to the section above on how to obtain the refresh token.
 	RefreshToken *string `pulumi:"refreshToken"`
-	// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_TOKEN
-	// environment variable.
+	// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_TOKEN environment variable.
 	Token *string `pulumi:"token"`
 }
 
 // The set of arguments for constructing a Provider resource.
 type ProviderArgs struct {
-	// The Control Plane Data Service API endpoint. Default is: https://api.cpln.io. Can be specified with the CPLN_ENDPOINT
-	// environment variable.
+	// The Control Plane Data Service API endpoint. Default is: https://api.cpln.io. Can be specified with the CPLN_ENDPOINT environment variable.
 	Endpoint pulumi.StringPtrInput
-	// The Control Plane org that this provider will perform actions against. Can be specified with the CPLN_ORG environment
-	// variable.
+	// The Control Plane org that this provider will perform actions against. Can be specified with the CPLN_ORG environment variable.
 	Org pulumi.StringPtrInput
-	// The user/service account profile that this provider will use to authenticate to the data service. Can be specified with
-	// the CPLN_PROFILE environment variable.
+	// The user/service account profile that this provider will use to authenticate to the data service. Can be specified with the CPLN_PROFILE environment variable.
 	Profile pulumi.StringPtrInput
-	// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_REFRESH_TOKEN
-	// environment variable. Used when the provider is required to create an org or update the authConfig property. Refer to
-	// the section above on how to obtain the refresh token.
+	// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_REFRESH_TOKEN environment variable. Used when the provider is required to create an org or update the authConfig property. Refer to the section above on how to obtain the refresh token.
 	RefreshToken pulumi.StringPtrInput
-	// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_TOKEN
-	// environment variable.
+	// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_TOKEN environment variable.
 	Token pulumi.StringPtrInput
 }
 
@@ -162,33 +144,27 @@ func (o ProviderOutput) ToProviderOutputWithContext(ctx context.Context) Provide
 	return o
 }
 
-// The Control Plane Data Service API endpoint. Default is: https://api.cpln.io. Can be specified with the CPLN_ENDPOINT
-// environment variable.
+// The Control Plane Data Service API endpoint. Default is: https://api.cpln.io. Can be specified with the CPLN_ENDPOINT environment variable.
 func (o ProviderOutput) Endpoint() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.Endpoint }).(pulumi.StringPtrOutput)
 }
 
-// The Control Plane org that this provider will perform actions against. Can be specified with the CPLN_ORG environment
-// variable.
+// The Control Plane org that this provider will perform actions against. Can be specified with the CPLN_ORG environment variable.
 func (o ProviderOutput) Org() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.Org }).(pulumi.StringPtrOutput)
 }
 
-// The user/service account profile that this provider will use to authenticate to the data service. Can be specified with
-// the CPLN_PROFILE environment variable.
+// The user/service account profile that this provider will use to authenticate to the data service. Can be specified with the CPLN_PROFILE environment variable.
 func (o ProviderOutput) Profile() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.Profile }).(pulumi.StringPtrOutput)
 }
 
-// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_REFRESH_TOKEN
-// environment variable. Used when the provider is required to create an org or update the authConfig property. Refer to
-// the section above on how to obtain the refresh token.
+// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_REFRESH_TOKEN environment variable. Used when the provider is required to create an org or update the authConfig property. Refer to the section above on how to obtain the refresh token.
 func (o ProviderOutput) RefreshToken() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.RefreshToken }).(pulumi.StringPtrOutput)
 }
 
-// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_TOKEN
-// environment variable.
+// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_TOKEN environment variable.
 func (o ProviderOutput) Token() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.Token }).(pulumi.StringPtrOutput)
 }

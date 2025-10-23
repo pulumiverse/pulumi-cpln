@@ -34,8 +34,7 @@ namespace Pulumiverse.Cpln
 
         private static readonly __Value<string?> _endpoint = new __Value<string?>(() => __config.Get("endpoint"));
         /// <summary>
-        /// The Control Plane Data Service API endpoint. Default is: https://api.cpln.io. Can be specified with the CPLN_ENDPOINT
-        /// environment variable.
+        /// The Control Plane Data Service API endpoint. Default is: https://api.cpln.io. Can be specified with the CPLN_ENDPOINT environment variable.
         /// </summary>
         public static string? Endpoint
         {
@@ -45,8 +44,7 @@ namespace Pulumiverse.Cpln
 
         private static readonly __Value<string?> _org = new __Value<string?>(() => __config.Get("org"));
         /// <summary>
-        /// The Control Plane org that this provider will perform actions against. Can be specified with the CPLN_ORG environment
-        /// variable.
+        /// The Control Plane org that this provider will perform actions against. Can be specified with the CPLN_ORG environment variable.
         /// </summary>
         public static string? Org
         {
@@ -56,8 +54,7 @@ namespace Pulumiverse.Cpln
 
         private static readonly __Value<string?> _profile = new __Value<string?>(() => __config.Get("profile"));
         /// <summary>
-        /// The user/service account profile that this provider will use to authenticate to the data service. Can be specified with
-        /// the CPLN_PROFILE environment variable.
+        /// The user/service account profile that this provider will use to authenticate to the data service. Can be specified with the CPLN_PROFILE environment variable.
         /// </summary>
         public static string? Profile
         {
@@ -67,9 +64,7 @@ namespace Pulumiverse.Cpln
 
         private static readonly __Value<string?> _refreshToken = new __Value<string?>(() => __config.Get("refreshToken"));
         /// <summary>
-        /// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_REFRESH_TOKEN
-        /// environment variable. Used when the provider is required to create an org or update the auth_config property. Refer to
-        /// the section above on how to obtain the refresh token.
+        /// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_REFRESH_TOKEN environment variable. Used when the provider is required to create an org or update the AuthConfig property. Refer to the section above on how to obtain the refresh token.
         /// </summary>
         public static string? RefreshToken
         {
@@ -79,8 +74,7 @@ namespace Pulumiverse.Cpln
 
         private static readonly __Value<string?> _token = new __Value<string?>(() => __config.Get("token"));
         /// <summary>
-        /// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_TOKEN
-        /// environment variable.
+        /// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_TOKEN environment variable.
         /// </summary>
         public static string? Token
         {

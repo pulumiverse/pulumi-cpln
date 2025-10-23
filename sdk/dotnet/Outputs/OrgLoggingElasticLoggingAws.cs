@@ -15,7 +15,7 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class OrgLoggingElasticLoggingAws
     {
         /// <summary>
-        /// Full Link to a secret of type `aws`.
+        /// Full Link to a secret of type `Aws`.
         /// </summary>
         public readonly string Credentials;
         /// <summary>

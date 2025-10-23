@@ -21,11 +21,11 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--query"&gt;&lt;/a&gt;
         /// 
-        /// ### `query`
+        /// ### `Query`
         /// 
         /// Optional:
         /// 
-        /// - **fetch** (String) Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        /// - **fetch** (String) Type of fetch. Specify either: `Links` or `Items`. Default: `Items`.
         /// - **spec** (Block List, Max: 1) (see below).
         /// 
         /// &lt;a id="nestedblock--query--spec"&gt;&lt;/a&gt;
@@ -34,20 +34,20 @@ namespace Pulumiverse.Cpln
         /// 
         /// Optional:
         /// 
-        /// - **match** (String) Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        /// - **match** (String) Type of match. Available values: `All`, `Any`, `None`. Default: `All`.
         /// - **terms** (Block List) (see below).
         /// 
         /// &lt;a id="nestedblock--query--spec--terms"&gt;&lt;/a&gt;
         /// 
         /// ### `query.spec.terms`
         /// 
-        /// &lt;!-- Terms can only contain one of the following attributes: `property`, `rel`, `tag`. --&gt;
+        /// &lt;!-- Terms can only contain one of the following attributes: `Property`, `Rel`, `Tag`. --&gt;
         /// 
-        /// Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        /// Terms can only contain one of the following attributes: `Property`, `Rel`, `Tag`.
         /// 
         /// Optional:
         /// 
-        /// - **op** (String) Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `exists`, `!exists`. Default: `=`.
+        /// - **op** (String) Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `Exists`, `!exists`. Default: `=`.
         /// 
         /// - **property** (String) Property to use for query evaluation.
         /// - **rel** (String) Rel to use use for query evaluation.
@@ -62,7 +62,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--images"&gt;&lt;/a&gt;
         /// 
-        /// ### `images`
+        /// ### `Images`
         /// 
         /// - **cpln_id** (String) The ID, in GUID format, of the Image.
         /// - **name** (String) Name of the Image.
@@ -75,7 +75,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--manifest"&gt;&lt;/a&gt;
         /// 
-        /// ### `manifest`
+        /// ### `Manifest`
         /// 
         ///  The manifest provides configuration and layers information about the image. It plays a crucial role in the Docker image distribution system, enabling image creation, verification, and replication in a consistent and secure manner.
         /// 
@@ -86,7 +86,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--config--layers"&gt;&lt;/a&gt;
         /// 
-        /// ### `config` and `layers`
+        /// ### `Config` and `Layers`
         /// 
         /// The config is a JSON blob that contains the image configuration data which includes environment variables, default command to run, and other settings necessary to run the container based on this image.
         /// 
@@ -108,11 +108,11 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--query"&gt;&lt;/a&gt;
         /// 
-        /// ### `query`
+        /// ### `Query`
         /// 
         /// Optional:
         /// 
-        /// - **fetch** (String) Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        /// - **fetch** (String) Type of fetch. Specify either: `Links` or `Items`. Default: `Items`.
         /// - **spec** (Block List, Max: 1) (see below).
         /// 
         /// &lt;a id="nestedblock--query--spec"&gt;&lt;/a&gt;
@@ -121,20 +121,20 @@ namespace Pulumiverse.Cpln
         /// 
         /// Optional:
         /// 
-        /// - **match** (String) Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        /// - **match** (String) Type of match. Available values: `All`, `Any`, `None`. Default: `All`.
         /// - **terms** (Block List) (see below).
         /// 
         /// &lt;a id="nestedblock--query--spec--terms"&gt;&lt;/a&gt;
         /// 
         /// ### `query.spec.terms`
         /// 
-        /// &lt;!-- Terms can only contain one of the following attributes: `property`, `rel`, `tag`. --&gt;
+        /// &lt;!-- Terms can only contain one of the following attributes: `Property`, `Rel`, `Tag`. --&gt;
         /// 
-        /// Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        /// Terms can only contain one of the following attributes: `Property`, `Rel`, `Tag`.
         /// 
         /// Optional:
         /// 
-        /// - **op** (String) Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `exists`, `!exists`. Default: `=`.
+        /// - **op** (String) Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `Exists`, `!exists`. Default: `=`.
         /// 
         /// - **property** (String) Property to use for query evaluation.
         /// - **rel** (String) Rel to use use for query evaluation.
@@ -149,7 +149,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--images"&gt;&lt;/a&gt;
         /// 
-        /// ### `images`
+        /// ### `Images`
         /// 
         /// - **cpln_id** (String) The ID, in GUID format, of the Image.
         /// - **name** (String) Name of the Image.
@@ -162,7 +162,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--manifest"&gt;&lt;/a&gt;
         /// 
-        /// ### `manifest`
+        /// ### `Manifest`
         /// 
         ///  The manifest provides configuration and layers information about the image. It plays a crucial role in the Docker image distribution system, enabling image creation, verification, and replication in a consistent and secure manner.
         /// 
@@ -173,7 +173,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--config--layers"&gt;&lt;/a&gt;
         /// 
-        /// ### `config` and `layers`
+        /// ### `Config` and `Layers`
         /// 
         /// The config is a JSON blob that contains the image configuration data which includes environment variables, default command to run, and other settings necessary to run the container based on this image.
         /// 
@@ -195,11 +195,11 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--query"&gt;&lt;/a&gt;
         /// 
-        /// ### `query`
+        /// ### `Query`
         /// 
         /// Optional:
         /// 
-        /// - **fetch** (String) Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        /// - **fetch** (String) Type of fetch. Specify either: `Links` or `Items`. Default: `Items`.
         /// - **spec** (Block List, Max: 1) (see below).
         /// 
         /// &lt;a id="nestedblock--query--spec"&gt;&lt;/a&gt;
@@ -208,20 +208,20 @@ namespace Pulumiverse.Cpln
         /// 
         /// Optional:
         /// 
-        /// - **match** (String) Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        /// - **match** (String) Type of match. Available values: `All`, `Any`, `None`. Default: `All`.
         /// - **terms** (Block List) (see below).
         /// 
         /// &lt;a id="nestedblock--query--spec--terms"&gt;&lt;/a&gt;
         /// 
         /// ### `query.spec.terms`
         /// 
-        /// &lt;!-- Terms can only contain one of the following attributes: `property`, `rel`, `tag`. --&gt;
+        /// &lt;!-- Terms can only contain one of the following attributes: `Property`, `Rel`, `Tag`. --&gt;
         /// 
-        /// Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        /// Terms can only contain one of the following attributes: `Property`, `Rel`, `Tag`.
         /// 
         /// Optional:
         /// 
-        /// - **op** (String) Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `exists`, `!exists`. Default: `=`.
+        /// - **op** (String) Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `Exists`, `!exists`. Default: `=`.
         /// 
         /// - **property** (String) Property to use for query evaluation.
         /// - **rel** (String) Rel to use use for query evaluation.
@@ -236,7 +236,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--images"&gt;&lt;/a&gt;
         /// 
-        /// ### `images`
+        /// ### `Images`
         /// 
         /// - **cpln_id** (String) The ID, in GUID format, of the Image.
         /// - **name** (String) Name of the Image.
@@ -249,7 +249,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--manifest"&gt;&lt;/a&gt;
         /// 
-        /// ### `manifest`
+        /// ### `Manifest`
         /// 
         ///  The manifest provides configuration and layers information about the image. It plays a crucial role in the Docker image distribution system, enabling image creation, verification, and replication in a consistent and secure manner.
         /// 
@@ -260,7 +260,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--config--layers"&gt;&lt;/a&gt;
         /// 
-        /// ### `config` and `layers`
+        /// ### `Config` and `Layers`
         /// 
         /// The config is a JSON blob that contains the image configuration data which includes environment variables, default command to run, and other settings necessary to run the container based on this image.
         /// 

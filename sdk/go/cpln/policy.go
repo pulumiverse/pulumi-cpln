@@ -31,8 +31,7 @@ type Policy struct {
 	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapOutput `pulumi:"tags"`
-	// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
-	// do not include the attribute.
+	// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise, do not include the attribute.
 	Target pulumi.StringPtrOutput `pulumi:"target"`
 	// The kind of resource to target (e.g., gvc, serviceaccount, etc.).
 	TargetKind pulumi.StringOutput `pulumi:"targetKind"`
@@ -91,8 +90,7 @@ type policyState struct {
 	SelfLink *string `pulumi:"selfLink"`
 	// Key-value map of resource tags.
 	Tags map[string]string `pulumi:"tags"`
-	// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
-	// do not include the attribute.
+	// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise, do not include the attribute.
 	Target *string `pulumi:"target"`
 	// The kind of resource to target (e.g., gvc, serviceaccount, etc.).
 	TargetKind *string `pulumi:"targetKind"`
@@ -119,8 +117,7 @@ type PolicyState struct {
 	SelfLink pulumi.StringPtrInput
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapInput
-	// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
-	// do not include the attribute.
+	// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise, do not include the attribute.
 	Target pulumi.StringPtrInput
 	// The kind of resource to target (e.g., gvc, serviceaccount, etc.).
 	TargetKind pulumi.StringPtrInput
@@ -145,8 +142,7 @@ type policyArgs struct {
 	Name *string `pulumi:"name"`
 	// Key-value map of resource tags.
 	Tags map[string]string `pulumi:"tags"`
-	// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
-	// do not include the attribute.
+	// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise, do not include the attribute.
 	Target *string `pulumi:"target"`
 	// The kind of resource to target (e.g., gvc, serviceaccount, etc.).
 	TargetKind string `pulumi:"targetKind"`
@@ -168,8 +164,7 @@ type PolicyArgs struct {
 	Name pulumi.StringPtrInput
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapInput
-	// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
-	// do not include the attribute.
+	// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise, do not include the attribute.
 	Target pulumi.StringPtrInput
 	// The kind of resource to target (e.g., gvc, serviceaccount, etc.).
 	TargetKind pulumi.StringInput
@@ -306,8 +301,7 @@ func (o PolicyOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Policy) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
 }
 
-// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
-// do not include the attribute.
+// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise, do not include the attribute.
 func (o PolicyOutput) Target() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Policy) pulumi.StringPtrOutput { return v.Target }).(pulumi.StringPtrOutput)
 }

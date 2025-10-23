@@ -37,50 +37,47 @@ export class DomainRoute extends pulumi.CustomResource {
     /**
      * The self link of the domain to add the route to.
      */
-    public readonly domainLink!: pulumi.Output<string>;
+    declare public readonly domainLink: pulumi.Output<string>;
     /**
      * The port the route corresponds to. Default: 443
      */
-    public readonly domainPort!: pulumi.Output<number>;
+    declare public readonly domainPort: pulumi.Output<number>;
     /**
      * Modify the headers for all http requests for this route.
      */
-    public readonly headers!: pulumi.Output<outputs.DomainRouteHeaders | undefined>;
+    declare public readonly headers: pulumi.Output<outputs.DomainRouteHeaders | undefined>;
     /**
-     * This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
-     * target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
-     * Slack or at support@controlplane.com for additional details.
+     * This option allows forwarding traffic for different host headers to different workloads. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on Slack or at support@controlplane.com for additional details.
      */
-    public readonly hostPrefix!: pulumi.Output<string | undefined>;
+    declare public readonly hostPrefix: pulumi.Output<string | undefined>;
     /**
-     * A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and
-     * the Domain is configure for wildcard support. Contact your account manager for details.
+     * A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
      */
-    public readonly hostRegex!: pulumi.Output<string | undefined>;
+    declare public readonly hostRegex: pulumi.Output<string | undefined>;
     /**
      * For the linked workload, the port to route traffic to.
      */
-    public readonly port!: pulumi.Output<number | undefined>;
+    declare public readonly port: pulumi.Output<number | undefined>;
     /**
      * The path will match any unmatched path prefixes for the subdomain.
      */
-    public readonly prefix!: pulumi.Output<string | undefined>;
+    declare public readonly prefix: pulumi.Output<string | undefined>;
     /**
      * Used to match URI paths. Uses the google re2 regex syntax.
      */
-    public readonly regex!: pulumi.Output<string | undefined>;
+    declare public readonly regex: pulumi.Output<string | undefined>;
     /**
      * A path prefix can be configured to be replaced when forwarding the request to the Workload.
      */
-    public readonly replacePrefix!: pulumi.Output<string | undefined>;
+    declare public readonly replacePrefix: pulumi.Output<string | undefined>;
     /**
      * The replica number of a stateful workload to route to. If not provided, traffic will be routed to all replicas.
      */
-    public readonly replica!: pulumi.Output<number | undefined>;
+    declare public readonly replica: pulumi.Output<number | undefined>;
     /**
      * The link of the workload to map the prefix to.
      */
-    public readonly workloadLink!: pulumi.Output<string>;
+    declare public readonly workloadLink: pulumi.Output<string>;
 
     /**
      * Create a DomainRoute resource with the given unique name, arguments, and options.
@@ -95,36 +92,36 @@ export class DomainRoute extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DomainRouteState | undefined;
-            resourceInputs["domainLink"] = state ? state.domainLink : undefined;
-            resourceInputs["domainPort"] = state ? state.domainPort : undefined;
-            resourceInputs["headers"] = state ? state.headers : undefined;
-            resourceInputs["hostPrefix"] = state ? state.hostPrefix : undefined;
-            resourceInputs["hostRegex"] = state ? state.hostRegex : undefined;
-            resourceInputs["port"] = state ? state.port : undefined;
-            resourceInputs["prefix"] = state ? state.prefix : undefined;
-            resourceInputs["regex"] = state ? state.regex : undefined;
-            resourceInputs["replacePrefix"] = state ? state.replacePrefix : undefined;
-            resourceInputs["replica"] = state ? state.replica : undefined;
-            resourceInputs["workloadLink"] = state ? state.workloadLink : undefined;
+            resourceInputs["domainLink"] = state?.domainLink;
+            resourceInputs["domainPort"] = state?.domainPort;
+            resourceInputs["headers"] = state?.headers;
+            resourceInputs["hostPrefix"] = state?.hostPrefix;
+            resourceInputs["hostRegex"] = state?.hostRegex;
+            resourceInputs["port"] = state?.port;
+            resourceInputs["prefix"] = state?.prefix;
+            resourceInputs["regex"] = state?.regex;
+            resourceInputs["replacePrefix"] = state?.replacePrefix;
+            resourceInputs["replica"] = state?.replica;
+            resourceInputs["workloadLink"] = state?.workloadLink;
         } else {
             const args = argsOrState as DomainRouteArgs | undefined;
-            if ((!args || args.domainLink === undefined) && !opts.urn) {
+            if (args?.domainLink === undefined && !opts.urn) {
                 throw new Error("Missing required property 'domainLink'");
             }
-            if ((!args || args.workloadLink === undefined) && !opts.urn) {
+            if (args?.workloadLink === undefined && !opts.urn) {
                 throw new Error("Missing required property 'workloadLink'");
             }
-            resourceInputs["domainLink"] = args ? args.domainLink : undefined;
-            resourceInputs["domainPort"] = args ? args.domainPort : undefined;
-            resourceInputs["headers"] = args ? args.headers : undefined;
-            resourceInputs["hostPrefix"] = args ? args.hostPrefix : undefined;
-            resourceInputs["hostRegex"] = args ? args.hostRegex : undefined;
-            resourceInputs["port"] = args ? args.port : undefined;
-            resourceInputs["prefix"] = args ? args.prefix : undefined;
-            resourceInputs["regex"] = args ? args.regex : undefined;
-            resourceInputs["replacePrefix"] = args ? args.replacePrefix : undefined;
-            resourceInputs["replica"] = args ? args.replica : undefined;
-            resourceInputs["workloadLink"] = args ? args.workloadLink : undefined;
+            resourceInputs["domainLink"] = args?.domainLink;
+            resourceInputs["domainPort"] = args?.domainPort;
+            resourceInputs["headers"] = args?.headers;
+            resourceInputs["hostPrefix"] = args?.hostPrefix;
+            resourceInputs["hostRegex"] = args?.hostRegex;
+            resourceInputs["port"] = args?.port;
+            resourceInputs["prefix"] = args?.prefix;
+            resourceInputs["regex"] = args?.regex;
+            resourceInputs["replacePrefix"] = args?.replacePrefix;
+            resourceInputs["replica"] = args?.replica;
+            resourceInputs["workloadLink"] = args?.workloadLink;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(DomainRoute.__pulumiType, name, resourceInputs, opts);
@@ -148,14 +145,11 @@ export interface DomainRouteState {
      */
     headers?: pulumi.Input<inputs.DomainRouteHeaders>;
     /**
-     * This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
-     * target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
-     * Slack or at support@controlplane.com for additional details.
+     * This option allows forwarding traffic for different host headers to different workloads. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on Slack or at support@controlplane.com for additional details.
      */
     hostPrefix?: pulumi.Input<string>;
     /**
-     * A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and
-     * the Domain is configure for wildcard support. Contact your account manager for details.
+     * A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
      */
     hostRegex?: pulumi.Input<string>;
     /**
@@ -201,14 +195,11 @@ export interface DomainRouteArgs {
      */
     headers?: pulumi.Input<inputs.DomainRouteHeaders>;
     /**
-     * This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
-     * target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
-     * Slack or at support@controlplane.com for additional details.
+     * This option allows forwarding traffic for different host headers to different workloads. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on Slack or at support@controlplane.com for additional details.
      */
     hostPrefix?: pulumi.Input<string>;
     /**
-     * A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and
-     * the Domain is configure for wildcard support. Contact your account manager for details.
+     * A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
      */
     hostRegex?: pulumi.Input<string>;
     /**

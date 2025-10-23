@@ -20,7 +20,7 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<string> Path { get; set; } = null!;
 
         /// <summary>
-        /// Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
+        /// Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `Retain`, `Recycle`. Default: `Retain`. **DEPRECATED - No longer being used.**
         /// </summary>
         [Input("recoveryPolicy")]
         public Input<string>? RecoveryPolicy { get; set; }

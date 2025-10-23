@@ -37,63 +37,61 @@ export class Gvc extends pulumi.CustomResource {
     /**
      * The alias name of the GVC.
      */
-    public /*out*/ readonly alias!: pulumi.Output<string>;
-    public readonly controlplaneTracing!: pulumi.Output<outputs.GvcControlplaneTracing | undefined>;
+    declare public /*out*/ readonly alias: pulumi.Output<string>;
+    declare public readonly controlplaneTracing: pulumi.Output<outputs.GvcControlplaneTracing | undefined>;
     /**
      * The ID, in GUID format, of the Global Virtual Cloud.
      */
-    public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    declare public /*out*/ readonly cplnId: pulumi.Output<string>;
     /**
      * Description of the Global Virtual Cloud.
      */
-    public readonly description!: pulumi.Output<string>;
+    declare public readonly description: pulumi.Output<string>;
     /**
      * Custom domain name used by associated workloads.
      *
      * @deprecated Selecting a domain on a GVC will be deprecated in the future. Use the 'cpln_domain resource' instead.
      */
-    public readonly domain!: pulumi.Output<string | undefined>;
+    declare public readonly domain: pulumi.Output<string | undefined>;
     /**
-     * Customizes the subdomain format for the canonical workload endpoint. `default` leaves it as
-     * '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
+     * Customizes the subdomain format for the canonical workload endpoint. `legacy` leaves it as '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${orgEndpointPrefix}.cpln.app'.
      */
-    public readonly endpointNamingFormat!: pulumi.Output<string>;
+    declare public readonly endpointNamingFormat: pulumi.Output<string>;
     /**
      * Key-value array of resource environment variables.
      */
-    public readonly env!: pulumi.Output<{[key: string]: string} | undefined>;
+    declare public readonly env: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * KEDA configuration for the GVC.
      */
-    public readonly keda!: pulumi.Output<outputs.GvcKeda | undefined>;
-    public readonly lightstepTracing!: pulumi.Output<outputs.GvcLightstepTracing | undefined>;
+    declare public readonly keda: pulumi.Output<outputs.GvcKeda | undefined>;
+    declare public readonly lightstepTracing: pulumi.Output<outputs.GvcLightstepTracing | undefined>;
     /**
      * Dedicated load balancer configuration.
      */
-    public readonly loadBalancer!: pulumi.Output<outputs.GvcLoadBalancer | undefined>;
+    declare public readonly loadBalancer: pulumi.Output<outputs.GvcLoadBalancer | undefined>;
     /**
      * A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
      */
-    public readonly locations!: pulumi.Output<string[] | undefined>;
+    declare public readonly locations: pulumi.Output<string[] | undefined>;
     /**
      * Name of the Global Virtual Cloud.
      */
-    public readonly name!: pulumi.Output<string>;
-    public readonly otelTracing!: pulumi.Output<outputs.GvcOtelTracing | undefined>;
+    declare public readonly name: pulumi.Output<string>;
+    declare public readonly otelTracing: pulumi.Output<outputs.GvcOtelTracing | undefined>;
     /**
-     * A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
-     * private image repository referenced by Workloads within the GVC.
+     * A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
      */
-    public readonly pullSecrets!: pulumi.Output<string[] | undefined>;
+    declare public readonly pullSecrets: pulumi.Output<string[] | undefined>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
-    public /*out*/ readonly selfLink!: pulumi.Output<string>;
-    public readonly sidecar!: pulumi.Output<outputs.GvcSidecar | undefined>;
+    declare public /*out*/ readonly selfLink: pulumi.Output<string>;
+    declare public readonly sidecar: pulumi.Output<outputs.GvcSidecar | undefined>;
     /**
      * Key-value map of resource tags.
      */
-    public readonly tags!: pulumi.Output<{[key: string]: string}>;
+    declare public readonly tags: pulumi.Output<{[key: string]: string}>;
 
     /**
      * Create a Gvc resource with the given unique name, arguments, and options.
@@ -108,39 +106,39 @@ export class Gvc extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as GvcState | undefined;
-            resourceInputs["alias"] = state ? state.alias : undefined;
-            resourceInputs["controlplaneTracing"] = state ? state.controlplaneTracing : undefined;
-            resourceInputs["cplnId"] = state ? state.cplnId : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["domain"] = state ? state.domain : undefined;
-            resourceInputs["endpointNamingFormat"] = state ? state.endpointNamingFormat : undefined;
-            resourceInputs["env"] = state ? state.env : undefined;
-            resourceInputs["keda"] = state ? state.keda : undefined;
-            resourceInputs["lightstepTracing"] = state ? state.lightstepTracing : undefined;
-            resourceInputs["loadBalancer"] = state ? state.loadBalancer : undefined;
-            resourceInputs["locations"] = state ? state.locations : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["otelTracing"] = state ? state.otelTracing : undefined;
-            resourceInputs["pullSecrets"] = state ? state.pullSecrets : undefined;
-            resourceInputs["selfLink"] = state ? state.selfLink : undefined;
-            resourceInputs["sidecar"] = state ? state.sidecar : undefined;
-            resourceInputs["tags"] = state ? state.tags : undefined;
+            resourceInputs["alias"] = state?.alias;
+            resourceInputs["controlplaneTracing"] = state?.controlplaneTracing;
+            resourceInputs["cplnId"] = state?.cplnId;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["domain"] = state?.domain;
+            resourceInputs["endpointNamingFormat"] = state?.endpointNamingFormat;
+            resourceInputs["env"] = state?.env;
+            resourceInputs["keda"] = state?.keda;
+            resourceInputs["lightstepTracing"] = state?.lightstepTracing;
+            resourceInputs["loadBalancer"] = state?.loadBalancer;
+            resourceInputs["locations"] = state?.locations;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["otelTracing"] = state?.otelTracing;
+            resourceInputs["pullSecrets"] = state?.pullSecrets;
+            resourceInputs["selfLink"] = state?.selfLink;
+            resourceInputs["sidecar"] = state?.sidecar;
+            resourceInputs["tags"] = state?.tags;
         } else {
             const args = argsOrState as GvcArgs | undefined;
-            resourceInputs["controlplaneTracing"] = args ? args.controlplaneTracing : undefined;
-            resourceInputs["description"] = args ? args.description : undefined;
-            resourceInputs["domain"] = args ? args.domain : undefined;
-            resourceInputs["endpointNamingFormat"] = args ? args.endpointNamingFormat : undefined;
-            resourceInputs["env"] = args ? args.env : undefined;
-            resourceInputs["keda"] = args ? args.keda : undefined;
-            resourceInputs["lightstepTracing"] = args ? args.lightstepTracing : undefined;
-            resourceInputs["loadBalancer"] = args ? args.loadBalancer : undefined;
-            resourceInputs["locations"] = args ? args.locations : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["otelTracing"] = args ? args.otelTracing : undefined;
-            resourceInputs["pullSecrets"] = args ? args.pullSecrets : undefined;
-            resourceInputs["sidecar"] = args ? args.sidecar : undefined;
-            resourceInputs["tags"] = args ? args.tags : undefined;
+            resourceInputs["controlplaneTracing"] = args?.controlplaneTracing;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["domain"] = args?.domain;
+            resourceInputs["endpointNamingFormat"] = args?.endpointNamingFormat;
+            resourceInputs["env"] = args?.env;
+            resourceInputs["keda"] = args?.keda;
+            resourceInputs["lightstepTracing"] = args?.lightstepTracing;
+            resourceInputs["loadBalancer"] = args?.loadBalancer;
+            resourceInputs["locations"] = args?.locations;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["otelTracing"] = args?.otelTracing;
+            resourceInputs["pullSecrets"] = args?.pullSecrets;
+            resourceInputs["sidecar"] = args?.sidecar;
+            resourceInputs["tags"] = args?.tags;
             resourceInputs["alias"] = undefined /*out*/;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
@@ -174,8 +172,7 @@ export interface GvcState {
      */
     domain?: pulumi.Input<string>;
     /**
-     * Customizes the subdomain format for the canonical workload endpoint. `default` leaves it as
-     * '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
+     * Customizes the subdomain format for the canonical workload endpoint. `legacy` leaves it as '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${orgEndpointPrefix}.cpln.app'.
      */
     endpointNamingFormat?: pulumi.Input<string>;
     /**
@@ -201,8 +198,7 @@ export interface GvcState {
     name?: pulumi.Input<string>;
     otelTracing?: pulumi.Input<inputs.GvcOtelTracing>;
     /**
-     * A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
-     * private image repository referenced by Workloads within the GVC.
+     * A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
      */
     pullSecrets?: pulumi.Input<pulumi.Input<string>[]>;
     /**
@@ -232,8 +228,7 @@ export interface GvcArgs {
      */
     domain?: pulumi.Input<string>;
     /**
-     * Customizes the subdomain format for the canonical workload endpoint. `default` leaves it as
-     * '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${org}.cpln.app'.
+     * Customizes the subdomain format for the canonical workload endpoint. `legacy` leaves it as '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${orgEndpointPrefix}.cpln.app'.
      */
     endpointNamingFormat?: pulumi.Input<string>;
     /**
@@ -259,8 +254,7 @@ export interface GvcArgs {
     name?: pulumi.Input<string>;
     otelTracing?: pulumi.Input<inputs.GvcOtelTracing>;
     /**
-     * A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any
-     * private image repository referenced by Workloads within the GVC.
+     * A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
      */
     pullSecrets?: pulumi.Input<pulumi.Input<string>[]>;
     sidecar?: pulumi.Input<inputs.GvcSidecar>;

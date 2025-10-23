@@ -28,7 +28,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly ImmutableArray<Outputs.DomainStatusLocation> Locations;
         /// <summary>
-        /// Status of Domain. Possible values: `initializing`, `ready`, `pendingDnsConfig`, `pendingCertificate`, `usedByGvc`.
+        /// Status of Domain. Possible values: `Initializing`, `Ready`, `pendingDnsConfig`, `pendingCertificate`, `usedByGvc`.
         /// </summary>
         public readonly string? Status;
         /// <summary>

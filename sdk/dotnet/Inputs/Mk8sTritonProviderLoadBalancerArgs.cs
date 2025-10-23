@@ -19,6 +19,9 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("manual")]
         public Input<Inputs.Mk8sTritonProviderLoadBalancerManualArgs>? Manual { get; set; }
 
+        [Input("none")]
+        public Input<Inputs.Mk8sTritonProviderLoadBalancerNoneArgs>? None { get; set; }
+
         public Mk8sTritonProviderLoadBalancerArgs()
         {
         }

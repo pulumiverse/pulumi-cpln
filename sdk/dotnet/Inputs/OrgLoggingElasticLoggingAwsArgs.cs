@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class OrgLoggingElasticLoggingAwsArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Full Link to a secret of type `aws`.
+        /// Full Link to a secret of type `Aws`.
         /// </summary>
         [Input("credentials", required: true)]
         public Input<string> Credentials { get; set; } = null!;

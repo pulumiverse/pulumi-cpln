@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class SecretOpaqueGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Available encodings: `plain`, `base64`. Default: `plain`.
+        /// Available encodings: `Plain`, `Base64`. Default: `Plain`.
         /// </summary>
         [Input("encoding")]
         public Input<string>? Encoding { get; set; }
@@ -23,7 +23,7 @@ namespace Pulumiverse.Cpln.Inputs
         private Input<string>? _payload;
 
         /// <summary>
-        /// Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.
+        /// Plain text or base64 encoded string. Use `Encoding` attribute to specify encoding.
         /// </summary>
         public Input<string>? Payload
         {

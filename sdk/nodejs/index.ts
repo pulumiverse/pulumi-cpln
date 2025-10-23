@@ -75,6 +75,11 @@ export const getSecret: typeof import("./getSecret").getSecret = null as any;
 export const getSecretOutput: typeof import("./getSecret").getSecretOutput = null as any;
 utilities.lazyLoad(exports, ["getSecret","getSecretOutput"], () => require("./getSecret"));
 
+export { GetWorkloadArgs, GetWorkloadResult, GetWorkloadOutputArgs } from "./getWorkload";
+export const getWorkload: typeof import("./getWorkload").getWorkload = null as any;
+export const getWorkloadOutput: typeof import("./getWorkload").getWorkloadOutput = null as any;
+utilities.lazyLoad(exports, ["getWorkload","getWorkloadOutput"], () => require("./getWorkload"));
+
 export { GroupArgs, GroupState } from "./group";
 export type Group = import("./group").Group;
 export const Group: typeof import("./group").Group = null as any;

@@ -23,7 +23,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly int? Number;
         /// <summary>
-        /// Allowed protocol. Valid values: `http`, `http2`, `tcp`. Default: `http2`.
+        /// Allowed protocol. Valid values: `Http`, `Http2`, `Tcp`. Default: `Http2`.
         /// </summary>
         public readonly string? Protocol;
         /// <summary>

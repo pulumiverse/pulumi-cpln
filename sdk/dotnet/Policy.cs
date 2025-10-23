@@ -32,7 +32,7 @@ namespace Pulumiverse.Cpln
         public Output<string> Description { get; private set; } = null!;
 
         /// <summary>
-        /// The GVC for `identity`, `workload` and `volumeset` target kinds only.
+        /// The GVC for `Identity`, `Workload` and `Volumeset` target kinds only.
         /// </summary>
         [Output("gvc")]
         public Output<string?> Gvc { get; private set; } = null!;
@@ -44,7 +44,7 @@ namespace Pulumiverse.Cpln
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
-        /// Origin of the Policy. Either `builtin` or `default`.
+        /// Origin of the Policy. Either `Builtin` or `Default`.
         /// </summary>
         [Output("origin")]
         public Output<string> Origin { get; private set; } = null!;
@@ -62,8 +62,7 @@ namespace Pulumiverse.Cpln
         public Output<ImmutableDictionary<string, string>> Tags { get; private set; } = null!;
 
         /// <summary>
-        /// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
-        /// do not include the attribute.
+        /// Set this value of this attribute to `All` if this policy should target all objects of the given target_kind. Otherwise, do not include the attribute.
         /// </summary>
         [Output("target")]
         public Output<string?> Target { get; private set; } = null!;
@@ -75,7 +74,7 @@ namespace Pulumiverse.Cpln
         public Output<string> TargetKind { get; private set; } = null!;
 
         /// <summary>
-        /// List of the targets this policy will be applied to. Not used if `target` is set to `all`.
+        /// List of the targets this policy will be applied to. Not used if `Target` is set to `All`.
         /// </summary>
         [Output("targetLinks")]
         public Output<ImmutableArray<string>> TargetLinks { get; private set; } = null!;
@@ -152,7 +151,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Description { get; set; }
 
         /// <summary>
-        /// The GVC for `identity`, `workload` and `volumeset` target kinds only.
+        /// The GVC for `Identity`, `Workload` and `Volumeset` target kinds only.
         /// </summary>
         [Input("gvc")]
         public Input<string>? Gvc { get; set; }
@@ -176,8 +175,7 @@ namespace Pulumiverse.Cpln
         }
 
         /// <summary>
-        /// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
-        /// do not include the attribute.
+        /// Set this value of this attribute to `All` if this policy should target all objects of the given target_kind. Otherwise, do not include the attribute.
         /// </summary>
         [Input("target")]
         public Input<string>? Target { get; set; }
@@ -192,7 +190,7 @@ namespace Pulumiverse.Cpln
         private InputList<string>? _targetLinks;
 
         /// <summary>
-        /// List of the targets this policy will be applied to. Not used if `target` is set to `all`.
+        /// List of the targets this policy will be applied to. Not used if `Target` is set to `All`.
         /// </summary>
         public InputList<string> TargetLinks
         {
@@ -239,7 +237,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Description { get; set; }
 
         /// <summary>
-        /// The GVC for `identity`, `workload` and `volumeset` target kinds only.
+        /// The GVC for `Identity`, `Workload` and `Volumeset` target kinds only.
         /// </summary>
         [Input("gvc")]
         public Input<string>? Gvc { get; set; }
@@ -251,7 +249,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// Origin of the Policy. Either `builtin` or `default`.
+        /// Origin of the Policy. Either `Builtin` or `Default`.
         /// </summary>
         [Input("origin")]
         public Input<string>? Origin { get; set; }
@@ -275,8 +273,7 @@ namespace Pulumiverse.Cpln
         }
 
         /// <summary>
-        /// Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
-        /// do not include the attribute.
+        /// Set this value of this attribute to `All` if this policy should target all objects of the given target_kind. Otherwise, do not include the attribute.
         /// </summary>
         [Input("target")]
         public Input<string>? Target { get; set; }
@@ -291,7 +288,7 @@ namespace Pulumiverse.Cpln
         private InputList<string>? _targetLinks;
 
         /// <summary>
-        /// List of the targets this policy will be applied to. Not used if `target` is set to `all`.
+        /// List of the targets this policy will be applied to. Not used if `Target` is set to `All`.
         /// </summary>
         public InputList<string> TargetLinks
         {

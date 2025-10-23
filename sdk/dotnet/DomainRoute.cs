@@ -32,16 +32,13 @@ namespace Pulumiverse.Cpln
         public Output<Outputs.DomainRouteHeaders?> Headers { get; private set; } = null!;
 
         /// <summary>
-        /// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
-        /// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
-        /// Slack or at support@controlplane.com for additional details.
+        /// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on Slack or at support@controlplane.com for additional details.
         /// </summary>
         [Output("hostPrefix")]
         public Output<string?> HostPrefix { get; private set; } = null!;
 
         /// <summary>
-        /// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and
-        /// the Domain is configure for wildcard support. Contact your account manager for details.
+        /// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
         /// </summary>
         [Output("hostRegex")]
         public Output<string?> HostRegex { get; private set; } = null!;
@@ -148,16 +145,13 @@ namespace Pulumiverse.Cpln
         public Input<Inputs.DomainRouteHeadersArgs>? Headers { get; set; }
 
         /// <summary>
-        /// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
-        /// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
-        /// Slack or at support@controlplane.com for additional details.
+        /// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on Slack or at support@controlplane.com for additional details.
         /// </summary>
         [Input("hostPrefix")]
         public Input<string>? HostPrefix { get; set; }
 
         /// <summary>
-        /// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and
-        /// the Domain is configure for wildcard support. Contact your account manager for details.
+        /// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
         /// </summary>
         [Input("hostRegex")]
         public Input<string>? HostRegex { get; set; }
@@ -225,16 +219,13 @@ namespace Pulumiverse.Cpln
         public Input<Inputs.DomainRouteHeadersGetArgs>? Headers { get; set; }
 
         /// <summary>
-        /// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
-        /// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
-        /// Slack or at support@controlplane.com for additional details.
+        /// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on Slack or at support@controlplane.com for additional details.
         /// </summary>
         [Input("hostPrefix")]
         public Input<string>? HostPrefix { get; set; }
 
         /// <summary>
-        /// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and
-        /// the Domain is configure for wildcard support. Contact your account manager for details.
+        /// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
         /// </summary>
         [Input("hostRegex")]
         public Input<string>? HostRegex { get; set; }

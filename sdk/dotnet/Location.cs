@@ -52,6 +52,9 @@ namespace Pulumiverse.Cpln
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        [Output("origin")]
+        public Output<string> Origin { get; private set; } = null!;
+
         /// <summary>
         /// Region of the location.
         /// </summary>
@@ -198,6 +201,9 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
+
+        [Input("origin")]
+        public Input<string>? Origin { get; set; }
 
         /// <summary>
         /// Region of the location.

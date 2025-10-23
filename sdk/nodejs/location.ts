@@ -37,40 +37,41 @@ export class Location extends pulumi.CustomResource {
     /**
      * Cloud Provider of the location.
      */
-    public /*out*/ readonly cloudProvider!: pulumi.Output<string>;
+    declare public /*out*/ readonly cloudProvider: pulumi.Output<string>;
     /**
      * The ID, in GUID format, of the location.
      */
-    public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    declare public /*out*/ readonly cplnId: pulumi.Output<string>;
     /**
      * Description of the location.
      */
-    public /*out*/ readonly description!: pulumi.Output<string>;
+    declare public /*out*/ readonly description: pulumi.Output<string>;
     /**
      * Indication if location is enabled.
      */
-    public readonly enabled!: pulumi.Output<boolean>;
-    public /*out*/ readonly geos!: pulumi.Output<outputs.LocationGeo[]>;
+    declare public readonly enabled: pulumi.Output<boolean>;
+    declare public /*out*/ readonly geos: pulumi.Output<outputs.LocationGeo[]>;
     /**
      * A list of IP ranges of the location.
      */
-    public /*out*/ readonly ipRanges!: pulumi.Output<string[]>;
+    declare public /*out*/ readonly ipRanges: pulumi.Output<string[]>;
     /**
      * Name of the location.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
+    declare public /*out*/ readonly origin: pulumi.Output<string>;
     /**
      * Region of the location.
      */
-    public /*out*/ readonly region!: pulumi.Output<string>;
+    declare public /*out*/ readonly region: pulumi.Output<string>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
-    public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    declare public /*out*/ readonly selfLink: pulumi.Output<string>;
     /**
      * Key-value map of resource tags.
      */
-    public readonly tags!: pulumi.Output<{[key: string]: string}>;
+    declare public readonly tags: pulumi.Output<{[key: string]: string}>;
 
     /**
      * Create a Location resource with the given unique name, arguments, and options.
@@ -85,29 +86,31 @@ export class Location extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as LocationState | undefined;
-            resourceInputs["cloudProvider"] = state ? state.cloudProvider : undefined;
-            resourceInputs["cplnId"] = state ? state.cplnId : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["enabled"] = state ? state.enabled : undefined;
-            resourceInputs["geos"] = state ? state.geos : undefined;
-            resourceInputs["ipRanges"] = state ? state.ipRanges : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["region"] = state ? state.region : undefined;
-            resourceInputs["selfLink"] = state ? state.selfLink : undefined;
-            resourceInputs["tags"] = state ? state.tags : undefined;
+            resourceInputs["cloudProvider"] = state?.cloudProvider;
+            resourceInputs["cplnId"] = state?.cplnId;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["enabled"] = state?.enabled;
+            resourceInputs["geos"] = state?.geos;
+            resourceInputs["ipRanges"] = state?.ipRanges;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["origin"] = state?.origin;
+            resourceInputs["region"] = state?.region;
+            resourceInputs["selfLink"] = state?.selfLink;
+            resourceInputs["tags"] = state?.tags;
         } else {
             const args = argsOrState as LocationArgs | undefined;
-            if ((!args || args.enabled === undefined) && !opts.urn) {
+            if (args?.enabled === undefined && !opts.urn) {
                 throw new Error("Missing required property 'enabled'");
             }
-            resourceInputs["enabled"] = args ? args.enabled : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["tags"] = args ? args.tags : undefined;
+            resourceInputs["enabled"] = args?.enabled;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["tags"] = args?.tags;
             resourceInputs["cloudProvider"] = undefined /*out*/;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["description"] = undefined /*out*/;
             resourceInputs["geos"] = undefined /*out*/;
             resourceInputs["ipRanges"] = undefined /*out*/;
+            resourceInputs["origin"] = undefined /*out*/;
             resourceInputs["region"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
         }
@@ -145,6 +148,7 @@ export interface LocationState {
      * Name of the location.
      */
     name?: pulumi.Input<string>;
+    origin?: pulumi.Input<string>;
     /**
      * Region of the location.
      */

@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class OrgLoggingCloudWatchLoggingGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Full Link to a secret of type `opaque`.
+        /// Full Link to a secret of type `Opaque`.
         /// </summary>
         [Input("credentials", required: true)]
         public Input<string> Credentials { get; set; } = null!;

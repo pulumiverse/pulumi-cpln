@@ -39,6 +39,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// ID of the parent object.
         /// </summary>
         public readonly string? ParentId;
+        public readonly ImmutableArray<string> ReplicaInternalNames;
         /// <summary>
         /// Resolved images for workloads with dynamic tags enabled.
         /// </summary>
@@ -60,6 +61,8 @@ namespace Pulumiverse.Cpln.Outputs
 
             string? parentId,
 
+            ImmutableArray<string> replicaInternalNames,
+
             ImmutableArray<Outputs.WorkloadStatusResolvedImage> resolvedImages)
         {
             CanonicalEndpoint = canonicalEndpoint;
@@ -69,6 +72,7 @@ namespace Pulumiverse.Cpln.Outputs
             InternalName = internalName;
             LoadBalancers = loadBalancers;
             ParentId = parentId;
+            ReplicaInternalNames = replicaInternalNames;
             ResolvedImages = resolvedImages;
         }
     }

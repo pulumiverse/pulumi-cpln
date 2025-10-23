@@ -52,6 +52,9 @@ namespace Pulumiverse.Cpln
         [Output("firewalls")]
         public Output<ImmutableArray<Outputs.Mk8sFirewall>> Firewalls { get; private set; } = null!;
 
+        [Output("gcpProvider")]
+        public Output<Outputs.Mk8sGcpProvider?> GcpProvider { get; private set; } = null!;
+
         [Output("genericProvider")]
         public Output<Outputs.Mk8sGenericProvider?> GenericProvider { get; private set; } = null!;
 
@@ -180,6 +183,9 @@ namespace Pulumiverse.Cpln
             set => _firewalls = value;
         }
 
+        [Input("gcpProvider")]
+        public Input<Inputs.Mk8sGcpProviderArgs>? GcpProvider { get; set; }
+
         [Input("genericProvider")]
         public Input<Inputs.Mk8sGenericProviderArgs>? GenericProvider { get; set; }
 
@@ -274,6 +280,9 @@ namespace Pulumiverse.Cpln
             get => _firewalls ?? (_firewalls = new InputList<Inputs.Mk8sFirewallGetArgs>());
             set => _firewalls = value;
         }
+
+        [Input("gcpProvider")]
+        public Input<Inputs.Mk8sGcpProviderGetArgs>? GcpProvider { get; set; }
 
         [Input("genericProvider")]
         public Input<Inputs.Mk8sGenericProviderGetArgs>? GenericProvider { get; set; }

@@ -37,67 +37,67 @@ export class VolumeSet extends pulumi.CustomResource {
     /**
      * Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
      */
-    public readonly autoscaling!: pulumi.Output<outputs.VolumeSetAutoscaling | undefined>;
+    declare public readonly autoscaling: pulumi.Output<outputs.VolumeSetAutoscaling | undefined>;
     /**
      * The ID, in GUID format, of the volume set.
      */
-    public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    declare public /*out*/ readonly cplnId: pulumi.Output<string>;
+    /**
+     * Configuration for customer-managed encryption keys, keyed by region.
+     */
+    declare public readonly customEncryption: pulumi.Output<outputs.VolumeSetCustomEncryption | undefined>;
     /**
      * Description of the volume set.
      */
-    public readonly description!: pulumi.Output<string>;
+    declare public readonly description: pulumi.Output<string>;
     /**
      * Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
      */
-    public readonly fileSystemType!: pulumi.Output<string>;
+    declare public readonly fileSystemType: pulumi.Output<string>;
     /**
      * Name of the associated GVC.
      */
-    public readonly gvc!: pulumi.Output<string>;
+    declare public readonly gvc: pulumi.Output<string>;
     /**
-     * The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
-     * is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
+     * The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd` is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
      */
-    public readonly initialCapacity!: pulumi.Output<number>;
+    declare public readonly initialCapacity: pulumi.Output<number>;
     /**
      * A list of mount options to use when mounting volumes in this set.
      */
-    public readonly mountOptions!: pulumi.Output<outputs.VolumeSetMountOptions | undefined>;
+    declare public readonly mountOptions: pulumi.Output<outputs.VolumeSetMountOptions | undefined>;
     /**
      * Name of the volume set.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
     /**
-     * Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
-     * `high-throughput-ssd`.
+     * Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
      */
-    public readonly performanceClass!: pulumi.Output<string>;
+    declare public readonly performanceClass: pulumi.Output<string>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
-    public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    declare public /*out*/ readonly selfLink: pulumi.Output<string>;
     /**
      * Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
      */
-    public readonly snapshots!: pulumi.Output<outputs.VolumeSetSnapshots | undefined>;
+    declare public readonly snapshots: pulumi.Output<outputs.VolumeSetSnapshots | undefined>;
     /**
      * Status of the Volume Set.
      */
-    public /*out*/ readonly statuses!: pulumi.Output<outputs.VolumeSetStatus[]>;
+    declare public /*out*/ readonly statuses: pulumi.Output<outputs.VolumeSetStatus[]>;
     /**
-     * For self-hosted locations only. The storage class used for volumes in this set will be
-     * {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
-     * {performanceClass}-{fileSystemType}
+     * For self-hosted locations only. The storage class used for volumes in this set will be {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be {performanceClass}-{fileSystemType}
      */
-    public readonly storageClassSuffix!: pulumi.Output<string | undefined>;
+    declare public readonly storageClassSuffix: pulumi.Output<string | undefined>;
     /**
      * Key-value map of resource tags.
      */
-    public readonly tags!: pulumi.Output<{[key: string]: string}>;
+    declare public readonly tags: pulumi.Output<{[key: string]: string}>;
     /**
      * Output used when linking a volume set to a workload.
      */
-    public /*out*/ readonly volumesetLink!: pulumi.Output<string>;
+    declare public /*out*/ readonly volumesetLink: pulumi.Output<string>;
 
     /**
      * Create a VolumeSet resource with the given unique name, arguments, and options.
@@ -112,43 +112,45 @@ export class VolumeSet extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as VolumeSetState | undefined;
-            resourceInputs["autoscaling"] = state ? state.autoscaling : undefined;
-            resourceInputs["cplnId"] = state ? state.cplnId : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["fileSystemType"] = state ? state.fileSystemType : undefined;
-            resourceInputs["gvc"] = state ? state.gvc : undefined;
-            resourceInputs["initialCapacity"] = state ? state.initialCapacity : undefined;
-            resourceInputs["mountOptions"] = state ? state.mountOptions : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["performanceClass"] = state ? state.performanceClass : undefined;
-            resourceInputs["selfLink"] = state ? state.selfLink : undefined;
-            resourceInputs["snapshots"] = state ? state.snapshots : undefined;
-            resourceInputs["statuses"] = state ? state.statuses : undefined;
-            resourceInputs["storageClassSuffix"] = state ? state.storageClassSuffix : undefined;
-            resourceInputs["tags"] = state ? state.tags : undefined;
-            resourceInputs["volumesetLink"] = state ? state.volumesetLink : undefined;
+            resourceInputs["autoscaling"] = state?.autoscaling;
+            resourceInputs["cplnId"] = state?.cplnId;
+            resourceInputs["customEncryption"] = state?.customEncryption;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["fileSystemType"] = state?.fileSystemType;
+            resourceInputs["gvc"] = state?.gvc;
+            resourceInputs["initialCapacity"] = state?.initialCapacity;
+            resourceInputs["mountOptions"] = state?.mountOptions;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["performanceClass"] = state?.performanceClass;
+            resourceInputs["selfLink"] = state?.selfLink;
+            resourceInputs["snapshots"] = state?.snapshots;
+            resourceInputs["statuses"] = state?.statuses;
+            resourceInputs["storageClassSuffix"] = state?.storageClassSuffix;
+            resourceInputs["tags"] = state?.tags;
+            resourceInputs["volumesetLink"] = state?.volumesetLink;
         } else {
             const args = argsOrState as VolumeSetArgs | undefined;
-            if ((!args || args.gvc === undefined) && !opts.urn) {
+            if (args?.gvc === undefined && !opts.urn) {
                 throw new Error("Missing required property 'gvc'");
             }
-            if ((!args || args.initialCapacity === undefined) && !opts.urn) {
+            if (args?.initialCapacity === undefined && !opts.urn) {
                 throw new Error("Missing required property 'initialCapacity'");
             }
-            if ((!args || args.performanceClass === undefined) && !opts.urn) {
+            if (args?.performanceClass === undefined && !opts.urn) {
                 throw new Error("Missing required property 'performanceClass'");
             }
-            resourceInputs["autoscaling"] = args ? args.autoscaling : undefined;
-            resourceInputs["description"] = args ? args.description : undefined;
-            resourceInputs["fileSystemType"] = args ? args.fileSystemType : undefined;
-            resourceInputs["gvc"] = args ? args.gvc : undefined;
-            resourceInputs["initialCapacity"] = args ? args.initialCapacity : undefined;
-            resourceInputs["mountOptions"] = args ? args.mountOptions : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["performanceClass"] = args ? args.performanceClass : undefined;
-            resourceInputs["snapshots"] = args ? args.snapshots : undefined;
-            resourceInputs["storageClassSuffix"] = args ? args.storageClassSuffix : undefined;
-            resourceInputs["tags"] = args ? args.tags : undefined;
+            resourceInputs["autoscaling"] = args?.autoscaling;
+            resourceInputs["customEncryption"] = args?.customEncryption;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["fileSystemType"] = args?.fileSystemType;
+            resourceInputs["gvc"] = args?.gvc;
+            resourceInputs["initialCapacity"] = args?.initialCapacity;
+            resourceInputs["mountOptions"] = args?.mountOptions;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["performanceClass"] = args?.performanceClass;
+            resourceInputs["snapshots"] = args?.snapshots;
+            resourceInputs["storageClassSuffix"] = args?.storageClassSuffix;
+            resourceInputs["tags"] = args?.tags;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
             resourceInputs["statuses"] = undefined /*out*/;
@@ -172,6 +174,10 @@ export interface VolumeSetState {
      */
     cplnId?: pulumi.Input<string>;
     /**
+     * Configuration for customer-managed encryption keys, keyed by region.
+     */
+    customEncryption?: pulumi.Input<inputs.VolumeSetCustomEncryption>;
+    /**
      * Description of the volume set.
      */
     description?: pulumi.Input<string>;
@@ -184,8 +190,7 @@ export interface VolumeSetState {
      */
     gvc?: pulumi.Input<string>;
     /**
-     * The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
-     * is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
+     * The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd` is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
      */
     initialCapacity?: pulumi.Input<number>;
     /**
@@ -197,8 +202,7 @@ export interface VolumeSetState {
      */
     name?: pulumi.Input<string>;
     /**
-     * Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
-     * `high-throughput-ssd`.
+     * Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
      */
     performanceClass?: pulumi.Input<string>;
     /**
@@ -214,9 +218,7 @@ export interface VolumeSetState {
      */
     statuses?: pulumi.Input<pulumi.Input<inputs.VolumeSetStatus>[]>;
     /**
-     * For self-hosted locations only. The storage class used for volumes in this set will be
-     * {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
-     * {performanceClass}-{fileSystemType}
+     * For self-hosted locations only. The storage class used for volumes in this set will be {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be {performanceClass}-{fileSystemType}
      */
     storageClassSuffix?: pulumi.Input<string>;
     /**
@@ -238,6 +240,10 @@ export interface VolumeSetArgs {
      */
     autoscaling?: pulumi.Input<inputs.VolumeSetAutoscaling>;
     /**
+     * Configuration for customer-managed encryption keys, keyed by region.
+     */
+    customEncryption?: pulumi.Input<inputs.VolumeSetCustomEncryption>;
+    /**
      * Description of the volume set.
      */
     description?: pulumi.Input<string>;
@@ -250,8 +256,7 @@ export interface VolumeSetArgs {
      */
     gvc: pulumi.Input<string>;
     /**
-     * The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
-     * is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
+     * The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd` is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
      */
     initialCapacity: pulumi.Input<number>;
     /**
@@ -263,8 +268,7 @@ export interface VolumeSetArgs {
      */
     name?: pulumi.Input<string>;
     /**
-     * Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
-     * `high-throughput-ssd`.
+     * Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
      */
     performanceClass: pulumi.Input<string>;
     /**
@@ -272,9 +276,7 @@ export interface VolumeSetArgs {
      */
     snapshots?: pulumi.Input<inputs.VolumeSetSnapshots>;
     /**
-     * For self-hosted locations only. The storage class used for volumes in this set will be
-     * {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
-     * {performanceClass}-{fileSystemType}
+     * For self-hosted locations only. The storage class used for volumes in this set will be {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be {performanceClass}-{fileSystemType}
      */
     storageClassSuffix?: pulumi.Input<string>;
     /**

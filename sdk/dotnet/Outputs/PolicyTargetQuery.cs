@@ -15,7 +15,7 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class PolicyTargetQuery
     {
         /// <summary>
-        /// Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        /// Type of fetch. Specify either: `Links` or `Items`. Default: `Items`.
         /// </summary>
         public readonly string? Fetch;
         public readonly Outputs.PolicyTargetQuerySpec? Spec;

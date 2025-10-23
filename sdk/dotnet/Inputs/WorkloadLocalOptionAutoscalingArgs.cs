@@ -32,7 +32,7 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<int>? MaxScale { get; set; }
 
         /// <summary>
-        /// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
+        /// Valid values: `Concurrency`, `Cpu`, `Memory`, `Rps`, `Latency`, `Keda` or `Disabled`.
         /// </summary>
         [Input("metric")]
         public Input<string>? Metric { get; set; }
@@ -44,7 +44,7 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<string>? MetricPercentile { get; set; }
 
         /// <summary>
-        /// The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `max_scale`. Default `1`.
+        /// The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `MaxScale`. Default `1`.
         /// </summary>
         [Input("minScale")]
         public Input<int>? MinScale { get; set; }

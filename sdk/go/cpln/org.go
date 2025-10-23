@@ -14,8 +14,7 @@ import (
 type Org struct {
 	pulumi.CustomResourceState
 
-	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
-	// obtained from the `Org Management & Billing` page.
+	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be obtained from the `Org Management & Billing` page.
 	AccountId pulumi.StringOutput `pulumi:"accountId"`
 	// The configuration settings and parameters related to authentication within the org.
 	AuthConfig OrgAuthConfigPtrOutput `pulumi:"authConfig"`
@@ -23,8 +22,7 @@ type Org struct {
 	CplnId pulumi.StringOutput `pulumi:"cplnId"`
 	// Description of the Organization.
 	Description pulumi.StringOutput `pulumi:"description"`
-	// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
-	// the `superusers` group. The user account used when creating the org will be included in this list.
+	// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to the `superusers` group. The user account used when creating the org will be included in this list.
 	Invitees pulumi.StringArrayOutput `pulumi:"invitees"`
 	// Name of the Organization.
 	Name pulumi.StringOutput `pulumi:"name"`
@@ -71,8 +69,7 @@ func GetOrg(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Org resources.
 type orgState struct {
-	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
-	// obtained from the `Org Management & Billing` page.
+	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be obtained from the `Org Management & Billing` page.
 	AccountId *string `pulumi:"accountId"`
 	// The configuration settings and parameters related to authentication within the org.
 	AuthConfig *OrgAuthConfig `pulumi:"authConfig"`
@@ -80,8 +77,7 @@ type orgState struct {
 	CplnId *string `pulumi:"cplnId"`
 	// Description of the Organization.
 	Description *string `pulumi:"description"`
-	// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
-	// the `superusers` group. The user account used when creating the org will be included in this list.
+	// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to the `superusers` group. The user account used when creating the org will be included in this list.
 	Invitees []string `pulumi:"invitees"`
 	// Name of the Organization.
 	Name *string `pulumi:"name"`
@@ -99,8 +95,7 @@ type orgState struct {
 }
 
 type OrgState struct {
-	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
-	// obtained from the `Org Management & Billing` page.
+	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be obtained from the `Org Management & Billing` page.
 	AccountId pulumi.StringPtrInput
 	// The configuration settings and parameters related to authentication within the org.
 	AuthConfig OrgAuthConfigPtrInput
@@ -108,8 +103,7 @@ type OrgState struct {
 	CplnId pulumi.StringPtrInput
 	// Description of the Organization.
 	Description pulumi.StringPtrInput
-	// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
-	// the `superusers` group. The user account used when creating the org will be included in this list.
+	// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to the `superusers` group. The user account used when creating the org will be included in this list.
 	Invitees pulumi.StringArrayInput
 	// Name of the Organization.
 	Name pulumi.StringPtrInput
@@ -131,15 +125,13 @@ func (OrgState) ElementType() reflect.Type {
 }
 
 type orgArgs struct {
-	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
-	// obtained from the `Org Management & Billing` page.
+	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be obtained from the `Org Management & Billing` page.
 	AccountId *string `pulumi:"accountId"`
 	// The configuration settings and parameters related to authentication within the org.
 	AuthConfig *OrgAuthConfig `pulumi:"authConfig"`
 	// Description of the Organization.
 	Description *string `pulumi:"description"`
-	// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
-	// the `superusers` group. The user account used when creating the org will be included in this list.
+	// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to the `superusers` group. The user account used when creating the org will be included in this list.
 	Invitees []string `pulumi:"invitees"`
 	// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
 	Observability *OrgObservability `pulumi:"observability"`
@@ -152,15 +144,13 @@ type orgArgs struct {
 
 // The set of arguments for constructing a Org resource.
 type OrgArgs struct {
-	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
-	// obtained from the `Org Management & Billing` page.
+	// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be obtained from the `Org Management & Billing` page.
 	AccountId pulumi.StringPtrInput
 	// The configuration settings and parameters related to authentication within the org.
 	AuthConfig OrgAuthConfigPtrInput
 	// Description of the Organization.
 	Description pulumi.StringPtrInput
-	// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
-	// the `superusers` group. The user account used when creating the org will be included in this list.
+	// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to the `superusers` group. The user account used when creating the org will be included in this list.
 	Invitees pulumi.StringArrayInput
 	// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
 	Observability OrgObservabilityPtrInput
@@ -258,8 +248,7 @@ func (o OrgOutput) ToOrgOutputWithContext(ctx context.Context) OrgOutput {
 	return o
 }
 
-// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
-// obtained from the `Org Management & Billing` page.
+// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be obtained from the `Org Management & Billing` page.
 func (o OrgOutput) AccountId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Org) pulumi.StringOutput { return v.AccountId }).(pulumi.StringOutput)
 }
@@ -279,8 +268,7 @@ func (o OrgOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v *Org) pulumi.StringOutput { return v.Description }).(pulumi.StringOutput)
 }
 
-// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
-// the `superusers` group. The user account used when creating the org will be included in this list.
+// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to the `superusers` group. The user account used when creating the org will be included in this list.
 func (o OrgOutput) Invitees() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Org) pulumi.StringArrayOutput { return v.Invitees }).(pulumi.StringArrayOutput)
 }

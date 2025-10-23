@@ -25,6 +25,7 @@ import (
 // - **name** (String) Name of the location.
 // - **description** (String) Description of the location.
 // - **tags** (Map of String) Key-value map of resource tags.
+// - **origin** (String)
 // - **cloud_provider** (String) Cloud Provider of the location.
 // - **region** (String) Region of the location.
 // - **enabled** (Boolean) Indication if location is enabled.
@@ -98,6 +99,7 @@ type LookupLocationResult struct {
 	Id            string            `pulumi:"id"`
 	IpRanges      []string          `pulumi:"ipRanges"`
 	Name          string            `pulumi:"name"`
+	Origin        string            `pulumi:"origin"`
 	Region        string            `pulumi:"region"`
 	SelfLink      string            `pulumi:"selfLink"`
 	Tags          map[string]string `pulumi:"tags"`
@@ -167,6 +169,10 @@ func (o LookupLocationResultOutput) IpRanges() pulumi.StringArrayOutput {
 
 func (o LookupLocationResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupLocationResult) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o LookupLocationResultOutput) Origin() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupLocationResult) string { return v.Origin }).(pulumi.StringOutput)
 }
 
 func (o LookupLocationResultOutput) Region() pulumi.StringOutput {

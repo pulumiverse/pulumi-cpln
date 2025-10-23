@@ -19,20 +19,24 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly Outputs.WorkloadLocalOptionAutoscaling? Autoscaling;
         /// <summary>
-        /// Capacity AI. Default: `true`.
+        /// Capacity AI. Default: `True`.
         /// </summary>
         public readonly bool? CapacityAi;
         /// <summary>
-        /// Debug mode. Default: `false`.
+        /// The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+        /// </summary>
+        public readonly int? CapacityAiUpdateMinutes;
+        /// <summary>
+        /// Debug mode. Default: `False`.
         /// </summary>
         public readonly bool? Debug;
         /// <summary>
-        /// Valid only for `local_options`. Override options for a specific location.
+        /// Valid only for `LocalOptions`. Override options for a specific location.
         /// </summary>
         public readonly string Location;
         public readonly Outputs.WorkloadLocalOptionMultiZone? MultiZone;
         /// <summary>
-        /// Workload suspend. Default: `false`.
+        /// Workload suspend. Default: `False`.
         /// </summary>
         public readonly bool? Suspend;
         /// <summary>
@@ -46,6 +50,8 @@ namespace Pulumiverse.Cpln.Outputs
 
             bool? capacityAi,
 
+            int? capacityAiUpdateMinutes,
+
             bool? debug,
 
             string location,
@@ -58,6 +64,7 @@ namespace Pulumiverse.Cpln.Outputs
         {
             Autoscaling = autoscaling;
             CapacityAi = capacityAi;
+            CapacityAiUpdateMinutes = capacityAiUpdateMinutes;
             Debug = debug;
             Location = location;
             MultiZone = multiZone;

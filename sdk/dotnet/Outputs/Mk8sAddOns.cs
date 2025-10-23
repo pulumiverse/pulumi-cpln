@@ -20,6 +20,10 @@ namespace Pulumiverse.Cpln.Outputs
         public readonly bool? AwsWorkloadIdentity;
         public readonly Outputs.Mk8sAddOnsAzureAcr? AzureAcr;
         public readonly Outputs.Mk8sAddOnsAzureWorkloadIdentity? AzureWorkloadIdentity;
+        /// <summary>
+        /// Bring-your-own Kubernetes (BYOK) add-on settings.
+        /// </summary>
+        public readonly Outputs.Mk8sAddOnsByok? Byok;
         public readonly bool? Dashboard;
         public readonly bool? LocalPathStorage;
         public readonly Outputs.Mk8sAddOnsLogs? Logs;
@@ -45,6 +49,8 @@ namespace Pulumiverse.Cpln.Outputs
 
             Outputs.Mk8sAddOnsAzureWorkloadIdentity? azureWorkloadIdentity,
 
+            Outputs.Mk8sAddOnsByok? byok,
+
             bool? dashboard,
 
             bool? localPathStorage,
@@ -65,6 +71,7 @@ namespace Pulumiverse.Cpln.Outputs
             AwsWorkloadIdentity = awsWorkloadIdentity;
             AzureAcr = azureAcr;
             AzureWorkloadIdentity = azureWorkloadIdentity;
+            Byok = byok;
             Dashboard = dashboard;
             LocalPathStorage = localPathStorage;
             Logs = logs;

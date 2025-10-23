@@ -900,6 +900,1562 @@ export interface GetSecretUserpassArgs {
     username?: pulumi.Input<string>;
 }
 
+export interface GetWorkloadContainer {
+    /**
+     * Command line arguments passed to the container at runtime. Replaces the CMD arguments of the running container. It is an ordered list.
+     */
+    args?: string[];
+    /**
+     * Override the entry point.
+     */
+    command?: string;
+    /**
+     * Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
+     */
+    cpu?: string;
+    /**
+     * Name-Value list of environment variables.
+     */
+    env?: {[key: string]: string};
+    gpuCustoms?: inputs.GetWorkloadContainerGpuCustom[];
+    /**
+     * GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
+     */
+    gpuNvidias?: inputs.GetWorkloadContainerGpuNvidia[];
+    /**
+     * The full image and tag path.
+     */
+    image?: string;
+    /**
+     * Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
+     */
+    inheritEnv?: boolean;
+    /**
+     * Lifecycle [Reference Page](https://docs.controlplane.com/reference/workload#lifecycle).
+     */
+    lifecycles?: inputs.GetWorkloadContainerLifecycle[];
+    /**
+     * Liveness Probe
+     */
+    livenessProbes?: inputs.GetWorkloadContainerLivenessProbe[];
+    /**
+     * Reserved memory of the workload when capacityAI is disabled. Maximum memory when CapacityAI is enabled. Default: "128Mi".
+     */
+    memory?: string;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/workload#metrics).
+     */
+    metrics?: inputs.GetWorkloadContainerMetric[];
+    /**
+     * Minimum CPU when capacity AI is enabled.
+     */
+    minCpu?: string;
+    /**
+     * Minimum memory when capacity AI is enabled.
+     */
+    minMemory?: string;
+    /**
+     * Name of the container.
+     */
+    name?: string;
+    /**
+     * The port the container exposes. Only one container is allowed to specify a port. Min: `80`. Max: `65535`. Used by `serverless` Workload type. **DEPRECATED - Use `ports`.**
+     *
+     * @deprecated The 'port' attribute will be deprecated in the next major version. Use the 'ports' attribute instead.
+     */
+    port?: number;
+    /**
+     * Communication endpoints used by the workload to send and receive network traffic.
+     */
+    ports?: inputs.GetWorkloadContainerPort[];
+    /**
+     * Readiness Probe
+     */
+    readinessProbes?: inputs.GetWorkloadContainerReadinessProbe[];
+    /**
+     * Mount Object Store (S3, GCS, AzureBlob) buckets as file system.
+     */
+    volumes?: inputs.GetWorkloadContainerVolume[];
+    /**
+     * Override the working directory. Must be an absolute path.
+     */
+    workingDirectory?: string;
+}
+
+export interface GetWorkloadContainerArgs {
+    /**
+     * Command line arguments passed to the container at runtime. Replaces the CMD arguments of the running container. It is an ordered list.
+     */
+    args?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Override the entry point.
+     */
+    command?: pulumi.Input<string>;
+    /**
+     * Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
+     */
+    cpu?: pulumi.Input<string>;
+    /**
+     * Name-Value list of environment variables.
+     */
+    env?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    gpuCustoms?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerGpuCustomArgs>[]>;
+    /**
+     * GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
+     */
+    gpuNvidias?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerGpuNvidiaArgs>[]>;
+    /**
+     * The full image and tag path.
+     */
+    image?: pulumi.Input<string>;
+    /**
+     * Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
+     */
+    inheritEnv?: pulumi.Input<boolean>;
+    /**
+     * Lifecycle [Reference Page](https://docs.controlplane.com/reference/workload#lifecycle).
+     */
+    lifecycles?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerLifecycleArgs>[]>;
+    /**
+     * Liveness Probe
+     */
+    livenessProbes?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerLivenessProbeArgs>[]>;
+    /**
+     * Reserved memory of the workload when capacityAI is disabled. Maximum memory when CapacityAI is enabled. Default: "128Mi".
+     */
+    memory?: pulumi.Input<string>;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/workload#metrics).
+     */
+    metrics?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerMetricArgs>[]>;
+    /**
+     * Minimum CPU when capacity AI is enabled.
+     */
+    minCpu?: pulumi.Input<string>;
+    /**
+     * Minimum memory when capacity AI is enabled.
+     */
+    minMemory?: pulumi.Input<string>;
+    /**
+     * Name of the container.
+     */
+    name?: pulumi.Input<string>;
+    /**
+     * The port the container exposes. Only one container is allowed to specify a port. Min: `80`. Max: `65535`. Used by `serverless` Workload type. **DEPRECATED - Use `ports`.**
+     *
+     * @deprecated The 'port' attribute will be deprecated in the next major version. Use the 'ports' attribute instead.
+     */
+    port?: pulumi.Input<number>;
+    /**
+     * Communication endpoints used by the workload to send and receive network traffic.
+     */
+    ports?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerPortArgs>[]>;
+    /**
+     * Readiness Probe
+     */
+    readinessProbes?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerReadinessProbeArgs>[]>;
+    /**
+     * Mount Object Store (S3, GCS, AzureBlob) buckets as file system.
+     */
+    volumes?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerVolumeArgs>[]>;
+    /**
+     * Override the working directory. Must be an absolute path.
+     */
+    workingDirectory?: pulumi.Input<string>;
+}
+
+export interface GetWorkloadContainerGpuCustom {
+    /**
+     * Number of GPUs.
+     */
+    quantity?: number;
+    resource?: string;
+    runtimeClass?: string;
+}
+
+export interface GetWorkloadContainerGpuCustomArgs {
+    /**
+     * Number of GPUs.
+     */
+    quantity?: pulumi.Input<number>;
+    resource?: pulumi.Input<string>;
+    runtimeClass?: pulumi.Input<string>;
+}
+
+export interface GetWorkloadContainerGpuNvidia {
+    /**
+     * GPU Model (i.e.: t4)
+     */
+    model?: string;
+    /**
+     * Number of GPUs.
+     */
+    quantity?: number;
+}
+
+export interface GetWorkloadContainerGpuNvidiaArgs {
+    /**
+     * GPU Model (i.e.: t4)
+     */
+    model?: pulumi.Input<string>;
+    /**
+     * Number of GPUs.
+     */
+    quantity?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadContainerLifecycle {
+    postStarts?: inputs.GetWorkloadContainerLifecyclePostStart[];
+    preStops?: inputs.GetWorkloadContainerLifecyclePreStop[];
+}
+
+export interface GetWorkloadContainerLifecycleArgs {
+    postStarts?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerLifecyclePostStartArgs>[]>;
+    preStops?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerLifecyclePreStopArgs>[]>;
+}
+
+export interface GetWorkloadContainerLifecyclePostStart {
+    execs?: inputs.GetWorkloadContainerLifecyclePostStartExec[];
+}
+
+export interface GetWorkloadContainerLifecyclePostStartArgs {
+    execs?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerLifecyclePostStartExecArgs>[]>;
+}
+
+export interface GetWorkloadContainerLifecyclePostStartExec {
+    /**
+     * Command and arguments executed immediately after the container is created.
+     */
+    commands?: string[];
+}
+
+export interface GetWorkloadContainerLifecyclePostStartExecArgs {
+    /**
+     * Command and arguments executed immediately after the container is created.
+     */
+    commands?: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetWorkloadContainerLifecyclePreStop {
+    execs?: inputs.GetWorkloadContainerLifecyclePreStopExec[];
+}
+
+export interface GetWorkloadContainerLifecyclePreStopArgs {
+    execs?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerLifecyclePreStopExecArgs>[]>;
+}
+
+export interface GetWorkloadContainerLifecyclePreStopExec {
+    /**
+     * Command and arguments executed immediately before the container is stopped.
+     */
+    commands?: string[];
+}
+
+export interface GetWorkloadContainerLifecyclePreStopExecArgs {
+    /**
+     * Command and arguments executed immediately before the container is stopped.
+     */
+    commands?: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetWorkloadContainerLivenessProbe {
+    execs?: inputs.GetWorkloadContainerLivenessProbeExec[];
+    failureThreshold?: number;
+    grpcs?: inputs.GetWorkloadContainerLivenessProbeGrpc[];
+    httpGets?: inputs.GetWorkloadContainerLivenessProbeHttpGet[];
+    initialDelaySeconds?: number;
+    periodSeconds?: number;
+    successThreshold?: number;
+    tcpSockets?: inputs.GetWorkloadContainerLivenessProbeTcpSocket[];
+    timeoutSeconds?: number;
+}
+
+export interface GetWorkloadContainerLivenessProbeArgs {
+    execs?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerLivenessProbeExecArgs>[]>;
+    failureThreshold?: pulumi.Input<number>;
+    grpcs?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerLivenessProbeGrpcArgs>[]>;
+    httpGets?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerLivenessProbeHttpGetArgs>[]>;
+    initialDelaySeconds?: pulumi.Input<number>;
+    periodSeconds?: pulumi.Input<number>;
+    successThreshold?: pulumi.Input<number>;
+    tcpSockets?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerLivenessProbeTcpSocketArgs>[]>;
+    timeoutSeconds?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadContainerLivenessProbeExec {
+    commands?: string[];
+}
+
+export interface GetWorkloadContainerLivenessProbeExecArgs {
+    commands?: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetWorkloadContainerLivenessProbeGrpc {
+    port?: number;
+}
+
+export interface GetWorkloadContainerLivenessProbeGrpcArgs {
+    port?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadContainerLivenessProbeHttpGet {
+    httpHeaders?: {[key: string]: string};
+    path?: string;
+    port?: number;
+    scheme?: string;
+}
+
+export interface GetWorkloadContainerLivenessProbeHttpGetArgs {
+    httpHeaders?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    path?: pulumi.Input<string>;
+    port?: pulumi.Input<number>;
+    scheme?: pulumi.Input<string>;
+}
+
+export interface GetWorkloadContainerLivenessProbeTcpSocket {
+    port?: number;
+}
+
+export interface GetWorkloadContainerLivenessProbeTcpSocketArgs {
+    port?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadContainerMetric {
+    /**
+     * Drop metrics that match given patterns.
+     */
+    dropMetrics?: string[];
+    /**
+     * Path from container emitting custom metrics.
+     */
+    path?: string;
+    /**
+     * Port from container emitting custom metrics.
+     */
+    port?: number;
+}
+
+export interface GetWorkloadContainerMetricArgs {
+    /**
+     * Drop metrics that match given patterns.
+     */
+    dropMetrics?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Path from container emitting custom metrics.
+     */
+    path?: pulumi.Input<string>;
+    /**
+     * Port from container emitting custom metrics.
+     */
+    port?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadContainerPort {
+    /**
+     * Port to expose.
+     */
+    number?: number;
+    /**
+     * Protocol. Choice of: `http`, `http2`, `tcp`, or `grpc`.
+     */
+    protocol?: string;
+}
+
+export interface GetWorkloadContainerPortArgs {
+    /**
+     * Port to expose.
+     */
+    number?: pulumi.Input<number>;
+    /**
+     * Protocol. Choice of: `http`, `http2`, `tcp`, or `grpc`.
+     */
+    protocol?: pulumi.Input<string>;
+}
+
+export interface GetWorkloadContainerReadinessProbe {
+    execs?: inputs.GetWorkloadContainerReadinessProbeExec[];
+    failureThreshold?: number;
+    grpcs?: inputs.GetWorkloadContainerReadinessProbeGrpc[];
+    httpGets?: inputs.GetWorkloadContainerReadinessProbeHttpGet[];
+    initialDelaySeconds?: number;
+    periodSeconds?: number;
+    successThreshold?: number;
+    tcpSockets?: inputs.GetWorkloadContainerReadinessProbeTcpSocket[];
+    timeoutSeconds?: number;
+}
+
+export interface GetWorkloadContainerReadinessProbeArgs {
+    execs?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerReadinessProbeExecArgs>[]>;
+    failureThreshold?: pulumi.Input<number>;
+    grpcs?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerReadinessProbeGrpcArgs>[]>;
+    httpGets?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerReadinessProbeHttpGetArgs>[]>;
+    initialDelaySeconds?: pulumi.Input<number>;
+    periodSeconds?: pulumi.Input<number>;
+    successThreshold?: pulumi.Input<number>;
+    tcpSockets?: pulumi.Input<pulumi.Input<inputs.GetWorkloadContainerReadinessProbeTcpSocketArgs>[]>;
+    timeoutSeconds?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadContainerReadinessProbeExec {
+    commands?: string[];
+}
+
+export interface GetWorkloadContainerReadinessProbeExecArgs {
+    commands?: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetWorkloadContainerReadinessProbeGrpc {
+    port?: number;
+}
+
+export interface GetWorkloadContainerReadinessProbeGrpcArgs {
+    port?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadContainerReadinessProbeHttpGet {
+    httpHeaders?: {[key: string]: string};
+    path?: string;
+    port?: number;
+    scheme?: string;
+}
+
+export interface GetWorkloadContainerReadinessProbeHttpGetArgs {
+    httpHeaders?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    path?: pulumi.Input<string>;
+    port?: pulumi.Input<number>;
+    scheme?: pulumi.Input<string>;
+}
+
+export interface GetWorkloadContainerReadinessProbeTcpSocket {
+    port?: number;
+}
+
+export interface GetWorkloadContainerReadinessProbeTcpSocketArgs {
+    port?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadContainerVolume {
+    /**
+     * File path added to workload pointing to the volume.
+     */
+    path?: string;
+    /**
+     * Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
+     */
+    recoveryPolicy?: string;
+    /**
+     * URI of a volume hosted at Control Plane (Volume Set) or at a cloud provider (AWS, Azure, GCP).
+     */
+    uri?: string;
+}
+
+export interface GetWorkloadContainerVolumeArgs {
+    /**
+     * File path added to workload pointing to the volume.
+     */
+    path?: pulumi.Input<string>;
+    /**
+     * Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
+     */
+    recoveryPolicy?: pulumi.Input<string>;
+    /**
+     * URI of a volume hosted at Control Plane (Volume Set) or at a cloud provider (AWS, Azure, GCP).
+     */
+    uri?: pulumi.Input<string>;
+}
+
+export interface GetWorkloadFirewallSpec {
+    /**
+     * The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
+     */
+    externals?: inputs.GetWorkloadFirewallSpecExternal[];
+    /**
+     * The internal firewall is used to control access between workloads.
+     */
+    internals?: inputs.GetWorkloadFirewallSpecInternal[];
+}
+
+export interface GetWorkloadFirewallSpecArgs {
+    /**
+     * The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
+     */
+    externals?: pulumi.Input<pulumi.Input<inputs.GetWorkloadFirewallSpecExternalArgs>[]>;
+    /**
+     * The internal firewall is used to control access between workloads.
+     */
+    internals?: pulumi.Input<pulumi.Input<inputs.GetWorkloadFirewallSpecInternalArgs>[]>;
+}
+
+export interface GetWorkloadFirewallSpecExternal {
+    /**
+     * Firewall options for HTTP workloads.
+     */
+    https?: inputs.GetWorkloadFirewallSpecExternalHttp[];
+    /**
+     * The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+     */
+    inboundAllowCidrs?: string[];
+    /**
+     * The list of ipv4/ipv6 addresses or cidr blocks that are NOT allowed to access this workload. Addresses in the allow list will only be allowed if they do not exist in this list.
+     */
+    inboundBlockedCidrs?: string[];
+    /**
+     * The list of ipv4/ipv6 addresses or cidr blocks that this workload is allowed reach. No outbound access is allowed by default. Specify '0.0.0.0/0' to allow outbound access to the public internet.
+     */
+    outboundAllowCidrs?: string[];
+    /**
+     * The list of public hostnames that this workload is allowed to reach. No outbound access is allowed by default. A wildcard `*` is allowed on the prefix of the hostname only, ex: `*.amazonaws.com`. Use `outboundAllowCIDR` to allow access to all external websites.
+     */
+    outboundAllowHostnames?: string[];
+    /**
+     * Allow outbound access to specific ports and protocols. When not specified, communication to address ranges in outboundAllowCIDR is allowed on all ports and communication to names in outboundAllowHostname is allowed on ports 80/443.
+     */
+    outboundAllowPorts?: inputs.GetWorkloadFirewallSpecExternalOutboundAllowPort[];
+    /**
+     * The list of ipv4/ipv6 addresses or cidr blocks that this workload is NOT allowed to reach. Addresses in the allow list will only be allowed if they do not exist in this list.
+     */
+    outboundBlockedCidrs?: string[];
+}
+
+export interface GetWorkloadFirewallSpecExternalArgs {
+    /**
+     * Firewall options for HTTP workloads.
+     */
+    https?: pulumi.Input<pulumi.Input<inputs.GetWorkloadFirewallSpecExternalHttpArgs>[]>;
+    /**
+     * The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+     */
+    inboundAllowCidrs?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The list of ipv4/ipv6 addresses or cidr blocks that are NOT allowed to access this workload. Addresses in the allow list will only be allowed if they do not exist in this list.
+     */
+    inboundBlockedCidrs?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The list of ipv4/ipv6 addresses or cidr blocks that this workload is allowed reach. No outbound access is allowed by default. Specify '0.0.0.0/0' to allow outbound access to the public internet.
+     */
+    outboundAllowCidrs?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The list of public hostnames that this workload is allowed to reach. No outbound access is allowed by default. A wildcard `*` is allowed on the prefix of the hostname only, ex: `*.amazonaws.com`. Use `outboundAllowCIDR` to allow access to all external websites.
+     */
+    outboundAllowHostnames?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Allow outbound access to specific ports and protocols. When not specified, communication to address ranges in outboundAllowCIDR is allowed on all ports and communication to names in outboundAllowHostname is allowed on ports 80/443.
+     */
+    outboundAllowPorts?: pulumi.Input<pulumi.Input<inputs.GetWorkloadFirewallSpecExternalOutboundAllowPortArgs>[]>;
+    /**
+     * The list of ipv4/ipv6 addresses or cidr blocks that this workload is NOT allowed to reach. Addresses in the allow list will only be allowed if they do not exist in this list.
+     */
+    outboundBlockedCidrs?: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetWorkloadFirewallSpecExternalHttp {
+    /**
+     * A list of header filters for HTTP workloads.
+     */
+    inboundHeaderFilters?: inputs.GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter[];
+}
+
+export interface GetWorkloadFirewallSpecExternalHttpArgs {
+    /**
+     * A list of header filters for HTTP workloads.
+     */
+    inboundHeaderFilters?: pulumi.Input<pulumi.Input<inputs.GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArgs>[]>;
+}
+
+export interface GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter {
+    /**
+     * A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
+     */
+    allowedValues?: string[];
+    /**
+     * A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
+     */
+    blockedValues?: string[];
+    /**
+     * The header to match for.
+     */
+    key?: string;
+}
+
+export interface GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArgs {
+    /**
+     * A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
+     */
+    allowedValues?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
+     */
+    blockedValues?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The header to match for.
+     */
+    key?: pulumi.Input<string>;
+}
+
+export interface GetWorkloadFirewallSpecExternalOutboundAllowPort {
+    /**
+     * Port number. Max: 65000
+     */
+    number?: number;
+    /**
+     * Either `http`, `https` or `tcp`.
+     */
+    protocol?: string;
+}
+
+export interface GetWorkloadFirewallSpecExternalOutboundAllowPortArgs {
+    /**
+     * Port number. Max: 65000
+     */
+    number?: pulumi.Input<number>;
+    /**
+     * Either `http`, `https` or `tcp`.
+     */
+    protocol?: pulumi.Input<string>;
+}
+
+export interface GetWorkloadFirewallSpecInternal {
+    /**
+     * Used to control the internal firewall configuration and mutual tls. Allowed Values: "none", "same-gvc", "same-org", "workload-list".
+     */
+    inboundAllowType?: string;
+    /**
+     * A list of specific workloads which are allowed to access this workload internally. This list is only used if the 'inboundAllowType' is set to 'workload-list'.
+     */
+    inboundAllowWorkloads?: string[];
+}
+
+export interface GetWorkloadFirewallSpecInternalArgs {
+    /**
+     * Used to control the internal firewall configuration and mutual tls. Allowed Values: "none", "same-gvc", "same-org", "workload-list".
+     */
+    inboundAllowType?: pulumi.Input<string>;
+    /**
+     * A list of specific workloads which are allowed to access this workload internally. This list is only used if the 'inboundAllowType' is set to 'workload-list'.
+     */
+    inboundAllowWorkloads?: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetWorkloadJob {
+    /**
+     * The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
+     */
+    activeDeadlineSeconds?: number;
+    /**
+     * Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+     */
+    concurrencyPolicy?: string;
+    /**
+     * The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`.
+     */
+    historyLimit?: number;
+    /**
+     * Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`.
+     */
+    restartPolicy?: string;
+    /**
+     * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
+     */
+    schedule?: string;
+}
+
+export interface GetWorkloadJobArgs {
+    /**
+     * The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
+     */
+    activeDeadlineSeconds?: pulumi.Input<number>;
+    /**
+     * Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+     */
+    concurrencyPolicy?: pulumi.Input<string>;
+    /**
+     * The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`.
+     */
+    historyLimit?: pulumi.Input<number>;
+    /**
+     * Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`.
+     */
+    restartPolicy?: pulumi.Input<string>;
+    /**
+     * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
+     */
+    schedule?: pulumi.Input<string>;
+}
+
+export interface GetWorkloadLoadBalancer {
+    /**
+     * Direct load balancers are created in each location that a workload is running in and are configured for the standard endpoints of the workload. Customers are responsible for configuring the workload with certificates if TLS is required.
+     */
+    directs?: inputs.GetWorkloadLoadBalancerDirect[];
+    geoLocations?: inputs.GetWorkloadLoadBalancerGeoLocation[];
+    /**
+     * When enabled, individual replicas of the workload can be reached directly using the subdomain prefix replica-<index>. For example, replica-0.my-workload.my-gvc.cpln.local or replica-0.my-workload-<gvc-alias>.cpln.app - Can only be used with stateful workloads.
+     */
+    replicaDirect?: boolean;
+}
+
+export interface GetWorkloadLoadBalancerArgs {
+    /**
+     * Direct load balancers are created in each location that a workload is running in and are configured for the standard endpoints of the workload. Customers are responsible for configuring the workload with certificates if TLS is required.
+     */
+    directs?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLoadBalancerDirectArgs>[]>;
+    geoLocations?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLoadBalancerGeoLocationArgs>[]>;
+    /**
+     * When enabled, individual replicas of the workload can be reached directly using the subdomain prefix replica-<index>. For example, replica-0.my-workload.my-gvc.cpln.local or replica-0.my-workload-<gvc-alias>.cpln.app - Can only be used with stateful workloads.
+     */
+    replicaDirect?: pulumi.Input<boolean>;
+}
+
+export interface GetWorkloadLoadBalancerDirect {
+    /**
+     * When disabled, this load balancer will be stopped.
+     */
+    enabled?: boolean;
+    ipset?: string;
+    /**
+     * List of ports that will be exposed by this load balancer.
+     */
+    ports?: inputs.GetWorkloadLoadBalancerDirectPort[];
+}
+
+export interface GetWorkloadLoadBalancerDirectArgs {
+    /**
+     * When disabled, this load balancer will be stopped.
+     */
+    enabled?: pulumi.Input<boolean>;
+    ipset?: pulumi.Input<string>;
+    /**
+     * List of ports that will be exposed by this load balancer.
+     */
+    ports?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLoadBalancerDirectPortArgs>[]>;
+}
+
+export interface GetWorkloadLoadBalancerDirectPort {
+    /**
+     * The port on the container tha will receive this traffic.
+     */
+    containerPort?: number;
+    /**
+     * The port that is available publicly.
+     */
+    externalPort?: number;
+    /**
+     * The protocol that is exposed publicly.
+     */
+    protocol?: string;
+    /**
+     * Overrides the default `https` url scheme that will be used for links in the UI and status.
+     */
+    scheme?: string;
+}
+
+export interface GetWorkloadLoadBalancerDirectPortArgs {
+    /**
+     * The port on the container tha will receive this traffic.
+     */
+    containerPort?: pulumi.Input<number>;
+    /**
+     * The port that is available publicly.
+     */
+    externalPort?: pulumi.Input<number>;
+    /**
+     * The protocol that is exposed publicly.
+     */
+    protocol?: pulumi.Input<string>;
+    /**
+     * Overrides the default `https` url scheme that will be used for links in the UI and status.
+     */
+    scheme?: pulumi.Input<string>;
+}
+
+export interface GetWorkloadLoadBalancerGeoLocation {
+    /**
+     * When enabled, geo location headers will be included on inbound http requests. Existing headers will be replaced.
+     */
+    enabled?: boolean;
+    headers?: inputs.GetWorkloadLoadBalancerGeoLocationHeader[];
+}
+
+export interface GetWorkloadLoadBalancerGeoLocationArgs {
+    /**
+     * When enabled, geo location headers will be included on inbound http requests. Existing headers will be replaced.
+     */
+    enabled?: pulumi.Input<boolean>;
+    headers?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLoadBalancerGeoLocationHeaderArgs>[]>;
+}
+
+export interface GetWorkloadLoadBalancerGeoLocationHeader {
+    /**
+     * The geo asn header.
+     */
+    asn?: string;
+    /**
+     * The geo city header.
+     */
+    city?: string;
+    /**
+     * The geo country header.
+     */
+    country?: string;
+    /**
+     * The geo region header.
+     */
+    region?: string;
+}
+
+export interface GetWorkloadLoadBalancerGeoLocationHeaderArgs {
+    /**
+     * The geo asn header.
+     */
+    asn?: pulumi.Input<string>;
+    /**
+     * The geo city header.
+     */
+    city?: pulumi.Input<string>;
+    /**
+     * The geo country header.
+     */
+    country?: pulumi.Input<string>;
+    /**
+     * The geo region header.
+     */
+    region?: pulumi.Input<string>;
+}
+
+export interface GetWorkloadLocalOption {
+    /**
+     * Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+     */
+    autoscalings?: inputs.GetWorkloadLocalOptionAutoscaling[];
+    /**
+     * Capacity AI. Default: `true`.
+     */
+    capacityAi?: boolean;
+    /**
+     * The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+     */
+    capacityAiUpdateMinutes?: number;
+    /**
+     * Debug mode. Default: `false`.
+     */
+    debug?: boolean;
+    /**
+     * Valid only for `localOptions`. Override options for a specific location.
+     */
+    location: string;
+    multiZones?: inputs.GetWorkloadLocalOptionMultiZone[];
+    /**
+     * Workload suspend. Default: `false`.
+     */
+    suspend?: boolean;
+    /**
+     * Timeout in seconds. Default: `5`.
+     */
+    timeoutSeconds?: number;
+}
+
+export interface GetWorkloadLocalOptionArgs {
+    /**
+     * Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+     */
+    autoscalings?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLocalOptionAutoscalingArgs>[]>;
+    /**
+     * Capacity AI. Default: `true`.
+     */
+    capacityAi?: pulumi.Input<boolean>;
+    /**
+     * The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+     */
+    capacityAiUpdateMinutes?: pulumi.Input<number>;
+    /**
+     * Debug mode. Default: `false`.
+     */
+    debug?: pulumi.Input<boolean>;
+    /**
+     * Valid only for `localOptions`. Override options for a specific location.
+     */
+    location: pulumi.Input<string>;
+    multiZones?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLocalOptionMultiZoneArgs>[]>;
+    /**
+     * Workload suspend. Default: `false`.
+     */
+    suspend?: pulumi.Input<boolean>;
+    /**
+     * Timeout in seconds. Default: `5`.
+     */
+    timeoutSeconds?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadLocalOptionAutoscaling {
+    /**
+     * KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+     */
+    kedas?: inputs.GetWorkloadLocalOptionAutoscalingKeda[];
+    /**
+     * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+     */
+    maxConcurrency?: number;
+    /**
+     * The maximum allowed number of replicas. Min: `0`. Default `5`.
+     */
+    maxScale?: number;
+    /**
+     * Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
+     */
+    metric?: string;
+    /**
+     * For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+     */
+    metricPercentile?: string;
+    /**
+     * The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `maxScale`. Default `1`.
+     */
+    minScale?: number;
+    multis?: inputs.GetWorkloadLocalOptionAutoscalingMulti[];
+    /**
+     * The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+     */
+    scaleToZeroDelay?: number;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+     */
+    target?: number;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingArgs {
+    /**
+     * KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+     */
+    kedas?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLocalOptionAutoscalingKedaArgs>[]>;
+    /**
+     * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+     */
+    maxConcurrency?: pulumi.Input<number>;
+    /**
+     * The maximum allowed number of replicas. Min: `0`. Default `5`.
+     */
+    maxScale?: pulumi.Input<number>;
+    /**
+     * Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
+     */
+    metric?: pulumi.Input<string>;
+    /**
+     * For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+     */
+    metricPercentile?: pulumi.Input<string>;
+    /**
+     * The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `maxScale`. Default `1`.
+     */
+    minScale?: pulumi.Input<number>;
+    multis?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLocalOptionAutoscalingMultiArgs>[]>;
+    /**
+     * The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+     */
+    scaleToZeroDelay?: pulumi.Input<number>;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+     */
+    target?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKeda {
+    /**
+     * Advanced configuration options for KEDA.
+     */
+    advanceds?: inputs.GetWorkloadLocalOptionAutoscalingKedaAdvanced[];
+    /**
+     * The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+     */
+    cooldownPeriod?: number;
+    /**
+     * The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+     */
+    initialCooldownPeriod?: number;
+    /**
+     * The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+     */
+    pollingInterval?: number;
+    /**
+     * An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+     */
+    triggers?: inputs.GetWorkloadLocalOptionAutoscalingKedaTrigger[];
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaArgs {
+    /**
+     * Advanced configuration options for KEDA.
+     */
+    advanceds?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedArgs>[]>;
+    /**
+     * The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+     */
+    cooldownPeriod?: pulumi.Input<number>;
+    /**
+     * The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+     */
+    initialCooldownPeriod?: pulumi.Input<number>;
+    /**
+     * The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+     */
+    pollingInterval?: pulumi.Input<number>;
+    /**
+     * An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+     */
+    triggers?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLocalOptionAutoscalingKedaTriggerArgs>[]>;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvanced {
+    /**
+     * Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+     */
+    scalingModifiers?: inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier[];
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedArgs {
+    /**
+     * Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+     */
+    scalingModifiers?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArgs>[]>;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier {
+    /**
+     * Defines the new activation target value to scale on for the composed metric.
+     */
+    activationTarget?: string;
+    /**
+     * Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+     */
+    formula?: string;
+    /**
+     * Defines metric type used for this new composite-metric.
+     */
+    metricType?: string;
+    /**
+     * Defines new target value to scale on for the composed metric.
+     */
+    target?: string;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArgs {
+    /**
+     * Defines the new activation target value to scale on for the composed metric.
+     */
+    activationTarget?: pulumi.Input<string>;
+    /**
+     * Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+     */
+    formula?: pulumi.Input<string>;
+    /**
+     * Defines metric type used for this new composite-metric.
+     */
+    metricType?: pulumi.Input<string>;
+    /**
+     * Defines new target value to scale on for the composed metric.
+     */
+    target?: pulumi.Input<string>;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaTrigger {
+    /**
+     * Reference to a KEDA authentication object for secure access to external systems.
+     */
+    authenticationReves?: inputs.GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef[];
+    /**
+     * The configuration parameters that the trigger requires.
+     */
+    metadata?: {[key: string]: string};
+    /**
+     * The type of metric to be used for scaling.
+     */
+    metricType?: string;
+    /**
+     * An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+     */
+    name?: string;
+    /**
+     * The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+     */
+    type?: string;
+    /**
+     * Enables caching of metric values during polling interval.
+     */
+    useCachedMetrics?: boolean;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaTriggerArgs {
+    /**
+     * Reference to a KEDA authentication object for secure access to external systems.
+     */
+    authenticationReves?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs>[]>;
+    /**
+     * The configuration parameters that the trigger requires.
+     */
+    metadata?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The type of metric to be used for scaling.
+     */
+    metricType?: pulumi.Input<string>;
+    /**
+     * An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+     */
+    name?: pulumi.Input<string>;
+    /**
+     * The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+     */
+    type?: pulumi.Input<string>;
+    /**
+     * Enables caching of metric values during polling interval.
+     */
+    useCachedMetrics?: pulumi.Input<boolean>;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef {
+    /**
+     * The name of secret listed in the GVC spec.keda.secrets.
+     */
+    name?: string;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs {
+    /**
+     * The name of secret listed in the GVC spec.keda.secrets.
+     */
+    name?: pulumi.Input<string>;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingMulti {
+    /**
+     * Valid values: `cpu` or `memory`.
+     */
+    metric?: string;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
+     */
+    target?: number;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingMultiArgs {
+    /**
+     * Valid values: `cpu` or `memory`.
+     */
+    metric?: pulumi.Input<string>;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
+     */
+    target?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadLocalOptionMultiZone {
+    enabled?: boolean;
+}
+
+export interface GetWorkloadLocalOptionMultiZoneArgs {
+    enabled?: pulumi.Input<boolean>;
+}
+
+export interface GetWorkloadOption {
+    /**
+     * Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+     */
+    autoscalings?: inputs.GetWorkloadOptionAutoscaling[];
+    /**
+     * Capacity AI. Default: `true`.
+     */
+    capacityAi?: boolean;
+    /**
+     * The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+     */
+    capacityAiUpdateMinutes?: number;
+    /**
+     * Debug mode. Default: `false`.
+     */
+    debug?: boolean;
+    multiZones?: inputs.GetWorkloadOptionMultiZone[];
+    /**
+     * Workload suspend. Default: `false`.
+     */
+    suspend?: boolean;
+    /**
+     * Timeout in seconds. Default: `5`.
+     */
+    timeoutSeconds?: number;
+}
+
+export interface GetWorkloadOptionArgs {
+    /**
+     * Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+     */
+    autoscalings?: pulumi.Input<pulumi.Input<inputs.GetWorkloadOptionAutoscalingArgs>[]>;
+    /**
+     * Capacity AI. Default: `true`.
+     */
+    capacityAi?: pulumi.Input<boolean>;
+    /**
+     * The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+     */
+    capacityAiUpdateMinutes?: pulumi.Input<number>;
+    /**
+     * Debug mode. Default: `false`.
+     */
+    debug?: pulumi.Input<boolean>;
+    multiZones?: pulumi.Input<pulumi.Input<inputs.GetWorkloadOptionMultiZoneArgs>[]>;
+    /**
+     * Workload suspend. Default: `false`.
+     */
+    suspend?: pulumi.Input<boolean>;
+    /**
+     * Timeout in seconds. Default: `5`.
+     */
+    timeoutSeconds?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadOptionAutoscaling {
+    /**
+     * KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+     */
+    kedas?: inputs.GetWorkloadOptionAutoscalingKeda[];
+    /**
+     * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+     */
+    maxConcurrency?: number;
+    /**
+     * The maximum allowed number of replicas. Min: `0`. Default `5`.
+     */
+    maxScale?: number;
+    /**
+     * Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
+     */
+    metric?: string;
+    /**
+     * For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+     */
+    metricPercentile?: string;
+    /**
+     * The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `maxScale`. Default `1`.
+     */
+    minScale?: number;
+    multis?: inputs.GetWorkloadOptionAutoscalingMulti[];
+    /**
+     * The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+     */
+    scaleToZeroDelay?: number;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+     */
+    target?: number;
+}
+
+export interface GetWorkloadOptionAutoscalingArgs {
+    /**
+     * KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+     */
+    kedas?: pulumi.Input<pulumi.Input<inputs.GetWorkloadOptionAutoscalingKedaArgs>[]>;
+    /**
+     * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+     */
+    maxConcurrency?: pulumi.Input<number>;
+    /**
+     * The maximum allowed number of replicas. Min: `0`. Default `5`.
+     */
+    maxScale?: pulumi.Input<number>;
+    /**
+     * Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
+     */
+    metric?: pulumi.Input<string>;
+    /**
+     * For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+     */
+    metricPercentile?: pulumi.Input<string>;
+    /**
+     * The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `maxScale`. Default `1`.
+     */
+    minScale?: pulumi.Input<number>;
+    multis?: pulumi.Input<pulumi.Input<inputs.GetWorkloadOptionAutoscalingMultiArgs>[]>;
+    /**
+     * The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+     */
+    scaleToZeroDelay?: pulumi.Input<number>;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+     */
+    target?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadOptionAutoscalingKeda {
+    /**
+     * Advanced configuration options for KEDA.
+     */
+    advanceds?: inputs.GetWorkloadOptionAutoscalingKedaAdvanced[];
+    /**
+     * The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+     */
+    cooldownPeriod?: number;
+    /**
+     * The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+     */
+    initialCooldownPeriod?: number;
+    /**
+     * The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+     */
+    pollingInterval?: number;
+    /**
+     * An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+     */
+    triggers?: inputs.GetWorkloadOptionAutoscalingKedaTrigger[];
+}
+
+export interface GetWorkloadOptionAutoscalingKedaArgs {
+    /**
+     * Advanced configuration options for KEDA.
+     */
+    advanceds?: pulumi.Input<pulumi.Input<inputs.GetWorkloadOptionAutoscalingKedaAdvancedArgs>[]>;
+    /**
+     * The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+     */
+    cooldownPeriod?: pulumi.Input<number>;
+    /**
+     * The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+     */
+    initialCooldownPeriod?: pulumi.Input<number>;
+    /**
+     * The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+     */
+    pollingInterval?: pulumi.Input<number>;
+    /**
+     * An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+     */
+    triggers?: pulumi.Input<pulumi.Input<inputs.GetWorkloadOptionAutoscalingKedaTriggerArgs>[]>;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvanced {
+    /**
+     * Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+     */
+    scalingModifiers?: inputs.GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier[];
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedArgs {
+    /**
+     * Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+     */
+    scalingModifiers?: pulumi.Input<pulumi.Input<inputs.GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArgs>[]>;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier {
+    /**
+     * Defines the new activation target value to scale on for the composed metric.
+     */
+    activationTarget?: string;
+    /**
+     * Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+     */
+    formula?: string;
+    /**
+     * Defines metric type used for this new composite-metric.
+     */
+    metricType?: string;
+    /**
+     * Defines new target value to scale on for the composed metric.
+     */
+    target?: string;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArgs {
+    /**
+     * Defines the new activation target value to scale on for the composed metric.
+     */
+    activationTarget?: pulumi.Input<string>;
+    /**
+     * Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+     */
+    formula?: pulumi.Input<string>;
+    /**
+     * Defines metric type used for this new composite-metric.
+     */
+    metricType?: pulumi.Input<string>;
+    /**
+     * Defines new target value to scale on for the composed metric.
+     */
+    target?: pulumi.Input<string>;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaTrigger {
+    /**
+     * Reference to a KEDA authentication object for secure access to external systems.
+     */
+    authenticationReves?: inputs.GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRef[];
+    /**
+     * The configuration parameters that the trigger requires.
+     */
+    metadata?: {[key: string]: string};
+    /**
+     * The type of metric to be used for scaling.
+     */
+    metricType?: string;
+    /**
+     * An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+     */
+    name?: string;
+    /**
+     * The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+     */
+    type?: string;
+    /**
+     * Enables caching of metric values during polling interval.
+     */
+    useCachedMetrics?: boolean;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaTriggerArgs {
+    /**
+     * Reference to a KEDA authentication object for secure access to external systems.
+     */
+    authenticationReves?: pulumi.Input<pulumi.Input<inputs.GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArgs>[]>;
+    /**
+     * The configuration parameters that the trigger requires.
+     */
+    metadata?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The type of metric to be used for scaling.
+     */
+    metricType?: pulumi.Input<string>;
+    /**
+     * An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+     */
+    name?: pulumi.Input<string>;
+    /**
+     * The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+     */
+    type?: pulumi.Input<string>;
+    /**
+     * Enables caching of metric values during polling interval.
+     */
+    useCachedMetrics?: pulumi.Input<boolean>;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRef {
+    /**
+     * The name of secret listed in the GVC spec.keda.secrets.
+     */
+    name?: string;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArgs {
+    /**
+     * The name of secret listed in the GVC spec.keda.secrets.
+     */
+    name?: pulumi.Input<string>;
+}
+
+export interface GetWorkloadOptionAutoscalingMulti {
+    /**
+     * Valid values: `cpu` or `memory`.
+     */
+    metric?: string;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
+     */
+    target?: number;
+}
+
+export interface GetWorkloadOptionAutoscalingMultiArgs {
+    /**
+     * Valid values: `cpu` or `memory`.
+     */
+    metric?: pulumi.Input<string>;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
+     */
+    target?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadOptionMultiZone {
+    enabled?: boolean;
+}
+
+export interface GetWorkloadOptionMultiZoneArgs {
+    enabled?: pulumi.Input<boolean>;
+}
+
+export interface GetWorkloadRequestRetryPolicy {
+    attempts?: number;
+    retryOns?: string[];
+}
+
+export interface GetWorkloadRequestRetryPolicyArgs {
+    attempts?: pulumi.Input<number>;
+    retryOns?: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetWorkloadRolloutOption {
+    /**
+     * The number of replicas that can be created above the desired amount of replicas during an update.
+     */
+    maxSurgeReplicas?: string;
+    /**
+     * The number of replicas that can be unavailable during the update process.
+     */
+    maxUnavailableReplicas?: string;
+    /**
+     * The minimum number of seconds a container must run without crashing to be considered available.
+     */
+    minReadySeconds?: number;
+    /**
+     * The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+     */
+    scalingPolicy?: string;
+    /**
+     * The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run.
+     */
+    terminationGracePeriodSeconds?: number;
+}
+
+export interface GetWorkloadRolloutOptionArgs {
+    /**
+     * The number of replicas that can be created above the desired amount of replicas during an update.
+     */
+    maxSurgeReplicas?: pulumi.Input<string>;
+    /**
+     * The number of replicas that can be unavailable during the update process.
+     */
+    maxUnavailableReplicas?: pulumi.Input<string>;
+    /**
+     * The minimum number of seconds a container must run without crashing to be considered available.
+     */
+    minReadySeconds?: pulumi.Input<number>;
+    /**
+     * The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+     */
+    scalingPolicy?: pulumi.Input<string>;
+    /**
+     * The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run.
+     */
+    terminationGracePeriodSeconds?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadSecurityOption {
+    /**
+     * The group id assigned to any mounted volume.
+     */
+    fileSystemGroupId?: number;
+}
+
+export interface GetWorkloadSecurityOptionArgs {
+    /**
+     * The group id assigned to any mounted volume.
+     */
+    fileSystemGroupId?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadSidecar {
+    envoy?: string;
+}
+
+export interface GetWorkloadSidecarArgs {
+    envoy?: pulumi.Input<string>;
+}
+
 export interface GroupIdentityMatcher {
     /**
      * Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged in with SAML providers.
@@ -1325,6 +2881,10 @@ export interface Mk8sAddOns {
     awsWorkloadIdentity?: pulumi.Input<boolean>;
     azureAcr?: pulumi.Input<inputs.Mk8sAddOnsAzureAcr>;
     azureWorkloadIdentity?: pulumi.Input<inputs.Mk8sAddOnsAzureWorkloadIdentity>;
+    /**
+     * Bring-your-own Kubernetes (BYOK) add-on settings.
+     */
+    byok?: pulumi.Input<inputs.Mk8sAddOnsByok>;
     dashboard?: pulumi.Input<boolean>;
     localPathStorage?: pulumi.Input<boolean>;
     logs?: pulumi.Input<inputs.Mk8sAddOnsLogs>;
@@ -1367,6 +2927,388 @@ export interface Mk8sAddOnsAzureWorkloadIdentity {
      * Tenant ID to use for workload identity.
      */
     tenantId?: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsByok {
+    /**
+     * Fine-grained configuration for the BYOK workloads.
+     */
+    config?: pulumi.Input<inputs.Mk8sAddOnsByokConfig>;
+    /**
+     * Disable Control Plane managed upgrades for BYOK components.
+     */
+    ignoreUpdates?: pulumi.Input<boolean>;
+    /**
+     * The full link of a BYOK location.
+     */
+    location: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsByokConfig {
+    /**
+     * Resource tuning for the actuator component.
+     */
+    actuator?: pulumi.Input<inputs.Mk8sAddOnsByokConfigActuator>;
+    /**
+     * Shared rollout settings for BYOK workloads.
+     */
+    common?: pulumi.Input<inputs.Mk8sAddOnsByokConfigCommon>;
+    /**
+     * Ingress controller resource configuration.
+     */
+    ingress?: pulumi.Input<inputs.Mk8sAddOnsByokConfigIngress>;
+    /**
+     * Internal DNS deployment settings.
+     */
+    internalDns?: pulumi.Input<inputs.Mk8sAddOnsByokConfigInternalDns>;
+    /**
+     * Istio service mesh configuration.
+     */
+    istio?: pulumi.Input<inputs.Mk8sAddOnsByokConfigIstio>;
+    /**
+     * Log splitter deployment configuration.
+     */
+    logSplitter?: pulumi.Input<inputs.Mk8sAddOnsByokConfigLogSplitter>;
+    /**
+     * Longhorn persistent volume settings.
+     */
+    longhorn?: pulumi.Input<inputs.Mk8sAddOnsByokConfigLonghorn>;
+    /**
+     * Configuration for the optional middlebox traffic shaper.
+     */
+    middlebox?: pulumi.Input<inputs.Mk8sAddOnsByokConfigMiddlebox>;
+    /**
+     * Monitoring stack configuration.
+     */
+    monitoring?: pulumi.Input<inputs.Mk8sAddOnsByokConfigMonitoring>;
+    /**
+     * Redis cache configuration.
+     */
+    redis?: pulumi.Input<inputs.Mk8sAddOnsByokConfigRedis>;
+    /**
+     * High-availability Redis configuration.
+     */
+    redisHa?: pulumi.Input<inputs.Mk8sAddOnsByokConfigRedisHa>;
+    /**
+     * Redis Sentinel configuration.
+     */
+    redisSentinel?: pulumi.Input<inputs.Mk8sAddOnsByokConfigRedisSentinel>;
+    /**
+     * Tempo agent resource configuration.
+     */
+    tempoAgent?: pulumi.Input<inputs.Mk8sAddOnsByokConfigTempoAgent>;
+}
+
+export interface Mk8sAddOnsByokConfigActuator {
+    /**
+     * Additional environment variables injected into actuator pods.
+     */
+    env?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Log level override for actuator containers. Valid values are: trace, info, error.
+     */
+    logLevel?: pulumi.Input<string>;
+    /**
+     * CPU limit applied to actuator pods.
+     */
+    maxCpu?: pulumi.Input<string>;
+    /**
+     * Memory limit applied to actuator pods.
+     */
+    maxMemory?: pulumi.Input<string>;
+    /**
+     * Minimum CPU request applied to actuator pods (e.g. "100m").
+     */
+    minCpu?: pulumi.Input<string>;
+    /**
+     * Minimum memory request applied to actuator pods (e.g. "128Mi").
+     */
+    minMemory?: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsByokConfigCommon {
+    /**
+     * Replica count shared by BYOK control plane deployments.
+     */
+    deploymentReplicas?: pulumi.Input<number>;
+    /**
+     * Pod disruption budget limits for BYOK workloads.
+     */
+    pdb?: pulumi.Input<inputs.Mk8sAddOnsByokConfigCommonPdb>;
+}
+
+export interface Mk8sAddOnsByokConfigCommonPdb {
+    /**
+     * Maximum number of pods that can be unavailable during disruptions.
+     */
+    maxUnavailable?: pulumi.Input<number>;
+}
+
+export interface Mk8sAddOnsByokConfigIngress {
+    /**
+     * CPU request/limit string applied to ingress pods.
+     */
+    cpu?: pulumi.Input<string>;
+    /**
+     * Memory request/limit string applied to ingress pods.
+     */
+    memory?: pulumi.Input<string>;
+    /**
+     * Target usage percentage that triggers ingress autoscaling.
+     */
+    targetPercent?: pulumi.Input<number>;
+}
+
+export interface Mk8sAddOnsByokConfigInternalDns {
+    /**
+     * CPU limit applied to internal DNS pods.
+     */
+    maxCpu?: pulumi.Input<string>;
+    /**
+     * Memory limit applied to internal DNS pods.
+     */
+    maxMemory?: pulumi.Input<string>;
+    /**
+     * CPU request applied to internal DNS pods.
+     */
+    minCpu?: pulumi.Input<string>;
+    /**
+     * Memory request applied to internal DNS pods.
+     */
+    minMemory?: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsByokConfigIstio {
+    /**
+     * Istio ingress gateway deployment settings.
+     */
+    ingressGateway?: pulumi.Input<inputs.Mk8sAddOnsByokConfigIstioIngressGateway>;
+    /**
+     * Control plane deployment settings for istiod.
+     */
+    istiod?: pulumi.Input<inputs.Mk8sAddOnsByokConfigIstioIstiod>;
+    /**
+     * Default resource requests for Istio sidecar injection.
+     */
+    sidecar?: pulumi.Input<inputs.Mk8sAddOnsByokConfigIstioSidecar>;
+}
+
+export interface Mk8sAddOnsByokConfigIstioIngressGateway {
+    /**
+     * CPU limit applied to ingress gateway pods.
+     */
+    maxCpu?: pulumi.Input<string>;
+    /**
+     * Memory limit applied to ingress gateway pods.
+     */
+    maxMemory?: pulumi.Input<string>;
+    /**
+     * Number of ingress gateway replicas.
+     */
+    replicas?: pulumi.Input<number>;
+}
+
+export interface Mk8sAddOnsByokConfigIstioIstiod {
+    /**
+     * CPU limit applied to istiod pods.
+     */
+    maxCpu?: pulumi.Input<string>;
+    /**
+     * Memory limit applied to istiod pods.
+     */
+    maxMemory?: pulumi.Input<string>;
+    /**
+     * CPU request applied to istiod pods.
+     */
+    minCpu?: pulumi.Input<string>;
+    /**
+     * Memory request applied to istiod pods.
+     */
+    minMemory?: pulumi.Input<string>;
+    /**
+     * Pod disruption budget maxUnavailable for istiod.
+     */
+    pdb?: pulumi.Input<number>;
+    /**
+     * Number of istiod replicas.
+     */
+    replicas?: pulumi.Input<number>;
+}
+
+export interface Mk8sAddOnsByokConfigIstioSidecar {
+    /**
+     * CPU request applied to injected sidecars.
+     */
+    minCpu?: pulumi.Input<string>;
+    /**
+     * Memory request applied to injected sidecars.
+     */
+    minMemory?: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsByokConfigLogSplitter {
+    /**
+     * CPU limit applied to log splitter pods.
+     */
+    maxCpu?: pulumi.Input<string>;
+    /**
+     * Memory limit applied to log splitter pods.
+     */
+    maxMemory?: pulumi.Input<string>;
+    /**
+     * In-memory buffer size consumed by each log splitter pod.
+     */
+    memBufferSize?: pulumi.Input<string>;
+    /**
+     * CPU request applied to log splitter pods.
+     */
+    minCpu?: pulumi.Input<string>;
+    /**
+     * Memory request applied to log splitter pods.
+     */
+    minMemory?: pulumi.Input<string>;
+    /**
+     * Per-pod log processing rate limit.
+     */
+    perPodRate?: pulumi.Input<number>;
+}
+
+export interface Mk8sAddOnsByokConfigLonghorn {
+    /**
+     * Replica factor for Longhorn volumes. Minimum: 1.
+     */
+    replicas?: pulumi.Input<number>;
+}
+
+export interface Mk8sAddOnsByokConfigMiddlebox {
+    /**
+     * Alert threshold, in Mbps, for middlebox bandwidth usage.
+     */
+    bandwidthAlertMbps?: pulumi.Input<number>;
+    /**
+     * Whether to deploy the middlebox component.
+     */
+    enabled?: pulumi.Input<boolean>;
+}
+
+export interface Mk8sAddOnsByokConfigMonitoring {
+    /**
+     * Kube-state-metrics resource overrides.
+     */
+    kubeStateMetrics?: pulumi.Input<inputs.Mk8sAddOnsByokConfigMonitoringKubeStateMetrics>;
+    /**
+     * Maximum memory limit for monitoring components.
+     */
+    maxMemory?: pulumi.Input<string>;
+    /**
+     * Minimum memory request for monitoring components.
+     */
+    minMemory?: pulumi.Input<string>;
+    /**
+     * Prometheus deployment configuration.
+     */
+    prometheus?: pulumi.Input<inputs.Mk8sAddOnsByokConfigMonitoringPrometheus>;
+}
+
+export interface Mk8sAddOnsByokConfigMonitoringKubeStateMetrics {
+    /**
+     * Memory request applied to kube-state-metrics pods.
+     */
+    minMemory?: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsByokConfigMonitoringPrometheus {
+    /**
+     * Primary Prometheus instance settings.
+     */
+    main?: pulumi.Input<inputs.Mk8sAddOnsByokConfigMonitoringPrometheusMain>;
+}
+
+export interface Mk8sAddOnsByokConfigMonitoringPrometheusMain {
+    /**
+     * Persistent volume size for Prometheus (for example, "50Gi").
+     */
+    storage?: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsByokConfigRedis {
+    /**
+     * CPU limit applied to the Redis pods.
+     */
+    maxCpu?: pulumi.Input<string>;
+    /**
+     * Memory limit applied to the Redis pods.
+     */
+    maxMemory?: pulumi.Input<string>;
+    /**
+     * CPU request applied to the Redis pods.
+     */
+    minCpu?: pulumi.Input<string>;
+    /**
+     * Memory request applied to the Redis pods.
+     */
+    minMemory?: pulumi.Input<string>;
+    /**
+     * Persistent storage size allocated to the Redis pods (for example, "8Gi").
+     */
+    storage?: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsByokConfigRedisHa {
+    /**
+     * CPU limit applied to the Redis pods.
+     */
+    maxCpu?: pulumi.Input<string>;
+    /**
+     * Memory limit applied to the Redis pods.
+     */
+    maxMemory?: pulumi.Input<string>;
+    /**
+     * CPU request applied to the Redis pods.
+     */
+    minCpu?: pulumi.Input<string>;
+    /**
+     * Memory request applied to the Redis pods.
+     */
+    minMemory?: pulumi.Input<string>;
+    /**
+     * Persistent storage size allocated to the Redis pods, in GiB.
+     */
+    storage?: pulumi.Input<number>;
+}
+
+export interface Mk8sAddOnsByokConfigRedisSentinel {
+    /**
+     * CPU limit applied to the Redis pods.
+     */
+    maxCpu?: pulumi.Input<string>;
+    /**
+     * Memory limit applied to the Redis pods.
+     */
+    maxMemory?: pulumi.Input<string>;
+    /**
+     * CPU request applied to the Redis pods.
+     */
+    minCpu?: pulumi.Input<string>;
+    /**
+     * Memory request applied to the Redis pods.
+     */
+    minMemory?: pulumi.Input<string>;
+    /**
+     * Persistent storage size allocated to the Redis pods, in GiB.
+     */
+    storage?: pulumi.Input<number>;
+}
+
+export interface Mk8sAddOnsByokConfigTempoAgent {
+    /**
+     * CPU request applied to tempo agent pods.
+     */
+    minCpu?: pulumi.Input<string>;
+    /**
+     * Memory request applied to tempo agent pods.
+     */
+    minMemory?: pulumi.Input<string>;
 }
 
 export interface Mk8sAddOnsLogs {
@@ -1819,6 +3761,107 @@ export interface Mk8sEphemeralProviderNodePoolTaint {
 export interface Mk8sFirewall {
     description?: pulumi.Input<string>;
     sourceCidr: pulumi.Input<string>;
+}
+
+export interface Mk8sGcpProvider {
+    autoscaler?: pulumi.Input<inputs.Mk8sGcpProviderAutoscaler>;
+    /**
+     * Extra tags to attach to all created objects.
+     */
+    gcpLabels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Default image for all nodes.
+     */
+    image?: pulumi.Input<inputs.Mk8sGcpProviderImage>;
+    /**
+     * VPC network used by the cluster.
+     */
+    network: pulumi.Input<string>;
+    networking?: pulumi.Input<inputs.Mk8sGcpProviderNetworking>;
+    nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sGcpProviderNodePool>[]>;
+    /**
+     * Optional shell script that will be run before K8s is installed. Supports SSM.
+     */
+    preInstallScript?: pulumi.Input<string>;
+    /**
+     * GCP project ID that hosts the cluster infrastructure.
+     */
+    projectId: pulumi.Input<string>;
+    /**
+     * Region where the cluster nodes will live.
+     */
+    region: pulumi.Input<string>;
+    /**
+     * Link to a secret containing the service account JSON key.
+     */
+    saKeyLink: pulumi.Input<string>;
+}
+
+export interface Mk8sGcpProviderAutoscaler {
+    expanders?: pulumi.Input<pulumi.Input<string>[]>;
+    unneededTime?: pulumi.Input<string>;
+    unreadyTime?: pulumi.Input<string>;
+    utilizationThreshold?: pulumi.Input<number>;
+}
+
+export interface Mk8sGcpProviderImage {
+    recommended?: pulumi.Input<string>;
+}
+
+export interface Mk8sGcpProviderNetworking {
+    /**
+     * DNS forwarder used by the cluster. Can be a space-delimited list of dns servers. Default is /etc/resolv.conf when not specified.
+     */
+    dnsForwarder?: pulumi.Input<string>;
+    /**
+     * The CIDR of the pod network.
+     */
+    podNetwork?: pulumi.Input<string>;
+    /**
+     * The CIDR of the service network.
+     */
+    serviceNetwork?: pulumi.Input<string>;
+}
+
+export interface Mk8sGcpProviderNodePool {
+    /**
+     * Size in GB.
+     */
+    bootDiskSize: pulumi.Input<number>;
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * GCE machine type for nodes in this pool.
+     */
+    machineType: pulumi.Input<string>;
+    maxSize?: pulumi.Input<number>;
+    minSize?: pulumi.Input<number>;
+    name: pulumi.Input<string>;
+    overrideImage?: pulumi.Input<inputs.Mk8sGcpProviderNodePoolOverrideImage>;
+    /**
+     * Subnet within the selected network.
+     */
+    subnet: pulumi.Input<string>;
+    /**
+     * Taint for the nodes of a pool.
+     */
+    taints?: pulumi.Input<pulumi.Input<inputs.Mk8sGcpProviderNodePoolTaint>[]>;
+    /**
+     * Zone where the pool nodes run.
+     */
+    zone: pulumi.Input<string>;
+}
+
+export interface Mk8sGcpProviderNodePoolOverrideImage {
+    recommended?: pulumi.Input<string>;
+}
+
+export interface Mk8sGcpProviderNodePoolTaint {
+    effect?: pulumi.Input<string>;
+    key?: pulumi.Input<string>;
+    value?: pulumi.Input<string>;
 }
 
 export interface Mk8sGenericProvider {
@@ -2376,6 +4419,7 @@ export interface Mk8sTritonProviderConnection {
 export interface Mk8sTritonProviderLoadBalancer {
     gateway?: pulumi.Input<inputs.Mk8sTritonProviderLoadBalancerGateway>;
     manual?: pulumi.Input<inputs.Mk8sTritonProviderLoadBalancerManual>;
+    none?: pulumi.Input<inputs.Mk8sTritonProviderLoadBalancerNone>;
 }
 
 export interface Mk8sTritonProviderLoadBalancerGateway {
@@ -2409,6 +4453,9 @@ export interface Mk8sTritonProviderLoadBalancerManual {
 export interface Mk8sTritonProviderLoadBalancerManualLogging {
     externalSyslog?: pulumi.Input<string>;
     nodePort?: pulumi.Input<number>;
+}
+
+export interface Mk8sTritonProviderLoadBalancerNone {
 }
 
 export interface Mk8sTritonProviderNetworking {
@@ -2753,6 +4800,7 @@ export interface OrgStatus {
      * Indicates whether the org is active or not.
      */
     active?: pulumi.Input<boolean>;
+    endpointPrefix?: pulumi.Input<string>;
 }
 
 export interface OrgTracingControlplaneTracing {
@@ -2988,6 +5036,17 @@ export interface VolumeSetAutoscaling {
     scalingFactor?: pulumi.Input<number>;
 }
 
+export interface VolumeSetCustomEncryption {
+    /**
+     * Map of region identifiers to encryption key configuration.
+     */
+    regions: pulumi.Input<{[key: string]: pulumi.Input<inputs.VolumeSetCustomEncryptionRegions>}>;
+}
+
+export interface VolumeSetCustomEncryptionRegions {
+    keyId: pulumi.Input<string>;
+}
+
 export interface VolumeSetMountOptions {
     /**
      * For volume sets using the shared file system, this object specifies the CPU and memory resources allotted to each mount point.
@@ -3034,6 +5093,10 @@ export interface VolumeSetStatus {
      * The url of the workload currently using this volume set (if any).
      */
     usedByWorkload?: pulumi.Input<string>;
+    /**
+     * Contains a list of workload links that are using this volume set.
+     */
+    workloadLinks?: pulumi.Input<pulumi.Input<string>[]>;
 }
 
 export interface WorkloadContainer {
@@ -3197,6 +5260,10 @@ export interface WorkloadContainerLivenessProbeTcpSocket {
 }
 
 export interface WorkloadContainerMetrics {
+    /**
+     * Drop metrics that match given patterns.
+     */
+    dropMetrics?: pulumi.Input<pulumi.Input<string>[]>;
     /**
      * Path from container emitting custom metrics.
      */
@@ -3453,6 +5520,10 @@ export interface WorkloadLocalOption {
      */
     capacityAi?: pulumi.Input<boolean>;
     /**
+     * The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+     */
+    capacityAiUpdateMinutes?: pulumi.Input<number>;
+    /**
      * Debug mode. Default: `false`.
      */
     debug?: pulumi.Input<boolean>;
@@ -3614,6 +5685,10 @@ export interface WorkloadOptions {
      * Capacity AI. Default: `true`.
      */
     capacityAi?: pulumi.Input<boolean>;
+    /**
+     * The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+     */
+    capacityAiUpdateMinutes?: pulumi.Input<number>;
     /**
      * Debug mode. Default: `false`.
      */
@@ -3828,6 +5903,7 @@ export interface WorkloadStatus {
      * ID of the parent object.
      */
     parentId?: pulumi.Input<string>;
+    replicaInternalNames?: pulumi.Input<pulumi.Input<string>[]>;
     /**
      * Resolved images for workloads with dynamic tags enabled.
      */
@@ -3876,6 +5952,7 @@ export interface WorkloadStatusResolvedImage {
      * A list of images that were resolved.
      */
     images?: pulumi.Input<pulumi.Input<inputs.WorkloadStatusResolvedImageImage>[]>;
+    nextRetryAt?: pulumi.Input<string>;
     /**
      * UTC Time when the images were resolved.
      */

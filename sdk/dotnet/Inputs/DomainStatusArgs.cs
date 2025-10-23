@@ -53,7 +53,7 @@ namespace Pulumiverse.Cpln.Inputs
         }
 
         /// <summary>
-        /// Status of Domain. Possible values: `initializing`, `ready`, `pendingDnsConfig`, `pendingCertificate`, `usedByGvc`.
+        /// Status of Domain. Possible values: `Initializing`, `Ready`, `pendingDnsConfig`, `pendingCertificate`, `usedByGvc`.
         /// </summary>
         [Input("status")]
         public Input<string>? Status { get; set; }

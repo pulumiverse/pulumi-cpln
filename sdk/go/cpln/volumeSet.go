@@ -19,21 +19,21 @@ type VolumeSet struct {
 	Autoscaling VolumeSetAutoscalingPtrOutput `pulumi:"autoscaling"`
 	// The ID, in GUID format, of the volume set.
 	CplnId pulumi.StringOutput `pulumi:"cplnId"`
+	// Configuration for customer-managed encryption keys, keyed by region.
+	CustomEncryption VolumeSetCustomEncryptionPtrOutput `pulumi:"customEncryption"`
 	// Description of the volume set.
 	Description pulumi.StringOutput `pulumi:"description"`
 	// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
 	FileSystemType pulumi.StringOutput `pulumi:"fileSystemType"`
 	// Name of the associated GVC.
 	Gvc pulumi.StringOutput `pulumi:"gvc"`
-	// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
-	// is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
+	// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd` is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
 	InitialCapacity pulumi.IntOutput `pulumi:"initialCapacity"`
 	// A list of mount options to use when mounting volumes in this set.
 	MountOptions VolumeSetMountOptionsPtrOutput `pulumi:"mountOptions"`
 	// Name of the volume set.
 	Name pulumi.StringOutput `pulumi:"name"`
-	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
-	// `high-throughput-ssd`.
+	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
 	PerformanceClass pulumi.StringOutput `pulumi:"performanceClass"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
@@ -41,9 +41,7 @@ type VolumeSet struct {
 	Snapshots VolumeSetSnapshotsPtrOutput `pulumi:"snapshots"`
 	// Status of the Volume Set.
 	Statuses VolumeSetStatusArrayOutput `pulumi:"statuses"`
-	// For self-hosted locations only. The storage class used for volumes in this set will be
-	// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
-	// {performanceClass}-{fileSystemType}
+	// For self-hosted locations only. The storage class used for volumes in this set will be {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be {performanceClass}-{fileSystemType}
 	StorageClassSuffix pulumi.StringPtrOutput `pulumi:"storageClassSuffix"`
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapOutput `pulumi:"tags"`
@@ -94,21 +92,21 @@ type volumeSetState struct {
 	Autoscaling *VolumeSetAutoscaling `pulumi:"autoscaling"`
 	// The ID, in GUID format, of the volume set.
 	CplnId *string `pulumi:"cplnId"`
+	// Configuration for customer-managed encryption keys, keyed by region.
+	CustomEncryption *VolumeSetCustomEncryption `pulumi:"customEncryption"`
 	// Description of the volume set.
 	Description *string `pulumi:"description"`
 	// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
 	FileSystemType *string `pulumi:"fileSystemType"`
 	// Name of the associated GVC.
 	Gvc *string `pulumi:"gvc"`
-	// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
-	// is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
+	// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd` is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
 	InitialCapacity *int `pulumi:"initialCapacity"`
 	// A list of mount options to use when mounting volumes in this set.
 	MountOptions *VolumeSetMountOptions `pulumi:"mountOptions"`
 	// Name of the volume set.
 	Name *string `pulumi:"name"`
-	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
-	// `high-throughput-ssd`.
+	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
 	PerformanceClass *string `pulumi:"performanceClass"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink *string `pulumi:"selfLink"`
@@ -116,9 +114,7 @@ type volumeSetState struct {
 	Snapshots *VolumeSetSnapshots `pulumi:"snapshots"`
 	// Status of the Volume Set.
 	Statuses []VolumeSetStatus `pulumi:"statuses"`
-	// For self-hosted locations only. The storage class used for volumes in this set will be
-	// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
-	// {performanceClass}-{fileSystemType}
+	// For self-hosted locations only. The storage class used for volumes in this set will be {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be {performanceClass}-{fileSystemType}
 	StorageClassSuffix *string `pulumi:"storageClassSuffix"`
 	// Key-value map of resource tags.
 	Tags map[string]string `pulumi:"tags"`
@@ -131,21 +127,21 @@ type VolumeSetState struct {
 	Autoscaling VolumeSetAutoscalingPtrInput
 	// The ID, in GUID format, of the volume set.
 	CplnId pulumi.StringPtrInput
+	// Configuration for customer-managed encryption keys, keyed by region.
+	CustomEncryption VolumeSetCustomEncryptionPtrInput
 	// Description of the volume set.
 	Description pulumi.StringPtrInput
 	// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
 	FileSystemType pulumi.StringPtrInput
 	// Name of the associated GVC.
 	Gvc pulumi.StringPtrInput
-	// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
-	// is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
+	// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd` is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
 	InitialCapacity pulumi.IntPtrInput
 	// A list of mount options to use when mounting volumes in this set.
 	MountOptions VolumeSetMountOptionsPtrInput
 	// Name of the volume set.
 	Name pulumi.StringPtrInput
-	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
-	// `high-throughput-ssd`.
+	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
 	PerformanceClass pulumi.StringPtrInput
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringPtrInput
@@ -153,9 +149,7 @@ type VolumeSetState struct {
 	Snapshots VolumeSetSnapshotsPtrInput
 	// Status of the Volume Set.
 	Statuses VolumeSetStatusArrayInput
-	// For self-hosted locations only. The storage class used for volumes in this set will be
-	// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
-	// {performanceClass}-{fileSystemType}
+	// For self-hosted locations only. The storage class used for volumes in this set will be {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be {performanceClass}-{fileSystemType}
 	StorageClassSuffix pulumi.StringPtrInput
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapInput
@@ -170,27 +164,25 @@ func (VolumeSetState) ElementType() reflect.Type {
 type volumeSetArgs struct {
 	// Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
 	Autoscaling *VolumeSetAutoscaling `pulumi:"autoscaling"`
+	// Configuration for customer-managed encryption keys, keyed by region.
+	CustomEncryption *VolumeSetCustomEncryption `pulumi:"customEncryption"`
 	// Description of the volume set.
 	Description *string `pulumi:"description"`
 	// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
 	FileSystemType *string `pulumi:"fileSystemType"`
 	// Name of the associated GVC.
 	Gvc string `pulumi:"gvc"`
-	// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
-	// is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
+	// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd` is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
 	InitialCapacity int `pulumi:"initialCapacity"`
 	// A list of mount options to use when mounting volumes in this set.
 	MountOptions *VolumeSetMountOptions `pulumi:"mountOptions"`
 	// Name of the volume set.
 	Name *string `pulumi:"name"`
-	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
-	// `high-throughput-ssd`.
+	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
 	PerformanceClass string `pulumi:"performanceClass"`
 	// Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
 	Snapshots *VolumeSetSnapshots `pulumi:"snapshots"`
-	// For self-hosted locations only. The storage class used for volumes in this set will be
-	// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
-	// {performanceClass}-{fileSystemType}
+	// For self-hosted locations only. The storage class used for volumes in this set will be {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be {performanceClass}-{fileSystemType}
 	StorageClassSuffix *string `pulumi:"storageClassSuffix"`
 	// Key-value map of resource tags.
 	Tags map[string]string `pulumi:"tags"`
@@ -200,27 +192,25 @@ type volumeSetArgs struct {
 type VolumeSetArgs struct {
 	// Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
 	Autoscaling VolumeSetAutoscalingPtrInput
+	// Configuration for customer-managed encryption keys, keyed by region.
+	CustomEncryption VolumeSetCustomEncryptionPtrInput
 	// Description of the volume set.
 	Description pulumi.StringPtrInput
 	// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
 	FileSystemType pulumi.StringPtrInput
 	// Name of the associated GVC.
 	Gvc pulumi.StringInput
-	// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
-	// is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
+	// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd` is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
 	InitialCapacity pulumi.IntInput
 	// A list of mount options to use when mounting volumes in this set.
 	MountOptions VolumeSetMountOptionsPtrInput
 	// Name of the volume set.
 	Name pulumi.StringPtrInput
-	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
-	// `high-throughput-ssd`.
+	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
 	PerformanceClass pulumi.StringInput
 	// Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
 	Snapshots VolumeSetSnapshotsPtrInput
-	// For self-hosted locations only. The storage class used for volumes in this set will be
-	// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
-	// {performanceClass}-{fileSystemType}
+	// For self-hosted locations only. The storage class used for volumes in this set will be {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be {performanceClass}-{fileSystemType}
 	StorageClassSuffix pulumi.StringPtrInput
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapInput
@@ -323,6 +313,11 @@ func (o VolumeSetOutput) CplnId() pulumi.StringOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringOutput { return v.CplnId }).(pulumi.StringOutput)
 }
 
+// Configuration for customer-managed encryption keys, keyed by region.
+func (o VolumeSetOutput) CustomEncryption() VolumeSetCustomEncryptionPtrOutput {
+	return o.ApplyT(func(v *VolumeSet) VolumeSetCustomEncryptionPtrOutput { return v.CustomEncryption }).(VolumeSetCustomEncryptionPtrOutput)
+}
+
 // Description of the volume set.
 func (o VolumeSetOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringOutput { return v.Description }).(pulumi.StringOutput)
@@ -338,8 +333,7 @@ func (o VolumeSetOutput) Gvc() pulumi.StringOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringOutput { return v.Gvc }).(pulumi.StringOutput)
 }
 
-// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
-// is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
+// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd` is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
 func (o VolumeSetOutput) InitialCapacity() pulumi.IntOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.IntOutput { return v.InitialCapacity }).(pulumi.IntOutput)
 }
@@ -354,8 +348,7 @@ func (o VolumeSetOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
-// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
-// `high-throughput-ssd`.
+// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
 func (o VolumeSetOutput) PerformanceClass() pulumi.StringOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringOutput { return v.PerformanceClass }).(pulumi.StringOutput)
 }
@@ -375,9 +368,7 @@ func (o VolumeSetOutput) Statuses() VolumeSetStatusArrayOutput {
 	return o.ApplyT(func(v *VolumeSet) VolumeSetStatusArrayOutput { return v.Statuses }).(VolumeSetStatusArrayOutput)
 }
 
-// For self-hosted locations only. The storage class used for volumes in this set will be
-// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
-// {performanceClass}-{fileSystemType}
+// For self-hosted locations only. The storage class used for volumes in this set will be {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be {performanceClass}-{fileSystemType}
 func (o VolumeSetOutput) StorageClassSuffix() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringPtrOutput { return v.StorageClassSuffix }).(pulumi.StringPtrOutput)
 }

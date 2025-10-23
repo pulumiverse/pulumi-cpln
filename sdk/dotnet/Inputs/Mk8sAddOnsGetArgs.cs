@@ -31,6 +31,12 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("azureWorkloadIdentity")]
         public Input<Inputs.Mk8sAddOnsAzureWorkloadIdentityGetArgs>? AzureWorkloadIdentity { get; set; }
 
+        /// <summary>
+        /// Bring-your-own Kubernetes (BYOK) add-on settings.
+        /// </summary>
+        [Input("byok")]
+        public Input<Inputs.Mk8sAddOnsByokGetArgs>? Byok { get; set; }
+
         [Input("dashboard")]
         public Input<bool>? Dashboard { get; set; }
 

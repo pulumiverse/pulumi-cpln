@@ -19,7 +19,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly bool Enabled;
         /// <summary>
-        /// Any threats with this severity and more severe will be sent. Others will be ignored. Valid values: `warning`, `error`, or `critical`.
+        /// Any threats with this severity and more severe will be sent. Others will be ignored. Valid values: `Warning`, `Error`, or `Critical`.
         /// </summary>
         public readonly string? MinimumSeverity;
         /// <summary>

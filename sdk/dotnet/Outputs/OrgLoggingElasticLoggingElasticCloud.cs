@@ -19,7 +19,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly string CloudId;
         /// <summary>
-        /// Full Link to a secret of type `userpass`.
+        /// Full Link to a secret of type `Userpass`.
         /// </summary>
         public readonly string Credentials;
         /// <summary>

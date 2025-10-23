@@ -20,7 +20,7 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<string> CloudId { get; set; } = null!;
 
         /// <summary>
-        /// Full Link to a secret of type `userpass`.
+        /// Full Link to a secret of type `Userpass`.
         /// </summary>
         [Input("credentials", required: true)]
         public Input<string> Credentials { get; set; } = null!;

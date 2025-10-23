@@ -26,8 +26,7 @@ type Secret struct {
 	Description pulumi.StringOutput `pulumi:"description"`
 	// List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
 	Dictionary pulumi.StringMapOutput `pulumi:"dictionary"`
-	// If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
-	// cpln://secret/SECRET_NAME.key`.
+	// If a dictionary secret is defined, this output will be a key-value map in the following format: `key = cpln://secret/SECRET_NAME.key`.
 	DictionaryAsEnvs pulumi.StringMapOutput `pulumi:"dictionaryAsEnvs"`
 	// JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
 	Docker pulumi.StringPtrOutput `pulumi:"docker"`
@@ -111,8 +110,7 @@ type secretState struct {
 	Description *string `pulumi:"description"`
 	// List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
 	Dictionary map[string]string `pulumi:"dictionary"`
-	// If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
-	// cpln://secret/SECRET_NAME.key`.
+	// If a dictionary secret is defined, this output will be a key-value map in the following format: `key = cpln://secret/SECRET_NAME.key`.
 	DictionaryAsEnvs map[string]string `pulumi:"dictionaryAsEnvs"`
 	// JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
 	Docker *string    `pulumi:"docker"`
@@ -152,8 +150,7 @@ type SecretState struct {
 	Description pulumi.StringPtrInput
 	// List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
 	Dictionary pulumi.StringMapInput
-	// If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
-	// cpln://secret/SECRET_NAME.key`.
+	// If a dictionary secret is defined, this output will be a key-value map in the following format: `key = cpln://secret/SECRET_NAME.key`.
 	DictionaryAsEnvs pulumi.StringMapInput
 	// JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
 	Docker pulumi.StringPtrInput
@@ -366,8 +363,7 @@ func (o SecretOutput) Dictionary() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Secret) pulumi.StringMapOutput { return v.Dictionary }).(pulumi.StringMapOutput)
 }
 
-// If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
-// cpln://secret/SECRET_NAME.key`.
+// If a dictionary secret is defined, this output will be a key-value map in the following format: `key = cpln://secret/SECRET_NAME.key`.
 func (o SecretOutput) DictionaryAsEnvs() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Secret) pulumi.StringMapOutput { return v.DictionaryAsEnvs }).(pulumi.StringMapOutput)
 }

@@ -7123,9 +7123,11 @@ type Mk8sAddOns struct {
 	AwsWorkloadIdentity   *bool                            `pulumi:"awsWorkloadIdentity"`
 	AzureAcr              *Mk8sAddOnsAzureAcr              `pulumi:"azureAcr"`
 	AzureWorkloadIdentity *Mk8sAddOnsAzureWorkloadIdentity `pulumi:"azureWorkloadIdentity"`
-	Dashboard             *bool                            `pulumi:"dashboard"`
-	LocalPathStorage      *bool                            `pulumi:"localPathStorage"`
-	Logs                  *Mk8sAddOnsLogs                  `pulumi:"logs"`
+	// Bring-your-own Kubernetes (BYOK) add-on settings.
+	Byok             *Mk8sAddOnsByok `pulumi:"byok"`
+	Dashboard        *bool           `pulumi:"dashboard"`
+	LocalPathStorage *bool           `pulumi:"localPathStorage"`
+	Logs             *Mk8sAddOnsLogs `pulumi:"logs"`
 	// Scrape pods annotated with prometheus.io/scrape=true
 	Metrics        *Mk8sAddOnsMetrics        `pulumi:"metrics"`
 	Nvidia         *Mk8sAddOnsNvidia         `pulumi:"nvidia"`
@@ -7151,9 +7153,11 @@ type Mk8sAddOnsArgs struct {
 	AwsWorkloadIdentity   pulumi.BoolPtrInput                     `pulumi:"awsWorkloadIdentity"`
 	AzureAcr              Mk8sAddOnsAzureAcrPtrInput              `pulumi:"azureAcr"`
 	AzureWorkloadIdentity Mk8sAddOnsAzureWorkloadIdentityPtrInput `pulumi:"azureWorkloadIdentity"`
-	Dashboard             pulumi.BoolPtrInput                     `pulumi:"dashboard"`
-	LocalPathStorage      pulumi.BoolPtrInput                     `pulumi:"localPathStorage"`
-	Logs                  Mk8sAddOnsLogsPtrInput                  `pulumi:"logs"`
+	// Bring-your-own Kubernetes (BYOK) add-on settings.
+	Byok             Mk8sAddOnsByokPtrInput `pulumi:"byok"`
+	Dashboard        pulumi.BoolPtrInput    `pulumi:"dashboard"`
+	LocalPathStorage pulumi.BoolPtrInput    `pulumi:"localPathStorage"`
+	Logs             Mk8sAddOnsLogsPtrInput `pulumi:"logs"`
 	// Scrape pods annotated with prometheus.io/scrape=true
 	Metrics        Mk8sAddOnsMetricsPtrInput        `pulumi:"metrics"`
 	Nvidia         Mk8sAddOnsNvidiaPtrInput         `pulumi:"nvidia"`
@@ -7262,6 +7266,11 @@ func (o Mk8sAddOnsOutput) AzureWorkloadIdentity() Mk8sAddOnsAzureWorkloadIdentit
 	return o.ApplyT(func(v Mk8sAddOns) *Mk8sAddOnsAzureWorkloadIdentity { return v.AzureWorkloadIdentity }).(Mk8sAddOnsAzureWorkloadIdentityPtrOutput)
 }
 
+// Bring-your-own Kubernetes (BYOK) add-on settings.
+func (o Mk8sAddOnsOutput) Byok() Mk8sAddOnsByokPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOns) *Mk8sAddOnsByok { return v.Byok }).(Mk8sAddOnsByokPtrOutput)
+}
+
 func (o Mk8sAddOnsOutput) Dashboard() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOns) *bool { return v.Dashboard }).(pulumi.BoolPtrOutput)
 }
@@ -7367,6 +7376,16 @@ func (o Mk8sAddOnsPtrOutput) AzureWorkloadIdentity() Mk8sAddOnsAzureWorkloadIden
 		}
 		return v.AzureWorkloadIdentity
 	}).(Mk8sAddOnsAzureWorkloadIdentityPtrOutput)
+}
+
+// Bring-your-own Kubernetes (BYOK) add-on settings.
+func (o Mk8sAddOnsPtrOutput) Byok() Mk8sAddOnsByokPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOns) *Mk8sAddOnsByok {
+		if v == nil {
+			return nil
+		}
+		return v.Byok
+	}).(Mk8sAddOnsByokPtrOutput)
 }
 
 func (o Mk8sAddOnsPtrOutput) Dashboard() pulumi.BoolPtrOutput {
@@ -8111,6 +8130,4107 @@ func (o Mk8sAddOnsAzureWorkloadIdentityPtrOutput) TenantId() pulumi.StringPtrOut
 			return nil
 		}
 		return v.TenantId
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByok struct {
+	// Fine-grained configuration for the BYOK workloads.
+	Config *Mk8sAddOnsByokConfig `pulumi:"config"`
+	// Disable Control Plane managed upgrades for BYOK components.
+	IgnoreUpdates *bool `pulumi:"ignoreUpdates"`
+	// The full link of a BYOK location.
+	Location string `pulumi:"location"`
+}
+
+// Mk8sAddOnsByokInput is an input type that accepts Mk8sAddOnsByokArgs and Mk8sAddOnsByokOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokInput` via:
+//
+//	Mk8sAddOnsByokArgs{...}
+type Mk8sAddOnsByokInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokOutput() Mk8sAddOnsByokOutput
+	ToMk8sAddOnsByokOutputWithContext(context.Context) Mk8sAddOnsByokOutput
+}
+
+type Mk8sAddOnsByokArgs struct {
+	// Fine-grained configuration for the BYOK workloads.
+	Config Mk8sAddOnsByokConfigPtrInput `pulumi:"config"`
+	// Disable Control Plane managed upgrades for BYOK components.
+	IgnoreUpdates pulumi.BoolPtrInput `pulumi:"ignoreUpdates"`
+	// The full link of a BYOK location.
+	Location pulumi.StringInput `pulumi:"location"`
+}
+
+func (Mk8sAddOnsByokArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByok)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokArgs) ToMk8sAddOnsByokOutput() Mk8sAddOnsByokOutput {
+	return i.ToMk8sAddOnsByokOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokArgs) ToMk8sAddOnsByokOutputWithContext(ctx context.Context) Mk8sAddOnsByokOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokOutput)
+}
+
+func (i Mk8sAddOnsByokArgs) ToMk8sAddOnsByokPtrOutput() Mk8sAddOnsByokPtrOutput {
+	return i.ToMk8sAddOnsByokPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokArgs) ToMk8sAddOnsByokPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokOutput).ToMk8sAddOnsByokPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokPtrInput is an input type that accepts Mk8sAddOnsByokArgs, Mk8sAddOnsByokPtr and Mk8sAddOnsByokPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokPtrInput` via:
+//
+//	        Mk8sAddOnsByokArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokPtrOutput() Mk8sAddOnsByokPtrOutput
+	ToMk8sAddOnsByokPtrOutputWithContext(context.Context) Mk8sAddOnsByokPtrOutput
+}
+
+type mk8sAddOnsByokPtrType Mk8sAddOnsByokArgs
+
+func Mk8sAddOnsByokPtr(v *Mk8sAddOnsByokArgs) Mk8sAddOnsByokPtrInput {
+	return (*mk8sAddOnsByokPtrType)(v)
+}
+
+func (*mk8sAddOnsByokPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByok)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokPtrType) ToMk8sAddOnsByokPtrOutput() Mk8sAddOnsByokPtrOutput {
+	return i.ToMk8sAddOnsByokPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokPtrType) ToMk8sAddOnsByokPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokPtrOutput)
+}
+
+type Mk8sAddOnsByokOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByok)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokOutput) ToMk8sAddOnsByokOutput() Mk8sAddOnsByokOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokOutput) ToMk8sAddOnsByokOutputWithContext(ctx context.Context) Mk8sAddOnsByokOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokOutput) ToMk8sAddOnsByokPtrOutput() Mk8sAddOnsByokPtrOutput {
+	return o.ToMk8sAddOnsByokPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokOutput) ToMk8sAddOnsByokPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByok) *Mk8sAddOnsByok {
+		return &v
+	}).(Mk8sAddOnsByokPtrOutput)
+}
+
+// Fine-grained configuration for the BYOK workloads.
+func (o Mk8sAddOnsByokOutput) Config() Mk8sAddOnsByokConfigPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByok) *Mk8sAddOnsByokConfig { return v.Config }).(Mk8sAddOnsByokConfigPtrOutput)
+}
+
+// Disable Control Plane managed upgrades for BYOK components.
+func (o Mk8sAddOnsByokOutput) IgnoreUpdates() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByok) *bool { return v.IgnoreUpdates }).(pulumi.BoolPtrOutput)
+}
+
+// The full link of a BYOK location.
+func (o Mk8sAddOnsByokOutput) Location() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByok) string { return v.Location }).(pulumi.StringOutput)
+}
+
+type Mk8sAddOnsByokPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByok)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokPtrOutput) ToMk8sAddOnsByokPtrOutput() Mk8sAddOnsByokPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokPtrOutput) ToMk8sAddOnsByokPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokPtrOutput) Elem() Mk8sAddOnsByokOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByok) Mk8sAddOnsByok {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByok
+		return ret
+	}).(Mk8sAddOnsByokOutput)
+}
+
+// Fine-grained configuration for the BYOK workloads.
+func (o Mk8sAddOnsByokPtrOutput) Config() Mk8sAddOnsByokConfigPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByok) *Mk8sAddOnsByokConfig {
+		if v == nil {
+			return nil
+		}
+		return v.Config
+	}).(Mk8sAddOnsByokConfigPtrOutput)
+}
+
+// Disable Control Plane managed upgrades for BYOK components.
+func (o Mk8sAddOnsByokPtrOutput) IgnoreUpdates() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByok) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.IgnoreUpdates
+	}).(pulumi.BoolPtrOutput)
+}
+
+// The full link of a BYOK location.
+func (o Mk8sAddOnsByokPtrOutput) Location() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByok) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Location
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfig struct {
+	// Resource tuning for the actuator component.
+	Actuator *Mk8sAddOnsByokConfigActuator `pulumi:"actuator"`
+	// Shared rollout settings for BYOK workloads.
+	Common *Mk8sAddOnsByokConfigCommon `pulumi:"common"`
+	// Ingress controller resource configuration.
+	Ingress *Mk8sAddOnsByokConfigIngress `pulumi:"ingress"`
+	// Internal DNS deployment settings.
+	InternalDns *Mk8sAddOnsByokConfigInternalDns `pulumi:"internalDns"`
+	// Istio service mesh configuration.
+	Istio *Mk8sAddOnsByokConfigIstio `pulumi:"istio"`
+	// Log splitter deployment configuration.
+	LogSplitter *Mk8sAddOnsByokConfigLogSplitter `pulumi:"logSplitter"`
+	// Longhorn persistent volume settings.
+	Longhorn *Mk8sAddOnsByokConfigLonghorn `pulumi:"longhorn"`
+	// Configuration for the optional middlebox traffic shaper.
+	Middlebox *Mk8sAddOnsByokConfigMiddlebox `pulumi:"middlebox"`
+	// Monitoring stack configuration.
+	Monitoring *Mk8sAddOnsByokConfigMonitoring `pulumi:"monitoring"`
+	// Redis cache configuration.
+	Redis *Mk8sAddOnsByokConfigRedis `pulumi:"redis"`
+	// High-availability Redis configuration.
+	RedisHa *Mk8sAddOnsByokConfigRedisHa `pulumi:"redisHa"`
+	// Redis Sentinel configuration.
+	RedisSentinel *Mk8sAddOnsByokConfigRedisSentinel `pulumi:"redisSentinel"`
+	// Tempo agent resource configuration.
+	TempoAgent *Mk8sAddOnsByokConfigTempoAgent `pulumi:"tempoAgent"`
+}
+
+// Mk8sAddOnsByokConfigInput is an input type that accepts Mk8sAddOnsByokConfigArgs and Mk8sAddOnsByokConfigOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigInput` via:
+//
+//	Mk8sAddOnsByokConfigArgs{...}
+type Mk8sAddOnsByokConfigInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigOutput() Mk8sAddOnsByokConfigOutput
+	ToMk8sAddOnsByokConfigOutputWithContext(context.Context) Mk8sAddOnsByokConfigOutput
+}
+
+type Mk8sAddOnsByokConfigArgs struct {
+	// Resource tuning for the actuator component.
+	Actuator Mk8sAddOnsByokConfigActuatorPtrInput `pulumi:"actuator"`
+	// Shared rollout settings for BYOK workloads.
+	Common Mk8sAddOnsByokConfigCommonPtrInput `pulumi:"common"`
+	// Ingress controller resource configuration.
+	Ingress Mk8sAddOnsByokConfigIngressPtrInput `pulumi:"ingress"`
+	// Internal DNS deployment settings.
+	InternalDns Mk8sAddOnsByokConfigInternalDnsPtrInput `pulumi:"internalDns"`
+	// Istio service mesh configuration.
+	Istio Mk8sAddOnsByokConfigIstioPtrInput `pulumi:"istio"`
+	// Log splitter deployment configuration.
+	LogSplitter Mk8sAddOnsByokConfigLogSplitterPtrInput `pulumi:"logSplitter"`
+	// Longhorn persistent volume settings.
+	Longhorn Mk8sAddOnsByokConfigLonghornPtrInput `pulumi:"longhorn"`
+	// Configuration for the optional middlebox traffic shaper.
+	Middlebox Mk8sAddOnsByokConfigMiddleboxPtrInput `pulumi:"middlebox"`
+	// Monitoring stack configuration.
+	Monitoring Mk8sAddOnsByokConfigMonitoringPtrInput `pulumi:"monitoring"`
+	// Redis cache configuration.
+	Redis Mk8sAddOnsByokConfigRedisPtrInput `pulumi:"redis"`
+	// High-availability Redis configuration.
+	RedisHa Mk8sAddOnsByokConfigRedisHaPtrInput `pulumi:"redisHa"`
+	// Redis Sentinel configuration.
+	RedisSentinel Mk8sAddOnsByokConfigRedisSentinelPtrInput `pulumi:"redisSentinel"`
+	// Tempo agent resource configuration.
+	TempoAgent Mk8sAddOnsByokConfigTempoAgentPtrInput `pulumi:"tempoAgent"`
+}
+
+func (Mk8sAddOnsByokConfigArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfig)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigArgs) ToMk8sAddOnsByokConfigOutput() Mk8sAddOnsByokConfigOutput {
+	return i.ToMk8sAddOnsByokConfigOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigArgs) ToMk8sAddOnsByokConfigOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigOutput)
+}
+
+func (i Mk8sAddOnsByokConfigArgs) ToMk8sAddOnsByokConfigPtrOutput() Mk8sAddOnsByokConfigPtrOutput {
+	return i.ToMk8sAddOnsByokConfigPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigArgs) ToMk8sAddOnsByokConfigPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigOutput).ToMk8sAddOnsByokConfigPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigPtrInput is an input type that accepts Mk8sAddOnsByokConfigArgs, Mk8sAddOnsByokConfigPtr and Mk8sAddOnsByokConfigPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigPtrOutput() Mk8sAddOnsByokConfigPtrOutput
+	ToMk8sAddOnsByokConfigPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigPtrOutput
+}
+
+type mk8sAddOnsByokConfigPtrType Mk8sAddOnsByokConfigArgs
+
+func Mk8sAddOnsByokConfigPtr(v *Mk8sAddOnsByokConfigArgs) Mk8sAddOnsByokConfigPtrInput {
+	return (*mk8sAddOnsByokConfigPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfig)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigPtrType) ToMk8sAddOnsByokConfigPtrOutput() Mk8sAddOnsByokConfigPtrOutput {
+	return i.ToMk8sAddOnsByokConfigPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigPtrType) ToMk8sAddOnsByokConfigPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfig)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigOutput) ToMk8sAddOnsByokConfigOutput() Mk8sAddOnsByokConfigOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigOutput) ToMk8sAddOnsByokConfigOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigOutput) ToMk8sAddOnsByokConfigPtrOutput() Mk8sAddOnsByokConfigPtrOutput {
+	return o.ToMk8sAddOnsByokConfigPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigOutput) ToMk8sAddOnsByokConfigPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfig {
+		return &v
+	}).(Mk8sAddOnsByokConfigPtrOutput)
+}
+
+// Resource tuning for the actuator component.
+func (o Mk8sAddOnsByokConfigOutput) Actuator() Mk8sAddOnsByokConfigActuatorPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigActuator { return v.Actuator }).(Mk8sAddOnsByokConfigActuatorPtrOutput)
+}
+
+// Shared rollout settings for BYOK workloads.
+func (o Mk8sAddOnsByokConfigOutput) Common() Mk8sAddOnsByokConfigCommonPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigCommon { return v.Common }).(Mk8sAddOnsByokConfigCommonPtrOutput)
+}
+
+// Ingress controller resource configuration.
+func (o Mk8sAddOnsByokConfigOutput) Ingress() Mk8sAddOnsByokConfigIngressPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigIngress { return v.Ingress }).(Mk8sAddOnsByokConfigIngressPtrOutput)
+}
+
+// Internal DNS deployment settings.
+func (o Mk8sAddOnsByokConfigOutput) InternalDns() Mk8sAddOnsByokConfigInternalDnsPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigInternalDns { return v.InternalDns }).(Mk8sAddOnsByokConfigInternalDnsPtrOutput)
+}
+
+// Istio service mesh configuration.
+func (o Mk8sAddOnsByokConfigOutput) Istio() Mk8sAddOnsByokConfigIstioPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigIstio { return v.Istio }).(Mk8sAddOnsByokConfigIstioPtrOutput)
+}
+
+// Log splitter deployment configuration.
+func (o Mk8sAddOnsByokConfigOutput) LogSplitter() Mk8sAddOnsByokConfigLogSplitterPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigLogSplitter { return v.LogSplitter }).(Mk8sAddOnsByokConfigLogSplitterPtrOutput)
+}
+
+// Longhorn persistent volume settings.
+func (o Mk8sAddOnsByokConfigOutput) Longhorn() Mk8sAddOnsByokConfigLonghornPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigLonghorn { return v.Longhorn }).(Mk8sAddOnsByokConfigLonghornPtrOutput)
+}
+
+// Configuration for the optional middlebox traffic shaper.
+func (o Mk8sAddOnsByokConfigOutput) Middlebox() Mk8sAddOnsByokConfigMiddleboxPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigMiddlebox { return v.Middlebox }).(Mk8sAddOnsByokConfigMiddleboxPtrOutput)
+}
+
+// Monitoring stack configuration.
+func (o Mk8sAddOnsByokConfigOutput) Monitoring() Mk8sAddOnsByokConfigMonitoringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigMonitoring { return v.Monitoring }).(Mk8sAddOnsByokConfigMonitoringPtrOutput)
+}
+
+// Redis cache configuration.
+func (o Mk8sAddOnsByokConfigOutput) Redis() Mk8sAddOnsByokConfigRedisPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigRedis { return v.Redis }).(Mk8sAddOnsByokConfigRedisPtrOutput)
+}
+
+// High-availability Redis configuration.
+func (o Mk8sAddOnsByokConfigOutput) RedisHa() Mk8sAddOnsByokConfigRedisHaPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigRedisHa { return v.RedisHa }).(Mk8sAddOnsByokConfigRedisHaPtrOutput)
+}
+
+// Redis Sentinel configuration.
+func (o Mk8sAddOnsByokConfigOutput) RedisSentinel() Mk8sAddOnsByokConfigRedisSentinelPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigRedisSentinel { return v.RedisSentinel }).(Mk8sAddOnsByokConfigRedisSentinelPtrOutput)
+}
+
+// Tempo agent resource configuration.
+func (o Mk8sAddOnsByokConfigOutput) TempoAgent() Mk8sAddOnsByokConfigTempoAgentPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigTempoAgent { return v.TempoAgent }).(Mk8sAddOnsByokConfigTempoAgentPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfig)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigPtrOutput) ToMk8sAddOnsByokConfigPtrOutput() Mk8sAddOnsByokConfigPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigPtrOutput) ToMk8sAddOnsByokConfigPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigPtrOutput) Elem() Mk8sAddOnsByokConfigOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfig) Mk8sAddOnsByokConfig {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfig
+		return ret
+	}).(Mk8sAddOnsByokConfigOutput)
+}
+
+// Resource tuning for the actuator component.
+func (o Mk8sAddOnsByokConfigPtrOutput) Actuator() Mk8sAddOnsByokConfigActuatorPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigActuator {
+		if v == nil {
+			return nil
+		}
+		return v.Actuator
+	}).(Mk8sAddOnsByokConfigActuatorPtrOutput)
+}
+
+// Shared rollout settings for BYOK workloads.
+func (o Mk8sAddOnsByokConfigPtrOutput) Common() Mk8sAddOnsByokConfigCommonPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigCommon {
+		if v == nil {
+			return nil
+		}
+		return v.Common
+	}).(Mk8sAddOnsByokConfigCommonPtrOutput)
+}
+
+// Ingress controller resource configuration.
+func (o Mk8sAddOnsByokConfigPtrOutput) Ingress() Mk8sAddOnsByokConfigIngressPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigIngress {
+		if v == nil {
+			return nil
+		}
+		return v.Ingress
+	}).(Mk8sAddOnsByokConfigIngressPtrOutput)
+}
+
+// Internal DNS deployment settings.
+func (o Mk8sAddOnsByokConfigPtrOutput) InternalDns() Mk8sAddOnsByokConfigInternalDnsPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigInternalDns {
+		if v == nil {
+			return nil
+		}
+		return v.InternalDns
+	}).(Mk8sAddOnsByokConfigInternalDnsPtrOutput)
+}
+
+// Istio service mesh configuration.
+func (o Mk8sAddOnsByokConfigPtrOutput) Istio() Mk8sAddOnsByokConfigIstioPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigIstio {
+		if v == nil {
+			return nil
+		}
+		return v.Istio
+	}).(Mk8sAddOnsByokConfigIstioPtrOutput)
+}
+
+// Log splitter deployment configuration.
+func (o Mk8sAddOnsByokConfigPtrOutput) LogSplitter() Mk8sAddOnsByokConfigLogSplitterPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigLogSplitter {
+		if v == nil {
+			return nil
+		}
+		return v.LogSplitter
+	}).(Mk8sAddOnsByokConfigLogSplitterPtrOutput)
+}
+
+// Longhorn persistent volume settings.
+func (o Mk8sAddOnsByokConfigPtrOutput) Longhorn() Mk8sAddOnsByokConfigLonghornPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigLonghorn {
+		if v == nil {
+			return nil
+		}
+		return v.Longhorn
+	}).(Mk8sAddOnsByokConfigLonghornPtrOutput)
+}
+
+// Configuration for the optional middlebox traffic shaper.
+func (o Mk8sAddOnsByokConfigPtrOutput) Middlebox() Mk8sAddOnsByokConfigMiddleboxPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigMiddlebox {
+		if v == nil {
+			return nil
+		}
+		return v.Middlebox
+	}).(Mk8sAddOnsByokConfigMiddleboxPtrOutput)
+}
+
+// Monitoring stack configuration.
+func (o Mk8sAddOnsByokConfigPtrOutput) Monitoring() Mk8sAddOnsByokConfigMonitoringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigMonitoring {
+		if v == nil {
+			return nil
+		}
+		return v.Monitoring
+	}).(Mk8sAddOnsByokConfigMonitoringPtrOutput)
+}
+
+// Redis cache configuration.
+func (o Mk8sAddOnsByokConfigPtrOutput) Redis() Mk8sAddOnsByokConfigRedisPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigRedis {
+		if v == nil {
+			return nil
+		}
+		return v.Redis
+	}).(Mk8sAddOnsByokConfigRedisPtrOutput)
+}
+
+// High-availability Redis configuration.
+func (o Mk8sAddOnsByokConfigPtrOutput) RedisHa() Mk8sAddOnsByokConfigRedisHaPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigRedisHa {
+		if v == nil {
+			return nil
+		}
+		return v.RedisHa
+	}).(Mk8sAddOnsByokConfigRedisHaPtrOutput)
+}
+
+// Redis Sentinel configuration.
+func (o Mk8sAddOnsByokConfigPtrOutput) RedisSentinel() Mk8sAddOnsByokConfigRedisSentinelPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigRedisSentinel {
+		if v == nil {
+			return nil
+		}
+		return v.RedisSentinel
+	}).(Mk8sAddOnsByokConfigRedisSentinelPtrOutput)
+}
+
+// Tempo agent resource configuration.
+func (o Mk8sAddOnsByokConfigPtrOutput) TempoAgent() Mk8sAddOnsByokConfigTempoAgentPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigTempoAgent {
+		if v == nil {
+			return nil
+		}
+		return v.TempoAgent
+	}).(Mk8sAddOnsByokConfigTempoAgentPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigActuator struct {
+	// Additional environment variables injected into actuator pods.
+	Env map[string]string `pulumi:"env"`
+	// Log level override for actuator containers. Valid values are: trace, info, error.
+	LogLevel *string `pulumi:"logLevel"`
+	// CPU limit applied to actuator pods.
+	MaxCpu *string `pulumi:"maxCpu"`
+	// Memory limit applied to actuator pods.
+	MaxMemory *string `pulumi:"maxMemory"`
+	// Minimum CPU request applied to actuator pods (e.g. "100m").
+	MinCpu *string `pulumi:"minCpu"`
+	// Minimum memory request applied to actuator pods (e.g. "128Mi").
+	MinMemory *string `pulumi:"minMemory"`
+}
+
+// Mk8sAddOnsByokConfigActuatorInput is an input type that accepts Mk8sAddOnsByokConfigActuatorArgs and Mk8sAddOnsByokConfigActuatorOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigActuatorInput` via:
+//
+//	Mk8sAddOnsByokConfigActuatorArgs{...}
+type Mk8sAddOnsByokConfigActuatorInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigActuatorOutput() Mk8sAddOnsByokConfigActuatorOutput
+	ToMk8sAddOnsByokConfigActuatorOutputWithContext(context.Context) Mk8sAddOnsByokConfigActuatorOutput
+}
+
+type Mk8sAddOnsByokConfigActuatorArgs struct {
+	// Additional environment variables injected into actuator pods.
+	Env pulumi.StringMapInput `pulumi:"env"`
+	// Log level override for actuator containers. Valid values are: trace, info, error.
+	LogLevel pulumi.StringPtrInput `pulumi:"logLevel"`
+	// CPU limit applied to actuator pods.
+	MaxCpu pulumi.StringPtrInput `pulumi:"maxCpu"`
+	// Memory limit applied to actuator pods.
+	MaxMemory pulumi.StringPtrInput `pulumi:"maxMemory"`
+	// Minimum CPU request applied to actuator pods (e.g. "100m").
+	MinCpu pulumi.StringPtrInput `pulumi:"minCpu"`
+	// Minimum memory request applied to actuator pods (e.g. "128Mi").
+	MinMemory pulumi.StringPtrInput `pulumi:"minMemory"`
+}
+
+func (Mk8sAddOnsByokConfigActuatorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigActuator)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigActuatorArgs) ToMk8sAddOnsByokConfigActuatorOutput() Mk8sAddOnsByokConfigActuatorOutput {
+	return i.ToMk8sAddOnsByokConfigActuatorOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigActuatorArgs) ToMk8sAddOnsByokConfigActuatorOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigActuatorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigActuatorOutput)
+}
+
+func (i Mk8sAddOnsByokConfigActuatorArgs) ToMk8sAddOnsByokConfigActuatorPtrOutput() Mk8sAddOnsByokConfigActuatorPtrOutput {
+	return i.ToMk8sAddOnsByokConfigActuatorPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigActuatorArgs) ToMk8sAddOnsByokConfigActuatorPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigActuatorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigActuatorOutput).ToMk8sAddOnsByokConfigActuatorPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigActuatorPtrInput is an input type that accepts Mk8sAddOnsByokConfigActuatorArgs, Mk8sAddOnsByokConfigActuatorPtr and Mk8sAddOnsByokConfigActuatorPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigActuatorPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigActuatorArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigActuatorPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigActuatorPtrOutput() Mk8sAddOnsByokConfigActuatorPtrOutput
+	ToMk8sAddOnsByokConfigActuatorPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigActuatorPtrOutput
+}
+
+type mk8sAddOnsByokConfigActuatorPtrType Mk8sAddOnsByokConfigActuatorArgs
+
+func Mk8sAddOnsByokConfigActuatorPtr(v *Mk8sAddOnsByokConfigActuatorArgs) Mk8sAddOnsByokConfigActuatorPtrInput {
+	return (*mk8sAddOnsByokConfigActuatorPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigActuatorPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigActuator)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigActuatorPtrType) ToMk8sAddOnsByokConfigActuatorPtrOutput() Mk8sAddOnsByokConfigActuatorPtrOutput {
+	return i.ToMk8sAddOnsByokConfigActuatorPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigActuatorPtrType) ToMk8sAddOnsByokConfigActuatorPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigActuatorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigActuatorPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigActuatorOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigActuatorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigActuator)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigActuatorOutput) ToMk8sAddOnsByokConfigActuatorOutput() Mk8sAddOnsByokConfigActuatorOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigActuatorOutput) ToMk8sAddOnsByokConfigActuatorOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigActuatorOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigActuatorOutput) ToMk8sAddOnsByokConfigActuatorPtrOutput() Mk8sAddOnsByokConfigActuatorPtrOutput {
+	return o.ToMk8sAddOnsByokConfigActuatorPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigActuatorOutput) ToMk8sAddOnsByokConfigActuatorPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigActuatorPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigActuator) *Mk8sAddOnsByokConfigActuator {
+		return &v
+	}).(Mk8sAddOnsByokConfigActuatorPtrOutput)
+}
+
+// Additional environment variables injected into actuator pods.
+func (o Mk8sAddOnsByokConfigActuatorOutput) Env() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigActuator) map[string]string { return v.Env }).(pulumi.StringMapOutput)
+}
+
+// Log level override for actuator containers. Valid values are: trace, info, error.
+func (o Mk8sAddOnsByokConfigActuatorOutput) LogLevel() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigActuator) *string { return v.LogLevel }).(pulumi.StringPtrOutput)
+}
+
+// CPU limit applied to actuator pods.
+func (o Mk8sAddOnsByokConfigActuatorOutput) MaxCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigActuator) *string { return v.MaxCpu }).(pulumi.StringPtrOutput)
+}
+
+// Memory limit applied to actuator pods.
+func (o Mk8sAddOnsByokConfigActuatorOutput) MaxMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigActuator) *string { return v.MaxMemory }).(pulumi.StringPtrOutput)
+}
+
+// Minimum CPU request applied to actuator pods (e.g. "100m").
+func (o Mk8sAddOnsByokConfigActuatorOutput) MinCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigActuator) *string { return v.MinCpu }).(pulumi.StringPtrOutput)
+}
+
+// Minimum memory request applied to actuator pods (e.g. "128Mi").
+func (o Mk8sAddOnsByokConfigActuatorOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigActuator) *string { return v.MinMemory }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigActuatorPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigActuatorPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigActuator)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigActuatorPtrOutput) ToMk8sAddOnsByokConfigActuatorPtrOutput() Mk8sAddOnsByokConfigActuatorPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigActuatorPtrOutput) ToMk8sAddOnsByokConfigActuatorPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigActuatorPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigActuatorPtrOutput) Elem() Mk8sAddOnsByokConfigActuatorOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigActuator) Mk8sAddOnsByokConfigActuator {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigActuator
+		return ret
+	}).(Mk8sAddOnsByokConfigActuatorOutput)
+}
+
+// Additional environment variables injected into actuator pods.
+func (o Mk8sAddOnsByokConfigActuatorPtrOutput) Env() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigActuator) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Env
+	}).(pulumi.StringMapOutput)
+}
+
+// Log level override for actuator containers. Valid values are: trace, info, error.
+func (o Mk8sAddOnsByokConfigActuatorPtrOutput) LogLevel() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigActuator) *string {
+		if v == nil {
+			return nil
+		}
+		return v.LogLevel
+	}).(pulumi.StringPtrOutput)
+}
+
+// CPU limit applied to actuator pods.
+func (o Mk8sAddOnsByokConfigActuatorPtrOutput) MaxCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigActuator) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxCpu
+	}).(pulumi.StringPtrOutput)
+}
+
+// Memory limit applied to actuator pods.
+func (o Mk8sAddOnsByokConfigActuatorPtrOutput) MaxMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigActuator) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+// Minimum CPU request applied to actuator pods (e.g. "100m").
+func (o Mk8sAddOnsByokConfigActuatorPtrOutput) MinCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigActuator) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinCpu
+	}).(pulumi.StringPtrOutput)
+}
+
+// Minimum memory request applied to actuator pods (e.g. "128Mi").
+func (o Mk8sAddOnsByokConfigActuatorPtrOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigActuator) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigCommon struct {
+	// Replica count shared by BYOK control plane deployments.
+	DeploymentReplicas *int `pulumi:"deploymentReplicas"`
+	// Pod disruption budget limits for BYOK workloads.
+	Pdb *Mk8sAddOnsByokConfigCommonPdb `pulumi:"pdb"`
+}
+
+// Mk8sAddOnsByokConfigCommonInput is an input type that accepts Mk8sAddOnsByokConfigCommonArgs and Mk8sAddOnsByokConfigCommonOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigCommonInput` via:
+//
+//	Mk8sAddOnsByokConfigCommonArgs{...}
+type Mk8sAddOnsByokConfigCommonInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigCommonOutput() Mk8sAddOnsByokConfigCommonOutput
+	ToMk8sAddOnsByokConfigCommonOutputWithContext(context.Context) Mk8sAddOnsByokConfigCommonOutput
+}
+
+type Mk8sAddOnsByokConfigCommonArgs struct {
+	// Replica count shared by BYOK control plane deployments.
+	DeploymentReplicas pulumi.IntPtrInput `pulumi:"deploymentReplicas"`
+	// Pod disruption budget limits for BYOK workloads.
+	Pdb Mk8sAddOnsByokConfigCommonPdbPtrInput `pulumi:"pdb"`
+}
+
+func (Mk8sAddOnsByokConfigCommonArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigCommon)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigCommonArgs) ToMk8sAddOnsByokConfigCommonOutput() Mk8sAddOnsByokConfigCommonOutput {
+	return i.ToMk8sAddOnsByokConfigCommonOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigCommonArgs) ToMk8sAddOnsByokConfigCommonOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigCommonOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigCommonOutput)
+}
+
+func (i Mk8sAddOnsByokConfigCommonArgs) ToMk8sAddOnsByokConfigCommonPtrOutput() Mk8sAddOnsByokConfigCommonPtrOutput {
+	return i.ToMk8sAddOnsByokConfigCommonPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigCommonArgs) ToMk8sAddOnsByokConfigCommonPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigCommonPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigCommonOutput).ToMk8sAddOnsByokConfigCommonPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigCommonPtrInput is an input type that accepts Mk8sAddOnsByokConfigCommonArgs, Mk8sAddOnsByokConfigCommonPtr and Mk8sAddOnsByokConfigCommonPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigCommonPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigCommonArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigCommonPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigCommonPtrOutput() Mk8sAddOnsByokConfigCommonPtrOutput
+	ToMk8sAddOnsByokConfigCommonPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigCommonPtrOutput
+}
+
+type mk8sAddOnsByokConfigCommonPtrType Mk8sAddOnsByokConfigCommonArgs
+
+func Mk8sAddOnsByokConfigCommonPtr(v *Mk8sAddOnsByokConfigCommonArgs) Mk8sAddOnsByokConfigCommonPtrInput {
+	return (*mk8sAddOnsByokConfigCommonPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigCommonPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigCommon)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigCommonPtrType) ToMk8sAddOnsByokConfigCommonPtrOutput() Mk8sAddOnsByokConfigCommonPtrOutput {
+	return i.ToMk8sAddOnsByokConfigCommonPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigCommonPtrType) ToMk8sAddOnsByokConfigCommonPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigCommonPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigCommonPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigCommonOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigCommonOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigCommon)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigCommonOutput) ToMk8sAddOnsByokConfigCommonOutput() Mk8sAddOnsByokConfigCommonOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigCommonOutput) ToMk8sAddOnsByokConfigCommonOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigCommonOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigCommonOutput) ToMk8sAddOnsByokConfigCommonPtrOutput() Mk8sAddOnsByokConfigCommonPtrOutput {
+	return o.ToMk8sAddOnsByokConfigCommonPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigCommonOutput) ToMk8sAddOnsByokConfigCommonPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigCommonPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigCommon) *Mk8sAddOnsByokConfigCommon {
+		return &v
+	}).(Mk8sAddOnsByokConfigCommonPtrOutput)
+}
+
+// Replica count shared by BYOK control plane deployments.
+func (o Mk8sAddOnsByokConfigCommonOutput) DeploymentReplicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigCommon) *int { return v.DeploymentReplicas }).(pulumi.IntPtrOutput)
+}
+
+// Pod disruption budget limits for BYOK workloads.
+func (o Mk8sAddOnsByokConfigCommonOutput) Pdb() Mk8sAddOnsByokConfigCommonPdbPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigCommon) *Mk8sAddOnsByokConfigCommonPdb { return v.Pdb }).(Mk8sAddOnsByokConfigCommonPdbPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigCommonPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigCommonPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigCommon)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigCommonPtrOutput) ToMk8sAddOnsByokConfigCommonPtrOutput() Mk8sAddOnsByokConfigCommonPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigCommonPtrOutput) ToMk8sAddOnsByokConfigCommonPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigCommonPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigCommonPtrOutput) Elem() Mk8sAddOnsByokConfigCommonOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigCommon) Mk8sAddOnsByokConfigCommon {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigCommon
+		return ret
+	}).(Mk8sAddOnsByokConfigCommonOutput)
+}
+
+// Replica count shared by BYOK control plane deployments.
+func (o Mk8sAddOnsByokConfigCommonPtrOutput) DeploymentReplicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigCommon) *int {
+		if v == nil {
+			return nil
+		}
+		return v.DeploymentReplicas
+	}).(pulumi.IntPtrOutput)
+}
+
+// Pod disruption budget limits for BYOK workloads.
+func (o Mk8sAddOnsByokConfigCommonPtrOutput) Pdb() Mk8sAddOnsByokConfigCommonPdbPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigCommon) *Mk8sAddOnsByokConfigCommonPdb {
+		if v == nil {
+			return nil
+		}
+		return v.Pdb
+	}).(Mk8sAddOnsByokConfigCommonPdbPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigCommonPdb struct {
+	// Maximum number of pods that can be unavailable during disruptions.
+	MaxUnavailable *int `pulumi:"maxUnavailable"`
+}
+
+// Mk8sAddOnsByokConfigCommonPdbInput is an input type that accepts Mk8sAddOnsByokConfigCommonPdbArgs and Mk8sAddOnsByokConfigCommonPdbOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigCommonPdbInput` via:
+//
+//	Mk8sAddOnsByokConfigCommonPdbArgs{...}
+type Mk8sAddOnsByokConfigCommonPdbInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigCommonPdbOutput() Mk8sAddOnsByokConfigCommonPdbOutput
+	ToMk8sAddOnsByokConfigCommonPdbOutputWithContext(context.Context) Mk8sAddOnsByokConfigCommonPdbOutput
+}
+
+type Mk8sAddOnsByokConfigCommonPdbArgs struct {
+	// Maximum number of pods that can be unavailable during disruptions.
+	MaxUnavailable pulumi.IntPtrInput `pulumi:"maxUnavailable"`
+}
+
+func (Mk8sAddOnsByokConfigCommonPdbArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigCommonPdb)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigCommonPdbArgs) ToMk8sAddOnsByokConfigCommonPdbOutput() Mk8sAddOnsByokConfigCommonPdbOutput {
+	return i.ToMk8sAddOnsByokConfigCommonPdbOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigCommonPdbArgs) ToMk8sAddOnsByokConfigCommonPdbOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigCommonPdbOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigCommonPdbOutput)
+}
+
+func (i Mk8sAddOnsByokConfigCommonPdbArgs) ToMk8sAddOnsByokConfigCommonPdbPtrOutput() Mk8sAddOnsByokConfigCommonPdbPtrOutput {
+	return i.ToMk8sAddOnsByokConfigCommonPdbPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigCommonPdbArgs) ToMk8sAddOnsByokConfigCommonPdbPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigCommonPdbPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigCommonPdbOutput).ToMk8sAddOnsByokConfigCommonPdbPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigCommonPdbPtrInput is an input type that accepts Mk8sAddOnsByokConfigCommonPdbArgs, Mk8sAddOnsByokConfigCommonPdbPtr and Mk8sAddOnsByokConfigCommonPdbPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigCommonPdbPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigCommonPdbArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigCommonPdbPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigCommonPdbPtrOutput() Mk8sAddOnsByokConfigCommonPdbPtrOutput
+	ToMk8sAddOnsByokConfigCommonPdbPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigCommonPdbPtrOutput
+}
+
+type mk8sAddOnsByokConfigCommonPdbPtrType Mk8sAddOnsByokConfigCommonPdbArgs
+
+func Mk8sAddOnsByokConfigCommonPdbPtr(v *Mk8sAddOnsByokConfigCommonPdbArgs) Mk8sAddOnsByokConfigCommonPdbPtrInput {
+	return (*mk8sAddOnsByokConfigCommonPdbPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigCommonPdbPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigCommonPdb)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigCommonPdbPtrType) ToMk8sAddOnsByokConfigCommonPdbPtrOutput() Mk8sAddOnsByokConfigCommonPdbPtrOutput {
+	return i.ToMk8sAddOnsByokConfigCommonPdbPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigCommonPdbPtrType) ToMk8sAddOnsByokConfigCommonPdbPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigCommonPdbPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigCommonPdbPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigCommonPdbOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigCommonPdbOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigCommonPdb)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigCommonPdbOutput) ToMk8sAddOnsByokConfigCommonPdbOutput() Mk8sAddOnsByokConfigCommonPdbOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigCommonPdbOutput) ToMk8sAddOnsByokConfigCommonPdbOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigCommonPdbOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigCommonPdbOutput) ToMk8sAddOnsByokConfigCommonPdbPtrOutput() Mk8sAddOnsByokConfigCommonPdbPtrOutput {
+	return o.ToMk8sAddOnsByokConfigCommonPdbPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigCommonPdbOutput) ToMk8sAddOnsByokConfigCommonPdbPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigCommonPdbPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigCommonPdb) *Mk8sAddOnsByokConfigCommonPdb {
+		return &v
+	}).(Mk8sAddOnsByokConfigCommonPdbPtrOutput)
+}
+
+// Maximum number of pods that can be unavailable during disruptions.
+func (o Mk8sAddOnsByokConfigCommonPdbOutput) MaxUnavailable() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigCommonPdb) *int { return v.MaxUnavailable }).(pulumi.IntPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigCommonPdbPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigCommonPdbPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigCommonPdb)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigCommonPdbPtrOutput) ToMk8sAddOnsByokConfigCommonPdbPtrOutput() Mk8sAddOnsByokConfigCommonPdbPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigCommonPdbPtrOutput) ToMk8sAddOnsByokConfigCommonPdbPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigCommonPdbPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigCommonPdbPtrOutput) Elem() Mk8sAddOnsByokConfigCommonPdbOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigCommonPdb) Mk8sAddOnsByokConfigCommonPdb {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigCommonPdb
+		return ret
+	}).(Mk8sAddOnsByokConfigCommonPdbOutput)
+}
+
+// Maximum number of pods that can be unavailable during disruptions.
+func (o Mk8sAddOnsByokConfigCommonPdbPtrOutput) MaxUnavailable() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigCommonPdb) *int {
+		if v == nil {
+			return nil
+		}
+		return v.MaxUnavailable
+	}).(pulumi.IntPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigIngress struct {
+	// CPU request/limit string applied to ingress pods.
+	Cpu *string `pulumi:"cpu"`
+	// Memory request/limit string applied to ingress pods.
+	Memory *string `pulumi:"memory"`
+	// Target usage percentage that triggers ingress autoscaling.
+	TargetPercent *float64 `pulumi:"targetPercent"`
+}
+
+// Mk8sAddOnsByokConfigIngressInput is an input type that accepts Mk8sAddOnsByokConfigIngressArgs and Mk8sAddOnsByokConfigIngressOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigIngressInput` via:
+//
+//	Mk8sAddOnsByokConfigIngressArgs{...}
+type Mk8sAddOnsByokConfigIngressInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigIngressOutput() Mk8sAddOnsByokConfigIngressOutput
+	ToMk8sAddOnsByokConfigIngressOutputWithContext(context.Context) Mk8sAddOnsByokConfigIngressOutput
+}
+
+type Mk8sAddOnsByokConfigIngressArgs struct {
+	// CPU request/limit string applied to ingress pods.
+	Cpu pulumi.StringPtrInput `pulumi:"cpu"`
+	// Memory request/limit string applied to ingress pods.
+	Memory pulumi.StringPtrInput `pulumi:"memory"`
+	// Target usage percentage that triggers ingress autoscaling.
+	TargetPercent pulumi.Float64PtrInput `pulumi:"targetPercent"`
+}
+
+func (Mk8sAddOnsByokConfigIngressArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigIngress)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigIngressArgs) ToMk8sAddOnsByokConfigIngressOutput() Mk8sAddOnsByokConfigIngressOutput {
+	return i.ToMk8sAddOnsByokConfigIngressOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigIngressArgs) ToMk8sAddOnsByokConfigIngressOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIngressOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigIngressOutput)
+}
+
+func (i Mk8sAddOnsByokConfigIngressArgs) ToMk8sAddOnsByokConfigIngressPtrOutput() Mk8sAddOnsByokConfigIngressPtrOutput {
+	return i.ToMk8sAddOnsByokConfigIngressPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigIngressArgs) ToMk8sAddOnsByokConfigIngressPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIngressPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigIngressOutput).ToMk8sAddOnsByokConfigIngressPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigIngressPtrInput is an input type that accepts Mk8sAddOnsByokConfigIngressArgs, Mk8sAddOnsByokConfigIngressPtr and Mk8sAddOnsByokConfigIngressPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigIngressPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigIngressArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigIngressPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigIngressPtrOutput() Mk8sAddOnsByokConfigIngressPtrOutput
+	ToMk8sAddOnsByokConfigIngressPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigIngressPtrOutput
+}
+
+type mk8sAddOnsByokConfigIngressPtrType Mk8sAddOnsByokConfigIngressArgs
+
+func Mk8sAddOnsByokConfigIngressPtr(v *Mk8sAddOnsByokConfigIngressArgs) Mk8sAddOnsByokConfigIngressPtrInput {
+	return (*mk8sAddOnsByokConfigIngressPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigIngressPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigIngress)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigIngressPtrType) ToMk8sAddOnsByokConfigIngressPtrOutput() Mk8sAddOnsByokConfigIngressPtrOutput {
+	return i.ToMk8sAddOnsByokConfigIngressPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigIngressPtrType) ToMk8sAddOnsByokConfigIngressPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIngressPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigIngressPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigIngressOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigIngressOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigIngress)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigIngressOutput) ToMk8sAddOnsByokConfigIngressOutput() Mk8sAddOnsByokConfigIngressOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIngressOutput) ToMk8sAddOnsByokConfigIngressOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIngressOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIngressOutput) ToMk8sAddOnsByokConfigIngressPtrOutput() Mk8sAddOnsByokConfigIngressPtrOutput {
+	return o.ToMk8sAddOnsByokConfigIngressPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigIngressOutput) ToMk8sAddOnsByokConfigIngressPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIngressPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigIngress) *Mk8sAddOnsByokConfigIngress {
+		return &v
+	}).(Mk8sAddOnsByokConfigIngressPtrOutput)
+}
+
+// CPU request/limit string applied to ingress pods.
+func (o Mk8sAddOnsByokConfigIngressOutput) Cpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigIngress) *string { return v.Cpu }).(pulumi.StringPtrOutput)
+}
+
+// Memory request/limit string applied to ingress pods.
+func (o Mk8sAddOnsByokConfigIngressOutput) Memory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigIngress) *string { return v.Memory }).(pulumi.StringPtrOutput)
+}
+
+// Target usage percentage that triggers ingress autoscaling.
+func (o Mk8sAddOnsByokConfigIngressOutput) TargetPercent() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigIngress) *float64 { return v.TargetPercent }).(pulumi.Float64PtrOutput)
+}
+
+type Mk8sAddOnsByokConfigIngressPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigIngressPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigIngress)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigIngressPtrOutput) ToMk8sAddOnsByokConfigIngressPtrOutput() Mk8sAddOnsByokConfigIngressPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIngressPtrOutput) ToMk8sAddOnsByokConfigIngressPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIngressPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIngressPtrOutput) Elem() Mk8sAddOnsByokConfigIngressOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIngress) Mk8sAddOnsByokConfigIngress {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigIngress
+		return ret
+	}).(Mk8sAddOnsByokConfigIngressOutput)
+}
+
+// CPU request/limit string applied to ingress pods.
+func (o Mk8sAddOnsByokConfigIngressPtrOutput) Cpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIngress) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Cpu
+	}).(pulumi.StringPtrOutput)
+}
+
+// Memory request/limit string applied to ingress pods.
+func (o Mk8sAddOnsByokConfigIngressPtrOutput) Memory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIngress) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Memory
+	}).(pulumi.StringPtrOutput)
+}
+
+// Target usage percentage that triggers ingress autoscaling.
+func (o Mk8sAddOnsByokConfigIngressPtrOutput) TargetPercent() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIngress) *float64 {
+		if v == nil {
+			return nil
+		}
+		return v.TargetPercent
+	}).(pulumi.Float64PtrOutput)
+}
+
+type Mk8sAddOnsByokConfigInternalDns struct {
+	// CPU limit applied to internal DNS pods.
+	MaxCpu *string `pulumi:"maxCpu"`
+	// Memory limit applied to internal DNS pods.
+	MaxMemory *string `pulumi:"maxMemory"`
+	// CPU request applied to internal DNS pods.
+	MinCpu *string `pulumi:"minCpu"`
+	// Memory request applied to internal DNS pods.
+	MinMemory *string `pulumi:"minMemory"`
+}
+
+// Mk8sAddOnsByokConfigInternalDnsInput is an input type that accepts Mk8sAddOnsByokConfigInternalDnsArgs and Mk8sAddOnsByokConfigInternalDnsOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigInternalDnsInput` via:
+//
+//	Mk8sAddOnsByokConfigInternalDnsArgs{...}
+type Mk8sAddOnsByokConfigInternalDnsInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigInternalDnsOutput() Mk8sAddOnsByokConfigInternalDnsOutput
+	ToMk8sAddOnsByokConfigInternalDnsOutputWithContext(context.Context) Mk8sAddOnsByokConfigInternalDnsOutput
+}
+
+type Mk8sAddOnsByokConfigInternalDnsArgs struct {
+	// CPU limit applied to internal DNS pods.
+	MaxCpu pulumi.StringPtrInput `pulumi:"maxCpu"`
+	// Memory limit applied to internal DNS pods.
+	MaxMemory pulumi.StringPtrInput `pulumi:"maxMemory"`
+	// CPU request applied to internal DNS pods.
+	MinCpu pulumi.StringPtrInput `pulumi:"minCpu"`
+	// Memory request applied to internal DNS pods.
+	MinMemory pulumi.StringPtrInput `pulumi:"minMemory"`
+}
+
+func (Mk8sAddOnsByokConfigInternalDnsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigInternalDns)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigInternalDnsArgs) ToMk8sAddOnsByokConfigInternalDnsOutput() Mk8sAddOnsByokConfigInternalDnsOutput {
+	return i.ToMk8sAddOnsByokConfigInternalDnsOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigInternalDnsArgs) ToMk8sAddOnsByokConfigInternalDnsOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigInternalDnsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigInternalDnsOutput)
+}
+
+func (i Mk8sAddOnsByokConfigInternalDnsArgs) ToMk8sAddOnsByokConfigInternalDnsPtrOutput() Mk8sAddOnsByokConfigInternalDnsPtrOutput {
+	return i.ToMk8sAddOnsByokConfigInternalDnsPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigInternalDnsArgs) ToMk8sAddOnsByokConfigInternalDnsPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigInternalDnsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigInternalDnsOutput).ToMk8sAddOnsByokConfigInternalDnsPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigInternalDnsPtrInput is an input type that accepts Mk8sAddOnsByokConfigInternalDnsArgs, Mk8sAddOnsByokConfigInternalDnsPtr and Mk8sAddOnsByokConfigInternalDnsPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigInternalDnsPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigInternalDnsArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigInternalDnsPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigInternalDnsPtrOutput() Mk8sAddOnsByokConfigInternalDnsPtrOutput
+	ToMk8sAddOnsByokConfigInternalDnsPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigInternalDnsPtrOutput
+}
+
+type mk8sAddOnsByokConfigInternalDnsPtrType Mk8sAddOnsByokConfigInternalDnsArgs
+
+func Mk8sAddOnsByokConfigInternalDnsPtr(v *Mk8sAddOnsByokConfigInternalDnsArgs) Mk8sAddOnsByokConfigInternalDnsPtrInput {
+	return (*mk8sAddOnsByokConfigInternalDnsPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigInternalDnsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigInternalDns)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigInternalDnsPtrType) ToMk8sAddOnsByokConfigInternalDnsPtrOutput() Mk8sAddOnsByokConfigInternalDnsPtrOutput {
+	return i.ToMk8sAddOnsByokConfigInternalDnsPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigInternalDnsPtrType) ToMk8sAddOnsByokConfigInternalDnsPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigInternalDnsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigInternalDnsPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigInternalDnsOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigInternalDnsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigInternalDns)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigInternalDnsOutput) ToMk8sAddOnsByokConfigInternalDnsOutput() Mk8sAddOnsByokConfigInternalDnsOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigInternalDnsOutput) ToMk8sAddOnsByokConfigInternalDnsOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigInternalDnsOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigInternalDnsOutput) ToMk8sAddOnsByokConfigInternalDnsPtrOutput() Mk8sAddOnsByokConfigInternalDnsPtrOutput {
+	return o.ToMk8sAddOnsByokConfigInternalDnsPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigInternalDnsOutput) ToMk8sAddOnsByokConfigInternalDnsPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigInternalDnsPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigInternalDns) *Mk8sAddOnsByokConfigInternalDns {
+		return &v
+	}).(Mk8sAddOnsByokConfigInternalDnsPtrOutput)
+}
+
+// CPU limit applied to internal DNS pods.
+func (o Mk8sAddOnsByokConfigInternalDnsOutput) MaxCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigInternalDns) *string { return v.MaxCpu }).(pulumi.StringPtrOutput)
+}
+
+// Memory limit applied to internal DNS pods.
+func (o Mk8sAddOnsByokConfigInternalDnsOutput) MaxMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigInternalDns) *string { return v.MaxMemory }).(pulumi.StringPtrOutput)
+}
+
+// CPU request applied to internal DNS pods.
+func (o Mk8sAddOnsByokConfigInternalDnsOutput) MinCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigInternalDns) *string { return v.MinCpu }).(pulumi.StringPtrOutput)
+}
+
+// Memory request applied to internal DNS pods.
+func (o Mk8sAddOnsByokConfigInternalDnsOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigInternalDns) *string { return v.MinMemory }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigInternalDnsPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigInternalDnsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigInternalDns)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigInternalDnsPtrOutput) ToMk8sAddOnsByokConfigInternalDnsPtrOutput() Mk8sAddOnsByokConfigInternalDnsPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigInternalDnsPtrOutput) ToMk8sAddOnsByokConfigInternalDnsPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigInternalDnsPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigInternalDnsPtrOutput) Elem() Mk8sAddOnsByokConfigInternalDnsOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigInternalDns) Mk8sAddOnsByokConfigInternalDns {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigInternalDns
+		return ret
+	}).(Mk8sAddOnsByokConfigInternalDnsOutput)
+}
+
+// CPU limit applied to internal DNS pods.
+func (o Mk8sAddOnsByokConfigInternalDnsPtrOutput) MaxCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigInternalDns) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxCpu
+	}).(pulumi.StringPtrOutput)
+}
+
+// Memory limit applied to internal DNS pods.
+func (o Mk8sAddOnsByokConfigInternalDnsPtrOutput) MaxMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigInternalDns) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+// CPU request applied to internal DNS pods.
+func (o Mk8sAddOnsByokConfigInternalDnsPtrOutput) MinCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigInternalDns) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinCpu
+	}).(pulumi.StringPtrOutput)
+}
+
+// Memory request applied to internal DNS pods.
+func (o Mk8sAddOnsByokConfigInternalDnsPtrOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigInternalDns) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigIstio struct {
+	// Istio ingress gateway deployment settings.
+	IngressGateway *Mk8sAddOnsByokConfigIstioIngressGateway `pulumi:"ingressGateway"`
+	// Control plane deployment settings for istiod.
+	Istiod *Mk8sAddOnsByokConfigIstioIstiod `pulumi:"istiod"`
+	// Default resource requests for Istio sidecar injection.
+	Sidecar *Mk8sAddOnsByokConfigIstioSidecar `pulumi:"sidecar"`
+}
+
+// Mk8sAddOnsByokConfigIstioInput is an input type that accepts Mk8sAddOnsByokConfigIstioArgs and Mk8sAddOnsByokConfigIstioOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigIstioInput` via:
+//
+//	Mk8sAddOnsByokConfigIstioArgs{...}
+type Mk8sAddOnsByokConfigIstioInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigIstioOutput() Mk8sAddOnsByokConfigIstioOutput
+	ToMk8sAddOnsByokConfigIstioOutputWithContext(context.Context) Mk8sAddOnsByokConfigIstioOutput
+}
+
+type Mk8sAddOnsByokConfigIstioArgs struct {
+	// Istio ingress gateway deployment settings.
+	IngressGateway Mk8sAddOnsByokConfigIstioIngressGatewayPtrInput `pulumi:"ingressGateway"`
+	// Control plane deployment settings for istiod.
+	Istiod Mk8sAddOnsByokConfigIstioIstiodPtrInput `pulumi:"istiod"`
+	// Default resource requests for Istio sidecar injection.
+	Sidecar Mk8sAddOnsByokConfigIstioSidecarPtrInput `pulumi:"sidecar"`
+}
+
+func (Mk8sAddOnsByokConfigIstioArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigIstio)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigIstioArgs) ToMk8sAddOnsByokConfigIstioOutput() Mk8sAddOnsByokConfigIstioOutput {
+	return i.ToMk8sAddOnsByokConfigIstioOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigIstioArgs) ToMk8sAddOnsByokConfigIstioOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigIstioOutput)
+}
+
+func (i Mk8sAddOnsByokConfigIstioArgs) ToMk8sAddOnsByokConfigIstioPtrOutput() Mk8sAddOnsByokConfigIstioPtrOutput {
+	return i.ToMk8sAddOnsByokConfigIstioPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigIstioArgs) ToMk8sAddOnsByokConfigIstioPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigIstioOutput).ToMk8sAddOnsByokConfigIstioPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigIstioPtrInput is an input type that accepts Mk8sAddOnsByokConfigIstioArgs, Mk8sAddOnsByokConfigIstioPtr and Mk8sAddOnsByokConfigIstioPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigIstioPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigIstioArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigIstioPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigIstioPtrOutput() Mk8sAddOnsByokConfigIstioPtrOutput
+	ToMk8sAddOnsByokConfigIstioPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigIstioPtrOutput
+}
+
+type mk8sAddOnsByokConfigIstioPtrType Mk8sAddOnsByokConfigIstioArgs
+
+func Mk8sAddOnsByokConfigIstioPtr(v *Mk8sAddOnsByokConfigIstioArgs) Mk8sAddOnsByokConfigIstioPtrInput {
+	return (*mk8sAddOnsByokConfigIstioPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigIstioPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigIstio)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigIstioPtrType) ToMk8sAddOnsByokConfigIstioPtrOutput() Mk8sAddOnsByokConfigIstioPtrOutput {
+	return i.ToMk8sAddOnsByokConfigIstioPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigIstioPtrType) ToMk8sAddOnsByokConfigIstioPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigIstioPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigIstioOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigIstioOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigIstio)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigIstioOutput) ToMk8sAddOnsByokConfigIstioOutput() Mk8sAddOnsByokConfigIstioOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIstioOutput) ToMk8sAddOnsByokConfigIstioOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIstioOutput) ToMk8sAddOnsByokConfigIstioPtrOutput() Mk8sAddOnsByokConfigIstioPtrOutput {
+	return o.ToMk8sAddOnsByokConfigIstioPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigIstioOutput) ToMk8sAddOnsByokConfigIstioPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigIstio) *Mk8sAddOnsByokConfigIstio {
+		return &v
+	}).(Mk8sAddOnsByokConfigIstioPtrOutput)
+}
+
+// Istio ingress gateway deployment settings.
+func (o Mk8sAddOnsByokConfigIstioOutput) IngressGateway() Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigIstio) *Mk8sAddOnsByokConfigIstioIngressGateway { return v.IngressGateway }).(Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput)
+}
+
+// Control plane deployment settings for istiod.
+func (o Mk8sAddOnsByokConfigIstioOutput) Istiod() Mk8sAddOnsByokConfigIstioIstiodPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigIstio) *Mk8sAddOnsByokConfigIstioIstiod { return v.Istiod }).(Mk8sAddOnsByokConfigIstioIstiodPtrOutput)
+}
+
+// Default resource requests for Istio sidecar injection.
+func (o Mk8sAddOnsByokConfigIstioOutput) Sidecar() Mk8sAddOnsByokConfigIstioSidecarPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigIstio) *Mk8sAddOnsByokConfigIstioSidecar { return v.Sidecar }).(Mk8sAddOnsByokConfigIstioSidecarPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigIstioPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigIstioPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigIstio)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigIstioPtrOutput) ToMk8sAddOnsByokConfigIstioPtrOutput() Mk8sAddOnsByokConfigIstioPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIstioPtrOutput) ToMk8sAddOnsByokConfigIstioPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIstioPtrOutput) Elem() Mk8sAddOnsByokConfigIstioOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIstio) Mk8sAddOnsByokConfigIstio {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigIstio
+		return ret
+	}).(Mk8sAddOnsByokConfigIstioOutput)
+}
+
+// Istio ingress gateway deployment settings.
+func (o Mk8sAddOnsByokConfigIstioPtrOutput) IngressGateway() Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIstio) *Mk8sAddOnsByokConfigIstioIngressGateway {
+		if v == nil {
+			return nil
+		}
+		return v.IngressGateway
+	}).(Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput)
+}
+
+// Control plane deployment settings for istiod.
+func (o Mk8sAddOnsByokConfigIstioPtrOutput) Istiod() Mk8sAddOnsByokConfigIstioIstiodPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIstio) *Mk8sAddOnsByokConfigIstioIstiod {
+		if v == nil {
+			return nil
+		}
+		return v.Istiod
+	}).(Mk8sAddOnsByokConfigIstioIstiodPtrOutput)
+}
+
+// Default resource requests for Istio sidecar injection.
+func (o Mk8sAddOnsByokConfigIstioPtrOutput) Sidecar() Mk8sAddOnsByokConfigIstioSidecarPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIstio) *Mk8sAddOnsByokConfigIstioSidecar {
+		if v == nil {
+			return nil
+		}
+		return v.Sidecar
+	}).(Mk8sAddOnsByokConfigIstioSidecarPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigIstioIngressGateway struct {
+	// CPU limit applied to ingress gateway pods.
+	MaxCpu *string `pulumi:"maxCpu"`
+	// Memory limit applied to ingress gateway pods.
+	MaxMemory *string `pulumi:"maxMemory"`
+	// Number of ingress gateway replicas.
+	Replicas *int `pulumi:"replicas"`
+}
+
+// Mk8sAddOnsByokConfigIstioIngressGatewayInput is an input type that accepts Mk8sAddOnsByokConfigIstioIngressGatewayArgs and Mk8sAddOnsByokConfigIstioIngressGatewayOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigIstioIngressGatewayInput` via:
+//
+//	Mk8sAddOnsByokConfigIstioIngressGatewayArgs{...}
+type Mk8sAddOnsByokConfigIstioIngressGatewayInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigIstioIngressGatewayOutput() Mk8sAddOnsByokConfigIstioIngressGatewayOutput
+	ToMk8sAddOnsByokConfigIstioIngressGatewayOutputWithContext(context.Context) Mk8sAddOnsByokConfigIstioIngressGatewayOutput
+}
+
+type Mk8sAddOnsByokConfigIstioIngressGatewayArgs struct {
+	// CPU limit applied to ingress gateway pods.
+	MaxCpu pulumi.StringPtrInput `pulumi:"maxCpu"`
+	// Memory limit applied to ingress gateway pods.
+	MaxMemory pulumi.StringPtrInput `pulumi:"maxMemory"`
+	// Number of ingress gateway replicas.
+	Replicas pulumi.IntPtrInput `pulumi:"replicas"`
+}
+
+func (Mk8sAddOnsByokConfigIstioIngressGatewayArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigIstioIngressGateway)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigIstioIngressGatewayArgs) ToMk8sAddOnsByokConfigIstioIngressGatewayOutput() Mk8sAddOnsByokConfigIstioIngressGatewayOutput {
+	return i.ToMk8sAddOnsByokConfigIstioIngressGatewayOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigIstioIngressGatewayArgs) ToMk8sAddOnsByokConfigIstioIngressGatewayOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioIngressGatewayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigIstioIngressGatewayOutput)
+}
+
+func (i Mk8sAddOnsByokConfigIstioIngressGatewayArgs) ToMk8sAddOnsByokConfigIstioIngressGatewayPtrOutput() Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput {
+	return i.ToMk8sAddOnsByokConfigIstioIngressGatewayPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigIstioIngressGatewayArgs) ToMk8sAddOnsByokConfigIstioIngressGatewayPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigIstioIngressGatewayOutput).ToMk8sAddOnsByokConfigIstioIngressGatewayPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigIstioIngressGatewayPtrInput is an input type that accepts Mk8sAddOnsByokConfigIstioIngressGatewayArgs, Mk8sAddOnsByokConfigIstioIngressGatewayPtr and Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigIstioIngressGatewayPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigIstioIngressGatewayArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigIstioIngressGatewayPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigIstioIngressGatewayPtrOutput() Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput
+	ToMk8sAddOnsByokConfigIstioIngressGatewayPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput
+}
+
+type mk8sAddOnsByokConfigIstioIngressGatewayPtrType Mk8sAddOnsByokConfigIstioIngressGatewayArgs
+
+func Mk8sAddOnsByokConfigIstioIngressGatewayPtr(v *Mk8sAddOnsByokConfigIstioIngressGatewayArgs) Mk8sAddOnsByokConfigIstioIngressGatewayPtrInput {
+	return (*mk8sAddOnsByokConfigIstioIngressGatewayPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigIstioIngressGatewayPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigIstioIngressGateway)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigIstioIngressGatewayPtrType) ToMk8sAddOnsByokConfigIstioIngressGatewayPtrOutput() Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput {
+	return i.ToMk8sAddOnsByokConfigIstioIngressGatewayPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigIstioIngressGatewayPtrType) ToMk8sAddOnsByokConfigIstioIngressGatewayPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigIstioIngressGatewayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigIstioIngressGatewayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigIstioIngressGateway)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigIstioIngressGatewayOutput) ToMk8sAddOnsByokConfigIstioIngressGatewayOutput() Mk8sAddOnsByokConfigIstioIngressGatewayOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIstioIngressGatewayOutput) ToMk8sAddOnsByokConfigIstioIngressGatewayOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioIngressGatewayOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIstioIngressGatewayOutput) ToMk8sAddOnsByokConfigIstioIngressGatewayPtrOutput() Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput {
+	return o.ToMk8sAddOnsByokConfigIstioIngressGatewayPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigIstioIngressGatewayOutput) ToMk8sAddOnsByokConfigIstioIngressGatewayPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigIstioIngressGateway) *Mk8sAddOnsByokConfigIstioIngressGateway {
+		return &v
+	}).(Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput)
+}
+
+// CPU limit applied to ingress gateway pods.
+func (o Mk8sAddOnsByokConfigIstioIngressGatewayOutput) MaxCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigIstioIngressGateway) *string { return v.MaxCpu }).(pulumi.StringPtrOutput)
+}
+
+// Memory limit applied to ingress gateway pods.
+func (o Mk8sAddOnsByokConfigIstioIngressGatewayOutput) MaxMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigIstioIngressGateway) *string { return v.MaxMemory }).(pulumi.StringPtrOutput)
+}
+
+// Number of ingress gateway replicas.
+func (o Mk8sAddOnsByokConfigIstioIngressGatewayOutput) Replicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigIstioIngressGateway) *int { return v.Replicas }).(pulumi.IntPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigIstioIngressGateway)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput) ToMk8sAddOnsByokConfigIstioIngressGatewayPtrOutput() Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput) ToMk8sAddOnsByokConfigIstioIngressGatewayPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput) Elem() Mk8sAddOnsByokConfigIstioIngressGatewayOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIstioIngressGateway) Mk8sAddOnsByokConfigIstioIngressGateway {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigIstioIngressGateway
+		return ret
+	}).(Mk8sAddOnsByokConfigIstioIngressGatewayOutput)
+}
+
+// CPU limit applied to ingress gateway pods.
+func (o Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput) MaxCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIstioIngressGateway) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxCpu
+	}).(pulumi.StringPtrOutput)
+}
+
+// Memory limit applied to ingress gateway pods.
+func (o Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput) MaxMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIstioIngressGateway) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+// Number of ingress gateway replicas.
+func (o Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput) Replicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIstioIngressGateway) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Replicas
+	}).(pulumi.IntPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigIstioIstiod struct {
+	// CPU limit applied to istiod pods.
+	MaxCpu *string `pulumi:"maxCpu"`
+	// Memory limit applied to istiod pods.
+	MaxMemory *string `pulumi:"maxMemory"`
+	// CPU request applied to istiod pods.
+	MinCpu *string `pulumi:"minCpu"`
+	// Memory request applied to istiod pods.
+	MinMemory *string `pulumi:"minMemory"`
+	// Pod disruption budget maxUnavailable for istiod.
+	Pdb *int `pulumi:"pdb"`
+	// Number of istiod replicas.
+	Replicas *int `pulumi:"replicas"`
+}
+
+// Mk8sAddOnsByokConfigIstioIstiodInput is an input type that accepts Mk8sAddOnsByokConfigIstioIstiodArgs and Mk8sAddOnsByokConfigIstioIstiodOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigIstioIstiodInput` via:
+//
+//	Mk8sAddOnsByokConfigIstioIstiodArgs{...}
+type Mk8sAddOnsByokConfigIstioIstiodInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigIstioIstiodOutput() Mk8sAddOnsByokConfigIstioIstiodOutput
+	ToMk8sAddOnsByokConfigIstioIstiodOutputWithContext(context.Context) Mk8sAddOnsByokConfigIstioIstiodOutput
+}
+
+type Mk8sAddOnsByokConfigIstioIstiodArgs struct {
+	// CPU limit applied to istiod pods.
+	MaxCpu pulumi.StringPtrInput `pulumi:"maxCpu"`
+	// Memory limit applied to istiod pods.
+	MaxMemory pulumi.StringPtrInput `pulumi:"maxMemory"`
+	// CPU request applied to istiod pods.
+	MinCpu pulumi.StringPtrInput `pulumi:"minCpu"`
+	// Memory request applied to istiod pods.
+	MinMemory pulumi.StringPtrInput `pulumi:"minMemory"`
+	// Pod disruption budget maxUnavailable for istiod.
+	Pdb pulumi.IntPtrInput `pulumi:"pdb"`
+	// Number of istiod replicas.
+	Replicas pulumi.IntPtrInput `pulumi:"replicas"`
+}
+
+func (Mk8sAddOnsByokConfigIstioIstiodArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigIstioIstiod)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigIstioIstiodArgs) ToMk8sAddOnsByokConfigIstioIstiodOutput() Mk8sAddOnsByokConfigIstioIstiodOutput {
+	return i.ToMk8sAddOnsByokConfigIstioIstiodOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigIstioIstiodArgs) ToMk8sAddOnsByokConfigIstioIstiodOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioIstiodOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigIstioIstiodOutput)
+}
+
+func (i Mk8sAddOnsByokConfigIstioIstiodArgs) ToMk8sAddOnsByokConfigIstioIstiodPtrOutput() Mk8sAddOnsByokConfigIstioIstiodPtrOutput {
+	return i.ToMk8sAddOnsByokConfigIstioIstiodPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigIstioIstiodArgs) ToMk8sAddOnsByokConfigIstioIstiodPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioIstiodPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigIstioIstiodOutput).ToMk8sAddOnsByokConfigIstioIstiodPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigIstioIstiodPtrInput is an input type that accepts Mk8sAddOnsByokConfigIstioIstiodArgs, Mk8sAddOnsByokConfigIstioIstiodPtr and Mk8sAddOnsByokConfigIstioIstiodPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigIstioIstiodPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigIstioIstiodArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigIstioIstiodPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigIstioIstiodPtrOutput() Mk8sAddOnsByokConfigIstioIstiodPtrOutput
+	ToMk8sAddOnsByokConfigIstioIstiodPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigIstioIstiodPtrOutput
+}
+
+type mk8sAddOnsByokConfigIstioIstiodPtrType Mk8sAddOnsByokConfigIstioIstiodArgs
+
+func Mk8sAddOnsByokConfigIstioIstiodPtr(v *Mk8sAddOnsByokConfigIstioIstiodArgs) Mk8sAddOnsByokConfigIstioIstiodPtrInput {
+	return (*mk8sAddOnsByokConfigIstioIstiodPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigIstioIstiodPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigIstioIstiod)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigIstioIstiodPtrType) ToMk8sAddOnsByokConfigIstioIstiodPtrOutput() Mk8sAddOnsByokConfigIstioIstiodPtrOutput {
+	return i.ToMk8sAddOnsByokConfigIstioIstiodPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigIstioIstiodPtrType) ToMk8sAddOnsByokConfigIstioIstiodPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioIstiodPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigIstioIstiodPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigIstioIstiodOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigIstioIstiodOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigIstioIstiod)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigIstioIstiodOutput) ToMk8sAddOnsByokConfigIstioIstiodOutput() Mk8sAddOnsByokConfigIstioIstiodOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIstioIstiodOutput) ToMk8sAddOnsByokConfigIstioIstiodOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioIstiodOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIstioIstiodOutput) ToMk8sAddOnsByokConfigIstioIstiodPtrOutput() Mk8sAddOnsByokConfigIstioIstiodPtrOutput {
+	return o.ToMk8sAddOnsByokConfigIstioIstiodPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigIstioIstiodOutput) ToMk8sAddOnsByokConfigIstioIstiodPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioIstiodPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigIstioIstiod) *Mk8sAddOnsByokConfigIstioIstiod {
+		return &v
+	}).(Mk8sAddOnsByokConfigIstioIstiodPtrOutput)
+}
+
+// CPU limit applied to istiod pods.
+func (o Mk8sAddOnsByokConfigIstioIstiodOutput) MaxCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigIstioIstiod) *string { return v.MaxCpu }).(pulumi.StringPtrOutput)
+}
+
+// Memory limit applied to istiod pods.
+func (o Mk8sAddOnsByokConfigIstioIstiodOutput) MaxMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigIstioIstiod) *string { return v.MaxMemory }).(pulumi.StringPtrOutput)
+}
+
+// CPU request applied to istiod pods.
+func (o Mk8sAddOnsByokConfigIstioIstiodOutput) MinCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigIstioIstiod) *string { return v.MinCpu }).(pulumi.StringPtrOutput)
+}
+
+// Memory request applied to istiod pods.
+func (o Mk8sAddOnsByokConfigIstioIstiodOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigIstioIstiod) *string { return v.MinMemory }).(pulumi.StringPtrOutput)
+}
+
+// Pod disruption budget maxUnavailable for istiod.
+func (o Mk8sAddOnsByokConfigIstioIstiodOutput) Pdb() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigIstioIstiod) *int { return v.Pdb }).(pulumi.IntPtrOutput)
+}
+
+// Number of istiod replicas.
+func (o Mk8sAddOnsByokConfigIstioIstiodOutput) Replicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigIstioIstiod) *int { return v.Replicas }).(pulumi.IntPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigIstioIstiodPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigIstioIstiodPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigIstioIstiod)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigIstioIstiodPtrOutput) ToMk8sAddOnsByokConfigIstioIstiodPtrOutput() Mk8sAddOnsByokConfigIstioIstiodPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIstioIstiodPtrOutput) ToMk8sAddOnsByokConfigIstioIstiodPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioIstiodPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIstioIstiodPtrOutput) Elem() Mk8sAddOnsByokConfigIstioIstiodOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIstioIstiod) Mk8sAddOnsByokConfigIstioIstiod {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigIstioIstiod
+		return ret
+	}).(Mk8sAddOnsByokConfigIstioIstiodOutput)
+}
+
+// CPU limit applied to istiod pods.
+func (o Mk8sAddOnsByokConfigIstioIstiodPtrOutput) MaxCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIstioIstiod) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxCpu
+	}).(pulumi.StringPtrOutput)
+}
+
+// Memory limit applied to istiod pods.
+func (o Mk8sAddOnsByokConfigIstioIstiodPtrOutput) MaxMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIstioIstiod) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+// CPU request applied to istiod pods.
+func (o Mk8sAddOnsByokConfigIstioIstiodPtrOutput) MinCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIstioIstiod) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinCpu
+	}).(pulumi.StringPtrOutput)
+}
+
+// Memory request applied to istiod pods.
+func (o Mk8sAddOnsByokConfigIstioIstiodPtrOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIstioIstiod) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+// Pod disruption budget maxUnavailable for istiod.
+func (o Mk8sAddOnsByokConfigIstioIstiodPtrOutput) Pdb() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIstioIstiod) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Pdb
+	}).(pulumi.IntPtrOutput)
+}
+
+// Number of istiod replicas.
+func (o Mk8sAddOnsByokConfigIstioIstiodPtrOutput) Replicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIstioIstiod) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Replicas
+	}).(pulumi.IntPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigIstioSidecar struct {
+	// CPU request applied to injected sidecars.
+	MinCpu *string `pulumi:"minCpu"`
+	// Memory request applied to injected sidecars.
+	MinMemory *string `pulumi:"minMemory"`
+}
+
+// Mk8sAddOnsByokConfigIstioSidecarInput is an input type that accepts Mk8sAddOnsByokConfigIstioSidecarArgs and Mk8sAddOnsByokConfigIstioSidecarOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigIstioSidecarInput` via:
+//
+//	Mk8sAddOnsByokConfigIstioSidecarArgs{...}
+type Mk8sAddOnsByokConfigIstioSidecarInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigIstioSidecarOutput() Mk8sAddOnsByokConfigIstioSidecarOutput
+	ToMk8sAddOnsByokConfigIstioSidecarOutputWithContext(context.Context) Mk8sAddOnsByokConfigIstioSidecarOutput
+}
+
+type Mk8sAddOnsByokConfigIstioSidecarArgs struct {
+	// CPU request applied to injected sidecars.
+	MinCpu pulumi.StringPtrInput `pulumi:"minCpu"`
+	// Memory request applied to injected sidecars.
+	MinMemory pulumi.StringPtrInput `pulumi:"minMemory"`
+}
+
+func (Mk8sAddOnsByokConfigIstioSidecarArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigIstioSidecar)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigIstioSidecarArgs) ToMk8sAddOnsByokConfigIstioSidecarOutput() Mk8sAddOnsByokConfigIstioSidecarOutput {
+	return i.ToMk8sAddOnsByokConfigIstioSidecarOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigIstioSidecarArgs) ToMk8sAddOnsByokConfigIstioSidecarOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioSidecarOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigIstioSidecarOutput)
+}
+
+func (i Mk8sAddOnsByokConfigIstioSidecarArgs) ToMk8sAddOnsByokConfigIstioSidecarPtrOutput() Mk8sAddOnsByokConfigIstioSidecarPtrOutput {
+	return i.ToMk8sAddOnsByokConfigIstioSidecarPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigIstioSidecarArgs) ToMk8sAddOnsByokConfigIstioSidecarPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioSidecarPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigIstioSidecarOutput).ToMk8sAddOnsByokConfigIstioSidecarPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigIstioSidecarPtrInput is an input type that accepts Mk8sAddOnsByokConfigIstioSidecarArgs, Mk8sAddOnsByokConfigIstioSidecarPtr and Mk8sAddOnsByokConfigIstioSidecarPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigIstioSidecarPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigIstioSidecarArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigIstioSidecarPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigIstioSidecarPtrOutput() Mk8sAddOnsByokConfigIstioSidecarPtrOutput
+	ToMk8sAddOnsByokConfigIstioSidecarPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigIstioSidecarPtrOutput
+}
+
+type mk8sAddOnsByokConfigIstioSidecarPtrType Mk8sAddOnsByokConfigIstioSidecarArgs
+
+func Mk8sAddOnsByokConfigIstioSidecarPtr(v *Mk8sAddOnsByokConfigIstioSidecarArgs) Mk8sAddOnsByokConfigIstioSidecarPtrInput {
+	return (*mk8sAddOnsByokConfigIstioSidecarPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigIstioSidecarPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigIstioSidecar)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigIstioSidecarPtrType) ToMk8sAddOnsByokConfigIstioSidecarPtrOutput() Mk8sAddOnsByokConfigIstioSidecarPtrOutput {
+	return i.ToMk8sAddOnsByokConfigIstioSidecarPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigIstioSidecarPtrType) ToMk8sAddOnsByokConfigIstioSidecarPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioSidecarPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigIstioSidecarPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigIstioSidecarOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigIstioSidecarOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigIstioSidecar)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigIstioSidecarOutput) ToMk8sAddOnsByokConfigIstioSidecarOutput() Mk8sAddOnsByokConfigIstioSidecarOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIstioSidecarOutput) ToMk8sAddOnsByokConfigIstioSidecarOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioSidecarOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIstioSidecarOutput) ToMk8sAddOnsByokConfigIstioSidecarPtrOutput() Mk8sAddOnsByokConfigIstioSidecarPtrOutput {
+	return o.ToMk8sAddOnsByokConfigIstioSidecarPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigIstioSidecarOutput) ToMk8sAddOnsByokConfigIstioSidecarPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioSidecarPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigIstioSidecar) *Mk8sAddOnsByokConfigIstioSidecar {
+		return &v
+	}).(Mk8sAddOnsByokConfigIstioSidecarPtrOutput)
+}
+
+// CPU request applied to injected sidecars.
+func (o Mk8sAddOnsByokConfigIstioSidecarOutput) MinCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigIstioSidecar) *string { return v.MinCpu }).(pulumi.StringPtrOutput)
+}
+
+// Memory request applied to injected sidecars.
+func (o Mk8sAddOnsByokConfigIstioSidecarOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigIstioSidecar) *string { return v.MinMemory }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigIstioSidecarPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigIstioSidecarPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigIstioSidecar)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigIstioSidecarPtrOutput) ToMk8sAddOnsByokConfigIstioSidecarPtrOutput() Mk8sAddOnsByokConfigIstioSidecarPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIstioSidecarPtrOutput) ToMk8sAddOnsByokConfigIstioSidecarPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigIstioSidecarPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigIstioSidecarPtrOutput) Elem() Mk8sAddOnsByokConfigIstioSidecarOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIstioSidecar) Mk8sAddOnsByokConfigIstioSidecar {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigIstioSidecar
+		return ret
+	}).(Mk8sAddOnsByokConfigIstioSidecarOutput)
+}
+
+// CPU request applied to injected sidecars.
+func (o Mk8sAddOnsByokConfigIstioSidecarPtrOutput) MinCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIstioSidecar) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinCpu
+	}).(pulumi.StringPtrOutput)
+}
+
+// Memory request applied to injected sidecars.
+func (o Mk8sAddOnsByokConfigIstioSidecarPtrOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigIstioSidecar) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigLogSplitter struct {
+	// CPU limit applied to log splitter pods.
+	MaxCpu *string `pulumi:"maxCpu"`
+	// Memory limit applied to log splitter pods.
+	MaxMemory *string `pulumi:"maxMemory"`
+	// In-memory buffer size consumed by each log splitter pod.
+	MemBufferSize *string `pulumi:"memBufferSize"`
+	// CPU request applied to log splitter pods.
+	MinCpu *string `pulumi:"minCpu"`
+	// Memory request applied to log splitter pods.
+	MinMemory *string `pulumi:"minMemory"`
+	// Per-pod log processing rate limit.
+	PerPodRate *int `pulumi:"perPodRate"`
+}
+
+// Mk8sAddOnsByokConfigLogSplitterInput is an input type that accepts Mk8sAddOnsByokConfigLogSplitterArgs and Mk8sAddOnsByokConfigLogSplitterOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigLogSplitterInput` via:
+//
+//	Mk8sAddOnsByokConfigLogSplitterArgs{...}
+type Mk8sAddOnsByokConfigLogSplitterInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigLogSplitterOutput() Mk8sAddOnsByokConfigLogSplitterOutput
+	ToMk8sAddOnsByokConfigLogSplitterOutputWithContext(context.Context) Mk8sAddOnsByokConfigLogSplitterOutput
+}
+
+type Mk8sAddOnsByokConfigLogSplitterArgs struct {
+	// CPU limit applied to log splitter pods.
+	MaxCpu pulumi.StringPtrInput `pulumi:"maxCpu"`
+	// Memory limit applied to log splitter pods.
+	MaxMemory pulumi.StringPtrInput `pulumi:"maxMemory"`
+	// In-memory buffer size consumed by each log splitter pod.
+	MemBufferSize pulumi.StringPtrInput `pulumi:"memBufferSize"`
+	// CPU request applied to log splitter pods.
+	MinCpu pulumi.StringPtrInput `pulumi:"minCpu"`
+	// Memory request applied to log splitter pods.
+	MinMemory pulumi.StringPtrInput `pulumi:"minMemory"`
+	// Per-pod log processing rate limit.
+	PerPodRate pulumi.IntPtrInput `pulumi:"perPodRate"`
+}
+
+func (Mk8sAddOnsByokConfigLogSplitterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigLogSplitter)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigLogSplitterArgs) ToMk8sAddOnsByokConfigLogSplitterOutput() Mk8sAddOnsByokConfigLogSplitterOutput {
+	return i.ToMk8sAddOnsByokConfigLogSplitterOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigLogSplitterArgs) ToMk8sAddOnsByokConfigLogSplitterOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigLogSplitterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigLogSplitterOutput)
+}
+
+func (i Mk8sAddOnsByokConfigLogSplitterArgs) ToMk8sAddOnsByokConfigLogSplitterPtrOutput() Mk8sAddOnsByokConfigLogSplitterPtrOutput {
+	return i.ToMk8sAddOnsByokConfigLogSplitterPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigLogSplitterArgs) ToMk8sAddOnsByokConfigLogSplitterPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigLogSplitterPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigLogSplitterOutput).ToMk8sAddOnsByokConfigLogSplitterPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigLogSplitterPtrInput is an input type that accepts Mk8sAddOnsByokConfigLogSplitterArgs, Mk8sAddOnsByokConfigLogSplitterPtr and Mk8sAddOnsByokConfigLogSplitterPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigLogSplitterPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigLogSplitterArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigLogSplitterPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigLogSplitterPtrOutput() Mk8sAddOnsByokConfigLogSplitterPtrOutput
+	ToMk8sAddOnsByokConfigLogSplitterPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigLogSplitterPtrOutput
+}
+
+type mk8sAddOnsByokConfigLogSplitterPtrType Mk8sAddOnsByokConfigLogSplitterArgs
+
+func Mk8sAddOnsByokConfigLogSplitterPtr(v *Mk8sAddOnsByokConfigLogSplitterArgs) Mk8sAddOnsByokConfigLogSplitterPtrInput {
+	return (*mk8sAddOnsByokConfigLogSplitterPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigLogSplitterPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigLogSplitter)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigLogSplitterPtrType) ToMk8sAddOnsByokConfigLogSplitterPtrOutput() Mk8sAddOnsByokConfigLogSplitterPtrOutput {
+	return i.ToMk8sAddOnsByokConfigLogSplitterPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigLogSplitterPtrType) ToMk8sAddOnsByokConfigLogSplitterPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigLogSplitterPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigLogSplitterPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigLogSplitterOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigLogSplitterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigLogSplitter)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigLogSplitterOutput) ToMk8sAddOnsByokConfigLogSplitterOutput() Mk8sAddOnsByokConfigLogSplitterOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigLogSplitterOutput) ToMk8sAddOnsByokConfigLogSplitterOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigLogSplitterOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigLogSplitterOutput) ToMk8sAddOnsByokConfigLogSplitterPtrOutput() Mk8sAddOnsByokConfigLogSplitterPtrOutput {
+	return o.ToMk8sAddOnsByokConfigLogSplitterPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigLogSplitterOutput) ToMk8sAddOnsByokConfigLogSplitterPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigLogSplitterPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigLogSplitter) *Mk8sAddOnsByokConfigLogSplitter {
+		return &v
+	}).(Mk8sAddOnsByokConfigLogSplitterPtrOutput)
+}
+
+// CPU limit applied to log splitter pods.
+func (o Mk8sAddOnsByokConfigLogSplitterOutput) MaxCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigLogSplitter) *string { return v.MaxCpu }).(pulumi.StringPtrOutput)
+}
+
+// Memory limit applied to log splitter pods.
+func (o Mk8sAddOnsByokConfigLogSplitterOutput) MaxMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigLogSplitter) *string { return v.MaxMemory }).(pulumi.StringPtrOutput)
+}
+
+// In-memory buffer size consumed by each log splitter pod.
+func (o Mk8sAddOnsByokConfigLogSplitterOutput) MemBufferSize() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigLogSplitter) *string { return v.MemBufferSize }).(pulumi.StringPtrOutput)
+}
+
+// CPU request applied to log splitter pods.
+func (o Mk8sAddOnsByokConfigLogSplitterOutput) MinCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigLogSplitter) *string { return v.MinCpu }).(pulumi.StringPtrOutput)
+}
+
+// Memory request applied to log splitter pods.
+func (o Mk8sAddOnsByokConfigLogSplitterOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigLogSplitter) *string { return v.MinMemory }).(pulumi.StringPtrOutput)
+}
+
+// Per-pod log processing rate limit.
+func (o Mk8sAddOnsByokConfigLogSplitterOutput) PerPodRate() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigLogSplitter) *int { return v.PerPodRate }).(pulumi.IntPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigLogSplitterPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigLogSplitterPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigLogSplitter)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigLogSplitterPtrOutput) ToMk8sAddOnsByokConfigLogSplitterPtrOutput() Mk8sAddOnsByokConfigLogSplitterPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigLogSplitterPtrOutput) ToMk8sAddOnsByokConfigLogSplitterPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigLogSplitterPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigLogSplitterPtrOutput) Elem() Mk8sAddOnsByokConfigLogSplitterOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigLogSplitter) Mk8sAddOnsByokConfigLogSplitter {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigLogSplitter
+		return ret
+	}).(Mk8sAddOnsByokConfigLogSplitterOutput)
+}
+
+// CPU limit applied to log splitter pods.
+func (o Mk8sAddOnsByokConfigLogSplitterPtrOutput) MaxCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigLogSplitter) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxCpu
+	}).(pulumi.StringPtrOutput)
+}
+
+// Memory limit applied to log splitter pods.
+func (o Mk8sAddOnsByokConfigLogSplitterPtrOutput) MaxMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigLogSplitter) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+// In-memory buffer size consumed by each log splitter pod.
+func (o Mk8sAddOnsByokConfigLogSplitterPtrOutput) MemBufferSize() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigLogSplitter) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MemBufferSize
+	}).(pulumi.StringPtrOutput)
+}
+
+// CPU request applied to log splitter pods.
+func (o Mk8sAddOnsByokConfigLogSplitterPtrOutput) MinCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigLogSplitter) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinCpu
+	}).(pulumi.StringPtrOutput)
+}
+
+// Memory request applied to log splitter pods.
+func (o Mk8sAddOnsByokConfigLogSplitterPtrOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigLogSplitter) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+// Per-pod log processing rate limit.
+func (o Mk8sAddOnsByokConfigLogSplitterPtrOutput) PerPodRate() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigLogSplitter) *int {
+		if v == nil {
+			return nil
+		}
+		return v.PerPodRate
+	}).(pulumi.IntPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigLonghorn struct {
+	// Replica factor for Longhorn volumes. Minimum: 1.
+	Replicas *int `pulumi:"replicas"`
+}
+
+// Mk8sAddOnsByokConfigLonghornInput is an input type that accepts Mk8sAddOnsByokConfigLonghornArgs and Mk8sAddOnsByokConfigLonghornOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigLonghornInput` via:
+//
+//	Mk8sAddOnsByokConfigLonghornArgs{...}
+type Mk8sAddOnsByokConfigLonghornInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigLonghornOutput() Mk8sAddOnsByokConfigLonghornOutput
+	ToMk8sAddOnsByokConfigLonghornOutputWithContext(context.Context) Mk8sAddOnsByokConfigLonghornOutput
+}
+
+type Mk8sAddOnsByokConfigLonghornArgs struct {
+	// Replica factor for Longhorn volumes. Minimum: 1.
+	Replicas pulumi.IntPtrInput `pulumi:"replicas"`
+}
+
+func (Mk8sAddOnsByokConfigLonghornArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigLonghorn)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigLonghornArgs) ToMk8sAddOnsByokConfigLonghornOutput() Mk8sAddOnsByokConfigLonghornOutput {
+	return i.ToMk8sAddOnsByokConfigLonghornOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigLonghornArgs) ToMk8sAddOnsByokConfigLonghornOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigLonghornOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigLonghornOutput)
+}
+
+func (i Mk8sAddOnsByokConfigLonghornArgs) ToMk8sAddOnsByokConfigLonghornPtrOutput() Mk8sAddOnsByokConfigLonghornPtrOutput {
+	return i.ToMk8sAddOnsByokConfigLonghornPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigLonghornArgs) ToMk8sAddOnsByokConfigLonghornPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigLonghornPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigLonghornOutput).ToMk8sAddOnsByokConfigLonghornPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigLonghornPtrInput is an input type that accepts Mk8sAddOnsByokConfigLonghornArgs, Mk8sAddOnsByokConfigLonghornPtr and Mk8sAddOnsByokConfigLonghornPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigLonghornPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigLonghornArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigLonghornPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigLonghornPtrOutput() Mk8sAddOnsByokConfigLonghornPtrOutput
+	ToMk8sAddOnsByokConfigLonghornPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigLonghornPtrOutput
+}
+
+type mk8sAddOnsByokConfigLonghornPtrType Mk8sAddOnsByokConfigLonghornArgs
+
+func Mk8sAddOnsByokConfigLonghornPtr(v *Mk8sAddOnsByokConfigLonghornArgs) Mk8sAddOnsByokConfigLonghornPtrInput {
+	return (*mk8sAddOnsByokConfigLonghornPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigLonghornPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigLonghorn)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigLonghornPtrType) ToMk8sAddOnsByokConfigLonghornPtrOutput() Mk8sAddOnsByokConfigLonghornPtrOutput {
+	return i.ToMk8sAddOnsByokConfigLonghornPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigLonghornPtrType) ToMk8sAddOnsByokConfigLonghornPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigLonghornPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigLonghornPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigLonghornOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigLonghornOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigLonghorn)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigLonghornOutput) ToMk8sAddOnsByokConfigLonghornOutput() Mk8sAddOnsByokConfigLonghornOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigLonghornOutput) ToMk8sAddOnsByokConfigLonghornOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigLonghornOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigLonghornOutput) ToMk8sAddOnsByokConfigLonghornPtrOutput() Mk8sAddOnsByokConfigLonghornPtrOutput {
+	return o.ToMk8sAddOnsByokConfigLonghornPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigLonghornOutput) ToMk8sAddOnsByokConfigLonghornPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigLonghornPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigLonghorn) *Mk8sAddOnsByokConfigLonghorn {
+		return &v
+	}).(Mk8sAddOnsByokConfigLonghornPtrOutput)
+}
+
+// Replica factor for Longhorn volumes. Minimum: 1.
+func (o Mk8sAddOnsByokConfigLonghornOutput) Replicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigLonghorn) *int { return v.Replicas }).(pulumi.IntPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigLonghornPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigLonghornPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigLonghorn)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigLonghornPtrOutput) ToMk8sAddOnsByokConfigLonghornPtrOutput() Mk8sAddOnsByokConfigLonghornPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigLonghornPtrOutput) ToMk8sAddOnsByokConfigLonghornPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigLonghornPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigLonghornPtrOutput) Elem() Mk8sAddOnsByokConfigLonghornOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigLonghorn) Mk8sAddOnsByokConfigLonghorn {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigLonghorn
+		return ret
+	}).(Mk8sAddOnsByokConfigLonghornOutput)
+}
+
+// Replica factor for Longhorn volumes. Minimum: 1.
+func (o Mk8sAddOnsByokConfigLonghornPtrOutput) Replicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigLonghorn) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Replicas
+	}).(pulumi.IntPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMiddlebox struct {
+	// Alert threshold, in Mbps, for middlebox bandwidth usage.
+	BandwidthAlertMbps *int `pulumi:"bandwidthAlertMbps"`
+	// Whether to deploy the middlebox component.
+	Enabled *bool `pulumi:"enabled"`
+}
+
+// Mk8sAddOnsByokConfigMiddleboxInput is an input type that accepts Mk8sAddOnsByokConfigMiddleboxArgs and Mk8sAddOnsByokConfigMiddleboxOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigMiddleboxInput` via:
+//
+//	Mk8sAddOnsByokConfigMiddleboxArgs{...}
+type Mk8sAddOnsByokConfigMiddleboxInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigMiddleboxOutput() Mk8sAddOnsByokConfigMiddleboxOutput
+	ToMk8sAddOnsByokConfigMiddleboxOutputWithContext(context.Context) Mk8sAddOnsByokConfigMiddleboxOutput
+}
+
+type Mk8sAddOnsByokConfigMiddleboxArgs struct {
+	// Alert threshold, in Mbps, for middlebox bandwidth usage.
+	BandwidthAlertMbps pulumi.IntPtrInput `pulumi:"bandwidthAlertMbps"`
+	// Whether to deploy the middlebox component.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+}
+
+func (Mk8sAddOnsByokConfigMiddleboxArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigMiddlebox)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigMiddleboxArgs) ToMk8sAddOnsByokConfigMiddleboxOutput() Mk8sAddOnsByokConfigMiddleboxOutput {
+	return i.ToMk8sAddOnsByokConfigMiddleboxOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigMiddleboxArgs) ToMk8sAddOnsByokConfigMiddleboxOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMiddleboxOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMiddleboxOutput)
+}
+
+func (i Mk8sAddOnsByokConfigMiddleboxArgs) ToMk8sAddOnsByokConfigMiddleboxPtrOutput() Mk8sAddOnsByokConfigMiddleboxPtrOutput {
+	return i.ToMk8sAddOnsByokConfigMiddleboxPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigMiddleboxArgs) ToMk8sAddOnsByokConfigMiddleboxPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMiddleboxPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMiddleboxOutput).ToMk8sAddOnsByokConfigMiddleboxPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigMiddleboxPtrInput is an input type that accepts Mk8sAddOnsByokConfigMiddleboxArgs, Mk8sAddOnsByokConfigMiddleboxPtr and Mk8sAddOnsByokConfigMiddleboxPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigMiddleboxPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigMiddleboxArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigMiddleboxPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigMiddleboxPtrOutput() Mk8sAddOnsByokConfigMiddleboxPtrOutput
+	ToMk8sAddOnsByokConfigMiddleboxPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigMiddleboxPtrOutput
+}
+
+type mk8sAddOnsByokConfigMiddleboxPtrType Mk8sAddOnsByokConfigMiddleboxArgs
+
+func Mk8sAddOnsByokConfigMiddleboxPtr(v *Mk8sAddOnsByokConfigMiddleboxArgs) Mk8sAddOnsByokConfigMiddleboxPtrInput {
+	return (*mk8sAddOnsByokConfigMiddleboxPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigMiddleboxPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigMiddlebox)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigMiddleboxPtrType) ToMk8sAddOnsByokConfigMiddleboxPtrOutput() Mk8sAddOnsByokConfigMiddleboxPtrOutput {
+	return i.ToMk8sAddOnsByokConfigMiddleboxPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigMiddleboxPtrType) ToMk8sAddOnsByokConfigMiddleboxPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMiddleboxPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMiddleboxPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMiddleboxOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigMiddleboxOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigMiddlebox)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigMiddleboxOutput) ToMk8sAddOnsByokConfigMiddleboxOutput() Mk8sAddOnsByokConfigMiddleboxOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMiddleboxOutput) ToMk8sAddOnsByokConfigMiddleboxOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMiddleboxOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMiddleboxOutput) ToMk8sAddOnsByokConfigMiddleboxPtrOutput() Mk8sAddOnsByokConfigMiddleboxPtrOutput {
+	return o.ToMk8sAddOnsByokConfigMiddleboxPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigMiddleboxOutput) ToMk8sAddOnsByokConfigMiddleboxPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMiddleboxPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigMiddlebox) *Mk8sAddOnsByokConfigMiddlebox {
+		return &v
+	}).(Mk8sAddOnsByokConfigMiddleboxPtrOutput)
+}
+
+// Alert threshold, in Mbps, for middlebox bandwidth usage.
+func (o Mk8sAddOnsByokConfigMiddleboxOutput) BandwidthAlertMbps() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMiddlebox) *int { return v.BandwidthAlertMbps }).(pulumi.IntPtrOutput)
+}
+
+// Whether to deploy the middlebox component.
+func (o Mk8sAddOnsByokConfigMiddleboxOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMiddlebox) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMiddleboxPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigMiddleboxPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigMiddlebox)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigMiddleboxPtrOutput) ToMk8sAddOnsByokConfigMiddleboxPtrOutput() Mk8sAddOnsByokConfigMiddleboxPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMiddleboxPtrOutput) ToMk8sAddOnsByokConfigMiddleboxPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMiddleboxPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMiddleboxPtrOutput) Elem() Mk8sAddOnsByokConfigMiddleboxOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMiddlebox) Mk8sAddOnsByokConfigMiddlebox {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigMiddlebox
+		return ret
+	}).(Mk8sAddOnsByokConfigMiddleboxOutput)
+}
+
+// Alert threshold, in Mbps, for middlebox bandwidth usage.
+func (o Mk8sAddOnsByokConfigMiddleboxPtrOutput) BandwidthAlertMbps() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMiddlebox) *int {
+		if v == nil {
+			return nil
+		}
+		return v.BandwidthAlertMbps
+	}).(pulumi.IntPtrOutput)
+}
+
+// Whether to deploy the middlebox component.
+func (o Mk8sAddOnsByokConfigMiddleboxPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMiddlebox) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoring struct {
+	// Kube-state-metrics resource overrides.
+	KubeStateMetrics *Mk8sAddOnsByokConfigMonitoringKubeStateMetrics `pulumi:"kubeStateMetrics"`
+	// Maximum memory limit for monitoring components.
+	MaxMemory *string `pulumi:"maxMemory"`
+	// Minimum memory request for monitoring components.
+	MinMemory *string `pulumi:"minMemory"`
+	// Prometheus deployment configuration.
+	Prometheus *Mk8sAddOnsByokConfigMonitoringPrometheus `pulumi:"prometheus"`
+}
+
+// Mk8sAddOnsByokConfigMonitoringInput is an input type that accepts Mk8sAddOnsByokConfigMonitoringArgs and Mk8sAddOnsByokConfigMonitoringOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigMonitoringInput` via:
+//
+//	Mk8sAddOnsByokConfigMonitoringArgs{...}
+type Mk8sAddOnsByokConfigMonitoringInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigMonitoringOutput() Mk8sAddOnsByokConfigMonitoringOutput
+	ToMk8sAddOnsByokConfigMonitoringOutputWithContext(context.Context) Mk8sAddOnsByokConfigMonitoringOutput
+}
+
+type Mk8sAddOnsByokConfigMonitoringArgs struct {
+	// Kube-state-metrics resource overrides.
+	KubeStateMetrics Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrInput `pulumi:"kubeStateMetrics"`
+	// Maximum memory limit for monitoring components.
+	MaxMemory pulumi.StringPtrInput `pulumi:"maxMemory"`
+	// Minimum memory request for monitoring components.
+	MinMemory pulumi.StringPtrInput `pulumi:"minMemory"`
+	// Prometheus deployment configuration.
+	Prometheus Mk8sAddOnsByokConfigMonitoringPrometheusPtrInput `pulumi:"prometheus"`
+}
+
+func (Mk8sAddOnsByokConfigMonitoringArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoring)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringArgs) ToMk8sAddOnsByokConfigMonitoringOutput() Mk8sAddOnsByokConfigMonitoringOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringArgs) ToMk8sAddOnsByokConfigMonitoringOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringOutput)
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringArgs) ToMk8sAddOnsByokConfigMonitoringPtrOutput() Mk8sAddOnsByokConfigMonitoringPtrOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringArgs) ToMk8sAddOnsByokConfigMonitoringPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringOutput).ToMk8sAddOnsByokConfigMonitoringPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigMonitoringPtrInput is an input type that accepts Mk8sAddOnsByokConfigMonitoringArgs, Mk8sAddOnsByokConfigMonitoringPtr and Mk8sAddOnsByokConfigMonitoringPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigMonitoringPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigMonitoringArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigMonitoringPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigMonitoringPtrOutput() Mk8sAddOnsByokConfigMonitoringPtrOutput
+	ToMk8sAddOnsByokConfigMonitoringPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigMonitoringPtrOutput
+}
+
+type mk8sAddOnsByokConfigMonitoringPtrType Mk8sAddOnsByokConfigMonitoringArgs
+
+func Mk8sAddOnsByokConfigMonitoringPtr(v *Mk8sAddOnsByokConfigMonitoringArgs) Mk8sAddOnsByokConfigMonitoringPtrInput {
+	return (*mk8sAddOnsByokConfigMonitoringPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigMonitoringPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigMonitoring)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigMonitoringPtrType) ToMk8sAddOnsByokConfigMonitoringPtrOutput() Mk8sAddOnsByokConfigMonitoringPtrOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigMonitoringPtrType) ToMk8sAddOnsByokConfigMonitoringPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigMonitoringOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoring)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringOutput) ToMk8sAddOnsByokConfigMonitoringOutput() Mk8sAddOnsByokConfigMonitoringOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringOutput) ToMk8sAddOnsByokConfigMonitoringOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringOutput) ToMk8sAddOnsByokConfigMonitoringPtrOutput() Mk8sAddOnsByokConfigMonitoringPtrOutput {
+	return o.ToMk8sAddOnsByokConfigMonitoringPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringOutput) ToMk8sAddOnsByokConfigMonitoringPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigMonitoring) *Mk8sAddOnsByokConfigMonitoring {
+		return &v
+	}).(Mk8sAddOnsByokConfigMonitoringPtrOutput)
+}
+
+// Kube-state-metrics resource overrides.
+func (o Mk8sAddOnsByokConfigMonitoringOutput) KubeStateMetrics() Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoring) *Mk8sAddOnsByokConfigMonitoringKubeStateMetrics {
+		return v.KubeStateMetrics
+	}).(Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput)
+}
+
+// Maximum memory limit for monitoring components.
+func (o Mk8sAddOnsByokConfigMonitoringOutput) MaxMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoring) *string { return v.MaxMemory }).(pulumi.StringPtrOutput)
+}
+
+// Minimum memory request for monitoring components.
+func (o Mk8sAddOnsByokConfigMonitoringOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoring) *string { return v.MinMemory }).(pulumi.StringPtrOutput)
+}
+
+// Prometheus deployment configuration.
+func (o Mk8sAddOnsByokConfigMonitoringOutput) Prometheus() Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoring) *Mk8sAddOnsByokConfigMonitoringPrometheus { return v.Prometheus }).(Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigMonitoringPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigMonitoring)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringPtrOutput) ToMk8sAddOnsByokConfigMonitoringPtrOutput() Mk8sAddOnsByokConfigMonitoringPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringPtrOutput) ToMk8sAddOnsByokConfigMonitoringPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringPtrOutput) Elem() Mk8sAddOnsByokConfigMonitoringOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoring) Mk8sAddOnsByokConfigMonitoring {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigMonitoring
+		return ret
+	}).(Mk8sAddOnsByokConfigMonitoringOutput)
+}
+
+// Kube-state-metrics resource overrides.
+func (o Mk8sAddOnsByokConfigMonitoringPtrOutput) KubeStateMetrics() Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoring) *Mk8sAddOnsByokConfigMonitoringKubeStateMetrics {
+		if v == nil {
+			return nil
+		}
+		return v.KubeStateMetrics
+	}).(Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput)
+}
+
+// Maximum memory limit for monitoring components.
+func (o Mk8sAddOnsByokConfigMonitoringPtrOutput) MaxMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoring) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+// Minimum memory request for monitoring components.
+func (o Mk8sAddOnsByokConfigMonitoringPtrOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoring) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+// Prometheus deployment configuration.
+func (o Mk8sAddOnsByokConfigMonitoringPtrOutput) Prometheus() Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoring) *Mk8sAddOnsByokConfigMonitoringPrometheus {
+		if v == nil {
+			return nil
+		}
+		return v.Prometheus
+	}).(Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringKubeStateMetrics struct {
+	// Memory request applied to kube-state-metrics pods.
+	MinMemory *string `pulumi:"minMemory"`
+}
+
+// Mk8sAddOnsByokConfigMonitoringKubeStateMetricsInput is an input type that accepts Mk8sAddOnsByokConfigMonitoringKubeStateMetricsArgs and Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigMonitoringKubeStateMetricsInput` via:
+//
+//	Mk8sAddOnsByokConfigMonitoringKubeStateMetricsArgs{...}
+type Mk8sAddOnsByokConfigMonitoringKubeStateMetricsInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput() Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput
+	ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsOutputWithContext(context.Context) Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput
+}
+
+type Mk8sAddOnsByokConfigMonitoringKubeStateMetricsArgs struct {
+	// Memory request applied to kube-state-metrics pods.
+	MinMemory pulumi.StringPtrInput `pulumi:"minMemory"`
+}
+
+func (Mk8sAddOnsByokConfigMonitoringKubeStateMetricsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringKubeStateMetrics)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringKubeStateMetricsArgs) ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput() Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringKubeStateMetricsArgs) ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput)
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringKubeStateMetricsArgs) ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput() Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringKubeStateMetricsArgs) ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput).ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrInput is an input type that accepts Mk8sAddOnsByokConfigMonitoringKubeStateMetricsArgs, Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtr and Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigMonitoringKubeStateMetricsArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput() Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput
+	ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput
+}
+
+type mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrType Mk8sAddOnsByokConfigMonitoringKubeStateMetricsArgs
+
+func Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtr(v *Mk8sAddOnsByokConfigMonitoringKubeStateMetricsArgs) Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrInput {
+	return (*mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigMonitoringKubeStateMetrics)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrType) ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput() Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrType) ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringKubeStateMetrics)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput) ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput() Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput) ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput) ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput() Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput {
+	return o.ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput) ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigMonitoringKubeStateMetrics) *Mk8sAddOnsByokConfigMonitoringKubeStateMetrics {
+		return &v
+	}).(Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput)
+}
+
+// Memory request applied to kube-state-metrics pods.
+func (o Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringKubeStateMetrics) *string { return v.MinMemory }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigMonitoringKubeStateMetrics)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput) ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput() Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput) ToMk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput) Elem() Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoringKubeStateMetrics) Mk8sAddOnsByokConfigMonitoringKubeStateMetrics {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigMonitoringKubeStateMetrics
+		return ret
+	}).(Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput)
+}
+
+// Memory request applied to kube-state-metrics pods.
+func (o Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoringKubeStateMetrics) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringPrometheus struct {
+	// Primary Prometheus instance settings.
+	Main *Mk8sAddOnsByokConfigMonitoringPrometheusMain `pulumi:"main"`
+}
+
+// Mk8sAddOnsByokConfigMonitoringPrometheusInput is an input type that accepts Mk8sAddOnsByokConfigMonitoringPrometheusArgs and Mk8sAddOnsByokConfigMonitoringPrometheusOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigMonitoringPrometheusInput` via:
+//
+//	Mk8sAddOnsByokConfigMonitoringPrometheusArgs{...}
+type Mk8sAddOnsByokConfigMonitoringPrometheusInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigMonitoringPrometheusOutput() Mk8sAddOnsByokConfigMonitoringPrometheusOutput
+	ToMk8sAddOnsByokConfigMonitoringPrometheusOutputWithContext(context.Context) Mk8sAddOnsByokConfigMonitoringPrometheusOutput
+}
+
+type Mk8sAddOnsByokConfigMonitoringPrometheusArgs struct {
+	// Primary Prometheus instance settings.
+	Main Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrInput `pulumi:"main"`
+}
+
+func (Mk8sAddOnsByokConfigMonitoringPrometheusArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringPrometheus)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringPrometheusArgs) ToMk8sAddOnsByokConfigMonitoringPrometheusOutput() Mk8sAddOnsByokConfigMonitoringPrometheusOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringPrometheusOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringPrometheusArgs) ToMk8sAddOnsByokConfigMonitoringPrometheusOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringPrometheusOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringPrometheusOutput)
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringPrometheusArgs) ToMk8sAddOnsByokConfigMonitoringPrometheusPtrOutput() Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringPrometheusPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringPrometheusArgs) ToMk8sAddOnsByokConfigMonitoringPrometheusPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringPrometheusOutput).ToMk8sAddOnsByokConfigMonitoringPrometheusPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigMonitoringPrometheusPtrInput is an input type that accepts Mk8sAddOnsByokConfigMonitoringPrometheusArgs, Mk8sAddOnsByokConfigMonitoringPrometheusPtr and Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigMonitoringPrometheusPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigMonitoringPrometheusArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigMonitoringPrometheusPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigMonitoringPrometheusPtrOutput() Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput
+	ToMk8sAddOnsByokConfigMonitoringPrometheusPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput
+}
+
+type mk8sAddOnsByokConfigMonitoringPrometheusPtrType Mk8sAddOnsByokConfigMonitoringPrometheusArgs
+
+func Mk8sAddOnsByokConfigMonitoringPrometheusPtr(v *Mk8sAddOnsByokConfigMonitoringPrometheusArgs) Mk8sAddOnsByokConfigMonitoringPrometheusPtrInput {
+	return (*mk8sAddOnsByokConfigMonitoringPrometheusPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigMonitoringPrometheusPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigMonitoringPrometheus)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigMonitoringPrometheusPtrType) ToMk8sAddOnsByokConfigMonitoringPrometheusPtrOutput() Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringPrometheusPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigMonitoringPrometheusPtrType) ToMk8sAddOnsByokConfigMonitoringPrometheusPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringPrometheusOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigMonitoringPrometheusOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringPrometheus)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringPrometheusOutput) ToMk8sAddOnsByokConfigMonitoringPrometheusOutput() Mk8sAddOnsByokConfigMonitoringPrometheusOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringPrometheusOutput) ToMk8sAddOnsByokConfigMonitoringPrometheusOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringPrometheusOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringPrometheusOutput) ToMk8sAddOnsByokConfigMonitoringPrometheusPtrOutput() Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput {
+	return o.ToMk8sAddOnsByokConfigMonitoringPrometheusPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringPrometheusOutput) ToMk8sAddOnsByokConfigMonitoringPrometheusPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigMonitoringPrometheus) *Mk8sAddOnsByokConfigMonitoringPrometheus {
+		return &v
+	}).(Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput)
+}
+
+// Primary Prometheus instance settings.
+func (o Mk8sAddOnsByokConfigMonitoringPrometheusOutput) Main() Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringPrometheus) *Mk8sAddOnsByokConfigMonitoringPrometheusMain {
+		return v.Main
+	}).(Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigMonitoringPrometheus)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput) ToMk8sAddOnsByokConfigMonitoringPrometheusPtrOutput() Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput) ToMk8sAddOnsByokConfigMonitoringPrometheusPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput) Elem() Mk8sAddOnsByokConfigMonitoringPrometheusOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoringPrometheus) Mk8sAddOnsByokConfigMonitoringPrometheus {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigMonitoringPrometheus
+		return ret
+	}).(Mk8sAddOnsByokConfigMonitoringPrometheusOutput)
+}
+
+// Primary Prometheus instance settings.
+func (o Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput) Main() Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoringPrometheus) *Mk8sAddOnsByokConfigMonitoringPrometheusMain {
+		if v == nil {
+			return nil
+		}
+		return v.Main
+	}).(Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringPrometheusMain struct {
+	// Persistent volume size for Prometheus (for example, "50Gi").
+	Storage *string `pulumi:"storage"`
+}
+
+// Mk8sAddOnsByokConfigMonitoringPrometheusMainInput is an input type that accepts Mk8sAddOnsByokConfigMonitoringPrometheusMainArgs and Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigMonitoringPrometheusMainInput` via:
+//
+//	Mk8sAddOnsByokConfigMonitoringPrometheusMainArgs{...}
+type Mk8sAddOnsByokConfigMonitoringPrometheusMainInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigMonitoringPrometheusMainOutput() Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput
+	ToMk8sAddOnsByokConfigMonitoringPrometheusMainOutputWithContext(context.Context) Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput
+}
+
+type Mk8sAddOnsByokConfigMonitoringPrometheusMainArgs struct {
+	// Persistent volume size for Prometheus (for example, "50Gi").
+	Storage pulumi.StringPtrInput `pulumi:"storage"`
+}
+
+func (Mk8sAddOnsByokConfigMonitoringPrometheusMainArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringPrometheusMain)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringPrometheusMainArgs) ToMk8sAddOnsByokConfigMonitoringPrometheusMainOutput() Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringPrometheusMainOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringPrometheusMainArgs) ToMk8sAddOnsByokConfigMonitoringPrometheusMainOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput)
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringPrometheusMainArgs) ToMk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput() Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringPrometheusMainArgs) ToMk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput).ToMk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrInput is an input type that accepts Mk8sAddOnsByokConfigMonitoringPrometheusMainArgs, Mk8sAddOnsByokConfigMonitoringPrometheusMainPtr and Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigMonitoringPrometheusMainArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput() Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput
+	ToMk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput
+}
+
+type mk8sAddOnsByokConfigMonitoringPrometheusMainPtrType Mk8sAddOnsByokConfigMonitoringPrometheusMainArgs
+
+func Mk8sAddOnsByokConfigMonitoringPrometheusMainPtr(v *Mk8sAddOnsByokConfigMonitoringPrometheusMainArgs) Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrInput {
+	return (*mk8sAddOnsByokConfigMonitoringPrometheusMainPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigMonitoringPrometheusMainPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigMonitoringPrometheusMain)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigMonitoringPrometheusMainPtrType) ToMk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput() Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigMonitoringPrometheusMainPtrType) ToMk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringPrometheusMain)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput) ToMk8sAddOnsByokConfigMonitoringPrometheusMainOutput() Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput) ToMk8sAddOnsByokConfigMonitoringPrometheusMainOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput) ToMk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput() Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput {
+	return o.ToMk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput) ToMk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigMonitoringPrometheusMain) *Mk8sAddOnsByokConfigMonitoringPrometheusMain {
+		return &v
+	}).(Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput)
+}
+
+// Persistent volume size for Prometheus (for example, "50Gi").
+func (o Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput) Storage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringPrometheusMain) *string { return v.Storage }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigMonitoringPrometheusMain)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput) ToMk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput() Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput) ToMk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput) Elem() Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoringPrometheusMain) Mk8sAddOnsByokConfigMonitoringPrometheusMain {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigMonitoringPrometheusMain
+		return ret
+	}).(Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput)
+}
+
+// Persistent volume size for Prometheus (for example, "50Gi").
+func (o Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput) Storage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoringPrometheusMain) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Storage
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigRedis struct {
+	// CPU limit applied to the Redis pods.
+	MaxCpu *string `pulumi:"maxCpu"`
+	// Memory limit applied to the Redis pods.
+	MaxMemory *string `pulumi:"maxMemory"`
+	// CPU request applied to the Redis pods.
+	MinCpu *string `pulumi:"minCpu"`
+	// Memory request applied to the Redis pods.
+	MinMemory *string `pulumi:"minMemory"`
+	// Persistent storage size allocated to the Redis pods (for example, "8Gi").
+	Storage *string `pulumi:"storage"`
+}
+
+// Mk8sAddOnsByokConfigRedisInput is an input type that accepts Mk8sAddOnsByokConfigRedisArgs and Mk8sAddOnsByokConfigRedisOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigRedisInput` via:
+//
+//	Mk8sAddOnsByokConfigRedisArgs{...}
+type Mk8sAddOnsByokConfigRedisInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigRedisOutput() Mk8sAddOnsByokConfigRedisOutput
+	ToMk8sAddOnsByokConfigRedisOutputWithContext(context.Context) Mk8sAddOnsByokConfigRedisOutput
+}
+
+type Mk8sAddOnsByokConfigRedisArgs struct {
+	// CPU limit applied to the Redis pods.
+	MaxCpu pulumi.StringPtrInput `pulumi:"maxCpu"`
+	// Memory limit applied to the Redis pods.
+	MaxMemory pulumi.StringPtrInput `pulumi:"maxMemory"`
+	// CPU request applied to the Redis pods.
+	MinCpu pulumi.StringPtrInput `pulumi:"minCpu"`
+	// Memory request applied to the Redis pods.
+	MinMemory pulumi.StringPtrInput `pulumi:"minMemory"`
+	// Persistent storage size allocated to the Redis pods (for example, "8Gi").
+	Storage pulumi.StringPtrInput `pulumi:"storage"`
+}
+
+func (Mk8sAddOnsByokConfigRedisArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigRedis)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigRedisArgs) ToMk8sAddOnsByokConfigRedisOutput() Mk8sAddOnsByokConfigRedisOutput {
+	return i.ToMk8sAddOnsByokConfigRedisOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigRedisArgs) ToMk8sAddOnsByokConfigRedisOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigRedisOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigRedisOutput)
+}
+
+func (i Mk8sAddOnsByokConfigRedisArgs) ToMk8sAddOnsByokConfigRedisPtrOutput() Mk8sAddOnsByokConfigRedisPtrOutput {
+	return i.ToMk8sAddOnsByokConfigRedisPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigRedisArgs) ToMk8sAddOnsByokConfigRedisPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigRedisPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigRedisOutput).ToMk8sAddOnsByokConfigRedisPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigRedisPtrInput is an input type that accepts Mk8sAddOnsByokConfigRedisArgs, Mk8sAddOnsByokConfigRedisPtr and Mk8sAddOnsByokConfigRedisPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigRedisPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigRedisArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigRedisPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigRedisPtrOutput() Mk8sAddOnsByokConfigRedisPtrOutput
+	ToMk8sAddOnsByokConfigRedisPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigRedisPtrOutput
+}
+
+type mk8sAddOnsByokConfigRedisPtrType Mk8sAddOnsByokConfigRedisArgs
+
+func Mk8sAddOnsByokConfigRedisPtr(v *Mk8sAddOnsByokConfigRedisArgs) Mk8sAddOnsByokConfigRedisPtrInput {
+	return (*mk8sAddOnsByokConfigRedisPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigRedisPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigRedis)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigRedisPtrType) ToMk8sAddOnsByokConfigRedisPtrOutput() Mk8sAddOnsByokConfigRedisPtrOutput {
+	return i.ToMk8sAddOnsByokConfigRedisPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigRedisPtrType) ToMk8sAddOnsByokConfigRedisPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigRedisPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigRedisPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigRedisOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigRedisOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigRedis)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigRedisOutput) ToMk8sAddOnsByokConfigRedisOutput() Mk8sAddOnsByokConfigRedisOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigRedisOutput) ToMk8sAddOnsByokConfigRedisOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigRedisOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigRedisOutput) ToMk8sAddOnsByokConfigRedisPtrOutput() Mk8sAddOnsByokConfigRedisPtrOutput {
+	return o.ToMk8sAddOnsByokConfigRedisPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigRedisOutput) ToMk8sAddOnsByokConfigRedisPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigRedisPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigRedis) *Mk8sAddOnsByokConfigRedis {
+		return &v
+	}).(Mk8sAddOnsByokConfigRedisPtrOutput)
+}
+
+// CPU limit applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisOutput) MaxCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigRedis) *string { return v.MaxCpu }).(pulumi.StringPtrOutput)
+}
+
+// Memory limit applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisOutput) MaxMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigRedis) *string { return v.MaxMemory }).(pulumi.StringPtrOutput)
+}
+
+// CPU request applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisOutput) MinCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigRedis) *string { return v.MinCpu }).(pulumi.StringPtrOutput)
+}
+
+// Memory request applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigRedis) *string { return v.MinMemory }).(pulumi.StringPtrOutput)
+}
+
+// Persistent storage size allocated to the Redis pods (for example, "8Gi").
+func (o Mk8sAddOnsByokConfigRedisOutput) Storage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigRedis) *string { return v.Storage }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigRedisPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigRedisPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigRedis)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigRedisPtrOutput) ToMk8sAddOnsByokConfigRedisPtrOutput() Mk8sAddOnsByokConfigRedisPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigRedisPtrOutput) ToMk8sAddOnsByokConfigRedisPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigRedisPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigRedisPtrOutput) Elem() Mk8sAddOnsByokConfigRedisOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigRedis) Mk8sAddOnsByokConfigRedis {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigRedis
+		return ret
+	}).(Mk8sAddOnsByokConfigRedisOutput)
+}
+
+// CPU limit applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisPtrOutput) MaxCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigRedis) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxCpu
+	}).(pulumi.StringPtrOutput)
+}
+
+// Memory limit applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisPtrOutput) MaxMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigRedis) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+// CPU request applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisPtrOutput) MinCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigRedis) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinCpu
+	}).(pulumi.StringPtrOutput)
+}
+
+// Memory request applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisPtrOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigRedis) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+// Persistent storage size allocated to the Redis pods (for example, "8Gi").
+func (o Mk8sAddOnsByokConfigRedisPtrOutput) Storage() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigRedis) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Storage
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigRedisHa struct {
+	// CPU limit applied to the Redis pods.
+	MaxCpu *string `pulumi:"maxCpu"`
+	// Memory limit applied to the Redis pods.
+	MaxMemory *string `pulumi:"maxMemory"`
+	// CPU request applied to the Redis pods.
+	MinCpu *string `pulumi:"minCpu"`
+	// Memory request applied to the Redis pods.
+	MinMemory *string `pulumi:"minMemory"`
+	// Persistent storage size allocated to the Redis pods, in GiB.
+	Storage *int `pulumi:"storage"`
+}
+
+// Mk8sAddOnsByokConfigRedisHaInput is an input type that accepts Mk8sAddOnsByokConfigRedisHaArgs and Mk8sAddOnsByokConfigRedisHaOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigRedisHaInput` via:
+//
+//	Mk8sAddOnsByokConfigRedisHaArgs{...}
+type Mk8sAddOnsByokConfigRedisHaInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigRedisHaOutput() Mk8sAddOnsByokConfigRedisHaOutput
+	ToMk8sAddOnsByokConfigRedisHaOutputWithContext(context.Context) Mk8sAddOnsByokConfigRedisHaOutput
+}
+
+type Mk8sAddOnsByokConfigRedisHaArgs struct {
+	// CPU limit applied to the Redis pods.
+	MaxCpu pulumi.StringPtrInput `pulumi:"maxCpu"`
+	// Memory limit applied to the Redis pods.
+	MaxMemory pulumi.StringPtrInput `pulumi:"maxMemory"`
+	// CPU request applied to the Redis pods.
+	MinCpu pulumi.StringPtrInput `pulumi:"minCpu"`
+	// Memory request applied to the Redis pods.
+	MinMemory pulumi.StringPtrInput `pulumi:"minMemory"`
+	// Persistent storage size allocated to the Redis pods, in GiB.
+	Storage pulumi.IntPtrInput `pulumi:"storage"`
+}
+
+func (Mk8sAddOnsByokConfigRedisHaArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigRedisHa)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigRedisHaArgs) ToMk8sAddOnsByokConfigRedisHaOutput() Mk8sAddOnsByokConfigRedisHaOutput {
+	return i.ToMk8sAddOnsByokConfigRedisHaOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigRedisHaArgs) ToMk8sAddOnsByokConfigRedisHaOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigRedisHaOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigRedisHaOutput)
+}
+
+func (i Mk8sAddOnsByokConfigRedisHaArgs) ToMk8sAddOnsByokConfigRedisHaPtrOutput() Mk8sAddOnsByokConfigRedisHaPtrOutput {
+	return i.ToMk8sAddOnsByokConfigRedisHaPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigRedisHaArgs) ToMk8sAddOnsByokConfigRedisHaPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigRedisHaPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigRedisHaOutput).ToMk8sAddOnsByokConfigRedisHaPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigRedisHaPtrInput is an input type that accepts Mk8sAddOnsByokConfigRedisHaArgs, Mk8sAddOnsByokConfigRedisHaPtr and Mk8sAddOnsByokConfigRedisHaPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigRedisHaPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigRedisHaArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigRedisHaPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigRedisHaPtrOutput() Mk8sAddOnsByokConfigRedisHaPtrOutput
+	ToMk8sAddOnsByokConfigRedisHaPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigRedisHaPtrOutput
+}
+
+type mk8sAddOnsByokConfigRedisHaPtrType Mk8sAddOnsByokConfigRedisHaArgs
+
+func Mk8sAddOnsByokConfigRedisHaPtr(v *Mk8sAddOnsByokConfigRedisHaArgs) Mk8sAddOnsByokConfigRedisHaPtrInput {
+	return (*mk8sAddOnsByokConfigRedisHaPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigRedisHaPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigRedisHa)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigRedisHaPtrType) ToMk8sAddOnsByokConfigRedisHaPtrOutput() Mk8sAddOnsByokConfigRedisHaPtrOutput {
+	return i.ToMk8sAddOnsByokConfigRedisHaPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigRedisHaPtrType) ToMk8sAddOnsByokConfigRedisHaPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigRedisHaPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigRedisHaPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigRedisHaOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigRedisHaOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigRedisHa)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigRedisHaOutput) ToMk8sAddOnsByokConfigRedisHaOutput() Mk8sAddOnsByokConfigRedisHaOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigRedisHaOutput) ToMk8sAddOnsByokConfigRedisHaOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigRedisHaOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigRedisHaOutput) ToMk8sAddOnsByokConfigRedisHaPtrOutput() Mk8sAddOnsByokConfigRedisHaPtrOutput {
+	return o.ToMk8sAddOnsByokConfigRedisHaPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigRedisHaOutput) ToMk8sAddOnsByokConfigRedisHaPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigRedisHaPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigRedisHa) *Mk8sAddOnsByokConfigRedisHa {
+		return &v
+	}).(Mk8sAddOnsByokConfigRedisHaPtrOutput)
+}
+
+// CPU limit applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisHaOutput) MaxCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigRedisHa) *string { return v.MaxCpu }).(pulumi.StringPtrOutput)
+}
+
+// Memory limit applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisHaOutput) MaxMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigRedisHa) *string { return v.MaxMemory }).(pulumi.StringPtrOutput)
+}
+
+// CPU request applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisHaOutput) MinCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigRedisHa) *string { return v.MinCpu }).(pulumi.StringPtrOutput)
+}
+
+// Memory request applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisHaOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigRedisHa) *string { return v.MinMemory }).(pulumi.StringPtrOutput)
+}
+
+// Persistent storage size allocated to the Redis pods, in GiB.
+func (o Mk8sAddOnsByokConfigRedisHaOutput) Storage() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigRedisHa) *int { return v.Storage }).(pulumi.IntPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigRedisHaPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigRedisHaPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigRedisHa)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigRedisHaPtrOutput) ToMk8sAddOnsByokConfigRedisHaPtrOutput() Mk8sAddOnsByokConfigRedisHaPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigRedisHaPtrOutput) ToMk8sAddOnsByokConfigRedisHaPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigRedisHaPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigRedisHaPtrOutput) Elem() Mk8sAddOnsByokConfigRedisHaOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigRedisHa) Mk8sAddOnsByokConfigRedisHa {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigRedisHa
+		return ret
+	}).(Mk8sAddOnsByokConfigRedisHaOutput)
+}
+
+// CPU limit applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisHaPtrOutput) MaxCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigRedisHa) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxCpu
+	}).(pulumi.StringPtrOutput)
+}
+
+// Memory limit applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisHaPtrOutput) MaxMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigRedisHa) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+// CPU request applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisHaPtrOutput) MinCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigRedisHa) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinCpu
+	}).(pulumi.StringPtrOutput)
+}
+
+// Memory request applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisHaPtrOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigRedisHa) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+// Persistent storage size allocated to the Redis pods, in GiB.
+func (o Mk8sAddOnsByokConfigRedisHaPtrOutput) Storage() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigRedisHa) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Storage
+	}).(pulumi.IntPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigRedisSentinel struct {
+	// CPU limit applied to the Redis pods.
+	MaxCpu *string `pulumi:"maxCpu"`
+	// Memory limit applied to the Redis pods.
+	MaxMemory *string `pulumi:"maxMemory"`
+	// CPU request applied to the Redis pods.
+	MinCpu *string `pulumi:"minCpu"`
+	// Memory request applied to the Redis pods.
+	MinMemory *string `pulumi:"minMemory"`
+	// Persistent storage size allocated to the Redis pods, in GiB.
+	Storage *int `pulumi:"storage"`
+}
+
+// Mk8sAddOnsByokConfigRedisSentinelInput is an input type that accepts Mk8sAddOnsByokConfigRedisSentinelArgs and Mk8sAddOnsByokConfigRedisSentinelOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigRedisSentinelInput` via:
+//
+//	Mk8sAddOnsByokConfigRedisSentinelArgs{...}
+type Mk8sAddOnsByokConfigRedisSentinelInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigRedisSentinelOutput() Mk8sAddOnsByokConfigRedisSentinelOutput
+	ToMk8sAddOnsByokConfigRedisSentinelOutputWithContext(context.Context) Mk8sAddOnsByokConfigRedisSentinelOutput
+}
+
+type Mk8sAddOnsByokConfigRedisSentinelArgs struct {
+	// CPU limit applied to the Redis pods.
+	MaxCpu pulumi.StringPtrInput `pulumi:"maxCpu"`
+	// Memory limit applied to the Redis pods.
+	MaxMemory pulumi.StringPtrInput `pulumi:"maxMemory"`
+	// CPU request applied to the Redis pods.
+	MinCpu pulumi.StringPtrInput `pulumi:"minCpu"`
+	// Memory request applied to the Redis pods.
+	MinMemory pulumi.StringPtrInput `pulumi:"minMemory"`
+	// Persistent storage size allocated to the Redis pods, in GiB.
+	Storage pulumi.IntPtrInput `pulumi:"storage"`
+}
+
+func (Mk8sAddOnsByokConfigRedisSentinelArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigRedisSentinel)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigRedisSentinelArgs) ToMk8sAddOnsByokConfigRedisSentinelOutput() Mk8sAddOnsByokConfigRedisSentinelOutput {
+	return i.ToMk8sAddOnsByokConfigRedisSentinelOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigRedisSentinelArgs) ToMk8sAddOnsByokConfigRedisSentinelOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigRedisSentinelOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigRedisSentinelOutput)
+}
+
+func (i Mk8sAddOnsByokConfigRedisSentinelArgs) ToMk8sAddOnsByokConfigRedisSentinelPtrOutput() Mk8sAddOnsByokConfigRedisSentinelPtrOutput {
+	return i.ToMk8sAddOnsByokConfigRedisSentinelPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigRedisSentinelArgs) ToMk8sAddOnsByokConfigRedisSentinelPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigRedisSentinelPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigRedisSentinelOutput).ToMk8sAddOnsByokConfigRedisSentinelPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigRedisSentinelPtrInput is an input type that accepts Mk8sAddOnsByokConfigRedisSentinelArgs, Mk8sAddOnsByokConfigRedisSentinelPtr and Mk8sAddOnsByokConfigRedisSentinelPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigRedisSentinelPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigRedisSentinelArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigRedisSentinelPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigRedisSentinelPtrOutput() Mk8sAddOnsByokConfigRedisSentinelPtrOutput
+	ToMk8sAddOnsByokConfigRedisSentinelPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigRedisSentinelPtrOutput
+}
+
+type mk8sAddOnsByokConfigRedisSentinelPtrType Mk8sAddOnsByokConfigRedisSentinelArgs
+
+func Mk8sAddOnsByokConfigRedisSentinelPtr(v *Mk8sAddOnsByokConfigRedisSentinelArgs) Mk8sAddOnsByokConfigRedisSentinelPtrInput {
+	return (*mk8sAddOnsByokConfigRedisSentinelPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigRedisSentinelPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigRedisSentinel)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigRedisSentinelPtrType) ToMk8sAddOnsByokConfigRedisSentinelPtrOutput() Mk8sAddOnsByokConfigRedisSentinelPtrOutput {
+	return i.ToMk8sAddOnsByokConfigRedisSentinelPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigRedisSentinelPtrType) ToMk8sAddOnsByokConfigRedisSentinelPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigRedisSentinelPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigRedisSentinelPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigRedisSentinelOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigRedisSentinelOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigRedisSentinel)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigRedisSentinelOutput) ToMk8sAddOnsByokConfigRedisSentinelOutput() Mk8sAddOnsByokConfigRedisSentinelOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigRedisSentinelOutput) ToMk8sAddOnsByokConfigRedisSentinelOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigRedisSentinelOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigRedisSentinelOutput) ToMk8sAddOnsByokConfigRedisSentinelPtrOutput() Mk8sAddOnsByokConfigRedisSentinelPtrOutput {
+	return o.ToMk8sAddOnsByokConfigRedisSentinelPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigRedisSentinelOutput) ToMk8sAddOnsByokConfigRedisSentinelPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigRedisSentinelPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigRedisSentinel) *Mk8sAddOnsByokConfigRedisSentinel {
+		return &v
+	}).(Mk8sAddOnsByokConfigRedisSentinelPtrOutput)
+}
+
+// CPU limit applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisSentinelOutput) MaxCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigRedisSentinel) *string { return v.MaxCpu }).(pulumi.StringPtrOutput)
+}
+
+// Memory limit applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisSentinelOutput) MaxMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigRedisSentinel) *string { return v.MaxMemory }).(pulumi.StringPtrOutput)
+}
+
+// CPU request applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisSentinelOutput) MinCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigRedisSentinel) *string { return v.MinCpu }).(pulumi.StringPtrOutput)
+}
+
+// Memory request applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisSentinelOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigRedisSentinel) *string { return v.MinMemory }).(pulumi.StringPtrOutput)
+}
+
+// Persistent storage size allocated to the Redis pods, in GiB.
+func (o Mk8sAddOnsByokConfigRedisSentinelOutput) Storage() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigRedisSentinel) *int { return v.Storage }).(pulumi.IntPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigRedisSentinelPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigRedisSentinelPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigRedisSentinel)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigRedisSentinelPtrOutput) ToMk8sAddOnsByokConfigRedisSentinelPtrOutput() Mk8sAddOnsByokConfigRedisSentinelPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigRedisSentinelPtrOutput) ToMk8sAddOnsByokConfigRedisSentinelPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigRedisSentinelPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigRedisSentinelPtrOutput) Elem() Mk8sAddOnsByokConfigRedisSentinelOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigRedisSentinel) Mk8sAddOnsByokConfigRedisSentinel {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigRedisSentinel
+		return ret
+	}).(Mk8sAddOnsByokConfigRedisSentinelOutput)
+}
+
+// CPU limit applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisSentinelPtrOutput) MaxCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigRedisSentinel) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxCpu
+	}).(pulumi.StringPtrOutput)
+}
+
+// Memory limit applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisSentinelPtrOutput) MaxMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigRedisSentinel) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+// CPU request applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisSentinelPtrOutput) MinCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigRedisSentinel) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinCpu
+	}).(pulumi.StringPtrOutput)
+}
+
+// Memory request applied to the Redis pods.
+func (o Mk8sAddOnsByokConfigRedisSentinelPtrOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigRedisSentinel) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+// Persistent storage size allocated to the Redis pods, in GiB.
+func (o Mk8sAddOnsByokConfigRedisSentinelPtrOutput) Storage() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigRedisSentinel) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Storage
+	}).(pulumi.IntPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigTempoAgent struct {
+	// CPU request applied to tempo agent pods.
+	MinCpu *string `pulumi:"minCpu"`
+	// Memory request applied to tempo agent pods.
+	MinMemory *string `pulumi:"minMemory"`
+}
+
+// Mk8sAddOnsByokConfigTempoAgentInput is an input type that accepts Mk8sAddOnsByokConfigTempoAgentArgs and Mk8sAddOnsByokConfigTempoAgentOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigTempoAgentInput` via:
+//
+//	Mk8sAddOnsByokConfigTempoAgentArgs{...}
+type Mk8sAddOnsByokConfigTempoAgentInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigTempoAgentOutput() Mk8sAddOnsByokConfigTempoAgentOutput
+	ToMk8sAddOnsByokConfigTempoAgentOutputWithContext(context.Context) Mk8sAddOnsByokConfigTempoAgentOutput
+}
+
+type Mk8sAddOnsByokConfigTempoAgentArgs struct {
+	// CPU request applied to tempo agent pods.
+	MinCpu pulumi.StringPtrInput `pulumi:"minCpu"`
+	// Memory request applied to tempo agent pods.
+	MinMemory pulumi.StringPtrInput `pulumi:"minMemory"`
+}
+
+func (Mk8sAddOnsByokConfigTempoAgentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigTempoAgent)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigTempoAgentArgs) ToMk8sAddOnsByokConfigTempoAgentOutput() Mk8sAddOnsByokConfigTempoAgentOutput {
+	return i.ToMk8sAddOnsByokConfigTempoAgentOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigTempoAgentArgs) ToMk8sAddOnsByokConfigTempoAgentOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigTempoAgentOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigTempoAgentOutput)
+}
+
+func (i Mk8sAddOnsByokConfigTempoAgentArgs) ToMk8sAddOnsByokConfigTempoAgentPtrOutput() Mk8sAddOnsByokConfigTempoAgentPtrOutput {
+	return i.ToMk8sAddOnsByokConfigTempoAgentPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigTempoAgentArgs) ToMk8sAddOnsByokConfigTempoAgentPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigTempoAgentPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigTempoAgentOutput).ToMk8sAddOnsByokConfigTempoAgentPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigTempoAgentPtrInput is an input type that accepts Mk8sAddOnsByokConfigTempoAgentArgs, Mk8sAddOnsByokConfigTempoAgentPtr and Mk8sAddOnsByokConfigTempoAgentPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigTempoAgentPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigTempoAgentArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigTempoAgentPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigTempoAgentPtrOutput() Mk8sAddOnsByokConfigTempoAgentPtrOutput
+	ToMk8sAddOnsByokConfigTempoAgentPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigTempoAgentPtrOutput
+}
+
+type mk8sAddOnsByokConfigTempoAgentPtrType Mk8sAddOnsByokConfigTempoAgentArgs
+
+func Mk8sAddOnsByokConfigTempoAgentPtr(v *Mk8sAddOnsByokConfigTempoAgentArgs) Mk8sAddOnsByokConfigTempoAgentPtrInput {
+	return (*mk8sAddOnsByokConfigTempoAgentPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigTempoAgentPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigTempoAgent)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigTempoAgentPtrType) ToMk8sAddOnsByokConfigTempoAgentPtrOutput() Mk8sAddOnsByokConfigTempoAgentPtrOutput {
+	return i.ToMk8sAddOnsByokConfigTempoAgentPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigTempoAgentPtrType) ToMk8sAddOnsByokConfigTempoAgentPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigTempoAgentPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigTempoAgentPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigTempoAgentOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigTempoAgentOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigTempoAgent)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigTempoAgentOutput) ToMk8sAddOnsByokConfigTempoAgentOutput() Mk8sAddOnsByokConfigTempoAgentOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigTempoAgentOutput) ToMk8sAddOnsByokConfigTempoAgentOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigTempoAgentOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigTempoAgentOutput) ToMk8sAddOnsByokConfigTempoAgentPtrOutput() Mk8sAddOnsByokConfigTempoAgentPtrOutput {
+	return o.ToMk8sAddOnsByokConfigTempoAgentPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigTempoAgentOutput) ToMk8sAddOnsByokConfigTempoAgentPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigTempoAgentPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigTempoAgent) *Mk8sAddOnsByokConfigTempoAgent {
+		return &v
+	}).(Mk8sAddOnsByokConfigTempoAgentPtrOutput)
+}
+
+// CPU request applied to tempo agent pods.
+func (o Mk8sAddOnsByokConfigTempoAgentOutput) MinCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigTempoAgent) *string { return v.MinCpu }).(pulumi.StringPtrOutput)
+}
+
+// Memory request applied to tempo agent pods.
+func (o Mk8sAddOnsByokConfigTempoAgentOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigTempoAgent) *string { return v.MinMemory }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigTempoAgentPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigTempoAgentPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigTempoAgent)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigTempoAgentPtrOutput) ToMk8sAddOnsByokConfigTempoAgentPtrOutput() Mk8sAddOnsByokConfigTempoAgentPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigTempoAgentPtrOutput) ToMk8sAddOnsByokConfigTempoAgentPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigTempoAgentPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigTempoAgentPtrOutput) Elem() Mk8sAddOnsByokConfigTempoAgentOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigTempoAgent) Mk8sAddOnsByokConfigTempoAgent {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigTempoAgent
+		return ret
+	}).(Mk8sAddOnsByokConfigTempoAgentOutput)
+}
+
+// CPU request applied to tempo agent pods.
+func (o Mk8sAddOnsByokConfigTempoAgentPtrOutput) MinCpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigTempoAgent) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinCpu
+	}).(pulumi.StringPtrOutput)
+}
+
+// Memory request applied to tempo agent pods.
+func (o Mk8sAddOnsByokConfigTempoAgentPtrOutput) MinMemory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigTempoAgent) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinMemory
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -13623,6 +17743,1193 @@ func (o Mk8sFirewallArrayOutput) Index(i pulumi.IntInput) Mk8sFirewallOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sFirewall {
 		return vs[0].([]Mk8sFirewall)[vs[1].(int)]
 	}).(Mk8sFirewallOutput)
+}
+
+type Mk8sGcpProvider struct {
+	Autoscaler *Mk8sGcpProviderAutoscaler `pulumi:"autoscaler"`
+	// Extra tags to attach to all created objects.
+	GcpLabels map[string]string `pulumi:"gcpLabels"`
+	// Default image for all nodes.
+	Image *Mk8sGcpProviderImage `pulumi:"image"`
+	// VPC network used by the cluster.
+	Network    string                     `pulumi:"network"`
+	Networking *Mk8sGcpProviderNetworking `pulumi:"networking"`
+	NodePools  []Mk8sGcpProviderNodePool  `pulumi:"nodePools"`
+	// Optional shell script that will be run before K8s is installed. Supports SSM.
+	PreInstallScript *string `pulumi:"preInstallScript"`
+	// GCP project ID that hosts the cluster infrastructure.
+	ProjectId string `pulumi:"projectId"`
+	// Region where the cluster nodes will live.
+	Region string `pulumi:"region"`
+	// Link to a secret containing the service account JSON key.
+	SaKeyLink string `pulumi:"saKeyLink"`
+}
+
+// Mk8sGcpProviderInput is an input type that accepts Mk8sGcpProviderArgs and Mk8sGcpProviderOutput values.
+// You can construct a concrete instance of `Mk8sGcpProviderInput` via:
+//
+//	Mk8sGcpProviderArgs{...}
+type Mk8sGcpProviderInput interface {
+	pulumi.Input
+
+	ToMk8sGcpProviderOutput() Mk8sGcpProviderOutput
+	ToMk8sGcpProviderOutputWithContext(context.Context) Mk8sGcpProviderOutput
+}
+
+type Mk8sGcpProviderArgs struct {
+	Autoscaler Mk8sGcpProviderAutoscalerPtrInput `pulumi:"autoscaler"`
+	// Extra tags to attach to all created objects.
+	GcpLabels pulumi.StringMapInput `pulumi:"gcpLabels"`
+	// Default image for all nodes.
+	Image Mk8sGcpProviderImagePtrInput `pulumi:"image"`
+	// VPC network used by the cluster.
+	Network    pulumi.StringInput                `pulumi:"network"`
+	Networking Mk8sGcpProviderNetworkingPtrInput `pulumi:"networking"`
+	NodePools  Mk8sGcpProviderNodePoolArrayInput `pulumi:"nodePools"`
+	// Optional shell script that will be run before K8s is installed. Supports SSM.
+	PreInstallScript pulumi.StringPtrInput `pulumi:"preInstallScript"`
+	// GCP project ID that hosts the cluster infrastructure.
+	ProjectId pulumi.StringInput `pulumi:"projectId"`
+	// Region where the cluster nodes will live.
+	Region pulumi.StringInput `pulumi:"region"`
+	// Link to a secret containing the service account JSON key.
+	SaKeyLink pulumi.StringInput `pulumi:"saKeyLink"`
+}
+
+func (Mk8sGcpProviderArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sGcpProvider)(nil)).Elem()
+}
+
+func (i Mk8sGcpProviderArgs) ToMk8sGcpProviderOutput() Mk8sGcpProviderOutput {
+	return i.ToMk8sGcpProviderOutputWithContext(context.Background())
+}
+
+func (i Mk8sGcpProviderArgs) ToMk8sGcpProviderOutputWithContext(ctx context.Context) Mk8sGcpProviderOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderOutput)
+}
+
+func (i Mk8sGcpProviderArgs) ToMk8sGcpProviderPtrOutput() Mk8sGcpProviderPtrOutput {
+	return i.ToMk8sGcpProviderPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sGcpProviderArgs) ToMk8sGcpProviderPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderOutput).ToMk8sGcpProviderPtrOutputWithContext(ctx)
+}
+
+// Mk8sGcpProviderPtrInput is an input type that accepts Mk8sGcpProviderArgs, Mk8sGcpProviderPtr and Mk8sGcpProviderPtrOutput values.
+// You can construct a concrete instance of `Mk8sGcpProviderPtrInput` via:
+//
+//	        Mk8sGcpProviderArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sGcpProviderPtrInput interface {
+	pulumi.Input
+
+	ToMk8sGcpProviderPtrOutput() Mk8sGcpProviderPtrOutput
+	ToMk8sGcpProviderPtrOutputWithContext(context.Context) Mk8sGcpProviderPtrOutput
+}
+
+type mk8sGcpProviderPtrType Mk8sGcpProviderArgs
+
+func Mk8sGcpProviderPtr(v *Mk8sGcpProviderArgs) Mk8sGcpProviderPtrInput {
+	return (*mk8sGcpProviderPtrType)(v)
+}
+
+func (*mk8sGcpProviderPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sGcpProvider)(nil)).Elem()
+}
+
+func (i *mk8sGcpProviderPtrType) ToMk8sGcpProviderPtrOutput() Mk8sGcpProviderPtrOutput {
+	return i.ToMk8sGcpProviderPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sGcpProviderPtrType) ToMk8sGcpProviderPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderPtrOutput)
+}
+
+type Mk8sGcpProviderOutput struct{ *pulumi.OutputState }
+
+func (Mk8sGcpProviderOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sGcpProvider)(nil)).Elem()
+}
+
+func (o Mk8sGcpProviderOutput) ToMk8sGcpProviderOutput() Mk8sGcpProviderOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderOutput) ToMk8sGcpProviderOutputWithContext(ctx context.Context) Mk8sGcpProviderOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderOutput) ToMk8sGcpProviderPtrOutput() Mk8sGcpProviderPtrOutput {
+	return o.ToMk8sGcpProviderPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sGcpProviderOutput) ToMk8sGcpProviderPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sGcpProvider) *Mk8sGcpProvider {
+		return &v
+	}).(Mk8sGcpProviderPtrOutput)
+}
+
+func (o Mk8sGcpProviderOutput) Autoscaler() Mk8sGcpProviderAutoscalerPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProvider) *Mk8sGcpProviderAutoscaler { return v.Autoscaler }).(Mk8sGcpProviderAutoscalerPtrOutput)
+}
+
+// Extra tags to attach to all created objects.
+func (o Mk8sGcpProviderOutput) GcpLabels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sGcpProvider) map[string]string { return v.GcpLabels }).(pulumi.StringMapOutput)
+}
+
+// Default image for all nodes.
+func (o Mk8sGcpProviderOutput) Image() Mk8sGcpProviderImagePtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProvider) *Mk8sGcpProviderImage { return v.Image }).(Mk8sGcpProviderImagePtrOutput)
+}
+
+// VPC network used by the cluster.
+func (o Mk8sGcpProviderOutput) Network() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sGcpProvider) string { return v.Network }).(pulumi.StringOutput)
+}
+
+func (o Mk8sGcpProviderOutput) Networking() Mk8sGcpProviderNetworkingPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProvider) *Mk8sGcpProviderNetworking { return v.Networking }).(Mk8sGcpProviderNetworkingPtrOutput)
+}
+
+func (o Mk8sGcpProviderOutput) NodePools() Mk8sGcpProviderNodePoolArrayOutput {
+	return o.ApplyT(func(v Mk8sGcpProvider) []Mk8sGcpProviderNodePool { return v.NodePools }).(Mk8sGcpProviderNodePoolArrayOutput)
+}
+
+// Optional shell script that will be run before K8s is installed. Supports SSM.
+func (o Mk8sGcpProviderOutput) PreInstallScript() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProvider) *string { return v.PreInstallScript }).(pulumi.StringPtrOutput)
+}
+
+// GCP project ID that hosts the cluster infrastructure.
+func (o Mk8sGcpProviderOutput) ProjectId() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sGcpProvider) string { return v.ProjectId }).(pulumi.StringOutput)
+}
+
+// Region where the cluster nodes will live.
+func (o Mk8sGcpProviderOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sGcpProvider) string { return v.Region }).(pulumi.StringOutput)
+}
+
+// Link to a secret containing the service account JSON key.
+func (o Mk8sGcpProviderOutput) SaKeyLink() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sGcpProvider) string { return v.SaKeyLink }).(pulumi.StringOutput)
+}
+
+type Mk8sGcpProviderPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sGcpProviderPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sGcpProvider)(nil)).Elem()
+}
+
+func (o Mk8sGcpProviderPtrOutput) ToMk8sGcpProviderPtrOutput() Mk8sGcpProviderPtrOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderPtrOutput) ToMk8sGcpProviderPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderPtrOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderPtrOutput) Elem() Mk8sGcpProviderOutput {
+	return o.ApplyT(func(v *Mk8sGcpProvider) Mk8sGcpProvider {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sGcpProvider
+		return ret
+	}).(Mk8sGcpProviderOutput)
+}
+
+func (o Mk8sGcpProviderPtrOutput) Autoscaler() Mk8sGcpProviderAutoscalerPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProvider) *Mk8sGcpProviderAutoscaler {
+		if v == nil {
+			return nil
+		}
+		return v.Autoscaler
+	}).(Mk8sGcpProviderAutoscalerPtrOutput)
+}
+
+// Extra tags to attach to all created objects.
+func (o Mk8sGcpProviderPtrOutput) GcpLabels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Mk8sGcpProvider) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.GcpLabels
+	}).(pulumi.StringMapOutput)
+}
+
+// Default image for all nodes.
+func (o Mk8sGcpProviderPtrOutput) Image() Mk8sGcpProviderImagePtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProvider) *Mk8sGcpProviderImage {
+		if v == nil {
+			return nil
+		}
+		return v.Image
+	}).(Mk8sGcpProviderImagePtrOutput)
+}
+
+// VPC network used by the cluster.
+func (o Mk8sGcpProviderPtrOutput) Network() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Network
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sGcpProviderPtrOutput) Networking() Mk8sGcpProviderNetworkingPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProvider) *Mk8sGcpProviderNetworking {
+		if v == nil {
+			return nil
+		}
+		return v.Networking
+	}).(Mk8sGcpProviderNetworkingPtrOutput)
+}
+
+func (o Mk8sGcpProviderPtrOutput) NodePools() Mk8sGcpProviderNodePoolArrayOutput {
+	return o.ApplyT(func(v *Mk8sGcpProvider) []Mk8sGcpProviderNodePool {
+		if v == nil {
+			return nil
+		}
+		return v.NodePools
+	}).(Mk8sGcpProviderNodePoolArrayOutput)
+}
+
+// Optional shell script that will be run before K8s is installed. Supports SSM.
+func (o Mk8sGcpProviderPtrOutput) PreInstallScript() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return v.PreInstallScript
+	}).(pulumi.StringPtrOutput)
+}
+
+// GCP project ID that hosts the cluster infrastructure.
+func (o Mk8sGcpProviderPtrOutput) ProjectId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ProjectId
+	}).(pulumi.StringPtrOutput)
+}
+
+// Region where the cluster nodes will live.
+func (o Mk8sGcpProviderPtrOutput) Region() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Region
+	}).(pulumi.StringPtrOutput)
+}
+
+// Link to a secret containing the service account JSON key.
+func (o Mk8sGcpProviderPtrOutput) SaKeyLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProvider) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.SaKeyLink
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sGcpProviderAutoscaler struct {
+	Expanders            []string `pulumi:"expanders"`
+	UnneededTime         *string  `pulumi:"unneededTime"`
+	UnreadyTime          *string  `pulumi:"unreadyTime"`
+	UtilizationThreshold *float64 `pulumi:"utilizationThreshold"`
+}
+
+// Mk8sGcpProviderAutoscalerInput is an input type that accepts Mk8sGcpProviderAutoscalerArgs and Mk8sGcpProviderAutoscalerOutput values.
+// You can construct a concrete instance of `Mk8sGcpProviderAutoscalerInput` via:
+//
+//	Mk8sGcpProviderAutoscalerArgs{...}
+type Mk8sGcpProviderAutoscalerInput interface {
+	pulumi.Input
+
+	ToMk8sGcpProviderAutoscalerOutput() Mk8sGcpProviderAutoscalerOutput
+	ToMk8sGcpProviderAutoscalerOutputWithContext(context.Context) Mk8sGcpProviderAutoscalerOutput
+}
+
+type Mk8sGcpProviderAutoscalerArgs struct {
+	Expanders            pulumi.StringArrayInput `pulumi:"expanders"`
+	UnneededTime         pulumi.StringPtrInput   `pulumi:"unneededTime"`
+	UnreadyTime          pulumi.StringPtrInput   `pulumi:"unreadyTime"`
+	UtilizationThreshold pulumi.Float64PtrInput  `pulumi:"utilizationThreshold"`
+}
+
+func (Mk8sGcpProviderAutoscalerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sGcpProviderAutoscaler)(nil)).Elem()
+}
+
+func (i Mk8sGcpProviderAutoscalerArgs) ToMk8sGcpProviderAutoscalerOutput() Mk8sGcpProviderAutoscalerOutput {
+	return i.ToMk8sGcpProviderAutoscalerOutputWithContext(context.Background())
+}
+
+func (i Mk8sGcpProviderAutoscalerArgs) ToMk8sGcpProviderAutoscalerOutputWithContext(ctx context.Context) Mk8sGcpProviderAutoscalerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderAutoscalerOutput)
+}
+
+func (i Mk8sGcpProviderAutoscalerArgs) ToMk8sGcpProviderAutoscalerPtrOutput() Mk8sGcpProviderAutoscalerPtrOutput {
+	return i.ToMk8sGcpProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sGcpProviderAutoscalerArgs) ToMk8sGcpProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderAutoscalerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderAutoscalerOutput).ToMk8sGcpProviderAutoscalerPtrOutputWithContext(ctx)
+}
+
+// Mk8sGcpProviderAutoscalerPtrInput is an input type that accepts Mk8sGcpProviderAutoscalerArgs, Mk8sGcpProviderAutoscalerPtr and Mk8sGcpProviderAutoscalerPtrOutput values.
+// You can construct a concrete instance of `Mk8sGcpProviderAutoscalerPtrInput` via:
+//
+//	        Mk8sGcpProviderAutoscalerArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sGcpProviderAutoscalerPtrInput interface {
+	pulumi.Input
+
+	ToMk8sGcpProviderAutoscalerPtrOutput() Mk8sGcpProviderAutoscalerPtrOutput
+	ToMk8sGcpProviderAutoscalerPtrOutputWithContext(context.Context) Mk8sGcpProviderAutoscalerPtrOutput
+}
+
+type mk8sGcpProviderAutoscalerPtrType Mk8sGcpProviderAutoscalerArgs
+
+func Mk8sGcpProviderAutoscalerPtr(v *Mk8sGcpProviderAutoscalerArgs) Mk8sGcpProviderAutoscalerPtrInput {
+	return (*mk8sGcpProviderAutoscalerPtrType)(v)
+}
+
+func (*mk8sGcpProviderAutoscalerPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sGcpProviderAutoscaler)(nil)).Elem()
+}
+
+func (i *mk8sGcpProviderAutoscalerPtrType) ToMk8sGcpProviderAutoscalerPtrOutput() Mk8sGcpProviderAutoscalerPtrOutput {
+	return i.ToMk8sGcpProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sGcpProviderAutoscalerPtrType) ToMk8sGcpProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderAutoscalerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderAutoscalerPtrOutput)
+}
+
+type Mk8sGcpProviderAutoscalerOutput struct{ *pulumi.OutputState }
+
+func (Mk8sGcpProviderAutoscalerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sGcpProviderAutoscaler)(nil)).Elem()
+}
+
+func (o Mk8sGcpProviderAutoscalerOutput) ToMk8sGcpProviderAutoscalerOutput() Mk8sGcpProviderAutoscalerOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderAutoscalerOutput) ToMk8sGcpProviderAutoscalerOutputWithContext(ctx context.Context) Mk8sGcpProviderAutoscalerOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderAutoscalerOutput) ToMk8sGcpProviderAutoscalerPtrOutput() Mk8sGcpProviderAutoscalerPtrOutput {
+	return o.ToMk8sGcpProviderAutoscalerPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sGcpProviderAutoscalerOutput) ToMk8sGcpProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderAutoscalerPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sGcpProviderAutoscaler) *Mk8sGcpProviderAutoscaler {
+		return &v
+	}).(Mk8sGcpProviderAutoscalerPtrOutput)
+}
+
+func (o Mk8sGcpProviderAutoscalerOutput) Expanders() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderAutoscaler) []string { return v.Expanders }).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sGcpProviderAutoscalerOutput) UnneededTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderAutoscaler) *string { return v.UnneededTime }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sGcpProviderAutoscalerOutput) UnreadyTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderAutoscaler) *string { return v.UnreadyTime }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sGcpProviderAutoscalerOutput) UtilizationThreshold() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderAutoscaler) *float64 { return v.UtilizationThreshold }).(pulumi.Float64PtrOutput)
+}
+
+type Mk8sGcpProviderAutoscalerPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sGcpProviderAutoscalerPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sGcpProviderAutoscaler)(nil)).Elem()
+}
+
+func (o Mk8sGcpProviderAutoscalerPtrOutput) ToMk8sGcpProviderAutoscalerPtrOutput() Mk8sGcpProviderAutoscalerPtrOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderAutoscalerPtrOutput) ToMk8sGcpProviderAutoscalerPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderAutoscalerPtrOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderAutoscalerPtrOutput) Elem() Mk8sGcpProviderAutoscalerOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderAutoscaler) Mk8sGcpProviderAutoscaler {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sGcpProviderAutoscaler
+		return ret
+	}).(Mk8sGcpProviderAutoscalerOutput)
+}
+
+func (o Mk8sGcpProviderAutoscalerPtrOutput) Expanders() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderAutoscaler) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Expanders
+	}).(pulumi.StringArrayOutput)
+}
+
+func (o Mk8sGcpProviderAutoscalerPtrOutput) UnneededTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderAutoscaler) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UnneededTime
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sGcpProviderAutoscalerPtrOutput) UnreadyTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderAutoscaler) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UnreadyTime
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sGcpProviderAutoscalerPtrOutput) UtilizationThreshold() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderAutoscaler) *float64 {
+		if v == nil {
+			return nil
+		}
+		return v.UtilizationThreshold
+	}).(pulumi.Float64PtrOutput)
+}
+
+type Mk8sGcpProviderImage struct {
+	Recommended *string `pulumi:"recommended"`
+}
+
+// Mk8sGcpProviderImageInput is an input type that accepts Mk8sGcpProviderImageArgs and Mk8sGcpProviderImageOutput values.
+// You can construct a concrete instance of `Mk8sGcpProviderImageInput` via:
+//
+//	Mk8sGcpProviderImageArgs{...}
+type Mk8sGcpProviderImageInput interface {
+	pulumi.Input
+
+	ToMk8sGcpProviderImageOutput() Mk8sGcpProviderImageOutput
+	ToMk8sGcpProviderImageOutputWithContext(context.Context) Mk8sGcpProviderImageOutput
+}
+
+type Mk8sGcpProviderImageArgs struct {
+	Recommended pulumi.StringPtrInput `pulumi:"recommended"`
+}
+
+func (Mk8sGcpProviderImageArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sGcpProviderImage)(nil)).Elem()
+}
+
+func (i Mk8sGcpProviderImageArgs) ToMk8sGcpProviderImageOutput() Mk8sGcpProviderImageOutput {
+	return i.ToMk8sGcpProviderImageOutputWithContext(context.Background())
+}
+
+func (i Mk8sGcpProviderImageArgs) ToMk8sGcpProviderImageOutputWithContext(ctx context.Context) Mk8sGcpProviderImageOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderImageOutput)
+}
+
+func (i Mk8sGcpProviderImageArgs) ToMk8sGcpProviderImagePtrOutput() Mk8sGcpProviderImagePtrOutput {
+	return i.ToMk8sGcpProviderImagePtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sGcpProviderImageArgs) ToMk8sGcpProviderImagePtrOutputWithContext(ctx context.Context) Mk8sGcpProviderImagePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderImageOutput).ToMk8sGcpProviderImagePtrOutputWithContext(ctx)
+}
+
+// Mk8sGcpProviderImagePtrInput is an input type that accepts Mk8sGcpProviderImageArgs, Mk8sGcpProviderImagePtr and Mk8sGcpProviderImagePtrOutput values.
+// You can construct a concrete instance of `Mk8sGcpProviderImagePtrInput` via:
+//
+//	        Mk8sGcpProviderImageArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sGcpProviderImagePtrInput interface {
+	pulumi.Input
+
+	ToMk8sGcpProviderImagePtrOutput() Mk8sGcpProviderImagePtrOutput
+	ToMk8sGcpProviderImagePtrOutputWithContext(context.Context) Mk8sGcpProviderImagePtrOutput
+}
+
+type mk8sGcpProviderImagePtrType Mk8sGcpProviderImageArgs
+
+func Mk8sGcpProviderImagePtr(v *Mk8sGcpProviderImageArgs) Mk8sGcpProviderImagePtrInput {
+	return (*mk8sGcpProviderImagePtrType)(v)
+}
+
+func (*mk8sGcpProviderImagePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sGcpProviderImage)(nil)).Elem()
+}
+
+func (i *mk8sGcpProviderImagePtrType) ToMk8sGcpProviderImagePtrOutput() Mk8sGcpProviderImagePtrOutput {
+	return i.ToMk8sGcpProviderImagePtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sGcpProviderImagePtrType) ToMk8sGcpProviderImagePtrOutputWithContext(ctx context.Context) Mk8sGcpProviderImagePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderImagePtrOutput)
+}
+
+type Mk8sGcpProviderImageOutput struct{ *pulumi.OutputState }
+
+func (Mk8sGcpProviderImageOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sGcpProviderImage)(nil)).Elem()
+}
+
+func (o Mk8sGcpProviderImageOutput) ToMk8sGcpProviderImageOutput() Mk8sGcpProviderImageOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderImageOutput) ToMk8sGcpProviderImageOutputWithContext(ctx context.Context) Mk8sGcpProviderImageOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderImageOutput) ToMk8sGcpProviderImagePtrOutput() Mk8sGcpProviderImagePtrOutput {
+	return o.ToMk8sGcpProviderImagePtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sGcpProviderImageOutput) ToMk8sGcpProviderImagePtrOutputWithContext(ctx context.Context) Mk8sGcpProviderImagePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sGcpProviderImage) *Mk8sGcpProviderImage {
+		return &v
+	}).(Mk8sGcpProviderImagePtrOutput)
+}
+
+func (o Mk8sGcpProviderImageOutput) Recommended() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderImage) *string { return v.Recommended }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sGcpProviderImagePtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sGcpProviderImagePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sGcpProviderImage)(nil)).Elem()
+}
+
+func (o Mk8sGcpProviderImagePtrOutput) ToMk8sGcpProviderImagePtrOutput() Mk8sGcpProviderImagePtrOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderImagePtrOutput) ToMk8sGcpProviderImagePtrOutputWithContext(ctx context.Context) Mk8sGcpProviderImagePtrOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderImagePtrOutput) Elem() Mk8sGcpProviderImageOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderImage) Mk8sGcpProviderImage {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sGcpProviderImage
+		return ret
+	}).(Mk8sGcpProviderImageOutput)
+}
+
+func (o Mk8sGcpProviderImagePtrOutput) Recommended() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderImage) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Recommended
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sGcpProviderNetworking struct {
+	// DNS forwarder used by the cluster. Can be a space-delimited list of dns servers. Default is /etc/resolv.conf when not specified.
+	DnsForwarder *string `pulumi:"dnsForwarder"`
+	// The CIDR of the pod network.
+	PodNetwork *string `pulumi:"podNetwork"`
+	// The CIDR of the service network.
+	ServiceNetwork *string `pulumi:"serviceNetwork"`
+}
+
+// Mk8sGcpProviderNetworkingInput is an input type that accepts Mk8sGcpProviderNetworkingArgs and Mk8sGcpProviderNetworkingOutput values.
+// You can construct a concrete instance of `Mk8sGcpProviderNetworkingInput` via:
+//
+//	Mk8sGcpProviderNetworkingArgs{...}
+type Mk8sGcpProviderNetworkingInput interface {
+	pulumi.Input
+
+	ToMk8sGcpProviderNetworkingOutput() Mk8sGcpProviderNetworkingOutput
+	ToMk8sGcpProviderNetworkingOutputWithContext(context.Context) Mk8sGcpProviderNetworkingOutput
+}
+
+type Mk8sGcpProviderNetworkingArgs struct {
+	// DNS forwarder used by the cluster. Can be a space-delimited list of dns servers. Default is /etc/resolv.conf when not specified.
+	DnsForwarder pulumi.StringPtrInput `pulumi:"dnsForwarder"`
+	// The CIDR of the pod network.
+	PodNetwork pulumi.StringPtrInput `pulumi:"podNetwork"`
+	// The CIDR of the service network.
+	ServiceNetwork pulumi.StringPtrInput `pulumi:"serviceNetwork"`
+}
+
+func (Mk8sGcpProviderNetworkingArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sGcpProviderNetworking)(nil)).Elem()
+}
+
+func (i Mk8sGcpProviderNetworkingArgs) ToMk8sGcpProviderNetworkingOutput() Mk8sGcpProviderNetworkingOutput {
+	return i.ToMk8sGcpProviderNetworkingOutputWithContext(context.Background())
+}
+
+func (i Mk8sGcpProviderNetworkingArgs) ToMk8sGcpProviderNetworkingOutputWithContext(ctx context.Context) Mk8sGcpProviderNetworkingOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderNetworkingOutput)
+}
+
+func (i Mk8sGcpProviderNetworkingArgs) ToMk8sGcpProviderNetworkingPtrOutput() Mk8sGcpProviderNetworkingPtrOutput {
+	return i.ToMk8sGcpProviderNetworkingPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sGcpProviderNetworkingArgs) ToMk8sGcpProviderNetworkingPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderNetworkingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderNetworkingOutput).ToMk8sGcpProviderNetworkingPtrOutputWithContext(ctx)
+}
+
+// Mk8sGcpProviderNetworkingPtrInput is an input type that accepts Mk8sGcpProviderNetworkingArgs, Mk8sGcpProviderNetworkingPtr and Mk8sGcpProviderNetworkingPtrOutput values.
+// You can construct a concrete instance of `Mk8sGcpProviderNetworkingPtrInput` via:
+//
+//	        Mk8sGcpProviderNetworkingArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sGcpProviderNetworkingPtrInput interface {
+	pulumi.Input
+
+	ToMk8sGcpProviderNetworkingPtrOutput() Mk8sGcpProviderNetworkingPtrOutput
+	ToMk8sGcpProviderNetworkingPtrOutputWithContext(context.Context) Mk8sGcpProviderNetworkingPtrOutput
+}
+
+type mk8sGcpProviderNetworkingPtrType Mk8sGcpProviderNetworkingArgs
+
+func Mk8sGcpProviderNetworkingPtr(v *Mk8sGcpProviderNetworkingArgs) Mk8sGcpProviderNetworkingPtrInput {
+	return (*mk8sGcpProviderNetworkingPtrType)(v)
+}
+
+func (*mk8sGcpProviderNetworkingPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sGcpProviderNetworking)(nil)).Elem()
+}
+
+func (i *mk8sGcpProviderNetworkingPtrType) ToMk8sGcpProviderNetworkingPtrOutput() Mk8sGcpProviderNetworkingPtrOutput {
+	return i.ToMk8sGcpProviderNetworkingPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sGcpProviderNetworkingPtrType) ToMk8sGcpProviderNetworkingPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderNetworkingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderNetworkingPtrOutput)
+}
+
+type Mk8sGcpProviderNetworkingOutput struct{ *pulumi.OutputState }
+
+func (Mk8sGcpProviderNetworkingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sGcpProviderNetworking)(nil)).Elem()
+}
+
+func (o Mk8sGcpProviderNetworkingOutput) ToMk8sGcpProviderNetworkingOutput() Mk8sGcpProviderNetworkingOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNetworkingOutput) ToMk8sGcpProviderNetworkingOutputWithContext(ctx context.Context) Mk8sGcpProviderNetworkingOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNetworkingOutput) ToMk8sGcpProviderNetworkingPtrOutput() Mk8sGcpProviderNetworkingPtrOutput {
+	return o.ToMk8sGcpProviderNetworkingPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sGcpProviderNetworkingOutput) ToMk8sGcpProviderNetworkingPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderNetworkingPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sGcpProviderNetworking) *Mk8sGcpProviderNetworking {
+		return &v
+	}).(Mk8sGcpProviderNetworkingPtrOutput)
+}
+
+// DNS forwarder used by the cluster. Can be a space-delimited list of dns servers. Default is /etc/resolv.conf when not specified.
+func (o Mk8sGcpProviderNetworkingOutput) DnsForwarder() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNetworking) *string { return v.DnsForwarder }).(pulumi.StringPtrOutput)
+}
+
+// The CIDR of the pod network.
+func (o Mk8sGcpProviderNetworkingOutput) PodNetwork() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNetworking) *string { return v.PodNetwork }).(pulumi.StringPtrOutput)
+}
+
+// The CIDR of the service network.
+func (o Mk8sGcpProviderNetworkingOutput) ServiceNetwork() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNetworking) *string { return v.ServiceNetwork }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sGcpProviderNetworkingPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sGcpProviderNetworkingPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sGcpProviderNetworking)(nil)).Elem()
+}
+
+func (o Mk8sGcpProviderNetworkingPtrOutput) ToMk8sGcpProviderNetworkingPtrOutput() Mk8sGcpProviderNetworkingPtrOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNetworkingPtrOutput) ToMk8sGcpProviderNetworkingPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderNetworkingPtrOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNetworkingPtrOutput) Elem() Mk8sGcpProviderNetworkingOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderNetworking) Mk8sGcpProviderNetworking {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sGcpProviderNetworking
+		return ret
+	}).(Mk8sGcpProviderNetworkingOutput)
+}
+
+// DNS forwarder used by the cluster. Can be a space-delimited list of dns servers. Default is /etc/resolv.conf when not specified.
+func (o Mk8sGcpProviderNetworkingPtrOutput) DnsForwarder() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderNetworking) *string {
+		if v == nil {
+			return nil
+		}
+		return v.DnsForwarder
+	}).(pulumi.StringPtrOutput)
+}
+
+// The CIDR of the pod network.
+func (o Mk8sGcpProviderNetworkingPtrOutput) PodNetwork() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderNetworking) *string {
+		if v == nil {
+			return nil
+		}
+		return v.PodNetwork
+	}).(pulumi.StringPtrOutput)
+}
+
+// The CIDR of the service network.
+func (o Mk8sGcpProviderNetworkingPtrOutput) ServiceNetwork() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderNetworking) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ServiceNetwork
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sGcpProviderNodePool struct {
+	// Size in GB.
+	BootDiskSize int `pulumi:"bootDiskSize"`
+	// Labels to attach to nodes of a node pool.
+	Labels map[string]string `pulumi:"labels"`
+	// GCE machine type for nodes in this pool.
+	MachineType   string                                `pulumi:"machineType"`
+	MaxSize       *int                                  `pulumi:"maxSize"`
+	MinSize       *int                                  `pulumi:"minSize"`
+	Name          string                                `pulumi:"name"`
+	OverrideImage *Mk8sGcpProviderNodePoolOverrideImage `pulumi:"overrideImage"`
+	// Subnet within the selected network.
+	Subnet string `pulumi:"subnet"`
+	// Taint for the nodes of a pool.
+	Taints []Mk8sGcpProviderNodePoolTaint `pulumi:"taints"`
+	// Zone where the pool nodes run.
+	Zone string `pulumi:"zone"`
+}
+
+// Mk8sGcpProviderNodePoolInput is an input type that accepts Mk8sGcpProviderNodePoolArgs and Mk8sGcpProviderNodePoolOutput values.
+// You can construct a concrete instance of `Mk8sGcpProviderNodePoolInput` via:
+//
+//	Mk8sGcpProviderNodePoolArgs{...}
+type Mk8sGcpProviderNodePoolInput interface {
+	pulumi.Input
+
+	ToMk8sGcpProviderNodePoolOutput() Mk8sGcpProviderNodePoolOutput
+	ToMk8sGcpProviderNodePoolOutputWithContext(context.Context) Mk8sGcpProviderNodePoolOutput
+}
+
+type Mk8sGcpProviderNodePoolArgs struct {
+	// Size in GB.
+	BootDiskSize pulumi.IntInput `pulumi:"bootDiskSize"`
+	// Labels to attach to nodes of a node pool.
+	Labels pulumi.StringMapInput `pulumi:"labels"`
+	// GCE machine type for nodes in this pool.
+	MachineType   pulumi.StringInput                           `pulumi:"machineType"`
+	MaxSize       pulumi.IntPtrInput                           `pulumi:"maxSize"`
+	MinSize       pulumi.IntPtrInput                           `pulumi:"minSize"`
+	Name          pulumi.StringInput                           `pulumi:"name"`
+	OverrideImage Mk8sGcpProviderNodePoolOverrideImagePtrInput `pulumi:"overrideImage"`
+	// Subnet within the selected network.
+	Subnet pulumi.StringInput `pulumi:"subnet"`
+	// Taint for the nodes of a pool.
+	Taints Mk8sGcpProviderNodePoolTaintArrayInput `pulumi:"taints"`
+	// Zone where the pool nodes run.
+	Zone pulumi.StringInput `pulumi:"zone"`
+}
+
+func (Mk8sGcpProviderNodePoolArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sGcpProviderNodePool)(nil)).Elem()
+}
+
+func (i Mk8sGcpProviderNodePoolArgs) ToMk8sGcpProviderNodePoolOutput() Mk8sGcpProviderNodePoolOutput {
+	return i.ToMk8sGcpProviderNodePoolOutputWithContext(context.Background())
+}
+
+func (i Mk8sGcpProviderNodePoolArgs) ToMk8sGcpProviderNodePoolOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderNodePoolOutput)
+}
+
+// Mk8sGcpProviderNodePoolArrayInput is an input type that accepts Mk8sGcpProviderNodePoolArray and Mk8sGcpProviderNodePoolArrayOutput values.
+// You can construct a concrete instance of `Mk8sGcpProviderNodePoolArrayInput` via:
+//
+//	Mk8sGcpProviderNodePoolArray{ Mk8sGcpProviderNodePoolArgs{...} }
+type Mk8sGcpProviderNodePoolArrayInput interface {
+	pulumi.Input
+
+	ToMk8sGcpProviderNodePoolArrayOutput() Mk8sGcpProviderNodePoolArrayOutput
+	ToMk8sGcpProviderNodePoolArrayOutputWithContext(context.Context) Mk8sGcpProviderNodePoolArrayOutput
+}
+
+type Mk8sGcpProviderNodePoolArray []Mk8sGcpProviderNodePoolInput
+
+func (Mk8sGcpProviderNodePoolArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sGcpProviderNodePool)(nil)).Elem()
+}
+
+func (i Mk8sGcpProviderNodePoolArray) ToMk8sGcpProviderNodePoolArrayOutput() Mk8sGcpProviderNodePoolArrayOutput {
+	return i.ToMk8sGcpProviderNodePoolArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sGcpProviderNodePoolArray) ToMk8sGcpProviderNodePoolArrayOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderNodePoolArrayOutput)
+}
+
+type Mk8sGcpProviderNodePoolOutput struct{ *pulumi.OutputState }
+
+func (Mk8sGcpProviderNodePoolOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sGcpProviderNodePool)(nil)).Elem()
+}
+
+func (o Mk8sGcpProviderNodePoolOutput) ToMk8sGcpProviderNodePoolOutput() Mk8sGcpProviderNodePoolOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNodePoolOutput) ToMk8sGcpProviderNodePoolOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolOutput {
+	return o
+}
+
+// Size in GB.
+func (o Mk8sGcpProviderNodePoolOutput) BootDiskSize() pulumi.IntOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePool) int { return v.BootDiskSize }).(pulumi.IntOutput)
+}
+
+// Labels to attach to nodes of a node pool.
+func (o Mk8sGcpProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+// GCE machine type for nodes in this pool.
+func (o Mk8sGcpProviderNodePoolOutput) MachineType() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePool) string { return v.MachineType }).(pulumi.StringOutput)
+}
+
+func (o Mk8sGcpProviderNodePoolOutput) MaxSize() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePool) *int { return v.MaxSize }).(pulumi.IntPtrOutput)
+}
+
+func (o Mk8sGcpProviderNodePoolOutput) MinSize() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePool) *int { return v.MinSize }).(pulumi.IntPtrOutput)
+}
+
+func (o Mk8sGcpProviderNodePoolOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePool) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o Mk8sGcpProviderNodePoolOutput) OverrideImage() Mk8sGcpProviderNodePoolOverrideImagePtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePool) *Mk8sGcpProviderNodePoolOverrideImage { return v.OverrideImage }).(Mk8sGcpProviderNodePoolOverrideImagePtrOutput)
+}
+
+// Subnet within the selected network.
+func (o Mk8sGcpProviderNodePoolOutput) Subnet() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePool) string { return v.Subnet }).(pulumi.StringOutput)
+}
+
+// Taint for the nodes of a pool.
+func (o Mk8sGcpProviderNodePoolOutput) Taints() Mk8sGcpProviderNodePoolTaintArrayOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePool) []Mk8sGcpProviderNodePoolTaint { return v.Taints }).(Mk8sGcpProviderNodePoolTaintArrayOutput)
+}
+
+// Zone where the pool nodes run.
+func (o Mk8sGcpProviderNodePoolOutput) Zone() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePool) string { return v.Zone }).(pulumi.StringOutput)
+}
+
+type Mk8sGcpProviderNodePoolArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sGcpProviderNodePoolArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sGcpProviderNodePool)(nil)).Elem()
+}
+
+func (o Mk8sGcpProviderNodePoolArrayOutput) ToMk8sGcpProviderNodePoolArrayOutput() Mk8sGcpProviderNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNodePoolArrayOutput) ToMk8sGcpProviderNodePoolArrayOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolArrayOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNodePoolArrayOutput) Index(i pulumi.IntInput) Mk8sGcpProviderNodePoolOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sGcpProviderNodePool {
+		return vs[0].([]Mk8sGcpProviderNodePool)[vs[1].(int)]
+	}).(Mk8sGcpProviderNodePoolOutput)
+}
+
+type Mk8sGcpProviderNodePoolOverrideImage struct {
+	Recommended *string `pulumi:"recommended"`
+}
+
+// Mk8sGcpProviderNodePoolOverrideImageInput is an input type that accepts Mk8sGcpProviderNodePoolOverrideImageArgs and Mk8sGcpProviderNodePoolOverrideImageOutput values.
+// You can construct a concrete instance of `Mk8sGcpProviderNodePoolOverrideImageInput` via:
+//
+//	Mk8sGcpProviderNodePoolOverrideImageArgs{...}
+type Mk8sGcpProviderNodePoolOverrideImageInput interface {
+	pulumi.Input
+
+	ToMk8sGcpProviderNodePoolOverrideImageOutput() Mk8sGcpProviderNodePoolOverrideImageOutput
+	ToMk8sGcpProviderNodePoolOverrideImageOutputWithContext(context.Context) Mk8sGcpProviderNodePoolOverrideImageOutput
+}
+
+type Mk8sGcpProviderNodePoolOverrideImageArgs struct {
+	Recommended pulumi.StringPtrInput `pulumi:"recommended"`
+}
+
+func (Mk8sGcpProviderNodePoolOverrideImageArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sGcpProviderNodePoolOverrideImage)(nil)).Elem()
+}
+
+func (i Mk8sGcpProviderNodePoolOverrideImageArgs) ToMk8sGcpProviderNodePoolOverrideImageOutput() Mk8sGcpProviderNodePoolOverrideImageOutput {
+	return i.ToMk8sGcpProviderNodePoolOverrideImageOutputWithContext(context.Background())
+}
+
+func (i Mk8sGcpProviderNodePoolOverrideImageArgs) ToMk8sGcpProviderNodePoolOverrideImageOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolOverrideImageOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderNodePoolOverrideImageOutput)
+}
+
+func (i Mk8sGcpProviderNodePoolOverrideImageArgs) ToMk8sGcpProviderNodePoolOverrideImagePtrOutput() Mk8sGcpProviderNodePoolOverrideImagePtrOutput {
+	return i.ToMk8sGcpProviderNodePoolOverrideImagePtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sGcpProviderNodePoolOverrideImageArgs) ToMk8sGcpProviderNodePoolOverrideImagePtrOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolOverrideImagePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderNodePoolOverrideImageOutput).ToMk8sGcpProviderNodePoolOverrideImagePtrOutputWithContext(ctx)
+}
+
+// Mk8sGcpProviderNodePoolOverrideImagePtrInput is an input type that accepts Mk8sGcpProviderNodePoolOverrideImageArgs, Mk8sGcpProviderNodePoolOverrideImagePtr and Mk8sGcpProviderNodePoolOverrideImagePtrOutput values.
+// You can construct a concrete instance of `Mk8sGcpProviderNodePoolOverrideImagePtrInput` via:
+//
+//	        Mk8sGcpProviderNodePoolOverrideImageArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sGcpProviderNodePoolOverrideImagePtrInput interface {
+	pulumi.Input
+
+	ToMk8sGcpProviderNodePoolOverrideImagePtrOutput() Mk8sGcpProviderNodePoolOverrideImagePtrOutput
+	ToMk8sGcpProviderNodePoolOverrideImagePtrOutputWithContext(context.Context) Mk8sGcpProviderNodePoolOverrideImagePtrOutput
+}
+
+type mk8sGcpProviderNodePoolOverrideImagePtrType Mk8sGcpProviderNodePoolOverrideImageArgs
+
+func Mk8sGcpProviderNodePoolOverrideImagePtr(v *Mk8sGcpProviderNodePoolOverrideImageArgs) Mk8sGcpProviderNodePoolOverrideImagePtrInput {
+	return (*mk8sGcpProviderNodePoolOverrideImagePtrType)(v)
+}
+
+func (*mk8sGcpProviderNodePoolOverrideImagePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sGcpProviderNodePoolOverrideImage)(nil)).Elem()
+}
+
+func (i *mk8sGcpProviderNodePoolOverrideImagePtrType) ToMk8sGcpProviderNodePoolOverrideImagePtrOutput() Mk8sGcpProviderNodePoolOverrideImagePtrOutput {
+	return i.ToMk8sGcpProviderNodePoolOverrideImagePtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sGcpProviderNodePoolOverrideImagePtrType) ToMk8sGcpProviderNodePoolOverrideImagePtrOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolOverrideImagePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderNodePoolOverrideImagePtrOutput)
+}
+
+type Mk8sGcpProviderNodePoolOverrideImageOutput struct{ *pulumi.OutputState }
+
+func (Mk8sGcpProviderNodePoolOverrideImageOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sGcpProviderNodePoolOverrideImage)(nil)).Elem()
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImageOutput) ToMk8sGcpProviderNodePoolOverrideImageOutput() Mk8sGcpProviderNodePoolOverrideImageOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImageOutput) ToMk8sGcpProviderNodePoolOverrideImageOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolOverrideImageOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImageOutput) ToMk8sGcpProviderNodePoolOverrideImagePtrOutput() Mk8sGcpProviderNodePoolOverrideImagePtrOutput {
+	return o.ToMk8sGcpProviderNodePoolOverrideImagePtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImageOutput) ToMk8sGcpProviderNodePoolOverrideImagePtrOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolOverrideImagePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sGcpProviderNodePoolOverrideImage) *Mk8sGcpProviderNodePoolOverrideImage {
+		return &v
+	}).(Mk8sGcpProviderNodePoolOverrideImagePtrOutput)
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImageOutput) Recommended() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePoolOverrideImage) *string { return v.Recommended }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sGcpProviderNodePoolOverrideImagePtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sGcpProviderNodePoolOverrideImagePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sGcpProviderNodePoolOverrideImage)(nil)).Elem()
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImagePtrOutput) ToMk8sGcpProviderNodePoolOverrideImagePtrOutput() Mk8sGcpProviderNodePoolOverrideImagePtrOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImagePtrOutput) ToMk8sGcpProviderNodePoolOverrideImagePtrOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolOverrideImagePtrOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImagePtrOutput) Elem() Mk8sGcpProviderNodePoolOverrideImageOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderNodePoolOverrideImage) Mk8sGcpProviderNodePoolOverrideImage {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sGcpProviderNodePoolOverrideImage
+		return ret
+	}).(Mk8sGcpProviderNodePoolOverrideImageOutput)
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImagePtrOutput) Recommended() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderNodePoolOverrideImage) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Recommended
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sGcpProviderNodePoolTaint struct {
+	Effect *string `pulumi:"effect"`
+	Key    *string `pulumi:"key"`
+	Value  *string `pulumi:"value"`
+}
+
+// Mk8sGcpProviderNodePoolTaintInput is an input type that accepts Mk8sGcpProviderNodePoolTaintArgs and Mk8sGcpProviderNodePoolTaintOutput values.
+// You can construct a concrete instance of `Mk8sGcpProviderNodePoolTaintInput` via:
+//
+//	Mk8sGcpProviderNodePoolTaintArgs{...}
+type Mk8sGcpProviderNodePoolTaintInput interface {
+	pulumi.Input
+
+	ToMk8sGcpProviderNodePoolTaintOutput() Mk8sGcpProviderNodePoolTaintOutput
+	ToMk8sGcpProviderNodePoolTaintOutputWithContext(context.Context) Mk8sGcpProviderNodePoolTaintOutput
+}
+
+type Mk8sGcpProviderNodePoolTaintArgs struct {
+	Effect pulumi.StringPtrInput `pulumi:"effect"`
+	Key    pulumi.StringPtrInput `pulumi:"key"`
+	Value  pulumi.StringPtrInput `pulumi:"value"`
+}
+
+func (Mk8sGcpProviderNodePoolTaintArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sGcpProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sGcpProviderNodePoolTaintArgs) ToMk8sGcpProviderNodePoolTaintOutput() Mk8sGcpProviderNodePoolTaintOutput {
+	return i.ToMk8sGcpProviderNodePoolTaintOutputWithContext(context.Background())
+}
+
+func (i Mk8sGcpProviderNodePoolTaintArgs) ToMk8sGcpProviderNodePoolTaintOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolTaintOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderNodePoolTaintOutput)
+}
+
+// Mk8sGcpProviderNodePoolTaintArrayInput is an input type that accepts Mk8sGcpProviderNodePoolTaintArray and Mk8sGcpProviderNodePoolTaintArrayOutput values.
+// You can construct a concrete instance of `Mk8sGcpProviderNodePoolTaintArrayInput` via:
+//
+//	Mk8sGcpProviderNodePoolTaintArray{ Mk8sGcpProviderNodePoolTaintArgs{...} }
+type Mk8sGcpProviderNodePoolTaintArrayInput interface {
+	pulumi.Input
+
+	ToMk8sGcpProviderNodePoolTaintArrayOutput() Mk8sGcpProviderNodePoolTaintArrayOutput
+	ToMk8sGcpProviderNodePoolTaintArrayOutputWithContext(context.Context) Mk8sGcpProviderNodePoolTaintArrayOutput
+}
+
+type Mk8sGcpProviderNodePoolTaintArray []Mk8sGcpProviderNodePoolTaintInput
+
+func (Mk8sGcpProviderNodePoolTaintArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sGcpProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (i Mk8sGcpProviderNodePoolTaintArray) ToMk8sGcpProviderNodePoolTaintArrayOutput() Mk8sGcpProviderNodePoolTaintArrayOutput {
+	return i.ToMk8sGcpProviderNodePoolTaintArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sGcpProviderNodePoolTaintArray) ToMk8sGcpProviderNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolTaintArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderNodePoolTaintArrayOutput)
+}
+
+type Mk8sGcpProviderNodePoolTaintOutput struct{ *pulumi.OutputState }
+
+func (Mk8sGcpProviderNodePoolTaintOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sGcpProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sGcpProviderNodePoolTaintOutput) ToMk8sGcpProviderNodePoolTaintOutput() Mk8sGcpProviderNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNodePoolTaintOutput) ToMk8sGcpProviderNodePoolTaintOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolTaintOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNodePoolTaintOutput) Effect() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePoolTaint) *string { return v.Effect }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sGcpProviderNodePoolTaintOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePoolTaint) *string { return v.Key }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sGcpProviderNodePoolTaintOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePoolTaint) *string { return v.Value }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sGcpProviderNodePoolTaintArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sGcpProviderNodePoolTaintArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sGcpProviderNodePoolTaint)(nil)).Elem()
+}
+
+func (o Mk8sGcpProviderNodePoolTaintArrayOutput) ToMk8sGcpProviderNodePoolTaintArrayOutput() Mk8sGcpProviderNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNodePoolTaintArrayOutput) ToMk8sGcpProviderNodePoolTaintArrayOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolTaintArrayOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNodePoolTaintArrayOutput) Index(i pulumi.IntInput) Mk8sGcpProviderNodePoolTaintOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sGcpProviderNodePoolTaint {
+		return vs[0].([]Mk8sGcpProviderNodePoolTaint)[vs[1].(int)]
+	}).(Mk8sGcpProviderNodePoolTaintOutput)
 }
 
 type Mk8sGenericProvider struct {
@@ -20641,6 +25948,7 @@ func (o Mk8sTritonProviderConnectionPtrOutput) User() pulumi.StringPtrOutput {
 type Mk8sTritonProviderLoadBalancer struct {
 	Gateway *Mk8sTritonProviderLoadBalancerGateway `pulumi:"gateway"`
 	Manual  *Mk8sTritonProviderLoadBalancerManual  `pulumi:"manual"`
+	None    *Mk8sTritonProviderLoadBalancerNone    `pulumi:"none"`
 }
 
 // Mk8sTritonProviderLoadBalancerInput is an input type that accepts Mk8sTritonProviderLoadBalancerArgs and Mk8sTritonProviderLoadBalancerOutput values.
@@ -20657,6 +25965,7 @@ type Mk8sTritonProviderLoadBalancerInput interface {
 type Mk8sTritonProviderLoadBalancerArgs struct {
 	Gateway Mk8sTritonProviderLoadBalancerGatewayPtrInput `pulumi:"gateway"`
 	Manual  Mk8sTritonProviderLoadBalancerManualPtrInput  `pulumi:"manual"`
+	None    Mk8sTritonProviderLoadBalancerNonePtrInput    `pulumi:"none"`
 }
 
 func (Mk8sTritonProviderLoadBalancerArgs) ElementType() reflect.Type {
@@ -20744,6 +26053,10 @@ func (o Mk8sTritonProviderLoadBalancerOutput) Manual() Mk8sTritonProviderLoadBal
 	return o.ApplyT(func(v Mk8sTritonProviderLoadBalancer) *Mk8sTritonProviderLoadBalancerManual { return v.Manual }).(Mk8sTritonProviderLoadBalancerManualPtrOutput)
 }
 
+func (o Mk8sTritonProviderLoadBalancerOutput) None() Mk8sTritonProviderLoadBalancerNonePtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderLoadBalancer) *Mk8sTritonProviderLoadBalancerNone { return v.None }).(Mk8sTritonProviderLoadBalancerNonePtrOutput)
+}
+
 type Mk8sTritonProviderLoadBalancerPtrOutput struct{ *pulumi.OutputState }
 
 func (Mk8sTritonProviderLoadBalancerPtrOutput) ElementType() reflect.Type {
@@ -20784,6 +26097,15 @@ func (o Mk8sTritonProviderLoadBalancerPtrOutput) Manual() Mk8sTritonProviderLoad
 		}
 		return v.Manual
 	}).(Mk8sTritonProviderLoadBalancerManualPtrOutput)
+}
+
+func (o Mk8sTritonProviderLoadBalancerPtrOutput) None() Mk8sTritonProviderLoadBalancerNonePtrOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderLoadBalancer) *Mk8sTritonProviderLoadBalancerNone {
+		if v == nil {
+			return nil
+		}
+		return v.None
+	}).(Mk8sTritonProviderLoadBalancerNonePtrOutput)
 }
 
 type Mk8sTritonProviderLoadBalancerGateway struct {
@@ -21336,6 +26658,124 @@ func (o Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput) NodePort() pulumi.
 		}
 		return v.NodePort
 	}).(pulumi.IntPtrOutput)
+}
+
+type Mk8sTritonProviderLoadBalancerNone struct {
+}
+
+// Mk8sTritonProviderLoadBalancerNoneInput is an input type that accepts Mk8sTritonProviderLoadBalancerNoneArgs and Mk8sTritonProviderLoadBalancerNoneOutput values.
+// You can construct a concrete instance of `Mk8sTritonProviderLoadBalancerNoneInput` via:
+//
+//	Mk8sTritonProviderLoadBalancerNoneArgs{...}
+type Mk8sTritonProviderLoadBalancerNoneInput interface {
+	pulumi.Input
+
+	ToMk8sTritonProviderLoadBalancerNoneOutput() Mk8sTritonProviderLoadBalancerNoneOutput
+	ToMk8sTritonProviderLoadBalancerNoneOutputWithContext(context.Context) Mk8sTritonProviderLoadBalancerNoneOutput
+}
+
+type Mk8sTritonProviderLoadBalancerNoneArgs struct {
+}
+
+func (Mk8sTritonProviderLoadBalancerNoneArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sTritonProviderLoadBalancerNone)(nil)).Elem()
+}
+
+func (i Mk8sTritonProviderLoadBalancerNoneArgs) ToMk8sTritonProviderLoadBalancerNoneOutput() Mk8sTritonProviderLoadBalancerNoneOutput {
+	return i.ToMk8sTritonProviderLoadBalancerNoneOutputWithContext(context.Background())
+}
+
+func (i Mk8sTritonProviderLoadBalancerNoneArgs) ToMk8sTritonProviderLoadBalancerNoneOutputWithContext(ctx context.Context) Mk8sTritonProviderLoadBalancerNoneOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderLoadBalancerNoneOutput)
+}
+
+func (i Mk8sTritonProviderLoadBalancerNoneArgs) ToMk8sTritonProviderLoadBalancerNonePtrOutput() Mk8sTritonProviderLoadBalancerNonePtrOutput {
+	return i.ToMk8sTritonProviderLoadBalancerNonePtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sTritonProviderLoadBalancerNoneArgs) ToMk8sTritonProviderLoadBalancerNonePtrOutputWithContext(ctx context.Context) Mk8sTritonProviderLoadBalancerNonePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderLoadBalancerNoneOutput).ToMk8sTritonProviderLoadBalancerNonePtrOutputWithContext(ctx)
+}
+
+// Mk8sTritonProviderLoadBalancerNonePtrInput is an input type that accepts Mk8sTritonProviderLoadBalancerNoneArgs, Mk8sTritonProviderLoadBalancerNonePtr and Mk8sTritonProviderLoadBalancerNonePtrOutput values.
+// You can construct a concrete instance of `Mk8sTritonProviderLoadBalancerNonePtrInput` via:
+//
+//	        Mk8sTritonProviderLoadBalancerNoneArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sTritonProviderLoadBalancerNonePtrInput interface {
+	pulumi.Input
+
+	ToMk8sTritonProviderLoadBalancerNonePtrOutput() Mk8sTritonProviderLoadBalancerNonePtrOutput
+	ToMk8sTritonProviderLoadBalancerNonePtrOutputWithContext(context.Context) Mk8sTritonProviderLoadBalancerNonePtrOutput
+}
+
+type mk8sTritonProviderLoadBalancerNonePtrType Mk8sTritonProviderLoadBalancerNoneArgs
+
+func Mk8sTritonProviderLoadBalancerNonePtr(v *Mk8sTritonProviderLoadBalancerNoneArgs) Mk8sTritonProviderLoadBalancerNonePtrInput {
+	return (*mk8sTritonProviderLoadBalancerNonePtrType)(v)
+}
+
+func (*mk8sTritonProviderLoadBalancerNonePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sTritonProviderLoadBalancerNone)(nil)).Elem()
+}
+
+func (i *mk8sTritonProviderLoadBalancerNonePtrType) ToMk8sTritonProviderLoadBalancerNonePtrOutput() Mk8sTritonProviderLoadBalancerNonePtrOutput {
+	return i.ToMk8sTritonProviderLoadBalancerNonePtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sTritonProviderLoadBalancerNonePtrType) ToMk8sTritonProviderLoadBalancerNonePtrOutputWithContext(ctx context.Context) Mk8sTritonProviderLoadBalancerNonePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sTritonProviderLoadBalancerNonePtrOutput)
+}
+
+type Mk8sTritonProviderLoadBalancerNoneOutput struct{ *pulumi.OutputState }
+
+func (Mk8sTritonProviderLoadBalancerNoneOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sTritonProviderLoadBalancerNone)(nil)).Elem()
+}
+
+func (o Mk8sTritonProviderLoadBalancerNoneOutput) ToMk8sTritonProviderLoadBalancerNoneOutput() Mk8sTritonProviderLoadBalancerNoneOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderLoadBalancerNoneOutput) ToMk8sTritonProviderLoadBalancerNoneOutputWithContext(ctx context.Context) Mk8sTritonProviderLoadBalancerNoneOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderLoadBalancerNoneOutput) ToMk8sTritonProviderLoadBalancerNonePtrOutput() Mk8sTritonProviderLoadBalancerNonePtrOutput {
+	return o.ToMk8sTritonProviderLoadBalancerNonePtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sTritonProviderLoadBalancerNoneOutput) ToMk8sTritonProviderLoadBalancerNonePtrOutputWithContext(ctx context.Context) Mk8sTritonProviderLoadBalancerNonePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sTritonProviderLoadBalancerNone) *Mk8sTritonProviderLoadBalancerNone {
+		return &v
+	}).(Mk8sTritonProviderLoadBalancerNonePtrOutput)
+}
+
+type Mk8sTritonProviderLoadBalancerNonePtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sTritonProviderLoadBalancerNonePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sTritonProviderLoadBalancerNone)(nil)).Elem()
+}
+
+func (o Mk8sTritonProviderLoadBalancerNonePtrOutput) ToMk8sTritonProviderLoadBalancerNonePtrOutput() Mk8sTritonProviderLoadBalancerNonePtrOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderLoadBalancerNonePtrOutput) ToMk8sTritonProviderLoadBalancerNonePtrOutputWithContext(ctx context.Context) Mk8sTritonProviderLoadBalancerNonePtrOutput {
+	return o
+}
+
+func (o Mk8sTritonProviderLoadBalancerNonePtrOutput) Elem() Mk8sTritonProviderLoadBalancerNoneOutput {
+	return o.ApplyT(func(v *Mk8sTritonProviderLoadBalancerNone) Mk8sTritonProviderLoadBalancerNone {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sTritonProviderLoadBalancerNone
+		return ret
+	}).(Mk8sTritonProviderLoadBalancerNoneOutput)
 }
 
 type Mk8sTritonProviderNetworking struct {
@@ -24339,7 +29779,8 @@ type OrgStatus struct {
 	// The link of the account the org belongs to.
 	AccountLink *string `pulumi:"accountLink"`
 	// Indicates whether the org is active or not.
-	Active *bool `pulumi:"active"`
+	Active         *bool   `pulumi:"active"`
+	EndpointPrefix *string `pulumi:"endpointPrefix"`
 }
 
 // OrgStatusInput is an input type that accepts OrgStatusArgs and OrgStatusOutput values.
@@ -24357,7 +29798,8 @@ type OrgStatusArgs struct {
 	// The link of the account the org belongs to.
 	AccountLink pulumi.StringPtrInput `pulumi:"accountLink"`
 	// Indicates whether the org is active or not.
-	Active pulumi.BoolPtrInput `pulumi:"active"`
+	Active         pulumi.BoolPtrInput   `pulumi:"active"`
+	EndpointPrefix pulumi.StringPtrInput `pulumi:"endpointPrefix"`
 }
 
 func (OrgStatusArgs) ElementType() reflect.Type {
@@ -24419,6 +29861,10 @@ func (o OrgStatusOutput) AccountLink() pulumi.StringPtrOutput {
 // Indicates whether the org is active or not.
 func (o OrgStatusOutput) Active() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v OrgStatus) *bool { return v.Active }).(pulumi.BoolPtrOutput)
+}
+
+func (o OrgStatusOutput) EndpointPrefix() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v OrgStatus) *string { return v.EndpointPrefix }).(pulumi.StringPtrOutput)
 }
 
 type OrgStatusArrayOutput struct{ *pulumi.OutputState }
@@ -27088,6 +32534,237 @@ func (o VolumeSetAutoscalingPtrOutput) ScalingFactor() pulumi.Float64PtrOutput {
 	}).(pulumi.Float64PtrOutput)
 }
 
+type VolumeSetCustomEncryption struct {
+	// Map of region identifiers to encryption key configuration.
+	Regions map[string]VolumeSetCustomEncryptionRegions `pulumi:"regions"`
+}
+
+// VolumeSetCustomEncryptionInput is an input type that accepts VolumeSetCustomEncryptionArgs and VolumeSetCustomEncryptionOutput values.
+// You can construct a concrete instance of `VolumeSetCustomEncryptionInput` via:
+//
+//	VolumeSetCustomEncryptionArgs{...}
+type VolumeSetCustomEncryptionInput interface {
+	pulumi.Input
+
+	ToVolumeSetCustomEncryptionOutput() VolumeSetCustomEncryptionOutput
+	ToVolumeSetCustomEncryptionOutputWithContext(context.Context) VolumeSetCustomEncryptionOutput
+}
+
+type VolumeSetCustomEncryptionArgs struct {
+	// Map of region identifiers to encryption key configuration.
+	Regions VolumeSetCustomEncryptionRegionsMapInput `pulumi:"regions"`
+}
+
+func (VolumeSetCustomEncryptionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*VolumeSetCustomEncryption)(nil)).Elem()
+}
+
+func (i VolumeSetCustomEncryptionArgs) ToVolumeSetCustomEncryptionOutput() VolumeSetCustomEncryptionOutput {
+	return i.ToVolumeSetCustomEncryptionOutputWithContext(context.Background())
+}
+
+func (i VolumeSetCustomEncryptionArgs) ToVolumeSetCustomEncryptionOutputWithContext(ctx context.Context) VolumeSetCustomEncryptionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(VolumeSetCustomEncryptionOutput)
+}
+
+func (i VolumeSetCustomEncryptionArgs) ToVolumeSetCustomEncryptionPtrOutput() VolumeSetCustomEncryptionPtrOutput {
+	return i.ToVolumeSetCustomEncryptionPtrOutputWithContext(context.Background())
+}
+
+func (i VolumeSetCustomEncryptionArgs) ToVolumeSetCustomEncryptionPtrOutputWithContext(ctx context.Context) VolumeSetCustomEncryptionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(VolumeSetCustomEncryptionOutput).ToVolumeSetCustomEncryptionPtrOutputWithContext(ctx)
+}
+
+// VolumeSetCustomEncryptionPtrInput is an input type that accepts VolumeSetCustomEncryptionArgs, VolumeSetCustomEncryptionPtr and VolumeSetCustomEncryptionPtrOutput values.
+// You can construct a concrete instance of `VolumeSetCustomEncryptionPtrInput` via:
+//
+//	        VolumeSetCustomEncryptionArgs{...}
+//
+//	or:
+//
+//	        nil
+type VolumeSetCustomEncryptionPtrInput interface {
+	pulumi.Input
+
+	ToVolumeSetCustomEncryptionPtrOutput() VolumeSetCustomEncryptionPtrOutput
+	ToVolumeSetCustomEncryptionPtrOutputWithContext(context.Context) VolumeSetCustomEncryptionPtrOutput
+}
+
+type volumeSetCustomEncryptionPtrType VolumeSetCustomEncryptionArgs
+
+func VolumeSetCustomEncryptionPtr(v *VolumeSetCustomEncryptionArgs) VolumeSetCustomEncryptionPtrInput {
+	return (*volumeSetCustomEncryptionPtrType)(v)
+}
+
+func (*volumeSetCustomEncryptionPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**VolumeSetCustomEncryption)(nil)).Elem()
+}
+
+func (i *volumeSetCustomEncryptionPtrType) ToVolumeSetCustomEncryptionPtrOutput() VolumeSetCustomEncryptionPtrOutput {
+	return i.ToVolumeSetCustomEncryptionPtrOutputWithContext(context.Background())
+}
+
+func (i *volumeSetCustomEncryptionPtrType) ToVolumeSetCustomEncryptionPtrOutputWithContext(ctx context.Context) VolumeSetCustomEncryptionPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(VolumeSetCustomEncryptionPtrOutput)
+}
+
+type VolumeSetCustomEncryptionOutput struct{ *pulumi.OutputState }
+
+func (VolumeSetCustomEncryptionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*VolumeSetCustomEncryption)(nil)).Elem()
+}
+
+func (o VolumeSetCustomEncryptionOutput) ToVolumeSetCustomEncryptionOutput() VolumeSetCustomEncryptionOutput {
+	return o
+}
+
+func (o VolumeSetCustomEncryptionOutput) ToVolumeSetCustomEncryptionOutputWithContext(ctx context.Context) VolumeSetCustomEncryptionOutput {
+	return o
+}
+
+func (o VolumeSetCustomEncryptionOutput) ToVolumeSetCustomEncryptionPtrOutput() VolumeSetCustomEncryptionPtrOutput {
+	return o.ToVolumeSetCustomEncryptionPtrOutputWithContext(context.Background())
+}
+
+func (o VolumeSetCustomEncryptionOutput) ToVolumeSetCustomEncryptionPtrOutputWithContext(ctx context.Context) VolumeSetCustomEncryptionPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v VolumeSetCustomEncryption) *VolumeSetCustomEncryption {
+		return &v
+	}).(VolumeSetCustomEncryptionPtrOutput)
+}
+
+// Map of region identifiers to encryption key configuration.
+func (o VolumeSetCustomEncryptionOutput) Regions() VolumeSetCustomEncryptionRegionsMapOutput {
+	return o.ApplyT(func(v VolumeSetCustomEncryption) map[string]VolumeSetCustomEncryptionRegions { return v.Regions }).(VolumeSetCustomEncryptionRegionsMapOutput)
+}
+
+type VolumeSetCustomEncryptionPtrOutput struct{ *pulumi.OutputState }
+
+func (VolumeSetCustomEncryptionPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**VolumeSetCustomEncryption)(nil)).Elem()
+}
+
+func (o VolumeSetCustomEncryptionPtrOutput) ToVolumeSetCustomEncryptionPtrOutput() VolumeSetCustomEncryptionPtrOutput {
+	return o
+}
+
+func (o VolumeSetCustomEncryptionPtrOutput) ToVolumeSetCustomEncryptionPtrOutputWithContext(ctx context.Context) VolumeSetCustomEncryptionPtrOutput {
+	return o
+}
+
+func (o VolumeSetCustomEncryptionPtrOutput) Elem() VolumeSetCustomEncryptionOutput {
+	return o.ApplyT(func(v *VolumeSetCustomEncryption) VolumeSetCustomEncryption {
+		if v != nil {
+			return *v
+		}
+		var ret VolumeSetCustomEncryption
+		return ret
+	}).(VolumeSetCustomEncryptionOutput)
+}
+
+// Map of region identifiers to encryption key configuration.
+func (o VolumeSetCustomEncryptionPtrOutput) Regions() VolumeSetCustomEncryptionRegionsMapOutput {
+	return o.ApplyT(func(v *VolumeSetCustomEncryption) map[string]VolumeSetCustomEncryptionRegions {
+		if v == nil {
+			return nil
+		}
+		return v.Regions
+	}).(VolumeSetCustomEncryptionRegionsMapOutput)
+}
+
+type VolumeSetCustomEncryptionRegions struct {
+	KeyId string `pulumi:"keyId"`
+}
+
+// VolumeSetCustomEncryptionRegionsInput is an input type that accepts VolumeSetCustomEncryptionRegionsArgs and VolumeSetCustomEncryptionRegionsOutput values.
+// You can construct a concrete instance of `VolumeSetCustomEncryptionRegionsInput` via:
+//
+//	VolumeSetCustomEncryptionRegionsArgs{...}
+type VolumeSetCustomEncryptionRegionsInput interface {
+	pulumi.Input
+
+	ToVolumeSetCustomEncryptionRegionsOutput() VolumeSetCustomEncryptionRegionsOutput
+	ToVolumeSetCustomEncryptionRegionsOutputWithContext(context.Context) VolumeSetCustomEncryptionRegionsOutput
+}
+
+type VolumeSetCustomEncryptionRegionsArgs struct {
+	KeyId pulumi.StringInput `pulumi:"keyId"`
+}
+
+func (VolumeSetCustomEncryptionRegionsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*VolumeSetCustomEncryptionRegions)(nil)).Elem()
+}
+
+func (i VolumeSetCustomEncryptionRegionsArgs) ToVolumeSetCustomEncryptionRegionsOutput() VolumeSetCustomEncryptionRegionsOutput {
+	return i.ToVolumeSetCustomEncryptionRegionsOutputWithContext(context.Background())
+}
+
+func (i VolumeSetCustomEncryptionRegionsArgs) ToVolumeSetCustomEncryptionRegionsOutputWithContext(ctx context.Context) VolumeSetCustomEncryptionRegionsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(VolumeSetCustomEncryptionRegionsOutput)
+}
+
+// VolumeSetCustomEncryptionRegionsMapInput is an input type that accepts VolumeSetCustomEncryptionRegionsMap and VolumeSetCustomEncryptionRegionsMapOutput values.
+// You can construct a concrete instance of `VolumeSetCustomEncryptionRegionsMapInput` via:
+//
+//	VolumeSetCustomEncryptionRegionsMap{ "key": VolumeSetCustomEncryptionRegionsArgs{...} }
+type VolumeSetCustomEncryptionRegionsMapInput interface {
+	pulumi.Input
+
+	ToVolumeSetCustomEncryptionRegionsMapOutput() VolumeSetCustomEncryptionRegionsMapOutput
+	ToVolumeSetCustomEncryptionRegionsMapOutputWithContext(context.Context) VolumeSetCustomEncryptionRegionsMapOutput
+}
+
+type VolumeSetCustomEncryptionRegionsMap map[string]VolumeSetCustomEncryptionRegionsInput
+
+func (VolumeSetCustomEncryptionRegionsMap) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]VolumeSetCustomEncryptionRegions)(nil)).Elem()
+}
+
+func (i VolumeSetCustomEncryptionRegionsMap) ToVolumeSetCustomEncryptionRegionsMapOutput() VolumeSetCustomEncryptionRegionsMapOutput {
+	return i.ToVolumeSetCustomEncryptionRegionsMapOutputWithContext(context.Background())
+}
+
+func (i VolumeSetCustomEncryptionRegionsMap) ToVolumeSetCustomEncryptionRegionsMapOutputWithContext(ctx context.Context) VolumeSetCustomEncryptionRegionsMapOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(VolumeSetCustomEncryptionRegionsMapOutput)
+}
+
+type VolumeSetCustomEncryptionRegionsOutput struct{ *pulumi.OutputState }
+
+func (VolumeSetCustomEncryptionRegionsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*VolumeSetCustomEncryptionRegions)(nil)).Elem()
+}
+
+func (o VolumeSetCustomEncryptionRegionsOutput) ToVolumeSetCustomEncryptionRegionsOutput() VolumeSetCustomEncryptionRegionsOutput {
+	return o
+}
+
+func (o VolumeSetCustomEncryptionRegionsOutput) ToVolumeSetCustomEncryptionRegionsOutputWithContext(ctx context.Context) VolumeSetCustomEncryptionRegionsOutput {
+	return o
+}
+
+func (o VolumeSetCustomEncryptionRegionsOutput) KeyId() pulumi.StringOutput {
+	return o.ApplyT(func(v VolumeSetCustomEncryptionRegions) string { return v.KeyId }).(pulumi.StringOutput)
+}
+
+type VolumeSetCustomEncryptionRegionsMapOutput struct{ *pulumi.OutputState }
+
+func (VolumeSetCustomEncryptionRegionsMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]VolumeSetCustomEncryptionRegions)(nil)).Elem()
+}
+
+func (o VolumeSetCustomEncryptionRegionsMapOutput) ToVolumeSetCustomEncryptionRegionsMapOutput() VolumeSetCustomEncryptionRegionsMapOutput {
+	return o
+}
+
+func (o VolumeSetCustomEncryptionRegionsMapOutput) ToVolumeSetCustomEncryptionRegionsMapOutputWithContext(ctx context.Context) VolumeSetCustomEncryptionRegionsMapOutput {
+	return o
+}
+
+func (o VolumeSetCustomEncryptionRegionsMapOutput) MapIndex(k pulumi.StringInput) VolumeSetCustomEncryptionRegionsOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) VolumeSetCustomEncryptionRegions {
+		return vs[0].(map[string]VolumeSetCustomEncryptionRegions)[vs[1].(string)]
+	}).(VolumeSetCustomEncryptionRegionsOutput)
+}
+
 type VolumeSetMountOptions struct {
 	// For volume sets using the shared file system, this object specifies the CPU and memory resources allotted to each mount point.
 	Resources *VolumeSetMountOptionsResources `pulumi:"resources"`
@@ -27587,6 +33264,8 @@ type VolumeSetStatus struct {
 	ParentId *string `pulumi:"parentId"`
 	// The url of the workload currently using this volume set (if any).
 	UsedByWorkload *string `pulumi:"usedByWorkload"`
+	// Contains a list of workload links that are using this volume set.
+	WorkloadLinks []string `pulumi:"workloadLinks"`
 }
 
 // VolumeSetStatusInput is an input type that accepts VolumeSetStatusArgs and VolumeSetStatusOutput values.
@@ -27609,6 +33288,8 @@ type VolumeSetStatusArgs struct {
 	ParentId pulumi.StringPtrInput `pulumi:"parentId"`
 	// The url of the workload currently using this volume set (if any).
 	UsedByWorkload pulumi.StringPtrInput `pulumi:"usedByWorkload"`
+	// Contains a list of workload links that are using this volume set.
+	WorkloadLinks pulumi.StringArrayInput `pulumi:"workloadLinks"`
 }
 
 func (VolumeSetStatusArgs) ElementType() reflect.Type {
@@ -27680,6 +33361,11 @@ func (o VolumeSetStatusOutput) ParentId() pulumi.StringPtrOutput {
 // The url of the workload currently using this volume set (if any).
 func (o VolumeSetStatusOutput) UsedByWorkload() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v VolumeSetStatus) *string { return v.UsedByWorkload }).(pulumi.StringPtrOutput)
+}
+
+// Contains a list of workload links that are using this volume set.
+func (o VolumeSetStatusOutput) WorkloadLinks() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v VolumeSetStatus) []string { return v.WorkloadLinks }).(pulumi.StringArrayOutput)
 }
 
 type VolumeSetStatusArrayOutput struct{ *pulumi.OutputState }
@@ -29815,6 +35501,8 @@ func (o WorkloadContainerLivenessProbeTcpSocketPtrOutput) Port() pulumi.IntPtrOu
 }
 
 type WorkloadContainerMetrics struct {
+	// Drop metrics that match given patterns.
+	DropMetrics []string `pulumi:"dropMetrics"`
 	// Path from container emitting custom metrics.
 	Path string `pulumi:"path"`
 	// Port from container emitting custom metrics.
@@ -29833,6 +35521,8 @@ type WorkloadContainerMetricsInput interface {
 }
 
 type WorkloadContainerMetricsArgs struct {
+	// Drop metrics that match given patterns.
+	DropMetrics pulumi.StringArrayInput `pulumi:"dropMetrics"`
 	// Path from container emitting custom metrics.
 	Path pulumi.StringInput `pulumi:"path"`
 	// Port from container emitting custom metrics.
@@ -29916,6 +35606,11 @@ func (o WorkloadContainerMetricsOutput) ToWorkloadContainerMetricsPtrOutputWithC
 	}).(WorkloadContainerMetricsPtrOutput)
 }
 
+// Drop metrics that match given patterns.
+func (o WorkloadContainerMetricsOutput) DropMetrics() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v WorkloadContainerMetrics) []string { return v.DropMetrics }).(pulumi.StringArrayOutput)
+}
+
 // Path from container emitting custom metrics.
 func (o WorkloadContainerMetricsOutput) Path() pulumi.StringOutput {
 	return o.ApplyT(func(v WorkloadContainerMetrics) string { return v.Path }).(pulumi.StringOutput)
@@ -29948,6 +35643,16 @@ func (o WorkloadContainerMetricsPtrOutput) Elem() WorkloadContainerMetricsOutput
 		var ret WorkloadContainerMetrics
 		return ret
 	}).(WorkloadContainerMetricsOutput)
+}
+
+// Drop metrics that match given patterns.
+func (o WorkloadContainerMetricsPtrOutput) DropMetrics() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *WorkloadContainerMetrics) []string {
+		if v == nil {
+			return nil
+		}
+		return v.DropMetrics
+	}).(pulumi.StringArrayOutput)
 }
 
 // Path from container emitting custom metrics.
@@ -32896,6 +38601,8 @@ type WorkloadLocalOption struct {
 	Autoscaling *WorkloadLocalOptionAutoscaling `pulumi:"autoscaling"`
 	// Capacity AI. Default: `true`.
 	CapacityAi *bool `pulumi:"capacityAi"`
+	// The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+	CapacityAiUpdateMinutes *int `pulumi:"capacityAiUpdateMinutes"`
 	// Debug mode. Default: `false`.
 	Debug *bool `pulumi:"debug"`
 	// Valid only for `localOptions`. Override options for a specific location.
@@ -32923,6 +38630,8 @@ type WorkloadLocalOptionArgs struct {
 	Autoscaling WorkloadLocalOptionAutoscalingPtrInput `pulumi:"autoscaling"`
 	// Capacity AI. Default: `true`.
 	CapacityAi pulumi.BoolPtrInput `pulumi:"capacityAi"`
+	// The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+	CapacityAiUpdateMinutes pulumi.IntPtrInput `pulumi:"capacityAiUpdateMinutes"`
 	// Debug mode. Default: `false`.
 	Debug pulumi.BoolPtrInput `pulumi:"debug"`
 	// Valid only for `localOptions`. Override options for a specific location.
@@ -32993,6 +38702,11 @@ func (o WorkloadLocalOptionOutput) Autoscaling() WorkloadLocalOptionAutoscalingP
 // Capacity AI. Default: `true`.
 func (o WorkloadLocalOptionOutput) CapacityAi() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v WorkloadLocalOption) *bool { return v.CapacityAi }).(pulumi.BoolPtrOutput)
+}
+
+// The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+func (o WorkloadLocalOptionOutput) CapacityAiUpdateMinutes() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOption) *int { return v.CapacityAiUpdateMinutes }).(pulumi.IntPtrOutput)
 }
 
 // Debug mode. Default: `false`.
@@ -34399,6 +40113,8 @@ type WorkloadOptions struct {
 	Autoscaling *WorkloadOptionsAutoscaling `pulumi:"autoscaling"`
 	// Capacity AI. Default: `true`.
 	CapacityAi *bool `pulumi:"capacityAi"`
+	// The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+	CapacityAiUpdateMinutes *int `pulumi:"capacityAiUpdateMinutes"`
 	// Debug mode. Default: `false`.
 	Debug     *bool                     `pulumi:"debug"`
 	MultiZone *WorkloadOptionsMultiZone `pulumi:"multiZone"`
@@ -34424,6 +40140,8 @@ type WorkloadOptionsArgs struct {
 	Autoscaling WorkloadOptionsAutoscalingPtrInput `pulumi:"autoscaling"`
 	// Capacity AI. Default: `true`.
 	CapacityAi pulumi.BoolPtrInput `pulumi:"capacityAi"`
+	// The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+	CapacityAiUpdateMinutes pulumi.IntPtrInput `pulumi:"capacityAiUpdateMinutes"`
 	// Debug mode. Default: `false`.
 	Debug     pulumi.BoolPtrInput              `pulumi:"debug"`
 	MultiZone WorkloadOptionsMultiZonePtrInput `pulumi:"multiZone"`
@@ -34520,6 +40238,11 @@ func (o WorkloadOptionsOutput) CapacityAi() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v WorkloadOptions) *bool { return v.CapacityAi }).(pulumi.BoolPtrOutput)
 }
 
+// The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+func (o WorkloadOptionsOutput) CapacityAiUpdateMinutes() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadOptions) *int { return v.CapacityAiUpdateMinutes }).(pulumi.IntPtrOutput)
+}
+
 // Debug mode. Default: `false`.
 func (o WorkloadOptionsOutput) Debug() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v WorkloadOptions) *bool { return v.Debug }).(pulumi.BoolPtrOutput)
@@ -34581,6 +40304,16 @@ func (o WorkloadOptionsPtrOutput) CapacityAi() pulumi.BoolPtrOutput {
 		}
 		return v.CapacityAi
 	}).(pulumi.BoolPtrOutput)
+}
+
+// The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+func (o WorkloadOptionsPtrOutput) CapacityAiUpdateMinutes() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptions) *int {
+		if v == nil {
+			return nil
+		}
+		return v.CapacityAiUpdateMinutes
+	}).(pulumi.IntPtrOutput)
 }
 
 // Debug mode. Default: `false`.
@@ -36537,7 +42270,8 @@ type WorkloadStatus struct {
 	InternalName  *string                      `pulumi:"internalName"`
 	LoadBalancers []WorkloadStatusLoadBalancer `pulumi:"loadBalancers"`
 	// ID of the parent object.
-	ParentId *string `pulumi:"parentId"`
+	ParentId             *string  `pulumi:"parentId"`
+	ReplicaInternalNames []string `pulumi:"replicaInternalNames"`
 	// Resolved images for workloads with dynamic tags enabled.
 	ResolvedImages []WorkloadStatusResolvedImage `pulumi:"resolvedImages"`
 }
@@ -36566,7 +42300,8 @@ type WorkloadStatusArgs struct {
 	InternalName  pulumi.StringPtrInput                `pulumi:"internalName"`
 	LoadBalancers WorkloadStatusLoadBalancerArrayInput `pulumi:"loadBalancers"`
 	// ID of the parent object.
-	ParentId pulumi.StringPtrInput `pulumi:"parentId"`
+	ParentId             pulumi.StringPtrInput   `pulumi:"parentId"`
+	ReplicaInternalNames pulumi.StringArrayInput `pulumi:"replicaInternalNames"`
 	// Resolved images for workloads with dynamic tags enabled.
 	ResolvedImages WorkloadStatusResolvedImageArrayInput `pulumi:"resolvedImages"`
 }
@@ -36654,6 +42389,10 @@ func (o WorkloadStatusOutput) LoadBalancers() WorkloadStatusLoadBalancerArrayOut
 // ID of the parent object.
 func (o WorkloadStatusOutput) ParentId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v WorkloadStatus) *string { return v.ParentId }).(pulumi.StringPtrOutput)
+}
+
+func (o WorkloadStatusOutput) ReplicaInternalNames() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v WorkloadStatus) []string { return v.ReplicaInternalNames }).(pulumi.StringArrayOutput)
 }
 
 // Resolved images for workloads with dynamic tags enabled.
@@ -36935,7 +42674,8 @@ func (o WorkloadStatusLoadBalancerArrayOutput) Index(i pulumi.IntInput) Workload
 type WorkloadStatusResolvedImage struct {
 	ErrorMessages []string `pulumi:"errorMessages"`
 	// A list of images that were resolved.
-	Images []WorkloadStatusResolvedImageImage `pulumi:"images"`
+	Images      []WorkloadStatusResolvedImageImage `pulumi:"images"`
+	NextRetryAt *string                            `pulumi:"nextRetryAt"`
 	// UTC Time when the images were resolved.
 	ResolvedAt *string `pulumi:"resolvedAt"`
 	// Workload version the images were resolved for.
@@ -36956,7 +42696,8 @@ type WorkloadStatusResolvedImageInput interface {
 type WorkloadStatusResolvedImageArgs struct {
 	ErrorMessages pulumi.StringArrayInput `pulumi:"errorMessages"`
 	// A list of images that were resolved.
-	Images WorkloadStatusResolvedImageImageArrayInput `pulumi:"images"`
+	Images      WorkloadStatusResolvedImageImageArrayInput `pulumi:"images"`
+	NextRetryAt pulumi.StringPtrInput                      `pulumi:"nextRetryAt"`
 	// UTC Time when the images were resolved.
 	ResolvedAt pulumi.StringPtrInput `pulumi:"resolvedAt"`
 	// Workload version the images were resolved for.
@@ -37021,6 +42762,10 @@ func (o WorkloadStatusResolvedImageOutput) ErrorMessages() pulumi.StringArrayOut
 // A list of images that were resolved.
 func (o WorkloadStatusResolvedImageOutput) Images() WorkloadStatusResolvedImageImageArrayOutput {
 	return o.ApplyT(func(v WorkloadStatusResolvedImage) []WorkloadStatusResolvedImageImage { return v.Images }).(WorkloadStatusResolvedImageImageArrayOutput)
+}
+
+func (o WorkloadStatusResolvedImageOutput) NextRetryAt() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadStatusResolvedImage) *string { return v.NextRetryAt }).(pulumi.StringPtrOutput)
 }
 
 // UTC Time when the images were resolved.
@@ -40168,7 +45913,8 @@ type GetLocationsLocation struct {
 	// A list of IP ranges of the location.
 	IpRanges []string `pulumi:"ipRanges"`
 	// Name of the location.
-	Name string `pulumi:"name"`
+	Name   string `pulumi:"name"`
+	Origin string `pulumi:"origin"`
 	// Region of the location.
 	Region string `pulumi:"region"`
 	// Full link to this resource. Can be referenced by other resources.
@@ -40201,7 +45947,8 @@ type GetLocationsLocationArgs struct {
 	// A list of IP ranges of the location.
 	IpRanges pulumi.StringArrayInput `pulumi:"ipRanges"`
 	// Name of the location.
-	Name pulumi.StringInput `pulumi:"name"`
+	Name   pulumi.StringInput `pulumi:"name"`
+	Origin pulumi.StringInput `pulumi:"origin"`
 	// Region of the location.
 	Region pulumi.StringInput `pulumi:"region"`
 	// Full link to this resource. Can be referenced by other resources.
@@ -40293,6 +46040,10 @@ func (o GetLocationsLocationOutput) IpRanges() pulumi.StringArrayOutput {
 // Name of the location.
 func (o GetLocationsLocationOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v GetLocationsLocation) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o GetLocationsLocationOutput) Origin() pulumi.StringOutput {
+	return o.ApplyT(func(v GetLocationsLocation) string { return v.Origin }).(pulumi.StringOutput)
 }
 
 // Region of the location.
@@ -41309,7 +47060,8 @@ type GetOrgStatus struct {
 	// The link of the account the org belongs to.
 	AccountLink string `pulumi:"accountLink"`
 	// Indicates whether the org is active or not.
-	Active bool `pulumi:"active"`
+	Active         bool   `pulumi:"active"`
+	EndpointPrefix string `pulumi:"endpointPrefix"`
 }
 
 // GetOrgStatusInput is an input type that accepts GetOrgStatusArgs and GetOrgStatusOutput values.
@@ -41327,7 +47079,8 @@ type GetOrgStatusArgs struct {
 	// The link of the account the org belongs to.
 	AccountLink pulumi.StringInput `pulumi:"accountLink"`
 	// Indicates whether the org is active or not.
-	Active pulumi.BoolInput `pulumi:"active"`
+	Active         pulumi.BoolInput   `pulumi:"active"`
+	EndpointPrefix pulumi.StringInput `pulumi:"endpointPrefix"`
 }
 
 func (GetOrgStatusArgs) ElementType() reflect.Type {
@@ -41389,6 +47142,10 @@ func (o GetOrgStatusOutput) AccountLink() pulumi.StringOutput {
 // Indicates whether the org is active or not.
 func (o GetOrgStatusOutput) Active() pulumi.BoolOutput {
 	return o.ApplyT(func(v GetOrgStatus) bool { return v.Active }).(pulumi.BoolOutput)
+}
+
+func (o GetOrgStatusOutput) EndpointPrefix() pulumi.StringOutput {
+	return o.ApplyT(func(v GetOrgStatus) string { return v.EndpointPrefix }).(pulumi.StringOutput)
 }
 
 type GetOrgStatusArrayOutput struct{ *pulumi.OutputState }
@@ -42331,6 +48088,7220 @@ func (o GetSecretUserpassArrayOutput) Index(i pulumi.IntInput) GetSecretUserpass
 	}).(GetSecretUserpassOutput)
 }
 
+type GetWorkloadContainer struct {
+	// Command line arguments passed to the container at runtime. Replaces the CMD arguments of the running container. It is an ordered list.
+	Args []string `pulumi:"args"`
+	// Override the entry point.
+	Command string `pulumi:"command"`
+	// Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
+	Cpu string `pulumi:"cpu"`
+	// Name-Value list of environment variables.
+	Env        map[string]string               `pulumi:"env"`
+	GpuCustoms []GetWorkloadContainerGpuCustom `pulumi:"gpuCustoms"`
+	// GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
+	GpuNvidias []GetWorkloadContainerGpuNvidia `pulumi:"gpuNvidias"`
+	// The full image and tag path.
+	Image string `pulumi:"image"`
+	// Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
+	InheritEnv bool `pulumi:"inheritEnv"`
+	// Lifecycle [Reference Page](https://docs.controlplane.com/reference/workload#lifecycle).
+	Lifecycles []GetWorkloadContainerLifecycle `pulumi:"lifecycles"`
+	// Liveness Probe
+	LivenessProbes []GetWorkloadContainerLivenessProbe `pulumi:"livenessProbes"`
+	// Reserved memory of the workload when capacityAI is disabled. Maximum memory when CapacityAI is enabled. Default: "128Mi".
+	Memory string `pulumi:"memory"`
+	// [Reference Page](https://docs.controlplane.com/reference/workload#metrics).
+	Metrics []GetWorkloadContainerMetric `pulumi:"metrics"`
+	// Minimum CPU when capacity AI is enabled.
+	MinCpu string `pulumi:"minCpu"`
+	// Minimum memory when capacity AI is enabled.
+	MinMemory string `pulumi:"minMemory"`
+	// Name of the container.
+	Name string `pulumi:"name"`
+	// The port the container exposes. Only one container is allowed to specify a port. Min: `80`. Max: `65535`. Used by `serverless` Workload type. **DEPRECATED - Use `ports`.**
+	//
+	// Deprecated: The 'port' attribute will be deprecated in the next major version. Use the 'ports' attribute instead.
+	Port int `pulumi:"port"`
+	// Communication endpoints used by the workload to send and receive network traffic.
+	Ports []GetWorkloadContainerPort `pulumi:"ports"`
+	// Readiness Probe
+	ReadinessProbes []GetWorkloadContainerReadinessProbe `pulumi:"readinessProbes"`
+	// Mount Object Store (S3, GCS, AzureBlob) buckets as file system.
+	Volumes []GetWorkloadContainerVolume `pulumi:"volumes"`
+	// Override the working directory. Must be an absolute path.
+	WorkingDirectory string `pulumi:"workingDirectory"`
+}
+
+// GetWorkloadContainerInput is an input type that accepts GetWorkloadContainerArgs and GetWorkloadContainerOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerInput` via:
+//
+//	GetWorkloadContainerArgs{...}
+type GetWorkloadContainerInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerOutput() GetWorkloadContainerOutput
+	ToGetWorkloadContainerOutputWithContext(context.Context) GetWorkloadContainerOutput
+}
+
+type GetWorkloadContainerArgs struct {
+	// Command line arguments passed to the container at runtime. Replaces the CMD arguments of the running container. It is an ordered list.
+	Args pulumi.StringArrayInput `pulumi:"args"`
+	// Override the entry point.
+	Command pulumi.StringInput `pulumi:"command"`
+	// Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
+	Cpu pulumi.StringInput `pulumi:"cpu"`
+	// Name-Value list of environment variables.
+	Env        pulumi.StringMapInput                   `pulumi:"env"`
+	GpuCustoms GetWorkloadContainerGpuCustomArrayInput `pulumi:"gpuCustoms"`
+	// GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
+	GpuNvidias GetWorkloadContainerGpuNvidiaArrayInput `pulumi:"gpuNvidias"`
+	// The full image and tag path.
+	Image pulumi.StringInput `pulumi:"image"`
+	// Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
+	InheritEnv pulumi.BoolInput `pulumi:"inheritEnv"`
+	// Lifecycle [Reference Page](https://docs.controlplane.com/reference/workload#lifecycle).
+	Lifecycles GetWorkloadContainerLifecycleArrayInput `pulumi:"lifecycles"`
+	// Liveness Probe
+	LivenessProbes GetWorkloadContainerLivenessProbeArrayInput `pulumi:"livenessProbes"`
+	// Reserved memory of the workload when capacityAI is disabled. Maximum memory when CapacityAI is enabled. Default: "128Mi".
+	Memory pulumi.StringInput `pulumi:"memory"`
+	// [Reference Page](https://docs.controlplane.com/reference/workload#metrics).
+	Metrics GetWorkloadContainerMetricArrayInput `pulumi:"metrics"`
+	// Minimum CPU when capacity AI is enabled.
+	MinCpu pulumi.StringInput `pulumi:"minCpu"`
+	// Minimum memory when capacity AI is enabled.
+	MinMemory pulumi.StringInput `pulumi:"minMemory"`
+	// Name of the container.
+	Name pulumi.StringInput `pulumi:"name"`
+	// The port the container exposes. Only one container is allowed to specify a port. Min: `80`. Max: `65535`. Used by `serverless` Workload type. **DEPRECATED - Use `ports`.**
+	//
+	// Deprecated: The 'port' attribute will be deprecated in the next major version. Use the 'ports' attribute instead.
+	Port pulumi.IntInput `pulumi:"port"`
+	// Communication endpoints used by the workload to send and receive network traffic.
+	Ports GetWorkloadContainerPortArrayInput `pulumi:"ports"`
+	// Readiness Probe
+	ReadinessProbes GetWorkloadContainerReadinessProbeArrayInput `pulumi:"readinessProbes"`
+	// Mount Object Store (S3, GCS, AzureBlob) buckets as file system.
+	Volumes GetWorkloadContainerVolumeArrayInput `pulumi:"volumes"`
+	// Override the working directory. Must be an absolute path.
+	WorkingDirectory pulumi.StringInput `pulumi:"workingDirectory"`
+}
+
+func (GetWorkloadContainerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainer)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerArgs) ToGetWorkloadContainerOutput() GetWorkloadContainerOutput {
+	return i.ToGetWorkloadContainerOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerArgs) ToGetWorkloadContainerOutputWithContext(ctx context.Context) GetWorkloadContainerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerOutput)
+}
+
+// GetWorkloadContainerArrayInput is an input type that accepts GetWorkloadContainerArray and GetWorkloadContainerArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerArrayInput` via:
+//
+//	GetWorkloadContainerArray{ GetWorkloadContainerArgs{...} }
+type GetWorkloadContainerArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerArrayOutput() GetWorkloadContainerArrayOutput
+	ToGetWorkloadContainerArrayOutputWithContext(context.Context) GetWorkloadContainerArrayOutput
+}
+
+type GetWorkloadContainerArray []GetWorkloadContainerInput
+
+func (GetWorkloadContainerArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainer)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerArray) ToGetWorkloadContainerArrayOutput() GetWorkloadContainerArrayOutput {
+	return i.ToGetWorkloadContainerArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerArray) ToGetWorkloadContainerArrayOutputWithContext(ctx context.Context) GetWorkloadContainerArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerArrayOutput)
+}
+
+type GetWorkloadContainerOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainer)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerOutput) ToGetWorkloadContainerOutput() GetWorkloadContainerOutput {
+	return o
+}
+
+func (o GetWorkloadContainerOutput) ToGetWorkloadContainerOutputWithContext(ctx context.Context) GetWorkloadContainerOutput {
+	return o
+}
+
+// Command line arguments passed to the container at runtime. Replaces the CMD arguments of the running container. It is an ordered list.
+func (o GetWorkloadContainerOutput) Args() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) []string { return v.Args }).(pulumi.StringArrayOutput)
+}
+
+// Override the entry point.
+func (o GetWorkloadContainerOutput) Command() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) string { return v.Command }).(pulumi.StringOutput)
+}
+
+// Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
+func (o GetWorkloadContainerOutput) Cpu() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) string { return v.Cpu }).(pulumi.StringOutput)
+}
+
+// Name-Value list of environment variables.
+func (o GetWorkloadContainerOutput) Env() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) map[string]string { return v.Env }).(pulumi.StringMapOutput)
+}
+
+func (o GetWorkloadContainerOutput) GpuCustoms() GetWorkloadContainerGpuCustomArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) []GetWorkloadContainerGpuCustom { return v.GpuCustoms }).(GetWorkloadContainerGpuCustomArrayOutput)
+}
+
+// GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
+func (o GetWorkloadContainerOutput) GpuNvidias() GetWorkloadContainerGpuNvidiaArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) []GetWorkloadContainerGpuNvidia { return v.GpuNvidias }).(GetWorkloadContainerGpuNvidiaArrayOutput)
+}
+
+// The full image and tag path.
+func (o GetWorkloadContainerOutput) Image() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) string { return v.Image }).(pulumi.StringOutput)
+}
+
+// Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
+func (o GetWorkloadContainerOutput) InheritEnv() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) bool { return v.InheritEnv }).(pulumi.BoolOutput)
+}
+
+// Lifecycle [Reference Page](https://docs.controlplane.com/reference/workload#lifecycle).
+func (o GetWorkloadContainerOutput) Lifecycles() GetWorkloadContainerLifecycleArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) []GetWorkloadContainerLifecycle { return v.Lifecycles }).(GetWorkloadContainerLifecycleArrayOutput)
+}
+
+// Liveness Probe
+func (o GetWorkloadContainerOutput) LivenessProbes() GetWorkloadContainerLivenessProbeArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) []GetWorkloadContainerLivenessProbe { return v.LivenessProbes }).(GetWorkloadContainerLivenessProbeArrayOutput)
+}
+
+// Reserved memory of the workload when capacityAI is disabled. Maximum memory when CapacityAI is enabled. Default: "128Mi".
+func (o GetWorkloadContainerOutput) Memory() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) string { return v.Memory }).(pulumi.StringOutput)
+}
+
+// [Reference Page](https://docs.controlplane.com/reference/workload#metrics).
+func (o GetWorkloadContainerOutput) Metrics() GetWorkloadContainerMetricArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) []GetWorkloadContainerMetric { return v.Metrics }).(GetWorkloadContainerMetricArrayOutput)
+}
+
+// Minimum CPU when capacity AI is enabled.
+func (o GetWorkloadContainerOutput) MinCpu() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) string { return v.MinCpu }).(pulumi.StringOutput)
+}
+
+// Minimum memory when capacity AI is enabled.
+func (o GetWorkloadContainerOutput) MinMemory() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) string { return v.MinMemory }).(pulumi.StringOutput)
+}
+
+// Name of the container.
+func (o GetWorkloadContainerOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// The port the container exposes. Only one container is allowed to specify a port. Min: `80`. Max: `65535`. Used by `serverless` Workload type. **DEPRECATED - Use `ports`.**
+//
+// Deprecated: The 'port' attribute will be deprecated in the next major version. Use the 'ports' attribute instead.
+func (o GetWorkloadContainerOutput) Port() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) int { return v.Port }).(pulumi.IntOutput)
+}
+
+// Communication endpoints used by the workload to send and receive network traffic.
+func (o GetWorkloadContainerOutput) Ports() GetWorkloadContainerPortArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) []GetWorkloadContainerPort { return v.Ports }).(GetWorkloadContainerPortArrayOutput)
+}
+
+// Readiness Probe
+func (o GetWorkloadContainerOutput) ReadinessProbes() GetWorkloadContainerReadinessProbeArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) []GetWorkloadContainerReadinessProbe { return v.ReadinessProbes }).(GetWorkloadContainerReadinessProbeArrayOutput)
+}
+
+// Mount Object Store (S3, GCS, AzureBlob) buckets as file system.
+func (o GetWorkloadContainerOutput) Volumes() GetWorkloadContainerVolumeArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) []GetWorkloadContainerVolume { return v.Volumes }).(GetWorkloadContainerVolumeArrayOutput)
+}
+
+// Override the working directory. Must be an absolute path.
+func (o GetWorkloadContainerOutput) WorkingDirectory() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) string { return v.WorkingDirectory }).(pulumi.StringOutput)
+}
+
+type GetWorkloadContainerArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainer)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerArrayOutput) ToGetWorkloadContainerArrayOutput() GetWorkloadContainerArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerArrayOutput) ToGetWorkloadContainerArrayOutputWithContext(ctx context.Context) GetWorkloadContainerArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainer {
+		return vs[0].([]GetWorkloadContainer)[vs[1].(int)]
+	}).(GetWorkloadContainerOutput)
+}
+
+type GetWorkloadContainerGpuCustom struct {
+	// Number of GPUs.
+	Quantity     int    `pulumi:"quantity"`
+	Resource     string `pulumi:"resource"`
+	RuntimeClass string `pulumi:"runtimeClass"`
+}
+
+// GetWorkloadContainerGpuCustomInput is an input type that accepts GetWorkloadContainerGpuCustomArgs and GetWorkloadContainerGpuCustomOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerGpuCustomInput` via:
+//
+//	GetWorkloadContainerGpuCustomArgs{...}
+type GetWorkloadContainerGpuCustomInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerGpuCustomOutput() GetWorkloadContainerGpuCustomOutput
+	ToGetWorkloadContainerGpuCustomOutputWithContext(context.Context) GetWorkloadContainerGpuCustomOutput
+}
+
+type GetWorkloadContainerGpuCustomArgs struct {
+	// Number of GPUs.
+	Quantity     pulumi.IntInput    `pulumi:"quantity"`
+	Resource     pulumi.StringInput `pulumi:"resource"`
+	RuntimeClass pulumi.StringInput `pulumi:"runtimeClass"`
+}
+
+func (GetWorkloadContainerGpuCustomArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerGpuCustom)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerGpuCustomArgs) ToGetWorkloadContainerGpuCustomOutput() GetWorkloadContainerGpuCustomOutput {
+	return i.ToGetWorkloadContainerGpuCustomOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerGpuCustomArgs) ToGetWorkloadContainerGpuCustomOutputWithContext(ctx context.Context) GetWorkloadContainerGpuCustomOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerGpuCustomOutput)
+}
+
+// GetWorkloadContainerGpuCustomArrayInput is an input type that accepts GetWorkloadContainerGpuCustomArray and GetWorkloadContainerGpuCustomArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerGpuCustomArrayInput` via:
+//
+//	GetWorkloadContainerGpuCustomArray{ GetWorkloadContainerGpuCustomArgs{...} }
+type GetWorkloadContainerGpuCustomArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerGpuCustomArrayOutput() GetWorkloadContainerGpuCustomArrayOutput
+	ToGetWorkloadContainerGpuCustomArrayOutputWithContext(context.Context) GetWorkloadContainerGpuCustomArrayOutput
+}
+
+type GetWorkloadContainerGpuCustomArray []GetWorkloadContainerGpuCustomInput
+
+func (GetWorkloadContainerGpuCustomArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerGpuCustom)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerGpuCustomArray) ToGetWorkloadContainerGpuCustomArrayOutput() GetWorkloadContainerGpuCustomArrayOutput {
+	return i.ToGetWorkloadContainerGpuCustomArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerGpuCustomArray) ToGetWorkloadContainerGpuCustomArrayOutputWithContext(ctx context.Context) GetWorkloadContainerGpuCustomArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerGpuCustomArrayOutput)
+}
+
+type GetWorkloadContainerGpuCustomOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerGpuCustomOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerGpuCustom)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerGpuCustomOutput) ToGetWorkloadContainerGpuCustomOutput() GetWorkloadContainerGpuCustomOutput {
+	return o
+}
+
+func (o GetWorkloadContainerGpuCustomOutput) ToGetWorkloadContainerGpuCustomOutputWithContext(ctx context.Context) GetWorkloadContainerGpuCustomOutput {
+	return o
+}
+
+// Number of GPUs.
+func (o GetWorkloadContainerGpuCustomOutput) Quantity() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerGpuCustom) int { return v.Quantity }).(pulumi.IntOutput)
+}
+
+func (o GetWorkloadContainerGpuCustomOutput) Resource() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainerGpuCustom) string { return v.Resource }).(pulumi.StringOutput)
+}
+
+func (o GetWorkloadContainerGpuCustomOutput) RuntimeClass() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainerGpuCustom) string { return v.RuntimeClass }).(pulumi.StringOutput)
+}
+
+type GetWorkloadContainerGpuCustomArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerGpuCustomArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerGpuCustom)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerGpuCustomArrayOutput) ToGetWorkloadContainerGpuCustomArrayOutput() GetWorkloadContainerGpuCustomArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerGpuCustomArrayOutput) ToGetWorkloadContainerGpuCustomArrayOutputWithContext(ctx context.Context) GetWorkloadContainerGpuCustomArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerGpuCustomArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerGpuCustomOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerGpuCustom {
+		return vs[0].([]GetWorkloadContainerGpuCustom)[vs[1].(int)]
+	}).(GetWorkloadContainerGpuCustomOutput)
+}
+
+type GetWorkloadContainerGpuNvidia struct {
+	// GPU Model (i.e.: t4)
+	Model string `pulumi:"model"`
+	// Number of GPUs.
+	Quantity int `pulumi:"quantity"`
+}
+
+// GetWorkloadContainerGpuNvidiaInput is an input type that accepts GetWorkloadContainerGpuNvidiaArgs and GetWorkloadContainerGpuNvidiaOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerGpuNvidiaInput` via:
+//
+//	GetWorkloadContainerGpuNvidiaArgs{...}
+type GetWorkloadContainerGpuNvidiaInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerGpuNvidiaOutput() GetWorkloadContainerGpuNvidiaOutput
+	ToGetWorkloadContainerGpuNvidiaOutputWithContext(context.Context) GetWorkloadContainerGpuNvidiaOutput
+}
+
+type GetWorkloadContainerGpuNvidiaArgs struct {
+	// GPU Model (i.e.: t4)
+	Model pulumi.StringInput `pulumi:"model"`
+	// Number of GPUs.
+	Quantity pulumi.IntInput `pulumi:"quantity"`
+}
+
+func (GetWorkloadContainerGpuNvidiaArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerGpuNvidia)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerGpuNvidiaArgs) ToGetWorkloadContainerGpuNvidiaOutput() GetWorkloadContainerGpuNvidiaOutput {
+	return i.ToGetWorkloadContainerGpuNvidiaOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerGpuNvidiaArgs) ToGetWorkloadContainerGpuNvidiaOutputWithContext(ctx context.Context) GetWorkloadContainerGpuNvidiaOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerGpuNvidiaOutput)
+}
+
+// GetWorkloadContainerGpuNvidiaArrayInput is an input type that accepts GetWorkloadContainerGpuNvidiaArray and GetWorkloadContainerGpuNvidiaArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerGpuNvidiaArrayInput` via:
+//
+//	GetWorkloadContainerGpuNvidiaArray{ GetWorkloadContainerGpuNvidiaArgs{...} }
+type GetWorkloadContainerGpuNvidiaArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerGpuNvidiaArrayOutput() GetWorkloadContainerGpuNvidiaArrayOutput
+	ToGetWorkloadContainerGpuNvidiaArrayOutputWithContext(context.Context) GetWorkloadContainerGpuNvidiaArrayOutput
+}
+
+type GetWorkloadContainerGpuNvidiaArray []GetWorkloadContainerGpuNvidiaInput
+
+func (GetWorkloadContainerGpuNvidiaArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerGpuNvidia)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerGpuNvidiaArray) ToGetWorkloadContainerGpuNvidiaArrayOutput() GetWorkloadContainerGpuNvidiaArrayOutput {
+	return i.ToGetWorkloadContainerGpuNvidiaArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerGpuNvidiaArray) ToGetWorkloadContainerGpuNvidiaArrayOutputWithContext(ctx context.Context) GetWorkloadContainerGpuNvidiaArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerGpuNvidiaArrayOutput)
+}
+
+type GetWorkloadContainerGpuNvidiaOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerGpuNvidiaOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerGpuNvidia)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerGpuNvidiaOutput) ToGetWorkloadContainerGpuNvidiaOutput() GetWorkloadContainerGpuNvidiaOutput {
+	return o
+}
+
+func (o GetWorkloadContainerGpuNvidiaOutput) ToGetWorkloadContainerGpuNvidiaOutputWithContext(ctx context.Context) GetWorkloadContainerGpuNvidiaOutput {
+	return o
+}
+
+// GPU Model (i.e.: t4)
+func (o GetWorkloadContainerGpuNvidiaOutput) Model() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainerGpuNvidia) string { return v.Model }).(pulumi.StringOutput)
+}
+
+// Number of GPUs.
+func (o GetWorkloadContainerGpuNvidiaOutput) Quantity() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerGpuNvidia) int { return v.Quantity }).(pulumi.IntOutput)
+}
+
+type GetWorkloadContainerGpuNvidiaArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerGpuNvidiaArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerGpuNvidia)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerGpuNvidiaArrayOutput) ToGetWorkloadContainerGpuNvidiaArrayOutput() GetWorkloadContainerGpuNvidiaArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerGpuNvidiaArrayOutput) ToGetWorkloadContainerGpuNvidiaArrayOutputWithContext(ctx context.Context) GetWorkloadContainerGpuNvidiaArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerGpuNvidiaArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerGpuNvidiaOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerGpuNvidia {
+		return vs[0].([]GetWorkloadContainerGpuNvidia)[vs[1].(int)]
+	}).(GetWorkloadContainerGpuNvidiaOutput)
+}
+
+type GetWorkloadContainerLifecycle struct {
+	PostStarts []GetWorkloadContainerLifecyclePostStart `pulumi:"postStarts"`
+	PreStops   []GetWorkloadContainerLifecyclePreStop   `pulumi:"preStops"`
+}
+
+// GetWorkloadContainerLifecycleInput is an input type that accepts GetWorkloadContainerLifecycleArgs and GetWorkloadContainerLifecycleOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLifecycleInput` via:
+//
+//	GetWorkloadContainerLifecycleArgs{...}
+type GetWorkloadContainerLifecycleInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLifecycleOutput() GetWorkloadContainerLifecycleOutput
+	ToGetWorkloadContainerLifecycleOutputWithContext(context.Context) GetWorkloadContainerLifecycleOutput
+}
+
+type GetWorkloadContainerLifecycleArgs struct {
+	PostStarts GetWorkloadContainerLifecyclePostStartArrayInput `pulumi:"postStarts"`
+	PreStops   GetWorkloadContainerLifecyclePreStopArrayInput   `pulumi:"preStops"`
+}
+
+func (GetWorkloadContainerLifecycleArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLifecycle)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLifecycleArgs) ToGetWorkloadContainerLifecycleOutput() GetWorkloadContainerLifecycleOutput {
+	return i.ToGetWorkloadContainerLifecycleOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLifecycleArgs) ToGetWorkloadContainerLifecycleOutputWithContext(ctx context.Context) GetWorkloadContainerLifecycleOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLifecycleOutput)
+}
+
+// GetWorkloadContainerLifecycleArrayInput is an input type that accepts GetWorkloadContainerLifecycleArray and GetWorkloadContainerLifecycleArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLifecycleArrayInput` via:
+//
+//	GetWorkloadContainerLifecycleArray{ GetWorkloadContainerLifecycleArgs{...} }
+type GetWorkloadContainerLifecycleArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLifecycleArrayOutput() GetWorkloadContainerLifecycleArrayOutput
+	ToGetWorkloadContainerLifecycleArrayOutputWithContext(context.Context) GetWorkloadContainerLifecycleArrayOutput
+}
+
+type GetWorkloadContainerLifecycleArray []GetWorkloadContainerLifecycleInput
+
+func (GetWorkloadContainerLifecycleArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLifecycle)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLifecycleArray) ToGetWorkloadContainerLifecycleArrayOutput() GetWorkloadContainerLifecycleArrayOutput {
+	return i.ToGetWorkloadContainerLifecycleArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLifecycleArray) ToGetWorkloadContainerLifecycleArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLifecycleArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLifecycleArrayOutput)
+}
+
+type GetWorkloadContainerLifecycleOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLifecycleOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLifecycle)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLifecycleOutput) ToGetWorkloadContainerLifecycleOutput() GetWorkloadContainerLifecycleOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLifecycleOutput) ToGetWorkloadContainerLifecycleOutputWithContext(ctx context.Context) GetWorkloadContainerLifecycleOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLifecycleOutput) PostStarts() GetWorkloadContainerLifecyclePostStartArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLifecycle) []GetWorkloadContainerLifecyclePostStart { return v.PostStarts }).(GetWorkloadContainerLifecyclePostStartArrayOutput)
+}
+
+func (o GetWorkloadContainerLifecycleOutput) PreStops() GetWorkloadContainerLifecyclePreStopArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLifecycle) []GetWorkloadContainerLifecyclePreStop { return v.PreStops }).(GetWorkloadContainerLifecyclePreStopArrayOutput)
+}
+
+type GetWorkloadContainerLifecycleArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLifecycleArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLifecycle)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLifecycleArrayOutput) ToGetWorkloadContainerLifecycleArrayOutput() GetWorkloadContainerLifecycleArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLifecycleArrayOutput) ToGetWorkloadContainerLifecycleArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLifecycleArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLifecycleArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerLifecycleOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerLifecycle {
+		return vs[0].([]GetWorkloadContainerLifecycle)[vs[1].(int)]
+	}).(GetWorkloadContainerLifecycleOutput)
+}
+
+type GetWorkloadContainerLifecyclePostStart struct {
+	Execs []GetWorkloadContainerLifecyclePostStartExec `pulumi:"execs"`
+}
+
+// GetWorkloadContainerLifecyclePostStartInput is an input type that accepts GetWorkloadContainerLifecyclePostStartArgs and GetWorkloadContainerLifecyclePostStartOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLifecyclePostStartInput` via:
+//
+//	GetWorkloadContainerLifecyclePostStartArgs{...}
+type GetWorkloadContainerLifecyclePostStartInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLifecyclePostStartOutput() GetWorkloadContainerLifecyclePostStartOutput
+	ToGetWorkloadContainerLifecyclePostStartOutputWithContext(context.Context) GetWorkloadContainerLifecyclePostStartOutput
+}
+
+type GetWorkloadContainerLifecyclePostStartArgs struct {
+	Execs GetWorkloadContainerLifecyclePostStartExecArrayInput `pulumi:"execs"`
+}
+
+func (GetWorkloadContainerLifecyclePostStartArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLifecyclePostStart)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLifecyclePostStartArgs) ToGetWorkloadContainerLifecyclePostStartOutput() GetWorkloadContainerLifecyclePostStartOutput {
+	return i.ToGetWorkloadContainerLifecyclePostStartOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLifecyclePostStartArgs) ToGetWorkloadContainerLifecyclePostStartOutputWithContext(ctx context.Context) GetWorkloadContainerLifecyclePostStartOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLifecyclePostStartOutput)
+}
+
+// GetWorkloadContainerLifecyclePostStartArrayInput is an input type that accepts GetWorkloadContainerLifecyclePostStartArray and GetWorkloadContainerLifecyclePostStartArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLifecyclePostStartArrayInput` via:
+//
+//	GetWorkloadContainerLifecyclePostStartArray{ GetWorkloadContainerLifecyclePostStartArgs{...} }
+type GetWorkloadContainerLifecyclePostStartArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLifecyclePostStartArrayOutput() GetWorkloadContainerLifecyclePostStartArrayOutput
+	ToGetWorkloadContainerLifecyclePostStartArrayOutputWithContext(context.Context) GetWorkloadContainerLifecyclePostStartArrayOutput
+}
+
+type GetWorkloadContainerLifecyclePostStartArray []GetWorkloadContainerLifecyclePostStartInput
+
+func (GetWorkloadContainerLifecyclePostStartArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLifecyclePostStart)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLifecyclePostStartArray) ToGetWorkloadContainerLifecyclePostStartArrayOutput() GetWorkloadContainerLifecyclePostStartArrayOutput {
+	return i.ToGetWorkloadContainerLifecyclePostStartArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLifecyclePostStartArray) ToGetWorkloadContainerLifecyclePostStartArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLifecyclePostStartArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLifecyclePostStartArrayOutput)
+}
+
+type GetWorkloadContainerLifecyclePostStartOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLifecyclePostStartOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLifecyclePostStart)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLifecyclePostStartOutput) ToGetWorkloadContainerLifecyclePostStartOutput() GetWorkloadContainerLifecyclePostStartOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLifecyclePostStartOutput) ToGetWorkloadContainerLifecyclePostStartOutputWithContext(ctx context.Context) GetWorkloadContainerLifecyclePostStartOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLifecyclePostStartOutput) Execs() GetWorkloadContainerLifecyclePostStartExecArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLifecyclePostStart) []GetWorkloadContainerLifecyclePostStartExec {
+		return v.Execs
+	}).(GetWorkloadContainerLifecyclePostStartExecArrayOutput)
+}
+
+type GetWorkloadContainerLifecyclePostStartArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLifecyclePostStartArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLifecyclePostStart)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLifecyclePostStartArrayOutput) ToGetWorkloadContainerLifecyclePostStartArrayOutput() GetWorkloadContainerLifecyclePostStartArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLifecyclePostStartArrayOutput) ToGetWorkloadContainerLifecyclePostStartArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLifecyclePostStartArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLifecyclePostStartArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerLifecyclePostStartOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerLifecyclePostStart {
+		return vs[0].([]GetWorkloadContainerLifecyclePostStart)[vs[1].(int)]
+	}).(GetWorkloadContainerLifecyclePostStartOutput)
+}
+
+type GetWorkloadContainerLifecyclePostStartExec struct {
+	// Command and arguments executed immediately after the container is created.
+	Commands []string `pulumi:"commands"`
+}
+
+// GetWorkloadContainerLifecyclePostStartExecInput is an input type that accepts GetWorkloadContainerLifecyclePostStartExecArgs and GetWorkloadContainerLifecyclePostStartExecOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLifecyclePostStartExecInput` via:
+//
+//	GetWorkloadContainerLifecyclePostStartExecArgs{...}
+type GetWorkloadContainerLifecyclePostStartExecInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLifecyclePostStartExecOutput() GetWorkloadContainerLifecyclePostStartExecOutput
+	ToGetWorkloadContainerLifecyclePostStartExecOutputWithContext(context.Context) GetWorkloadContainerLifecyclePostStartExecOutput
+}
+
+type GetWorkloadContainerLifecyclePostStartExecArgs struct {
+	// Command and arguments executed immediately after the container is created.
+	Commands pulumi.StringArrayInput `pulumi:"commands"`
+}
+
+func (GetWorkloadContainerLifecyclePostStartExecArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLifecyclePostStartExec)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLifecyclePostStartExecArgs) ToGetWorkloadContainerLifecyclePostStartExecOutput() GetWorkloadContainerLifecyclePostStartExecOutput {
+	return i.ToGetWorkloadContainerLifecyclePostStartExecOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLifecyclePostStartExecArgs) ToGetWorkloadContainerLifecyclePostStartExecOutputWithContext(ctx context.Context) GetWorkloadContainerLifecyclePostStartExecOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLifecyclePostStartExecOutput)
+}
+
+// GetWorkloadContainerLifecyclePostStartExecArrayInput is an input type that accepts GetWorkloadContainerLifecyclePostStartExecArray and GetWorkloadContainerLifecyclePostStartExecArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLifecyclePostStartExecArrayInput` via:
+//
+//	GetWorkloadContainerLifecyclePostStartExecArray{ GetWorkloadContainerLifecyclePostStartExecArgs{...} }
+type GetWorkloadContainerLifecyclePostStartExecArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLifecyclePostStartExecArrayOutput() GetWorkloadContainerLifecyclePostStartExecArrayOutput
+	ToGetWorkloadContainerLifecyclePostStartExecArrayOutputWithContext(context.Context) GetWorkloadContainerLifecyclePostStartExecArrayOutput
+}
+
+type GetWorkloadContainerLifecyclePostStartExecArray []GetWorkloadContainerLifecyclePostStartExecInput
+
+func (GetWorkloadContainerLifecyclePostStartExecArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLifecyclePostStartExec)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLifecyclePostStartExecArray) ToGetWorkloadContainerLifecyclePostStartExecArrayOutput() GetWorkloadContainerLifecyclePostStartExecArrayOutput {
+	return i.ToGetWorkloadContainerLifecyclePostStartExecArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLifecyclePostStartExecArray) ToGetWorkloadContainerLifecyclePostStartExecArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLifecyclePostStartExecArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLifecyclePostStartExecArrayOutput)
+}
+
+type GetWorkloadContainerLifecyclePostStartExecOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLifecyclePostStartExecOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLifecyclePostStartExec)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLifecyclePostStartExecOutput) ToGetWorkloadContainerLifecyclePostStartExecOutput() GetWorkloadContainerLifecyclePostStartExecOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLifecyclePostStartExecOutput) ToGetWorkloadContainerLifecyclePostStartExecOutputWithContext(ctx context.Context) GetWorkloadContainerLifecyclePostStartExecOutput {
+	return o
+}
+
+// Command and arguments executed immediately after the container is created.
+func (o GetWorkloadContainerLifecyclePostStartExecOutput) Commands() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLifecyclePostStartExec) []string { return v.Commands }).(pulumi.StringArrayOutput)
+}
+
+type GetWorkloadContainerLifecyclePostStartExecArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLifecyclePostStartExecArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLifecyclePostStartExec)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLifecyclePostStartExecArrayOutput) ToGetWorkloadContainerLifecyclePostStartExecArrayOutput() GetWorkloadContainerLifecyclePostStartExecArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLifecyclePostStartExecArrayOutput) ToGetWorkloadContainerLifecyclePostStartExecArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLifecyclePostStartExecArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLifecyclePostStartExecArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerLifecyclePostStartExecOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerLifecyclePostStartExec {
+		return vs[0].([]GetWorkloadContainerLifecyclePostStartExec)[vs[1].(int)]
+	}).(GetWorkloadContainerLifecyclePostStartExecOutput)
+}
+
+type GetWorkloadContainerLifecyclePreStop struct {
+	Execs []GetWorkloadContainerLifecyclePreStopExec `pulumi:"execs"`
+}
+
+// GetWorkloadContainerLifecyclePreStopInput is an input type that accepts GetWorkloadContainerLifecyclePreStopArgs and GetWorkloadContainerLifecyclePreStopOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLifecyclePreStopInput` via:
+//
+//	GetWorkloadContainerLifecyclePreStopArgs{...}
+type GetWorkloadContainerLifecyclePreStopInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLifecyclePreStopOutput() GetWorkloadContainerLifecyclePreStopOutput
+	ToGetWorkloadContainerLifecyclePreStopOutputWithContext(context.Context) GetWorkloadContainerLifecyclePreStopOutput
+}
+
+type GetWorkloadContainerLifecyclePreStopArgs struct {
+	Execs GetWorkloadContainerLifecyclePreStopExecArrayInput `pulumi:"execs"`
+}
+
+func (GetWorkloadContainerLifecyclePreStopArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLifecyclePreStop)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLifecyclePreStopArgs) ToGetWorkloadContainerLifecyclePreStopOutput() GetWorkloadContainerLifecyclePreStopOutput {
+	return i.ToGetWorkloadContainerLifecyclePreStopOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLifecyclePreStopArgs) ToGetWorkloadContainerLifecyclePreStopOutputWithContext(ctx context.Context) GetWorkloadContainerLifecyclePreStopOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLifecyclePreStopOutput)
+}
+
+// GetWorkloadContainerLifecyclePreStopArrayInput is an input type that accepts GetWorkloadContainerLifecyclePreStopArray and GetWorkloadContainerLifecyclePreStopArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLifecyclePreStopArrayInput` via:
+//
+//	GetWorkloadContainerLifecyclePreStopArray{ GetWorkloadContainerLifecyclePreStopArgs{...} }
+type GetWorkloadContainerLifecyclePreStopArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLifecyclePreStopArrayOutput() GetWorkloadContainerLifecyclePreStopArrayOutput
+	ToGetWorkloadContainerLifecyclePreStopArrayOutputWithContext(context.Context) GetWorkloadContainerLifecyclePreStopArrayOutput
+}
+
+type GetWorkloadContainerLifecyclePreStopArray []GetWorkloadContainerLifecyclePreStopInput
+
+func (GetWorkloadContainerLifecyclePreStopArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLifecyclePreStop)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLifecyclePreStopArray) ToGetWorkloadContainerLifecyclePreStopArrayOutput() GetWorkloadContainerLifecyclePreStopArrayOutput {
+	return i.ToGetWorkloadContainerLifecyclePreStopArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLifecyclePreStopArray) ToGetWorkloadContainerLifecyclePreStopArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLifecyclePreStopArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLifecyclePreStopArrayOutput)
+}
+
+type GetWorkloadContainerLifecyclePreStopOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLifecyclePreStopOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLifecyclePreStop)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLifecyclePreStopOutput) ToGetWorkloadContainerLifecyclePreStopOutput() GetWorkloadContainerLifecyclePreStopOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLifecyclePreStopOutput) ToGetWorkloadContainerLifecyclePreStopOutputWithContext(ctx context.Context) GetWorkloadContainerLifecyclePreStopOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLifecyclePreStopOutput) Execs() GetWorkloadContainerLifecyclePreStopExecArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLifecyclePreStop) []GetWorkloadContainerLifecyclePreStopExec {
+		return v.Execs
+	}).(GetWorkloadContainerLifecyclePreStopExecArrayOutput)
+}
+
+type GetWorkloadContainerLifecyclePreStopArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLifecyclePreStopArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLifecyclePreStop)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLifecyclePreStopArrayOutput) ToGetWorkloadContainerLifecyclePreStopArrayOutput() GetWorkloadContainerLifecyclePreStopArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLifecyclePreStopArrayOutput) ToGetWorkloadContainerLifecyclePreStopArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLifecyclePreStopArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLifecyclePreStopArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerLifecyclePreStopOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerLifecyclePreStop {
+		return vs[0].([]GetWorkloadContainerLifecyclePreStop)[vs[1].(int)]
+	}).(GetWorkloadContainerLifecyclePreStopOutput)
+}
+
+type GetWorkloadContainerLifecyclePreStopExec struct {
+	// Command and arguments executed immediately before the container is stopped.
+	Commands []string `pulumi:"commands"`
+}
+
+// GetWorkloadContainerLifecyclePreStopExecInput is an input type that accepts GetWorkloadContainerLifecyclePreStopExecArgs and GetWorkloadContainerLifecyclePreStopExecOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLifecyclePreStopExecInput` via:
+//
+//	GetWorkloadContainerLifecyclePreStopExecArgs{...}
+type GetWorkloadContainerLifecyclePreStopExecInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLifecyclePreStopExecOutput() GetWorkloadContainerLifecyclePreStopExecOutput
+	ToGetWorkloadContainerLifecyclePreStopExecOutputWithContext(context.Context) GetWorkloadContainerLifecyclePreStopExecOutput
+}
+
+type GetWorkloadContainerLifecyclePreStopExecArgs struct {
+	// Command and arguments executed immediately before the container is stopped.
+	Commands pulumi.StringArrayInput `pulumi:"commands"`
+}
+
+func (GetWorkloadContainerLifecyclePreStopExecArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLifecyclePreStopExec)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLifecyclePreStopExecArgs) ToGetWorkloadContainerLifecyclePreStopExecOutput() GetWorkloadContainerLifecyclePreStopExecOutput {
+	return i.ToGetWorkloadContainerLifecyclePreStopExecOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLifecyclePreStopExecArgs) ToGetWorkloadContainerLifecyclePreStopExecOutputWithContext(ctx context.Context) GetWorkloadContainerLifecyclePreStopExecOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLifecyclePreStopExecOutput)
+}
+
+// GetWorkloadContainerLifecyclePreStopExecArrayInput is an input type that accepts GetWorkloadContainerLifecyclePreStopExecArray and GetWorkloadContainerLifecyclePreStopExecArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLifecyclePreStopExecArrayInput` via:
+//
+//	GetWorkloadContainerLifecyclePreStopExecArray{ GetWorkloadContainerLifecyclePreStopExecArgs{...} }
+type GetWorkloadContainerLifecyclePreStopExecArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLifecyclePreStopExecArrayOutput() GetWorkloadContainerLifecyclePreStopExecArrayOutput
+	ToGetWorkloadContainerLifecyclePreStopExecArrayOutputWithContext(context.Context) GetWorkloadContainerLifecyclePreStopExecArrayOutput
+}
+
+type GetWorkloadContainerLifecyclePreStopExecArray []GetWorkloadContainerLifecyclePreStopExecInput
+
+func (GetWorkloadContainerLifecyclePreStopExecArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLifecyclePreStopExec)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLifecyclePreStopExecArray) ToGetWorkloadContainerLifecyclePreStopExecArrayOutput() GetWorkloadContainerLifecyclePreStopExecArrayOutput {
+	return i.ToGetWorkloadContainerLifecyclePreStopExecArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLifecyclePreStopExecArray) ToGetWorkloadContainerLifecyclePreStopExecArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLifecyclePreStopExecArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLifecyclePreStopExecArrayOutput)
+}
+
+type GetWorkloadContainerLifecyclePreStopExecOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLifecyclePreStopExecOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLifecyclePreStopExec)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLifecyclePreStopExecOutput) ToGetWorkloadContainerLifecyclePreStopExecOutput() GetWorkloadContainerLifecyclePreStopExecOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLifecyclePreStopExecOutput) ToGetWorkloadContainerLifecyclePreStopExecOutputWithContext(ctx context.Context) GetWorkloadContainerLifecyclePreStopExecOutput {
+	return o
+}
+
+// Command and arguments executed immediately before the container is stopped.
+func (o GetWorkloadContainerLifecyclePreStopExecOutput) Commands() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLifecyclePreStopExec) []string { return v.Commands }).(pulumi.StringArrayOutput)
+}
+
+type GetWorkloadContainerLifecyclePreStopExecArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLifecyclePreStopExecArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLifecyclePreStopExec)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLifecyclePreStopExecArrayOutput) ToGetWorkloadContainerLifecyclePreStopExecArrayOutput() GetWorkloadContainerLifecyclePreStopExecArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLifecyclePreStopExecArrayOutput) ToGetWorkloadContainerLifecyclePreStopExecArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLifecyclePreStopExecArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLifecyclePreStopExecArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerLifecyclePreStopExecOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerLifecyclePreStopExec {
+		return vs[0].([]GetWorkloadContainerLifecyclePreStopExec)[vs[1].(int)]
+	}).(GetWorkloadContainerLifecyclePreStopExecOutput)
+}
+
+type GetWorkloadContainerLivenessProbe struct {
+	Execs               []GetWorkloadContainerLivenessProbeExec      `pulumi:"execs"`
+	FailureThreshold    int                                          `pulumi:"failureThreshold"`
+	Grpcs               []GetWorkloadContainerLivenessProbeGrpc      `pulumi:"grpcs"`
+	HttpGets            []GetWorkloadContainerLivenessProbeHttpGet   `pulumi:"httpGets"`
+	InitialDelaySeconds int                                          `pulumi:"initialDelaySeconds"`
+	PeriodSeconds       int                                          `pulumi:"periodSeconds"`
+	SuccessThreshold    int                                          `pulumi:"successThreshold"`
+	TcpSockets          []GetWorkloadContainerLivenessProbeTcpSocket `pulumi:"tcpSockets"`
+	TimeoutSeconds      int                                          `pulumi:"timeoutSeconds"`
+}
+
+// GetWorkloadContainerLivenessProbeInput is an input type that accepts GetWorkloadContainerLivenessProbeArgs and GetWorkloadContainerLivenessProbeOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLivenessProbeInput` via:
+//
+//	GetWorkloadContainerLivenessProbeArgs{...}
+type GetWorkloadContainerLivenessProbeInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLivenessProbeOutput() GetWorkloadContainerLivenessProbeOutput
+	ToGetWorkloadContainerLivenessProbeOutputWithContext(context.Context) GetWorkloadContainerLivenessProbeOutput
+}
+
+type GetWorkloadContainerLivenessProbeArgs struct {
+	Execs               GetWorkloadContainerLivenessProbeExecArrayInput      `pulumi:"execs"`
+	FailureThreshold    pulumi.IntInput                                      `pulumi:"failureThreshold"`
+	Grpcs               GetWorkloadContainerLivenessProbeGrpcArrayInput      `pulumi:"grpcs"`
+	HttpGets            GetWorkloadContainerLivenessProbeHttpGetArrayInput   `pulumi:"httpGets"`
+	InitialDelaySeconds pulumi.IntInput                                      `pulumi:"initialDelaySeconds"`
+	PeriodSeconds       pulumi.IntInput                                      `pulumi:"periodSeconds"`
+	SuccessThreshold    pulumi.IntInput                                      `pulumi:"successThreshold"`
+	TcpSockets          GetWorkloadContainerLivenessProbeTcpSocketArrayInput `pulumi:"tcpSockets"`
+	TimeoutSeconds      pulumi.IntInput                                      `pulumi:"timeoutSeconds"`
+}
+
+func (GetWorkloadContainerLivenessProbeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLivenessProbe)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLivenessProbeArgs) ToGetWorkloadContainerLivenessProbeOutput() GetWorkloadContainerLivenessProbeOutput {
+	return i.ToGetWorkloadContainerLivenessProbeOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLivenessProbeArgs) ToGetWorkloadContainerLivenessProbeOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLivenessProbeOutput)
+}
+
+// GetWorkloadContainerLivenessProbeArrayInput is an input type that accepts GetWorkloadContainerLivenessProbeArray and GetWorkloadContainerLivenessProbeArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLivenessProbeArrayInput` via:
+//
+//	GetWorkloadContainerLivenessProbeArray{ GetWorkloadContainerLivenessProbeArgs{...} }
+type GetWorkloadContainerLivenessProbeArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLivenessProbeArrayOutput() GetWorkloadContainerLivenessProbeArrayOutput
+	ToGetWorkloadContainerLivenessProbeArrayOutputWithContext(context.Context) GetWorkloadContainerLivenessProbeArrayOutput
+}
+
+type GetWorkloadContainerLivenessProbeArray []GetWorkloadContainerLivenessProbeInput
+
+func (GetWorkloadContainerLivenessProbeArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLivenessProbe)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLivenessProbeArray) ToGetWorkloadContainerLivenessProbeArrayOutput() GetWorkloadContainerLivenessProbeArrayOutput {
+	return i.ToGetWorkloadContainerLivenessProbeArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLivenessProbeArray) ToGetWorkloadContainerLivenessProbeArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLivenessProbeArrayOutput)
+}
+
+type GetWorkloadContainerLivenessProbeOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLivenessProbeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLivenessProbe)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLivenessProbeOutput) ToGetWorkloadContainerLivenessProbeOutput() GetWorkloadContainerLivenessProbeOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeOutput) ToGetWorkloadContainerLivenessProbeOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeOutput) Execs() GetWorkloadContainerLivenessProbeExecArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLivenessProbe) []GetWorkloadContainerLivenessProbeExec { return v.Execs }).(GetWorkloadContainerLivenessProbeExecArrayOutput)
+}
+
+func (o GetWorkloadContainerLivenessProbeOutput) FailureThreshold() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLivenessProbe) int { return v.FailureThreshold }).(pulumi.IntOutput)
+}
+
+func (o GetWorkloadContainerLivenessProbeOutput) Grpcs() GetWorkloadContainerLivenessProbeGrpcArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLivenessProbe) []GetWorkloadContainerLivenessProbeGrpc { return v.Grpcs }).(GetWorkloadContainerLivenessProbeGrpcArrayOutput)
+}
+
+func (o GetWorkloadContainerLivenessProbeOutput) HttpGets() GetWorkloadContainerLivenessProbeHttpGetArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLivenessProbe) []GetWorkloadContainerLivenessProbeHttpGet {
+		return v.HttpGets
+	}).(GetWorkloadContainerLivenessProbeHttpGetArrayOutput)
+}
+
+func (o GetWorkloadContainerLivenessProbeOutput) InitialDelaySeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLivenessProbe) int { return v.InitialDelaySeconds }).(pulumi.IntOutput)
+}
+
+func (o GetWorkloadContainerLivenessProbeOutput) PeriodSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLivenessProbe) int { return v.PeriodSeconds }).(pulumi.IntOutput)
+}
+
+func (o GetWorkloadContainerLivenessProbeOutput) SuccessThreshold() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLivenessProbe) int { return v.SuccessThreshold }).(pulumi.IntOutput)
+}
+
+func (o GetWorkloadContainerLivenessProbeOutput) TcpSockets() GetWorkloadContainerLivenessProbeTcpSocketArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLivenessProbe) []GetWorkloadContainerLivenessProbeTcpSocket {
+		return v.TcpSockets
+	}).(GetWorkloadContainerLivenessProbeTcpSocketArrayOutput)
+}
+
+func (o GetWorkloadContainerLivenessProbeOutput) TimeoutSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLivenessProbe) int { return v.TimeoutSeconds }).(pulumi.IntOutput)
+}
+
+type GetWorkloadContainerLivenessProbeArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLivenessProbeArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLivenessProbe)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLivenessProbeArrayOutput) ToGetWorkloadContainerLivenessProbeArrayOutput() GetWorkloadContainerLivenessProbeArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeArrayOutput) ToGetWorkloadContainerLivenessProbeArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerLivenessProbeOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerLivenessProbe {
+		return vs[0].([]GetWorkloadContainerLivenessProbe)[vs[1].(int)]
+	}).(GetWorkloadContainerLivenessProbeOutput)
+}
+
+type GetWorkloadContainerLivenessProbeExec struct {
+	Commands []string `pulumi:"commands"`
+}
+
+// GetWorkloadContainerLivenessProbeExecInput is an input type that accepts GetWorkloadContainerLivenessProbeExecArgs and GetWorkloadContainerLivenessProbeExecOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLivenessProbeExecInput` via:
+//
+//	GetWorkloadContainerLivenessProbeExecArgs{...}
+type GetWorkloadContainerLivenessProbeExecInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLivenessProbeExecOutput() GetWorkloadContainerLivenessProbeExecOutput
+	ToGetWorkloadContainerLivenessProbeExecOutputWithContext(context.Context) GetWorkloadContainerLivenessProbeExecOutput
+}
+
+type GetWorkloadContainerLivenessProbeExecArgs struct {
+	Commands pulumi.StringArrayInput `pulumi:"commands"`
+}
+
+func (GetWorkloadContainerLivenessProbeExecArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLivenessProbeExec)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLivenessProbeExecArgs) ToGetWorkloadContainerLivenessProbeExecOutput() GetWorkloadContainerLivenessProbeExecOutput {
+	return i.ToGetWorkloadContainerLivenessProbeExecOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLivenessProbeExecArgs) ToGetWorkloadContainerLivenessProbeExecOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeExecOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLivenessProbeExecOutput)
+}
+
+// GetWorkloadContainerLivenessProbeExecArrayInput is an input type that accepts GetWorkloadContainerLivenessProbeExecArray and GetWorkloadContainerLivenessProbeExecArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLivenessProbeExecArrayInput` via:
+//
+//	GetWorkloadContainerLivenessProbeExecArray{ GetWorkloadContainerLivenessProbeExecArgs{...} }
+type GetWorkloadContainerLivenessProbeExecArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLivenessProbeExecArrayOutput() GetWorkloadContainerLivenessProbeExecArrayOutput
+	ToGetWorkloadContainerLivenessProbeExecArrayOutputWithContext(context.Context) GetWorkloadContainerLivenessProbeExecArrayOutput
+}
+
+type GetWorkloadContainerLivenessProbeExecArray []GetWorkloadContainerLivenessProbeExecInput
+
+func (GetWorkloadContainerLivenessProbeExecArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLivenessProbeExec)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLivenessProbeExecArray) ToGetWorkloadContainerLivenessProbeExecArrayOutput() GetWorkloadContainerLivenessProbeExecArrayOutput {
+	return i.ToGetWorkloadContainerLivenessProbeExecArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLivenessProbeExecArray) ToGetWorkloadContainerLivenessProbeExecArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeExecArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLivenessProbeExecArrayOutput)
+}
+
+type GetWorkloadContainerLivenessProbeExecOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLivenessProbeExecOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLivenessProbeExec)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLivenessProbeExecOutput) ToGetWorkloadContainerLivenessProbeExecOutput() GetWorkloadContainerLivenessProbeExecOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeExecOutput) ToGetWorkloadContainerLivenessProbeExecOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeExecOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeExecOutput) Commands() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLivenessProbeExec) []string { return v.Commands }).(pulumi.StringArrayOutput)
+}
+
+type GetWorkloadContainerLivenessProbeExecArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLivenessProbeExecArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLivenessProbeExec)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLivenessProbeExecArrayOutput) ToGetWorkloadContainerLivenessProbeExecArrayOutput() GetWorkloadContainerLivenessProbeExecArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeExecArrayOutput) ToGetWorkloadContainerLivenessProbeExecArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeExecArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeExecArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerLivenessProbeExecOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerLivenessProbeExec {
+		return vs[0].([]GetWorkloadContainerLivenessProbeExec)[vs[1].(int)]
+	}).(GetWorkloadContainerLivenessProbeExecOutput)
+}
+
+type GetWorkloadContainerLivenessProbeGrpc struct {
+	Port int `pulumi:"port"`
+}
+
+// GetWorkloadContainerLivenessProbeGrpcInput is an input type that accepts GetWorkloadContainerLivenessProbeGrpcArgs and GetWorkloadContainerLivenessProbeGrpcOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLivenessProbeGrpcInput` via:
+//
+//	GetWorkloadContainerLivenessProbeGrpcArgs{...}
+type GetWorkloadContainerLivenessProbeGrpcInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLivenessProbeGrpcOutput() GetWorkloadContainerLivenessProbeGrpcOutput
+	ToGetWorkloadContainerLivenessProbeGrpcOutputWithContext(context.Context) GetWorkloadContainerLivenessProbeGrpcOutput
+}
+
+type GetWorkloadContainerLivenessProbeGrpcArgs struct {
+	Port pulumi.IntInput `pulumi:"port"`
+}
+
+func (GetWorkloadContainerLivenessProbeGrpcArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLivenessProbeGrpc)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLivenessProbeGrpcArgs) ToGetWorkloadContainerLivenessProbeGrpcOutput() GetWorkloadContainerLivenessProbeGrpcOutput {
+	return i.ToGetWorkloadContainerLivenessProbeGrpcOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLivenessProbeGrpcArgs) ToGetWorkloadContainerLivenessProbeGrpcOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeGrpcOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLivenessProbeGrpcOutput)
+}
+
+// GetWorkloadContainerLivenessProbeGrpcArrayInput is an input type that accepts GetWorkloadContainerLivenessProbeGrpcArray and GetWorkloadContainerLivenessProbeGrpcArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLivenessProbeGrpcArrayInput` via:
+//
+//	GetWorkloadContainerLivenessProbeGrpcArray{ GetWorkloadContainerLivenessProbeGrpcArgs{...} }
+type GetWorkloadContainerLivenessProbeGrpcArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLivenessProbeGrpcArrayOutput() GetWorkloadContainerLivenessProbeGrpcArrayOutput
+	ToGetWorkloadContainerLivenessProbeGrpcArrayOutputWithContext(context.Context) GetWorkloadContainerLivenessProbeGrpcArrayOutput
+}
+
+type GetWorkloadContainerLivenessProbeGrpcArray []GetWorkloadContainerLivenessProbeGrpcInput
+
+func (GetWorkloadContainerLivenessProbeGrpcArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLivenessProbeGrpc)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLivenessProbeGrpcArray) ToGetWorkloadContainerLivenessProbeGrpcArrayOutput() GetWorkloadContainerLivenessProbeGrpcArrayOutput {
+	return i.ToGetWorkloadContainerLivenessProbeGrpcArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLivenessProbeGrpcArray) ToGetWorkloadContainerLivenessProbeGrpcArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeGrpcArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLivenessProbeGrpcArrayOutput)
+}
+
+type GetWorkloadContainerLivenessProbeGrpcOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLivenessProbeGrpcOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLivenessProbeGrpc)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLivenessProbeGrpcOutput) ToGetWorkloadContainerLivenessProbeGrpcOutput() GetWorkloadContainerLivenessProbeGrpcOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeGrpcOutput) ToGetWorkloadContainerLivenessProbeGrpcOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeGrpcOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeGrpcOutput) Port() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLivenessProbeGrpc) int { return v.Port }).(pulumi.IntOutput)
+}
+
+type GetWorkloadContainerLivenessProbeGrpcArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLivenessProbeGrpcArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLivenessProbeGrpc)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLivenessProbeGrpcArrayOutput) ToGetWorkloadContainerLivenessProbeGrpcArrayOutput() GetWorkloadContainerLivenessProbeGrpcArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeGrpcArrayOutput) ToGetWorkloadContainerLivenessProbeGrpcArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeGrpcArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeGrpcArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerLivenessProbeGrpcOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerLivenessProbeGrpc {
+		return vs[0].([]GetWorkloadContainerLivenessProbeGrpc)[vs[1].(int)]
+	}).(GetWorkloadContainerLivenessProbeGrpcOutput)
+}
+
+type GetWorkloadContainerLivenessProbeHttpGet struct {
+	HttpHeaders map[string]string `pulumi:"httpHeaders"`
+	Path        string            `pulumi:"path"`
+	Port        int               `pulumi:"port"`
+	Scheme      string            `pulumi:"scheme"`
+}
+
+// GetWorkloadContainerLivenessProbeHttpGetInput is an input type that accepts GetWorkloadContainerLivenessProbeHttpGetArgs and GetWorkloadContainerLivenessProbeHttpGetOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLivenessProbeHttpGetInput` via:
+//
+//	GetWorkloadContainerLivenessProbeHttpGetArgs{...}
+type GetWorkloadContainerLivenessProbeHttpGetInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLivenessProbeHttpGetOutput() GetWorkloadContainerLivenessProbeHttpGetOutput
+	ToGetWorkloadContainerLivenessProbeHttpGetOutputWithContext(context.Context) GetWorkloadContainerLivenessProbeHttpGetOutput
+}
+
+type GetWorkloadContainerLivenessProbeHttpGetArgs struct {
+	HttpHeaders pulumi.StringMapInput `pulumi:"httpHeaders"`
+	Path        pulumi.StringInput    `pulumi:"path"`
+	Port        pulumi.IntInput       `pulumi:"port"`
+	Scheme      pulumi.StringInput    `pulumi:"scheme"`
+}
+
+func (GetWorkloadContainerLivenessProbeHttpGetArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLivenessProbeHttpGet)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLivenessProbeHttpGetArgs) ToGetWorkloadContainerLivenessProbeHttpGetOutput() GetWorkloadContainerLivenessProbeHttpGetOutput {
+	return i.ToGetWorkloadContainerLivenessProbeHttpGetOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLivenessProbeHttpGetArgs) ToGetWorkloadContainerLivenessProbeHttpGetOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeHttpGetOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLivenessProbeHttpGetOutput)
+}
+
+// GetWorkloadContainerLivenessProbeHttpGetArrayInput is an input type that accepts GetWorkloadContainerLivenessProbeHttpGetArray and GetWorkloadContainerLivenessProbeHttpGetArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLivenessProbeHttpGetArrayInput` via:
+//
+//	GetWorkloadContainerLivenessProbeHttpGetArray{ GetWorkloadContainerLivenessProbeHttpGetArgs{...} }
+type GetWorkloadContainerLivenessProbeHttpGetArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLivenessProbeHttpGetArrayOutput() GetWorkloadContainerLivenessProbeHttpGetArrayOutput
+	ToGetWorkloadContainerLivenessProbeHttpGetArrayOutputWithContext(context.Context) GetWorkloadContainerLivenessProbeHttpGetArrayOutput
+}
+
+type GetWorkloadContainerLivenessProbeHttpGetArray []GetWorkloadContainerLivenessProbeHttpGetInput
+
+func (GetWorkloadContainerLivenessProbeHttpGetArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLivenessProbeHttpGet)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLivenessProbeHttpGetArray) ToGetWorkloadContainerLivenessProbeHttpGetArrayOutput() GetWorkloadContainerLivenessProbeHttpGetArrayOutput {
+	return i.ToGetWorkloadContainerLivenessProbeHttpGetArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLivenessProbeHttpGetArray) ToGetWorkloadContainerLivenessProbeHttpGetArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeHttpGetArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLivenessProbeHttpGetArrayOutput)
+}
+
+type GetWorkloadContainerLivenessProbeHttpGetOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLivenessProbeHttpGetOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLivenessProbeHttpGet)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLivenessProbeHttpGetOutput) ToGetWorkloadContainerLivenessProbeHttpGetOutput() GetWorkloadContainerLivenessProbeHttpGetOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeHttpGetOutput) ToGetWorkloadContainerLivenessProbeHttpGetOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeHttpGetOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeHttpGetOutput) HttpHeaders() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLivenessProbeHttpGet) map[string]string { return v.HttpHeaders }).(pulumi.StringMapOutput)
+}
+
+func (o GetWorkloadContainerLivenessProbeHttpGetOutput) Path() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLivenessProbeHttpGet) string { return v.Path }).(pulumi.StringOutput)
+}
+
+func (o GetWorkloadContainerLivenessProbeHttpGetOutput) Port() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLivenessProbeHttpGet) int { return v.Port }).(pulumi.IntOutput)
+}
+
+func (o GetWorkloadContainerLivenessProbeHttpGetOutput) Scheme() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLivenessProbeHttpGet) string { return v.Scheme }).(pulumi.StringOutput)
+}
+
+type GetWorkloadContainerLivenessProbeHttpGetArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLivenessProbeHttpGetArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLivenessProbeHttpGet)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLivenessProbeHttpGetArrayOutput) ToGetWorkloadContainerLivenessProbeHttpGetArrayOutput() GetWorkloadContainerLivenessProbeHttpGetArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeHttpGetArrayOutput) ToGetWorkloadContainerLivenessProbeHttpGetArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeHttpGetArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeHttpGetArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerLivenessProbeHttpGetOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerLivenessProbeHttpGet {
+		return vs[0].([]GetWorkloadContainerLivenessProbeHttpGet)[vs[1].(int)]
+	}).(GetWorkloadContainerLivenessProbeHttpGetOutput)
+}
+
+type GetWorkloadContainerLivenessProbeTcpSocket struct {
+	Port int `pulumi:"port"`
+}
+
+// GetWorkloadContainerLivenessProbeTcpSocketInput is an input type that accepts GetWorkloadContainerLivenessProbeTcpSocketArgs and GetWorkloadContainerLivenessProbeTcpSocketOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLivenessProbeTcpSocketInput` via:
+//
+//	GetWorkloadContainerLivenessProbeTcpSocketArgs{...}
+type GetWorkloadContainerLivenessProbeTcpSocketInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLivenessProbeTcpSocketOutput() GetWorkloadContainerLivenessProbeTcpSocketOutput
+	ToGetWorkloadContainerLivenessProbeTcpSocketOutputWithContext(context.Context) GetWorkloadContainerLivenessProbeTcpSocketOutput
+}
+
+type GetWorkloadContainerLivenessProbeTcpSocketArgs struct {
+	Port pulumi.IntInput `pulumi:"port"`
+}
+
+func (GetWorkloadContainerLivenessProbeTcpSocketArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLivenessProbeTcpSocket)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLivenessProbeTcpSocketArgs) ToGetWorkloadContainerLivenessProbeTcpSocketOutput() GetWorkloadContainerLivenessProbeTcpSocketOutput {
+	return i.ToGetWorkloadContainerLivenessProbeTcpSocketOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLivenessProbeTcpSocketArgs) ToGetWorkloadContainerLivenessProbeTcpSocketOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeTcpSocketOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLivenessProbeTcpSocketOutput)
+}
+
+// GetWorkloadContainerLivenessProbeTcpSocketArrayInput is an input type that accepts GetWorkloadContainerLivenessProbeTcpSocketArray and GetWorkloadContainerLivenessProbeTcpSocketArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerLivenessProbeTcpSocketArrayInput` via:
+//
+//	GetWorkloadContainerLivenessProbeTcpSocketArray{ GetWorkloadContainerLivenessProbeTcpSocketArgs{...} }
+type GetWorkloadContainerLivenessProbeTcpSocketArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerLivenessProbeTcpSocketArrayOutput() GetWorkloadContainerLivenessProbeTcpSocketArrayOutput
+	ToGetWorkloadContainerLivenessProbeTcpSocketArrayOutputWithContext(context.Context) GetWorkloadContainerLivenessProbeTcpSocketArrayOutput
+}
+
+type GetWorkloadContainerLivenessProbeTcpSocketArray []GetWorkloadContainerLivenessProbeTcpSocketInput
+
+func (GetWorkloadContainerLivenessProbeTcpSocketArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLivenessProbeTcpSocket)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerLivenessProbeTcpSocketArray) ToGetWorkloadContainerLivenessProbeTcpSocketArrayOutput() GetWorkloadContainerLivenessProbeTcpSocketArrayOutput {
+	return i.ToGetWorkloadContainerLivenessProbeTcpSocketArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerLivenessProbeTcpSocketArray) ToGetWorkloadContainerLivenessProbeTcpSocketArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeTcpSocketArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerLivenessProbeTcpSocketArrayOutput)
+}
+
+type GetWorkloadContainerLivenessProbeTcpSocketOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLivenessProbeTcpSocketOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerLivenessProbeTcpSocket)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLivenessProbeTcpSocketOutput) ToGetWorkloadContainerLivenessProbeTcpSocketOutput() GetWorkloadContainerLivenessProbeTcpSocketOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeTcpSocketOutput) ToGetWorkloadContainerLivenessProbeTcpSocketOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeTcpSocketOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeTcpSocketOutput) Port() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerLivenessProbeTcpSocket) int { return v.Port }).(pulumi.IntOutput)
+}
+
+type GetWorkloadContainerLivenessProbeTcpSocketArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerLivenessProbeTcpSocketArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerLivenessProbeTcpSocket)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerLivenessProbeTcpSocketArrayOutput) ToGetWorkloadContainerLivenessProbeTcpSocketArrayOutput() GetWorkloadContainerLivenessProbeTcpSocketArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeTcpSocketArrayOutput) ToGetWorkloadContainerLivenessProbeTcpSocketArrayOutputWithContext(ctx context.Context) GetWorkloadContainerLivenessProbeTcpSocketArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerLivenessProbeTcpSocketArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerLivenessProbeTcpSocketOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerLivenessProbeTcpSocket {
+		return vs[0].([]GetWorkloadContainerLivenessProbeTcpSocket)[vs[1].(int)]
+	}).(GetWorkloadContainerLivenessProbeTcpSocketOutput)
+}
+
+type GetWorkloadContainerMetric struct {
+	// Drop metrics that match given patterns.
+	DropMetrics []string `pulumi:"dropMetrics"`
+	// Path from container emitting custom metrics.
+	Path string `pulumi:"path"`
+	// Port from container emitting custom metrics.
+	Port int `pulumi:"port"`
+}
+
+// GetWorkloadContainerMetricInput is an input type that accepts GetWorkloadContainerMetricArgs and GetWorkloadContainerMetricOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerMetricInput` via:
+//
+//	GetWorkloadContainerMetricArgs{...}
+type GetWorkloadContainerMetricInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerMetricOutput() GetWorkloadContainerMetricOutput
+	ToGetWorkloadContainerMetricOutputWithContext(context.Context) GetWorkloadContainerMetricOutput
+}
+
+type GetWorkloadContainerMetricArgs struct {
+	// Drop metrics that match given patterns.
+	DropMetrics pulumi.StringArrayInput `pulumi:"dropMetrics"`
+	// Path from container emitting custom metrics.
+	Path pulumi.StringInput `pulumi:"path"`
+	// Port from container emitting custom metrics.
+	Port pulumi.IntInput `pulumi:"port"`
+}
+
+func (GetWorkloadContainerMetricArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerMetric)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerMetricArgs) ToGetWorkloadContainerMetricOutput() GetWorkloadContainerMetricOutput {
+	return i.ToGetWorkloadContainerMetricOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerMetricArgs) ToGetWorkloadContainerMetricOutputWithContext(ctx context.Context) GetWorkloadContainerMetricOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerMetricOutput)
+}
+
+// GetWorkloadContainerMetricArrayInput is an input type that accepts GetWorkloadContainerMetricArray and GetWorkloadContainerMetricArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerMetricArrayInput` via:
+//
+//	GetWorkloadContainerMetricArray{ GetWorkloadContainerMetricArgs{...} }
+type GetWorkloadContainerMetricArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerMetricArrayOutput() GetWorkloadContainerMetricArrayOutput
+	ToGetWorkloadContainerMetricArrayOutputWithContext(context.Context) GetWorkloadContainerMetricArrayOutput
+}
+
+type GetWorkloadContainerMetricArray []GetWorkloadContainerMetricInput
+
+func (GetWorkloadContainerMetricArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerMetric)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerMetricArray) ToGetWorkloadContainerMetricArrayOutput() GetWorkloadContainerMetricArrayOutput {
+	return i.ToGetWorkloadContainerMetricArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerMetricArray) ToGetWorkloadContainerMetricArrayOutputWithContext(ctx context.Context) GetWorkloadContainerMetricArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerMetricArrayOutput)
+}
+
+type GetWorkloadContainerMetricOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerMetricOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerMetric)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerMetricOutput) ToGetWorkloadContainerMetricOutput() GetWorkloadContainerMetricOutput {
+	return o
+}
+
+func (o GetWorkloadContainerMetricOutput) ToGetWorkloadContainerMetricOutputWithContext(ctx context.Context) GetWorkloadContainerMetricOutput {
+	return o
+}
+
+// Drop metrics that match given patterns.
+func (o GetWorkloadContainerMetricOutput) DropMetrics() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainerMetric) []string { return v.DropMetrics }).(pulumi.StringArrayOutput)
+}
+
+// Path from container emitting custom metrics.
+func (o GetWorkloadContainerMetricOutput) Path() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainerMetric) string { return v.Path }).(pulumi.StringOutput)
+}
+
+// Port from container emitting custom metrics.
+func (o GetWorkloadContainerMetricOutput) Port() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerMetric) int { return v.Port }).(pulumi.IntOutput)
+}
+
+type GetWorkloadContainerMetricArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerMetricArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerMetric)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerMetricArrayOutput) ToGetWorkloadContainerMetricArrayOutput() GetWorkloadContainerMetricArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerMetricArrayOutput) ToGetWorkloadContainerMetricArrayOutputWithContext(ctx context.Context) GetWorkloadContainerMetricArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerMetricArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerMetricOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerMetric {
+		return vs[0].([]GetWorkloadContainerMetric)[vs[1].(int)]
+	}).(GetWorkloadContainerMetricOutput)
+}
+
+type GetWorkloadContainerPort struct {
+	// Port to expose.
+	Number int `pulumi:"number"`
+	// Protocol. Choice of: `http`, `http2`, `tcp`, or `grpc`.
+	Protocol string `pulumi:"protocol"`
+}
+
+// GetWorkloadContainerPortInput is an input type that accepts GetWorkloadContainerPortArgs and GetWorkloadContainerPortOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerPortInput` via:
+//
+//	GetWorkloadContainerPortArgs{...}
+type GetWorkloadContainerPortInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerPortOutput() GetWorkloadContainerPortOutput
+	ToGetWorkloadContainerPortOutputWithContext(context.Context) GetWorkloadContainerPortOutput
+}
+
+type GetWorkloadContainerPortArgs struct {
+	// Port to expose.
+	Number pulumi.IntInput `pulumi:"number"`
+	// Protocol. Choice of: `http`, `http2`, `tcp`, or `grpc`.
+	Protocol pulumi.StringInput `pulumi:"protocol"`
+}
+
+func (GetWorkloadContainerPortArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerPort)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerPortArgs) ToGetWorkloadContainerPortOutput() GetWorkloadContainerPortOutput {
+	return i.ToGetWorkloadContainerPortOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerPortArgs) ToGetWorkloadContainerPortOutputWithContext(ctx context.Context) GetWorkloadContainerPortOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerPortOutput)
+}
+
+// GetWorkloadContainerPortArrayInput is an input type that accepts GetWorkloadContainerPortArray and GetWorkloadContainerPortArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerPortArrayInput` via:
+//
+//	GetWorkloadContainerPortArray{ GetWorkloadContainerPortArgs{...} }
+type GetWorkloadContainerPortArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerPortArrayOutput() GetWorkloadContainerPortArrayOutput
+	ToGetWorkloadContainerPortArrayOutputWithContext(context.Context) GetWorkloadContainerPortArrayOutput
+}
+
+type GetWorkloadContainerPortArray []GetWorkloadContainerPortInput
+
+func (GetWorkloadContainerPortArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerPort)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerPortArray) ToGetWorkloadContainerPortArrayOutput() GetWorkloadContainerPortArrayOutput {
+	return i.ToGetWorkloadContainerPortArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerPortArray) ToGetWorkloadContainerPortArrayOutputWithContext(ctx context.Context) GetWorkloadContainerPortArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerPortArrayOutput)
+}
+
+type GetWorkloadContainerPortOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerPortOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerPort)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerPortOutput) ToGetWorkloadContainerPortOutput() GetWorkloadContainerPortOutput {
+	return o
+}
+
+func (o GetWorkloadContainerPortOutput) ToGetWorkloadContainerPortOutputWithContext(ctx context.Context) GetWorkloadContainerPortOutput {
+	return o
+}
+
+// Port to expose.
+func (o GetWorkloadContainerPortOutput) Number() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerPort) int { return v.Number }).(pulumi.IntOutput)
+}
+
+// Protocol. Choice of: `http`, `http2`, `tcp`, or `grpc`.
+func (o GetWorkloadContainerPortOutput) Protocol() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainerPort) string { return v.Protocol }).(pulumi.StringOutput)
+}
+
+type GetWorkloadContainerPortArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerPortArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerPort)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerPortArrayOutput) ToGetWorkloadContainerPortArrayOutput() GetWorkloadContainerPortArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerPortArrayOutput) ToGetWorkloadContainerPortArrayOutputWithContext(ctx context.Context) GetWorkloadContainerPortArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerPortArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerPortOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerPort {
+		return vs[0].([]GetWorkloadContainerPort)[vs[1].(int)]
+	}).(GetWorkloadContainerPortOutput)
+}
+
+type GetWorkloadContainerReadinessProbe struct {
+	Execs               []GetWorkloadContainerReadinessProbeExec      `pulumi:"execs"`
+	FailureThreshold    int                                           `pulumi:"failureThreshold"`
+	Grpcs               []GetWorkloadContainerReadinessProbeGrpc      `pulumi:"grpcs"`
+	HttpGets            []GetWorkloadContainerReadinessProbeHttpGet   `pulumi:"httpGets"`
+	InitialDelaySeconds int                                           `pulumi:"initialDelaySeconds"`
+	PeriodSeconds       int                                           `pulumi:"periodSeconds"`
+	SuccessThreshold    int                                           `pulumi:"successThreshold"`
+	TcpSockets          []GetWorkloadContainerReadinessProbeTcpSocket `pulumi:"tcpSockets"`
+	TimeoutSeconds      int                                           `pulumi:"timeoutSeconds"`
+}
+
+// GetWorkloadContainerReadinessProbeInput is an input type that accepts GetWorkloadContainerReadinessProbeArgs and GetWorkloadContainerReadinessProbeOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerReadinessProbeInput` via:
+//
+//	GetWorkloadContainerReadinessProbeArgs{...}
+type GetWorkloadContainerReadinessProbeInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerReadinessProbeOutput() GetWorkloadContainerReadinessProbeOutput
+	ToGetWorkloadContainerReadinessProbeOutputWithContext(context.Context) GetWorkloadContainerReadinessProbeOutput
+}
+
+type GetWorkloadContainerReadinessProbeArgs struct {
+	Execs               GetWorkloadContainerReadinessProbeExecArrayInput      `pulumi:"execs"`
+	FailureThreshold    pulumi.IntInput                                       `pulumi:"failureThreshold"`
+	Grpcs               GetWorkloadContainerReadinessProbeGrpcArrayInput      `pulumi:"grpcs"`
+	HttpGets            GetWorkloadContainerReadinessProbeHttpGetArrayInput   `pulumi:"httpGets"`
+	InitialDelaySeconds pulumi.IntInput                                       `pulumi:"initialDelaySeconds"`
+	PeriodSeconds       pulumi.IntInput                                       `pulumi:"periodSeconds"`
+	SuccessThreshold    pulumi.IntInput                                       `pulumi:"successThreshold"`
+	TcpSockets          GetWorkloadContainerReadinessProbeTcpSocketArrayInput `pulumi:"tcpSockets"`
+	TimeoutSeconds      pulumi.IntInput                                       `pulumi:"timeoutSeconds"`
+}
+
+func (GetWorkloadContainerReadinessProbeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerReadinessProbe)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerReadinessProbeArgs) ToGetWorkloadContainerReadinessProbeOutput() GetWorkloadContainerReadinessProbeOutput {
+	return i.ToGetWorkloadContainerReadinessProbeOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerReadinessProbeArgs) ToGetWorkloadContainerReadinessProbeOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerReadinessProbeOutput)
+}
+
+// GetWorkloadContainerReadinessProbeArrayInput is an input type that accepts GetWorkloadContainerReadinessProbeArray and GetWorkloadContainerReadinessProbeArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerReadinessProbeArrayInput` via:
+//
+//	GetWorkloadContainerReadinessProbeArray{ GetWorkloadContainerReadinessProbeArgs{...} }
+type GetWorkloadContainerReadinessProbeArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerReadinessProbeArrayOutput() GetWorkloadContainerReadinessProbeArrayOutput
+	ToGetWorkloadContainerReadinessProbeArrayOutputWithContext(context.Context) GetWorkloadContainerReadinessProbeArrayOutput
+}
+
+type GetWorkloadContainerReadinessProbeArray []GetWorkloadContainerReadinessProbeInput
+
+func (GetWorkloadContainerReadinessProbeArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerReadinessProbe)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerReadinessProbeArray) ToGetWorkloadContainerReadinessProbeArrayOutput() GetWorkloadContainerReadinessProbeArrayOutput {
+	return i.ToGetWorkloadContainerReadinessProbeArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerReadinessProbeArray) ToGetWorkloadContainerReadinessProbeArrayOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerReadinessProbeArrayOutput)
+}
+
+type GetWorkloadContainerReadinessProbeOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerReadinessProbeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerReadinessProbe)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerReadinessProbeOutput) ToGetWorkloadContainerReadinessProbeOutput() GetWorkloadContainerReadinessProbeOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeOutput) ToGetWorkloadContainerReadinessProbeOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeOutput) Execs() GetWorkloadContainerReadinessProbeExecArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainerReadinessProbe) []GetWorkloadContainerReadinessProbeExec { return v.Execs }).(GetWorkloadContainerReadinessProbeExecArrayOutput)
+}
+
+func (o GetWorkloadContainerReadinessProbeOutput) FailureThreshold() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerReadinessProbe) int { return v.FailureThreshold }).(pulumi.IntOutput)
+}
+
+func (o GetWorkloadContainerReadinessProbeOutput) Grpcs() GetWorkloadContainerReadinessProbeGrpcArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainerReadinessProbe) []GetWorkloadContainerReadinessProbeGrpc { return v.Grpcs }).(GetWorkloadContainerReadinessProbeGrpcArrayOutput)
+}
+
+func (o GetWorkloadContainerReadinessProbeOutput) HttpGets() GetWorkloadContainerReadinessProbeHttpGetArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainerReadinessProbe) []GetWorkloadContainerReadinessProbeHttpGet {
+		return v.HttpGets
+	}).(GetWorkloadContainerReadinessProbeHttpGetArrayOutput)
+}
+
+func (o GetWorkloadContainerReadinessProbeOutput) InitialDelaySeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerReadinessProbe) int { return v.InitialDelaySeconds }).(pulumi.IntOutput)
+}
+
+func (o GetWorkloadContainerReadinessProbeOutput) PeriodSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerReadinessProbe) int { return v.PeriodSeconds }).(pulumi.IntOutput)
+}
+
+func (o GetWorkloadContainerReadinessProbeOutput) SuccessThreshold() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerReadinessProbe) int { return v.SuccessThreshold }).(pulumi.IntOutput)
+}
+
+func (o GetWorkloadContainerReadinessProbeOutput) TcpSockets() GetWorkloadContainerReadinessProbeTcpSocketArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainerReadinessProbe) []GetWorkloadContainerReadinessProbeTcpSocket {
+		return v.TcpSockets
+	}).(GetWorkloadContainerReadinessProbeTcpSocketArrayOutput)
+}
+
+func (o GetWorkloadContainerReadinessProbeOutput) TimeoutSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerReadinessProbe) int { return v.TimeoutSeconds }).(pulumi.IntOutput)
+}
+
+type GetWorkloadContainerReadinessProbeArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerReadinessProbeArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerReadinessProbe)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerReadinessProbeArrayOutput) ToGetWorkloadContainerReadinessProbeArrayOutput() GetWorkloadContainerReadinessProbeArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeArrayOutput) ToGetWorkloadContainerReadinessProbeArrayOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerReadinessProbeOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerReadinessProbe {
+		return vs[0].([]GetWorkloadContainerReadinessProbe)[vs[1].(int)]
+	}).(GetWorkloadContainerReadinessProbeOutput)
+}
+
+type GetWorkloadContainerReadinessProbeExec struct {
+	Commands []string `pulumi:"commands"`
+}
+
+// GetWorkloadContainerReadinessProbeExecInput is an input type that accepts GetWorkloadContainerReadinessProbeExecArgs and GetWorkloadContainerReadinessProbeExecOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerReadinessProbeExecInput` via:
+//
+//	GetWorkloadContainerReadinessProbeExecArgs{...}
+type GetWorkloadContainerReadinessProbeExecInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerReadinessProbeExecOutput() GetWorkloadContainerReadinessProbeExecOutput
+	ToGetWorkloadContainerReadinessProbeExecOutputWithContext(context.Context) GetWorkloadContainerReadinessProbeExecOutput
+}
+
+type GetWorkloadContainerReadinessProbeExecArgs struct {
+	Commands pulumi.StringArrayInput `pulumi:"commands"`
+}
+
+func (GetWorkloadContainerReadinessProbeExecArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerReadinessProbeExec)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerReadinessProbeExecArgs) ToGetWorkloadContainerReadinessProbeExecOutput() GetWorkloadContainerReadinessProbeExecOutput {
+	return i.ToGetWorkloadContainerReadinessProbeExecOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerReadinessProbeExecArgs) ToGetWorkloadContainerReadinessProbeExecOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeExecOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerReadinessProbeExecOutput)
+}
+
+// GetWorkloadContainerReadinessProbeExecArrayInput is an input type that accepts GetWorkloadContainerReadinessProbeExecArray and GetWorkloadContainerReadinessProbeExecArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerReadinessProbeExecArrayInput` via:
+//
+//	GetWorkloadContainerReadinessProbeExecArray{ GetWorkloadContainerReadinessProbeExecArgs{...} }
+type GetWorkloadContainerReadinessProbeExecArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerReadinessProbeExecArrayOutput() GetWorkloadContainerReadinessProbeExecArrayOutput
+	ToGetWorkloadContainerReadinessProbeExecArrayOutputWithContext(context.Context) GetWorkloadContainerReadinessProbeExecArrayOutput
+}
+
+type GetWorkloadContainerReadinessProbeExecArray []GetWorkloadContainerReadinessProbeExecInput
+
+func (GetWorkloadContainerReadinessProbeExecArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerReadinessProbeExec)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerReadinessProbeExecArray) ToGetWorkloadContainerReadinessProbeExecArrayOutput() GetWorkloadContainerReadinessProbeExecArrayOutput {
+	return i.ToGetWorkloadContainerReadinessProbeExecArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerReadinessProbeExecArray) ToGetWorkloadContainerReadinessProbeExecArrayOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeExecArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerReadinessProbeExecArrayOutput)
+}
+
+type GetWorkloadContainerReadinessProbeExecOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerReadinessProbeExecOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerReadinessProbeExec)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerReadinessProbeExecOutput) ToGetWorkloadContainerReadinessProbeExecOutput() GetWorkloadContainerReadinessProbeExecOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeExecOutput) ToGetWorkloadContainerReadinessProbeExecOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeExecOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeExecOutput) Commands() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainerReadinessProbeExec) []string { return v.Commands }).(pulumi.StringArrayOutput)
+}
+
+type GetWorkloadContainerReadinessProbeExecArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerReadinessProbeExecArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerReadinessProbeExec)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerReadinessProbeExecArrayOutput) ToGetWorkloadContainerReadinessProbeExecArrayOutput() GetWorkloadContainerReadinessProbeExecArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeExecArrayOutput) ToGetWorkloadContainerReadinessProbeExecArrayOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeExecArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeExecArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerReadinessProbeExecOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerReadinessProbeExec {
+		return vs[0].([]GetWorkloadContainerReadinessProbeExec)[vs[1].(int)]
+	}).(GetWorkloadContainerReadinessProbeExecOutput)
+}
+
+type GetWorkloadContainerReadinessProbeGrpc struct {
+	Port int `pulumi:"port"`
+}
+
+// GetWorkloadContainerReadinessProbeGrpcInput is an input type that accepts GetWorkloadContainerReadinessProbeGrpcArgs and GetWorkloadContainerReadinessProbeGrpcOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerReadinessProbeGrpcInput` via:
+//
+//	GetWorkloadContainerReadinessProbeGrpcArgs{...}
+type GetWorkloadContainerReadinessProbeGrpcInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerReadinessProbeGrpcOutput() GetWorkloadContainerReadinessProbeGrpcOutput
+	ToGetWorkloadContainerReadinessProbeGrpcOutputWithContext(context.Context) GetWorkloadContainerReadinessProbeGrpcOutput
+}
+
+type GetWorkloadContainerReadinessProbeGrpcArgs struct {
+	Port pulumi.IntInput `pulumi:"port"`
+}
+
+func (GetWorkloadContainerReadinessProbeGrpcArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerReadinessProbeGrpc)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerReadinessProbeGrpcArgs) ToGetWorkloadContainerReadinessProbeGrpcOutput() GetWorkloadContainerReadinessProbeGrpcOutput {
+	return i.ToGetWorkloadContainerReadinessProbeGrpcOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerReadinessProbeGrpcArgs) ToGetWorkloadContainerReadinessProbeGrpcOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeGrpcOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerReadinessProbeGrpcOutput)
+}
+
+// GetWorkloadContainerReadinessProbeGrpcArrayInput is an input type that accepts GetWorkloadContainerReadinessProbeGrpcArray and GetWorkloadContainerReadinessProbeGrpcArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerReadinessProbeGrpcArrayInput` via:
+//
+//	GetWorkloadContainerReadinessProbeGrpcArray{ GetWorkloadContainerReadinessProbeGrpcArgs{...} }
+type GetWorkloadContainerReadinessProbeGrpcArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerReadinessProbeGrpcArrayOutput() GetWorkloadContainerReadinessProbeGrpcArrayOutput
+	ToGetWorkloadContainerReadinessProbeGrpcArrayOutputWithContext(context.Context) GetWorkloadContainerReadinessProbeGrpcArrayOutput
+}
+
+type GetWorkloadContainerReadinessProbeGrpcArray []GetWorkloadContainerReadinessProbeGrpcInput
+
+func (GetWorkloadContainerReadinessProbeGrpcArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerReadinessProbeGrpc)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerReadinessProbeGrpcArray) ToGetWorkloadContainerReadinessProbeGrpcArrayOutput() GetWorkloadContainerReadinessProbeGrpcArrayOutput {
+	return i.ToGetWorkloadContainerReadinessProbeGrpcArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerReadinessProbeGrpcArray) ToGetWorkloadContainerReadinessProbeGrpcArrayOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeGrpcArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerReadinessProbeGrpcArrayOutput)
+}
+
+type GetWorkloadContainerReadinessProbeGrpcOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerReadinessProbeGrpcOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerReadinessProbeGrpc)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerReadinessProbeGrpcOutput) ToGetWorkloadContainerReadinessProbeGrpcOutput() GetWorkloadContainerReadinessProbeGrpcOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeGrpcOutput) ToGetWorkloadContainerReadinessProbeGrpcOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeGrpcOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeGrpcOutput) Port() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerReadinessProbeGrpc) int { return v.Port }).(pulumi.IntOutput)
+}
+
+type GetWorkloadContainerReadinessProbeGrpcArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerReadinessProbeGrpcArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerReadinessProbeGrpc)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerReadinessProbeGrpcArrayOutput) ToGetWorkloadContainerReadinessProbeGrpcArrayOutput() GetWorkloadContainerReadinessProbeGrpcArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeGrpcArrayOutput) ToGetWorkloadContainerReadinessProbeGrpcArrayOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeGrpcArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeGrpcArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerReadinessProbeGrpcOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerReadinessProbeGrpc {
+		return vs[0].([]GetWorkloadContainerReadinessProbeGrpc)[vs[1].(int)]
+	}).(GetWorkloadContainerReadinessProbeGrpcOutput)
+}
+
+type GetWorkloadContainerReadinessProbeHttpGet struct {
+	HttpHeaders map[string]string `pulumi:"httpHeaders"`
+	Path        string            `pulumi:"path"`
+	Port        int               `pulumi:"port"`
+	Scheme      string            `pulumi:"scheme"`
+}
+
+// GetWorkloadContainerReadinessProbeHttpGetInput is an input type that accepts GetWorkloadContainerReadinessProbeHttpGetArgs and GetWorkloadContainerReadinessProbeHttpGetOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerReadinessProbeHttpGetInput` via:
+//
+//	GetWorkloadContainerReadinessProbeHttpGetArgs{...}
+type GetWorkloadContainerReadinessProbeHttpGetInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerReadinessProbeHttpGetOutput() GetWorkloadContainerReadinessProbeHttpGetOutput
+	ToGetWorkloadContainerReadinessProbeHttpGetOutputWithContext(context.Context) GetWorkloadContainerReadinessProbeHttpGetOutput
+}
+
+type GetWorkloadContainerReadinessProbeHttpGetArgs struct {
+	HttpHeaders pulumi.StringMapInput `pulumi:"httpHeaders"`
+	Path        pulumi.StringInput    `pulumi:"path"`
+	Port        pulumi.IntInput       `pulumi:"port"`
+	Scheme      pulumi.StringInput    `pulumi:"scheme"`
+}
+
+func (GetWorkloadContainerReadinessProbeHttpGetArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerReadinessProbeHttpGet)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerReadinessProbeHttpGetArgs) ToGetWorkloadContainerReadinessProbeHttpGetOutput() GetWorkloadContainerReadinessProbeHttpGetOutput {
+	return i.ToGetWorkloadContainerReadinessProbeHttpGetOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerReadinessProbeHttpGetArgs) ToGetWorkloadContainerReadinessProbeHttpGetOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeHttpGetOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerReadinessProbeHttpGetOutput)
+}
+
+// GetWorkloadContainerReadinessProbeHttpGetArrayInput is an input type that accepts GetWorkloadContainerReadinessProbeHttpGetArray and GetWorkloadContainerReadinessProbeHttpGetArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerReadinessProbeHttpGetArrayInput` via:
+//
+//	GetWorkloadContainerReadinessProbeHttpGetArray{ GetWorkloadContainerReadinessProbeHttpGetArgs{...} }
+type GetWorkloadContainerReadinessProbeHttpGetArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerReadinessProbeHttpGetArrayOutput() GetWorkloadContainerReadinessProbeHttpGetArrayOutput
+	ToGetWorkloadContainerReadinessProbeHttpGetArrayOutputWithContext(context.Context) GetWorkloadContainerReadinessProbeHttpGetArrayOutput
+}
+
+type GetWorkloadContainerReadinessProbeHttpGetArray []GetWorkloadContainerReadinessProbeHttpGetInput
+
+func (GetWorkloadContainerReadinessProbeHttpGetArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerReadinessProbeHttpGet)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerReadinessProbeHttpGetArray) ToGetWorkloadContainerReadinessProbeHttpGetArrayOutput() GetWorkloadContainerReadinessProbeHttpGetArrayOutput {
+	return i.ToGetWorkloadContainerReadinessProbeHttpGetArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerReadinessProbeHttpGetArray) ToGetWorkloadContainerReadinessProbeHttpGetArrayOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeHttpGetArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerReadinessProbeHttpGetArrayOutput)
+}
+
+type GetWorkloadContainerReadinessProbeHttpGetOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerReadinessProbeHttpGetOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerReadinessProbeHttpGet)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerReadinessProbeHttpGetOutput) ToGetWorkloadContainerReadinessProbeHttpGetOutput() GetWorkloadContainerReadinessProbeHttpGetOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeHttpGetOutput) ToGetWorkloadContainerReadinessProbeHttpGetOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeHttpGetOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeHttpGetOutput) HttpHeaders() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetWorkloadContainerReadinessProbeHttpGet) map[string]string { return v.HttpHeaders }).(pulumi.StringMapOutput)
+}
+
+func (o GetWorkloadContainerReadinessProbeHttpGetOutput) Path() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainerReadinessProbeHttpGet) string { return v.Path }).(pulumi.StringOutput)
+}
+
+func (o GetWorkloadContainerReadinessProbeHttpGetOutput) Port() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerReadinessProbeHttpGet) int { return v.Port }).(pulumi.IntOutput)
+}
+
+func (o GetWorkloadContainerReadinessProbeHttpGetOutput) Scheme() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainerReadinessProbeHttpGet) string { return v.Scheme }).(pulumi.StringOutput)
+}
+
+type GetWorkloadContainerReadinessProbeHttpGetArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerReadinessProbeHttpGetArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerReadinessProbeHttpGet)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerReadinessProbeHttpGetArrayOutput) ToGetWorkloadContainerReadinessProbeHttpGetArrayOutput() GetWorkloadContainerReadinessProbeHttpGetArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeHttpGetArrayOutput) ToGetWorkloadContainerReadinessProbeHttpGetArrayOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeHttpGetArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeHttpGetArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerReadinessProbeHttpGetOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerReadinessProbeHttpGet {
+		return vs[0].([]GetWorkloadContainerReadinessProbeHttpGet)[vs[1].(int)]
+	}).(GetWorkloadContainerReadinessProbeHttpGetOutput)
+}
+
+type GetWorkloadContainerReadinessProbeTcpSocket struct {
+	Port int `pulumi:"port"`
+}
+
+// GetWorkloadContainerReadinessProbeTcpSocketInput is an input type that accepts GetWorkloadContainerReadinessProbeTcpSocketArgs and GetWorkloadContainerReadinessProbeTcpSocketOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerReadinessProbeTcpSocketInput` via:
+//
+//	GetWorkloadContainerReadinessProbeTcpSocketArgs{...}
+type GetWorkloadContainerReadinessProbeTcpSocketInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerReadinessProbeTcpSocketOutput() GetWorkloadContainerReadinessProbeTcpSocketOutput
+	ToGetWorkloadContainerReadinessProbeTcpSocketOutputWithContext(context.Context) GetWorkloadContainerReadinessProbeTcpSocketOutput
+}
+
+type GetWorkloadContainerReadinessProbeTcpSocketArgs struct {
+	Port pulumi.IntInput `pulumi:"port"`
+}
+
+func (GetWorkloadContainerReadinessProbeTcpSocketArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerReadinessProbeTcpSocket)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerReadinessProbeTcpSocketArgs) ToGetWorkloadContainerReadinessProbeTcpSocketOutput() GetWorkloadContainerReadinessProbeTcpSocketOutput {
+	return i.ToGetWorkloadContainerReadinessProbeTcpSocketOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerReadinessProbeTcpSocketArgs) ToGetWorkloadContainerReadinessProbeTcpSocketOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeTcpSocketOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerReadinessProbeTcpSocketOutput)
+}
+
+// GetWorkloadContainerReadinessProbeTcpSocketArrayInput is an input type that accepts GetWorkloadContainerReadinessProbeTcpSocketArray and GetWorkloadContainerReadinessProbeTcpSocketArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerReadinessProbeTcpSocketArrayInput` via:
+//
+//	GetWorkloadContainerReadinessProbeTcpSocketArray{ GetWorkloadContainerReadinessProbeTcpSocketArgs{...} }
+type GetWorkloadContainerReadinessProbeTcpSocketArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerReadinessProbeTcpSocketArrayOutput() GetWorkloadContainerReadinessProbeTcpSocketArrayOutput
+	ToGetWorkloadContainerReadinessProbeTcpSocketArrayOutputWithContext(context.Context) GetWorkloadContainerReadinessProbeTcpSocketArrayOutput
+}
+
+type GetWorkloadContainerReadinessProbeTcpSocketArray []GetWorkloadContainerReadinessProbeTcpSocketInput
+
+func (GetWorkloadContainerReadinessProbeTcpSocketArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerReadinessProbeTcpSocket)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerReadinessProbeTcpSocketArray) ToGetWorkloadContainerReadinessProbeTcpSocketArrayOutput() GetWorkloadContainerReadinessProbeTcpSocketArrayOutput {
+	return i.ToGetWorkloadContainerReadinessProbeTcpSocketArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerReadinessProbeTcpSocketArray) ToGetWorkloadContainerReadinessProbeTcpSocketArrayOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeTcpSocketArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerReadinessProbeTcpSocketArrayOutput)
+}
+
+type GetWorkloadContainerReadinessProbeTcpSocketOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerReadinessProbeTcpSocketOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerReadinessProbeTcpSocket)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerReadinessProbeTcpSocketOutput) ToGetWorkloadContainerReadinessProbeTcpSocketOutput() GetWorkloadContainerReadinessProbeTcpSocketOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeTcpSocketOutput) ToGetWorkloadContainerReadinessProbeTcpSocketOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeTcpSocketOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeTcpSocketOutput) Port() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerReadinessProbeTcpSocket) int { return v.Port }).(pulumi.IntOutput)
+}
+
+type GetWorkloadContainerReadinessProbeTcpSocketArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerReadinessProbeTcpSocketArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerReadinessProbeTcpSocket)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerReadinessProbeTcpSocketArrayOutput) ToGetWorkloadContainerReadinessProbeTcpSocketArrayOutput() GetWorkloadContainerReadinessProbeTcpSocketArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeTcpSocketArrayOutput) ToGetWorkloadContainerReadinessProbeTcpSocketArrayOutputWithContext(ctx context.Context) GetWorkloadContainerReadinessProbeTcpSocketArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerReadinessProbeTcpSocketArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerReadinessProbeTcpSocketOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerReadinessProbeTcpSocket {
+		return vs[0].([]GetWorkloadContainerReadinessProbeTcpSocket)[vs[1].(int)]
+	}).(GetWorkloadContainerReadinessProbeTcpSocketOutput)
+}
+
+type GetWorkloadContainerVolume struct {
+	// File path added to workload pointing to the volume.
+	Path string `pulumi:"path"`
+	// Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
+	RecoveryPolicy string `pulumi:"recoveryPolicy"`
+	// URI of a volume hosted at Control Plane (Volume Set) or at a cloud provider (AWS, Azure, GCP).
+	Uri string `pulumi:"uri"`
+}
+
+// GetWorkloadContainerVolumeInput is an input type that accepts GetWorkloadContainerVolumeArgs and GetWorkloadContainerVolumeOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerVolumeInput` via:
+//
+//	GetWorkloadContainerVolumeArgs{...}
+type GetWorkloadContainerVolumeInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerVolumeOutput() GetWorkloadContainerVolumeOutput
+	ToGetWorkloadContainerVolumeOutputWithContext(context.Context) GetWorkloadContainerVolumeOutput
+}
+
+type GetWorkloadContainerVolumeArgs struct {
+	// File path added to workload pointing to the volume.
+	Path pulumi.StringInput `pulumi:"path"`
+	// Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
+	RecoveryPolicy pulumi.StringInput `pulumi:"recoveryPolicy"`
+	// URI of a volume hosted at Control Plane (Volume Set) or at a cloud provider (AWS, Azure, GCP).
+	Uri pulumi.StringInput `pulumi:"uri"`
+}
+
+func (GetWorkloadContainerVolumeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerVolume)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerVolumeArgs) ToGetWorkloadContainerVolumeOutput() GetWorkloadContainerVolumeOutput {
+	return i.ToGetWorkloadContainerVolumeOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerVolumeArgs) ToGetWorkloadContainerVolumeOutputWithContext(ctx context.Context) GetWorkloadContainerVolumeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerVolumeOutput)
+}
+
+// GetWorkloadContainerVolumeArrayInput is an input type that accepts GetWorkloadContainerVolumeArray and GetWorkloadContainerVolumeArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerVolumeArrayInput` via:
+//
+//	GetWorkloadContainerVolumeArray{ GetWorkloadContainerVolumeArgs{...} }
+type GetWorkloadContainerVolumeArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerVolumeArrayOutput() GetWorkloadContainerVolumeArrayOutput
+	ToGetWorkloadContainerVolumeArrayOutputWithContext(context.Context) GetWorkloadContainerVolumeArrayOutput
+}
+
+type GetWorkloadContainerVolumeArray []GetWorkloadContainerVolumeInput
+
+func (GetWorkloadContainerVolumeArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerVolume)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerVolumeArray) ToGetWorkloadContainerVolumeArrayOutput() GetWorkloadContainerVolumeArrayOutput {
+	return i.ToGetWorkloadContainerVolumeArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerVolumeArray) ToGetWorkloadContainerVolumeArrayOutputWithContext(ctx context.Context) GetWorkloadContainerVolumeArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerVolumeArrayOutput)
+}
+
+type GetWorkloadContainerVolumeOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerVolumeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerVolume)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerVolumeOutput) ToGetWorkloadContainerVolumeOutput() GetWorkloadContainerVolumeOutput {
+	return o
+}
+
+func (o GetWorkloadContainerVolumeOutput) ToGetWorkloadContainerVolumeOutputWithContext(ctx context.Context) GetWorkloadContainerVolumeOutput {
+	return o
+}
+
+// File path added to workload pointing to the volume.
+func (o GetWorkloadContainerVolumeOutput) Path() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainerVolume) string { return v.Path }).(pulumi.StringOutput)
+}
+
+// Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
+func (o GetWorkloadContainerVolumeOutput) RecoveryPolicy() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainerVolume) string { return v.RecoveryPolicy }).(pulumi.StringOutput)
+}
+
+// URI of a volume hosted at Control Plane (Volume Set) or at a cloud provider (AWS, Azure, GCP).
+func (o GetWorkloadContainerVolumeOutput) Uri() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainerVolume) string { return v.Uri }).(pulumi.StringOutput)
+}
+
+type GetWorkloadContainerVolumeArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerVolumeArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerVolume)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerVolumeArrayOutput) ToGetWorkloadContainerVolumeArrayOutput() GetWorkloadContainerVolumeArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerVolumeArrayOutput) ToGetWorkloadContainerVolumeArrayOutputWithContext(ctx context.Context) GetWorkloadContainerVolumeArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerVolumeArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerVolumeOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerVolume {
+		return vs[0].([]GetWorkloadContainerVolume)[vs[1].(int)]
+	}).(GetWorkloadContainerVolumeOutput)
+}
+
+type GetWorkloadFirewallSpec struct {
+	// The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
+	Externals []GetWorkloadFirewallSpecExternal `pulumi:"externals"`
+	// The internal firewall is used to control access between workloads.
+	Internals []GetWorkloadFirewallSpecInternal `pulumi:"internals"`
+}
+
+// GetWorkloadFirewallSpecInput is an input type that accepts GetWorkloadFirewallSpecArgs and GetWorkloadFirewallSpecOutput values.
+// You can construct a concrete instance of `GetWorkloadFirewallSpecInput` via:
+//
+//	GetWorkloadFirewallSpecArgs{...}
+type GetWorkloadFirewallSpecInput interface {
+	pulumi.Input
+
+	ToGetWorkloadFirewallSpecOutput() GetWorkloadFirewallSpecOutput
+	ToGetWorkloadFirewallSpecOutputWithContext(context.Context) GetWorkloadFirewallSpecOutput
+}
+
+type GetWorkloadFirewallSpecArgs struct {
+	// The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
+	Externals GetWorkloadFirewallSpecExternalArrayInput `pulumi:"externals"`
+	// The internal firewall is used to control access between workloads.
+	Internals GetWorkloadFirewallSpecInternalArrayInput `pulumi:"internals"`
+}
+
+func (GetWorkloadFirewallSpecArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadFirewallSpec)(nil)).Elem()
+}
+
+func (i GetWorkloadFirewallSpecArgs) ToGetWorkloadFirewallSpecOutput() GetWorkloadFirewallSpecOutput {
+	return i.ToGetWorkloadFirewallSpecOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadFirewallSpecArgs) ToGetWorkloadFirewallSpecOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadFirewallSpecOutput)
+}
+
+// GetWorkloadFirewallSpecArrayInput is an input type that accepts GetWorkloadFirewallSpecArray and GetWorkloadFirewallSpecArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadFirewallSpecArrayInput` via:
+//
+//	GetWorkloadFirewallSpecArray{ GetWorkloadFirewallSpecArgs{...} }
+type GetWorkloadFirewallSpecArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadFirewallSpecArrayOutput() GetWorkloadFirewallSpecArrayOutput
+	ToGetWorkloadFirewallSpecArrayOutputWithContext(context.Context) GetWorkloadFirewallSpecArrayOutput
+}
+
+type GetWorkloadFirewallSpecArray []GetWorkloadFirewallSpecInput
+
+func (GetWorkloadFirewallSpecArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadFirewallSpec)(nil)).Elem()
+}
+
+func (i GetWorkloadFirewallSpecArray) ToGetWorkloadFirewallSpecArrayOutput() GetWorkloadFirewallSpecArrayOutput {
+	return i.ToGetWorkloadFirewallSpecArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadFirewallSpecArray) ToGetWorkloadFirewallSpecArrayOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadFirewallSpecArrayOutput)
+}
+
+type GetWorkloadFirewallSpecOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadFirewallSpecOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadFirewallSpec)(nil)).Elem()
+}
+
+func (o GetWorkloadFirewallSpecOutput) ToGetWorkloadFirewallSpecOutput() GetWorkloadFirewallSpecOutput {
+	return o
+}
+
+func (o GetWorkloadFirewallSpecOutput) ToGetWorkloadFirewallSpecOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecOutput {
+	return o
+}
+
+// The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
+func (o GetWorkloadFirewallSpecOutput) Externals() GetWorkloadFirewallSpecExternalArrayOutput {
+	return o.ApplyT(func(v GetWorkloadFirewallSpec) []GetWorkloadFirewallSpecExternal { return v.Externals }).(GetWorkloadFirewallSpecExternalArrayOutput)
+}
+
+// The internal firewall is used to control access between workloads.
+func (o GetWorkloadFirewallSpecOutput) Internals() GetWorkloadFirewallSpecInternalArrayOutput {
+	return o.ApplyT(func(v GetWorkloadFirewallSpec) []GetWorkloadFirewallSpecInternal { return v.Internals }).(GetWorkloadFirewallSpecInternalArrayOutput)
+}
+
+type GetWorkloadFirewallSpecArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadFirewallSpecArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadFirewallSpec)(nil)).Elem()
+}
+
+func (o GetWorkloadFirewallSpecArrayOutput) ToGetWorkloadFirewallSpecArrayOutput() GetWorkloadFirewallSpecArrayOutput {
+	return o
+}
+
+func (o GetWorkloadFirewallSpecArrayOutput) ToGetWorkloadFirewallSpecArrayOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecArrayOutput {
+	return o
+}
+
+func (o GetWorkloadFirewallSpecArrayOutput) Index(i pulumi.IntInput) GetWorkloadFirewallSpecOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadFirewallSpec {
+		return vs[0].([]GetWorkloadFirewallSpec)[vs[1].(int)]
+	}).(GetWorkloadFirewallSpecOutput)
+}
+
+type GetWorkloadFirewallSpecExternal struct {
+	// Firewall options for HTTP workloads.
+	Https []GetWorkloadFirewallSpecExternalHttp `pulumi:"https"`
+	// The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+	InboundAllowCidrs []string `pulumi:"inboundAllowCidrs"`
+	// The list of ipv4/ipv6 addresses or cidr blocks that are NOT allowed to access this workload. Addresses in the allow list will only be allowed if they do not exist in this list.
+	InboundBlockedCidrs []string `pulumi:"inboundBlockedCidrs"`
+	// The list of ipv4/ipv6 addresses or cidr blocks that this workload is allowed reach. No outbound access is allowed by default. Specify '0.0.0.0/0' to allow outbound access to the public internet.
+	OutboundAllowCidrs []string `pulumi:"outboundAllowCidrs"`
+	// The list of public hostnames that this workload is allowed to reach. No outbound access is allowed by default. A wildcard `*` is allowed on the prefix of the hostname only, ex: `*.amazonaws.com`. Use `outboundAllowCIDR` to allow access to all external websites.
+	OutboundAllowHostnames []string `pulumi:"outboundAllowHostnames"`
+	// Allow outbound access to specific ports and protocols. When not specified, communication to address ranges in outboundAllowCIDR is allowed on all ports and communication to names in outboundAllowHostname is allowed on ports 80/443.
+	OutboundAllowPorts []GetWorkloadFirewallSpecExternalOutboundAllowPort `pulumi:"outboundAllowPorts"`
+	// The list of ipv4/ipv6 addresses or cidr blocks that this workload is NOT allowed to reach. Addresses in the allow list will only be allowed if they do not exist in this list.
+	OutboundBlockedCidrs []string `pulumi:"outboundBlockedCidrs"`
+}
+
+// GetWorkloadFirewallSpecExternalInput is an input type that accepts GetWorkloadFirewallSpecExternalArgs and GetWorkloadFirewallSpecExternalOutput values.
+// You can construct a concrete instance of `GetWorkloadFirewallSpecExternalInput` via:
+//
+//	GetWorkloadFirewallSpecExternalArgs{...}
+type GetWorkloadFirewallSpecExternalInput interface {
+	pulumi.Input
+
+	ToGetWorkloadFirewallSpecExternalOutput() GetWorkloadFirewallSpecExternalOutput
+	ToGetWorkloadFirewallSpecExternalOutputWithContext(context.Context) GetWorkloadFirewallSpecExternalOutput
+}
+
+type GetWorkloadFirewallSpecExternalArgs struct {
+	// Firewall options for HTTP workloads.
+	Https GetWorkloadFirewallSpecExternalHttpArrayInput `pulumi:"https"`
+	// The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+	InboundAllowCidrs pulumi.StringArrayInput `pulumi:"inboundAllowCidrs"`
+	// The list of ipv4/ipv6 addresses or cidr blocks that are NOT allowed to access this workload. Addresses in the allow list will only be allowed if they do not exist in this list.
+	InboundBlockedCidrs pulumi.StringArrayInput `pulumi:"inboundBlockedCidrs"`
+	// The list of ipv4/ipv6 addresses or cidr blocks that this workload is allowed reach. No outbound access is allowed by default. Specify '0.0.0.0/0' to allow outbound access to the public internet.
+	OutboundAllowCidrs pulumi.StringArrayInput `pulumi:"outboundAllowCidrs"`
+	// The list of public hostnames that this workload is allowed to reach. No outbound access is allowed by default. A wildcard `*` is allowed on the prefix of the hostname only, ex: `*.amazonaws.com`. Use `outboundAllowCIDR` to allow access to all external websites.
+	OutboundAllowHostnames pulumi.StringArrayInput `pulumi:"outboundAllowHostnames"`
+	// Allow outbound access to specific ports and protocols. When not specified, communication to address ranges in outboundAllowCIDR is allowed on all ports and communication to names in outboundAllowHostname is allowed on ports 80/443.
+	OutboundAllowPorts GetWorkloadFirewallSpecExternalOutboundAllowPortArrayInput `pulumi:"outboundAllowPorts"`
+	// The list of ipv4/ipv6 addresses or cidr blocks that this workload is NOT allowed to reach. Addresses in the allow list will only be allowed if they do not exist in this list.
+	OutboundBlockedCidrs pulumi.StringArrayInput `pulumi:"outboundBlockedCidrs"`
+}
+
+func (GetWorkloadFirewallSpecExternalArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadFirewallSpecExternal)(nil)).Elem()
+}
+
+func (i GetWorkloadFirewallSpecExternalArgs) ToGetWorkloadFirewallSpecExternalOutput() GetWorkloadFirewallSpecExternalOutput {
+	return i.ToGetWorkloadFirewallSpecExternalOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadFirewallSpecExternalArgs) ToGetWorkloadFirewallSpecExternalOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecExternalOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadFirewallSpecExternalOutput)
+}
+
+// GetWorkloadFirewallSpecExternalArrayInput is an input type that accepts GetWorkloadFirewallSpecExternalArray and GetWorkloadFirewallSpecExternalArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadFirewallSpecExternalArrayInput` via:
+//
+//	GetWorkloadFirewallSpecExternalArray{ GetWorkloadFirewallSpecExternalArgs{...} }
+type GetWorkloadFirewallSpecExternalArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadFirewallSpecExternalArrayOutput() GetWorkloadFirewallSpecExternalArrayOutput
+	ToGetWorkloadFirewallSpecExternalArrayOutputWithContext(context.Context) GetWorkloadFirewallSpecExternalArrayOutput
+}
+
+type GetWorkloadFirewallSpecExternalArray []GetWorkloadFirewallSpecExternalInput
+
+func (GetWorkloadFirewallSpecExternalArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadFirewallSpecExternal)(nil)).Elem()
+}
+
+func (i GetWorkloadFirewallSpecExternalArray) ToGetWorkloadFirewallSpecExternalArrayOutput() GetWorkloadFirewallSpecExternalArrayOutput {
+	return i.ToGetWorkloadFirewallSpecExternalArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadFirewallSpecExternalArray) ToGetWorkloadFirewallSpecExternalArrayOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecExternalArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadFirewallSpecExternalArrayOutput)
+}
+
+type GetWorkloadFirewallSpecExternalOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadFirewallSpecExternalOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadFirewallSpecExternal)(nil)).Elem()
+}
+
+func (o GetWorkloadFirewallSpecExternalOutput) ToGetWorkloadFirewallSpecExternalOutput() GetWorkloadFirewallSpecExternalOutput {
+	return o
+}
+
+func (o GetWorkloadFirewallSpecExternalOutput) ToGetWorkloadFirewallSpecExternalOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecExternalOutput {
+	return o
+}
+
+// Firewall options for HTTP workloads.
+func (o GetWorkloadFirewallSpecExternalOutput) Https() GetWorkloadFirewallSpecExternalHttpArrayOutput {
+	return o.ApplyT(func(v GetWorkloadFirewallSpecExternal) []GetWorkloadFirewallSpecExternalHttp { return v.Https }).(GetWorkloadFirewallSpecExternalHttpArrayOutput)
+}
+
+// The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+func (o GetWorkloadFirewallSpecExternalOutput) InboundAllowCidrs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadFirewallSpecExternal) []string { return v.InboundAllowCidrs }).(pulumi.StringArrayOutput)
+}
+
+// The list of ipv4/ipv6 addresses or cidr blocks that are NOT allowed to access this workload. Addresses in the allow list will only be allowed if they do not exist in this list.
+func (o GetWorkloadFirewallSpecExternalOutput) InboundBlockedCidrs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadFirewallSpecExternal) []string { return v.InboundBlockedCidrs }).(pulumi.StringArrayOutput)
+}
+
+// The list of ipv4/ipv6 addresses or cidr blocks that this workload is allowed reach. No outbound access is allowed by default. Specify '0.0.0.0/0' to allow outbound access to the public internet.
+func (o GetWorkloadFirewallSpecExternalOutput) OutboundAllowCidrs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadFirewallSpecExternal) []string { return v.OutboundAllowCidrs }).(pulumi.StringArrayOutput)
+}
+
+// The list of public hostnames that this workload is allowed to reach. No outbound access is allowed by default. A wildcard `*` is allowed on the prefix of the hostname only, ex: `*.amazonaws.com`. Use `outboundAllowCIDR` to allow access to all external websites.
+func (o GetWorkloadFirewallSpecExternalOutput) OutboundAllowHostnames() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadFirewallSpecExternal) []string { return v.OutboundAllowHostnames }).(pulumi.StringArrayOutput)
+}
+
+// Allow outbound access to specific ports and protocols. When not specified, communication to address ranges in outboundAllowCIDR is allowed on all ports and communication to names in outboundAllowHostname is allowed on ports 80/443.
+func (o GetWorkloadFirewallSpecExternalOutput) OutboundAllowPorts() GetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput {
+	return o.ApplyT(func(v GetWorkloadFirewallSpecExternal) []GetWorkloadFirewallSpecExternalOutboundAllowPort {
+		return v.OutboundAllowPorts
+	}).(GetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput)
+}
+
+// The list of ipv4/ipv6 addresses or cidr blocks that this workload is NOT allowed to reach. Addresses in the allow list will only be allowed if they do not exist in this list.
+func (o GetWorkloadFirewallSpecExternalOutput) OutboundBlockedCidrs() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadFirewallSpecExternal) []string { return v.OutboundBlockedCidrs }).(pulumi.StringArrayOutput)
+}
+
+type GetWorkloadFirewallSpecExternalArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadFirewallSpecExternalArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadFirewallSpecExternal)(nil)).Elem()
+}
+
+func (o GetWorkloadFirewallSpecExternalArrayOutput) ToGetWorkloadFirewallSpecExternalArrayOutput() GetWorkloadFirewallSpecExternalArrayOutput {
+	return o
+}
+
+func (o GetWorkloadFirewallSpecExternalArrayOutput) ToGetWorkloadFirewallSpecExternalArrayOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecExternalArrayOutput {
+	return o
+}
+
+func (o GetWorkloadFirewallSpecExternalArrayOutput) Index(i pulumi.IntInput) GetWorkloadFirewallSpecExternalOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadFirewallSpecExternal {
+		return vs[0].([]GetWorkloadFirewallSpecExternal)[vs[1].(int)]
+	}).(GetWorkloadFirewallSpecExternalOutput)
+}
+
+type GetWorkloadFirewallSpecExternalHttp struct {
+	// A list of header filters for HTTP workloads.
+	InboundHeaderFilters []GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter `pulumi:"inboundHeaderFilters"`
+}
+
+// GetWorkloadFirewallSpecExternalHttpInput is an input type that accepts GetWorkloadFirewallSpecExternalHttpArgs and GetWorkloadFirewallSpecExternalHttpOutput values.
+// You can construct a concrete instance of `GetWorkloadFirewallSpecExternalHttpInput` via:
+//
+//	GetWorkloadFirewallSpecExternalHttpArgs{...}
+type GetWorkloadFirewallSpecExternalHttpInput interface {
+	pulumi.Input
+
+	ToGetWorkloadFirewallSpecExternalHttpOutput() GetWorkloadFirewallSpecExternalHttpOutput
+	ToGetWorkloadFirewallSpecExternalHttpOutputWithContext(context.Context) GetWorkloadFirewallSpecExternalHttpOutput
+}
+
+type GetWorkloadFirewallSpecExternalHttpArgs struct {
+	// A list of header filters for HTTP workloads.
+	InboundHeaderFilters GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayInput `pulumi:"inboundHeaderFilters"`
+}
+
+func (GetWorkloadFirewallSpecExternalHttpArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadFirewallSpecExternalHttp)(nil)).Elem()
+}
+
+func (i GetWorkloadFirewallSpecExternalHttpArgs) ToGetWorkloadFirewallSpecExternalHttpOutput() GetWorkloadFirewallSpecExternalHttpOutput {
+	return i.ToGetWorkloadFirewallSpecExternalHttpOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadFirewallSpecExternalHttpArgs) ToGetWorkloadFirewallSpecExternalHttpOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecExternalHttpOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadFirewallSpecExternalHttpOutput)
+}
+
+// GetWorkloadFirewallSpecExternalHttpArrayInput is an input type that accepts GetWorkloadFirewallSpecExternalHttpArray and GetWorkloadFirewallSpecExternalHttpArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadFirewallSpecExternalHttpArrayInput` via:
+//
+//	GetWorkloadFirewallSpecExternalHttpArray{ GetWorkloadFirewallSpecExternalHttpArgs{...} }
+type GetWorkloadFirewallSpecExternalHttpArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadFirewallSpecExternalHttpArrayOutput() GetWorkloadFirewallSpecExternalHttpArrayOutput
+	ToGetWorkloadFirewallSpecExternalHttpArrayOutputWithContext(context.Context) GetWorkloadFirewallSpecExternalHttpArrayOutput
+}
+
+type GetWorkloadFirewallSpecExternalHttpArray []GetWorkloadFirewallSpecExternalHttpInput
+
+func (GetWorkloadFirewallSpecExternalHttpArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadFirewallSpecExternalHttp)(nil)).Elem()
+}
+
+func (i GetWorkloadFirewallSpecExternalHttpArray) ToGetWorkloadFirewallSpecExternalHttpArrayOutput() GetWorkloadFirewallSpecExternalHttpArrayOutput {
+	return i.ToGetWorkloadFirewallSpecExternalHttpArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadFirewallSpecExternalHttpArray) ToGetWorkloadFirewallSpecExternalHttpArrayOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecExternalHttpArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadFirewallSpecExternalHttpArrayOutput)
+}
+
+type GetWorkloadFirewallSpecExternalHttpOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadFirewallSpecExternalHttpOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadFirewallSpecExternalHttp)(nil)).Elem()
+}
+
+func (o GetWorkloadFirewallSpecExternalHttpOutput) ToGetWorkloadFirewallSpecExternalHttpOutput() GetWorkloadFirewallSpecExternalHttpOutput {
+	return o
+}
+
+func (o GetWorkloadFirewallSpecExternalHttpOutput) ToGetWorkloadFirewallSpecExternalHttpOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecExternalHttpOutput {
+	return o
+}
+
+// A list of header filters for HTTP workloads.
+func (o GetWorkloadFirewallSpecExternalHttpOutput) InboundHeaderFilters() GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput {
+	return o.ApplyT(func(v GetWorkloadFirewallSpecExternalHttp) []GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter {
+		return v.InboundHeaderFilters
+	}).(GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput)
+}
+
+type GetWorkloadFirewallSpecExternalHttpArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadFirewallSpecExternalHttpArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadFirewallSpecExternalHttp)(nil)).Elem()
+}
+
+func (o GetWorkloadFirewallSpecExternalHttpArrayOutput) ToGetWorkloadFirewallSpecExternalHttpArrayOutput() GetWorkloadFirewallSpecExternalHttpArrayOutput {
+	return o
+}
+
+func (o GetWorkloadFirewallSpecExternalHttpArrayOutput) ToGetWorkloadFirewallSpecExternalHttpArrayOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecExternalHttpArrayOutput {
+	return o
+}
+
+func (o GetWorkloadFirewallSpecExternalHttpArrayOutput) Index(i pulumi.IntInput) GetWorkloadFirewallSpecExternalHttpOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadFirewallSpecExternalHttp {
+		return vs[0].([]GetWorkloadFirewallSpecExternalHttp)[vs[1].(int)]
+	}).(GetWorkloadFirewallSpecExternalHttpOutput)
+}
+
+type GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter struct {
+	// A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
+	AllowedValues []string `pulumi:"allowedValues"`
+	// A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
+	BlockedValues []string `pulumi:"blockedValues"`
+	// The header to match for.
+	Key string `pulumi:"key"`
+}
+
+// GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterInput is an input type that accepts GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArgs and GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput values.
+// You can construct a concrete instance of `GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterInput` via:
+//
+//	GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArgs{...}
+type GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterInput interface {
+	pulumi.Input
+
+	ToGetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput() GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput
+	ToGetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutputWithContext(context.Context) GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput
+}
+
+type GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArgs struct {
+	// A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
+	AllowedValues pulumi.StringArrayInput `pulumi:"allowedValues"`
+	// A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
+	BlockedValues pulumi.StringArrayInput `pulumi:"blockedValues"`
+	// The header to match for.
+	Key pulumi.StringInput `pulumi:"key"`
+}
+
+func (GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter)(nil)).Elem()
+}
+
+func (i GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArgs) ToGetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput() GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput {
+	return i.ToGetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArgs) ToGetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput)
+}
+
+// GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayInput is an input type that accepts GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArray and GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayInput` via:
+//
+//	GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArray{ GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArgs{...} }
+type GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput() GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput
+	ToGetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutputWithContext(context.Context) GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput
+}
+
+type GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArray []GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterInput
+
+func (GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter)(nil)).Elem()
+}
+
+func (i GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArray) ToGetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput() GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput {
+	return i.ToGetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArray) ToGetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput)
+}
+
+type GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter)(nil)).Elem()
+}
+
+func (o GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput) ToGetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput() GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput {
+	return o
+}
+
+func (o GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput) ToGetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput {
+	return o
+}
+
+// A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
+func (o GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput) AllowedValues() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter) []string { return v.AllowedValues }).(pulumi.StringArrayOutput)
+}
+
+// A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
+func (o GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput) BlockedValues() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter) []string { return v.BlockedValues }).(pulumi.StringArrayOutput)
+}
+
+// The header to match for.
+func (o GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter) string { return v.Key }).(pulumi.StringOutput)
+}
+
+type GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter)(nil)).Elem()
+}
+
+func (o GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput) ToGetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput() GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput {
+	return o
+}
+
+func (o GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput) ToGetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput {
+	return o
+}
+
+func (o GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput) Index(i pulumi.IntInput) GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter {
+		return vs[0].([]GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter)[vs[1].(int)]
+	}).(GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput)
+}
+
+type GetWorkloadFirewallSpecExternalOutboundAllowPort struct {
+	// Port number. Max: 65000
+	Number int `pulumi:"number"`
+	// Either `http`, `https` or `tcp`.
+	Protocol string `pulumi:"protocol"`
+}
+
+// GetWorkloadFirewallSpecExternalOutboundAllowPortInput is an input type that accepts GetWorkloadFirewallSpecExternalOutboundAllowPortArgs and GetWorkloadFirewallSpecExternalOutboundAllowPortOutput values.
+// You can construct a concrete instance of `GetWorkloadFirewallSpecExternalOutboundAllowPortInput` via:
+//
+//	GetWorkloadFirewallSpecExternalOutboundAllowPortArgs{...}
+type GetWorkloadFirewallSpecExternalOutboundAllowPortInput interface {
+	pulumi.Input
+
+	ToGetWorkloadFirewallSpecExternalOutboundAllowPortOutput() GetWorkloadFirewallSpecExternalOutboundAllowPortOutput
+	ToGetWorkloadFirewallSpecExternalOutboundAllowPortOutputWithContext(context.Context) GetWorkloadFirewallSpecExternalOutboundAllowPortOutput
+}
+
+type GetWorkloadFirewallSpecExternalOutboundAllowPortArgs struct {
+	// Port number. Max: 65000
+	Number pulumi.IntInput `pulumi:"number"`
+	// Either `http`, `https` or `tcp`.
+	Protocol pulumi.StringInput `pulumi:"protocol"`
+}
+
+func (GetWorkloadFirewallSpecExternalOutboundAllowPortArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadFirewallSpecExternalOutboundAllowPort)(nil)).Elem()
+}
+
+func (i GetWorkloadFirewallSpecExternalOutboundAllowPortArgs) ToGetWorkloadFirewallSpecExternalOutboundAllowPortOutput() GetWorkloadFirewallSpecExternalOutboundAllowPortOutput {
+	return i.ToGetWorkloadFirewallSpecExternalOutboundAllowPortOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadFirewallSpecExternalOutboundAllowPortArgs) ToGetWorkloadFirewallSpecExternalOutboundAllowPortOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecExternalOutboundAllowPortOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadFirewallSpecExternalOutboundAllowPortOutput)
+}
+
+// GetWorkloadFirewallSpecExternalOutboundAllowPortArrayInput is an input type that accepts GetWorkloadFirewallSpecExternalOutboundAllowPortArray and GetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadFirewallSpecExternalOutboundAllowPortArrayInput` via:
+//
+//	GetWorkloadFirewallSpecExternalOutboundAllowPortArray{ GetWorkloadFirewallSpecExternalOutboundAllowPortArgs{...} }
+type GetWorkloadFirewallSpecExternalOutboundAllowPortArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput() GetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput
+	ToGetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutputWithContext(context.Context) GetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput
+}
+
+type GetWorkloadFirewallSpecExternalOutboundAllowPortArray []GetWorkloadFirewallSpecExternalOutboundAllowPortInput
+
+func (GetWorkloadFirewallSpecExternalOutboundAllowPortArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadFirewallSpecExternalOutboundAllowPort)(nil)).Elem()
+}
+
+func (i GetWorkloadFirewallSpecExternalOutboundAllowPortArray) ToGetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput() GetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput {
+	return i.ToGetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadFirewallSpecExternalOutboundAllowPortArray) ToGetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput)
+}
+
+type GetWorkloadFirewallSpecExternalOutboundAllowPortOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadFirewallSpecExternalOutboundAllowPortOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadFirewallSpecExternalOutboundAllowPort)(nil)).Elem()
+}
+
+func (o GetWorkloadFirewallSpecExternalOutboundAllowPortOutput) ToGetWorkloadFirewallSpecExternalOutboundAllowPortOutput() GetWorkloadFirewallSpecExternalOutboundAllowPortOutput {
+	return o
+}
+
+func (o GetWorkloadFirewallSpecExternalOutboundAllowPortOutput) ToGetWorkloadFirewallSpecExternalOutboundAllowPortOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecExternalOutboundAllowPortOutput {
+	return o
+}
+
+// Port number. Max: 65000
+func (o GetWorkloadFirewallSpecExternalOutboundAllowPortOutput) Number() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadFirewallSpecExternalOutboundAllowPort) int { return v.Number }).(pulumi.IntOutput)
+}
+
+// Either `http`, `https` or `tcp`.
+func (o GetWorkloadFirewallSpecExternalOutboundAllowPortOutput) Protocol() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadFirewallSpecExternalOutboundAllowPort) string { return v.Protocol }).(pulumi.StringOutput)
+}
+
+type GetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadFirewallSpecExternalOutboundAllowPort)(nil)).Elem()
+}
+
+func (o GetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput) ToGetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput() GetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput {
+	return o
+}
+
+func (o GetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput) ToGetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput {
+	return o
+}
+
+func (o GetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput) Index(i pulumi.IntInput) GetWorkloadFirewallSpecExternalOutboundAllowPortOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadFirewallSpecExternalOutboundAllowPort {
+		return vs[0].([]GetWorkloadFirewallSpecExternalOutboundAllowPort)[vs[1].(int)]
+	}).(GetWorkloadFirewallSpecExternalOutboundAllowPortOutput)
+}
+
+type GetWorkloadFirewallSpecInternal struct {
+	// Used to control the internal firewall configuration and mutual tls. Allowed Values: "none", "same-gvc", "same-org", "workload-list".
+	InboundAllowType string `pulumi:"inboundAllowType"`
+	// A list of specific workloads which are allowed to access this workload internally. This list is only used if the 'inboundAllowType' is set to 'workload-list'.
+	InboundAllowWorkloads []string `pulumi:"inboundAllowWorkloads"`
+}
+
+// GetWorkloadFirewallSpecInternalInput is an input type that accepts GetWorkloadFirewallSpecInternalArgs and GetWorkloadFirewallSpecInternalOutput values.
+// You can construct a concrete instance of `GetWorkloadFirewallSpecInternalInput` via:
+//
+//	GetWorkloadFirewallSpecInternalArgs{...}
+type GetWorkloadFirewallSpecInternalInput interface {
+	pulumi.Input
+
+	ToGetWorkloadFirewallSpecInternalOutput() GetWorkloadFirewallSpecInternalOutput
+	ToGetWorkloadFirewallSpecInternalOutputWithContext(context.Context) GetWorkloadFirewallSpecInternalOutput
+}
+
+type GetWorkloadFirewallSpecInternalArgs struct {
+	// Used to control the internal firewall configuration and mutual tls. Allowed Values: "none", "same-gvc", "same-org", "workload-list".
+	InboundAllowType pulumi.StringInput `pulumi:"inboundAllowType"`
+	// A list of specific workloads which are allowed to access this workload internally. This list is only used if the 'inboundAllowType' is set to 'workload-list'.
+	InboundAllowWorkloads pulumi.StringArrayInput `pulumi:"inboundAllowWorkloads"`
+}
+
+func (GetWorkloadFirewallSpecInternalArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadFirewallSpecInternal)(nil)).Elem()
+}
+
+func (i GetWorkloadFirewallSpecInternalArgs) ToGetWorkloadFirewallSpecInternalOutput() GetWorkloadFirewallSpecInternalOutput {
+	return i.ToGetWorkloadFirewallSpecInternalOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadFirewallSpecInternalArgs) ToGetWorkloadFirewallSpecInternalOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecInternalOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadFirewallSpecInternalOutput)
+}
+
+// GetWorkloadFirewallSpecInternalArrayInput is an input type that accepts GetWorkloadFirewallSpecInternalArray and GetWorkloadFirewallSpecInternalArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadFirewallSpecInternalArrayInput` via:
+//
+//	GetWorkloadFirewallSpecInternalArray{ GetWorkloadFirewallSpecInternalArgs{...} }
+type GetWorkloadFirewallSpecInternalArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadFirewallSpecInternalArrayOutput() GetWorkloadFirewallSpecInternalArrayOutput
+	ToGetWorkloadFirewallSpecInternalArrayOutputWithContext(context.Context) GetWorkloadFirewallSpecInternalArrayOutput
+}
+
+type GetWorkloadFirewallSpecInternalArray []GetWorkloadFirewallSpecInternalInput
+
+func (GetWorkloadFirewallSpecInternalArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadFirewallSpecInternal)(nil)).Elem()
+}
+
+func (i GetWorkloadFirewallSpecInternalArray) ToGetWorkloadFirewallSpecInternalArrayOutput() GetWorkloadFirewallSpecInternalArrayOutput {
+	return i.ToGetWorkloadFirewallSpecInternalArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadFirewallSpecInternalArray) ToGetWorkloadFirewallSpecInternalArrayOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecInternalArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadFirewallSpecInternalArrayOutput)
+}
+
+type GetWorkloadFirewallSpecInternalOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadFirewallSpecInternalOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadFirewallSpecInternal)(nil)).Elem()
+}
+
+func (o GetWorkloadFirewallSpecInternalOutput) ToGetWorkloadFirewallSpecInternalOutput() GetWorkloadFirewallSpecInternalOutput {
+	return o
+}
+
+func (o GetWorkloadFirewallSpecInternalOutput) ToGetWorkloadFirewallSpecInternalOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecInternalOutput {
+	return o
+}
+
+// Used to control the internal firewall configuration and mutual tls. Allowed Values: "none", "same-gvc", "same-org", "workload-list".
+func (o GetWorkloadFirewallSpecInternalOutput) InboundAllowType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadFirewallSpecInternal) string { return v.InboundAllowType }).(pulumi.StringOutput)
+}
+
+// A list of specific workloads which are allowed to access this workload internally. This list is only used if the 'inboundAllowType' is set to 'workload-list'.
+func (o GetWorkloadFirewallSpecInternalOutput) InboundAllowWorkloads() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadFirewallSpecInternal) []string { return v.InboundAllowWorkloads }).(pulumi.StringArrayOutput)
+}
+
+type GetWorkloadFirewallSpecInternalArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadFirewallSpecInternalArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadFirewallSpecInternal)(nil)).Elem()
+}
+
+func (o GetWorkloadFirewallSpecInternalArrayOutput) ToGetWorkloadFirewallSpecInternalArrayOutput() GetWorkloadFirewallSpecInternalArrayOutput {
+	return o
+}
+
+func (o GetWorkloadFirewallSpecInternalArrayOutput) ToGetWorkloadFirewallSpecInternalArrayOutputWithContext(ctx context.Context) GetWorkloadFirewallSpecInternalArrayOutput {
+	return o
+}
+
+func (o GetWorkloadFirewallSpecInternalArrayOutput) Index(i pulumi.IntInput) GetWorkloadFirewallSpecInternalOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadFirewallSpecInternal {
+		return vs[0].([]GetWorkloadFirewallSpecInternal)[vs[1].(int)]
+	}).(GetWorkloadFirewallSpecInternalOutput)
+}
+
+type GetWorkloadJob struct {
+	// The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
+	ActiveDeadlineSeconds int `pulumi:"activeDeadlineSeconds"`
+	// Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+	ConcurrencyPolicy string `pulumi:"concurrencyPolicy"`
+	// The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`.
+	HistoryLimit int `pulumi:"historyLimit"`
+	// Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`.
+	RestartPolicy string `pulumi:"restartPolicy"`
+	// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
+	Schedule string `pulumi:"schedule"`
+}
+
+// GetWorkloadJobInput is an input type that accepts GetWorkloadJobArgs and GetWorkloadJobOutput values.
+// You can construct a concrete instance of `GetWorkloadJobInput` via:
+//
+//	GetWorkloadJobArgs{...}
+type GetWorkloadJobInput interface {
+	pulumi.Input
+
+	ToGetWorkloadJobOutput() GetWorkloadJobOutput
+	ToGetWorkloadJobOutputWithContext(context.Context) GetWorkloadJobOutput
+}
+
+type GetWorkloadJobArgs struct {
+	// The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
+	ActiveDeadlineSeconds pulumi.IntInput `pulumi:"activeDeadlineSeconds"`
+	// Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+	ConcurrencyPolicy pulumi.StringInput `pulumi:"concurrencyPolicy"`
+	// The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`.
+	HistoryLimit pulumi.IntInput `pulumi:"historyLimit"`
+	// Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`.
+	RestartPolicy pulumi.StringInput `pulumi:"restartPolicy"`
+	// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
+	Schedule pulumi.StringInput `pulumi:"schedule"`
+}
+
+func (GetWorkloadJobArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadJob)(nil)).Elem()
+}
+
+func (i GetWorkloadJobArgs) ToGetWorkloadJobOutput() GetWorkloadJobOutput {
+	return i.ToGetWorkloadJobOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadJobArgs) ToGetWorkloadJobOutputWithContext(ctx context.Context) GetWorkloadJobOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadJobOutput)
+}
+
+// GetWorkloadJobArrayInput is an input type that accepts GetWorkloadJobArray and GetWorkloadJobArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadJobArrayInput` via:
+//
+//	GetWorkloadJobArray{ GetWorkloadJobArgs{...} }
+type GetWorkloadJobArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadJobArrayOutput() GetWorkloadJobArrayOutput
+	ToGetWorkloadJobArrayOutputWithContext(context.Context) GetWorkloadJobArrayOutput
+}
+
+type GetWorkloadJobArray []GetWorkloadJobInput
+
+func (GetWorkloadJobArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadJob)(nil)).Elem()
+}
+
+func (i GetWorkloadJobArray) ToGetWorkloadJobArrayOutput() GetWorkloadJobArrayOutput {
+	return i.ToGetWorkloadJobArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadJobArray) ToGetWorkloadJobArrayOutputWithContext(ctx context.Context) GetWorkloadJobArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadJobArrayOutput)
+}
+
+type GetWorkloadJobOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadJobOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadJob)(nil)).Elem()
+}
+
+func (o GetWorkloadJobOutput) ToGetWorkloadJobOutput() GetWorkloadJobOutput {
+	return o
+}
+
+func (o GetWorkloadJobOutput) ToGetWorkloadJobOutputWithContext(ctx context.Context) GetWorkloadJobOutput {
+	return o
+}
+
+// The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
+func (o GetWorkloadJobOutput) ActiveDeadlineSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadJob) int { return v.ActiveDeadlineSeconds }).(pulumi.IntOutput)
+}
+
+// Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+func (o GetWorkloadJobOutput) ConcurrencyPolicy() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadJob) string { return v.ConcurrencyPolicy }).(pulumi.StringOutput)
+}
+
+// The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`.
+func (o GetWorkloadJobOutput) HistoryLimit() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadJob) int { return v.HistoryLimit }).(pulumi.IntOutput)
+}
+
+// Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`.
+func (o GetWorkloadJobOutput) RestartPolicy() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadJob) string { return v.RestartPolicy }).(pulumi.StringOutput)
+}
+
+// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
+func (o GetWorkloadJobOutput) Schedule() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadJob) string { return v.Schedule }).(pulumi.StringOutput)
+}
+
+type GetWorkloadJobArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadJobArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadJob)(nil)).Elem()
+}
+
+func (o GetWorkloadJobArrayOutput) ToGetWorkloadJobArrayOutput() GetWorkloadJobArrayOutput {
+	return o
+}
+
+func (o GetWorkloadJobArrayOutput) ToGetWorkloadJobArrayOutputWithContext(ctx context.Context) GetWorkloadJobArrayOutput {
+	return o
+}
+
+func (o GetWorkloadJobArrayOutput) Index(i pulumi.IntInput) GetWorkloadJobOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadJob {
+		return vs[0].([]GetWorkloadJob)[vs[1].(int)]
+	}).(GetWorkloadJobOutput)
+}
+
+type GetWorkloadLoadBalancer struct {
+	// Direct load balancers are created in each location that a workload is running in and are configured for the standard endpoints of the workload. Customers are responsible for configuring the workload with certificates if TLS is required.
+	Directs      []GetWorkloadLoadBalancerDirect      `pulumi:"directs"`
+	GeoLocations []GetWorkloadLoadBalancerGeoLocation `pulumi:"geoLocations"`
+	// When enabled, individual replicas of the workload can be reached directly using the subdomain prefix replica-<index>. For example, replica-0.my-workload.my-gvc.cpln.local or replica-0.my-workload-<gvc-alias>.cpln.app - Can only be used with stateful workloads.
+	ReplicaDirect bool `pulumi:"replicaDirect"`
+}
+
+// GetWorkloadLoadBalancerInput is an input type that accepts GetWorkloadLoadBalancerArgs and GetWorkloadLoadBalancerOutput values.
+// You can construct a concrete instance of `GetWorkloadLoadBalancerInput` via:
+//
+//	GetWorkloadLoadBalancerArgs{...}
+type GetWorkloadLoadBalancerInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLoadBalancerOutput() GetWorkloadLoadBalancerOutput
+	ToGetWorkloadLoadBalancerOutputWithContext(context.Context) GetWorkloadLoadBalancerOutput
+}
+
+type GetWorkloadLoadBalancerArgs struct {
+	// Direct load balancers are created in each location that a workload is running in and are configured for the standard endpoints of the workload. Customers are responsible for configuring the workload with certificates if TLS is required.
+	Directs      GetWorkloadLoadBalancerDirectArrayInput      `pulumi:"directs"`
+	GeoLocations GetWorkloadLoadBalancerGeoLocationArrayInput `pulumi:"geoLocations"`
+	// When enabled, individual replicas of the workload can be reached directly using the subdomain prefix replica-<index>. For example, replica-0.my-workload.my-gvc.cpln.local or replica-0.my-workload-<gvc-alias>.cpln.app - Can only be used with stateful workloads.
+	ReplicaDirect pulumi.BoolInput `pulumi:"replicaDirect"`
+}
+
+func (GetWorkloadLoadBalancerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLoadBalancer)(nil)).Elem()
+}
+
+func (i GetWorkloadLoadBalancerArgs) ToGetWorkloadLoadBalancerOutput() GetWorkloadLoadBalancerOutput {
+	return i.ToGetWorkloadLoadBalancerOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLoadBalancerArgs) ToGetWorkloadLoadBalancerOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLoadBalancerOutput)
+}
+
+// GetWorkloadLoadBalancerArrayInput is an input type that accepts GetWorkloadLoadBalancerArray and GetWorkloadLoadBalancerArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLoadBalancerArrayInput` via:
+//
+//	GetWorkloadLoadBalancerArray{ GetWorkloadLoadBalancerArgs{...} }
+type GetWorkloadLoadBalancerArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLoadBalancerArrayOutput() GetWorkloadLoadBalancerArrayOutput
+	ToGetWorkloadLoadBalancerArrayOutputWithContext(context.Context) GetWorkloadLoadBalancerArrayOutput
+}
+
+type GetWorkloadLoadBalancerArray []GetWorkloadLoadBalancerInput
+
+func (GetWorkloadLoadBalancerArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLoadBalancer)(nil)).Elem()
+}
+
+func (i GetWorkloadLoadBalancerArray) ToGetWorkloadLoadBalancerArrayOutput() GetWorkloadLoadBalancerArrayOutput {
+	return i.ToGetWorkloadLoadBalancerArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLoadBalancerArray) ToGetWorkloadLoadBalancerArrayOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLoadBalancerArrayOutput)
+}
+
+type GetWorkloadLoadBalancerOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLoadBalancerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLoadBalancer)(nil)).Elem()
+}
+
+func (o GetWorkloadLoadBalancerOutput) ToGetWorkloadLoadBalancerOutput() GetWorkloadLoadBalancerOutput {
+	return o
+}
+
+func (o GetWorkloadLoadBalancerOutput) ToGetWorkloadLoadBalancerOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerOutput {
+	return o
+}
+
+// Direct load balancers are created in each location that a workload is running in and are configured for the standard endpoints of the workload. Customers are responsible for configuring the workload with certificates if TLS is required.
+func (o GetWorkloadLoadBalancerOutput) Directs() GetWorkloadLoadBalancerDirectArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLoadBalancer) []GetWorkloadLoadBalancerDirect { return v.Directs }).(GetWorkloadLoadBalancerDirectArrayOutput)
+}
+
+func (o GetWorkloadLoadBalancerOutput) GeoLocations() GetWorkloadLoadBalancerGeoLocationArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLoadBalancer) []GetWorkloadLoadBalancerGeoLocation { return v.GeoLocations }).(GetWorkloadLoadBalancerGeoLocationArrayOutput)
+}
+
+// When enabled, individual replicas of the workload can be reached directly using the subdomain prefix replica-<index>. For example, replica-0.my-workload.my-gvc.cpln.local or replica-0.my-workload-<gvc-alias>.cpln.app - Can only be used with stateful workloads.
+func (o GetWorkloadLoadBalancerOutput) ReplicaDirect() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadLoadBalancer) bool { return v.ReplicaDirect }).(pulumi.BoolOutput)
+}
+
+type GetWorkloadLoadBalancerArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLoadBalancerArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLoadBalancer)(nil)).Elem()
+}
+
+func (o GetWorkloadLoadBalancerArrayOutput) ToGetWorkloadLoadBalancerArrayOutput() GetWorkloadLoadBalancerArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLoadBalancerArrayOutput) ToGetWorkloadLoadBalancerArrayOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLoadBalancerArrayOutput) Index(i pulumi.IntInput) GetWorkloadLoadBalancerOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLoadBalancer {
+		return vs[0].([]GetWorkloadLoadBalancer)[vs[1].(int)]
+	}).(GetWorkloadLoadBalancerOutput)
+}
+
+type GetWorkloadLoadBalancerDirect struct {
+	// When disabled, this load balancer will be stopped.
+	Enabled bool   `pulumi:"enabled"`
+	Ipset   string `pulumi:"ipset"`
+	// List of ports that will be exposed by this load balancer.
+	Ports []GetWorkloadLoadBalancerDirectPort `pulumi:"ports"`
+}
+
+// GetWorkloadLoadBalancerDirectInput is an input type that accepts GetWorkloadLoadBalancerDirectArgs and GetWorkloadLoadBalancerDirectOutput values.
+// You can construct a concrete instance of `GetWorkloadLoadBalancerDirectInput` via:
+//
+//	GetWorkloadLoadBalancerDirectArgs{...}
+type GetWorkloadLoadBalancerDirectInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLoadBalancerDirectOutput() GetWorkloadLoadBalancerDirectOutput
+	ToGetWorkloadLoadBalancerDirectOutputWithContext(context.Context) GetWorkloadLoadBalancerDirectOutput
+}
+
+type GetWorkloadLoadBalancerDirectArgs struct {
+	// When disabled, this load balancer will be stopped.
+	Enabled pulumi.BoolInput   `pulumi:"enabled"`
+	Ipset   pulumi.StringInput `pulumi:"ipset"`
+	// List of ports that will be exposed by this load balancer.
+	Ports GetWorkloadLoadBalancerDirectPortArrayInput `pulumi:"ports"`
+}
+
+func (GetWorkloadLoadBalancerDirectArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLoadBalancerDirect)(nil)).Elem()
+}
+
+func (i GetWorkloadLoadBalancerDirectArgs) ToGetWorkloadLoadBalancerDirectOutput() GetWorkloadLoadBalancerDirectOutput {
+	return i.ToGetWorkloadLoadBalancerDirectOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLoadBalancerDirectArgs) ToGetWorkloadLoadBalancerDirectOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerDirectOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLoadBalancerDirectOutput)
+}
+
+// GetWorkloadLoadBalancerDirectArrayInput is an input type that accepts GetWorkloadLoadBalancerDirectArray and GetWorkloadLoadBalancerDirectArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLoadBalancerDirectArrayInput` via:
+//
+//	GetWorkloadLoadBalancerDirectArray{ GetWorkloadLoadBalancerDirectArgs{...} }
+type GetWorkloadLoadBalancerDirectArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLoadBalancerDirectArrayOutput() GetWorkloadLoadBalancerDirectArrayOutput
+	ToGetWorkloadLoadBalancerDirectArrayOutputWithContext(context.Context) GetWorkloadLoadBalancerDirectArrayOutput
+}
+
+type GetWorkloadLoadBalancerDirectArray []GetWorkloadLoadBalancerDirectInput
+
+func (GetWorkloadLoadBalancerDirectArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLoadBalancerDirect)(nil)).Elem()
+}
+
+func (i GetWorkloadLoadBalancerDirectArray) ToGetWorkloadLoadBalancerDirectArrayOutput() GetWorkloadLoadBalancerDirectArrayOutput {
+	return i.ToGetWorkloadLoadBalancerDirectArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLoadBalancerDirectArray) ToGetWorkloadLoadBalancerDirectArrayOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerDirectArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLoadBalancerDirectArrayOutput)
+}
+
+type GetWorkloadLoadBalancerDirectOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLoadBalancerDirectOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLoadBalancerDirect)(nil)).Elem()
+}
+
+func (o GetWorkloadLoadBalancerDirectOutput) ToGetWorkloadLoadBalancerDirectOutput() GetWorkloadLoadBalancerDirectOutput {
+	return o
+}
+
+func (o GetWorkloadLoadBalancerDirectOutput) ToGetWorkloadLoadBalancerDirectOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerDirectOutput {
+	return o
+}
+
+// When disabled, this load balancer will be stopped.
+func (o GetWorkloadLoadBalancerDirectOutput) Enabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadLoadBalancerDirect) bool { return v.Enabled }).(pulumi.BoolOutput)
+}
+
+func (o GetWorkloadLoadBalancerDirectOutput) Ipset() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLoadBalancerDirect) string { return v.Ipset }).(pulumi.StringOutput)
+}
+
+// List of ports that will be exposed by this load balancer.
+func (o GetWorkloadLoadBalancerDirectOutput) Ports() GetWorkloadLoadBalancerDirectPortArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLoadBalancerDirect) []GetWorkloadLoadBalancerDirectPort { return v.Ports }).(GetWorkloadLoadBalancerDirectPortArrayOutput)
+}
+
+type GetWorkloadLoadBalancerDirectArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLoadBalancerDirectArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLoadBalancerDirect)(nil)).Elem()
+}
+
+func (o GetWorkloadLoadBalancerDirectArrayOutput) ToGetWorkloadLoadBalancerDirectArrayOutput() GetWorkloadLoadBalancerDirectArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLoadBalancerDirectArrayOutput) ToGetWorkloadLoadBalancerDirectArrayOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerDirectArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLoadBalancerDirectArrayOutput) Index(i pulumi.IntInput) GetWorkloadLoadBalancerDirectOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLoadBalancerDirect {
+		return vs[0].([]GetWorkloadLoadBalancerDirect)[vs[1].(int)]
+	}).(GetWorkloadLoadBalancerDirectOutput)
+}
+
+type GetWorkloadLoadBalancerDirectPort struct {
+	// The port on the container tha will receive this traffic.
+	ContainerPort int `pulumi:"containerPort"`
+	// The port that is available publicly.
+	ExternalPort int `pulumi:"externalPort"`
+	// The protocol that is exposed publicly.
+	Protocol string `pulumi:"protocol"`
+	// Overrides the default `https` url scheme that will be used for links in the UI and status.
+	Scheme string `pulumi:"scheme"`
+}
+
+// GetWorkloadLoadBalancerDirectPortInput is an input type that accepts GetWorkloadLoadBalancerDirectPortArgs and GetWorkloadLoadBalancerDirectPortOutput values.
+// You can construct a concrete instance of `GetWorkloadLoadBalancerDirectPortInput` via:
+//
+//	GetWorkloadLoadBalancerDirectPortArgs{...}
+type GetWorkloadLoadBalancerDirectPortInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLoadBalancerDirectPortOutput() GetWorkloadLoadBalancerDirectPortOutput
+	ToGetWorkloadLoadBalancerDirectPortOutputWithContext(context.Context) GetWorkloadLoadBalancerDirectPortOutput
+}
+
+type GetWorkloadLoadBalancerDirectPortArgs struct {
+	// The port on the container tha will receive this traffic.
+	ContainerPort pulumi.IntInput `pulumi:"containerPort"`
+	// The port that is available publicly.
+	ExternalPort pulumi.IntInput `pulumi:"externalPort"`
+	// The protocol that is exposed publicly.
+	Protocol pulumi.StringInput `pulumi:"protocol"`
+	// Overrides the default `https` url scheme that will be used for links in the UI and status.
+	Scheme pulumi.StringInput `pulumi:"scheme"`
+}
+
+func (GetWorkloadLoadBalancerDirectPortArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLoadBalancerDirectPort)(nil)).Elem()
+}
+
+func (i GetWorkloadLoadBalancerDirectPortArgs) ToGetWorkloadLoadBalancerDirectPortOutput() GetWorkloadLoadBalancerDirectPortOutput {
+	return i.ToGetWorkloadLoadBalancerDirectPortOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLoadBalancerDirectPortArgs) ToGetWorkloadLoadBalancerDirectPortOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerDirectPortOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLoadBalancerDirectPortOutput)
+}
+
+// GetWorkloadLoadBalancerDirectPortArrayInput is an input type that accepts GetWorkloadLoadBalancerDirectPortArray and GetWorkloadLoadBalancerDirectPortArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLoadBalancerDirectPortArrayInput` via:
+//
+//	GetWorkloadLoadBalancerDirectPortArray{ GetWorkloadLoadBalancerDirectPortArgs{...} }
+type GetWorkloadLoadBalancerDirectPortArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLoadBalancerDirectPortArrayOutput() GetWorkloadLoadBalancerDirectPortArrayOutput
+	ToGetWorkloadLoadBalancerDirectPortArrayOutputWithContext(context.Context) GetWorkloadLoadBalancerDirectPortArrayOutput
+}
+
+type GetWorkloadLoadBalancerDirectPortArray []GetWorkloadLoadBalancerDirectPortInput
+
+func (GetWorkloadLoadBalancerDirectPortArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLoadBalancerDirectPort)(nil)).Elem()
+}
+
+func (i GetWorkloadLoadBalancerDirectPortArray) ToGetWorkloadLoadBalancerDirectPortArrayOutput() GetWorkloadLoadBalancerDirectPortArrayOutput {
+	return i.ToGetWorkloadLoadBalancerDirectPortArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLoadBalancerDirectPortArray) ToGetWorkloadLoadBalancerDirectPortArrayOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerDirectPortArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLoadBalancerDirectPortArrayOutput)
+}
+
+type GetWorkloadLoadBalancerDirectPortOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLoadBalancerDirectPortOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLoadBalancerDirectPort)(nil)).Elem()
+}
+
+func (o GetWorkloadLoadBalancerDirectPortOutput) ToGetWorkloadLoadBalancerDirectPortOutput() GetWorkloadLoadBalancerDirectPortOutput {
+	return o
+}
+
+func (o GetWorkloadLoadBalancerDirectPortOutput) ToGetWorkloadLoadBalancerDirectPortOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerDirectPortOutput {
+	return o
+}
+
+// The port on the container tha will receive this traffic.
+func (o GetWorkloadLoadBalancerDirectPortOutput) ContainerPort() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLoadBalancerDirectPort) int { return v.ContainerPort }).(pulumi.IntOutput)
+}
+
+// The port that is available publicly.
+func (o GetWorkloadLoadBalancerDirectPortOutput) ExternalPort() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLoadBalancerDirectPort) int { return v.ExternalPort }).(pulumi.IntOutput)
+}
+
+// The protocol that is exposed publicly.
+func (o GetWorkloadLoadBalancerDirectPortOutput) Protocol() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLoadBalancerDirectPort) string { return v.Protocol }).(pulumi.StringOutput)
+}
+
+// Overrides the default `https` url scheme that will be used for links in the UI and status.
+func (o GetWorkloadLoadBalancerDirectPortOutput) Scheme() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLoadBalancerDirectPort) string { return v.Scheme }).(pulumi.StringOutput)
+}
+
+type GetWorkloadLoadBalancerDirectPortArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLoadBalancerDirectPortArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLoadBalancerDirectPort)(nil)).Elem()
+}
+
+func (o GetWorkloadLoadBalancerDirectPortArrayOutput) ToGetWorkloadLoadBalancerDirectPortArrayOutput() GetWorkloadLoadBalancerDirectPortArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLoadBalancerDirectPortArrayOutput) ToGetWorkloadLoadBalancerDirectPortArrayOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerDirectPortArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLoadBalancerDirectPortArrayOutput) Index(i pulumi.IntInput) GetWorkloadLoadBalancerDirectPortOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLoadBalancerDirectPort {
+		return vs[0].([]GetWorkloadLoadBalancerDirectPort)[vs[1].(int)]
+	}).(GetWorkloadLoadBalancerDirectPortOutput)
+}
+
+type GetWorkloadLoadBalancerGeoLocation struct {
+	// When enabled, geo location headers will be included on inbound http requests. Existing headers will be replaced.
+	Enabled bool                                       `pulumi:"enabled"`
+	Headers []GetWorkloadLoadBalancerGeoLocationHeader `pulumi:"headers"`
+}
+
+// GetWorkloadLoadBalancerGeoLocationInput is an input type that accepts GetWorkloadLoadBalancerGeoLocationArgs and GetWorkloadLoadBalancerGeoLocationOutput values.
+// You can construct a concrete instance of `GetWorkloadLoadBalancerGeoLocationInput` via:
+//
+//	GetWorkloadLoadBalancerGeoLocationArgs{...}
+type GetWorkloadLoadBalancerGeoLocationInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLoadBalancerGeoLocationOutput() GetWorkloadLoadBalancerGeoLocationOutput
+	ToGetWorkloadLoadBalancerGeoLocationOutputWithContext(context.Context) GetWorkloadLoadBalancerGeoLocationOutput
+}
+
+type GetWorkloadLoadBalancerGeoLocationArgs struct {
+	// When enabled, geo location headers will be included on inbound http requests. Existing headers will be replaced.
+	Enabled pulumi.BoolInput                                   `pulumi:"enabled"`
+	Headers GetWorkloadLoadBalancerGeoLocationHeaderArrayInput `pulumi:"headers"`
+}
+
+func (GetWorkloadLoadBalancerGeoLocationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLoadBalancerGeoLocation)(nil)).Elem()
+}
+
+func (i GetWorkloadLoadBalancerGeoLocationArgs) ToGetWorkloadLoadBalancerGeoLocationOutput() GetWorkloadLoadBalancerGeoLocationOutput {
+	return i.ToGetWorkloadLoadBalancerGeoLocationOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLoadBalancerGeoLocationArgs) ToGetWorkloadLoadBalancerGeoLocationOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerGeoLocationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLoadBalancerGeoLocationOutput)
+}
+
+// GetWorkloadLoadBalancerGeoLocationArrayInput is an input type that accepts GetWorkloadLoadBalancerGeoLocationArray and GetWorkloadLoadBalancerGeoLocationArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLoadBalancerGeoLocationArrayInput` via:
+//
+//	GetWorkloadLoadBalancerGeoLocationArray{ GetWorkloadLoadBalancerGeoLocationArgs{...} }
+type GetWorkloadLoadBalancerGeoLocationArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLoadBalancerGeoLocationArrayOutput() GetWorkloadLoadBalancerGeoLocationArrayOutput
+	ToGetWorkloadLoadBalancerGeoLocationArrayOutputWithContext(context.Context) GetWorkloadLoadBalancerGeoLocationArrayOutput
+}
+
+type GetWorkloadLoadBalancerGeoLocationArray []GetWorkloadLoadBalancerGeoLocationInput
+
+func (GetWorkloadLoadBalancerGeoLocationArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLoadBalancerGeoLocation)(nil)).Elem()
+}
+
+func (i GetWorkloadLoadBalancerGeoLocationArray) ToGetWorkloadLoadBalancerGeoLocationArrayOutput() GetWorkloadLoadBalancerGeoLocationArrayOutput {
+	return i.ToGetWorkloadLoadBalancerGeoLocationArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLoadBalancerGeoLocationArray) ToGetWorkloadLoadBalancerGeoLocationArrayOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerGeoLocationArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLoadBalancerGeoLocationArrayOutput)
+}
+
+type GetWorkloadLoadBalancerGeoLocationOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLoadBalancerGeoLocationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLoadBalancerGeoLocation)(nil)).Elem()
+}
+
+func (o GetWorkloadLoadBalancerGeoLocationOutput) ToGetWorkloadLoadBalancerGeoLocationOutput() GetWorkloadLoadBalancerGeoLocationOutput {
+	return o
+}
+
+func (o GetWorkloadLoadBalancerGeoLocationOutput) ToGetWorkloadLoadBalancerGeoLocationOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerGeoLocationOutput {
+	return o
+}
+
+// When enabled, geo location headers will be included on inbound http requests. Existing headers will be replaced.
+func (o GetWorkloadLoadBalancerGeoLocationOutput) Enabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadLoadBalancerGeoLocation) bool { return v.Enabled }).(pulumi.BoolOutput)
+}
+
+func (o GetWorkloadLoadBalancerGeoLocationOutput) Headers() GetWorkloadLoadBalancerGeoLocationHeaderArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLoadBalancerGeoLocation) []GetWorkloadLoadBalancerGeoLocationHeader {
+		return v.Headers
+	}).(GetWorkloadLoadBalancerGeoLocationHeaderArrayOutput)
+}
+
+type GetWorkloadLoadBalancerGeoLocationArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLoadBalancerGeoLocationArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLoadBalancerGeoLocation)(nil)).Elem()
+}
+
+func (o GetWorkloadLoadBalancerGeoLocationArrayOutput) ToGetWorkloadLoadBalancerGeoLocationArrayOutput() GetWorkloadLoadBalancerGeoLocationArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLoadBalancerGeoLocationArrayOutput) ToGetWorkloadLoadBalancerGeoLocationArrayOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerGeoLocationArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLoadBalancerGeoLocationArrayOutput) Index(i pulumi.IntInput) GetWorkloadLoadBalancerGeoLocationOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLoadBalancerGeoLocation {
+		return vs[0].([]GetWorkloadLoadBalancerGeoLocation)[vs[1].(int)]
+	}).(GetWorkloadLoadBalancerGeoLocationOutput)
+}
+
+type GetWorkloadLoadBalancerGeoLocationHeader struct {
+	// The geo asn header.
+	Asn string `pulumi:"asn"`
+	// The geo city header.
+	City string `pulumi:"city"`
+	// The geo country header.
+	Country string `pulumi:"country"`
+	// The geo region header.
+	Region string `pulumi:"region"`
+}
+
+// GetWorkloadLoadBalancerGeoLocationHeaderInput is an input type that accepts GetWorkloadLoadBalancerGeoLocationHeaderArgs and GetWorkloadLoadBalancerGeoLocationHeaderOutput values.
+// You can construct a concrete instance of `GetWorkloadLoadBalancerGeoLocationHeaderInput` via:
+//
+//	GetWorkloadLoadBalancerGeoLocationHeaderArgs{...}
+type GetWorkloadLoadBalancerGeoLocationHeaderInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLoadBalancerGeoLocationHeaderOutput() GetWorkloadLoadBalancerGeoLocationHeaderOutput
+	ToGetWorkloadLoadBalancerGeoLocationHeaderOutputWithContext(context.Context) GetWorkloadLoadBalancerGeoLocationHeaderOutput
+}
+
+type GetWorkloadLoadBalancerGeoLocationHeaderArgs struct {
+	// The geo asn header.
+	Asn pulumi.StringInput `pulumi:"asn"`
+	// The geo city header.
+	City pulumi.StringInput `pulumi:"city"`
+	// The geo country header.
+	Country pulumi.StringInput `pulumi:"country"`
+	// The geo region header.
+	Region pulumi.StringInput `pulumi:"region"`
+}
+
+func (GetWorkloadLoadBalancerGeoLocationHeaderArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLoadBalancerGeoLocationHeader)(nil)).Elem()
+}
+
+func (i GetWorkloadLoadBalancerGeoLocationHeaderArgs) ToGetWorkloadLoadBalancerGeoLocationHeaderOutput() GetWorkloadLoadBalancerGeoLocationHeaderOutput {
+	return i.ToGetWorkloadLoadBalancerGeoLocationHeaderOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLoadBalancerGeoLocationHeaderArgs) ToGetWorkloadLoadBalancerGeoLocationHeaderOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerGeoLocationHeaderOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLoadBalancerGeoLocationHeaderOutput)
+}
+
+// GetWorkloadLoadBalancerGeoLocationHeaderArrayInput is an input type that accepts GetWorkloadLoadBalancerGeoLocationHeaderArray and GetWorkloadLoadBalancerGeoLocationHeaderArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLoadBalancerGeoLocationHeaderArrayInput` via:
+//
+//	GetWorkloadLoadBalancerGeoLocationHeaderArray{ GetWorkloadLoadBalancerGeoLocationHeaderArgs{...} }
+type GetWorkloadLoadBalancerGeoLocationHeaderArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLoadBalancerGeoLocationHeaderArrayOutput() GetWorkloadLoadBalancerGeoLocationHeaderArrayOutput
+	ToGetWorkloadLoadBalancerGeoLocationHeaderArrayOutputWithContext(context.Context) GetWorkloadLoadBalancerGeoLocationHeaderArrayOutput
+}
+
+type GetWorkloadLoadBalancerGeoLocationHeaderArray []GetWorkloadLoadBalancerGeoLocationHeaderInput
+
+func (GetWorkloadLoadBalancerGeoLocationHeaderArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLoadBalancerGeoLocationHeader)(nil)).Elem()
+}
+
+func (i GetWorkloadLoadBalancerGeoLocationHeaderArray) ToGetWorkloadLoadBalancerGeoLocationHeaderArrayOutput() GetWorkloadLoadBalancerGeoLocationHeaderArrayOutput {
+	return i.ToGetWorkloadLoadBalancerGeoLocationHeaderArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLoadBalancerGeoLocationHeaderArray) ToGetWorkloadLoadBalancerGeoLocationHeaderArrayOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerGeoLocationHeaderArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLoadBalancerGeoLocationHeaderArrayOutput)
+}
+
+type GetWorkloadLoadBalancerGeoLocationHeaderOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLoadBalancerGeoLocationHeaderOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLoadBalancerGeoLocationHeader)(nil)).Elem()
+}
+
+func (o GetWorkloadLoadBalancerGeoLocationHeaderOutput) ToGetWorkloadLoadBalancerGeoLocationHeaderOutput() GetWorkloadLoadBalancerGeoLocationHeaderOutput {
+	return o
+}
+
+func (o GetWorkloadLoadBalancerGeoLocationHeaderOutput) ToGetWorkloadLoadBalancerGeoLocationHeaderOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerGeoLocationHeaderOutput {
+	return o
+}
+
+// The geo asn header.
+func (o GetWorkloadLoadBalancerGeoLocationHeaderOutput) Asn() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLoadBalancerGeoLocationHeader) string { return v.Asn }).(pulumi.StringOutput)
+}
+
+// The geo city header.
+func (o GetWorkloadLoadBalancerGeoLocationHeaderOutput) City() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLoadBalancerGeoLocationHeader) string { return v.City }).(pulumi.StringOutput)
+}
+
+// The geo country header.
+func (o GetWorkloadLoadBalancerGeoLocationHeaderOutput) Country() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLoadBalancerGeoLocationHeader) string { return v.Country }).(pulumi.StringOutput)
+}
+
+// The geo region header.
+func (o GetWorkloadLoadBalancerGeoLocationHeaderOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLoadBalancerGeoLocationHeader) string { return v.Region }).(pulumi.StringOutput)
+}
+
+type GetWorkloadLoadBalancerGeoLocationHeaderArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLoadBalancerGeoLocationHeaderArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLoadBalancerGeoLocationHeader)(nil)).Elem()
+}
+
+func (o GetWorkloadLoadBalancerGeoLocationHeaderArrayOutput) ToGetWorkloadLoadBalancerGeoLocationHeaderArrayOutput() GetWorkloadLoadBalancerGeoLocationHeaderArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLoadBalancerGeoLocationHeaderArrayOutput) ToGetWorkloadLoadBalancerGeoLocationHeaderArrayOutputWithContext(ctx context.Context) GetWorkloadLoadBalancerGeoLocationHeaderArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLoadBalancerGeoLocationHeaderArrayOutput) Index(i pulumi.IntInput) GetWorkloadLoadBalancerGeoLocationHeaderOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLoadBalancerGeoLocationHeader {
+		return vs[0].([]GetWorkloadLoadBalancerGeoLocationHeader)[vs[1].(int)]
+	}).(GetWorkloadLoadBalancerGeoLocationHeaderOutput)
+}
+
+type GetWorkloadLocalOption struct {
+	// Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+	Autoscalings []GetWorkloadLocalOptionAutoscaling `pulumi:"autoscalings"`
+	// Capacity AI. Default: `true`.
+	CapacityAi bool `pulumi:"capacityAi"`
+	// The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+	CapacityAiUpdateMinutes int `pulumi:"capacityAiUpdateMinutes"`
+	// Debug mode. Default: `false`.
+	Debug bool `pulumi:"debug"`
+	// Valid only for `localOptions`. Override options for a specific location.
+	Location   string                            `pulumi:"location"`
+	MultiZones []GetWorkloadLocalOptionMultiZone `pulumi:"multiZones"`
+	// Workload suspend. Default: `false`.
+	Suspend bool `pulumi:"suspend"`
+	// Timeout in seconds. Default: `5`.
+	TimeoutSeconds int `pulumi:"timeoutSeconds"`
+}
+
+// GetWorkloadLocalOptionInput is an input type that accepts GetWorkloadLocalOptionArgs and GetWorkloadLocalOptionOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionInput` via:
+//
+//	GetWorkloadLocalOptionArgs{...}
+type GetWorkloadLocalOptionInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionOutput() GetWorkloadLocalOptionOutput
+	ToGetWorkloadLocalOptionOutputWithContext(context.Context) GetWorkloadLocalOptionOutput
+}
+
+type GetWorkloadLocalOptionArgs struct {
+	// Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+	Autoscalings GetWorkloadLocalOptionAutoscalingArrayInput `pulumi:"autoscalings"`
+	// Capacity AI. Default: `true`.
+	CapacityAi pulumi.BoolInput `pulumi:"capacityAi"`
+	// The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+	CapacityAiUpdateMinutes pulumi.IntInput `pulumi:"capacityAiUpdateMinutes"`
+	// Debug mode. Default: `false`.
+	Debug pulumi.BoolInput `pulumi:"debug"`
+	// Valid only for `localOptions`. Override options for a specific location.
+	Location   pulumi.StringInput                        `pulumi:"location"`
+	MultiZones GetWorkloadLocalOptionMultiZoneArrayInput `pulumi:"multiZones"`
+	// Workload suspend. Default: `false`.
+	Suspend pulumi.BoolInput `pulumi:"suspend"`
+	// Timeout in seconds. Default: `5`.
+	TimeoutSeconds pulumi.IntInput `pulumi:"timeoutSeconds"`
+}
+
+func (GetWorkloadLocalOptionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOption)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionArgs) ToGetWorkloadLocalOptionOutput() GetWorkloadLocalOptionOutput {
+	return i.ToGetWorkloadLocalOptionOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionArgs) ToGetWorkloadLocalOptionOutputWithContext(ctx context.Context) GetWorkloadLocalOptionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionOutput)
+}
+
+// GetWorkloadLocalOptionArrayInput is an input type that accepts GetWorkloadLocalOptionArray and GetWorkloadLocalOptionArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionArrayInput` via:
+//
+//	GetWorkloadLocalOptionArray{ GetWorkloadLocalOptionArgs{...} }
+type GetWorkloadLocalOptionArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionArrayOutput() GetWorkloadLocalOptionArrayOutput
+	ToGetWorkloadLocalOptionArrayOutputWithContext(context.Context) GetWorkloadLocalOptionArrayOutput
+}
+
+type GetWorkloadLocalOptionArray []GetWorkloadLocalOptionInput
+
+func (GetWorkloadLocalOptionArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOption)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionArray) ToGetWorkloadLocalOptionArrayOutput() GetWorkloadLocalOptionArrayOutput {
+	return i.ToGetWorkloadLocalOptionArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionArray) ToGetWorkloadLocalOptionArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionArrayOutput)
+}
+
+type GetWorkloadLocalOptionOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOption)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionOutput) ToGetWorkloadLocalOptionOutput() GetWorkloadLocalOptionOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionOutput) ToGetWorkloadLocalOptionOutputWithContext(ctx context.Context) GetWorkloadLocalOptionOutput {
+	return o
+}
+
+// Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+func (o GetWorkloadLocalOptionOutput) Autoscalings() GetWorkloadLocalOptionAutoscalingArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOption) []GetWorkloadLocalOptionAutoscaling { return v.Autoscalings }).(GetWorkloadLocalOptionAutoscalingArrayOutput)
+}
+
+// Capacity AI. Default: `true`.
+func (o GetWorkloadLocalOptionOutput) CapacityAi() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOption) bool { return v.CapacityAi }).(pulumi.BoolOutput)
+}
+
+// The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+func (o GetWorkloadLocalOptionOutput) CapacityAiUpdateMinutes() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOption) int { return v.CapacityAiUpdateMinutes }).(pulumi.IntOutput)
+}
+
+// Debug mode. Default: `false`.
+func (o GetWorkloadLocalOptionOutput) Debug() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOption) bool { return v.Debug }).(pulumi.BoolOutput)
+}
+
+// Valid only for `localOptions`. Override options for a specific location.
+func (o GetWorkloadLocalOptionOutput) Location() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOption) string { return v.Location }).(pulumi.StringOutput)
+}
+
+func (o GetWorkloadLocalOptionOutput) MultiZones() GetWorkloadLocalOptionMultiZoneArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOption) []GetWorkloadLocalOptionMultiZone { return v.MultiZones }).(GetWorkloadLocalOptionMultiZoneArrayOutput)
+}
+
+// Workload suspend. Default: `false`.
+func (o GetWorkloadLocalOptionOutput) Suspend() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOption) bool { return v.Suspend }).(pulumi.BoolOutput)
+}
+
+// Timeout in seconds. Default: `5`.
+func (o GetWorkloadLocalOptionOutput) TimeoutSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOption) int { return v.TimeoutSeconds }).(pulumi.IntOutput)
+}
+
+type GetWorkloadLocalOptionArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOption)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionArrayOutput) ToGetWorkloadLocalOptionArrayOutput() GetWorkloadLocalOptionArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionArrayOutput) ToGetWorkloadLocalOptionArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionArrayOutput) Index(i pulumi.IntInput) GetWorkloadLocalOptionOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLocalOption {
+		return vs[0].([]GetWorkloadLocalOption)[vs[1].(int)]
+	}).(GetWorkloadLocalOptionOutput)
+}
+
+type GetWorkloadLocalOptionAutoscaling struct {
+	// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+	Kedas []GetWorkloadLocalOptionAutoscalingKeda `pulumi:"kedas"`
+	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+	MaxConcurrency int `pulumi:"maxConcurrency"`
+	// The maximum allowed number of replicas. Min: `0`. Default `5`.
+	MaxScale int `pulumi:"maxScale"`
+	// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
+	Metric string `pulumi:"metric"`
+	// For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+	MetricPercentile string `pulumi:"metricPercentile"`
+	// The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `maxScale`. Default `1`.
+	MinScale int                                      `pulumi:"minScale"`
+	Multis   []GetWorkloadLocalOptionAutoscalingMulti `pulumi:"multis"`
+	// The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+	ScaleToZeroDelay int `pulumi:"scaleToZeroDelay"`
+	// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+	Target int `pulumi:"target"`
+}
+
+// GetWorkloadLocalOptionAutoscalingInput is an input type that accepts GetWorkloadLocalOptionAutoscalingArgs and GetWorkloadLocalOptionAutoscalingOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingArgs{...}
+type GetWorkloadLocalOptionAutoscalingInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingOutput() GetWorkloadLocalOptionAutoscalingOutput
+	ToGetWorkloadLocalOptionAutoscalingOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingArgs struct {
+	// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+	Kedas GetWorkloadLocalOptionAutoscalingKedaArrayInput `pulumi:"kedas"`
+	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+	MaxConcurrency pulumi.IntInput `pulumi:"maxConcurrency"`
+	// The maximum allowed number of replicas. Min: `0`. Default `5`.
+	MaxScale pulumi.IntInput `pulumi:"maxScale"`
+	// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
+	Metric pulumi.StringInput `pulumi:"metric"`
+	// For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+	MetricPercentile pulumi.StringInput `pulumi:"metricPercentile"`
+	// The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `maxScale`. Default `1`.
+	MinScale pulumi.IntInput                                  `pulumi:"minScale"`
+	Multis   GetWorkloadLocalOptionAutoscalingMultiArrayInput `pulumi:"multis"`
+	// The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+	ScaleToZeroDelay pulumi.IntInput `pulumi:"scaleToZeroDelay"`
+	// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+	Target pulumi.IntInput `pulumi:"target"`
+}
+
+func (GetWorkloadLocalOptionAutoscalingArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscaling)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingArgs) ToGetWorkloadLocalOptionAutoscalingOutput() GetWorkloadLocalOptionAutoscalingOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingArgs) ToGetWorkloadLocalOptionAutoscalingOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingOutput)
+}
+
+// GetWorkloadLocalOptionAutoscalingArrayInput is an input type that accepts GetWorkloadLocalOptionAutoscalingArray and GetWorkloadLocalOptionAutoscalingArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingArrayInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingArray{ GetWorkloadLocalOptionAutoscalingArgs{...} }
+type GetWorkloadLocalOptionAutoscalingArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingArrayOutput() GetWorkloadLocalOptionAutoscalingArrayOutput
+	ToGetWorkloadLocalOptionAutoscalingArrayOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingArrayOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingArray []GetWorkloadLocalOptionAutoscalingInput
+
+func (GetWorkloadLocalOptionAutoscalingArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscaling)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingArray) ToGetWorkloadLocalOptionAutoscalingArrayOutput() GetWorkloadLocalOptionAutoscalingArrayOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingArray) ToGetWorkloadLocalOptionAutoscalingArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingArrayOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscaling)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingOutput) ToGetWorkloadLocalOptionAutoscalingOutput() GetWorkloadLocalOptionAutoscalingOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingOutput) ToGetWorkloadLocalOptionAutoscalingOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingOutput {
+	return o
+}
+
+// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+func (o GetWorkloadLocalOptionAutoscalingOutput) Kedas() GetWorkloadLocalOptionAutoscalingKedaArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscaling) []GetWorkloadLocalOptionAutoscalingKeda { return v.Kedas }).(GetWorkloadLocalOptionAutoscalingKedaArrayOutput)
+}
+
+// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+func (o GetWorkloadLocalOptionAutoscalingOutput) MaxConcurrency() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscaling) int { return v.MaxConcurrency }).(pulumi.IntOutput)
+}
+
+// The maximum allowed number of replicas. Min: `0`. Default `5`.
+func (o GetWorkloadLocalOptionAutoscalingOutput) MaxScale() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscaling) int { return v.MaxScale }).(pulumi.IntOutput)
+}
+
+// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
+func (o GetWorkloadLocalOptionAutoscalingOutput) Metric() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscaling) string { return v.Metric }).(pulumi.StringOutput)
+}
+
+// For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+func (o GetWorkloadLocalOptionAutoscalingOutput) MetricPercentile() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscaling) string { return v.MetricPercentile }).(pulumi.StringOutput)
+}
+
+// The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `maxScale`. Default `1`.
+func (o GetWorkloadLocalOptionAutoscalingOutput) MinScale() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscaling) int { return v.MinScale }).(pulumi.IntOutput)
+}
+
+func (o GetWorkloadLocalOptionAutoscalingOutput) Multis() GetWorkloadLocalOptionAutoscalingMultiArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscaling) []GetWorkloadLocalOptionAutoscalingMulti { return v.Multis }).(GetWorkloadLocalOptionAutoscalingMultiArrayOutput)
+}
+
+// The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+func (o GetWorkloadLocalOptionAutoscalingOutput) ScaleToZeroDelay() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscaling) int { return v.ScaleToZeroDelay }).(pulumi.IntOutput)
+}
+
+// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+func (o GetWorkloadLocalOptionAutoscalingOutput) Target() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscaling) int { return v.Target }).(pulumi.IntOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscaling)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingArrayOutput) ToGetWorkloadLocalOptionAutoscalingArrayOutput() GetWorkloadLocalOptionAutoscalingArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingArrayOutput) ToGetWorkloadLocalOptionAutoscalingArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingArrayOutput) Index(i pulumi.IntInput) GetWorkloadLocalOptionAutoscalingOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLocalOptionAutoscaling {
+		return vs[0].([]GetWorkloadLocalOptionAutoscaling)[vs[1].(int)]
+	}).(GetWorkloadLocalOptionAutoscalingOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKeda struct {
+	// Advanced configuration options for KEDA.
+	Advanceds []GetWorkloadLocalOptionAutoscalingKedaAdvanced `pulumi:"advanceds"`
+	// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+	CooldownPeriod int `pulumi:"cooldownPeriod"`
+	// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+	InitialCooldownPeriod int `pulumi:"initialCooldownPeriod"`
+	// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+	PollingInterval int `pulumi:"pollingInterval"`
+	// An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+	Triggers []GetWorkloadLocalOptionAutoscalingKedaTrigger `pulumi:"triggers"`
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaArgs and GetWorkloadLocalOptionAutoscalingKedaOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaArgs{...}
+type GetWorkloadLocalOptionAutoscalingKedaInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaOutput() GetWorkloadLocalOptionAutoscalingKedaOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaArgs struct {
+	// Advanced configuration options for KEDA.
+	Advanceds GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayInput `pulumi:"advanceds"`
+	// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+	CooldownPeriod pulumi.IntInput `pulumi:"cooldownPeriod"`
+	// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+	InitialCooldownPeriod pulumi.IntInput `pulumi:"initialCooldownPeriod"`
+	// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+	PollingInterval pulumi.IntInput `pulumi:"pollingInterval"`
+	// An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+	Triggers GetWorkloadLocalOptionAutoscalingKedaTriggerArrayInput `pulumi:"triggers"`
+}
+
+func (GetWorkloadLocalOptionAutoscalingKedaArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKeda)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaArgs) ToGetWorkloadLocalOptionAutoscalingKedaOutput() GetWorkloadLocalOptionAutoscalingKedaOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaArgs) ToGetWorkloadLocalOptionAutoscalingKedaOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaOutput)
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaArrayInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaArray and GetWorkloadLocalOptionAutoscalingKedaArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaArrayInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaArray{ GetWorkloadLocalOptionAutoscalingKedaArgs{...} }
+type GetWorkloadLocalOptionAutoscalingKedaArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaArrayOutput() GetWorkloadLocalOptionAutoscalingKedaArrayOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaArrayOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaArrayOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaArray []GetWorkloadLocalOptionAutoscalingKedaInput
+
+func (GetWorkloadLocalOptionAutoscalingKedaArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKeda)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaArray) ToGetWorkloadLocalOptionAutoscalingKedaArrayOutput() GetWorkloadLocalOptionAutoscalingKedaArrayOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaArray) ToGetWorkloadLocalOptionAutoscalingKedaArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaArrayOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKeda)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaOutput) ToGetWorkloadLocalOptionAutoscalingKedaOutput() GetWorkloadLocalOptionAutoscalingKedaOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaOutput) ToGetWorkloadLocalOptionAutoscalingKedaOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaOutput {
+	return o
+}
+
+// Advanced configuration options for KEDA.
+func (o GetWorkloadLocalOptionAutoscalingKedaOutput) Advanceds() GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKeda) []GetWorkloadLocalOptionAutoscalingKedaAdvanced {
+		return v.Advanceds
+	}).(GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput)
+}
+
+// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+func (o GetWorkloadLocalOptionAutoscalingKedaOutput) CooldownPeriod() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKeda) int { return v.CooldownPeriod }).(pulumi.IntOutput)
+}
+
+// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+func (o GetWorkloadLocalOptionAutoscalingKedaOutput) InitialCooldownPeriod() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKeda) int { return v.InitialCooldownPeriod }).(pulumi.IntOutput)
+}
+
+// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+func (o GetWorkloadLocalOptionAutoscalingKedaOutput) PollingInterval() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKeda) int { return v.PollingInterval }).(pulumi.IntOutput)
+}
+
+// An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+func (o GetWorkloadLocalOptionAutoscalingKedaOutput) Triggers() GetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKeda) []GetWorkloadLocalOptionAutoscalingKedaTrigger {
+		return v.Triggers
+	}).(GetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKeda)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaArrayOutput() GetWorkloadLocalOptionAutoscalingKedaArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaArrayOutput) Index(i pulumi.IntInput) GetWorkloadLocalOptionAutoscalingKedaOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLocalOptionAutoscalingKeda {
+		return vs[0].([]GetWorkloadLocalOptionAutoscalingKeda)[vs[1].(int)]
+	}).(GetWorkloadLocalOptionAutoscalingKedaOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvanced struct {
+	// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+	ScalingModifiers []GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier `pulumi:"scalingModifiers"`
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaAdvancedInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaAdvancedArgs and GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaAdvancedInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaAdvancedArgs{...}
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedArgs struct {
+	// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+	ScalingModifiers GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayInput `pulumi:"scalingModifiers"`
+}
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvanced)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedArgs) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaAdvancedOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedArgs) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput)
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaAdvancedArray and GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaAdvancedArray{ GetWorkloadLocalOptionAutoscalingKedaAdvancedArgs{...} }
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedArray []GetWorkloadLocalOptionAutoscalingKedaAdvancedInput
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaAdvanced)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedArray) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedArray) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvanced)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput {
+	return o
+}
+
+// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput) ScalingModifiers() GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvanced) []GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier {
+		return v.ScalingModifiers
+	}).(GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaAdvanced)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput) Index(i pulumi.IntInput) GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLocalOptionAutoscalingKedaAdvanced {
+		return vs[0].([]GetWorkloadLocalOptionAutoscalingKedaAdvanced)[vs[1].(int)]
+	}).(GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier struct {
+	// Defines the new activation target value to scale on for the composed metric.
+	ActivationTarget string `pulumi:"activationTarget"`
+	// Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+	Formula string `pulumi:"formula"`
+	// Defines metric type used for this new composite-metric.
+	MetricType string `pulumi:"metricType"`
+	// Defines new target value to scale on for the composed metric.
+	Target string `pulumi:"target"`
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArgs and GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArgs{...}
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArgs struct {
+	// Defines the new activation target value to scale on for the composed metric.
+	ActivationTarget pulumi.StringInput `pulumi:"activationTarget"`
+	// Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+	Formula pulumi.StringInput `pulumi:"formula"`
+	// Defines metric type used for this new composite-metric.
+	MetricType pulumi.StringInput `pulumi:"metricType"`
+	// Defines new target value to scale on for the composed metric.
+	Target pulumi.StringInput `pulumi:"target"`
+}
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArgs) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArgs) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput)
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArray and GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArray{ GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArgs{...} }
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArray []GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierInput
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArray) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArray) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput {
+	return o
+}
+
+// Defines the new activation target value to scale on for the composed metric.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput) ActivationTarget() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier) string { return v.ActivationTarget }).(pulumi.StringOutput)
+}
+
+// Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput) Formula() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier) string { return v.Formula }).(pulumi.StringOutput)
+}
+
+// Defines metric type used for this new composite-metric.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput) MetricType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier) string { return v.MetricType }).(pulumi.StringOutput)
+}
+
+// Defines new target value to scale on for the composed metric.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput) Target() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier) string { return v.Target }).(pulumi.StringOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput) Index(i pulumi.IntInput) GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier {
+		return vs[0].([]GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier)[vs[1].(int)]
+	}).(GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaTrigger struct {
+	// Reference to a KEDA authentication object for secure access to external systems.
+	AuthenticationReves []GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef `pulumi:"authenticationReves"`
+	// The configuration parameters that the trigger requires.
+	Metadata map[string]string `pulumi:"metadata"`
+	// The type of metric to be used for scaling.
+	MetricType string `pulumi:"metricType"`
+	// An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+	Name string `pulumi:"name"`
+	// The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+	Type string `pulumi:"type"`
+	// Enables caching of metric values during polling interval.
+	UseCachedMetrics bool `pulumi:"useCachedMetrics"`
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaTriggerInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaTriggerArgs and GetWorkloadLocalOptionAutoscalingKedaTriggerOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaTriggerInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaTriggerArgs{...}
+type GetWorkloadLocalOptionAutoscalingKedaTriggerInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaTriggerOutput() GetWorkloadLocalOptionAutoscalingKedaTriggerOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaTriggerOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaTriggerOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaTriggerArgs struct {
+	// Reference to a KEDA authentication object for secure access to external systems.
+	AuthenticationReves GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayInput `pulumi:"authenticationReves"`
+	// The configuration parameters that the trigger requires.
+	Metadata pulumi.StringMapInput `pulumi:"metadata"`
+	// The type of metric to be used for scaling.
+	MetricType pulumi.StringInput `pulumi:"metricType"`
+	// An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+	Name pulumi.StringInput `pulumi:"name"`
+	// The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+	Type pulumi.StringInput `pulumi:"type"`
+	// Enables caching of metric values during polling interval.
+	UseCachedMetrics pulumi.BoolInput `pulumi:"useCachedMetrics"`
+}
+
+func (GetWorkloadLocalOptionAutoscalingKedaTriggerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaTrigger)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaTriggerArgs) ToGetWorkloadLocalOptionAutoscalingKedaTriggerOutput() GetWorkloadLocalOptionAutoscalingKedaTriggerOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaTriggerOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaTriggerArgs) ToGetWorkloadLocalOptionAutoscalingKedaTriggerOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaTriggerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaTriggerOutput)
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaTriggerArrayInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaTriggerArray and GetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaTriggerArrayInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaTriggerArray{ GetWorkloadLocalOptionAutoscalingKedaTriggerArgs{...} }
+type GetWorkloadLocalOptionAutoscalingKedaTriggerArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput() GetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaTriggerArray []GetWorkloadLocalOptionAutoscalingKedaTriggerInput
+
+func (GetWorkloadLocalOptionAutoscalingKedaTriggerArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaTrigger)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaTriggerArray) ToGetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput() GetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaTriggerArray) ToGetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaTriggerOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaTriggerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaTrigger)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaTriggerOutput) ToGetWorkloadLocalOptionAutoscalingKedaTriggerOutput() GetWorkloadLocalOptionAutoscalingKedaTriggerOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaTriggerOutput) ToGetWorkloadLocalOptionAutoscalingKedaTriggerOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaTriggerOutput {
+	return o
+}
+
+// Reference to a KEDA authentication object for secure access to external systems.
+func (o GetWorkloadLocalOptionAutoscalingKedaTriggerOutput) AuthenticationReves() GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaTrigger) []GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef {
+		return v.AuthenticationReves
+	}).(GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput)
+}
+
+// The configuration parameters that the trigger requires.
+func (o GetWorkloadLocalOptionAutoscalingKedaTriggerOutput) Metadata() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaTrigger) map[string]string { return v.Metadata }).(pulumi.StringMapOutput)
+}
+
+// The type of metric to be used for scaling.
+func (o GetWorkloadLocalOptionAutoscalingKedaTriggerOutput) MetricType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaTrigger) string { return v.MetricType }).(pulumi.StringOutput)
+}
+
+// An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+func (o GetWorkloadLocalOptionAutoscalingKedaTriggerOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaTrigger) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+func (o GetWorkloadLocalOptionAutoscalingKedaTriggerOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaTrigger) string { return v.Type }).(pulumi.StringOutput)
+}
+
+// Enables caching of metric values during polling interval.
+func (o GetWorkloadLocalOptionAutoscalingKedaTriggerOutput) UseCachedMetrics() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaTrigger) bool { return v.UseCachedMetrics }).(pulumi.BoolOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaTrigger)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput() GetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput) Index(i pulumi.IntInput) GetWorkloadLocalOptionAutoscalingKedaTriggerOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLocalOptionAutoscalingKedaTrigger {
+		return vs[0].([]GetWorkloadLocalOptionAutoscalingKedaTrigger)[vs[1].(int)]
+	}).(GetWorkloadLocalOptionAutoscalingKedaTriggerOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef struct {
+	// The name of secret listed in the GVC spec.keda.secrets.
+	Name string `pulumi:"name"`
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs and GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs{...}
+type GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput() GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs struct {
+	// The name of secret listed in the GVC spec.keda.secrets.
+	Name pulumi.StringInput `pulumi:"name"`
+}
+
+func (GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs) ToGetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput() GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs) ToGetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput)
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArray and GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArray{ GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs{...} }
+type GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput() GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArray []GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefInput
+
+func (GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArray) ToGetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput() GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArray) ToGetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput) ToGetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput() GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput) ToGetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput {
+	return o
+}
+
+// The name of secret listed in the GVC spec.keda.secrets.
+func (o GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef) string { return v.Name }).(pulumi.StringOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput() GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput) Index(i pulumi.IntInput) GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef {
+		return vs[0].([]GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef)[vs[1].(int)]
+	}).(GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingMulti struct {
+	// Valid values: `cpu` or `memory`.
+	Metric string `pulumi:"metric"`
+	// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
+	Target int `pulumi:"target"`
+}
+
+// GetWorkloadLocalOptionAutoscalingMultiInput is an input type that accepts GetWorkloadLocalOptionAutoscalingMultiArgs and GetWorkloadLocalOptionAutoscalingMultiOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingMultiInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingMultiArgs{...}
+type GetWorkloadLocalOptionAutoscalingMultiInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingMultiOutput() GetWorkloadLocalOptionAutoscalingMultiOutput
+	ToGetWorkloadLocalOptionAutoscalingMultiOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingMultiOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingMultiArgs struct {
+	// Valid values: `cpu` or `memory`.
+	Metric pulumi.StringInput `pulumi:"metric"`
+	// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
+	Target pulumi.IntInput `pulumi:"target"`
+}
+
+func (GetWorkloadLocalOptionAutoscalingMultiArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingMulti)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingMultiArgs) ToGetWorkloadLocalOptionAutoscalingMultiOutput() GetWorkloadLocalOptionAutoscalingMultiOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingMultiOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingMultiArgs) ToGetWorkloadLocalOptionAutoscalingMultiOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingMultiOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingMultiOutput)
+}
+
+// GetWorkloadLocalOptionAutoscalingMultiArrayInput is an input type that accepts GetWorkloadLocalOptionAutoscalingMultiArray and GetWorkloadLocalOptionAutoscalingMultiArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingMultiArrayInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingMultiArray{ GetWorkloadLocalOptionAutoscalingMultiArgs{...} }
+type GetWorkloadLocalOptionAutoscalingMultiArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingMultiArrayOutput() GetWorkloadLocalOptionAutoscalingMultiArrayOutput
+	ToGetWorkloadLocalOptionAutoscalingMultiArrayOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingMultiArrayOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingMultiArray []GetWorkloadLocalOptionAutoscalingMultiInput
+
+func (GetWorkloadLocalOptionAutoscalingMultiArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingMulti)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingMultiArray) ToGetWorkloadLocalOptionAutoscalingMultiArrayOutput() GetWorkloadLocalOptionAutoscalingMultiArrayOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingMultiArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingMultiArray) ToGetWorkloadLocalOptionAutoscalingMultiArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingMultiArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingMultiArrayOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingMultiOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingMultiOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingMulti)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingMultiOutput) ToGetWorkloadLocalOptionAutoscalingMultiOutput() GetWorkloadLocalOptionAutoscalingMultiOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingMultiOutput) ToGetWorkloadLocalOptionAutoscalingMultiOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingMultiOutput {
+	return o
+}
+
+// Valid values: `cpu` or `memory`.
+func (o GetWorkloadLocalOptionAutoscalingMultiOutput) Metric() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingMulti) string { return v.Metric }).(pulumi.StringOutput)
+}
+
+// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
+func (o GetWorkloadLocalOptionAutoscalingMultiOutput) Target() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingMulti) int { return v.Target }).(pulumi.IntOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingMultiArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingMultiArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingMulti)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingMultiArrayOutput) ToGetWorkloadLocalOptionAutoscalingMultiArrayOutput() GetWorkloadLocalOptionAutoscalingMultiArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingMultiArrayOutput) ToGetWorkloadLocalOptionAutoscalingMultiArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingMultiArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingMultiArrayOutput) Index(i pulumi.IntInput) GetWorkloadLocalOptionAutoscalingMultiOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLocalOptionAutoscalingMulti {
+		return vs[0].([]GetWorkloadLocalOptionAutoscalingMulti)[vs[1].(int)]
+	}).(GetWorkloadLocalOptionAutoscalingMultiOutput)
+}
+
+type GetWorkloadLocalOptionMultiZone struct {
+	Enabled bool `pulumi:"enabled"`
+}
+
+// GetWorkloadLocalOptionMultiZoneInput is an input type that accepts GetWorkloadLocalOptionMultiZoneArgs and GetWorkloadLocalOptionMultiZoneOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionMultiZoneInput` via:
+//
+//	GetWorkloadLocalOptionMultiZoneArgs{...}
+type GetWorkloadLocalOptionMultiZoneInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionMultiZoneOutput() GetWorkloadLocalOptionMultiZoneOutput
+	ToGetWorkloadLocalOptionMultiZoneOutputWithContext(context.Context) GetWorkloadLocalOptionMultiZoneOutput
+}
+
+type GetWorkloadLocalOptionMultiZoneArgs struct {
+	Enabled pulumi.BoolInput `pulumi:"enabled"`
+}
+
+func (GetWorkloadLocalOptionMultiZoneArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionMultiZone)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionMultiZoneArgs) ToGetWorkloadLocalOptionMultiZoneOutput() GetWorkloadLocalOptionMultiZoneOutput {
+	return i.ToGetWorkloadLocalOptionMultiZoneOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionMultiZoneArgs) ToGetWorkloadLocalOptionMultiZoneOutputWithContext(ctx context.Context) GetWorkloadLocalOptionMultiZoneOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionMultiZoneOutput)
+}
+
+// GetWorkloadLocalOptionMultiZoneArrayInput is an input type that accepts GetWorkloadLocalOptionMultiZoneArray and GetWorkloadLocalOptionMultiZoneArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionMultiZoneArrayInput` via:
+//
+//	GetWorkloadLocalOptionMultiZoneArray{ GetWorkloadLocalOptionMultiZoneArgs{...} }
+type GetWorkloadLocalOptionMultiZoneArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionMultiZoneArrayOutput() GetWorkloadLocalOptionMultiZoneArrayOutput
+	ToGetWorkloadLocalOptionMultiZoneArrayOutputWithContext(context.Context) GetWorkloadLocalOptionMultiZoneArrayOutput
+}
+
+type GetWorkloadLocalOptionMultiZoneArray []GetWorkloadLocalOptionMultiZoneInput
+
+func (GetWorkloadLocalOptionMultiZoneArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionMultiZone)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionMultiZoneArray) ToGetWorkloadLocalOptionMultiZoneArrayOutput() GetWorkloadLocalOptionMultiZoneArrayOutput {
+	return i.ToGetWorkloadLocalOptionMultiZoneArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionMultiZoneArray) ToGetWorkloadLocalOptionMultiZoneArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionMultiZoneArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionMultiZoneArrayOutput)
+}
+
+type GetWorkloadLocalOptionMultiZoneOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionMultiZoneOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionMultiZone)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionMultiZoneOutput) ToGetWorkloadLocalOptionMultiZoneOutput() GetWorkloadLocalOptionMultiZoneOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionMultiZoneOutput) ToGetWorkloadLocalOptionMultiZoneOutputWithContext(ctx context.Context) GetWorkloadLocalOptionMultiZoneOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionMultiZoneOutput) Enabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionMultiZone) bool { return v.Enabled }).(pulumi.BoolOutput)
+}
+
+type GetWorkloadLocalOptionMultiZoneArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionMultiZoneArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionMultiZone)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionMultiZoneArrayOutput) ToGetWorkloadLocalOptionMultiZoneArrayOutput() GetWorkloadLocalOptionMultiZoneArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionMultiZoneArrayOutput) ToGetWorkloadLocalOptionMultiZoneArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionMultiZoneArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionMultiZoneArrayOutput) Index(i pulumi.IntInput) GetWorkloadLocalOptionMultiZoneOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLocalOptionMultiZone {
+		return vs[0].([]GetWorkloadLocalOptionMultiZone)[vs[1].(int)]
+	}).(GetWorkloadLocalOptionMultiZoneOutput)
+}
+
+type GetWorkloadOption struct {
+	// Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+	Autoscalings []GetWorkloadOptionAutoscaling `pulumi:"autoscalings"`
+	// Capacity AI. Default: `true`.
+	CapacityAi bool `pulumi:"capacityAi"`
+	// The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+	CapacityAiUpdateMinutes int `pulumi:"capacityAiUpdateMinutes"`
+	// Debug mode. Default: `false`.
+	Debug      bool                         `pulumi:"debug"`
+	MultiZones []GetWorkloadOptionMultiZone `pulumi:"multiZones"`
+	// Workload suspend. Default: `false`.
+	Suspend bool `pulumi:"suspend"`
+	// Timeout in seconds. Default: `5`.
+	TimeoutSeconds int `pulumi:"timeoutSeconds"`
+}
+
+// GetWorkloadOptionInput is an input type that accepts GetWorkloadOptionArgs and GetWorkloadOptionOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionInput` via:
+//
+//	GetWorkloadOptionArgs{...}
+type GetWorkloadOptionInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionOutput() GetWorkloadOptionOutput
+	ToGetWorkloadOptionOutputWithContext(context.Context) GetWorkloadOptionOutput
+}
+
+type GetWorkloadOptionArgs struct {
+	// Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+	Autoscalings GetWorkloadOptionAutoscalingArrayInput `pulumi:"autoscalings"`
+	// Capacity AI. Default: `true`.
+	CapacityAi pulumi.BoolInput `pulumi:"capacityAi"`
+	// The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+	CapacityAiUpdateMinutes pulumi.IntInput `pulumi:"capacityAiUpdateMinutes"`
+	// Debug mode. Default: `false`.
+	Debug      pulumi.BoolInput                     `pulumi:"debug"`
+	MultiZones GetWorkloadOptionMultiZoneArrayInput `pulumi:"multiZones"`
+	// Workload suspend. Default: `false`.
+	Suspend pulumi.BoolInput `pulumi:"suspend"`
+	// Timeout in seconds. Default: `5`.
+	TimeoutSeconds pulumi.IntInput `pulumi:"timeoutSeconds"`
+}
+
+func (GetWorkloadOptionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOption)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionArgs) ToGetWorkloadOptionOutput() GetWorkloadOptionOutput {
+	return i.ToGetWorkloadOptionOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionArgs) ToGetWorkloadOptionOutputWithContext(ctx context.Context) GetWorkloadOptionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionOutput)
+}
+
+// GetWorkloadOptionArrayInput is an input type that accepts GetWorkloadOptionArray and GetWorkloadOptionArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionArrayInput` via:
+//
+//	GetWorkloadOptionArray{ GetWorkloadOptionArgs{...} }
+type GetWorkloadOptionArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionArrayOutput() GetWorkloadOptionArrayOutput
+	ToGetWorkloadOptionArrayOutputWithContext(context.Context) GetWorkloadOptionArrayOutput
+}
+
+type GetWorkloadOptionArray []GetWorkloadOptionInput
+
+func (GetWorkloadOptionArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOption)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionArray) ToGetWorkloadOptionArrayOutput() GetWorkloadOptionArrayOutput {
+	return i.ToGetWorkloadOptionArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionArray) ToGetWorkloadOptionArrayOutputWithContext(ctx context.Context) GetWorkloadOptionArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionArrayOutput)
+}
+
+type GetWorkloadOptionOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOption)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionOutput) ToGetWorkloadOptionOutput() GetWorkloadOptionOutput {
+	return o
+}
+
+func (o GetWorkloadOptionOutput) ToGetWorkloadOptionOutputWithContext(ctx context.Context) GetWorkloadOptionOutput {
+	return o
+}
+
+// Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+func (o GetWorkloadOptionOutput) Autoscalings() GetWorkloadOptionAutoscalingArrayOutput {
+	return o.ApplyT(func(v GetWorkloadOption) []GetWorkloadOptionAutoscaling { return v.Autoscalings }).(GetWorkloadOptionAutoscalingArrayOutput)
+}
+
+// Capacity AI. Default: `true`.
+func (o GetWorkloadOptionOutput) CapacityAi() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadOption) bool { return v.CapacityAi }).(pulumi.BoolOutput)
+}
+
+// The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+func (o GetWorkloadOptionOutput) CapacityAiUpdateMinutes() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOption) int { return v.CapacityAiUpdateMinutes }).(pulumi.IntOutput)
+}
+
+// Debug mode. Default: `false`.
+func (o GetWorkloadOptionOutput) Debug() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadOption) bool { return v.Debug }).(pulumi.BoolOutput)
+}
+
+func (o GetWorkloadOptionOutput) MultiZones() GetWorkloadOptionMultiZoneArrayOutput {
+	return o.ApplyT(func(v GetWorkloadOption) []GetWorkloadOptionMultiZone { return v.MultiZones }).(GetWorkloadOptionMultiZoneArrayOutput)
+}
+
+// Workload suspend. Default: `false`.
+func (o GetWorkloadOptionOutput) Suspend() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadOption) bool { return v.Suspend }).(pulumi.BoolOutput)
+}
+
+// Timeout in seconds. Default: `5`.
+func (o GetWorkloadOptionOutput) TimeoutSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOption) int { return v.TimeoutSeconds }).(pulumi.IntOutput)
+}
+
+type GetWorkloadOptionArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOption)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionArrayOutput) ToGetWorkloadOptionArrayOutput() GetWorkloadOptionArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionArrayOutput) ToGetWorkloadOptionArrayOutputWithContext(ctx context.Context) GetWorkloadOptionArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionArrayOutput) Index(i pulumi.IntInput) GetWorkloadOptionOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadOption {
+		return vs[0].([]GetWorkloadOption)[vs[1].(int)]
+	}).(GetWorkloadOptionOutput)
+}
+
+type GetWorkloadOptionAutoscaling struct {
+	// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+	Kedas []GetWorkloadOptionAutoscalingKeda `pulumi:"kedas"`
+	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+	MaxConcurrency int `pulumi:"maxConcurrency"`
+	// The maximum allowed number of replicas. Min: `0`. Default `5`.
+	MaxScale int `pulumi:"maxScale"`
+	// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
+	Metric string `pulumi:"metric"`
+	// For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+	MetricPercentile string `pulumi:"metricPercentile"`
+	// The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `maxScale`. Default `1`.
+	MinScale int                                 `pulumi:"minScale"`
+	Multis   []GetWorkloadOptionAutoscalingMulti `pulumi:"multis"`
+	// The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+	ScaleToZeroDelay int `pulumi:"scaleToZeroDelay"`
+	// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+	Target int `pulumi:"target"`
+}
+
+// GetWorkloadOptionAutoscalingInput is an input type that accepts GetWorkloadOptionAutoscalingArgs and GetWorkloadOptionAutoscalingOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingInput` via:
+//
+//	GetWorkloadOptionAutoscalingArgs{...}
+type GetWorkloadOptionAutoscalingInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingOutput() GetWorkloadOptionAutoscalingOutput
+	ToGetWorkloadOptionAutoscalingOutputWithContext(context.Context) GetWorkloadOptionAutoscalingOutput
+}
+
+type GetWorkloadOptionAutoscalingArgs struct {
+	// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+	Kedas GetWorkloadOptionAutoscalingKedaArrayInput `pulumi:"kedas"`
+	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+	MaxConcurrency pulumi.IntInput `pulumi:"maxConcurrency"`
+	// The maximum allowed number of replicas. Min: `0`. Default `5`.
+	MaxScale pulumi.IntInput `pulumi:"maxScale"`
+	// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
+	Metric pulumi.StringInput `pulumi:"metric"`
+	// For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+	MetricPercentile pulumi.StringInput `pulumi:"metricPercentile"`
+	// The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `maxScale`. Default `1`.
+	MinScale pulumi.IntInput                             `pulumi:"minScale"`
+	Multis   GetWorkloadOptionAutoscalingMultiArrayInput `pulumi:"multis"`
+	// The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+	ScaleToZeroDelay pulumi.IntInput `pulumi:"scaleToZeroDelay"`
+	// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+	Target pulumi.IntInput `pulumi:"target"`
+}
+
+func (GetWorkloadOptionAutoscalingArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscaling)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingArgs) ToGetWorkloadOptionAutoscalingOutput() GetWorkloadOptionAutoscalingOutput {
+	return i.ToGetWorkloadOptionAutoscalingOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingArgs) ToGetWorkloadOptionAutoscalingOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingOutput)
+}
+
+// GetWorkloadOptionAutoscalingArrayInput is an input type that accepts GetWorkloadOptionAutoscalingArray and GetWorkloadOptionAutoscalingArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingArrayInput` via:
+//
+//	GetWorkloadOptionAutoscalingArray{ GetWorkloadOptionAutoscalingArgs{...} }
+type GetWorkloadOptionAutoscalingArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingArrayOutput() GetWorkloadOptionAutoscalingArrayOutput
+	ToGetWorkloadOptionAutoscalingArrayOutputWithContext(context.Context) GetWorkloadOptionAutoscalingArrayOutput
+}
+
+type GetWorkloadOptionAutoscalingArray []GetWorkloadOptionAutoscalingInput
+
+func (GetWorkloadOptionAutoscalingArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscaling)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingArray) ToGetWorkloadOptionAutoscalingArrayOutput() GetWorkloadOptionAutoscalingArrayOutput {
+	return i.ToGetWorkloadOptionAutoscalingArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingArray) ToGetWorkloadOptionAutoscalingArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingArrayOutput)
+}
+
+type GetWorkloadOptionAutoscalingOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscaling)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingOutput) ToGetWorkloadOptionAutoscalingOutput() GetWorkloadOptionAutoscalingOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingOutput) ToGetWorkloadOptionAutoscalingOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingOutput {
+	return o
+}
+
+// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+func (o GetWorkloadOptionAutoscalingOutput) Kedas() GetWorkloadOptionAutoscalingKedaArrayOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscaling) []GetWorkloadOptionAutoscalingKeda { return v.Kedas }).(GetWorkloadOptionAutoscalingKedaArrayOutput)
+}
+
+// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+func (o GetWorkloadOptionAutoscalingOutput) MaxConcurrency() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscaling) int { return v.MaxConcurrency }).(pulumi.IntOutput)
+}
+
+// The maximum allowed number of replicas. Min: `0`. Default `5`.
+func (o GetWorkloadOptionAutoscalingOutput) MaxScale() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscaling) int { return v.MaxScale }).(pulumi.IntOutput)
+}
+
+// Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
+func (o GetWorkloadOptionAutoscalingOutput) Metric() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscaling) string { return v.Metric }).(pulumi.StringOutput)
+}
+
+// For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+func (o GetWorkloadOptionAutoscalingOutput) MetricPercentile() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscaling) string { return v.MetricPercentile }).(pulumi.StringOutput)
+}
+
+// The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `maxScale`. Default `1`.
+func (o GetWorkloadOptionAutoscalingOutput) MinScale() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscaling) int { return v.MinScale }).(pulumi.IntOutput)
+}
+
+func (o GetWorkloadOptionAutoscalingOutput) Multis() GetWorkloadOptionAutoscalingMultiArrayOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscaling) []GetWorkloadOptionAutoscalingMulti { return v.Multis }).(GetWorkloadOptionAutoscalingMultiArrayOutput)
+}
+
+// The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+func (o GetWorkloadOptionAutoscalingOutput) ScaleToZeroDelay() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscaling) int { return v.ScaleToZeroDelay }).(pulumi.IntOutput)
+}
+
+// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+func (o GetWorkloadOptionAutoscalingOutput) Target() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscaling) int { return v.Target }).(pulumi.IntOutput)
+}
+
+type GetWorkloadOptionAutoscalingArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscaling)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingArrayOutput) ToGetWorkloadOptionAutoscalingArrayOutput() GetWorkloadOptionAutoscalingArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingArrayOutput) ToGetWorkloadOptionAutoscalingArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingArrayOutput) Index(i pulumi.IntInput) GetWorkloadOptionAutoscalingOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadOptionAutoscaling {
+		return vs[0].([]GetWorkloadOptionAutoscaling)[vs[1].(int)]
+	}).(GetWorkloadOptionAutoscalingOutput)
+}
+
+type GetWorkloadOptionAutoscalingKeda struct {
+	// Advanced configuration options for KEDA.
+	Advanceds []GetWorkloadOptionAutoscalingKedaAdvanced `pulumi:"advanceds"`
+	// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+	CooldownPeriod int `pulumi:"cooldownPeriod"`
+	// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+	InitialCooldownPeriod int `pulumi:"initialCooldownPeriod"`
+	// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+	PollingInterval int `pulumi:"pollingInterval"`
+	// An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+	Triggers []GetWorkloadOptionAutoscalingKedaTrigger `pulumi:"triggers"`
+}
+
+// GetWorkloadOptionAutoscalingKedaInput is an input type that accepts GetWorkloadOptionAutoscalingKedaArgs and GetWorkloadOptionAutoscalingKedaOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaArgs{...}
+type GetWorkloadOptionAutoscalingKedaInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaOutput() GetWorkloadOptionAutoscalingKedaOutput
+	ToGetWorkloadOptionAutoscalingKedaOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaArgs struct {
+	// Advanced configuration options for KEDA.
+	Advanceds GetWorkloadOptionAutoscalingKedaAdvancedArrayInput `pulumi:"advanceds"`
+	// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+	CooldownPeriod pulumi.IntInput `pulumi:"cooldownPeriod"`
+	// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+	InitialCooldownPeriod pulumi.IntInput `pulumi:"initialCooldownPeriod"`
+	// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+	PollingInterval pulumi.IntInput `pulumi:"pollingInterval"`
+	// An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+	Triggers GetWorkloadOptionAutoscalingKedaTriggerArrayInput `pulumi:"triggers"`
+}
+
+func (GetWorkloadOptionAutoscalingKedaArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKeda)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaArgs) ToGetWorkloadOptionAutoscalingKedaOutput() GetWorkloadOptionAutoscalingKedaOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaArgs) ToGetWorkloadOptionAutoscalingKedaOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaOutput)
+}
+
+// GetWorkloadOptionAutoscalingKedaArrayInput is an input type that accepts GetWorkloadOptionAutoscalingKedaArray and GetWorkloadOptionAutoscalingKedaArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaArrayInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaArray{ GetWorkloadOptionAutoscalingKedaArgs{...} }
+type GetWorkloadOptionAutoscalingKedaArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaArrayOutput() GetWorkloadOptionAutoscalingKedaArrayOutput
+	ToGetWorkloadOptionAutoscalingKedaArrayOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaArrayOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaArray []GetWorkloadOptionAutoscalingKedaInput
+
+func (GetWorkloadOptionAutoscalingKedaArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKeda)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaArray) ToGetWorkloadOptionAutoscalingKedaArrayOutput() GetWorkloadOptionAutoscalingKedaArrayOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaArray) ToGetWorkloadOptionAutoscalingKedaArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaArrayOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKeda)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaOutput) ToGetWorkloadOptionAutoscalingKedaOutput() GetWorkloadOptionAutoscalingKedaOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaOutput) ToGetWorkloadOptionAutoscalingKedaOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaOutput {
+	return o
+}
+
+// Advanced configuration options for KEDA.
+func (o GetWorkloadOptionAutoscalingKedaOutput) Advanceds() GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKeda) []GetWorkloadOptionAutoscalingKedaAdvanced {
+		return v.Advanceds
+	}).(GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput)
+}
+
+// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+func (o GetWorkloadOptionAutoscalingKedaOutput) CooldownPeriod() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKeda) int { return v.CooldownPeriod }).(pulumi.IntOutput)
+}
+
+// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+func (o GetWorkloadOptionAutoscalingKedaOutput) InitialCooldownPeriod() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKeda) int { return v.InitialCooldownPeriod }).(pulumi.IntOutput)
+}
+
+// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+func (o GetWorkloadOptionAutoscalingKedaOutput) PollingInterval() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKeda) int { return v.PollingInterval }).(pulumi.IntOutput)
+}
+
+// An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+func (o GetWorkloadOptionAutoscalingKedaOutput) Triggers() GetWorkloadOptionAutoscalingKedaTriggerArrayOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKeda) []GetWorkloadOptionAutoscalingKedaTrigger { return v.Triggers }).(GetWorkloadOptionAutoscalingKedaTriggerArrayOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKeda)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaArrayOutput) ToGetWorkloadOptionAutoscalingKedaArrayOutput() GetWorkloadOptionAutoscalingKedaArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaArrayOutput) ToGetWorkloadOptionAutoscalingKedaArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaArrayOutput) Index(i pulumi.IntInput) GetWorkloadOptionAutoscalingKedaOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadOptionAutoscalingKeda {
+		return vs[0].([]GetWorkloadOptionAutoscalingKeda)[vs[1].(int)]
+	}).(GetWorkloadOptionAutoscalingKedaOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvanced struct {
+	// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+	ScalingModifiers []GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier `pulumi:"scalingModifiers"`
+}
+
+// GetWorkloadOptionAutoscalingKedaAdvancedInput is an input type that accepts GetWorkloadOptionAutoscalingKedaAdvancedArgs and GetWorkloadOptionAutoscalingKedaAdvancedOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaAdvancedInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaAdvancedArgs{...}
+type GetWorkloadOptionAutoscalingKedaAdvancedInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaAdvancedOutput() GetWorkloadOptionAutoscalingKedaAdvancedOutput
+	ToGetWorkloadOptionAutoscalingKedaAdvancedOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaAdvancedOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedArgs struct {
+	// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+	ScalingModifiers GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayInput `pulumi:"scalingModifiers"`
+}
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvanced)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedArgs) ToGetWorkloadOptionAutoscalingKedaAdvancedOutput() GetWorkloadOptionAutoscalingKedaAdvancedOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaAdvancedOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedArgs) ToGetWorkloadOptionAutoscalingKedaAdvancedOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaAdvancedOutput)
+}
+
+// GetWorkloadOptionAutoscalingKedaAdvancedArrayInput is an input type that accepts GetWorkloadOptionAutoscalingKedaAdvancedArray and GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaAdvancedArrayInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaAdvancedArray{ GetWorkloadOptionAutoscalingKedaAdvancedArgs{...} }
+type GetWorkloadOptionAutoscalingKedaAdvancedArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaAdvancedArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput
+	ToGetWorkloadOptionAutoscalingKedaAdvancedArrayOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedArray []GetWorkloadOptionAutoscalingKedaAdvancedInput
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaAdvanced)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedArray) ToGetWorkloadOptionAutoscalingKedaAdvancedArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaAdvancedArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedArray) ToGetWorkloadOptionAutoscalingKedaAdvancedArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvanced)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedOutput() GetWorkloadOptionAutoscalingKedaAdvancedOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedOutput {
+	return o
+}
+
+// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedOutput) ScalingModifiers() GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvanced) []GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier {
+		return v.ScalingModifiers
+	}).(GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaAdvanced)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput) Index(i pulumi.IntInput) GetWorkloadOptionAutoscalingKedaAdvancedOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadOptionAutoscalingKedaAdvanced {
+		return vs[0].([]GetWorkloadOptionAutoscalingKedaAdvanced)[vs[1].(int)]
+	}).(GetWorkloadOptionAutoscalingKedaAdvancedOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier struct {
+	// Defines the new activation target value to scale on for the composed metric.
+	ActivationTarget string `pulumi:"activationTarget"`
+	// Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+	Formula string `pulumi:"formula"`
+	// Defines metric type used for this new composite-metric.
+	MetricType string `pulumi:"metricType"`
+	// Defines new target value to scale on for the composed metric.
+	Target string `pulumi:"target"`
+}
+
+// GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierInput is an input type that accepts GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArgs and GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArgs{...}
+type GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput() GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput
+	ToGetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArgs struct {
+	// Defines the new activation target value to scale on for the composed metric.
+	ActivationTarget pulumi.StringInput `pulumi:"activationTarget"`
+	// Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+	Formula pulumi.StringInput `pulumi:"formula"`
+	// Defines metric type used for this new composite-metric.
+	MetricType pulumi.StringInput `pulumi:"metricType"`
+	// Defines new target value to scale on for the composed metric.
+	Target pulumi.StringInput `pulumi:"target"`
+}
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArgs) ToGetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput() GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArgs) ToGetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput)
+}
+
+// GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayInput is an input type that accepts GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArray and GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArray{ GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArgs{...} }
+type GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput
+	ToGetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArray []GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierInput
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArray) ToGetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArray) ToGetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput() GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput {
+	return o
+}
+
+// Defines the new activation target value to scale on for the composed metric.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput) ActivationTarget() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier) string { return v.ActivationTarget }).(pulumi.StringOutput)
+}
+
+// Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput) Formula() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier) string { return v.Formula }).(pulumi.StringOutput)
+}
+
+// Defines metric type used for this new composite-metric.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput) MetricType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier) string { return v.MetricType }).(pulumi.StringOutput)
+}
+
+// Defines new target value to scale on for the composed metric.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput) Target() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier) string { return v.Target }).(pulumi.StringOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput) Index(i pulumi.IntInput) GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier {
+		return vs[0].([]GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier)[vs[1].(int)]
+	}).(GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaTrigger struct {
+	// Reference to a KEDA authentication object for secure access to external systems.
+	AuthenticationReves []GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRef `pulumi:"authenticationReves"`
+	// The configuration parameters that the trigger requires.
+	Metadata map[string]string `pulumi:"metadata"`
+	// The type of metric to be used for scaling.
+	MetricType string `pulumi:"metricType"`
+	// An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+	Name string `pulumi:"name"`
+	// The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+	Type string `pulumi:"type"`
+	// Enables caching of metric values during polling interval.
+	UseCachedMetrics bool `pulumi:"useCachedMetrics"`
+}
+
+// GetWorkloadOptionAutoscalingKedaTriggerInput is an input type that accepts GetWorkloadOptionAutoscalingKedaTriggerArgs and GetWorkloadOptionAutoscalingKedaTriggerOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaTriggerInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaTriggerArgs{...}
+type GetWorkloadOptionAutoscalingKedaTriggerInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaTriggerOutput() GetWorkloadOptionAutoscalingKedaTriggerOutput
+	ToGetWorkloadOptionAutoscalingKedaTriggerOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaTriggerOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaTriggerArgs struct {
+	// Reference to a KEDA authentication object for secure access to external systems.
+	AuthenticationReves GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayInput `pulumi:"authenticationReves"`
+	// The configuration parameters that the trigger requires.
+	Metadata pulumi.StringMapInput `pulumi:"metadata"`
+	// The type of metric to be used for scaling.
+	MetricType pulumi.StringInput `pulumi:"metricType"`
+	// An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+	Name pulumi.StringInput `pulumi:"name"`
+	// The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+	Type pulumi.StringInput `pulumi:"type"`
+	// Enables caching of metric values during polling interval.
+	UseCachedMetrics pulumi.BoolInput `pulumi:"useCachedMetrics"`
+}
+
+func (GetWorkloadOptionAutoscalingKedaTriggerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaTrigger)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaTriggerArgs) ToGetWorkloadOptionAutoscalingKedaTriggerOutput() GetWorkloadOptionAutoscalingKedaTriggerOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaTriggerOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaTriggerArgs) ToGetWorkloadOptionAutoscalingKedaTriggerOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaTriggerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaTriggerOutput)
+}
+
+// GetWorkloadOptionAutoscalingKedaTriggerArrayInput is an input type that accepts GetWorkloadOptionAutoscalingKedaTriggerArray and GetWorkloadOptionAutoscalingKedaTriggerArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaTriggerArrayInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaTriggerArray{ GetWorkloadOptionAutoscalingKedaTriggerArgs{...} }
+type GetWorkloadOptionAutoscalingKedaTriggerArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaTriggerArrayOutput() GetWorkloadOptionAutoscalingKedaTriggerArrayOutput
+	ToGetWorkloadOptionAutoscalingKedaTriggerArrayOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaTriggerArrayOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaTriggerArray []GetWorkloadOptionAutoscalingKedaTriggerInput
+
+func (GetWorkloadOptionAutoscalingKedaTriggerArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaTrigger)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaTriggerArray) ToGetWorkloadOptionAutoscalingKedaTriggerArrayOutput() GetWorkloadOptionAutoscalingKedaTriggerArrayOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaTriggerArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaTriggerArray) ToGetWorkloadOptionAutoscalingKedaTriggerArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaTriggerArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaTriggerArrayOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaTriggerOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaTriggerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaTrigger)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaTriggerOutput) ToGetWorkloadOptionAutoscalingKedaTriggerOutput() GetWorkloadOptionAutoscalingKedaTriggerOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaTriggerOutput) ToGetWorkloadOptionAutoscalingKedaTriggerOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaTriggerOutput {
+	return o
+}
+
+// Reference to a KEDA authentication object for secure access to external systems.
+func (o GetWorkloadOptionAutoscalingKedaTriggerOutput) AuthenticationReves() GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaTrigger) []GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRef {
+		return v.AuthenticationReves
+	}).(GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput)
+}
+
+// The configuration parameters that the trigger requires.
+func (o GetWorkloadOptionAutoscalingKedaTriggerOutput) Metadata() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaTrigger) map[string]string { return v.Metadata }).(pulumi.StringMapOutput)
+}
+
+// The type of metric to be used for scaling.
+func (o GetWorkloadOptionAutoscalingKedaTriggerOutput) MetricType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaTrigger) string { return v.MetricType }).(pulumi.StringOutput)
+}
+
+// An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+func (o GetWorkloadOptionAutoscalingKedaTriggerOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaTrigger) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+func (o GetWorkloadOptionAutoscalingKedaTriggerOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaTrigger) string { return v.Type }).(pulumi.StringOutput)
+}
+
+// Enables caching of metric values during polling interval.
+func (o GetWorkloadOptionAutoscalingKedaTriggerOutput) UseCachedMetrics() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaTrigger) bool { return v.UseCachedMetrics }).(pulumi.BoolOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaTriggerArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaTriggerArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaTrigger)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaTriggerArrayOutput) ToGetWorkloadOptionAutoscalingKedaTriggerArrayOutput() GetWorkloadOptionAutoscalingKedaTriggerArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaTriggerArrayOutput) ToGetWorkloadOptionAutoscalingKedaTriggerArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaTriggerArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaTriggerArrayOutput) Index(i pulumi.IntInput) GetWorkloadOptionAutoscalingKedaTriggerOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadOptionAutoscalingKedaTrigger {
+		return vs[0].([]GetWorkloadOptionAutoscalingKedaTrigger)[vs[1].(int)]
+	}).(GetWorkloadOptionAutoscalingKedaTriggerOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRef struct {
+	// The name of secret listed in the GVC spec.keda.secrets.
+	Name string `pulumi:"name"`
+}
+
+// GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefInput is an input type that accepts GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArgs and GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArgs{...}
+type GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput() GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput
+	ToGetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArgs struct {
+	// The name of secret listed in the GVC spec.keda.secrets.
+	Name pulumi.StringInput `pulumi:"name"`
+}
+
+func (GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRef)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArgs) ToGetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput() GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArgs) ToGetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput)
+}
+
+// GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayInput is an input type that accepts GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArray and GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArray{ GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArgs{...} }
+type GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput() GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput
+	ToGetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArray []GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefInput
+
+func (GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRef)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArray) ToGetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput() GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArray) ToGetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRef)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput) ToGetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput() GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput) ToGetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput {
+	return o
+}
+
+// The name of secret listed in the GVC spec.keda.secrets.
+func (o GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRef) string { return v.Name }).(pulumi.StringOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRef)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput) ToGetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput() GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput) ToGetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput) Index(i pulumi.IntInput) GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRef {
+		return vs[0].([]GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRef)[vs[1].(int)]
+	}).(GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput)
+}
+
+type GetWorkloadOptionAutoscalingMulti struct {
+	// Valid values: `cpu` or `memory`.
+	Metric string `pulumi:"metric"`
+	// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
+	Target int `pulumi:"target"`
+}
+
+// GetWorkloadOptionAutoscalingMultiInput is an input type that accepts GetWorkloadOptionAutoscalingMultiArgs and GetWorkloadOptionAutoscalingMultiOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingMultiInput` via:
+//
+//	GetWorkloadOptionAutoscalingMultiArgs{...}
+type GetWorkloadOptionAutoscalingMultiInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingMultiOutput() GetWorkloadOptionAutoscalingMultiOutput
+	ToGetWorkloadOptionAutoscalingMultiOutputWithContext(context.Context) GetWorkloadOptionAutoscalingMultiOutput
+}
+
+type GetWorkloadOptionAutoscalingMultiArgs struct {
+	// Valid values: `cpu` or `memory`.
+	Metric pulumi.StringInput `pulumi:"metric"`
+	// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
+	Target pulumi.IntInput `pulumi:"target"`
+}
+
+func (GetWorkloadOptionAutoscalingMultiArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingMulti)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingMultiArgs) ToGetWorkloadOptionAutoscalingMultiOutput() GetWorkloadOptionAutoscalingMultiOutput {
+	return i.ToGetWorkloadOptionAutoscalingMultiOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingMultiArgs) ToGetWorkloadOptionAutoscalingMultiOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingMultiOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingMultiOutput)
+}
+
+// GetWorkloadOptionAutoscalingMultiArrayInput is an input type that accepts GetWorkloadOptionAutoscalingMultiArray and GetWorkloadOptionAutoscalingMultiArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingMultiArrayInput` via:
+//
+//	GetWorkloadOptionAutoscalingMultiArray{ GetWorkloadOptionAutoscalingMultiArgs{...} }
+type GetWorkloadOptionAutoscalingMultiArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingMultiArrayOutput() GetWorkloadOptionAutoscalingMultiArrayOutput
+	ToGetWorkloadOptionAutoscalingMultiArrayOutputWithContext(context.Context) GetWorkloadOptionAutoscalingMultiArrayOutput
+}
+
+type GetWorkloadOptionAutoscalingMultiArray []GetWorkloadOptionAutoscalingMultiInput
+
+func (GetWorkloadOptionAutoscalingMultiArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingMulti)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingMultiArray) ToGetWorkloadOptionAutoscalingMultiArrayOutput() GetWorkloadOptionAutoscalingMultiArrayOutput {
+	return i.ToGetWorkloadOptionAutoscalingMultiArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingMultiArray) ToGetWorkloadOptionAutoscalingMultiArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingMultiArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingMultiArrayOutput)
+}
+
+type GetWorkloadOptionAutoscalingMultiOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingMultiOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingMulti)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingMultiOutput) ToGetWorkloadOptionAutoscalingMultiOutput() GetWorkloadOptionAutoscalingMultiOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingMultiOutput) ToGetWorkloadOptionAutoscalingMultiOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingMultiOutput {
+	return o
+}
+
+// Valid values: `cpu` or `memory`.
+func (o GetWorkloadOptionAutoscalingMultiOutput) Metric() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingMulti) string { return v.Metric }).(pulumi.StringOutput)
+}
+
+// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
+func (o GetWorkloadOptionAutoscalingMultiOutput) Target() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingMulti) int { return v.Target }).(pulumi.IntOutput)
+}
+
+type GetWorkloadOptionAutoscalingMultiArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingMultiArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingMulti)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingMultiArrayOutput) ToGetWorkloadOptionAutoscalingMultiArrayOutput() GetWorkloadOptionAutoscalingMultiArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingMultiArrayOutput) ToGetWorkloadOptionAutoscalingMultiArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingMultiArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingMultiArrayOutput) Index(i pulumi.IntInput) GetWorkloadOptionAutoscalingMultiOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadOptionAutoscalingMulti {
+		return vs[0].([]GetWorkloadOptionAutoscalingMulti)[vs[1].(int)]
+	}).(GetWorkloadOptionAutoscalingMultiOutput)
+}
+
+type GetWorkloadOptionMultiZone struct {
+	Enabled bool `pulumi:"enabled"`
+}
+
+// GetWorkloadOptionMultiZoneInput is an input type that accepts GetWorkloadOptionMultiZoneArgs and GetWorkloadOptionMultiZoneOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionMultiZoneInput` via:
+//
+//	GetWorkloadOptionMultiZoneArgs{...}
+type GetWorkloadOptionMultiZoneInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionMultiZoneOutput() GetWorkloadOptionMultiZoneOutput
+	ToGetWorkloadOptionMultiZoneOutputWithContext(context.Context) GetWorkloadOptionMultiZoneOutput
+}
+
+type GetWorkloadOptionMultiZoneArgs struct {
+	Enabled pulumi.BoolInput `pulumi:"enabled"`
+}
+
+func (GetWorkloadOptionMultiZoneArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionMultiZone)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionMultiZoneArgs) ToGetWorkloadOptionMultiZoneOutput() GetWorkloadOptionMultiZoneOutput {
+	return i.ToGetWorkloadOptionMultiZoneOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionMultiZoneArgs) ToGetWorkloadOptionMultiZoneOutputWithContext(ctx context.Context) GetWorkloadOptionMultiZoneOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionMultiZoneOutput)
+}
+
+// GetWorkloadOptionMultiZoneArrayInput is an input type that accepts GetWorkloadOptionMultiZoneArray and GetWorkloadOptionMultiZoneArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionMultiZoneArrayInput` via:
+//
+//	GetWorkloadOptionMultiZoneArray{ GetWorkloadOptionMultiZoneArgs{...} }
+type GetWorkloadOptionMultiZoneArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionMultiZoneArrayOutput() GetWorkloadOptionMultiZoneArrayOutput
+	ToGetWorkloadOptionMultiZoneArrayOutputWithContext(context.Context) GetWorkloadOptionMultiZoneArrayOutput
+}
+
+type GetWorkloadOptionMultiZoneArray []GetWorkloadOptionMultiZoneInput
+
+func (GetWorkloadOptionMultiZoneArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionMultiZone)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionMultiZoneArray) ToGetWorkloadOptionMultiZoneArrayOutput() GetWorkloadOptionMultiZoneArrayOutput {
+	return i.ToGetWorkloadOptionMultiZoneArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionMultiZoneArray) ToGetWorkloadOptionMultiZoneArrayOutputWithContext(ctx context.Context) GetWorkloadOptionMultiZoneArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionMultiZoneArrayOutput)
+}
+
+type GetWorkloadOptionMultiZoneOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionMultiZoneOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionMultiZone)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionMultiZoneOutput) ToGetWorkloadOptionMultiZoneOutput() GetWorkloadOptionMultiZoneOutput {
+	return o
+}
+
+func (o GetWorkloadOptionMultiZoneOutput) ToGetWorkloadOptionMultiZoneOutputWithContext(ctx context.Context) GetWorkloadOptionMultiZoneOutput {
+	return o
+}
+
+func (o GetWorkloadOptionMultiZoneOutput) Enabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadOptionMultiZone) bool { return v.Enabled }).(pulumi.BoolOutput)
+}
+
+type GetWorkloadOptionMultiZoneArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionMultiZoneArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionMultiZone)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionMultiZoneArrayOutput) ToGetWorkloadOptionMultiZoneArrayOutput() GetWorkloadOptionMultiZoneArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionMultiZoneArrayOutput) ToGetWorkloadOptionMultiZoneArrayOutputWithContext(ctx context.Context) GetWorkloadOptionMultiZoneArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionMultiZoneArrayOutput) Index(i pulumi.IntInput) GetWorkloadOptionMultiZoneOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadOptionMultiZone {
+		return vs[0].([]GetWorkloadOptionMultiZone)[vs[1].(int)]
+	}).(GetWorkloadOptionMultiZoneOutput)
+}
+
+type GetWorkloadRequestRetryPolicy struct {
+	Attempts int      `pulumi:"attempts"`
+	RetryOns []string `pulumi:"retryOns"`
+}
+
+// GetWorkloadRequestRetryPolicyInput is an input type that accepts GetWorkloadRequestRetryPolicyArgs and GetWorkloadRequestRetryPolicyOutput values.
+// You can construct a concrete instance of `GetWorkloadRequestRetryPolicyInput` via:
+//
+//	GetWorkloadRequestRetryPolicyArgs{...}
+type GetWorkloadRequestRetryPolicyInput interface {
+	pulumi.Input
+
+	ToGetWorkloadRequestRetryPolicyOutput() GetWorkloadRequestRetryPolicyOutput
+	ToGetWorkloadRequestRetryPolicyOutputWithContext(context.Context) GetWorkloadRequestRetryPolicyOutput
+}
+
+type GetWorkloadRequestRetryPolicyArgs struct {
+	Attempts pulumi.IntInput         `pulumi:"attempts"`
+	RetryOns pulumi.StringArrayInput `pulumi:"retryOns"`
+}
+
+func (GetWorkloadRequestRetryPolicyArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadRequestRetryPolicy)(nil)).Elem()
+}
+
+func (i GetWorkloadRequestRetryPolicyArgs) ToGetWorkloadRequestRetryPolicyOutput() GetWorkloadRequestRetryPolicyOutput {
+	return i.ToGetWorkloadRequestRetryPolicyOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadRequestRetryPolicyArgs) ToGetWorkloadRequestRetryPolicyOutputWithContext(ctx context.Context) GetWorkloadRequestRetryPolicyOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadRequestRetryPolicyOutput)
+}
+
+// GetWorkloadRequestRetryPolicyArrayInput is an input type that accepts GetWorkloadRequestRetryPolicyArray and GetWorkloadRequestRetryPolicyArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadRequestRetryPolicyArrayInput` via:
+//
+//	GetWorkloadRequestRetryPolicyArray{ GetWorkloadRequestRetryPolicyArgs{...} }
+type GetWorkloadRequestRetryPolicyArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadRequestRetryPolicyArrayOutput() GetWorkloadRequestRetryPolicyArrayOutput
+	ToGetWorkloadRequestRetryPolicyArrayOutputWithContext(context.Context) GetWorkloadRequestRetryPolicyArrayOutput
+}
+
+type GetWorkloadRequestRetryPolicyArray []GetWorkloadRequestRetryPolicyInput
+
+func (GetWorkloadRequestRetryPolicyArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadRequestRetryPolicy)(nil)).Elem()
+}
+
+func (i GetWorkloadRequestRetryPolicyArray) ToGetWorkloadRequestRetryPolicyArrayOutput() GetWorkloadRequestRetryPolicyArrayOutput {
+	return i.ToGetWorkloadRequestRetryPolicyArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadRequestRetryPolicyArray) ToGetWorkloadRequestRetryPolicyArrayOutputWithContext(ctx context.Context) GetWorkloadRequestRetryPolicyArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadRequestRetryPolicyArrayOutput)
+}
+
+type GetWorkloadRequestRetryPolicyOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadRequestRetryPolicyOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadRequestRetryPolicy)(nil)).Elem()
+}
+
+func (o GetWorkloadRequestRetryPolicyOutput) ToGetWorkloadRequestRetryPolicyOutput() GetWorkloadRequestRetryPolicyOutput {
+	return o
+}
+
+func (o GetWorkloadRequestRetryPolicyOutput) ToGetWorkloadRequestRetryPolicyOutputWithContext(ctx context.Context) GetWorkloadRequestRetryPolicyOutput {
+	return o
+}
+
+func (o GetWorkloadRequestRetryPolicyOutput) Attempts() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadRequestRetryPolicy) int { return v.Attempts }).(pulumi.IntOutput)
+}
+
+func (o GetWorkloadRequestRetryPolicyOutput) RetryOns() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadRequestRetryPolicy) []string { return v.RetryOns }).(pulumi.StringArrayOutput)
+}
+
+type GetWorkloadRequestRetryPolicyArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadRequestRetryPolicyArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadRequestRetryPolicy)(nil)).Elem()
+}
+
+func (o GetWorkloadRequestRetryPolicyArrayOutput) ToGetWorkloadRequestRetryPolicyArrayOutput() GetWorkloadRequestRetryPolicyArrayOutput {
+	return o
+}
+
+func (o GetWorkloadRequestRetryPolicyArrayOutput) ToGetWorkloadRequestRetryPolicyArrayOutputWithContext(ctx context.Context) GetWorkloadRequestRetryPolicyArrayOutput {
+	return o
+}
+
+func (o GetWorkloadRequestRetryPolicyArrayOutput) Index(i pulumi.IntInput) GetWorkloadRequestRetryPolicyOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadRequestRetryPolicy {
+		return vs[0].([]GetWorkloadRequestRetryPolicy)[vs[1].(int)]
+	}).(GetWorkloadRequestRetryPolicyOutput)
+}
+
+type GetWorkloadRolloutOption struct {
+	// The number of replicas that can be created above the desired amount of replicas during an update.
+	MaxSurgeReplicas string `pulumi:"maxSurgeReplicas"`
+	// The number of replicas that can be unavailable during the update process.
+	MaxUnavailableReplicas string `pulumi:"maxUnavailableReplicas"`
+	// The minimum number of seconds a container must run without crashing to be considered available.
+	MinReadySeconds int `pulumi:"minReadySeconds"`
+	// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+	ScalingPolicy string `pulumi:"scalingPolicy"`
+	// The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run.
+	TerminationGracePeriodSeconds int `pulumi:"terminationGracePeriodSeconds"`
+}
+
+// GetWorkloadRolloutOptionInput is an input type that accepts GetWorkloadRolloutOptionArgs and GetWorkloadRolloutOptionOutput values.
+// You can construct a concrete instance of `GetWorkloadRolloutOptionInput` via:
+//
+//	GetWorkloadRolloutOptionArgs{...}
+type GetWorkloadRolloutOptionInput interface {
+	pulumi.Input
+
+	ToGetWorkloadRolloutOptionOutput() GetWorkloadRolloutOptionOutput
+	ToGetWorkloadRolloutOptionOutputWithContext(context.Context) GetWorkloadRolloutOptionOutput
+}
+
+type GetWorkloadRolloutOptionArgs struct {
+	// The number of replicas that can be created above the desired amount of replicas during an update.
+	MaxSurgeReplicas pulumi.StringInput `pulumi:"maxSurgeReplicas"`
+	// The number of replicas that can be unavailable during the update process.
+	MaxUnavailableReplicas pulumi.StringInput `pulumi:"maxUnavailableReplicas"`
+	// The minimum number of seconds a container must run without crashing to be considered available.
+	MinReadySeconds pulumi.IntInput `pulumi:"minReadySeconds"`
+	// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+	ScalingPolicy pulumi.StringInput `pulumi:"scalingPolicy"`
+	// The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run.
+	TerminationGracePeriodSeconds pulumi.IntInput `pulumi:"terminationGracePeriodSeconds"`
+}
+
+func (GetWorkloadRolloutOptionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadRolloutOption)(nil)).Elem()
+}
+
+func (i GetWorkloadRolloutOptionArgs) ToGetWorkloadRolloutOptionOutput() GetWorkloadRolloutOptionOutput {
+	return i.ToGetWorkloadRolloutOptionOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadRolloutOptionArgs) ToGetWorkloadRolloutOptionOutputWithContext(ctx context.Context) GetWorkloadRolloutOptionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadRolloutOptionOutput)
+}
+
+// GetWorkloadRolloutOptionArrayInput is an input type that accepts GetWorkloadRolloutOptionArray and GetWorkloadRolloutOptionArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadRolloutOptionArrayInput` via:
+//
+//	GetWorkloadRolloutOptionArray{ GetWorkloadRolloutOptionArgs{...} }
+type GetWorkloadRolloutOptionArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadRolloutOptionArrayOutput() GetWorkloadRolloutOptionArrayOutput
+	ToGetWorkloadRolloutOptionArrayOutputWithContext(context.Context) GetWorkloadRolloutOptionArrayOutput
+}
+
+type GetWorkloadRolloutOptionArray []GetWorkloadRolloutOptionInput
+
+func (GetWorkloadRolloutOptionArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadRolloutOption)(nil)).Elem()
+}
+
+func (i GetWorkloadRolloutOptionArray) ToGetWorkloadRolloutOptionArrayOutput() GetWorkloadRolloutOptionArrayOutput {
+	return i.ToGetWorkloadRolloutOptionArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadRolloutOptionArray) ToGetWorkloadRolloutOptionArrayOutputWithContext(ctx context.Context) GetWorkloadRolloutOptionArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadRolloutOptionArrayOutput)
+}
+
+type GetWorkloadRolloutOptionOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadRolloutOptionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadRolloutOption)(nil)).Elem()
+}
+
+func (o GetWorkloadRolloutOptionOutput) ToGetWorkloadRolloutOptionOutput() GetWorkloadRolloutOptionOutput {
+	return o
+}
+
+func (o GetWorkloadRolloutOptionOutput) ToGetWorkloadRolloutOptionOutputWithContext(ctx context.Context) GetWorkloadRolloutOptionOutput {
+	return o
+}
+
+// The number of replicas that can be created above the desired amount of replicas during an update.
+func (o GetWorkloadRolloutOptionOutput) MaxSurgeReplicas() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadRolloutOption) string { return v.MaxSurgeReplicas }).(pulumi.StringOutput)
+}
+
+// The number of replicas that can be unavailable during the update process.
+func (o GetWorkloadRolloutOptionOutput) MaxUnavailableReplicas() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadRolloutOption) string { return v.MaxUnavailableReplicas }).(pulumi.StringOutput)
+}
+
+// The minimum number of seconds a container must run without crashing to be considered available.
+func (o GetWorkloadRolloutOptionOutput) MinReadySeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadRolloutOption) int { return v.MinReadySeconds }).(pulumi.IntOutput)
+}
+
+// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+func (o GetWorkloadRolloutOptionOutput) ScalingPolicy() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadRolloutOption) string { return v.ScalingPolicy }).(pulumi.StringOutput)
+}
+
+// The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run.
+func (o GetWorkloadRolloutOptionOutput) TerminationGracePeriodSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadRolloutOption) int { return v.TerminationGracePeriodSeconds }).(pulumi.IntOutput)
+}
+
+type GetWorkloadRolloutOptionArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadRolloutOptionArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadRolloutOption)(nil)).Elem()
+}
+
+func (o GetWorkloadRolloutOptionArrayOutput) ToGetWorkloadRolloutOptionArrayOutput() GetWorkloadRolloutOptionArrayOutput {
+	return o
+}
+
+func (o GetWorkloadRolloutOptionArrayOutput) ToGetWorkloadRolloutOptionArrayOutputWithContext(ctx context.Context) GetWorkloadRolloutOptionArrayOutput {
+	return o
+}
+
+func (o GetWorkloadRolloutOptionArrayOutput) Index(i pulumi.IntInput) GetWorkloadRolloutOptionOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadRolloutOption {
+		return vs[0].([]GetWorkloadRolloutOption)[vs[1].(int)]
+	}).(GetWorkloadRolloutOptionOutput)
+}
+
+type GetWorkloadSecurityOption struct {
+	// The group id assigned to any mounted volume.
+	FileSystemGroupId int `pulumi:"fileSystemGroupId"`
+}
+
+// GetWorkloadSecurityOptionInput is an input type that accepts GetWorkloadSecurityOptionArgs and GetWorkloadSecurityOptionOutput values.
+// You can construct a concrete instance of `GetWorkloadSecurityOptionInput` via:
+//
+//	GetWorkloadSecurityOptionArgs{...}
+type GetWorkloadSecurityOptionInput interface {
+	pulumi.Input
+
+	ToGetWorkloadSecurityOptionOutput() GetWorkloadSecurityOptionOutput
+	ToGetWorkloadSecurityOptionOutputWithContext(context.Context) GetWorkloadSecurityOptionOutput
+}
+
+type GetWorkloadSecurityOptionArgs struct {
+	// The group id assigned to any mounted volume.
+	FileSystemGroupId pulumi.IntInput `pulumi:"fileSystemGroupId"`
+}
+
+func (GetWorkloadSecurityOptionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadSecurityOption)(nil)).Elem()
+}
+
+func (i GetWorkloadSecurityOptionArgs) ToGetWorkloadSecurityOptionOutput() GetWorkloadSecurityOptionOutput {
+	return i.ToGetWorkloadSecurityOptionOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadSecurityOptionArgs) ToGetWorkloadSecurityOptionOutputWithContext(ctx context.Context) GetWorkloadSecurityOptionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadSecurityOptionOutput)
+}
+
+// GetWorkloadSecurityOptionArrayInput is an input type that accepts GetWorkloadSecurityOptionArray and GetWorkloadSecurityOptionArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadSecurityOptionArrayInput` via:
+//
+//	GetWorkloadSecurityOptionArray{ GetWorkloadSecurityOptionArgs{...} }
+type GetWorkloadSecurityOptionArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadSecurityOptionArrayOutput() GetWorkloadSecurityOptionArrayOutput
+	ToGetWorkloadSecurityOptionArrayOutputWithContext(context.Context) GetWorkloadSecurityOptionArrayOutput
+}
+
+type GetWorkloadSecurityOptionArray []GetWorkloadSecurityOptionInput
+
+func (GetWorkloadSecurityOptionArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadSecurityOption)(nil)).Elem()
+}
+
+func (i GetWorkloadSecurityOptionArray) ToGetWorkloadSecurityOptionArrayOutput() GetWorkloadSecurityOptionArrayOutput {
+	return i.ToGetWorkloadSecurityOptionArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadSecurityOptionArray) ToGetWorkloadSecurityOptionArrayOutputWithContext(ctx context.Context) GetWorkloadSecurityOptionArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadSecurityOptionArrayOutput)
+}
+
+type GetWorkloadSecurityOptionOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadSecurityOptionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadSecurityOption)(nil)).Elem()
+}
+
+func (o GetWorkloadSecurityOptionOutput) ToGetWorkloadSecurityOptionOutput() GetWorkloadSecurityOptionOutput {
+	return o
+}
+
+func (o GetWorkloadSecurityOptionOutput) ToGetWorkloadSecurityOptionOutputWithContext(ctx context.Context) GetWorkloadSecurityOptionOutput {
+	return o
+}
+
+// The group id assigned to any mounted volume.
+func (o GetWorkloadSecurityOptionOutput) FileSystemGroupId() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadSecurityOption) int { return v.FileSystemGroupId }).(pulumi.IntOutput)
+}
+
+type GetWorkloadSecurityOptionArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadSecurityOptionArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadSecurityOption)(nil)).Elem()
+}
+
+func (o GetWorkloadSecurityOptionArrayOutput) ToGetWorkloadSecurityOptionArrayOutput() GetWorkloadSecurityOptionArrayOutput {
+	return o
+}
+
+func (o GetWorkloadSecurityOptionArrayOutput) ToGetWorkloadSecurityOptionArrayOutputWithContext(ctx context.Context) GetWorkloadSecurityOptionArrayOutput {
+	return o
+}
+
+func (o GetWorkloadSecurityOptionArrayOutput) Index(i pulumi.IntInput) GetWorkloadSecurityOptionOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadSecurityOption {
+		return vs[0].([]GetWorkloadSecurityOption)[vs[1].(int)]
+	}).(GetWorkloadSecurityOptionOutput)
+}
+
+type GetWorkloadSidecar struct {
+	Envoy string `pulumi:"envoy"`
+}
+
+// GetWorkloadSidecarInput is an input type that accepts GetWorkloadSidecarArgs and GetWorkloadSidecarOutput values.
+// You can construct a concrete instance of `GetWorkloadSidecarInput` via:
+//
+//	GetWorkloadSidecarArgs{...}
+type GetWorkloadSidecarInput interface {
+	pulumi.Input
+
+	ToGetWorkloadSidecarOutput() GetWorkloadSidecarOutput
+	ToGetWorkloadSidecarOutputWithContext(context.Context) GetWorkloadSidecarOutput
+}
+
+type GetWorkloadSidecarArgs struct {
+	Envoy pulumi.StringInput `pulumi:"envoy"`
+}
+
+func (GetWorkloadSidecarArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadSidecar)(nil)).Elem()
+}
+
+func (i GetWorkloadSidecarArgs) ToGetWorkloadSidecarOutput() GetWorkloadSidecarOutput {
+	return i.ToGetWorkloadSidecarOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadSidecarArgs) ToGetWorkloadSidecarOutputWithContext(ctx context.Context) GetWorkloadSidecarOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadSidecarOutput)
+}
+
+// GetWorkloadSidecarArrayInput is an input type that accepts GetWorkloadSidecarArray and GetWorkloadSidecarArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadSidecarArrayInput` via:
+//
+//	GetWorkloadSidecarArray{ GetWorkloadSidecarArgs{...} }
+type GetWorkloadSidecarArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadSidecarArrayOutput() GetWorkloadSidecarArrayOutput
+	ToGetWorkloadSidecarArrayOutputWithContext(context.Context) GetWorkloadSidecarArrayOutput
+}
+
+type GetWorkloadSidecarArray []GetWorkloadSidecarInput
+
+func (GetWorkloadSidecarArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadSidecar)(nil)).Elem()
+}
+
+func (i GetWorkloadSidecarArray) ToGetWorkloadSidecarArrayOutput() GetWorkloadSidecarArrayOutput {
+	return i.ToGetWorkloadSidecarArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadSidecarArray) ToGetWorkloadSidecarArrayOutputWithContext(ctx context.Context) GetWorkloadSidecarArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadSidecarArrayOutput)
+}
+
+type GetWorkloadSidecarOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadSidecarOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadSidecar)(nil)).Elem()
+}
+
+func (o GetWorkloadSidecarOutput) ToGetWorkloadSidecarOutput() GetWorkloadSidecarOutput {
+	return o
+}
+
+func (o GetWorkloadSidecarOutput) ToGetWorkloadSidecarOutputWithContext(ctx context.Context) GetWorkloadSidecarOutput {
+	return o
+}
+
+func (o GetWorkloadSidecarOutput) Envoy() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadSidecar) string { return v.Envoy }).(pulumi.StringOutput)
+}
+
+type GetWorkloadSidecarArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadSidecarArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadSidecar)(nil)).Elem()
+}
+
+func (o GetWorkloadSidecarArrayOutput) ToGetWorkloadSidecarArrayOutput() GetWorkloadSidecarArrayOutput {
+	return o
+}
+
+func (o GetWorkloadSidecarArrayOutput) ToGetWorkloadSidecarArrayOutputWithContext(ctx context.Context) GetWorkloadSidecarArrayOutput {
+	return o
+}
+
+func (o GetWorkloadSidecarArrayOutput) Index(i pulumi.IntInput) GetWorkloadSidecarOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadSidecar {
+		return vs[0].([]GetWorkloadSidecar)[vs[1].(int)]
+	}).(GetWorkloadSidecarOutput)
+}
+
+type GetWorkloadStatus struct {
+	// Canonical endpoint for the workload.
+	CanonicalEndpoint string `pulumi:"canonicalEndpoint"`
+	// Current amount of replicas deployed.
+	CurrentReplicaCount int `pulumi:"currentReplicaCount"`
+	// Endpoint for the workload.
+	Endpoint string `pulumi:"endpoint"`
+	// Current health status.
+	HealthChecks []GetWorkloadStatusHealthCheck `pulumi:"healthChecks"`
+	// Internal hostname for the workload. Used for service-to-service requests.
+	InternalName  string                          `pulumi:"internalName"`
+	LoadBalancers []GetWorkloadStatusLoadBalancer `pulumi:"loadBalancers"`
+	// ID of the parent object.
+	ParentId             string   `pulumi:"parentId"`
+	ReplicaInternalNames []string `pulumi:"replicaInternalNames"`
+	// Resolved images for workloads with dynamic tags enabled.
+	ResolvedImages []GetWorkloadStatusResolvedImage `pulumi:"resolvedImages"`
+}
+
+// GetWorkloadStatusInput is an input type that accepts GetWorkloadStatusArgs and GetWorkloadStatusOutput values.
+// You can construct a concrete instance of `GetWorkloadStatusInput` via:
+//
+//	GetWorkloadStatusArgs{...}
+type GetWorkloadStatusInput interface {
+	pulumi.Input
+
+	ToGetWorkloadStatusOutput() GetWorkloadStatusOutput
+	ToGetWorkloadStatusOutputWithContext(context.Context) GetWorkloadStatusOutput
+}
+
+type GetWorkloadStatusArgs struct {
+	// Canonical endpoint for the workload.
+	CanonicalEndpoint pulumi.StringInput `pulumi:"canonicalEndpoint"`
+	// Current amount of replicas deployed.
+	CurrentReplicaCount pulumi.IntInput `pulumi:"currentReplicaCount"`
+	// Endpoint for the workload.
+	Endpoint pulumi.StringInput `pulumi:"endpoint"`
+	// Current health status.
+	HealthChecks GetWorkloadStatusHealthCheckArrayInput `pulumi:"healthChecks"`
+	// Internal hostname for the workload. Used for service-to-service requests.
+	InternalName  pulumi.StringInput                      `pulumi:"internalName"`
+	LoadBalancers GetWorkloadStatusLoadBalancerArrayInput `pulumi:"loadBalancers"`
+	// ID of the parent object.
+	ParentId             pulumi.StringInput      `pulumi:"parentId"`
+	ReplicaInternalNames pulumi.StringArrayInput `pulumi:"replicaInternalNames"`
+	// Resolved images for workloads with dynamic tags enabled.
+	ResolvedImages GetWorkloadStatusResolvedImageArrayInput `pulumi:"resolvedImages"`
+}
+
+func (GetWorkloadStatusArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadStatus)(nil)).Elem()
+}
+
+func (i GetWorkloadStatusArgs) ToGetWorkloadStatusOutput() GetWorkloadStatusOutput {
+	return i.ToGetWorkloadStatusOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadStatusArgs) ToGetWorkloadStatusOutputWithContext(ctx context.Context) GetWorkloadStatusOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadStatusOutput)
+}
+
+// GetWorkloadStatusArrayInput is an input type that accepts GetWorkloadStatusArray and GetWorkloadStatusArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadStatusArrayInput` via:
+//
+//	GetWorkloadStatusArray{ GetWorkloadStatusArgs{...} }
+type GetWorkloadStatusArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadStatusArrayOutput() GetWorkloadStatusArrayOutput
+	ToGetWorkloadStatusArrayOutputWithContext(context.Context) GetWorkloadStatusArrayOutput
+}
+
+type GetWorkloadStatusArray []GetWorkloadStatusInput
+
+func (GetWorkloadStatusArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadStatus)(nil)).Elem()
+}
+
+func (i GetWorkloadStatusArray) ToGetWorkloadStatusArrayOutput() GetWorkloadStatusArrayOutput {
+	return i.ToGetWorkloadStatusArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadStatusArray) ToGetWorkloadStatusArrayOutputWithContext(ctx context.Context) GetWorkloadStatusArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadStatusArrayOutput)
+}
+
+type GetWorkloadStatusOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadStatusOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadStatus)(nil)).Elem()
+}
+
+func (o GetWorkloadStatusOutput) ToGetWorkloadStatusOutput() GetWorkloadStatusOutput {
+	return o
+}
+
+func (o GetWorkloadStatusOutput) ToGetWorkloadStatusOutputWithContext(ctx context.Context) GetWorkloadStatusOutput {
+	return o
+}
+
+// Canonical endpoint for the workload.
+func (o GetWorkloadStatusOutput) CanonicalEndpoint() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadStatus) string { return v.CanonicalEndpoint }).(pulumi.StringOutput)
+}
+
+// Current amount of replicas deployed.
+func (o GetWorkloadStatusOutput) CurrentReplicaCount() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadStatus) int { return v.CurrentReplicaCount }).(pulumi.IntOutput)
+}
+
+// Endpoint for the workload.
+func (o GetWorkloadStatusOutput) Endpoint() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadStatus) string { return v.Endpoint }).(pulumi.StringOutput)
+}
+
+// Current health status.
+func (o GetWorkloadStatusOutput) HealthChecks() GetWorkloadStatusHealthCheckArrayOutput {
+	return o.ApplyT(func(v GetWorkloadStatus) []GetWorkloadStatusHealthCheck { return v.HealthChecks }).(GetWorkloadStatusHealthCheckArrayOutput)
+}
+
+// Internal hostname for the workload. Used for service-to-service requests.
+func (o GetWorkloadStatusOutput) InternalName() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadStatus) string { return v.InternalName }).(pulumi.StringOutput)
+}
+
+func (o GetWorkloadStatusOutput) LoadBalancers() GetWorkloadStatusLoadBalancerArrayOutput {
+	return o.ApplyT(func(v GetWorkloadStatus) []GetWorkloadStatusLoadBalancer { return v.LoadBalancers }).(GetWorkloadStatusLoadBalancerArrayOutput)
+}
+
+// ID of the parent object.
+func (o GetWorkloadStatusOutput) ParentId() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadStatus) string { return v.ParentId }).(pulumi.StringOutput)
+}
+
+func (o GetWorkloadStatusOutput) ReplicaInternalNames() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadStatus) []string { return v.ReplicaInternalNames }).(pulumi.StringArrayOutput)
+}
+
+// Resolved images for workloads with dynamic tags enabled.
+func (o GetWorkloadStatusOutput) ResolvedImages() GetWorkloadStatusResolvedImageArrayOutput {
+	return o.ApplyT(func(v GetWorkloadStatus) []GetWorkloadStatusResolvedImage { return v.ResolvedImages }).(GetWorkloadStatusResolvedImageArrayOutput)
+}
+
+type GetWorkloadStatusArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadStatusArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadStatus)(nil)).Elem()
+}
+
+func (o GetWorkloadStatusArrayOutput) ToGetWorkloadStatusArrayOutput() GetWorkloadStatusArrayOutput {
+	return o
+}
+
+func (o GetWorkloadStatusArrayOutput) ToGetWorkloadStatusArrayOutputWithContext(ctx context.Context) GetWorkloadStatusArrayOutput {
+	return o
+}
+
+func (o GetWorkloadStatusArrayOutput) Index(i pulumi.IntInput) GetWorkloadStatusOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadStatus {
+		return vs[0].([]GetWorkloadStatus)[vs[1].(int)]
+	}).(GetWorkloadStatusOutput)
+}
+
+type GetWorkloadStatusHealthCheck struct {
+	// Active boolean for the associated workload.
+	Active bool `pulumi:"active"`
+	// Current output code for the associated workload.
+	Code int `pulumi:"code"`
+	// Failure integer for the associated workload.
+	Failures int `pulumi:"failures"`
+	// Timestamp in UTC of the last health check.
+	LastChecked string `pulumi:"lastChecked"`
+	// Current health status for the associated workload.
+	Message string `pulumi:"message"`
+	// Success boolean for the associated workload.
+	Success bool `pulumi:"success"`
+	// Success integer for the associated workload.
+	Successes int `pulumi:"successes"`
+}
+
+// GetWorkloadStatusHealthCheckInput is an input type that accepts GetWorkloadStatusHealthCheckArgs and GetWorkloadStatusHealthCheckOutput values.
+// You can construct a concrete instance of `GetWorkloadStatusHealthCheckInput` via:
+//
+//	GetWorkloadStatusHealthCheckArgs{...}
+type GetWorkloadStatusHealthCheckInput interface {
+	pulumi.Input
+
+	ToGetWorkloadStatusHealthCheckOutput() GetWorkloadStatusHealthCheckOutput
+	ToGetWorkloadStatusHealthCheckOutputWithContext(context.Context) GetWorkloadStatusHealthCheckOutput
+}
+
+type GetWorkloadStatusHealthCheckArgs struct {
+	// Active boolean for the associated workload.
+	Active pulumi.BoolInput `pulumi:"active"`
+	// Current output code for the associated workload.
+	Code pulumi.IntInput `pulumi:"code"`
+	// Failure integer for the associated workload.
+	Failures pulumi.IntInput `pulumi:"failures"`
+	// Timestamp in UTC of the last health check.
+	LastChecked pulumi.StringInput `pulumi:"lastChecked"`
+	// Current health status for the associated workload.
+	Message pulumi.StringInput `pulumi:"message"`
+	// Success boolean for the associated workload.
+	Success pulumi.BoolInput `pulumi:"success"`
+	// Success integer for the associated workload.
+	Successes pulumi.IntInput `pulumi:"successes"`
+}
+
+func (GetWorkloadStatusHealthCheckArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadStatusHealthCheck)(nil)).Elem()
+}
+
+func (i GetWorkloadStatusHealthCheckArgs) ToGetWorkloadStatusHealthCheckOutput() GetWorkloadStatusHealthCheckOutput {
+	return i.ToGetWorkloadStatusHealthCheckOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadStatusHealthCheckArgs) ToGetWorkloadStatusHealthCheckOutputWithContext(ctx context.Context) GetWorkloadStatusHealthCheckOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadStatusHealthCheckOutput)
+}
+
+// GetWorkloadStatusHealthCheckArrayInput is an input type that accepts GetWorkloadStatusHealthCheckArray and GetWorkloadStatusHealthCheckArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadStatusHealthCheckArrayInput` via:
+//
+//	GetWorkloadStatusHealthCheckArray{ GetWorkloadStatusHealthCheckArgs{...} }
+type GetWorkloadStatusHealthCheckArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadStatusHealthCheckArrayOutput() GetWorkloadStatusHealthCheckArrayOutput
+	ToGetWorkloadStatusHealthCheckArrayOutputWithContext(context.Context) GetWorkloadStatusHealthCheckArrayOutput
+}
+
+type GetWorkloadStatusHealthCheckArray []GetWorkloadStatusHealthCheckInput
+
+func (GetWorkloadStatusHealthCheckArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadStatusHealthCheck)(nil)).Elem()
+}
+
+func (i GetWorkloadStatusHealthCheckArray) ToGetWorkloadStatusHealthCheckArrayOutput() GetWorkloadStatusHealthCheckArrayOutput {
+	return i.ToGetWorkloadStatusHealthCheckArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadStatusHealthCheckArray) ToGetWorkloadStatusHealthCheckArrayOutputWithContext(ctx context.Context) GetWorkloadStatusHealthCheckArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadStatusHealthCheckArrayOutput)
+}
+
+type GetWorkloadStatusHealthCheckOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadStatusHealthCheckOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadStatusHealthCheck)(nil)).Elem()
+}
+
+func (o GetWorkloadStatusHealthCheckOutput) ToGetWorkloadStatusHealthCheckOutput() GetWorkloadStatusHealthCheckOutput {
+	return o
+}
+
+func (o GetWorkloadStatusHealthCheckOutput) ToGetWorkloadStatusHealthCheckOutputWithContext(ctx context.Context) GetWorkloadStatusHealthCheckOutput {
+	return o
+}
+
+// Active boolean for the associated workload.
+func (o GetWorkloadStatusHealthCheckOutput) Active() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadStatusHealthCheck) bool { return v.Active }).(pulumi.BoolOutput)
+}
+
+// Current output code for the associated workload.
+func (o GetWorkloadStatusHealthCheckOutput) Code() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadStatusHealthCheck) int { return v.Code }).(pulumi.IntOutput)
+}
+
+// Failure integer for the associated workload.
+func (o GetWorkloadStatusHealthCheckOutput) Failures() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadStatusHealthCheck) int { return v.Failures }).(pulumi.IntOutput)
+}
+
+// Timestamp in UTC of the last health check.
+func (o GetWorkloadStatusHealthCheckOutput) LastChecked() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadStatusHealthCheck) string { return v.LastChecked }).(pulumi.StringOutput)
+}
+
+// Current health status for the associated workload.
+func (o GetWorkloadStatusHealthCheckOutput) Message() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadStatusHealthCheck) string { return v.Message }).(pulumi.StringOutput)
+}
+
+// Success boolean for the associated workload.
+func (o GetWorkloadStatusHealthCheckOutput) Success() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadStatusHealthCheck) bool { return v.Success }).(pulumi.BoolOutput)
+}
+
+// Success integer for the associated workload.
+func (o GetWorkloadStatusHealthCheckOutput) Successes() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadStatusHealthCheck) int { return v.Successes }).(pulumi.IntOutput)
+}
+
+type GetWorkloadStatusHealthCheckArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadStatusHealthCheckArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadStatusHealthCheck)(nil)).Elem()
+}
+
+func (o GetWorkloadStatusHealthCheckArrayOutput) ToGetWorkloadStatusHealthCheckArrayOutput() GetWorkloadStatusHealthCheckArrayOutput {
+	return o
+}
+
+func (o GetWorkloadStatusHealthCheckArrayOutput) ToGetWorkloadStatusHealthCheckArrayOutputWithContext(ctx context.Context) GetWorkloadStatusHealthCheckArrayOutput {
+	return o
+}
+
+func (o GetWorkloadStatusHealthCheckArrayOutput) Index(i pulumi.IntInput) GetWorkloadStatusHealthCheckOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadStatusHealthCheck {
+		return vs[0].([]GetWorkloadStatusHealthCheck)[vs[1].(int)]
+	}).(GetWorkloadStatusHealthCheckOutput)
+}
+
+type GetWorkloadStatusLoadBalancer struct {
+	Origin string `pulumi:"origin"`
+	Url    string `pulumi:"url"`
+}
+
+// GetWorkloadStatusLoadBalancerInput is an input type that accepts GetWorkloadStatusLoadBalancerArgs and GetWorkloadStatusLoadBalancerOutput values.
+// You can construct a concrete instance of `GetWorkloadStatusLoadBalancerInput` via:
+//
+//	GetWorkloadStatusLoadBalancerArgs{...}
+type GetWorkloadStatusLoadBalancerInput interface {
+	pulumi.Input
+
+	ToGetWorkloadStatusLoadBalancerOutput() GetWorkloadStatusLoadBalancerOutput
+	ToGetWorkloadStatusLoadBalancerOutputWithContext(context.Context) GetWorkloadStatusLoadBalancerOutput
+}
+
+type GetWorkloadStatusLoadBalancerArgs struct {
+	Origin pulumi.StringInput `pulumi:"origin"`
+	Url    pulumi.StringInput `pulumi:"url"`
+}
+
+func (GetWorkloadStatusLoadBalancerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadStatusLoadBalancer)(nil)).Elem()
+}
+
+func (i GetWorkloadStatusLoadBalancerArgs) ToGetWorkloadStatusLoadBalancerOutput() GetWorkloadStatusLoadBalancerOutput {
+	return i.ToGetWorkloadStatusLoadBalancerOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadStatusLoadBalancerArgs) ToGetWorkloadStatusLoadBalancerOutputWithContext(ctx context.Context) GetWorkloadStatusLoadBalancerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadStatusLoadBalancerOutput)
+}
+
+// GetWorkloadStatusLoadBalancerArrayInput is an input type that accepts GetWorkloadStatusLoadBalancerArray and GetWorkloadStatusLoadBalancerArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadStatusLoadBalancerArrayInput` via:
+//
+//	GetWorkloadStatusLoadBalancerArray{ GetWorkloadStatusLoadBalancerArgs{...} }
+type GetWorkloadStatusLoadBalancerArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadStatusLoadBalancerArrayOutput() GetWorkloadStatusLoadBalancerArrayOutput
+	ToGetWorkloadStatusLoadBalancerArrayOutputWithContext(context.Context) GetWorkloadStatusLoadBalancerArrayOutput
+}
+
+type GetWorkloadStatusLoadBalancerArray []GetWorkloadStatusLoadBalancerInput
+
+func (GetWorkloadStatusLoadBalancerArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadStatusLoadBalancer)(nil)).Elem()
+}
+
+func (i GetWorkloadStatusLoadBalancerArray) ToGetWorkloadStatusLoadBalancerArrayOutput() GetWorkloadStatusLoadBalancerArrayOutput {
+	return i.ToGetWorkloadStatusLoadBalancerArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadStatusLoadBalancerArray) ToGetWorkloadStatusLoadBalancerArrayOutputWithContext(ctx context.Context) GetWorkloadStatusLoadBalancerArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadStatusLoadBalancerArrayOutput)
+}
+
+type GetWorkloadStatusLoadBalancerOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadStatusLoadBalancerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadStatusLoadBalancer)(nil)).Elem()
+}
+
+func (o GetWorkloadStatusLoadBalancerOutput) ToGetWorkloadStatusLoadBalancerOutput() GetWorkloadStatusLoadBalancerOutput {
+	return o
+}
+
+func (o GetWorkloadStatusLoadBalancerOutput) ToGetWorkloadStatusLoadBalancerOutputWithContext(ctx context.Context) GetWorkloadStatusLoadBalancerOutput {
+	return o
+}
+
+func (o GetWorkloadStatusLoadBalancerOutput) Origin() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadStatusLoadBalancer) string { return v.Origin }).(pulumi.StringOutput)
+}
+
+func (o GetWorkloadStatusLoadBalancerOutput) Url() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadStatusLoadBalancer) string { return v.Url }).(pulumi.StringOutput)
+}
+
+type GetWorkloadStatusLoadBalancerArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadStatusLoadBalancerArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadStatusLoadBalancer)(nil)).Elem()
+}
+
+func (o GetWorkloadStatusLoadBalancerArrayOutput) ToGetWorkloadStatusLoadBalancerArrayOutput() GetWorkloadStatusLoadBalancerArrayOutput {
+	return o
+}
+
+func (o GetWorkloadStatusLoadBalancerArrayOutput) ToGetWorkloadStatusLoadBalancerArrayOutputWithContext(ctx context.Context) GetWorkloadStatusLoadBalancerArrayOutput {
+	return o
+}
+
+func (o GetWorkloadStatusLoadBalancerArrayOutput) Index(i pulumi.IntInput) GetWorkloadStatusLoadBalancerOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadStatusLoadBalancer {
+		return vs[0].([]GetWorkloadStatusLoadBalancer)[vs[1].(int)]
+	}).(GetWorkloadStatusLoadBalancerOutput)
+}
+
+type GetWorkloadStatusResolvedImage struct {
+	ErrorMessages []string `pulumi:"errorMessages"`
+	// A list of images that were resolved.
+	Images      []GetWorkloadStatusResolvedImageImage `pulumi:"images"`
+	NextRetryAt string                                `pulumi:"nextRetryAt"`
+	// UTC Time when the images were resolved.
+	ResolvedAt string `pulumi:"resolvedAt"`
+	// Workload version the images were resolved for.
+	ResolvedForVersion int `pulumi:"resolvedForVersion"`
+}
+
+// GetWorkloadStatusResolvedImageInput is an input type that accepts GetWorkloadStatusResolvedImageArgs and GetWorkloadStatusResolvedImageOutput values.
+// You can construct a concrete instance of `GetWorkloadStatusResolvedImageInput` via:
+//
+//	GetWorkloadStatusResolvedImageArgs{...}
+type GetWorkloadStatusResolvedImageInput interface {
+	pulumi.Input
+
+	ToGetWorkloadStatusResolvedImageOutput() GetWorkloadStatusResolvedImageOutput
+	ToGetWorkloadStatusResolvedImageOutputWithContext(context.Context) GetWorkloadStatusResolvedImageOutput
+}
+
+type GetWorkloadStatusResolvedImageArgs struct {
+	ErrorMessages pulumi.StringArrayInput `pulumi:"errorMessages"`
+	// A list of images that were resolved.
+	Images      GetWorkloadStatusResolvedImageImageArrayInput `pulumi:"images"`
+	NextRetryAt pulumi.StringInput                            `pulumi:"nextRetryAt"`
+	// UTC Time when the images were resolved.
+	ResolvedAt pulumi.StringInput `pulumi:"resolvedAt"`
+	// Workload version the images were resolved for.
+	ResolvedForVersion pulumi.IntInput `pulumi:"resolvedForVersion"`
+}
+
+func (GetWorkloadStatusResolvedImageArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadStatusResolvedImage)(nil)).Elem()
+}
+
+func (i GetWorkloadStatusResolvedImageArgs) ToGetWorkloadStatusResolvedImageOutput() GetWorkloadStatusResolvedImageOutput {
+	return i.ToGetWorkloadStatusResolvedImageOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadStatusResolvedImageArgs) ToGetWorkloadStatusResolvedImageOutputWithContext(ctx context.Context) GetWorkloadStatusResolvedImageOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadStatusResolvedImageOutput)
+}
+
+// GetWorkloadStatusResolvedImageArrayInput is an input type that accepts GetWorkloadStatusResolvedImageArray and GetWorkloadStatusResolvedImageArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadStatusResolvedImageArrayInput` via:
+//
+//	GetWorkloadStatusResolvedImageArray{ GetWorkloadStatusResolvedImageArgs{...} }
+type GetWorkloadStatusResolvedImageArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadStatusResolvedImageArrayOutput() GetWorkloadStatusResolvedImageArrayOutput
+	ToGetWorkloadStatusResolvedImageArrayOutputWithContext(context.Context) GetWorkloadStatusResolvedImageArrayOutput
+}
+
+type GetWorkloadStatusResolvedImageArray []GetWorkloadStatusResolvedImageInput
+
+func (GetWorkloadStatusResolvedImageArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadStatusResolvedImage)(nil)).Elem()
+}
+
+func (i GetWorkloadStatusResolvedImageArray) ToGetWorkloadStatusResolvedImageArrayOutput() GetWorkloadStatusResolvedImageArrayOutput {
+	return i.ToGetWorkloadStatusResolvedImageArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadStatusResolvedImageArray) ToGetWorkloadStatusResolvedImageArrayOutputWithContext(ctx context.Context) GetWorkloadStatusResolvedImageArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadStatusResolvedImageArrayOutput)
+}
+
+type GetWorkloadStatusResolvedImageOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadStatusResolvedImageOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadStatusResolvedImage)(nil)).Elem()
+}
+
+func (o GetWorkloadStatusResolvedImageOutput) ToGetWorkloadStatusResolvedImageOutput() GetWorkloadStatusResolvedImageOutput {
+	return o
+}
+
+func (o GetWorkloadStatusResolvedImageOutput) ToGetWorkloadStatusResolvedImageOutputWithContext(ctx context.Context) GetWorkloadStatusResolvedImageOutput {
+	return o
+}
+
+func (o GetWorkloadStatusResolvedImageOutput) ErrorMessages() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadStatusResolvedImage) []string { return v.ErrorMessages }).(pulumi.StringArrayOutput)
+}
+
+// A list of images that were resolved.
+func (o GetWorkloadStatusResolvedImageOutput) Images() GetWorkloadStatusResolvedImageImageArrayOutput {
+	return o.ApplyT(func(v GetWorkloadStatusResolvedImage) []GetWorkloadStatusResolvedImageImage { return v.Images }).(GetWorkloadStatusResolvedImageImageArrayOutput)
+}
+
+func (o GetWorkloadStatusResolvedImageOutput) NextRetryAt() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadStatusResolvedImage) string { return v.NextRetryAt }).(pulumi.StringOutput)
+}
+
+// UTC Time when the images were resolved.
+func (o GetWorkloadStatusResolvedImageOutput) ResolvedAt() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadStatusResolvedImage) string { return v.ResolvedAt }).(pulumi.StringOutput)
+}
+
+// Workload version the images were resolved for.
+func (o GetWorkloadStatusResolvedImageOutput) ResolvedForVersion() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadStatusResolvedImage) int { return v.ResolvedForVersion }).(pulumi.IntOutput)
+}
+
+type GetWorkloadStatusResolvedImageArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadStatusResolvedImageArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadStatusResolvedImage)(nil)).Elem()
+}
+
+func (o GetWorkloadStatusResolvedImageArrayOutput) ToGetWorkloadStatusResolvedImageArrayOutput() GetWorkloadStatusResolvedImageArrayOutput {
+	return o
+}
+
+func (o GetWorkloadStatusResolvedImageArrayOutput) ToGetWorkloadStatusResolvedImageArrayOutputWithContext(ctx context.Context) GetWorkloadStatusResolvedImageArrayOutput {
+	return o
+}
+
+func (o GetWorkloadStatusResolvedImageArrayOutput) Index(i pulumi.IntInput) GetWorkloadStatusResolvedImageOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadStatusResolvedImage {
+		return vs[0].([]GetWorkloadStatusResolvedImage)[vs[1].(int)]
+	}).(GetWorkloadStatusResolvedImageOutput)
+}
+
+type GetWorkloadStatusResolvedImageImage struct {
+	// A unique SHA256 hash value that identifies a specific image content. This digest serves as a fingerprint of the image's content, ensuring the image you pull or run is exactly what you expect, without any modifications or corruptions.
+	Digest    string                                        `pulumi:"digest"`
+	Manifests []GetWorkloadStatusResolvedImageImageManifest `pulumi:"manifests"`
+}
+
+// GetWorkloadStatusResolvedImageImageInput is an input type that accepts GetWorkloadStatusResolvedImageImageArgs and GetWorkloadStatusResolvedImageImageOutput values.
+// You can construct a concrete instance of `GetWorkloadStatusResolvedImageImageInput` via:
+//
+//	GetWorkloadStatusResolvedImageImageArgs{...}
+type GetWorkloadStatusResolvedImageImageInput interface {
+	pulumi.Input
+
+	ToGetWorkloadStatusResolvedImageImageOutput() GetWorkloadStatusResolvedImageImageOutput
+	ToGetWorkloadStatusResolvedImageImageOutputWithContext(context.Context) GetWorkloadStatusResolvedImageImageOutput
+}
+
+type GetWorkloadStatusResolvedImageImageArgs struct {
+	// A unique SHA256 hash value that identifies a specific image content. This digest serves as a fingerprint of the image's content, ensuring the image you pull or run is exactly what you expect, without any modifications or corruptions.
+	Digest    pulumi.StringInput                                    `pulumi:"digest"`
+	Manifests GetWorkloadStatusResolvedImageImageManifestArrayInput `pulumi:"manifests"`
+}
+
+func (GetWorkloadStatusResolvedImageImageArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadStatusResolvedImageImage)(nil)).Elem()
+}
+
+func (i GetWorkloadStatusResolvedImageImageArgs) ToGetWorkloadStatusResolvedImageImageOutput() GetWorkloadStatusResolvedImageImageOutput {
+	return i.ToGetWorkloadStatusResolvedImageImageOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadStatusResolvedImageImageArgs) ToGetWorkloadStatusResolvedImageImageOutputWithContext(ctx context.Context) GetWorkloadStatusResolvedImageImageOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadStatusResolvedImageImageOutput)
+}
+
+// GetWorkloadStatusResolvedImageImageArrayInput is an input type that accepts GetWorkloadStatusResolvedImageImageArray and GetWorkloadStatusResolvedImageImageArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadStatusResolvedImageImageArrayInput` via:
+//
+//	GetWorkloadStatusResolvedImageImageArray{ GetWorkloadStatusResolvedImageImageArgs{...} }
+type GetWorkloadStatusResolvedImageImageArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadStatusResolvedImageImageArrayOutput() GetWorkloadStatusResolvedImageImageArrayOutput
+	ToGetWorkloadStatusResolvedImageImageArrayOutputWithContext(context.Context) GetWorkloadStatusResolvedImageImageArrayOutput
+}
+
+type GetWorkloadStatusResolvedImageImageArray []GetWorkloadStatusResolvedImageImageInput
+
+func (GetWorkloadStatusResolvedImageImageArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadStatusResolvedImageImage)(nil)).Elem()
+}
+
+func (i GetWorkloadStatusResolvedImageImageArray) ToGetWorkloadStatusResolvedImageImageArrayOutput() GetWorkloadStatusResolvedImageImageArrayOutput {
+	return i.ToGetWorkloadStatusResolvedImageImageArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadStatusResolvedImageImageArray) ToGetWorkloadStatusResolvedImageImageArrayOutputWithContext(ctx context.Context) GetWorkloadStatusResolvedImageImageArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadStatusResolvedImageImageArrayOutput)
+}
+
+type GetWorkloadStatusResolvedImageImageOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadStatusResolvedImageImageOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadStatusResolvedImageImage)(nil)).Elem()
+}
+
+func (o GetWorkloadStatusResolvedImageImageOutput) ToGetWorkloadStatusResolvedImageImageOutput() GetWorkloadStatusResolvedImageImageOutput {
+	return o
+}
+
+func (o GetWorkloadStatusResolvedImageImageOutput) ToGetWorkloadStatusResolvedImageImageOutputWithContext(ctx context.Context) GetWorkloadStatusResolvedImageImageOutput {
+	return o
+}
+
+// A unique SHA256 hash value that identifies a specific image content. This digest serves as a fingerprint of the image's content, ensuring the image you pull or run is exactly what you expect, without any modifications or corruptions.
+func (o GetWorkloadStatusResolvedImageImageOutput) Digest() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadStatusResolvedImageImage) string { return v.Digest }).(pulumi.StringOutput)
+}
+
+func (o GetWorkloadStatusResolvedImageImageOutput) Manifests() GetWorkloadStatusResolvedImageImageManifestArrayOutput {
+	return o.ApplyT(func(v GetWorkloadStatusResolvedImageImage) []GetWorkloadStatusResolvedImageImageManifest {
+		return v.Manifests
+	}).(GetWorkloadStatusResolvedImageImageManifestArrayOutput)
+}
+
+type GetWorkloadStatusResolvedImageImageArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadStatusResolvedImageImageArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadStatusResolvedImageImage)(nil)).Elem()
+}
+
+func (o GetWorkloadStatusResolvedImageImageArrayOutput) ToGetWorkloadStatusResolvedImageImageArrayOutput() GetWorkloadStatusResolvedImageImageArrayOutput {
+	return o
+}
+
+func (o GetWorkloadStatusResolvedImageImageArrayOutput) ToGetWorkloadStatusResolvedImageImageArrayOutputWithContext(ctx context.Context) GetWorkloadStatusResolvedImageImageArrayOutput {
+	return o
+}
+
+func (o GetWorkloadStatusResolvedImageImageArrayOutput) Index(i pulumi.IntInput) GetWorkloadStatusResolvedImageImageOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadStatusResolvedImageImage {
+		return vs[0].([]GetWorkloadStatusResolvedImageImage)[vs[1].(int)]
+	}).(GetWorkloadStatusResolvedImageImageOutput)
+}
+
+type GetWorkloadStatusResolvedImageImageManifest struct {
+	// A SHA256 hash that uniquely identifies the specific image manifest.
+	Digest string `pulumi:"digest"`
+	// The name and tag of the resolved image.
+	Image string `pulumi:"image"`
+	// The MIME type used in the Docker Registry HTTP API to specify the format of the data being sent or received. Docker uses media types to distinguish between different kinds of JSON objects and binary data formats within the registry protocol, enabling the Docker client and registry to understand and process different components of Docker images correctly.
+	MediaType string `pulumi:"mediaType"`
+	// Key-value map of strings. The combination of the operating system and architecture for which the image is built.
+	Platform map[string]string `pulumi:"platform"`
+}
+
+// GetWorkloadStatusResolvedImageImageManifestInput is an input type that accepts GetWorkloadStatusResolvedImageImageManifestArgs and GetWorkloadStatusResolvedImageImageManifestOutput values.
+// You can construct a concrete instance of `GetWorkloadStatusResolvedImageImageManifestInput` via:
+//
+//	GetWorkloadStatusResolvedImageImageManifestArgs{...}
+type GetWorkloadStatusResolvedImageImageManifestInput interface {
+	pulumi.Input
+
+	ToGetWorkloadStatusResolvedImageImageManifestOutput() GetWorkloadStatusResolvedImageImageManifestOutput
+	ToGetWorkloadStatusResolvedImageImageManifestOutputWithContext(context.Context) GetWorkloadStatusResolvedImageImageManifestOutput
+}
+
+type GetWorkloadStatusResolvedImageImageManifestArgs struct {
+	// A SHA256 hash that uniquely identifies the specific image manifest.
+	Digest pulumi.StringInput `pulumi:"digest"`
+	// The name and tag of the resolved image.
+	Image pulumi.StringInput `pulumi:"image"`
+	// The MIME type used in the Docker Registry HTTP API to specify the format of the data being sent or received. Docker uses media types to distinguish between different kinds of JSON objects and binary data formats within the registry protocol, enabling the Docker client and registry to understand and process different components of Docker images correctly.
+	MediaType pulumi.StringInput `pulumi:"mediaType"`
+	// Key-value map of strings. The combination of the operating system and architecture for which the image is built.
+	Platform pulumi.StringMapInput `pulumi:"platform"`
+}
+
+func (GetWorkloadStatusResolvedImageImageManifestArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadStatusResolvedImageImageManifest)(nil)).Elem()
+}
+
+func (i GetWorkloadStatusResolvedImageImageManifestArgs) ToGetWorkloadStatusResolvedImageImageManifestOutput() GetWorkloadStatusResolvedImageImageManifestOutput {
+	return i.ToGetWorkloadStatusResolvedImageImageManifestOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadStatusResolvedImageImageManifestArgs) ToGetWorkloadStatusResolvedImageImageManifestOutputWithContext(ctx context.Context) GetWorkloadStatusResolvedImageImageManifestOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadStatusResolvedImageImageManifestOutput)
+}
+
+// GetWorkloadStatusResolvedImageImageManifestArrayInput is an input type that accepts GetWorkloadStatusResolvedImageImageManifestArray and GetWorkloadStatusResolvedImageImageManifestArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadStatusResolvedImageImageManifestArrayInput` via:
+//
+//	GetWorkloadStatusResolvedImageImageManifestArray{ GetWorkloadStatusResolvedImageImageManifestArgs{...} }
+type GetWorkloadStatusResolvedImageImageManifestArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadStatusResolvedImageImageManifestArrayOutput() GetWorkloadStatusResolvedImageImageManifestArrayOutput
+	ToGetWorkloadStatusResolvedImageImageManifestArrayOutputWithContext(context.Context) GetWorkloadStatusResolvedImageImageManifestArrayOutput
+}
+
+type GetWorkloadStatusResolvedImageImageManifestArray []GetWorkloadStatusResolvedImageImageManifestInput
+
+func (GetWorkloadStatusResolvedImageImageManifestArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadStatusResolvedImageImageManifest)(nil)).Elem()
+}
+
+func (i GetWorkloadStatusResolvedImageImageManifestArray) ToGetWorkloadStatusResolvedImageImageManifestArrayOutput() GetWorkloadStatusResolvedImageImageManifestArrayOutput {
+	return i.ToGetWorkloadStatusResolvedImageImageManifestArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadStatusResolvedImageImageManifestArray) ToGetWorkloadStatusResolvedImageImageManifestArrayOutputWithContext(ctx context.Context) GetWorkloadStatusResolvedImageImageManifestArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadStatusResolvedImageImageManifestArrayOutput)
+}
+
+type GetWorkloadStatusResolvedImageImageManifestOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadStatusResolvedImageImageManifestOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadStatusResolvedImageImageManifest)(nil)).Elem()
+}
+
+func (o GetWorkloadStatusResolvedImageImageManifestOutput) ToGetWorkloadStatusResolvedImageImageManifestOutput() GetWorkloadStatusResolvedImageImageManifestOutput {
+	return o
+}
+
+func (o GetWorkloadStatusResolvedImageImageManifestOutput) ToGetWorkloadStatusResolvedImageImageManifestOutputWithContext(ctx context.Context) GetWorkloadStatusResolvedImageImageManifestOutput {
+	return o
+}
+
+// A SHA256 hash that uniquely identifies the specific image manifest.
+func (o GetWorkloadStatusResolvedImageImageManifestOutput) Digest() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadStatusResolvedImageImageManifest) string { return v.Digest }).(pulumi.StringOutput)
+}
+
+// The name and tag of the resolved image.
+func (o GetWorkloadStatusResolvedImageImageManifestOutput) Image() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadStatusResolvedImageImageManifest) string { return v.Image }).(pulumi.StringOutput)
+}
+
+// The MIME type used in the Docker Registry HTTP API to specify the format of the data being sent or received. Docker uses media types to distinguish between different kinds of JSON objects and binary data formats within the registry protocol, enabling the Docker client and registry to understand and process different components of Docker images correctly.
+func (o GetWorkloadStatusResolvedImageImageManifestOutput) MediaType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadStatusResolvedImageImageManifest) string { return v.MediaType }).(pulumi.StringOutput)
+}
+
+// Key-value map of strings. The combination of the operating system and architecture for which the image is built.
+func (o GetWorkloadStatusResolvedImageImageManifestOutput) Platform() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetWorkloadStatusResolvedImageImageManifest) map[string]string { return v.Platform }).(pulumi.StringMapOutput)
+}
+
+type GetWorkloadStatusResolvedImageImageManifestArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadStatusResolvedImageImageManifestArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadStatusResolvedImageImageManifest)(nil)).Elem()
+}
+
+func (o GetWorkloadStatusResolvedImageImageManifestArrayOutput) ToGetWorkloadStatusResolvedImageImageManifestArrayOutput() GetWorkloadStatusResolvedImageImageManifestArrayOutput {
+	return o
+}
+
+func (o GetWorkloadStatusResolvedImageImageManifestArrayOutput) ToGetWorkloadStatusResolvedImageImageManifestArrayOutputWithContext(ctx context.Context) GetWorkloadStatusResolvedImageImageManifestArrayOutput {
+	return o
+}
+
+func (o GetWorkloadStatusResolvedImageImageManifestArrayOutput) Index(i pulumi.IntInput) GetWorkloadStatusResolvedImageImageManifestOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadStatusResolvedImageImageManifest {
+		return vs[0].([]GetWorkloadStatusResolvedImageImageManifest)[vs[1].(int)]
+	}).(GetWorkloadStatusResolvedImageImageManifestOutput)
+}
+
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CloudAccountAwsInput)(nil)).Elem(), CloudAccountAwsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CloudAccountAwsPtrInput)(nil)).Elem(), CloudAccountAwsArgs{})
@@ -42440,6 +55411,50 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsAzureAcrPtrInput)(nil)).Elem(), Mk8sAddOnsAzureAcrArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsAzureWorkloadIdentityInput)(nil)).Elem(), Mk8sAddOnsAzureWorkloadIdentityArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsAzureWorkloadIdentityPtrInput)(nil)).Elem(), Mk8sAddOnsAzureWorkloadIdentityArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokInput)(nil)).Elem(), Mk8sAddOnsByokArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokPtrInput)(nil)).Elem(), Mk8sAddOnsByokArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigInput)(nil)).Elem(), Mk8sAddOnsByokConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigActuatorInput)(nil)).Elem(), Mk8sAddOnsByokConfigActuatorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigActuatorPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigActuatorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigCommonInput)(nil)).Elem(), Mk8sAddOnsByokConfigCommonArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigCommonPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigCommonArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigCommonPdbInput)(nil)).Elem(), Mk8sAddOnsByokConfigCommonPdbArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigCommonPdbPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigCommonPdbArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigIngressInput)(nil)).Elem(), Mk8sAddOnsByokConfigIngressArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigIngressPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigIngressArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigInternalDnsInput)(nil)).Elem(), Mk8sAddOnsByokConfigInternalDnsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigInternalDnsPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigInternalDnsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigIstioInput)(nil)).Elem(), Mk8sAddOnsByokConfigIstioArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigIstioPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigIstioArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigIstioIngressGatewayInput)(nil)).Elem(), Mk8sAddOnsByokConfigIstioIngressGatewayArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigIstioIngressGatewayPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigIstioIngressGatewayArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigIstioIstiodInput)(nil)).Elem(), Mk8sAddOnsByokConfigIstioIstiodArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigIstioIstiodPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigIstioIstiodArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigIstioSidecarInput)(nil)).Elem(), Mk8sAddOnsByokConfigIstioSidecarArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigIstioSidecarPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigIstioSidecarArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigLogSplitterInput)(nil)).Elem(), Mk8sAddOnsByokConfigLogSplitterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigLogSplitterPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigLogSplitterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigLonghornInput)(nil)).Elem(), Mk8sAddOnsByokConfigLonghornArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigLonghornPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigLonghornArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMiddleboxInput)(nil)).Elem(), Mk8sAddOnsByokConfigMiddleboxArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMiddleboxPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigMiddleboxArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringInput)(nil)).Elem(), Mk8sAddOnsByokConfigMonitoringArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigMonitoringArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringKubeStateMetricsInput)(nil)).Elem(), Mk8sAddOnsByokConfigMonitoringKubeStateMetricsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigMonitoringKubeStateMetricsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringPrometheusInput)(nil)).Elem(), Mk8sAddOnsByokConfigMonitoringPrometheusArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringPrometheusPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigMonitoringPrometheusArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringPrometheusMainInput)(nil)).Elem(), Mk8sAddOnsByokConfigMonitoringPrometheusMainArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigMonitoringPrometheusMainArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigRedisInput)(nil)).Elem(), Mk8sAddOnsByokConfigRedisArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigRedisPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigRedisArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigRedisHaInput)(nil)).Elem(), Mk8sAddOnsByokConfigRedisHaArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigRedisHaPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigRedisHaArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigRedisSentinelInput)(nil)).Elem(), Mk8sAddOnsByokConfigRedisSentinelArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigRedisSentinelPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigRedisSentinelArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigTempoAgentInput)(nil)).Elem(), Mk8sAddOnsByokConfigTempoAgentArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigTempoAgentPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigTempoAgentArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsLogsInput)(nil)).Elem(), Mk8sAddOnsLogsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsLogsPtrInput)(nil)).Elem(), Mk8sAddOnsLogsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsMetricsInput)(nil)).Elem(), Mk8sAddOnsMetricsArgs{})
@@ -42504,6 +55519,20 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sEphemeralProviderNodePoolTaintArrayInput)(nil)).Elem(), Mk8sEphemeralProviderNodePoolTaintArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sFirewallInput)(nil)).Elem(), Mk8sFirewallArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sFirewallArrayInput)(nil)).Elem(), Mk8sFirewallArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderInput)(nil)).Elem(), Mk8sGcpProviderArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderPtrInput)(nil)).Elem(), Mk8sGcpProviderArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderAutoscalerInput)(nil)).Elem(), Mk8sGcpProviderAutoscalerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderAutoscalerPtrInput)(nil)).Elem(), Mk8sGcpProviderAutoscalerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderImageInput)(nil)).Elem(), Mk8sGcpProviderImageArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderImagePtrInput)(nil)).Elem(), Mk8sGcpProviderImageArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderNetworkingInput)(nil)).Elem(), Mk8sGcpProviderNetworkingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderNetworkingPtrInput)(nil)).Elem(), Mk8sGcpProviderNetworkingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderNodePoolInput)(nil)).Elem(), Mk8sGcpProviderNodePoolArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderNodePoolArrayInput)(nil)).Elem(), Mk8sGcpProviderNodePoolArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderNodePoolOverrideImageInput)(nil)).Elem(), Mk8sGcpProviderNodePoolOverrideImageArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderNodePoolOverrideImagePtrInput)(nil)).Elem(), Mk8sGcpProviderNodePoolOverrideImageArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderNodePoolTaintInput)(nil)).Elem(), Mk8sGcpProviderNodePoolTaintArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderNodePoolTaintArrayInput)(nil)).Elem(), Mk8sGcpProviderNodePoolTaintArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGenericProviderInput)(nil)).Elem(), Mk8sGenericProviderArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGenericProviderPtrInput)(nil)).Elem(), Mk8sGenericProviderArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGenericProviderNetworkingInput)(nil)).Elem(), Mk8sGenericProviderNetworkingArgs{})
@@ -42606,6 +55635,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderLoadBalancerManualPtrInput)(nil)).Elem(), Mk8sTritonProviderLoadBalancerManualArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderLoadBalancerManualLoggingInput)(nil)).Elem(), Mk8sTritonProviderLoadBalancerManualLoggingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderLoadBalancerManualLoggingPtrInput)(nil)).Elem(), Mk8sTritonProviderLoadBalancerManualLoggingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderLoadBalancerNoneInput)(nil)).Elem(), Mk8sTritonProviderLoadBalancerNoneArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderLoadBalancerNonePtrInput)(nil)).Elem(), Mk8sTritonProviderLoadBalancerNoneArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderNetworkingInput)(nil)).Elem(), Mk8sTritonProviderNetworkingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderNetworkingPtrInput)(nil)).Elem(), Mk8sTritonProviderNetworkingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sTritonProviderNodePoolInput)(nil)).Elem(), Mk8sTritonProviderNodePoolArgs{})
@@ -42680,6 +55711,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SecretUserpassPtrInput)(nil)).Elem(), SecretUserpassArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSetAutoscalingInput)(nil)).Elem(), VolumeSetAutoscalingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSetAutoscalingPtrInput)(nil)).Elem(), VolumeSetAutoscalingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSetCustomEncryptionInput)(nil)).Elem(), VolumeSetCustomEncryptionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSetCustomEncryptionPtrInput)(nil)).Elem(), VolumeSetCustomEncryptionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSetCustomEncryptionRegionsInput)(nil)).Elem(), VolumeSetCustomEncryptionRegionsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSetCustomEncryptionRegionsMapInput)(nil)).Elem(), VolumeSetCustomEncryptionRegionsMap{})
 	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSetMountOptionsInput)(nil)).Elem(), VolumeSetMountOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSetMountOptionsPtrInput)(nil)).Elem(), VolumeSetMountOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSetMountOptionsResourcesInput)(nil)).Elem(), VolumeSetMountOptionsResourcesArgs{})
@@ -42882,6 +55917,128 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretTlArrayInput)(nil)).Elem(), GetSecretTlArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretUserpassInput)(nil)).Elem(), GetSecretUserpassArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretUserpassArrayInput)(nil)).Elem(), GetSecretUserpassArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerInput)(nil)).Elem(), GetWorkloadContainerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerArrayInput)(nil)).Elem(), GetWorkloadContainerArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerGpuCustomInput)(nil)).Elem(), GetWorkloadContainerGpuCustomArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerGpuCustomArrayInput)(nil)).Elem(), GetWorkloadContainerGpuCustomArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerGpuNvidiaInput)(nil)).Elem(), GetWorkloadContainerGpuNvidiaArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerGpuNvidiaArrayInput)(nil)).Elem(), GetWorkloadContainerGpuNvidiaArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLifecycleInput)(nil)).Elem(), GetWorkloadContainerLifecycleArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLifecycleArrayInput)(nil)).Elem(), GetWorkloadContainerLifecycleArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLifecyclePostStartInput)(nil)).Elem(), GetWorkloadContainerLifecyclePostStartArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLifecyclePostStartArrayInput)(nil)).Elem(), GetWorkloadContainerLifecyclePostStartArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLifecyclePostStartExecInput)(nil)).Elem(), GetWorkloadContainerLifecyclePostStartExecArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLifecyclePostStartExecArrayInput)(nil)).Elem(), GetWorkloadContainerLifecyclePostStartExecArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLifecyclePreStopInput)(nil)).Elem(), GetWorkloadContainerLifecyclePreStopArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLifecyclePreStopArrayInput)(nil)).Elem(), GetWorkloadContainerLifecyclePreStopArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLifecyclePreStopExecInput)(nil)).Elem(), GetWorkloadContainerLifecyclePreStopExecArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLifecyclePreStopExecArrayInput)(nil)).Elem(), GetWorkloadContainerLifecyclePreStopExecArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLivenessProbeInput)(nil)).Elem(), GetWorkloadContainerLivenessProbeArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLivenessProbeArrayInput)(nil)).Elem(), GetWorkloadContainerLivenessProbeArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLivenessProbeExecInput)(nil)).Elem(), GetWorkloadContainerLivenessProbeExecArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLivenessProbeExecArrayInput)(nil)).Elem(), GetWorkloadContainerLivenessProbeExecArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLivenessProbeGrpcInput)(nil)).Elem(), GetWorkloadContainerLivenessProbeGrpcArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLivenessProbeGrpcArrayInput)(nil)).Elem(), GetWorkloadContainerLivenessProbeGrpcArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLivenessProbeHttpGetInput)(nil)).Elem(), GetWorkloadContainerLivenessProbeHttpGetArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLivenessProbeHttpGetArrayInput)(nil)).Elem(), GetWorkloadContainerLivenessProbeHttpGetArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLivenessProbeTcpSocketInput)(nil)).Elem(), GetWorkloadContainerLivenessProbeTcpSocketArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerLivenessProbeTcpSocketArrayInput)(nil)).Elem(), GetWorkloadContainerLivenessProbeTcpSocketArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerMetricInput)(nil)).Elem(), GetWorkloadContainerMetricArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerMetricArrayInput)(nil)).Elem(), GetWorkloadContainerMetricArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerPortInput)(nil)).Elem(), GetWorkloadContainerPortArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerPortArrayInput)(nil)).Elem(), GetWorkloadContainerPortArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerReadinessProbeInput)(nil)).Elem(), GetWorkloadContainerReadinessProbeArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerReadinessProbeArrayInput)(nil)).Elem(), GetWorkloadContainerReadinessProbeArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerReadinessProbeExecInput)(nil)).Elem(), GetWorkloadContainerReadinessProbeExecArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerReadinessProbeExecArrayInput)(nil)).Elem(), GetWorkloadContainerReadinessProbeExecArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerReadinessProbeGrpcInput)(nil)).Elem(), GetWorkloadContainerReadinessProbeGrpcArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerReadinessProbeGrpcArrayInput)(nil)).Elem(), GetWorkloadContainerReadinessProbeGrpcArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerReadinessProbeHttpGetInput)(nil)).Elem(), GetWorkloadContainerReadinessProbeHttpGetArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerReadinessProbeHttpGetArrayInput)(nil)).Elem(), GetWorkloadContainerReadinessProbeHttpGetArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerReadinessProbeTcpSocketInput)(nil)).Elem(), GetWorkloadContainerReadinessProbeTcpSocketArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerReadinessProbeTcpSocketArrayInput)(nil)).Elem(), GetWorkloadContainerReadinessProbeTcpSocketArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerVolumeInput)(nil)).Elem(), GetWorkloadContainerVolumeArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerVolumeArrayInput)(nil)).Elem(), GetWorkloadContainerVolumeArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecInput)(nil)).Elem(), GetWorkloadFirewallSpecArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecArrayInput)(nil)).Elem(), GetWorkloadFirewallSpecArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecExternalInput)(nil)).Elem(), GetWorkloadFirewallSpecExternalArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecExternalArrayInput)(nil)).Elem(), GetWorkloadFirewallSpecExternalArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecExternalHttpInput)(nil)).Elem(), GetWorkloadFirewallSpecExternalHttpArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecExternalHttpArrayInput)(nil)).Elem(), GetWorkloadFirewallSpecExternalHttpArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterInput)(nil)).Elem(), GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayInput)(nil)).Elem(), GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecExternalOutboundAllowPortInput)(nil)).Elem(), GetWorkloadFirewallSpecExternalOutboundAllowPortArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecExternalOutboundAllowPortArrayInput)(nil)).Elem(), GetWorkloadFirewallSpecExternalOutboundAllowPortArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecInternalInput)(nil)).Elem(), GetWorkloadFirewallSpecInternalArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecInternalArrayInput)(nil)).Elem(), GetWorkloadFirewallSpecInternalArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadJobInput)(nil)).Elem(), GetWorkloadJobArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadJobArrayInput)(nil)).Elem(), GetWorkloadJobArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLoadBalancerInput)(nil)).Elem(), GetWorkloadLoadBalancerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLoadBalancerArrayInput)(nil)).Elem(), GetWorkloadLoadBalancerArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLoadBalancerDirectInput)(nil)).Elem(), GetWorkloadLoadBalancerDirectArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLoadBalancerDirectArrayInput)(nil)).Elem(), GetWorkloadLoadBalancerDirectArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLoadBalancerDirectPortInput)(nil)).Elem(), GetWorkloadLoadBalancerDirectPortArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLoadBalancerDirectPortArrayInput)(nil)).Elem(), GetWorkloadLoadBalancerDirectPortArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLoadBalancerGeoLocationInput)(nil)).Elem(), GetWorkloadLoadBalancerGeoLocationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLoadBalancerGeoLocationArrayInput)(nil)).Elem(), GetWorkloadLoadBalancerGeoLocationArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLoadBalancerGeoLocationHeaderInput)(nil)).Elem(), GetWorkloadLoadBalancerGeoLocationHeaderArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLoadBalancerGeoLocationHeaderArrayInput)(nil)).Elem(), GetWorkloadLoadBalancerGeoLocationHeaderArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionInput)(nil)).Elem(), GetWorkloadLocalOptionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionArrayInput)(nil)).Elem(), GetWorkloadLocalOptionArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaTriggerInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaTriggerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaTriggerArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaTriggerArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingMultiInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingMultiArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingMultiArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingMultiArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionMultiZoneInput)(nil)).Elem(), GetWorkloadLocalOptionMultiZoneArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionMultiZoneArrayInput)(nil)).Elem(), GetWorkloadLocalOptionMultiZoneArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionInput)(nil)).Elem(), GetWorkloadOptionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionArrayInput)(nil)).Elem(), GetWorkloadOptionArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingInput)(nil)).Elem(), GetWorkloadOptionAutoscalingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaTriggerInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaTriggerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaTriggerArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaTriggerArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingMultiInput)(nil)).Elem(), GetWorkloadOptionAutoscalingMultiArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingMultiArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingMultiArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionMultiZoneInput)(nil)).Elem(), GetWorkloadOptionMultiZoneArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionMultiZoneArrayInput)(nil)).Elem(), GetWorkloadOptionMultiZoneArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadRequestRetryPolicyInput)(nil)).Elem(), GetWorkloadRequestRetryPolicyArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadRequestRetryPolicyArrayInput)(nil)).Elem(), GetWorkloadRequestRetryPolicyArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadRolloutOptionInput)(nil)).Elem(), GetWorkloadRolloutOptionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadRolloutOptionArrayInput)(nil)).Elem(), GetWorkloadRolloutOptionArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadSecurityOptionInput)(nil)).Elem(), GetWorkloadSecurityOptionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadSecurityOptionArrayInput)(nil)).Elem(), GetWorkloadSecurityOptionArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadSidecarInput)(nil)).Elem(), GetWorkloadSidecarArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadSidecarArrayInput)(nil)).Elem(), GetWorkloadSidecarArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadStatusInput)(nil)).Elem(), GetWorkloadStatusArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadStatusArrayInput)(nil)).Elem(), GetWorkloadStatusArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadStatusHealthCheckInput)(nil)).Elem(), GetWorkloadStatusHealthCheckArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadStatusHealthCheckArrayInput)(nil)).Elem(), GetWorkloadStatusHealthCheckArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadStatusLoadBalancerInput)(nil)).Elem(), GetWorkloadStatusLoadBalancerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadStatusLoadBalancerArrayInput)(nil)).Elem(), GetWorkloadStatusLoadBalancerArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadStatusResolvedImageInput)(nil)).Elem(), GetWorkloadStatusResolvedImageArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadStatusResolvedImageArrayInput)(nil)).Elem(), GetWorkloadStatusResolvedImageArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadStatusResolvedImageImageInput)(nil)).Elem(), GetWorkloadStatusResolvedImageImageArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadStatusResolvedImageImageArrayInput)(nil)).Elem(), GetWorkloadStatusResolvedImageImageArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadStatusResolvedImageImageManifestInput)(nil)).Elem(), GetWorkloadStatusResolvedImageImageManifestArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadStatusResolvedImageImageManifestArrayInput)(nil)).Elem(), GetWorkloadStatusResolvedImageImageManifestArray{})
 	pulumi.RegisterOutputType(CloudAccountAwsOutput{})
 	pulumi.RegisterOutputType(CloudAccountAwsPtrOutput{})
 	pulumi.RegisterOutputType(CloudAccountAzureOutput{})
@@ -42990,6 +56147,50 @@ func init() {
 	pulumi.RegisterOutputType(Mk8sAddOnsAzureAcrPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsAzureWorkloadIdentityOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsAzureWorkloadIdentityPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigActuatorOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigActuatorPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigCommonOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigCommonPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigCommonPdbOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigCommonPdbPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigIngressOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigIngressPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigInternalDnsOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigInternalDnsPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigIstioOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigIstioPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigIstioIngressGatewayOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigIstioIngressGatewayPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigIstioIstiodOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigIstioIstiodPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigIstioSidecarOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigIstioSidecarPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigLogSplitterOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigLogSplitterPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigLonghornOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigLonghornPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMiddleboxOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMiddleboxPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMonitoringOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMonitoringPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMonitoringKubeStateMetricsOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMonitoringPrometheusOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigRedisOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigRedisPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigRedisHaOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigRedisHaPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigRedisSentinelOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigRedisSentinelPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigTempoAgentOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigTempoAgentPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsLogsOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsLogsPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsMetricsOutput{})
@@ -43054,6 +56255,20 @@ func init() {
 	pulumi.RegisterOutputType(Mk8sEphemeralProviderNodePoolTaintArrayOutput{})
 	pulumi.RegisterOutputType(Mk8sFirewallOutput{})
 	pulumi.RegisterOutputType(Mk8sFirewallArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sGcpProviderOutput{})
+	pulumi.RegisterOutputType(Mk8sGcpProviderPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sGcpProviderAutoscalerOutput{})
+	pulumi.RegisterOutputType(Mk8sGcpProviderAutoscalerPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sGcpProviderImageOutput{})
+	pulumi.RegisterOutputType(Mk8sGcpProviderImagePtrOutput{})
+	pulumi.RegisterOutputType(Mk8sGcpProviderNetworkingOutput{})
+	pulumi.RegisterOutputType(Mk8sGcpProviderNetworkingPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sGcpProviderNodePoolOutput{})
+	pulumi.RegisterOutputType(Mk8sGcpProviderNodePoolArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sGcpProviderNodePoolOverrideImageOutput{})
+	pulumi.RegisterOutputType(Mk8sGcpProviderNodePoolOverrideImagePtrOutput{})
+	pulumi.RegisterOutputType(Mk8sGcpProviderNodePoolTaintOutput{})
+	pulumi.RegisterOutputType(Mk8sGcpProviderNodePoolTaintArrayOutput{})
 	pulumi.RegisterOutputType(Mk8sGenericProviderOutput{})
 	pulumi.RegisterOutputType(Mk8sGenericProviderPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sGenericProviderNetworkingOutput{})
@@ -43156,6 +56371,8 @@ func init() {
 	pulumi.RegisterOutputType(Mk8sTritonProviderLoadBalancerManualPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sTritonProviderLoadBalancerManualLoggingOutput{})
 	pulumi.RegisterOutputType(Mk8sTritonProviderLoadBalancerManualLoggingPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sTritonProviderLoadBalancerNoneOutput{})
+	pulumi.RegisterOutputType(Mk8sTritonProviderLoadBalancerNonePtrOutput{})
 	pulumi.RegisterOutputType(Mk8sTritonProviderNetworkingOutput{})
 	pulumi.RegisterOutputType(Mk8sTritonProviderNetworkingPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sTritonProviderNodePoolOutput{})
@@ -43230,6 +56447,10 @@ func init() {
 	pulumi.RegisterOutputType(SecretUserpassPtrOutput{})
 	pulumi.RegisterOutputType(VolumeSetAutoscalingOutput{})
 	pulumi.RegisterOutputType(VolumeSetAutoscalingPtrOutput{})
+	pulumi.RegisterOutputType(VolumeSetCustomEncryptionOutput{})
+	pulumi.RegisterOutputType(VolumeSetCustomEncryptionPtrOutput{})
+	pulumi.RegisterOutputType(VolumeSetCustomEncryptionRegionsOutput{})
+	pulumi.RegisterOutputType(VolumeSetCustomEncryptionRegionsMapOutput{})
 	pulumi.RegisterOutputType(VolumeSetMountOptionsOutput{})
 	pulumi.RegisterOutputType(VolumeSetMountOptionsPtrOutput{})
 	pulumi.RegisterOutputType(VolumeSetMountOptionsResourcesOutput{})
@@ -43432,4 +56653,126 @@ func init() {
 	pulumi.RegisterOutputType(GetSecretTlArrayOutput{})
 	pulumi.RegisterOutputType(GetSecretUserpassOutput{})
 	pulumi.RegisterOutputType(GetSecretUserpassArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerGpuCustomOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerGpuCustomArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerGpuNvidiaOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerGpuNvidiaArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLifecycleOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLifecycleArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLifecyclePostStartOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLifecyclePostStartArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLifecyclePostStartExecOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLifecyclePostStartExecArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLifecyclePreStopOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLifecyclePreStopArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLifecyclePreStopExecOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLifecyclePreStopExecArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLivenessProbeOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLivenessProbeArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLivenessProbeExecOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLivenessProbeExecArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLivenessProbeGrpcOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLivenessProbeGrpcArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLivenessProbeHttpGetOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLivenessProbeHttpGetArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLivenessProbeTcpSocketOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerLivenessProbeTcpSocketArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerMetricOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerMetricArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerPortOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerPortArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerReadinessProbeOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerReadinessProbeArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerReadinessProbeExecOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerReadinessProbeExecArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerReadinessProbeGrpcOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerReadinessProbeGrpcArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerReadinessProbeHttpGetOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerReadinessProbeHttpGetArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerReadinessProbeTcpSocketOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerReadinessProbeTcpSocketArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerVolumeOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerVolumeArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadFirewallSpecOutput{})
+	pulumi.RegisterOutputType(GetWorkloadFirewallSpecArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadFirewallSpecExternalOutput{})
+	pulumi.RegisterOutputType(GetWorkloadFirewallSpecExternalArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadFirewallSpecExternalHttpOutput{})
+	pulumi.RegisterOutputType(GetWorkloadFirewallSpecExternalHttpArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput{})
+	pulumi.RegisterOutputType(GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadFirewallSpecExternalOutboundAllowPortOutput{})
+	pulumi.RegisterOutputType(GetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadFirewallSpecInternalOutput{})
+	pulumi.RegisterOutputType(GetWorkloadFirewallSpecInternalArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadJobOutput{})
+	pulumi.RegisterOutputType(GetWorkloadJobArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLoadBalancerOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLoadBalancerArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLoadBalancerDirectOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLoadBalancerDirectArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLoadBalancerDirectPortOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLoadBalancerDirectPortArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLoadBalancerGeoLocationOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLoadBalancerGeoLocationArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLoadBalancerGeoLocationHeaderOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLoadBalancerGeoLocationHeaderArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaTriggerOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingMultiOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingMultiArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionMultiZoneOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionMultiZoneArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaTriggerOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaTriggerArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingMultiOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingMultiArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionMultiZoneOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionMultiZoneArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadRequestRetryPolicyOutput{})
+	pulumi.RegisterOutputType(GetWorkloadRequestRetryPolicyArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadRolloutOptionOutput{})
+	pulumi.RegisterOutputType(GetWorkloadRolloutOptionArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadSecurityOptionOutput{})
+	pulumi.RegisterOutputType(GetWorkloadSecurityOptionArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadSidecarOutput{})
+	pulumi.RegisterOutputType(GetWorkloadSidecarArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadStatusOutput{})
+	pulumi.RegisterOutputType(GetWorkloadStatusArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadStatusHealthCheckOutput{})
+	pulumi.RegisterOutputType(GetWorkloadStatusHealthCheckArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadStatusLoadBalancerOutput{})
+	pulumi.RegisterOutputType(GetWorkloadStatusLoadBalancerArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadStatusResolvedImageOutput{})
+	pulumi.RegisterOutputType(GetWorkloadStatusResolvedImageArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadStatusResolvedImageImageOutput{})
+	pulumi.RegisterOutputType(GetWorkloadStatusResolvedImageImageArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadStatusResolvedImageImageManifestOutput{})
+	pulumi.RegisterOutputType(GetWorkloadStatusResolvedImageImageManifestArrayOutput{})
 }

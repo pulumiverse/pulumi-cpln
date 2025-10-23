@@ -34,51 +34,52 @@ export class Mk8s extends pulumi.CustomResource {
         return obj['__pulumiType'] === Mk8s.__pulumiType;
     }
 
-    public readonly addOns!: pulumi.Output<outputs.Mk8sAddOns | undefined>;
+    declare public readonly addOns: pulumi.Output<outputs.Mk8sAddOns | undefined>;
     /**
      * The alias name of the Mk8s.
      */
-    public /*out*/ readonly alias!: pulumi.Output<string>;
-    public readonly awsProvider!: pulumi.Output<outputs.Mk8sAwsProvider | undefined>;
-    public readonly azureProvider!: pulumi.Output<outputs.Mk8sAzureProvider | undefined>;
+    declare public /*out*/ readonly alias: pulumi.Output<string>;
+    declare public readonly awsProvider: pulumi.Output<outputs.Mk8sAwsProvider | undefined>;
+    declare public readonly azureProvider: pulumi.Output<outputs.Mk8sAzureProvider | undefined>;
     /**
      * The ID, in GUID format, of the mk8s.
      */
-    public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    declare public /*out*/ readonly cplnId: pulumi.Output<string>;
     /**
      * Description of the mk8s.
      */
-    public readonly description!: pulumi.Output<string>;
-    public readonly digitalOceanProvider!: pulumi.Output<outputs.Mk8sDigitalOceanProvider | undefined>;
-    public readonly ephemeralProvider!: pulumi.Output<outputs.Mk8sEphemeralProvider | undefined>;
+    declare public readonly description: pulumi.Output<string>;
+    declare public readonly digitalOceanProvider: pulumi.Output<outputs.Mk8sDigitalOceanProvider | undefined>;
+    declare public readonly ephemeralProvider: pulumi.Output<outputs.Mk8sEphemeralProvider | undefined>;
     /**
      * Allow-list.
      */
-    public readonly firewalls!: pulumi.Output<outputs.Mk8sFirewall[] | undefined>;
-    public readonly genericProvider!: pulumi.Output<outputs.Mk8sGenericProvider | undefined>;
-    public readonly hetznerProvider!: pulumi.Output<outputs.Mk8sHetznerProvider | undefined>;
-    public readonly lambdalabsProvider!: pulumi.Output<outputs.Mk8sLambdalabsProvider | undefined>;
-    public readonly linodeProvider!: pulumi.Output<outputs.Mk8sLinodeProvider | undefined>;
+    declare public readonly firewalls: pulumi.Output<outputs.Mk8sFirewall[] | undefined>;
+    declare public readonly gcpProvider: pulumi.Output<outputs.Mk8sGcpProvider | undefined>;
+    declare public readonly genericProvider: pulumi.Output<outputs.Mk8sGenericProvider | undefined>;
+    declare public readonly hetznerProvider: pulumi.Output<outputs.Mk8sHetznerProvider | undefined>;
+    declare public readonly lambdalabsProvider: pulumi.Output<outputs.Mk8sLambdalabsProvider | undefined>;
+    declare public readonly linodeProvider: pulumi.Output<outputs.Mk8sLinodeProvider | undefined>;
     /**
      * Name of the mk8s.
      */
-    public readonly name!: pulumi.Output<string>;
-    public readonly oblivusProvider!: pulumi.Output<outputs.Mk8sOblivusProvider | undefined>;
-    public readonly paperspaceProvider!: pulumi.Output<outputs.Mk8sPaperspaceProvider | undefined>;
+    declare public readonly name: pulumi.Output<string>;
+    declare public readonly oblivusProvider: pulumi.Output<outputs.Mk8sOblivusProvider | undefined>;
+    declare public readonly paperspaceProvider: pulumi.Output<outputs.Mk8sPaperspaceProvider | undefined>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
-    public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    declare public /*out*/ readonly selfLink: pulumi.Output<string>;
     /**
      * Status of the mk8s.
      */
-    public /*out*/ readonly statuses!: pulumi.Output<outputs.Mk8sStatus[]>;
+    declare public /*out*/ readonly statuses: pulumi.Output<outputs.Mk8sStatus[]>;
     /**
      * Key-value map of resource tags.
      */
-    public readonly tags!: pulumi.Output<{[key: string]: string}>;
-    public readonly tritonProvider!: pulumi.Output<outputs.Mk8sTritonProvider | undefined>;
-    public readonly version!: pulumi.Output<string>;
+    declare public readonly tags: pulumi.Output<{[key: string]: string}>;
+    declare public readonly tritonProvider: pulumi.Output<outputs.Mk8sTritonProvider | undefined>;
+    declare public readonly version: pulumi.Output<string>;
 
     /**
      * Create a Mk8s resource with the given unique name, arguments, and options.
@@ -93,49 +94,51 @@ export class Mk8s extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as Mk8sState | undefined;
-            resourceInputs["addOns"] = state ? state.addOns : undefined;
-            resourceInputs["alias"] = state ? state.alias : undefined;
-            resourceInputs["awsProvider"] = state ? state.awsProvider : undefined;
-            resourceInputs["azureProvider"] = state ? state.azureProvider : undefined;
-            resourceInputs["cplnId"] = state ? state.cplnId : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["digitalOceanProvider"] = state ? state.digitalOceanProvider : undefined;
-            resourceInputs["ephemeralProvider"] = state ? state.ephemeralProvider : undefined;
-            resourceInputs["firewalls"] = state ? state.firewalls : undefined;
-            resourceInputs["genericProvider"] = state ? state.genericProvider : undefined;
-            resourceInputs["hetznerProvider"] = state ? state.hetznerProvider : undefined;
-            resourceInputs["lambdalabsProvider"] = state ? state.lambdalabsProvider : undefined;
-            resourceInputs["linodeProvider"] = state ? state.linodeProvider : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["oblivusProvider"] = state ? state.oblivusProvider : undefined;
-            resourceInputs["paperspaceProvider"] = state ? state.paperspaceProvider : undefined;
-            resourceInputs["selfLink"] = state ? state.selfLink : undefined;
-            resourceInputs["statuses"] = state ? state.statuses : undefined;
-            resourceInputs["tags"] = state ? state.tags : undefined;
-            resourceInputs["tritonProvider"] = state ? state.tritonProvider : undefined;
-            resourceInputs["version"] = state ? state.version : undefined;
+            resourceInputs["addOns"] = state?.addOns;
+            resourceInputs["alias"] = state?.alias;
+            resourceInputs["awsProvider"] = state?.awsProvider;
+            resourceInputs["azureProvider"] = state?.azureProvider;
+            resourceInputs["cplnId"] = state?.cplnId;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["digitalOceanProvider"] = state?.digitalOceanProvider;
+            resourceInputs["ephemeralProvider"] = state?.ephemeralProvider;
+            resourceInputs["firewalls"] = state?.firewalls;
+            resourceInputs["gcpProvider"] = state?.gcpProvider;
+            resourceInputs["genericProvider"] = state?.genericProvider;
+            resourceInputs["hetznerProvider"] = state?.hetznerProvider;
+            resourceInputs["lambdalabsProvider"] = state?.lambdalabsProvider;
+            resourceInputs["linodeProvider"] = state?.linodeProvider;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["oblivusProvider"] = state?.oblivusProvider;
+            resourceInputs["paperspaceProvider"] = state?.paperspaceProvider;
+            resourceInputs["selfLink"] = state?.selfLink;
+            resourceInputs["statuses"] = state?.statuses;
+            resourceInputs["tags"] = state?.tags;
+            resourceInputs["tritonProvider"] = state?.tritonProvider;
+            resourceInputs["version"] = state?.version;
         } else {
             const args = argsOrState as Mk8sArgs | undefined;
-            if ((!args || args.version === undefined) && !opts.urn) {
+            if (args?.version === undefined && !opts.urn) {
                 throw new Error("Missing required property 'version'");
             }
-            resourceInputs["addOns"] = args ? args.addOns : undefined;
-            resourceInputs["awsProvider"] = args ? args.awsProvider : undefined;
-            resourceInputs["azureProvider"] = args ? args.azureProvider : undefined;
-            resourceInputs["description"] = args ? args.description : undefined;
-            resourceInputs["digitalOceanProvider"] = args ? args.digitalOceanProvider : undefined;
-            resourceInputs["ephemeralProvider"] = args ? args.ephemeralProvider : undefined;
-            resourceInputs["firewalls"] = args ? args.firewalls : undefined;
-            resourceInputs["genericProvider"] = args ? args.genericProvider : undefined;
-            resourceInputs["hetznerProvider"] = args ? args.hetznerProvider : undefined;
-            resourceInputs["lambdalabsProvider"] = args ? args.lambdalabsProvider : undefined;
-            resourceInputs["linodeProvider"] = args ? args.linodeProvider : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["oblivusProvider"] = args ? args.oblivusProvider : undefined;
-            resourceInputs["paperspaceProvider"] = args ? args.paperspaceProvider : undefined;
-            resourceInputs["tags"] = args ? args.tags : undefined;
-            resourceInputs["tritonProvider"] = args ? args.tritonProvider : undefined;
-            resourceInputs["version"] = args ? args.version : undefined;
+            resourceInputs["addOns"] = args?.addOns;
+            resourceInputs["awsProvider"] = args?.awsProvider;
+            resourceInputs["azureProvider"] = args?.azureProvider;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["digitalOceanProvider"] = args?.digitalOceanProvider;
+            resourceInputs["ephemeralProvider"] = args?.ephemeralProvider;
+            resourceInputs["firewalls"] = args?.firewalls;
+            resourceInputs["gcpProvider"] = args?.gcpProvider;
+            resourceInputs["genericProvider"] = args?.genericProvider;
+            resourceInputs["hetznerProvider"] = args?.hetznerProvider;
+            resourceInputs["lambdalabsProvider"] = args?.lambdalabsProvider;
+            resourceInputs["linodeProvider"] = args?.linodeProvider;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["oblivusProvider"] = args?.oblivusProvider;
+            resourceInputs["paperspaceProvider"] = args?.paperspaceProvider;
+            resourceInputs["tags"] = args?.tags;
+            resourceInputs["tritonProvider"] = args?.tritonProvider;
+            resourceInputs["version"] = args?.version;
             resourceInputs["alias"] = undefined /*out*/;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
@@ -171,6 +174,7 @@ export interface Mk8sState {
      * Allow-list.
      */
     firewalls?: pulumi.Input<pulumi.Input<inputs.Mk8sFirewall>[]>;
+    gcpProvider?: pulumi.Input<inputs.Mk8sGcpProvider>;
     genericProvider?: pulumi.Input<inputs.Mk8sGenericProvider>;
     hetznerProvider?: pulumi.Input<inputs.Mk8sHetznerProvider>;
     lambdalabsProvider?: pulumi.Input<inputs.Mk8sLambdalabsProvider>;
@@ -214,6 +218,7 @@ export interface Mk8sArgs {
      * Allow-list.
      */
     firewalls?: pulumi.Input<pulumi.Input<inputs.Mk8sFirewall>[]>;
+    gcpProvider?: pulumi.Input<inputs.Mk8sGcpProvider>;
     genericProvider?: pulumi.Input<inputs.Mk8sGenericProvider>;
     hetznerProvider?: pulumi.Input<inputs.Mk8sHetznerProvider>;
     lambdalabsProvider?: pulumi.Input<inputs.Mk8sLambdalabsProvider>;

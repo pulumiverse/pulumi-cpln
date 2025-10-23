@@ -14,8 +14,7 @@ namespace Pulumiverse.Cpln
     public partial class Org : global::Pulumi.CustomResource
     {
         /// <summary>
-        /// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
-        /// obtained from the `Org Management &amp; Billing` page.
+        /// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be obtained from the `Org Management &amp; Billing` page.
         /// </summary>
         [Output("accountId")]
         public Output<string> AccountId { get; private set; } = null!;
@@ -39,8 +38,7 @@ namespace Pulumiverse.Cpln
         public Output<string> Description { get; private set; } = null!;
 
         /// <summary>
-        /// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
-        /// the `superusers` group. The user account used when creating the org will be included in this list.
+        /// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to the `Superusers` group. The user account used when creating the org will be included in this list.
         /// </summary>
         [Output("invitees")]
         public Output<ImmutableArray<string>> Invitees { get; private set; } = null!;
@@ -132,8 +130,7 @@ namespace Pulumiverse.Cpln
     public sealed class OrgArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
-        /// obtained from the `Org Management &amp; Billing` page.
+        /// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be obtained from the `Org Management &amp; Billing` page.
         /// </summary>
         [Input("accountId")]
         public Input<string>? AccountId { get; set; }
@@ -154,8 +151,7 @@ namespace Pulumiverse.Cpln
         private InputList<string>? _invitees;
 
         /// <summary>
-        /// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
-        /// the `superusers` group. The user account used when creating the org will be included in this list.
+        /// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to the `Superusers` group. The user account used when creating the org will be included in this list.
         /// </summary>
         public InputList<string> Invitees
         {
@@ -199,8 +195,7 @@ namespace Pulumiverse.Cpln
     public sealed class OrgState : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
-        /// obtained from the `Org Management &amp; Billing` page.
+        /// The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be obtained from the `Org Management &amp; Billing` page.
         /// </summary>
         [Input("accountId")]
         public Input<string>? AccountId { get; set; }
@@ -227,8 +222,7 @@ namespace Pulumiverse.Cpln
         private InputList<string>? _invitees;
 
         /// <summary>
-        /// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
-        /// the `superusers` group. The user account used when creating the org will be included in this list.
+        /// When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to the `Superusers` group. The user account used when creating the org will be included in this list.
         /// </summary>
         public InputList<string> Invitees
         {

@@ -38,8 +38,7 @@ namespace Pulumiverse.Cpln
         public Output<string?> Extras { get; private set; } = null!;
 
         /// <summary>
-        /// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
-        /// Access is restricted by default.
+        /// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
         /// </summary>
         [Output("firewallSpec")]
         public Output<Outputs.WorkloadFirewallSpec?> FirewallSpec { get; private set; } = null!;
@@ -51,8 +50,7 @@ namespace Pulumiverse.Cpln
         public Output<string> Gvc { get; private set; } = null!;
 
         /// <summary>
-        /// The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to
-        /// multiple cloud providers.
+        /// The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to multiple cloud providers.
         /// </summary>
         [Output("identityLink")]
         public Output<string?> IdentityLink { get; private set; } = null!;
@@ -79,8 +77,7 @@ namespace Pulumiverse.Cpln
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
-        /// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
-        /// characteristics of the workload.
+        /// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
         /// </summary>
         [Output("options")]
         public Output<Outputs.WorkloadOptions?> Options { get; private set; } = null!;
@@ -89,8 +86,7 @@ namespace Pulumiverse.Cpln
         public Output<Outputs.WorkloadRequestRetryPolicy?> RequestRetryPolicy { get; private set; } = null!;
 
         /// <summary>
-        /// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
-        /// replicas, surge replicas, and scaling policies.
+        /// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable replicas, surge replicas, and scaling policies.
         /// </summary>
         [Output("rolloutOptions")]
         public Output<ImmutableArray<Outputs.WorkloadRolloutOption>> RolloutOptions { get; private set; } = null!;
@@ -117,8 +113,7 @@ namespace Pulumiverse.Cpln
         public Output<ImmutableArray<Outputs.WorkloadStatus>> Statuses { get; private set; } = null!;
 
         /// <summary>
-        /// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
-        /// false.
+        /// Workload will automatically redeploy when one of the container images is updated in the container registry. Default: false.
         /// </summary>
         [Output("supportDynamicTags")]
         public Output<bool> SupportDynamicTags { get; private set; } = null!;
@@ -130,7 +125,7 @@ namespace Pulumiverse.Cpln
         public Output<ImmutableDictionary<string, string>> Tags { get; private set; } = null!;
 
         /// <summary>
-        /// Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+        /// Workload Type. Either `Serverless`, `Standard`, `Stateful`, or `Cron`.
         /// </summary>
         [Output("type")]
         public Output<string> Type { get; private set; } = null!;
@@ -207,8 +202,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Extras { get; set; }
 
         /// <summary>
-        /// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
-        /// Access is restricted by default.
+        /// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
         /// </summary>
         [Input("firewallSpec")]
         public Input<Inputs.WorkloadFirewallSpecArgs>? FirewallSpec { get; set; }
@@ -220,8 +214,7 @@ namespace Pulumiverse.Cpln
         public Input<string> Gvc { get; set; } = null!;
 
         /// <summary>
-        /// The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to
-        /// multiple cloud providers.
+        /// The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to multiple cloud providers.
         /// </summary>
         [Input("identityLink")]
         public Input<string>? IdentityLink { get; set; }
@@ -260,8 +253,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
-        /// characteristics of the workload.
+        /// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
         /// </summary>
         [Input("options")]
         public Input<Inputs.WorkloadOptionsArgs>? Options { get; set; }
@@ -273,8 +265,7 @@ namespace Pulumiverse.Cpln
         private InputList<Inputs.WorkloadRolloutOptionArgs>? _rolloutOptions;
 
         /// <summary>
-        /// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
-        /// replicas, surge replicas, and scaling policies.
+        /// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable replicas, surge replicas, and scaling policies.
         /// </summary>
         public InputList<Inputs.WorkloadRolloutOptionArgs> RolloutOptions
         {
@@ -292,8 +283,7 @@ namespace Pulumiverse.Cpln
         public Input<Inputs.WorkloadSidecarArgs>? Sidecar { get; set; }
 
         /// <summary>
-        /// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
-        /// false.
+        /// Workload will automatically redeploy when one of the container images is updated in the container registry. Default: false.
         /// </summary>
         [Input("supportDynamicTags")]
         public Input<bool>? SupportDynamicTags { get; set; }
@@ -311,7 +301,7 @@ namespace Pulumiverse.Cpln
         }
 
         /// <summary>
-        /// Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+        /// Workload Type. Either `Serverless`, `Standard`, `Stateful`, or `Cron`.
         /// </summary>
         [Input("type", required: true)]
         public Input<string> Type { get; set; } = null!;
@@ -355,8 +345,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Extras { get; set; }
 
         /// <summary>
-        /// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
-        /// Access is restricted by default.
+        /// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
         /// </summary>
         [Input("firewallSpec")]
         public Input<Inputs.WorkloadFirewallSpecGetArgs>? FirewallSpec { get; set; }
@@ -368,8 +357,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Gvc { get; set; }
 
         /// <summary>
-        /// The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to
-        /// multiple cloud providers.
+        /// The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to multiple cloud providers.
         /// </summary>
         [Input("identityLink")]
         public Input<string>? IdentityLink { get; set; }
@@ -408,8 +396,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
-        /// characteristics of the workload.
+        /// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
         /// </summary>
         [Input("options")]
         public Input<Inputs.WorkloadOptionsGetArgs>? Options { get; set; }
@@ -421,8 +408,7 @@ namespace Pulumiverse.Cpln
         private InputList<Inputs.WorkloadRolloutOptionGetArgs>? _rolloutOptions;
 
         /// <summary>
-        /// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
-        /// replicas, surge replicas, and scaling policies.
+        /// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable replicas, surge replicas, and scaling policies.
         /// </summary>
         public InputList<Inputs.WorkloadRolloutOptionGetArgs> RolloutOptions
         {
@@ -458,8 +444,7 @@ namespace Pulumiverse.Cpln
         }
 
         /// <summary>
-        /// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
-        /// false.
+        /// Workload will automatically redeploy when one of the container images is updated in the container registry. Default: false.
         /// </summary>
         [Input("supportDynamicTags")]
         public Input<bool>? SupportDynamicTags { get; set; }
@@ -477,7 +462,7 @@ namespace Pulumiverse.Cpln
         }
 
         /// <summary>
-        /// Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+        /// Workload Type. Either `Serverless`, `Standard`, `Stateful`, or `Cron`.
         /// </summary>
         [Input("type")]
         public Input<string>? Type { get; set; }

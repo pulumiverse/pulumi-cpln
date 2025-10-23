@@ -34,29 +34,29 @@ export class OrgTracing extends pulumi.CustomResource {
         return obj['__pulumiType'] === OrgTracing.__pulumiType;
     }
 
-    public readonly controlplaneTracing!: pulumi.Output<outputs.OrgTracingControlplaneTracing | undefined>;
+    declare public readonly controlplaneTracing: pulumi.Output<outputs.OrgTracingControlplaneTracing | undefined>;
     /**
      * The ID, in GUID format, of the Org.
      */
-    public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    declare public /*out*/ readonly cplnId: pulumi.Output<string>;
     /**
      * Description of the Org.
      */
-    public /*out*/ readonly description!: pulumi.Output<string>;
-    public readonly lightstepTracing!: pulumi.Output<outputs.OrgTracingLightstepTracing | undefined>;
+    declare public /*out*/ readonly description: pulumi.Output<string>;
+    declare public readonly lightstepTracing: pulumi.Output<outputs.OrgTracingLightstepTracing | undefined>;
     /**
      * Name of the Org.
      */
-    public /*out*/ readonly name!: pulumi.Output<string>;
-    public readonly otelTracing!: pulumi.Output<outputs.OrgTracingOtelTracing | undefined>;
+    declare public /*out*/ readonly name: pulumi.Output<string>;
+    declare public readonly otelTracing: pulumi.Output<outputs.OrgTracingOtelTracing | undefined>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
-    public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    declare public /*out*/ readonly selfLink: pulumi.Output<string>;
     /**
      * Key-value map of resource tags.
      */
-    public /*out*/ readonly tags!: pulumi.Output<{[key: string]: string}>;
+    declare public /*out*/ readonly tags: pulumi.Output<{[key: string]: string}>;
 
     /**
      * Create a OrgTracing resource with the given unique name, arguments, and options.
@@ -71,19 +71,19 @@ export class OrgTracing extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as OrgTracingState | undefined;
-            resourceInputs["controlplaneTracing"] = state ? state.controlplaneTracing : undefined;
-            resourceInputs["cplnId"] = state ? state.cplnId : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["lightstepTracing"] = state ? state.lightstepTracing : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["otelTracing"] = state ? state.otelTracing : undefined;
-            resourceInputs["selfLink"] = state ? state.selfLink : undefined;
-            resourceInputs["tags"] = state ? state.tags : undefined;
+            resourceInputs["controlplaneTracing"] = state?.controlplaneTracing;
+            resourceInputs["cplnId"] = state?.cplnId;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["lightstepTracing"] = state?.lightstepTracing;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["otelTracing"] = state?.otelTracing;
+            resourceInputs["selfLink"] = state?.selfLink;
+            resourceInputs["tags"] = state?.tags;
         } else {
             const args = argsOrState as OrgTracingArgs | undefined;
-            resourceInputs["controlplaneTracing"] = args ? args.controlplaneTracing : undefined;
-            resourceInputs["lightstepTracing"] = args ? args.lightstepTracing : undefined;
-            resourceInputs["otelTracing"] = args ? args.otelTracing : undefined;
+            resourceInputs["controlplaneTracing"] = args?.controlplaneTracing;
+            resourceInputs["lightstepTracing"] = args?.lightstepTracing;
+            resourceInputs["otelTracing"] = args?.otelTracing;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["description"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;

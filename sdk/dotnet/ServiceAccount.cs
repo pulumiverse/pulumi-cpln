@@ -32,7 +32,7 @@ namespace Pulumiverse.Cpln
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
-        /// Origin of the Policy. Either `builtin` or `default`.
+        /// Origin of the Policy. Either `Builtin` or `Default`.
         /// </summary>
         [Output("origin")]
         public Output<string> Origin { get; private set; } = null!;
@@ -147,7 +147,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// Origin of the Policy. Either `builtin` or `default`.
+        /// Origin of the Policy. Either `Builtin` or `Default`.
         /// </summary>
         [Input("origin")]
         public Input<string>? Origin { get; set; }

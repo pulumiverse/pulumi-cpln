@@ -21,12 +21,9 @@ type DomainRoute struct {
 	DomainPort pulumi.IntOutput `pulumi:"domainPort"`
 	// Modify the headers for all http requests for this route.
 	Headers DomainRouteHeadersPtrOutput `pulumi:"headers"`
-	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
-	// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
-	// Slack or at support@controlplane.com for additional details.
+	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on Slack or at support@controlplane.com for additional details.
 	HostPrefix pulumi.StringPtrOutput `pulumi:"hostPrefix"`
-	// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and
-	// the Domain is configure for wildcard support. Contact your account manager for details.
+	// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
 	HostRegex pulumi.StringPtrOutput `pulumi:"hostRegex"`
 	// For the linked workload, the port to route traffic to.
 	Port pulumi.IntPtrOutput `pulumi:"port"`
@@ -84,12 +81,9 @@ type domainRouteState struct {
 	DomainPort *int `pulumi:"domainPort"`
 	// Modify the headers for all http requests for this route.
 	Headers *DomainRouteHeaders `pulumi:"headers"`
-	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
-	// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
-	// Slack or at support@controlplane.com for additional details.
+	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on Slack or at support@controlplane.com for additional details.
 	HostPrefix *string `pulumi:"hostPrefix"`
-	// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and
-	// the Domain is configure for wildcard support. Contact your account manager for details.
+	// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
 	HostRegex *string `pulumi:"hostRegex"`
 	// For the linked workload, the port to route traffic to.
 	Port *int `pulumi:"port"`
@@ -112,12 +106,9 @@ type DomainRouteState struct {
 	DomainPort pulumi.IntPtrInput
 	// Modify the headers for all http requests for this route.
 	Headers DomainRouteHeadersPtrInput
-	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
-	// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
-	// Slack or at support@controlplane.com for additional details.
+	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on Slack or at support@controlplane.com for additional details.
 	HostPrefix pulumi.StringPtrInput
-	// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and
-	// the Domain is configure for wildcard support. Contact your account manager for details.
+	// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
 	HostRegex pulumi.StringPtrInput
 	// For the linked workload, the port to route traffic to.
 	Port pulumi.IntPtrInput
@@ -144,12 +135,9 @@ type domainRouteArgs struct {
 	DomainPort *int `pulumi:"domainPort"`
 	// Modify the headers for all http requests for this route.
 	Headers *DomainRouteHeaders `pulumi:"headers"`
-	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
-	// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
-	// Slack or at support@controlplane.com for additional details.
+	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on Slack or at support@controlplane.com for additional details.
 	HostPrefix *string `pulumi:"hostPrefix"`
-	// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and
-	// the Domain is configure for wildcard support. Contact your account manager for details.
+	// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
 	HostRegex *string `pulumi:"hostRegex"`
 	// For the linked workload, the port to route traffic to.
 	Port *int `pulumi:"port"`
@@ -173,12 +161,9 @@ type DomainRouteArgs struct {
 	DomainPort pulumi.IntPtrInput
 	// Modify the headers for all http requests for this route.
 	Headers DomainRouteHeadersPtrInput
-	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
-	// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
-	// Slack or at support@controlplane.com for additional details.
+	// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on Slack or at support@controlplane.com for additional details.
 	HostPrefix pulumi.StringPtrInput
-	// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and
-	// the Domain is configure for wildcard support. Contact your account manager for details.
+	// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
 	HostRegex pulumi.StringPtrInput
 	// For the linked workload, the port to route traffic to.
 	Port pulumi.IntPtrInput
@@ -296,15 +281,12 @@ func (o DomainRouteOutput) Headers() DomainRouteHeadersPtrOutput {
 	return o.ApplyT(func(v *DomainRoute) DomainRouteHeadersPtrOutput { return v.Headers }).(DomainRouteHeadersPtrOutput)
 }
 
-// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the
-// target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on
-// Slack or at support@controlplane.com for additional details.
+// This option allows forwarding traffic for different host headers to different workloads. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on Slack or at support@controlplane.com for additional details.
 func (o DomainRouteOutput) HostPrefix() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *DomainRoute) pulumi.StringPtrOutput { return v.HostPrefix }).(pulumi.StringPtrOutput)
 }
 
-// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and
-// the Domain is configure for wildcard support. Contact your account manager for details.
+// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
 func (o DomainRouteOutput) HostRegex() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *DomainRoute) pulumi.StringPtrOutput { return v.HostRegex }).(pulumi.StringPtrOutput)
 }

@@ -72,7 +72,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly string Name;
         /// <summary>
-        /// The port the container exposes. Only one container is allowed to specify a port. Min: `80`. Max: `65535`. Used by `serverless` Workload type. **DEPRECATED - Use `ports`.**
+        /// The port the container exposes. Only one container is allowed to specify a port. Min: `80`. Max: `65535`. Used by `Serverless` Workload type. **DEPRECATED - Use `Ports`.**
         /// </summary>
         public readonly int? Port;
         /// <summary>

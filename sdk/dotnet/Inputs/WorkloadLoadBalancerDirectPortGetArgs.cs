@@ -32,7 +32,7 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<string> Protocol { get; set; } = null!;
 
         /// <summary>
-        /// Overrides the default `https` url scheme that will be used for links in the UI and status.
+        /// Overrides the default `Https` url scheme that will be used for links in the UI and status.
         /// </summary>
         [Input("scheme")]
         public Input<string>? Scheme { get; set; }

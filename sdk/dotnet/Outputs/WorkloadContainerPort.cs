@@ -19,7 +19,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly int Number;
         /// <summary>
-        /// Protocol. Choice of: `http`, `http2`, `tcp`, or `grpc`.
+        /// Protocol. Choice of: `Http`, `Http2`, `Tcp`, or `Grpc`.
         /// </summary>
         public readonly string? Protocol;
 

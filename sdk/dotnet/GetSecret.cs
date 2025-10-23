@@ -45,7 +45,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--aws"&gt;&lt;/a&gt;
         /// 
-        /// ### `aws`
+        /// ### `Aws`
         /// 
         /// Optional:
         /// 
@@ -56,7 +56,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--azure_connector"&gt;&lt;/a&gt;
         /// 
-        /// ### `azure_connector`
+        /// ### `AzureConnector`
         /// 
         /// Optional:
         /// 
@@ -65,7 +65,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--ecr"&gt;&lt;/a&gt;
         /// 
-        /// ### `ecr`
+        /// ### `Ecr`
         /// 
         /// [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
         /// 
@@ -79,7 +79,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--keypair"&gt;&lt;/a&gt;
         /// 
-        /// ### `keypair`
+        /// ### `Keypair`
         /// 
         /// Optional:
         /// 
@@ -89,7 +89,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--nats-account"&gt;&lt;/a&gt;
         /// 
-        /// ### `nats_account`
+        /// ### `NatsAccount`
         /// 
         /// Required:
         /// 
@@ -98,16 +98,16 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--opaque"&gt;&lt;/a&gt;
         /// 
-        /// ### `opaque`
+        /// ### `Opaque`
         /// 
         /// Optional:
         /// 
-        /// - **encoding** (String) Available encodings: `plain`, `base64`. Default: `plain`.
-        /// - **payload** (String, Sensitive) Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.
+        /// - **encoding** (String) Available encodings: `Plain`, `Base64`. Default: `Plain`.
+        /// - **payload** (String, Sensitive) Plain text or base64 encoded string. Use `Encoding` attribute to specify encoding.
         /// 
         /// &lt;a id="nestedblock--tls"&gt;&lt;/a&gt;
         /// 
-        /// ### `tls`
+        /// ### `Tls`
         /// 
         /// Optional:
         /// 
@@ -117,11 +117,11 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--userpass"&gt;&lt;/a&gt;
         /// 
-        /// ### `userpass`
+        /// ### `Userpass`
         /// 
         /// Optional:
         /// 
-        /// - **encoding** (String) Available encodings: `plain`, `base64`. Default: `plain`.
+        /// - **encoding** (String) Available encodings: `Plain`, `Base64`. Default: `Plain`.
         /// - **password** (String, Sensitive) Password.
         /// - **username** (String) Username.
         /// 
@@ -183,7 +183,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--aws"&gt;&lt;/a&gt;
         /// 
-        /// ### `aws`
+        /// ### `Aws`
         /// 
         /// Optional:
         /// 
@@ -194,7 +194,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--azure_connector"&gt;&lt;/a&gt;
         /// 
-        /// ### `azure_connector`
+        /// ### `AzureConnector`
         /// 
         /// Optional:
         /// 
@@ -203,7 +203,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--ecr"&gt;&lt;/a&gt;
         /// 
-        /// ### `ecr`
+        /// ### `Ecr`
         /// 
         /// [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
         /// 
@@ -217,7 +217,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--keypair"&gt;&lt;/a&gt;
         /// 
-        /// ### `keypair`
+        /// ### `Keypair`
         /// 
         /// Optional:
         /// 
@@ -227,7 +227,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--nats-account"&gt;&lt;/a&gt;
         /// 
-        /// ### `nats_account`
+        /// ### `NatsAccount`
         /// 
         /// Required:
         /// 
@@ -236,16 +236,16 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--opaque"&gt;&lt;/a&gt;
         /// 
-        /// ### `opaque`
+        /// ### `Opaque`
         /// 
         /// Optional:
         /// 
-        /// - **encoding** (String) Available encodings: `plain`, `base64`. Default: `plain`.
-        /// - **payload** (String, Sensitive) Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.
+        /// - **encoding** (String) Available encodings: `Plain`, `Base64`. Default: `Plain`.
+        /// - **payload** (String, Sensitive) Plain text or base64 encoded string. Use `Encoding` attribute to specify encoding.
         /// 
         /// &lt;a id="nestedblock--tls"&gt;&lt;/a&gt;
         /// 
-        /// ### `tls`
+        /// ### `Tls`
         /// 
         /// Optional:
         /// 
@@ -255,11 +255,11 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--userpass"&gt;&lt;/a&gt;
         /// 
-        /// ### `userpass`
+        /// ### `Userpass`
         /// 
         /// Optional:
         /// 
-        /// - **encoding** (String) Available encodings: `plain`, `base64`. Default: `plain`.
+        /// - **encoding** (String) Available encodings: `Plain`, `Base64`. Default: `Plain`.
         /// - **password** (String, Sensitive) Password.
         /// - **username** (String) Username.
         /// 
@@ -321,7 +321,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--aws"&gt;&lt;/a&gt;
         /// 
-        /// ### `aws`
+        /// ### `Aws`
         /// 
         /// Optional:
         /// 
@@ -332,7 +332,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--azure_connector"&gt;&lt;/a&gt;
         /// 
-        /// ### `azure_connector`
+        /// ### `AzureConnector`
         /// 
         /// Optional:
         /// 
@@ -341,7 +341,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--ecr"&gt;&lt;/a&gt;
         /// 
-        /// ### `ecr`
+        /// ### `Ecr`
         /// 
         /// [Reference Page](https://docs.controlplane.com/reference/secret#ecr)
         /// 
@@ -355,7 +355,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--keypair"&gt;&lt;/a&gt;
         /// 
-        /// ### `keypair`
+        /// ### `Keypair`
         /// 
         /// Optional:
         /// 
@@ -365,7 +365,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--nats-account"&gt;&lt;/a&gt;
         /// 
-        /// ### `nats_account`
+        /// ### `NatsAccount`
         /// 
         /// Required:
         /// 
@@ -374,16 +374,16 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--opaque"&gt;&lt;/a&gt;
         /// 
-        /// ### `opaque`
+        /// ### `Opaque`
         /// 
         /// Optional:
         /// 
-        /// - **encoding** (String) Available encodings: `plain`, `base64`. Default: `plain`.
-        /// - **payload** (String, Sensitive) Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.
+        /// - **encoding** (String) Available encodings: `Plain`, `Base64`. Default: `Plain`.
+        /// - **payload** (String, Sensitive) Plain text or base64 encoded string. Use `Encoding` attribute to specify encoding.
         /// 
         /// &lt;a id="nestedblock--tls"&gt;&lt;/a&gt;
         /// 
-        /// ### `tls`
+        /// ### `Tls`
         /// 
         /// Optional:
         /// 
@@ -393,11 +393,11 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--userpass"&gt;&lt;/a&gt;
         /// 
-        /// ### `userpass`
+        /// ### `Userpass`
         /// 
         /// Optional:
         /// 
-        /// - **encoding** (String) Available encodings: `plain`, `base64`. Default: `plain`.
+        /// - **encoding** (String) Available encodings: `Plain`, `Base64`. Default: `Plain`.
         /// - **password** (String, Sensitive) Password.
         /// - **username** (String) Username.
         /// 

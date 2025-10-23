@@ -113,7 +113,7 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<string> Name { get; set; } = null!;
 
         /// <summary>
-        /// The port the container exposes. Only one container is allowed to specify a port. Min: `80`. Max: `65535`. Used by `serverless` Workload type. **DEPRECATED - Use `ports`.**
+        /// The port the container exposes. Only one container is allowed to specify a port. Min: `80`. Max: `65535`. Used by `Serverless` Workload type. **DEPRECATED - Use `Ports`.**
         /// </summary>
         [Input("port")]
         public Input<int>? Port { get; set; }

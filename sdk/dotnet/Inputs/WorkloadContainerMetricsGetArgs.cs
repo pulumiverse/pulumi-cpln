@@ -13,6 +13,18 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class WorkloadContainerMetricsGetArgs : global::Pulumi.ResourceArgs
     {
+        [Input("dropMetrics")]
+        private InputList<string>? _dropMetrics;
+
+        /// <summary>
+        /// Drop metrics that match given patterns.
+        /// </summary>
+        public InputList<string> DropMetrics
+        {
+            get => _dropMetrics ?? (_dropMetrics = new InputList<string>());
+            set => _dropMetrics = value;
+        }
+
         /// <summary>
         /// Path from container emitting custom metrics.
         /// </summary>

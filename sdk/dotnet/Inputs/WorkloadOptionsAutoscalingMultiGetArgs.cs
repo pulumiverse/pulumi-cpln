@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class WorkloadOptionsAutoscalingMultiGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Valid values: `cpu` or `memory`.
+        /// Valid values: `Cpu` or `Memory`.
         /// </summary>
         [Input("metric")]
         public Input<string>? Metric { get; set; }

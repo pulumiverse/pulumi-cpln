@@ -91,19 +91,19 @@ export class Mk8sKubeconfig extends pulumi.CustomResource {
     /**
      * The Kubeconfig of your MK8s cluster in YAML format.
      */
-    public /*out*/ readonly kubeconfig!: pulumi.Output<string>;
+    declare public /*out*/ readonly kubeconfig: pulumi.Output<string>;
     /**
      * Name of the MK8s to create the Kubeconfig for.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
     /**
      * Profile name to extract the token from.
      */
-    public readonly profile!: pulumi.Output<string | undefined>;
+    declare public readonly profile: pulumi.Output<string | undefined>;
     /**
      * A service account to add a key to.
      */
-    public readonly serviceAccount!: pulumi.Output<string | undefined>;
+    declare public readonly serviceAccount: pulumi.Output<string | undefined>;
 
     /**
      * Create a Mk8sKubeconfig resource with the given unique name, arguments, and options.
@@ -118,15 +118,15 @@ export class Mk8sKubeconfig extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as Mk8sKubeconfigState | undefined;
-            resourceInputs["kubeconfig"] = state ? state.kubeconfig : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["profile"] = state ? state.profile : undefined;
-            resourceInputs["serviceAccount"] = state ? state.serviceAccount : undefined;
+            resourceInputs["kubeconfig"] = state?.kubeconfig;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["profile"] = state?.profile;
+            resourceInputs["serviceAccount"] = state?.serviceAccount;
         } else {
             const args = argsOrState as Mk8sKubeconfigArgs | undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["profile"] = args ? args.profile : undefined;
-            resourceInputs["serviceAccount"] = args ? args.serviceAccount : undefined;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["profile"] = args?.profile;
+            resourceInputs["serviceAccount"] = args?.serviceAccount;
             resourceInputs["kubeconfig"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);

@@ -20,7 +20,7 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<bool> Enabled { get; set; } = null!;
 
         /// <summary>
-        /// Any threats with this severity and more severe will be sent. Others will be ignored. Valid values: `warning`, `error`, or `critical`.
+        /// Any threats with this severity and more severe will be sent. Others will be ignored. Valid values: `Warning`, `Error`, or `Critical`.
         /// </summary>
         [Input("minimumSeverity")]
         public Input<string>? MinimumSeverity { get; set; }

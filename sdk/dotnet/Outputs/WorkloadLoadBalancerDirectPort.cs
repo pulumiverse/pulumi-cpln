@@ -27,7 +27,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly string Protocol;
         /// <summary>
-        /// Overrides the default `https` url scheme that will be used for links in the UI and status.
+        /// Overrides the default `Https` url scheme that will be used for links in the UI and status.
         /// </summary>
         public readonly string? Scheme;
 
