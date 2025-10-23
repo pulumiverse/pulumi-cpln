@@ -9,11 +9,10 @@ layout: package
 
 The Control Plane provider is available as a package in all Pulumi languages:
 
-- JavaScript/TypeScript: [`@pulumi/cpln`](https://www.npmjs.com/package/@pulumi/cpln)
-- Python: [`pulumi-cpln`](https://pypi.org/project/pulumi-cpln/)
-- Go: [`github.com/pulumiverse/pulumi-cpln/sdk/go/cpln`](https://github.com/pulumi/pulumi-cpln)
-- .NET: [`Pulumi.Cpln`](https://www.nuget.org/packages/Pulumi.Cpln)
-- Java: [`com.pulumi/cpln`](https://central.sonatype.com/artifact/com.pulumi/cpln)
+- JavaScript/TypeScript: [`@pulumiserve/cpln`](https://www.npmjs.com/package/@pulumiverse/cpln)
+- Python: [`pulumiverse-cpln`](https://pypi.org/project/pulumiverse-cpln/)
+- Go: [`github.com/pulumiverse/pulumi-cpln/sdk/go/cpln`](https://pkg.go.dev/github.com/pulumiverse/pulumi-cpln/sdk)
+- .NET: [`Pulumiverse.cpln`](https://www.nuget.org/packages/Pulumiverse.cpln)
 
 ## Overview
 
