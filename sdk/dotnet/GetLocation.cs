@@ -27,6 +27,7 @@ namespace Pulumiverse.Cpln
         /// - **name** (String) Name of the location.
         /// - **description** (String) Description of the location.
         /// - **tags** (Map of String) Key-value map of resource tags.
+        /// - **origin** (String)
         /// - **cloud_provider** (String) Cloud Provider of the location.
         /// - **region** (String) Region of the location.
         /// - **enabled** (Boolean) Indication if location is enabled.
@@ -36,7 +37,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--geo"&gt;&lt;/a&gt;
         /// 
-        /// ### `geo`
+        /// ### `Geo`
         /// 
         /// Location geographical details
         /// 
@@ -88,6 +89,7 @@ namespace Pulumiverse.Cpln
         /// - **name** (String) Name of the location.
         /// - **description** (String) Description of the location.
         /// - **tags** (Map of String) Key-value map of resource tags.
+        /// - **origin** (String)
         /// - **cloud_provider** (String) Cloud Provider of the location.
         /// - **region** (String) Region of the location.
         /// - **enabled** (Boolean) Indication if location is enabled.
@@ -97,7 +99,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--geo"&gt;&lt;/a&gt;
         /// 
-        /// ### `geo`
+        /// ### `Geo`
         /// 
         /// Location geographical details
         /// 
@@ -149,6 +151,7 @@ namespace Pulumiverse.Cpln
         /// - **name** (String) Name of the location.
         /// - **description** (String) Description of the location.
         /// - **tags** (Map of String) Key-value map of resource tags.
+        /// - **origin** (String)
         /// - **cloud_provider** (String) Cloud Provider of the location.
         /// - **region** (String) Region of the location.
         /// - **enabled** (Boolean) Indication if location is enabled.
@@ -158,7 +161,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--geo"&gt;&lt;/a&gt;
         /// 
-        /// ### `geo`
+        /// ### `Geo`
         /// 
         /// Location geographical details
         /// 
@@ -247,6 +250,7 @@ namespace Pulumiverse.Cpln
         public readonly string Id;
         public readonly ImmutableArray<string> IpRanges;
         public readonly string Name;
+        public readonly string Origin;
         public readonly string Region;
         public readonly string SelfLink;
         public readonly ImmutableDictionary<string, string> Tags;
@@ -269,6 +273,8 @@ namespace Pulumiverse.Cpln
 
             string name,
 
+            string origin,
+
             string region,
 
             string selfLink,
@@ -283,6 +289,7 @@ namespace Pulumiverse.Cpln
             Id = id;
             IpRanges = ipRanges;
             Name = name;
+            Origin = origin;
             Region = region;
             SelfLink = selfLink;
             Tags = tags;

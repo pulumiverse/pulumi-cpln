@@ -37,77 +37,76 @@ export class Secret extends pulumi.CustomResource {
     /**
      * [Reference Page](https://docs.controlplane.com/reference/secret#aws).
      */
-    public readonly aws!: pulumi.Output<outputs.SecretAws | undefined>;
+    declare public readonly aws: pulumi.Output<outputs.SecretAws | undefined>;
     /**
      * [Reference Page](https://docs.controlplane.com/reference/secret#azure-connector).
      */
-    public readonly azureConnector!: pulumi.Output<outputs.SecretAzureConnector | undefined>;
+    declare public readonly azureConnector: pulumi.Output<outputs.SecretAzureConnector | undefined>;
     /**
      * JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#azure).
      */
-    public readonly azureSdk!: pulumi.Output<string | undefined>;
+    declare public readonly azureSdk: pulumi.Output<string | undefined>;
     /**
      * The ID, in GUID format, of the secret.
      */
-    public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    declare public /*out*/ readonly cplnId: pulumi.Output<string>;
     /**
      * Description of the secret.
      */
-    public readonly description!: pulumi.Output<string>;
+    declare public readonly description: pulumi.Output<string>;
     /**
      * List of unique key-value pairs. [Reference Page](https://docs.controlplane.com/reference/secret#dictionary).
      */
-    public readonly dictionary!: pulumi.Output<{[key: string]: string} | undefined>;
+    declare public readonly dictionary: pulumi.Output<{[key: string]: string} | undefined>;
     /**
-     * If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
-     * cpln://secret/SECRET_NAME.key`.
+     * If a dictionary secret is defined, this output will be a key-value map in the following format: `key = cpln://secret/SECRET_NAME.key`.
      */
-    public /*out*/ readonly dictionaryAsEnvs!: pulumi.Output<{[key: string]: string}>;
+    declare public /*out*/ readonly dictionaryAsEnvs: pulumi.Output<{[key: string]: string}>;
     /**
      * JSON string containing the Docker secret. [Reference Page](https://docs.controlplane.com/reference/secret#docker).
      */
-    public readonly docker!: pulumi.Output<string | undefined>;
-    public readonly ecr!: pulumi.Output<outputs.SecretEcr | undefined>;
+    declare public readonly docker: pulumi.Output<string | undefined>;
+    declare public readonly ecr: pulumi.Output<outputs.SecretEcr | undefined>;
     /**
      * JSON string containing the GCP secret. [Reference Page](https://docs.controlplane.com/reference/secret#gcp)
      */
-    public readonly gcp!: pulumi.Output<string | undefined>;
+    declare public readonly gcp: pulumi.Output<string | undefined>;
     /**
      * [Reference Page](https://docs.controlplane.com/reference/secret#keypair).
      */
-    public readonly keypair!: pulumi.Output<outputs.SecretKeypair | undefined>;
+    declare public readonly keypair: pulumi.Output<outputs.SecretKeypair | undefined>;
     /**
      * Name of the secret.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
     /**
      * [Reference Page](https://docs.controlplane.com/reference/secret#nats-account).
      */
-    public readonly natsAccount!: pulumi.Output<outputs.SecretNatsAccount | undefined>;
+    declare public readonly natsAccount: pulumi.Output<outputs.SecretNatsAccount | undefined>;
     /**
      * [Reference Page](https://docs.controlplane.com/reference/secret#opaque).
      */
-    public readonly opaque!: pulumi.Output<outputs.SecretOpaque | undefined>;
+    declare public readonly opaque: pulumi.Output<outputs.SecretOpaque | undefined>;
     /**
      * Output used when linking a secret to an environment variable or volume.
      */
-    public /*out*/ readonly secretLink!: pulumi.Output<string>;
+    declare public /*out*/ readonly secretLink: pulumi.Output<string>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
-    public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    declare public /*out*/ readonly selfLink: pulumi.Output<string>;
     /**
      * Key-value map of resource tags.
      */
-    public readonly tags!: pulumi.Output<{[key: string]: string}>;
+    declare public readonly tags: pulumi.Output<{[key: string]: string}>;
     /**
      * [Reference Page](https://docs.controlplane.com/reference/secret#tls).
      */
-    public readonly tls!: pulumi.Output<outputs.SecretTls | undefined>;
+    declare public readonly tls: pulumi.Output<outputs.SecretTls | undefined>;
     /**
      * [Reference Page](https://docs.controlplane.com/reference/secret#username).
      */
-    public readonly userpass!: pulumi.Output<outputs.SecretUserpass | undefined>;
+    declare public readonly userpass: pulumi.Output<outputs.SecretUserpass | undefined>;
 
     /**
      * Create a Secret resource with the given unique name, arguments, and options.
@@ -122,42 +121,42 @@ export class Secret extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as SecretState | undefined;
-            resourceInputs["aws"] = state ? state.aws : undefined;
-            resourceInputs["azureConnector"] = state ? state.azureConnector : undefined;
-            resourceInputs["azureSdk"] = state ? state.azureSdk : undefined;
-            resourceInputs["cplnId"] = state ? state.cplnId : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["dictionary"] = state ? state.dictionary : undefined;
-            resourceInputs["dictionaryAsEnvs"] = state ? state.dictionaryAsEnvs : undefined;
-            resourceInputs["docker"] = state ? state.docker : undefined;
-            resourceInputs["ecr"] = state ? state.ecr : undefined;
-            resourceInputs["gcp"] = state ? state.gcp : undefined;
-            resourceInputs["keypair"] = state ? state.keypair : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["natsAccount"] = state ? state.natsAccount : undefined;
-            resourceInputs["opaque"] = state ? state.opaque : undefined;
-            resourceInputs["secretLink"] = state ? state.secretLink : undefined;
-            resourceInputs["selfLink"] = state ? state.selfLink : undefined;
-            resourceInputs["tags"] = state ? state.tags : undefined;
-            resourceInputs["tls"] = state ? state.tls : undefined;
-            resourceInputs["userpass"] = state ? state.userpass : undefined;
+            resourceInputs["aws"] = state?.aws;
+            resourceInputs["azureConnector"] = state?.azureConnector;
+            resourceInputs["azureSdk"] = state?.azureSdk;
+            resourceInputs["cplnId"] = state?.cplnId;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["dictionary"] = state?.dictionary;
+            resourceInputs["dictionaryAsEnvs"] = state?.dictionaryAsEnvs;
+            resourceInputs["docker"] = state?.docker;
+            resourceInputs["ecr"] = state?.ecr;
+            resourceInputs["gcp"] = state?.gcp;
+            resourceInputs["keypair"] = state?.keypair;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["natsAccount"] = state?.natsAccount;
+            resourceInputs["opaque"] = state?.opaque;
+            resourceInputs["secretLink"] = state?.secretLink;
+            resourceInputs["selfLink"] = state?.selfLink;
+            resourceInputs["tags"] = state?.tags;
+            resourceInputs["tls"] = state?.tls;
+            resourceInputs["userpass"] = state?.userpass;
         } else {
             const args = argsOrState as SecretArgs | undefined;
-            resourceInputs["aws"] = args ? args.aws : undefined;
-            resourceInputs["azureConnector"] = args ? args.azureConnector : undefined;
+            resourceInputs["aws"] = args?.aws;
+            resourceInputs["azureConnector"] = args?.azureConnector;
             resourceInputs["azureSdk"] = args?.azureSdk ? pulumi.secret(args.azureSdk) : undefined;
-            resourceInputs["description"] = args ? args.description : undefined;
-            resourceInputs["dictionary"] = args ? args.dictionary : undefined;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["dictionary"] = args?.dictionary;
             resourceInputs["docker"] = args?.docker ? pulumi.secret(args.docker) : undefined;
-            resourceInputs["ecr"] = args ? args.ecr : undefined;
+            resourceInputs["ecr"] = args?.ecr;
             resourceInputs["gcp"] = args?.gcp ? pulumi.secret(args.gcp) : undefined;
-            resourceInputs["keypair"] = args ? args.keypair : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["natsAccount"] = args ? args.natsAccount : undefined;
-            resourceInputs["opaque"] = args ? args.opaque : undefined;
-            resourceInputs["tags"] = args ? args.tags : undefined;
-            resourceInputs["tls"] = args ? args.tls : undefined;
-            resourceInputs["userpass"] = args ? args.userpass : undefined;
+            resourceInputs["keypair"] = args?.keypair;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["natsAccount"] = args?.natsAccount;
+            resourceInputs["opaque"] = args?.opaque;
+            resourceInputs["tags"] = args?.tags;
+            resourceInputs["tls"] = args?.tls;
+            resourceInputs["userpass"] = args?.userpass;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["dictionaryAsEnvs"] = undefined /*out*/;
             resourceInputs["secretLink"] = undefined /*out*/;
@@ -199,8 +198,7 @@ export interface SecretState {
      */
     dictionary?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
-     * cpln://secret/SECRET_NAME.key`.
+     * If a dictionary secret is defined, this output will be a key-value map in the following format: `key = cpln://secret/SECRET_NAME.key`.
      */
     dictionaryAsEnvs?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**

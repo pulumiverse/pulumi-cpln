@@ -15,7 +15,7 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class SecretUserpass
     {
         /// <summary>
-        /// Available encodings: `plain`, `base64`. Default: `plain`.
+        /// Available encodings: `Plain`, `Base64`. Default: `Plain`.
         /// </summary>
         public readonly string? Encoding;
         /// <summary>

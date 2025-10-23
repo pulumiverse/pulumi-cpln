@@ -63,6 +63,14 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("parentId")]
         public Input<string>? ParentId { get; set; }
 
+        [Input("replicaInternalNames")]
+        private InputList<string>? _replicaInternalNames;
+        public InputList<string> ReplicaInternalNames
+        {
+            get => _replicaInternalNames ?? (_replicaInternalNames = new InputList<string>());
+            set => _replicaInternalNames = value;
+        }
+
         [Input("resolvedImages")]
         private InputList<Inputs.WorkloadStatusResolvedImageArgs>? _resolvedImages;
 

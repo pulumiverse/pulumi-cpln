@@ -13,14 +13,89 @@ namespace Pulumiverse.Cpln
     public static class GetOrg
     {
         /// <summary>
-        /// Output the ID and name of the current [org](https://docs.controlplane.com/reference/org). 
+        /// Use this data source to access details about the current [org](https://docs.controlplane.com/reference/org) targeted by the provider configuration.
         /// 
         /// ## Outputs
         /// 
         /// The following attributes are exported:
         /// 
+        /// - **id** (String) The unique identifier for this org.
         /// - **cpln_id** (String) The ID, in GUID format, of the org.
         /// - **name** (String) The name of org.
+        /// - **description** (String) Description of the org.
+        /// - **tags** (Map of String) Key-value map of resource tags.
+        /// - **self_link** (String) Full link to this resource. Can be referenced by other resources.
+        /// - **observability** (Block List, Max: 1) (see below).
+        /// - **account_id** (String) The associated account ID that was used when creating the org.
+        /// - **invitees** (Set of String) Email addresses that received invitations to join the org and were assigned to the `Superusers` group.
+        /// - **session_timeout_seconds** (Int) The idle time (in seconds) after which the console UI signs out the user. Default: `900`.
+        /// - **auth_config** (Block List, Max: 1) (see below).
+        /// - **security** (Block List, Max: 1) (see below).
+        /// - **status** (List of Object) (see below).
+        /// 
+        /// &lt;a id="nestedblock--observability"&gt;&lt;/a&gt;
+        /// 
+        /// ### `Observability`
+        /// 
+        /// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **logs_retention_days** (Number) Log retention days. Default: `30`.
+        /// - **metrics_retention_days** (Number) Metrics retention days. Default: `30`.
+        /// - **traces_retention_days** (Number) Traces retention days. Default: `30`.
+        /// - **default_alert_emails** (Set of String) These emails are configured as alert recipients in Grafana when the `grafana-default-email` contact delivery type is `Email`.
+        /// 
+        /// &lt;a id="nestedblock--auth_config"&gt;&lt;/a&gt;
+        /// 
+        /// ### `AuthConfig`
+        /// 
+        /// Configuration settings related to authentication within the org.
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **domain_auto_members** (Set of String) List of domains that auto-provision users when authenticating using SAML.
+        /// - **saml_only** (Boolean) Enforces SAML-only authentication.
+        /// 
+        /// &lt;a id="nestedblock--security"&gt;&lt;/a&gt;
+        /// 
+        /// ### `Security`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **threat_detection** (Block List, Max: 1) (see below).
+        /// 
+        /// &lt;a id="nestedblock--security--threat_detection"&gt;&lt;/a&gt;
+        /// 
+        /// ### `security.threat_detection`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **enabled** (Boolean) Indicates whether threat detection information is forwarded.
+        /// - **minimum_severity** (String) Any threats with this severity and more severe are sent. Others are ignored. Valid values: `Warning`, `Error`, or `Critical`.
+        /// - **syslog** (Block List, Max: 1) (see below).
+        /// 
+        /// &lt;a id="nestedblock--security--threat_detection--syslog"&gt;&lt;/a&gt;
+        /// 
+        /// ### `security.threat_detection.syslog`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **port** (Number) The port to send syslog messages to.
+        /// - **transport** (String) The transport-layer protocol used for syslog messages. If `Tcp` is chosen, messages are sent with TLS. Default: `Tcp`.
+        /// - **host** (String) The hostname to send syslog messages to.
+        /// 
+        /// &lt;a id="nestedblock--status"&gt;&lt;/a&gt;
+        /// 
+        /// ### `Status`
+        /// 
+        /// Status of the org.
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **account_link** (String) The link of the account the org belongs to.
+        /// - **active** (Boolean) Indicates whether the org is active or not.
+        /// - **endpoint_prefix** (String)
         /// 
         /// ## Example Usage
         /// 
@@ -36,8 +111,14 @@ namespace Pulumiverse.Cpln
         /// 
         ///     return new Dictionary&lt;string, object?&gt;
         ///     {
-        ///         ["orgId"] = org.Apply(getOrgResult =&gt; getOrgResult.Id),
-        ///         ["orgName"] = org.Apply(getOrgResult =&gt; getOrgResult.Name),
+        ///         ["orgSummary"] = 
+        ///         {
+        ///             { "name", org.Apply(getOrgResult =&gt; getOrgResult.Name) },
+        ///             { "cplnId", org.Apply(getOrgResult =&gt; getOrgResult.CplnId) },
+        ///             { "accountId", org.Apply(getOrgResult =&gt; getOrgResult.AccountId) },
+        ///             { "sessionTimeoutSec", org.Apply(getOrgResult =&gt; getOrgResult.SessionTimeoutSeconds) },
+        ///             { "observability", org.Apply(getOrgResult =&gt; getOrgResult.Observability) },
+        ///         },
         ///     };
         /// });
         /// ```
@@ -46,14 +127,89 @@ namespace Pulumiverse.Cpln
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetOrgResult>("cpln:index/getOrg:getOrg", args ?? new GetOrgArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Output the ID and name of the current [org](https://docs.controlplane.com/reference/org). 
+        /// Use this data source to access details about the current [org](https://docs.controlplane.com/reference/org) targeted by the provider configuration.
         /// 
         /// ## Outputs
         /// 
         /// The following attributes are exported:
         /// 
+        /// - **id** (String) The unique identifier for this org.
         /// - **cpln_id** (String) The ID, in GUID format, of the org.
         /// - **name** (String) The name of org.
+        /// - **description** (String) Description of the org.
+        /// - **tags** (Map of String) Key-value map of resource tags.
+        /// - **self_link** (String) Full link to this resource. Can be referenced by other resources.
+        /// - **observability** (Block List, Max: 1) (see below).
+        /// - **account_id** (String) The associated account ID that was used when creating the org.
+        /// - **invitees** (Set of String) Email addresses that received invitations to join the org and were assigned to the `Superusers` group.
+        /// - **session_timeout_seconds** (Int) The idle time (in seconds) after which the console UI signs out the user. Default: `900`.
+        /// - **auth_config** (Block List, Max: 1) (see below).
+        /// - **security** (Block List, Max: 1) (see below).
+        /// - **status** (List of Object) (see below).
+        /// 
+        /// &lt;a id="nestedblock--observability"&gt;&lt;/a&gt;
+        /// 
+        /// ### `Observability`
+        /// 
+        /// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **logs_retention_days** (Number) Log retention days. Default: `30`.
+        /// - **metrics_retention_days** (Number) Metrics retention days. Default: `30`.
+        /// - **traces_retention_days** (Number) Traces retention days. Default: `30`.
+        /// - **default_alert_emails** (Set of String) These emails are configured as alert recipients in Grafana when the `grafana-default-email` contact delivery type is `Email`.
+        /// 
+        /// &lt;a id="nestedblock--auth_config"&gt;&lt;/a&gt;
+        /// 
+        /// ### `AuthConfig`
+        /// 
+        /// Configuration settings related to authentication within the org.
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **domain_auto_members** (Set of String) List of domains that auto-provision users when authenticating using SAML.
+        /// - **saml_only** (Boolean) Enforces SAML-only authentication.
+        /// 
+        /// &lt;a id="nestedblock--security"&gt;&lt;/a&gt;
+        /// 
+        /// ### `Security`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **threat_detection** (Block List, Max: 1) (see below).
+        /// 
+        /// &lt;a id="nestedblock--security--threat_detection"&gt;&lt;/a&gt;
+        /// 
+        /// ### `security.threat_detection`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **enabled** (Boolean) Indicates whether threat detection information is forwarded.
+        /// - **minimum_severity** (String) Any threats with this severity and more severe are sent. Others are ignored. Valid values: `Warning`, `Error`, or `Critical`.
+        /// - **syslog** (Block List, Max: 1) (see below).
+        /// 
+        /// &lt;a id="nestedblock--security--threat_detection--syslog"&gt;&lt;/a&gt;
+        /// 
+        /// ### `security.threat_detection.syslog`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **port** (Number) The port to send syslog messages to.
+        /// - **transport** (String) The transport-layer protocol used for syslog messages. If `Tcp` is chosen, messages are sent with TLS. Default: `Tcp`.
+        /// - **host** (String) The hostname to send syslog messages to.
+        /// 
+        /// &lt;a id="nestedblock--status"&gt;&lt;/a&gt;
+        /// 
+        /// ### `Status`
+        /// 
+        /// Status of the org.
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **account_link** (String) The link of the account the org belongs to.
+        /// - **active** (Boolean) Indicates whether the org is active or not.
+        /// - **endpoint_prefix** (String)
         /// 
         /// ## Example Usage
         /// 
@@ -69,8 +225,14 @@ namespace Pulumiverse.Cpln
         /// 
         ///     return new Dictionary&lt;string, object?&gt;
         ///     {
-        ///         ["orgId"] = org.Apply(getOrgResult =&gt; getOrgResult.Id),
-        ///         ["orgName"] = org.Apply(getOrgResult =&gt; getOrgResult.Name),
+        ///         ["orgSummary"] = 
+        ///         {
+        ///             { "name", org.Apply(getOrgResult =&gt; getOrgResult.Name) },
+        ///             { "cplnId", org.Apply(getOrgResult =&gt; getOrgResult.CplnId) },
+        ///             { "accountId", org.Apply(getOrgResult =&gt; getOrgResult.AccountId) },
+        ///             { "sessionTimeoutSec", org.Apply(getOrgResult =&gt; getOrgResult.SessionTimeoutSeconds) },
+        ///             { "observability", org.Apply(getOrgResult =&gt; getOrgResult.Observability) },
+        ///         },
         ///     };
         /// });
         /// ```
@@ -79,14 +241,89 @@ namespace Pulumiverse.Cpln
             => global::Pulumi.Deployment.Instance.Invoke<GetOrgResult>("cpln:index/getOrg:getOrg", args ?? new GetOrgInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Output the ID and name of the current [org](https://docs.controlplane.com/reference/org). 
+        /// Use this data source to access details about the current [org](https://docs.controlplane.com/reference/org) targeted by the provider configuration.
         /// 
         /// ## Outputs
         /// 
         /// The following attributes are exported:
         /// 
+        /// - **id** (String) The unique identifier for this org.
         /// - **cpln_id** (String) The ID, in GUID format, of the org.
         /// - **name** (String) The name of org.
+        /// - **description** (String) Description of the org.
+        /// - **tags** (Map of String) Key-value map of resource tags.
+        /// - **self_link** (String) Full link to this resource. Can be referenced by other resources.
+        /// - **observability** (Block List, Max: 1) (see below).
+        /// - **account_id** (String) The associated account ID that was used when creating the org.
+        /// - **invitees** (Set of String) Email addresses that received invitations to join the org and were assigned to the `Superusers` group.
+        /// - **session_timeout_seconds** (Int) The idle time (in seconds) after which the console UI signs out the user. Default: `900`.
+        /// - **auth_config** (Block List, Max: 1) (see below).
+        /// - **security** (Block List, Max: 1) (see below).
+        /// - **status** (List of Object) (see below).
+        /// 
+        /// &lt;a id="nestedblock--observability"&gt;&lt;/a&gt;
+        /// 
+        /// ### `Observability`
+        /// 
+        /// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **logs_retention_days** (Number) Log retention days. Default: `30`.
+        /// - **metrics_retention_days** (Number) Metrics retention days. Default: `30`.
+        /// - **traces_retention_days** (Number) Traces retention days. Default: `30`.
+        /// - **default_alert_emails** (Set of String) These emails are configured as alert recipients in Grafana when the `grafana-default-email` contact delivery type is `Email`.
+        /// 
+        /// &lt;a id="nestedblock--auth_config"&gt;&lt;/a&gt;
+        /// 
+        /// ### `AuthConfig`
+        /// 
+        /// Configuration settings related to authentication within the org.
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **domain_auto_members** (Set of String) List of domains that auto-provision users when authenticating using SAML.
+        /// - **saml_only** (Boolean) Enforces SAML-only authentication.
+        /// 
+        /// &lt;a id="nestedblock--security"&gt;&lt;/a&gt;
+        /// 
+        /// ### `Security`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **threat_detection** (Block List, Max: 1) (see below).
+        /// 
+        /// &lt;a id="nestedblock--security--threat_detection"&gt;&lt;/a&gt;
+        /// 
+        /// ### `security.threat_detection`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **enabled** (Boolean) Indicates whether threat detection information is forwarded.
+        /// - **minimum_severity** (String) Any threats with this severity and more severe are sent. Others are ignored. Valid values: `Warning`, `Error`, or `Critical`.
+        /// - **syslog** (Block List, Max: 1) (see below).
+        /// 
+        /// &lt;a id="nestedblock--security--threat_detection--syslog"&gt;&lt;/a&gt;
+        /// 
+        /// ### `security.threat_detection.syslog`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **port** (Number) The port to send syslog messages to.
+        /// - **transport** (String) The transport-layer protocol used for syslog messages. If `Tcp` is chosen, messages are sent with TLS. Default: `Tcp`.
+        /// - **host** (String) The hostname to send syslog messages to.
+        /// 
+        /// &lt;a id="nestedblock--status"&gt;&lt;/a&gt;
+        /// 
+        /// ### `Status`
+        /// 
+        /// Status of the org.
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **account_link** (String) The link of the account the org belongs to.
+        /// - **active** (Boolean) Indicates whether the org is active or not.
+        /// - **endpoint_prefix** (String)
         /// 
         /// ## Example Usage
         /// 
@@ -102,8 +339,14 @@ namespace Pulumiverse.Cpln
         /// 
         ///     return new Dictionary&lt;string, object?&gt;
         ///     {
-        ///         ["orgId"] = org.Apply(getOrgResult =&gt; getOrgResult.Id),
-        ///         ["orgName"] = org.Apply(getOrgResult =&gt; getOrgResult.Name),
+        ///         ["orgSummary"] = 
+        ///         {
+        ///             { "name", org.Apply(getOrgResult =&gt; getOrgResult.Name) },
+        ///             { "cplnId", org.Apply(getOrgResult =&gt; getOrgResult.CplnId) },
+        ///             { "accountId", org.Apply(getOrgResult =&gt; getOrgResult.AccountId) },
+        ///             { "sessionTimeoutSec", org.Apply(getOrgResult =&gt; getOrgResult.SessionTimeoutSeconds) },
+        ///             { "observability", org.Apply(getOrgResult =&gt; getOrgResult.Observability) },
+        ///         },
         ///     };
         /// });
         /// ```

@@ -19,7 +19,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly int Number;
         /// <summary>
-        /// Either `http`, `https` or `tcp`.
+        /// Either `Http`, `Https` or `Tcp`.
         /// </summary>
         public readonly string Protocol;
 

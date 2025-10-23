@@ -15,11 +15,11 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class GroupMemberQuerySpec
     {
         /// <summary>
-        /// Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        /// Type of match. Available values: `All`, `Any`, `None`. Default: `All`.
         /// </summary>
         public readonly string? Match;
         /// <summary>
-        /// Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        /// Terms can only contain one of the following attributes: `Property`, `Rel`, `Tag`.
         /// </summary>
         public readonly ImmutableArray<Outputs.GroupMemberQuerySpecTerm> Terms;
 

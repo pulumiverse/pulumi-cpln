@@ -8,8 +8,7 @@ declare var exports: any;
 const __config = new pulumi.Config("cpln");
 
 /**
- * The Control Plane Data Service API endpoint. Default is: https://api.cpln.io. Can be specified with the CPLN_ENDPOINT
- * environment variable.
+ * The Control Plane Data Service API endpoint. Default is: https://api.cpln.io. Can be specified with the CPLN_ENDPOINT environment variable.
  */
 export declare const endpoint: string | undefined;
 Object.defineProperty(exports, "endpoint", {
@@ -20,8 +19,7 @@ Object.defineProperty(exports, "endpoint", {
 });
 
 /**
- * The Control Plane org that this provider will perform actions against. Can be specified with the CPLN_ORG environment
- * variable.
+ * The Control Plane org that this provider will perform actions against. Can be specified with the CPLN_ORG environment variable.
  */
 export declare const org: string | undefined;
 Object.defineProperty(exports, "org", {
@@ -32,8 +30,7 @@ Object.defineProperty(exports, "org", {
 });
 
 /**
- * The user/service account profile that this provider will use to authenticate to the data service. Can be specified with
- * the CPLN_PROFILE environment variable.
+ * The user/service account profile that this provider will use to authenticate to the data service. Can be specified with the CPLN_PROFILE environment variable.
  */
 export declare const profile: string | undefined;
 Object.defineProperty(exports, "profile", {
@@ -44,9 +41,7 @@ Object.defineProperty(exports, "profile", {
 });
 
 /**
- * A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_REFRESH_TOKEN
- * environment variable. Used when the provider is required to create an org or update the authConfig property. Refer to
- * the section above on how to obtain the refresh token.
+ * A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_REFRESH_TOKEN environment variable. Used when the provider is required to create an org or update the authConfig property. Refer to the section above on how to obtain the refresh token.
  */
 export declare const refreshToken: string | undefined;
 Object.defineProperty(exports, "refreshToken", {
@@ -57,8 +52,7 @@ Object.defineProperty(exports, "refreshToken", {
 });
 
 /**
- * A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_TOKEN
- * environment variable.
+ * A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_TOKEN environment variable.
  */
 export declare const token: string | undefined;
 Object.defineProperty(exports, "token", {

@@ -15,6 +15,10 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class WorkloadContainerMetrics
     {
         /// <summary>
+        /// Drop metrics that match given patterns.
+        /// </summary>
+        public readonly ImmutableArray<string> DropMetrics;
+        /// <summary>
         /// Path from container emitting custom metrics.
         /// </summary>
         public readonly string Path;
@@ -25,10 +29,13 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private WorkloadContainerMetrics(
+            ImmutableArray<string> dropMetrics,
+
             string path,
 
             int port)
         {
+            DropMetrics = dropMetrics;
             Path = path;
             Port = port;
         }

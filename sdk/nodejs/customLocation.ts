@@ -35,35 +35,36 @@ export class CustomLocation extends pulumi.CustomResource {
     /**
      * Cloud Provider of the custom location.
      */
-    public readonly cloudProvider!: pulumi.Output<string>;
+    declare public readonly cloudProvider: pulumi.Output<string>;
     /**
      * The ID, in GUID format, of the Custom Location.
      */
-    public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    declare public /*out*/ readonly cplnId: pulumi.Output<string>;
     /**
      * Description of the Custom Location.
      */
-    public readonly description!: pulumi.Output<string>;
+    declare public readonly description: pulumi.Output<string>;
     /**
      * Indication if the custom location is enabled.
      */
-    public readonly enabled!: pulumi.Output<boolean>;
+    declare public readonly enabled: pulumi.Output<boolean>;
     /**
      * Name of the Custom Location.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
+    declare public /*out*/ readonly origin: pulumi.Output<string>;
     /**
      * Region of the location.
      */
-    public /*out*/ readonly region!: pulumi.Output<string>;
+    declare public /*out*/ readonly region: pulumi.Output<string>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
-    public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    declare public /*out*/ readonly selfLink: pulumi.Output<string>;
     /**
      * Key-value map of resource tags.
      */
-    public readonly tags!: pulumi.Output<{[key: string]: string}>;
+    declare public readonly tags: pulumi.Output<{[key: string]: string}>;
 
     /**
      * Create a CustomLocation resource with the given unique name, arguments, and options.
@@ -78,28 +79,30 @@ export class CustomLocation extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as CustomLocationState | undefined;
-            resourceInputs["cloudProvider"] = state ? state.cloudProvider : undefined;
-            resourceInputs["cplnId"] = state ? state.cplnId : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["enabled"] = state ? state.enabled : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["region"] = state ? state.region : undefined;
-            resourceInputs["selfLink"] = state ? state.selfLink : undefined;
-            resourceInputs["tags"] = state ? state.tags : undefined;
+            resourceInputs["cloudProvider"] = state?.cloudProvider;
+            resourceInputs["cplnId"] = state?.cplnId;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["enabled"] = state?.enabled;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["origin"] = state?.origin;
+            resourceInputs["region"] = state?.region;
+            resourceInputs["selfLink"] = state?.selfLink;
+            resourceInputs["tags"] = state?.tags;
         } else {
             const args = argsOrState as CustomLocationArgs | undefined;
-            if ((!args || args.cloudProvider === undefined) && !opts.urn) {
+            if (args?.cloudProvider === undefined && !opts.urn) {
                 throw new Error("Missing required property 'cloudProvider'");
             }
-            if ((!args || args.enabled === undefined) && !opts.urn) {
+            if (args?.enabled === undefined && !opts.urn) {
                 throw new Error("Missing required property 'enabled'");
             }
-            resourceInputs["cloudProvider"] = args ? args.cloudProvider : undefined;
-            resourceInputs["description"] = args ? args.description : undefined;
-            resourceInputs["enabled"] = args ? args.enabled : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["tags"] = args ? args.tags : undefined;
+            resourceInputs["cloudProvider"] = args?.cloudProvider;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["enabled"] = args?.enabled;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["tags"] = args?.tags;
             resourceInputs["cplnId"] = undefined /*out*/;
+            resourceInputs["origin"] = undefined /*out*/;
             resourceInputs["region"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
         }
@@ -132,6 +135,7 @@ export interface CustomLocationState {
      * Name of the Custom Location.
      */
     name?: pulumi.Input<string>;
+    origin?: pulumi.Input<string>;
     /**
      * Region of the location.
      */

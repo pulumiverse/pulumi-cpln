@@ -15,11 +15,11 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class SecretOpaque
     {
         /// <summary>
-        /// Available encodings: `plain`, `base64`. Default: `plain`.
+        /// Available encodings: `Plain`, `Base64`. Default: `Plain`.
         /// </summary>
         public readonly string? Encoding;
         /// <summary>
-        /// Plain text or base64 encoded string. Use `encoding` attribute to specify encoding.
+        /// Plain text or base64 encoded string. Use `Encoding` attribute to specify encoding.
         /// </summary>
         public readonly string Payload;
 

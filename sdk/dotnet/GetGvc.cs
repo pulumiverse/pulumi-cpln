@@ -39,7 +39,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--lightstep_tracing"&gt;&lt;/a&gt;
         /// 
-        /// ### `lightstep_tracing`
+        /// ### `LightstepTracing`
         /// 
         /// - **sampling** (Int) Sampling percentage.
         /// - **endpoint** (String) Tracing Endpoint Workload. Either the canonical endpoint or the internal endpoint.
@@ -47,7 +47,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--otel_tracing"&gt;&lt;/a&gt;
         /// 
-        /// ### `otel_tracing`
+        /// ### `OtelTracing`
         /// 
         /// - **sampling** (Int) Determines what percentage of requests should be traced.
         /// - **endpoint** (String) Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
@@ -55,14 +55,14 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--controlplane_tracing"&gt;&lt;/a&gt;
         /// 
-        /// ### `controlplane_tracing`
+        /// ### `ControlplaneTracing`
         /// 
         /// - **sampling** (Int) Determines what percentage of requests should be traced.
         /// - **custom_tags** (Map of String) Key-value map of custom tags.
         /// 
         /// &lt;a id="nestedblock--load_balancer"&gt;&lt;/a&gt;
         /// 
-        /// ### `load_balancer`
+        /// ### `LoadBalancer`
         /// 
         /// - **dedicated** (Boolean) Creates a dedicated load balancer in each location and enables additional Domain features: custom ports, protocols and wildcard hostnames. Charges apply for each location.
         /// 
@@ -121,7 +121,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--lightstep_tracing"&gt;&lt;/a&gt;
         /// 
-        /// ### `lightstep_tracing`
+        /// ### `LightstepTracing`
         /// 
         /// - **sampling** (Int) Sampling percentage.
         /// - **endpoint** (String) Tracing Endpoint Workload. Either the canonical endpoint or the internal endpoint.
@@ -129,7 +129,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--otel_tracing"&gt;&lt;/a&gt;
         /// 
-        /// ### `otel_tracing`
+        /// ### `OtelTracing`
         /// 
         /// - **sampling** (Int) Determines what percentage of requests should be traced.
         /// - **endpoint** (String) Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
@@ -137,14 +137,14 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--controlplane_tracing"&gt;&lt;/a&gt;
         /// 
-        /// ### `controlplane_tracing`
+        /// ### `ControlplaneTracing`
         /// 
         /// - **sampling** (Int) Determines what percentage of requests should be traced.
         /// - **custom_tags** (Map of String) Key-value map of custom tags.
         /// 
         /// &lt;a id="nestedblock--load_balancer"&gt;&lt;/a&gt;
         /// 
-        /// ### `load_balancer`
+        /// ### `LoadBalancer`
         /// 
         /// - **dedicated** (Boolean) Creates a dedicated load balancer in each location and enables additional Domain features: custom ports, protocols and wildcard hostnames. Charges apply for each location.
         /// 
@@ -203,7 +203,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--lightstep_tracing"&gt;&lt;/a&gt;
         /// 
-        /// ### `lightstep_tracing`
+        /// ### `LightstepTracing`
         /// 
         /// - **sampling** (Int) Sampling percentage.
         /// - **endpoint** (String) Tracing Endpoint Workload. Either the canonical endpoint or the internal endpoint.
@@ -211,7 +211,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--otel_tracing"&gt;&lt;/a&gt;
         /// 
-        /// ### `otel_tracing`
+        /// ### `OtelTracing`
         /// 
         /// - **sampling** (Int) Determines what percentage of requests should be traced.
         /// - **endpoint** (String) Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.
@@ -219,14 +219,14 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--controlplane_tracing"&gt;&lt;/a&gt;
         /// 
-        /// ### `controlplane_tracing`
+        /// ### `ControlplaneTracing`
         /// 
         /// - **sampling** (Int) Determines what percentage of requests should be traced.
         /// - **custom_tags** (Map of String) Key-value map of custom tags.
         /// 
         /// &lt;a id="nestedblock--load_balancer"&gt;&lt;/a&gt;
         /// 
-        /// ### `load_balancer`
+        /// ### `LoadBalancer`
         /// 
         /// - **dedicated** (Boolean) Creates a dedicated load balancer in each location and enables additional Domain features: custom ports, protocols and wildcard hostnames. Charges apply for each location.
         /// 

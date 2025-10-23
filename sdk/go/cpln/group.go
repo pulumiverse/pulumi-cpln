@@ -18,8 +18,7 @@ type Group struct {
 	CplnId pulumi.StringOutput `pulumi:"cplnId"`
 	// Description of the Group.
 	Description pulumi.StringOutput `pulumi:"description"`
-	// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
-	// for managing the grouping of users logged-in with SAML providers.
+	// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged-in with SAML providers.
 	IdentityMatcher GroupIdentityMatcherPtrOutput `pulumi:"identityMatcher"`
 	// A predefined set of criteria or conditions used to query and retrieve members within the group.
 	MemberQuery GroupMemberQueryPtrOutput `pulumi:"memberQuery"`
@@ -29,13 +28,11 @@ type Group struct {
 	Origin pulumi.StringOutput `pulumi:"origin"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
-	// List of service accounts that exists within the configured org. Group membership will fail if the service account does
-	// not exits within the org.
+	// List of service accounts that exists within the configured org. Group membership will fail if the service account does not exits within the org.
 	ServiceAccounts pulumi.StringArrayOutput `pulumi:"serviceAccounts"`
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapOutput `pulumi:"tags"`
-	// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
-	// if the user ID / email does not exist within the org.
+	// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail if the user ID / email does not exist within the org.
 	UserIdsAndEmails pulumi.StringArrayOutput `pulumi:"userIdsAndEmails"`
 }
 
@@ -73,8 +70,7 @@ type groupState struct {
 	CplnId *string `pulumi:"cplnId"`
 	// Description of the Group.
 	Description *string `pulumi:"description"`
-	// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
-	// for managing the grouping of users logged-in with SAML providers.
+	// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged-in with SAML providers.
 	IdentityMatcher *GroupIdentityMatcher `pulumi:"identityMatcher"`
 	// A predefined set of criteria or conditions used to query and retrieve members within the group.
 	MemberQuery *GroupMemberQuery `pulumi:"memberQuery"`
@@ -84,13 +80,11 @@ type groupState struct {
 	Origin *string `pulumi:"origin"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink *string `pulumi:"selfLink"`
-	// List of service accounts that exists within the configured org. Group membership will fail if the service account does
-	// not exits within the org.
+	// List of service accounts that exists within the configured org. Group membership will fail if the service account does not exits within the org.
 	ServiceAccounts []string `pulumi:"serviceAccounts"`
 	// Key-value map of resource tags.
 	Tags map[string]string `pulumi:"tags"`
-	// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
-	// if the user ID / email does not exist within the org.
+	// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail if the user ID / email does not exist within the org.
 	UserIdsAndEmails []string `pulumi:"userIdsAndEmails"`
 }
 
@@ -99,8 +93,7 @@ type GroupState struct {
 	CplnId pulumi.StringPtrInput
 	// Description of the Group.
 	Description pulumi.StringPtrInput
-	// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
-	// for managing the grouping of users logged-in with SAML providers.
+	// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged-in with SAML providers.
 	IdentityMatcher GroupIdentityMatcherPtrInput
 	// A predefined set of criteria or conditions used to query and retrieve members within the group.
 	MemberQuery GroupMemberQueryPtrInput
@@ -110,13 +103,11 @@ type GroupState struct {
 	Origin pulumi.StringPtrInput
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringPtrInput
-	// List of service accounts that exists within the configured org. Group membership will fail if the service account does
-	// not exits within the org.
+	// List of service accounts that exists within the configured org. Group membership will fail if the service account does not exits within the org.
 	ServiceAccounts pulumi.StringArrayInput
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapInput
-	// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
-	// if the user ID / email does not exist within the org.
+	// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail if the user ID / email does not exist within the org.
 	UserIdsAndEmails pulumi.StringArrayInput
 }
 
@@ -127,20 +118,17 @@ func (GroupState) ElementType() reflect.Type {
 type groupArgs struct {
 	// Description of the Group.
 	Description *string `pulumi:"description"`
-	// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
-	// for managing the grouping of users logged-in with SAML providers.
+	// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged-in with SAML providers.
 	IdentityMatcher *GroupIdentityMatcher `pulumi:"identityMatcher"`
 	// A predefined set of criteria or conditions used to query and retrieve members within the group.
 	MemberQuery *GroupMemberQuery `pulumi:"memberQuery"`
 	// Name of the Group.
 	Name *string `pulumi:"name"`
-	// List of service accounts that exists within the configured org. Group membership will fail if the service account does
-	// not exits within the org.
+	// List of service accounts that exists within the configured org. Group membership will fail if the service account does not exits within the org.
 	ServiceAccounts []string `pulumi:"serviceAccounts"`
 	// Key-value map of resource tags.
 	Tags map[string]string `pulumi:"tags"`
-	// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
-	// if the user ID / email does not exist within the org.
+	// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail if the user ID / email does not exist within the org.
 	UserIdsAndEmails []string `pulumi:"userIdsAndEmails"`
 }
 
@@ -148,20 +136,17 @@ type groupArgs struct {
 type GroupArgs struct {
 	// Description of the Group.
 	Description pulumi.StringPtrInput
-	// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
-	// for managing the grouping of users logged-in with SAML providers.
+	// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged-in with SAML providers.
 	IdentityMatcher GroupIdentityMatcherPtrInput
 	// A predefined set of criteria or conditions used to query and retrieve members within the group.
 	MemberQuery GroupMemberQueryPtrInput
 	// Name of the Group.
 	Name pulumi.StringPtrInput
-	// List of service accounts that exists within the configured org. Group membership will fail if the service account does
-	// not exits within the org.
+	// List of service accounts that exists within the configured org. Group membership will fail if the service account does not exits within the org.
 	ServiceAccounts pulumi.StringArrayInput
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapInput
-	// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
-	// if the user ID / email does not exist within the org.
+	// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail if the user ID / email does not exist within the org.
 	UserIdsAndEmails pulumi.StringArrayInput
 }
 
@@ -262,8 +247,7 @@ func (o GroupOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v *Group) pulumi.StringOutput { return v.Description }).(pulumi.StringOutput)
 }
 
-// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
-// for managing the grouping of users logged-in with SAML providers.
+// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged-in with SAML providers.
 func (o GroupOutput) IdentityMatcher() GroupIdentityMatcherPtrOutput {
 	return o.ApplyT(func(v *Group) GroupIdentityMatcherPtrOutput { return v.IdentityMatcher }).(GroupIdentityMatcherPtrOutput)
 }
@@ -288,8 +272,7 @@ func (o GroupOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *Group) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
 }
 
-// List of service accounts that exists within the configured org. Group membership will fail if the service account does
-// not exits within the org.
+// List of service accounts that exists within the configured org. Group membership will fail if the service account does not exits within the org.
 func (o GroupOutput) ServiceAccounts() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Group) pulumi.StringArrayOutput { return v.ServiceAccounts }).(pulumi.StringArrayOutput)
 }
@@ -299,8 +282,7 @@ func (o GroupOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Group) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
 }
 
-// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
-// if the user ID / email does not exist within the org.
+// List of either the user ID or email address for a user that exists within the configured org. Group membership will fail if the user ID / email does not exist within the org.
 func (o GroupOutput) UserIdsAndEmails() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Group) pulumi.StringArrayOutput { return v.UserIdsAndEmails }).(pulumi.StringArrayOutput)
 }

@@ -14,15 +14,13 @@ namespace Pulumiverse.Cpln
     public partial class Identity : global::Pulumi.CustomResource
     {
         /// <summary>
-        /// A set of access policy rules that defines the actions and resources that an identity can access within an AWS
-        /// environment.
+        /// A set of access policy rules that defines the actions and resources that an identity can access within an AWS environment.
         /// </summary>
         [Output("awsAccessPolicy")]
         public Output<Outputs.IdentityAwsAccessPolicy?> AwsAccessPolicy { get; private set; } = null!;
 
         /// <summary>
-        /// A set of access policy rules that defines the actions and resources that an identity can access within an Azure
-        /// environment.
+        /// A set of access policy rules that defines the actions and resources that an identity can access within an Azure environment.
         /// </summary>
         [Output("azureAccessPolicy")]
         public Output<Outputs.IdentityAzureAccessPolicy?> AzureAccessPolicy { get; private set; } = null!;
@@ -40,7 +38,7 @@ namespace Pulumiverse.Cpln
         public Output<string> Description { get; private set; } = null!;
 
         /// <summary>
-        /// The GCP access policy can either contain an existing service_account or multiple bindings.
+        /// The GCP access policy can either contain an existing ServiceAccount or multiple bindings.
         /// </summary>
         [Output("gcpAccessPolicy")]
         public Output<Outputs.IdentityGcpAccessPolicy?> GcpAccessPolicy { get; private set; } = null!;
@@ -64,15 +62,13 @@ namespace Pulumiverse.Cpln
         public Output<ImmutableArray<Outputs.IdentityNativeNetworkResource>> NativeNetworkResources { get; private set; } = null!;
 
         /// <summary>
-        /// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
-        /// ports. - IP's and ports.
+        /// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and ports. - IP's and ports.
         /// </summary>
         [Output("networkResources")]
         public Output<ImmutableArray<Outputs.IdentityNetworkResource>> NetworkResources { get; private set; } = null!;
 
         /// <summary>
-        /// A set of access policy rules that defines the actions and resources that an identity can access within an NGA
-        /// environment.
+        /// A set of access policy rules that defines the actions and resources that an identity can access within an NGA environment.
         /// </summary>
         [Output("ngsAccessPolicy")]
         public Output<Outputs.IdentityNgsAccessPolicy?> NgsAccessPolicy { get; private set; } = null!;
@@ -84,7 +80,7 @@ namespace Pulumiverse.Cpln
         public Output<string> SelfLink { get; private set; } = null!;
 
         /// <summary>
-        /// Key-value map of identity status. Available fields: `objectName`.
+        /// Key-value map of identity status. Available fields: `objectName`, `Aws`, `Gcp`, `Azure`.
         /// </summary>
         [Output("status")]
         public Output<ImmutableDictionary<string, string>> Status { get; private set; } = null!;
@@ -143,15 +139,13 @@ namespace Pulumiverse.Cpln
     public sealed class IdentityArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// A set of access policy rules that defines the actions and resources that an identity can access within an AWS
-        /// environment.
+        /// A set of access policy rules that defines the actions and resources that an identity can access within an AWS environment.
         /// </summary>
         [Input("awsAccessPolicy")]
         public Input<Inputs.IdentityAwsAccessPolicyArgs>? AwsAccessPolicy { get; set; }
 
         /// <summary>
-        /// A set of access policy rules that defines the actions and resources that an identity can access within an Azure
-        /// environment.
+        /// A set of access policy rules that defines the actions and resources that an identity can access within an Azure environment.
         /// </summary>
         [Input("azureAccessPolicy")]
         public Input<Inputs.IdentityAzureAccessPolicyArgs>? AzureAccessPolicy { get; set; }
@@ -163,7 +157,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Description { get; set; }
 
         /// <summary>
-        /// The GCP access policy can either contain an existing service_account or multiple bindings.
+        /// The GCP access policy can either contain an existing ServiceAccount or multiple bindings.
         /// </summary>
         [Input("gcpAccessPolicy")]
         public Input<Inputs.IdentityGcpAccessPolicyArgs>? GcpAccessPolicy { get; set; }
@@ -196,8 +190,7 @@ namespace Pulumiverse.Cpln
         private InputList<Inputs.IdentityNetworkResourceArgs>? _networkResources;
 
         /// <summary>
-        /// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
-        /// ports. - IP's and ports.
+        /// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and ports. - IP's and ports.
         /// </summary>
         public InputList<Inputs.IdentityNetworkResourceArgs> NetworkResources
         {
@@ -206,8 +199,7 @@ namespace Pulumiverse.Cpln
         }
 
         /// <summary>
-        /// A set of access policy rules that defines the actions and resources that an identity can access within an NGA
-        /// environment.
+        /// A set of access policy rules that defines the actions and resources that an identity can access within an NGA environment.
         /// </summary>
         [Input("ngsAccessPolicy")]
         public Input<Inputs.IdentityNgsAccessPolicyArgs>? NgsAccessPolicy { get; set; }
@@ -233,15 +225,13 @@ namespace Pulumiverse.Cpln
     public sealed class IdentityState : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// A set of access policy rules that defines the actions and resources that an identity can access within an AWS
-        /// environment.
+        /// A set of access policy rules that defines the actions and resources that an identity can access within an AWS environment.
         /// </summary>
         [Input("awsAccessPolicy")]
         public Input<Inputs.IdentityAwsAccessPolicyGetArgs>? AwsAccessPolicy { get; set; }
 
         /// <summary>
-        /// A set of access policy rules that defines the actions and resources that an identity can access within an Azure
-        /// environment.
+        /// A set of access policy rules that defines the actions and resources that an identity can access within an Azure environment.
         /// </summary>
         [Input("azureAccessPolicy")]
         public Input<Inputs.IdentityAzureAccessPolicyGetArgs>? AzureAccessPolicy { get; set; }
@@ -259,7 +249,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Description { get; set; }
 
         /// <summary>
-        /// The GCP access policy can either contain an existing service_account or multiple bindings.
+        /// The GCP access policy can either contain an existing ServiceAccount or multiple bindings.
         /// </summary>
         [Input("gcpAccessPolicy")]
         public Input<Inputs.IdentityGcpAccessPolicyGetArgs>? GcpAccessPolicy { get; set; }
@@ -292,8 +282,7 @@ namespace Pulumiverse.Cpln
         private InputList<Inputs.IdentityNetworkResourceGetArgs>? _networkResources;
 
         /// <summary>
-        /// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
-        /// ports. - IP's and ports.
+        /// A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and ports. - IP's and ports.
         /// </summary>
         public InputList<Inputs.IdentityNetworkResourceGetArgs> NetworkResources
         {
@@ -302,8 +291,7 @@ namespace Pulumiverse.Cpln
         }
 
         /// <summary>
-        /// A set of access policy rules that defines the actions and resources that an identity can access within an NGA
-        /// environment.
+        /// A set of access policy rules that defines the actions and resources that an identity can access within an NGA environment.
         /// </summary>
         [Input("ngsAccessPolicy")]
         public Input<Inputs.IdentityNgsAccessPolicyGetArgs>? NgsAccessPolicy { get; set; }
@@ -318,7 +306,7 @@ namespace Pulumiverse.Cpln
         private InputMap<string>? _status;
 
         /// <summary>
-        /// Key-value map of identity status. Available fields: `objectName`.
+        /// Key-value map of identity status. Available fields: `objectName`, `Aws`, `Gcp`, `Azure`.
         /// </summary>
         public InputMap<string> Status
         {

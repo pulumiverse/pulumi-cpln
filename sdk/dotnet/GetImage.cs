@@ -34,7 +34,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--manifest"&gt;&lt;/a&gt;
         /// 
-        /// ### `manifest`
+        /// ### `Manifest`
         /// 
         ///  The manifest provides configuration and layers information about the image. It plays a crucial role in the Docker image distribution system, enabling image creation, verification, and replication in a consistent and secure manner.
         /// 
@@ -45,7 +45,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--config--layers"&gt;&lt;/a&gt;
         /// 
-        /// ### `config` and `layers`
+        /// ### `Config` and `Layers`
         /// 
         /// The config is a JSON blob that contains the image configuration data which includes environment variables, default command to run, and other settings necessary to run the container based on this image.
         /// 
@@ -110,7 +110,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--manifest"&gt;&lt;/a&gt;
         /// 
-        /// ### `manifest`
+        /// ### `Manifest`
         /// 
         ///  The manifest provides configuration and layers information about the image. It plays a crucial role in the Docker image distribution system, enabling image creation, verification, and replication in a consistent and secure manner.
         /// 
@@ -121,7 +121,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--config--layers"&gt;&lt;/a&gt;
         /// 
-        /// ### `config` and `layers`
+        /// ### `Config` and `Layers`
         /// 
         /// The config is a JSON blob that contains the image configuration data which includes environment variables, default command to run, and other settings necessary to run the container based on this image.
         /// 
@@ -186,7 +186,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--manifest"&gt;&lt;/a&gt;
         /// 
-        /// ### `manifest`
+        /// ### `Manifest`
         /// 
         ///  The manifest provides configuration and layers information about the image. It plays a crucial role in the Docker image distribution system, enabling image creation, verification, and replication in a consistent and secure manner.
         /// 
@@ -197,7 +197,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// &lt;a id="nestedblock--config--layers"&gt;&lt;/a&gt;
         /// 
-        /// ### `config` and `layers`
+        /// ### `Config` and `Layers`
         /// 
         /// The config is a JSON blob that contains the image configuration data which includes environment variables, default command to run, and other settings necessary to run the container based on this image.
         /// 

@@ -15,7 +15,7 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class OrgLoggingElasticLoggingGeneric
     {
         /// <summary>
-        /// Full Link to a secret of type `userpass`.
+        /// Full Link to a secret of type `Userpass`.
         /// </summary>
         public readonly string Credentials;
         /// <summary>

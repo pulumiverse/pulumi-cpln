@@ -26,13 +26,19 @@ namespace Pulumiverse.Cpln
         public Output<string> CplnId { get; private set; } = null!;
 
         /// <summary>
+        /// Configuration for customer-managed encryption keys, keyed by region.
+        /// </summary>
+        [Output("customEncryption")]
+        public Output<Outputs.VolumeSetCustomEncryption?> CustomEncryption { get; private set; } = null!;
+
+        /// <summary>
         /// Description of the volume set.
         /// </summary>
         [Output("description")]
         public Output<string> Description { get; private set; } = null!;
 
         /// <summary>
-        /// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+        /// Each volume set has a single, immutable file system. Valid types: `Xfs` or `Ext4`.
         /// </summary>
         [Output("fileSystemType")]
         public Output<string> FileSystemType { get; private set; } = null!;
@@ -44,8 +50,7 @@ namespace Pulumiverse.Cpln
         public Output<string> Gvc { get; private set; } = null!;
 
         /// <summary>
-        /// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
-        /// is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
+        /// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd` is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
         /// </summary>
         [Output("initialCapacity")]
         public Output<int> InitialCapacity { get; private set; } = null!;
@@ -63,8 +68,7 @@ namespace Pulumiverse.Cpln
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
-        /// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
-        /// `high-throughput-ssd`.
+        /// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
         /// </summary>
         [Output("performanceClass")]
         public Output<string> PerformanceClass { get; private set; } = null!;
@@ -88,9 +92,7 @@ namespace Pulumiverse.Cpln
         public Output<ImmutableArray<Outputs.VolumeSetStatus>> Statuses { get; private set; } = null!;
 
         /// <summary>
-        /// For self-hosted locations only. The storage class used for volumes in this set will be
-        /// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
-        /// {performanceClass}-{fileSystemType}
+        /// For self-hosted locations only. The storage class used for volumes in this set will be {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be {performanceClass}-{fileSystemType}
         /// </summary>
         [Output("storageClassSuffix")]
         public Output<string?> StorageClassSuffix { get; private set; } = null!;
@@ -161,13 +163,19 @@ namespace Pulumiverse.Cpln
         public Input<Inputs.VolumeSetAutoscalingArgs>? Autoscaling { get; set; }
 
         /// <summary>
+        /// Configuration for customer-managed encryption keys, keyed by region.
+        /// </summary>
+        [Input("customEncryption")]
+        public Input<Inputs.VolumeSetCustomEncryptionArgs>? CustomEncryption { get; set; }
+
+        /// <summary>
         /// Description of the volume set.
         /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
         /// <summary>
-        /// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+        /// Each volume set has a single, immutable file system. Valid types: `Xfs` or `Ext4`.
         /// </summary>
         [Input("fileSystemType")]
         public Input<string>? FileSystemType { get; set; }
@@ -179,8 +187,7 @@ namespace Pulumiverse.Cpln
         public Input<string> Gvc { get; set; } = null!;
 
         /// <summary>
-        /// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
-        /// is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
+        /// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd` is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
         /// </summary>
         [Input("initialCapacity", required: true)]
         public Input<int> InitialCapacity { get; set; } = null!;
@@ -198,8 +205,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
-        /// `high-throughput-ssd`.
+        /// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
         /// </summary>
         [Input("performanceClass", required: true)]
         public Input<string> PerformanceClass { get; set; } = null!;
@@ -211,9 +217,7 @@ namespace Pulumiverse.Cpln
         public Input<Inputs.VolumeSetSnapshotsArgs>? Snapshots { get; set; }
 
         /// <summary>
-        /// For self-hosted locations only. The storage class used for volumes in this set will be
-        /// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
-        /// {performanceClass}-{fileSystemType}
+        /// For self-hosted locations only. The storage class used for volumes in this set will be {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be {performanceClass}-{fileSystemType}
         /// </summary>
         [Input("storageClassSuffix")]
         public Input<string>? StorageClassSuffix { get; set; }
@@ -251,13 +255,19 @@ namespace Pulumiverse.Cpln
         public Input<string>? CplnId { get; set; }
 
         /// <summary>
+        /// Configuration for customer-managed encryption keys, keyed by region.
+        /// </summary>
+        [Input("customEncryption")]
+        public Input<Inputs.VolumeSetCustomEncryptionGetArgs>? CustomEncryption { get; set; }
+
+        /// <summary>
         /// Description of the volume set.
         /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
 
         /// <summary>
-        /// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+        /// Each volume set has a single, immutable file system. Valid types: `Xfs` or `Ext4`.
         /// </summary>
         [Input("fileSystemType")]
         public Input<string>? FileSystemType { get; set; }
@@ -269,8 +279,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Gvc { get; set; }
 
         /// <summary>
-        /// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd`
-        /// is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
+        /// The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd` is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
         /// </summary>
         [Input("initialCapacity")]
         public Input<int>? InitialCapacity { get; set; }
@@ -288,8 +297,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or
-        /// `high-throughput-ssd`.
+        /// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
         /// </summary>
         [Input("performanceClass")]
         public Input<string>? PerformanceClass { get; set; }
@@ -319,9 +327,7 @@ namespace Pulumiverse.Cpln
         }
 
         /// <summary>
-        /// For self-hosted locations only. The storage class used for volumes in this set will be
-        /// {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be
-        /// {performanceClass}-{fileSystemType}
+        /// For self-hosted locations only. The storage class used for volumes in this set will be {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be {performanceClass}-{fileSystemType}
         /// </summary>
         [Input("storageClassSuffix")]
         public Input<string>? StorageClassSuffix { get; set; }

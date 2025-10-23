@@ -24,7 +24,8 @@ type CustomLocation struct {
 	// Indication if the custom location is enabled.
 	Enabled pulumi.BoolOutput `pulumi:"enabled"`
 	// Name of the Custom Location.
-	Name pulumi.StringOutput `pulumi:"name"`
+	Name   pulumi.StringOutput `pulumi:"name"`
+	Origin pulumi.StringOutput `pulumi:"origin"`
 	// Region of the location.
 	Region pulumi.StringOutput `pulumi:"region"`
 	// Full link to this resource. Can be referenced by other resources.
@@ -78,7 +79,8 @@ type customLocationState struct {
 	// Indication if the custom location is enabled.
 	Enabled *bool `pulumi:"enabled"`
 	// Name of the Custom Location.
-	Name *string `pulumi:"name"`
+	Name   *string `pulumi:"name"`
+	Origin *string `pulumi:"origin"`
 	// Region of the location.
 	Region *string `pulumi:"region"`
 	// Full link to this resource. Can be referenced by other resources.
@@ -97,7 +99,8 @@ type CustomLocationState struct {
 	// Indication if the custom location is enabled.
 	Enabled pulumi.BoolPtrInput
 	// Name of the Custom Location.
-	Name pulumi.StringPtrInput
+	Name   pulumi.StringPtrInput
+	Origin pulumi.StringPtrInput
 	// Region of the location.
 	Region pulumi.StringPtrInput
 	// Full link to this resource. Can be referenced by other resources.
@@ -247,6 +250,10 @@ func (o CustomLocationOutput) Enabled() pulumi.BoolOutput {
 // Name of the Custom Location.
 func (o CustomLocationOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *CustomLocation) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o CustomLocationOutput) Origin() pulumi.StringOutput {
+	return o.ApplyT(func(v *CustomLocation) pulumi.StringOutput { return v.Origin }).(pulumi.StringOutput)
 }
 
 // Region of the location.

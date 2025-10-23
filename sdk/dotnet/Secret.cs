@@ -50,8 +50,7 @@ namespace Pulumiverse.Cpln
         public Output<ImmutableDictionary<string, string>?> Dictionary { get; private set; } = null!;
 
         /// <summary>
-        /// If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
-        /// cpln://secret/SECRET_NAME.key`.
+        /// If a dictionary secret is defined, this output will be a key-value map in the following format: `key = cpln://secret/SECRET_NAME.key`.
         /// </summary>
         [Output("dictionaryAsEnvs")]
         public Output<ImmutableDictionary<string, string>> DictionaryAsEnvs { get; private set; } = null!;
@@ -371,8 +370,7 @@ namespace Pulumiverse.Cpln
         private InputMap<string>? _dictionaryAsEnvs;
 
         /// <summary>
-        /// If a dictionary secret is defined, this output will be a key-value map in the following format: `key =
-        /// cpln://secret/SECRET_NAME.key`.
+        /// If a dictionary secret is defined, this output will be a key-value map in the following format: `key = cpln://secret/SECRET_NAME.key`.
         /// </summary>
         public InputMap<string> DictionaryAsEnvs
         {

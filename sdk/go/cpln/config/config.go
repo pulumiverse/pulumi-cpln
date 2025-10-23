@@ -11,33 +11,27 @@ import (
 
 var _ = internal.GetEnvOrDefault
 
-// The Control Plane Data Service API endpoint. Default is: https://api.cpln.io. Can be specified with the CPLN_ENDPOINT
-// environment variable.
+// The Control Plane Data Service API endpoint. Default is: https://api.cpln.io. Can be specified with the CPLN_ENDPOINT environment variable.
 func GetEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "cpln:endpoint")
 }
 
-// The Control Plane org that this provider will perform actions against. Can be specified with the CPLN_ORG environment
-// variable.
+// The Control Plane org that this provider will perform actions against. Can be specified with the CPLN_ORG environment variable.
 func GetOrg(ctx *pulumi.Context) string {
 	return config.Get(ctx, "cpln:org")
 }
 
-// The user/service account profile that this provider will use to authenticate to the data service. Can be specified with
-// the CPLN_PROFILE environment variable.
+// The user/service account profile that this provider will use to authenticate to the data service. Can be specified with the CPLN_PROFILE environment variable.
 func GetProfile(ctx *pulumi.Context) string {
 	return config.Get(ctx, "cpln:profile")
 }
 
-// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_REFRESH_TOKEN
-// environment variable. Used when the provider is required to create an org or update the authConfig property. Refer to
-// the section above on how to obtain the refresh token.
+// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_REFRESH_TOKEN environment variable. Used when the provider is required to create an org or update the authConfig property. Refer to the section above on how to obtain the refresh token.
 func GetRefreshToken(ctx *pulumi.Context) string {
 	return config.Get(ctx, "cpln:refreshToken")
 }
 
-// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_TOKEN
-// environment variable.
+// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_TOKEN environment variable.
 func GetToken(ctx *pulumi.Context) string {
 	return config.Get(ctx, "cpln:token")
 }

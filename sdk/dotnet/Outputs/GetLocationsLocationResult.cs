@@ -39,6 +39,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// Name of the location.
         /// </summary>
         public readonly string Name;
+        public readonly string Origin;
         /// <summary>
         /// Region of the location.
         /// </summary>
@@ -68,6 +69,8 @@ namespace Pulumiverse.Cpln.Outputs
 
             string name,
 
+            string origin,
+
             string region,
 
             string selfLink,
@@ -81,6 +84,7 @@ namespace Pulumiverse.Cpln.Outputs
             Geos = geos;
             IpRanges = ipRanges;
             Name = name;
+            Origin = origin;
             Region = region;
             SelfLink = selfLink;
             Tags = tags;

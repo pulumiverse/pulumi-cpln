@@ -20,7 +20,7 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<int> Number { get; set; } = null!;
 
         /// <summary>
-        /// Either `http`, `https` or `tcp`.
+        /// Either `Http`, `Https` or `Tcp`.
         /// </summary>
         [Input("protocol", required: true)]
         public Input<string> Protocol { get; set; } = null!;

@@ -37,47 +37,47 @@ export class CloudAccount extends pulumi.CustomResource {
     /**
      * Contains AWS cloud account configuration.
      */
-    public readonly aws!: pulumi.Output<outputs.CloudAccountAws | undefined>;
+    declare public readonly aws: pulumi.Output<outputs.CloudAccountAws | undefined>;
     /**
      * Contains Azure cloud account configuration.
      */
-    public readonly azures!: pulumi.Output<outputs.CloudAccountAzure[] | undefined>;
+    declare public readonly azures: pulumi.Output<outputs.CloudAccountAzure[] | undefined>;
     /**
      * The ID, in GUID format, of the Cloud Account.
      */
-    public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    declare public /*out*/ readonly cplnId: pulumi.Output<string>;
     /**
      * Description of the Cloud Account.
      */
-    public readonly description!: pulumi.Output<string>;
+    declare public readonly description: pulumi.Output<string>;
     /**
      * Contains GCP cloud account configuration.
      */
-    public readonly gcp!: pulumi.Output<outputs.CloudAccountGcp | undefined>;
+    declare public readonly gcp: pulumi.Output<outputs.CloudAccountGcp | undefined>;
     /**
      * GCP roles used during the configuration of the cloud account at GCP.
      */
-    public /*out*/ readonly gcpRoles!: pulumi.Output<string[]>;
+    declare public /*out*/ readonly gcpRoles: pulumi.Output<string[]>;
     /**
      * GCP service account name used during the configuration of the cloud account at GCP.
      */
-    public /*out*/ readonly gcpServiceAccountName!: pulumi.Output<string>;
+    declare public /*out*/ readonly gcpServiceAccountName: pulumi.Output<string>;
     /**
      * Name of the Cloud Account.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
     /**
      * Contains NGS cloud account configuration.
      */
-    public readonly ngs!: pulumi.Output<outputs.CloudAccountNgs | undefined>;
+    declare public readonly ngs: pulumi.Output<outputs.CloudAccountNgs | undefined>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
-    public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    declare public /*out*/ readonly selfLink: pulumi.Output<string>;
     /**
      * Key-value map of resource tags.
      */
-    public readonly tags!: pulumi.Output<{[key: string]: string}>;
+    declare public readonly tags: pulumi.Output<{[key: string]: string}>;
 
     /**
      * Create a CloudAccount resource with the given unique name, arguments, and options.
@@ -92,26 +92,26 @@ export class CloudAccount extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as CloudAccountState | undefined;
-            resourceInputs["aws"] = state ? state.aws : undefined;
-            resourceInputs["azures"] = state ? state.azures : undefined;
-            resourceInputs["cplnId"] = state ? state.cplnId : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["gcp"] = state ? state.gcp : undefined;
-            resourceInputs["gcpRoles"] = state ? state.gcpRoles : undefined;
-            resourceInputs["gcpServiceAccountName"] = state ? state.gcpServiceAccountName : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["ngs"] = state ? state.ngs : undefined;
-            resourceInputs["selfLink"] = state ? state.selfLink : undefined;
-            resourceInputs["tags"] = state ? state.tags : undefined;
+            resourceInputs["aws"] = state?.aws;
+            resourceInputs["azures"] = state?.azures;
+            resourceInputs["cplnId"] = state?.cplnId;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["gcp"] = state?.gcp;
+            resourceInputs["gcpRoles"] = state?.gcpRoles;
+            resourceInputs["gcpServiceAccountName"] = state?.gcpServiceAccountName;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["ngs"] = state?.ngs;
+            resourceInputs["selfLink"] = state?.selfLink;
+            resourceInputs["tags"] = state?.tags;
         } else {
             const args = argsOrState as CloudAccountArgs | undefined;
-            resourceInputs["aws"] = args ? args.aws : undefined;
-            resourceInputs["azures"] = args ? args.azures : undefined;
-            resourceInputs["description"] = args ? args.description : undefined;
-            resourceInputs["gcp"] = args ? args.gcp : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["ngs"] = args ? args.ngs : undefined;
-            resourceInputs["tags"] = args ? args.tags : undefined;
+            resourceInputs["aws"] = args?.aws;
+            resourceInputs["azures"] = args?.azures;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["gcp"] = args?.gcp;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["ngs"] = args?.ngs;
+            resourceInputs["tags"] = args?.tags;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["gcpRoles"] = undefined /*out*/;
             resourceInputs["gcpServiceAccountName"] = undefined /*out*/;

@@ -25,6 +25,9 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("active")]
         public Input<bool>? Active { get; set; }
 
+        [Input("endpointPrefix")]
+        public Input<string>? EndpointPrefix { get; set; }
+
         public OrgStatusArgs()
         {
         }

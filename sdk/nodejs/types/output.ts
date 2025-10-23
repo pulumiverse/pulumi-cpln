@@ -567,6 +567,7 @@ export interface GetLocationsLocation {
      * Name of the location.
      */
     name: string;
+    origin: string;
     /**
      * Region of the location.
      */
@@ -681,6 +682,7 @@ export interface GetOrgStatus {
      * Indicates whether the org is active or not.
      */
     active: boolean;
+    endpointPrefix: string;
 }
 
 export interface GetSecretAw {
@@ -801,6 +803,897 @@ export interface GetSecretUserpass {
      * Username.
      */
     username: string;
+}
+
+export interface GetWorkloadContainer {
+    /**
+     * Command line arguments passed to the container at runtime. Replaces the CMD arguments of the running container. It is an ordered list.
+     */
+    args: string[];
+    /**
+     * Override the entry point.
+     */
+    command: string;
+    /**
+     * Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
+     */
+    cpu: string;
+    /**
+     * Name-Value list of environment variables.
+     */
+    env: {[key: string]: string};
+    gpuCustoms?: outputs.GetWorkloadContainerGpuCustom[];
+    /**
+     * GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
+     */
+    gpuNvidias?: outputs.GetWorkloadContainerGpuNvidia[];
+    /**
+     * The full image and tag path.
+     */
+    image: string;
+    /**
+     * Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
+     */
+    inheritEnv: boolean;
+    /**
+     * Lifecycle [Reference Page](https://docs.controlplane.com/reference/workload#lifecycle).
+     */
+    lifecycles?: outputs.GetWorkloadContainerLifecycle[];
+    /**
+     * Liveness Probe
+     */
+    livenessProbes?: outputs.GetWorkloadContainerLivenessProbe[];
+    /**
+     * Reserved memory of the workload when capacityAI is disabled. Maximum memory when CapacityAI is enabled. Default: "128Mi".
+     */
+    memory: string;
+    /**
+     * [Reference Page](https://docs.controlplane.com/reference/workload#metrics).
+     */
+    metrics?: outputs.GetWorkloadContainerMetric[];
+    /**
+     * Minimum CPU when capacity AI is enabled.
+     */
+    minCpu: string;
+    /**
+     * Minimum memory when capacity AI is enabled.
+     */
+    minMemory: string;
+    /**
+     * Name of the container.
+     */
+    name: string;
+    /**
+     * The port the container exposes. Only one container is allowed to specify a port. Min: `80`. Max: `65535`. Used by `serverless` Workload type. **DEPRECATED - Use `ports`.**
+     *
+     * @deprecated The 'port' attribute will be deprecated in the next major version. Use the 'ports' attribute instead.
+     */
+    port: number;
+    /**
+     * Communication endpoints used by the workload to send and receive network traffic.
+     */
+    ports?: outputs.GetWorkloadContainerPort[];
+    /**
+     * Readiness Probe
+     */
+    readinessProbes?: outputs.GetWorkloadContainerReadinessProbe[];
+    /**
+     * Mount Object Store (S3, GCS, AzureBlob) buckets as file system.
+     */
+    volumes?: outputs.GetWorkloadContainerVolume[];
+    /**
+     * Override the working directory. Must be an absolute path.
+     */
+    workingDirectory: string;
+}
+
+export interface GetWorkloadContainerGpuCustom {
+    /**
+     * Number of GPUs.
+     */
+    quantity: number;
+    resource: string;
+    runtimeClass: string;
+}
+
+export interface GetWorkloadContainerGpuNvidia {
+    /**
+     * GPU Model (i.e.: t4)
+     */
+    model: string;
+    /**
+     * Number of GPUs.
+     */
+    quantity: number;
+}
+
+export interface GetWorkloadContainerLifecycle {
+    postStarts?: outputs.GetWorkloadContainerLifecyclePostStart[];
+    preStops?: outputs.GetWorkloadContainerLifecyclePreStop[];
+}
+
+export interface GetWorkloadContainerLifecyclePostStart {
+    execs?: outputs.GetWorkloadContainerLifecyclePostStartExec[];
+}
+
+export interface GetWorkloadContainerLifecyclePostStartExec {
+    /**
+     * Command and arguments executed immediately after the container is created.
+     */
+    commands: string[];
+}
+
+export interface GetWorkloadContainerLifecyclePreStop {
+    execs?: outputs.GetWorkloadContainerLifecyclePreStopExec[];
+}
+
+export interface GetWorkloadContainerLifecyclePreStopExec {
+    /**
+     * Command and arguments executed immediately before the container is stopped.
+     */
+    commands: string[];
+}
+
+export interface GetWorkloadContainerLivenessProbe {
+    execs?: outputs.GetWorkloadContainerLivenessProbeExec[];
+    failureThreshold: number;
+    grpcs?: outputs.GetWorkloadContainerLivenessProbeGrpc[];
+    httpGets?: outputs.GetWorkloadContainerLivenessProbeHttpGet[];
+    initialDelaySeconds: number;
+    periodSeconds: number;
+    successThreshold: number;
+    tcpSockets?: outputs.GetWorkloadContainerLivenessProbeTcpSocket[];
+    timeoutSeconds: number;
+}
+
+export interface GetWorkloadContainerLivenessProbeExec {
+    commands: string[];
+}
+
+export interface GetWorkloadContainerLivenessProbeGrpc {
+    port: number;
+}
+
+export interface GetWorkloadContainerLivenessProbeHttpGet {
+    httpHeaders: {[key: string]: string};
+    path: string;
+    port: number;
+    scheme: string;
+}
+
+export interface GetWorkloadContainerLivenessProbeTcpSocket {
+    port: number;
+}
+
+export interface GetWorkloadContainerMetric {
+    /**
+     * Drop metrics that match given patterns.
+     */
+    dropMetrics: string[];
+    /**
+     * Path from container emitting custom metrics.
+     */
+    path: string;
+    /**
+     * Port from container emitting custom metrics.
+     */
+    port: number;
+}
+
+export interface GetWorkloadContainerPort {
+    /**
+     * Port to expose.
+     */
+    number: number;
+    /**
+     * Protocol. Choice of: `http`, `http2`, `tcp`, or `grpc`.
+     */
+    protocol: string;
+}
+
+export interface GetWorkloadContainerReadinessProbe {
+    execs?: outputs.GetWorkloadContainerReadinessProbeExec[];
+    failureThreshold: number;
+    grpcs?: outputs.GetWorkloadContainerReadinessProbeGrpc[];
+    httpGets?: outputs.GetWorkloadContainerReadinessProbeHttpGet[];
+    initialDelaySeconds: number;
+    periodSeconds: number;
+    successThreshold: number;
+    tcpSockets?: outputs.GetWorkloadContainerReadinessProbeTcpSocket[];
+    timeoutSeconds: number;
+}
+
+export interface GetWorkloadContainerReadinessProbeExec {
+    commands: string[];
+}
+
+export interface GetWorkloadContainerReadinessProbeGrpc {
+    port: number;
+}
+
+export interface GetWorkloadContainerReadinessProbeHttpGet {
+    httpHeaders: {[key: string]: string};
+    path: string;
+    port: number;
+    scheme: string;
+}
+
+export interface GetWorkloadContainerReadinessProbeTcpSocket {
+    port: number;
+}
+
+export interface GetWorkloadContainerVolume {
+    /**
+     * File path added to workload pointing to the volume.
+     */
+    path: string;
+    /**
+     * Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
+     */
+    recoveryPolicy: string;
+    /**
+     * URI of a volume hosted at Control Plane (Volume Set) or at a cloud provider (AWS, Azure, GCP).
+     */
+    uri: string;
+}
+
+export interface GetWorkloadFirewallSpec {
+    /**
+     * The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
+     */
+    externals?: outputs.GetWorkloadFirewallSpecExternal[];
+    /**
+     * The internal firewall is used to control access between workloads.
+     */
+    internals?: outputs.GetWorkloadFirewallSpecInternal[];
+}
+
+export interface GetWorkloadFirewallSpecExternal {
+    /**
+     * Firewall options for HTTP workloads.
+     */
+    https?: outputs.GetWorkloadFirewallSpecExternalHttp[];
+    /**
+     * The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+     */
+    inboundAllowCidrs: string[];
+    /**
+     * The list of ipv4/ipv6 addresses or cidr blocks that are NOT allowed to access this workload. Addresses in the allow list will only be allowed if they do not exist in this list.
+     */
+    inboundBlockedCidrs: string[];
+    /**
+     * The list of ipv4/ipv6 addresses or cidr blocks that this workload is allowed reach. No outbound access is allowed by default. Specify '0.0.0.0/0' to allow outbound access to the public internet.
+     */
+    outboundAllowCidrs: string[];
+    /**
+     * The list of public hostnames that this workload is allowed to reach. No outbound access is allowed by default. A wildcard `*` is allowed on the prefix of the hostname only, ex: `*.amazonaws.com`. Use `outboundAllowCIDR` to allow access to all external websites.
+     */
+    outboundAllowHostnames: string[];
+    /**
+     * Allow outbound access to specific ports and protocols. When not specified, communication to address ranges in outboundAllowCIDR is allowed on all ports and communication to names in outboundAllowHostname is allowed on ports 80/443.
+     */
+    outboundAllowPorts?: outputs.GetWorkloadFirewallSpecExternalOutboundAllowPort[];
+    /**
+     * The list of ipv4/ipv6 addresses or cidr blocks that this workload is NOT allowed to reach. Addresses in the allow list will only be allowed if they do not exist in this list.
+     */
+    outboundBlockedCidrs: string[];
+}
+
+export interface GetWorkloadFirewallSpecExternalHttp {
+    /**
+     * A list of header filters for HTTP workloads.
+     */
+    inboundHeaderFilters?: outputs.GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter[];
+}
+
+export interface GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter {
+    /**
+     * A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
+     */
+    allowedValues: string[];
+    /**
+     * A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
+     */
+    blockedValues: string[];
+    /**
+     * The header to match for.
+     */
+    key: string;
+}
+
+export interface GetWorkloadFirewallSpecExternalOutboundAllowPort {
+    /**
+     * Port number. Max: 65000
+     */
+    number: number;
+    /**
+     * Either `http`, `https` or `tcp`.
+     */
+    protocol: string;
+}
+
+export interface GetWorkloadFirewallSpecInternal {
+    /**
+     * Used to control the internal firewall configuration and mutual tls. Allowed Values: "none", "same-gvc", "same-org", "workload-list".
+     */
+    inboundAllowType: string;
+    /**
+     * A list of specific workloads which are allowed to access this workload internally. This list is only used if the 'inboundAllowType' is set to 'workload-list'.
+     */
+    inboundAllowWorkloads: string[];
+}
+
+export interface GetWorkloadJob {
+    /**
+     * The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
+     */
+    activeDeadlineSeconds: number;
+    /**
+     * Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+     */
+    concurrencyPolicy: string;
+    /**
+     * The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`.
+     */
+    historyLimit: number;
+    /**
+     * Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`.
+     */
+    restartPolicy: string;
+    /**
+     * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
+     */
+    schedule: string;
+}
+
+export interface GetWorkloadLoadBalancer {
+    /**
+     * Direct load balancers are created in each location that a workload is running in and are configured for the standard endpoints of the workload. Customers are responsible for configuring the workload with certificates if TLS is required.
+     */
+    directs?: outputs.GetWorkloadLoadBalancerDirect[];
+    geoLocations?: outputs.GetWorkloadLoadBalancerGeoLocation[];
+    /**
+     * When enabled, individual replicas of the workload can be reached directly using the subdomain prefix replica-<index>. For example, replica-0.my-workload.my-gvc.cpln.local or replica-0.my-workload-<gvc-alias>.cpln.app - Can only be used with stateful workloads.
+     */
+    replicaDirect: boolean;
+}
+
+export interface GetWorkloadLoadBalancerDirect {
+    /**
+     * When disabled, this load balancer will be stopped.
+     */
+    enabled: boolean;
+    ipset: string;
+    /**
+     * List of ports that will be exposed by this load balancer.
+     */
+    ports?: outputs.GetWorkloadLoadBalancerDirectPort[];
+}
+
+export interface GetWorkloadLoadBalancerDirectPort {
+    /**
+     * The port on the container tha will receive this traffic.
+     */
+    containerPort: number;
+    /**
+     * The port that is available publicly.
+     */
+    externalPort: number;
+    /**
+     * The protocol that is exposed publicly.
+     */
+    protocol: string;
+    /**
+     * Overrides the default `https` url scheme that will be used for links in the UI and status.
+     */
+    scheme: string;
+}
+
+export interface GetWorkloadLoadBalancerGeoLocation {
+    /**
+     * When enabled, geo location headers will be included on inbound http requests. Existing headers will be replaced.
+     */
+    enabled: boolean;
+    headers?: outputs.GetWorkloadLoadBalancerGeoLocationHeader[];
+}
+
+export interface GetWorkloadLoadBalancerGeoLocationHeader {
+    /**
+     * The geo asn header.
+     */
+    asn: string;
+    /**
+     * The geo city header.
+     */
+    city: string;
+    /**
+     * The geo country header.
+     */
+    country: string;
+    /**
+     * The geo region header.
+     */
+    region: string;
+}
+
+export interface GetWorkloadLocalOption {
+    /**
+     * Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+     */
+    autoscalings?: outputs.GetWorkloadLocalOptionAutoscaling[];
+    /**
+     * Capacity AI. Default: `true`.
+     */
+    capacityAi: boolean;
+    /**
+     * The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+     */
+    capacityAiUpdateMinutes: number;
+    /**
+     * Debug mode. Default: `false`.
+     */
+    debug: boolean;
+    /**
+     * Valid only for `localOptions`. Override options for a specific location.
+     */
+    location: string;
+    multiZones?: outputs.GetWorkloadLocalOptionMultiZone[];
+    /**
+     * Workload suspend. Default: `false`.
+     */
+    suspend: boolean;
+    /**
+     * Timeout in seconds. Default: `5`.
+     */
+    timeoutSeconds: number;
+}
+
+export interface GetWorkloadLocalOptionAutoscaling {
+    /**
+     * KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+     */
+    kedas?: outputs.GetWorkloadLocalOptionAutoscalingKeda[];
+    /**
+     * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+     */
+    maxConcurrency: number;
+    /**
+     * The maximum allowed number of replicas. Min: `0`. Default `5`.
+     */
+    maxScale: number;
+    /**
+     * Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
+     */
+    metric: string;
+    /**
+     * For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+     */
+    metricPercentile: string;
+    /**
+     * The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `maxScale`. Default `1`.
+     */
+    minScale: number;
+    multis?: outputs.GetWorkloadLocalOptionAutoscalingMulti[];
+    /**
+     * The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+     */
+    scaleToZeroDelay: number;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+     */
+    target: number;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKeda {
+    /**
+     * Advanced configuration options for KEDA.
+     */
+    advanceds?: outputs.GetWorkloadLocalOptionAutoscalingKedaAdvanced[];
+    /**
+     * The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+     */
+    cooldownPeriod: number;
+    /**
+     * The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+     */
+    initialCooldownPeriod: number;
+    /**
+     * The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+     */
+    pollingInterval: number;
+    /**
+     * An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+     */
+    triggers?: outputs.GetWorkloadLocalOptionAutoscalingKedaTrigger[];
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvanced {
+    /**
+     * Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+     */
+    scalingModifiers?: outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier[];
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier {
+    /**
+     * Defines the new activation target value to scale on for the composed metric.
+     */
+    activationTarget: string;
+    /**
+     * Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+     */
+    formula: string;
+    /**
+     * Defines metric type used for this new composite-metric.
+     */
+    metricType: string;
+    /**
+     * Defines new target value to scale on for the composed metric.
+     */
+    target: string;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaTrigger {
+    /**
+     * Reference to a KEDA authentication object for secure access to external systems.
+     */
+    authenticationReves?: outputs.GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef[];
+    /**
+     * The configuration parameters that the trigger requires.
+     */
+    metadata: {[key: string]: string};
+    /**
+     * The type of metric to be used for scaling.
+     */
+    metricType: string;
+    /**
+     * An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+     */
+    name: string;
+    /**
+     * The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+     */
+    type: string;
+    /**
+     * Enables caching of metric values during polling interval.
+     */
+    useCachedMetrics: boolean;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef {
+    /**
+     * The name of secret listed in the GVC spec.keda.secrets.
+     */
+    name: string;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingMulti {
+    /**
+     * Valid values: `cpu` or `memory`.
+     */
+    metric: string;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
+     */
+    target: number;
+}
+
+export interface GetWorkloadLocalOptionMultiZone {
+    enabled: boolean;
+}
+
+export interface GetWorkloadOption {
+    /**
+     * Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
+     */
+    autoscalings?: outputs.GetWorkloadOptionAutoscaling[];
+    /**
+     * Capacity AI. Default: `true`.
+     */
+    capacityAi: boolean;
+    /**
+     * The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+     */
+    capacityAiUpdateMinutes: number;
+    /**
+     * Debug mode. Default: `false`.
+     */
+    debug: boolean;
+    multiZones?: outputs.GetWorkloadOptionMultiZone[];
+    /**
+     * Workload suspend. Default: `false`.
+     */
+    suspend: boolean;
+    /**
+     * Timeout in seconds. Default: `5`.
+     */
+    timeoutSeconds: number;
+}
+
+export interface GetWorkloadOptionAutoscaling {
+    /**
+     * KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
+     */
+    kedas?: outputs.GetWorkloadOptionAutoscalingKeda[];
+    /**
+     * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+     */
+    maxConcurrency: number;
+    /**
+     * The maximum allowed number of replicas. Min: `0`. Default `5`.
+     */
+    maxScale: number;
+    /**
+     * Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
+     */
+    metric: string;
+    /**
+     * For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
+     */
+    metricPercentile: string;
+    /**
+     * The minimum allowed number of replicas. Control Plane can scale the workload down to 0 when there is no traffic and scale up immediately to fulfill new requests. Min: `0`. Max: `maxScale`. Default `1`.
+     */
+    minScale: number;
+    multis?: outputs.GetWorkloadOptionAutoscalingMulti[];
+    /**
+     * The amount of time (in seconds) with no requests received before a workload is scaled to 0. Min: `30`. Max: `3600`. Default: `300`.
+     */
+    scaleToZeroDelay: number;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`. Default: `95`.
+     */
+    target: number;
+}
+
+export interface GetWorkloadOptionAutoscalingKeda {
+    /**
+     * Advanced configuration options for KEDA.
+     */
+    advanceds?: outputs.GetWorkloadOptionAutoscalingKedaAdvanced[];
+    /**
+     * The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+     */
+    cooldownPeriod: number;
+    /**
+     * The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+     */
+    initialCooldownPeriod: number;
+    /**
+     * The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
+     */
+    pollingInterval: number;
+    /**
+     * An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
+     */
+    triggers?: outputs.GetWorkloadOptionAutoscalingKedaTrigger[];
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvanced {
+    /**
+     * Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
+     */
+    scalingModifiers?: outputs.GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier[];
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier {
+    /**
+     * Defines the new activation target value to scale on for the composed metric.
+     */
+    activationTarget: string;
+    /**
+     * Composes metrics together and allows them to be modified/manipulated. It accepts mathematical/conditional statements.
+     */
+    formula: string;
+    /**
+     * Defines metric type used for this new composite-metric.
+     */
+    metricType: string;
+    /**
+     * Defines new target value to scale on for the composed metric.
+     */
+    target: string;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaTrigger {
+    /**
+     * Reference to a KEDA authentication object for secure access to external systems.
+     */
+    authenticationReves?: outputs.GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRef[];
+    /**
+     * The configuration parameters that the trigger requires.
+     */
+    metadata: {[key: string]: string};
+    /**
+     * The type of metric to be used for scaling.
+     */
+    metricType: string;
+    /**
+     * An optional name for the trigger. If not provided, a default name will be generated based on the trigger type.
+     */
+    name: string;
+    /**
+     * The type of KEDA trigger, e.g "prometheus", "aws-sqs", etc.
+     */
+    type: string;
+    /**
+     * Enables caching of metric values during polling interval.
+     */
+    useCachedMetrics: boolean;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRef {
+    /**
+     * The name of secret listed in the GVC spec.keda.secrets.
+     */
+    name: string;
+}
+
+export interface GetWorkloadOptionAutoscalingMulti {
+    /**
+     * Valid values: `cpu` or `memory`.
+     */
+    metric: string;
+    /**
+     * Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
+     */
+    target: number;
+}
+
+export interface GetWorkloadOptionMultiZone {
+    enabled: boolean;
+}
+
+export interface GetWorkloadRequestRetryPolicy {
+    attempts: number;
+    retryOns: string[];
+}
+
+export interface GetWorkloadRolloutOption {
+    /**
+     * The number of replicas that can be created above the desired amount of replicas during an update.
+     */
+    maxSurgeReplicas: string;
+    /**
+     * The number of replicas that can be unavailable during the update process.
+     */
+    maxUnavailableReplicas: string;
+    /**
+     * The minimum number of seconds a container must run without crashing to be considered available.
+     */
+    minReadySeconds: number;
+    /**
+     * The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+     */
+    scalingPolicy: string;
+    /**
+     * The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run.
+     */
+    terminationGracePeriodSeconds: number;
+}
+
+export interface GetWorkloadSecurityOption {
+    /**
+     * The group id assigned to any mounted volume.
+     */
+    fileSystemGroupId: number;
+}
+
+export interface GetWorkloadSidecar {
+    envoy: string;
+}
+
+export interface GetWorkloadStatus {
+    /**
+     * Canonical endpoint for the workload.
+     */
+    canonicalEndpoint: string;
+    /**
+     * Current amount of replicas deployed.
+     */
+    currentReplicaCount: number;
+    /**
+     * Endpoint for the workload.
+     */
+    endpoint: string;
+    /**
+     * Current health status.
+     */
+    healthChecks: outputs.GetWorkloadStatusHealthCheck[];
+    /**
+     * Internal hostname for the workload. Used for service-to-service requests.
+     */
+    internalName: string;
+    loadBalancers: outputs.GetWorkloadStatusLoadBalancer[];
+    /**
+     * ID of the parent object.
+     */
+    parentId: string;
+    replicaInternalNames: string[];
+    /**
+     * Resolved images for workloads with dynamic tags enabled.
+     */
+    resolvedImages: outputs.GetWorkloadStatusResolvedImage[];
+}
+
+export interface GetWorkloadStatusHealthCheck {
+    /**
+     * Active boolean for the associated workload.
+     */
+    active: boolean;
+    /**
+     * Current output code for the associated workload.
+     */
+    code: number;
+    /**
+     * Failure integer for the associated workload.
+     */
+    failures: number;
+    /**
+     * Timestamp in UTC of the last health check.
+     */
+    lastChecked: string;
+    /**
+     * Current health status for the associated workload.
+     */
+    message: string;
+    /**
+     * Success boolean for the associated workload.
+     */
+    success: boolean;
+    /**
+     * Success integer for the associated workload.
+     */
+    successes: number;
+}
+
+export interface GetWorkloadStatusLoadBalancer {
+    origin: string;
+    url: string;
+}
+
+export interface GetWorkloadStatusResolvedImage {
+    errorMessages: string[];
+    /**
+     * A list of images that were resolved.
+     */
+    images: outputs.GetWorkloadStatusResolvedImageImage[];
+    nextRetryAt: string;
+    /**
+     * UTC Time when the images were resolved.
+     */
+    resolvedAt: string;
+    /**
+     * Workload version the images were resolved for.
+     */
+    resolvedForVersion: number;
+}
+
+export interface GetWorkloadStatusResolvedImageImage {
+    /**
+     * A unique SHA256 hash value that identifies a specific image content. This digest serves as a fingerprint of the image's content, ensuring the image you pull or run is exactly what you expect, without any modifications or corruptions.
+     */
+    digest: string;
+    manifests: outputs.GetWorkloadStatusResolvedImageImageManifest[];
+}
+
+export interface GetWorkloadStatusResolvedImageImageManifest {
+    /**
+     * A SHA256 hash that uniquely identifies the specific image manifest.
+     */
+    digest: string;
+    /**
+     * The name and tag of the resolved image.
+     */
+    image: string;
+    /**
+     * The MIME type used in the Docker Registry HTTP API to specify the format of the data being sent or received. Docker uses media types to distinguish between different kinds of JSON objects and binary data formats within the registry protocol, enabling the Docker client and registry to understand and process different components of Docker images correctly.
+     */
+    mediaType: string;
+    /**
+     * Key-value map of strings. The combination of the operating system and architecture for which the image is built.
+     */
+    platform: {[key: string]: string};
 }
 
 export interface GroupIdentityMatcher {
@@ -1228,6 +2121,10 @@ export interface Mk8sAddOns {
     awsWorkloadIdentity?: boolean;
     azureAcr?: outputs.Mk8sAddOnsAzureAcr;
     azureWorkloadIdentity?: outputs.Mk8sAddOnsAzureWorkloadIdentity;
+    /**
+     * Bring-your-own Kubernetes (BYOK) add-on settings.
+     */
+    byok?: outputs.Mk8sAddOnsByok;
     dashboard?: boolean;
     localPathStorage?: boolean;
     logs?: outputs.Mk8sAddOnsLogs;
@@ -1270,6 +2167,388 @@ export interface Mk8sAddOnsAzureWorkloadIdentity {
      * Tenant ID to use for workload identity.
      */
     tenantId?: string;
+}
+
+export interface Mk8sAddOnsByok {
+    /**
+     * Fine-grained configuration for the BYOK workloads.
+     */
+    config: outputs.Mk8sAddOnsByokConfig;
+    /**
+     * Disable Control Plane managed upgrades for BYOK components.
+     */
+    ignoreUpdates?: boolean;
+    /**
+     * The full link of a BYOK location.
+     */
+    location: string;
+}
+
+export interface Mk8sAddOnsByokConfig {
+    /**
+     * Resource tuning for the actuator component.
+     */
+    actuator?: outputs.Mk8sAddOnsByokConfigActuator;
+    /**
+     * Shared rollout settings for BYOK workloads.
+     */
+    common?: outputs.Mk8sAddOnsByokConfigCommon;
+    /**
+     * Ingress controller resource configuration.
+     */
+    ingress?: outputs.Mk8sAddOnsByokConfigIngress;
+    /**
+     * Internal DNS deployment settings.
+     */
+    internalDns?: outputs.Mk8sAddOnsByokConfigInternalDns;
+    /**
+     * Istio service mesh configuration.
+     */
+    istio?: outputs.Mk8sAddOnsByokConfigIstio;
+    /**
+     * Log splitter deployment configuration.
+     */
+    logSplitter?: outputs.Mk8sAddOnsByokConfigLogSplitter;
+    /**
+     * Longhorn persistent volume settings.
+     */
+    longhorn?: outputs.Mk8sAddOnsByokConfigLonghorn;
+    /**
+     * Configuration for the optional middlebox traffic shaper.
+     */
+    middlebox?: outputs.Mk8sAddOnsByokConfigMiddlebox;
+    /**
+     * Monitoring stack configuration.
+     */
+    monitoring?: outputs.Mk8sAddOnsByokConfigMonitoring;
+    /**
+     * Redis cache configuration.
+     */
+    redis?: outputs.Mk8sAddOnsByokConfigRedis;
+    /**
+     * High-availability Redis configuration.
+     */
+    redisHa?: outputs.Mk8sAddOnsByokConfigRedisHa;
+    /**
+     * Redis Sentinel configuration.
+     */
+    redisSentinel?: outputs.Mk8sAddOnsByokConfigRedisSentinel;
+    /**
+     * Tempo agent resource configuration.
+     */
+    tempoAgent?: outputs.Mk8sAddOnsByokConfigTempoAgent;
+}
+
+export interface Mk8sAddOnsByokConfigActuator {
+    /**
+     * Additional environment variables injected into actuator pods.
+     */
+    env?: {[key: string]: string};
+    /**
+     * Log level override for actuator containers. Valid values are: trace, info, error.
+     */
+    logLevel?: string;
+    /**
+     * CPU limit applied to actuator pods.
+     */
+    maxCpu?: string;
+    /**
+     * Memory limit applied to actuator pods.
+     */
+    maxMemory?: string;
+    /**
+     * Minimum CPU request applied to actuator pods (e.g. "100m").
+     */
+    minCpu?: string;
+    /**
+     * Minimum memory request applied to actuator pods (e.g. "128Mi").
+     */
+    minMemory?: string;
+}
+
+export interface Mk8sAddOnsByokConfigCommon {
+    /**
+     * Replica count shared by BYOK control plane deployments.
+     */
+    deploymentReplicas?: number;
+    /**
+     * Pod disruption budget limits for BYOK workloads.
+     */
+    pdb?: outputs.Mk8sAddOnsByokConfigCommonPdb;
+}
+
+export interface Mk8sAddOnsByokConfigCommonPdb {
+    /**
+     * Maximum number of pods that can be unavailable during disruptions.
+     */
+    maxUnavailable?: number;
+}
+
+export interface Mk8sAddOnsByokConfigIngress {
+    /**
+     * CPU request/limit string applied to ingress pods.
+     */
+    cpu?: string;
+    /**
+     * Memory request/limit string applied to ingress pods.
+     */
+    memory?: string;
+    /**
+     * Target usage percentage that triggers ingress autoscaling.
+     */
+    targetPercent?: number;
+}
+
+export interface Mk8sAddOnsByokConfigInternalDns {
+    /**
+     * CPU limit applied to internal DNS pods.
+     */
+    maxCpu?: string;
+    /**
+     * Memory limit applied to internal DNS pods.
+     */
+    maxMemory?: string;
+    /**
+     * CPU request applied to internal DNS pods.
+     */
+    minCpu?: string;
+    /**
+     * Memory request applied to internal DNS pods.
+     */
+    minMemory?: string;
+}
+
+export interface Mk8sAddOnsByokConfigIstio {
+    /**
+     * Istio ingress gateway deployment settings.
+     */
+    ingressGateway?: outputs.Mk8sAddOnsByokConfigIstioIngressGateway;
+    /**
+     * Control plane deployment settings for istiod.
+     */
+    istiod?: outputs.Mk8sAddOnsByokConfigIstioIstiod;
+    /**
+     * Default resource requests for Istio sidecar injection.
+     */
+    sidecar?: outputs.Mk8sAddOnsByokConfigIstioSidecar;
+}
+
+export interface Mk8sAddOnsByokConfigIstioIngressGateway {
+    /**
+     * CPU limit applied to ingress gateway pods.
+     */
+    maxCpu?: string;
+    /**
+     * Memory limit applied to ingress gateway pods.
+     */
+    maxMemory?: string;
+    /**
+     * Number of ingress gateway replicas.
+     */
+    replicas?: number;
+}
+
+export interface Mk8sAddOnsByokConfigIstioIstiod {
+    /**
+     * CPU limit applied to istiod pods.
+     */
+    maxCpu?: string;
+    /**
+     * Memory limit applied to istiod pods.
+     */
+    maxMemory?: string;
+    /**
+     * CPU request applied to istiod pods.
+     */
+    minCpu?: string;
+    /**
+     * Memory request applied to istiod pods.
+     */
+    minMemory?: string;
+    /**
+     * Pod disruption budget maxUnavailable for istiod.
+     */
+    pdb?: number;
+    /**
+     * Number of istiod replicas.
+     */
+    replicas?: number;
+}
+
+export interface Mk8sAddOnsByokConfigIstioSidecar {
+    /**
+     * CPU request applied to injected sidecars.
+     */
+    minCpu?: string;
+    /**
+     * Memory request applied to injected sidecars.
+     */
+    minMemory?: string;
+}
+
+export interface Mk8sAddOnsByokConfigLogSplitter {
+    /**
+     * CPU limit applied to log splitter pods.
+     */
+    maxCpu?: string;
+    /**
+     * Memory limit applied to log splitter pods.
+     */
+    maxMemory?: string;
+    /**
+     * In-memory buffer size consumed by each log splitter pod.
+     */
+    memBufferSize?: string;
+    /**
+     * CPU request applied to log splitter pods.
+     */
+    minCpu?: string;
+    /**
+     * Memory request applied to log splitter pods.
+     */
+    minMemory?: string;
+    /**
+     * Per-pod log processing rate limit.
+     */
+    perPodRate?: number;
+}
+
+export interface Mk8sAddOnsByokConfigLonghorn {
+    /**
+     * Replica factor for Longhorn volumes. Minimum: 1.
+     */
+    replicas?: number;
+}
+
+export interface Mk8sAddOnsByokConfigMiddlebox {
+    /**
+     * Alert threshold, in Mbps, for middlebox bandwidth usage.
+     */
+    bandwidthAlertMbps?: number;
+    /**
+     * Whether to deploy the middlebox component.
+     */
+    enabled?: boolean;
+}
+
+export interface Mk8sAddOnsByokConfigMonitoring {
+    /**
+     * Kube-state-metrics resource overrides.
+     */
+    kubeStateMetrics?: outputs.Mk8sAddOnsByokConfigMonitoringKubeStateMetrics;
+    /**
+     * Maximum memory limit for monitoring components.
+     */
+    maxMemory?: string;
+    /**
+     * Minimum memory request for monitoring components.
+     */
+    minMemory?: string;
+    /**
+     * Prometheus deployment configuration.
+     */
+    prometheus?: outputs.Mk8sAddOnsByokConfigMonitoringPrometheus;
+}
+
+export interface Mk8sAddOnsByokConfigMonitoringKubeStateMetrics {
+    /**
+     * Memory request applied to kube-state-metrics pods.
+     */
+    minMemory?: string;
+}
+
+export interface Mk8sAddOnsByokConfigMonitoringPrometheus {
+    /**
+     * Primary Prometheus instance settings.
+     */
+    main?: outputs.Mk8sAddOnsByokConfigMonitoringPrometheusMain;
+}
+
+export interface Mk8sAddOnsByokConfigMonitoringPrometheusMain {
+    /**
+     * Persistent volume size for Prometheus (for example, "50Gi").
+     */
+    storage?: string;
+}
+
+export interface Mk8sAddOnsByokConfigRedis {
+    /**
+     * CPU limit applied to the Redis pods.
+     */
+    maxCpu?: string;
+    /**
+     * Memory limit applied to the Redis pods.
+     */
+    maxMemory?: string;
+    /**
+     * CPU request applied to the Redis pods.
+     */
+    minCpu?: string;
+    /**
+     * Memory request applied to the Redis pods.
+     */
+    minMemory?: string;
+    /**
+     * Persistent storage size allocated to the Redis pods (for example, "8Gi").
+     */
+    storage?: string;
+}
+
+export interface Mk8sAddOnsByokConfigRedisHa {
+    /**
+     * CPU limit applied to the Redis pods.
+     */
+    maxCpu?: string;
+    /**
+     * Memory limit applied to the Redis pods.
+     */
+    maxMemory?: string;
+    /**
+     * CPU request applied to the Redis pods.
+     */
+    minCpu?: string;
+    /**
+     * Memory request applied to the Redis pods.
+     */
+    minMemory?: string;
+    /**
+     * Persistent storage size allocated to the Redis pods, in GiB.
+     */
+    storage?: number;
+}
+
+export interface Mk8sAddOnsByokConfigRedisSentinel {
+    /**
+     * CPU limit applied to the Redis pods.
+     */
+    maxCpu?: string;
+    /**
+     * Memory limit applied to the Redis pods.
+     */
+    maxMemory?: string;
+    /**
+     * CPU request applied to the Redis pods.
+     */
+    minCpu?: string;
+    /**
+     * Memory request applied to the Redis pods.
+     */
+    minMemory?: string;
+    /**
+     * Persistent storage size allocated to the Redis pods, in GiB.
+     */
+    storage?: number;
+}
+
+export interface Mk8sAddOnsByokConfigTempoAgent {
+    /**
+     * CPU request applied to tempo agent pods.
+     */
+    minCpu?: string;
+    /**
+     * Memory request applied to tempo agent pods.
+     */
+    minMemory?: string;
 }
 
 export interface Mk8sAddOnsLogs {
@@ -1722,6 +3001,107 @@ export interface Mk8sEphemeralProviderNodePoolTaint {
 export interface Mk8sFirewall {
     description?: string;
     sourceCidr: string;
+}
+
+export interface Mk8sGcpProvider {
+    autoscaler?: outputs.Mk8sGcpProviderAutoscaler;
+    /**
+     * Extra tags to attach to all created objects.
+     */
+    gcpLabels?: {[key: string]: string};
+    /**
+     * Default image for all nodes.
+     */
+    image?: outputs.Mk8sGcpProviderImage;
+    /**
+     * VPC network used by the cluster.
+     */
+    network: string;
+    networking?: outputs.Mk8sGcpProviderNetworking;
+    nodePools?: outputs.Mk8sGcpProviderNodePool[];
+    /**
+     * Optional shell script that will be run before K8s is installed. Supports SSM.
+     */
+    preInstallScript?: string;
+    /**
+     * GCP project ID that hosts the cluster infrastructure.
+     */
+    projectId: string;
+    /**
+     * Region where the cluster nodes will live.
+     */
+    region: string;
+    /**
+     * Link to a secret containing the service account JSON key.
+     */
+    saKeyLink: string;
+}
+
+export interface Mk8sGcpProviderAutoscaler {
+    expanders: string[];
+    unneededTime: string;
+    unreadyTime: string;
+    utilizationThreshold: number;
+}
+
+export interface Mk8sGcpProviderImage {
+    recommended?: string;
+}
+
+export interface Mk8sGcpProviderNetworking {
+    /**
+     * DNS forwarder used by the cluster. Can be a space-delimited list of dns servers. Default is /etc/resolv.conf when not specified.
+     */
+    dnsForwarder?: string;
+    /**
+     * The CIDR of the pod network.
+     */
+    podNetwork: string;
+    /**
+     * The CIDR of the service network.
+     */
+    serviceNetwork: string;
+}
+
+export interface Mk8sGcpProviderNodePool {
+    /**
+     * Size in GB.
+     */
+    bootDiskSize: number;
+    /**
+     * Labels to attach to nodes of a node pool.
+     */
+    labels?: {[key: string]: string};
+    /**
+     * GCE machine type for nodes in this pool.
+     */
+    machineType: string;
+    maxSize: number;
+    minSize: number;
+    name: string;
+    overrideImage?: outputs.Mk8sGcpProviderNodePoolOverrideImage;
+    /**
+     * Subnet within the selected network.
+     */
+    subnet: string;
+    /**
+     * Taint for the nodes of a pool.
+     */
+    taints?: outputs.Mk8sGcpProviderNodePoolTaint[];
+    /**
+     * Zone where the pool nodes run.
+     */
+    zone: string;
+}
+
+export interface Mk8sGcpProviderNodePoolOverrideImage {
+    recommended?: string;
+}
+
+export interface Mk8sGcpProviderNodePoolTaint {
+    effect?: string;
+    key?: string;
+    value?: string;
 }
 
 export interface Mk8sGenericProvider {
@@ -2279,6 +3659,7 @@ export interface Mk8sTritonProviderConnection {
 export interface Mk8sTritonProviderLoadBalancer {
     gateway?: outputs.Mk8sTritonProviderLoadBalancerGateway;
     manual?: outputs.Mk8sTritonProviderLoadBalancerManual;
+    none?: outputs.Mk8sTritonProviderLoadBalancerNone;
 }
 
 export interface Mk8sTritonProviderLoadBalancerGateway {
@@ -2312,6 +3693,9 @@ export interface Mk8sTritonProviderLoadBalancerManual {
 export interface Mk8sTritonProviderLoadBalancerManualLogging {
     externalSyslog?: string;
     nodePort?: number;
+}
+
+export interface Mk8sTritonProviderLoadBalancerNone {
 }
 
 export interface Mk8sTritonProviderNetworking {
@@ -2656,6 +4040,7 @@ export interface OrgStatus {
      * Indicates whether the org is active or not.
      */
     active: boolean;
+    endpointPrefix: string;
 }
 
 export interface OrgTracingControlplaneTracing {
@@ -2891,6 +4276,17 @@ export interface VolumeSetAutoscaling {
     scalingFactor?: number;
 }
 
+export interface VolumeSetCustomEncryption {
+    /**
+     * Map of region identifiers to encryption key configuration.
+     */
+    regions: {[key: string]: outputs.VolumeSetCustomEncryptionRegions};
+}
+
+export interface VolumeSetCustomEncryptionRegions {
+    keyId: string;
+}
+
 export interface VolumeSetMountOptions {
     /**
      * For volume sets using the shared file system, this object specifies the CPU and memory resources allotted to each mount point.
@@ -2937,6 +4333,10 @@ export interface VolumeSetStatus {
      * The url of the workload currently using this volume set (if any).
      */
     usedByWorkload: string;
+    /**
+     * Contains a list of workload links that are using this volume set.
+     */
+    workloadLinks: string[];
 }
 
 export interface WorkloadContainer {
@@ -3100,6 +4500,10 @@ export interface WorkloadContainerLivenessProbeTcpSocket {
 }
 
 export interface WorkloadContainerMetrics {
+    /**
+     * Drop metrics that match given patterns.
+     */
+    dropMetrics?: string[];
     /**
      * Path from container emitting custom metrics.
      */
@@ -3356,6 +4760,10 @@ export interface WorkloadLocalOption {
      */
     capacityAi: boolean;
     /**
+     * The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+     */
+    capacityAiUpdateMinutes?: number;
+    /**
      * Debug mode. Default: `false`.
      */
     debug: boolean;
@@ -3517,6 +4925,10 @@ export interface WorkloadOptions {
      * Capacity AI. Default: `true`.
      */
     capacityAi: boolean;
+    /**
+     * The highest frequency capacity AI is allowed to update resource reservations when CapacityAI is enabled.
+     */
+    capacityAiUpdateMinutes?: number;
     /**
      * Debug mode. Default: `false`.
      */
@@ -3731,6 +5143,7 @@ export interface WorkloadStatus {
      * ID of the parent object.
      */
     parentId: string;
+    replicaInternalNames: string[];
     /**
      * Resolved images for workloads with dynamic tags enabled.
      */
@@ -3779,6 +5192,7 @@ export interface WorkloadStatusResolvedImage {
      * A list of images that were resolved.
      */
     images: outputs.WorkloadStatusResolvedImageImage[];
+    nextRetryAt: string;
     /**
      * UTC Time when the images were resolved.
      */

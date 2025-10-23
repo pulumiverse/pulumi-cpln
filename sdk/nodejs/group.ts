@@ -37,46 +37,43 @@ export class Group extends pulumi.CustomResource {
     /**
      * The ID, in GUID format, of the Group.
      */
-    public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    declare public /*out*/ readonly cplnId: pulumi.Output<string>;
     /**
      * Description of the Group.
      */
-    public readonly description!: pulumi.Output<string>;
+    declare public readonly description: pulumi.Output<string>;
     /**
-     * Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
-     * for managing the grouping of users logged-in with SAML providers.
+     * Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged-in with SAML providers.
      */
-    public readonly identityMatcher!: pulumi.Output<outputs.GroupIdentityMatcher | undefined>;
+    declare public readonly identityMatcher: pulumi.Output<outputs.GroupIdentityMatcher | undefined>;
     /**
      * A predefined set of criteria or conditions used to query and retrieve members within the group.
      */
-    public readonly memberQuery!: pulumi.Output<outputs.GroupMemberQuery | undefined>;
+    declare public readonly memberQuery: pulumi.Output<outputs.GroupMemberQuery | undefined>;
     /**
      * Name of the Group.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
     /**
      * Origin of the service account. Either `builtin` or `default`.
      */
-    public /*out*/ readonly origin!: pulumi.Output<string>;
+    declare public /*out*/ readonly origin: pulumi.Output<string>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
-    public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    declare public /*out*/ readonly selfLink: pulumi.Output<string>;
     /**
-     * List of service accounts that exists within the configured org. Group membership will fail if the service account does
-     * not exits within the org.
+     * List of service accounts that exists within the configured org. Group membership will fail if the service account does not exits within the org.
      */
-    public readonly serviceAccounts!: pulumi.Output<string[] | undefined>;
+    declare public readonly serviceAccounts: pulumi.Output<string[] | undefined>;
     /**
      * Key-value map of resource tags.
      */
-    public readonly tags!: pulumi.Output<{[key: string]: string}>;
+    declare public readonly tags: pulumi.Output<{[key: string]: string}>;
     /**
-     * List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
-     * if the user ID / email does not exist within the org.
+     * List of either the user ID or email address for a user that exists within the configured org. Group membership will fail if the user ID / email does not exist within the org.
      */
-    public readonly userIdsAndEmails!: pulumi.Output<string[] | undefined>;
+    declare public readonly userIdsAndEmails: pulumi.Output<string[] | undefined>;
 
     /**
      * Create a Group resource with the given unique name, arguments, and options.
@@ -91,25 +88,25 @@ export class Group extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as GroupState | undefined;
-            resourceInputs["cplnId"] = state ? state.cplnId : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["identityMatcher"] = state ? state.identityMatcher : undefined;
-            resourceInputs["memberQuery"] = state ? state.memberQuery : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["origin"] = state ? state.origin : undefined;
-            resourceInputs["selfLink"] = state ? state.selfLink : undefined;
-            resourceInputs["serviceAccounts"] = state ? state.serviceAccounts : undefined;
-            resourceInputs["tags"] = state ? state.tags : undefined;
-            resourceInputs["userIdsAndEmails"] = state ? state.userIdsAndEmails : undefined;
+            resourceInputs["cplnId"] = state?.cplnId;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["identityMatcher"] = state?.identityMatcher;
+            resourceInputs["memberQuery"] = state?.memberQuery;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["origin"] = state?.origin;
+            resourceInputs["selfLink"] = state?.selfLink;
+            resourceInputs["serviceAccounts"] = state?.serviceAccounts;
+            resourceInputs["tags"] = state?.tags;
+            resourceInputs["userIdsAndEmails"] = state?.userIdsAndEmails;
         } else {
             const args = argsOrState as GroupArgs | undefined;
-            resourceInputs["description"] = args ? args.description : undefined;
-            resourceInputs["identityMatcher"] = args ? args.identityMatcher : undefined;
-            resourceInputs["memberQuery"] = args ? args.memberQuery : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["serviceAccounts"] = args ? args.serviceAccounts : undefined;
-            resourceInputs["tags"] = args ? args.tags : undefined;
-            resourceInputs["userIdsAndEmails"] = args ? args.userIdsAndEmails : undefined;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["identityMatcher"] = args?.identityMatcher;
+            resourceInputs["memberQuery"] = args?.memberQuery;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["serviceAccounts"] = args?.serviceAccounts;
+            resourceInputs["tags"] = args?.tags;
+            resourceInputs["userIdsAndEmails"] = args?.userIdsAndEmails;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["origin"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
@@ -132,8 +129,7 @@ export interface GroupState {
      */
     description?: pulumi.Input<string>;
     /**
-     * Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
-     * for managing the grouping of users logged-in with SAML providers.
+     * Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged-in with SAML providers.
      */
     identityMatcher?: pulumi.Input<inputs.GroupIdentityMatcher>;
     /**
@@ -153,8 +149,7 @@ export interface GroupState {
      */
     selfLink?: pulumi.Input<string>;
     /**
-     * List of service accounts that exists within the configured org. Group membership will fail if the service account does
-     * not exits within the org.
+     * List of service accounts that exists within the configured org. Group membership will fail if the service account does not exits within the org.
      */
     serviceAccounts?: pulumi.Input<pulumi.Input<string>[]>;
     /**
@@ -162,8 +157,7 @@ export interface GroupState {
      */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
-     * if the user ID / email does not exist within the org.
+     * List of either the user ID or email address for a user that exists within the configured org. Group membership will fail if the user ID / email does not exist within the org.
      */
     userIdsAndEmails?: pulumi.Input<pulumi.Input<string>[]>;
 }
@@ -177,8 +171,7 @@ export interface GroupArgs {
      */
     description?: pulumi.Input<string>;
     /**
-     * Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful
-     * for managing the grouping of users logged-in with SAML providers.
+     * Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged-in with SAML providers.
      */
     identityMatcher?: pulumi.Input<inputs.GroupIdentityMatcher>;
     /**
@@ -190,8 +183,7 @@ export interface GroupArgs {
      */
     name?: pulumi.Input<string>;
     /**
-     * List of service accounts that exists within the configured org. Group membership will fail if the service account does
-     * not exits within the org.
+     * List of service accounts that exists within the configured org. Group membership will fail if the service account does not exits within the org.
      */
     serviceAccounts?: pulumi.Input<pulumi.Input<string>[]>;
     /**
@@ -199,8 +191,7 @@ export interface GroupArgs {
      */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * List of either the user ID or email address for a user that exists within the configured org. Group membership will fail
-     * if the user ID / email does not exist within the org.
+     * List of either the user ID or email address for a user that exists within the configured org. Group membership will fail if the user ID / email does not exist within the org.
      */
     userIdsAndEmails?: pulumi.Input<pulumi.Input<string>[]>;
 }

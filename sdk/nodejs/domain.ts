@@ -37,31 +37,31 @@ export class Domain extends pulumi.CustomResource {
     /**
      * The ID, in GUID format, of the Domain.
      */
-    public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    declare public /*out*/ readonly cplnId: pulumi.Output<string>;
     /**
      * Description of the Domain.
      */
-    public readonly description!: pulumi.Output<string>;
+    declare public readonly description: pulumi.Output<string>;
     /**
      * Name of the Domain.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
-    public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    declare public /*out*/ readonly selfLink: pulumi.Output<string>;
     /**
      * Domain specification.
      */
-    public readonly spec!: pulumi.Output<outputs.DomainSpec | undefined>;
+    declare public readonly spec: pulumi.Output<outputs.DomainSpec | undefined>;
     /**
      * Domain status.
      */
-    public /*out*/ readonly statuses!: pulumi.Output<outputs.DomainStatus[]>;
+    declare public /*out*/ readonly statuses: pulumi.Output<outputs.DomainStatus[]>;
     /**
      * Key-value map of resource tags.
      */
-    public readonly tags!: pulumi.Output<{[key: string]: string}>;
+    declare public readonly tags: pulumi.Output<{[key: string]: string}>;
 
     /**
      * Create a Domain resource with the given unique name, arguments, and options.
@@ -76,19 +76,19 @@ export class Domain extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DomainState | undefined;
-            resourceInputs["cplnId"] = state ? state.cplnId : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["selfLink"] = state ? state.selfLink : undefined;
-            resourceInputs["spec"] = state ? state.spec : undefined;
-            resourceInputs["statuses"] = state ? state.statuses : undefined;
-            resourceInputs["tags"] = state ? state.tags : undefined;
+            resourceInputs["cplnId"] = state?.cplnId;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["selfLink"] = state?.selfLink;
+            resourceInputs["spec"] = state?.spec;
+            resourceInputs["statuses"] = state?.statuses;
+            resourceInputs["tags"] = state?.tags;
         } else {
             const args = argsOrState as DomainArgs | undefined;
-            resourceInputs["description"] = args ? args.description : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["spec"] = args ? args.spec : undefined;
-            resourceInputs["tags"] = args ? args.tags : undefined;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["spec"] = args?.spec;
+            resourceInputs["tags"] = args?.tags;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
             resourceInputs["statuses"] = undefined /*out*/;

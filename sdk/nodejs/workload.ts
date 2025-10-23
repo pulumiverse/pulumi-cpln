@@ -37,83 +37,78 @@ export class Workload extends pulumi.CustomResource {
     /**
      * An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
      */
-    public readonly containers!: pulumi.Output<outputs.WorkloadContainer[] | undefined>;
+    declare public readonly containers: pulumi.Output<outputs.WorkloadContainer[] | undefined>;
     /**
      * The ID, in GUID format, of the workload.
      */
-    public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    declare public /*out*/ readonly cplnId: pulumi.Output<string>;
     /**
      * Description of the workload.
      */
-    public readonly description!: pulumi.Output<string>;
+    declare public readonly description: pulumi.Output<string>;
     /**
      * Extra Kubernetes modifications. Only used for BYOK.
      */
-    public readonly extras!: pulumi.Output<string | undefined>;
+    declare public readonly extras: pulumi.Output<string | undefined>;
     /**
-     * Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
-     * Access is restricted by default.
+     * Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
      */
-    public readonly firewallSpec!: pulumi.Output<outputs.WorkloadFirewallSpec | undefined>;
+    declare public readonly firewallSpec: pulumi.Output<outputs.WorkloadFirewallSpec | undefined>;
     /**
      * Name of the associated GVC.
      */
-    public readonly gvc!: pulumi.Output<string>;
+    declare public readonly gvc: pulumi.Output<string>;
     /**
-     * The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to
-     * multiple cloud providers.
+     * The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to multiple cloud providers.
      */
-    public readonly identityLink!: pulumi.Output<string | undefined>;
+    declare public readonly identityLink: pulumi.Output<string | undefined>;
     /**
      * [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
      */
-    public readonly jobs!: pulumi.Output<outputs.WorkloadJob[] | undefined>;
-    public readonly loadBalancer!: pulumi.Output<outputs.WorkloadLoadBalancer | undefined>;
+    declare public readonly jobs: pulumi.Output<outputs.WorkloadJob[] | undefined>;
+    declare public readonly loadBalancer: pulumi.Output<outputs.WorkloadLoadBalancer | undefined>;
     /**
      * Override defaultOptions for the workload in specific Control Plane Locations.
      */
-    public readonly localOptions!: pulumi.Output<outputs.WorkloadLocalOption[] | undefined>;
+    declare public readonly localOptions: pulumi.Output<outputs.WorkloadLocalOption[] | undefined>;
     /**
      * Name of the workload.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
     /**
-     * Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
-     * characteristics of the workload.
+     * Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
      */
-    public readonly options!: pulumi.Output<outputs.WorkloadOptions | undefined>;
-    public readonly requestRetryPolicy!: pulumi.Output<outputs.WorkloadRequestRetryPolicy | undefined>;
+    declare public readonly options: pulumi.Output<outputs.WorkloadOptions | undefined>;
+    declare public readonly requestRetryPolicy: pulumi.Output<outputs.WorkloadRequestRetryPolicy | undefined>;
     /**
-     * Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
-     * replicas, surge replicas, and scaling policies.
+     * Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable replicas, surge replicas, and scaling policies.
      */
-    public readonly rolloutOptions!: pulumi.Output<outputs.WorkloadRolloutOption[] | undefined>;
+    declare public readonly rolloutOptions: pulumi.Output<outputs.WorkloadRolloutOption[] | undefined>;
     /**
      * Allows for the configuration of the `file system group id` and `geo location`.
      */
-    public readonly securityOptions!: pulumi.Output<outputs.WorkloadSecurityOptions | undefined>;
+    declare public readonly securityOptions: pulumi.Output<outputs.WorkloadSecurityOptions | undefined>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
-    public /*out*/ readonly selfLink!: pulumi.Output<string>;
-    public readonly sidecar!: pulumi.Output<outputs.WorkloadSidecar | undefined>;
+    declare public /*out*/ readonly selfLink: pulumi.Output<string>;
+    declare public readonly sidecar: pulumi.Output<outputs.WorkloadSidecar | undefined>;
     /**
      * Status of the workload.
      */
-    public /*out*/ readonly statuses!: pulumi.Output<outputs.WorkloadStatus[]>;
+    declare public /*out*/ readonly statuses: pulumi.Output<outputs.WorkloadStatus[]>;
     /**
-     * Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
-     * false.
+     * Workload will automatically redeploy when one of the container images is updated in the container registry. Default: false.
      */
-    public readonly supportDynamicTags!: pulumi.Output<boolean>;
+    declare public readonly supportDynamicTags: pulumi.Output<boolean>;
     /**
      * Key-value map of resource tags.
      */
-    public readonly tags!: pulumi.Output<{[key: string]: string}>;
+    declare public readonly tags: pulumi.Output<{[key: string]: string}>;
     /**
      * Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
      */
-    public readonly type!: pulumi.Output<string>;
+    declare public readonly type: pulumi.Output<string>;
 
     /**
      * Create a Workload resource with the given unique name, arguments, and options.
@@ -128,53 +123,53 @@ export class Workload extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as WorkloadState | undefined;
-            resourceInputs["containers"] = state ? state.containers : undefined;
-            resourceInputs["cplnId"] = state ? state.cplnId : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["extras"] = state ? state.extras : undefined;
-            resourceInputs["firewallSpec"] = state ? state.firewallSpec : undefined;
-            resourceInputs["gvc"] = state ? state.gvc : undefined;
-            resourceInputs["identityLink"] = state ? state.identityLink : undefined;
-            resourceInputs["jobs"] = state ? state.jobs : undefined;
-            resourceInputs["loadBalancer"] = state ? state.loadBalancer : undefined;
-            resourceInputs["localOptions"] = state ? state.localOptions : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["options"] = state ? state.options : undefined;
-            resourceInputs["requestRetryPolicy"] = state ? state.requestRetryPolicy : undefined;
-            resourceInputs["rolloutOptions"] = state ? state.rolloutOptions : undefined;
-            resourceInputs["securityOptions"] = state ? state.securityOptions : undefined;
-            resourceInputs["selfLink"] = state ? state.selfLink : undefined;
-            resourceInputs["sidecar"] = state ? state.sidecar : undefined;
-            resourceInputs["statuses"] = state ? state.statuses : undefined;
-            resourceInputs["supportDynamicTags"] = state ? state.supportDynamicTags : undefined;
-            resourceInputs["tags"] = state ? state.tags : undefined;
-            resourceInputs["type"] = state ? state.type : undefined;
+            resourceInputs["containers"] = state?.containers;
+            resourceInputs["cplnId"] = state?.cplnId;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["extras"] = state?.extras;
+            resourceInputs["firewallSpec"] = state?.firewallSpec;
+            resourceInputs["gvc"] = state?.gvc;
+            resourceInputs["identityLink"] = state?.identityLink;
+            resourceInputs["jobs"] = state?.jobs;
+            resourceInputs["loadBalancer"] = state?.loadBalancer;
+            resourceInputs["localOptions"] = state?.localOptions;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["options"] = state?.options;
+            resourceInputs["requestRetryPolicy"] = state?.requestRetryPolicy;
+            resourceInputs["rolloutOptions"] = state?.rolloutOptions;
+            resourceInputs["securityOptions"] = state?.securityOptions;
+            resourceInputs["selfLink"] = state?.selfLink;
+            resourceInputs["sidecar"] = state?.sidecar;
+            resourceInputs["statuses"] = state?.statuses;
+            resourceInputs["supportDynamicTags"] = state?.supportDynamicTags;
+            resourceInputs["tags"] = state?.tags;
+            resourceInputs["type"] = state?.type;
         } else {
             const args = argsOrState as WorkloadArgs | undefined;
-            if ((!args || args.gvc === undefined) && !opts.urn) {
+            if (args?.gvc === undefined && !opts.urn) {
                 throw new Error("Missing required property 'gvc'");
             }
-            if ((!args || args.type === undefined) && !opts.urn) {
+            if (args?.type === undefined && !opts.urn) {
                 throw new Error("Missing required property 'type'");
             }
-            resourceInputs["containers"] = args ? args.containers : undefined;
-            resourceInputs["description"] = args ? args.description : undefined;
-            resourceInputs["extras"] = args ? args.extras : undefined;
-            resourceInputs["firewallSpec"] = args ? args.firewallSpec : undefined;
-            resourceInputs["gvc"] = args ? args.gvc : undefined;
-            resourceInputs["identityLink"] = args ? args.identityLink : undefined;
-            resourceInputs["jobs"] = args ? args.jobs : undefined;
-            resourceInputs["loadBalancer"] = args ? args.loadBalancer : undefined;
-            resourceInputs["localOptions"] = args ? args.localOptions : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["options"] = args ? args.options : undefined;
-            resourceInputs["requestRetryPolicy"] = args ? args.requestRetryPolicy : undefined;
-            resourceInputs["rolloutOptions"] = args ? args.rolloutOptions : undefined;
-            resourceInputs["securityOptions"] = args ? args.securityOptions : undefined;
-            resourceInputs["sidecar"] = args ? args.sidecar : undefined;
-            resourceInputs["supportDynamicTags"] = args ? args.supportDynamicTags : undefined;
-            resourceInputs["tags"] = args ? args.tags : undefined;
-            resourceInputs["type"] = args ? args.type : undefined;
+            resourceInputs["containers"] = args?.containers;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["extras"] = args?.extras;
+            resourceInputs["firewallSpec"] = args?.firewallSpec;
+            resourceInputs["gvc"] = args?.gvc;
+            resourceInputs["identityLink"] = args?.identityLink;
+            resourceInputs["jobs"] = args?.jobs;
+            resourceInputs["loadBalancer"] = args?.loadBalancer;
+            resourceInputs["localOptions"] = args?.localOptions;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["options"] = args?.options;
+            resourceInputs["requestRetryPolicy"] = args?.requestRetryPolicy;
+            resourceInputs["rolloutOptions"] = args?.rolloutOptions;
+            resourceInputs["securityOptions"] = args?.securityOptions;
+            resourceInputs["sidecar"] = args?.sidecar;
+            resourceInputs["supportDynamicTags"] = args?.supportDynamicTags;
+            resourceInputs["tags"] = args?.tags;
+            resourceInputs["type"] = args?.type;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
             resourceInputs["statuses"] = undefined /*out*/;
@@ -205,8 +200,7 @@ export interface WorkloadState {
      */
     extras?: pulumi.Input<string>;
     /**
-     * Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
-     * Access is restricted by default.
+     * Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
      */
     firewallSpec?: pulumi.Input<inputs.WorkloadFirewallSpec>;
     /**
@@ -214,8 +208,7 @@ export interface WorkloadState {
      */
     gvc?: pulumi.Input<string>;
     /**
-     * The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to
-     * multiple cloud providers.
+     * The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to multiple cloud providers.
      */
     identityLink?: pulumi.Input<string>;
     /**
@@ -232,14 +225,12 @@ export interface WorkloadState {
      */
     name?: pulumi.Input<string>;
     /**
-     * Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
-     * characteristics of the workload.
+     * Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
      */
     options?: pulumi.Input<inputs.WorkloadOptions>;
     requestRetryPolicy?: pulumi.Input<inputs.WorkloadRequestRetryPolicy>;
     /**
-     * Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
-     * replicas, surge replicas, and scaling policies.
+     * Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable replicas, surge replicas, and scaling policies.
      */
     rolloutOptions?: pulumi.Input<pulumi.Input<inputs.WorkloadRolloutOption>[]>;
     /**
@@ -256,8 +247,7 @@ export interface WorkloadState {
      */
     statuses?: pulumi.Input<pulumi.Input<inputs.WorkloadStatus>[]>;
     /**
-     * Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
-     * false.
+     * Workload will automatically redeploy when one of the container images is updated in the container registry. Default: false.
      */
     supportDynamicTags?: pulumi.Input<boolean>;
     /**
@@ -287,8 +277,7 @@ export interface WorkloadArgs {
      */
     extras?: pulumi.Input<string>;
     /**
-     * Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
-     * Access is restricted by default.
+     * Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
      */
     firewallSpec?: pulumi.Input<inputs.WorkloadFirewallSpec>;
     /**
@@ -296,8 +285,7 @@ export interface WorkloadArgs {
      */
     gvc: pulumi.Input<string>;
     /**
-     * The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to
-     * multiple cloud providers.
+     * The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to multiple cloud providers.
      */
     identityLink?: pulumi.Input<string>;
     /**
@@ -314,14 +302,12 @@ export interface WorkloadArgs {
      */
     name?: pulumi.Input<string>;
     /**
-     * Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
-     * characteristics of the workload.
+     * Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
      */
     options?: pulumi.Input<inputs.WorkloadOptions>;
     requestRetryPolicy?: pulumi.Input<inputs.WorkloadRequestRetryPolicy>;
     /**
-     * Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
-     * replicas, surge replicas, and scaling policies.
+     * Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable replicas, surge replicas, and scaling policies.
      */
     rolloutOptions?: pulumi.Input<pulumi.Input<inputs.WorkloadRolloutOption>[]>;
     /**
@@ -330,8 +316,7 @@ export interface WorkloadArgs {
     securityOptions?: pulumi.Input<inputs.WorkloadSecurityOptions>;
     sidecar?: pulumi.Input<inputs.WorkloadSidecar>;
     /**
-     * Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
-     * false.
+     * Workload will automatically redeploy when one of the container images is updated in the container registry. Default: false.
      */
     supportDynamicTags?: pulumi.Input<boolean>;
     /**

@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class GetImagesQuerySpecArgs : global::Pulumi.InvokeArgs
     {
         /// <summary>
-        /// Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        /// Type of match. Available values: `All`, `Any`, `None`. Default: `All`.
         /// </summary>
         [Input("match", required: true)]
         public string Match { get; set; } = null!;
@@ -23,7 +23,7 @@ namespace Pulumiverse.Cpln.Inputs
         private List<Inputs.GetImagesQuerySpecTermArgs>? _terms;
 
         /// <summary>
-        /// Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        /// Terms can only contain one of the following attributes: `Property`, `Rel`, `Tag`.
         /// </summary>
         public List<Inputs.GetImagesQuerySpecTermArgs> Terms
         {

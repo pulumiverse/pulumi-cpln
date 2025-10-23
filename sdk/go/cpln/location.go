@@ -27,7 +27,8 @@ type Location struct {
 	// A list of IP ranges of the location.
 	IpRanges pulumi.StringArrayOutput `pulumi:"ipRanges"`
 	// Name of the location.
-	Name pulumi.StringOutput `pulumi:"name"`
+	Name   pulumi.StringOutput `pulumi:"name"`
+	Origin pulumi.StringOutput `pulumi:"origin"`
 	// Region of the location.
 	Region pulumi.StringOutput `pulumi:"region"`
 	// Full link to this resource. Can be referenced by other resources.
@@ -81,7 +82,8 @@ type locationState struct {
 	// A list of IP ranges of the location.
 	IpRanges []string `pulumi:"ipRanges"`
 	// Name of the location.
-	Name *string `pulumi:"name"`
+	Name   *string `pulumi:"name"`
+	Origin *string `pulumi:"origin"`
 	// Region of the location.
 	Region *string `pulumi:"region"`
 	// Full link to this resource. Can be referenced by other resources.
@@ -103,7 +105,8 @@ type LocationState struct {
 	// A list of IP ranges of the location.
 	IpRanges pulumi.StringArrayInput
 	// Name of the location.
-	Name pulumi.StringPtrInput
+	Name   pulumi.StringPtrInput
+	Origin pulumi.StringPtrInput
 	// Region of the location.
 	Region pulumi.StringPtrInput
 	// Full link to this resource. Can be referenced by other resources.
@@ -254,6 +257,10 @@ func (o LocationOutput) IpRanges() pulumi.StringArrayOutput {
 // Name of the location.
 func (o LocationOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Location) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o LocationOutput) Origin() pulumi.StringOutput {
+	return o.ApplyT(func(v *Location) pulumi.StringOutput { return v.Origin }).(pulumi.StringOutput)
 }
 
 // Region of the location.

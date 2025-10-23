@@ -20,37 +20,31 @@ namespace Pulumiverse.Cpln
     public partial class Provider : global::Pulumi.ProviderResource
     {
         /// <summary>
-        /// The Control Plane Data Service API endpoint. Default is: https://api.cpln.io. Can be specified with the CPLN_ENDPOINT
-        /// environment variable.
+        /// The Control Plane Data Service API endpoint. Default is: https://api.cpln.io. Can be specified with the CPLN_ENDPOINT environment variable.
         /// </summary>
         [Output("endpoint")]
         public Output<string?> Endpoint { get; private set; } = null!;
 
         /// <summary>
-        /// The Control Plane org that this provider will perform actions against. Can be specified with the CPLN_ORG environment
-        /// variable.
+        /// The Control Plane org that this provider will perform actions against. Can be specified with the CPLN_ORG environment variable.
         /// </summary>
         [Output("org")]
         public Output<string?> Org { get; private set; } = null!;
 
         /// <summary>
-        /// The user/service account profile that this provider will use to authenticate to the data service. Can be specified with
-        /// the CPLN_PROFILE environment variable.
+        /// The user/service account profile that this provider will use to authenticate to the data service. Can be specified with the CPLN_PROFILE environment variable.
         /// </summary>
         [Output("profile")]
         public Output<string?> Profile { get; private set; } = null!;
 
         /// <summary>
-        /// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_REFRESH_TOKEN
-        /// environment variable. Used when the provider is required to create an org or update the auth_config property. Refer to
-        /// the section above on how to obtain the refresh token.
+        /// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_REFRESH_TOKEN environment variable. Used when the provider is required to create an org or update the AuthConfig property. Refer to the section above on how to obtain the refresh token.
         /// </summary>
         [Output("refreshToken")]
         public Output<string?> RefreshToken { get; private set; } = null!;
 
         /// <summary>
-        /// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_TOKEN
-        /// environment variable.
+        /// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_TOKEN environment variable.
         /// </summary>
         [Output("token")]
         public Output<string?> Token { get; private set; } = null!;
@@ -96,22 +90,19 @@ namespace Pulumiverse.Cpln
     public sealed class ProviderArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The Control Plane Data Service API endpoint. Default is: https://api.cpln.io. Can be specified with the CPLN_ENDPOINT
-        /// environment variable.
+        /// The Control Plane Data Service API endpoint. Default is: https://api.cpln.io. Can be specified with the CPLN_ENDPOINT environment variable.
         /// </summary>
         [Input("endpoint")]
         public Input<string>? Endpoint { get; set; }
 
         /// <summary>
-        /// The Control Plane org that this provider will perform actions against. Can be specified with the CPLN_ORG environment
-        /// variable.
+        /// The Control Plane org that this provider will perform actions against. Can be specified with the CPLN_ORG environment variable.
         /// </summary>
         [Input("org")]
         public Input<string>? Org { get; set; }
 
         /// <summary>
-        /// The user/service account profile that this provider will use to authenticate to the data service. Can be specified with
-        /// the CPLN_PROFILE environment variable.
+        /// The user/service account profile that this provider will use to authenticate to the data service. Can be specified with the CPLN_PROFILE environment variable.
         /// </summary>
         [Input("profile")]
         public Input<string>? Profile { get; set; }
@@ -120,9 +111,7 @@ namespace Pulumiverse.Cpln
         private Input<string>? _refreshToken;
 
         /// <summary>
-        /// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_REFRESH_TOKEN
-        /// environment variable. Used when the provider is required to create an org or update the auth_config property. Refer to
-        /// the section above on how to obtain the refresh token.
+        /// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_REFRESH_TOKEN environment variable. Used when the provider is required to create an org or update the AuthConfig property. Refer to the section above on how to obtain the refresh token.
         /// </summary>
         public Input<string>? RefreshToken
         {
@@ -138,8 +127,7 @@ namespace Pulumiverse.Cpln
         private Input<string>? _token;
 
         /// <summary>
-        /// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_TOKEN
-        /// environment variable.
+        /// A generated token that can be used to authenticate to the data service API. Can be specified with the CPLN_TOKEN environment variable.
         /// </summary>
         public Input<string>? Token
         {

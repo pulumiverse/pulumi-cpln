@@ -15,7 +15,7 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class VolumeSetSnapshots
     {
         /// <summary>
-        /// If true, a volume snapshot will be created immediately before deletion of any volume in this set. Default: `true`
+        /// If true, a volume snapshot will be created immediately before deletion of any volume in this set. Default: `True`
         /// </summary>
         public readonly bool? CreateFinalSnapshot;
         /// <summary>

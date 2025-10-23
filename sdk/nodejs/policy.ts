@@ -37,52 +37,51 @@ export class Policy extends pulumi.CustomResource {
     /**
      * The association between a target kind and the bound permissions to service principals.
      */
-    public readonly bindings!: pulumi.Output<outputs.PolicyBinding[] | undefined>;
+    declare public readonly bindings: pulumi.Output<outputs.PolicyBinding[] | undefined>;
     /**
      * The ID, in GUID format, of the Policy.
      */
-    public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    declare public /*out*/ readonly cplnId: pulumi.Output<string>;
     /**
      * Description of the Policy.
      */
-    public readonly description!: pulumi.Output<string>;
+    declare public readonly description: pulumi.Output<string>;
     /**
      * The GVC for `identity`, `workload` and `volumeset` target kinds only.
      */
-    public readonly gvc!: pulumi.Output<string | undefined>;
+    declare public readonly gvc: pulumi.Output<string | undefined>;
     /**
      * Name of the Policy.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
     /**
      * Origin of the Policy. Either `builtin` or `default`.
      */
-    public /*out*/ readonly origin!: pulumi.Output<string>;
+    declare public /*out*/ readonly origin: pulumi.Output<string>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
-    public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    declare public /*out*/ readonly selfLink: pulumi.Output<string>;
     /**
      * Key-value map of resource tags.
      */
-    public readonly tags!: pulumi.Output<{[key: string]: string}>;
+    declare public readonly tags: pulumi.Output<{[key: string]: string}>;
     /**
-     * Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
-     * do not include the attribute.
+     * Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise, do not include the attribute.
      */
-    public readonly target!: pulumi.Output<string | undefined>;
+    declare public readonly target: pulumi.Output<string | undefined>;
     /**
      * The kind of resource to target (e.g., gvc, serviceaccount, etc.).
      */
-    public readonly targetKind!: pulumi.Output<string>;
+    declare public readonly targetKind: pulumi.Output<string>;
     /**
      * List of the targets this policy will be applied to. Not used if `target` is set to `all`.
      */
-    public readonly targetLinks!: pulumi.Output<string[] | undefined>;
+    declare public readonly targetLinks: pulumi.Output<string[] | undefined>;
     /**
      * A defined set of criteria or conditions used to identify the target entities or resources to which the policy applies.
      */
-    public readonly targetQuery!: pulumi.Output<outputs.PolicyTargetQuery | undefined>;
+    declare public readonly targetQuery: pulumi.Output<outputs.PolicyTargetQuery | undefined>;
 
     /**
      * Create a Policy resource with the given unique name, arguments, and options.
@@ -97,32 +96,32 @@ export class Policy extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as PolicyState | undefined;
-            resourceInputs["bindings"] = state ? state.bindings : undefined;
-            resourceInputs["cplnId"] = state ? state.cplnId : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["gvc"] = state ? state.gvc : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["origin"] = state ? state.origin : undefined;
-            resourceInputs["selfLink"] = state ? state.selfLink : undefined;
-            resourceInputs["tags"] = state ? state.tags : undefined;
-            resourceInputs["target"] = state ? state.target : undefined;
-            resourceInputs["targetKind"] = state ? state.targetKind : undefined;
-            resourceInputs["targetLinks"] = state ? state.targetLinks : undefined;
-            resourceInputs["targetQuery"] = state ? state.targetQuery : undefined;
+            resourceInputs["bindings"] = state?.bindings;
+            resourceInputs["cplnId"] = state?.cplnId;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["gvc"] = state?.gvc;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["origin"] = state?.origin;
+            resourceInputs["selfLink"] = state?.selfLink;
+            resourceInputs["tags"] = state?.tags;
+            resourceInputs["target"] = state?.target;
+            resourceInputs["targetKind"] = state?.targetKind;
+            resourceInputs["targetLinks"] = state?.targetLinks;
+            resourceInputs["targetQuery"] = state?.targetQuery;
         } else {
             const args = argsOrState as PolicyArgs | undefined;
-            if ((!args || args.targetKind === undefined) && !opts.urn) {
+            if (args?.targetKind === undefined && !opts.urn) {
                 throw new Error("Missing required property 'targetKind'");
             }
-            resourceInputs["bindings"] = args ? args.bindings : undefined;
-            resourceInputs["description"] = args ? args.description : undefined;
-            resourceInputs["gvc"] = args ? args.gvc : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["tags"] = args ? args.tags : undefined;
-            resourceInputs["target"] = args ? args.target : undefined;
-            resourceInputs["targetKind"] = args ? args.targetKind : undefined;
-            resourceInputs["targetLinks"] = args ? args.targetLinks : undefined;
-            resourceInputs["targetQuery"] = args ? args.targetQuery : undefined;
+            resourceInputs["bindings"] = args?.bindings;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["gvc"] = args?.gvc;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["tags"] = args?.tags;
+            resourceInputs["target"] = args?.target;
+            resourceInputs["targetKind"] = args?.targetKind;
+            resourceInputs["targetLinks"] = args?.targetLinks;
+            resourceInputs["targetQuery"] = args?.targetQuery;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["origin"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
@@ -169,8 +168,7 @@ export interface PolicyState {
      */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
-     * do not include the attribute.
+     * Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise, do not include the attribute.
      */
     target?: pulumi.Input<string>;
     /**
@@ -212,8 +210,7 @@ export interface PolicyArgs {
      */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise,
-     * do not include the attribute.
+     * Set this value of this attribute to `all` if this policy should target all objects of the given target_kind. Otherwise, do not include the attribute.
      */
     target?: pulumi.Input<string>;
     /**

@@ -43,6 +43,18 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("usedByWorkload")]
         public Input<string>? UsedByWorkload { get; set; }
 
+        [Input("workloadLinks")]
+        private InputList<string>? _workloadLinks;
+
+        /// <summary>
+        /// Contains a list of workload links that are using this volume set.
+        /// </summary>
+        public InputList<string> WorkloadLinks
+        {
+            get => _workloadLinks ?? (_workloadLinks = new InputList<string>());
+            set => _workloadLinks = value;
+        }
+
         public VolumeSetStatusGetArgs()
         {
         }

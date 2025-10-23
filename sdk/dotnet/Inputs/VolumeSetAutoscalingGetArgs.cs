@@ -26,7 +26,7 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<int>? MinFreePercentage { get; set; }
 
         /// <summary>
-        /// When scaling is necessary, then `new_capacity = current_capacity * storageScalingFactor`. Minimum value: `1.1`.
+        /// When scaling is necessary, then `NewCapacity = CurrentCapacity * storageScalingFactor`. Minimum value: `1.1`.
         /// </summary>
         [Input("scalingFactor")]
         public Input<double>? ScalingFactor { get; set; }

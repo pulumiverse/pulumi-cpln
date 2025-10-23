@@ -28,6 +28,7 @@ type Mk8s struct {
 	EphemeralProvider    Mk8sEphemeralProviderPtrOutput    `pulumi:"ephemeralProvider"`
 	// Allow-list.
 	Firewalls          Mk8sFirewallArrayOutput         `pulumi:"firewalls"`
+	GcpProvider        Mk8sGcpProviderPtrOutput        `pulumi:"gcpProvider"`
 	GenericProvider    Mk8sGenericProviderPtrOutput    `pulumi:"genericProvider"`
 	HetznerProvider    Mk8sHetznerProviderPtrOutput    `pulumi:"hetznerProvider"`
 	LambdalabsProvider Mk8sLambdalabsProviderPtrOutput `pulumi:"lambdalabsProvider"`
@@ -92,6 +93,7 @@ type mk8sState struct {
 	EphemeralProvider    *Mk8sEphemeralProvider    `pulumi:"ephemeralProvider"`
 	// Allow-list.
 	Firewalls          []Mk8sFirewall          `pulumi:"firewalls"`
+	GcpProvider        *Mk8sGcpProvider        `pulumi:"gcpProvider"`
 	GenericProvider    *Mk8sGenericProvider    `pulumi:"genericProvider"`
 	HetznerProvider    *Mk8sHetznerProvider    `pulumi:"hetznerProvider"`
 	LambdalabsProvider *Mk8sLambdalabsProvider `pulumi:"lambdalabsProvider"`
@@ -124,6 +126,7 @@ type Mk8sState struct {
 	EphemeralProvider    Mk8sEphemeralProviderPtrInput
 	// Allow-list.
 	Firewalls          Mk8sFirewallArrayInput
+	GcpProvider        Mk8sGcpProviderPtrInput
 	GenericProvider    Mk8sGenericProviderPtrInput
 	HetznerProvider    Mk8sHetznerProviderPtrInput
 	LambdalabsProvider Mk8sLambdalabsProviderPtrInput
@@ -156,6 +159,7 @@ type mk8sArgs struct {
 	EphemeralProvider    *Mk8sEphemeralProvider    `pulumi:"ephemeralProvider"`
 	// Allow-list.
 	Firewalls          []Mk8sFirewall          `pulumi:"firewalls"`
+	GcpProvider        *Mk8sGcpProvider        `pulumi:"gcpProvider"`
 	GenericProvider    *Mk8sGenericProvider    `pulumi:"genericProvider"`
 	HetznerProvider    *Mk8sHetznerProvider    `pulumi:"hetznerProvider"`
 	LambdalabsProvider *Mk8sLambdalabsProvider `pulumi:"lambdalabsProvider"`
@@ -181,6 +185,7 @@ type Mk8sArgs struct {
 	EphemeralProvider    Mk8sEphemeralProviderPtrInput
 	// Allow-list.
 	Firewalls          Mk8sFirewallArrayInput
+	GcpProvider        Mk8sGcpProviderPtrInput
 	GenericProvider    Mk8sGenericProviderPtrInput
 	HetznerProvider    Mk8sHetznerProviderPtrInput
 	LambdalabsProvider Mk8sLambdalabsProviderPtrInput
@@ -320,6 +325,10 @@ func (o Mk8sOutput) EphemeralProvider() Mk8sEphemeralProviderPtrOutput {
 // Allow-list.
 func (o Mk8sOutput) Firewalls() Mk8sFirewallArrayOutput {
 	return o.ApplyT(func(v *Mk8s) Mk8sFirewallArrayOutput { return v.Firewalls }).(Mk8sFirewallArrayOutput)
+}
+
+func (o Mk8sOutput) GcpProvider() Mk8sGcpProviderPtrOutput {
+	return o.ApplyT(func(v *Mk8s) Mk8sGcpProviderPtrOutput { return v.GcpProvider }).(Mk8sGcpProviderPtrOutput)
 }
 
 func (o Mk8sOutput) GenericProvider() Mk8sGenericProviderPtrOutput {

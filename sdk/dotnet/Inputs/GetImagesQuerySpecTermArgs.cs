@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class GetImagesQuerySpecTermInputArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `exists`, `!exists`. Default: `=`.
+        /// Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `Exists`, `!exists`. Default: `=`.
         /// </summary>
         [Input("op", required: true)]
         public Input<string> Op { get; set; } = null!;

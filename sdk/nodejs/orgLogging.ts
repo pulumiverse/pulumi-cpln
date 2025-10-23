@@ -34,50 +34,50 @@ export class OrgLogging extends pulumi.CustomResource {
         return obj['__pulumiType'] === OrgLogging.__pulumiType;
     }
 
-    public readonly cloudWatchLoggings!: pulumi.Output<outputs.OrgLoggingCloudWatchLogging[] | undefined>;
+    declare public readonly cloudWatchLoggings: pulumi.Output<outputs.OrgLoggingCloudWatchLogging[] | undefined>;
     /**
      * [Documentation Reference](https://docs.controlplane.com/external-logging/coralogix)
      */
-    public readonly coralogixLoggings!: pulumi.Output<outputs.OrgLoggingCoralogixLogging[] | undefined>;
+    declare public readonly coralogixLoggings: pulumi.Output<outputs.OrgLoggingCoralogixLogging[] | undefined>;
     /**
      * The ID, in GUID format, of the Org.
      */
-    public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    declare public /*out*/ readonly cplnId: pulumi.Output<string>;
     /**
      * [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
      */
-    public readonly datadogLoggings!: pulumi.Output<outputs.OrgLoggingDatadogLogging[] | undefined>;
+    declare public readonly datadogLoggings: pulumi.Output<outputs.OrgLoggingDatadogLogging[] | undefined>;
     /**
      * Description of the Org.
      */
-    public /*out*/ readonly description!: pulumi.Output<string>;
+    declare public /*out*/ readonly description: pulumi.Output<string>;
     /**
      * For logging and analyzing data within an org using Elastic Logging.
      */
-    public readonly elasticLoggings!: pulumi.Output<outputs.OrgLoggingElasticLogging[] | undefined>;
-    public readonly fluentdLoggings!: pulumi.Output<outputs.OrgLoggingFluentdLogging[] | undefined>;
+    declare public readonly elasticLoggings: pulumi.Output<outputs.OrgLoggingElasticLogging[] | undefined>;
+    declare public readonly fluentdLoggings: pulumi.Output<outputs.OrgLoggingFluentdLogging[] | undefined>;
     /**
      * [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
      */
-    public readonly logzioLoggings!: pulumi.Output<outputs.OrgLoggingLogzioLogging[] | undefined>;
+    declare public readonly logzioLoggings: pulumi.Output<outputs.OrgLoggingLogzioLogging[] | undefined>;
     /**
      * Name of the Org.
      */
-    public /*out*/ readonly name!: pulumi.Output<string>;
+    declare public /*out*/ readonly name: pulumi.Output<string>;
     /**
      * [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
      */
-    public readonly s3Loggings!: pulumi.Output<outputs.OrgLoggingS3Logging[] | undefined>;
+    declare public readonly s3Loggings: pulumi.Output<outputs.OrgLoggingS3Logging[] | undefined>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
-    public /*out*/ readonly selfLink!: pulumi.Output<string>;
-    public readonly stackdriverLoggings!: pulumi.Output<outputs.OrgLoggingStackdriverLogging[] | undefined>;
-    public readonly syslogLoggings!: pulumi.Output<outputs.OrgLoggingSyslogLogging[] | undefined>;
+    declare public /*out*/ readonly selfLink: pulumi.Output<string>;
+    declare public readonly stackdriverLoggings: pulumi.Output<outputs.OrgLoggingStackdriverLogging[] | undefined>;
+    declare public readonly syslogLoggings: pulumi.Output<outputs.OrgLoggingSyslogLogging[] | undefined>;
     /**
      * Key-value map of resource tags.
      */
-    public /*out*/ readonly tags!: pulumi.Output<{[key: string]: string}>;
+    declare public /*out*/ readonly tags: pulumi.Output<{[key: string]: string}>;
 
     /**
      * Create a OrgLogging resource with the given unique name, arguments, and options.
@@ -92,31 +92,31 @@ export class OrgLogging extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as OrgLoggingState | undefined;
-            resourceInputs["cloudWatchLoggings"] = state ? state.cloudWatchLoggings : undefined;
-            resourceInputs["coralogixLoggings"] = state ? state.coralogixLoggings : undefined;
-            resourceInputs["cplnId"] = state ? state.cplnId : undefined;
-            resourceInputs["datadogLoggings"] = state ? state.datadogLoggings : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["elasticLoggings"] = state ? state.elasticLoggings : undefined;
-            resourceInputs["fluentdLoggings"] = state ? state.fluentdLoggings : undefined;
-            resourceInputs["logzioLoggings"] = state ? state.logzioLoggings : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["s3Loggings"] = state ? state.s3Loggings : undefined;
-            resourceInputs["selfLink"] = state ? state.selfLink : undefined;
-            resourceInputs["stackdriverLoggings"] = state ? state.stackdriverLoggings : undefined;
-            resourceInputs["syslogLoggings"] = state ? state.syslogLoggings : undefined;
-            resourceInputs["tags"] = state ? state.tags : undefined;
+            resourceInputs["cloudWatchLoggings"] = state?.cloudWatchLoggings;
+            resourceInputs["coralogixLoggings"] = state?.coralogixLoggings;
+            resourceInputs["cplnId"] = state?.cplnId;
+            resourceInputs["datadogLoggings"] = state?.datadogLoggings;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["elasticLoggings"] = state?.elasticLoggings;
+            resourceInputs["fluentdLoggings"] = state?.fluentdLoggings;
+            resourceInputs["logzioLoggings"] = state?.logzioLoggings;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["s3Loggings"] = state?.s3Loggings;
+            resourceInputs["selfLink"] = state?.selfLink;
+            resourceInputs["stackdriverLoggings"] = state?.stackdriverLoggings;
+            resourceInputs["syslogLoggings"] = state?.syslogLoggings;
+            resourceInputs["tags"] = state?.tags;
         } else {
             const args = argsOrState as OrgLoggingArgs | undefined;
-            resourceInputs["cloudWatchLoggings"] = args ? args.cloudWatchLoggings : undefined;
-            resourceInputs["coralogixLoggings"] = args ? args.coralogixLoggings : undefined;
-            resourceInputs["datadogLoggings"] = args ? args.datadogLoggings : undefined;
-            resourceInputs["elasticLoggings"] = args ? args.elasticLoggings : undefined;
-            resourceInputs["fluentdLoggings"] = args ? args.fluentdLoggings : undefined;
-            resourceInputs["logzioLoggings"] = args ? args.logzioLoggings : undefined;
-            resourceInputs["s3Loggings"] = args ? args.s3Loggings : undefined;
-            resourceInputs["stackdriverLoggings"] = args ? args.stackdriverLoggings : undefined;
-            resourceInputs["syslogLoggings"] = args ? args.syslogLoggings : undefined;
+            resourceInputs["cloudWatchLoggings"] = args?.cloudWatchLoggings;
+            resourceInputs["coralogixLoggings"] = args?.coralogixLoggings;
+            resourceInputs["datadogLoggings"] = args?.datadogLoggings;
+            resourceInputs["elasticLoggings"] = args?.elasticLoggings;
+            resourceInputs["fluentdLoggings"] = args?.fluentdLoggings;
+            resourceInputs["logzioLoggings"] = args?.logzioLoggings;
+            resourceInputs["s3Loggings"] = args?.s3Loggings;
+            resourceInputs["stackdriverLoggings"] = args?.stackdriverLoggings;
+            resourceInputs["syslogLoggings"] = args?.syslogLoggings;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["description"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;

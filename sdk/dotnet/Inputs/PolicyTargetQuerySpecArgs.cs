@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class PolicyTargetQuerySpecArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        /// Type of match. Available values: `All`, `Any`, `None`. Default: `All`.
         /// </summary>
         [Input("match")]
         public Input<string>? Match { get; set; }
@@ -23,7 +23,7 @@ namespace Pulumiverse.Cpln.Inputs
         private InputList<Inputs.PolicyTargetQuerySpecTermArgs>? _terms;
 
         /// <summary>
-        /// Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        /// Terms can only contain one of the following attributes: `Property`, `Rel`, `Tag`.
         /// </summary>
         public InputList<Inputs.PolicyTargetQuerySpecTermArgs> Terms
         {

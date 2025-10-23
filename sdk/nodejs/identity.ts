@@ -35,61 +35,57 @@ export class Identity extends pulumi.CustomResource {
     }
 
     /**
-     * A set of access policy rules that defines the actions and resources that an identity can access within an AWS
-     * environment.
+     * A set of access policy rules that defines the actions and resources that an identity can access within an AWS environment.
      */
-    public readonly awsAccessPolicy!: pulumi.Output<outputs.IdentityAwsAccessPolicy | undefined>;
+    declare public readonly awsAccessPolicy: pulumi.Output<outputs.IdentityAwsAccessPolicy | undefined>;
     /**
-     * A set of access policy rules that defines the actions and resources that an identity can access within an Azure
-     * environment.
+     * A set of access policy rules that defines the actions and resources that an identity can access within an Azure environment.
      */
-    public readonly azureAccessPolicy!: pulumi.Output<outputs.IdentityAzureAccessPolicy | undefined>;
+    declare public readonly azureAccessPolicy: pulumi.Output<outputs.IdentityAzureAccessPolicy | undefined>;
     /**
      * The ID, in GUID format, of the identity.
      */
-    public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    declare public /*out*/ readonly cplnId: pulumi.Output<string>;
     /**
      * Description of the identity.
      */
-    public readonly description!: pulumi.Output<string>;
+    declare public readonly description: pulumi.Output<string>;
     /**
      * The GCP access policy can either contain an existing serviceAccount or multiple bindings.
      */
-    public readonly gcpAccessPolicy!: pulumi.Output<outputs.IdentityGcpAccessPolicy | undefined>;
+    declare public readonly gcpAccessPolicy: pulumi.Output<outputs.IdentityGcpAccessPolicy | undefined>;
     /**
      * The GVC to which this identity belongs.
      */
-    public readonly gvc!: pulumi.Output<string>;
+    declare public readonly gvc: pulumi.Output<string>;
     /**
      * Name of the identity.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
     /**
      * > **NOTE** The configuration of a native network resource requires the assistance of Control Plane support.
      */
-    public readonly nativeNetworkResources!: pulumi.Output<outputs.IdentityNativeNetworkResource[] | undefined>;
+    declare public readonly nativeNetworkResources: pulumi.Output<outputs.IdentityNativeNetworkResource[] | undefined>;
     /**
-     * A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
-     * ports. - IP's and ports.
+     * A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and ports. - IP's and ports.
      */
-    public readonly networkResources!: pulumi.Output<outputs.IdentityNetworkResource[] | undefined>;
+    declare public readonly networkResources: pulumi.Output<outputs.IdentityNetworkResource[] | undefined>;
     /**
-     * A set of access policy rules that defines the actions and resources that an identity can access within an NGA
-     * environment.
+     * A set of access policy rules that defines the actions and resources that an identity can access within an NGA environment.
      */
-    public readonly ngsAccessPolicy!: pulumi.Output<outputs.IdentityNgsAccessPolicy | undefined>;
+    declare public readonly ngsAccessPolicy: pulumi.Output<outputs.IdentityNgsAccessPolicy | undefined>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
-    public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    declare public /*out*/ readonly selfLink: pulumi.Output<string>;
     /**
-     * Key-value map of identity status. Available fields: `objectName`.
+     * Key-value map of identity status. Available fields: `objectName`, `aws`, `gcp`, `azure`.
      */
-    public /*out*/ readonly status!: pulumi.Output<{[key: string]: string}>;
+    declare public /*out*/ readonly status: pulumi.Output<{[key: string]: string}>;
     /**
      * Key-value map of resource tags.
      */
-    public readonly tags!: pulumi.Output<{[key: string]: string}>;
+    declare public readonly tags: pulumi.Output<{[key: string]: string}>;
 
     /**
      * Create a Identity resource with the given unique name, arguments, and options.
@@ -104,34 +100,34 @@ export class Identity extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as IdentityState | undefined;
-            resourceInputs["awsAccessPolicy"] = state ? state.awsAccessPolicy : undefined;
-            resourceInputs["azureAccessPolicy"] = state ? state.azureAccessPolicy : undefined;
-            resourceInputs["cplnId"] = state ? state.cplnId : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["gcpAccessPolicy"] = state ? state.gcpAccessPolicy : undefined;
-            resourceInputs["gvc"] = state ? state.gvc : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["nativeNetworkResources"] = state ? state.nativeNetworkResources : undefined;
-            resourceInputs["networkResources"] = state ? state.networkResources : undefined;
-            resourceInputs["ngsAccessPolicy"] = state ? state.ngsAccessPolicy : undefined;
-            resourceInputs["selfLink"] = state ? state.selfLink : undefined;
-            resourceInputs["status"] = state ? state.status : undefined;
-            resourceInputs["tags"] = state ? state.tags : undefined;
+            resourceInputs["awsAccessPolicy"] = state?.awsAccessPolicy;
+            resourceInputs["azureAccessPolicy"] = state?.azureAccessPolicy;
+            resourceInputs["cplnId"] = state?.cplnId;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["gcpAccessPolicy"] = state?.gcpAccessPolicy;
+            resourceInputs["gvc"] = state?.gvc;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["nativeNetworkResources"] = state?.nativeNetworkResources;
+            resourceInputs["networkResources"] = state?.networkResources;
+            resourceInputs["ngsAccessPolicy"] = state?.ngsAccessPolicy;
+            resourceInputs["selfLink"] = state?.selfLink;
+            resourceInputs["status"] = state?.status;
+            resourceInputs["tags"] = state?.tags;
         } else {
             const args = argsOrState as IdentityArgs | undefined;
-            if ((!args || args.gvc === undefined) && !opts.urn) {
+            if (args?.gvc === undefined && !opts.urn) {
                 throw new Error("Missing required property 'gvc'");
             }
-            resourceInputs["awsAccessPolicy"] = args ? args.awsAccessPolicy : undefined;
-            resourceInputs["azureAccessPolicy"] = args ? args.azureAccessPolicy : undefined;
-            resourceInputs["description"] = args ? args.description : undefined;
-            resourceInputs["gcpAccessPolicy"] = args ? args.gcpAccessPolicy : undefined;
-            resourceInputs["gvc"] = args ? args.gvc : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["nativeNetworkResources"] = args ? args.nativeNetworkResources : undefined;
-            resourceInputs["networkResources"] = args ? args.networkResources : undefined;
-            resourceInputs["ngsAccessPolicy"] = args ? args.ngsAccessPolicy : undefined;
-            resourceInputs["tags"] = args ? args.tags : undefined;
+            resourceInputs["awsAccessPolicy"] = args?.awsAccessPolicy;
+            resourceInputs["azureAccessPolicy"] = args?.azureAccessPolicy;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["gcpAccessPolicy"] = args?.gcpAccessPolicy;
+            resourceInputs["gvc"] = args?.gvc;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["nativeNetworkResources"] = args?.nativeNetworkResources;
+            resourceInputs["networkResources"] = args?.networkResources;
+            resourceInputs["ngsAccessPolicy"] = args?.ngsAccessPolicy;
+            resourceInputs["tags"] = args?.tags;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
             resourceInputs["status"] = undefined /*out*/;
@@ -146,13 +142,11 @@ export class Identity extends pulumi.CustomResource {
  */
 export interface IdentityState {
     /**
-     * A set of access policy rules that defines the actions and resources that an identity can access within an AWS
-     * environment.
+     * A set of access policy rules that defines the actions and resources that an identity can access within an AWS environment.
      */
     awsAccessPolicy?: pulumi.Input<inputs.IdentityAwsAccessPolicy>;
     /**
-     * A set of access policy rules that defines the actions and resources that an identity can access within an Azure
-     * environment.
+     * A set of access policy rules that defines the actions and resources that an identity can access within an Azure environment.
      */
     azureAccessPolicy?: pulumi.Input<inputs.IdentityAzureAccessPolicy>;
     /**
@@ -180,13 +174,11 @@ export interface IdentityState {
      */
     nativeNetworkResources?: pulumi.Input<pulumi.Input<inputs.IdentityNativeNetworkResource>[]>;
     /**
-     * A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
-     * ports. - IP's and ports.
+     * A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and ports. - IP's and ports.
      */
     networkResources?: pulumi.Input<pulumi.Input<inputs.IdentityNetworkResource>[]>;
     /**
-     * A set of access policy rules that defines the actions and resources that an identity can access within an NGA
-     * environment.
+     * A set of access policy rules that defines the actions and resources that an identity can access within an NGA environment.
      */
     ngsAccessPolicy?: pulumi.Input<inputs.IdentityNgsAccessPolicy>;
     /**
@@ -194,7 +186,7 @@ export interface IdentityState {
      */
     selfLink?: pulumi.Input<string>;
     /**
-     * Key-value map of identity status. Available fields: `objectName`.
+     * Key-value map of identity status. Available fields: `objectName`, `aws`, `gcp`, `azure`.
      */
     status?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
@@ -208,13 +200,11 @@ export interface IdentityState {
  */
 export interface IdentityArgs {
     /**
-     * A set of access policy rules that defines the actions and resources that an identity can access within an AWS
-     * environment.
+     * A set of access policy rules that defines the actions and resources that an identity can access within an AWS environment.
      */
     awsAccessPolicy?: pulumi.Input<inputs.IdentityAwsAccessPolicy>;
     /**
-     * A set of access policy rules that defines the actions and resources that an identity can access within an Azure
-     * environment.
+     * A set of access policy rules that defines the actions and resources that an identity can access within an Azure environment.
      */
     azureAccessPolicy?: pulumi.Input<inputs.IdentityAzureAccessPolicy>;
     /**
@@ -238,13 +228,11 @@ export interface IdentityArgs {
      */
     nativeNetworkResources?: pulumi.Input<pulumi.Input<inputs.IdentityNativeNetworkResource>[]>;
     /**
-     * A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and
-     * ports. - IP's and ports.
+     * A network resource can be configured with: - A fully qualified domain name (FQDN) and ports. - An FQDN, resolver IP, and ports. - IP's and ports.
      */
     networkResources?: pulumi.Input<pulumi.Input<inputs.IdentityNetworkResource>[]>;
     /**
-     * A set of access policy rules that defines the actions and resources that an identity can access within an NGA
-     * environment.
+     * A set of access policy rules that defines the actions and resources that an identity can access within an NGA environment.
      */
     ngsAccessPolicy?: pulumi.Input<inputs.IdentityNgsAccessPolicy>;
     /**

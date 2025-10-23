@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class VolumeSetSnapshotsArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// If true, a volume snapshot will be created immediately before deletion of any volume in this set. Default: `true`
+        /// If true, a volume snapshot will be created immediately before deletion of any volume in this set. Default: `True`
         /// </summary>
         [Input("createFinalSnapshot")]
         public Input<bool>? CreateFinalSnapshot { get; set; }

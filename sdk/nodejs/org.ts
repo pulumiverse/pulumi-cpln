@@ -35,52 +35,50 @@ export class Org extends pulumi.CustomResource {
     }
 
     /**
-     * The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
-     * obtained from the `Org Management & Billing` page.
+     * The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be obtained from the `Org Management & Billing` page.
      */
-    public readonly accountId!: pulumi.Output<string>;
+    declare public readonly accountId: pulumi.Output<string>;
     /**
      * The configuration settings and parameters related to authentication within the org.
      */
-    public readonly authConfig!: pulumi.Output<outputs.OrgAuthConfig | undefined>;
+    declare public readonly authConfig: pulumi.Output<outputs.OrgAuthConfig | undefined>;
     /**
      * The ID, in GUID format, of the Organization.
      */
-    public /*out*/ readonly cplnId!: pulumi.Output<string>;
+    declare public /*out*/ readonly cplnId: pulumi.Output<string>;
     /**
      * Description of the Organization.
      */
-    public readonly description!: pulumi.Output<string>;
+    declare public readonly description: pulumi.Output<string>;
     /**
-     * When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
-     * the `superusers` group. The user account used when creating the org will be included in this list.
+     * When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to the `superusers` group. The user account used when creating the org will be included in this list.
      */
-    public readonly invitees!: pulumi.Output<string[]>;
+    declare public readonly invitees: pulumi.Output<string[]>;
     /**
      * Name of the Organization.
      */
-    public /*out*/ readonly name!: pulumi.Output<string>;
+    declare public /*out*/ readonly name: pulumi.Output<string>;
     /**
      * The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
      */
-    public readonly observability!: pulumi.Output<outputs.OrgObservability | undefined>;
-    public readonly security!: pulumi.Output<outputs.OrgSecurity | undefined>;
+    declare public readonly observability: pulumi.Output<outputs.OrgObservability | undefined>;
+    declare public readonly security: pulumi.Output<outputs.OrgSecurity | undefined>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */
-    public /*out*/ readonly selfLink!: pulumi.Output<string>;
+    declare public /*out*/ readonly selfLink: pulumi.Output<string>;
     /**
      * The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
      */
-    public readonly sessionTimeoutSeconds!: pulumi.Output<number>;
+    declare public readonly sessionTimeoutSeconds: pulumi.Output<number>;
     /**
      * Status of the org.
      */
-    public /*out*/ readonly statuses!: pulumi.Output<outputs.OrgStatus[]>;
+    declare public /*out*/ readonly statuses: pulumi.Output<outputs.OrgStatus[]>;
     /**
      * Key-value map of resource tags.
      */
-    public readonly tags!: pulumi.Output<{[key: string]: string}>;
+    declare public readonly tags: pulumi.Output<{[key: string]: string}>;
 
     /**
      * Create a Org resource with the given unique name, arguments, and options.
@@ -95,28 +93,28 @@ export class Org extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as OrgState | undefined;
-            resourceInputs["accountId"] = state ? state.accountId : undefined;
-            resourceInputs["authConfig"] = state ? state.authConfig : undefined;
-            resourceInputs["cplnId"] = state ? state.cplnId : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["invitees"] = state ? state.invitees : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["observability"] = state ? state.observability : undefined;
-            resourceInputs["security"] = state ? state.security : undefined;
-            resourceInputs["selfLink"] = state ? state.selfLink : undefined;
-            resourceInputs["sessionTimeoutSeconds"] = state ? state.sessionTimeoutSeconds : undefined;
-            resourceInputs["statuses"] = state ? state.statuses : undefined;
-            resourceInputs["tags"] = state ? state.tags : undefined;
+            resourceInputs["accountId"] = state?.accountId;
+            resourceInputs["authConfig"] = state?.authConfig;
+            resourceInputs["cplnId"] = state?.cplnId;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["invitees"] = state?.invitees;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["observability"] = state?.observability;
+            resourceInputs["security"] = state?.security;
+            resourceInputs["selfLink"] = state?.selfLink;
+            resourceInputs["sessionTimeoutSeconds"] = state?.sessionTimeoutSeconds;
+            resourceInputs["statuses"] = state?.statuses;
+            resourceInputs["tags"] = state?.tags;
         } else {
             const args = argsOrState as OrgArgs | undefined;
-            resourceInputs["accountId"] = args ? args.accountId : undefined;
-            resourceInputs["authConfig"] = args ? args.authConfig : undefined;
-            resourceInputs["description"] = args ? args.description : undefined;
-            resourceInputs["invitees"] = args ? args.invitees : undefined;
-            resourceInputs["observability"] = args ? args.observability : undefined;
-            resourceInputs["security"] = args ? args.security : undefined;
-            resourceInputs["sessionTimeoutSeconds"] = args ? args.sessionTimeoutSeconds : undefined;
-            resourceInputs["tags"] = args ? args.tags : undefined;
+            resourceInputs["accountId"] = args?.accountId;
+            resourceInputs["authConfig"] = args?.authConfig;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["invitees"] = args?.invitees;
+            resourceInputs["observability"] = args?.observability;
+            resourceInputs["security"] = args?.security;
+            resourceInputs["sessionTimeoutSeconds"] = args?.sessionTimeoutSeconds;
+            resourceInputs["tags"] = args?.tags;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["name"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
@@ -132,8 +130,7 @@ export class Org extends pulumi.CustomResource {
  */
 export interface OrgState {
     /**
-     * The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
-     * obtained from the `Org Management & Billing` page.
+     * The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be obtained from the `Org Management & Billing` page.
      */
     accountId?: pulumi.Input<string>;
     /**
@@ -149,8 +146,7 @@ export interface OrgState {
      */
     description?: pulumi.Input<string>;
     /**
-     * When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
-     * the `superusers` group. The user account used when creating the org will be included in this list.
+     * When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to the `superusers` group. The user account used when creating the org will be included in this list.
      */
     invitees?: pulumi.Input<pulumi.Input<string>[]>;
     /**
@@ -185,8 +181,7 @@ export interface OrgState {
  */
 export interface OrgArgs {
     /**
-     * The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be
-     * obtained from the `Org Management & Billing` page.
+     * The associated account ID that will be used when creating the org. Only used on org creation. The account ID can be obtained from the `Org Management & Billing` page.
      */
     accountId?: pulumi.Input<string>;
     /**
@@ -198,8 +193,7 @@ export interface OrgArgs {
      */
     description?: pulumi.Input<string>;
     /**
-     * When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to
-     * the `superusers` group. The user account used when creating the org will be included in this list.
+     * When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to the `superusers` group. The user account used when creating the org will be included in this list.
      */
     invitees?: pulumi.Input<pulumi.Input<string>[]>;
     /**

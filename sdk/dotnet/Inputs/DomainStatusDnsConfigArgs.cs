@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class DomainStatusDnsConfigArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The host in DNS terminology refers to the domain or subdomain that the DNS record is associated with. It's essentially the name that is being queried or managed. For example, in a DNS record for `www.example.com`, `www` is a host in the domain `example.com`.
+        /// The host in DNS terminology refers to the domain or subdomain that the DNS record is associated with. It's essentially the name that is being queried or managed. For example, in a DNS record for `www.example.com`, `Www` is a host in the domain `example.com`.
         /// </summary>
         [Input("host")]
         public Input<string>? Host { get; set; }

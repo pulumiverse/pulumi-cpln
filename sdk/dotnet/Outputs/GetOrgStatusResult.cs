@@ -22,15 +22,19 @@ namespace Pulumiverse.Cpln.Outputs
         /// Indicates whether the org is active or not.
         /// </summary>
         public readonly bool Active;
+        public readonly string EndpointPrefix;
 
         [OutputConstructor]
         private GetOrgStatusResult(
             string accountLink,
 
-            bool active)
+            bool active,
+
+            string endpointPrefix)
         {
             AccountLink = accountLink;
             Active = active;
+            EndpointPrefix = endpointPrefix;
         }
     }
 }

@@ -21,6 +21,7 @@ import * as utilities from "./utilities";
  * - **name** (String) Name of the location.
  * - **description** (String) Description of the location.
  * - **tags** (Map of String) Key-value map of resource tags.
+ * - **origin** (String)
  * - **cloud_provider** (String) Cloud Provider of the location.
  * - **region** (String) Region of the location.
  * - **enabled** (Boolean) Indication if location is enabled.
@@ -86,6 +87,7 @@ export interface GetLocationResult {
     readonly id: string;
     readonly ipRanges: string[];
     readonly name: string;
+    readonly origin: string;
     readonly region: string;
     readonly selfLink: string;
     readonly tags: {[key: string]: string};
@@ -105,6 +107,7 @@ export interface GetLocationResult {
  * - **name** (String) Name of the location.
  * - **description** (String) Description of the location.
  * - **tags** (Map of String) Key-value map of resource tags.
+ * - **origin** (String)
  * - **cloud_provider** (String) Cloud Provider of the location.
  * - **region** (String) Region of the location.
  * - **enabled** (Boolean) Indication if location is enabled.

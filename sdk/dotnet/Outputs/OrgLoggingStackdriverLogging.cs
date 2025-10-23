@@ -15,7 +15,7 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class OrgLoggingStackdriverLogging
     {
         /// <summary>
-        /// Full Link to a secret of type `opaque`.
+        /// Full Link to a secret of type `Opaque`.
         /// </summary>
         public readonly string Credentials;
         /// <summary>

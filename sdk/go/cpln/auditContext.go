@@ -19,7 +19,8 @@ type AuditContext struct {
 	// Description of the Audit Context.
 	Description pulumi.StringOutput `pulumi:"description"`
 	// Name of the Audit Context.
-	Name pulumi.StringOutput `pulumi:"name"`
+	Name   pulumi.StringOutput `pulumi:"name"`
+	Origin pulumi.StringOutput `pulumi:"origin"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
 	// Key-value map of resource tags.
@@ -61,7 +62,8 @@ type auditContextState struct {
 	// Description of the Audit Context.
 	Description *string `pulumi:"description"`
 	// Name of the Audit Context.
-	Name *string `pulumi:"name"`
+	Name   *string `pulumi:"name"`
+	Origin *string `pulumi:"origin"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink *string `pulumi:"selfLink"`
 	// Key-value map of resource tags.
@@ -74,7 +76,8 @@ type AuditContextState struct {
 	// Description of the Audit Context.
 	Description pulumi.StringPtrInput
 	// Name of the Audit Context.
-	Name pulumi.StringPtrInput
+	Name   pulumi.StringPtrInput
+	Origin pulumi.StringPtrInput
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringPtrInput
 	// Key-value map of resource tags.
@@ -204,6 +207,10 @@ func (o AuditContextOutput) Description() pulumi.StringOutput {
 // Name of the Audit Context.
 func (o AuditContextOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *AuditContext) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o AuditContextOutput) Origin() pulumi.StringOutput {
+	return o.ApplyT(func(v *AuditContext) pulumi.StringOutput { return v.Origin }).(pulumi.StringOutput)
 }
 
 // Full link to this resource. Can be referenced by other resources.

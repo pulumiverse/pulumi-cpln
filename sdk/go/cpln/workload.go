@@ -23,13 +23,11 @@ type Workload struct {
 	Description pulumi.StringOutput `pulumi:"description"`
 	// Extra Kubernetes modifications. Only used for BYOK.
 	Extras pulumi.StringPtrOutput `pulumi:"extras"`
-	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
-	// Access is restricted by default.
+	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
 	FirewallSpec WorkloadFirewallSpecPtrOutput `pulumi:"firewallSpec"`
 	// Name of the associated GVC.
 	Gvc pulumi.StringOutput `pulumi:"gvc"`
-	// The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to
-	// multiple cloud providers.
+	// The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to multiple cloud providers.
 	IdentityLink pulumi.StringPtrOutput `pulumi:"identityLink"`
 	// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
 	Jobs         WorkloadJobArrayOutput        `pulumi:"jobs"`
@@ -38,12 +36,10 @@ type Workload struct {
 	LocalOptions WorkloadLocalOptionArrayOutput `pulumi:"localOptions"`
 	// Name of the workload.
 	Name pulumi.StringOutput `pulumi:"name"`
-	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
-	// characteristics of the workload.
+	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
 	Options            WorkloadOptionsPtrOutput            `pulumi:"options"`
 	RequestRetryPolicy WorkloadRequestRetryPolicyPtrOutput `pulumi:"requestRetryPolicy"`
-	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
-	// replicas, surge replicas, and scaling policies.
+	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable replicas, surge replicas, and scaling policies.
 	RolloutOptions WorkloadRolloutOptionArrayOutput `pulumi:"rolloutOptions"`
 	// Allows for the configuration of the `file system group id` and `geo location`.
 	SecurityOptions WorkloadSecurityOptionsPtrOutput `pulumi:"securityOptions"`
@@ -52,8 +48,7 @@ type Workload struct {
 	Sidecar  WorkloadSidecarPtrOutput `pulumi:"sidecar"`
 	// Status of the workload.
 	Statuses WorkloadStatusArrayOutput `pulumi:"statuses"`
-	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
-	// false.
+	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default: false.
 	SupportDynamicTags pulumi.BoolOutput `pulumi:"supportDynamicTags"`
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapOutput `pulumi:"tags"`
@@ -105,13 +100,11 @@ type workloadState struct {
 	Description *string `pulumi:"description"`
 	// Extra Kubernetes modifications. Only used for BYOK.
 	Extras *string `pulumi:"extras"`
-	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
-	// Access is restricted by default.
+	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
 	FirewallSpec *WorkloadFirewallSpec `pulumi:"firewallSpec"`
 	// Name of the associated GVC.
 	Gvc *string `pulumi:"gvc"`
-	// The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to
-	// multiple cloud providers.
+	// The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to multiple cloud providers.
 	IdentityLink *string `pulumi:"identityLink"`
 	// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
 	Jobs         []WorkloadJob         `pulumi:"jobs"`
@@ -120,12 +113,10 @@ type workloadState struct {
 	LocalOptions []WorkloadLocalOption `pulumi:"localOptions"`
 	// Name of the workload.
 	Name *string `pulumi:"name"`
-	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
-	// characteristics of the workload.
+	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
 	Options            *WorkloadOptions            `pulumi:"options"`
 	RequestRetryPolicy *WorkloadRequestRetryPolicy `pulumi:"requestRetryPolicy"`
-	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
-	// replicas, surge replicas, and scaling policies.
+	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable replicas, surge replicas, and scaling policies.
 	RolloutOptions []WorkloadRolloutOption `pulumi:"rolloutOptions"`
 	// Allows for the configuration of the `file system group id` and `geo location`.
 	SecurityOptions *WorkloadSecurityOptions `pulumi:"securityOptions"`
@@ -134,8 +125,7 @@ type workloadState struct {
 	Sidecar  *WorkloadSidecar `pulumi:"sidecar"`
 	// Status of the workload.
 	Statuses []WorkloadStatus `pulumi:"statuses"`
-	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
-	// false.
+	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default: false.
 	SupportDynamicTags *bool `pulumi:"supportDynamicTags"`
 	// Key-value map of resource tags.
 	Tags map[string]string `pulumi:"tags"`
@@ -152,13 +142,11 @@ type WorkloadState struct {
 	Description pulumi.StringPtrInput
 	// Extra Kubernetes modifications. Only used for BYOK.
 	Extras pulumi.StringPtrInput
-	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
-	// Access is restricted by default.
+	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
 	FirewallSpec WorkloadFirewallSpecPtrInput
 	// Name of the associated GVC.
 	Gvc pulumi.StringPtrInput
-	// The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to
-	// multiple cloud providers.
+	// The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to multiple cloud providers.
 	IdentityLink pulumi.StringPtrInput
 	// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
 	Jobs         WorkloadJobArrayInput
@@ -167,12 +155,10 @@ type WorkloadState struct {
 	LocalOptions WorkloadLocalOptionArrayInput
 	// Name of the workload.
 	Name pulumi.StringPtrInput
-	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
-	// characteristics of the workload.
+	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
 	Options            WorkloadOptionsPtrInput
 	RequestRetryPolicy WorkloadRequestRetryPolicyPtrInput
-	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
-	// replicas, surge replicas, and scaling policies.
+	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable replicas, surge replicas, and scaling policies.
 	RolloutOptions WorkloadRolloutOptionArrayInput
 	// Allows for the configuration of the `file system group id` and `geo location`.
 	SecurityOptions WorkloadSecurityOptionsPtrInput
@@ -181,8 +167,7 @@ type WorkloadState struct {
 	Sidecar  WorkloadSidecarPtrInput
 	// Status of the workload.
 	Statuses WorkloadStatusArrayInput
-	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
-	// false.
+	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default: false.
 	SupportDynamicTags pulumi.BoolPtrInput
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapInput
@@ -201,13 +186,11 @@ type workloadArgs struct {
 	Description *string `pulumi:"description"`
 	// Extra Kubernetes modifications. Only used for BYOK.
 	Extras *string `pulumi:"extras"`
-	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
-	// Access is restricted by default.
+	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
 	FirewallSpec *WorkloadFirewallSpec `pulumi:"firewallSpec"`
 	// Name of the associated GVC.
 	Gvc string `pulumi:"gvc"`
-	// The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to
-	// multiple cloud providers.
+	// The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to multiple cloud providers.
 	IdentityLink *string `pulumi:"identityLink"`
 	// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
 	Jobs         []WorkloadJob         `pulumi:"jobs"`
@@ -216,18 +199,15 @@ type workloadArgs struct {
 	LocalOptions []WorkloadLocalOption `pulumi:"localOptions"`
 	// Name of the workload.
 	Name *string `pulumi:"name"`
-	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
-	// characteristics of the workload.
+	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
 	Options            *WorkloadOptions            `pulumi:"options"`
 	RequestRetryPolicy *WorkloadRequestRetryPolicy `pulumi:"requestRetryPolicy"`
-	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
-	// replicas, surge replicas, and scaling policies.
+	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable replicas, surge replicas, and scaling policies.
 	RolloutOptions []WorkloadRolloutOption `pulumi:"rolloutOptions"`
 	// Allows for the configuration of the `file system group id` and `geo location`.
 	SecurityOptions *WorkloadSecurityOptions `pulumi:"securityOptions"`
 	Sidecar         *WorkloadSidecar         `pulumi:"sidecar"`
-	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
-	// false.
+	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default: false.
 	SupportDynamicTags *bool `pulumi:"supportDynamicTags"`
 	// Key-value map of resource tags.
 	Tags map[string]string `pulumi:"tags"`
@@ -243,13 +223,11 @@ type WorkloadArgs struct {
 	Description pulumi.StringPtrInput
 	// Extra Kubernetes modifications. Only used for BYOK.
 	Extras pulumi.StringPtrInput
-	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
-	// Access is restricted by default.
+	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
 	FirewallSpec WorkloadFirewallSpecPtrInput
 	// Name of the associated GVC.
 	Gvc pulumi.StringInput
-	// The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to
-	// multiple cloud providers.
+	// The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to multiple cloud providers.
 	IdentityLink pulumi.StringPtrInput
 	// [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
 	Jobs         WorkloadJobArrayInput
@@ -258,18 +236,15 @@ type WorkloadArgs struct {
 	LocalOptions WorkloadLocalOptionArrayInput
 	// Name of the workload.
 	Name pulumi.StringPtrInput
-	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
-	// characteristics of the workload.
+	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
 	Options            WorkloadOptionsPtrInput
 	RequestRetryPolicy WorkloadRequestRetryPolicyPtrInput
-	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
-	// replicas, surge replicas, and scaling policies.
+	// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable replicas, surge replicas, and scaling policies.
 	RolloutOptions WorkloadRolloutOptionArrayInput
 	// Allows for the configuration of the `file system group id` and `geo location`.
 	SecurityOptions WorkloadSecurityOptionsPtrInput
 	Sidecar         WorkloadSidecarPtrInput
-	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
-	// false.
+	// Workload will automatically redeploy when one of the container images is updated in the container registry. Default: false.
 	SupportDynamicTags pulumi.BoolPtrInput
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapInput
@@ -384,8 +359,7 @@ func (o WorkloadOutput) Extras() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringPtrOutput { return v.Extras }).(pulumi.StringPtrOutput)
 }
 
-// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic.
-// Access is restricted by default.
+// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
 func (o WorkloadOutput) FirewallSpec() WorkloadFirewallSpecPtrOutput {
 	return o.ApplyT(func(v *Workload) WorkloadFirewallSpecPtrOutput { return v.FirewallSpec }).(WorkloadFirewallSpecPtrOutput)
 }
@@ -395,8 +369,7 @@ func (o WorkloadOutput) Gvc() pulumi.StringOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringOutput { return v.Gvc }).(pulumi.StringOutput)
 }
 
-// The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to
-// multiple cloud providers.
+// The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to multiple cloud providers.
 func (o WorkloadOutput) IdentityLink() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringPtrOutput { return v.IdentityLink }).(pulumi.StringPtrOutput)
 }
@@ -420,8 +393,7 @@ func (o WorkloadOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
-// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and
-// characteristics of the workload.
+// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
 func (o WorkloadOutput) Options() WorkloadOptionsPtrOutput {
 	return o.ApplyT(func(v *Workload) WorkloadOptionsPtrOutput { return v.Options }).(WorkloadOptionsPtrOutput)
 }
@@ -430,8 +402,7 @@ func (o WorkloadOutput) RequestRetryPolicy() WorkloadRequestRetryPolicyPtrOutput
 	return o.ApplyT(func(v *Workload) WorkloadRequestRetryPolicyPtrOutput { return v.RequestRetryPolicy }).(WorkloadRequestRetryPolicyPtrOutput)
 }
 
-// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable
-// replicas, surge replicas, and scaling policies.
+// Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable replicas, surge replicas, and scaling policies.
 func (o WorkloadOutput) RolloutOptions() WorkloadRolloutOptionArrayOutput {
 	return o.ApplyT(func(v *Workload) WorkloadRolloutOptionArrayOutput { return v.RolloutOptions }).(WorkloadRolloutOptionArrayOutput)
 }
@@ -455,8 +426,7 @@ func (o WorkloadOutput) Statuses() WorkloadStatusArrayOutput {
 	return o.ApplyT(func(v *Workload) WorkloadStatusArrayOutput { return v.Statuses }).(WorkloadStatusArrayOutput)
 }
 
-// Workload will automatically redeploy when one of the container images is updated in the container registry. Default:
-// false.
+// Workload will automatically redeploy when one of the container images is updated in the container registry. Default: false.
 func (o WorkloadOutput) SupportDynamicTags() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Workload) pulumi.BoolOutput { return v.SupportDynamicTags }).(pulumi.BoolOutput)
 }
