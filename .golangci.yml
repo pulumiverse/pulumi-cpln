@@ -2,30 +2,28 @@
 
 linters:
   enable:
-    - errcheck
-    - gci
-    - goconst
-    - gofmt
-    - gosec
-    - govet
-    - ineffassign
-    - lll
-    - gosimple
-    - staticcheck
-    - misspell
-    - nakedret
-    - revive
-    - unconvert
-    - unused
+  - errcheck
+  - gci
+  - goconst
+  - gofmt
+  - gosec
+  - govet
+  - ineffassign
+  - lll
+  - gosimple
+  - staticcheck
+  - misspell
+  - nakedret
+  - revive
+  - unconvert
+  - unused
   enable-all: false
 issues:
   exclude-dirs:
-    - pkg/vendored
+  - pkg/vendored
   exclude-files:
-    - schema.go
-    - pulumiManifest.go
-    - resources.go
-    - main.go
+  - schema.go
+  - pulumiManifest.go
 run:
   timeout: 20m
 linters-settings:
