@@ -81,6 +81,32 @@
         }
     },
     "types": {
+        "cpln:index/CatalogTemplateResource:CatalogTemplateResource": {
+            "properties": {
+                "kind": {
+                    "type": "string",
+                    "description": "The kind of resource (e.g., 'workload', 'secret', 'gvc').\n"
+                },
+                "link": {
+                    "type": "string",
+                    "description": "The full Control Plane link to the resource.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the resource.\n"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "kind",
+                        "link",
+                        "name"
+                    ]
+                }
+            }
+        },
         "cpln:index/CloudAccountAws:CloudAccountAws": {
             "properties": {
                 "roleArn": {
@@ -2690,16 +2716,22 @@
                 "autoscaler": {
                     "$ref": "#/types/cpln:index/Mk8sGcpProviderAutoscaler:Mk8sGcpProviderAutoscaler"
                 },
-                "gcpLabels": {
+                "image": {
+                    "$ref": "#/types/cpln:index/Mk8sGcpProviderImage:Mk8sGcpProviderImage",
+                    "description": "Default image for all nodes.\n"
+                },
+                "labels": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
                     },
                     "description": "Extra tags to attach to all created objects.\n"
                 },
-                "image": {
-                    "$ref": "#/types/cpln:index/Mk8sGcpProviderImage:Mk8sGcpProviderImage",
-                    "description": "Default image for all nodes.\n"
+                "metadata": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
                 },
                 "network": {
                     "type": "string",
@@ -2729,6 +2761,12 @@
                 "saKeyLink": {
                     "type": "string",
                     "description": "Link to a secret containing the service account JSON key.\n"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             },
             "type": "object",
@@ -2771,11 +2809,33 @@
         },
         "cpln:index/Mk8sGcpProviderImage:Mk8sGcpProviderImage": {
             "properties": {
-                "recommended": {
+                "exact": {
                     "type": "string"
+                },
+                "family": {
+                    "$ref": "#/types/cpln:index/Mk8sGcpProviderImageFamily:Mk8sGcpProviderImageFamily"
+                },
+                "recommended": {
+                    "type": "string",
+                    "description": "Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.\n"
                 }
             },
             "type": "object"
+        },
+        "cpln:index/Mk8sGcpProviderImageFamily:Mk8sGcpProviderImageFamily": {
+            "properties": {
+                "family": {
+                    "type": "string"
+                },
+                "project": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "family",
+                "project"
+            ]
         },
         "cpln:index/Mk8sGcpProviderNetworking:Mk8sGcpProviderNetworking": {
             "properties": {
@@ -2804,6 +2864,9 @@
         },
         "cpln:index/Mk8sGcpProviderNodePool:Mk8sGcpProviderNodePool": {
             "properties": {
+                "assignPublicIp": {
+                    "type": "boolean"
+                },
                 "bootDiskSize": {
                     "type": "integer",
                     "description": "Size in GB.\n"
@@ -2814,6 +2877,9 @@
                         "type": "string"
                     },
                     "description": "Labels to attach to nodes of a node pool.\n"
+                },
+                "localPersistentDisks": {
+                    "type": "integer"
                 },
                 "machineType": {
                     "type": "string",
@@ -2830,6 +2896,9 @@
                 },
                 "overrideImage": {
                     "$ref": "#/types/cpln:index/Mk8sGcpProviderNodePoolOverrideImage:Mk8sGcpProviderNodePoolOverrideImage"
+                },
+                "preemptible": {
+                    "type": "boolean"
                 },
                 "subnet": {
                     "type": "string",
@@ -2871,11 +2940,33 @@
         },
         "cpln:index/Mk8sGcpProviderNodePoolOverrideImage:Mk8sGcpProviderNodePoolOverrideImage": {
             "properties": {
-                "recommended": {
+                "exact": {
                     "type": "string"
+                },
+                "family": {
+                    "$ref": "#/types/cpln:index/Mk8sGcpProviderNodePoolOverrideImageFamily:Mk8sGcpProviderNodePoolOverrideImageFamily"
+                },
+                "recommended": {
+                    "type": "string",
+                    "description": "Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.\n"
                 }
             },
             "type": "object"
+        },
+        "cpln:index/Mk8sGcpProviderNodePoolOverrideImageFamily:Mk8sGcpProviderNodePoolOverrideImageFamily": {
+            "properties": {
+                "family": {
+                    "type": "string"
+                },
+                "project": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "family",
+                "project"
+            ]
         },
         "cpln:index/Mk8sGcpProviderNodePoolTaint:Mk8sGcpProviderNodePoolTaint": {
             "properties": {
@@ -3993,6 +4084,12 @@
                         "$ref": "#/types/cpln:index/Mk8sStatusAddOnDashboard:Mk8sStatusAddOnDashboard"
                     }
                 },
+                "headlamps": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/Mk8sStatusAddOnHeadlamp:Mk8sStatusAddOnHeadlamp"
+                    }
+                },
                 "logs": {
                     "type": "array",
                     "items": {
@@ -4015,6 +4112,7 @@
                         "awsElbs",
                         "awsWorkloadIdentities",
                         "dashboards",
+                        "headlamps",
                         "logs",
                         "metrics"
                     ]
@@ -4108,6 +4206,22 @@
             }
         },
         "cpln:index/Mk8sStatusAddOnDashboard:Mk8sStatusAddOnDashboard": {
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "description": "Access to dashboard.\n"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "url"
+                    ]
+                }
+            }
+        },
+        "cpln:index/Mk8sStatusAddOnHeadlamp:Mk8sStatusAddOnHeadlamp": {
             "properties": {
                 "url": {
                     "type": "string",
@@ -10205,6 +10319,105 @@
                             "type": "string"
                         },
                         "description": "Key-value map of resource tags."
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "cpln:index/catalogTemplate:CatalogTemplate": {
+            "properties": {
+                "gvc": {
+                    "type": "string",
+                    "description": "The GVC where the template will be deployed. Leave empty if the template creates its own GVC (check template's createsGvc field)."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The release name for this catalog release."
+                },
+                "resources": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/CatalogTemplateResource:CatalogTemplateResource"
+                    },
+                    "description": "List of Control Plane resources created by this release. Populated from the helm release secret."
+                },
+                "template": {
+                    "type": "string",
+                    "description": "The name of the catalog template to deploy (e.g., 'postgres', 'nginx', 'redis')."
+                },
+                "values": {
+                    "type": "string",
+                    "description": "The values file content (YAML format) for customizing the template deployment."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version of the catalog template to deploy."
+                }
+            },
+            "required": [
+                "gvc",
+                "name",
+                "resources",
+                "template",
+                "values",
+                "version"
+            ],
+            "inputProperties": {
+                "gvc": {
+                    "type": "string",
+                    "description": "The GVC where the template will be deployed. Leave empty if the template creates its own GVC (check template's createsGvc field)."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The release name for this catalog release."
+                },
+                "template": {
+                    "type": "string",
+                    "description": "The name of the catalog template to deploy (e.g., 'postgres', 'nginx', 'redis')."
+                },
+                "values": {
+                    "type": "string",
+                    "description": "The values file content (YAML format) for customizing the template deployment."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The version of the catalog template to deploy."
+                }
+            },
+            "requiredInputs": [
+                "template",
+                "values",
+                "version"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering CatalogTemplate resources.\n",
+                "properties": {
+                    "gvc": {
+                        "type": "string",
+                        "description": "The GVC where the template will be deployed. Leave empty if the template creates its own GVC (check template's createsGvc field)."
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The release name for this catalog release."
+                    },
+                    "resources": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/CatalogTemplateResource:CatalogTemplateResource"
+                        },
+                        "description": "List of Control Plane resources created by this release. Populated from the helm release secret."
+                    },
+                    "template": {
+                        "type": "string",
+                        "description": "The name of the catalog template to deploy (e.g., 'postgres', 'nginx', 'redis')."
+                    },
+                    "values": {
+                        "type": "string",
+                        "description": "The values file content (YAML format) for customizing the template deployment."
+                    },
+                    "version": {
+                        "type": "string",
+                        "description": "The version of the catalog template to deploy."
                     }
                 },
                 "type": "object"
