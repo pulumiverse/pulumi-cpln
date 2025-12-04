@@ -16,23 +16,31 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("autoscaler")]
         public Input<Inputs.Mk8sGcpProviderAutoscalerArgs>? Autoscaler { get; set; }
 
-        [Input("gcpLabels")]
-        private InputMap<string>? _gcpLabels;
-
-        /// <summary>
-        /// Extra tags to attach to all created objects.
-        /// </summary>
-        public InputMap<string> GcpLabels
-        {
-            get => _gcpLabels ?? (_gcpLabels = new InputMap<string>());
-            set => _gcpLabels = value;
-        }
-
         /// <summary>
         /// Default image for all nodes.
         /// </summary>
         [Input("image")]
         public Input<Inputs.Mk8sGcpProviderImageArgs>? Image { get; set; }
+
+        [Input("labels")]
+        private InputMap<string>? _labels;
+
+        /// <summary>
+        /// Extra tags to attach to all created objects.
+        /// </summary>
+        public InputMap<string> Labels
+        {
+            get => _labels ?? (_labels = new InputMap<string>());
+            set => _labels = value;
+        }
+
+        [Input("metadata")]
+        private InputMap<string>? _metadata;
+        public InputMap<string> Metadata
+        {
+            get => _metadata ?? (_metadata = new InputMap<string>());
+            set => _metadata = value;
+        }
 
         /// <summary>
         /// VPC network used by the cluster.
@@ -74,6 +82,14 @@ namespace Pulumiverse.Cpln.Inputs
         /// </summary>
         [Input("saKeyLink", required: true)]
         public Input<string> SaKeyLink { get; set; } = null!;
+
+        [Input("tags")]
+        private InputList<string>? _tags;
+        public InputList<string> Tags
+        {
+            get => _tags ?? (_tags = new InputList<string>());
+            set => _tags = value;
+        }
 
         public Mk8sGcpProviderArgs()
         {

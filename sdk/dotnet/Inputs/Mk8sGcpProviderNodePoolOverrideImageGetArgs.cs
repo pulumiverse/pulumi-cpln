@@ -13,6 +13,15 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class Mk8sGcpProviderNodePoolOverrideImageGetArgs : global::Pulumi.ResourceArgs
     {
+        [Input("exact")]
+        public Input<string>? Exact { get; set; }
+
+        [Input("family")]
+        public Input<Inputs.Mk8sGcpProviderNodePoolOverrideImageFamilyGetArgs>? Family { get; set; }
+
+        /// <summary>
+        /// Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
+        /// </summary>
         [Input("recommended")]
         public Input<string>? Recommended { get; set; }
 

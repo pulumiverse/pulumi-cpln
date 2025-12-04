@@ -7,6 +7,14 @@
             "cpln_audit_context": {
                 "current": "cpln:index/auditContext:AuditContext"
             },
+            "cpln_catalog_template": {
+                "current": "cpln:index/catalogTemplate:CatalogTemplate",
+                "fields": {
+                    "resources": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
             "cpln_cloud_account": {
                 "current": "cpln:index/cloudAccount:CloudAccount",
                 "fields": {
@@ -614,6 +622,9 @@
                                             }
                                         }
                                     }
+                                },
+                                "tags": {
+                                    "maxItemsOne": false
                                 }
                             }
                         }
@@ -865,6 +876,9 @@
                                                 }
                                             },
                                             "dashboard": {
+                                                "maxItemsOne": false
+                                            },
+                                            "headlamp": {
                                                 "maxItemsOne": false
                                             },
                                             "logs": {

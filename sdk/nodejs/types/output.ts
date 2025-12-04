@@ -5,6 +5,21 @@ import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 
+export interface CatalogTemplateResource {
+    /**
+     * The kind of resource (e.g., 'workload', 'secret', 'gvc').
+     */
+    kind: string;
+    /**
+     * The full Control Plane link to the resource.
+     */
+    link: string;
+    /**
+     * The name of the resource.
+     */
+    name: string;
+}
+
 export interface CloudAccountAws {
     /**
      * Amazon Resource Name (ARN) Role.
@@ -3006,13 +3021,14 @@ export interface Mk8sFirewall {
 export interface Mk8sGcpProvider {
     autoscaler?: outputs.Mk8sGcpProviderAutoscaler;
     /**
-     * Extra tags to attach to all created objects.
-     */
-    gcpLabels?: {[key: string]: string};
-    /**
      * Default image for all nodes.
      */
     image?: outputs.Mk8sGcpProviderImage;
+    /**
+     * Extra tags to attach to all created objects.
+     */
+    labels?: {[key: string]: string};
+    metadata?: {[key: string]: string};
     /**
      * VPC network used by the cluster.
      */
@@ -3035,6 +3051,7 @@ export interface Mk8sGcpProvider {
      * Link to a secret containing the service account JSON key.
      */
     saKeyLink: string;
+    tags?: string[];
 }
 
 export interface Mk8sGcpProviderAutoscaler {
@@ -3045,7 +3062,17 @@ export interface Mk8sGcpProviderAutoscaler {
 }
 
 export interface Mk8sGcpProviderImage {
+    exact?: string;
+    family?: outputs.Mk8sGcpProviderImageFamily;
+    /**
+     * Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
+     */
     recommended?: string;
+}
+
+export interface Mk8sGcpProviderImageFamily {
+    family: string;
+    project: string;
 }
 
 export interface Mk8sGcpProviderNetworking {
@@ -3064,6 +3091,7 @@ export interface Mk8sGcpProviderNetworking {
 }
 
 export interface Mk8sGcpProviderNodePool {
+    assignPublicIp?: boolean;
     /**
      * Size in GB.
      */
@@ -3072,6 +3100,7 @@ export interface Mk8sGcpProviderNodePool {
      * Labels to attach to nodes of a node pool.
      */
     labels?: {[key: string]: string};
+    localPersistentDisks?: number;
     /**
      * GCE machine type for nodes in this pool.
      */
@@ -3080,6 +3109,7 @@ export interface Mk8sGcpProviderNodePool {
     minSize: number;
     name: string;
     overrideImage?: outputs.Mk8sGcpProviderNodePoolOverrideImage;
+    preemptible?: boolean;
     /**
      * Subnet within the selected network.
      */
@@ -3095,7 +3125,17 @@ export interface Mk8sGcpProviderNodePool {
 }
 
 export interface Mk8sGcpProviderNodePoolOverrideImage {
+    exact?: string;
+    family?: outputs.Mk8sGcpProviderNodePoolOverrideImageFamily;
+    /**
+     * Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
+     */
     recommended?: string;
+}
+
+export interface Mk8sGcpProviderNodePoolOverrideImageFamily {
+    family: string;
+    project: string;
 }
 
 export interface Mk8sGcpProviderNodePoolTaint {
@@ -3559,6 +3599,7 @@ export interface Mk8sStatusAddOn {
     awsElbs: outputs.Mk8sStatusAddOnAwsElb[];
     awsWorkloadIdentities: outputs.Mk8sStatusAddOnAwsWorkloadIdentity[];
     dashboards: outputs.Mk8sStatusAddOnDashboard[];
+    headlamps: outputs.Mk8sStatusAddOnHeadlamp[];
     logs: outputs.Mk8sStatusAddOnLog[];
     metrics: outputs.Mk8sStatusAddOnMetric[];
 }
@@ -3586,6 +3627,13 @@ export interface Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig {
 }
 
 export interface Mk8sStatusAddOnDashboard {
+    /**
+     * Access to dashboard.
+     */
+    url: string;
+}
+
+export interface Mk8sStatusAddOnHeadlamp {
     /**
      * Access to dashboard.
      */

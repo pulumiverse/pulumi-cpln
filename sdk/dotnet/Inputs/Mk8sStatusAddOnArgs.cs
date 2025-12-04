@@ -53,6 +53,14 @@ namespace Pulumiverse.Cpln.Inputs
             set => _dashboards = value;
         }
 
+        [Input("headlamps")]
+        private InputList<Inputs.Mk8sStatusAddOnHeadlampArgs>? _headlamps;
+        public InputList<Inputs.Mk8sStatusAddOnHeadlampArgs> Headlamps
+        {
+            get => _headlamps ?? (_headlamps = new InputList<Inputs.Mk8sStatusAddOnHeadlampArgs>());
+            set => _headlamps = value;
+        }
+
         [Input("logs")]
         private InputList<Inputs.Mk8sStatusAddOnLogArgs>? _logs;
         public InputList<Inputs.Mk8sStatusAddOnLogArgs> Logs

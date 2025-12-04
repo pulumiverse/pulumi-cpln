@@ -8,8 +8,8 @@ github.com/apparentlymart/go-textseg/v15 v15.0.0 h1:uYvfpb3DyLSCGWnctWKGj857c6ew
 github.com/apparentlymart/go-textseg/v15 v15.0.0/go.mod h1:K8XmNZdhEBkdlyDdvbmmsvpAG721bKi0joRfFdHIWJ4=
 github.com/cloudflare/circl v1.6.1 h1:zqIqSPIndyBh1bjLVVDHMPpVKqp8Su/V+6MeDzzQBQ0=
 github.com/cloudflare/circl v1.6.1/go.mod h1:uddAzsPgqdMAYatqJ0lsjX1oECcQLIlRpzZh3pJrofs=
-github.com/controlplane-com/terraform-provider-cpln v1.2.17 h1:RYh1A+FZB2s+f38h7FLPilmaNawjUZQTwdP+YRhc3xM=
-github.com/controlplane-com/terraform-provider-cpln v1.2.17/go.mod h1:oCHiR3PCtgtihg00RjZvf23V2B4akTs+Fhc5LgIcyFM=
+github.com/controlplane-com/terraform-provider-cpln v1.2.19 h1:/WQ+JLmSaWjJkHwry/myoBfzUDOXH0adGxQSQfeoijk=
+github.com/controlplane-com/terraform-provider-cpln v1.2.19/go.mod h1:oCHiR3PCtgtihg00RjZvf23V2B4akTs+Fhc5LgIcyFM=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
