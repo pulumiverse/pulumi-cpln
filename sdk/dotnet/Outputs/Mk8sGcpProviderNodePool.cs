@@ -14,6 +14,7 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sGcpProviderNodePool
     {
+        public readonly bool? AssignPublicIp;
         /// <summary>
         /// Size in GB.
         /// </summary>
@@ -22,6 +23,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// Labels to attach to nodes of a node pool.
         /// </summary>
         public readonly ImmutableDictionary<string, string>? Labels;
+        public readonly int? LocalPersistentDisks;
         /// <summary>
         /// GCE machine type for nodes in this pool.
         /// </summary>
@@ -30,6 +32,7 @@ namespace Pulumiverse.Cpln.Outputs
         public readonly int? MinSize;
         public readonly string Name;
         public readonly Outputs.Mk8sGcpProviderNodePoolOverrideImage? OverrideImage;
+        public readonly bool? Preemptible;
         /// <summary>
         /// Subnet within the selected network.
         /// </summary>
@@ -45,9 +48,13 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private Mk8sGcpProviderNodePool(
+            bool? assignPublicIp,
+
             int bootDiskSize,
 
             ImmutableDictionary<string, string>? labels,
+
+            int? localPersistentDisks,
 
             string machineType,
 
@@ -59,19 +66,24 @@ namespace Pulumiverse.Cpln.Outputs
 
             Outputs.Mk8sGcpProviderNodePoolOverrideImage? overrideImage,
 
+            bool? preemptible,
+
             string subnet,
 
             ImmutableArray<Outputs.Mk8sGcpProviderNodePoolTaint> taints,
 
             string zone)
         {
+            AssignPublicIp = assignPublicIp;
             BootDiskSize = bootDiskSize;
             Labels = labels;
+            LocalPersistentDisks = localPersistentDisks;
             MachineType = machineType;
             MaxSize = maxSize;
             MinSize = minSize;
             Name = name;
             OverrideImage = overrideImage;
+            Preemptible = preemptible;
             Subnet = subnet;
             Taints = taints;
             Zone = zone;

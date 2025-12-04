@@ -5,6 +5,21 @@ import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 
+export interface CatalogTemplateResource {
+    /**
+     * The kind of resource (e.g., 'workload', 'secret', 'gvc').
+     */
+    kind?: pulumi.Input<string>;
+    /**
+     * The full Control Plane link to the resource.
+     */
+    link?: pulumi.Input<string>;
+    /**
+     * The name of the resource.
+     */
+    name?: pulumi.Input<string>;
+}
+
 export interface CloudAccountAws {
     /**
      * Amazon Resource Name (ARN) Role.
@@ -3766,13 +3781,14 @@ export interface Mk8sFirewall {
 export interface Mk8sGcpProvider {
     autoscaler?: pulumi.Input<inputs.Mk8sGcpProviderAutoscaler>;
     /**
-     * Extra tags to attach to all created objects.
-     */
-    gcpLabels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
-    /**
      * Default image for all nodes.
      */
     image?: pulumi.Input<inputs.Mk8sGcpProviderImage>;
+    /**
+     * Extra tags to attach to all created objects.
+     */
+    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    metadata?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * VPC network used by the cluster.
      */
@@ -3795,6 +3811,7 @@ export interface Mk8sGcpProvider {
      * Link to a secret containing the service account JSON key.
      */
     saKeyLink: pulumi.Input<string>;
+    tags?: pulumi.Input<pulumi.Input<string>[]>;
 }
 
 export interface Mk8sGcpProviderAutoscaler {
@@ -3805,7 +3822,17 @@ export interface Mk8sGcpProviderAutoscaler {
 }
 
 export interface Mk8sGcpProviderImage {
+    exact?: pulumi.Input<string>;
+    family?: pulumi.Input<inputs.Mk8sGcpProviderImageFamily>;
+    /**
+     * Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
+     */
     recommended?: pulumi.Input<string>;
+}
+
+export interface Mk8sGcpProviderImageFamily {
+    family: pulumi.Input<string>;
+    project: pulumi.Input<string>;
 }
 
 export interface Mk8sGcpProviderNetworking {
@@ -3824,6 +3851,7 @@ export interface Mk8sGcpProviderNetworking {
 }
 
 export interface Mk8sGcpProviderNodePool {
+    assignPublicIp?: pulumi.Input<boolean>;
     /**
      * Size in GB.
      */
@@ -3832,6 +3860,7 @@ export interface Mk8sGcpProviderNodePool {
      * Labels to attach to nodes of a node pool.
      */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    localPersistentDisks?: pulumi.Input<number>;
     /**
      * GCE machine type for nodes in this pool.
      */
@@ -3840,6 +3869,7 @@ export interface Mk8sGcpProviderNodePool {
     minSize?: pulumi.Input<number>;
     name: pulumi.Input<string>;
     overrideImage?: pulumi.Input<inputs.Mk8sGcpProviderNodePoolOverrideImage>;
+    preemptible?: pulumi.Input<boolean>;
     /**
      * Subnet within the selected network.
      */
@@ -3855,7 +3885,17 @@ export interface Mk8sGcpProviderNodePool {
 }
 
 export interface Mk8sGcpProviderNodePoolOverrideImage {
+    exact?: pulumi.Input<string>;
+    family?: pulumi.Input<inputs.Mk8sGcpProviderNodePoolOverrideImageFamily>;
+    /**
+     * Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
+     */
     recommended?: pulumi.Input<string>;
+}
+
+export interface Mk8sGcpProviderNodePoolOverrideImageFamily {
+    family: pulumi.Input<string>;
+    project: pulumi.Input<string>;
 }
 
 export interface Mk8sGcpProviderNodePoolTaint {
@@ -4319,6 +4359,7 @@ export interface Mk8sStatusAddOn {
     awsElbs?: pulumi.Input<pulumi.Input<inputs.Mk8sStatusAddOnAwsElb>[]>;
     awsWorkloadIdentities?: pulumi.Input<pulumi.Input<inputs.Mk8sStatusAddOnAwsWorkloadIdentity>[]>;
     dashboards?: pulumi.Input<pulumi.Input<inputs.Mk8sStatusAddOnDashboard>[]>;
+    headlamps?: pulumi.Input<pulumi.Input<inputs.Mk8sStatusAddOnHeadlamp>[]>;
     logs?: pulumi.Input<pulumi.Input<inputs.Mk8sStatusAddOnLog>[]>;
     metrics?: pulumi.Input<pulumi.Input<inputs.Mk8sStatusAddOnMetric>[]>;
 }
@@ -4346,6 +4387,13 @@ export interface Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfig {
 }
 
 export interface Mk8sStatusAddOnDashboard {
+    /**
+     * Access to dashboard.
+     */
+    url?: pulumi.Input<string>;
+}
+
+export interface Mk8sStatusAddOnHeadlamp {
     /**
      * Access to dashboard.
      */

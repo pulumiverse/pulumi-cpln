@@ -15,6 +15,11 @@ export type AuditContext = import("./auditContext").AuditContext;
 export const AuditContext: typeof import("./auditContext").AuditContext = null as any;
 utilities.lazyLoad(exports, ["AuditContext"], () => require("./auditContext"));
 
+export { CatalogTemplateArgs, CatalogTemplateState } from "./catalogTemplate";
+export type CatalogTemplate = import("./catalogTemplate").CatalogTemplate;
+export const CatalogTemplate: typeof import("./catalogTemplate").CatalogTemplate = null as any;
+utilities.lazyLoad(exports, ["CatalogTemplate"], () => require("./catalogTemplate"));
+
 export { CloudAccountArgs, CloudAccountState } from "./cloudAccount";
 export type CloudAccount = import("./cloudAccount").CloudAccount;
 export const CloudAccount: typeof import("./cloudAccount").CloudAccount = null as any;
@@ -181,6 +186,8 @@ const _module = {
                 return new Agent(name, <any>undefined, { urn })
             case "cpln:index/auditContext:AuditContext":
                 return new AuditContext(name, <any>undefined, { urn })
+            case "cpln:index/catalogTemplate:CatalogTemplate":
+                return new CatalogTemplate(name, <any>undefined, { urn })
             case "cpln:index/cloudAccount:CloudAccount":
                 return new CloudAccount(name, <any>undefined, { urn })
             case "cpln:index/customLocation:CustomLocation":
@@ -228,6 +235,7 @@ const _module = {
 };
 pulumi.runtime.registerResourceModule("cpln", "index/agent", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/auditContext", _module)
+pulumi.runtime.registerResourceModule("cpln", "index/catalogTemplate", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/cloudAccount", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/customLocation", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/domain", _module)

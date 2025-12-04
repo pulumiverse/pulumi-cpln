@@ -16,13 +16,14 @@ namespace Pulumiverse.Cpln.Outputs
     {
         public readonly Outputs.Mk8sGcpProviderAutoscaler? Autoscaler;
         /// <summary>
-        /// Extra tags to attach to all created objects.
-        /// </summary>
-        public readonly ImmutableDictionary<string, string>? GcpLabels;
-        /// <summary>
         /// Default image for all nodes.
         /// </summary>
         public readonly Outputs.Mk8sGcpProviderImage? Image;
+        /// <summary>
+        /// Extra tags to attach to all created objects.
+        /// </summary>
+        public readonly ImmutableDictionary<string, string>? Labels;
+        public readonly ImmutableDictionary<string, string>? Metadata;
         /// <summary>
         /// VPC network used by the cluster.
         /// </summary>
@@ -45,14 +46,17 @@ namespace Pulumiverse.Cpln.Outputs
         /// Link to a secret containing the service account JSON key.
         /// </summary>
         public readonly string SaKeyLink;
+        public readonly ImmutableArray<string> Tags;
 
         [OutputConstructor]
         private Mk8sGcpProvider(
             Outputs.Mk8sGcpProviderAutoscaler? autoscaler,
 
-            ImmutableDictionary<string, string>? gcpLabels,
-
             Outputs.Mk8sGcpProviderImage? image,
+
+            ImmutableDictionary<string, string>? labels,
+
+            ImmutableDictionary<string, string>? metadata,
 
             string network,
 
@@ -66,11 +70,14 @@ namespace Pulumiverse.Cpln.Outputs
 
             string region,
 
-            string saKeyLink)
+            string saKeyLink,
+
+            ImmutableArray<string> tags)
         {
             Autoscaler = autoscaler;
-            GcpLabels = gcpLabels;
             Image = image;
+            Labels = labels;
+            Metadata = metadata;
             Network = network;
             Networking = networking;
             NodePools = nodePools;
@@ -78,6 +85,7 @@ namespace Pulumiverse.Cpln.Outputs
             ProjectId = projectId;
             Region = region;
             SaKeyLink = saKeyLink;
+            Tags = tags;
         }
     }
 }

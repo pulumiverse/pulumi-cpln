@@ -14,11 +14,23 @@ namespace Pulumiverse.Cpln.Outputs
     [OutputType]
     public sealed class Mk8sGcpProviderImage
     {
+        public readonly string? Exact;
+        public readonly Outputs.Mk8sGcpProviderImageFamily? Family;
+        /// <summary>
+        /// Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
+        /// </summary>
         public readonly string? Recommended;
 
         [OutputConstructor]
-        private Mk8sGcpProviderImage(string? recommended)
+        private Mk8sGcpProviderImage(
+            string? exact,
+
+            Outputs.Mk8sGcpProviderImageFamily? family,
+
+            string? recommended)
         {
+            Exact = exact;
+            Family = family;
             Recommended = recommended;
         }
     }

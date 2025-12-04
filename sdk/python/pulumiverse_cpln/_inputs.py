@@ -15,6 +15,8 @@ else:
 from . import _utilities
 
 __all__ = [
+    'CatalogTemplateResourceArgs',
+    'CatalogTemplateResourceArgsDict',
     'CloudAccountAwsArgs',
     'CloudAccountAwsArgsDict',
     'CloudAccountAzureArgs',
@@ -237,12 +239,16 @@ __all__ = [
     'Mk8sGcpProviderAutoscalerArgsDict',
     'Mk8sGcpProviderImageArgs',
     'Mk8sGcpProviderImageArgsDict',
+    'Mk8sGcpProviderImageFamilyArgs',
+    'Mk8sGcpProviderImageFamilyArgsDict',
     'Mk8sGcpProviderNetworkingArgs',
     'Mk8sGcpProviderNetworkingArgsDict',
     'Mk8sGcpProviderNodePoolArgs',
     'Mk8sGcpProviderNodePoolArgsDict',
     'Mk8sGcpProviderNodePoolOverrideImageArgs',
     'Mk8sGcpProviderNodePoolOverrideImageArgsDict',
+    'Mk8sGcpProviderNodePoolOverrideImageFamilyArgs',
+    'Mk8sGcpProviderNodePoolOverrideImageFamilyArgsDict',
     'Mk8sGcpProviderNodePoolTaintArgs',
     'Mk8sGcpProviderNodePoolTaintArgsDict',
     'Mk8sGenericProviderArgs',
@@ -329,6 +335,8 @@ __all__ = [
     'Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfigArgsDict',
     'Mk8sStatusAddOnDashboardArgs',
     'Mk8sStatusAddOnDashboardArgsDict',
+    'Mk8sStatusAddOnHeadlampArgs',
+    'Mk8sStatusAddOnHeadlampArgsDict',
     'Mk8sStatusAddOnLogArgs',
     'Mk8sStatusAddOnLogArgsDict',
     'Mk8sStatusAddOnMetricArgs',
@@ -720,6 +728,78 @@ __all__ = [
 ]
 
 MYPY = False
+
+if not MYPY:
+    class CatalogTemplateResourceArgsDict(TypedDict):
+        kind: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        The kind of resource (e.g., 'workload', 'secret', 'gvc').
+        """
+        link: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        The full Control Plane link to the resource.
+        """
+        name: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        The name of the resource.
+        """
+elif False:
+    CatalogTemplateResourceArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class CatalogTemplateResourceArgs:
+    def __init__(__self__, *,
+                 kind: Optional[pulumi.Input[_builtins.str]] = None,
+                 link: Optional[pulumi.Input[_builtins.str]] = None,
+                 name: Optional[pulumi.Input[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] kind: The kind of resource (e.g., 'workload', 'secret', 'gvc').
+        :param pulumi.Input[_builtins.str] link: The full Control Plane link to the resource.
+        :param pulumi.Input[_builtins.str] name: The name of the resource.
+        """
+        if kind is not None:
+            pulumi.set(__self__, "kind", kind)
+        if link is not None:
+            pulumi.set(__self__, "link", link)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @_builtins.property
+    @pulumi.getter
+    def kind(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The kind of resource (e.g., 'workload', 'secret', 'gvc').
+        """
+        return pulumi.get(self, "kind")
+
+    @kind.setter
+    def kind(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "kind", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def link(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The full Control Plane link to the resource.
+        """
+        return pulumi.get(self, "link")
+
+    @link.setter
+    def link(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "link", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The name of the resource.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "name", value)
+
 
 if not MYPY:
     class CloudAccountAwsArgsDict(TypedDict):
@@ -8899,20 +8979,22 @@ if not MYPY:
         Link to a secret containing the service account JSON key.
         """
         autoscaler: NotRequired[pulumi.Input['Mk8sGcpProviderAutoscalerArgsDict']]
-        gcp_labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
-        """
-        Extra tags to attach to all created objects.
-        """
         image: NotRequired[pulumi.Input['Mk8sGcpProviderImageArgsDict']]
         """
         Default image for all nodes.
         """
+        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+        """
+        Extra tags to attach to all created objects.
+        """
+        metadata: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
         networking: NotRequired[pulumi.Input['Mk8sGcpProviderNetworkingArgsDict']]
         node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sGcpProviderNodePoolArgsDict']]]]
         pre_install_script: NotRequired[pulumi.Input[_builtins.str]]
         """
         Optional shell script that will be run before K8s is installed. Supports SSM.
         """
+        tags: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
 elif False:
     Mk8sGcpProviderArgsDict: TypeAlias = Mapping[str, Any]
 
@@ -8924,18 +9006,20 @@ class Mk8sGcpProviderArgs:
                  region: pulumi.Input[_builtins.str],
                  sa_key_link: pulumi.Input[_builtins.str],
                  autoscaler: Optional[pulumi.Input['Mk8sGcpProviderAutoscalerArgs']] = None,
-                 gcp_labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  image: Optional[pulumi.Input['Mk8sGcpProviderImageArgs']] = None,
+                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 metadata: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  networking: Optional[pulumi.Input['Mk8sGcpProviderNetworkingArgs']] = None,
                  node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sGcpProviderNodePoolArgs']]]] = None,
-                 pre_install_script: Optional[pulumi.Input[_builtins.str]] = None):
+                 pre_install_script: Optional[pulumi.Input[_builtins.str]] = None,
+                 tags: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
         """
         :param pulumi.Input[_builtins.str] network: VPC network used by the cluster.
         :param pulumi.Input[_builtins.str] project_id: GCP project ID that hosts the cluster infrastructure.
         :param pulumi.Input[_builtins.str] region: Region where the cluster nodes will live.
         :param pulumi.Input[_builtins.str] sa_key_link: Link to a secret containing the service account JSON key.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] gcp_labels: Extra tags to attach to all created objects.
         :param pulumi.Input['Mk8sGcpProviderImageArgs'] image: Default image for all nodes.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Extra tags to attach to all created objects.
         :param pulumi.Input[_builtins.str] pre_install_script: Optional shell script that will be run before K8s is installed. Supports SSM.
         """
         pulumi.set(__self__, "network", network)
@@ -8944,16 +9028,20 @@ class Mk8sGcpProviderArgs:
         pulumi.set(__self__, "sa_key_link", sa_key_link)
         if autoscaler is not None:
             pulumi.set(__self__, "autoscaler", autoscaler)
-        if gcp_labels is not None:
-            pulumi.set(__self__, "gcp_labels", gcp_labels)
         if image is not None:
             pulumi.set(__self__, "image", image)
+        if labels is not None:
+            pulumi.set(__self__, "labels", labels)
+        if metadata is not None:
+            pulumi.set(__self__, "metadata", metadata)
         if networking is not None:
             pulumi.set(__self__, "networking", networking)
         if node_pools is not None:
             pulumi.set(__self__, "node_pools", node_pools)
         if pre_install_script is not None:
             pulumi.set(__self__, "pre_install_script", pre_install_script)
+        if tags is not None:
+            pulumi.set(__self__, "tags", tags)
 
     @_builtins.property
     @pulumi.getter
@@ -9013,18 +9101,6 @@ class Mk8sGcpProviderArgs:
         pulumi.set(self, "autoscaler", value)
 
     @_builtins.property
-    @pulumi.getter(name="gcpLabels")
-    def gcp_labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
-        """
-        Extra tags to attach to all created objects.
-        """
-        return pulumi.get(self, "gcp_labels")
-
-    @gcp_labels.setter
-    def gcp_labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
-        pulumi.set(self, "gcp_labels", value)
-
-    @_builtins.property
     @pulumi.getter
     def image(self) -> Optional[pulumi.Input['Mk8sGcpProviderImageArgs']]:
         """
@@ -9035,6 +9111,27 @@ class Mk8sGcpProviderArgs:
     @image.setter
     def image(self, value: Optional[pulumi.Input['Mk8sGcpProviderImageArgs']]):
         pulumi.set(self, "image", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Extra tags to attach to all created objects.
+        """
+        return pulumi.get(self, "labels")
+
+    @labels.setter
+    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "labels", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def metadata(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        return pulumi.get(self, "metadata")
+
+    @metadata.setter
+    def metadata(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "metadata", value)
 
     @_builtins.property
     @pulumi.getter
@@ -9065,6 +9162,15 @@ class Mk8sGcpProviderArgs:
     @pre_install_script.setter
     def pre_install_script(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "pre_install_script", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def tags(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+        return pulumi.get(self, "tags")
+
+    @tags.setter
+    def tags(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "tags", value)
 
 
 if not MYPY:
@@ -9131,25 +9237,94 @@ class Mk8sGcpProviderAutoscalerArgs:
 
 if not MYPY:
     class Mk8sGcpProviderImageArgsDict(TypedDict):
+        exact: NotRequired[pulumi.Input[_builtins.str]]
+        family: NotRequired[pulumi.Input['Mk8sGcpProviderImageFamilyArgsDict']]
         recommended: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
+        """
 elif False:
     Mk8sGcpProviderImageArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sGcpProviderImageArgs:
     def __init__(__self__, *,
+                 exact: Optional[pulumi.Input[_builtins.str]] = None,
+                 family: Optional[pulumi.Input['Mk8sGcpProviderImageFamilyArgs']] = None,
                  recommended: Optional[pulumi.Input[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] recommended: Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
+        """
+        if exact is not None:
+            pulumi.set(__self__, "exact", exact)
+        if family is not None:
+            pulumi.set(__self__, "family", family)
         if recommended is not None:
             pulumi.set(__self__, "recommended", recommended)
 
     @_builtins.property
     @pulumi.getter
+    def exact(self) -> Optional[pulumi.Input[_builtins.str]]:
+        return pulumi.get(self, "exact")
+
+    @exact.setter
+    def exact(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "exact", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def family(self) -> Optional[pulumi.Input['Mk8sGcpProviderImageFamilyArgs']]:
+        return pulumi.get(self, "family")
+
+    @family.setter
+    def family(self, value: Optional[pulumi.Input['Mk8sGcpProviderImageFamilyArgs']]):
+        pulumi.set(self, "family", value)
+
+    @_builtins.property
+    @pulumi.getter
     def recommended(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
+        """
         return pulumi.get(self, "recommended")
 
     @recommended.setter
     def recommended(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "recommended", value)
+
+
+if not MYPY:
+    class Mk8sGcpProviderImageFamilyArgsDict(TypedDict):
+        family: pulumi.Input[_builtins.str]
+        project: pulumi.Input[_builtins.str]
+elif False:
+    Mk8sGcpProviderImageFamilyArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class Mk8sGcpProviderImageFamilyArgs:
+    def __init__(__self__, *,
+                 family: pulumi.Input[_builtins.str],
+                 project: pulumi.Input[_builtins.str]):
+        pulumi.set(__self__, "family", family)
+        pulumi.set(__self__, "project", project)
+
+    @_builtins.property
+    @pulumi.getter
+    def family(self) -> pulumi.Input[_builtins.str]:
+        return pulumi.get(self, "family")
+
+    @family.setter
+    def family(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "family", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def project(self) -> pulumi.Input[_builtins.str]:
+        return pulumi.get(self, "project")
+
+    @project.setter
+    def project(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "project", value)
 
 
 if not MYPY:
@@ -9243,13 +9418,16 @@ if not MYPY:
         """
         Zone where the pool nodes run.
         """
+        assign_public_ip: NotRequired[pulumi.Input[_builtins.bool]]
         labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
         """
         Labels to attach to nodes of a node pool.
         """
+        local_persistent_disks: NotRequired[pulumi.Input[_builtins.int]]
         max_size: NotRequired[pulumi.Input[_builtins.int]]
         min_size: NotRequired[pulumi.Input[_builtins.int]]
         override_image: NotRequired[pulumi.Input['Mk8sGcpProviderNodePoolOverrideImageArgsDict']]
+        preemptible: NotRequired[pulumi.Input[_builtins.bool]]
         taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sGcpProviderNodePoolTaintArgsDict']]]]
         """
         Taint for the nodes of a pool.
@@ -9265,10 +9443,13 @@ class Mk8sGcpProviderNodePoolArgs:
                  name: pulumi.Input[_builtins.str],
                  subnet: pulumi.Input[_builtins.str],
                  zone: pulumi.Input[_builtins.str],
+                 assign_public_ip: Optional[pulumi.Input[_builtins.bool]] = None,
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 local_persistent_disks: Optional[pulumi.Input[_builtins.int]] = None,
                  max_size: Optional[pulumi.Input[_builtins.int]] = None,
                  min_size: Optional[pulumi.Input[_builtins.int]] = None,
                  override_image: Optional[pulumi.Input['Mk8sGcpProviderNodePoolOverrideImageArgs']] = None,
+                 preemptible: Optional[pulumi.Input[_builtins.bool]] = None,
                  taints: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sGcpProviderNodePoolTaintArgs']]]] = None):
         """
         :param pulumi.Input[_builtins.int] boot_disk_size: Size in GB.
@@ -9283,14 +9464,20 @@ class Mk8sGcpProviderNodePoolArgs:
         pulumi.set(__self__, "name", name)
         pulumi.set(__self__, "subnet", subnet)
         pulumi.set(__self__, "zone", zone)
+        if assign_public_ip is not None:
+            pulumi.set(__self__, "assign_public_ip", assign_public_ip)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if local_persistent_disks is not None:
+            pulumi.set(__self__, "local_persistent_disks", local_persistent_disks)
         if max_size is not None:
             pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
             pulumi.set(__self__, "min_size", min_size)
         if override_image is not None:
             pulumi.set(__self__, "override_image", override_image)
+        if preemptible is not None:
+            pulumi.set(__self__, "preemptible", preemptible)
         if taints is not None:
             pulumi.set(__self__, "taints", taints)
 
@@ -9352,6 +9539,15 @@ class Mk8sGcpProviderNodePoolArgs:
         pulumi.set(self, "zone", value)
 
     @_builtins.property
+    @pulumi.getter(name="assignPublicIp")
+    def assign_public_ip(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        return pulumi.get(self, "assign_public_ip")
+
+    @assign_public_ip.setter
+    def assign_public_ip(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "assign_public_ip", value)
+
+    @_builtins.property
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
@@ -9362,6 +9558,15 @@ class Mk8sGcpProviderNodePoolArgs:
     @labels.setter
     def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
+
+    @_builtins.property
+    @pulumi.getter(name="localPersistentDisks")
+    def local_persistent_disks(self) -> Optional[pulumi.Input[_builtins.int]]:
+        return pulumi.get(self, "local_persistent_disks")
+
+    @local_persistent_disks.setter
+    def local_persistent_disks(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "local_persistent_disks", value)
 
     @_builtins.property
     @pulumi.getter(name="maxSize")
@@ -9392,6 +9597,15 @@ class Mk8sGcpProviderNodePoolArgs:
 
     @_builtins.property
     @pulumi.getter
+    def preemptible(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        return pulumi.get(self, "preemptible")
+
+    @preemptible.setter
+    def preemptible(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "preemptible", value)
+
+    @_builtins.property
+    @pulumi.getter
     def taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sGcpProviderNodePoolTaintArgs']]]]:
         """
         Taint for the nodes of a pool.
@@ -9405,25 +9619,94 @@ class Mk8sGcpProviderNodePoolArgs:
 
 if not MYPY:
     class Mk8sGcpProviderNodePoolOverrideImageArgsDict(TypedDict):
+        exact: NotRequired[pulumi.Input[_builtins.str]]
+        family: NotRequired[pulumi.Input['Mk8sGcpProviderNodePoolOverrideImageFamilyArgsDict']]
         recommended: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
+        """
 elif False:
     Mk8sGcpProviderNodePoolOverrideImageArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sGcpProviderNodePoolOverrideImageArgs:
     def __init__(__self__, *,
+                 exact: Optional[pulumi.Input[_builtins.str]] = None,
+                 family: Optional[pulumi.Input['Mk8sGcpProviderNodePoolOverrideImageFamilyArgs']] = None,
                  recommended: Optional[pulumi.Input[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] recommended: Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
+        """
+        if exact is not None:
+            pulumi.set(__self__, "exact", exact)
+        if family is not None:
+            pulumi.set(__self__, "family", family)
         if recommended is not None:
             pulumi.set(__self__, "recommended", recommended)
 
     @_builtins.property
     @pulumi.getter
+    def exact(self) -> Optional[pulumi.Input[_builtins.str]]:
+        return pulumi.get(self, "exact")
+
+    @exact.setter
+    def exact(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "exact", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def family(self) -> Optional[pulumi.Input['Mk8sGcpProviderNodePoolOverrideImageFamilyArgs']]:
+        return pulumi.get(self, "family")
+
+    @family.setter
+    def family(self, value: Optional[pulumi.Input['Mk8sGcpProviderNodePoolOverrideImageFamilyArgs']]):
+        pulumi.set(self, "family", value)
+
+    @_builtins.property
+    @pulumi.getter
     def recommended(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
+        """
         return pulumi.get(self, "recommended")
 
     @recommended.setter
     def recommended(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "recommended", value)
+
+
+if not MYPY:
+    class Mk8sGcpProviderNodePoolOverrideImageFamilyArgsDict(TypedDict):
+        family: pulumi.Input[_builtins.str]
+        project: pulumi.Input[_builtins.str]
+elif False:
+    Mk8sGcpProviderNodePoolOverrideImageFamilyArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class Mk8sGcpProviderNodePoolOverrideImageFamilyArgs:
+    def __init__(__self__, *,
+                 family: pulumi.Input[_builtins.str],
+                 project: pulumi.Input[_builtins.str]):
+        pulumi.set(__self__, "family", family)
+        pulumi.set(__self__, "project", project)
+
+    @_builtins.property
+    @pulumi.getter
+    def family(self) -> pulumi.Input[_builtins.str]:
+        return pulumi.get(self, "family")
+
+    @family.setter
+    def family(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "family", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def project(self) -> pulumi.Input[_builtins.str]:
+        return pulumi.get(self, "project")
+
+    @project.setter
+    def project(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "project", value)
 
 
 if not MYPY:
@@ -12389,6 +12672,7 @@ if not MYPY:
         aws_elbs: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnAwsElbArgsDict']]]]
         aws_workload_identities: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnAwsWorkloadIdentityArgsDict']]]]
         dashboards: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnDashboardArgsDict']]]]
+        headlamps: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnHeadlampArgsDict']]]]
         logs: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnLogArgsDict']]]]
         metrics: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnMetricArgsDict']]]]
 elif False:
@@ -12402,6 +12686,7 @@ class Mk8sStatusAddOnArgs:
                  aws_elbs: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnAwsElbArgs']]]] = None,
                  aws_workload_identities: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnAwsWorkloadIdentityArgs']]]] = None,
                  dashboards: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnDashboardArgs']]]] = None,
+                 headlamps: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnHeadlampArgs']]]] = None,
                  logs: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnLogArgs']]]] = None,
                  metrics: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnMetricArgs']]]] = None):
         if aws_ecrs is not None:
@@ -12414,6 +12699,8 @@ class Mk8sStatusAddOnArgs:
             pulumi.set(__self__, "aws_workload_identities", aws_workload_identities)
         if dashboards is not None:
             pulumi.set(__self__, "dashboards", dashboards)
+        if headlamps is not None:
+            pulumi.set(__self__, "headlamps", headlamps)
         if logs is not None:
             pulumi.set(__self__, "logs", logs)
         if metrics is not None:
@@ -12463,6 +12750,15 @@ class Mk8sStatusAddOnArgs:
     @dashboards.setter
     def dashboards(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnDashboardArgs']]]]):
         pulumi.set(self, "dashboards", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def headlamps(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnHeadlampArgs']]]]:
+        return pulumi.get(self, "headlamps")
+
+    @headlamps.setter
+    def headlamps(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sStatusAddOnHeadlampArgs']]]]):
+        pulumi.set(self, "headlamps", value)
 
     @_builtins.property
     @pulumi.getter
@@ -12635,6 +12931,38 @@ elif False:
 
 @pulumi.input_type
 class Mk8sStatusAddOnDashboardArgs:
+    def __init__(__self__, *,
+                 url: Optional[pulumi.Input[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] url: Access to dashboard.
+        """
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Access to dashboard.
+        """
+        return pulumi.get(self, "url")
+
+    @url.setter
+    def url(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "url", value)
+
+
+if not MYPY:
+    class Mk8sStatusAddOnHeadlampArgsDict(TypedDict):
+        url: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Access to dashboard.
+        """
+elif False:
+    Mk8sStatusAddOnHeadlampArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class Mk8sStatusAddOnHeadlampArgs:
     def __init__(__self__, *,
                  url: Optional[pulumi.Input[_builtins.str]] = None):
         """

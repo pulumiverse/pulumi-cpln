@@ -19,6 +19,7 @@ namespace Pulumiverse.Cpln.Outputs
         public readonly ImmutableArray<Outputs.Mk8sStatusAddOnAwsElb> AwsElbs;
         public readonly ImmutableArray<Outputs.Mk8sStatusAddOnAwsWorkloadIdentity> AwsWorkloadIdentities;
         public readonly ImmutableArray<Outputs.Mk8sStatusAddOnDashboard> Dashboards;
+        public readonly ImmutableArray<Outputs.Mk8sStatusAddOnHeadlamp> Headlamps;
         public readonly ImmutableArray<Outputs.Mk8sStatusAddOnLog> Logs;
         public readonly ImmutableArray<Outputs.Mk8sStatusAddOnMetric> Metrics;
 
@@ -34,6 +35,8 @@ namespace Pulumiverse.Cpln.Outputs
 
             ImmutableArray<Outputs.Mk8sStatusAddOnDashboard> dashboards,
 
+            ImmutableArray<Outputs.Mk8sStatusAddOnHeadlamp> headlamps,
+
             ImmutableArray<Outputs.Mk8sStatusAddOnLog> logs,
 
             ImmutableArray<Outputs.Mk8sStatusAddOnMetric> metrics)
@@ -43,6 +46,7 @@ namespace Pulumiverse.Cpln.Outputs
             AwsElbs = awsElbs;
             AwsWorkloadIdentities = awsWorkloadIdentities;
             Dashboards = dashboards;
+            Headlamps = headlamps;
             Logs = logs;
             Metrics = metrics;
         }

@@ -13,6 +13,9 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class Mk8sGcpProviderNodePoolArgs : global::Pulumi.ResourceArgs
     {
+        [Input("assignPublicIp")]
+        public Input<bool>? AssignPublicIp { get; set; }
+
         /// <summary>
         /// Size in GB.
         /// </summary>
@@ -31,6 +34,9 @@ namespace Pulumiverse.Cpln.Inputs
             set => _labels = value;
         }
 
+        [Input("localPersistentDisks")]
+        public Input<int>? LocalPersistentDisks { get; set; }
+
         /// <summary>
         /// GCE machine type for nodes in this pool.
         /// </summary>
@@ -48,6 +54,9 @@ namespace Pulumiverse.Cpln.Inputs
 
         [Input("overrideImage")]
         public Input<Inputs.Mk8sGcpProviderNodePoolOverrideImageArgs>? OverrideImage { get; set; }
+
+        [Input("preemptible")]
+        public Input<bool>? Preemptible { get; set; }
 
         /// <summary>
         /// Subnet within the selected network.

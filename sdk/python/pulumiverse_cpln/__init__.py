@@ -8,6 +8,7 @@ import typing
 # Export this package's modules as members:
 from .agent import *
 from .audit_context import *
+from .catalog_template import *
 from .cloud_account import *
 from .custom_location import *
 from .domain import *
@@ -65,6 +66,14 @@ _utilities.register(
   "fqn": "pulumiverse_cpln",
   "classes": {
    "cpln:index/auditContext:AuditContext": "AuditContext"
+  }
+ },
+ {
+  "pkg": "cpln",
+  "mod": "index/catalogTemplate",
+  "fqn": "pulumiverse_cpln",
+  "classes": {
+   "cpln:index/catalogTemplate:CatalogTemplate": "CatalogTemplate"
   }
  },
  {

@@ -13,6 +13,121 @@ import (
 
 var _ = internal.GetEnvOrDefault
 
+type CatalogTemplateResource struct {
+	// The kind of resource (e.g., 'workload', 'secret', 'gvc').
+	Kind *string `pulumi:"kind"`
+	// The full Control Plane link to the resource.
+	Link *string `pulumi:"link"`
+	// The name of the resource.
+	Name *string `pulumi:"name"`
+}
+
+// CatalogTemplateResourceInput is an input type that accepts CatalogTemplateResourceArgs and CatalogTemplateResourceOutput values.
+// You can construct a concrete instance of `CatalogTemplateResourceInput` via:
+//
+//	CatalogTemplateResourceArgs{...}
+type CatalogTemplateResourceInput interface {
+	pulumi.Input
+
+	ToCatalogTemplateResourceOutput() CatalogTemplateResourceOutput
+	ToCatalogTemplateResourceOutputWithContext(context.Context) CatalogTemplateResourceOutput
+}
+
+type CatalogTemplateResourceArgs struct {
+	// The kind of resource (e.g., 'workload', 'secret', 'gvc').
+	Kind pulumi.StringPtrInput `pulumi:"kind"`
+	// The full Control Plane link to the resource.
+	Link pulumi.StringPtrInput `pulumi:"link"`
+	// The name of the resource.
+	Name pulumi.StringPtrInput `pulumi:"name"`
+}
+
+func (CatalogTemplateResourceArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CatalogTemplateResource)(nil)).Elem()
+}
+
+func (i CatalogTemplateResourceArgs) ToCatalogTemplateResourceOutput() CatalogTemplateResourceOutput {
+	return i.ToCatalogTemplateResourceOutputWithContext(context.Background())
+}
+
+func (i CatalogTemplateResourceArgs) ToCatalogTemplateResourceOutputWithContext(ctx context.Context) CatalogTemplateResourceOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CatalogTemplateResourceOutput)
+}
+
+// CatalogTemplateResourceArrayInput is an input type that accepts CatalogTemplateResourceArray and CatalogTemplateResourceArrayOutput values.
+// You can construct a concrete instance of `CatalogTemplateResourceArrayInput` via:
+//
+//	CatalogTemplateResourceArray{ CatalogTemplateResourceArgs{...} }
+type CatalogTemplateResourceArrayInput interface {
+	pulumi.Input
+
+	ToCatalogTemplateResourceArrayOutput() CatalogTemplateResourceArrayOutput
+	ToCatalogTemplateResourceArrayOutputWithContext(context.Context) CatalogTemplateResourceArrayOutput
+}
+
+type CatalogTemplateResourceArray []CatalogTemplateResourceInput
+
+func (CatalogTemplateResourceArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]CatalogTemplateResource)(nil)).Elem()
+}
+
+func (i CatalogTemplateResourceArray) ToCatalogTemplateResourceArrayOutput() CatalogTemplateResourceArrayOutput {
+	return i.ToCatalogTemplateResourceArrayOutputWithContext(context.Background())
+}
+
+func (i CatalogTemplateResourceArray) ToCatalogTemplateResourceArrayOutputWithContext(ctx context.Context) CatalogTemplateResourceArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CatalogTemplateResourceArrayOutput)
+}
+
+type CatalogTemplateResourceOutput struct{ *pulumi.OutputState }
+
+func (CatalogTemplateResourceOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CatalogTemplateResource)(nil)).Elem()
+}
+
+func (o CatalogTemplateResourceOutput) ToCatalogTemplateResourceOutput() CatalogTemplateResourceOutput {
+	return o
+}
+
+func (o CatalogTemplateResourceOutput) ToCatalogTemplateResourceOutputWithContext(ctx context.Context) CatalogTemplateResourceOutput {
+	return o
+}
+
+// The kind of resource (e.g., 'workload', 'secret', 'gvc').
+func (o CatalogTemplateResourceOutput) Kind() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CatalogTemplateResource) *string { return v.Kind }).(pulumi.StringPtrOutput)
+}
+
+// The full Control Plane link to the resource.
+func (o CatalogTemplateResourceOutput) Link() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CatalogTemplateResource) *string { return v.Link }).(pulumi.StringPtrOutput)
+}
+
+// The name of the resource.
+func (o CatalogTemplateResourceOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CatalogTemplateResource) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+type CatalogTemplateResourceArrayOutput struct{ *pulumi.OutputState }
+
+func (CatalogTemplateResourceArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]CatalogTemplateResource)(nil)).Elem()
+}
+
+func (o CatalogTemplateResourceArrayOutput) ToCatalogTemplateResourceArrayOutput() CatalogTemplateResourceArrayOutput {
+	return o
+}
+
+func (o CatalogTemplateResourceArrayOutput) ToCatalogTemplateResourceArrayOutputWithContext(ctx context.Context) CatalogTemplateResourceArrayOutput {
+	return o
+}
+
+func (o CatalogTemplateResourceArrayOutput) Index(i pulumi.IntInput) CatalogTemplateResourceOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) CatalogTemplateResource {
+		return vs[0].([]CatalogTemplateResource)[vs[1].(int)]
+	}).(CatalogTemplateResourceOutput)
+}
+
 type CloudAccountAws struct {
 	// Amazon Resource Name (ARN) Role.
 	RoleArn *string `pulumi:"roleArn"`
@@ -17747,10 +17862,11 @@ func (o Mk8sFirewallArrayOutput) Index(i pulumi.IntInput) Mk8sFirewallOutput {
 
 type Mk8sGcpProvider struct {
 	Autoscaler *Mk8sGcpProviderAutoscaler `pulumi:"autoscaler"`
-	// Extra tags to attach to all created objects.
-	GcpLabels map[string]string `pulumi:"gcpLabels"`
 	// Default image for all nodes.
 	Image *Mk8sGcpProviderImage `pulumi:"image"`
+	// Extra tags to attach to all created objects.
+	Labels   map[string]string `pulumi:"labels"`
+	Metadata map[string]string `pulumi:"metadata"`
 	// VPC network used by the cluster.
 	Network    string                     `pulumi:"network"`
 	Networking *Mk8sGcpProviderNetworking `pulumi:"networking"`
@@ -17762,7 +17878,8 @@ type Mk8sGcpProvider struct {
 	// Region where the cluster nodes will live.
 	Region string `pulumi:"region"`
 	// Link to a secret containing the service account JSON key.
-	SaKeyLink string `pulumi:"saKeyLink"`
+	SaKeyLink string   `pulumi:"saKeyLink"`
+	Tags      []string `pulumi:"tags"`
 }
 
 // Mk8sGcpProviderInput is an input type that accepts Mk8sGcpProviderArgs and Mk8sGcpProviderOutput values.
@@ -17778,10 +17895,11 @@ type Mk8sGcpProviderInput interface {
 
 type Mk8sGcpProviderArgs struct {
 	Autoscaler Mk8sGcpProviderAutoscalerPtrInput `pulumi:"autoscaler"`
-	// Extra tags to attach to all created objects.
-	GcpLabels pulumi.StringMapInput `pulumi:"gcpLabels"`
 	// Default image for all nodes.
 	Image Mk8sGcpProviderImagePtrInput `pulumi:"image"`
+	// Extra tags to attach to all created objects.
+	Labels   pulumi.StringMapInput `pulumi:"labels"`
+	Metadata pulumi.StringMapInput `pulumi:"metadata"`
 	// VPC network used by the cluster.
 	Network    pulumi.StringInput                `pulumi:"network"`
 	Networking Mk8sGcpProviderNetworkingPtrInput `pulumi:"networking"`
@@ -17793,7 +17911,8 @@ type Mk8sGcpProviderArgs struct {
 	// Region where the cluster nodes will live.
 	Region pulumi.StringInput `pulumi:"region"`
 	// Link to a secret containing the service account JSON key.
-	SaKeyLink pulumi.StringInput `pulumi:"saKeyLink"`
+	SaKeyLink pulumi.StringInput      `pulumi:"saKeyLink"`
+	Tags      pulumi.StringArrayInput `pulumi:"tags"`
 }
 
 func (Mk8sGcpProviderArgs) ElementType() reflect.Type {
@@ -17877,14 +17996,18 @@ func (o Mk8sGcpProviderOutput) Autoscaler() Mk8sGcpProviderAutoscalerPtrOutput {
 	return o.ApplyT(func(v Mk8sGcpProvider) *Mk8sGcpProviderAutoscaler { return v.Autoscaler }).(Mk8sGcpProviderAutoscalerPtrOutput)
 }
 
-// Extra tags to attach to all created objects.
-func (o Mk8sGcpProviderOutput) GcpLabels() pulumi.StringMapOutput {
-	return o.ApplyT(func(v Mk8sGcpProvider) map[string]string { return v.GcpLabels }).(pulumi.StringMapOutput)
-}
-
 // Default image for all nodes.
 func (o Mk8sGcpProviderOutput) Image() Mk8sGcpProviderImagePtrOutput {
 	return o.ApplyT(func(v Mk8sGcpProvider) *Mk8sGcpProviderImage { return v.Image }).(Mk8sGcpProviderImagePtrOutput)
+}
+
+// Extra tags to attach to all created objects.
+func (o Mk8sGcpProviderOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sGcpProvider) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+func (o Mk8sGcpProviderOutput) Metadata() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sGcpProvider) map[string]string { return v.Metadata }).(pulumi.StringMapOutput)
 }
 
 // VPC network used by the cluster.
@@ -17920,6 +18043,10 @@ func (o Mk8sGcpProviderOutput) SaKeyLink() pulumi.StringOutput {
 	return o.ApplyT(func(v Mk8sGcpProvider) string { return v.SaKeyLink }).(pulumi.StringOutput)
 }
 
+func (o Mk8sGcpProviderOutput) Tags() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v Mk8sGcpProvider) []string { return v.Tags }).(pulumi.StringArrayOutput)
+}
+
 type Mk8sGcpProviderPtrOutput struct{ *pulumi.OutputState }
 
 func (Mk8sGcpProviderPtrOutput) ElementType() reflect.Type {
@@ -17953,16 +18080,6 @@ func (o Mk8sGcpProviderPtrOutput) Autoscaler() Mk8sGcpProviderAutoscalerPtrOutpu
 	}).(Mk8sGcpProviderAutoscalerPtrOutput)
 }
 
-// Extra tags to attach to all created objects.
-func (o Mk8sGcpProviderPtrOutput) GcpLabels() pulumi.StringMapOutput {
-	return o.ApplyT(func(v *Mk8sGcpProvider) map[string]string {
-		if v == nil {
-			return nil
-		}
-		return v.GcpLabels
-	}).(pulumi.StringMapOutput)
-}
-
 // Default image for all nodes.
 func (o Mk8sGcpProviderPtrOutput) Image() Mk8sGcpProviderImagePtrOutput {
 	return o.ApplyT(func(v *Mk8sGcpProvider) *Mk8sGcpProviderImage {
@@ -17971,6 +18088,25 @@ func (o Mk8sGcpProviderPtrOutput) Image() Mk8sGcpProviderImagePtrOutput {
 		}
 		return v.Image
 	}).(Mk8sGcpProviderImagePtrOutput)
+}
+
+// Extra tags to attach to all created objects.
+func (o Mk8sGcpProviderPtrOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Mk8sGcpProvider) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Labels
+	}).(pulumi.StringMapOutput)
+}
+
+func (o Mk8sGcpProviderPtrOutput) Metadata() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Mk8sGcpProvider) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Metadata
+	}).(pulumi.StringMapOutput)
 }
 
 // VPC network used by the cluster.
@@ -18039,6 +18175,15 @@ func (o Mk8sGcpProviderPtrOutput) SaKeyLink() pulumi.StringPtrOutput {
 		}
 		return &v.SaKeyLink
 	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sGcpProviderPtrOutput) Tags() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Mk8sGcpProvider) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Tags
+	}).(pulumi.StringArrayOutput)
 }
 
 type Mk8sGcpProviderAutoscaler struct {
@@ -18220,6 +18365,9 @@ func (o Mk8sGcpProviderAutoscalerPtrOutput) UtilizationThreshold() pulumi.Float6
 }
 
 type Mk8sGcpProviderImage struct {
+	Exact  *string                     `pulumi:"exact"`
+	Family *Mk8sGcpProviderImageFamily `pulumi:"family"`
+	// Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
 	Recommended *string `pulumi:"recommended"`
 }
 
@@ -18235,6 +18383,9 @@ type Mk8sGcpProviderImageInput interface {
 }
 
 type Mk8sGcpProviderImageArgs struct {
+	Exact  pulumi.StringPtrInput              `pulumi:"exact"`
+	Family Mk8sGcpProviderImageFamilyPtrInput `pulumi:"family"`
+	// Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
 	Recommended pulumi.StringPtrInput `pulumi:"recommended"`
 }
 
@@ -18315,6 +18466,15 @@ func (o Mk8sGcpProviderImageOutput) ToMk8sGcpProviderImagePtrOutputWithContext(c
 	}).(Mk8sGcpProviderImagePtrOutput)
 }
 
+func (o Mk8sGcpProviderImageOutput) Exact() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderImage) *string { return v.Exact }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sGcpProviderImageOutput) Family() Mk8sGcpProviderImageFamilyPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderImage) *Mk8sGcpProviderImageFamily { return v.Family }).(Mk8sGcpProviderImageFamilyPtrOutput)
+}
+
+// Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
 func (o Mk8sGcpProviderImageOutput) Recommended() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Mk8sGcpProviderImage) *string { return v.Recommended }).(pulumi.StringPtrOutput)
 }
@@ -18343,12 +18503,179 @@ func (o Mk8sGcpProviderImagePtrOutput) Elem() Mk8sGcpProviderImageOutput {
 	}).(Mk8sGcpProviderImageOutput)
 }
 
+func (o Mk8sGcpProviderImagePtrOutput) Exact() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderImage) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Exact
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sGcpProviderImagePtrOutput) Family() Mk8sGcpProviderImageFamilyPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderImage) *Mk8sGcpProviderImageFamily {
+		if v == nil {
+			return nil
+		}
+		return v.Family
+	}).(Mk8sGcpProviderImageFamilyPtrOutput)
+}
+
+// Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
 func (o Mk8sGcpProviderImagePtrOutput) Recommended() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Mk8sGcpProviderImage) *string {
 		if v == nil {
 			return nil
 		}
 		return v.Recommended
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sGcpProviderImageFamily struct {
+	Family  string `pulumi:"family"`
+	Project string `pulumi:"project"`
+}
+
+// Mk8sGcpProviderImageFamilyInput is an input type that accepts Mk8sGcpProviderImageFamilyArgs and Mk8sGcpProviderImageFamilyOutput values.
+// You can construct a concrete instance of `Mk8sGcpProviderImageFamilyInput` via:
+//
+//	Mk8sGcpProviderImageFamilyArgs{...}
+type Mk8sGcpProviderImageFamilyInput interface {
+	pulumi.Input
+
+	ToMk8sGcpProviderImageFamilyOutput() Mk8sGcpProviderImageFamilyOutput
+	ToMk8sGcpProviderImageFamilyOutputWithContext(context.Context) Mk8sGcpProviderImageFamilyOutput
+}
+
+type Mk8sGcpProviderImageFamilyArgs struct {
+	Family  pulumi.StringInput `pulumi:"family"`
+	Project pulumi.StringInput `pulumi:"project"`
+}
+
+func (Mk8sGcpProviderImageFamilyArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sGcpProviderImageFamily)(nil)).Elem()
+}
+
+func (i Mk8sGcpProviderImageFamilyArgs) ToMk8sGcpProviderImageFamilyOutput() Mk8sGcpProviderImageFamilyOutput {
+	return i.ToMk8sGcpProviderImageFamilyOutputWithContext(context.Background())
+}
+
+func (i Mk8sGcpProviderImageFamilyArgs) ToMk8sGcpProviderImageFamilyOutputWithContext(ctx context.Context) Mk8sGcpProviderImageFamilyOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderImageFamilyOutput)
+}
+
+func (i Mk8sGcpProviderImageFamilyArgs) ToMk8sGcpProviderImageFamilyPtrOutput() Mk8sGcpProviderImageFamilyPtrOutput {
+	return i.ToMk8sGcpProviderImageFamilyPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sGcpProviderImageFamilyArgs) ToMk8sGcpProviderImageFamilyPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderImageFamilyPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderImageFamilyOutput).ToMk8sGcpProviderImageFamilyPtrOutputWithContext(ctx)
+}
+
+// Mk8sGcpProviderImageFamilyPtrInput is an input type that accepts Mk8sGcpProviderImageFamilyArgs, Mk8sGcpProviderImageFamilyPtr and Mk8sGcpProviderImageFamilyPtrOutput values.
+// You can construct a concrete instance of `Mk8sGcpProviderImageFamilyPtrInput` via:
+//
+//	        Mk8sGcpProviderImageFamilyArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sGcpProviderImageFamilyPtrInput interface {
+	pulumi.Input
+
+	ToMk8sGcpProviderImageFamilyPtrOutput() Mk8sGcpProviderImageFamilyPtrOutput
+	ToMk8sGcpProviderImageFamilyPtrOutputWithContext(context.Context) Mk8sGcpProviderImageFamilyPtrOutput
+}
+
+type mk8sGcpProviderImageFamilyPtrType Mk8sGcpProviderImageFamilyArgs
+
+func Mk8sGcpProviderImageFamilyPtr(v *Mk8sGcpProviderImageFamilyArgs) Mk8sGcpProviderImageFamilyPtrInput {
+	return (*mk8sGcpProviderImageFamilyPtrType)(v)
+}
+
+func (*mk8sGcpProviderImageFamilyPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sGcpProviderImageFamily)(nil)).Elem()
+}
+
+func (i *mk8sGcpProviderImageFamilyPtrType) ToMk8sGcpProviderImageFamilyPtrOutput() Mk8sGcpProviderImageFamilyPtrOutput {
+	return i.ToMk8sGcpProviderImageFamilyPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sGcpProviderImageFamilyPtrType) ToMk8sGcpProviderImageFamilyPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderImageFamilyPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderImageFamilyPtrOutput)
+}
+
+type Mk8sGcpProviderImageFamilyOutput struct{ *pulumi.OutputState }
+
+func (Mk8sGcpProviderImageFamilyOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sGcpProviderImageFamily)(nil)).Elem()
+}
+
+func (o Mk8sGcpProviderImageFamilyOutput) ToMk8sGcpProviderImageFamilyOutput() Mk8sGcpProviderImageFamilyOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderImageFamilyOutput) ToMk8sGcpProviderImageFamilyOutputWithContext(ctx context.Context) Mk8sGcpProviderImageFamilyOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderImageFamilyOutput) ToMk8sGcpProviderImageFamilyPtrOutput() Mk8sGcpProviderImageFamilyPtrOutput {
+	return o.ToMk8sGcpProviderImageFamilyPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sGcpProviderImageFamilyOutput) ToMk8sGcpProviderImageFamilyPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderImageFamilyPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sGcpProviderImageFamily) *Mk8sGcpProviderImageFamily {
+		return &v
+	}).(Mk8sGcpProviderImageFamilyPtrOutput)
+}
+
+func (o Mk8sGcpProviderImageFamilyOutput) Family() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderImageFamily) string { return v.Family }).(pulumi.StringOutput)
+}
+
+func (o Mk8sGcpProviderImageFamilyOutput) Project() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderImageFamily) string { return v.Project }).(pulumi.StringOutput)
+}
+
+type Mk8sGcpProviderImageFamilyPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sGcpProviderImageFamilyPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sGcpProviderImageFamily)(nil)).Elem()
+}
+
+func (o Mk8sGcpProviderImageFamilyPtrOutput) ToMk8sGcpProviderImageFamilyPtrOutput() Mk8sGcpProviderImageFamilyPtrOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderImageFamilyPtrOutput) ToMk8sGcpProviderImageFamilyPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderImageFamilyPtrOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderImageFamilyPtrOutput) Elem() Mk8sGcpProviderImageFamilyOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderImageFamily) Mk8sGcpProviderImageFamily {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sGcpProviderImageFamily
+		return ret
+	}).(Mk8sGcpProviderImageFamilyOutput)
+}
+
+func (o Mk8sGcpProviderImageFamilyPtrOutput) Family() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderImageFamily) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Family
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sGcpProviderImageFamilyPtrOutput) Project() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderImageFamily) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Project
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -18528,16 +18855,19 @@ func (o Mk8sGcpProviderNetworkingPtrOutput) ServiceNetwork() pulumi.StringPtrOut
 }
 
 type Mk8sGcpProviderNodePool struct {
+	AssignPublicIp *bool `pulumi:"assignPublicIp"`
 	// Size in GB.
 	BootDiskSize int `pulumi:"bootDiskSize"`
 	// Labels to attach to nodes of a node pool.
-	Labels map[string]string `pulumi:"labels"`
+	Labels               map[string]string `pulumi:"labels"`
+	LocalPersistentDisks *int              `pulumi:"localPersistentDisks"`
 	// GCE machine type for nodes in this pool.
 	MachineType   string                                `pulumi:"machineType"`
 	MaxSize       *int                                  `pulumi:"maxSize"`
 	MinSize       *int                                  `pulumi:"minSize"`
 	Name          string                                `pulumi:"name"`
 	OverrideImage *Mk8sGcpProviderNodePoolOverrideImage `pulumi:"overrideImage"`
+	Preemptible   *bool                                 `pulumi:"preemptible"`
 	// Subnet within the selected network.
 	Subnet string `pulumi:"subnet"`
 	// Taint for the nodes of a pool.
@@ -18558,16 +18888,19 @@ type Mk8sGcpProviderNodePoolInput interface {
 }
 
 type Mk8sGcpProviderNodePoolArgs struct {
+	AssignPublicIp pulumi.BoolPtrInput `pulumi:"assignPublicIp"`
 	// Size in GB.
 	BootDiskSize pulumi.IntInput `pulumi:"bootDiskSize"`
 	// Labels to attach to nodes of a node pool.
-	Labels pulumi.StringMapInput `pulumi:"labels"`
+	Labels               pulumi.StringMapInput `pulumi:"labels"`
+	LocalPersistentDisks pulumi.IntPtrInput    `pulumi:"localPersistentDisks"`
 	// GCE machine type for nodes in this pool.
 	MachineType   pulumi.StringInput                           `pulumi:"machineType"`
 	MaxSize       pulumi.IntPtrInput                           `pulumi:"maxSize"`
 	MinSize       pulumi.IntPtrInput                           `pulumi:"minSize"`
 	Name          pulumi.StringInput                           `pulumi:"name"`
 	OverrideImage Mk8sGcpProviderNodePoolOverrideImagePtrInput `pulumi:"overrideImage"`
+	Preemptible   pulumi.BoolPtrInput                          `pulumi:"preemptible"`
 	// Subnet within the selected network.
 	Subnet pulumi.StringInput `pulumi:"subnet"`
 	// Taint for the nodes of a pool.
@@ -18627,6 +18960,10 @@ func (o Mk8sGcpProviderNodePoolOutput) ToMk8sGcpProviderNodePoolOutputWithContex
 	return o
 }
 
+func (o Mk8sGcpProviderNodePoolOutput) AssignPublicIp() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePool) *bool { return v.AssignPublicIp }).(pulumi.BoolPtrOutput)
+}
+
 // Size in GB.
 func (o Mk8sGcpProviderNodePoolOutput) BootDiskSize() pulumi.IntOutput {
 	return o.ApplyT(func(v Mk8sGcpProviderNodePool) int { return v.BootDiskSize }).(pulumi.IntOutput)
@@ -18635,6 +18972,10 @@ func (o Mk8sGcpProviderNodePoolOutput) BootDiskSize() pulumi.IntOutput {
 // Labels to attach to nodes of a node pool.
 func (o Mk8sGcpProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sGcpProviderNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+func (o Mk8sGcpProviderNodePoolOutput) LocalPersistentDisks() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePool) *int { return v.LocalPersistentDisks }).(pulumi.IntPtrOutput)
 }
 
 // GCE machine type for nodes in this pool.
@@ -18656,6 +18997,10 @@ func (o Mk8sGcpProviderNodePoolOutput) Name() pulumi.StringOutput {
 
 func (o Mk8sGcpProviderNodePoolOutput) OverrideImage() Mk8sGcpProviderNodePoolOverrideImagePtrOutput {
 	return o.ApplyT(func(v Mk8sGcpProviderNodePool) *Mk8sGcpProviderNodePoolOverrideImage { return v.OverrideImage }).(Mk8sGcpProviderNodePoolOverrideImagePtrOutput)
+}
+
+func (o Mk8sGcpProviderNodePoolOutput) Preemptible() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePool) *bool { return v.Preemptible }).(pulumi.BoolPtrOutput)
 }
 
 // Subnet within the selected network.
@@ -18694,6 +19039,9 @@ func (o Mk8sGcpProviderNodePoolArrayOutput) Index(i pulumi.IntInput) Mk8sGcpProv
 }
 
 type Mk8sGcpProviderNodePoolOverrideImage struct {
+	Exact  *string                                     `pulumi:"exact"`
+	Family *Mk8sGcpProviderNodePoolOverrideImageFamily `pulumi:"family"`
+	// Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
 	Recommended *string `pulumi:"recommended"`
 }
 
@@ -18709,6 +19057,9 @@ type Mk8sGcpProviderNodePoolOverrideImageInput interface {
 }
 
 type Mk8sGcpProviderNodePoolOverrideImageArgs struct {
+	Exact  pulumi.StringPtrInput                              `pulumi:"exact"`
+	Family Mk8sGcpProviderNodePoolOverrideImageFamilyPtrInput `pulumi:"family"`
+	// Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
 	Recommended pulumi.StringPtrInput `pulumi:"recommended"`
 }
 
@@ -18789,6 +19140,17 @@ func (o Mk8sGcpProviderNodePoolOverrideImageOutput) ToMk8sGcpProviderNodePoolOve
 	}).(Mk8sGcpProviderNodePoolOverrideImagePtrOutput)
 }
 
+func (o Mk8sGcpProviderNodePoolOverrideImageOutput) Exact() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePoolOverrideImage) *string { return v.Exact }).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImageOutput) Family() Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePoolOverrideImage) *Mk8sGcpProviderNodePoolOverrideImageFamily {
+		return v.Family
+	}).(Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput)
+}
+
+// Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
 func (o Mk8sGcpProviderNodePoolOverrideImageOutput) Recommended() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Mk8sGcpProviderNodePoolOverrideImage) *string { return v.Recommended }).(pulumi.StringPtrOutput)
 }
@@ -18817,12 +19179,179 @@ func (o Mk8sGcpProviderNodePoolOverrideImagePtrOutput) Elem() Mk8sGcpProviderNod
 	}).(Mk8sGcpProviderNodePoolOverrideImageOutput)
 }
 
+func (o Mk8sGcpProviderNodePoolOverrideImagePtrOutput) Exact() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderNodePoolOverrideImage) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Exact
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImagePtrOutput) Family() Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderNodePoolOverrideImage) *Mk8sGcpProviderNodePoolOverrideImageFamily {
+		if v == nil {
+			return nil
+		}
+		return v.Family
+	}).(Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput)
+}
+
+// Recommended image alias. Valid values: `ubuntu/jammy-22.04`, `ubuntu/noble-24.04`, `debian/bookworm-12`, `debian/trixie-13`, `google/cos-stable`.
 func (o Mk8sGcpProviderNodePoolOverrideImagePtrOutput) Recommended() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Mk8sGcpProviderNodePoolOverrideImage) *string {
 		if v == nil {
 			return nil
 		}
 		return v.Recommended
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sGcpProviderNodePoolOverrideImageFamily struct {
+	Family  string `pulumi:"family"`
+	Project string `pulumi:"project"`
+}
+
+// Mk8sGcpProviderNodePoolOverrideImageFamilyInput is an input type that accepts Mk8sGcpProviderNodePoolOverrideImageFamilyArgs and Mk8sGcpProviderNodePoolOverrideImageFamilyOutput values.
+// You can construct a concrete instance of `Mk8sGcpProviderNodePoolOverrideImageFamilyInput` via:
+//
+//	Mk8sGcpProviderNodePoolOverrideImageFamilyArgs{...}
+type Mk8sGcpProviderNodePoolOverrideImageFamilyInput interface {
+	pulumi.Input
+
+	ToMk8sGcpProviderNodePoolOverrideImageFamilyOutput() Mk8sGcpProviderNodePoolOverrideImageFamilyOutput
+	ToMk8sGcpProviderNodePoolOverrideImageFamilyOutputWithContext(context.Context) Mk8sGcpProviderNodePoolOverrideImageFamilyOutput
+}
+
+type Mk8sGcpProviderNodePoolOverrideImageFamilyArgs struct {
+	Family  pulumi.StringInput `pulumi:"family"`
+	Project pulumi.StringInput `pulumi:"project"`
+}
+
+func (Mk8sGcpProviderNodePoolOverrideImageFamilyArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sGcpProviderNodePoolOverrideImageFamily)(nil)).Elem()
+}
+
+func (i Mk8sGcpProviderNodePoolOverrideImageFamilyArgs) ToMk8sGcpProviderNodePoolOverrideImageFamilyOutput() Mk8sGcpProviderNodePoolOverrideImageFamilyOutput {
+	return i.ToMk8sGcpProviderNodePoolOverrideImageFamilyOutputWithContext(context.Background())
+}
+
+func (i Mk8sGcpProviderNodePoolOverrideImageFamilyArgs) ToMk8sGcpProviderNodePoolOverrideImageFamilyOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolOverrideImageFamilyOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderNodePoolOverrideImageFamilyOutput)
+}
+
+func (i Mk8sGcpProviderNodePoolOverrideImageFamilyArgs) ToMk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput() Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput {
+	return i.ToMk8sGcpProviderNodePoolOverrideImageFamilyPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sGcpProviderNodePoolOverrideImageFamilyArgs) ToMk8sGcpProviderNodePoolOverrideImageFamilyPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderNodePoolOverrideImageFamilyOutput).ToMk8sGcpProviderNodePoolOverrideImageFamilyPtrOutputWithContext(ctx)
+}
+
+// Mk8sGcpProviderNodePoolOverrideImageFamilyPtrInput is an input type that accepts Mk8sGcpProviderNodePoolOverrideImageFamilyArgs, Mk8sGcpProviderNodePoolOverrideImageFamilyPtr and Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput values.
+// You can construct a concrete instance of `Mk8sGcpProviderNodePoolOverrideImageFamilyPtrInput` via:
+//
+//	        Mk8sGcpProviderNodePoolOverrideImageFamilyArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sGcpProviderNodePoolOverrideImageFamilyPtrInput interface {
+	pulumi.Input
+
+	ToMk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput() Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput
+	ToMk8sGcpProviderNodePoolOverrideImageFamilyPtrOutputWithContext(context.Context) Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput
+}
+
+type mk8sGcpProviderNodePoolOverrideImageFamilyPtrType Mk8sGcpProviderNodePoolOverrideImageFamilyArgs
+
+func Mk8sGcpProviderNodePoolOverrideImageFamilyPtr(v *Mk8sGcpProviderNodePoolOverrideImageFamilyArgs) Mk8sGcpProviderNodePoolOverrideImageFamilyPtrInput {
+	return (*mk8sGcpProviderNodePoolOverrideImageFamilyPtrType)(v)
+}
+
+func (*mk8sGcpProviderNodePoolOverrideImageFamilyPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sGcpProviderNodePoolOverrideImageFamily)(nil)).Elem()
+}
+
+func (i *mk8sGcpProviderNodePoolOverrideImageFamilyPtrType) ToMk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput() Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput {
+	return i.ToMk8sGcpProviderNodePoolOverrideImageFamilyPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sGcpProviderNodePoolOverrideImageFamilyPtrType) ToMk8sGcpProviderNodePoolOverrideImageFamilyPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput)
+}
+
+type Mk8sGcpProviderNodePoolOverrideImageFamilyOutput struct{ *pulumi.OutputState }
+
+func (Mk8sGcpProviderNodePoolOverrideImageFamilyOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sGcpProviderNodePoolOverrideImageFamily)(nil)).Elem()
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImageFamilyOutput) ToMk8sGcpProviderNodePoolOverrideImageFamilyOutput() Mk8sGcpProviderNodePoolOverrideImageFamilyOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImageFamilyOutput) ToMk8sGcpProviderNodePoolOverrideImageFamilyOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolOverrideImageFamilyOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImageFamilyOutput) ToMk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput() Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput {
+	return o.ToMk8sGcpProviderNodePoolOverrideImageFamilyPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImageFamilyOutput) ToMk8sGcpProviderNodePoolOverrideImageFamilyPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sGcpProviderNodePoolOverrideImageFamily) *Mk8sGcpProviderNodePoolOverrideImageFamily {
+		return &v
+	}).(Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput)
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImageFamilyOutput) Family() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePoolOverrideImageFamily) string { return v.Family }).(pulumi.StringOutput)
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImageFamilyOutput) Project() pulumi.StringOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePoolOverrideImageFamily) string { return v.Project }).(pulumi.StringOutput)
+}
+
+type Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sGcpProviderNodePoolOverrideImageFamily)(nil)).Elem()
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput) ToMk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput() Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput) ToMk8sGcpProviderNodePoolOverrideImageFamilyPtrOutputWithContext(ctx context.Context) Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput {
+	return o
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput) Elem() Mk8sGcpProviderNodePoolOverrideImageFamilyOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderNodePoolOverrideImageFamily) Mk8sGcpProviderNodePoolOverrideImageFamily {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sGcpProviderNodePoolOverrideImageFamily
+		return ret
+	}).(Mk8sGcpProviderNodePoolOverrideImageFamilyOutput)
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput) Family() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderNodePoolOverrideImageFamily) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Family
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput) Project() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sGcpProviderNodePoolOverrideImageFamily) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Project
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -24372,6 +24901,7 @@ type Mk8sStatusAddOn struct {
 	AwsElbs               []Mk8sStatusAddOnAwsElb              `pulumi:"awsElbs"`
 	AwsWorkloadIdentities []Mk8sStatusAddOnAwsWorkloadIdentity `pulumi:"awsWorkloadIdentities"`
 	Dashboards            []Mk8sStatusAddOnDashboard           `pulumi:"dashboards"`
+	Headlamps             []Mk8sStatusAddOnHeadlamp            `pulumi:"headlamps"`
 	Logs                  []Mk8sStatusAddOnLog                 `pulumi:"logs"`
 	Metrics               []Mk8sStatusAddOnMetric              `pulumi:"metrics"`
 }
@@ -24393,6 +24923,7 @@ type Mk8sStatusAddOnArgs struct {
 	AwsElbs               Mk8sStatusAddOnAwsElbArrayInput              `pulumi:"awsElbs"`
 	AwsWorkloadIdentities Mk8sStatusAddOnAwsWorkloadIdentityArrayInput `pulumi:"awsWorkloadIdentities"`
 	Dashboards            Mk8sStatusAddOnDashboardArrayInput           `pulumi:"dashboards"`
+	Headlamps             Mk8sStatusAddOnHeadlampArrayInput            `pulumi:"headlamps"`
 	Logs                  Mk8sStatusAddOnLogArrayInput                 `pulumi:"logs"`
 	Metrics               Mk8sStatusAddOnMetricArrayInput              `pulumi:"metrics"`
 }
@@ -24466,6 +24997,10 @@ func (o Mk8sStatusAddOnOutput) AwsWorkloadIdentities() Mk8sStatusAddOnAwsWorkloa
 
 func (o Mk8sStatusAddOnOutput) Dashboards() Mk8sStatusAddOnDashboardArrayOutput {
 	return o.ApplyT(func(v Mk8sStatusAddOn) []Mk8sStatusAddOnDashboard { return v.Dashboards }).(Mk8sStatusAddOnDashboardArrayOutput)
+}
+
+func (o Mk8sStatusAddOnOutput) Headlamps() Mk8sStatusAddOnHeadlampArrayOutput {
+	return o.ApplyT(func(v Mk8sStatusAddOn) []Mk8sStatusAddOnHeadlamp { return v.Headlamps }).(Mk8sStatusAddOnHeadlampArrayOutput)
 }
 
 func (o Mk8sStatusAddOnOutput) Logs() Mk8sStatusAddOnLogArrayOutput {
@@ -25075,6 +25610,103 @@ func (o Mk8sStatusAddOnDashboardArrayOutput) Index(i pulumi.IntInput) Mk8sStatus
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sStatusAddOnDashboard {
 		return vs[0].([]Mk8sStatusAddOnDashboard)[vs[1].(int)]
 	}).(Mk8sStatusAddOnDashboardOutput)
+}
+
+type Mk8sStatusAddOnHeadlamp struct {
+	// Access to dashboard.
+	Url *string `pulumi:"url"`
+}
+
+// Mk8sStatusAddOnHeadlampInput is an input type that accepts Mk8sStatusAddOnHeadlampArgs and Mk8sStatusAddOnHeadlampOutput values.
+// You can construct a concrete instance of `Mk8sStatusAddOnHeadlampInput` via:
+//
+//	Mk8sStatusAddOnHeadlampArgs{...}
+type Mk8sStatusAddOnHeadlampInput interface {
+	pulumi.Input
+
+	ToMk8sStatusAddOnHeadlampOutput() Mk8sStatusAddOnHeadlampOutput
+	ToMk8sStatusAddOnHeadlampOutputWithContext(context.Context) Mk8sStatusAddOnHeadlampOutput
+}
+
+type Mk8sStatusAddOnHeadlampArgs struct {
+	// Access to dashboard.
+	Url pulumi.StringPtrInput `pulumi:"url"`
+}
+
+func (Mk8sStatusAddOnHeadlampArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sStatusAddOnHeadlamp)(nil)).Elem()
+}
+
+func (i Mk8sStatusAddOnHeadlampArgs) ToMk8sStatusAddOnHeadlampOutput() Mk8sStatusAddOnHeadlampOutput {
+	return i.ToMk8sStatusAddOnHeadlampOutputWithContext(context.Background())
+}
+
+func (i Mk8sStatusAddOnHeadlampArgs) ToMk8sStatusAddOnHeadlampOutputWithContext(ctx context.Context) Mk8sStatusAddOnHeadlampOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sStatusAddOnHeadlampOutput)
+}
+
+// Mk8sStatusAddOnHeadlampArrayInput is an input type that accepts Mk8sStatusAddOnHeadlampArray and Mk8sStatusAddOnHeadlampArrayOutput values.
+// You can construct a concrete instance of `Mk8sStatusAddOnHeadlampArrayInput` via:
+//
+//	Mk8sStatusAddOnHeadlampArray{ Mk8sStatusAddOnHeadlampArgs{...} }
+type Mk8sStatusAddOnHeadlampArrayInput interface {
+	pulumi.Input
+
+	ToMk8sStatusAddOnHeadlampArrayOutput() Mk8sStatusAddOnHeadlampArrayOutput
+	ToMk8sStatusAddOnHeadlampArrayOutputWithContext(context.Context) Mk8sStatusAddOnHeadlampArrayOutput
+}
+
+type Mk8sStatusAddOnHeadlampArray []Mk8sStatusAddOnHeadlampInput
+
+func (Mk8sStatusAddOnHeadlampArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sStatusAddOnHeadlamp)(nil)).Elem()
+}
+
+func (i Mk8sStatusAddOnHeadlampArray) ToMk8sStatusAddOnHeadlampArrayOutput() Mk8sStatusAddOnHeadlampArrayOutput {
+	return i.ToMk8sStatusAddOnHeadlampArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sStatusAddOnHeadlampArray) ToMk8sStatusAddOnHeadlampArrayOutputWithContext(ctx context.Context) Mk8sStatusAddOnHeadlampArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sStatusAddOnHeadlampArrayOutput)
+}
+
+type Mk8sStatusAddOnHeadlampOutput struct{ *pulumi.OutputState }
+
+func (Mk8sStatusAddOnHeadlampOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sStatusAddOnHeadlamp)(nil)).Elem()
+}
+
+func (o Mk8sStatusAddOnHeadlampOutput) ToMk8sStatusAddOnHeadlampOutput() Mk8sStatusAddOnHeadlampOutput {
+	return o
+}
+
+func (o Mk8sStatusAddOnHeadlampOutput) ToMk8sStatusAddOnHeadlampOutputWithContext(ctx context.Context) Mk8sStatusAddOnHeadlampOutput {
+	return o
+}
+
+// Access to dashboard.
+func (o Mk8sStatusAddOnHeadlampOutput) Url() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sStatusAddOnHeadlamp) *string { return v.Url }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sStatusAddOnHeadlampArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sStatusAddOnHeadlampArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sStatusAddOnHeadlamp)(nil)).Elem()
+}
+
+func (o Mk8sStatusAddOnHeadlampArrayOutput) ToMk8sStatusAddOnHeadlampArrayOutput() Mk8sStatusAddOnHeadlampArrayOutput {
+	return o
+}
+
+func (o Mk8sStatusAddOnHeadlampArrayOutput) ToMk8sStatusAddOnHeadlampArrayOutputWithContext(ctx context.Context) Mk8sStatusAddOnHeadlampArrayOutput {
+	return o
+}
+
+func (o Mk8sStatusAddOnHeadlampArrayOutput) Index(i pulumi.IntInput) Mk8sStatusAddOnHeadlampOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sStatusAddOnHeadlamp {
+		return vs[0].([]Mk8sStatusAddOnHeadlamp)[vs[1].(int)]
+	}).(Mk8sStatusAddOnHeadlampOutput)
 }
 
 type Mk8sStatusAddOnLog struct {
@@ -55303,6 +55935,8 @@ func (o GetWorkloadStatusResolvedImageImageManifestArrayOutput) Index(i pulumi.I
 }
 
 func init() {
+	pulumi.RegisterInputType(reflect.TypeOf((*CatalogTemplateResourceInput)(nil)).Elem(), CatalogTemplateResourceArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CatalogTemplateResourceArrayInput)(nil)).Elem(), CatalogTemplateResourceArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CloudAccountAwsInput)(nil)).Elem(), CloudAccountAwsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CloudAccountAwsPtrInput)(nil)).Elem(), CloudAccountAwsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CloudAccountAzureInput)(nil)).Elem(), CloudAccountAzureArgs{})
@@ -55525,12 +56159,16 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderAutoscalerPtrInput)(nil)).Elem(), Mk8sGcpProviderAutoscalerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderImageInput)(nil)).Elem(), Mk8sGcpProviderImageArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderImagePtrInput)(nil)).Elem(), Mk8sGcpProviderImageArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderImageFamilyInput)(nil)).Elem(), Mk8sGcpProviderImageFamilyArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderImageFamilyPtrInput)(nil)).Elem(), Mk8sGcpProviderImageFamilyArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderNetworkingInput)(nil)).Elem(), Mk8sGcpProviderNetworkingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderNetworkingPtrInput)(nil)).Elem(), Mk8sGcpProviderNetworkingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderNodePoolInput)(nil)).Elem(), Mk8sGcpProviderNodePoolArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderNodePoolArrayInput)(nil)).Elem(), Mk8sGcpProviderNodePoolArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderNodePoolOverrideImageInput)(nil)).Elem(), Mk8sGcpProviderNodePoolOverrideImageArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderNodePoolOverrideImagePtrInput)(nil)).Elem(), Mk8sGcpProviderNodePoolOverrideImageArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderNodePoolOverrideImageFamilyInput)(nil)).Elem(), Mk8sGcpProviderNodePoolOverrideImageFamilyArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderNodePoolOverrideImageFamilyPtrInput)(nil)).Elem(), Mk8sGcpProviderNodePoolOverrideImageFamilyArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderNodePoolTaintInput)(nil)).Elem(), Mk8sGcpProviderNodePoolTaintArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGcpProviderNodePoolTaintArrayInput)(nil)).Elem(), Mk8sGcpProviderNodePoolTaintArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sGenericProviderInput)(nil)).Elem(), Mk8sGenericProviderArgs{})
@@ -55617,6 +56255,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfigArrayInput)(nil)).Elem(), Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfigArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sStatusAddOnDashboardInput)(nil)).Elem(), Mk8sStatusAddOnDashboardArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sStatusAddOnDashboardArrayInput)(nil)).Elem(), Mk8sStatusAddOnDashboardArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sStatusAddOnHeadlampInput)(nil)).Elem(), Mk8sStatusAddOnHeadlampArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sStatusAddOnHeadlampArrayInput)(nil)).Elem(), Mk8sStatusAddOnHeadlampArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sStatusAddOnLogInput)(nil)).Elem(), Mk8sStatusAddOnLogArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sStatusAddOnLogArrayInput)(nil)).Elem(), Mk8sStatusAddOnLogArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sStatusAddOnMetricInput)(nil)).Elem(), Mk8sStatusAddOnMetricArgs{})
@@ -56039,6 +56679,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadStatusResolvedImageImageArrayInput)(nil)).Elem(), GetWorkloadStatusResolvedImageImageArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadStatusResolvedImageImageManifestInput)(nil)).Elem(), GetWorkloadStatusResolvedImageImageManifestArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadStatusResolvedImageImageManifestArrayInput)(nil)).Elem(), GetWorkloadStatusResolvedImageImageManifestArray{})
+	pulumi.RegisterOutputType(CatalogTemplateResourceOutput{})
+	pulumi.RegisterOutputType(CatalogTemplateResourceArrayOutput{})
 	pulumi.RegisterOutputType(CloudAccountAwsOutput{})
 	pulumi.RegisterOutputType(CloudAccountAwsPtrOutput{})
 	pulumi.RegisterOutputType(CloudAccountAzureOutput{})
@@ -56261,12 +56903,16 @@ func init() {
 	pulumi.RegisterOutputType(Mk8sGcpProviderAutoscalerPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sGcpProviderImageOutput{})
 	pulumi.RegisterOutputType(Mk8sGcpProviderImagePtrOutput{})
+	pulumi.RegisterOutputType(Mk8sGcpProviderImageFamilyOutput{})
+	pulumi.RegisterOutputType(Mk8sGcpProviderImageFamilyPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sGcpProviderNetworkingOutput{})
 	pulumi.RegisterOutputType(Mk8sGcpProviderNetworkingPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sGcpProviderNodePoolOutput{})
 	pulumi.RegisterOutputType(Mk8sGcpProviderNodePoolArrayOutput{})
 	pulumi.RegisterOutputType(Mk8sGcpProviderNodePoolOverrideImageOutput{})
 	pulumi.RegisterOutputType(Mk8sGcpProviderNodePoolOverrideImagePtrOutput{})
+	pulumi.RegisterOutputType(Mk8sGcpProviderNodePoolOverrideImageFamilyOutput{})
+	pulumi.RegisterOutputType(Mk8sGcpProviderNodePoolOverrideImageFamilyPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sGcpProviderNodePoolTaintOutput{})
 	pulumi.RegisterOutputType(Mk8sGcpProviderNodePoolTaintArrayOutput{})
 	pulumi.RegisterOutputType(Mk8sGenericProviderOutput{})
@@ -56353,6 +56999,8 @@ func init() {
 	pulumi.RegisterOutputType(Mk8sStatusAddOnAwsWorkloadIdentityOidcProviderConfigArrayOutput{})
 	pulumi.RegisterOutputType(Mk8sStatusAddOnDashboardOutput{})
 	pulumi.RegisterOutputType(Mk8sStatusAddOnDashboardArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sStatusAddOnHeadlampOutput{})
+	pulumi.RegisterOutputType(Mk8sStatusAddOnHeadlampArrayOutput{})
 	pulumi.RegisterOutputType(Mk8sStatusAddOnLogOutput{})
 	pulumi.RegisterOutputType(Mk8sStatusAddOnLogArrayOutput{})
 	pulumi.RegisterOutputType(Mk8sStatusAddOnMetricOutput{})
