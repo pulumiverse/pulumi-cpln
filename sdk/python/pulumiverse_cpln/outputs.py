@@ -268,6 +268,7 @@ __all__ = [
     'WorkloadLocalOptionAutoscalingKeda',
     'WorkloadLocalOptionAutoscalingKedaAdvanced',
     'WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers',
+    'WorkloadLocalOptionAutoscalingKedaFallback',
     'WorkloadLocalOptionAutoscalingKedaTrigger',
     'WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef',
     'WorkloadLocalOptionAutoscalingMulti',
@@ -277,6 +278,7 @@ __all__ = [
     'WorkloadOptionsAutoscalingKeda',
     'WorkloadOptionsAutoscalingKedaAdvanced',
     'WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers',
+    'WorkloadOptionsAutoscalingKedaFallback',
     'WorkloadOptionsAutoscalingKedaTrigger',
     'WorkloadOptionsAutoscalingKedaTriggerAuthenticationRef',
     'WorkloadOptionsAutoscalingMulti',
@@ -365,6 +367,7 @@ __all__ = [
     'GetWorkloadLocalOptionAutoscalingKedaResult',
     'GetWorkloadLocalOptionAutoscalingKedaAdvancedResult',
     'GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierResult',
+    'GetWorkloadLocalOptionAutoscalingKedaFallbackResult',
     'GetWorkloadLocalOptionAutoscalingKedaTriggerResult',
     'GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefResult',
     'GetWorkloadLocalOptionAutoscalingMultiResult',
@@ -374,6 +377,7 @@ __all__ = [
     'GetWorkloadOptionAutoscalingKedaResult',
     'GetWorkloadOptionAutoscalingKedaAdvancedResult',
     'GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierResult',
+    'GetWorkloadOptionAutoscalingKedaFallbackResult',
     'GetWorkloadOptionAutoscalingKedaTriggerResult',
     'GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefResult',
     'GetWorkloadOptionAutoscalingMultiResult',
@@ -14077,7 +14081,7 @@ class WorkloadJob(dict):
         """
         :param _builtins.str schedule: A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
         :param _builtins.int active_deadline_seconds: The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
-        :param _builtins.str concurrency_policy: Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+        :param _builtins.str concurrency_policy: Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
         :param _builtins.int history_limit: The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`.
         :param _builtins.str restart_policy: Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`.
         """
@@ -14111,7 +14115,7 @@ class WorkloadJob(dict):
     @pulumi.getter(name="concurrencyPolicy")
     def concurrency_policy(self) -> Optional[_builtins.str]:
         """
-        Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+        Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
         """
         return pulumi.get(self, "concurrency_policy")
 
@@ -14665,12 +14669,14 @@ class WorkloadLocalOptionAutoscalingKeda(dict):
     def __init__(__self__, *,
                  advanced: Optional['outputs.WorkloadLocalOptionAutoscalingKedaAdvanced'] = None,
                  cooldown_period: Optional[_builtins.int] = None,
+                 fallback: Optional['outputs.WorkloadLocalOptionAutoscalingKedaFallback'] = None,
                  initial_cooldown_period: Optional[_builtins.int] = None,
                  polling_interval: Optional[_builtins.int] = None,
                  triggers: Optional[Sequence['outputs.WorkloadLocalOptionAutoscalingKedaTrigger']] = None):
         """
         :param 'WorkloadLocalOptionAutoscalingKedaAdvancedArgs' advanced: Advanced configuration options for KEDA.
         :param _builtins.int cooldown_period: The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+        :param 'WorkloadLocalOptionAutoscalingKedaFallbackArgs' fallback: Fallback configuration for KEDA.
         :param _builtins.int initial_cooldown_period: The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
         :param _builtins.int polling_interval: The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
         :param Sequence['WorkloadLocalOptionAutoscalingKedaTriggerArgs'] triggers: An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
@@ -14679,6 +14685,8 @@ class WorkloadLocalOptionAutoscalingKeda(dict):
             pulumi.set(__self__, "advanced", advanced)
         if cooldown_period is not None:
             pulumi.set(__self__, "cooldown_period", cooldown_period)
+        if fallback is not None:
+            pulumi.set(__self__, "fallback", fallback)
         if initial_cooldown_period is not None:
             pulumi.set(__self__, "initial_cooldown_period", initial_cooldown_period)
         if polling_interval is not None:
@@ -14701,6 +14709,14 @@ class WorkloadLocalOptionAutoscalingKeda(dict):
         The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
         """
         return pulumi.get(self, "cooldown_period")
+
+    @_builtins.property
+    @pulumi.getter
+    def fallback(self) -> Optional['outputs.WorkloadLocalOptionAutoscalingKedaFallback']:
+        """
+        Fallback configuration for KEDA.
+        """
+        return pulumi.get(self, "fallback")
 
     @_builtins.property
     @pulumi.getter(name="initialCooldownPeriod")
@@ -14835,6 +14851,64 @@ class WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers(dict):
         Defines new target value to scale on for the composed metric.
         """
         return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class WorkloadLocalOptionAutoscalingKedaFallback(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failureThreshold":
+            suggest = "failure_threshold"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadLocalOptionAutoscalingKedaFallback. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadLocalOptionAutoscalingKedaFallback.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadLocalOptionAutoscalingKedaFallback.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 failure_threshold: _builtins.int,
+                 replicas: _builtins.int,
+                 behavior: Optional[_builtins.str] = None):
+        """
+        :param _builtins.int failure_threshold: Number of consecutive failures required to trigger fallback behavior.
+        :param _builtins.int replicas: Number of replicas to scale to when fallback is triggered.
+        :param _builtins.str behavior: Behavior to apply when fallback is triggered.
+        """
+        pulumi.set(__self__, "failure_threshold", failure_threshold)
+        pulumi.set(__self__, "replicas", replicas)
+        if behavior is not None:
+            pulumi.set(__self__, "behavior", behavior)
+
+    @_builtins.property
+    @pulumi.getter(name="failureThreshold")
+    def failure_threshold(self) -> _builtins.int:
+        """
+        Number of consecutive failures required to trigger fallback behavior.
+        """
+        return pulumi.get(self, "failure_threshold")
+
+    @_builtins.property
+    @pulumi.getter
+    def replicas(self) -> _builtins.int:
+        """
+        Number of replicas to scale to when fallback is triggered.
+        """
+        return pulumi.get(self, "replicas")
+
+    @_builtins.property
+    @pulumi.getter
+    def behavior(self) -> Optional[_builtins.str]:
+        """
+        Behavior to apply when fallback is triggered.
+        """
+        return pulumi.get(self, "behavior")
 
 
 @pulumi.output_type
@@ -15270,12 +15344,14 @@ class WorkloadOptionsAutoscalingKeda(dict):
     def __init__(__self__, *,
                  advanced: Optional['outputs.WorkloadOptionsAutoscalingKedaAdvanced'] = None,
                  cooldown_period: Optional[_builtins.int] = None,
+                 fallback: Optional['outputs.WorkloadOptionsAutoscalingKedaFallback'] = None,
                  initial_cooldown_period: Optional[_builtins.int] = None,
                  polling_interval: Optional[_builtins.int] = None,
                  triggers: Optional[Sequence['outputs.WorkloadOptionsAutoscalingKedaTrigger']] = None):
         """
         :param 'WorkloadOptionsAutoscalingKedaAdvancedArgs' advanced: Advanced configuration options for KEDA.
         :param _builtins.int cooldown_period: The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
+        :param 'WorkloadOptionsAutoscalingKedaFallbackArgs' fallback: Fallback configuration for KEDA.
         :param _builtins.int initial_cooldown_period: The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
         :param _builtins.int polling_interval: The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
         :param Sequence['WorkloadOptionsAutoscalingKedaTriggerArgs'] triggers: An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
@@ -15284,6 +15360,8 @@ class WorkloadOptionsAutoscalingKeda(dict):
             pulumi.set(__self__, "advanced", advanced)
         if cooldown_period is not None:
             pulumi.set(__self__, "cooldown_period", cooldown_period)
+        if fallback is not None:
+            pulumi.set(__self__, "fallback", fallback)
         if initial_cooldown_period is not None:
             pulumi.set(__self__, "initial_cooldown_period", initial_cooldown_period)
         if polling_interval is not None:
@@ -15306,6 +15384,14 @@ class WorkloadOptionsAutoscalingKeda(dict):
         The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
         """
         return pulumi.get(self, "cooldown_period")
+
+    @_builtins.property
+    @pulumi.getter
+    def fallback(self) -> Optional['outputs.WorkloadOptionsAutoscalingKedaFallback']:
+        """
+        Fallback configuration for KEDA.
+        """
+        return pulumi.get(self, "fallback")
 
     @_builtins.property
     @pulumi.getter(name="initialCooldownPeriod")
@@ -15440,6 +15526,64 @@ class WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers(dict):
         Defines new target value to scale on for the composed metric.
         """
         return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class WorkloadOptionsAutoscalingKedaFallback(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "failureThreshold":
+            suggest = "failure_threshold"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadOptionsAutoscalingKedaFallback. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadOptionsAutoscalingKedaFallback.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadOptionsAutoscalingKedaFallback.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 failure_threshold: _builtins.int,
+                 replicas: _builtins.int,
+                 behavior: Optional[_builtins.str] = None):
+        """
+        :param _builtins.int failure_threshold: Number of consecutive failures required to trigger fallback behavior.
+        :param _builtins.int replicas: Number of replicas to scale to when fallback is triggered.
+        :param _builtins.str behavior: Behavior to apply when fallback is triggered.
+        """
+        pulumi.set(__self__, "failure_threshold", failure_threshold)
+        pulumi.set(__self__, "replicas", replicas)
+        if behavior is not None:
+            pulumi.set(__self__, "behavior", behavior)
+
+    @_builtins.property
+    @pulumi.getter(name="failureThreshold")
+    def failure_threshold(self) -> _builtins.int:
+        """
+        Number of consecutive failures required to trigger fallback behavior.
+        """
+        return pulumi.get(self, "failure_threshold")
+
+    @_builtins.property
+    @pulumi.getter
+    def replicas(self) -> _builtins.int:
+        """
+        Number of replicas to scale to when fallback is triggered.
+        """
+        return pulumi.get(self, "replicas")
+
+    @_builtins.property
+    @pulumi.getter
+    def behavior(self) -> Optional[_builtins.str]:
+        """
+        Behavior to apply when fallback is triggered.
+        """
+        return pulumi.get(self, "behavior")
 
 
 @pulumi.output_type
@@ -18823,7 +18967,7 @@ class GetWorkloadJobResult(dict):
                  schedule: _builtins.str):
         """
         :param _builtins.int active_deadline_seconds: The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
-        :param _builtins.str concurrency_policy: Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+        :param _builtins.str concurrency_policy: Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
         :param _builtins.int history_limit: The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`.
         :param _builtins.str restart_policy: Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`.
         :param _builtins.str schedule: A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
@@ -18846,7 +18990,7 @@ class GetWorkloadJobResult(dict):
     @pulumi.getter(name="concurrencyPolicy")
     def concurrency_policy(self) -> _builtins.str:
         """
-        Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+        Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
         """
         return pulumi.get(self, "concurrency_policy")
 
@@ -19282,12 +19426,14 @@ class GetWorkloadLocalOptionAutoscalingKedaResult(dict):
                  initial_cooldown_period: _builtins.int,
                  polling_interval: _builtins.int,
                  advanceds: Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedResult']] = None,
+                 fallbacks: Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingKedaFallbackResult']] = None,
                  triggers: Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingKedaTriggerResult']] = None):
         """
         :param _builtins.int cooldown_period: The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
         :param _builtins.int initial_cooldown_period: The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
         :param _builtins.int polling_interval: The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
         :param Sequence['GetWorkloadLocalOptionAutoscalingKedaAdvancedArgs'] advanceds: Advanced configuration options for KEDA.
+        :param Sequence['GetWorkloadLocalOptionAutoscalingKedaFallbackArgs'] fallbacks: Fallback configuration for KEDA.
         :param Sequence['GetWorkloadLocalOptionAutoscalingKedaTriggerArgs'] triggers: An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
         """
         pulumi.set(__self__, "cooldown_period", cooldown_period)
@@ -19295,6 +19441,8 @@ class GetWorkloadLocalOptionAutoscalingKedaResult(dict):
         pulumi.set(__self__, "polling_interval", polling_interval)
         if advanceds is not None:
             pulumi.set(__self__, "advanceds", advanceds)
+        if fallbacks is not None:
+            pulumi.set(__self__, "fallbacks", fallbacks)
         if triggers is not None:
             pulumi.set(__self__, "triggers", triggers)
 
@@ -19329,6 +19477,14 @@ class GetWorkloadLocalOptionAutoscalingKedaResult(dict):
         Advanced configuration options for KEDA.
         """
         return pulumi.get(self, "advanceds")
+
+    @_builtins.property
+    @pulumi.getter
+    def fallbacks(self) -> Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingKedaFallbackResult']]:
+        """
+        Fallback configuration for KEDA.
+        """
+        return pulumi.get(self, "fallbacks")
 
     @_builtins.property
     @pulumi.getter
@@ -19407,6 +19563,46 @@ class GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierResult(dict):
         Defines new target value to scale on for the composed metric.
         """
         return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class GetWorkloadLocalOptionAutoscalingKedaFallbackResult(dict):
+    def __init__(__self__, *,
+                 behavior: _builtins.str,
+                 failure_threshold: _builtins.int,
+                 replicas: _builtins.int):
+        """
+        :param _builtins.str behavior: Behavior to apply when fallback is triggered.
+        :param _builtins.int failure_threshold: Number of consecutive failures required to trigger fallback behavior.
+        :param _builtins.int replicas: Number of replicas to scale to when fallback is triggered.
+        """
+        pulumi.set(__self__, "behavior", behavior)
+        pulumi.set(__self__, "failure_threshold", failure_threshold)
+        pulumi.set(__self__, "replicas", replicas)
+
+    @_builtins.property
+    @pulumi.getter
+    def behavior(self) -> _builtins.str:
+        """
+        Behavior to apply when fallback is triggered.
+        """
+        return pulumi.get(self, "behavior")
+
+    @_builtins.property
+    @pulumi.getter(name="failureThreshold")
+    def failure_threshold(self) -> _builtins.int:
+        """
+        Number of consecutive failures required to trigger fallback behavior.
+        """
+        return pulumi.get(self, "failure_threshold")
+
+    @_builtins.property
+    @pulumi.getter
+    def replicas(self) -> _builtins.int:
+        """
+        Number of replicas to scale to when fallback is triggered.
+        """
+        return pulumi.get(self, "replicas")
 
 
 @pulumi.output_type
@@ -19735,12 +19931,14 @@ class GetWorkloadOptionAutoscalingKedaResult(dict):
                  initial_cooldown_period: _builtins.int,
                  polling_interval: _builtins.int,
                  advanceds: Optional[Sequence['outputs.GetWorkloadOptionAutoscalingKedaAdvancedResult']] = None,
+                 fallbacks: Optional[Sequence['outputs.GetWorkloadOptionAutoscalingKedaFallbackResult']] = None,
                  triggers: Optional[Sequence['outputs.GetWorkloadOptionAutoscalingKedaTriggerResult']] = None):
         """
         :param _builtins.int cooldown_period: The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
         :param _builtins.int initial_cooldown_period: The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
         :param _builtins.int polling_interval: The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
         :param Sequence['GetWorkloadOptionAutoscalingKedaAdvancedArgs'] advanceds: Advanced configuration options for KEDA.
+        :param Sequence['GetWorkloadOptionAutoscalingKedaFallbackArgs'] fallbacks: Fallback configuration for KEDA.
         :param Sequence['GetWorkloadOptionAutoscalingKedaTriggerArgs'] triggers: An array of KEDA triggers to be used for scaling workloads in this GVC. This is used to define how KEDA will scale workloads in the GVC based on external metrics or events. Each trigger type may have its own specific configuration options.
         """
         pulumi.set(__self__, "cooldown_period", cooldown_period)
@@ -19748,6 +19946,8 @@ class GetWorkloadOptionAutoscalingKedaResult(dict):
         pulumi.set(__self__, "polling_interval", polling_interval)
         if advanceds is not None:
             pulumi.set(__self__, "advanceds", advanceds)
+        if fallbacks is not None:
+            pulumi.set(__self__, "fallbacks", fallbacks)
         if triggers is not None:
             pulumi.set(__self__, "triggers", triggers)
 
@@ -19782,6 +19982,14 @@ class GetWorkloadOptionAutoscalingKedaResult(dict):
         Advanced configuration options for KEDA.
         """
         return pulumi.get(self, "advanceds")
+
+    @_builtins.property
+    @pulumi.getter
+    def fallbacks(self) -> Optional[Sequence['outputs.GetWorkloadOptionAutoscalingKedaFallbackResult']]:
+        """
+        Fallback configuration for KEDA.
+        """
+        return pulumi.get(self, "fallbacks")
 
     @_builtins.property
     @pulumi.getter
@@ -19860,6 +20068,46 @@ class GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierResult(dict):
         Defines new target value to scale on for the composed metric.
         """
         return pulumi.get(self, "target")
+
+
+@pulumi.output_type
+class GetWorkloadOptionAutoscalingKedaFallbackResult(dict):
+    def __init__(__self__, *,
+                 behavior: _builtins.str,
+                 failure_threshold: _builtins.int,
+                 replicas: _builtins.int):
+        """
+        :param _builtins.str behavior: Behavior to apply when fallback is triggered.
+        :param _builtins.int failure_threshold: Number of consecutive failures required to trigger fallback behavior.
+        :param _builtins.int replicas: Number of replicas to scale to when fallback is triggered.
+        """
+        pulumi.set(__self__, "behavior", behavior)
+        pulumi.set(__self__, "failure_threshold", failure_threshold)
+        pulumi.set(__self__, "replicas", replicas)
+
+    @_builtins.property
+    @pulumi.getter
+    def behavior(self) -> _builtins.str:
+        """
+        Behavior to apply when fallback is triggered.
+        """
+        return pulumi.get(self, "behavior")
+
+    @_builtins.property
+    @pulumi.getter(name="failureThreshold")
+    def failure_threshold(self) -> _builtins.int:
+        """
+        Number of consecutive failures required to trigger fallback behavior.
+        """
+        return pulumi.get(self, "failure_threshold")
+
+    @_builtins.property
+    @pulumi.getter
+    def replicas(self) -> _builtins.int:
+        """
+        Number of replicas to scale to when fallback is triggered.
+        """
+        return pulumi.get(self, "replicas")
 
 
 @pulumi.output_type

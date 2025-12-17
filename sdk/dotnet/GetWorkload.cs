@@ -340,11 +340,12 @@ namespace Pulumiverse.Cpln
         /// 
         /// Read-Only:
         /// 
+        /// - **trigger** (Block List) (see below).
+        /// - **advanced** (Block List) (see below).
+        /// - **fallback** (Block List, Max: 1) (see below).
         /// - **polling_interval** (Number) Seconds between KEDA polling cycles.
         /// - **cooldown_period** (Number) Cooldown seconds after scaling to zero before scaling up again.
         /// - **initial_cooldown_period** (Number) Initial cooldown after scaling to zero.
-        /// - **trigger** (Block List) (see below).
-        /// - **advanced** (Block List) (see below).
         /// 
         /// &lt;a id="nestedblock--options--autoscaling--keda--trigger"&gt;&lt;/a&gt;
         /// 
@@ -390,6 +391,19 @@ namespace Pulumiverse.Cpln
         /// - **metric_type** (String) Metric type used for the composed metric.
         /// - **formula** (String) Expression that combines or transforms metrics.
         /// 
+        /// &lt;a id="nestedblock--options--autoscaling--keda--fallback"&gt;&lt;/a&gt;
+        /// 
+        /// ### `options.autoscaling.keda.fallback`
+        /// 
+        /// Required:
+        /// 
+        /// - **failure_threshold** (Number) Number of consecutive failures required to trigger fallback behavior.
+        /// - **replicas** (Number) Number of replicas to scale to when fallback is triggered.
+        /// 
+        /// Optional:
+        /// 
+        /// - **behavior** (String) Behavior to apply when fallback is triggered. Valid values: `Static`, `currentReplicas`, `currentReplicasIfHigher`, `currentReplicasIfLower`.
+        /// 
         /// &lt;a id="nestedblock--options--multi_zone"&gt;&lt;/a&gt;
         /// 
         /// ### `options.multi_zone`
@@ -418,7 +432,7 @@ namespace Pulumiverse.Cpln
         /// Read-Only:
         /// 
         /// - **schedule** (String) Cron schedule expression determining job execution times.
-        /// - **concurrency_policy** (String) Either `Forbid` or `Replace`. Determines how overlapping jobs are handled.
+        /// - **concurrency_policy** (String) Either `Forbid`, `Replace` or `Allow`. Determines how overlapping jobs are handled.
         /// - **history_limit** (Number) Maximum completed job instances retained. Integer between `1` and `10`. Default: `5`.
         /// - **restart_policy** (String) Either `OnFailure` or `Never`. Default: `Never`.
         /// - **active_deadline_seconds** (Number) Maximum seconds a job can run before it is forcibly stopped.
@@ -948,11 +962,12 @@ namespace Pulumiverse.Cpln
         /// 
         /// Read-Only:
         /// 
+        /// - **trigger** (Block List) (see below).
+        /// - **advanced** (Block List) (see below).
+        /// - **fallback** (Block List, Max: 1) (see below).
         /// - **polling_interval** (Number) Seconds between KEDA polling cycles.
         /// - **cooldown_period** (Number) Cooldown seconds after scaling to zero before scaling up again.
         /// - **initial_cooldown_period** (Number) Initial cooldown after scaling to zero.
-        /// - **trigger** (Block List) (see below).
-        /// - **advanced** (Block List) (see below).
         /// 
         /// &lt;a id="nestedblock--options--autoscaling--keda--trigger"&gt;&lt;/a&gt;
         /// 
@@ -998,6 +1013,19 @@ namespace Pulumiverse.Cpln
         /// - **metric_type** (String) Metric type used for the composed metric.
         /// - **formula** (String) Expression that combines or transforms metrics.
         /// 
+        /// &lt;a id="nestedblock--options--autoscaling--keda--fallback"&gt;&lt;/a&gt;
+        /// 
+        /// ### `options.autoscaling.keda.fallback`
+        /// 
+        /// Required:
+        /// 
+        /// - **failure_threshold** (Number) Number of consecutive failures required to trigger fallback behavior.
+        /// - **replicas** (Number) Number of replicas to scale to when fallback is triggered.
+        /// 
+        /// Optional:
+        /// 
+        /// - **behavior** (String) Behavior to apply when fallback is triggered. Valid values: `Static`, `currentReplicas`, `currentReplicasIfHigher`, `currentReplicasIfLower`.
+        /// 
         /// &lt;a id="nestedblock--options--multi_zone"&gt;&lt;/a&gt;
         /// 
         /// ### `options.multi_zone`
@@ -1026,7 +1054,7 @@ namespace Pulumiverse.Cpln
         /// Read-Only:
         /// 
         /// - **schedule** (String) Cron schedule expression determining job execution times.
-        /// - **concurrency_policy** (String) Either `Forbid` or `Replace`. Determines how overlapping jobs are handled.
+        /// - **concurrency_policy** (String) Either `Forbid`, `Replace` or `Allow`. Determines how overlapping jobs are handled.
         /// - **history_limit** (Number) Maximum completed job instances retained. Integer between `1` and `10`. Default: `5`.
         /// - **restart_policy** (String) Either `OnFailure` or `Never`. Default: `Never`.
         /// - **active_deadline_seconds** (Number) Maximum seconds a job can run before it is forcibly stopped.
@@ -1556,11 +1584,12 @@ namespace Pulumiverse.Cpln
         /// 
         /// Read-Only:
         /// 
+        /// - **trigger** (Block List) (see below).
+        /// - **advanced** (Block List) (see below).
+        /// - **fallback** (Block List, Max: 1) (see below).
         /// - **polling_interval** (Number) Seconds between KEDA polling cycles.
         /// - **cooldown_period** (Number) Cooldown seconds after scaling to zero before scaling up again.
         /// - **initial_cooldown_period** (Number) Initial cooldown after scaling to zero.
-        /// - **trigger** (Block List) (see below).
-        /// - **advanced** (Block List) (see below).
         /// 
         /// &lt;a id="nestedblock--options--autoscaling--keda--trigger"&gt;&lt;/a&gt;
         /// 
@@ -1606,6 +1635,19 @@ namespace Pulumiverse.Cpln
         /// - **metric_type** (String) Metric type used for the composed metric.
         /// - **formula** (String) Expression that combines or transforms metrics.
         /// 
+        /// &lt;a id="nestedblock--options--autoscaling--keda--fallback"&gt;&lt;/a&gt;
+        /// 
+        /// ### `options.autoscaling.keda.fallback`
+        /// 
+        /// Required:
+        /// 
+        /// - **failure_threshold** (Number) Number of consecutive failures required to trigger fallback behavior.
+        /// - **replicas** (Number) Number of replicas to scale to when fallback is triggered.
+        /// 
+        /// Optional:
+        /// 
+        /// - **behavior** (String) Behavior to apply when fallback is triggered. Valid values: `Static`, `currentReplicas`, `currentReplicasIfHigher`, `currentReplicasIfLower`.
+        /// 
         /// &lt;a id="nestedblock--options--multi_zone"&gt;&lt;/a&gt;
         /// 
         /// ### `options.multi_zone`
@@ -1634,7 +1676,7 @@ namespace Pulumiverse.Cpln
         /// Read-Only:
         /// 
         /// - **schedule** (String) Cron schedule expression determining job execution times.
-        /// - **concurrency_policy** (String) Either `Forbid` or `Replace`. Determines how overlapping jobs are handled.
+        /// - **concurrency_policy** (String) Either `Forbid`, `Replace` or `Allow`. Determines how overlapping jobs are handled.
         /// - **history_limit** (Number) Maximum completed job instances retained. Integer between `1` and `10`. Default: `5`.
         /// - **restart_policy** (String) Either `OnFailure` or `Never`. Default: `Never`.
         /// - **active_deadline_seconds** (Number) Maximum seconds a job can run before it is forcibly stopped.

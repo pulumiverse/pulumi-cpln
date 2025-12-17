@@ -1144,7 +1144,7 @@ export interface GetWorkloadJob {
      */
     activeDeadlineSeconds: number;
     /**
-     * Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+     * Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
      */
     concurrencyPolicy: string;
     /**
@@ -1309,6 +1309,10 @@ export interface GetWorkloadLocalOptionAutoscalingKeda {
      */
     cooldownPeriod: number;
     /**
+     * Fallback configuration for KEDA.
+     */
+    fallbacks?: outputs.GetWorkloadLocalOptionAutoscalingKedaFallback[];
+    /**
      * The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
      */
     initialCooldownPeriod: number;
@@ -1346,6 +1350,21 @@ export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier {
      * Defines new target value to scale on for the composed metric.
      */
     target: string;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaFallback {
+    /**
+     * Behavior to apply when fallback is triggered.
+     */
+    behavior: string;
+    /**
+     * Number of consecutive failures required to trigger fallback behavior.
+     */
+    failureThreshold: number;
+    /**
+     * Number of replicas to scale to when fallback is triggered.
+     */
+    replicas: number;
 }
 
 export interface GetWorkloadLocalOptionAutoscalingKedaTrigger {
@@ -1471,6 +1490,10 @@ export interface GetWorkloadOptionAutoscalingKeda {
      */
     cooldownPeriod: number;
     /**
+     * Fallback configuration for KEDA.
+     */
+    fallbacks?: outputs.GetWorkloadOptionAutoscalingKedaFallback[];
+    /**
      * The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
      */
     initialCooldownPeriod: number;
@@ -1508,6 +1531,21 @@ export interface GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier {
      * Defines new target value to scale on for the composed metric.
      */
     target: string;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaFallback {
+    /**
+     * Behavior to apply when fallback is triggered.
+     */
+    behavior: string;
+    /**
+     * Number of consecutive failures required to trigger fallback behavior.
+     */
+    failureThreshold: number;
+    /**
+     * Number of replicas to scale to when fallback is triggered.
+     */
+    replicas: number;
 }
 
 export interface GetWorkloadOptionAutoscalingKedaTrigger {
@@ -4711,7 +4749,7 @@ export interface WorkloadJob {
      */
     activeDeadlineSeconds?: number;
     /**
-     * Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+     * Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
      */
     concurrencyPolicy: string;
     /**
@@ -4876,6 +4914,10 @@ export interface WorkloadLocalOptionAutoscalingKeda {
      */
     cooldownPeriod?: number;
     /**
+     * Fallback configuration for KEDA.
+     */
+    fallback?: outputs.WorkloadLocalOptionAutoscalingKedaFallback;
+    /**
      * The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
      */
     initialCooldownPeriod?: number;
@@ -4913,6 +4955,21 @@ export interface WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers {
      * Defines new target value to scale on for the composed metric.
      */
     target?: string;
+}
+
+export interface WorkloadLocalOptionAutoscalingKedaFallback {
+    /**
+     * Behavior to apply when fallback is triggered.
+     */
+    behavior?: string;
+    /**
+     * Number of consecutive failures required to trigger fallback behavior.
+     */
+    failureThreshold: number;
+    /**
+     * Number of replicas to scale to when fallback is triggered.
+     */
+    replicas: number;
 }
 
 export interface WorkloadLocalOptionAutoscalingKedaTrigger {
@@ -5038,6 +5095,10 @@ export interface WorkloadOptionsAutoscalingKeda {
      */
     cooldownPeriod?: number;
     /**
+     * Fallback configuration for KEDA.
+     */
+    fallback?: outputs.WorkloadOptionsAutoscalingKedaFallback;
+    /**
      * The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
      */
     initialCooldownPeriod?: number;
@@ -5075,6 +5136,21 @@ export interface WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers {
      * Defines new target value to scale on for the composed metric.
      */
     target?: string;
+}
+
+export interface WorkloadOptionsAutoscalingKedaFallback {
+    /**
+     * Behavior to apply when fallback is triggered.
+     */
+    behavior?: string;
+    /**
+     * Number of consecutive failures required to trigger fallback behavior.
+     */
+    failureThreshold: number;
+    /**
+     * Number of replicas to scale to when fallback is triggered.
+     */
+    replicas: number;
 }
 
 export interface WorkloadOptionsAutoscalingKedaTrigger {

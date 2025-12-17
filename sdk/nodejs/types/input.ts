@@ -1557,7 +1557,7 @@ export interface GetWorkloadJob {
      */
     activeDeadlineSeconds?: number;
     /**
-     * Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+     * Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
      */
     concurrencyPolicy?: string;
     /**
@@ -1580,7 +1580,7 @@ export interface GetWorkloadJobArgs {
      */
     activeDeadlineSeconds?: pulumi.Input<number>;
     /**
-     * Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+     * Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
      */
     concurrencyPolicy?: pulumi.Input<string>;
     /**
@@ -1883,6 +1883,10 @@ export interface GetWorkloadLocalOptionAutoscalingKeda {
      */
     cooldownPeriod?: number;
     /**
+     * Fallback configuration for KEDA.
+     */
+    fallbacks?: inputs.GetWorkloadLocalOptionAutoscalingKedaFallback[];
+    /**
      * The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
      */
     initialCooldownPeriod?: number;
@@ -1905,6 +1909,10 @@ export interface GetWorkloadLocalOptionAutoscalingKedaArgs {
      * The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
      */
     cooldownPeriod?: pulumi.Input<number>;
+    /**
+     * Fallback configuration for KEDA.
+     */
+    fallbacks?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLocalOptionAutoscalingKedaFallbackArgs>[]>;
     /**
      * The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
      */
@@ -1969,6 +1977,36 @@ export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArg
      * Defines new target value to scale on for the composed metric.
      */
     target?: pulumi.Input<string>;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaFallback {
+    /**
+     * Behavior to apply when fallback is triggered.
+     */
+    behavior?: string;
+    /**
+     * Number of consecutive failures required to trigger fallback behavior.
+     */
+    failureThreshold?: number;
+    /**
+     * Number of replicas to scale to when fallback is triggered.
+     */
+    replicas?: number;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaFallbackArgs {
+    /**
+     * Behavior to apply when fallback is triggered.
+     */
+    behavior?: pulumi.Input<string>;
+    /**
+     * Number of consecutive failures required to trigger fallback behavior.
+     */
+    failureThreshold?: pulumi.Input<number>;
+    /**
+     * Number of replicas to scale to when fallback is triggered.
+     */
+    replicas?: pulumi.Input<number>;
 }
 
 export interface GetWorkloadLocalOptionAutoscalingKedaTrigger {
@@ -2207,6 +2245,10 @@ export interface GetWorkloadOptionAutoscalingKeda {
      */
     cooldownPeriod?: number;
     /**
+     * Fallback configuration for KEDA.
+     */
+    fallbacks?: inputs.GetWorkloadOptionAutoscalingKedaFallback[];
+    /**
      * The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
      */
     initialCooldownPeriod?: number;
@@ -2229,6 +2271,10 @@ export interface GetWorkloadOptionAutoscalingKedaArgs {
      * The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
      */
     cooldownPeriod?: pulumi.Input<number>;
+    /**
+     * Fallback configuration for KEDA.
+     */
+    fallbacks?: pulumi.Input<pulumi.Input<inputs.GetWorkloadOptionAutoscalingKedaFallbackArgs>[]>;
     /**
      * The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
      */
@@ -2293,6 +2339,36 @@ export interface GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArgs {
      * Defines new target value to scale on for the composed metric.
      */
     target?: pulumi.Input<string>;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaFallback {
+    /**
+     * Behavior to apply when fallback is triggered.
+     */
+    behavior?: string;
+    /**
+     * Number of consecutive failures required to trigger fallback behavior.
+     */
+    failureThreshold?: number;
+    /**
+     * Number of replicas to scale to when fallback is triggered.
+     */
+    replicas?: number;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaFallbackArgs {
+    /**
+     * Behavior to apply when fallback is triggered.
+     */
+    behavior?: pulumi.Input<string>;
+    /**
+     * Number of consecutive failures required to trigger fallback behavior.
+     */
+    failureThreshold?: pulumi.Input<number>;
+    /**
+     * Number of replicas to scale to when fallback is triggered.
+     */
+    replicas?: pulumi.Input<number>;
 }
 
 export interface GetWorkloadOptionAutoscalingKedaTrigger {
@@ -5471,7 +5547,7 @@ export interface WorkloadJob {
      */
     activeDeadlineSeconds?: pulumi.Input<number>;
     /**
-     * Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+     * Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
      */
     concurrencyPolicy?: pulumi.Input<string>;
     /**
@@ -5636,6 +5712,10 @@ export interface WorkloadLocalOptionAutoscalingKeda {
      */
     cooldownPeriod?: pulumi.Input<number>;
     /**
+     * Fallback configuration for KEDA.
+     */
+    fallback?: pulumi.Input<inputs.WorkloadLocalOptionAutoscalingKedaFallback>;
+    /**
      * The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
      */
     initialCooldownPeriod?: pulumi.Input<number>;
@@ -5673,6 +5753,21 @@ export interface WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers {
      * Defines new target value to scale on for the composed metric.
      */
     target?: pulumi.Input<string>;
+}
+
+export interface WorkloadLocalOptionAutoscalingKedaFallback {
+    /**
+     * Behavior to apply when fallback is triggered.
+     */
+    behavior?: pulumi.Input<string>;
+    /**
+     * Number of consecutive failures required to trigger fallback behavior.
+     */
+    failureThreshold: pulumi.Input<number>;
+    /**
+     * Number of replicas to scale to when fallback is triggered.
+     */
+    replicas: pulumi.Input<number>;
 }
 
 export interface WorkloadLocalOptionAutoscalingKedaTrigger {
@@ -5798,6 +5893,10 @@ export interface WorkloadOptionsAutoscalingKeda {
      */
     cooldownPeriod?: pulumi.Input<number>;
     /**
+     * Fallback configuration for KEDA.
+     */
+    fallback?: pulumi.Input<inputs.WorkloadOptionsAutoscalingKedaFallback>;
+    /**
      * The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
      */
     initialCooldownPeriod?: pulumi.Input<number>;
@@ -5835,6 +5934,21 @@ export interface WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers {
      * Defines new target value to scale on for the composed metric.
      */
     target?: pulumi.Input<string>;
+}
+
+export interface WorkloadOptionsAutoscalingKedaFallback {
+    /**
+     * Behavior to apply when fallback is triggered.
+     */
+    behavior?: pulumi.Input<string>;
+    /**
+     * Number of consecutive failures required to trigger fallback behavior.
+     */
+    failureThreshold: pulumi.Input<number>;
+    /**
+     * Number of replicas to scale to when fallback is triggered.
+     */
+    replicas: pulumi.Input<number>;
 }
 
 export interface WorkloadOptionsAutoscalingKedaTrigger {
