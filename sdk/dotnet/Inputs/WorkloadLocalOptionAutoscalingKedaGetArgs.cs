@@ -26,6 +26,12 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<int>? CooldownPeriod { get; set; }
 
         /// <summary>
+        /// Fallback configuration for KEDA.
+        /// </summary>
+        [Input("fallback")]
+        public Input<Inputs.WorkloadLocalOptionAutoscalingKedaFallbackGetArgs>? Fallback { get; set; }
+
+        /// <summary>
         /// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
         /// </summary>
         [Input("initialCooldownPeriod")]

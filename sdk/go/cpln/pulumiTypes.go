@@ -38286,7 +38286,7 @@ func (o WorkloadFirewallSpecInternalPtrOutput) InboundAllowWorkloads() pulumi.St
 type WorkloadJob struct {
 	// The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
 	ActiveDeadlineSeconds *int `pulumi:"activeDeadlineSeconds"`
-	// Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+	// Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
 	ConcurrencyPolicy *string `pulumi:"concurrencyPolicy"`
 	// The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`.
 	HistoryLimit *int `pulumi:"historyLimit"`
@@ -38310,7 +38310,7 @@ type WorkloadJobInput interface {
 type WorkloadJobArgs struct {
 	// The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
 	ActiveDeadlineSeconds pulumi.IntPtrInput `pulumi:"activeDeadlineSeconds"`
-	// Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+	// Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
 	ConcurrencyPolicy pulumi.StringPtrInput `pulumi:"concurrencyPolicy"`
 	// The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`.
 	HistoryLimit pulumi.IntPtrInput `pulumi:"historyLimit"`
@@ -38376,7 +38376,7 @@ func (o WorkloadJobOutput) ActiveDeadlineSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadJob) *int { return v.ActiveDeadlineSeconds }).(pulumi.IntPtrOutput)
 }
 
-// Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+// Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
 func (o WorkloadJobOutput) ConcurrencyPolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v WorkloadJob) *string { return v.ConcurrencyPolicy }).(pulumi.StringPtrOutput)
 }
@@ -39675,6 +39675,8 @@ type WorkloadLocalOptionAutoscalingKeda struct {
 	Advanced *WorkloadLocalOptionAutoscalingKedaAdvanced `pulumi:"advanced"`
 	// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 	CooldownPeriod *int `pulumi:"cooldownPeriod"`
+	// Fallback configuration for KEDA.
+	Fallback *WorkloadLocalOptionAutoscalingKedaFallback `pulumi:"fallback"`
 	// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 	InitialCooldownPeriod *int `pulumi:"initialCooldownPeriod"`
 	// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
@@ -39699,6 +39701,8 @@ type WorkloadLocalOptionAutoscalingKedaArgs struct {
 	Advanced WorkloadLocalOptionAutoscalingKedaAdvancedPtrInput `pulumi:"advanced"`
 	// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 	CooldownPeriod pulumi.IntPtrInput `pulumi:"cooldownPeriod"`
+	// Fallback configuration for KEDA.
+	Fallback WorkloadLocalOptionAutoscalingKedaFallbackPtrInput `pulumi:"fallback"`
 	// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 	InitialCooldownPeriod pulumi.IntPtrInput `pulumi:"initialCooldownPeriod"`
 	// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
@@ -39796,6 +39800,13 @@ func (o WorkloadLocalOptionAutoscalingKedaOutput) CooldownPeriod() pulumi.IntPtr
 	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKeda) *int { return v.CooldownPeriod }).(pulumi.IntPtrOutput)
 }
 
+// Fallback configuration for KEDA.
+func (o WorkloadLocalOptionAutoscalingKedaOutput) Fallback() WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKeda) *WorkloadLocalOptionAutoscalingKedaFallback {
+		return v.Fallback
+	}).(WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput)
+}
+
 // The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 func (o WorkloadLocalOptionAutoscalingKedaOutput) InitialCooldownPeriod() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKeda) *int { return v.InitialCooldownPeriod }).(pulumi.IntPtrOutput)
@@ -39855,6 +39866,16 @@ func (o WorkloadLocalOptionAutoscalingKedaPtrOutput) CooldownPeriod() pulumi.Int
 		}
 		return v.CooldownPeriod
 	}).(pulumi.IntPtrOutput)
+}
+
+// Fallback configuration for KEDA.
+func (o WorkloadLocalOptionAutoscalingKedaPtrOutput) Fallback() WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKeda) *WorkloadLocalOptionAutoscalingKedaFallback {
+		if v == nil {
+			return nil
+		}
+		return v.Fallback
+	}).(WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput)
 }
 
 // The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
@@ -40218,6 +40239,181 @@ func (o WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput) Tar
 		}
 		return v.Target
 	}).(pulumi.StringPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaFallback struct {
+	// Behavior to apply when fallback is triggered.
+	Behavior *string `pulumi:"behavior"`
+	// Number of consecutive failures required to trigger fallback behavior.
+	FailureThreshold int `pulumi:"failureThreshold"`
+	// Number of replicas to scale to when fallback is triggered.
+	Replicas int `pulumi:"replicas"`
+}
+
+// WorkloadLocalOptionAutoscalingKedaFallbackInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaFallbackArgs and WorkloadLocalOptionAutoscalingKedaFallbackOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaFallbackInput` via:
+//
+//	WorkloadLocalOptionAutoscalingKedaFallbackArgs{...}
+type WorkloadLocalOptionAutoscalingKedaFallbackInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaFallbackOutput() WorkloadLocalOptionAutoscalingKedaFallbackOutput
+	ToWorkloadLocalOptionAutoscalingKedaFallbackOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaFallbackOutput
+}
+
+type WorkloadLocalOptionAutoscalingKedaFallbackArgs struct {
+	// Behavior to apply when fallback is triggered.
+	Behavior pulumi.StringPtrInput `pulumi:"behavior"`
+	// Number of consecutive failures required to trigger fallback behavior.
+	FailureThreshold pulumi.IntInput `pulumi:"failureThreshold"`
+	// Number of replicas to scale to when fallback is triggered.
+	Replicas pulumi.IntInput `pulumi:"replicas"`
+}
+
+func (WorkloadLocalOptionAutoscalingKedaFallbackArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaFallback)(nil)).Elem()
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaFallbackArgs) ToWorkloadLocalOptionAutoscalingKedaFallbackOutput() WorkloadLocalOptionAutoscalingKedaFallbackOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaFallbackOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaFallbackArgs) ToWorkloadLocalOptionAutoscalingKedaFallbackOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaFallbackOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaFallbackOutput)
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaFallbackArgs) ToWorkloadLocalOptionAutoscalingKedaFallbackPtrOutput() WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaFallbackPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaFallbackArgs) ToWorkloadLocalOptionAutoscalingKedaFallbackPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaFallbackOutput).ToWorkloadLocalOptionAutoscalingKedaFallbackPtrOutputWithContext(ctx)
+}
+
+// WorkloadLocalOptionAutoscalingKedaFallbackPtrInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaFallbackArgs, WorkloadLocalOptionAutoscalingKedaFallbackPtr and WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaFallbackPtrInput` via:
+//
+//	        WorkloadLocalOptionAutoscalingKedaFallbackArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadLocalOptionAutoscalingKedaFallbackPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaFallbackPtrOutput() WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput
+	ToWorkloadLocalOptionAutoscalingKedaFallbackPtrOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput
+}
+
+type workloadLocalOptionAutoscalingKedaFallbackPtrType WorkloadLocalOptionAutoscalingKedaFallbackArgs
+
+func WorkloadLocalOptionAutoscalingKedaFallbackPtr(v *WorkloadLocalOptionAutoscalingKedaFallbackArgs) WorkloadLocalOptionAutoscalingKedaFallbackPtrInput {
+	return (*workloadLocalOptionAutoscalingKedaFallbackPtrType)(v)
+}
+
+func (*workloadLocalOptionAutoscalingKedaFallbackPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscalingKedaFallback)(nil)).Elem()
+}
+
+func (i *workloadLocalOptionAutoscalingKedaFallbackPtrType) ToWorkloadLocalOptionAutoscalingKedaFallbackPtrOutput() WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaFallbackPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadLocalOptionAutoscalingKedaFallbackPtrType) ToWorkloadLocalOptionAutoscalingKedaFallbackPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaFallbackOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaFallbackOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaFallback)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaFallbackOutput) ToWorkloadLocalOptionAutoscalingKedaFallbackOutput() WorkloadLocalOptionAutoscalingKedaFallbackOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaFallbackOutput) ToWorkloadLocalOptionAutoscalingKedaFallbackOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaFallbackOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaFallbackOutput) ToWorkloadLocalOptionAutoscalingKedaFallbackPtrOutput() WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput {
+	return o.ToWorkloadLocalOptionAutoscalingKedaFallbackPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaFallbackOutput) ToWorkloadLocalOptionAutoscalingKedaFallbackPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadLocalOptionAutoscalingKedaFallback) *WorkloadLocalOptionAutoscalingKedaFallback {
+		return &v
+	}).(WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput)
+}
+
+// Behavior to apply when fallback is triggered.
+func (o WorkloadLocalOptionAutoscalingKedaFallbackOutput) Behavior() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaFallback) *string { return v.Behavior }).(pulumi.StringPtrOutput)
+}
+
+// Number of consecutive failures required to trigger fallback behavior.
+func (o WorkloadLocalOptionAutoscalingKedaFallbackOutput) FailureThreshold() pulumi.IntOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaFallback) int { return v.FailureThreshold }).(pulumi.IntOutput)
+}
+
+// Number of replicas to scale to when fallback is triggered.
+func (o WorkloadLocalOptionAutoscalingKedaFallbackOutput) Replicas() pulumi.IntOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaFallback) int { return v.Replicas }).(pulumi.IntOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscalingKedaFallback)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput) ToWorkloadLocalOptionAutoscalingKedaFallbackPtrOutput() WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput) ToWorkloadLocalOptionAutoscalingKedaFallbackPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput) Elem() WorkloadLocalOptionAutoscalingKedaFallbackOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaFallback) WorkloadLocalOptionAutoscalingKedaFallback {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadLocalOptionAutoscalingKedaFallback
+		return ret
+	}).(WorkloadLocalOptionAutoscalingKedaFallbackOutput)
+}
+
+// Behavior to apply when fallback is triggered.
+func (o WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput) Behavior() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaFallback) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Behavior
+	}).(pulumi.StringPtrOutput)
+}
+
+// Number of consecutive failures required to trigger fallback behavior.
+func (o WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput) FailureThreshold() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaFallback) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.FailureThreshold
+	}).(pulumi.IntPtrOutput)
+}
+
+// Number of replicas to scale to when fallback is triggered.
+func (o WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput) Replicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaFallback) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.Replicas
+	}).(pulumi.IntPtrOutput)
 }
 
 type WorkloadLocalOptionAutoscalingKedaTrigger struct {
@@ -41277,6 +41473,8 @@ type WorkloadOptionsAutoscalingKeda struct {
 	Advanced *WorkloadOptionsAutoscalingKedaAdvanced `pulumi:"advanced"`
 	// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 	CooldownPeriod *int `pulumi:"cooldownPeriod"`
+	// Fallback configuration for KEDA.
+	Fallback *WorkloadOptionsAutoscalingKedaFallback `pulumi:"fallback"`
 	// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 	InitialCooldownPeriod *int `pulumi:"initialCooldownPeriod"`
 	// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
@@ -41301,6 +41499,8 @@ type WorkloadOptionsAutoscalingKedaArgs struct {
 	Advanced WorkloadOptionsAutoscalingKedaAdvancedPtrInput `pulumi:"advanced"`
 	// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 	CooldownPeriod pulumi.IntPtrInput `pulumi:"cooldownPeriod"`
+	// Fallback configuration for KEDA.
+	Fallback WorkloadOptionsAutoscalingKedaFallbackPtrInput `pulumi:"fallback"`
 	// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 	InitialCooldownPeriod pulumi.IntPtrInput `pulumi:"initialCooldownPeriod"`
 	// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
@@ -41396,6 +41596,11 @@ func (o WorkloadOptionsAutoscalingKedaOutput) CooldownPeriod() pulumi.IntPtrOutp
 	return o.ApplyT(func(v WorkloadOptionsAutoscalingKeda) *int { return v.CooldownPeriod }).(pulumi.IntPtrOutput)
 }
 
+// Fallback configuration for KEDA.
+func (o WorkloadOptionsAutoscalingKedaOutput) Fallback() WorkloadOptionsAutoscalingKedaFallbackPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKeda) *WorkloadOptionsAutoscalingKedaFallback { return v.Fallback }).(WorkloadOptionsAutoscalingKedaFallbackPtrOutput)
+}
+
 // The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 func (o WorkloadOptionsAutoscalingKedaOutput) InitialCooldownPeriod() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadOptionsAutoscalingKeda) *int { return v.InitialCooldownPeriod }).(pulumi.IntPtrOutput)
@@ -41453,6 +41658,16 @@ func (o WorkloadOptionsAutoscalingKedaPtrOutput) CooldownPeriod() pulumi.IntPtrO
 		}
 		return v.CooldownPeriod
 	}).(pulumi.IntPtrOutput)
+}
+
+// Fallback configuration for KEDA.
+func (o WorkloadOptionsAutoscalingKedaPtrOutput) Fallback() WorkloadOptionsAutoscalingKedaFallbackPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKeda) *WorkloadOptionsAutoscalingKedaFallback {
+		if v == nil {
+			return nil
+		}
+		return v.Fallback
+	}).(WorkloadOptionsAutoscalingKedaFallbackPtrOutput)
 }
 
 // The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
@@ -41816,6 +42031,181 @@ func (o WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput) Target(
 		}
 		return v.Target
 	}).(pulumi.StringPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaFallback struct {
+	// Behavior to apply when fallback is triggered.
+	Behavior *string `pulumi:"behavior"`
+	// Number of consecutive failures required to trigger fallback behavior.
+	FailureThreshold int `pulumi:"failureThreshold"`
+	// Number of replicas to scale to when fallback is triggered.
+	Replicas int `pulumi:"replicas"`
+}
+
+// WorkloadOptionsAutoscalingKedaFallbackInput is an input type that accepts WorkloadOptionsAutoscalingKedaFallbackArgs and WorkloadOptionsAutoscalingKedaFallbackOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaFallbackInput` via:
+//
+//	WorkloadOptionsAutoscalingKedaFallbackArgs{...}
+type WorkloadOptionsAutoscalingKedaFallbackInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaFallbackOutput() WorkloadOptionsAutoscalingKedaFallbackOutput
+	ToWorkloadOptionsAutoscalingKedaFallbackOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaFallbackOutput
+}
+
+type WorkloadOptionsAutoscalingKedaFallbackArgs struct {
+	// Behavior to apply when fallback is triggered.
+	Behavior pulumi.StringPtrInput `pulumi:"behavior"`
+	// Number of consecutive failures required to trigger fallback behavior.
+	FailureThreshold pulumi.IntInput `pulumi:"failureThreshold"`
+	// Number of replicas to scale to when fallback is triggered.
+	Replicas pulumi.IntInput `pulumi:"replicas"`
+}
+
+func (WorkloadOptionsAutoscalingKedaFallbackArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaFallback)(nil)).Elem()
+}
+
+func (i WorkloadOptionsAutoscalingKedaFallbackArgs) ToWorkloadOptionsAutoscalingKedaFallbackOutput() WorkloadOptionsAutoscalingKedaFallbackOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaFallbackOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaFallbackArgs) ToWorkloadOptionsAutoscalingKedaFallbackOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaFallbackOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaFallbackOutput)
+}
+
+func (i WorkloadOptionsAutoscalingKedaFallbackArgs) ToWorkloadOptionsAutoscalingKedaFallbackPtrOutput() WorkloadOptionsAutoscalingKedaFallbackPtrOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaFallbackPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaFallbackArgs) ToWorkloadOptionsAutoscalingKedaFallbackPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaFallbackPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaFallbackOutput).ToWorkloadOptionsAutoscalingKedaFallbackPtrOutputWithContext(ctx)
+}
+
+// WorkloadOptionsAutoscalingKedaFallbackPtrInput is an input type that accepts WorkloadOptionsAutoscalingKedaFallbackArgs, WorkloadOptionsAutoscalingKedaFallbackPtr and WorkloadOptionsAutoscalingKedaFallbackPtrOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaFallbackPtrInput` via:
+//
+//	        WorkloadOptionsAutoscalingKedaFallbackArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadOptionsAutoscalingKedaFallbackPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaFallbackPtrOutput() WorkloadOptionsAutoscalingKedaFallbackPtrOutput
+	ToWorkloadOptionsAutoscalingKedaFallbackPtrOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaFallbackPtrOutput
+}
+
+type workloadOptionsAutoscalingKedaFallbackPtrType WorkloadOptionsAutoscalingKedaFallbackArgs
+
+func WorkloadOptionsAutoscalingKedaFallbackPtr(v *WorkloadOptionsAutoscalingKedaFallbackArgs) WorkloadOptionsAutoscalingKedaFallbackPtrInput {
+	return (*workloadOptionsAutoscalingKedaFallbackPtrType)(v)
+}
+
+func (*workloadOptionsAutoscalingKedaFallbackPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadOptionsAutoscalingKedaFallback)(nil)).Elem()
+}
+
+func (i *workloadOptionsAutoscalingKedaFallbackPtrType) ToWorkloadOptionsAutoscalingKedaFallbackPtrOutput() WorkloadOptionsAutoscalingKedaFallbackPtrOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaFallbackPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadOptionsAutoscalingKedaFallbackPtrType) ToWorkloadOptionsAutoscalingKedaFallbackPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaFallbackPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaFallbackPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaFallbackOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaFallbackOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaFallback)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaFallbackOutput) ToWorkloadOptionsAutoscalingKedaFallbackOutput() WorkloadOptionsAutoscalingKedaFallbackOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaFallbackOutput) ToWorkloadOptionsAutoscalingKedaFallbackOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaFallbackOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaFallbackOutput) ToWorkloadOptionsAutoscalingKedaFallbackPtrOutput() WorkloadOptionsAutoscalingKedaFallbackPtrOutput {
+	return o.ToWorkloadOptionsAutoscalingKedaFallbackPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadOptionsAutoscalingKedaFallbackOutput) ToWorkloadOptionsAutoscalingKedaFallbackPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaFallbackPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadOptionsAutoscalingKedaFallback) *WorkloadOptionsAutoscalingKedaFallback {
+		return &v
+	}).(WorkloadOptionsAutoscalingKedaFallbackPtrOutput)
+}
+
+// Behavior to apply when fallback is triggered.
+func (o WorkloadOptionsAutoscalingKedaFallbackOutput) Behavior() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaFallback) *string { return v.Behavior }).(pulumi.StringPtrOutput)
+}
+
+// Number of consecutive failures required to trigger fallback behavior.
+func (o WorkloadOptionsAutoscalingKedaFallbackOutput) FailureThreshold() pulumi.IntOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaFallback) int { return v.FailureThreshold }).(pulumi.IntOutput)
+}
+
+// Number of replicas to scale to when fallback is triggered.
+func (o WorkloadOptionsAutoscalingKedaFallbackOutput) Replicas() pulumi.IntOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaFallback) int { return v.Replicas }).(pulumi.IntOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaFallbackPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaFallbackPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadOptionsAutoscalingKedaFallback)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaFallbackPtrOutput) ToWorkloadOptionsAutoscalingKedaFallbackPtrOutput() WorkloadOptionsAutoscalingKedaFallbackPtrOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaFallbackPtrOutput) ToWorkloadOptionsAutoscalingKedaFallbackPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaFallbackPtrOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaFallbackPtrOutput) Elem() WorkloadOptionsAutoscalingKedaFallbackOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaFallback) WorkloadOptionsAutoscalingKedaFallback {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadOptionsAutoscalingKedaFallback
+		return ret
+	}).(WorkloadOptionsAutoscalingKedaFallbackOutput)
+}
+
+// Behavior to apply when fallback is triggered.
+func (o WorkloadOptionsAutoscalingKedaFallbackPtrOutput) Behavior() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaFallback) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Behavior
+	}).(pulumi.StringPtrOutput)
+}
+
+// Number of consecutive failures required to trigger fallback behavior.
+func (o WorkloadOptionsAutoscalingKedaFallbackPtrOutput) FailureThreshold() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaFallback) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.FailureThreshold
+	}).(pulumi.IntPtrOutput)
+}
+
+// Number of replicas to scale to when fallback is triggered.
+func (o WorkloadOptionsAutoscalingKedaFallbackPtrOutput) Replicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaFallback) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.Replicas
+	}).(pulumi.IntPtrOutput)
 }
 
 type WorkloadOptionsAutoscalingKedaTrigger struct {
@@ -51796,7 +52186,7 @@ func (o GetWorkloadFirewallSpecInternalArrayOutput) Index(i pulumi.IntInput) Get
 type GetWorkloadJob struct {
 	// The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
 	ActiveDeadlineSeconds int `pulumi:"activeDeadlineSeconds"`
-	// Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+	// Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
 	ConcurrencyPolicy string `pulumi:"concurrencyPolicy"`
 	// The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`.
 	HistoryLimit int `pulumi:"historyLimit"`
@@ -51820,7 +52210,7 @@ type GetWorkloadJobInput interface {
 type GetWorkloadJobArgs struct {
 	// The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
 	ActiveDeadlineSeconds pulumi.IntInput `pulumi:"activeDeadlineSeconds"`
-	// Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+	// Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
 	ConcurrencyPolicy pulumi.StringInput `pulumi:"concurrencyPolicy"`
 	// The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`.
 	HistoryLimit pulumi.IntInput `pulumi:"historyLimit"`
@@ -51886,7 +52276,7 @@ func (o GetWorkloadJobOutput) ActiveDeadlineSeconds() pulumi.IntOutput {
 	return o.ApplyT(func(v GetWorkloadJob) int { return v.ActiveDeadlineSeconds }).(pulumi.IntOutput)
 }
 
-// Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+// Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
 func (o GetWorkloadJobOutput) ConcurrencyPolicy() pulumi.StringOutput {
 	return o.ApplyT(func(v GetWorkloadJob) string { return v.ConcurrencyPolicy }).(pulumi.StringOutput)
 }
@@ -52831,6 +53221,8 @@ type GetWorkloadLocalOptionAutoscalingKeda struct {
 	Advanceds []GetWorkloadLocalOptionAutoscalingKedaAdvanced `pulumi:"advanceds"`
 	// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 	CooldownPeriod int `pulumi:"cooldownPeriod"`
+	// Fallback configuration for KEDA.
+	Fallbacks []GetWorkloadLocalOptionAutoscalingKedaFallback `pulumi:"fallbacks"`
 	// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 	InitialCooldownPeriod int `pulumi:"initialCooldownPeriod"`
 	// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
@@ -52855,6 +53247,8 @@ type GetWorkloadLocalOptionAutoscalingKedaArgs struct {
 	Advanceds GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayInput `pulumi:"advanceds"`
 	// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 	CooldownPeriod pulumi.IntInput `pulumi:"cooldownPeriod"`
+	// Fallback configuration for KEDA.
+	Fallbacks GetWorkloadLocalOptionAutoscalingKedaFallbackArrayInput `pulumi:"fallbacks"`
 	// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 	InitialCooldownPeriod pulumi.IntInput `pulumi:"initialCooldownPeriod"`
 	// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
@@ -52924,6 +53318,13 @@ func (o GetWorkloadLocalOptionAutoscalingKedaOutput) Advanceds() GetWorkloadLoca
 // The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 func (o GetWorkloadLocalOptionAutoscalingKedaOutput) CooldownPeriod() pulumi.IntOutput {
 	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKeda) int { return v.CooldownPeriod }).(pulumi.IntOutput)
+}
+
+// Fallback configuration for KEDA.
+func (o GetWorkloadLocalOptionAutoscalingKedaOutput) Fallbacks() GetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKeda) []GetWorkloadLocalOptionAutoscalingKedaFallback {
+		return v.Fallbacks
+	}).(GetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput)
 }
 
 // The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
@@ -53184,6 +53585,121 @@ func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput)
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier {
 		return vs[0].([]GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier)[vs[1].(int)]
 	}).(GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaFallback struct {
+	// Behavior to apply when fallback is triggered.
+	Behavior string `pulumi:"behavior"`
+	// Number of consecutive failures required to trigger fallback behavior.
+	FailureThreshold int `pulumi:"failureThreshold"`
+	// Number of replicas to scale to when fallback is triggered.
+	Replicas int `pulumi:"replicas"`
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaFallbackInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaFallbackArgs and GetWorkloadLocalOptionAutoscalingKedaFallbackOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaFallbackInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaFallbackArgs{...}
+type GetWorkloadLocalOptionAutoscalingKedaFallbackInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaFallbackOutput() GetWorkloadLocalOptionAutoscalingKedaFallbackOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaFallbackOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaFallbackOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaFallbackArgs struct {
+	// Behavior to apply when fallback is triggered.
+	Behavior pulumi.StringInput `pulumi:"behavior"`
+	// Number of consecutive failures required to trigger fallback behavior.
+	FailureThreshold pulumi.IntInput `pulumi:"failureThreshold"`
+	// Number of replicas to scale to when fallback is triggered.
+	Replicas pulumi.IntInput `pulumi:"replicas"`
+}
+
+func (GetWorkloadLocalOptionAutoscalingKedaFallbackArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaFallback)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaFallbackArgs) ToGetWorkloadLocalOptionAutoscalingKedaFallbackOutput() GetWorkloadLocalOptionAutoscalingKedaFallbackOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaFallbackOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaFallbackArgs) ToGetWorkloadLocalOptionAutoscalingKedaFallbackOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaFallbackOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaFallbackOutput)
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaFallbackArrayInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaFallbackArray and GetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaFallbackArrayInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaFallbackArray{ GetWorkloadLocalOptionAutoscalingKedaFallbackArgs{...} }
+type GetWorkloadLocalOptionAutoscalingKedaFallbackArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput() GetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaFallbackArray []GetWorkloadLocalOptionAutoscalingKedaFallbackInput
+
+func (GetWorkloadLocalOptionAutoscalingKedaFallbackArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaFallback)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaFallbackArray) ToGetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput() GetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaFallbackArray) ToGetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaFallbackOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaFallbackOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaFallback)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaFallbackOutput) ToGetWorkloadLocalOptionAutoscalingKedaFallbackOutput() GetWorkloadLocalOptionAutoscalingKedaFallbackOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaFallbackOutput) ToGetWorkloadLocalOptionAutoscalingKedaFallbackOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaFallbackOutput {
+	return o
+}
+
+// Behavior to apply when fallback is triggered.
+func (o GetWorkloadLocalOptionAutoscalingKedaFallbackOutput) Behavior() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaFallback) string { return v.Behavior }).(pulumi.StringOutput)
+}
+
+// Number of consecutive failures required to trigger fallback behavior.
+func (o GetWorkloadLocalOptionAutoscalingKedaFallbackOutput) FailureThreshold() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaFallback) int { return v.FailureThreshold }).(pulumi.IntOutput)
+}
+
+// Number of replicas to scale to when fallback is triggered.
+func (o GetWorkloadLocalOptionAutoscalingKedaFallbackOutput) Replicas() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaFallback) int { return v.Replicas }).(pulumi.IntOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaFallback)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput() GetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput) Index(i pulumi.IntInput) GetWorkloadLocalOptionAutoscalingKedaFallbackOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLocalOptionAutoscalingKedaFallback {
+		return vs[0].([]GetWorkloadLocalOptionAutoscalingKedaFallback)[vs[1].(int)]
+	}).(GetWorkloadLocalOptionAutoscalingKedaFallbackOutput)
 }
 
 type GetWorkloadLocalOptionAutoscalingKedaTrigger struct {
@@ -53946,6 +54462,8 @@ type GetWorkloadOptionAutoscalingKeda struct {
 	Advanceds []GetWorkloadOptionAutoscalingKedaAdvanced `pulumi:"advanceds"`
 	// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 	CooldownPeriod int `pulumi:"cooldownPeriod"`
+	// Fallback configuration for KEDA.
+	Fallbacks []GetWorkloadOptionAutoscalingKedaFallback `pulumi:"fallbacks"`
 	// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 	InitialCooldownPeriod int `pulumi:"initialCooldownPeriod"`
 	// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
@@ -53970,6 +54488,8 @@ type GetWorkloadOptionAutoscalingKedaArgs struct {
 	Advanceds GetWorkloadOptionAutoscalingKedaAdvancedArrayInput `pulumi:"advanceds"`
 	// The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 	CooldownPeriod pulumi.IntInput `pulumi:"cooldownPeriod"`
+	// Fallback configuration for KEDA.
+	Fallbacks GetWorkloadOptionAutoscalingKedaFallbackArrayInput `pulumi:"fallbacks"`
 	// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 	InitialCooldownPeriod pulumi.IntInput `pulumi:"initialCooldownPeriod"`
 	// The interval in seconds at which KEDA will poll the external metrics to determine if scaling is required.
@@ -54039,6 +54559,13 @@ func (o GetWorkloadOptionAutoscalingKedaOutput) Advanceds() GetWorkloadOptionAut
 // The cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
 func (o GetWorkloadOptionAutoscalingKedaOutput) CooldownPeriod() pulumi.IntOutput {
 	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKeda) int { return v.CooldownPeriod }).(pulumi.IntOutput)
+}
+
+// Fallback configuration for KEDA.
+func (o GetWorkloadOptionAutoscalingKedaOutput) Fallbacks() GetWorkloadOptionAutoscalingKedaFallbackArrayOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKeda) []GetWorkloadOptionAutoscalingKedaFallback {
+		return v.Fallbacks
+	}).(GetWorkloadOptionAutoscalingKedaFallbackArrayOutput)
 }
 
 // The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
@@ -54297,6 +54824,121 @@ func (o GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput) Inde
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier {
 		return vs[0].([]GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier)[vs[1].(int)]
 	}).(GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaFallback struct {
+	// Behavior to apply when fallback is triggered.
+	Behavior string `pulumi:"behavior"`
+	// Number of consecutive failures required to trigger fallback behavior.
+	FailureThreshold int `pulumi:"failureThreshold"`
+	// Number of replicas to scale to when fallback is triggered.
+	Replicas int `pulumi:"replicas"`
+}
+
+// GetWorkloadOptionAutoscalingKedaFallbackInput is an input type that accepts GetWorkloadOptionAutoscalingKedaFallbackArgs and GetWorkloadOptionAutoscalingKedaFallbackOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaFallbackInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaFallbackArgs{...}
+type GetWorkloadOptionAutoscalingKedaFallbackInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaFallbackOutput() GetWorkloadOptionAutoscalingKedaFallbackOutput
+	ToGetWorkloadOptionAutoscalingKedaFallbackOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaFallbackOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaFallbackArgs struct {
+	// Behavior to apply when fallback is triggered.
+	Behavior pulumi.StringInput `pulumi:"behavior"`
+	// Number of consecutive failures required to trigger fallback behavior.
+	FailureThreshold pulumi.IntInput `pulumi:"failureThreshold"`
+	// Number of replicas to scale to when fallback is triggered.
+	Replicas pulumi.IntInput `pulumi:"replicas"`
+}
+
+func (GetWorkloadOptionAutoscalingKedaFallbackArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaFallback)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaFallbackArgs) ToGetWorkloadOptionAutoscalingKedaFallbackOutput() GetWorkloadOptionAutoscalingKedaFallbackOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaFallbackOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaFallbackArgs) ToGetWorkloadOptionAutoscalingKedaFallbackOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaFallbackOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaFallbackOutput)
+}
+
+// GetWorkloadOptionAutoscalingKedaFallbackArrayInput is an input type that accepts GetWorkloadOptionAutoscalingKedaFallbackArray and GetWorkloadOptionAutoscalingKedaFallbackArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaFallbackArrayInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaFallbackArray{ GetWorkloadOptionAutoscalingKedaFallbackArgs{...} }
+type GetWorkloadOptionAutoscalingKedaFallbackArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaFallbackArrayOutput() GetWorkloadOptionAutoscalingKedaFallbackArrayOutput
+	ToGetWorkloadOptionAutoscalingKedaFallbackArrayOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaFallbackArrayOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaFallbackArray []GetWorkloadOptionAutoscalingKedaFallbackInput
+
+func (GetWorkloadOptionAutoscalingKedaFallbackArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaFallback)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaFallbackArray) ToGetWorkloadOptionAutoscalingKedaFallbackArrayOutput() GetWorkloadOptionAutoscalingKedaFallbackArrayOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaFallbackArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaFallbackArray) ToGetWorkloadOptionAutoscalingKedaFallbackArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaFallbackArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaFallbackArrayOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaFallbackOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaFallbackOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaFallback)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaFallbackOutput) ToGetWorkloadOptionAutoscalingKedaFallbackOutput() GetWorkloadOptionAutoscalingKedaFallbackOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaFallbackOutput) ToGetWorkloadOptionAutoscalingKedaFallbackOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaFallbackOutput {
+	return o
+}
+
+// Behavior to apply when fallback is triggered.
+func (o GetWorkloadOptionAutoscalingKedaFallbackOutput) Behavior() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaFallback) string { return v.Behavior }).(pulumi.StringOutput)
+}
+
+// Number of consecutive failures required to trigger fallback behavior.
+func (o GetWorkloadOptionAutoscalingKedaFallbackOutput) FailureThreshold() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaFallback) int { return v.FailureThreshold }).(pulumi.IntOutput)
+}
+
+// Number of replicas to scale to when fallback is triggered.
+func (o GetWorkloadOptionAutoscalingKedaFallbackOutput) Replicas() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaFallback) int { return v.Replicas }).(pulumi.IntOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaFallbackArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaFallbackArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaFallback)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaFallbackArrayOutput) ToGetWorkloadOptionAutoscalingKedaFallbackArrayOutput() GetWorkloadOptionAutoscalingKedaFallbackArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaFallbackArrayOutput) ToGetWorkloadOptionAutoscalingKedaFallbackArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaFallbackArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaFallbackArrayOutput) Index(i pulumi.IntInput) GetWorkloadOptionAutoscalingKedaFallbackOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadOptionAutoscalingKedaFallback {
+		return vs[0].([]GetWorkloadOptionAutoscalingKedaFallback)[vs[1].(int)]
+	}).(GetWorkloadOptionAutoscalingKedaFallbackOutput)
 }
 
 type GetWorkloadOptionAutoscalingKedaTrigger struct {
@@ -56439,6 +57081,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedPtrInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaFallbackInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaFallbackArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaFallbackPtrInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaFallbackArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaTriggerInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaTriggerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaTriggerArrayInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaTriggerArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs{})
@@ -56457,6 +57101,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedPtrInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaFallbackInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaFallbackArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaFallbackPtrInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaFallbackArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaTriggerInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaTriggerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaTriggerArrayInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaTriggerArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefArgs{})
@@ -56633,6 +57279,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaFallbackInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaFallbackArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaFallbackArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaFallbackArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaTriggerInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaTriggerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaTriggerArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaTriggerArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArgs{})
@@ -56651,6 +57299,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaFallbackInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaFallbackArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaFallbackArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaFallbackArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaTriggerInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaTriggerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaTriggerArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaTriggerArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArgs{})
@@ -57183,6 +57833,8 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaFallbackOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaFallbackPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaTriggerOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaTriggerArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput{})
@@ -57201,6 +57853,8 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaFallbackOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaFallbackPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaTriggerOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaTriggerArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefOutput{})
@@ -57377,6 +58031,8 @@ func init() {
 	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaFallbackOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaFallbackArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaTriggerOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaTriggerArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefOutput{})
@@ -57395,6 +58051,8 @@ func init() {
 	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput{})
 	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaFallbackOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaFallbackArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaTriggerOutput{})
 	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaTriggerArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefOutput{})

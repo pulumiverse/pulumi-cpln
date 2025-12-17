@@ -23,6 +23,10 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly int? CooldownPeriod;
         /// <summary>
+        /// Fallback configuration for KEDA.
+        /// </summary>
+        public readonly Outputs.WorkloadLocalOptionAutoscalingKedaFallback? Fallback;
+        /// <summary>
         /// The initial cooldown period in seconds after scaling down to 0 replicas before KEDA will allow scaling up again.
         /// </summary>
         public readonly int? InitialCooldownPeriod;
@@ -41,6 +45,8 @@ namespace Pulumiverse.Cpln.Outputs
 
             int? cooldownPeriod,
 
+            Outputs.WorkloadLocalOptionAutoscalingKedaFallback? fallback,
+
             int? initialCooldownPeriod,
 
             int? pollingInterval,
@@ -49,6 +55,7 @@ namespace Pulumiverse.Cpln.Outputs
         {
             Advanced = advanced;
             CooldownPeriod = cooldownPeriod;
+            Fallback = fallback;
             InitialCooldownPeriod = initialCooldownPeriod;
             PollingInterval = pollingInterval;
             Triggers = triggers;

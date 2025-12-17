@@ -19,7 +19,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly int ActiveDeadlineSeconds;
         /// <summary>
-        /// Either 'Forbid' or 'Replace'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running. Enum: [ Forbid, Replace ] Default: `Forbid`.
+        /// Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
         /// </summary>
         public readonly string ConcurrencyPolicy;
         /// <summary>
