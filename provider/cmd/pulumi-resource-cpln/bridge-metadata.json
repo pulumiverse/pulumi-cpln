@@ -1429,6 +1429,9 @@
                                                                 }
                                                             }
                                                         },
+                                                        "fallback": {
+                                                            "maxItemsOne": true
+                                                        },
                                                         "trigger": {
                                                             "maxItemsOne": false,
                                                             "elem": {
@@ -1475,6 +1478,9 @@
                                                                     }
                                                                 }
                                                             }
+                                                        },
+                                                        "fallback": {
+                                                            "maxItemsOne": true
                                                         },
                                                         "trigger": {
                                                             "maxItemsOne": false,
@@ -2036,6 +2042,9 @@
                                                                 }
                                                             }
                                                         },
+                                                        "fallback": {
+                                                            "maxItemsOne": false
+                                                        },
                                                         "trigger": {
                                                             "maxItemsOne": false,
                                                             "elem": {
@@ -2082,6 +2091,9 @@
                                                                     }
                                                                 }
                                                             }
+                                                        },
+                                                        "fallback": {
+                                                            "maxItemsOne": false
                                                         },
                                                         "trigger": {
                                                             "maxItemsOne": false,
