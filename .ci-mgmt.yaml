@@ -33,3 +33,7 @@ publish:
 registryDocs: true
 # Disables a pulumi-internal-only step for running create_docs_build during the release
 publishRegistry: false
+# Enable Pulumi ESC for CI secrets (GitHub App credentials, etc.)
+esc:
+    enabled: true
+    environment: imports/github-secrets
