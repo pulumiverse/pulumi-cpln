@@ -43,7 +43,7 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("gvcLink")]
         public Input<string>? GvcLink { get; set; }
 
-        [Input("ports")]
+        [Input("ports", required: true)]
         private InputList<Inputs.DomainSpecPortArgs>? _ports;
 
         /// <summary>

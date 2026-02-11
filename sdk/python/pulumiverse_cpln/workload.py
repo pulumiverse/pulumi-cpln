@@ -21,9 +21,9 @@ __all__ = ['WorkloadArgs', 'Workload']
 @pulumi.input_type
 class WorkloadArgs:
     def __init__(__self__, *,
+                 containers: pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]],
                  gvc: pulumi.Input[_builtins.str],
                  type: pulumi.Input[_builtins.str],
-                 containers: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]]] = None,
                  description: Optional[pulumi.Input[_builtins.str]] = None,
                  extras: Optional[pulumi.Input[_builtins.str]] = None,
                  firewall_spec: Optional[pulumi.Input['WorkloadFirewallSpecArgs']] = None,
@@ -41,9 +41,9 @@ class WorkloadArgs:
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None):
         """
         The set of arguments for constructing a Workload resource.
+        :param pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
         :param pulumi.Input[_builtins.str] gvc: Name of the associated GVC.
         :param pulumi.Input[_builtins.str] type: Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
-        :param pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
         :param pulumi.Input[_builtins.str] description: Description of the workload.
         :param pulumi.Input[_builtins.str] extras: Extra Kubernetes modifications. Only used for BYOK.
         :param pulumi.Input['WorkloadFirewallSpecArgs'] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
@@ -57,10 +57,9 @@ class WorkloadArgs:
         :param pulumi.Input[_builtins.bool] support_dynamic_tags: Workload will automatically redeploy when one of the container images is updated in the container registry. Default: false.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
         """
+        pulumi.set(__self__, "containers", containers)
         pulumi.set(__self__, "gvc", gvc)
         pulumi.set(__self__, "type", type)
-        if containers is not None:
-            pulumi.set(__self__, "containers", containers)
         if description is not None:
             pulumi.set(__self__, "description", description)
         if extras is not None:
@@ -94,6 +93,18 @@ class WorkloadArgs:
 
     @_builtins.property
     @pulumi.getter
+    def containers(self) -> pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]]:
+        """
+        An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
+        """
+        return pulumi.get(self, "containers")
+
+    @containers.setter
+    def containers(self, value: pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]]):
+        pulumi.set(self, "containers", value)
+
+    @_builtins.property
+    @pulumi.getter
     def gvc(self) -> pulumi.Input[_builtins.str]:
         """
         Name of the associated GVC.
@@ -115,18 +126,6 @@ class WorkloadArgs:
     @type.setter
     def type(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "type", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def containers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]]]:
-        """
-        An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
-        """
-        return pulumi.get(self, "containers")
-
-    @containers.setter
-    def containers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]]]):
-        pulumi.set(self, "containers", value)
 
     @_builtins.property
     @pulumi.getter
@@ -727,6 +726,8 @@ class Workload(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = WorkloadArgs.__new__(WorkloadArgs)
 
+            if containers is None and not opts.urn:
+                raise TypeError("Missing required property 'containers'")
             __props__.__dict__["containers"] = containers
             __props__.__dict__["description"] = description
             __props__.__dict__["extras"] = extras
@@ -838,7 +839,7 @@ class Workload(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
-    def containers(self) -> pulumi.Output[Optional[Sequence['outputs.WorkloadContainer']]]:
+    def containers(self) -> pulumi.Output[Sequence['outputs.WorkloadContainer']]:
         """
         An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
         """

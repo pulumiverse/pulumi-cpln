@@ -27,7 +27,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// Default image for all nodes.
         /// </summary>
         public readonly string Image;
-        public readonly Outputs.Mk8sDigitalOceanProviderNetworking? Networking;
+        public readonly Outputs.Mk8sDigitalOceanProviderNetworking Networking;
         public readonly ImmutableArray<Outputs.Mk8sDigitalOceanProviderNodePool> NodePools;
         /// <summary>
         /// Optional shell script that will be run before K8s is installed. Supports SSM.
@@ -64,7 +64,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             string image,
 
-            Outputs.Mk8sDigitalOceanProviderNetworking? networking,
+            Outputs.Mk8sDigitalOceanProviderNetworking networking,
 
             ImmutableArray<Outputs.Mk8sDigitalOceanProviderNodePool> nodePools,
 

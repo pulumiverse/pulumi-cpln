@@ -18,7 +18,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// <summary>
         /// Default image for all nodes.
         /// </summary>
-        public readonly Outputs.Mk8sGcpProviderImage? Image;
+        public readonly Outputs.Mk8sGcpProviderImage Image;
         /// <summary>
         /// Extra tags to attach to all created objects.
         /// </summary>
@@ -28,7 +28,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// VPC network used by the cluster.
         /// </summary>
         public readonly string Network;
-        public readonly Outputs.Mk8sGcpProviderNetworking? Networking;
+        public readonly Outputs.Mk8sGcpProviderNetworking Networking;
         public readonly ImmutableArray<Outputs.Mk8sGcpProviderNodePool> NodePools;
         /// <summary>
         /// Optional shell script that will be run before K8s is installed. Supports SSM.
@@ -52,7 +52,7 @@ namespace Pulumiverse.Cpln.Outputs
         private Mk8sGcpProvider(
             Outputs.Mk8sGcpProviderAutoscaler? autoscaler,
 
-            Outputs.Mk8sGcpProviderImage? image,
+            Outputs.Mk8sGcpProviderImage image,
 
             ImmutableDictionary<string, string>? labels,
 
@@ -60,7 +60,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             string network,
 
-            Outputs.Mk8sGcpProviderNetworking? networking,
+            Outputs.Mk8sGcpProviderNetworking networking,
 
             ImmutableArray<Outputs.Mk8sGcpProviderNodePool> nodePools,
 

@@ -177,7 +177,7 @@ namespace Pulumiverse.Cpln
 
     public sealed class WorkloadArgs : global::Pulumi.ResourceArgs
     {
-        [Input("containers")]
+        [Input("containers", required: true)]
         private InputList<Inputs.WorkloadContainerArgs>? _containers;
 
         /// <summary>

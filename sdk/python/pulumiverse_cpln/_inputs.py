@@ -1003,6 +1003,10 @@ class DomainRouteHeadersRequestArgs:
 
 if not MYPY:
     class DomainSpecArgsDict(TypedDict):
+        ports: pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgsDict']]]
+        """
+        Domain port specifications.
+        """
         accept_all_hosts: NotRequired[pulumi.Input[_builtins.bool]]
         """
         Allows domain to accept wildcards. The associated GVC must have dedicated load balancing enabled.
@@ -1023,10 +1027,6 @@ if not MYPY:
         """
         This value is set to a target GVC (using a full link) for use by subdomain based routing. Each workload in the GVC will receive a subdomain in the form ${workload.name}.${domain.name}. **Do not include if path based routing is used.**
         """
-        ports: NotRequired[pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgsDict']]]]
-        """
-        Domain port specifications.
-        """
         workload_link: NotRequired[pulumi.Input[_builtins.str]]
         """
         Creates a unique subdomain for each replica of a stateful workload, enabling direct access to individual instances.
@@ -1037,22 +1037,23 @@ elif False:
 @pulumi.input_type
 class DomainSpecArgs:
     def __init__(__self__, *,
+                 ports: pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgs']]],
                  accept_all_hosts: Optional[pulumi.Input[_builtins.bool]] = None,
                  accept_all_subdomains: Optional[pulumi.Input[_builtins.bool]] = None,
                  cert_challenge_type: Optional[pulumi.Input[_builtins.str]] = None,
                  dns_mode: Optional[pulumi.Input[_builtins.str]] = None,
                  gvc_link: Optional[pulumi.Input[_builtins.str]] = None,
-                 ports: Optional[pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgs']]]] = None,
                  workload_link: Optional[pulumi.Input[_builtins.str]] = None):
         """
+        :param pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgs']]] ports: Domain port specifications.
         :param pulumi.Input[_builtins.bool] accept_all_hosts: Allows domain to accept wildcards. The associated GVC must have dedicated load balancing enabled.
         :param pulumi.Input[_builtins.bool] accept_all_subdomains: Accept all subdomains will accept any host that is a sub domain of the domain so *.$DOMAIN
         :param pulumi.Input[_builtins.str] cert_challenge_type: Defines the method used to prove domain ownership for certificate issuance.
         :param pulumi.Input[_builtins.str] dns_mode: In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
         :param pulumi.Input[_builtins.str] gvc_link: This value is set to a target GVC (using a full link) for use by subdomain based routing. Each workload in the GVC will receive a subdomain in the form ${workload.name}.${domain.name}. **Do not include if path based routing is used.**
-        :param pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgs']]] ports: Domain port specifications.
         :param pulumi.Input[_builtins.str] workload_link: Creates a unique subdomain for each replica of a stateful workload, enabling direct access to individual instances.
         """
+        pulumi.set(__self__, "ports", ports)
         if accept_all_hosts is not None:
             pulumi.set(__self__, "accept_all_hosts", accept_all_hosts)
         if accept_all_subdomains is not None:
@@ -1063,10 +1064,20 @@ class DomainSpecArgs:
             pulumi.set(__self__, "dns_mode", dns_mode)
         if gvc_link is not None:
             pulumi.set(__self__, "gvc_link", gvc_link)
-        if ports is not None:
-            pulumi.set(__self__, "ports", ports)
         if workload_link is not None:
             pulumi.set(__self__, "workload_link", workload_link)
+
+    @_builtins.property
+    @pulumi.getter
+    def ports(self) -> pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgs']]]:
+        """
+        Domain port specifications.
+        """
+        return pulumi.get(self, "ports")
+
+    @ports.setter
+    def ports(self, value: pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgs']]]):
+        pulumi.set(self, "ports", value)
 
     @_builtins.property
     @pulumi.getter(name="acceptAllHosts")
@@ -1129,18 +1140,6 @@ class DomainSpecArgs:
         pulumi.set(self, "gvc_link", value)
 
     @_builtins.property
-    @pulumi.getter
-    def ports(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgs']]]]:
-        """
-        Domain port specifications.
-        """
-        return pulumi.get(self, "ports")
-
-    @ports.setter
-    def ports(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgs']]]]):
-        pulumi.set(self, "ports", value)
-
-    @_builtins.property
     @pulumi.getter(name="workloadLink")
     def workload_link(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
@@ -1155,6 +1154,10 @@ class DomainSpecArgs:
 
 if not MYPY:
     class DomainSpecPortArgsDict(TypedDict):
+        tls: pulumi.Input['DomainSpecPortTlsArgsDict']
+        """
+        Used for TLS connections for this Domain. End users are responsible for certificate updates.
+        """
         cors: NotRequired[pulumi.Input['DomainSpecPortCorsArgsDict']]
         """
         A security feature implemented by web browsers to allow resources on a web page to be requested from another domain outside the domain from which the resource originated.
@@ -1167,34 +1170,41 @@ if not MYPY:
         """
         Allowed protocol. Valid values: `http`, `http2`, `tcp`. Default: `http2`.
         """
-        tls: NotRequired[pulumi.Input['DomainSpecPortTlsArgsDict']]
-        """
-        Used for TLS connections for this Domain. End users are responsible for certificate updates.
-        """
 elif False:
     DomainSpecPortArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class DomainSpecPortArgs:
     def __init__(__self__, *,
+                 tls: pulumi.Input['DomainSpecPortTlsArgs'],
                  cors: Optional[pulumi.Input['DomainSpecPortCorsArgs']] = None,
                  number: Optional[pulumi.Input[_builtins.int]] = None,
-                 protocol: Optional[pulumi.Input[_builtins.str]] = None,
-                 tls: Optional[pulumi.Input['DomainSpecPortTlsArgs']] = None):
+                 protocol: Optional[pulumi.Input[_builtins.str]] = None):
         """
+        :param pulumi.Input['DomainSpecPortTlsArgs'] tls: Used for TLS connections for this Domain. End users are responsible for certificate updates.
         :param pulumi.Input['DomainSpecPortCorsArgs'] cors: A security feature implemented by web browsers to allow resources on a web page to be requested from another domain outside the domain from which the resource originated.
         :param pulumi.Input[_builtins.int] number: Sets or overrides headers to all http requests for this route.
         :param pulumi.Input[_builtins.str] protocol: Allowed protocol. Valid values: `http`, `http2`, `tcp`. Default: `http2`.
-        :param pulumi.Input['DomainSpecPortTlsArgs'] tls: Used for TLS connections for this Domain. End users are responsible for certificate updates.
         """
+        pulumi.set(__self__, "tls", tls)
         if cors is not None:
             pulumi.set(__self__, "cors", cors)
         if number is not None:
             pulumi.set(__self__, "number", number)
         if protocol is not None:
             pulumi.set(__self__, "protocol", protocol)
-        if tls is not None:
-            pulumi.set(__self__, "tls", tls)
+
+    @_builtins.property
+    @pulumi.getter
+    def tls(self) -> pulumi.Input['DomainSpecPortTlsArgs']:
+        """
+        Used for TLS connections for this Domain. End users are responsible for certificate updates.
+        """
+        return pulumi.get(self, "tls")
+
+    @tls.setter
+    def tls(self, value: pulumi.Input['DomainSpecPortTlsArgs']):
+        pulumi.set(self, "tls", value)
 
     @_builtins.property
     @pulumi.getter
@@ -1231,18 +1241,6 @@ class DomainSpecPortArgs:
     @protocol.setter
     def protocol(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "protocol", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def tls(self) -> Optional[pulumi.Input['DomainSpecPortTlsArgs']]:
-        """
-        Used for TLS connections for this Domain. End users are responsible for certificate updates.
-        """
-        return pulumi.get(self, "tls")
-
-    @tls.setter
-    def tls(self, value: Optional[pulumi.Input['DomainSpecPortTlsArgs']]):
-        pulumi.set(self, "tls", value)
 
 
 if not MYPY:
@@ -6605,6 +6603,7 @@ if not MYPY:
         """
         Control Plane will set up the cluster by assuming this role.
         """
+        networking: pulumi.Input['Mk8sAwsProviderNetworkingArgsDict']
         region: pulumi.Input[_builtins.str]
         """
         Region where the cluster nodes will live.
@@ -6632,7 +6631,6 @@ if not MYPY:
         """
         Name of keyPair. Supports SSM
         """
-        networking: NotRequired[pulumi.Input['Mk8sAwsProviderNetworkingArgsDict']]
         node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sAwsProviderNodePoolArgsDict']]]]
         """
         List of node pools.
@@ -6656,6 +6654,7 @@ elif False:
 class Mk8sAwsProviderArgs:
     def __init__(__self__, *,
                  deploy_role_arn: pulumi.Input[_builtins.str],
+                 networking: pulumi.Input['Mk8sAwsProviderNetworkingArgs'],
                  region: pulumi.Input[_builtins.str],
                  vpc_id: pulumi.Input[_builtins.str],
                  autoscaler: Optional[pulumi.Input['Mk8sAwsProviderAutoscalerArgs']] = None,
@@ -6665,7 +6664,6 @@ class Mk8sAwsProviderArgs:
                  extra_node_policies: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  image: Optional[pulumi.Input['Mk8sAwsProviderImageArgs']] = None,
                  key_pair: Optional[pulumi.Input[_builtins.str]] = None,
-                 networking: Optional[pulumi.Input['Mk8sAwsProviderNetworkingArgs']] = None,
                  node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sAwsProviderNodePoolArgs']]]] = None,
                  pre_install_script: Optional[pulumi.Input[_builtins.str]] = None,
                  security_group_ids: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
@@ -6684,6 +6682,7 @@ class Mk8sAwsProviderArgs:
         :param pulumi.Input[_builtins.bool] skip_create_roles: If true, Control Plane will not create any roles.
         """
         pulumi.set(__self__, "deploy_role_arn", deploy_role_arn)
+        pulumi.set(__self__, "networking", networking)
         pulumi.set(__self__, "region", region)
         pulumi.set(__self__, "vpc_id", vpc_id)
         if autoscaler is not None:
@@ -6700,8 +6699,6 @@ class Mk8sAwsProviderArgs:
             pulumi.set(__self__, "image", image)
         if key_pair is not None:
             pulumi.set(__self__, "key_pair", key_pair)
-        if networking is not None:
-            pulumi.set(__self__, "networking", networking)
         if node_pools is not None:
             pulumi.set(__self__, "node_pools", node_pools)
         if pre_install_script is not None:
@@ -6722,6 +6719,15 @@ class Mk8sAwsProviderArgs:
     @deploy_role_arn.setter
     def deploy_role_arn(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "deploy_role_arn", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def networking(self) -> pulumi.Input['Mk8sAwsProviderNetworkingArgs']:
+        return pulumi.get(self, "networking")
+
+    @networking.setter
+    def networking(self, value: pulumi.Input['Mk8sAwsProviderNetworkingArgs']):
+        pulumi.set(self, "networking", value)
 
     @_builtins.property
     @pulumi.getter
@@ -6821,15 +6827,6 @@ class Mk8sAwsProviderArgs:
     @key_pair.setter
     def key_pair(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "key_pair", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def networking(self) -> Optional[pulumi.Input['Mk8sAwsProviderNetworkingArgs']]:
-        return pulumi.get(self, "networking")
-
-    @networking.setter
-    def networking(self, value: Optional[pulumi.Input['Mk8sAwsProviderNetworkingArgs']]):
-        pulumi.set(self, "networking", value)
 
     @_builtins.property
     @pulumi.getter(name="nodePools")
@@ -7433,6 +7430,7 @@ if not MYPY:
         """
         The vpc where nodes will be deployed.
         """
+        networking: pulumi.Input['Mk8sAzureProviderNetworkingArgsDict']
         resource_group: pulumi.Input[_builtins.str]
         sdk_secret_link: pulumi.Input[_builtins.str]
         ssh_keys: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
@@ -7445,7 +7443,6 @@ if not MYPY:
         """
         Default image for all nodes.
         """
-        networking: NotRequired[pulumi.Input['Mk8sAzureProviderNetworkingArgsDict']]
         node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sAzureProviderNodePoolArgsDict']]]]
         pre_install_script: NotRequired[pulumi.Input[_builtins.str]]
         """
@@ -7463,13 +7460,13 @@ class Mk8sAzureProviderArgs:
     def __init__(__self__, *,
                  location: pulumi.Input[_builtins.str],
                  network_id: pulumi.Input[_builtins.str],
+                 networking: pulumi.Input['Mk8sAzureProviderNetworkingArgs'],
                  resource_group: pulumi.Input[_builtins.str],
                  sdk_secret_link: pulumi.Input[_builtins.str],
                  ssh_keys: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]],
                  subscription_id: pulumi.Input[_builtins.str],
                  autoscaler: Optional[pulumi.Input['Mk8sAzureProviderAutoscalerArgs']] = None,
                  image: Optional[pulumi.Input['Mk8sAzureProviderImageArgs']] = None,
-                 networking: Optional[pulumi.Input['Mk8sAzureProviderNetworkingArgs']] = None,
                  node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sAzureProviderNodePoolArgs']]]] = None,
                  pre_install_script: Optional[pulumi.Input[_builtins.str]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None):
@@ -7483,6 +7480,7 @@ class Mk8sAzureProviderArgs:
         """
         pulumi.set(__self__, "location", location)
         pulumi.set(__self__, "network_id", network_id)
+        pulumi.set(__self__, "networking", networking)
         pulumi.set(__self__, "resource_group", resource_group)
         pulumi.set(__self__, "sdk_secret_link", sdk_secret_link)
         pulumi.set(__self__, "ssh_keys", ssh_keys)
@@ -7491,8 +7489,6 @@ class Mk8sAzureProviderArgs:
             pulumi.set(__self__, "autoscaler", autoscaler)
         if image is not None:
             pulumi.set(__self__, "image", image)
-        if networking is not None:
-            pulumi.set(__self__, "networking", networking)
         if node_pools is not None:
             pulumi.set(__self__, "node_pools", node_pools)
         if pre_install_script is not None:
@@ -7523,6 +7519,15 @@ class Mk8sAzureProviderArgs:
     @network_id.setter
     def network_id(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "network_id", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def networking(self) -> pulumi.Input['Mk8sAzureProviderNetworkingArgs']:
+        return pulumi.get(self, "networking")
+
+    @networking.setter
+    def networking(self, value: pulumi.Input['Mk8sAzureProviderNetworkingArgs']):
+        pulumi.set(self, "networking", value)
 
     @_builtins.property
     @pulumi.getter(name="resourceGroup")
@@ -7583,15 +7588,6 @@ class Mk8sAzureProviderArgs:
     @image.setter
     def image(self, value: Optional[pulumi.Input['Mk8sAzureProviderImageArgs']]):
         pulumi.set(self, "image", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def networking(self) -> Optional[pulumi.Input['Mk8sAzureProviderNetworkingArgs']]:
-        return pulumi.get(self, "networking")
-
-    @networking.setter
-    def networking(self, value: Optional[pulumi.Input['Mk8sAzureProviderNetworkingArgs']]):
-        pulumi.set(self, "networking", value)
 
     @_builtins.property
     @pulumi.getter(name="nodePools")
@@ -8155,6 +8151,7 @@ if not MYPY:
         """
         Default image for all nodes.
         """
+        networking: pulumi.Input['Mk8sDigitalOceanProviderNetworkingArgsDict']
         region: pulumi.Input[_builtins.str]
         """
         Region to deploy nodes to.
@@ -8180,7 +8177,6 @@ if not MYPY:
         """
         Extra SSH keys to provision for user root that are not registered in the DigitalOcean.
         """
-        networking: NotRequired[pulumi.Input['Mk8sDigitalOceanProviderNetworkingArgsDict']]
         node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sDigitalOceanProviderNodePoolArgsDict']]]]
         pre_install_script: NotRequired[pulumi.Input[_builtins.str]]
         """
@@ -8197,6 +8193,7 @@ elif False:
 class Mk8sDigitalOceanProviderArgs:
     def __init__(__self__, *,
                  image: pulumi.Input[_builtins.str],
+                 networking: pulumi.Input['Mk8sDigitalOceanProviderNetworkingArgs'],
                  region: pulumi.Input[_builtins.str],
                  ssh_keys: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]],
                  token_secret_link: pulumi.Input[_builtins.str],
@@ -8204,7 +8201,6 @@ class Mk8sDigitalOceanProviderArgs:
                  autoscaler: Optional[pulumi.Input['Mk8sDigitalOceanProviderAutoscalerArgs']] = None,
                  digital_ocean_tags: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  extra_ssh_keys: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 networking: Optional[pulumi.Input['Mk8sDigitalOceanProviderNetworkingArgs']] = None,
                  node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sDigitalOceanProviderNodePoolArgs']]]] = None,
                  pre_install_script: Optional[pulumi.Input[_builtins.str]] = None,
                  reserved_ips: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
@@ -8220,6 +8216,7 @@ class Mk8sDigitalOceanProviderArgs:
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] reserved_ips: Optional set of IPs to assign as extra IPs for nodes of the cluster.
         """
         pulumi.set(__self__, "image", image)
+        pulumi.set(__self__, "networking", networking)
         pulumi.set(__self__, "region", region)
         pulumi.set(__self__, "ssh_keys", ssh_keys)
         pulumi.set(__self__, "token_secret_link", token_secret_link)
@@ -8230,8 +8227,6 @@ class Mk8sDigitalOceanProviderArgs:
             pulumi.set(__self__, "digital_ocean_tags", digital_ocean_tags)
         if extra_ssh_keys is not None:
             pulumi.set(__self__, "extra_ssh_keys", extra_ssh_keys)
-        if networking is not None:
-            pulumi.set(__self__, "networking", networking)
         if node_pools is not None:
             pulumi.set(__self__, "node_pools", node_pools)
         if pre_install_script is not None:
@@ -8250,6 +8245,15 @@ class Mk8sDigitalOceanProviderArgs:
     @image.setter
     def image(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "image", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def networking(self) -> pulumi.Input['Mk8sDigitalOceanProviderNetworkingArgs']:
+        return pulumi.get(self, "networking")
+
+    @networking.setter
+    def networking(self, value: pulumi.Input['Mk8sDigitalOceanProviderNetworkingArgs']):
+        pulumi.set(self, "networking", value)
 
     @_builtins.property
     @pulumi.getter
@@ -8331,15 +8335,6 @@ class Mk8sDigitalOceanProviderArgs:
     @extra_ssh_keys.setter
     def extra_ssh_keys(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "extra_ssh_keys", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def networking(self) -> Optional[pulumi.Input['Mk8sDigitalOceanProviderNetworkingArgs']]:
-        return pulumi.get(self, "networking")
-
-    @networking.setter
-    def networking(self, value: Optional[pulumi.Input['Mk8sDigitalOceanProviderNetworkingArgs']]):
-        pulumi.set(self, "networking", value)
 
     @_builtins.property
     @pulumi.getter(name="nodePools")
@@ -8970,10 +8965,15 @@ class Mk8sFirewallArgs:
 
 if not MYPY:
     class Mk8sGcpProviderArgsDict(TypedDict):
+        image: pulumi.Input['Mk8sGcpProviderImageArgsDict']
+        """
+        Default image for all nodes.
+        """
         network: pulumi.Input[_builtins.str]
         """
         VPC network used by the cluster.
         """
+        networking: pulumi.Input['Mk8sGcpProviderNetworkingArgsDict']
         project_id: pulumi.Input[_builtins.str]
         """
         GCP project ID that hosts the cluster infrastructure.
@@ -8987,16 +8987,11 @@ if not MYPY:
         Link to a secret containing the service account JSON key.
         """
         autoscaler: NotRequired[pulumi.Input['Mk8sGcpProviderAutoscalerArgsDict']]
-        image: NotRequired[pulumi.Input['Mk8sGcpProviderImageArgsDict']]
-        """
-        Default image for all nodes.
-        """
         labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
         """
         Extra tags to attach to all created objects.
         """
         metadata: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
-        networking: NotRequired[pulumi.Input['Mk8sGcpProviderNetworkingArgsDict']]
         node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sGcpProviderNodePoolArgsDict']]]]
         pre_install_script: NotRequired[pulumi.Input[_builtins.str]]
         """
@@ -9009,47 +9004,57 @@ elif False:
 @pulumi.input_type
 class Mk8sGcpProviderArgs:
     def __init__(__self__, *,
+                 image: pulumi.Input['Mk8sGcpProviderImageArgs'],
                  network: pulumi.Input[_builtins.str],
+                 networking: pulumi.Input['Mk8sGcpProviderNetworkingArgs'],
                  project_id: pulumi.Input[_builtins.str],
                  region: pulumi.Input[_builtins.str],
                  sa_key_link: pulumi.Input[_builtins.str],
                  autoscaler: Optional[pulumi.Input['Mk8sGcpProviderAutoscalerArgs']] = None,
-                 image: Optional[pulumi.Input['Mk8sGcpProviderImageArgs']] = None,
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  metadata: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 networking: Optional[pulumi.Input['Mk8sGcpProviderNetworkingArgs']] = None,
                  node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sGcpProviderNodePoolArgs']]]] = None,
                  pre_install_script: Optional[pulumi.Input[_builtins.str]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
         """
+        :param pulumi.Input['Mk8sGcpProviderImageArgs'] image: Default image for all nodes.
         :param pulumi.Input[_builtins.str] network: VPC network used by the cluster.
         :param pulumi.Input[_builtins.str] project_id: GCP project ID that hosts the cluster infrastructure.
         :param pulumi.Input[_builtins.str] region: Region where the cluster nodes will live.
         :param pulumi.Input[_builtins.str] sa_key_link: Link to a secret containing the service account JSON key.
-        :param pulumi.Input['Mk8sGcpProviderImageArgs'] image: Default image for all nodes.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Extra tags to attach to all created objects.
         :param pulumi.Input[_builtins.str] pre_install_script: Optional shell script that will be run before K8s is installed. Supports SSM.
         """
+        pulumi.set(__self__, "image", image)
         pulumi.set(__self__, "network", network)
+        pulumi.set(__self__, "networking", networking)
         pulumi.set(__self__, "project_id", project_id)
         pulumi.set(__self__, "region", region)
         pulumi.set(__self__, "sa_key_link", sa_key_link)
         if autoscaler is not None:
             pulumi.set(__self__, "autoscaler", autoscaler)
-        if image is not None:
-            pulumi.set(__self__, "image", image)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
         if metadata is not None:
             pulumi.set(__self__, "metadata", metadata)
-        if networking is not None:
-            pulumi.set(__self__, "networking", networking)
         if node_pools is not None:
             pulumi.set(__self__, "node_pools", node_pools)
         if pre_install_script is not None:
             pulumi.set(__self__, "pre_install_script", pre_install_script)
         if tags is not None:
             pulumi.set(__self__, "tags", tags)
+
+    @_builtins.property
+    @pulumi.getter
+    def image(self) -> pulumi.Input['Mk8sGcpProviderImageArgs']:
+        """
+        Default image for all nodes.
+        """
+        return pulumi.get(self, "image")
+
+    @image.setter
+    def image(self, value: pulumi.Input['Mk8sGcpProviderImageArgs']):
+        pulumi.set(self, "image", value)
 
     @_builtins.property
     @pulumi.getter
@@ -9062,6 +9067,15 @@ class Mk8sGcpProviderArgs:
     @network.setter
     def network(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "network", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def networking(self) -> pulumi.Input['Mk8sGcpProviderNetworkingArgs']:
+        return pulumi.get(self, "networking")
+
+    @networking.setter
+    def networking(self, value: pulumi.Input['Mk8sGcpProviderNetworkingArgs']):
+        pulumi.set(self, "networking", value)
 
     @_builtins.property
     @pulumi.getter(name="projectId")
@@ -9110,18 +9124,6 @@ class Mk8sGcpProviderArgs:
 
     @_builtins.property
     @pulumi.getter
-    def image(self) -> Optional[pulumi.Input['Mk8sGcpProviderImageArgs']]:
-        """
-        Default image for all nodes.
-        """
-        return pulumi.get(self, "image")
-
-    @image.setter
-    def image(self, value: Optional[pulumi.Input['Mk8sGcpProviderImageArgs']]):
-        pulumi.set(self, "image", value)
-
-    @_builtins.property
-    @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Extra tags to attach to all created objects.
@@ -9140,15 +9142,6 @@ class Mk8sGcpProviderArgs:
     @metadata.setter
     def metadata(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "metadata", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def networking(self) -> Optional[pulumi.Input['Mk8sGcpProviderNetworkingArgs']]:
-        return pulumi.get(self, "networking")
-
-    @networking.setter
-    def networking(self, value: Optional[pulumi.Input['Mk8sGcpProviderNetworkingArgs']]):
-        pulumi.set(self, "networking", value)
 
     @_builtins.property
     @pulumi.getter(name="nodePools")
@@ -9772,7 +9765,7 @@ if not MYPY:
         """
         Control Plane location that will host the K8s components. Prefer one that is closest to where the nodes are running.
         """
-        networking: NotRequired[pulumi.Input['Mk8sGenericProviderNetworkingArgsDict']]
+        networking: pulumi.Input['Mk8sGenericProviderNetworkingArgsDict']
         node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sGenericProviderNodePoolArgsDict']]]]
         """
         List of node pools.
@@ -9784,15 +9777,14 @@ elif False:
 class Mk8sGenericProviderArgs:
     def __init__(__self__, *,
                  location: pulumi.Input[_builtins.str],
-                 networking: Optional[pulumi.Input['Mk8sGenericProviderNetworkingArgs']] = None,
+                 networking: pulumi.Input['Mk8sGenericProviderNetworkingArgs'],
                  node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sGenericProviderNodePoolArgs']]]] = None):
         """
         :param pulumi.Input[_builtins.str] location: Control Plane location that will host the K8s components. Prefer one that is closest to where the nodes are running.
         :param pulumi.Input[Sequence[pulumi.Input['Mk8sGenericProviderNodePoolArgs']]] node_pools: List of node pools.
         """
         pulumi.set(__self__, "location", location)
-        if networking is not None:
-            pulumi.set(__self__, "networking", networking)
+        pulumi.set(__self__, "networking", networking)
         if node_pools is not None:
             pulumi.set(__self__, "node_pools", node_pools)
 
@@ -9810,11 +9802,11 @@ class Mk8sGenericProviderArgs:
 
     @_builtins.property
     @pulumi.getter
-    def networking(self) -> Optional[pulumi.Input['Mk8sGenericProviderNetworkingArgs']]:
+    def networking(self) -> pulumi.Input['Mk8sGenericProviderNetworkingArgs']:
         return pulumi.get(self, "networking")
 
     @networking.setter
-    def networking(self, value: Optional[pulumi.Input['Mk8sGenericProviderNetworkingArgs']]):
+    def networking(self, value: pulumi.Input['Mk8sGenericProviderNetworkingArgs']):
         pulumi.set(self, "networking", value)
 
     @_builtins.property
@@ -10021,6 +10013,7 @@ if not MYPY:
         """
         ID of the Hetzner network to deploy nodes to.
         """
+        networking: pulumi.Input['Mk8sHetznerProviderNetworkingArgsDict']
         region: pulumi.Input[_builtins.str]
         """
         Hetzner region to deploy nodes to.
@@ -10050,7 +10043,6 @@ if not MYPY:
         """
         Default image for all nodes.
         """
-        networking: NotRequired[pulumi.Input['Mk8sHetznerProviderNetworkingArgsDict']]
         node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderNodePoolArgsDict']]]]
         pre_install_script: NotRequired[pulumi.Input[_builtins.str]]
         """
@@ -10067,6 +10059,7 @@ elif False:
 class Mk8sHetznerProviderArgs:
     def __init__(__self__, *,
                  network_id: pulumi.Input[_builtins.str],
+                 networking: pulumi.Input['Mk8sHetznerProviderNetworkingArgs'],
                  region: pulumi.Input[_builtins.str],
                  token_secret_link: pulumi.Input[_builtins.str],
                  autoscaler: Optional[pulumi.Input['Mk8sHetznerProviderAutoscalerArgs']] = None,
@@ -10075,7 +10068,6 @@ class Mk8sHetznerProviderArgs:
                  floating_ip_selector: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  hetzner_labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  image: Optional[pulumi.Input[_builtins.str]] = None,
-                 networking: Optional[pulumi.Input['Mk8sHetznerProviderNetworkingArgs']] = None,
                  node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sHetznerProviderNodePoolArgs']]]] = None,
                  pre_install_script: Optional[pulumi.Input[_builtins.str]] = None,
                  ssh_key: Optional[pulumi.Input[_builtins.str]] = None):
@@ -10092,6 +10084,7 @@ class Mk8sHetznerProviderArgs:
         :param pulumi.Input[_builtins.str] ssh_key: SSH key name for accessing deployed nodes.
         """
         pulumi.set(__self__, "network_id", network_id)
+        pulumi.set(__self__, "networking", networking)
         pulumi.set(__self__, "region", region)
         pulumi.set(__self__, "token_secret_link", token_secret_link)
         if autoscaler is not None:
@@ -10106,8 +10099,6 @@ class Mk8sHetznerProviderArgs:
             pulumi.set(__self__, "hetzner_labels", hetzner_labels)
         if image is not None:
             pulumi.set(__self__, "image", image)
-        if networking is not None:
-            pulumi.set(__self__, "networking", networking)
         if node_pools is not None:
             pulumi.set(__self__, "node_pools", node_pools)
         if pre_install_script is not None:
@@ -10126,6 +10117,15 @@ class Mk8sHetznerProviderArgs:
     @network_id.setter
     def network_id(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "network_id", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def networking(self) -> pulumi.Input['Mk8sHetznerProviderNetworkingArgs']:
+        return pulumi.get(self, "networking")
+
+    @networking.setter
+    def networking(self, value: pulumi.Input['Mk8sHetznerProviderNetworkingArgs']):
+        pulumi.set(self, "networking", value)
 
     @_builtins.property
     @pulumi.getter
@@ -10219,15 +10219,6 @@ class Mk8sHetznerProviderArgs:
     @image.setter
     def image(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "image", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def networking(self) -> Optional[pulumi.Input['Mk8sHetznerProviderNetworkingArgs']]:
-        return pulumi.get(self, "networking")
-
-    @networking.setter
-    def networking(self, value: Optional[pulumi.Input['Mk8sHetznerProviderNetworkingArgs']]):
-        pulumi.set(self, "networking", value)
 
     @_builtins.property
     @pulumi.getter(name="nodePools")
@@ -11154,6 +11145,7 @@ if not MYPY:
         """
         Default image for all nodes.
         """
+        networking: pulumi.Input['Mk8sLinodeProviderNetworkingArgsDict']
         region: pulumi.Input[_builtins.str]
         """
         Region where the cluster nodes will live.
@@ -11173,7 +11165,6 @@ if not MYPY:
         """
         Optional firewall rule to attach to all nodes.
         """
-        networking: NotRequired[pulumi.Input['Mk8sLinodeProviderNetworkingArgsDict']]
         node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sLinodeProviderNodePoolArgsDict']]]]
         """
         List of node pools.
@@ -11189,6 +11180,7 @@ elif False:
 class Mk8sLinodeProviderArgs:
     def __init__(__self__, *,
                  image: pulumi.Input[_builtins.str],
+                 networking: pulumi.Input['Mk8sLinodeProviderNetworkingArgs'],
                  region: pulumi.Input[_builtins.str],
                  token_secret_link: pulumi.Input[_builtins.str],
                  vpc_id: pulumi.Input[_builtins.str],
@@ -11196,7 +11188,6 @@ class Mk8sLinodeProviderArgs:
                  authorized_users: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  autoscaler: Optional[pulumi.Input['Mk8sLinodeProviderAutoscalerArgs']] = None,
                  firewall_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 networking: Optional[pulumi.Input['Mk8sLinodeProviderNetworkingArgs']] = None,
                  node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sLinodeProviderNodePoolArgs']]]] = None,
                  pre_install_script: Optional[pulumi.Input[_builtins.str]] = None):
         """
@@ -11209,6 +11200,7 @@ class Mk8sLinodeProviderArgs:
         :param pulumi.Input[_builtins.str] pre_install_script: Optional shell script that will be run before K8s is installed. Supports SSM.
         """
         pulumi.set(__self__, "image", image)
+        pulumi.set(__self__, "networking", networking)
         pulumi.set(__self__, "region", region)
         pulumi.set(__self__, "token_secret_link", token_secret_link)
         pulumi.set(__self__, "vpc_id", vpc_id)
@@ -11220,8 +11212,6 @@ class Mk8sLinodeProviderArgs:
             pulumi.set(__self__, "autoscaler", autoscaler)
         if firewall_id is not None:
             pulumi.set(__self__, "firewall_id", firewall_id)
-        if networking is not None:
-            pulumi.set(__self__, "networking", networking)
         if node_pools is not None:
             pulumi.set(__self__, "node_pools", node_pools)
         if pre_install_script is not None:
@@ -11238,6 +11228,15 @@ class Mk8sLinodeProviderArgs:
     @image.setter
     def image(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "image", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def networking(self) -> pulumi.Input['Mk8sLinodeProviderNetworkingArgs']:
+        return pulumi.get(self, "networking")
+
+    @networking.setter
+    def networking(self, value: pulumi.Input['Mk8sLinodeProviderNetworkingArgs']):
+        pulumi.set(self, "networking", value)
 
     @_builtins.property
     @pulumi.getter
@@ -11313,15 +11312,6 @@ class Mk8sLinodeProviderArgs:
     @firewall_id.setter
     def firewall_id(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "firewall_id", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def networking(self) -> Optional[pulumi.Input['Mk8sLinodeProviderNetworkingArgs']]:
-        return pulumi.get(self, "networking")
-
-    @networking.setter
-    def networking(self, value: Optional[pulumi.Input['Mk8sLinodeProviderNetworkingArgs']]):
-        pulumi.set(self, "networking", value)
 
     @_builtins.property
     @pulumi.getter(name="nodePools")
@@ -13070,6 +13060,7 @@ if not MYPY:
         """
         Control Plane location that will host the K8s components. Prefer one that is closest to the Triton datacenter.
         """
+        networking: pulumi.Input['Mk8sTritonProviderNetworkingArgsDict']
         private_network_id: pulumi.Input[_builtins.str]
         """
         ID of the private Fabric/Network.
@@ -13081,7 +13072,6 @@ if not MYPY:
         Enable firewall for the instances deployed.
         """
         load_balancer: NotRequired[pulumi.Input['Mk8sTritonProviderLoadBalancerArgsDict']]
-        networking: NotRequired[pulumi.Input['Mk8sTritonProviderNetworkingArgsDict']]
         node_pools: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sTritonProviderNodePoolArgsDict']]]]
         """
         List of node pools.
@@ -13102,12 +13092,12 @@ class Mk8sTritonProviderArgs:
     def __init__(__self__, *,
                  image_id: pulumi.Input[_builtins.str],
                  location: pulumi.Input[_builtins.str],
+                 networking: pulumi.Input['Mk8sTritonProviderNetworkingArgs'],
                  private_network_id: pulumi.Input[_builtins.str],
                  autoscaler: Optional[pulumi.Input['Mk8sTritonProviderAutoscalerArgs']] = None,
                  connection: Optional[pulumi.Input['Mk8sTritonProviderConnectionArgs']] = None,
                  firewall_enabled: Optional[pulumi.Input[_builtins.bool]] = None,
                  load_balancer: Optional[pulumi.Input['Mk8sTritonProviderLoadBalancerArgs']] = None,
-                 networking: Optional[pulumi.Input['Mk8sTritonProviderNetworkingArgs']] = None,
                  node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sTritonProviderNodePoolArgs']]]] = None,
                  pre_install_script: Optional[pulumi.Input[_builtins.str]] = None,
                  ssh_keys: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
@@ -13122,6 +13112,7 @@ class Mk8sTritonProviderArgs:
         """
         pulumi.set(__self__, "image_id", image_id)
         pulumi.set(__self__, "location", location)
+        pulumi.set(__self__, "networking", networking)
         pulumi.set(__self__, "private_network_id", private_network_id)
         if autoscaler is not None:
             pulumi.set(__self__, "autoscaler", autoscaler)
@@ -13131,8 +13122,6 @@ class Mk8sTritonProviderArgs:
             pulumi.set(__self__, "firewall_enabled", firewall_enabled)
         if load_balancer is not None:
             pulumi.set(__self__, "load_balancer", load_balancer)
-        if networking is not None:
-            pulumi.set(__self__, "networking", networking)
         if node_pools is not None:
             pulumi.set(__self__, "node_pools", node_pools)
         if pre_install_script is not None:
@@ -13163,6 +13152,15 @@ class Mk8sTritonProviderArgs:
     @location.setter
     def location(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "location", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def networking(self) -> pulumi.Input['Mk8sTritonProviderNetworkingArgs']:
+        return pulumi.get(self, "networking")
+
+    @networking.setter
+    def networking(self, value: pulumi.Input['Mk8sTritonProviderNetworkingArgs']):
+        pulumi.set(self, "networking", value)
 
     @_builtins.property
     @pulumi.getter(name="privateNetworkId")
@@ -13214,15 +13212,6 @@ class Mk8sTritonProviderArgs:
     @load_balancer.setter
     def load_balancer(self, value: Optional[pulumi.Input['Mk8sTritonProviderLoadBalancerArgs']]):
         pulumi.set(self, "load_balancer", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def networking(self) -> Optional[pulumi.Input['Mk8sTritonProviderNetworkingArgs']]:
-        return pulumi.get(self, "networking")
-
-    @networking.setter
-    def networking(self, value: Optional[pulumi.Input['Mk8sTritonProviderNetworkingArgs']]):
-        pulumi.set(self, "networking", value)
 
     @_builtins.property
     @pulumi.getter(name="nodePools")

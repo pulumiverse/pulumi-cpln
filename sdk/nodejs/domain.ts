@@ -53,7 +53,7 @@ export class Domain extends pulumi.CustomResource {
     /**
      * Domain specification.
      */
-    declare public readonly spec: pulumi.Output<outputs.DomainSpec | undefined>;
+    declare public readonly spec: pulumi.Output<outputs.DomainSpec>;
     /**
      * Domain status.
      */
@@ -70,7 +70,7 @@ export class Domain extends pulumi.CustomResource {
      * @param args The arguments to use to populate this resource's properties.
      * @param opts A bag of options that control this resource's behavior.
      */
-    constructor(name: string, args?: DomainArgs, opts?: pulumi.CustomResourceOptions)
+    constructor(name: string, args: DomainArgs, opts?: pulumi.CustomResourceOptions)
     constructor(name: string, argsOrState?: DomainArgs | DomainState, opts?: pulumi.CustomResourceOptions) {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
@@ -85,6 +85,9 @@ export class Domain extends pulumi.CustomResource {
             resourceInputs["tags"] = state?.tags;
         } else {
             const args = argsOrState as DomainArgs | undefined;
+            if (args?.spec === undefined && !opts.urn) {
+                throw new Error("Missing required property 'spec'");
+            }
             resourceInputs["description"] = args?.description;
             resourceInputs["name"] = args?.name;
             resourceInputs["spec"] = args?.spec;
@@ -147,7 +150,7 @@ export interface DomainArgs {
     /**
      * Domain specification.
      */
-    spec?: pulumi.Input<inputs.DomainSpec>;
+    spec: pulumi.Input<inputs.DomainSpec>;
     /**
      * Key-value map of resource tags.
      */

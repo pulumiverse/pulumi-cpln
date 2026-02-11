@@ -21,6 +21,7 @@ __all__ = ['Mk8sArgs', 'Mk8s']
 @pulumi.input_type
 class Mk8sArgs:
     def __init__(__self__, *,
+                 firewalls: pulumi.Input[Sequence[pulumi.Input['Mk8sFirewallArgs']]],
                  version: pulumi.Input[_builtins.str],
                  add_ons: Optional[pulumi.Input['Mk8sAddOnsArgs']] = None,
                  aws_provider: Optional[pulumi.Input['Mk8sAwsProviderArgs']] = None,
@@ -28,7 +29,6 @@ class Mk8sArgs:
                  description: Optional[pulumi.Input[_builtins.str]] = None,
                  digital_ocean_provider: Optional[pulumi.Input['Mk8sDigitalOceanProviderArgs']] = None,
                  ephemeral_provider: Optional[pulumi.Input['Mk8sEphemeralProviderArgs']] = None,
-                 firewalls: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sFirewallArgs']]]] = None,
                  gcp_provider: Optional[pulumi.Input['Mk8sGcpProviderArgs']] = None,
                  generic_provider: Optional[pulumi.Input['Mk8sGenericProviderArgs']] = None,
                  hetzner_provider: Optional[pulumi.Input['Mk8sHetznerProviderArgs']] = None,
@@ -41,11 +41,12 @@ class Mk8sArgs:
                  triton_provider: Optional[pulumi.Input['Mk8sTritonProviderArgs']] = None):
         """
         The set of arguments for constructing a Mk8s resource.
-        :param pulumi.Input[_builtins.str] description: Description of the mk8s.
         :param pulumi.Input[Sequence[pulumi.Input['Mk8sFirewallArgs']]] firewalls: Allow-list.
+        :param pulumi.Input[_builtins.str] description: Description of the mk8s.
         :param pulumi.Input[_builtins.str] name: Name of the mk8s.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
         """
+        pulumi.set(__self__, "firewalls", firewalls)
         pulumi.set(__self__, "version", version)
         if add_ons is not None:
             pulumi.set(__self__, "add_ons", add_ons)
@@ -59,8 +60,6 @@ class Mk8sArgs:
             pulumi.set(__self__, "digital_ocean_provider", digital_ocean_provider)
         if ephemeral_provider is not None:
             pulumi.set(__self__, "ephemeral_provider", ephemeral_provider)
-        if firewalls is not None:
-            pulumi.set(__self__, "firewalls", firewalls)
         if gcp_provider is not None:
             pulumi.set(__self__, "gcp_provider", gcp_provider)
         if generic_provider is not None:
@@ -81,6 +80,18 @@ class Mk8sArgs:
             pulumi.set(__self__, "tags", tags)
         if triton_provider is not None:
             pulumi.set(__self__, "triton_provider", triton_provider)
+
+    @_builtins.property
+    @pulumi.getter
+    def firewalls(self) -> pulumi.Input[Sequence[pulumi.Input['Mk8sFirewallArgs']]]:
+        """
+        Allow-list.
+        """
+        return pulumi.get(self, "firewalls")
+
+    @firewalls.setter
+    def firewalls(self, value: pulumi.Input[Sequence[pulumi.Input['Mk8sFirewallArgs']]]):
+        pulumi.set(self, "firewalls", value)
 
     @_builtins.property
     @pulumi.getter
@@ -147,18 +158,6 @@ class Mk8sArgs:
     @ephemeral_provider.setter
     def ephemeral_provider(self, value: Optional[pulumi.Input['Mk8sEphemeralProviderArgs']]):
         pulumi.set(self, "ephemeral_provider", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def firewalls(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sFirewallArgs']]]]:
-        """
-        Allow-list.
-        """
-        return pulumi.get(self, "firewalls")
-
-    @firewalls.setter
-    def firewalls(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sFirewallArgs']]]]):
-        pulumi.set(self, "firewalls", value)
 
     @_builtins.property
     @pulumi.getter(name="gcpProvider")
@@ -651,6 +650,8 @@ class Mk8s(pulumi.CustomResource):
             __props__.__dict__["description"] = description
             __props__.__dict__["digital_ocean_provider"] = digital_ocean_provider
             __props__.__dict__["ephemeral_provider"] = ephemeral_provider
+            if firewalls is None and not opts.urn:
+                raise TypeError("Missing required property 'firewalls'")
             __props__.__dict__["firewalls"] = firewalls
             __props__.__dict__["gcp_provider"] = gcp_provider
             __props__.__dict__["generic_provider"] = generic_provider
@@ -796,7 +797,7 @@ class Mk8s(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
-    def firewalls(self) -> pulumi.Output[Optional[Sequence['outputs.Mk8sFirewall']]]:
+    def firewalls(self) -> pulumi.Output[Sequence['outputs.Mk8sFirewall']]:
         """
         Allow-list.
         """

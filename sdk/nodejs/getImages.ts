@@ -89,6 +89,35 @@ import * as utilities from "./utilities";
  * - **size** (Number) The size of the image or layer in bytes. This helps in estimating the space required and the download time.
  * - **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.
  * - **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.
+ *
+ * ## Example Usage
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as cpln from "@pulumiverse/cpln";
+ *
+ * export = async () => {
+ *     const images = await cpln.getImages({});
+ *     // Get Specific Images of a Repository
+ *     const images_query = await cpln.getImages({
+ *         queries: [{
+ *             fetch: "items",
+ *             spec: {
+ *                 match: "all",
+ *                 terms: [{
+ *                     op: "=",
+ *                     property: "repository",
+ *                     value: "REPOSITORY_NAME",
+ *                 }],
+ *             },
+ *         }],
+ *     });
+ *     return {
+ *         images: images.images,
+ *         "images-of-specific-repository": images["images-query"],
+ *     };
+ * }
+ * ```
  */
 export function getImages(args?: GetImagesArgs, opts?: pulumi.InvokeOptions): Promise<GetImagesResult> {
     args = args || {};
@@ -199,6 +228,35 @@ export interface GetImagesResult {
  * - **size** (Number) The size of the image or layer in bytes. This helps in estimating the space required and the download time.
  * - **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.
  * - **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.
+ *
+ * ## Example Usage
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as cpln from "@pulumiverse/cpln";
+ *
+ * export = async () => {
+ *     const images = await cpln.getImages({});
+ *     // Get Specific Images of a Repository
+ *     const images_query = await cpln.getImages({
+ *         queries: [{
+ *             fetch: "items",
+ *             spec: {
+ *                 match: "all",
+ *                 terms: [{
+ *                     op: "=",
+ *                     property: "repository",
+ *                     value: "REPOSITORY_NAME",
+ *                 }],
+ *             },
+ *         }],
+ *     });
+ *     return {
+ *         images: images.images,
+ *         "images-of-specific-repository": images["images-query"],
+ *     };
+ * }
+ * ```
  */
 export function getImagesOutput(args?: GetImagesOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetImagesResult> {
     args = args || {};

@@ -29,7 +29,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// Control Plane location that will host the K8s components. Prefer one that is closest to the Triton datacenter.
         /// </summary>
         public readonly string Location;
-        public readonly Outputs.Mk8sTritonProviderNetworking? Networking;
+        public readonly Outputs.Mk8sTritonProviderNetworking Networking;
         /// <summary>
         /// List of node pools.
         /// </summary>
@@ -61,7 +61,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             string location,
 
-            Outputs.Mk8sTritonProviderNetworking? networking,
+            Outputs.Mk8sTritonProviderNetworking networking,
 
             ImmutableArray<Outputs.Mk8sTritonProviderNodePool> nodePools,
 

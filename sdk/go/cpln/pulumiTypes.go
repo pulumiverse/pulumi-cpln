@@ -1169,7 +1169,7 @@ type DomainSpecPort struct {
 	// Allowed protocol. Valid values: `http`, `http2`, `tcp`. Default: `http2`.
 	Protocol *string `pulumi:"protocol"`
 	// Used for TLS connections for this Domain. End users are responsible for certificate updates.
-	Tls *DomainSpecPortTls `pulumi:"tls"`
+	Tls DomainSpecPortTls `pulumi:"tls"`
 }
 
 // DomainSpecPortInput is an input type that accepts DomainSpecPortArgs and DomainSpecPortOutput values.
@@ -1191,7 +1191,7 @@ type DomainSpecPortArgs struct {
 	// Allowed protocol. Valid values: `http`, `http2`, `tcp`. Default: `http2`.
 	Protocol pulumi.StringPtrInput `pulumi:"protocol"`
 	// Used for TLS connections for this Domain. End users are responsible for certificate updates.
-	Tls DomainSpecPortTlsPtrInput `pulumi:"tls"`
+	Tls DomainSpecPortTlsInput `pulumi:"tls"`
 }
 
 func (DomainSpecPortArgs) ElementType() reflect.Type {
@@ -1261,8 +1261,8 @@ func (o DomainSpecPortOutput) Protocol() pulumi.StringPtrOutput {
 }
 
 // Used for TLS connections for this Domain. End users are responsible for certificate updates.
-func (o DomainSpecPortOutput) Tls() DomainSpecPortTlsPtrOutput {
-	return o.ApplyT(func(v DomainSpecPort) *DomainSpecPortTls { return v.Tls }).(DomainSpecPortTlsPtrOutput)
+func (o DomainSpecPortOutput) Tls() DomainSpecPortTlsOutput {
+	return o.ApplyT(func(v DomainSpecPort) DomainSpecPortTls { return v.Tls }).(DomainSpecPortTlsOutput)
 }
 
 type DomainSpecPortArrayOutput struct{ *pulumi.OutputState }
@@ -1665,47 +1665,6 @@ func (i DomainSpecPortTlsArgs) ToDomainSpecPortTlsOutputWithContext(ctx context.
 	return pulumi.ToOutputWithContext(ctx, i).(DomainSpecPortTlsOutput)
 }
 
-func (i DomainSpecPortTlsArgs) ToDomainSpecPortTlsPtrOutput() DomainSpecPortTlsPtrOutput {
-	return i.ToDomainSpecPortTlsPtrOutputWithContext(context.Background())
-}
-
-func (i DomainSpecPortTlsArgs) ToDomainSpecPortTlsPtrOutputWithContext(ctx context.Context) DomainSpecPortTlsPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(DomainSpecPortTlsOutput).ToDomainSpecPortTlsPtrOutputWithContext(ctx)
-}
-
-// DomainSpecPortTlsPtrInput is an input type that accepts DomainSpecPortTlsArgs, DomainSpecPortTlsPtr and DomainSpecPortTlsPtrOutput values.
-// You can construct a concrete instance of `DomainSpecPortTlsPtrInput` via:
-//
-//	        DomainSpecPortTlsArgs{...}
-//
-//	or:
-//
-//	        nil
-type DomainSpecPortTlsPtrInput interface {
-	pulumi.Input
-
-	ToDomainSpecPortTlsPtrOutput() DomainSpecPortTlsPtrOutput
-	ToDomainSpecPortTlsPtrOutputWithContext(context.Context) DomainSpecPortTlsPtrOutput
-}
-
-type domainSpecPortTlsPtrType DomainSpecPortTlsArgs
-
-func DomainSpecPortTlsPtr(v *DomainSpecPortTlsArgs) DomainSpecPortTlsPtrInput {
-	return (*domainSpecPortTlsPtrType)(v)
-}
-
-func (*domainSpecPortTlsPtrType) ElementType() reflect.Type {
-	return reflect.TypeOf((**DomainSpecPortTls)(nil)).Elem()
-}
-
-func (i *domainSpecPortTlsPtrType) ToDomainSpecPortTlsPtrOutput() DomainSpecPortTlsPtrOutput {
-	return i.ToDomainSpecPortTlsPtrOutputWithContext(context.Background())
-}
-
-func (i *domainSpecPortTlsPtrType) ToDomainSpecPortTlsPtrOutputWithContext(ctx context.Context) DomainSpecPortTlsPtrOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(DomainSpecPortTlsPtrOutput)
-}
-
 type DomainSpecPortTlsOutput struct{ *pulumi.OutputState }
 
 func (DomainSpecPortTlsOutput) ElementType() reflect.Type {
@@ -1718,16 +1677,6 @@ func (o DomainSpecPortTlsOutput) ToDomainSpecPortTlsOutput() DomainSpecPortTlsOu
 
 func (o DomainSpecPortTlsOutput) ToDomainSpecPortTlsOutputWithContext(ctx context.Context) DomainSpecPortTlsOutput {
 	return o
-}
-
-func (o DomainSpecPortTlsOutput) ToDomainSpecPortTlsPtrOutput() DomainSpecPortTlsPtrOutput {
-	return o.ToDomainSpecPortTlsPtrOutputWithContext(context.Background())
-}
-
-func (o DomainSpecPortTlsOutput) ToDomainSpecPortTlsPtrOutputWithContext(ctx context.Context) DomainSpecPortTlsPtrOutput {
-	return o.ApplyTWithContext(ctx, func(_ context.Context, v DomainSpecPortTls) *DomainSpecPortTls {
-		return &v
-	}).(DomainSpecPortTlsPtrOutput)
 }
 
 // Allowed cipher suites. Refer to the [Domain Reference](https://docs.controlplane.com/reference/domain#cipher-suites) for details.
@@ -1748,70 +1697,6 @@ func (o DomainSpecPortTlsOutput) MinProtocolVersion() pulumi.StringPtrOutput {
 // Configure an optional custom server certificate for the domain. When the port number is 443 and this is not supplied, a certificate is provisioned automatically.
 func (o DomainSpecPortTlsOutput) ServerCertificate() DomainSpecPortTlsServerCertificatePtrOutput {
 	return o.ApplyT(func(v DomainSpecPortTls) *DomainSpecPortTlsServerCertificate { return v.ServerCertificate }).(DomainSpecPortTlsServerCertificatePtrOutput)
-}
-
-type DomainSpecPortTlsPtrOutput struct{ *pulumi.OutputState }
-
-func (DomainSpecPortTlsPtrOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**DomainSpecPortTls)(nil)).Elem()
-}
-
-func (o DomainSpecPortTlsPtrOutput) ToDomainSpecPortTlsPtrOutput() DomainSpecPortTlsPtrOutput {
-	return o
-}
-
-func (o DomainSpecPortTlsPtrOutput) ToDomainSpecPortTlsPtrOutputWithContext(ctx context.Context) DomainSpecPortTlsPtrOutput {
-	return o
-}
-
-func (o DomainSpecPortTlsPtrOutput) Elem() DomainSpecPortTlsOutput {
-	return o.ApplyT(func(v *DomainSpecPortTls) DomainSpecPortTls {
-		if v != nil {
-			return *v
-		}
-		var ret DomainSpecPortTls
-		return ret
-	}).(DomainSpecPortTlsOutput)
-}
-
-// Allowed cipher suites. Refer to the [Domain Reference](https://docs.controlplane.com/reference/domain#cipher-suites) for details.
-func (o DomainSpecPortTlsPtrOutput) CipherSuites() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v *DomainSpecPortTls) []string {
-		if v == nil {
-			return nil
-		}
-		return v.CipherSuites
-	}).(pulumi.StringArrayOutput)
-}
-
-// The certificate authority PEM, stored as a TLS Secret, used to verify the authority of the client certificate. The only verification performed checks that the CN of the PEM matches the Domain (i.e., CN=*.DOMAIN).
-func (o DomainSpecPortTlsPtrOutput) ClientCertificate() DomainSpecPortTlsClientCertificatePtrOutput {
-	return o.ApplyT(func(v *DomainSpecPortTls) *DomainSpecPortTlsClientCertificate {
-		if v == nil {
-			return nil
-		}
-		return v.ClientCertificate
-	}).(DomainSpecPortTlsClientCertificatePtrOutput)
-}
-
-// Minimum TLS version to accept. Minimum is `1.0`. Default: `1.2`.
-func (o DomainSpecPortTlsPtrOutput) MinProtocolVersion() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *DomainSpecPortTls) *string {
-		if v == nil {
-			return nil
-		}
-		return v.MinProtocolVersion
-	}).(pulumi.StringPtrOutput)
-}
-
-// Configure an optional custom server certificate for the domain. When the port number is 443 and this is not supplied, a certificate is provisioned automatically.
-func (o DomainSpecPortTlsPtrOutput) ServerCertificate() DomainSpecPortTlsServerCertificatePtrOutput {
-	return o.ApplyT(func(v *DomainSpecPortTls) *DomainSpecPortTlsServerCertificate {
-		if v == nil {
-			return nil
-		}
-		return v.ServerCertificate
-	}).(DomainSpecPortTlsServerCertificatePtrOutput)
 }
 
 type DomainSpecPortTlsClientCertificate struct {
@@ -13396,8 +13281,8 @@ type Mk8sAwsProvider struct {
 	// Default image for all nodes.
 	Image *Mk8sAwsProviderImage `pulumi:"image"`
 	// Name of keyPair. Supports SSM
-	KeyPair    *string                    `pulumi:"keyPair"`
-	Networking *Mk8sAwsProviderNetworking `pulumi:"networking"`
+	KeyPair    *string                   `pulumi:"keyPair"`
+	Networking Mk8sAwsProviderNetworking `pulumi:"networking"`
 	// List of node pools.
 	NodePools []Mk8sAwsProviderNodePool `pulumi:"nodePools"`
 	// Optional shell script that will be run before K8s is installed. Supports SSM.
@@ -13436,8 +13321,8 @@ type Mk8sAwsProviderArgs struct {
 	// Default image for all nodes.
 	Image Mk8sAwsProviderImagePtrInput `pulumi:"image"`
 	// Name of keyPair. Supports SSM
-	KeyPair    pulumi.StringPtrInput             `pulumi:"keyPair"`
-	Networking Mk8sAwsProviderNetworkingPtrInput `pulumi:"networking"`
+	KeyPair    pulumi.StringPtrInput          `pulumi:"keyPair"`
+	Networking Mk8sAwsProviderNetworkingInput `pulumi:"networking"`
 	// List of node pools.
 	NodePools Mk8sAwsProviderNodePoolArrayInput `pulumi:"nodePools"`
 	// Optional shell script that will be run before K8s is installed. Supports SSM.
@@ -13566,8 +13451,8 @@ func (o Mk8sAwsProviderOutput) KeyPair() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Mk8sAwsProvider) *string { return v.KeyPair }).(pulumi.StringPtrOutput)
 }
 
-func (o Mk8sAwsProviderOutput) Networking() Mk8sAwsProviderNetworkingPtrOutput {
-	return o.ApplyT(func(v Mk8sAwsProvider) *Mk8sAwsProviderNetworking { return v.Networking }).(Mk8sAwsProviderNetworkingPtrOutput)
+func (o Mk8sAwsProviderOutput) Networking() Mk8sAwsProviderNetworkingOutput {
+	return o.ApplyT(func(v Mk8sAwsProvider) Mk8sAwsProviderNetworking { return v.Networking }).(Mk8sAwsProviderNetworkingOutput)
 }
 
 // List of node pools.
@@ -13706,7 +13591,7 @@ func (o Mk8sAwsProviderPtrOutput) Networking() Mk8sAwsProviderNetworkingPtrOutpu
 		if v == nil {
 			return nil
 		}
-		return v.Networking
+		return &v.Networking
 	}).(Mk8sAwsProviderNetworkingPtrOutput)
 }
 
@@ -14830,9 +14715,9 @@ type Mk8sAzureProvider struct {
 	// Region where the cluster nodes will live.
 	Location string `pulumi:"location"`
 	// The vpc where nodes will be deployed.
-	NetworkId  string                       `pulumi:"networkId"`
-	Networking *Mk8sAzureProviderNetworking `pulumi:"networking"`
-	NodePools  []Mk8sAzureProviderNodePool  `pulumi:"nodePools"`
+	NetworkId  string                      `pulumi:"networkId"`
+	Networking Mk8sAzureProviderNetworking `pulumi:"networking"`
+	NodePools  []Mk8sAzureProviderNodePool `pulumi:"nodePools"`
 	// Optional shell script that will be run before K8s is installed. Supports SSM.
 	PreInstallScript *string `pulumi:"preInstallScript"`
 	ResourceGroup    string  `pulumi:"resourceGroup"`
@@ -14863,7 +14748,7 @@ type Mk8sAzureProviderArgs struct {
 	Location pulumi.StringInput `pulumi:"location"`
 	// The vpc where nodes will be deployed.
 	NetworkId  pulumi.StringInput                  `pulumi:"networkId"`
-	Networking Mk8sAzureProviderNetworkingPtrInput `pulumi:"networking"`
+	Networking Mk8sAzureProviderNetworkingInput    `pulumi:"networking"`
 	NodePools  Mk8sAzureProviderNodePoolArrayInput `pulumi:"nodePools"`
 	// Optional shell script that will be run before K8s is installed. Supports SSM.
 	PreInstallScript pulumi.StringPtrInput `pulumi:"preInstallScript"`
@@ -14972,8 +14857,8 @@ func (o Mk8sAzureProviderOutput) NetworkId() pulumi.StringOutput {
 	return o.ApplyT(func(v Mk8sAzureProvider) string { return v.NetworkId }).(pulumi.StringOutput)
 }
 
-func (o Mk8sAzureProviderOutput) Networking() Mk8sAzureProviderNetworkingPtrOutput {
-	return o.ApplyT(func(v Mk8sAzureProvider) *Mk8sAzureProviderNetworking { return v.Networking }).(Mk8sAzureProviderNetworkingPtrOutput)
+func (o Mk8sAzureProviderOutput) Networking() Mk8sAzureProviderNetworkingOutput {
+	return o.ApplyT(func(v Mk8sAzureProvider) Mk8sAzureProviderNetworking { return v.Networking }).(Mk8sAzureProviderNetworkingOutput)
 }
 
 func (o Mk8sAzureProviderOutput) NodePools() Mk8sAzureProviderNodePoolArrayOutput {
@@ -15075,7 +14960,7 @@ func (o Mk8sAzureProviderPtrOutput) Networking() Mk8sAzureProviderNetworkingPtrO
 		if v == nil {
 			return nil
 		}
-		return v.Networking
+		return &v.Networking
 	}).(Mk8sAzureProviderNetworkingPtrOutput)
 }
 
@@ -16419,9 +16304,9 @@ type Mk8sDigitalOceanProvider struct {
 	// Extra SSH keys to provision for user root that are not registered in the DigitalOcean.
 	ExtraSshKeys []string `pulumi:"extraSshKeys"`
 	// Default image for all nodes.
-	Image      string                              `pulumi:"image"`
-	Networking *Mk8sDigitalOceanProviderNetworking `pulumi:"networking"`
-	NodePools  []Mk8sDigitalOceanProviderNodePool  `pulumi:"nodePools"`
+	Image      string                             `pulumi:"image"`
+	Networking Mk8sDigitalOceanProviderNetworking `pulumi:"networking"`
+	NodePools  []Mk8sDigitalOceanProviderNodePool `pulumi:"nodePools"`
 	// Optional shell script that will be run before K8s is installed. Supports SSM.
 	PreInstallScript *string `pulumi:"preInstallScript"`
 	// Region to deploy nodes to.
@@ -16455,7 +16340,7 @@ type Mk8sDigitalOceanProviderArgs struct {
 	ExtraSshKeys pulumi.StringArrayInput `pulumi:"extraSshKeys"`
 	// Default image for all nodes.
 	Image      pulumi.StringInput                         `pulumi:"image"`
-	Networking Mk8sDigitalOceanProviderNetworkingPtrInput `pulumi:"networking"`
+	Networking Mk8sDigitalOceanProviderNetworkingInput    `pulumi:"networking"`
 	NodePools  Mk8sDigitalOceanProviderNodePoolArrayInput `pulumi:"nodePools"`
 	// Optional shell script that will be run before K8s is installed. Supports SSM.
 	PreInstallScript pulumi.StringPtrInput `pulumi:"preInstallScript"`
@@ -16567,8 +16452,8 @@ func (o Mk8sDigitalOceanProviderOutput) Image() pulumi.StringOutput {
 	return o.ApplyT(func(v Mk8sDigitalOceanProvider) string { return v.Image }).(pulumi.StringOutput)
 }
 
-func (o Mk8sDigitalOceanProviderOutput) Networking() Mk8sDigitalOceanProviderNetworkingPtrOutput {
-	return o.ApplyT(func(v Mk8sDigitalOceanProvider) *Mk8sDigitalOceanProviderNetworking { return v.Networking }).(Mk8sDigitalOceanProviderNetworkingPtrOutput)
+func (o Mk8sDigitalOceanProviderOutput) Networking() Mk8sDigitalOceanProviderNetworkingOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProvider) Mk8sDigitalOceanProviderNetworking { return v.Networking }).(Mk8sDigitalOceanProviderNetworkingOutput)
 }
 
 func (o Mk8sDigitalOceanProviderOutput) NodePools() Mk8sDigitalOceanProviderNodePoolArrayOutput {
@@ -16673,7 +16558,7 @@ func (o Mk8sDigitalOceanProviderPtrOutput) Networking() Mk8sDigitalOceanProvider
 		if v == nil {
 			return nil
 		}
-		return v.Networking
+		return &v.Networking
 	}).(Mk8sDigitalOceanProviderNetworkingPtrOutput)
 }
 
@@ -17863,14 +17748,14 @@ func (o Mk8sFirewallArrayOutput) Index(i pulumi.IntInput) Mk8sFirewallOutput {
 type Mk8sGcpProvider struct {
 	Autoscaler *Mk8sGcpProviderAutoscaler `pulumi:"autoscaler"`
 	// Default image for all nodes.
-	Image *Mk8sGcpProviderImage `pulumi:"image"`
+	Image Mk8sGcpProviderImage `pulumi:"image"`
 	// Extra tags to attach to all created objects.
 	Labels   map[string]string `pulumi:"labels"`
 	Metadata map[string]string `pulumi:"metadata"`
 	// VPC network used by the cluster.
-	Network    string                     `pulumi:"network"`
-	Networking *Mk8sGcpProviderNetworking `pulumi:"networking"`
-	NodePools  []Mk8sGcpProviderNodePool  `pulumi:"nodePools"`
+	Network    string                    `pulumi:"network"`
+	Networking Mk8sGcpProviderNetworking `pulumi:"networking"`
+	NodePools  []Mk8sGcpProviderNodePool `pulumi:"nodePools"`
 	// Optional shell script that will be run before K8s is installed. Supports SSM.
 	PreInstallScript *string `pulumi:"preInstallScript"`
 	// GCP project ID that hosts the cluster infrastructure.
@@ -17896,13 +17781,13 @@ type Mk8sGcpProviderInput interface {
 type Mk8sGcpProviderArgs struct {
 	Autoscaler Mk8sGcpProviderAutoscalerPtrInput `pulumi:"autoscaler"`
 	// Default image for all nodes.
-	Image Mk8sGcpProviderImagePtrInput `pulumi:"image"`
+	Image Mk8sGcpProviderImageInput `pulumi:"image"`
 	// Extra tags to attach to all created objects.
 	Labels   pulumi.StringMapInput `pulumi:"labels"`
 	Metadata pulumi.StringMapInput `pulumi:"metadata"`
 	// VPC network used by the cluster.
 	Network    pulumi.StringInput                `pulumi:"network"`
-	Networking Mk8sGcpProviderNetworkingPtrInput `pulumi:"networking"`
+	Networking Mk8sGcpProviderNetworkingInput    `pulumi:"networking"`
 	NodePools  Mk8sGcpProviderNodePoolArrayInput `pulumi:"nodePools"`
 	// Optional shell script that will be run before K8s is installed. Supports SSM.
 	PreInstallScript pulumi.StringPtrInput `pulumi:"preInstallScript"`
@@ -17997,8 +17882,8 @@ func (o Mk8sGcpProviderOutput) Autoscaler() Mk8sGcpProviderAutoscalerPtrOutput {
 }
 
 // Default image for all nodes.
-func (o Mk8sGcpProviderOutput) Image() Mk8sGcpProviderImagePtrOutput {
-	return o.ApplyT(func(v Mk8sGcpProvider) *Mk8sGcpProviderImage { return v.Image }).(Mk8sGcpProviderImagePtrOutput)
+func (o Mk8sGcpProviderOutput) Image() Mk8sGcpProviderImageOutput {
+	return o.ApplyT(func(v Mk8sGcpProvider) Mk8sGcpProviderImage { return v.Image }).(Mk8sGcpProviderImageOutput)
 }
 
 // Extra tags to attach to all created objects.
@@ -18015,8 +17900,8 @@ func (o Mk8sGcpProviderOutput) Network() pulumi.StringOutput {
 	return o.ApplyT(func(v Mk8sGcpProvider) string { return v.Network }).(pulumi.StringOutput)
 }
 
-func (o Mk8sGcpProviderOutput) Networking() Mk8sGcpProviderNetworkingPtrOutput {
-	return o.ApplyT(func(v Mk8sGcpProvider) *Mk8sGcpProviderNetworking { return v.Networking }).(Mk8sGcpProviderNetworkingPtrOutput)
+func (o Mk8sGcpProviderOutput) Networking() Mk8sGcpProviderNetworkingOutput {
+	return o.ApplyT(func(v Mk8sGcpProvider) Mk8sGcpProviderNetworking { return v.Networking }).(Mk8sGcpProviderNetworkingOutput)
 }
 
 func (o Mk8sGcpProviderOutput) NodePools() Mk8sGcpProviderNodePoolArrayOutput {
@@ -18086,7 +17971,7 @@ func (o Mk8sGcpProviderPtrOutput) Image() Mk8sGcpProviderImagePtrOutput {
 		if v == nil {
 			return nil
 		}
-		return v.Image
+		return &v.Image
 	}).(Mk8sGcpProviderImagePtrOutput)
 }
 
@@ -18124,7 +18009,7 @@ func (o Mk8sGcpProviderPtrOutput) Networking() Mk8sGcpProviderNetworkingPtrOutpu
 		if v == nil {
 			return nil
 		}
-		return v.Networking
+		return &v.Networking
 	}).(Mk8sGcpProviderNetworkingPtrOutput)
 }
 
@@ -19463,8 +19348,8 @@ func (o Mk8sGcpProviderNodePoolTaintArrayOutput) Index(i pulumi.IntInput) Mk8sGc
 
 type Mk8sGenericProvider struct {
 	// Control Plane location that will host the K8s components. Prefer one that is closest to where the nodes are running.
-	Location   string                         `pulumi:"location"`
-	Networking *Mk8sGenericProviderNetworking `pulumi:"networking"`
+	Location   string                        `pulumi:"location"`
+	Networking Mk8sGenericProviderNetworking `pulumi:"networking"`
 	// List of node pools.
 	NodePools []Mk8sGenericProviderNodePool `pulumi:"nodePools"`
 }
@@ -19482,8 +19367,8 @@ type Mk8sGenericProviderInput interface {
 
 type Mk8sGenericProviderArgs struct {
 	// Control Plane location that will host the K8s components. Prefer one that is closest to where the nodes are running.
-	Location   pulumi.StringInput                    `pulumi:"location"`
-	Networking Mk8sGenericProviderNetworkingPtrInput `pulumi:"networking"`
+	Location   pulumi.StringInput                 `pulumi:"location"`
+	Networking Mk8sGenericProviderNetworkingInput `pulumi:"networking"`
 	// List of node pools.
 	NodePools Mk8sGenericProviderNodePoolArrayInput `pulumi:"nodePools"`
 }
@@ -19570,8 +19455,8 @@ func (o Mk8sGenericProviderOutput) Location() pulumi.StringOutput {
 	return o.ApplyT(func(v Mk8sGenericProvider) string { return v.Location }).(pulumi.StringOutput)
 }
 
-func (o Mk8sGenericProviderOutput) Networking() Mk8sGenericProviderNetworkingPtrOutput {
-	return o.ApplyT(func(v Mk8sGenericProvider) *Mk8sGenericProviderNetworking { return v.Networking }).(Mk8sGenericProviderNetworkingPtrOutput)
+func (o Mk8sGenericProviderOutput) Networking() Mk8sGenericProviderNetworkingOutput {
+	return o.ApplyT(func(v Mk8sGenericProvider) Mk8sGenericProviderNetworking { return v.Networking }).(Mk8sGenericProviderNetworkingOutput)
 }
 
 // List of node pools.
@@ -19618,7 +19503,7 @@ func (o Mk8sGenericProviderPtrOutput) Networking() Mk8sGenericProviderNetworking
 		if v == nil {
 			return nil
 		}
-		return v.Networking
+		return &v.Networking
 	}).(Mk8sGenericProviderNetworkingPtrOutput)
 }
 
@@ -20038,9 +19923,9 @@ type Mk8sHetznerProvider struct {
 	// Default image for all nodes.
 	Image *string `pulumi:"image"`
 	// ID of the Hetzner network to deploy nodes to.
-	NetworkId  string                         `pulumi:"networkId"`
-	Networking *Mk8sHetznerProviderNetworking `pulumi:"networking"`
-	NodePools  []Mk8sHetznerProviderNodePool  `pulumi:"nodePools"`
+	NetworkId  string                        `pulumi:"networkId"`
+	Networking Mk8sHetznerProviderNetworking `pulumi:"networking"`
+	NodePools  []Mk8sHetznerProviderNodePool `pulumi:"nodePools"`
 	// Optional shell script that will be run before K8s is installed. Supports SSM.
 	PreInstallScript *string `pulumi:"preInstallScript"`
 	// Hetzner region to deploy nodes to.
@@ -20076,7 +19961,7 @@ type Mk8sHetznerProviderArgs struct {
 	Image pulumi.StringPtrInput `pulumi:"image"`
 	// ID of the Hetzner network to deploy nodes to.
 	NetworkId  pulumi.StringInput                    `pulumi:"networkId"`
-	Networking Mk8sHetznerProviderNetworkingPtrInput `pulumi:"networking"`
+	Networking Mk8sHetznerProviderNetworkingInput    `pulumi:"networking"`
 	NodePools  Mk8sHetznerProviderNodePoolArrayInput `pulumi:"nodePools"`
 	// Optional shell script that will be run before K8s is installed. Supports SSM.
 	PreInstallScript pulumi.StringPtrInput `pulumi:"preInstallScript"`
@@ -20201,8 +20086,8 @@ func (o Mk8sHetznerProviderOutput) NetworkId() pulumi.StringOutput {
 	return o.ApplyT(func(v Mk8sHetznerProvider) string { return v.NetworkId }).(pulumi.StringOutput)
 }
 
-func (o Mk8sHetznerProviderOutput) Networking() Mk8sHetznerProviderNetworkingPtrOutput {
-	return o.ApplyT(func(v Mk8sHetznerProvider) *Mk8sHetznerProviderNetworking { return v.Networking }).(Mk8sHetznerProviderNetworkingPtrOutput)
+func (o Mk8sHetznerProviderOutput) Networking() Mk8sHetznerProviderNetworkingOutput {
+	return o.ApplyT(func(v Mk8sHetznerProvider) Mk8sHetznerProviderNetworking { return v.Networking }).(Mk8sHetznerProviderNetworkingOutput)
 }
 
 func (o Mk8sHetznerProviderOutput) NodePools() Mk8sHetznerProviderNodePoolArrayOutput {
@@ -20327,7 +20212,7 @@ func (o Mk8sHetznerProviderPtrOutput) Networking() Mk8sHetznerProviderNetworking
 		if v == nil {
 			return nil
 		}
-		return v.Networking
+		return &v.Networking
 	}).(Mk8sHetznerProviderNetworkingPtrOutput)
 }
 
@@ -22094,8 +21979,8 @@ type Mk8sLinodeProvider struct {
 	// Optional firewall rule to attach to all nodes.
 	FirewallId *string `pulumi:"firewallId"`
 	// Default image for all nodes.
-	Image      string                        `pulumi:"image"`
-	Networking *Mk8sLinodeProviderNetworking `pulumi:"networking"`
+	Image      string                       `pulumi:"image"`
+	Networking Mk8sLinodeProviderNetworking `pulumi:"networking"`
 	// List of node pools.
 	NodePools []Mk8sLinodeProviderNodePool `pulumi:"nodePools"`
 	// Optional shell script that will be run before K8s is installed. Supports SSM.
@@ -22126,8 +22011,8 @@ type Mk8sLinodeProviderArgs struct {
 	// Optional firewall rule to attach to all nodes.
 	FirewallId pulumi.StringPtrInput `pulumi:"firewallId"`
 	// Default image for all nodes.
-	Image      pulumi.StringInput                   `pulumi:"image"`
-	Networking Mk8sLinodeProviderNetworkingPtrInput `pulumi:"networking"`
+	Image      pulumi.StringInput                `pulumi:"image"`
+	Networking Mk8sLinodeProviderNetworkingInput `pulumi:"networking"`
 	// List of node pools.
 	NodePools Mk8sLinodeProviderNodePoolArrayInput `pulumi:"nodePools"`
 	// Optional shell script that will be run before K8s is installed. Supports SSM.
@@ -22239,8 +22124,8 @@ func (o Mk8sLinodeProviderOutput) Image() pulumi.StringOutput {
 	return o.ApplyT(func(v Mk8sLinodeProvider) string { return v.Image }).(pulumi.StringOutput)
 }
 
-func (o Mk8sLinodeProviderOutput) Networking() Mk8sLinodeProviderNetworkingPtrOutput {
-	return o.ApplyT(func(v Mk8sLinodeProvider) *Mk8sLinodeProviderNetworking { return v.Networking }).(Mk8sLinodeProviderNetworkingPtrOutput)
+func (o Mk8sLinodeProviderOutput) Networking() Mk8sLinodeProviderNetworkingOutput {
+	return o.ApplyT(func(v Mk8sLinodeProvider) Mk8sLinodeProviderNetworking { return v.Networking }).(Mk8sLinodeProviderNetworkingOutput)
 }
 
 // List of node pools.
@@ -22344,7 +22229,7 @@ func (o Mk8sLinodeProviderPtrOutput) Networking() Mk8sLinodeProviderNetworkingPt
 		if v == nil {
 			return nil
 		}
-		return v.Networking
+		return &v.Networking
 	}).(Mk8sLinodeProviderNetworkingPtrOutput)
 }
 
@@ -25915,8 +25800,8 @@ type Mk8sTritonProvider struct {
 	ImageId      string                          `pulumi:"imageId"`
 	LoadBalancer *Mk8sTritonProviderLoadBalancer `pulumi:"loadBalancer"`
 	// Control Plane location that will host the K8s components. Prefer one that is closest to the Triton datacenter.
-	Location   string                        `pulumi:"location"`
-	Networking *Mk8sTritonProviderNetworking `pulumi:"networking"`
+	Location   string                       `pulumi:"location"`
+	Networking Mk8sTritonProviderNetworking `pulumi:"networking"`
 	// List of node pools.
 	NodePools []Mk8sTritonProviderNodePool `pulumi:"nodePools"`
 	// Optional shell script that will be run before K8s is installed. Supports SSM.
@@ -25947,8 +25832,8 @@ type Mk8sTritonProviderArgs struct {
 	ImageId      pulumi.StringInput                     `pulumi:"imageId"`
 	LoadBalancer Mk8sTritonProviderLoadBalancerPtrInput `pulumi:"loadBalancer"`
 	// Control Plane location that will host the K8s components. Prefer one that is closest to the Triton datacenter.
-	Location   pulumi.StringInput                   `pulumi:"location"`
-	Networking Mk8sTritonProviderNetworkingPtrInput `pulumi:"networking"`
+	Location   pulumi.StringInput                `pulumi:"location"`
+	Networking Mk8sTritonProviderNetworkingInput `pulumi:"networking"`
 	// List of node pools.
 	NodePools Mk8sTritonProviderNodePoolArrayInput `pulumi:"nodePools"`
 	// Optional shell script that will be run before K8s is installed. Supports SSM.
@@ -26063,8 +25948,8 @@ func (o Mk8sTritonProviderOutput) Location() pulumi.StringOutput {
 	return o.ApplyT(func(v Mk8sTritonProvider) string { return v.Location }).(pulumi.StringOutput)
 }
 
-func (o Mk8sTritonProviderOutput) Networking() Mk8sTritonProviderNetworkingPtrOutput {
-	return o.ApplyT(func(v Mk8sTritonProvider) *Mk8sTritonProviderNetworking { return v.Networking }).(Mk8sTritonProviderNetworkingPtrOutput)
+func (o Mk8sTritonProviderOutput) Networking() Mk8sTritonProviderNetworkingOutput {
+	return o.ApplyT(func(v Mk8sTritonProvider) Mk8sTritonProviderNetworking { return v.Networking }).(Mk8sTritonProviderNetworkingOutput)
 }
 
 // List of node pools.
@@ -26173,7 +26058,7 @@ func (o Mk8sTritonProviderPtrOutput) Networking() Mk8sTritonProviderNetworkingPt
 		if v == nil {
 			return nil
 		}
-		return v.Networking
+		return &v.Networking
 	}).(Mk8sTritonProviderNetworkingPtrOutput)
 }
 
@@ -56600,7 +56485,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortCorsAllowOriginInput)(nil)).Elem(), DomainSpecPortCorsAllowOriginArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortCorsAllowOriginArrayInput)(nil)).Elem(), DomainSpecPortCorsAllowOriginArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortTlsInput)(nil)).Elem(), DomainSpecPortTlsArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortTlsPtrInput)(nil)).Elem(), DomainSpecPortTlsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortTlsClientCertificateInput)(nil)).Elem(), DomainSpecPortTlsClientCertificateArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortTlsClientCertificatePtrInput)(nil)).Elem(), DomainSpecPortTlsClientCertificateArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortTlsServerCertificateInput)(nil)).Elem(), DomainSpecPortTlsServerCertificateArgs{})
@@ -57352,7 +57236,6 @@ func init() {
 	pulumi.RegisterOutputType(DomainSpecPortCorsAllowOriginOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortCorsAllowOriginArrayOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortTlsOutput{})
-	pulumi.RegisterOutputType(DomainSpecPortTlsPtrOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortTlsClientCertificateOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortTlsClientCertificatePtrOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortTlsServerCertificateOutput{})

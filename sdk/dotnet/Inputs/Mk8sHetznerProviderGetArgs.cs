@@ -70,8 +70,8 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("networkId", required: true)]
         public Input<string> NetworkId { get; set; } = null!;
 
-        [Input("networking")]
-        public Input<Inputs.Mk8sHetznerProviderNetworkingGetArgs>? Networking { get; set; }
+        [Input("networking", required: true)]
+        public Input<Inputs.Mk8sHetznerProviderNetworkingGetArgs> Networking { get; set; } = null!;
 
         [Input("nodePools")]
         private InputList<Inputs.Mk8sHetznerProviderNodePoolGetArgs>? _nodePools;

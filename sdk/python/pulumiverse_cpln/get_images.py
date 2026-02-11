@@ -154,6 +154,29 @@ def get_images(queries: Optional[Sequence[Union['GetImagesQueryArgs', 'GetImages
     - **size** (Number) The size of the image or layer in bytes. This helps in estimating the space required and the download time.
     - **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.
     - **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.
+
+    ## Example Usage
+
+    ```python
+    import pulumi
+    import pulumi_cpln as cpln
+
+    images = cpln.get_images()
+    pulumi.export("images", images.images)
+    # Get Specific Images of a Repository
+    images_query = cpln.get_images(queries=[{
+        "fetch": "items",
+        "spec": {
+            "match": "all",
+            "terms": [{
+                "op": "=",
+                "property": "repository",
+                "value": "REPOSITORY_NAME",
+            }],
+        },
+    }])
+    pulumi.export("images-of-specific-repository", images["images-query"])
+    ```
     """
     __args__ = dict()
     __args__['queries'] = queries
@@ -249,6 +272,29 @@ def get_images_output(queries: Optional[pulumi.Input[Optional[Sequence[Union['Ge
     - **size** (Number) The size of the image or layer in bytes. This helps in estimating the space required and the download time.
     - **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.
     - **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.
+
+    ## Example Usage
+
+    ```python
+    import pulumi
+    import pulumi_cpln as cpln
+
+    images = cpln.get_images()
+    pulumi.export("images", images.images)
+    # Get Specific Images of a Repository
+    images_query = cpln.get_images(queries=[{
+        "fetch": "items",
+        "spec": {
+            "match": "all",
+            "terms": [{
+                "op": "=",
+                "property": "repository",
+                "value": "REPOSITORY_NAME",
+            }],
+        },
+    }])
+    pulumi.export("images-of-specific-repository", images["images-query"])
+    ```
     """
     __args__ = dict()
     __args__['queries'] = queries

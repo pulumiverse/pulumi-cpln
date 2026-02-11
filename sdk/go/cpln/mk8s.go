@@ -54,6 +54,9 @@ func NewMk8s(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.Firewalls == nil {
+		return nil, errors.New("invalid value for required argument 'Firewalls'")
+	}
 	if args.Version == nil {
 		return nil, errors.New("invalid value for required argument 'Version'")
 	}

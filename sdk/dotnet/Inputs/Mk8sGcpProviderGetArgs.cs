@@ -19,8 +19,8 @@ namespace Pulumiverse.Cpln.Inputs
         /// <summary>
         /// Default image for all nodes.
         /// </summary>
-        [Input("image")]
-        public Input<Inputs.Mk8sGcpProviderImageGetArgs>? Image { get; set; }
+        [Input("image", required: true)]
+        public Input<Inputs.Mk8sGcpProviderImageGetArgs> Image { get; set; } = null!;
 
         [Input("labels")]
         private InputMap<string>? _labels;
@@ -48,8 +48,8 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("network", required: true)]
         public Input<string> Network { get; set; } = null!;
 
-        [Input("networking")]
-        public Input<Inputs.Mk8sGcpProviderNetworkingGetArgs>? Networking { get; set; }
+        [Input("networking", required: true)]
+        public Input<Inputs.Mk8sGcpProviderNetworkingGetArgs> Networking { get; set; } = null!;
 
         [Input("nodePools")]
         private InputList<Inputs.Mk8sGcpProviderNodePoolGetArgs>? _nodePools;

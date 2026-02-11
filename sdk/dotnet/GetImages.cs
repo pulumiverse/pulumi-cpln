@@ -95,6 +95,51 @@ namespace Pulumiverse.Cpln
         /// - **size** (Number) The size of the image or layer in bytes. This helps in estimating the space required and the download time.
         /// - **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.
         /// - **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```csharp
+        /// using System.Collections.Generic;
+        /// using System.Linq;
+        /// using Pulumi;
+        /// using Cpln = Pulumiverse.Cpln;
+        /// 
+        /// return await Deployment.RunAsync(() =&gt; 
+        /// {
+        ///     var images = Cpln.GetImages.Invoke();
+        /// 
+        ///     // Get Specific Images of a Repository
+        ///     var images_query = Cpln.GetImages.Invoke(new()
+        ///     {
+        ///         Queries = new[]
+        ///         {
+        ///             new Cpln.Inputs.GetImagesQueryInputArgs
+        ///             {
+        ///                 Fetch = "items",
+        ///                 Spec = new Cpln.Inputs.GetImagesQuerySpecInputArgs
+        ///                 {
+        ///                     Match = "all",
+        ///                     Terms = new[]
+        ///                     {
+        ///                         new Cpln.Inputs.GetImagesQuerySpecTermInputArgs
+        ///                         {
+        ///                             Op = "=",
+        ///                             Property = "repository",
+        ///                             Value = "REPOSITORY_NAME",
+        ///                         },
+        ///                     },
+        ///                 },
+        ///             },
+        ///         },
+        ///     });
+        /// 
+        ///     return new Dictionary&lt;string, object?&gt;
+        ///     {
+        ///         ["images"] = images.Apply(getImagesResult =&gt; getImagesResult.Images),
+        ///         ["images-of-specific-repository"] = images.Apply(getImagesResult =&gt; getImagesResult.Images_query),
+        ///     };
+        /// });
+        /// ```
         /// </summary>
         public static Task<GetImagesResult> InvokeAsync(GetImagesArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetImagesResult>("cpln:index/getImages:getImages", args ?? new GetImagesArgs(), options.WithDefaults());
@@ -182,6 +227,51 @@ namespace Pulumiverse.Cpln
         /// - **size** (Number) The size of the image or layer in bytes. This helps in estimating the space required and the download time.
         /// - **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.
         /// - **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```csharp
+        /// using System.Collections.Generic;
+        /// using System.Linq;
+        /// using Pulumi;
+        /// using Cpln = Pulumiverse.Cpln;
+        /// 
+        /// return await Deployment.RunAsync(() =&gt; 
+        /// {
+        ///     var images = Cpln.GetImages.Invoke();
+        /// 
+        ///     // Get Specific Images of a Repository
+        ///     var images_query = Cpln.GetImages.Invoke(new()
+        ///     {
+        ///         Queries = new[]
+        ///         {
+        ///             new Cpln.Inputs.GetImagesQueryInputArgs
+        ///             {
+        ///                 Fetch = "items",
+        ///                 Spec = new Cpln.Inputs.GetImagesQuerySpecInputArgs
+        ///                 {
+        ///                     Match = "all",
+        ///                     Terms = new[]
+        ///                     {
+        ///                         new Cpln.Inputs.GetImagesQuerySpecTermInputArgs
+        ///                         {
+        ///                             Op = "=",
+        ///                             Property = "repository",
+        ///                             Value = "REPOSITORY_NAME",
+        ///                         },
+        ///                     },
+        ///                 },
+        ///             },
+        ///         },
+        ///     });
+        /// 
+        ///     return new Dictionary&lt;string, object?&gt;
+        ///     {
+        ///         ["images"] = images.Apply(getImagesResult =&gt; getImagesResult.Images),
+        ///         ["images-of-specific-repository"] = images.Apply(getImagesResult =&gt; getImagesResult.Images_query),
+        ///     };
+        /// });
+        /// ```
         /// </summary>
         public static Output<GetImagesResult> Invoke(GetImagesInvokeArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetImagesResult>("cpln:index/getImages:getImages", args ?? new GetImagesInvokeArgs(), options.WithDefaults());
@@ -269,6 +359,51 @@ namespace Pulumiverse.Cpln
         /// - **size** (Number) The size of the image or layer in bytes. This helps in estimating the space required and the download time.
         /// - **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.
         /// - **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.
+        /// 
+        /// ## Example Usage
+        /// 
+        /// ```csharp
+        /// using System.Collections.Generic;
+        /// using System.Linq;
+        /// using Pulumi;
+        /// using Cpln = Pulumiverse.Cpln;
+        /// 
+        /// return await Deployment.RunAsync(() =&gt; 
+        /// {
+        ///     var images = Cpln.GetImages.Invoke();
+        /// 
+        ///     // Get Specific Images of a Repository
+        ///     var images_query = Cpln.GetImages.Invoke(new()
+        ///     {
+        ///         Queries = new[]
+        ///         {
+        ///             new Cpln.Inputs.GetImagesQueryInputArgs
+        ///             {
+        ///                 Fetch = "items",
+        ///                 Spec = new Cpln.Inputs.GetImagesQuerySpecInputArgs
+        ///                 {
+        ///                     Match = "all",
+        ///                     Terms = new[]
+        ///                     {
+        ///                         new Cpln.Inputs.GetImagesQuerySpecTermInputArgs
+        ///                         {
+        ///                             Op = "=",
+        ///                             Property = "repository",
+        ///                             Value = "REPOSITORY_NAME",
+        ///                         },
+        ///                     },
+        ///                 },
+        ///             },
+        ///         },
+        ///     });
+        /// 
+        ///     return new Dictionary&lt;string, object?&gt;
+        ///     {
+        ///         ["images"] = images.Apply(getImagesResult =&gt; getImagesResult.Images),
+        ///         ["images-of-specific-repository"] = images.Apply(getImagesResult =&gt; getImagesResult.Images_query),
+        ///     };
+        /// });
+        /// ```
         /// </summary>
         public static Output<GetImagesResult> Invoke(GetImagesInvokeArgs args, InvokeOutputOptions options)
             => global::Pulumi.Deployment.Instance.Invoke<GetImagesResult>("cpln:index/getImages:getImages", args ?? new GetImagesInvokeArgs(), options.WithDefaults());

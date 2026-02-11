@@ -39,7 +39,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// ID of the Hetzner network to deploy nodes to.
         /// </summary>
         public readonly string NetworkId;
-        public readonly Outputs.Mk8sHetznerProviderNetworking? Networking;
+        public readonly Outputs.Mk8sHetznerProviderNetworking Networking;
         public readonly ImmutableArray<Outputs.Mk8sHetznerProviderNodePool> NodePools;
         /// <summary>
         /// Optional shell script that will be run before K8s is installed. Supports SSM.
@@ -74,7 +74,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             string networkId,
 
-            Outputs.Mk8sHetznerProviderNetworking? networking,
+            Outputs.Mk8sHetznerProviderNetworking networking,
 
             ImmutableArray<Outputs.Mk8sHetznerProviderNodePool> nodePools,
 

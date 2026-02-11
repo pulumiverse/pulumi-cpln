@@ -63,6 +63,9 @@ func NewWorkload(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.Containers == nil {
+		return nil, errors.New("invalid value for required argument 'Containers'")
+	}
 	if args.Gvc == nil {
 		return nil, errors.New("invalid value for required argument 'Gvc'")
 	}

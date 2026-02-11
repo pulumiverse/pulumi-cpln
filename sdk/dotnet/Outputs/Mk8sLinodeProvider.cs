@@ -25,7 +25,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// Default image for all nodes.
         /// </summary>
         public readonly string Image;
-        public readonly Outputs.Mk8sLinodeProviderNetworking? Networking;
+        public readonly Outputs.Mk8sLinodeProviderNetworking Networking;
         /// <summary>
         /// List of node pools.
         /// </summary>
@@ -59,7 +59,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             string image,
 
-            Outputs.Mk8sLinodeProviderNetworking? networking,
+            Outputs.Mk8sLinodeProviderNetworking networking,
 
             ImmutableArray<Outputs.Mk8sLinodeProviderNodePool> nodePools,
 

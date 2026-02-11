@@ -1,0 +1,3 @@
+name: cpln
+description: A Pulumi resource provider for cpln.
+language: go

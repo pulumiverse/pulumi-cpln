@@ -37,7 +37,7 @@ export class Workload extends pulumi.CustomResource {
     /**
      * An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
      */
-    declare public readonly containers: pulumi.Output<outputs.WorkloadContainer[] | undefined>;
+    declare public readonly containers: pulumi.Output<outputs.WorkloadContainer[]>;
     /**
      * The ID, in GUID format, of the workload.
      */
@@ -146,6 +146,9 @@ export class Workload extends pulumi.CustomResource {
             resourceInputs["type"] = state?.type;
         } else {
             const args = argsOrState as WorkloadArgs | undefined;
+            if (args?.containers === undefined && !opts.urn) {
+                throw new Error("Missing required property 'containers'");
+            }
             if (args?.gvc === undefined && !opts.urn) {
                 throw new Error("Missing required property 'gvc'");
             }
@@ -267,7 +270,7 @@ export interface WorkloadArgs {
     /**
      * An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
      */
-    containers?: pulumi.Input<pulumi.Input<inputs.WorkloadContainer>[]>;
+    containers: pulumi.Input<pulumi.Input<inputs.WorkloadContainer>[]>;
     /**
      * Description of the workload.
      */

@@ -171,7 +171,7 @@ namespace Pulumiverse.Cpln
         [Input("ephemeralProvider")]
         public Input<Inputs.Mk8sEphemeralProviderArgs>? EphemeralProvider { get; set; }
 
-        [Input("firewalls")]
+        [Input("firewalls", required: true)]
         private InputList<Inputs.Mk8sFirewallArgs>? _firewalls;
 
         /// <summary>

@@ -93,6 +93,53 @@ import (
 // - **size** (Number) The size of the image or layer in bytes. This helps in estimating the space required and the download time.
 // - **digest** (String) A unique SHA256 hash used to identify a specific image version within the image registry.
 // - **media_type** (String) Specifies the type of the content represented in the manifest, allowing Docker clients and registries to understand how to handle the document correctly.
+//
+// ## Example Usage
+//
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			images, err := cpln.GetImages(ctx, &cpln.GetImagesArgs{}, nil)
+//			if err != nil {
+//				return err
+//			}
+//			ctx.Export("images", images.Images)
+//			// Get Specific Images of a Repository
+//			_, err = cpln.GetImages(ctx, &cpln.GetImagesArgs{
+//				Queries: []cpln.GetImagesQuery{
+//					{
+//						Fetch: "items",
+//						Spec: {
+//							Match: "all",
+//							Terms: []cpln.GetImagesQuerySpecTerm{
+//								{
+//									Op:       "=",
+//									Property: pulumi.StringRef("repository"),
+//									Value:    pulumi.StringRef("REPOSITORY_NAME"),
+//								},
+//							},
+//						},
+//					},
+//				},
+//			}, nil)
+//			if err != nil {
+//				return err
+//			}
+//			ctx.Export("images-of-specific-repository", images.ImagesQuery)
+//			return nil
+//		})
+//	}
+//
+// ```
 func GetImages(ctx *pulumi.Context, args *GetImagesArgs, opts ...pulumi.InvokeOption) (*GetImagesResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv GetImagesResult

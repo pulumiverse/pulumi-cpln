@@ -40,8 +40,8 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("location", required: true)]
         public Input<string> Location { get; set; } = null!;
 
-        [Input("networking")]
-        public Input<Inputs.Mk8sTritonProviderNetworkingArgs>? Networking { get; set; }
+        [Input("networking", required: true)]
+        public Input<Inputs.Mk8sTritonProviderNetworkingArgs> Networking { get; set; } = null!;
 
         [Input("nodePools")]
         private InputList<Inputs.Mk8sTritonProviderNodePoolArgs>? _nodePools;

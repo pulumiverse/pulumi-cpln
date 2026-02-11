@@ -21,25 +21,36 @@ __all__ = ['DomainArgs', 'Domain']
 @pulumi.input_type
 class DomainArgs:
     def __init__(__self__, *,
+                 spec: pulumi.Input['DomainSpecArgs'],
                  description: Optional[pulumi.Input[_builtins.str]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
-                 spec: Optional[pulumi.Input['DomainSpecArgs']] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None):
         """
         The set of arguments for constructing a Domain resource.
+        :param pulumi.Input['DomainSpecArgs'] spec: Domain specification.
         :param pulumi.Input[_builtins.str] description: Description of the Domain.
         :param pulumi.Input[_builtins.str] name: Name of the Domain.
-        :param pulumi.Input['DomainSpecArgs'] spec: Domain specification.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
         """
+        pulumi.set(__self__, "spec", spec)
         if description is not None:
             pulumi.set(__self__, "description", description)
         if name is not None:
             pulumi.set(__self__, "name", name)
-        if spec is not None:
-            pulumi.set(__self__, "spec", spec)
         if tags is not None:
             pulumi.set(__self__, "tags", tags)
+
+    @_builtins.property
+    @pulumi.getter
+    def spec(self) -> pulumi.Input['DomainSpecArgs']:
+        """
+        Domain specification.
+        """
+        return pulumi.get(self, "spec")
+
+    @spec.setter
+    def spec(self, value: pulumi.Input['DomainSpecArgs']):
+        pulumi.set(self, "spec", value)
 
     @_builtins.property
     @pulumi.getter
@@ -64,18 +75,6 @@ class DomainArgs:
     @name.setter
     def name(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "name", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def spec(self) -> Optional[pulumi.Input['DomainSpecArgs']]:
-        """
-        Domain specification.
-        """
-        return pulumi.get(self, "spec")
-
-    @spec.setter
-    def spec(self, value: Optional[pulumi.Input['DomainSpecArgs']]):
-        pulumi.set(self, "spec", value)
 
     @_builtins.property
     @pulumi.getter
@@ -234,7 +233,7 @@ class Domain(pulumi.CustomResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: Optional[DomainArgs] = None,
+                 args: DomainArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Create a Domain resource with the given unique name, props, and options.
@@ -268,6 +267,8 @@ class Domain(pulumi.CustomResource):
 
             __props__.__dict__["description"] = description
             __props__.__dict__["name"] = name
+            if spec is None and not opts.urn:
+                raise TypeError("Missing required property 'spec'")
             __props__.__dict__["spec"] = spec
             __props__.__dict__["tags"] = tags
             __props__.__dict__["cpln_id"] = None
@@ -352,7 +353,7 @@ class Domain(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
-    def spec(self) -> pulumi.Output[Optional['outputs.DomainSpec']]:
+    def spec(self) -> pulumi.Output['outputs.DomainSpec']:
         """
         Domain specification.
         """

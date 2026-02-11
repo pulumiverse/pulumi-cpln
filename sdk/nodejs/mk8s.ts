@@ -54,7 +54,7 @@ export class Mk8s extends pulumi.CustomResource {
     /**
      * Allow-list.
      */
-    declare public readonly firewalls: pulumi.Output<outputs.Mk8sFirewall[] | undefined>;
+    declare public readonly firewalls: pulumi.Output<outputs.Mk8sFirewall[]>;
     declare public readonly gcpProvider: pulumi.Output<outputs.Mk8sGcpProvider | undefined>;
     declare public readonly genericProvider: pulumi.Output<outputs.Mk8sGenericProvider | undefined>;
     declare public readonly hetznerProvider: pulumi.Output<outputs.Mk8sHetznerProvider | undefined>;
@@ -118,6 +118,9 @@ export class Mk8s extends pulumi.CustomResource {
             resourceInputs["version"] = state?.version;
         } else {
             const args = argsOrState as Mk8sArgs | undefined;
+            if (args?.firewalls === undefined && !opts.urn) {
+                throw new Error("Missing required property 'firewalls'");
+            }
             if (args?.version === undefined && !opts.urn) {
                 throw new Error("Missing required property 'version'");
             }
@@ -217,7 +220,7 @@ export interface Mk8sArgs {
     /**
      * Allow-list.
      */
-    firewalls?: pulumi.Input<pulumi.Input<inputs.Mk8sFirewall>[]>;
+    firewalls: pulumi.Input<pulumi.Input<inputs.Mk8sFirewall>[]>;
     gcpProvider?: pulumi.Input<inputs.Mk8sGcpProvider>;
     genericProvider?: pulumi.Input<inputs.Mk8sGenericProvider>;
     hetznerProvider?: pulumi.Input<inputs.Mk8sHetznerProvider>;

@@ -7,6 +7,7 @@ import (
 	"context"
 	"reflect"
 
+	"errors"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln/internal"
 )
@@ -23,7 +24,7 @@ type Domain struct {
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
 	// Domain specification.
-	Spec DomainSpecPtrOutput `pulumi:"spec"`
+	Spec DomainSpecOutput `pulumi:"spec"`
 	// Domain status.
 	Statuses DomainStatusArrayOutput `pulumi:"statuses"`
 	// Key-value map of resource tags.
@@ -34,9 +35,12 @@ type Domain struct {
 func NewDomain(ctx *pulumi.Context,
 	name string, args *DomainArgs, opts ...pulumi.ResourceOption) (*Domain, error) {
 	if args == nil {
-		args = &DomainArgs{}
+		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.Spec == nil {
+		return nil, errors.New("invalid value for required argument 'Spec'")
+	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Domain
 	err := ctx.RegisterResource("cpln:index/domain:Domain", name, args, &resource, opts...)
@@ -103,7 +107,7 @@ type domainArgs struct {
 	// Name of the Domain.
 	Name *string `pulumi:"name"`
 	// Domain specification.
-	Spec *DomainSpec `pulumi:"spec"`
+	Spec DomainSpec `pulumi:"spec"`
 	// Key-value map of resource tags.
 	Tags map[string]string `pulumi:"tags"`
 }
@@ -115,7 +119,7 @@ type DomainArgs struct {
 	// Name of the Domain.
 	Name pulumi.StringPtrInput
 	// Domain specification.
-	Spec DomainSpecPtrInput
+	Spec DomainSpecInput
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapInput
 }
@@ -228,8 +232,8 @@ func (o DomainOutput) SelfLink() pulumi.StringOutput {
 }
 
 // Domain specification.
-func (o DomainOutput) Spec() DomainSpecPtrOutput {
-	return o.ApplyT(func(v *Domain) DomainSpecPtrOutput { return v.Spec }).(DomainSpecPtrOutput)
+func (o DomainOutput) Spec() DomainSpecOutput {
+	return o.ApplyT(func(v *Domain) DomainSpecOutput { return v.Spec }).(DomainSpecOutput)
 }
 
 // Domain status.

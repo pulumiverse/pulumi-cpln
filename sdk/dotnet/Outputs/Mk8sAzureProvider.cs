@@ -27,7 +27,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// The vpc where nodes will be deployed.
         /// </summary>
         public readonly string NetworkId;
-        public readonly Outputs.Mk8sAzureProviderNetworking? Networking;
+        public readonly Outputs.Mk8sAzureProviderNetworking Networking;
         public readonly ImmutableArray<Outputs.Mk8sAzureProviderNodePool> NodePools;
         /// <summary>
         /// Optional shell script that will be run before K8s is installed. Supports SSM.
@@ -55,7 +55,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             string networkId,
 
-            Outputs.Mk8sAzureProviderNetworking? networking,
+            Outputs.Mk8sAzureProviderNetworking networking,
 
             ImmutableArray<Outputs.Mk8sAzureProviderNodePool> nodePools,
 

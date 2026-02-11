@@ -86,7 +86,7 @@ export interface DomainSpec {
     /**
      * Domain port specifications.
      */
-    ports?: outputs.DomainSpecPort[];
+    ports: outputs.DomainSpecPort[];
     /**
      * Creates a unique subdomain for each replica of a stateful workload, enabling direct access to individual instances.
      */
@@ -109,7 +109,7 @@ export interface DomainSpecPort {
     /**
      * Used for TLS connections for this Domain. End users are responsible for certificate updates.
      */
-    tls?: outputs.DomainSpecPortTls;
+    tls: outputs.DomainSpecPortTls;
 }
 
 export interface DomainSpecPortCors {
@@ -2701,7 +2701,7 @@ export interface Mk8sAwsProvider {
      * Name of keyPair. Supports SSM
      */
     keyPair?: string;
-    networking?: outputs.Mk8sAwsProviderNetworking;
+    networking: outputs.Mk8sAwsProviderNetworking;
     /**
      * List of node pools.
      */
@@ -2826,7 +2826,7 @@ export interface Mk8sAzureProvider {
      * The vpc where nodes will be deployed.
      */
     networkId: string;
-    networking?: outputs.Mk8sAzureProviderNetworking;
+    networking: outputs.Mk8sAzureProviderNetworking;
     nodePools?: outputs.Mk8sAzureProviderNodePool[];
     /**
      * Optional shell script that will be run before K8s is installed. Supports SSM.
@@ -2930,7 +2930,7 @@ export interface Mk8sDigitalOceanProvider {
      * Default image for all nodes.
      */
     image: string;
-    networking?: outputs.Mk8sDigitalOceanProviderNetworking;
+    networking: outputs.Mk8sDigitalOceanProviderNetworking;
     nodePools?: outputs.Mk8sDigitalOceanProviderNodePool[];
     /**
      * Optional shell script that will be run before K8s is installed. Supports SSM.
@@ -3061,7 +3061,7 @@ export interface Mk8sGcpProvider {
     /**
      * Default image for all nodes.
      */
-    image?: outputs.Mk8sGcpProviderImage;
+    image: outputs.Mk8sGcpProviderImage;
     /**
      * Extra tags to attach to all created objects.
      */
@@ -3071,7 +3071,7 @@ export interface Mk8sGcpProvider {
      * VPC network used by the cluster.
      */
     network: string;
-    networking?: outputs.Mk8sGcpProviderNetworking;
+    networking: outputs.Mk8sGcpProviderNetworking;
     nodePools?: outputs.Mk8sGcpProviderNodePool[];
     /**
      * Optional shell script that will be run before K8s is installed. Supports SSM.
@@ -3187,7 +3187,7 @@ export interface Mk8sGenericProvider {
      * Control Plane location that will host the K8s components. Prefer one that is closest to where the nodes are running.
      */
     location: string;
-    networking?: outputs.Mk8sGenericProviderNetworking;
+    networking: outputs.Mk8sGenericProviderNetworking;
     /**
      * List of node pools.
      */
@@ -3253,7 +3253,7 @@ export interface Mk8sHetznerProvider {
      * ID of the Hetzner network to deploy nodes to.
      */
     networkId: string;
-    networking?: outputs.Mk8sHetznerProviderNetworking;
+    networking: outputs.Mk8sHetznerProviderNetworking;
     nodePools?: outputs.Mk8sHetznerProviderNodePool[];
     /**
      * Optional shell script that will be run before K8s is installed. Supports SSM.
@@ -3419,7 +3419,7 @@ export interface Mk8sLinodeProvider {
      * Default image for all nodes.
      */
     image: string;
-    networking?: outputs.Mk8sLinodeProviderNetworking;
+    networking: outputs.Mk8sLinodeProviderNetworking;
     /**
      * List of node pools.
      */
@@ -3706,7 +3706,7 @@ export interface Mk8sTritonProvider {
      * Control Plane location that will host the K8s components. Prefer one that is closest to the Triton datacenter.
      */
     location: string;
-    networking?: outputs.Mk8sTritonProviderNetworking;
+    networking: outputs.Mk8sTritonProviderNetworking;
     /**
      * List of node pools.
      */

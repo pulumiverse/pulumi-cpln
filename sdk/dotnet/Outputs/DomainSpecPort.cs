@@ -29,7 +29,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// <summary>
         /// Used for TLS connections for this Domain. End users are responsible for certificate updates.
         /// </summary>
-        public readonly Outputs.DomainSpecPortTls? Tls;
+        public readonly Outputs.DomainSpecPortTls Tls;
 
         [OutputConstructor]
         private DomainSpecPort(
@@ -39,7 +39,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             string? protocol,
 
-            Outputs.DomainSpecPortTls? tls)
+            Outputs.DomainSpecPortTls tls)
         {
             Cors = cors;
             Number = number;

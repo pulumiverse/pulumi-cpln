@@ -34,8 +34,8 @@ namespace Pulumiverse.Cpln.Inputs
         /// <summary>
         /// Used for TLS connections for this Domain. End users are responsible for certificate updates.
         /// </summary>
-        [Input("tls")]
-        public Input<Inputs.DomainSpecPortTlsArgs>? Tls { get; set; }
+        [Input("tls", required: true)]
+        public Input<Inputs.DomainSpecPortTlsArgs> Tls { get; set; } = null!;
 
         public DomainSpecPortArgs()
         {

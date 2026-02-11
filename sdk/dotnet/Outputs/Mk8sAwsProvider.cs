@@ -37,7 +37,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// Name of keyPair. Supports SSM
         /// </summary>
         public readonly string? KeyPair;
-        public readonly Outputs.Mk8sAwsProviderNetworking? Networking;
+        public readonly Outputs.Mk8sAwsProviderNetworking Networking;
         /// <summary>
         /// List of node pools.
         /// </summary>
@@ -81,7 +81,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             string? keyPair,
 
-            Outputs.Mk8sAwsProviderNetworking? networking,
+            Outputs.Mk8sAwsProviderNetworking networking,
 
             ImmutableArray<Outputs.Mk8sAwsProviderNodePool> nodePools,
 

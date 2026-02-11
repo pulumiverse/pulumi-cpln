@@ -86,7 +86,7 @@ export interface DomainSpec {
     /**
      * Domain port specifications.
      */
-    ports?: pulumi.Input<pulumi.Input<inputs.DomainSpecPort>[]>;
+    ports: pulumi.Input<pulumi.Input<inputs.DomainSpecPort>[]>;
     /**
      * Creates a unique subdomain for each replica of a stateful workload, enabling direct access to individual instances.
      */
@@ -109,7 +109,7 @@ export interface DomainSpecPort {
     /**
      * Used for TLS connections for this Domain. End users are responsible for certificate updates.
      */
-    tls?: pulumi.Input<inputs.DomainSpecPortTls>;
+    tls: pulumi.Input<inputs.DomainSpecPortTls>;
 }
 
 export interface DomainSpecPortCors {
@@ -3499,7 +3499,7 @@ export interface Mk8sAwsProvider {
      * Name of keyPair. Supports SSM
      */
     keyPair?: pulumi.Input<string>;
-    networking?: pulumi.Input<inputs.Mk8sAwsProviderNetworking>;
+    networking: pulumi.Input<inputs.Mk8sAwsProviderNetworking>;
     /**
      * List of node pools.
      */
@@ -3624,7 +3624,7 @@ export interface Mk8sAzureProvider {
      * The vpc where nodes will be deployed.
      */
     networkId: pulumi.Input<string>;
-    networking?: pulumi.Input<inputs.Mk8sAzureProviderNetworking>;
+    networking: pulumi.Input<inputs.Mk8sAzureProviderNetworking>;
     nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sAzureProviderNodePool>[]>;
     /**
      * Optional shell script that will be run before K8s is installed. Supports SSM.
@@ -3728,7 +3728,7 @@ export interface Mk8sDigitalOceanProvider {
      * Default image for all nodes.
      */
     image: pulumi.Input<string>;
-    networking?: pulumi.Input<inputs.Mk8sDigitalOceanProviderNetworking>;
+    networking: pulumi.Input<inputs.Mk8sDigitalOceanProviderNetworking>;
     nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sDigitalOceanProviderNodePool>[]>;
     /**
      * Optional shell script that will be run before K8s is installed. Supports SSM.
@@ -3859,7 +3859,7 @@ export interface Mk8sGcpProvider {
     /**
      * Default image for all nodes.
      */
-    image?: pulumi.Input<inputs.Mk8sGcpProviderImage>;
+    image: pulumi.Input<inputs.Mk8sGcpProviderImage>;
     /**
      * Extra tags to attach to all created objects.
      */
@@ -3869,7 +3869,7 @@ export interface Mk8sGcpProvider {
      * VPC network used by the cluster.
      */
     network: pulumi.Input<string>;
-    networking?: pulumi.Input<inputs.Mk8sGcpProviderNetworking>;
+    networking: pulumi.Input<inputs.Mk8sGcpProviderNetworking>;
     nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sGcpProviderNodePool>[]>;
     /**
      * Optional shell script that will be run before K8s is installed. Supports SSM.
@@ -3985,7 +3985,7 @@ export interface Mk8sGenericProvider {
      * Control Plane location that will host the K8s components. Prefer one that is closest to where the nodes are running.
      */
     location: pulumi.Input<string>;
-    networking?: pulumi.Input<inputs.Mk8sGenericProviderNetworking>;
+    networking: pulumi.Input<inputs.Mk8sGenericProviderNetworking>;
     /**
      * List of node pools.
      */
@@ -4051,7 +4051,7 @@ export interface Mk8sHetznerProvider {
      * ID of the Hetzner network to deploy nodes to.
      */
     networkId: pulumi.Input<string>;
-    networking?: pulumi.Input<inputs.Mk8sHetznerProviderNetworking>;
+    networking: pulumi.Input<inputs.Mk8sHetznerProviderNetworking>;
     nodePools?: pulumi.Input<pulumi.Input<inputs.Mk8sHetznerProviderNodePool>[]>;
     /**
      * Optional shell script that will be run before K8s is installed. Supports SSM.
@@ -4217,7 +4217,7 @@ export interface Mk8sLinodeProvider {
      * Default image for all nodes.
      */
     image: pulumi.Input<string>;
-    networking?: pulumi.Input<inputs.Mk8sLinodeProviderNetworking>;
+    networking: pulumi.Input<inputs.Mk8sLinodeProviderNetworking>;
     /**
      * List of node pools.
      */
@@ -4504,7 +4504,7 @@ export interface Mk8sTritonProvider {
      * Control Plane location that will host the K8s components. Prefer one that is closest to the Triton datacenter.
      */
     location: pulumi.Input<string>;
-    networking?: pulumi.Input<inputs.Mk8sTritonProviderNetworking>;
+    networking: pulumi.Input<inputs.Mk8sTritonProviderNetworking>;
     /**
      * List of node pools.
      */

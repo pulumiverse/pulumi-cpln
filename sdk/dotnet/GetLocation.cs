@@ -54,7 +54,7 @@ namespace Pulumiverse.Cpln
         /// using System.Collections.Generic;
         /// using System.Linq;
         /// using Pulumi;
-        /// using Cpln = Pulumi.Cpln;
+        /// using Cpln = Pulumiverse.Cpln;
         /// 
         /// return await Deployment.RunAsync(() =&gt; 
         /// {
@@ -116,7 +116,7 @@ namespace Pulumiverse.Cpln
         /// using System.Collections.Generic;
         /// using System.Linq;
         /// using Pulumi;
-        /// using Cpln = Pulumi.Cpln;
+        /// using Cpln = Pulumiverse.Cpln;
         /// 
         /// return await Deployment.RunAsync(() =&gt; 
         /// {
@@ -178,7 +178,7 @@ namespace Pulumiverse.Cpln
         /// using System.Collections.Generic;
         /// using System.Linq;
         /// using Pulumi;
-        /// using Cpln = Pulumi.Cpln;
+        /// using Cpln = Pulumiverse.Cpln;
         /// 
         /// return await Deployment.RunAsync(() =&gt; 
         /// {

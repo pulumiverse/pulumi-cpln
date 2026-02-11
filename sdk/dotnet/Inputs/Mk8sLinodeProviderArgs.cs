@@ -44,8 +44,8 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("image", required: true)]
         public Input<string> Image { get; set; } = null!;
 
-        [Input("networking")]
-        public Input<Inputs.Mk8sLinodeProviderNetworkingArgs>? Networking { get; set; }
+        [Input("networking", required: true)]
+        public Input<Inputs.Mk8sLinodeProviderNetworkingArgs> Networking { get; set; } = null!;
 
         [Input("nodePools")]
         private InputList<Inputs.Mk8sLinodeProviderNodePoolArgs>? _nodePools;

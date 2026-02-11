@@ -41,7 +41,7 @@ namespace Pulumiverse.Cpln
         /// Domain specification.
         /// </summary>
         [Output("spec")]
-        public Output<Outputs.DomainSpec?> Spec { get; private set; } = null!;
+        public Output<Outputs.DomainSpec> Spec { get; private set; } = null!;
 
         /// <summary>
         /// Domain status.
@@ -63,7 +63,7 @@ namespace Pulumiverse.Cpln
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public Domain(string name, DomainArgs? args = null, CustomResourceOptions? options = null)
+        public Domain(string name, DomainArgs args, CustomResourceOptions? options = null)
             : base("cpln:index/domain:Domain", name, args ?? new DomainArgs(), MakeResourceOptions(options, ""))
         {
         }
@@ -117,8 +117,8 @@ namespace Pulumiverse.Cpln
         /// <summary>
         /// Domain specification.
         /// </summary>
-        [Input("spec")]
-        public Input<Inputs.DomainSpecArgs>? Spec { get; set; }
+        [Input("spec", required: true)]
+        public Input<Inputs.DomainSpecArgs> Spec { get; set; } = null!;
 
         [Input("tags")]
         private InputMap<string>? _tags;
