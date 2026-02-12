@@ -267,7 +267,7 @@ tfgen_no_deps: .make/schema
 .make/schema: export PULUMI_CONVERT_EXAMPLES_CACHE_DIR := $(WORKING_DIR)/.pulumi/examples-cache
 .make/schema: export PULUMI_DISABLE_AUTOMATIC_PLUGIN_ACQUISITION := $(PULUMI_CONVERT)
 .make/schema: export PULUMI_MISSING_DOCS_ERROR := $(PULUMI_MISSING_DOCS_ERROR)
-.make/schema: bin/$(CODEGEN) .make/mise_install .make/upstream
+.make/schema: bin/$(CODEGEN) .make/mise_install .make/install_plugins .make/upstream
 .make/schema: | mise_env
 	$(WORKING_DIR)/bin/$(CODEGEN) schema --out provider/cmd/$(PROVIDER)
 	(cd provider && VERSION=$(PROVIDER_VERSION) go generate cmd/$(PROVIDER)/main.go)
@@ -299,6 +299,7 @@ debug_tfgen:
 	dlv  --listen=:2345 --headless=true --api-version=2  exec $(WORKING_DIR)/bin/$(CODEGEN) -- schema --out provider/cmd/$(PROVIDER)
 .PHONY: debug_tfgen
 
+include scripts/plugins.mk
 include scripts/crossbuild.mk
 
 # Permit providers to extend the Makefile with provider-specific Make includes.
