@@ -2179,6 +2179,7 @@ export interface Mk8sAddOns {
      */
     byok?: outputs.Mk8sAddOnsByok;
     dashboard?: boolean;
+    headlamp?: boolean;
     localPathStorage?: boolean;
     logs?: outputs.Mk8sAddOnsLogs;
     /**

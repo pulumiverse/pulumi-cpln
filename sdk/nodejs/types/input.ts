@@ -2977,6 +2977,7 @@ export interface Mk8sAddOns {
      */
     byok?: pulumi.Input<inputs.Mk8sAddOnsByok>;
     dashboard?: pulumi.Input<boolean>;
+    headlamp?: pulumi.Input<boolean>;
     localPathStorage?: pulumi.Input<boolean>;
     logs?: pulumi.Input<inputs.Mk8sAddOnsLogs>;
     /**

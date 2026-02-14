@@ -40,6 +40,9 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("dashboard")]
         public Input<bool>? Dashboard { get; set; }
 
+        [Input("headlamp")]
+        public Input<bool>? Headlamp { get; set; }
+
         [Input("localPathStorage")]
         public Input<bool>? LocalPathStorage { get; set; }
 
