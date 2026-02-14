@@ -7241,6 +7241,7 @@ type Mk8sAddOns struct {
 	// Bring-your-own Kubernetes (BYOK) add-on settings.
 	Byok             *Mk8sAddOnsByok `pulumi:"byok"`
 	Dashboard        *bool           `pulumi:"dashboard"`
+	Headlamp         *bool           `pulumi:"headlamp"`
 	LocalPathStorage *bool           `pulumi:"localPathStorage"`
 	Logs             *Mk8sAddOnsLogs `pulumi:"logs"`
 	// Scrape pods annotated with prometheus.io/scrape=true
@@ -7271,6 +7272,7 @@ type Mk8sAddOnsArgs struct {
 	// Bring-your-own Kubernetes (BYOK) add-on settings.
 	Byok             Mk8sAddOnsByokPtrInput `pulumi:"byok"`
 	Dashboard        pulumi.BoolPtrInput    `pulumi:"dashboard"`
+	Headlamp         pulumi.BoolPtrInput    `pulumi:"headlamp"`
 	LocalPathStorage pulumi.BoolPtrInput    `pulumi:"localPathStorage"`
 	Logs             Mk8sAddOnsLogsPtrInput `pulumi:"logs"`
 	// Scrape pods annotated with prometheus.io/scrape=true
@@ -7388,6 +7390,10 @@ func (o Mk8sAddOnsOutput) Byok() Mk8sAddOnsByokPtrOutput {
 
 func (o Mk8sAddOnsOutput) Dashboard() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOns) *bool { return v.Dashboard }).(pulumi.BoolPtrOutput)
+}
+
+func (o Mk8sAddOnsOutput) Headlamp() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOns) *bool { return v.Headlamp }).(pulumi.BoolPtrOutput)
 }
 
 func (o Mk8sAddOnsOutput) LocalPathStorage() pulumi.BoolPtrOutput {
@@ -7509,6 +7515,15 @@ func (o Mk8sAddOnsPtrOutput) Dashboard() pulumi.BoolPtrOutput {
 			return nil
 		}
 		return v.Dashboard
+	}).(pulumi.BoolPtrOutput)
+}
+
+func (o Mk8sAddOnsPtrOutput) Headlamp() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOns) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Headlamp
 	}).(pulumi.BoolPtrOutput)
 }
 

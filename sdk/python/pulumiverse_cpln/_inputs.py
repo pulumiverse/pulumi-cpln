@@ -3985,6 +3985,7 @@ if not MYPY:
         Bring-your-own Kubernetes (BYOK) add-on settings.
         """
         dashboard: NotRequired[pulumi.Input[_builtins.bool]]
+        headlamp: NotRequired[pulumi.Input[_builtins.bool]]
         local_path_storage: NotRequired[pulumi.Input[_builtins.bool]]
         logs: NotRequired[pulumi.Input['Mk8sAddOnsLogsArgsDict']]
         metrics: NotRequired[pulumi.Input['Mk8sAddOnsMetricsArgsDict']]
@@ -4008,6 +4009,7 @@ class Mk8sAddOnsArgs:
                  azure_workload_identity: Optional[pulumi.Input['Mk8sAddOnsAzureWorkloadIdentityArgs']] = None,
                  byok: Optional[pulumi.Input['Mk8sAddOnsByokArgs']] = None,
                  dashboard: Optional[pulumi.Input[_builtins.bool]] = None,
+                 headlamp: Optional[pulumi.Input[_builtins.bool]] = None,
                  local_path_storage: Optional[pulumi.Input[_builtins.bool]] = None,
                  logs: Optional[pulumi.Input['Mk8sAddOnsLogsArgs']] = None,
                  metrics: Optional[pulumi.Input['Mk8sAddOnsMetricsArgs']] = None,
@@ -4034,6 +4036,8 @@ class Mk8sAddOnsArgs:
             pulumi.set(__self__, "byok", byok)
         if dashboard is not None:
             pulumi.set(__self__, "dashboard", dashboard)
+        if headlamp is not None:
+            pulumi.set(__self__, "headlamp", headlamp)
         if local_path_storage is not None:
             pulumi.set(__self__, "local_path_storage", local_path_storage)
         if logs is not None:
@@ -4121,6 +4125,15 @@ class Mk8sAddOnsArgs:
     @dashboard.setter
     def dashboard(self, value: Optional[pulumi.Input[_builtins.bool]]):
         pulumi.set(self, "dashboard", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def headlamp(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        return pulumi.get(self, "headlamp")
+
+    @headlamp.setter
+    def headlamp(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "headlamp", value)
 
     @_builtins.property
     @pulumi.getter(name="localPathStorage")

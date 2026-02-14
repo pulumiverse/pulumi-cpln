@@ -25,6 +25,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly Outputs.Mk8sAddOnsByok? Byok;
         public readonly bool? Dashboard;
+        public readonly bool? Headlamp;
         public readonly bool? LocalPathStorage;
         public readonly Outputs.Mk8sAddOnsLogs? Logs;
         /// <summary>
@@ -53,6 +54,8 @@ namespace Pulumiverse.Cpln.Outputs
 
             bool? dashboard,
 
+            bool? headlamp,
+
             bool? localPathStorage,
 
             Outputs.Mk8sAddOnsLogs? logs,
@@ -73,6 +76,7 @@ namespace Pulumiverse.Cpln.Outputs
             AzureWorkloadIdentity = azureWorkloadIdentity;
             Byok = byok;
             Dashboard = dashboard;
+            Headlamp = headlamp;
             LocalPathStorage = localPathStorage;
             Logs = logs;
             Metrics = metrics;

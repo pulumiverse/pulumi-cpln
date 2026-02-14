@@ -2877,6 +2877,7 @@ class Mk8sAddOns(dict):
                  azure_workload_identity: Optional['outputs.Mk8sAddOnsAzureWorkloadIdentity'] = None,
                  byok: Optional['outputs.Mk8sAddOnsByok'] = None,
                  dashboard: Optional[_builtins.bool] = None,
+                 headlamp: Optional[_builtins.bool] = None,
                  local_path_storage: Optional[_builtins.bool] = None,
                  logs: Optional['outputs.Mk8sAddOnsLogs'] = None,
                  metrics: Optional['outputs.Mk8sAddOnsMetrics'] = None,
@@ -2903,6 +2904,8 @@ class Mk8sAddOns(dict):
             pulumi.set(__self__, "byok", byok)
         if dashboard is not None:
             pulumi.set(__self__, "dashboard", dashboard)
+        if headlamp is not None:
+            pulumi.set(__self__, "headlamp", headlamp)
         if local_path_storage is not None:
             pulumi.set(__self__, "local_path_storage", local_path_storage)
         if logs is not None:
@@ -2958,6 +2961,11 @@ class Mk8sAddOns(dict):
     @pulumi.getter
     def dashboard(self) -> Optional[_builtins.bool]:
         return pulumi.get(self, "dashboard")
+
+    @_builtins.property
+    @pulumi.getter
+    def headlamp(self) -> Optional[_builtins.bool]:
+        return pulumi.get(self, "headlamp")
 
     @_builtins.property
     @pulumi.getter(name="localPathStorage")

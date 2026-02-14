@@ -1229,6 +1229,9 @@
                 "dashboard": {
                     "type": "boolean"
                 },
+                "headlamp": {
+                    "type": "boolean"
+                },
                 "localPathStorage": {
                     "type": "boolean"
                 },
