@@ -31,6 +31,18 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("protocol")]
         public Input<string>? Protocol { get; set; }
 
+        [Input("routes")]
+        private InputList<Inputs.DomainSpecPortRouteGetArgs>? _routes;
+
+        /// <summary>
+        /// Inline routes for this port. Can coexist with separate cpln.DomainRoute resources on the same domain and port.
+        /// </summary>
+        public InputList<Inputs.DomainSpecPortRouteGetArgs> Routes
+        {
+            get => _routes ?? (_routes = new InputList<Inputs.DomainSpecPortRouteGetArgs>());
+            set => _routes = value;
+        }
+
         /// <summary>
         /// Used for TLS connections for this Domain. End users are responsible for certificate updates.
         /// </summary>

@@ -27,6 +27,9 @@ __all__ = [
     'DomainSpecPort',
     'DomainSpecPortCors',
     'DomainSpecPortCorsAllowOrigin',
+    'DomainSpecPortRoute',
+    'DomainSpecPortRouteHeaders',
+    'DomainSpecPortRouteHeadersRequest',
     'DomainSpecPortTls',
     'DomainSpecPortTlsClientCertificate',
     'DomainSpecPortTlsServerCertificate',
@@ -47,6 +50,7 @@ __all__ = [
     'GvcLoadBalancerRedirectClass',
     'GvcOtelTracing',
     'GvcSidecar',
+    'HelmReleasePostrender',
     'IdentityAwsAccessPolicy',
     'IdentityAwsAccessPolicyTrustPolicy',
     'IdentityAzureAccessPolicy',
@@ -302,6 +306,7 @@ __all__ = [
     'GetGvcLoadBalancerRedirectClassResult',
     'GetGvcOtelTracingResult',
     'GetGvcSidecarResult',
+    'GetHelmTemplatePostrenderResult',
     'GetImageManifestResult',
     'GetImageManifestConfigResult',
     'GetImageManifestLayerResult',
@@ -743,11 +748,13 @@ class DomainSpecPort(dict):
                  cors: Optional['outputs.DomainSpecPortCors'] = None,
                  number: Optional[_builtins.int] = None,
                  protocol: Optional[_builtins.str] = None,
+                 routes: Optional[Sequence['outputs.DomainSpecPortRoute']] = None,
                  tls: Optional['outputs.DomainSpecPortTls'] = None):
         """
         :param 'DomainSpecPortCorsArgs' cors: A security feature implemented by web browsers to allow resources on a web page to be requested from another domain outside the domain from which the resource originated.
         :param _builtins.int number: Sets or overrides headers to all http requests for this route.
         :param _builtins.str protocol: Allowed protocol. Valid values: `http`, `http2`, `tcp`. Default: `http2`.
+        :param Sequence['DomainSpecPortRouteArgs'] routes: Inline routes for this port. Can coexist with separate DomainRoute resources on the same domain and port.
         :param 'DomainSpecPortTlsArgs' tls: Used for TLS connections for this Domain. End users are responsible for certificate updates.
         """
         if cors is not None:
@@ -756,6 +763,8 @@ class DomainSpecPort(dict):
             pulumi.set(__self__, "number", number)
         if protocol is not None:
             pulumi.set(__self__, "protocol", protocol)
+        if routes is not None:
+            pulumi.set(__self__, "routes", routes)
         if tls is not None:
             pulumi.set(__self__, "tls", tls)
 
@@ -782,6 +791,14 @@ class DomainSpecPort(dict):
         Allowed protocol. Valid values: `http`, `http2`, `tcp`. Default: `http2`.
         """
         return pulumi.get(self, "protocol")
+
+    @_builtins.property
+    @pulumi.getter
+    def routes(self) -> Optional[Sequence['outputs.DomainSpecPortRoute']]:
+        """
+        Inline routes for this port. Can coexist with separate DomainRoute resources on the same domain and port.
+        """
+        return pulumi.get(self, "routes")
 
     @_builtins.property
     @pulumi.getter
@@ -923,6 +940,181 @@ class DomainSpecPortCorsAllowOrigin(dict):
     @pulumi.getter
     def regex(self) -> Optional[_builtins.str]:
         return pulumi.get(self, "regex")
+
+
+@pulumi.output_type
+class DomainSpecPortRoute(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "workloadLink":
+            suggest = "workload_link"
+        elif key == "hostPrefix":
+            suggest = "host_prefix"
+        elif key == "hostRegex":
+            suggest = "host_regex"
+        elif key == "replacePrefix":
+            suggest = "replace_prefix"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in DomainSpecPortRoute. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        DomainSpecPortRoute.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        DomainSpecPortRoute.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 workload_link: _builtins.str,
+                 headers: Optional['outputs.DomainSpecPortRouteHeaders'] = None,
+                 host_prefix: Optional[_builtins.str] = None,
+                 host_regex: Optional[_builtins.str] = None,
+                 port: Optional[_builtins.int] = None,
+                 prefix: Optional[_builtins.str] = None,
+                 regex: Optional[_builtins.str] = None,
+                 replace_prefix: Optional[_builtins.str] = None,
+                 replica: Optional[_builtins.int] = None):
+        """
+        :param _builtins.str workload_link: The link of the workload to map the prefix to.
+        :param 'DomainSpecPortRouteHeadersArgs' headers: Modify the headers for all http requests for this route.
+        :param _builtins.str host_prefix: This option allows forwarding traffic for different host headers to different workloads.
+        :param _builtins.str host_regex: A regex to match the host header.
+        :param _builtins.int port: For the linked workload, the port to route traffic to.
+        :param _builtins.str prefix: The path will match any unmatched path prefixes for the subdomain.
+        :param _builtins.str regex: Used to match URI paths. Uses the google re2 regex syntax.
+        :param _builtins.str replace_prefix: A path prefix can be configured to be replaced when forwarding the request to the Workload.
+        :param _builtins.int replica: The replica number of a stateful workload to route to. If not provided, traffic will be routed to all replicas.
+        """
+        pulumi.set(__self__, "workload_link", workload_link)
+        if headers is not None:
+            pulumi.set(__self__, "headers", headers)
+        if host_prefix is not None:
+            pulumi.set(__self__, "host_prefix", host_prefix)
+        if host_regex is not None:
+            pulumi.set(__self__, "host_regex", host_regex)
+        if port is not None:
+            pulumi.set(__self__, "port", port)
+        if prefix is not None:
+            pulumi.set(__self__, "prefix", prefix)
+        if regex is not None:
+            pulumi.set(__self__, "regex", regex)
+        if replace_prefix is not None:
+            pulumi.set(__self__, "replace_prefix", replace_prefix)
+        if replica is not None:
+            pulumi.set(__self__, "replica", replica)
+
+    @_builtins.property
+    @pulumi.getter(name="workloadLink")
+    def workload_link(self) -> _builtins.str:
+        """
+        The link of the workload to map the prefix to.
+        """
+        return pulumi.get(self, "workload_link")
+
+    @_builtins.property
+    @pulumi.getter
+    def headers(self) -> Optional['outputs.DomainSpecPortRouteHeaders']:
+        """
+        Modify the headers for all http requests for this route.
+        """
+        return pulumi.get(self, "headers")
+
+    @_builtins.property
+    @pulumi.getter(name="hostPrefix")
+    def host_prefix(self) -> Optional[_builtins.str]:
+        """
+        This option allows forwarding traffic for different host headers to different workloads.
+        """
+        return pulumi.get(self, "host_prefix")
+
+    @_builtins.property
+    @pulumi.getter(name="hostRegex")
+    def host_regex(self) -> Optional[_builtins.str]:
+        """
+        A regex to match the host header.
+        """
+        return pulumi.get(self, "host_regex")
+
+    @_builtins.property
+    @pulumi.getter
+    def port(self) -> Optional[_builtins.int]:
+        """
+        For the linked workload, the port to route traffic to.
+        """
+        return pulumi.get(self, "port")
+
+    @_builtins.property
+    @pulumi.getter
+    def prefix(self) -> Optional[_builtins.str]:
+        """
+        The path will match any unmatched path prefixes for the subdomain.
+        """
+        return pulumi.get(self, "prefix")
+
+    @_builtins.property
+    @pulumi.getter
+    def regex(self) -> Optional[_builtins.str]:
+        """
+        Used to match URI paths. Uses the google re2 regex syntax.
+        """
+        return pulumi.get(self, "regex")
+
+    @_builtins.property
+    @pulumi.getter(name="replacePrefix")
+    def replace_prefix(self) -> Optional[_builtins.str]:
+        """
+        A path prefix can be configured to be replaced when forwarding the request to the Workload.
+        """
+        return pulumi.get(self, "replace_prefix")
+
+    @_builtins.property
+    @pulumi.getter
+    def replica(self) -> Optional[_builtins.int]:
+        """
+        The replica number of a stateful workload to route to. If not provided, traffic will be routed to all replicas.
+        """
+        return pulumi.get(self, "replica")
+
+
+@pulumi.output_type
+class DomainSpecPortRouteHeaders(dict):
+    def __init__(__self__, *,
+                 request: Optional['outputs.DomainSpecPortRouteHeadersRequest'] = None):
+        """
+        :param 'DomainSpecPortRouteHeadersRequestArgs' request: Manipulates HTTP headers.
+        """
+        if request is not None:
+            pulumi.set(__self__, "request", request)
+
+    @_builtins.property
+    @pulumi.getter
+    def request(self) -> Optional['outputs.DomainSpecPortRouteHeadersRequest']:
+        """
+        Manipulates HTTP headers.
+        """
+        return pulumi.get(self, "request")
+
+
+@pulumi.output_type
+class DomainSpecPortRouteHeadersRequest(dict):
+    def __init__(__self__, *,
+                 set: Optional[Mapping[str, _builtins.str]] = None):
+        """
+        :param Mapping[str, _builtins.str] set: Sets or overrides headers to all http requests for this route.
+        """
+        if set is not None:
+            pulumi.set(__self__, "set", set)
+
+    @_builtins.property
+    @pulumi.getter
+    def set(self) -> Optional[Mapping[str, _builtins.str]]:
+        """
+        Sets or overrides headers to all http requests for this route.
+        """
+        return pulumi.get(self, "set")
 
 
 @pulumi.output_type
@@ -1880,6 +2072,53 @@ class GvcSidecar(dict):
     @pulumi.getter
     def envoy(self) -> _builtins.str:
         return pulumi.get(self, "envoy")
+
+
+@pulumi.output_type
+class HelmReleasePostrender(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "binaryPath":
+            suggest = "binary_path"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in HelmReleasePostrender. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        HelmReleasePostrender.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        HelmReleasePostrender.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 binary_path: _builtins.str,
+                 args: Optional[Sequence[_builtins.str]] = None):
+        """
+        :param _builtins.str binary_path: The path to an executable to be used for post rendering.
+        :param Sequence[_builtins.str] args: Arguments to the post-renderer.
+        """
+        pulumi.set(__self__, "binary_path", binary_path)
+        if args is not None:
+            pulumi.set(__self__, "args", args)
+
+    @_builtins.property
+    @pulumi.getter(name="binaryPath")
+    def binary_path(self) -> _builtins.str:
+        """
+        The path to an executable to be used for post rendering.
+        """
+        return pulumi.get(self, "binary_path")
+
+    @_builtins.property
+    @pulumi.getter
+    def args(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Arguments to the post-renderer.
+        """
+        return pulumi.get(self, "args")
 
 
 @pulumi.output_type
@@ -16681,6 +16920,36 @@ class GetGvcSidecarResult(dict):
     @pulumi.getter
     def envoy(self) -> _builtins.str:
         return pulumi.get(self, "envoy")
+
+
+@pulumi.output_type
+class GetHelmTemplatePostrenderResult(dict):
+    def __init__(__self__, *,
+                 binary_path: _builtins.str,
+                 args: Optional[Sequence[_builtins.str]] = None):
+        """
+        :param _builtins.str binary_path: The path to an executable to be used for post rendering.
+        :param Sequence[_builtins.str] args: Arguments to the post-renderer.
+        """
+        pulumi.set(__self__, "binary_path", binary_path)
+        if args is not None:
+            pulumi.set(__self__, "args", args)
+
+    @_builtins.property
+    @pulumi.getter(name="binaryPath")
+    def binary_path(self) -> _builtins.str:
+        """
+        The path to an executable to be used for post rendering.
+        """
+        return pulumi.get(self, "binary_path")
+
+    @_builtins.property
+    @pulumi.getter
+    def args(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        Arguments to the post-renderer.
+        """
+        return pulumi.get(self, "args")
 
 
 @pulumi.output_type

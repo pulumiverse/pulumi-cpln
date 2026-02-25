@@ -1168,6 +1168,8 @@ type DomainSpecPort struct {
 	Number *int `pulumi:"number"`
 	// Allowed protocol. Valid values: `http`, `http2`, `tcp`. Default: `http2`.
 	Protocol *string `pulumi:"protocol"`
+	// Inline routes for this port. Can coexist with separate DomainRoute resources on the same domain and port.
+	Routes []DomainSpecPortRoute `pulumi:"routes"`
 	// Used for TLS connections for this Domain. End users are responsible for certificate updates.
 	Tls *DomainSpecPortTls `pulumi:"tls"`
 }
@@ -1190,6 +1192,8 @@ type DomainSpecPortArgs struct {
 	Number pulumi.IntPtrInput `pulumi:"number"`
 	// Allowed protocol. Valid values: `http`, `http2`, `tcp`. Default: `http2`.
 	Protocol pulumi.StringPtrInput `pulumi:"protocol"`
+	// Inline routes for this port. Can coexist with separate DomainRoute resources on the same domain and port.
+	Routes DomainSpecPortRouteArrayInput `pulumi:"routes"`
 	// Used for TLS connections for this Domain. End users are responsible for certificate updates.
 	Tls DomainSpecPortTlsPtrInput `pulumi:"tls"`
 }
@@ -1258,6 +1262,11 @@ func (o DomainSpecPortOutput) Number() pulumi.IntPtrOutput {
 // Allowed protocol. Valid values: `http`, `http2`, `tcp`. Default: `http2`.
 func (o DomainSpecPortOutput) Protocol() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v DomainSpecPort) *string { return v.Protocol }).(pulumi.StringPtrOutput)
+}
+
+// Inline routes for this port. Can coexist with separate DomainRoute resources on the same domain and port.
+func (o DomainSpecPortOutput) Routes() DomainSpecPortRouteArrayOutput {
+	return o.ApplyT(func(v DomainSpecPort) []DomainSpecPortRoute { return v.Routes }).(DomainSpecPortRouteArrayOutput)
 }
 
 // Used for TLS connections for this Domain. End users are responsible for certificate updates.
@@ -1618,6 +1627,449 @@ func (o DomainSpecPortCorsAllowOriginArrayOutput) Index(i pulumi.IntInput) Domai
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) DomainSpecPortCorsAllowOrigin {
 		return vs[0].([]DomainSpecPortCorsAllowOrigin)[vs[1].(int)]
 	}).(DomainSpecPortCorsAllowOriginOutput)
+}
+
+type DomainSpecPortRoute struct {
+	// Modify the headers for all http requests for this route.
+	Headers *DomainSpecPortRouteHeaders `pulumi:"headers"`
+	// This option allows forwarding traffic for different host headers to different workloads.
+	HostPrefix *string `pulumi:"hostPrefix"`
+	// A regex to match the host header.
+	HostRegex *string `pulumi:"hostRegex"`
+	// For the linked workload, the port to route traffic to.
+	Port *int `pulumi:"port"`
+	// The path will match any unmatched path prefixes for the subdomain.
+	Prefix *string `pulumi:"prefix"`
+	// Used to match URI paths. Uses the google re2 regex syntax.
+	Regex *string `pulumi:"regex"`
+	// A path prefix can be configured to be replaced when forwarding the request to the Workload.
+	ReplacePrefix *string `pulumi:"replacePrefix"`
+	// The replica number of a stateful workload to route to. If not provided, traffic will be routed to all replicas.
+	Replica *int `pulumi:"replica"`
+	// The link of the workload to map the prefix to.
+	WorkloadLink string `pulumi:"workloadLink"`
+}
+
+// DomainSpecPortRouteInput is an input type that accepts DomainSpecPortRouteArgs and DomainSpecPortRouteOutput values.
+// You can construct a concrete instance of `DomainSpecPortRouteInput` via:
+//
+//	DomainSpecPortRouteArgs{...}
+type DomainSpecPortRouteInput interface {
+	pulumi.Input
+
+	ToDomainSpecPortRouteOutput() DomainSpecPortRouteOutput
+	ToDomainSpecPortRouteOutputWithContext(context.Context) DomainSpecPortRouteOutput
+}
+
+type DomainSpecPortRouteArgs struct {
+	// Modify the headers for all http requests for this route.
+	Headers DomainSpecPortRouteHeadersPtrInput `pulumi:"headers"`
+	// This option allows forwarding traffic for different host headers to different workloads.
+	HostPrefix pulumi.StringPtrInput `pulumi:"hostPrefix"`
+	// A regex to match the host header.
+	HostRegex pulumi.StringPtrInput `pulumi:"hostRegex"`
+	// For the linked workload, the port to route traffic to.
+	Port pulumi.IntPtrInput `pulumi:"port"`
+	// The path will match any unmatched path prefixes for the subdomain.
+	Prefix pulumi.StringPtrInput `pulumi:"prefix"`
+	// Used to match URI paths. Uses the google re2 regex syntax.
+	Regex pulumi.StringPtrInput `pulumi:"regex"`
+	// A path prefix can be configured to be replaced when forwarding the request to the Workload.
+	ReplacePrefix pulumi.StringPtrInput `pulumi:"replacePrefix"`
+	// The replica number of a stateful workload to route to. If not provided, traffic will be routed to all replicas.
+	Replica pulumi.IntPtrInput `pulumi:"replica"`
+	// The link of the workload to map the prefix to.
+	WorkloadLink pulumi.StringInput `pulumi:"workloadLink"`
+}
+
+func (DomainSpecPortRouteArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*DomainSpecPortRoute)(nil)).Elem()
+}
+
+func (i DomainSpecPortRouteArgs) ToDomainSpecPortRouteOutput() DomainSpecPortRouteOutput {
+	return i.ToDomainSpecPortRouteOutputWithContext(context.Background())
+}
+
+func (i DomainSpecPortRouteArgs) ToDomainSpecPortRouteOutputWithContext(ctx context.Context) DomainSpecPortRouteOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DomainSpecPortRouteOutput)
+}
+
+// DomainSpecPortRouteArrayInput is an input type that accepts DomainSpecPortRouteArray and DomainSpecPortRouteArrayOutput values.
+// You can construct a concrete instance of `DomainSpecPortRouteArrayInput` via:
+//
+//	DomainSpecPortRouteArray{ DomainSpecPortRouteArgs{...} }
+type DomainSpecPortRouteArrayInput interface {
+	pulumi.Input
+
+	ToDomainSpecPortRouteArrayOutput() DomainSpecPortRouteArrayOutput
+	ToDomainSpecPortRouteArrayOutputWithContext(context.Context) DomainSpecPortRouteArrayOutput
+}
+
+type DomainSpecPortRouteArray []DomainSpecPortRouteInput
+
+func (DomainSpecPortRouteArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]DomainSpecPortRoute)(nil)).Elem()
+}
+
+func (i DomainSpecPortRouteArray) ToDomainSpecPortRouteArrayOutput() DomainSpecPortRouteArrayOutput {
+	return i.ToDomainSpecPortRouteArrayOutputWithContext(context.Background())
+}
+
+func (i DomainSpecPortRouteArray) ToDomainSpecPortRouteArrayOutputWithContext(ctx context.Context) DomainSpecPortRouteArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DomainSpecPortRouteArrayOutput)
+}
+
+type DomainSpecPortRouteOutput struct{ *pulumi.OutputState }
+
+func (DomainSpecPortRouteOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*DomainSpecPortRoute)(nil)).Elem()
+}
+
+func (o DomainSpecPortRouteOutput) ToDomainSpecPortRouteOutput() DomainSpecPortRouteOutput {
+	return o
+}
+
+func (o DomainSpecPortRouteOutput) ToDomainSpecPortRouteOutputWithContext(ctx context.Context) DomainSpecPortRouteOutput {
+	return o
+}
+
+// Modify the headers for all http requests for this route.
+func (o DomainSpecPortRouteOutput) Headers() DomainSpecPortRouteHeadersPtrOutput {
+	return o.ApplyT(func(v DomainSpecPortRoute) *DomainSpecPortRouteHeaders { return v.Headers }).(DomainSpecPortRouteHeadersPtrOutput)
+}
+
+// This option allows forwarding traffic for different host headers to different workloads.
+func (o DomainSpecPortRouteOutput) HostPrefix() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DomainSpecPortRoute) *string { return v.HostPrefix }).(pulumi.StringPtrOutput)
+}
+
+// A regex to match the host header.
+func (o DomainSpecPortRouteOutput) HostRegex() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DomainSpecPortRoute) *string { return v.HostRegex }).(pulumi.StringPtrOutput)
+}
+
+// For the linked workload, the port to route traffic to.
+func (o DomainSpecPortRouteOutput) Port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v DomainSpecPortRoute) *int { return v.Port }).(pulumi.IntPtrOutput)
+}
+
+// The path will match any unmatched path prefixes for the subdomain.
+func (o DomainSpecPortRouteOutput) Prefix() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DomainSpecPortRoute) *string { return v.Prefix }).(pulumi.StringPtrOutput)
+}
+
+// Used to match URI paths. Uses the google re2 regex syntax.
+func (o DomainSpecPortRouteOutput) Regex() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DomainSpecPortRoute) *string { return v.Regex }).(pulumi.StringPtrOutput)
+}
+
+// A path prefix can be configured to be replaced when forwarding the request to the Workload.
+func (o DomainSpecPortRouteOutput) ReplacePrefix() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DomainSpecPortRoute) *string { return v.ReplacePrefix }).(pulumi.StringPtrOutput)
+}
+
+// The replica number of a stateful workload to route to. If not provided, traffic will be routed to all replicas.
+func (o DomainSpecPortRouteOutput) Replica() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v DomainSpecPortRoute) *int { return v.Replica }).(pulumi.IntPtrOutput)
+}
+
+// The link of the workload to map the prefix to.
+func (o DomainSpecPortRouteOutput) WorkloadLink() pulumi.StringOutput {
+	return o.ApplyT(func(v DomainSpecPortRoute) string { return v.WorkloadLink }).(pulumi.StringOutput)
+}
+
+type DomainSpecPortRouteArrayOutput struct{ *pulumi.OutputState }
+
+func (DomainSpecPortRouteArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]DomainSpecPortRoute)(nil)).Elem()
+}
+
+func (o DomainSpecPortRouteArrayOutput) ToDomainSpecPortRouteArrayOutput() DomainSpecPortRouteArrayOutput {
+	return o
+}
+
+func (o DomainSpecPortRouteArrayOutput) ToDomainSpecPortRouteArrayOutputWithContext(ctx context.Context) DomainSpecPortRouteArrayOutput {
+	return o
+}
+
+func (o DomainSpecPortRouteArrayOutput) Index(i pulumi.IntInput) DomainSpecPortRouteOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) DomainSpecPortRoute {
+		return vs[0].([]DomainSpecPortRoute)[vs[1].(int)]
+	}).(DomainSpecPortRouteOutput)
+}
+
+type DomainSpecPortRouteHeaders struct {
+	// Manipulates HTTP headers.
+	Request *DomainSpecPortRouteHeadersRequest `pulumi:"request"`
+}
+
+// DomainSpecPortRouteHeadersInput is an input type that accepts DomainSpecPortRouteHeadersArgs and DomainSpecPortRouteHeadersOutput values.
+// You can construct a concrete instance of `DomainSpecPortRouteHeadersInput` via:
+//
+//	DomainSpecPortRouteHeadersArgs{...}
+type DomainSpecPortRouteHeadersInput interface {
+	pulumi.Input
+
+	ToDomainSpecPortRouteHeadersOutput() DomainSpecPortRouteHeadersOutput
+	ToDomainSpecPortRouteHeadersOutputWithContext(context.Context) DomainSpecPortRouteHeadersOutput
+}
+
+type DomainSpecPortRouteHeadersArgs struct {
+	// Manipulates HTTP headers.
+	Request DomainSpecPortRouteHeadersRequestPtrInput `pulumi:"request"`
+}
+
+func (DomainSpecPortRouteHeadersArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*DomainSpecPortRouteHeaders)(nil)).Elem()
+}
+
+func (i DomainSpecPortRouteHeadersArgs) ToDomainSpecPortRouteHeadersOutput() DomainSpecPortRouteHeadersOutput {
+	return i.ToDomainSpecPortRouteHeadersOutputWithContext(context.Background())
+}
+
+func (i DomainSpecPortRouteHeadersArgs) ToDomainSpecPortRouteHeadersOutputWithContext(ctx context.Context) DomainSpecPortRouteHeadersOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DomainSpecPortRouteHeadersOutput)
+}
+
+func (i DomainSpecPortRouteHeadersArgs) ToDomainSpecPortRouteHeadersPtrOutput() DomainSpecPortRouteHeadersPtrOutput {
+	return i.ToDomainSpecPortRouteHeadersPtrOutputWithContext(context.Background())
+}
+
+func (i DomainSpecPortRouteHeadersArgs) ToDomainSpecPortRouteHeadersPtrOutputWithContext(ctx context.Context) DomainSpecPortRouteHeadersPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DomainSpecPortRouteHeadersOutput).ToDomainSpecPortRouteHeadersPtrOutputWithContext(ctx)
+}
+
+// DomainSpecPortRouteHeadersPtrInput is an input type that accepts DomainSpecPortRouteHeadersArgs, DomainSpecPortRouteHeadersPtr and DomainSpecPortRouteHeadersPtrOutput values.
+// You can construct a concrete instance of `DomainSpecPortRouteHeadersPtrInput` via:
+//
+//	        DomainSpecPortRouteHeadersArgs{...}
+//
+//	or:
+//
+//	        nil
+type DomainSpecPortRouteHeadersPtrInput interface {
+	pulumi.Input
+
+	ToDomainSpecPortRouteHeadersPtrOutput() DomainSpecPortRouteHeadersPtrOutput
+	ToDomainSpecPortRouteHeadersPtrOutputWithContext(context.Context) DomainSpecPortRouteHeadersPtrOutput
+}
+
+type domainSpecPortRouteHeadersPtrType DomainSpecPortRouteHeadersArgs
+
+func DomainSpecPortRouteHeadersPtr(v *DomainSpecPortRouteHeadersArgs) DomainSpecPortRouteHeadersPtrInput {
+	return (*domainSpecPortRouteHeadersPtrType)(v)
+}
+
+func (*domainSpecPortRouteHeadersPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**DomainSpecPortRouteHeaders)(nil)).Elem()
+}
+
+func (i *domainSpecPortRouteHeadersPtrType) ToDomainSpecPortRouteHeadersPtrOutput() DomainSpecPortRouteHeadersPtrOutput {
+	return i.ToDomainSpecPortRouteHeadersPtrOutputWithContext(context.Background())
+}
+
+func (i *domainSpecPortRouteHeadersPtrType) ToDomainSpecPortRouteHeadersPtrOutputWithContext(ctx context.Context) DomainSpecPortRouteHeadersPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DomainSpecPortRouteHeadersPtrOutput)
+}
+
+type DomainSpecPortRouteHeadersOutput struct{ *pulumi.OutputState }
+
+func (DomainSpecPortRouteHeadersOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*DomainSpecPortRouteHeaders)(nil)).Elem()
+}
+
+func (o DomainSpecPortRouteHeadersOutput) ToDomainSpecPortRouteHeadersOutput() DomainSpecPortRouteHeadersOutput {
+	return o
+}
+
+func (o DomainSpecPortRouteHeadersOutput) ToDomainSpecPortRouteHeadersOutputWithContext(ctx context.Context) DomainSpecPortRouteHeadersOutput {
+	return o
+}
+
+func (o DomainSpecPortRouteHeadersOutput) ToDomainSpecPortRouteHeadersPtrOutput() DomainSpecPortRouteHeadersPtrOutput {
+	return o.ToDomainSpecPortRouteHeadersPtrOutputWithContext(context.Background())
+}
+
+func (o DomainSpecPortRouteHeadersOutput) ToDomainSpecPortRouteHeadersPtrOutputWithContext(ctx context.Context) DomainSpecPortRouteHeadersPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v DomainSpecPortRouteHeaders) *DomainSpecPortRouteHeaders {
+		return &v
+	}).(DomainSpecPortRouteHeadersPtrOutput)
+}
+
+// Manipulates HTTP headers.
+func (o DomainSpecPortRouteHeadersOutput) Request() DomainSpecPortRouteHeadersRequestPtrOutput {
+	return o.ApplyT(func(v DomainSpecPortRouteHeaders) *DomainSpecPortRouteHeadersRequest { return v.Request }).(DomainSpecPortRouteHeadersRequestPtrOutput)
+}
+
+type DomainSpecPortRouteHeadersPtrOutput struct{ *pulumi.OutputState }
+
+func (DomainSpecPortRouteHeadersPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**DomainSpecPortRouteHeaders)(nil)).Elem()
+}
+
+func (o DomainSpecPortRouteHeadersPtrOutput) ToDomainSpecPortRouteHeadersPtrOutput() DomainSpecPortRouteHeadersPtrOutput {
+	return o
+}
+
+func (o DomainSpecPortRouteHeadersPtrOutput) ToDomainSpecPortRouteHeadersPtrOutputWithContext(ctx context.Context) DomainSpecPortRouteHeadersPtrOutput {
+	return o
+}
+
+func (o DomainSpecPortRouteHeadersPtrOutput) Elem() DomainSpecPortRouteHeadersOutput {
+	return o.ApplyT(func(v *DomainSpecPortRouteHeaders) DomainSpecPortRouteHeaders {
+		if v != nil {
+			return *v
+		}
+		var ret DomainSpecPortRouteHeaders
+		return ret
+	}).(DomainSpecPortRouteHeadersOutput)
+}
+
+// Manipulates HTTP headers.
+func (o DomainSpecPortRouteHeadersPtrOutput) Request() DomainSpecPortRouteHeadersRequestPtrOutput {
+	return o.ApplyT(func(v *DomainSpecPortRouteHeaders) *DomainSpecPortRouteHeadersRequest {
+		if v == nil {
+			return nil
+		}
+		return v.Request
+	}).(DomainSpecPortRouteHeadersRequestPtrOutput)
+}
+
+type DomainSpecPortRouteHeadersRequest struct {
+	// Sets or overrides headers to all http requests for this route.
+	Set map[string]string `pulumi:"set"`
+}
+
+// DomainSpecPortRouteHeadersRequestInput is an input type that accepts DomainSpecPortRouteHeadersRequestArgs and DomainSpecPortRouteHeadersRequestOutput values.
+// You can construct a concrete instance of `DomainSpecPortRouteHeadersRequestInput` via:
+//
+//	DomainSpecPortRouteHeadersRequestArgs{...}
+type DomainSpecPortRouteHeadersRequestInput interface {
+	pulumi.Input
+
+	ToDomainSpecPortRouteHeadersRequestOutput() DomainSpecPortRouteHeadersRequestOutput
+	ToDomainSpecPortRouteHeadersRequestOutputWithContext(context.Context) DomainSpecPortRouteHeadersRequestOutput
+}
+
+type DomainSpecPortRouteHeadersRequestArgs struct {
+	// Sets or overrides headers to all http requests for this route.
+	Set pulumi.StringMapInput `pulumi:"set"`
+}
+
+func (DomainSpecPortRouteHeadersRequestArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*DomainSpecPortRouteHeadersRequest)(nil)).Elem()
+}
+
+func (i DomainSpecPortRouteHeadersRequestArgs) ToDomainSpecPortRouteHeadersRequestOutput() DomainSpecPortRouteHeadersRequestOutput {
+	return i.ToDomainSpecPortRouteHeadersRequestOutputWithContext(context.Background())
+}
+
+func (i DomainSpecPortRouteHeadersRequestArgs) ToDomainSpecPortRouteHeadersRequestOutputWithContext(ctx context.Context) DomainSpecPortRouteHeadersRequestOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DomainSpecPortRouteHeadersRequestOutput)
+}
+
+func (i DomainSpecPortRouteHeadersRequestArgs) ToDomainSpecPortRouteHeadersRequestPtrOutput() DomainSpecPortRouteHeadersRequestPtrOutput {
+	return i.ToDomainSpecPortRouteHeadersRequestPtrOutputWithContext(context.Background())
+}
+
+func (i DomainSpecPortRouteHeadersRequestArgs) ToDomainSpecPortRouteHeadersRequestPtrOutputWithContext(ctx context.Context) DomainSpecPortRouteHeadersRequestPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DomainSpecPortRouteHeadersRequestOutput).ToDomainSpecPortRouteHeadersRequestPtrOutputWithContext(ctx)
+}
+
+// DomainSpecPortRouteHeadersRequestPtrInput is an input type that accepts DomainSpecPortRouteHeadersRequestArgs, DomainSpecPortRouteHeadersRequestPtr and DomainSpecPortRouteHeadersRequestPtrOutput values.
+// You can construct a concrete instance of `DomainSpecPortRouteHeadersRequestPtrInput` via:
+//
+//	        DomainSpecPortRouteHeadersRequestArgs{...}
+//
+//	or:
+//
+//	        nil
+type DomainSpecPortRouteHeadersRequestPtrInput interface {
+	pulumi.Input
+
+	ToDomainSpecPortRouteHeadersRequestPtrOutput() DomainSpecPortRouteHeadersRequestPtrOutput
+	ToDomainSpecPortRouteHeadersRequestPtrOutputWithContext(context.Context) DomainSpecPortRouteHeadersRequestPtrOutput
+}
+
+type domainSpecPortRouteHeadersRequestPtrType DomainSpecPortRouteHeadersRequestArgs
+
+func DomainSpecPortRouteHeadersRequestPtr(v *DomainSpecPortRouteHeadersRequestArgs) DomainSpecPortRouteHeadersRequestPtrInput {
+	return (*domainSpecPortRouteHeadersRequestPtrType)(v)
+}
+
+func (*domainSpecPortRouteHeadersRequestPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**DomainSpecPortRouteHeadersRequest)(nil)).Elem()
+}
+
+func (i *domainSpecPortRouteHeadersRequestPtrType) ToDomainSpecPortRouteHeadersRequestPtrOutput() DomainSpecPortRouteHeadersRequestPtrOutput {
+	return i.ToDomainSpecPortRouteHeadersRequestPtrOutputWithContext(context.Background())
+}
+
+func (i *domainSpecPortRouteHeadersRequestPtrType) ToDomainSpecPortRouteHeadersRequestPtrOutputWithContext(ctx context.Context) DomainSpecPortRouteHeadersRequestPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DomainSpecPortRouteHeadersRequestPtrOutput)
+}
+
+type DomainSpecPortRouteHeadersRequestOutput struct{ *pulumi.OutputState }
+
+func (DomainSpecPortRouteHeadersRequestOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*DomainSpecPortRouteHeadersRequest)(nil)).Elem()
+}
+
+func (o DomainSpecPortRouteHeadersRequestOutput) ToDomainSpecPortRouteHeadersRequestOutput() DomainSpecPortRouteHeadersRequestOutput {
+	return o
+}
+
+func (o DomainSpecPortRouteHeadersRequestOutput) ToDomainSpecPortRouteHeadersRequestOutputWithContext(ctx context.Context) DomainSpecPortRouteHeadersRequestOutput {
+	return o
+}
+
+func (o DomainSpecPortRouteHeadersRequestOutput) ToDomainSpecPortRouteHeadersRequestPtrOutput() DomainSpecPortRouteHeadersRequestPtrOutput {
+	return o.ToDomainSpecPortRouteHeadersRequestPtrOutputWithContext(context.Background())
+}
+
+func (o DomainSpecPortRouteHeadersRequestOutput) ToDomainSpecPortRouteHeadersRequestPtrOutputWithContext(ctx context.Context) DomainSpecPortRouteHeadersRequestPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v DomainSpecPortRouteHeadersRequest) *DomainSpecPortRouteHeadersRequest {
+		return &v
+	}).(DomainSpecPortRouteHeadersRequestPtrOutput)
+}
+
+// Sets or overrides headers to all http requests for this route.
+func (o DomainSpecPortRouteHeadersRequestOutput) Set() pulumi.StringMapOutput {
+	return o.ApplyT(func(v DomainSpecPortRouteHeadersRequest) map[string]string { return v.Set }).(pulumi.StringMapOutput)
+}
+
+type DomainSpecPortRouteHeadersRequestPtrOutput struct{ *pulumi.OutputState }
+
+func (DomainSpecPortRouteHeadersRequestPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**DomainSpecPortRouteHeadersRequest)(nil)).Elem()
+}
+
+func (o DomainSpecPortRouteHeadersRequestPtrOutput) ToDomainSpecPortRouteHeadersRequestPtrOutput() DomainSpecPortRouteHeadersRequestPtrOutput {
+	return o
+}
+
+func (o DomainSpecPortRouteHeadersRequestPtrOutput) ToDomainSpecPortRouteHeadersRequestPtrOutputWithContext(ctx context.Context) DomainSpecPortRouteHeadersRequestPtrOutput {
+	return o
+}
+
+func (o DomainSpecPortRouteHeadersRequestPtrOutput) Elem() DomainSpecPortRouteHeadersRequestOutput {
+	return o.ApplyT(func(v *DomainSpecPortRouteHeadersRequest) DomainSpecPortRouteHeadersRequest {
+		if v != nil {
+			return *v
+		}
+		var ret DomainSpecPortRouteHeadersRequest
+		return ret
+	}).(DomainSpecPortRouteHeadersRequestOutput)
+}
+
+// Sets or overrides headers to all http requests for this route.
+func (o DomainSpecPortRouteHeadersRequestPtrOutput) Set() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *DomainSpecPortRouteHeadersRequest) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Set
+	}).(pulumi.StringMapOutput)
 }
 
 type DomainSpecPortTls struct {
@@ -4625,6 +5077,162 @@ func (o GvcSidecarPtrOutput) Envoy() pulumi.StringPtrOutput {
 			return nil
 		}
 		return &v.Envoy
+	}).(pulumi.StringPtrOutput)
+}
+
+type HelmReleasePostrender struct {
+	// Arguments to the post-renderer.
+	Args []string `pulumi:"args"`
+	// The path to an executable to be used for post rendering.
+	BinaryPath string `pulumi:"binaryPath"`
+}
+
+// HelmReleasePostrenderInput is an input type that accepts HelmReleasePostrenderArgs and HelmReleasePostrenderOutput values.
+// You can construct a concrete instance of `HelmReleasePostrenderInput` via:
+//
+//	HelmReleasePostrenderArgs{...}
+type HelmReleasePostrenderInput interface {
+	pulumi.Input
+
+	ToHelmReleasePostrenderOutput() HelmReleasePostrenderOutput
+	ToHelmReleasePostrenderOutputWithContext(context.Context) HelmReleasePostrenderOutput
+}
+
+type HelmReleasePostrenderArgs struct {
+	// Arguments to the post-renderer.
+	Args pulumi.StringArrayInput `pulumi:"args"`
+	// The path to an executable to be used for post rendering.
+	BinaryPath pulumi.StringInput `pulumi:"binaryPath"`
+}
+
+func (HelmReleasePostrenderArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*HelmReleasePostrender)(nil)).Elem()
+}
+
+func (i HelmReleasePostrenderArgs) ToHelmReleasePostrenderOutput() HelmReleasePostrenderOutput {
+	return i.ToHelmReleasePostrenderOutputWithContext(context.Background())
+}
+
+func (i HelmReleasePostrenderArgs) ToHelmReleasePostrenderOutputWithContext(ctx context.Context) HelmReleasePostrenderOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HelmReleasePostrenderOutput)
+}
+
+func (i HelmReleasePostrenderArgs) ToHelmReleasePostrenderPtrOutput() HelmReleasePostrenderPtrOutput {
+	return i.ToHelmReleasePostrenderPtrOutputWithContext(context.Background())
+}
+
+func (i HelmReleasePostrenderArgs) ToHelmReleasePostrenderPtrOutputWithContext(ctx context.Context) HelmReleasePostrenderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HelmReleasePostrenderOutput).ToHelmReleasePostrenderPtrOutputWithContext(ctx)
+}
+
+// HelmReleasePostrenderPtrInput is an input type that accepts HelmReleasePostrenderArgs, HelmReleasePostrenderPtr and HelmReleasePostrenderPtrOutput values.
+// You can construct a concrete instance of `HelmReleasePostrenderPtrInput` via:
+//
+//	        HelmReleasePostrenderArgs{...}
+//
+//	or:
+//
+//	        nil
+type HelmReleasePostrenderPtrInput interface {
+	pulumi.Input
+
+	ToHelmReleasePostrenderPtrOutput() HelmReleasePostrenderPtrOutput
+	ToHelmReleasePostrenderPtrOutputWithContext(context.Context) HelmReleasePostrenderPtrOutput
+}
+
+type helmReleasePostrenderPtrType HelmReleasePostrenderArgs
+
+func HelmReleasePostrenderPtr(v *HelmReleasePostrenderArgs) HelmReleasePostrenderPtrInput {
+	return (*helmReleasePostrenderPtrType)(v)
+}
+
+func (*helmReleasePostrenderPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**HelmReleasePostrender)(nil)).Elem()
+}
+
+func (i *helmReleasePostrenderPtrType) ToHelmReleasePostrenderPtrOutput() HelmReleasePostrenderPtrOutput {
+	return i.ToHelmReleasePostrenderPtrOutputWithContext(context.Background())
+}
+
+func (i *helmReleasePostrenderPtrType) ToHelmReleasePostrenderPtrOutputWithContext(ctx context.Context) HelmReleasePostrenderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(HelmReleasePostrenderPtrOutput)
+}
+
+type HelmReleasePostrenderOutput struct{ *pulumi.OutputState }
+
+func (HelmReleasePostrenderOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*HelmReleasePostrender)(nil)).Elem()
+}
+
+func (o HelmReleasePostrenderOutput) ToHelmReleasePostrenderOutput() HelmReleasePostrenderOutput {
+	return o
+}
+
+func (o HelmReleasePostrenderOutput) ToHelmReleasePostrenderOutputWithContext(ctx context.Context) HelmReleasePostrenderOutput {
+	return o
+}
+
+func (o HelmReleasePostrenderOutput) ToHelmReleasePostrenderPtrOutput() HelmReleasePostrenderPtrOutput {
+	return o.ToHelmReleasePostrenderPtrOutputWithContext(context.Background())
+}
+
+func (o HelmReleasePostrenderOutput) ToHelmReleasePostrenderPtrOutputWithContext(ctx context.Context) HelmReleasePostrenderPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v HelmReleasePostrender) *HelmReleasePostrender {
+		return &v
+	}).(HelmReleasePostrenderPtrOutput)
+}
+
+// Arguments to the post-renderer.
+func (o HelmReleasePostrenderOutput) Args() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v HelmReleasePostrender) []string { return v.Args }).(pulumi.StringArrayOutput)
+}
+
+// The path to an executable to be used for post rendering.
+func (o HelmReleasePostrenderOutput) BinaryPath() pulumi.StringOutput {
+	return o.ApplyT(func(v HelmReleasePostrender) string { return v.BinaryPath }).(pulumi.StringOutput)
+}
+
+type HelmReleasePostrenderPtrOutput struct{ *pulumi.OutputState }
+
+func (HelmReleasePostrenderPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**HelmReleasePostrender)(nil)).Elem()
+}
+
+func (o HelmReleasePostrenderPtrOutput) ToHelmReleasePostrenderPtrOutput() HelmReleasePostrenderPtrOutput {
+	return o
+}
+
+func (o HelmReleasePostrenderPtrOutput) ToHelmReleasePostrenderPtrOutputWithContext(ctx context.Context) HelmReleasePostrenderPtrOutput {
+	return o
+}
+
+func (o HelmReleasePostrenderPtrOutput) Elem() HelmReleasePostrenderOutput {
+	return o.ApplyT(func(v *HelmReleasePostrender) HelmReleasePostrender {
+		if v != nil {
+			return *v
+		}
+		var ret HelmReleasePostrender
+		return ret
+	}).(HelmReleasePostrenderOutput)
+}
+
+// Arguments to the post-renderer.
+func (o HelmReleasePostrenderPtrOutput) Args() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *HelmReleasePostrender) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Args
+	}).(pulumi.StringArrayOutput)
+}
+
+// The path to an executable to be used for post rendering.
+func (o HelmReleasePostrenderPtrOutput) BinaryPath() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *HelmReleasePostrender) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.BinaryPath
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -45532,6 +46140,162 @@ func (o GetGvcSidecarPtrOutput) Envoy() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+type GetHelmTemplatePostrender struct {
+	// Arguments to the post-renderer.
+	Args []string `pulumi:"args"`
+	// The path to an executable to be used for post rendering.
+	BinaryPath string `pulumi:"binaryPath"`
+}
+
+// GetHelmTemplatePostrenderInput is an input type that accepts GetHelmTemplatePostrenderArgs and GetHelmTemplatePostrenderOutput values.
+// You can construct a concrete instance of `GetHelmTemplatePostrenderInput` via:
+//
+//	GetHelmTemplatePostrenderArgs{...}
+type GetHelmTemplatePostrenderInput interface {
+	pulumi.Input
+
+	ToGetHelmTemplatePostrenderOutput() GetHelmTemplatePostrenderOutput
+	ToGetHelmTemplatePostrenderOutputWithContext(context.Context) GetHelmTemplatePostrenderOutput
+}
+
+type GetHelmTemplatePostrenderArgs struct {
+	// Arguments to the post-renderer.
+	Args pulumi.StringArrayInput `pulumi:"args"`
+	// The path to an executable to be used for post rendering.
+	BinaryPath pulumi.StringInput `pulumi:"binaryPath"`
+}
+
+func (GetHelmTemplatePostrenderArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetHelmTemplatePostrender)(nil)).Elem()
+}
+
+func (i GetHelmTemplatePostrenderArgs) ToGetHelmTemplatePostrenderOutput() GetHelmTemplatePostrenderOutput {
+	return i.ToGetHelmTemplatePostrenderOutputWithContext(context.Background())
+}
+
+func (i GetHelmTemplatePostrenderArgs) ToGetHelmTemplatePostrenderOutputWithContext(ctx context.Context) GetHelmTemplatePostrenderOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetHelmTemplatePostrenderOutput)
+}
+
+func (i GetHelmTemplatePostrenderArgs) ToGetHelmTemplatePostrenderPtrOutput() GetHelmTemplatePostrenderPtrOutput {
+	return i.ToGetHelmTemplatePostrenderPtrOutputWithContext(context.Background())
+}
+
+func (i GetHelmTemplatePostrenderArgs) ToGetHelmTemplatePostrenderPtrOutputWithContext(ctx context.Context) GetHelmTemplatePostrenderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetHelmTemplatePostrenderOutput).ToGetHelmTemplatePostrenderPtrOutputWithContext(ctx)
+}
+
+// GetHelmTemplatePostrenderPtrInput is an input type that accepts GetHelmTemplatePostrenderArgs, GetHelmTemplatePostrenderPtr and GetHelmTemplatePostrenderPtrOutput values.
+// You can construct a concrete instance of `GetHelmTemplatePostrenderPtrInput` via:
+//
+//	        GetHelmTemplatePostrenderArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetHelmTemplatePostrenderPtrInput interface {
+	pulumi.Input
+
+	ToGetHelmTemplatePostrenderPtrOutput() GetHelmTemplatePostrenderPtrOutput
+	ToGetHelmTemplatePostrenderPtrOutputWithContext(context.Context) GetHelmTemplatePostrenderPtrOutput
+}
+
+type getHelmTemplatePostrenderPtrType GetHelmTemplatePostrenderArgs
+
+func GetHelmTemplatePostrenderPtr(v *GetHelmTemplatePostrenderArgs) GetHelmTemplatePostrenderPtrInput {
+	return (*getHelmTemplatePostrenderPtrType)(v)
+}
+
+func (*getHelmTemplatePostrenderPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetHelmTemplatePostrender)(nil)).Elem()
+}
+
+func (i *getHelmTemplatePostrenderPtrType) ToGetHelmTemplatePostrenderPtrOutput() GetHelmTemplatePostrenderPtrOutput {
+	return i.ToGetHelmTemplatePostrenderPtrOutputWithContext(context.Background())
+}
+
+func (i *getHelmTemplatePostrenderPtrType) ToGetHelmTemplatePostrenderPtrOutputWithContext(ctx context.Context) GetHelmTemplatePostrenderPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetHelmTemplatePostrenderPtrOutput)
+}
+
+type GetHelmTemplatePostrenderOutput struct{ *pulumi.OutputState }
+
+func (GetHelmTemplatePostrenderOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetHelmTemplatePostrender)(nil)).Elem()
+}
+
+func (o GetHelmTemplatePostrenderOutput) ToGetHelmTemplatePostrenderOutput() GetHelmTemplatePostrenderOutput {
+	return o
+}
+
+func (o GetHelmTemplatePostrenderOutput) ToGetHelmTemplatePostrenderOutputWithContext(ctx context.Context) GetHelmTemplatePostrenderOutput {
+	return o
+}
+
+func (o GetHelmTemplatePostrenderOutput) ToGetHelmTemplatePostrenderPtrOutput() GetHelmTemplatePostrenderPtrOutput {
+	return o.ToGetHelmTemplatePostrenderPtrOutputWithContext(context.Background())
+}
+
+func (o GetHelmTemplatePostrenderOutput) ToGetHelmTemplatePostrenderPtrOutputWithContext(ctx context.Context) GetHelmTemplatePostrenderPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetHelmTemplatePostrender) *GetHelmTemplatePostrender {
+		return &v
+	}).(GetHelmTemplatePostrenderPtrOutput)
+}
+
+// Arguments to the post-renderer.
+func (o GetHelmTemplatePostrenderOutput) Args() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetHelmTemplatePostrender) []string { return v.Args }).(pulumi.StringArrayOutput)
+}
+
+// The path to an executable to be used for post rendering.
+func (o GetHelmTemplatePostrenderOutput) BinaryPath() pulumi.StringOutput {
+	return o.ApplyT(func(v GetHelmTemplatePostrender) string { return v.BinaryPath }).(pulumi.StringOutput)
+}
+
+type GetHelmTemplatePostrenderPtrOutput struct{ *pulumi.OutputState }
+
+func (GetHelmTemplatePostrenderPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetHelmTemplatePostrender)(nil)).Elem()
+}
+
+func (o GetHelmTemplatePostrenderPtrOutput) ToGetHelmTemplatePostrenderPtrOutput() GetHelmTemplatePostrenderPtrOutput {
+	return o
+}
+
+func (o GetHelmTemplatePostrenderPtrOutput) ToGetHelmTemplatePostrenderPtrOutputWithContext(ctx context.Context) GetHelmTemplatePostrenderPtrOutput {
+	return o
+}
+
+func (o GetHelmTemplatePostrenderPtrOutput) Elem() GetHelmTemplatePostrenderOutput {
+	return o.ApplyT(func(v *GetHelmTemplatePostrender) GetHelmTemplatePostrender {
+		if v != nil {
+			return *v
+		}
+		var ret GetHelmTemplatePostrender
+		return ret
+	}).(GetHelmTemplatePostrenderOutput)
+}
+
+// Arguments to the post-renderer.
+func (o GetHelmTemplatePostrenderPtrOutput) Args() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *GetHelmTemplatePostrender) []string {
+		if v == nil {
+			return nil
+		}
+		return v.Args
+	}).(pulumi.StringArrayOutput)
+}
+
+// The path to an executable to be used for post rendering.
+func (o GetHelmTemplatePostrenderPtrOutput) BinaryPath() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetHelmTemplatePostrender) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.BinaryPath
+	}).(pulumi.StringPtrOutput)
+}
+
 type GetImageManifest struct {
 	// The config is a JSON blob that contains the image configuration data which includes environment variables, default command to run, and other settings necessary to run the container based on this image.
 	Configs []GetImageManifestConfig `pulumi:"configs"`
@@ -56614,6 +57378,12 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortCorsPtrInput)(nil)).Elem(), DomainSpecPortCorsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortCorsAllowOriginInput)(nil)).Elem(), DomainSpecPortCorsAllowOriginArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortCorsAllowOriginArrayInput)(nil)).Elem(), DomainSpecPortCorsAllowOriginArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortRouteInput)(nil)).Elem(), DomainSpecPortRouteArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortRouteArrayInput)(nil)).Elem(), DomainSpecPortRouteArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortRouteHeadersInput)(nil)).Elem(), DomainSpecPortRouteHeadersArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortRouteHeadersPtrInput)(nil)).Elem(), DomainSpecPortRouteHeadersArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortRouteHeadersRequestInput)(nil)).Elem(), DomainSpecPortRouteHeadersRequestArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortRouteHeadersRequestPtrInput)(nil)).Elem(), DomainSpecPortRouteHeadersRequestArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortTlsInput)(nil)).Elem(), DomainSpecPortTlsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortTlsPtrInput)(nil)).Elem(), DomainSpecPortTlsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortTlsClientCertificateInput)(nil)).Elem(), DomainSpecPortTlsClientCertificateArgs{})
@@ -56654,6 +57424,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcOtelTracingPtrInput)(nil)).Elem(), GvcOtelTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcSidecarInput)(nil)).Elem(), GvcSidecarArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcSidecarPtrInput)(nil)).Elem(), GvcSidecarArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*HelmReleasePostrenderInput)(nil)).Elem(), HelmReleasePostrenderArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*HelmReleasePostrenderPtrInput)(nil)).Elem(), HelmReleasePostrenderArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*IdentityAwsAccessPolicyInput)(nil)).Elem(), IdentityAwsAccessPolicyArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*IdentityAwsAccessPolicyPtrInput)(nil)).Elem(), IdentityAwsAccessPolicyArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*IdentityAwsAccessPolicyTrustPolicyInput)(nil)).Elem(), IdentityAwsAccessPolicyTrustPolicyArgs{})
@@ -57164,6 +57936,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcOtelTracingPtrInput)(nil)).Elem(), GetGvcOtelTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcSidecarInput)(nil)).Elem(), GetGvcSidecarArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcSidecarPtrInput)(nil)).Elem(), GetGvcSidecarArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetHelmTemplatePostrenderInput)(nil)).Elem(), GetHelmTemplatePostrenderArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetHelmTemplatePostrenderPtrInput)(nil)).Elem(), GetHelmTemplatePostrenderArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetImageManifestInput)(nil)).Elem(), GetImageManifestArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetImageManifestArrayInput)(nil)).Elem(), GetImageManifestArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetImageManifestConfigInput)(nil)).Elem(), GetImageManifestConfigArgs{})
@@ -57366,6 +58140,12 @@ func init() {
 	pulumi.RegisterOutputType(DomainSpecPortCorsPtrOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortCorsAllowOriginOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortCorsAllowOriginArrayOutput{})
+	pulumi.RegisterOutputType(DomainSpecPortRouteOutput{})
+	pulumi.RegisterOutputType(DomainSpecPortRouteArrayOutput{})
+	pulumi.RegisterOutputType(DomainSpecPortRouteHeadersOutput{})
+	pulumi.RegisterOutputType(DomainSpecPortRouteHeadersPtrOutput{})
+	pulumi.RegisterOutputType(DomainSpecPortRouteHeadersRequestOutput{})
+	pulumi.RegisterOutputType(DomainSpecPortRouteHeadersRequestPtrOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortTlsOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortTlsPtrOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortTlsClientCertificateOutput{})
@@ -57406,6 +58186,8 @@ func init() {
 	pulumi.RegisterOutputType(GvcOtelTracingPtrOutput{})
 	pulumi.RegisterOutputType(GvcSidecarOutput{})
 	pulumi.RegisterOutputType(GvcSidecarPtrOutput{})
+	pulumi.RegisterOutputType(HelmReleasePostrenderOutput{})
+	pulumi.RegisterOutputType(HelmReleasePostrenderPtrOutput{})
 	pulumi.RegisterOutputType(IdentityAwsAccessPolicyOutput{})
 	pulumi.RegisterOutputType(IdentityAwsAccessPolicyPtrOutput{})
 	pulumi.RegisterOutputType(IdentityAwsAccessPolicyTrustPolicyOutput{})
@@ -57916,6 +58698,8 @@ func init() {
 	pulumi.RegisterOutputType(GetGvcOtelTracingPtrOutput{})
 	pulumi.RegisterOutputType(GetGvcSidecarOutput{})
 	pulumi.RegisterOutputType(GetGvcSidecarPtrOutput{})
+	pulumi.RegisterOutputType(GetHelmTemplatePostrenderOutput{})
+	pulumi.RegisterOutputType(GetHelmTemplatePostrenderPtrOutput{})
 	pulumi.RegisterOutputType(GetImageManifestOutput{})
 	pulumi.RegisterOutputType(GetImageManifestArrayOutput{})
 	pulumi.RegisterOutputType(GetImageManifestConfigOutput{})

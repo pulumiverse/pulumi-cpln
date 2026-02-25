@@ -39,6 +39,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &Group{}
 	case "cpln:index/gvc:Gvc":
 		r = &Gvc{}
+	case "cpln:index/helmRelease:HelmRelease":
+		r = &HelmRelease{}
 	case "cpln:index/identity:Identity":
 		r = &Identity{}
 	case "cpln:index/ipSet:IpSet":
@@ -141,6 +143,11 @@ func init() {
 	pulumi.RegisterResourceModule(
 		"cpln",
 		"index/gvc",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"cpln",
+		"index/helmRelease",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(

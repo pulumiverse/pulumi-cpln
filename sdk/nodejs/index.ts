@@ -50,6 +50,11 @@ export const getGvc: typeof import("./getGvc").getGvc = null as any;
 export const getGvcOutput: typeof import("./getGvc").getGvcOutput = null as any;
 utilities.lazyLoad(exports, ["getGvc","getGvcOutput"], () => require("./getGvc"));
 
+export { GetHelmTemplateArgs, GetHelmTemplateResult, GetHelmTemplateOutputArgs } from "./getHelmTemplate";
+export const getHelmTemplate: typeof import("./getHelmTemplate").getHelmTemplate = null as any;
+export const getHelmTemplateOutput: typeof import("./getHelmTemplate").getHelmTemplateOutput = null as any;
+utilities.lazyLoad(exports, ["getHelmTemplate","getHelmTemplateOutput"], () => require("./getHelmTemplate"));
+
 export { GetImageArgs, GetImageResult, GetImageOutputArgs } from "./getImage";
 export const getImage: typeof import("./getImage").getImage = null as any;
 export const getImageOutput: typeof import("./getImage").getImageOutput = null as any;
@@ -94,6 +99,11 @@ export { GvcArgs, GvcState } from "./gvc";
 export type Gvc = import("./gvc").Gvc;
 export const Gvc: typeof import("./gvc").Gvc = null as any;
 utilities.lazyLoad(exports, ["Gvc"], () => require("./gvc"));
+
+export { HelmReleaseArgs, HelmReleaseState } from "./helmRelease";
+export type HelmRelease = import("./helmRelease").HelmRelease;
+export const HelmRelease: typeof import("./helmRelease").HelmRelease = null as any;
+utilities.lazyLoad(exports, ["HelmRelease"], () => require("./helmRelease"));
 
 export { IdentityArgs, IdentityState } from "./identity";
 export type Identity = import("./identity").Identity;
@@ -200,6 +210,8 @@ const _module = {
                 return new Group(name, <any>undefined, { urn })
             case "cpln:index/gvc:Gvc":
                 return new Gvc(name, <any>undefined, { urn })
+            case "cpln:index/helmRelease:HelmRelease":
+                return new HelmRelease(name, <any>undefined, { urn })
             case "cpln:index/identity:Identity":
                 return new Identity(name, <any>undefined, { urn })
             case "cpln:index/ipSet:IpSet":
@@ -242,6 +254,7 @@ pulumi.runtime.registerResourceModule("cpln", "index/domain", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/domainRoute", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/group", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/gvc", _module)
+pulumi.runtime.registerResourceModule("cpln", "index/helmRelease", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/identity", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/ipSet", _module)
 pulumi.runtime.registerResourceModule("cpln", "index/location", _module)
