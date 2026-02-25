@@ -15,6 +15,7 @@ from .domain import *
 from .domain_route import *
 from .get_cloud_account import *
 from .get_gvc import *
+from .get_helm_template import *
 from .get_image import *
 from .get_images import *
 from .get_location import *
@@ -24,6 +25,7 @@ from .get_secret import *
 from .get_workload import *
 from .group import *
 from .gvc import *
+from .helm_release import *
 from .identity import *
 from .ip_set import *
 from .location import *
@@ -122,6 +124,14 @@ _utilities.register(
   "fqn": "pulumiverse_cpln",
   "classes": {
    "cpln:index/gvc:Gvc": "Gvc"
+  }
+ },
+ {
+  "pkg": "cpln",
+  "mod": "index/helmRelease",
+  "fqn": "pulumiverse_cpln",
+  "classes": {
+   "cpln:index/helmRelease:HelmRelease": "HelmRelease"
   }
  },
  {

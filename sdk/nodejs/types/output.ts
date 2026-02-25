@@ -107,6 +107,10 @@ export interface DomainSpecPort {
      */
     protocol: string;
     /**
+     * Inline routes for this port. Can coexist with separate cpln.DomainRoute resources on the same domain and port.
+     */
+    routes?: outputs.DomainSpecPortRoute[];
+    /**
      * Used for TLS connections for this Domain. End users are responsible for certificate updates.
      */
     tls?: outputs.DomainSpecPortTls;
@@ -145,6 +149,59 @@ export interface DomainSpecPortCorsAllowOrigin {
      */
     exact?: string;
     regex?: string;
+}
+
+export interface DomainSpecPortRoute {
+    /**
+     * Modify the headers for all http requests for this route.
+     */
+    headers?: outputs.DomainSpecPortRouteHeaders;
+    /**
+     * This option allows forwarding traffic for different host headers to different workloads.
+     */
+    hostPrefix?: string;
+    /**
+     * A regex to match the host header.
+     */
+    hostRegex?: string;
+    /**
+     * For the linked workload, the port to route traffic to.
+     */
+    port?: number;
+    /**
+     * The path will match any unmatched path prefixes for the subdomain.
+     */
+    prefix?: string;
+    /**
+     * Used to match URI paths. Uses the google re2 regex syntax.
+     */
+    regex?: string;
+    /**
+     * A path prefix can be configured to be replaced when forwarding the request to the Workload.
+     */
+    replacePrefix?: string;
+    /**
+     * The replica number of a stateful workload to route to. If not provided, traffic will be routed to all replicas.
+     */
+    replica?: number;
+    /**
+     * The link of the workload to map the prefix to.
+     */
+    workloadLink: string;
+}
+
+export interface DomainSpecPortRouteHeaders {
+    /**
+     * Manipulates HTTP headers.
+     */
+    request?: outputs.DomainSpecPortRouteHeadersRequest;
+}
+
+export interface DomainSpecPortRouteHeadersRequest {
+    /**
+     * Sets or overrides headers to all http requests for this route.
+     */
+    set?: {[key: string]: string};
 }
 
 export interface DomainSpecPortTls {
@@ -349,6 +406,17 @@ export interface GetGvcOtelTracing {
 
 export interface GetGvcSidecar {
     envoy: string;
+}
+
+export interface GetHelmTemplatePostrender {
+    /**
+     * Arguments to the post-renderer.
+     */
+    args?: string[];
+    /**
+     * The path to an executable to be used for post rendering.
+     */
+    binaryPath: string;
 }
 
 export interface GetImageManifest {
@@ -1906,6 +1974,17 @@ export interface GvcOtelTracing {
 
 export interface GvcSidecar {
     envoy: string;
+}
+
+export interface HelmReleasePostrender {
+    /**
+     * Arguments to the post-renderer.
+     */
+    args?: string[];
+    /**
+     * The path to an executable to be used for post rendering.
+     */
+    binaryPath: string;
 }
 
 export interface IdentityAwsAccessPolicy {
