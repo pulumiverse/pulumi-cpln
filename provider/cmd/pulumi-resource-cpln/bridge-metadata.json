@@ -68,6 +68,23 @@
                                                     }
                                                 }
                                             },
+                                            "route": {
+                                                "maxItemsOne": false,
+                                                "elem": {
+                                                    "fields": {
+                                                        "headers": {
+                                                            "maxItemsOne": true,
+                                                            "elem": {
+                                                                "fields": {
+                                                                    "request": {
+                                                                        "maxItemsOne": true
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
                                             "tls": {
                                                 "maxItemsOne": true,
                                                 "elem": {
@@ -204,6 +221,21 @@
                     },
                     "sidecar": {
                         "maxItemsOne": true
+                    }
+                }
+            },
+            "cpln_helm_release": {
+                "current": "cpln:index/helmRelease:HelmRelease",
+                "fields": {
+                    "postrender": {
+                        "fields": {
+                            "args": {
+                                "maxItemsOne": false
+                            }
+                        }
+                    },
+                    "values": {
+                        "maxItemsOne": false
                     }
                 }
             },
@@ -1624,6 +1656,21 @@
                     },
                     "sidecar": {
                         "maxItemsOne": true
+                    }
+                }
+            },
+            "cpln_helm_template": {
+                "current": "cpln:index/getHelmTemplate:getHelmTemplate",
+                "fields": {
+                    "postrender": {
+                        "fields": {
+                            "args": {
+                                "maxItemsOne": false
+                            }
+                        }
+                    },
+                    "values": {
+                        "maxItemsOne": false
                     }
                 }
             },

@@ -223,6 +223,13 @@
                     "type": "string",
                     "description": "Allowed protocol. Valid values: \u003cspan pulumi-lang-nodejs=\"`http`\" pulumi-lang-dotnet=\"`Http`\" pulumi-lang-go=\"`http`\" pulumi-lang-python=\"`http`\" pulumi-lang-yaml=\"`http`\" pulumi-lang-java=\"`http`\"\u003e`http`\u003c/span\u003e, \u003cspan pulumi-lang-nodejs=\"`http2`\" pulumi-lang-dotnet=\"`Http2`\" pulumi-lang-go=\"`http2`\" pulumi-lang-python=\"`http2`\" pulumi-lang-yaml=\"`http2`\" pulumi-lang-java=\"`http2`\"\u003e`http2`\u003c/span\u003e, \u003cspan pulumi-lang-nodejs=\"`tcp`\" pulumi-lang-dotnet=\"`Tcp`\" pulumi-lang-go=\"`tcp`\" pulumi-lang-python=\"`tcp`\" pulumi-lang-yaml=\"`tcp`\" pulumi-lang-java=\"`tcp`\"\u003e`tcp`\u003c/span\u003e. Default: \u003cspan pulumi-lang-nodejs=\"`http2`\" pulumi-lang-dotnet=\"`Http2`\" pulumi-lang-go=\"`http2`\" pulumi-lang-python=\"`http2`\" pulumi-lang-yaml=\"`http2`\" pulumi-lang-java=\"`http2`\"\u003e`http2`\u003c/span\u003e.\n"
                 },
+                "routes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/DomainSpecPortRoute:DomainSpecPortRoute"
+                    },
+                    "description": "Inline routes for this port. Can coexist with separate\u003cspan pulumi-lang-nodejs=\" cpln.DomainRoute \" pulumi-lang-dotnet=\" cpln.DomainRoute \" pulumi-lang-go=\" DomainRoute \" pulumi-lang-python=\" DomainRoute \" pulumi-lang-yaml=\" cpln.DomainRoute \" pulumi-lang-java=\" cpln.DomainRoute \"\u003e cpln.DomainRoute \u003c/span\u003eresources on the same domain and port.\n"
+                },
                 "tls": {
                     "$ref": "#/types/cpln:index/DomainSpecPortTls:DomainSpecPortTls",
                     "description": "Used for TLS connections for this Domain. End users are responsible for certificate updates.\n"
@@ -295,6 +302,71 @@
                 },
                 "regex": {
                     "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/DomainSpecPortRoute:DomainSpecPortRoute": {
+            "properties": {
+                "headers": {
+                    "$ref": "#/types/cpln:index/DomainSpecPortRouteHeaders:DomainSpecPortRouteHeaders",
+                    "description": "Modify the headers for all http requests for this route.\n"
+                },
+                "hostPrefix": {
+                    "type": "string",
+                    "description": "This option allows forwarding traffic for different host headers to different workloads.\n"
+                },
+                "hostRegex": {
+                    "type": "string",
+                    "description": "A regex to match the host header.\n"
+                },
+                "port": {
+                    "type": "integer",
+                    "description": "For the linked workload, the port to route traffic to.\n"
+                },
+                "prefix": {
+                    "type": "string",
+                    "description": "The path will match any unmatched path prefixes for the subdomain.\n"
+                },
+                "regex": {
+                    "type": "string",
+                    "description": "Used to match URI paths. Uses the google re2 regex syntax.\n"
+                },
+                "replacePrefix": {
+                    "type": "string",
+                    "description": "A path prefix can be configured to be replaced when forwarding the request to the Workload.\n"
+                },
+                "replica": {
+                    "type": "integer",
+                    "description": "The replica number of a stateful workload to route to. If not provided, traffic will be routed to all replicas.\n"
+                },
+                "workloadLink": {
+                    "type": "string",
+                    "description": "The link of the workload to map the prefix to.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "workloadLink"
+            ]
+        },
+        "cpln:index/DomainSpecPortRouteHeaders:DomainSpecPortRouteHeaders": {
+            "properties": {
+                "request": {
+                    "$ref": "#/types/cpln:index/DomainSpecPortRouteHeadersRequest:DomainSpecPortRouteHeadersRequest",
+                    "description": "Manipulates HTTP headers.\n"
+                }
+            },
+            "type": "object"
+        },
+        "cpln:index/DomainSpecPortRouteHeadersRequest:DomainSpecPortRouteHeadersRequest": {
+            "properties": {
+                "set": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Sets or overrides headers to all http requests for this route.\n"
                 }
             },
             "type": "object"
@@ -744,6 +816,25 @@
             "type": "object",
             "required": [
                 "envoy"
+            ]
+        },
+        "cpln:index/HelmReleasePostrender:HelmReleasePostrender": {
+            "properties": {
+                "args": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Arguments to the post-renderer.\n"
+                },
+                "binaryPath": {
+                    "type": "string",
+                    "description": "The path to an executable to be used for post rendering.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "binaryPath"
             ]
         },
         "cpln:index/IdentityAwsAccessPolicy:IdentityAwsAccessPolicy": {
@@ -7387,6 +7478,25 @@
                 "envoy"
             ]
         },
+        "cpln:index/getHelmTemplatePostrender:getHelmTemplatePostrender": {
+            "properties": {
+                "args": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Arguments to the post-renderer.\n"
+                },
+                "binaryPath": {
+                    "type": "string",
+                    "description": "The path to an executable to be used for post rendering.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "binaryPath"
+            ]
+        },
         "cpln:index/getImageManifest:getImageManifest": {
             "properties": {
                 "configs": {
@@ -11486,6 +11596,389 @@
                 "type": "object"
             }
         },
+        "cpln:index/helmRelease:HelmRelease": {
+            "properties": {
+                "chart": {
+                    "type": "string",
+                    "description": "Path to the chart. This can be a local path to a chart directory or packaged chart, or a URL/path when used with --repo."
+                },
+                "dependencyUpdate": {
+                    "type": "boolean",
+                    "description": "Update dependencies if they are missing before installing the chart."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Add a custom description for the release."
+                },
+                "gvc": {
+                    "type": "string",
+                    "description": "The GVC (Global Virtual Cloud) to use for the helm deployment. Required only if the chart deploys GVC-scoped resources and the GVC is not defined within the chart manifests."
+                },
+                "insecureSkipTlsVerify": {
+                    "type": "boolean",
+                    "description": "Skip TLS certificate checks for the chart download."
+                },
+                "manifest": {
+                    "type": "string",
+                    "description": "The rendered manifest of the helm release."
+                },
+                "maxHistory": {
+                    "type": "integer",
+                    "description": "Maximum number of revisions saved per release. Use 0 for no limit. Default is 10. Only used on upgrade."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The release name for this helm deployment."
+                },
+                "postrender": {
+                    "$ref": "#/types/cpln:index/HelmReleasePostrender:HelmReleasePostrender",
+                    "description": "Post-renderer configuration. Specifies a binary to run after helm renders the manifests."
+                },
+                "renderSubchartNotes": {
+                    "type": "boolean",
+                    "description": "If set, render subchart notes along with the parent on install/upgrade."
+                },
+                "repository": {
+                    "type": "string",
+                    "description": "Chart repository URL where to locate the requested chart. Can be a Helm repository URL or an OCI registry URL."
+                },
+                "repositoryCaFile": {
+                    "type": "string",
+                    "description": "Verify certificates of HTTPS-enabled servers using this CA bundle."
+                },
+                "repositoryCertFile": {
+                    "type": "string",
+                    "description": "Identify HTTPS client using this SSL certificate file."
+                },
+                "repositoryKeyFile": {
+                    "type": "string",
+                    "description": "Identify HTTPS client using this SSL key file."
+                },
+                "repositoryPassword": {
+                    "type": "string",
+                    "description": "Chart repository password where to locate the requested chart.",
+                    "secret": true
+                },
+                "repositoryUsername": {
+                    "type": "string",
+                    "description": "Chart repository username where to locate the requested chart."
+                },
+                "resources": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Rendered manifests keyed by kind/gvc/name (e.g., workload/my-gvc/my-workload). GVC may be empty for GVC-level resources."
+                },
+                "revision": {
+                    "type": "integer",
+                    "description": "The current revision number of the helm release."
+                },
+                "set": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Set values on the command line. Map of key-value pairs. Equivalent to using --set flag."
+                },
+                "setFile": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Set values from files specified via the command line. Map of key to file path. Equivalent to using --set-file flag."
+                },
+                "setString": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Set STRING values on the command line. Map of key-value pairs. Equivalent to using --set-string flag."
+                },
+                "status": {
+                    "type": "string",
+                    "description": "The current status of the helm release."
+                },
+                "timeout": {
+                    "type": "integer",
+                    "description": "The amount of seconds to wait for workloads to be ready before timing out. Only used when wait is true. Default is 300 seconds."
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of values in raw YAML to pass to helm."
+                },
+                "verify": {
+                    "type": "boolean",
+                    "description": "Verify the package before using it."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "Specify a version constraint for the chart version to use. This can be a specific tag (e.g., 1.1.1) or a valid range (e.g., ^2.0.0). If not specified, the latest version is used."
+                },
+                "wait": {
+                    "type": "boolean",
+                    "description": "If set to true, will wait until all Workloads are in a ready state before marking the release as successful."
+                }
+            },
+            "required": [
+                "chart",
+                "dependencyUpdate",
+                "insecureSkipTlsVerify",
+                "manifest",
+                "maxHistory",
+                "name",
+                "renderSubchartNotes",
+                "resources",
+                "revision",
+                "status",
+                "timeout",
+                "verify",
+                "wait"
+            ],
+            "inputProperties": {
+                "chart": {
+                    "type": "string",
+                    "description": "Path to the chart. This can be a local path to a chart directory or packaged chart, or a URL/path when used with --repo."
+                },
+                "dependencyUpdate": {
+                    "type": "boolean",
+                    "description": "Update dependencies if they are missing before installing the chart."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Add a custom description for the release."
+                },
+                "gvc": {
+                    "type": "string",
+                    "description": "The GVC (Global Virtual Cloud) to use for the helm deployment. Required only if the chart deploys GVC-scoped resources and the GVC is not defined within the chart manifests."
+                },
+                "insecureSkipTlsVerify": {
+                    "type": "boolean",
+                    "description": "Skip TLS certificate checks for the chart download."
+                },
+                "maxHistory": {
+                    "type": "integer",
+                    "description": "Maximum number of revisions saved per release. Use 0 for no limit. Default is 10. Only used on upgrade."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The release name for this helm deployment."
+                },
+                "postrender": {
+                    "$ref": "#/types/cpln:index/HelmReleasePostrender:HelmReleasePostrender",
+                    "description": "Post-renderer configuration. Specifies a binary to run after helm renders the manifests."
+                },
+                "renderSubchartNotes": {
+                    "type": "boolean",
+                    "description": "If set, render subchart notes along with the parent on install/upgrade."
+                },
+                "repository": {
+                    "type": "string",
+                    "description": "Chart repository URL where to locate the requested chart. Can be a Helm repository URL or an OCI registry URL."
+                },
+                "repositoryCaFile": {
+                    "type": "string",
+                    "description": "Verify certificates of HTTPS-enabled servers using this CA bundle."
+                },
+                "repositoryCertFile": {
+                    "type": "string",
+                    "description": "Identify HTTPS client using this SSL certificate file."
+                },
+                "repositoryKeyFile": {
+                    "type": "string",
+                    "description": "Identify HTTPS client using this SSL key file."
+                },
+                "repositoryPassword": {
+                    "type": "string",
+                    "description": "Chart repository password where to locate the requested chart.",
+                    "secret": true
+                },
+                "repositoryUsername": {
+                    "type": "string",
+                    "description": "Chart repository username where to locate the requested chart."
+                },
+                "set": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Set values on the command line. Map of key-value pairs. Equivalent to using --set flag."
+                },
+                "setFile": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Set values from files specified via the command line. Map of key to file path. Equivalent to using --set-file flag."
+                },
+                "setString": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Set STRING values on the command line. Map of key-value pairs. Equivalent to using --set-string flag."
+                },
+                "timeout": {
+                    "type": "integer",
+                    "description": "The amount of seconds to wait for workloads to be ready before timing out. Only used when wait is true. Default is 300 seconds."
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "List of values in raw YAML to pass to helm."
+                },
+                "verify": {
+                    "type": "boolean",
+                    "description": "Verify the package before using it."
+                },
+                "version": {
+                    "type": "string",
+                    "description": "Specify a version constraint for the chart version to use. This can be a specific tag (e.g., 1.1.1) or a valid range (e.g., ^2.0.0). If not specified, the latest version is used."
+                },
+                "wait": {
+                    "type": "boolean",
+                    "description": "If set to true, will wait until all Workloads are in a ready state before marking the release as successful."
+                }
+            },
+            "requiredInputs": [
+                "chart"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering HelmRelease resources.\n",
+                "properties": {
+                    "chart": {
+                        "type": "string",
+                        "description": "Path to the chart. This can be a local path to a chart directory or packaged chart, or a URL/path when used with --repo."
+                    },
+                    "dependencyUpdate": {
+                        "type": "boolean",
+                        "description": "Update dependencies if they are missing before installing the chart."
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Add a custom description for the release."
+                    },
+                    "gvc": {
+                        "type": "string",
+                        "description": "The GVC (Global Virtual Cloud) to use for the helm deployment. Required only if the chart deploys GVC-scoped resources and the GVC is not defined within the chart manifests."
+                    },
+                    "insecureSkipTlsVerify": {
+                        "type": "boolean",
+                        "description": "Skip TLS certificate checks for the chart download."
+                    },
+                    "manifest": {
+                        "type": "string",
+                        "description": "The rendered manifest of the helm release."
+                    },
+                    "maxHistory": {
+                        "type": "integer",
+                        "description": "Maximum number of revisions saved per release. Use 0 for no limit. Default is 10. Only used on upgrade."
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The release name for this helm deployment."
+                    },
+                    "postrender": {
+                        "$ref": "#/types/cpln:index/HelmReleasePostrender:HelmReleasePostrender",
+                        "description": "Post-renderer configuration. Specifies a binary to run after helm renders the manifests."
+                    },
+                    "renderSubchartNotes": {
+                        "type": "boolean",
+                        "description": "If set, render subchart notes along with the parent on install/upgrade."
+                    },
+                    "repository": {
+                        "type": "string",
+                        "description": "Chart repository URL where to locate the requested chart. Can be a Helm repository URL or an OCI registry URL."
+                    },
+                    "repositoryCaFile": {
+                        "type": "string",
+                        "description": "Verify certificates of HTTPS-enabled servers using this CA bundle."
+                    },
+                    "repositoryCertFile": {
+                        "type": "string",
+                        "description": "Identify HTTPS client using this SSL certificate file."
+                    },
+                    "repositoryKeyFile": {
+                        "type": "string",
+                        "description": "Identify HTTPS client using this SSL key file."
+                    },
+                    "repositoryPassword": {
+                        "type": "string",
+                        "description": "Chart repository password where to locate the requested chart.",
+                        "secret": true
+                    },
+                    "repositoryUsername": {
+                        "type": "string",
+                        "description": "Chart repository username where to locate the requested chart."
+                    },
+                    "resources": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Rendered manifests keyed by kind/gvc/name (e.g., workload/my-gvc/my-workload). GVC may be empty for GVC-level resources."
+                    },
+                    "revision": {
+                        "type": "integer",
+                        "description": "The current revision number of the helm release."
+                    },
+                    "set": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Set values on the command line. Map of key-value pairs. Equivalent to using --set flag."
+                    },
+                    "setFile": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Set values from files specified via the command line. Map of key to file path. Equivalent to using --set-file flag."
+                    },
+                    "setString": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Set STRING values on the command line. Map of key-value pairs. Equivalent to using --set-string flag."
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "The current status of the helm release."
+                    },
+                    "timeout": {
+                        "type": "integer",
+                        "description": "The amount of seconds to wait for workloads to be ready before timing out. Only used when wait is true. Default is 300 seconds."
+                    },
+                    "values": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "List of values in raw YAML to pass to helm."
+                    },
+                    "verify": {
+                        "type": "boolean",
+                        "description": "Verify the package before using it."
+                    },
+                    "version": {
+                        "type": "string",
+                        "description": "Specify a version constraint for the chart version to use. This can be a specific tag (e.g., 1.1.1) or a valid range (e.g., ^2.0.0). If not specified, the latest version is used."
+                    },
+                    "wait": {
+                        "type": "boolean",
+                        "description": "If set to true, will wait until all Workloads are in a ready state before marking the release as successful."
+                    }
+                },
+                "type": "object"
+            }
+        },
         "cpln:index/identity:Identity": {
             "properties": {
                 "awsAccessPolicy": {
@@ -14087,6 +14580,183 @@
                     "name",
                     "selfLink",
                     "tags"
+                ],
+                "type": "object"
+            }
+        },
+        "cpln:index/getHelmTemplate:getHelmTemplate": {
+            "description": "Renders Helm chart templates using the `cpln helm template` command without installing. Useful for previewing rendered manifests or feeding them into other resources.\n\nFor more information about cpln helm, see the [Control Plane Helm Guide](https://docs.controlplane.com/guides/cpln-helm).\n\n\u003e **Important** The \u003cspan pulumi-lang-nodejs=\"`cpln`\" pulumi-lang-dotnet=\"`Cpln`\" pulumi-lang-go=\"`cpln`\" pulumi-lang-python=\"`cpln`\" pulumi-lang-yaml=\"`cpln`\" pulumi-lang-java=\"`cpln`\"\u003e`cpln`\u003c/span\u003e CLI and \u003cspan pulumi-lang-nodejs=\"`helm`\" pulumi-lang-dotnet=\"`Helm`\" pulumi-lang-go=\"`helm`\" pulumi-lang-python=\"`helm`\" pulumi-lang-yaml=\"`helm`\" pulumi-lang-java=\"`helm`\"\u003e`helm`\u003c/span\u003e CLI must both be installed and available in the PATH for this data source to function.\n\n## Declaration\n\n### Required\n\n- **name** (String) The release name to use for rendering the templates.\n- **chart** (String) Path to the chart. This can be a local path to a chart directory or packaged chart, or a chart name when used with \u003cspan pulumi-lang-nodejs=\"`repository`\" pulumi-lang-dotnet=\"`Repository`\" pulumi-lang-go=\"`repository`\" pulumi-lang-python=\"`repository`\" pulumi-lang-yaml=\"`repository`\" pulumi-lang-java=\"`repository`\"\u003e`repository`\u003c/span\u003e.\n\n### Optional\n\n- **gvc** (String) The GVC (Global Virtual Cloud) context for rendering the helm chart templates. Required only if the chart contains GVC-scoped resources and the GVC is not defined within the chart manifests.\n- **repository** (String) Chart repository URL where to locate the requested chart. Can be a Helm repository URL or an OCI registry URL.\n- **version** (String) Specify a version constraint for the chart version to use. This can be a specific tag (e.g., 1.1.1) or a valid range (e.g., ^2.0.0). If not specified, the latest version is used.\n- **values** (List of String) List of values in raw YAML to pass to the helm chart. Each entry is equivalent to a separate `--values/-f` flag. Values are merged in order, with later entries taking precedence.\n- **set** (Map of String) Set values on the command line. Map of key-value pairs. Equivalent to using `--set` flag.\n- **set_string** (Map of String) Set STRING values on the command line. Map of key-value pairs. Equivalent to using `--set-string` flag.\n- **set_file** (Map of String) Set values from files specified via the command line. Map of key to file path. Equivalent to using `--set-file` flag.\n- **dependency_update** (Boolean) Update dependencies if they are missing before rendering the chart.\n- **description** (String) Add a custom description.\n- **verify** (Boolean) Verify the package before using it.\n- **repository_username** (String) Chart repository username where to locate the requested chart.\n- **repository_password** (String, Sensitive) Chart repository password where to locate the requested chart.\n- **repository_ca_file** (String) Verify certificates of HTTPS-enabled servers using this CA bundle.\n- **repository_cert_file** (String) Identify HTTPS client using this SSL certificate file.\n- **repository_key_file** (String) Identify HTTPS client using this SSL key file.\n- **insecure_skip_tls_verify** (Boolean) Skip TLS certificate checks for the chart download.\n- **render_subchart_notes** (Boolean) If set, render subchart notes along with the parent.\n- **postrender** (Block) Post-renderer configuration:\n  - **binary_path** (String, Required) The path to an executable to be used for post rendering.\n  - **args** (List of String, Optional) Arguments to the post-renderer.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **id** (String) The unique identifier for this data source (same as name).\n- **manifest** (String) The rendered manifest output from helm template.\n\n## Example Usage\n\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking getHelmTemplate.\n",
+                "properties": {
+                    "chart": {
+                        "type": "string"
+                    },
+                    "dependencyUpdate": {
+                        "type": "boolean"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "gvc": {
+                        "type": "string"
+                    },
+                    "insecureSkipTlsVerify": {
+                        "type": "boolean"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "postrender": {
+                        "$ref": "#/types/cpln:index/getHelmTemplatePostrender:getHelmTemplatePostrender"
+                    },
+                    "renderSubchartNotes": {
+                        "type": "boolean"
+                    },
+                    "repository": {
+                        "type": "string"
+                    },
+                    "repositoryCaFile": {
+                        "type": "string"
+                    },
+                    "repositoryCertFile": {
+                        "type": "string"
+                    },
+                    "repositoryKeyFile": {
+                        "type": "string"
+                    },
+                    "repositoryPassword": {
+                        "type": "string",
+                        "secret": true
+                    },
+                    "repositoryUsername": {
+                        "type": "string"
+                    },
+                    "set": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "setFile": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "setString": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "values": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "verify": {
+                        "type": "boolean"
+                    },
+                    "version": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "chart",
+                    "name"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getHelmTemplate.\n",
+                "properties": {
+                    "chart": {
+                        "type": "string"
+                    },
+                    "dependencyUpdate": {
+                        "type": "boolean"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "gvc": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "insecureSkipTlsVerify": {
+                        "type": "boolean"
+                    },
+                    "manifest": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "postrender": {
+                        "$ref": "#/types/cpln:index/getHelmTemplatePostrender:getHelmTemplatePostrender"
+                    },
+                    "renderSubchartNotes": {
+                        "type": "boolean"
+                    },
+                    "repository": {
+                        "type": "string"
+                    },
+                    "repositoryCaFile": {
+                        "type": "string"
+                    },
+                    "repositoryCertFile": {
+                        "type": "string"
+                    },
+                    "repositoryKeyFile": {
+                        "type": "string"
+                    },
+                    "repositoryPassword": {
+                        "secret": true,
+                        "type": "string"
+                    },
+                    "repositoryUsername": {
+                        "type": "string"
+                    },
+                    "set": {
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "type": "object"
+                    },
+                    "setFile": {
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "type": "object"
+                    },
+                    "setString": {
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "type": "object"
+                    },
+                    "values": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    "verify": {
+                        "type": "boolean"
+                    },
+                    "version": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "chart",
+                    "id",
+                    "manifest",
+                    "name"
                 ],
                 "type": "object"
             }
