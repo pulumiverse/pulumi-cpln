@@ -164,6 +164,23 @@
             },
             "type": "object"
         },
+        "cpln:index/DomainRouteMirror:DomainRouteMirror": {
+            "properties": {
+                "percent": {
+                    "type": "number",
+                    "description": "The percentage of traffic to mirror to the specified workload.\n"
+                },
+                "workloadLink": {
+                    "type": "string",
+                    "description": "The workload to mirror traffic to.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "percent",
+                "workloadLink"
+            ]
+        },
         "cpln:index/DomainSpec:DomainSpec": {
             "properties": {
                 "acceptAllHosts": {
@@ -320,6 +337,13 @@
                     "type": "string",
                     "description": "A regex to match the host header.\n"
                 },
+                "mirrors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/DomainSpecPortRouteMirror:DomainSpecPortRouteMirror"
+                    },
+                    "description": "Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).\n"
+                },
                 "port": {
                     "type": "integer",
                     "description": "For the linked workload, the port to route traffic to.\n"
@@ -370,6 +394,23 @@
                 }
             },
             "type": "object"
+        },
+        "cpln:index/DomainSpecPortRouteMirror:DomainSpecPortRouteMirror": {
+            "properties": {
+                "percent": {
+                    "type": "number",
+                    "description": "The percentage of traffic to mirror to the specified workload.\n"
+                },
+                "workloadLink": {
+                    "type": "string",
+                    "description": "The workload to mirror traffic to.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "percent",
+                "workloadLink"
+            ]
         },
         "cpln:index/DomainSpecPortTls:DomainSpecPortTls": {
             "properties": {
@@ -5552,12 +5593,56 @@
                     "type": "integer",
                     "description": "The guaranteed free space on the volume as a percentage of the volume's total size. Control Plane will try to maintain at least that many percent free by scaling up the total size. Minimum percentage: \u003cspan pulumi-lang-nodejs=\"`1`\" pulumi-lang-dotnet=\"`1`\" pulumi-lang-go=\"`1`\" pulumi-lang-python=\"`1`\" pulumi-lang-yaml=\"`1`\" pulumi-lang-java=\"`1`\"\u003e`1`\u003c/span\u003e. Maximum Percentage: \u003cspan pulumi-lang-nodejs=\"`100`\" pulumi-lang-dotnet=\"`100`\" pulumi-lang-go=\"`100`\" pulumi-lang-python=\"`100`\" pulumi-lang-yaml=\"`100`\" pulumi-lang-java=\"`100`\"\u003e`100`\u003c/span\u003e.\n"
                 },
+                "predictive": {
+                    "$ref": "#/types/cpln:index/VolumeSetAutoscalingPredictive:VolumeSetAutoscalingPredictive",
+                    "description": "Predictive scaling configuration. When enabled, proactively expands volumes based on historical growth rate projections.\n"
+                },
                 "scalingFactor": {
                     "type": "number",
                     "description": "When scaling is necessary, then \u003cspan pulumi-lang-nodejs=\"`newCapacity \" pulumi-lang-dotnet=\"`NewCapacity \" pulumi-lang-go=\"`newCapacity \" pulumi-lang-python=\"`new_capacity \" pulumi-lang-yaml=\"`newCapacity \" pulumi-lang-java=\"`newCapacity \"\u003e`new_capacity \u003c/span\u003e=\u003cspan pulumi-lang-nodejs=\" currentCapacity \" pulumi-lang-dotnet=\" CurrentCapacity \" pulumi-lang-go=\" currentCapacity \" pulumi-lang-python=\" current_capacity \" pulumi-lang-yaml=\" currentCapacity \" pulumi-lang-java=\" currentCapacity \"\u003e current_capacity \u003c/span\u003e* storageScalingFactor`. Minimum value: `1.1`.\n"
                 }
             },
             "type": "object"
+        },
+        "cpln:index/VolumeSetAutoscalingPredictive:VolumeSetAutoscalingPredictive": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable predictive scaling based on historical growth rates. Default: \u003cspan pulumi-lang-nodejs=\"`false`\" pulumi-lang-dotnet=\"`False`\" pulumi-lang-go=\"`false`\" pulumi-lang-python=\"`false`\" pulumi-lang-yaml=\"`false`\" pulumi-lang-java=\"`false`\"\u003e`false`\u003c/span\u003e.\n"
+                },
+                "lookbackHours": {
+                    "type": "number",
+                    "description": "Hours of historical data to analyze. Default: \u003cspan pulumi-lang-nodejs=\"`24`\" pulumi-lang-dotnet=\"`24`\" pulumi-lang-go=\"`24`\" pulumi-lang-python=\"`24`\" pulumi-lang-yaml=\"`24`\" pulumi-lang-java=\"`24`\"\u003e`24`\u003c/span\u003e. Max: \u003cspan pulumi-lang-nodejs=\"`168`\" pulumi-lang-dotnet=\"`168`\" pulumi-lang-go=\"`168`\" pulumi-lang-python=\"`168`\" pulumi-lang-yaml=\"`168`\" pulumi-lang-java=\"`168`\"\u003e`168`\u003c/span\u003e (1 week).\n"
+                },
+                "minDataPoints": {
+                    "type": "integer",
+                    "description": "Minimum data points required for reliable growth rate calculation. Default: \u003cspan pulumi-lang-nodejs=\"`10`\" pulumi-lang-dotnet=\"`10`\" pulumi-lang-go=\"`10`\" pulumi-lang-python=\"`10`\" pulumi-lang-yaml=\"`10`\" pulumi-lang-java=\"`10`\"\u003e`10`\u003c/span\u003e.\n"
+                },
+                "minGrowthRateGbPerHour": {
+                    "type": "number",
+                    "description": "Minimum growth rate (GB/hour) to trigger predictive expansion. Default: `0.01`.\n"
+                },
+                "projectionHours": {
+                    "type": "number",
+                    "description": "Hours into the future to project storage needs. Default: \u003cspan pulumi-lang-nodejs=\"`6`\" pulumi-lang-dotnet=\"`6`\" pulumi-lang-go=\"`6`\" pulumi-lang-python=\"`6`\" pulumi-lang-yaml=\"`6`\" pulumi-lang-java=\"`6`\"\u003e`6`\u003c/span\u003e.\n"
+                },
+                "scalingFactor": {
+                    "type": "number",
+                    "description": "Scaling factor for predictive expansion. If not set, uses the parent autoscaling scaling_factor. Use a lower value (e.g., `1.2`) for gentler proactive scaling.\n"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "enabled",
+                        "lookbackHours",
+                        "minDataPoints",
+                        "minGrowthRateGbPerHour",
+                        "projectionHours"
+                    ]
+                }
+            }
         },
         "cpln:index/VolumeSetCustomEncryption:VolumeSetCustomEncryption": {
             "properties": {
@@ -6348,23 +6433,92 @@
                 },
                 "schedule": {
                     "type": "string",
-                    "description": "A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.\n"
+                    "description": "A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute. Use this for a single schedule, or use\u003cspan pulumi-lang-nodejs=\" scheduleEntry \" pulumi-lang-dotnet=\" ScheduleEntry \" pulumi-lang-go=\" scheduleEntry \" pulumi-lang-python=\" schedule_entry \" pulumi-lang-yaml=\" scheduleEntry \" pulumi-lang-java=\" scheduleEntry \"\u003e schedule_entry \u003c/span\u003efor multiple schedules.\n"
+                },
+                "scheduleEntries": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadJobScheduleEntry:WorkloadJobScheduleEntry"
+                    },
+                    "description": "Multiple schedules with individual container overrides. Use this for workloads that need to run on different schedules with different configurations.\n"
                 }
             },
             "type": "object",
-            "required": [
-                "schedule"
-            ],
             "language": {
                 "nodejs": {
                     "requiredOutputs": [
                         "concurrencyPolicy",
                         "historyLimit",
-                        "restartPolicy",
-                        "schedule"
+                        "restartPolicy"
                     ]
                 }
             }
+        },
+        "cpln:index/WorkloadJobScheduleEntry:WorkloadJobScheduleEntry": {
+            "properties": {
+                "containerOverrides": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/WorkloadJobScheduleEntryContainerOverride:WorkloadJobScheduleEntryContainerOverride"
+                    },
+                    "description": "Container overrides specific to this schedule execution.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Unique name for this schedule.\n"
+                },
+                "schedule": {
+                    "type": "string",
+                    "description": "A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) for when this schedule should execute.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "name",
+                "schedule"
+            ]
+        },
+        "cpln:index/WorkloadJobScheduleEntryContainerOverride:WorkloadJobScheduleEntryContainerOverride": {
+            "properties": {
+                "args": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Command line arguments for this execution.\n"
+                },
+                "command": {
+                    "type": "string",
+                    "description": "Optionally override the entrypoint.\n"
+                },
+                "cpu": {
+                    "type": "string",
+                    "description": "CPU allocation override.\n"
+                },
+                "env": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables specific to this execution.\n"
+                },
+                "image": {
+                    "type": "string",
+                    "description": "Image override.\n"
+                },
+                "memory": {
+                    "type": "string",
+                    "description": "Memory allocation override.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the container to override.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "name"
+            ]
         },
         "cpln:index/WorkloadLoadBalancer:WorkloadLoadBalancer": {
             "properties": {
@@ -9164,6 +9318,13 @@
                 "schedule": {
                     "type": "string",
                     "description": "A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.\n"
+                },
+                "scheduleEntries": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/getWorkloadJobScheduleEntry:getWorkloadJobScheduleEntry"
+                    },
+                    "description": "Multiple schedules with individual container overrides.\n"
                 }
             },
             "type": "object",
@@ -9173,6 +9334,88 @@
                 "historyLimit",
                 "restartPolicy",
                 "schedule"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "cpln:index/getWorkloadJobScheduleEntry:getWorkloadJobScheduleEntry": {
+            "properties": {
+                "containerOverrides": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/getWorkloadJobScheduleEntryContainerOverride:getWorkloadJobScheduleEntryContainerOverride"
+                    },
+                    "description": "Container overrides specific to this schedule execution.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Unique name for this schedule.\n"
+                },
+                "schedule": {
+                    "type": "string",
+                    "description": "A standard cron schedule expression for when this schedule should execute.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "name",
+                "schedule"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "cpln:index/getWorkloadJobScheduleEntryContainerOverride:getWorkloadJobScheduleEntryContainerOverride": {
+            "properties": {
+                "args": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Command line arguments for this execution.\n"
+                },
+                "command": {
+                    "type": "string",
+                    "description": "Optionally override the entrypoint.\n"
+                },
+                "cpu": {
+                    "type": "string",
+                    "description": "CPU allocation override.\n"
+                },
+                "env": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Environment variables specific to this execution.\n"
+                },
+                "image": {
+                    "type": "string",
+                    "description": "Image override.\n"
+                },
+                "memory": {
+                    "type": "string",
+                    "description": "Memory allocation override.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the container to override.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "args",
+                "command",
+                "cpu",
+                "env",
+                "image",
+                "memory",
+                "name"
             ],
             "language": {
                 "nodejs": {
@@ -11070,6 +11313,13 @@
                     "type": "string",
                     "description": "A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details."
                 },
+                "mirrors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/DomainRouteMirror:DomainRouteMirror"
+                    },
+                    "description": "Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s)."
+                },
                 "port": {
                     "type": "integer",
                     "description": "For the linked workload, the port to route traffic to."
@@ -11120,6 +11370,13 @@
                 "hostRegex": {
                     "type": "string",
                     "description": "A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details."
+                },
+                "mirrors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/DomainRouteMirror:DomainRouteMirror"
+                    },
+                    "description": "Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s)."
                 },
                 "port": {
                     "type": "integer",
@@ -11172,6 +11429,13 @@
                     "hostRegex": {
                         "type": "string",
                         "description": "A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details."
+                    },
+                    "mirrors": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/DomainRouteMirror:DomainRouteMirror"
+                        },
+                        "description": "Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s)."
                     },
                     "port": {
                         "type": "integer",
