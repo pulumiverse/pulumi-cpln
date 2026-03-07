@@ -34,6 +34,10 @@ namespace Pulumiverse.Cpln.Outputs
         /// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
         /// </summary>
         public readonly string Schedule;
+        /// <summary>
+        /// Multiple schedules with individual container overrides.
+        /// </summary>
+        public readonly ImmutableArray<Outputs.GetWorkloadJobScheduleEntryResult> ScheduleEntries;
 
         [OutputConstructor]
         private GetWorkloadJobResult(
@@ -45,13 +49,16 @@ namespace Pulumiverse.Cpln.Outputs
 
             string restartPolicy,
 
-            string schedule)
+            string schedule,
+
+            ImmutableArray<Outputs.GetWorkloadJobScheduleEntryResult> scheduleEntries)
         {
             ActiveDeadlineSeconds = activeDeadlineSeconds;
             ConcurrencyPolicy = concurrencyPolicy;
             HistoryLimit = historyLimit;
             RestartPolicy = restartPolicy;
             Schedule = schedule;
+            ScheduleEntries = scheduleEntries;
         }
     }
 }

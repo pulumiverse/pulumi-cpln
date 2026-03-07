@@ -44,6 +44,12 @@ namespace Pulumiverse.Cpln
         public Output<string?> HostRegex { get; private set; } = null!;
 
         /// <summary>
+        /// Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+        /// </summary>
+        [Output("mirrors")]
+        public Output<ImmutableArray<Outputs.DomainRouteMirror>> Mirrors { get; private set; } = null!;
+
+        /// <summary>
         /// For the linked workload, the port to route traffic to.
         /// </summary>
         [Output("port")]
@@ -156,6 +162,18 @@ namespace Pulumiverse.Cpln
         [Input("hostRegex")]
         public Input<string>? HostRegex { get; set; }
 
+        [Input("mirrors")]
+        private InputList<Inputs.DomainRouteMirrorArgs>? _mirrors;
+
+        /// <summary>
+        /// Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+        /// </summary>
+        public InputList<Inputs.DomainRouteMirrorArgs> Mirrors
+        {
+            get => _mirrors ?? (_mirrors = new InputList<Inputs.DomainRouteMirrorArgs>());
+            set => _mirrors = value;
+        }
+
         /// <summary>
         /// For the linked workload, the port to route traffic to.
         /// </summary>
@@ -229,6 +247,18 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Input("hostRegex")]
         public Input<string>? HostRegex { get; set; }
+
+        [Input("mirrors")]
+        private InputList<Inputs.DomainRouteMirrorGetArgs>? _mirrors;
+
+        /// <summary>
+        /// Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+        /// </summary>
+        public InputList<Inputs.DomainRouteMirrorGetArgs> Mirrors
+        {
+            get => _mirrors ?? (_mirrors = new InputList<Inputs.DomainRouteMirrorGetArgs>());
+            set => _mirrors = value;
+        }
 
         /// <summary>
         /// For the linked workload, the port to route traffic to.
