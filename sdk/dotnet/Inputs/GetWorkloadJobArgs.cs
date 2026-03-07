@@ -43,6 +43,18 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("schedule", required: true)]
         public Input<string> Schedule { get; set; } = null!;
 
+        [Input("scheduleEntries")]
+        private InputList<Inputs.GetWorkloadJobScheduleEntryInputArgs>? _scheduleEntries;
+
+        /// <summary>
+        /// Multiple schedules with individual container overrides.
+        /// </summary>
+        public InputList<Inputs.GetWorkloadJobScheduleEntryInputArgs> ScheduleEntries
+        {
+            get => _scheduleEntries ?? (_scheduleEntries = new InputList<Inputs.GetWorkloadJobScheduleEntryInputArgs>());
+            set => _scheduleEntries = value;
+        }
+
         public GetWorkloadJobInputArgs()
         {
         }

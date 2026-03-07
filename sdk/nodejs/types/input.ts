@@ -62,6 +62,17 @@ export interface DomainRouteHeadersRequest {
     set?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }
 
+export interface DomainRouteMirror {
+    /**
+     * The percentage of traffic to mirror to the specified workload.
+     */
+    percent: pulumi.Input<number>;
+    /**
+     * The workload to mirror traffic to.
+     */
+    workloadLink: pulumi.Input<string>;
+}
+
 export interface DomainSpec {
     /**
      * Allows domain to accept wildcards. The associated GVC must have dedicated load balancing enabled.
@@ -165,6 +176,10 @@ export interface DomainSpecPortRoute {
      */
     hostRegex?: pulumi.Input<string>;
     /**
+     * Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+     */
+    mirrors?: pulumi.Input<pulumi.Input<inputs.DomainSpecPortRouteMirror>[]>;
+    /**
      * For the linked workload, the port to route traffic to.
      */
     port?: pulumi.Input<number>;
@@ -202,6 +217,17 @@ export interface DomainSpecPortRouteHeadersRequest {
      * Sets or overrides headers to all http requests for this route.
      */
     set?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+}
+
+export interface DomainSpecPortRouteMirror {
+    /**
+     * The percentage of traffic to mirror to the specified workload.
+     */
+    percent: pulumi.Input<number>;
+    /**
+     * The workload to mirror traffic to.
+     */
+    workloadLink: pulumi.Input<string>;
 }
 
 export interface DomainSpecPortTls {
@@ -1651,6 +1677,10 @@ export interface GetWorkloadJob {
      * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
      */
     schedule?: string;
+    /**
+     * Multiple schedules with individual container overrides.
+     */
+    scheduleEntries?: inputs.GetWorkloadJobScheduleEntry[];
 }
 
 export interface GetWorkloadJobArgs {
@@ -1674,6 +1704,102 @@ export interface GetWorkloadJobArgs {
      * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
      */
     schedule?: pulumi.Input<string>;
+    /**
+     * Multiple schedules with individual container overrides.
+     */
+    scheduleEntries?: pulumi.Input<pulumi.Input<inputs.GetWorkloadJobScheduleEntryArgs>[]>;
+}
+
+export interface GetWorkloadJobScheduleEntry {
+    /**
+     * Container overrides specific to this schedule execution.
+     */
+    containerOverrides?: inputs.GetWorkloadJobScheduleEntryContainerOverride[];
+    /**
+     * Unique name for this schedule.
+     */
+    name?: string;
+    /**
+     * A standard cron schedule expression for when this schedule should execute.
+     */
+    schedule?: string;
+}
+
+export interface GetWorkloadJobScheduleEntryArgs {
+    /**
+     * Container overrides specific to this schedule execution.
+     */
+    containerOverrides?: pulumi.Input<pulumi.Input<inputs.GetWorkloadJobScheduleEntryContainerOverrideArgs>[]>;
+    /**
+     * Unique name for this schedule.
+     */
+    name?: pulumi.Input<string>;
+    /**
+     * A standard cron schedule expression for when this schedule should execute.
+     */
+    schedule?: pulumi.Input<string>;
+}
+
+export interface GetWorkloadJobScheduleEntryContainerOverride {
+    /**
+     * Command line arguments for this execution.
+     */
+    args?: string[];
+    /**
+     * Optionally override the entrypoint.
+     */
+    command?: string;
+    /**
+     * CPU allocation override.
+     */
+    cpu?: string;
+    /**
+     * Environment variables specific to this execution.
+     */
+    env?: {[key: string]: string};
+    /**
+     * Image override.
+     */
+    image?: string;
+    /**
+     * Memory allocation override.
+     */
+    memory?: string;
+    /**
+     * The name of the container to override.
+     */
+    name?: string;
+}
+
+export interface GetWorkloadJobScheduleEntryContainerOverrideArgs {
+    /**
+     * Command line arguments for this execution.
+     */
+    args?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Optionally override the entrypoint.
+     */
+    command?: pulumi.Input<string>;
+    /**
+     * CPU allocation override.
+     */
+    cpu?: pulumi.Input<string>;
+    /**
+     * Environment variables specific to this execution.
+     */
+    env?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Image override.
+     */
+    image?: pulumi.Input<string>;
+    /**
+     * Memory allocation override.
+     */
+    memory?: pulumi.Input<string>;
+    /**
+     * The name of the container to override.
+     */
+    name?: pulumi.Input<string>;
 }
 
 export interface GetWorkloadLoadBalancer {
@@ -5246,7 +5372,38 @@ export interface VolumeSetAutoscaling {
      */
     minFreePercentage?: pulumi.Input<number>;
     /**
+     * Predictive scaling configuration. When enabled, proactively expands volumes based on historical growth rate projections.
+     */
+    predictive?: pulumi.Input<inputs.VolumeSetAutoscalingPredictive>;
+    /**
      * When scaling is necessary, then `newCapacity = currentCapacity * storageScalingFactor`. Minimum value: `1.1`.
+     */
+    scalingFactor?: pulumi.Input<number>;
+}
+
+export interface VolumeSetAutoscalingPredictive {
+    /**
+     * Enable predictive scaling based on historical growth rates. Default: `false`.
+     */
+    enabled?: pulumi.Input<boolean>;
+    /**
+     * Hours of historical data to analyze. Default: `24`. Max: `168` (1 week).
+     */
+    lookbackHours?: pulumi.Input<number>;
+    /**
+     * Minimum data points required for reliable growth rate calculation. Default: `10`.
+     */
+    minDataPoints?: pulumi.Input<number>;
+    /**
+     * Minimum growth rate (GB/hour) to trigger predictive expansion. Default: `0.01`.
+     */
+    minGrowthRateGbPerHour?: pulumi.Input<number>;
+    /**
+     * Hours into the future to project storage needs. Default: `6`.
+     */
+    projectionHours?: pulumi.Input<number>;
+    /**
+     * Scaling factor for predictive expansion. If not set, uses the parent autoscaling scaling_factor. Use a lower value (e.g., `1.2`) for gentler proactive scaling.
      */
     scalingFactor?: pulumi.Input<number>;
 }
@@ -5650,9 +5807,59 @@ export interface WorkloadJob {
      */
     restartPolicy?: pulumi.Input<string>;
     /**
-     * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
+     * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute. Use this for a single schedule, or use scheduleEntry for multiple schedules.
+     */
+    schedule?: pulumi.Input<string>;
+    /**
+     * Multiple schedules with individual container overrides. Use this for workloads that need to run on different schedules with different configurations.
+     */
+    scheduleEntries?: pulumi.Input<pulumi.Input<inputs.WorkloadJobScheduleEntry>[]>;
+}
+
+export interface WorkloadJobScheduleEntry {
+    /**
+     * Container overrides specific to this schedule execution.
+     */
+    containerOverrides?: pulumi.Input<pulumi.Input<inputs.WorkloadJobScheduleEntryContainerOverride>[]>;
+    /**
+     * Unique name for this schedule.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) for when this schedule should execute.
      */
     schedule: pulumi.Input<string>;
+}
+
+export interface WorkloadJobScheduleEntryContainerOverride {
+    /**
+     * Command line arguments for this execution.
+     */
+    args?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Optionally override the entrypoint.
+     */
+    command?: pulumi.Input<string>;
+    /**
+     * CPU allocation override.
+     */
+    cpu?: pulumi.Input<string>;
+    /**
+     * Environment variables specific to this execution.
+     */
+    env?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Image override.
+     */
+    image?: pulumi.Input<string>;
+    /**
+     * Memory allocation override.
+     */
+    memory?: pulumi.Input<string>;
+    /**
+     * The name of the container to override.
+     */
+    name: pulumi.Input<string>;
 }
 
 export interface WorkloadLoadBalancer {

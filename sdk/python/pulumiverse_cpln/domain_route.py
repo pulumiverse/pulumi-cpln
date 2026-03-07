@@ -27,6 +27,7 @@ class DomainRouteArgs:
                  headers: Optional[pulumi.Input['DomainRouteHeadersArgs']] = None,
                  host_prefix: Optional[pulumi.Input[_builtins.str]] = None,
                  host_regex: Optional[pulumi.Input[_builtins.str]] = None,
+                 mirrors: Optional[pulumi.Input[Sequence[pulumi.Input['DomainRouteMirrorArgs']]]] = None,
                  port: Optional[pulumi.Input[_builtins.int]] = None,
                  prefix: Optional[pulumi.Input[_builtins.str]] = None,
                  regex: Optional[pulumi.Input[_builtins.str]] = None,
@@ -40,6 +41,7 @@ class DomainRouteArgs:
         :param pulumi.Input['DomainRouteHeadersArgs'] headers: Modify the headers for all http requests for this route.
         :param pulumi.Input[_builtins.str] host_prefix: This option allows forwarding traffic for different host headers to different workloads. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on Slack or at support@controlplane.com for additional details.
         :param pulumi.Input[_builtins.str] host_regex: A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
+        :param pulumi.Input[Sequence[pulumi.Input['DomainRouteMirrorArgs']]] mirrors: Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
         :param pulumi.Input[_builtins.int] port: For the linked workload, the port to route traffic to.
         :param pulumi.Input[_builtins.str] prefix: The path will match any unmatched path prefixes for the subdomain.
         :param pulumi.Input[_builtins.str] regex: Used to match URI paths. Uses the google re2 regex syntax.
@@ -56,6 +58,8 @@ class DomainRouteArgs:
             pulumi.set(__self__, "host_prefix", host_prefix)
         if host_regex is not None:
             pulumi.set(__self__, "host_regex", host_regex)
+        if mirrors is not None:
+            pulumi.set(__self__, "mirrors", mirrors)
         if port is not None:
             pulumi.set(__self__, "port", port)
         if prefix is not None:
@@ -141,6 +145,18 @@ class DomainRouteArgs:
 
     @_builtins.property
     @pulumi.getter
+    def mirrors(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['DomainRouteMirrorArgs']]]]:
+        """
+        Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+        """
+        return pulumi.get(self, "mirrors")
+
+    @mirrors.setter
+    def mirrors(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['DomainRouteMirrorArgs']]]]):
+        pulumi.set(self, "mirrors", value)
+
+    @_builtins.property
+    @pulumi.getter
     def port(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
         For the linked workload, the port to route traffic to.
@@ -208,6 +224,7 @@ class _DomainRouteState:
                  headers: Optional[pulumi.Input['DomainRouteHeadersArgs']] = None,
                  host_prefix: Optional[pulumi.Input[_builtins.str]] = None,
                  host_regex: Optional[pulumi.Input[_builtins.str]] = None,
+                 mirrors: Optional[pulumi.Input[Sequence[pulumi.Input['DomainRouteMirrorArgs']]]] = None,
                  port: Optional[pulumi.Input[_builtins.int]] = None,
                  prefix: Optional[pulumi.Input[_builtins.str]] = None,
                  regex: Optional[pulumi.Input[_builtins.str]] = None,
@@ -221,6 +238,7 @@ class _DomainRouteState:
         :param pulumi.Input['DomainRouteHeadersArgs'] headers: Modify the headers for all http requests for this route.
         :param pulumi.Input[_builtins.str] host_prefix: This option allows forwarding traffic for different host headers to different workloads. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on Slack or at support@controlplane.com for additional details.
         :param pulumi.Input[_builtins.str] host_regex: A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
+        :param pulumi.Input[Sequence[pulumi.Input['DomainRouteMirrorArgs']]] mirrors: Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
         :param pulumi.Input[_builtins.int] port: For the linked workload, the port to route traffic to.
         :param pulumi.Input[_builtins.str] prefix: The path will match any unmatched path prefixes for the subdomain.
         :param pulumi.Input[_builtins.str] regex: Used to match URI paths. Uses the google re2 regex syntax.
@@ -238,6 +256,8 @@ class _DomainRouteState:
             pulumi.set(__self__, "host_prefix", host_prefix)
         if host_regex is not None:
             pulumi.set(__self__, "host_regex", host_regex)
+        if mirrors is not None:
+            pulumi.set(__self__, "mirrors", mirrors)
         if port is not None:
             pulumi.set(__self__, "port", port)
         if prefix is not None:
@@ -310,6 +330,18 @@ class _DomainRouteState:
     @host_regex.setter
     def host_regex(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "host_regex", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def mirrors(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['DomainRouteMirrorArgs']]]]:
+        """
+        Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+        """
+        return pulumi.get(self, "mirrors")
+
+    @mirrors.setter
+    def mirrors(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['DomainRouteMirrorArgs']]]]):
+        pulumi.set(self, "mirrors", value)
 
     @_builtins.property
     @pulumi.getter
@@ -395,6 +427,7 @@ class DomainRoute(pulumi.CustomResource):
                  headers: Optional[pulumi.Input[Union['DomainRouteHeadersArgs', 'DomainRouteHeadersArgsDict']]] = None,
                  host_prefix: Optional[pulumi.Input[_builtins.str]] = None,
                  host_regex: Optional[pulumi.Input[_builtins.str]] = None,
+                 mirrors: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DomainRouteMirrorArgs', 'DomainRouteMirrorArgsDict']]]]] = None,
                  port: Optional[pulumi.Input[_builtins.int]] = None,
                  prefix: Optional[pulumi.Input[_builtins.str]] = None,
                  regex: Optional[pulumi.Input[_builtins.str]] = None,
@@ -411,6 +444,7 @@ class DomainRoute(pulumi.CustomResource):
         :param pulumi.Input[Union['DomainRouteHeadersArgs', 'DomainRouteHeadersArgsDict']] headers: Modify the headers for all http requests for this route.
         :param pulumi.Input[_builtins.str] host_prefix: This option allows forwarding traffic for different host headers to different workloads. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on Slack or at support@controlplane.com for additional details.
         :param pulumi.Input[_builtins.str] host_regex: A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['DomainRouteMirrorArgs', 'DomainRouteMirrorArgsDict']]]] mirrors: Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
         :param pulumi.Input[_builtins.int] port: For the linked workload, the port to route traffic to.
         :param pulumi.Input[_builtins.str] prefix: The path will match any unmatched path prefixes for the subdomain.
         :param pulumi.Input[_builtins.str] regex: Used to match URI paths. Uses the google re2 regex syntax.
@@ -446,6 +480,7 @@ class DomainRoute(pulumi.CustomResource):
                  headers: Optional[pulumi.Input[Union['DomainRouteHeadersArgs', 'DomainRouteHeadersArgsDict']]] = None,
                  host_prefix: Optional[pulumi.Input[_builtins.str]] = None,
                  host_regex: Optional[pulumi.Input[_builtins.str]] = None,
+                 mirrors: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DomainRouteMirrorArgs', 'DomainRouteMirrorArgsDict']]]]] = None,
                  port: Optional[pulumi.Input[_builtins.int]] = None,
                  prefix: Optional[pulumi.Input[_builtins.str]] = None,
                  regex: Optional[pulumi.Input[_builtins.str]] = None,
@@ -468,6 +503,7 @@ class DomainRoute(pulumi.CustomResource):
             __props__.__dict__["headers"] = headers
             __props__.__dict__["host_prefix"] = host_prefix
             __props__.__dict__["host_regex"] = host_regex
+            __props__.__dict__["mirrors"] = mirrors
             __props__.__dict__["port"] = port
             __props__.__dict__["prefix"] = prefix
             __props__.__dict__["regex"] = regex
@@ -491,6 +527,7 @@ class DomainRoute(pulumi.CustomResource):
             headers: Optional[pulumi.Input[Union['DomainRouteHeadersArgs', 'DomainRouteHeadersArgsDict']]] = None,
             host_prefix: Optional[pulumi.Input[_builtins.str]] = None,
             host_regex: Optional[pulumi.Input[_builtins.str]] = None,
+            mirrors: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DomainRouteMirrorArgs', 'DomainRouteMirrorArgsDict']]]]] = None,
             port: Optional[pulumi.Input[_builtins.int]] = None,
             prefix: Optional[pulumi.Input[_builtins.str]] = None,
             regex: Optional[pulumi.Input[_builtins.str]] = None,
@@ -509,6 +546,7 @@ class DomainRoute(pulumi.CustomResource):
         :param pulumi.Input[Union['DomainRouteHeadersArgs', 'DomainRouteHeadersArgsDict']] headers: Modify the headers for all http requests for this route.
         :param pulumi.Input[_builtins.str] host_prefix: This option allows forwarding traffic for different host headers to different workloads. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on Slack or at support@controlplane.com for additional details.
         :param pulumi.Input[_builtins.str] host_regex: A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['DomainRouteMirrorArgs', 'DomainRouteMirrorArgsDict']]]] mirrors: Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
         :param pulumi.Input[_builtins.int] port: For the linked workload, the port to route traffic to.
         :param pulumi.Input[_builtins.str] prefix: The path will match any unmatched path prefixes for the subdomain.
         :param pulumi.Input[_builtins.str] regex: Used to match URI paths. Uses the google re2 regex syntax.
@@ -525,6 +563,7 @@ class DomainRoute(pulumi.CustomResource):
         __props__.__dict__["headers"] = headers
         __props__.__dict__["host_prefix"] = host_prefix
         __props__.__dict__["host_regex"] = host_regex
+        __props__.__dict__["mirrors"] = mirrors
         __props__.__dict__["port"] = port
         __props__.__dict__["prefix"] = prefix
         __props__.__dict__["regex"] = regex
@@ -572,6 +611,14 @@ class DomainRoute(pulumi.CustomResource):
         A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
         """
         return pulumi.get(self, "host_regex")
+
+    @_builtins.property
+    @pulumi.getter
+    def mirrors(self) -> pulumi.Output[Optional[Sequence['outputs.DomainRouteMirror']]]:
+        """
+        Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+        """
+        return pulumi.get(self, "mirrors")
 
     @_builtins.property
     @pulumi.getter

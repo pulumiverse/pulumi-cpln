@@ -29,6 +29,8 @@ __all__ = [
     'DomainRouteHeadersArgsDict',
     'DomainRouteHeadersRequestArgs',
     'DomainRouteHeadersRequestArgsDict',
+    'DomainRouteMirrorArgs',
+    'DomainRouteMirrorArgsDict',
     'DomainSpecArgs',
     'DomainSpecArgsDict',
     'DomainSpecPortArgs',
@@ -43,6 +45,8 @@ __all__ = [
     'DomainSpecPortRouteHeadersArgsDict',
     'DomainSpecPortRouteHeadersRequestArgs',
     'DomainSpecPortRouteHeadersRequestArgsDict',
+    'DomainSpecPortRouteMirrorArgs',
+    'DomainSpecPortRouteMirrorArgsDict',
     'DomainSpecPortTlsArgs',
     'DomainSpecPortTlsArgsDict',
     'DomainSpecPortTlsClientCertificateArgs',
@@ -439,6 +443,8 @@ __all__ = [
     'SecretUserpassArgsDict',
     'VolumeSetAutoscalingArgs',
     'VolumeSetAutoscalingArgsDict',
+    'VolumeSetAutoscalingPredictiveArgs',
+    'VolumeSetAutoscalingPredictiveArgsDict',
     'VolumeSetCustomEncryptionArgs',
     'VolumeSetCustomEncryptionArgsDict',
     'VolumeSetCustomEncryptionRegionsArgs',
@@ -507,6 +513,10 @@ __all__ = [
     'WorkloadFirewallSpecInternalArgsDict',
     'WorkloadJobArgs',
     'WorkloadJobArgsDict',
+    'WorkloadJobScheduleEntryArgs',
+    'WorkloadJobScheduleEntryArgsDict',
+    'WorkloadJobScheduleEntryContainerOverrideArgs',
+    'WorkloadJobScheduleEntryContainerOverrideArgsDict',
     'WorkloadLoadBalancerArgs',
     'WorkloadLoadBalancerArgsDict',
     'WorkloadLoadBalancerDirectArgs',
@@ -685,6 +695,10 @@ __all__ = [
     'GetWorkloadFirewallSpecInternalArgsDict',
     'GetWorkloadJobArgs',
     'GetWorkloadJobArgsDict',
+    'GetWorkloadJobScheduleEntryArgs',
+    'GetWorkloadJobScheduleEntryArgsDict',
+    'GetWorkloadJobScheduleEntryContainerOverrideArgs',
+    'GetWorkloadJobScheduleEntryContainerOverrideArgsDict',
     'GetWorkloadLoadBalancerArgs',
     'GetWorkloadLoadBalancerArgsDict',
     'GetWorkloadLoadBalancerDirectArgs',
@@ -1009,6 +1023,56 @@ class DomainRouteHeadersRequestArgs:
     @set.setter
     def set(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "set", value)
+
+
+if not MYPY:
+    class DomainRouteMirrorArgsDict(TypedDict):
+        percent: pulumi.Input[_builtins.float]
+        """
+        The percentage of traffic to mirror to the specified workload.
+        """
+        workload_link: pulumi.Input[_builtins.str]
+        """
+        The workload to mirror traffic to.
+        """
+elif False:
+    DomainRouteMirrorArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class DomainRouteMirrorArgs:
+    def __init__(__self__, *,
+                 percent: pulumi.Input[_builtins.float],
+                 workload_link: pulumi.Input[_builtins.str]):
+        """
+        :param pulumi.Input[_builtins.float] percent: The percentage of traffic to mirror to the specified workload.
+        :param pulumi.Input[_builtins.str] workload_link: The workload to mirror traffic to.
+        """
+        pulumi.set(__self__, "percent", percent)
+        pulumi.set(__self__, "workload_link", workload_link)
+
+    @_builtins.property
+    @pulumi.getter
+    def percent(self) -> pulumi.Input[_builtins.float]:
+        """
+        The percentage of traffic to mirror to the specified workload.
+        """
+        return pulumi.get(self, "percent")
+
+    @percent.setter
+    def percent(self, value: pulumi.Input[_builtins.float]):
+        pulumi.set(self, "percent", value)
+
+    @_builtins.property
+    @pulumi.getter(name="workloadLink")
+    def workload_link(self) -> pulumi.Input[_builtins.str]:
+        """
+        The workload to mirror traffic to.
+        """
+        return pulumi.get(self, "workload_link")
+
+    @workload_link.setter
+    def workload_link(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "workload_link", value)
 
 
 if not MYPY:
@@ -1470,6 +1534,10 @@ if not MYPY:
         """
         A regex to match the host header.
         """
+        mirrors: NotRequired[pulumi.Input[Sequence[pulumi.Input['DomainSpecPortRouteMirrorArgsDict']]]]
+        """
+        Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+        """
         port: NotRequired[pulumi.Input[_builtins.int]]
         """
         For the linked workload, the port to route traffic to.
@@ -1500,6 +1568,7 @@ class DomainSpecPortRouteArgs:
                  headers: Optional[pulumi.Input['DomainSpecPortRouteHeadersArgs']] = None,
                  host_prefix: Optional[pulumi.Input[_builtins.str]] = None,
                  host_regex: Optional[pulumi.Input[_builtins.str]] = None,
+                 mirrors: Optional[pulumi.Input[Sequence[pulumi.Input['DomainSpecPortRouteMirrorArgs']]]] = None,
                  port: Optional[pulumi.Input[_builtins.int]] = None,
                  prefix: Optional[pulumi.Input[_builtins.str]] = None,
                  regex: Optional[pulumi.Input[_builtins.str]] = None,
@@ -1510,6 +1579,7 @@ class DomainSpecPortRouteArgs:
         :param pulumi.Input['DomainSpecPortRouteHeadersArgs'] headers: Modify the headers for all http requests for this route.
         :param pulumi.Input[_builtins.str] host_prefix: This option allows forwarding traffic for different host headers to different workloads.
         :param pulumi.Input[_builtins.str] host_regex: A regex to match the host header.
+        :param pulumi.Input[Sequence[pulumi.Input['DomainSpecPortRouteMirrorArgs']]] mirrors: Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
         :param pulumi.Input[_builtins.int] port: For the linked workload, the port to route traffic to.
         :param pulumi.Input[_builtins.str] prefix: The path will match any unmatched path prefixes for the subdomain.
         :param pulumi.Input[_builtins.str] regex: Used to match URI paths. Uses the google re2 regex syntax.
@@ -1523,6 +1593,8 @@ class DomainSpecPortRouteArgs:
             pulumi.set(__self__, "host_prefix", host_prefix)
         if host_regex is not None:
             pulumi.set(__self__, "host_regex", host_regex)
+        if mirrors is not None:
+            pulumi.set(__self__, "mirrors", mirrors)
         if port is not None:
             pulumi.set(__self__, "port", port)
         if prefix is not None:
@@ -1581,6 +1653,18 @@ class DomainSpecPortRouteArgs:
     @host_regex.setter
     def host_regex(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "host_regex", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def mirrors(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['DomainSpecPortRouteMirrorArgs']]]]:
+        """
+        Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+        """
+        return pulumi.get(self, "mirrors")
+
+    @mirrors.setter
+    def mirrors(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['DomainSpecPortRouteMirrorArgs']]]]):
+        pulumi.set(self, "mirrors", value)
 
     @_builtins.property
     @pulumi.getter
@@ -1705,6 +1789,56 @@ class DomainSpecPortRouteHeadersRequestArgs:
     @set.setter
     def set(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "set", value)
+
+
+if not MYPY:
+    class DomainSpecPortRouteMirrorArgsDict(TypedDict):
+        percent: pulumi.Input[_builtins.float]
+        """
+        The percentage of traffic to mirror to the specified workload.
+        """
+        workload_link: pulumi.Input[_builtins.str]
+        """
+        The workload to mirror traffic to.
+        """
+elif False:
+    DomainSpecPortRouteMirrorArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class DomainSpecPortRouteMirrorArgs:
+    def __init__(__self__, *,
+                 percent: pulumi.Input[_builtins.float],
+                 workload_link: pulumi.Input[_builtins.str]):
+        """
+        :param pulumi.Input[_builtins.float] percent: The percentage of traffic to mirror to the specified workload.
+        :param pulumi.Input[_builtins.str] workload_link: The workload to mirror traffic to.
+        """
+        pulumi.set(__self__, "percent", percent)
+        pulumi.set(__self__, "workload_link", workload_link)
+
+    @_builtins.property
+    @pulumi.getter
+    def percent(self) -> pulumi.Input[_builtins.float]:
+        """
+        The percentage of traffic to mirror to the specified workload.
+        """
+        return pulumi.get(self, "percent")
+
+    @percent.setter
+    def percent(self, value: pulumi.Input[_builtins.float]):
+        pulumi.set(self, "percent", value)
+
+    @_builtins.property
+    @pulumi.getter(name="workloadLink")
+    def workload_link(self) -> pulumi.Input[_builtins.str]:
+        """
+        The workload to mirror traffic to.
+        """
+        return pulumi.get(self, "workload_link")
+
+    @workload_link.setter
+    def workload_link(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "workload_link", value)
 
 
 if not MYPY:
@@ -16752,6 +16886,10 @@ if not MYPY:
         """
         The guaranteed free space on the volume as a percentage of the volume's total size. Control Plane will try to maintain at least that many percent free by scaling up the total size. Minimum percentage: `1`. Maximum Percentage: `100`.
         """
+        predictive: NotRequired[pulumi.Input['VolumeSetAutoscalingPredictiveArgsDict']]
+        """
+        Predictive scaling configuration. When enabled, proactively expands volumes based on historical growth rate projections.
+        """
         scaling_factor: NotRequired[pulumi.Input[_builtins.float]]
         """
         When scaling is necessary, then `new_capacity = current_capacity * storageScalingFactor`. Minimum value: `1.1`.
@@ -16764,16 +16902,20 @@ class VolumeSetAutoscalingArgs:
     def __init__(__self__, *,
                  max_capacity: Optional[pulumi.Input[_builtins.int]] = None,
                  min_free_percentage: Optional[pulumi.Input[_builtins.int]] = None,
+                 predictive: Optional[pulumi.Input['VolumeSetAutoscalingPredictiveArgs']] = None,
                  scaling_factor: Optional[pulumi.Input[_builtins.float]] = None):
         """
         :param pulumi.Input[_builtins.int] max_capacity: The maximum size in GB for a volume in this set. A volume cannot grow to be bigger than this value. Minimum value: `10`.
         :param pulumi.Input[_builtins.int] min_free_percentage: The guaranteed free space on the volume as a percentage of the volume's total size. Control Plane will try to maintain at least that many percent free by scaling up the total size. Minimum percentage: `1`. Maximum Percentage: `100`.
+        :param pulumi.Input['VolumeSetAutoscalingPredictiveArgs'] predictive: Predictive scaling configuration. When enabled, proactively expands volumes based on historical growth rate projections.
         :param pulumi.Input[_builtins.float] scaling_factor: When scaling is necessary, then `new_capacity = current_capacity * storageScalingFactor`. Minimum value: `1.1`.
         """
         if max_capacity is not None:
             pulumi.set(__self__, "max_capacity", max_capacity)
         if min_free_percentage is not None:
             pulumi.set(__self__, "min_free_percentage", min_free_percentage)
+        if predictive is not None:
+            pulumi.set(__self__, "predictive", predictive)
         if scaling_factor is not None:
             pulumi.set(__self__, "scaling_factor", scaling_factor)
 
@@ -16802,10 +16944,154 @@ class VolumeSetAutoscalingArgs:
         pulumi.set(self, "min_free_percentage", value)
 
     @_builtins.property
+    @pulumi.getter
+    def predictive(self) -> Optional[pulumi.Input['VolumeSetAutoscalingPredictiveArgs']]:
+        """
+        Predictive scaling configuration. When enabled, proactively expands volumes based on historical growth rate projections.
+        """
+        return pulumi.get(self, "predictive")
+
+    @predictive.setter
+    def predictive(self, value: Optional[pulumi.Input['VolumeSetAutoscalingPredictiveArgs']]):
+        pulumi.set(self, "predictive", value)
+
+    @_builtins.property
     @pulumi.getter(name="scalingFactor")
     def scaling_factor(self) -> Optional[pulumi.Input[_builtins.float]]:
         """
         When scaling is necessary, then `new_capacity = current_capacity * storageScalingFactor`. Minimum value: `1.1`.
+        """
+        return pulumi.get(self, "scaling_factor")
+
+    @scaling_factor.setter
+    def scaling_factor(self, value: Optional[pulumi.Input[_builtins.float]]):
+        pulumi.set(self, "scaling_factor", value)
+
+
+if not MYPY:
+    class VolumeSetAutoscalingPredictiveArgsDict(TypedDict):
+        enabled: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Enable predictive scaling based on historical growth rates. Default: `false`.
+        """
+        lookback_hours: NotRequired[pulumi.Input[_builtins.float]]
+        """
+        Hours of historical data to analyze. Default: `24`. Max: `168` (1 week).
+        """
+        min_data_points: NotRequired[pulumi.Input[_builtins.int]]
+        """
+        Minimum data points required for reliable growth rate calculation. Default: `10`.
+        """
+        min_growth_rate_gb_per_hour: NotRequired[pulumi.Input[_builtins.float]]
+        """
+        Minimum growth rate (GB/hour) to trigger predictive expansion. Default: `0.01`.
+        """
+        projection_hours: NotRequired[pulumi.Input[_builtins.float]]
+        """
+        Hours into the future to project storage needs. Default: `6`.
+        """
+        scaling_factor: NotRequired[pulumi.Input[_builtins.float]]
+        """
+        Scaling factor for predictive expansion. If not set, uses the parent autoscaling scaling_factor. Use a lower value (e.g., `1.2`) for gentler proactive scaling.
+        """
+elif False:
+    VolumeSetAutoscalingPredictiveArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class VolumeSetAutoscalingPredictiveArgs:
+    def __init__(__self__, *,
+                 enabled: Optional[pulumi.Input[_builtins.bool]] = None,
+                 lookback_hours: Optional[pulumi.Input[_builtins.float]] = None,
+                 min_data_points: Optional[pulumi.Input[_builtins.int]] = None,
+                 min_growth_rate_gb_per_hour: Optional[pulumi.Input[_builtins.float]] = None,
+                 projection_hours: Optional[pulumi.Input[_builtins.float]] = None,
+                 scaling_factor: Optional[pulumi.Input[_builtins.float]] = None):
+        """
+        :param pulumi.Input[_builtins.bool] enabled: Enable predictive scaling based on historical growth rates. Default: `false`.
+        :param pulumi.Input[_builtins.float] lookback_hours: Hours of historical data to analyze. Default: `24`. Max: `168` (1 week).
+        :param pulumi.Input[_builtins.int] min_data_points: Minimum data points required for reliable growth rate calculation. Default: `10`.
+        :param pulumi.Input[_builtins.float] min_growth_rate_gb_per_hour: Minimum growth rate (GB/hour) to trigger predictive expansion. Default: `0.01`.
+        :param pulumi.Input[_builtins.float] projection_hours: Hours into the future to project storage needs. Default: `6`.
+        :param pulumi.Input[_builtins.float] scaling_factor: Scaling factor for predictive expansion. If not set, uses the parent autoscaling scaling_factor. Use a lower value (e.g., `1.2`) for gentler proactive scaling.
+        """
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+        if lookback_hours is not None:
+            pulumi.set(__self__, "lookback_hours", lookback_hours)
+        if min_data_points is not None:
+            pulumi.set(__self__, "min_data_points", min_data_points)
+        if min_growth_rate_gb_per_hour is not None:
+            pulumi.set(__self__, "min_growth_rate_gb_per_hour", min_growth_rate_gb_per_hour)
+        if projection_hours is not None:
+            pulumi.set(__self__, "projection_hours", projection_hours)
+        if scaling_factor is not None:
+            pulumi.set(__self__, "scaling_factor", scaling_factor)
+
+    @_builtins.property
+    @pulumi.getter
+    def enabled(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Enable predictive scaling based on historical growth rates. Default: `false`.
+        """
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "enabled", value)
+
+    @_builtins.property
+    @pulumi.getter(name="lookbackHours")
+    def lookback_hours(self) -> Optional[pulumi.Input[_builtins.float]]:
+        """
+        Hours of historical data to analyze. Default: `24`. Max: `168` (1 week).
+        """
+        return pulumi.get(self, "lookback_hours")
+
+    @lookback_hours.setter
+    def lookback_hours(self, value: Optional[pulumi.Input[_builtins.float]]):
+        pulumi.set(self, "lookback_hours", value)
+
+    @_builtins.property
+    @pulumi.getter(name="minDataPoints")
+    def min_data_points(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        Minimum data points required for reliable growth rate calculation. Default: `10`.
+        """
+        return pulumi.get(self, "min_data_points")
+
+    @min_data_points.setter
+    def min_data_points(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "min_data_points", value)
+
+    @_builtins.property
+    @pulumi.getter(name="minGrowthRateGbPerHour")
+    def min_growth_rate_gb_per_hour(self) -> Optional[pulumi.Input[_builtins.float]]:
+        """
+        Minimum growth rate (GB/hour) to trigger predictive expansion. Default: `0.01`.
+        """
+        return pulumi.get(self, "min_growth_rate_gb_per_hour")
+
+    @min_growth_rate_gb_per_hour.setter
+    def min_growth_rate_gb_per_hour(self, value: Optional[pulumi.Input[_builtins.float]]):
+        pulumi.set(self, "min_growth_rate_gb_per_hour", value)
+
+    @_builtins.property
+    @pulumi.getter(name="projectionHours")
+    def projection_hours(self) -> Optional[pulumi.Input[_builtins.float]]:
+        """
+        Hours into the future to project storage needs. Default: `6`.
+        """
+        return pulumi.get(self, "projection_hours")
+
+    @projection_hours.setter
+    def projection_hours(self, value: Optional[pulumi.Input[_builtins.float]]):
+        pulumi.set(self, "projection_hours", value)
+
+    @_builtins.property
+    @pulumi.getter(name="scalingFactor")
+    def scaling_factor(self) -> Optional[pulumi.Input[_builtins.float]]:
+        """
+        Scaling factor for predictive expansion. If not set, uses the parent autoscaling scaling_factor. Use a lower value (e.g., `1.2`) for gentler proactive scaling.
         """
         return pulumi.get(self, "scaling_factor")
 
@@ -18918,10 +19204,6 @@ class WorkloadFirewallSpecInternalArgs:
 
 if not MYPY:
     class WorkloadJobArgsDict(TypedDict):
-        schedule: pulumi.Input[_builtins.str]
-        """
-        A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
-        """
         active_deadline_seconds: NotRequired[pulumi.Input[_builtins.int]]
         """
         The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
@@ -18938,25 +19220,34 @@ if not MYPY:
         """
         Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`.
         """
+        schedule: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute. Use this for a single schedule, or use schedule_entry for multiple schedules.
+        """
+        schedule_entries: NotRequired[pulumi.Input[Sequence[pulumi.Input['WorkloadJobScheduleEntryArgsDict']]]]
+        """
+        Multiple schedules with individual container overrides. Use this for workloads that need to run on different schedules with different configurations.
+        """
 elif False:
     WorkloadJobArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class WorkloadJobArgs:
     def __init__(__self__, *,
-                 schedule: pulumi.Input[_builtins.str],
                  active_deadline_seconds: Optional[pulumi.Input[_builtins.int]] = None,
                  concurrency_policy: Optional[pulumi.Input[_builtins.str]] = None,
                  history_limit: Optional[pulumi.Input[_builtins.int]] = None,
-                 restart_policy: Optional[pulumi.Input[_builtins.str]] = None):
+                 restart_policy: Optional[pulumi.Input[_builtins.str]] = None,
+                 schedule: Optional[pulumi.Input[_builtins.str]] = None,
+                 schedule_entries: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadJobScheduleEntryArgs']]]] = None):
         """
-        :param pulumi.Input[_builtins.str] schedule: A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
         :param pulumi.Input[_builtins.int] active_deadline_seconds: The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
         :param pulumi.Input[_builtins.str] concurrency_policy: Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
         :param pulumi.Input[_builtins.int] history_limit: The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`.
         :param pulumi.Input[_builtins.str] restart_policy: Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`.
+        :param pulumi.Input[_builtins.str] schedule: A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute. Use this for a single schedule, or use schedule_entry for multiple schedules.
+        :param pulumi.Input[Sequence[pulumi.Input['WorkloadJobScheduleEntryArgs']]] schedule_entries: Multiple schedules with individual container overrides. Use this for workloads that need to run on different schedules with different configurations.
         """
-        pulumi.set(__self__, "schedule", schedule)
         if active_deadline_seconds is not None:
             pulumi.set(__self__, "active_deadline_seconds", active_deadline_seconds)
         if concurrency_policy is not None:
@@ -18965,18 +19256,10 @@ class WorkloadJobArgs:
             pulumi.set(__self__, "history_limit", history_limit)
         if restart_policy is not None:
             pulumi.set(__self__, "restart_policy", restart_policy)
-
-    @_builtins.property
-    @pulumi.getter
-    def schedule(self) -> pulumi.Input[_builtins.str]:
-        """
-        A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
-        """
-        return pulumi.get(self, "schedule")
-
-    @schedule.setter
-    def schedule(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "schedule", value)
+        if schedule is not None:
+            pulumi.set(__self__, "schedule", schedule)
+        if schedule_entries is not None:
+            pulumi.set(__self__, "schedule_entries", schedule_entries)
 
     @_builtins.property
     @pulumi.getter(name="activeDeadlineSeconds")
@@ -19025,6 +19308,251 @@ class WorkloadJobArgs:
     @restart_policy.setter
     def restart_policy(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "restart_policy", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def schedule(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute. Use this for a single schedule, or use schedule_entry for multiple schedules.
+        """
+        return pulumi.get(self, "schedule")
+
+    @schedule.setter
+    def schedule(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "schedule", value)
+
+    @_builtins.property
+    @pulumi.getter(name="scheduleEntries")
+    def schedule_entries(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadJobScheduleEntryArgs']]]]:
+        """
+        Multiple schedules with individual container overrides. Use this for workloads that need to run on different schedules with different configurations.
+        """
+        return pulumi.get(self, "schedule_entries")
+
+    @schedule_entries.setter
+    def schedule_entries(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadJobScheduleEntryArgs']]]]):
+        pulumi.set(self, "schedule_entries", value)
+
+
+if not MYPY:
+    class WorkloadJobScheduleEntryArgsDict(TypedDict):
+        name: pulumi.Input[_builtins.str]
+        """
+        Unique name for this schedule.
+        """
+        schedule: pulumi.Input[_builtins.str]
+        """
+        A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) for when this schedule should execute.
+        """
+        container_overrides: NotRequired[pulumi.Input[Sequence[pulumi.Input['WorkloadJobScheduleEntryContainerOverrideArgsDict']]]]
+        """
+        Container overrides specific to this schedule execution.
+        """
+elif False:
+    WorkloadJobScheduleEntryArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class WorkloadJobScheduleEntryArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[_builtins.str],
+                 schedule: pulumi.Input[_builtins.str],
+                 container_overrides: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadJobScheduleEntryContainerOverrideArgs']]]] = None):
+        """
+        :param pulumi.Input[_builtins.str] name: Unique name for this schedule.
+        :param pulumi.Input[_builtins.str] schedule: A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) for when this schedule should execute.
+        :param pulumi.Input[Sequence[pulumi.Input['WorkloadJobScheduleEntryContainerOverrideArgs']]] container_overrides: Container overrides specific to this schedule execution.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "schedule", schedule)
+        if container_overrides is not None:
+            pulumi.set(__self__, "container_overrides", container_overrides)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[_builtins.str]:
+        """
+        Unique name for this schedule.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def schedule(self) -> pulumi.Input[_builtins.str]:
+        """
+        A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) for when this schedule should execute.
+        """
+        return pulumi.get(self, "schedule")
+
+    @schedule.setter
+    def schedule(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "schedule", value)
+
+    @_builtins.property
+    @pulumi.getter(name="containerOverrides")
+    def container_overrides(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadJobScheduleEntryContainerOverrideArgs']]]]:
+        """
+        Container overrides specific to this schedule execution.
+        """
+        return pulumi.get(self, "container_overrides")
+
+    @container_overrides.setter
+    def container_overrides(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadJobScheduleEntryContainerOverrideArgs']]]]):
+        pulumi.set(self, "container_overrides", value)
+
+
+if not MYPY:
+    class WorkloadJobScheduleEntryContainerOverrideArgsDict(TypedDict):
+        name: pulumi.Input[_builtins.str]
+        """
+        The name of the container to override.
+        """
+        args: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+        """
+        Command line arguments for this execution.
+        """
+        command: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Optionally override the entrypoint.
+        """
+        cpu: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        CPU allocation override.
+        """
+        env: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+        """
+        Environment variables specific to this execution.
+        """
+        image: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Image override.
+        """
+        memory: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Memory allocation override.
+        """
+elif False:
+    WorkloadJobScheduleEntryContainerOverrideArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class WorkloadJobScheduleEntryContainerOverrideArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[_builtins.str],
+                 args: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 command: Optional[pulumi.Input[_builtins.str]] = None,
+                 cpu: Optional[pulumi.Input[_builtins.str]] = None,
+                 env: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 image: Optional[pulumi.Input[_builtins.str]] = None,
+                 memory: Optional[pulumi.Input[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] name: The name of the container to override.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] args: Command line arguments for this execution.
+        :param pulumi.Input[_builtins.str] command: Optionally override the entrypoint.
+        :param pulumi.Input[_builtins.str] cpu: CPU allocation override.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] env: Environment variables specific to this execution.
+        :param pulumi.Input[_builtins.str] image: Image override.
+        :param pulumi.Input[_builtins.str] memory: Memory allocation override.
+        """
+        pulumi.set(__self__, "name", name)
+        if args is not None:
+            pulumi.set(__self__, "args", args)
+        if command is not None:
+            pulumi.set(__self__, "command", command)
+        if cpu is not None:
+            pulumi.set(__self__, "cpu", cpu)
+        if env is not None:
+            pulumi.set(__self__, "env", env)
+        if image is not None:
+            pulumi.set(__self__, "image", image)
+        if memory is not None:
+            pulumi.set(__self__, "memory", memory)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[_builtins.str]:
+        """
+        The name of the container to override.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def args(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        Command line arguments for this execution.
+        """
+        return pulumi.get(self, "args")
+
+    @args.setter
+    def args(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "args", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Optionally override the entrypoint.
+        """
+        return pulumi.get(self, "command")
+
+    @command.setter
+    def command(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "command", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def cpu(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        CPU allocation override.
+        """
+        return pulumi.get(self, "cpu")
+
+    @cpu.setter
+    def cpu(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "cpu", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def env(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Environment variables specific to this execution.
+        """
+        return pulumi.get(self, "env")
+
+    @env.setter
+    def env(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "env", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def image(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Image override.
+        """
+        return pulumi.get(self, "image")
+
+    @image.setter
+    def image(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "image", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def memory(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Memory allocation override.
+        """
+        return pulumi.get(self, "memory")
+
+    @memory.setter
+    def memory(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "memory", value)
 
 
 if not MYPY:
@@ -25371,6 +25899,10 @@ if not MYPY:
         """
         A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
         """
+        schedule_entries: NotRequired[Sequence['GetWorkloadJobScheduleEntryArgsDict']]
+        """
+        Multiple schedules with individual container overrides.
+        """
 elif False:
     GetWorkloadJobArgsDict: TypeAlias = Mapping[str, Any]
 
@@ -25381,19 +25913,23 @@ class GetWorkloadJobArgs:
                  concurrency_policy: _builtins.str,
                  history_limit: _builtins.int,
                  restart_policy: _builtins.str,
-                 schedule: _builtins.str):
+                 schedule: _builtins.str,
+                 schedule_entries: Optional[Sequence['GetWorkloadJobScheduleEntryArgs']] = None):
         """
         :param _builtins.int active_deadline_seconds: The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
         :param _builtins.str concurrency_policy: Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
         :param _builtins.int history_limit: The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`.
         :param _builtins.str restart_policy: Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`.
         :param _builtins.str schedule: A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
+        :param Sequence['GetWorkloadJobScheduleEntryArgs'] schedule_entries: Multiple schedules with individual container overrides.
         """
         pulumi.set(__self__, "active_deadline_seconds", active_deadline_seconds)
         pulumi.set(__self__, "concurrency_policy", concurrency_policy)
         pulumi.set(__self__, "history_limit", history_limit)
         pulumi.set(__self__, "restart_policy", restart_policy)
         pulumi.set(__self__, "schedule", schedule)
+        if schedule_entries is not None:
+            pulumi.set(__self__, "schedule_entries", schedule_entries)
 
     @_builtins.property
     @pulumi.getter(name="activeDeadlineSeconds")
@@ -25454,6 +25990,233 @@ class GetWorkloadJobArgs:
     @schedule.setter
     def schedule(self, value: _builtins.str):
         pulumi.set(self, "schedule", value)
+
+    @_builtins.property
+    @pulumi.getter(name="scheduleEntries")
+    def schedule_entries(self) -> Optional[Sequence['GetWorkloadJobScheduleEntryArgs']]:
+        """
+        Multiple schedules with individual container overrides.
+        """
+        return pulumi.get(self, "schedule_entries")
+
+    @schedule_entries.setter
+    def schedule_entries(self, value: Optional[Sequence['GetWorkloadJobScheduleEntryArgs']]):
+        pulumi.set(self, "schedule_entries", value)
+
+
+if not MYPY:
+    class GetWorkloadJobScheduleEntryArgsDict(TypedDict):
+        name: _builtins.str
+        """
+        Unique name for this schedule.
+        """
+        schedule: _builtins.str
+        """
+        A standard cron schedule expression for when this schedule should execute.
+        """
+        container_overrides: NotRequired[Sequence['GetWorkloadJobScheduleEntryContainerOverrideArgsDict']]
+        """
+        Container overrides specific to this schedule execution.
+        """
+elif False:
+    GetWorkloadJobScheduleEntryArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class GetWorkloadJobScheduleEntryArgs:
+    def __init__(__self__, *,
+                 name: _builtins.str,
+                 schedule: _builtins.str,
+                 container_overrides: Optional[Sequence['GetWorkloadJobScheduleEntryContainerOverrideArgs']] = None):
+        """
+        :param _builtins.str name: Unique name for this schedule.
+        :param _builtins.str schedule: A standard cron schedule expression for when this schedule should execute.
+        :param Sequence['GetWorkloadJobScheduleEntryContainerOverrideArgs'] container_overrides: Container overrides specific to this schedule execution.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "schedule", schedule)
+        if container_overrides is not None:
+            pulumi.set(__self__, "container_overrides", container_overrides)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        Unique name for this schedule.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: _builtins.str):
+        pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def schedule(self) -> _builtins.str:
+        """
+        A standard cron schedule expression for when this schedule should execute.
+        """
+        return pulumi.get(self, "schedule")
+
+    @schedule.setter
+    def schedule(self, value: _builtins.str):
+        pulumi.set(self, "schedule", value)
+
+    @_builtins.property
+    @pulumi.getter(name="containerOverrides")
+    def container_overrides(self) -> Optional[Sequence['GetWorkloadJobScheduleEntryContainerOverrideArgs']]:
+        """
+        Container overrides specific to this schedule execution.
+        """
+        return pulumi.get(self, "container_overrides")
+
+    @container_overrides.setter
+    def container_overrides(self, value: Optional[Sequence['GetWorkloadJobScheduleEntryContainerOverrideArgs']]):
+        pulumi.set(self, "container_overrides", value)
+
+
+if not MYPY:
+    class GetWorkloadJobScheduleEntryContainerOverrideArgsDict(TypedDict):
+        args: Sequence[_builtins.str]
+        """
+        Command line arguments for this execution.
+        """
+        command: _builtins.str
+        """
+        Optionally override the entrypoint.
+        """
+        cpu: _builtins.str
+        """
+        CPU allocation override.
+        """
+        env: Mapping[str, _builtins.str]
+        """
+        Environment variables specific to this execution.
+        """
+        image: _builtins.str
+        """
+        Image override.
+        """
+        memory: _builtins.str
+        """
+        Memory allocation override.
+        """
+        name: _builtins.str
+        """
+        The name of the container to override.
+        """
+elif False:
+    GetWorkloadJobScheduleEntryContainerOverrideArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class GetWorkloadJobScheduleEntryContainerOverrideArgs:
+    def __init__(__self__, *,
+                 args: Sequence[_builtins.str],
+                 command: _builtins.str,
+                 cpu: _builtins.str,
+                 env: Mapping[str, _builtins.str],
+                 image: _builtins.str,
+                 memory: _builtins.str,
+                 name: _builtins.str):
+        """
+        :param Sequence[_builtins.str] args: Command line arguments for this execution.
+        :param _builtins.str command: Optionally override the entrypoint.
+        :param _builtins.str cpu: CPU allocation override.
+        :param Mapping[str, _builtins.str] env: Environment variables specific to this execution.
+        :param _builtins.str image: Image override.
+        :param _builtins.str memory: Memory allocation override.
+        :param _builtins.str name: The name of the container to override.
+        """
+        pulumi.set(__self__, "args", args)
+        pulumi.set(__self__, "command", command)
+        pulumi.set(__self__, "cpu", cpu)
+        pulumi.set(__self__, "env", env)
+        pulumi.set(__self__, "image", image)
+        pulumi.set(__self__, "memory", memory)
+        pulumi.set(__self__, "name", name)
+
+    @_builtins.property
+    @pulumi.getter
+    def args(self) -> Sequence[_builtins.str]:
+        """
+        Command line arguments for this execution.
+        """
+        return pulumi.get(self, "args")
+
+    @args.setter
+    def args(self, value: Sequence[_builtins.str]):
+        pulumi.set(self, "args", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def command(self) -> _builtins.str:
+        """
+        Optionally override the entrypoint.
+        """
+        return pulumi.get(self, "command")
+
+    @command.setter
+    def command(self, value: _builtins.str):
+        pulumi.set(self, "command", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def cpu(self) -> _builtins.str:
+        """
+        CPU allocation override.
+        """
+        return pulumi.get(self, "cpu")
+
+    @cpu.setter
+    def cpu(self, value: _builtins.str):
+        pulumi.set(self, "cpu", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def env(self) -> Mapping[str, _builtins.str]:
+        """
+        Environment variables specific to this execution.
+        """
+        return pulumi.get(self, "env")
+
+    @env.setter
+    def env(self, value: Mapping[str, _builtins.str]):
+        pulumi.set(self, "env", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def image(self) -> _builtins.str:
+        """
+        Image override.
+        """
+        return pulumi.get(self, "image")
+
+    @image.setter
+    def image(self, value: _builtins.str):
+        pulumi.set(self, "image", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def memory(self) -> _builtins.str:
+        """
+        Memory allocation override.
+        """
+        return pulumi.get(self, "memory")
+
+    @memory.setter
+    def memory(self, value: _builtins.str):
+        pulumi.set(self, "memory", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        The name of the container to override.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: _builtins.str):
+        pulumi.set(self, "name", value)
 
 
 if not MYPY:

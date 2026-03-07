@@ -55,6 +55,10 @@ export class DomainRoute extends pulumi.CustomResource {
      */
     declare public readonly hostRegex: pulumi.Output<string | undefined>;
     /**
+     * Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+     */
+    declare public readonly mirrors: pulumi.Output<outputs.DomainRouteMirror[] | undefined>;
+    /**
      * For the linked workload, the port to route traffic to.
      */
     declare public readonly port: pulumi.Output<number | undefined>;
@@ -97,6 +101,7 @@ export class DomainRoute extends pulumi.CustomResource {
             resourceInputs["headers"] = state?.headers;
             resourceInputs["hostPrefix"] = state?.hostPrefix;
             resourceInputs["hostRegex"] = state?.hostRegex;
+            resourceInputs["mirrors"] = state?.mirrors;
             resourceInputs["port"] = state?.port;
             resourceInputs["prefix"] = state?.prefix;
             resourceInputs["regex"] = state?.regex;
@@ -116,6 +121,7 @@ export class DomainRoute extends pulumi.CustomResource {
             resourceInputs["headers"] = args?.headers;
             resourceInputs["hostPrefix"] = args?.hostPrefix;
             resourceInputs["hostRegex"] = args?.hostRegex;
+            resourceInputs["mirrors"] = args?.mirrors;
             resourceInputs["port"] = args?.port;
             resourceInputs["prefix"] = args?.prefix;
             resourceInputs["regex"] = args?.regex;
@@ -152,6 +158,10 @@ export interface DomainRouteState {
      * A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
      */
     hostRegex?: pulumi.Input<string>;
+    /**
+     * Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+     */
+    mirrors?: pulumi.Input<pulumi.Input<inputs.DomainRouteMirror>[]>;
     /**
      * For the linked workload, the port to route traffic to.
      */
@@ -202,6 +212,10 @@ export interface DomainRouteArgs {
      * A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
      */
     hostRegex?: pulumi.Input<string>;
+    /**
+     * Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+     */
+    mirrors?: pulumi.Input<pulumi.Input<inputs.DomainRouteMirror>[]>;
     /**
      * For the linked workload, the port to route traffic to.
      */

@@ -910,6 +910,112 @@ func (o DomainRouteHeadersRequestPtrOutput) Set() pulumi.StringMapOutput {
 	}).(pulumi.StringMapOutput)
 }
 
+type DomainRouteMirror struct {
+	// The percentage of traffic to mirror to the specified workload.
+	Percent float64 `pulumi:"percent"`
+	// The workload to mirror traffic to.
+	WorkloadLink string `pulumi:"workloadLink"`
+}
+
+// DomainRouteMirrorInput is an input type that accepts DomainRouteMirrorArgs and DomainRouteMirrorOutput values.
+// You can construct a concrete instance of `DomainRouteMirrorInput` via:
+//
+//	DomainRouteMirrorArgs{...}
+type DomainRouteMirrorInput interface {
+	pulumi.Input
+
+	ToDomainRouteMirrorOutput() DomainRouteMirrorOutput
+	ToDomainRouteMirrorOutputWithContext(context.Context) DomainRouteMirrorOutput
+}
+
+type DomainRouteMirrorArgs struct {
+	// The percentage of traffic to mirror to the specified workload.
+	Percent pulumi.Float64Input `pulumi:"percent"`
+	// The workload to mirror traffic to.
+	WorkloadLink pulumi.StringInput `pulumi:"workloadLink"`
+}
+
+func (DomainRouteMirrorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*DomainRouteMirror)(nil)).Elem()
+}
+
+func (i DomainRouteMirrorArgs) ToDomainRouteMirrorOutput() DomainRouteMirrorOutput {
+	return i.ToDomainRouteMirrorOutputWithContext(context.Background())
+}
+
+func (i DomainRouteMirrorArgs) ToDomainRouteMirrorOutputWithContext(ctx context.Context) DomainRouteMirrorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DomainRouteMirrorOutput)
+}
+
+// DomainRouteMirrorArrayInput is an input type that accepts DomainRouteMirrorArray and DomainRouteMirrorArrayOutput values.
+// You can construct a concrete instance of `DomainRouteMirrorArrayInput` via:
+//
+//	DomainRouteMirrorArray{ DomainRouteMirrorArgs{...} }
+type DomainRouteMirrorArrayInput interface {
+	pulumi.Input
+
+	ToDomainRouteMirrorArrayOutput() DomainRouteMirrorArrayOutput
+	ToDomainRouteMirrorArrayOutputWithContext(context.Context) DomainRouteMirrorArrayOutput
+}
+
+type DomainRouteMirrorArray []DomainRouteMirrorInput
+
+func (DomainRouteMirrorArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]DomainRouteMirror)(nil)).Elem()
+}
+
+func (i DomainRouteMirrorArray) ToDomainRouteMirrorArrayOutput() DomainRouteMirrorArrayOutput {
+	return i.ToDomainRouteMirrorArrayOutputWithContext(context.Background())
+}
+
+func (i DomainRouteMirrorArray) ToDomainRouteMirrorArrayOutputWithContext(ctx context.Context) DomainRouteMirrorArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DomainRouteMirrorArrayOutput)
+}
+
+type DomainRouteMirrorOutput struct{ *pulumi.OutputState }
+
+func (DomainRouteMirrorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*DomainRouteMirror)(nil)).Elem()
+}
+
+func (o DomainRouteMirrorOutput) ToDomainRouteMirrorOutput() DomainRouteMirrorOutput {
+	return o
+}
+
+func (o DomainRouteMirrorOutput) ToDomainRouteMirrorOutputWithContext(ctx context.Context) DomainRouteMirrorOutput {
+	return o
+}
+
+// The percentage of traffic to mirror to the specified workload.
+func (o DomainRouteMirrorOutput) Percent() pulumi.Float64Output {
+	return o.ApplyT(func(v DomainRouteMirror) float64 { return v.Percent }).(pulumi.Float64Output)
+}
+
+// The workload to mirror traffic to.
+func (o DomainRouteMirrorOutput) WorkloadLink() pulumi.StringOutput {
+	return o.ApplyT(func(v DomainRouteMirror) string { return v.WorkloadLink }).(pulumi.StringOutput)
+}
+
+type DomainRouteMirrorArrayOutput struct{ *pulumi.OutputState }
+
+func (DomainRouteMirrorArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]DomainRouteMirror)(nil)).Elem()
+}
+
+func (o DomainRouteMirrorArrayOutput) ToDomainRouteMirrorArrayOutput() DomainRouteMirrorArrayOutput {
+	return o
+}
+
+func (o DomainRouteMirrorArrayOutput) ToDomainRouteMirrorArrayOutputWithContext(ctx context.Context) DomainRouteMirrorArrayOutput {
+	return o
+}
+
+func (o DomainRouteMirrorArrayOutput) Index(i pulumi.IntInput) DomainRouteMirrorOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) DomainRouteMirror {
+		return vs[0].([]DomainRouteMirror)[vs[1].(int)]
+	}).(DomainRouteMirrorOutput)
+}
+
 type DomainSpec struct {
 	// Allows domain to accept wildcards. The associated GVC must have dedicated load balancing enabled.
 	AcceptAllHosts *bool `pulumi:"acceptAllHosts"`
@@ -1636,6 +1742,8 @@ type DomainSpecPortRoute struct {
 	HostPrefix *string `pulumi:"hostPrefix"`
 	// A regex to match the host header.
 	HostRegex *string `pulumi:"hostRegex"`
+	// Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+	Mirrors []DomainSpecPortRouteMirror `pulumi:"mirrors"`
 	// For the linked workload, the port to route traffic to.
 	Port *int `pulumi:"port"`
 	// The path will match any unmatched path prefixes for the subdomain.
@@ -1668,6 +1776,8 @@ type DomainSpecPortRouteArgs struct {
 	HostPrefix pulumi.StringPtrInput `pulumi:"hostPrefix"`
 	// A regex to match the host header.
 	HostRegex pulumi.StringPtrInput `pulumi:"hostRegex"`
+	// Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+	Mirrors DomainSpecPortRouteMirrorArrayInput `pulumi:"mirrors"`
 	// For the linked workload, the port to route traffic to.
 	Port pulumi.IntPtrInput `pulumi:"port"`
 	// The path will match any unmatched path prefixes for the subdomain.
@@ -1746,6 +1856,11 @@ func (o DomainSpecPortRouteOutput) HostPrefix() pulumi.StringPtrOutput {
 // A regex to match the host header.
 func (o DomainSpecPortRouteOutput) HostRegex() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v DomainSpecPortRoute) *string { return v.HostRegex }).(pulumi.StringPtrOutput)
+}
+
+// Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+func (o DomainSpecPortRouteOutput) Mirrors() DomainSpecPortRouteMirrorArrayOutput {
+	return o.ApplyT(func(v DomainSpecPortRoute) []DomainSpecPortRouteMirror { return v.Mirrors }).(DomainSpecPortRouteMirrorArrayOutput)
 }
 
 // For the linked workload, the port to route traffic to.
@@ -2070,6 +2185,112 @@ func (o DomainSpecPortRouteHeadersRequestPtrOutput) Set() pulumi.StringMapOutput
 		}
 		return v.Set
 	}).(pulumi.StringMapOutput)
+}
+
+type DomainSpecPortRouteMirror struct {
+	// The percentage of traffic to mirror to the specified workload.
+	Percent float64 `pulumi:"percent"`
+	// The workload to mirror traffic to.
+	WorkloadLink string `pulumi:"workloadLink"`
+}
+
+// DomainSpecPortRouteMirrorInput is an input type that accepts DomainSpecPortRouteMirrorArgs and DomainSpecPortRouteMirrorOutput values.
+// You can construct a concrete instance of `DomainSpecPortRouteMirrorInput` via:
+//
+//	DomainSpecPortRouteMirrorArgs{...}
+type DomainSpecPortRouteMirrorInput interface {
+	pulumi.Input
+
+	ToDomainSpecPortRouteMirrorOutput() DomainSpecPortRouteMirrorOutput
+	ToDomainSpecPortRouteMirrorOutputWithContext(context.Context) DomainSpecPortRouteMirrorOutput
+}
+
+type DomainSpecPortRouteMirrorArgs struct {
+	// The percentage of traffic to mirror to the specified workload.
+	Percent pulumi.Float64Input `pulumi:"percent"`
+	// The workload to mirror traffic to.
+	WorkloadLink pulumi.StringInput `pulumi:"workloadLink"`
+}
+
+func (DomainSpecPortRouteMirrorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*DomainSpecPortRouteMirror)(nil)).Elem()
+}
+
+func (i DomainSpecPortRouteMirrorArgs) ToDomainSpecPortRouteMirrorOutput() DomainSpecPortRouteMirrorOutput {
+	return i.ToDomainSpecPortRouteMirrorOutputWithContext(context.Background())
+}
+
+func (i DomainSpecPortRouteMirrorArgs) ToDomainSpecPortRouteMirrorOutputWithContext(ctx context.Context) DomainSpecPortRouteMirrorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DomainSpecPortRouteMirrorOutput)
+}
+
+// DomainSpecPortRouteMirrorArrayInput is an input type that accepts DomainSpecPortRouteMirrorArray and DomainSpecPortRouteMirrorArrayOutput values.
+// You can construct a concrete instance of `DomainSpecPortRouteMirrorArrayInput` via:
+//
+//	DomainSpecPortRouteMirrorArray{ DomainSpecPortRouteMirrorArgs{...} }
+type DomainSpecPortRouteMirrorArrayInput interface {
+	pulumi.Input
+
+	ToDomainSpecPortRouteMirrorArrayOutput() DomainSpecPortRouteMirrorArrayOutput
+	ToDomainSpecPortRouteMirrorArrayOutputWithContext(context.Context) DomainSpecPortRouteMirrorArrayOutput
+}
+
+type DomainSpecPortRouteMirrorArray []DomainSpecPortRouteMirrorInput
+
+func (DomainSpecPortRouteMirrorArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]DomainSpecPortRouteMirror)(nil)).Elem()
+}
+
+func (i DomainSpecPortRouteMirrorArray) ToDomainSpecPortRouteMirrorArrayOutput() DomainSpecPortRouteMirrorArrayOutput {
+	return i.ToDomainSpecPortRouteMirrorArrayOutputWithContext(context.Background())
+}
+
+func (i DomainSpecPortRouteMirrorArray) ToDomainSpecPortRouteMirrorArrayOutputWithContext(ctx context.Context) DomainSpecPortRouteMirrorArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DomainSpecPortRouteMirrorArrayOutput)
+}
+
+type DomainSpecPortRouteMirrorOutput struct{ *pulumi.OutputState }
+
+func (DomainSpecPortRouteMirrorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*DomainSpecPortRouteMirror)(nil)).Elem()
+}
+
+func (o DomainSpecPortRouteMirrorOutput) ToDomainSpecPortRouteMirrorOutput() DomainSpecPortRouteMirrorOutput {
+	return o
+}
+
+func (o DomainSpecPortRouteMirrorOutput) ToDomainSpecPortRouteMirrorOutputWithContext(ctx context.Context) DomainSpecPortRouteMirrorOutput {
+	return o
+}
+
+// The percentage of traffic to mirror to the specified workload.
+func (o DomainSpecPortRouteMirrorOutput) Percent() pulumi.Float64Output {
+	return o.ApplyT(func(v DomainSpecPortRouteMirror) float64 { return v.Percent }).(pulumi.Float64Output)
+}
+
+// The workload to mirror traffic to.
+func (o DomainSpecPortRouteMirrorOutput) WorkloadLink() pulumi.StringOutput {
+	return o.ApplyT(func(v DomainSpecPortRouteMirror) string { return v.WorkloadLink }).(pulumi.StringOutput)
+}
+
+type DomainSpecPortRouteMirrorArrayOutput struct{ *pulumi.OutputState }
+
+func (DomainSpecPortRouteMirrorArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]DomainSpecPortRouteMirror)(nil)).Elem()
+}
+
+func (o DomainSpecPortRouteMirrorArrayOutput) ToDomainSpecPortRouteMirrorArrayOutput() DomainSpecPortRouteMirrorArrayOutput {
+	return o
+}
+
+func (o DomainSpecPortRouteMirrorArrayOutput) ToDomainSpecPortRouteMirrorArrayOutputWithContext(ctx context.Context) DomainSpecPortRouteMirrorArrayOutput {
+	return o
+}
+
+func (o DomainSpecPortRouteMirrorArrayOutput) Index(i pulumi.IntInput) DomainSpecPortRouteMirrorOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) DomainSpecPortRouteMirror {
+		return vs[0].([]DomainSpecPortRouteMirror)[vs[1].(int)]
+	}).(DomainSpecPortRouteMirrorOutput)
 }
 
 type DomainSpecPortTls struct {
@@ -33619,6 +33840,8 @@ type VolumeSetAutoscaling struct {
 	MaxCapacity *int `pulumi:"maxCapacity"`
 	// The guaranteed free space on the volume as a percentage of the volume's total size. Control Plane will try to maintain at least that many percent free by scaling up the total size. Minimum percentage: `1`. Maximum Percentage: `100`.
 	MinFreePercentage *int `pulumi:"minFreePercentage"`
+	// Predictive scaling configuration. When enabled, proactively expands volumes based on historical growth rate projections.
+	Predictive *VolumeSetAutoscalingPredictive `pulumi:"predictive"`
 	// When scaling is necessary, then `newCapacity = currentCapacity * storageScalingFactor`. Minimum value: `1.1`.
 	ScalingFactor *float64 `pulumi:"scalingFactor"`
 }
@@ -33639,6 +33862,8 @@ type VolumeSetAutoscalingArgs struct {
 	MaxCapacity pulumi.IntPtrInput `pulumi:"maxCapacity"`
 	// The guaranteed free space on the volume as a percentage of the volume's total size. Control Plane will try to maintain at least that many percent free by scaling up the total size. Minimum percentage: `1`. Maximum Percentage: `100`.
 	MinFreePercentage pulumi.IntPtrInput `pulumi:"minFreePercentage"`
+	// Predictive scaling configuration. When enabled, proactively expands volumes based on historical growth rate projections.
+	Predictive VolumeSetAutoscalingPredictivePtrInput `pulumi:"predictive"`
 	// When scaling is necessary, then `newCapacity = currentCapacity * storageScalingFactor`. Minimum value: `1.1`.
 	ScalingFactor pulumi.Float64PtrInput `pulumi:"scalingFactor"`
 }
@@ -33730,6 +33955,11 @@ func (o VolumeSetAutoscalingOutput) MinFreePercentage() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v VolumeSetAutoscaling) *int { return v.MinFreePercentage }).(pulumi.IntPtrOutput)
 }
 
+// Predictive scaling configuration. When enabled, proactively expands volumes based on historical growth rate projections.
+func (o VolumeSetAutoscalingOutput) Predictive() VolumeSetAutoscalingPredictivePtrOutput {
+	return o.ApplyT(func(v VolumeSetAutoscaling) *VolumeSetAutoscalingPredictive { return v.Predictive }).(VolumeSetAutoscalingPredictivePtrOutput)
+}
+
 // When scaling is necessary, then `newCapacity = currentCapacity * storageScalingFactor`. Minimum value: `1.1`.
 func (o VolumeSetAutoscalingOutput) ScalingFactor() pulumi.Float64PtrOutput {
 	return o.ApplyT(func(v VolumeSetAutoscaling) *float64 { return v.ScalingFactor }).(pulumi.Float64PtrOutput)
@@ -33779,9 +34009,251 @@ func (o VolumeSetAutoscalingPtrOutput) MinFreePercentage() pulumi.IntPtrOutput {
 	}).(pulumi.IntPtrOutput)
 }
 
+// Predictive scaling configuration. When enabled, proactively expands volumes based on historical growth rate projections.
+func (o VolumeSetAutoscalingPtrOutput) Predictive() VolumeSetAutoscalingPredictivePtrOutput {
+	return o.ApplyT(func(v *VolumeSetAutoscaling) *VolumeSetAutoscalingPredictive {
+		if v == nil {
+			return nil
+		}
+		return v.Predictive
+	}).(VolumeSetAutoscalingPredictivePtrOutput)
+}
+
 // When scaling is necessary, then `newCapacity = currentCapacity * storageScalingFactor`. Minimum value: `1.1`.
 func (o VolumeSetAutoscalingPtrOutput) ScalingFactor() pulumi.Float64PtrOutput {
 	return o.ApplyT(func(v *VolumeSetAutoscaling) *float64 {
+		if v == nil {
+			return nil
+		}
+		return v.ScalingFactor
+	}).(pulumi.Float64PtrOutput)
+}
+
+type VolumeSetAutoscalingPredictive struct {
+	// Enable predictive scaling based on historical growth rates. Default: `false`.
+	Enabled *bool `pulumi:"enabled"`
+	// Hours of historical data to analyze. Default: `24`. Max: `168` (1 week).
+	LookbackHours *float64 `pulumi:"lookbackHours"`
+	// Minimum data points required for reliable growth rate calculation. Default: `10`.
+	MinDataPoints *int `pulumi:"minDataPoints"`
+	// Minimum growth rate (GB/hour) to trigger predictive expansion. Default: `0.01`.
+	MinGrowthRateGbPerHour *float64 `pulumi:"minGrowthRateGbPerHour"`
+	// Hours into the future to project storage needs. Default: `6`.
+	ProjectionHours *float64 `pulumi:"projectionHours"`
+	// Scaling factor for predictive expansion. If not set, uses the parent autoscaling scaling_factor. Use a lower value (e.g., `1.2`) for gentler proactive scaling.
+	ScalingFactor *float64 `pulumi:"scalingFactor"`
+}
+
+// VolumeSetAutoscalingPredictiveInput is an input type that accepts VolumeSetAutoscalingPredictiveArgs and VolumeSetAutoscalingPredictiveOutput values.
+// You can construct a concrete instance of `VolumeSetAutoscalingPredictiveInput` via:
+//
+//	VolumeSetAutoscalingPredictiveArgs{...}
+type VolumeSetAutoscalingPredictiveInput interface {
+	pulumi.Input
+
+	ToVolumeSetAutoscalingPredictiveOutput() VolumeSetAutoscalingPredictiveOutput
+	ToVolumeSetAutoscalingPredictiveOutputWithContext(context.Context) VolumeSetAutoscalingPredictiveOutput
+}
+
+type VolumeSetAutoscalingPredictiveArgs struct {
+	// Enable predictive scaling based on historical growth rates. Default: `false`.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// Hours of historical data to analyze. Default: `24`. Max: `168` (1 week).
+	LookbackHours pulumi.Float64PtrInput `pulumi:"lookbackHours"`
+	// Minimum data points required for reliable growth rate calculation. Default: `10`.
+	MinDataPoints pulumi.IntPtrInput `pulumi:"minDataPoints"`
+	// Minimum growth rate (GB/hour) to trigger predictive expansion. Default: `0.01`.
+	MinGrowthRateGbPerHour pulumi.Float64PtrInput `pulumi:"minGrowthRateGbPerHour"`
+	// Hours into the future to project storage needs. Default: `6`.
+	ProjectionHours pulumi.Float64PtrInput `pulumi:"projectionHours"`
+	// Scaling factor for predictive expansion. If not set, uses the parent autoscaling scaling_factor. Use a lower value (e.g., `1.2`) for gentler proactive scaling.
+	ScalingFactor pulumi.Float64PtrInput `pulumi:"scalingFactor"`
+}
+
+func (VolumeSetAutoscalingPredictiveArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*VolumeSetAutoscalingPredictive)(nil)).Elem()
+}
+
+func (i VolumeSetAutoscalingPredictiveArgs) ToVolumeSetAutoscalingPredictiveOutput() VolumeSetAutoscalingPredictiveOutput {
+	return i.ToVolumeSetAutoscalingPredictiveOutputWithContext(context.Background())
+}
+
+func (i VolumeSetAutoscalingPredictiveArgs) ToVolumeSetAutoscalingPredictiveOutputWithContext(ctx context.Context) VolumeSetAutoscalingPredictiveOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(VolumeSetAutoscalingPredictiveOutput)
+}
+
+func (i VolumeSetAutoscalingPredictiveArgs) ToVolumeSetAutoscalingPredictivePtrOutput() VolumeSetAutoscalingPredictivePtrOutput {
+	return i.ToVolumeSetAutoscalingPredictivePtrOutputWithContext(context.Background())
+}
+
+func (i VolumeSetAutoscalingPredictiveArgs) ToVolumeSetAutoscalingPredictivePtrOutputWithContext(ctx context.Context) VolumeSetAutoscalingPredictivePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(VolumeSetAutoscalingPredictiveOutput).ToVolumeSetAutoscalingPredictivePtrOutputWithContext(ctx)
+}
+
+// VolumeSetAutoscalingPredictivePtrInput is an input type that accepts VolumeSetAutoscalingPredictiveArgs, VolumeSetAutoscalingPredictivePtr and VolumeSetAutoscalingPredictivePtrOutput values.
+// You can construct a concrete instance of `VolumeSetAutoscalingPredictivePtrInput` via:
+//
+//	        VolumeSetAutoscalingPredictiveArgs{...}
+//
+//	or:
+//
+//	        nil
+type VolumeSetAutoscalingPredictivePtrInput interface {
+	pulumi.Input
+
+	ToVolumeSetAutoscalingPredictivePtrOutput() VolumeSetAutoscalingPredictivePtrOutput
+	ToVolumeSetAutoscalingPredictivePtrOutputWithContext(context.Context) VolumeSetAutoscalingPredictivePtrOutput
+}
+
+type volumeSetAutoscalingPredictivePtrType VolumeSetAutoscalingPredictiveArgs
+
+func VolumeSetAutoscalingPredictivePtr(v *VolumeSetAutoscalingPredictiveArgs) VolumeSetAutoscalingPredictivePtrInput {
+	return (*volumeSetAutoscalingPredictivePtrType)(v)
+}
+
+func (*volumeSetAutoscalingPredictivePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**VolumeSetAutoscalingPredictive)(nil)).Elem()
+}
+
+func (i *volumeSetAutoscalingPredictivePtrType) ToVolumeSetAutoscalingPredictivePtrOutput() VolumeSetAutoscalingPredictivePtrOutput {
+	return i.ToVolumeSetAutoscalingPredictivePtrOutputWithContext(context.Background())
+}
+
+func (i *volumeSetAutoscalingPredictivePtrType) ToVolumeSetAutoscalingPredictivePtrOutputWithContext(ctx context.Context) VolumeSetAutoscalingPredictivePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(VolumeSetAutoscalingPredictivePtrOutput)
+}
+
+type VolumeSetAutoscalingPredictiveOutput struct{ *pulumi.OutputState }
+
+func (VolumeSetAutoscalingPredictiveOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*VolumeSetAutoscalingPredictive)(nil)).Elem()
+}
+
+func (o VolumeSetAutoscalingPredictiveOutput) ToVolumeSetAutoscalingPredictiveOutput() VolumeSetAutoscalingPredictiveOutput {
+	return o
+}
+
+func (o VolumeSetAutoscalingPredictiveOutput) ToVolumeSetAutoscalingPredictiveOutputWithContext(ctx context.Context) VolumeSetAutoscalingPredictiveOutput {
+	return o
+}
+
+func (o VolumeSetAutoscalingPredictiveOutput) ToVolumeSetAutoscalingPredictivePtrOutput() VolumeSetAutoscalingPredictivePtrOutput {
+	return o.ToVolumeSetAutoscalingPredictivePtrOutputWithContext(context.Background())
+}
+
+func (o VolumeSetAutoscalingPredictiveOutput) ToVolumeSetAutoscalingPredictivePtrOutputWithContext(ctx context.Context) VolumeSetAutoscalingPredictivePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v VolumeSetAutoscalingPredictive) *VolumeSetAutoscalingPredictive {
+		return &v
+	}).(VolumeSetAutoscalingPredictivePtrOutput)
+}
+
+// Enable predictive scaling based on historical growth rates. Default: `false`.
+func (o VolumeSetAutoscalingPredictiveOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v VolumeSetAutoscalingPredictive) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+// Hours of historical data to analyze. Default: `24`. Max: `168` (1 week).
+func (o VolumeSetAutoscalingPredictiveOutput) LookbackHours() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v VolumeSetAutoscalingPredictive) *float64 { return v.LookbackHours }).(pulumi.Float64PtrOutput)
+}
+
+// Minimum data points required for reliable growth rate calculation. Default: `10`.
+func (o VolumeSetAutoscalingPredictiveOutput) MinDataPoints() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v VolumeSetAutoscalingPredictive) *int { return v.MinDataPoints }).(pulumi.IntPtrOutput)
+}
+
+// Minimum growth rate (GB/hour) to trigger predictive expansion. Default: `0.01`.
+func (o VolumeSetAutoscalingPredictiveOutput) MinGrowthRateGbPerHour() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v VolumeSetAutoscalingPredictive) *float64 { return v.MinGrowthRateGbPerHour }).(pulumi.Float64PtrOutput)
+}
+
+// Hours into the future to project storage needs. Default: `6`.
+func (o VolumeSetAutoscalingPredictiveOutput) ProjectionHours() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v VolumeSetAutoscalingPredictive) *float64 { return v.ProjectionHours }).(pulumi.Float64PtrOutput)
+}
+
+// Scaling factor for predictive expansion. If not set, uses the parent autoscaling scaling_factor. Use a lower value (e.g., `1.2`) for gentler proactive scaling.
+func (o VolumeSetAutoscalingPredictiveOutput) ScalingFactor() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v VolumeSetAutoscalingPredictive) *float64 { return v.ScalingFactor }).(pulumi.Float64PtrOutput)
+}
+
+type VolumeSetAutoscalingPredictivePtrOutput struct{ *pulumi.OutputState }
+
+func (VolumeSetAutoscalingPredictivePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**VolumeSetAutoscalingPredictive)(nil)).Elem()
+}
+
+func (o VolumeSetAutoscalingPredictivePtrOutput) ToVolumeSetAutoscalingPredictivePtrOutput() VolumeSetAutoscalingPredictivePtrOutput {
+	return o
+}
+
+func (o VolumeSetAutoscalingPredictivePtrOutput) ToVolumeSetAutoscalingPredictivePtrOutputWithContext(ctx context.Context) VolumeSetAutoscalingPredictivePtrOutput {
+	return o
+}
+
+func (o VolumeSetAutoscalingPredictivePtrOutput) Elem() VolumeSetAutoscalingPredictiveOutput {
+	return o.ApplyT(func(v *VolumeSetAutoscalingPredictive) VolumeSetAutoscalingPredictive {
+		if v != nil {
+			return *v
+		}
+		var ret VolumeSetAutoscalingPredictive
+		return ret
+	}).(VolumeSetAutoscalingPredictiveOutput)
+}
+
+// Enable predictive scaling based on historical growth rates. Default: `false`.
+func (o VolumeSetAutoscalingPredictivePtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *VolumeSetAutoscalingPredictive) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Hours of historical data to analyze. Default: `24`. Max: `168` (1 week).
+func (o VolumeSetAutoscalingPredictivePtrOutput) LookbackHours() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *VolumeSetAutoscalingPredictive) *float64 {
+		if v == nil {
+			return nil
+		}
+		return v.LookbackHours
+	}).(pulumi.Float64PtrOutput)
+}
+
+// Minimum data points required for reliable growth rate calculation. Default: `10`.
+func (o VolumeSetAutoscalingPredictivePtrOutput) MinDataPoints() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *VolumeSetAutoscalingPredictive) *int {
+		if v == nil {
+			return nil
+		}
+		return v.MinDataPoints
+	}).(pulumi.IntPtrOutput)
+}
+
+// Minimum growth rate (GB/hour) to trigger predictive expansion. Default: `0.01`.
+func (o VolumeSetAutoscalingPredictivePtrOutput) MinGrowthRateGbPerHour() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *VolumeSetAutoscalingPredictive) *float64 {
+		if v == nil {
+			return nil
+		}
+		return v.MinGrowthRateGbPerHour
+	}).(pulumi.Float64PtrOutput)
+}
+
+// Hours into the future to project storage needs. Default: `6`.
+func (o VolumeSetAutoscalingPredictivePtrOutput) ProjectionHours() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *VolumeSetAutoscalingPredictive) *float64 {
+		if v == nil {
+			return nil
+		}
+		return v.ProjectionHours
+	}).(pulumi.Float64PtrOutput)
+}
+
+// Scaling factor for predictive expansion. If not set, uses the parent autoscaling scaling_factor. Use a lower value (e.g., `1.2`) for gentler proactive scaling.
+func (o VolumeSetAutoscalingPredictivePtrOutput) ScalingFactor() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v *VolumeSetAutoscalingPredictive) *float64 {
 		if v == nil {
 			return nil
 		}
@@ -38915,8 +39387,10 @@ type WorkloadJob struct {
 	HistoryLimit *int `pulumi:"historyLimit"`
 	// Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`.
 	RestartPolicy *string `pulumi:"restartPolicy"`
-	// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
-	Schedule string `pulumi:"schedule"`
+	// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute. Use this for a single schedule, or use scheduleEntry for multiple schedules.
+	Schedule *string `pulumi:"schedule"`
+	// Multiple schedules with individual container overrides. Use this for workloads that need to run on different schedules with different configurations.
+	ScheduleEntries []WorkloadJobScheduleEntry `pulumi:"scheduleEntries"`
 }
 
 // WorkloadJobInput is an input type that accepts WorkloadJobArgs and WorkloadJobOutput values.
@@ -38939,8 +39413,10 @@ type WorkloadJobArgs struct {
 	HistoryLimit pulumi.IntPtrInput `pulumi:"historyLimit"`
 	// Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`.
 	RestartPolicy pulumi.StringPtrInput `pulumi:"restartPolicy"`
-	// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
-	Schedule pulumi.StringInput `pulumi:"schedule"`
+	// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute. Use this for a single schedule, or use scheduleEntry for multiple schedules.
+	Schedule pulumi.StringPtrInput `pulumi:"schedule"`
+	// Multiple schedules with individual container overrides. Use this for workloads that need to run on different schedules with different configurations.
+	ScheduleEntries WorkloadJobScheduleEntryArrayInput `pulumi:"scheduleEntries"`
 }
 
 func (WorkloadJobArgs) ElementType() reflect.Type {
@@ -39014,9 +39490,14 @@ func (o WorkloadJobOutput) RestartPolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v WorkloadJob) *string { return v.RestartPolicy }).(pulumi.StringPtrOutput)
 }
 
-// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
-func (o WorkloadJobOutput) Schedule() pulumi.StringOutput {
-	return o.ApplyT(func(v WorkloadJob) string { return v.Schedule }).(pulumi.StringOutput)
+// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute. Use this for a single schedule, or use scheduleEntry for multiple schedules.
+func (o WorkloadJobOutput) Schedule() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadJob) *string { return v.Schedule }).(pulumi.StringPtrOutput)
+}
+
+// Multiple schedules with individual container overrides. Use this for workloads that need to run on different schedules with different configurations.
+func (o WorkloadJobOutput) ScheduleEntries() WorkloadJobScheduleEntryArrayOutput {
+	return o.ApplyT(func(v WorkloadJob) []WorkloadJobScheduleEntry { return v.ScheduleEntries }).(WorkloadJobScheduleEntryArrayOutput)
 }
 
 type WorkloadJobArrayOutput struct{ *pulumi.OutputState }
@@ -39037,6 +39518,274 @@ func (o WorkloadJobArrayOutput) Index(i pulumi.IntInput) WorkloadJobOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadJob {
 		return vs[0].([]WorkloadJob)[vs[1].(int)]
 	}).(WorkloadJobOutput)
+}
+
+type WorkloadJobScheduleEntry struct {
+	// Container overrides specific to this schedule execution.
+	ContainerOverrides []WorkloadJobScheduleEntryContainerOverride `pulumi:"containerOverrides"`
+	// Unique name for this schedule.
+	Name string `pulumi:"name"`
+	// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) for when this schedule should execute.
+	Schedule string `pulumi:"schedule"`
+}
+
+// WorkloadJobScheduleEntryInput is an input type that accepts WorkloadJobScheduleEntryArgs and WorkloadJobScheduleEntryOutput values.
+// You can construct a concrete instance of `WorkloadJobScheduleEntryInput` via:
+//
+//	WorkloadJobScheduleEntryArgs{...}
+type WorkloadJobScheduleEntryInput interface {
+	pulumi.Input
+
+	ToWorkloadJobScheduleEntryOutput() WorkloadJobScheduleEntryOutput
+	ToWorkloadJobScheduleEntryOutputWithContext(context.Context) WorkloadJobScheduleEntryOutput
+}
+
+type WorkloadJobScheduleEntryArgs struct {
+	// Container overrides specific to this schedule execution.
+	ContainerOverrides WorkloadJobScheduleEntryContainerOverrideArrayInput `pulumi:"containerOverrides"`
+	// Unique name for this schedule.
+	Name pulumi.StringInput `pulumi:"name"`
+	// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) for when this schedule should execute.
+	Schedule pulumi.StringInput `pulumi:"schedule"`
+}
+
+func (WorkloadJobScheduleEntryArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadJobScheduleEntry)(nil)).Elem()
+}
+
+func (i WorkloadJobScheduleEntryArgs) ToWorkloadJobScheduleEntryOutput() WorkloadJobScheduleEntryOutput {
+	return i.ToWorkloadJobScheduleEntryOutputWithContext(context.Background())
+}
+
+func (i WorkloadJobScheduleEntryArgs) ToWorkloadJobScheduleEntryOutputWithContext(ctx context.Context) WorkloadJobScheduleEntryOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadJobScheduleEntryOutput)
+}
+
+// WorkloadJobScheduleEntryArrayInput is an input type that accepts WorkloadJobScheduleEntryArray and WorkloadJobScheduleEntryArrayOutput values.
+// You can construct a concrete instance of `WorkloadJobScheduleEntryArrayInput` via:
+//
+//	WorkloadJobScheduleEntryArray{ WorkloadJobScheduleEntryArgs{...} }
+type WorkloadJobScheduleEntryArrayInput interface {
+	pulumi.Input
+
+	ToWorkloadJobScheduleEntryArrayOutput() WorkloadJobScheduleEntryArrayOutput
+	ToWorkloadJobScheduleEntryArrayOutputWithContext(context.Context) WorkloadJobScheduleEntryArrayOutput
+}
+
+type WorkloadJobScheduleEntryArray []WorkloadJobScheduleEntryInput
+
+func (WorkloadJobScheduleEntryArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadJobScheduleEntry)(nil)).Elem()
+}
+
+func (i WorkloadJobScheduleEntryArray) ToWorkloadJobScheduleEntryArrayOutput() WorkloadJobScheduleEntryArrayOutput {
+	return i.ToWorkloadJobScheduleEntryArrayOutputWithContext(context.Background())
+}
+
+func (i WorkloadJobScheduleEntryArray) ToWorkloadJobScheduleEntryArrayOutputWithContext(ctx context.Context) WorkloadJobScheduleEntryArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadJobScheduleEntryArrayOutput)
+}
+
+type WorkloadJobScheduleEntryOutput struct{ *pulumi.OutputState }
+
+func (WorkloadJobScheduleEntryOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadJobScheduleEntry)(nil)).Elem()
+}
+
+func (o WorkloadJobScheduleEntryOutput) ToWorkloadJobScheduleEntryOutput() WorkloadJobScheduleEntryOutput {
+	return o
+}
+
+func (o WorkloadJobScheduleEntryOutput) ToWorkloadJobScheduleEntryOutputWithContext(ctx context.Context) WorkloadJobScheduleEntryOutput {
+	return o
+}
+
+// Container overrides specific to this schedule execution.
+func (o WorkloadJobScheduleEntryOutput) ContainerOverrides() WorkloadJobScheduleEntryContainerOverrideArrayOutput {
+	return o.ApplyT(func(v WorkloadJobScheduleEntry) []WorkloadJobScheduleEntryContainerOverride {
+		return v.ContainerOverrides
+	}).(WorkloadJobScheduleEntryContainerOverrideArrayOutput)
+}
+
+// Unique name for this schedule.
+func (o WorkloadJobScheduleEntryOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v WorkloadJobScheduleEntry) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) for when this schedule should execute.
+func (o WorkloadJobScheduleEntryOutput) Schedule() pulumi.StringOutput {
+	return o.ApplyT(func(v WorkloadJobScheduleEntry) string { return v.Schedule }).(pulumi.StringOutput)
+}
+
+type WorkloadJobScheduleEntryArrayOutput struct{ *pulumi.OutputState }
+
+func (WorkloadJobScheduleEntryArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadJobScheduleEntry)(nil)).Elem()
+}
+
+func (o WorkloadJobScheduleEntryArrayOutput) ToWorkloadJobScheduleEntryArrayOutput() WorkloadJobScheduleEntryArrayOutput {
+	return o
+}
+
+func (o WorkloadJobScheduleEntryArrayOutput) ToWorkloadJobScheduleEntryArrayOutputWithContext(ctx context.Context) WorkloadJobScheduleEntryArrayOutput {
+	return o
+}
+
+func (o WorkloadJobScheduleEntryArrayOutput) Index(i pulumi.IntInput) WorkloadJobScheduleEntryOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadJobScheduleEntry {
+		return vs[0].([]WorkloadJobScheduleEntry)[vs[1].(int)]
+	}).(WorkloadJobScheduleEntryOutput)
+}
+
+type WorkloadJobScheduleEntryContainerOverride struct {
+	// Command line arguments for this execution.
+	Args []string `pulumi:"args"`
+	// Optionally override the entrypoint.
+	Command *string `pulumi:"command"`
+	// CPU allocation override.
+	Cpu *string `pulumi:"cpu"`
+	// Environment variables specific to this execution.
+	Env map[string]string `pulumi:"env"`
+	// Image override.
+	Image *string `pulumi:"image"`
+	// Memory allocation override.
+	Memory *string `pulumi:"memory"`
+	// The name of the container to override.
+	Name string `pulumi:"name"`
+}
+
+// WorkloadJobScheduleEntryContainerOverrideInput is an input type that accepts WorkloadJobScheduleEntryContainerOverrideArgs and WorkloadJobScheduleEntryContainerOverrideOutput values.
+// You can construct a concrete instance of `WorkloadJobScheduleEntryContainerOverrideInput` via:
+//
+//	WorkloadJobScheduleEntryContainerOverrideArgs{...}
+type WorkloadJobScheduleEntryContainerOverrideInput interface {
+	pulumi.Input
+
+	ToWorkloadJobScheduleEntryContainerOverrideOutput() WorkloadJobScheduleEntryContainerOverrideOutput
+	ToWorkloadJobScheduleEntryContainerOverrideOutputWithContext(context.Context) WorkloadJobScheduleEntryContainerOverrideOutput
+}
+
+type WorkloadJobScheduleEntryContainerOverrideArgs struct {
+	// Command line arguments for this execution.
+	Args pulumi.StringArrayInput `pulumi:"args"`
+	// Optionally override the entrypoint.
+	Command pulumi.StringPtrInput `pulumi:"command"`
+	// CPU allocation override.
+	Cpu pulumi.StringPtrInput `pulumi:"cpu"`
+	// Environment variables specific to this execution.
+	Env pulumi.StringMapInput `pulumi:"env"`
+	// Image override.
+	Image pulumi.StringPtrInput `pulumi:"image"`
+	// Memory allocation override.
+	Memory pulumi.StringPtrInput `pulumi:"memory"`
+	// The name of the container to override.
+	Name pulumi.StringInput `pulumi:"name"`
+}
+
+func (WorkloadJobScheduleEntryContainerOverrideArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadJobScheduleEntryContainerOverride)(nil)).Elem()
+}
+
+func (i WorkloadJobScheduleEntryContainerOverrideArgs) ToWorkloadJobScheduleEntryContainerOverrideOutput() WorkloadJobScheduleEntryContainerOverrideOutput {
+	return i.ToWorkloadJobScheduleEntryContainerOverrideOutputWithContext(context.Background())
+}
+
+func (i WorkloadJobScheduleEntryContainerOverrideArgs) ToWorkloadJobScheduleEntryContainerOverrideOutputWithContext(ctx context.Context) WorkloadJobScheduleEntryContainerOverrideOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadJobScheduleEntryContainerOverrideOutput)
+}
+
+// WorkloadJobScheduleEntryContainerOverrideArrayInput is an input type that accepts WorkloadJobScheduleEntryContainerOverrideArray and WorkloadJobScheduleEntryContainerOverrideArrayOutput values.
+// You can construct a concrete instance of `WorkloadJobScheduleEntryContainerOverrideArrayInput` via:
+//
+//	WorkloadJobScheduleEntryContainerOverrideArray{ WorkloadJobScheduleEntryContainerOverrideArgs{...} }
+type WorkloadJobScheduleEntryContainerOverrideArrayInput interface {
+	pulumi.Input
+
+	ToWorkloadJobScheduleEntryContainerOverrideArrayOutput() WorkloadJobScheduleEntryContainerOverrideArrayOutput
+	ToWorkloadJobScheduleEntryContainerOverrideArrayOutputWithContext(context.Context) WorkloadJobScheduleEntryContainerOverrideArrayOutput
+}
+
+type WorkloadJobScheduleEntryContainerOverrideArray []WorkloadJobScheduleEntryContainerOverrideInput
+
+func (WorkloadJobScheduleEntryContainerOverrideArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadJobScheduleEntryContainerOverride)(nil)).Elem()
+}
+
+func (i WorkloadJobScheduleEntryContainerOverrideArray) ToWorkloadJobScheduleEntryContainerOverrideArrayOutput() WorkloadJobScheduleEntryContainerOverrideArrayOutput {
+	return i.ToWorkloadJobScheduleEntryContainerOverrideArrayOutputWithContext(context.Background())
+}
+
+func (i WorkloadJobScheduleEntryContainerOverrideArray) ToWorkloadJobScheduleEntryContainerOverrideArrayOutputWithContext(ctx context.Context) WorkloadJobScheduleEntryContainerOverrideArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadJobScheduleEntryContainerOverrideArrayOutput)
+}
+
+type WorkloadJobScheduleEntryContainerOverrideOutput struct{ *pulumi.OutputState }
+
+func (WorkloadJobScheduleEntryContainerOverrideOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadJobScheduleEntryContainerOverride)(nil)).Elem()
+}
+
+func (o WorkloadJobScheduleEntryContainerOverrideOutput) ToWorkloadJobScheduleEntryContainerOverrideOutput() WorkloadJobScheduleEntryContainerOverrideOutput {
+	return o
+}
+
+func (o WorkloadJobScheduleEntryContainerOverrideOutput) ToWorkloadJobScheduleEntryContainerOverrideOutputWithContext(ctx context.Context) WorkloadJobScheduleEntryContainerOverrideOutput {
+	return o
+}
+
+// Command line arguments for this execution.
+func (o WorkloadJobScheduleEntryContainerOverrideOutput) Args() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v WorkloadJobScheduleEntryContainerOverride) []string { return v.Args }).(pulumi.StringArrayOutput)
+}
+
+// Optionally override the entrypoint.
+func (o WorkloadJobScheduleEntryContainerOverrideOutput) Command() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadJobScheduleEntryContainerOverride) *string { return v.Command }).(pulumi.StringPtrOutput)
+}
+
+// CPU allocation override.
+func (o WorkloadJobScheduleEntryContainerOverrideOutput) Cpu() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadJobScheduleEntryContainerOverride) *string { return v.Cpu }).(pulumi.StringPtrOutput)
+}
+
+// Environment variables specific to this execution.
+func (o WorkloadJobScheduleEntryContainerOverrideOutput) Env() pulumi.StringMapOutput {
+	return o.ApplyT(func(v WorkloadJobScheduleEntryContainerOverride) map[string]string { return v.Env }).(pulumi.StringMapOutput)
+}
+
+// Image override.
+func (o WorkloadJobScheduleEntryContainerOverrideOutput) Image() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadJobScheduleEntryContainerOverride) *string { return v.Image }).(pulumi.StringPtrOutput)
+}
+
+// Memory allocation override.
+func (o WorkloadJobScheduleEntryContainerOverrideOutput) Memory() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadJobScheduleEntryContainerOverride) *string { return v.Memory }).(pulumi.StringPtrOutput)
+}
+
+// The name of the container to override.
+func (o WorkloadJobScheduleEntryContainerOverrideOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v WorkloadJobScheduleEntryContainerOverride) string { return v.Name }).(pulumi.StringOutput)
+}
+
+type WorkloadJobScheduleEntryContainerOverrideArrayOutput struct{ *pulumi.OutputState }
+
+func (WorkloadJobScheduleEntryContainerOverrideArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadJobScheduleEntryContainerOverride)(nil)).Elem()
+}
+
+func (o WorkloadJobScheduleEntryContainerOverrideArrayOutput) ToWorkloadJobScheduleEntryContainerOverrideArrayOutput() WorkloadJobScheduleEntryContainerOverrideArrayOutput {
+	return o
+}
+
+func (o WorkloadJobScheduleEntryContainerOverrideArrayOutput) ToWorkloadJobScheduleEntryContainerOverrideArrayOutputWithContext(ctx context.Context) WorkloadJobScheduleEntryContainerOverrideArrayOutput {
+	return o
+}
+
+func (o WorkloadJobScheduleEntryContainerOverrideArrayOutput) Index(i pulumi.IntInput) WorkloadJobScheduleEntryContainerOverrideOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadJobScheduleEntryContainerOverride {
+		return vs[0].([]WorkloadJobScheduleEntryContainerOverride)[vs[1].(int)]
+	}).(WorkloadJobScheduleEntryContainerOverrideOutput)
 }
 
 type WorkloadLoadBalancer struct {
@@ -52973,6 +53722,8 @@ type GetWorkloadJob struct {
 	RestartPolicy string `pulumi:"restartPolicy"`
 	// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
 	Schedule string `pulumi:"schedule"`
+	// Multiple schedules with individual container overrides.
+	ScheduleEntries []GetWorkloadJobScheduleEntry `pulumi:"scheduleEntries"`
 }
 
 // GetWorkloadJobInput is an input type that accepts GetWorkloadJobArgs and GetWorkloadJobOutput values.
@@ -52997,6 +53748,8 @@ type GetWorkloadJobArgs struct {
 	RestartPolicy pulumi.StringInput `pulumi:"restartPolicy"`
 	// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
 	Schedule pulumi.StringInput `pulumi:"schedule"`
+	// Multiple schedules with individual container overrides.
+	ScheduleEntries GetWorkloadJobScheduleEntryArrayInput `pulumi:"scheduleEntries"`
 }
 
 func (GetWorkloadJobArgs) ElementType() reflect.Type {
@@ -53075,6 +53828,11 @@ func (o GetWorkloadJobOutput) Schedule() pulumi.StringOutput {
 	return o.ApplyT(func(v GetWorkloadJob) string { return v.Schedule }).(pulumi.StringOutput)
 }
 
+// Multiple schedules with individual container overrides.
+func (o GetWorkloadJobOutput) ScheduleEntries() GetWorkloadJobScheduleEntryArrayOutput {
+	return o.ApplyT(func(v GetWorkloadJob) []GetWorkloadJobScheduleEntry { return v.ScheduleEntries }).(GetWorkloadJobScheduleEntryArrayOutput)
+}
+
 type GetWorkloadJobArrayOutput struct{ *pulumi.OutputState }
 
 func (GetWorkloadJobArrayOutput) ElementType() reflect.Type {
@@ -53093,6 +53851,274 @@ func (o GetWorkloadJobArrayOutput) Index(i pulumi.IntInput) GetWorkloadJobOutput
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadJob {
 		return vs[0].([]GetWorkloadJob)[vs[1].(int)]
 	}).(GetWorkloadJobOutput)
+}
+
+type GetWorkloadJobScheduleEntry struct {
+	// Container overrides specific to this schedule execution.
+	ContainerOverrides []GetWorkloadJobScheduleEntryContainerOverride `pulumi:"containerOverrides"`
+	// Unique name for this schedule.
+	Name string `pulumi:"name"`
+	// A standard cron schedule expression for when this schedule should execute.
+	Schedule string `pulumi:"schedule"`
+}
+
+// GetWorkloadJobScheduleEntryInput is an input type that accepts GetWorkloadJobScheduleEntryArgs and GetWorkloadJobScheduleEntryOutput values.
+// You can construct a concrete instance of `GetWorkloadJobScheduleEntryInput` via:
+//
+//	GetWorkloadJobScheduleEntryArgs{...}
+type GetWorkloadJobScheduleEntryInput interface {
+	pulumi.Input
+
+	ToGetWorkloadJobScheduleEntryOutput() GetWorkloadJobScheduleEntryOutput
+	ToGetWorkloadJobScheduleEntryOutputWithContext(context.Context) GetWorkloadJobScheduleEntryOutput
+}
+
+type GetWorkloadJobScheduleEntryArgs struct {
+	// Container overrides specific to this schedule execution.
+	ContainerOverrides GetWorkloadJobScheduleEntryContainerOverrideArrayInput `pulumi:"containerOverrides"`
+	// Unique name for this schedule.
+	Name pulumi.StringInput `pulumi:"name"`
+	// A standard cron schedule expression for when this schedule should execute.
+	Schedule pulumi.StringInput `pulumi:"schedule"`
+}
+
+func (GetWorkloadJobScheduleEntryArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadJobScheduleEntry)(nil)).Elem()
+}
+
+func (i GetWorkloadJobScheduleEntryArgs) ToGetWorkloadJobScheduleEntryOutput() GetWorkloadJobScheduleEntryOutput {
+	return i.ToGetWorkloadJobScheduleEntryOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadJobScheduleEntryArgs) ToGetWorkloadJobScheduleEntryOutputWithContext(ctx context.Context) GetWorkloadJobScheduleEntryOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadJobScheduleEntryOutput)
+}
+
+// GetWorkloadJobScheduleEntryArrayInput is an input type that accepts GetWorkloadJobScheduleEntryArray and GetWorkloadJobScheduleEntryArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadJobScheduleEntryArrayInput` via:
+//
+//	GetWorkloadJobScheduleEntryArray{ GetWorkloadJobScheduleEntryArgs{...} }
+type GetWorkloadJobScheduleEntryArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadJobScheduleEntryArrayOutput() GetWorkloadJobScheduleEntryArrayOutput
+	ToGetWorkloadJobScheduleEntryArrayOutputWithContext(context.Context) GetWorkloadJobScheduleEntryArrayOutput
+}
+
+type GetWorkloadJobScheduleEntryArray []GetWorkloadJobScheduleEntryInput
+
+func (GetWorkloadJobScheduleEntryArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadJobScheduleEntry)(nil)).Elem()
+}
+
+func (i GetWorkloadJobScheduleEntryArray) ToGetWorkloadJobScheduleEntryArrayOutput() GetWorkloadJobScheduleEntryArrayOutput {
+	return i.ToGetWorkloadJobScheduleEntryArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadJobScheduleEntryArray) ToGetWorkloadJobScheduleEntryArrayOutputWithContext(ctx context.Context) GetWorkloadJobScheduleEntryArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadJobScheduleEntryArrayOutput)
+}
+
+type GetWorkloadJobScheduleEntryOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadJobScheduleEntryOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadJobScheduleEntry)(nil)).Elem()
+}
+
+func (o GetWorkloadJobScheduleEntryOutput) ToGetWorkloadJobScheduleEntryOutput() GetWorkloadJobScheduleEntryOutput {
+	return o
+}
+
+func (o GetWorkloadJobScheduleEntryOutput) ToGetWorkloadJobScheduleEntryOutputWithContext(ctx context.Context) GetWorkloadJobScheduleEntryOutput {
+	return o
+}
+
+// Container overrides specific to this schedule execution.
+func (o GetWorkloadJobScheduleEntryOutput) ContainerOverrides() GetWorkloadJobScheduleEntryContainerOverrideArrayOutput {
+	return o.ApplyT(func(v GetWorkloadJobScheduleEntry) []GetWorkloadJobScheduleEntryContainerOverride {
+		return v.ContainerOverrides
+	}).(GetWorkloadJobScheduleEntryContainerOverrideArrayOutput)
+}
+
+// Unique name for this schedule.
+func (o GetWorkloadJobScheduleEntryOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadJobScheduleEntry) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// A standard cron schedule expression for when this schedule should execute.
+func (o GetWorkloadJobScheduleEntryOutput) Schedule() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadJobScheduleEntry) string { return v.Schedule }).(pulumi.StringOutput)
+}
+
+type GetWorkloadJobScheduleEntryArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadJobScheduleEntryArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadJobScheduleEntry)(nil)).Elem()
+}
+
+func (o GetWorkloadJobScheduleEntryArrayOutput) ToGetWorkloadJobScheduleEntryArrayOutput() GetWorkloadJobScheduleEntryArrayOutput {
+	return o
+}
+
+func (o GetWorkloadJobScheduleEntryArrayOutput) ToGetWorkloadJobScheduleEntryArrayOutputWithContext(ctx context.Context) GetWorkloadJobScheduleEntryArrayOutput {
+	return o
+}
+
+func (o GetWorkloadJobScheduleEntryArrayOutput) Index(i pulumi.IntInput) GetWorkloadJobScheduleEntryOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadJobScheduleEntry {
+		return vs[0].([]GetWorkloadJobScheduleEntry)[vs[1].(int)]
+	}).(GetWorkloadJobScheduleEntryOutput)
+}
+
+type GetWorkloadJobScheduleEntryContainerOverride struct {
+	// Command line arguments for this execution.
+	Args []string `pulumi:"args"`
+	// Optionally override the entrypoint.
+	Command string `pulumi:"command"`
+	// CPU allocation override.
+	Cpu string `pulumi:"cpu"`
+	// Environment variables specific to this execution.
+	Env map[string]string `pulumi:"env"`
+	// Image override.
+	Image string `pulumi:"image"`
+	// Memory allocation override.
+	Memory string `pulumi:"memory"`
+	// The name of the container to override.
+	Name string `pulumi:"name"`
+}
+
+// GetWorkloadJobScheduleEntryContainerOverrideInput is an input type that accepts GetWorkloadJobScheduleEntryContainerOverrideArgs and GetWorkloadJobScheduleEntryContainerOverrideOutput values.
+// You can construct a concrete instance of `GetWorkloadJobScheduleEntryContainerOverrideInput` via:
+//
+//	GetWorkloadJobScheduleEntryContainerOverrideArgs{...}
+type GetWorkloadJobScheduleEntryContainerOverrideInput interface {
+	pulumi.Input
+
+	ToGetWorkloadJobScheduleEntryContainerOverrideOutput() GetWorkloadJobScheduleEntryContainerOverrideOutput
+	ToGetWorkloadJobScheduleEntryContainerOverrideOutputWithContext(context.Context) GetWorkloadJobScheduleEntryContainerOverrideOutput
+}
+
+type GetWorkloadJobScheduleEntryContainerOverrideArgs struct {
+	// Command line arguments for this execution.
+	Args pulumi.StringArrayInput `pulumi:"args"`
+	// Optionally override the entrypoint.
+	Command pulumi.StringInput `pulumi:"command"`
+	// CPU allocation override.
+	Cpu pulumi.StringInput `pulumi:"cpu"`
+	// Environment variables specific to this execution.
+	Env pulumi.StringMapInput `pulumi:"env"`
+	// Image override.
+	Image pulumi.StringInput `pulumi:"image"`
+	// Memory allocation override.
+	Memory pulumi.StringInput `pulumi:"memory"`
+	// The name of the container to override.
+	Name pulumi.StringInput `pulumi:"name"`
+}
+
+func (GetWorkloadJobScheduleEntryContainerOverrideArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadJobScheduleEntryContainerOverride)(nil)).Elem()
+}
+
+func (i GetWorkloadJobScheduleEntryContainerOverrideArgs) ToGetWorkloadJobScheduleEntryContainerOverrideOutput() GetWorkloadJobScheduleEntryContainerOverrideOutput {
+	return i.ToGetWorkloadJobScheduleEntryContainerOverrideOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadJobScheduleEntryContainerOverrideArgs) ToGetWorkloadJobScheduleEntryContainerOverrideOutputWithContext(ctx context.Context) GetWorkloadJobScheduleEntryContainerOverrideOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadJobScheduleEntryContainerOverrideOutput)
+}
+
+// GetWorkloadJobScheduleEntryContainerOverrideArrayInput is an input type that accepts GetWorkloadJobScheduleEntryContainerOverrideArray and GetWorkloadJobScheduleEntryContainerOverrideArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadJobScheduleEntryContainerOverrideArrayInput` via:
+//
+//	GetWorkloadJobScheduleEntryContainerOverrideArray{ GetWorkloadJobScheduleEntryContainerOverrideArgs{...} }
+type GetWorkloadJobScheduleEntryContainerOverrideArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadJobScheduleEntryContainerOverrideArrayOutput() GetWorkloadJobScheduleEntryContainerOverrideArrayOutput
+	ToGetWorkloadJobScheduleEntryContainerOverrideArrayOutputWithContext(context.Context) GetWorkloadJobScheduleEntryContainerOverrideArrayOutput
+}
+
+type GetWorkloadJobScheduleEntryContainerOverrideArray []GetWorkloadJobScheduleEntryContainerOverrideInput
+
+func (GetWorkloadJobScheduleEntryContainerOverrideArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadJobScheduleEntryContainerOverride)(nil)).Elem()
+}
+
+func (i GetWorkloadJobScheduleEntryContainerOverrideArray) ToGetWorkloadJobScheduleEntryContainerOverrideArrayOutput() GetWorkloadJobScheduleEntryContainerOverrideArrayOutput {
+	return i.ToGetWorkloadJobScheduleEntryContainerOverrideArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadJobScheduleEntryContainerOverrideArray) ToGetWorkloadJobScheduleEntryContainerOverrideArrayOutputWithContext(ctx context.Context) GetWorkloadJobScheduleEntryContainerOverrideArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadJobScheduleEntryContainerOverrideArrayOutput)
+}
+
+type GetWorkloadJobScheduleEntryContainerOverrideOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadJobScheduleEntryContainerOverrideOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadJobScheduleEntryContainerOverride)(nil)).Elem()
+}
+
+func (o GetWorkloadJobScheduleEntryContainerOverrideOutput) ToGetWorkloadJobScheduleEntryContainerOverrideOutput() GetWorkloadJobScheduleEntryContainerOverrideOutput {
+	return o
+}
+
+func (o GetWorkloadJobScheduleEntryContainerOverrideOutput) ToGetWorkloadJobScheduleEntryContainerOverrideOutputWithContext(ctx context.Context) GetWorkloadJobScheduleEntryContainerOverrideOutput {
+	return o
+}
+
+// Command line arguments for this execution.
+func (o GetWorkloadJobScheduleEntryContainerOverrideOutput) Args() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadJobScheduleEntryContainerOverride) []string { return v.Args }).(pulumi.StringArrayOutput)
+}
+
+// Optionally override the entrypoint.
+func (o GetWorkloadJobScheduleEntryContainerOverrideOutput) Command() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadJobScheduleEntryContainerOverride) string { return v.Command }).(pulumi.StringOutput)
+}
+
+// CPU allocation override.
+func (o GetWorkloadJobScheduleEntryContainerOverrideOutput) Cpu() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadJobScheduleEntryContainerOverride) string { return v.Cpu }).(pulumi.StringOutput)
+}
+
+// Environment variables specific to this execution.
+func (o GetWorkloadJobScheduleEntryContainerOverrideOutput) Env() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetWorkloadJobScheduleEntryContainerOverride) map[string]string { return v.Env }).(pulumi.StringMapOutput)
+}
+
+// Image override.
+func (o GetWorkloadJobScheduleEntryContainerOverrideOutput) Image() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadJobScheduleEntryContainerOverride) string { return v.Image }).(pulumi.StringOutput)
+}
+
+// Memory allocation override.
+func (o GetWorkloadJobScheduleEntryContainerOverrideOutput) Memory() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadJobScheduleEntryContainerOverride) string { return v.Memory }).(pulumi.StringOutput)
+}
+
+// The name of the container to override.
+func (o GetWorkloadJobScheduleEntryContainerOverrideOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadJobScheduleEntryContainerOverride) string { return v.Name }).(pulumi.StringOutput)
+}
+
+type GetWorkloadJobScheduleEntryContainerOverrideArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadJobScheduleEntryContainerOverrideArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadJobScheduleEntryContainerOverride)(nil)).Elem()
+}
+
+func (o GetWorkloadJobScheduleEntryContainerOverrideArrayOutput) ToGetWorkloadJobScheduleEntryContainerOverrideArrayOutput() GetWorkloadJobScheduleEntryContainerOverrideArrayOutput {
+	return o
+}
+
+func (o GetWorkloadJobScheduleEntryContainerOverrideArrayOutput) ToGetWorkloadJobScheduleEntryContainerOverrideArrayOutputWithContext(ctx context.Context) GetWorkloadJobScheduleEntryContainerOverrideArrayOutput {
+	return o
+}
+
+func (o GetWorkloadJobScheduleEntryContainerOverrideArrayOutput) Index(i pulumi.IntInput) GetWorkloadJobScheduleEntryContainerOverrideOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadJobScheduleEntryContainerOverride {
+		return vs[0].([]GetWorkloadJobScheduleEntryContainerOverride)[vs[1].(int)]
+	}).(GetWorkloadJobScheduleEntryContainerOverrideOutput)
 }
 
 type GetWorkloadLoadBalancer struct {
@@ -57370,6 +58396,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainRouteHeadersPtrInput)(nil)).Elem(), DomainRouteHeadersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainRouteHeadersRequestInput)(nil)).Elem(), DomainRouteHeadersRequestArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainRouteHeadersRequestPtrInput)(nil)).Elem(), DomainRouteHeadersRequestArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*DomainRouteMirrorInput)(nil)).Elem(), DomainRouteMirrorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*DomainRouteMirrorArrayInput)(nil)).Elem(), DomainRouteMirrorArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecInput)(nil)).Elem(), DomainSpecArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPtrInput)(nil)).Elem(), DomainSpecArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortInput)(nil)).Elem(), DomainSpecPortArgs{})
@@ -57384,6 +58412,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortRouteHeadersPtrInput)(nil)).Elem(), DomainSpecPortRouteHeadersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortRouteHeadersRequestInput)(nil)).Elem(), DomainSpecPortRouteHeadersRequestArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortRouteHeadersRequestPtrInput)(nil)).Elem(), DomainSpecPortRouteHeadersRequestArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortRouteMirrorInput)(nil)).Elem(), DomainSpecPortRouteMirrorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortRouteMirrorArrayInput)(nil)).Elem(), DomainSpecPortRouteMirrorArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortTlsInput)(nil)).Elem(), DomainSpecPortTlsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortTlsPtrInput)(nil)).Elem(), DomainSpecPortTlsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortTlsClientCertificateInput)(nil)).Elem(), DomainSpecPortTlsClientCertificateArgs{})
@@ -57780,6 +58810,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SecretUserpassPtrInput)(nil)).Elem(), SecretUserpassArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSetAutoscalingInput)(nil)).Elem(), VolumeSetAutoscalingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSetAutoscalingPtrInput)(nil)).Elem(), VolumeSetAutoscalingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSetAutoscalingPredictiveInput)(nil)).Elem(), VolumeSetAutoscalingPredictiveArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSetAutoscalingPredictivePtrInput)(nil)).Elem(), VolumeSetAutoscalingPredictiveArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSetCustomEncryptionInput)(nil)).Elem(), VolumeSetCustomEncryptionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSetCustomEncryptionPtrInput)(nil)).Elem(), VolumeSetCustomEncryptionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSetCustomEncryptionRegionsInput)(nil)).Elem(), VolumeSetCustomEncryptionRegionsArgs{})
@@ -57848,6 +58880,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadFirewallSpecInternalPtrInput)(nil)).Elem(), WorkloadFirewallSpecInternalArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadJobInput)(nil)).Elem(), WorkloadJobArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadJobArrayInput)(nil)).Elem(), WorkloadJobArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadJobScheduleEntryInput)(nil)).Elem(), WorkloadJobScheduleEntryArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadJobScheduleEntryArrayInput)(nil)).Elem(), WorkloadJobScheduleEntryArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadJobScheduleEntryContainerOverrideInput)(nil)).Elem(), WorkloadJobScheduleEntryContainerOverrideArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadJobScheduleEntryContainerOverrideArrayInput)(nil)).Elem(), WorkloadJobScheduleEntryContainerOverrideArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerInput)(nil)).Elem(), WorkloadLoadBalancerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerPtrInput)(nil)).Elem(), WorkloadLoadBalancerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerDirectInput)(nil)).Elem(), WorkloadLoadBalancerDirectArgs{})
@@ -58048,6 +59084,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecInternalArrayInput)(nil)).Elem(), GetWorkloadFirewallSpecInternalArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadJobInput)(nil)).Elem(), GetWorkloadJobArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadJobArrayInput)(nil)).Elem(), GetWorkloadJobArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadJobScheduleEntryInput)(nil)).Elem(), GetWorkloadJobScheduleEntryArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadJobScheduleEntryArrayInput)(nil)).Elem(), GetWorkloadJobScheduleEntryArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadJobScheduleEntryContainerOverrideInput)(nil)).Elem(), GetWorkloadJobScheduleEntryContainerOverrideArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadJobScheduleEntryContainerOverrideArrayInput)(nil)).Elem(), GetWorkloadJobScheduleEntryContainerOverrideArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLoadBalancerInput)(nil)).Elem(), GetWorkloadLoadBalancerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLoadBalancerArrayInput)(nil)).Elem(), GetWorkloadLoadBalancerArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLoadBalancerDirectInput)(nil)).Elem(), GetWorkloadLoadBalancerDirectArgs{})
@@ -58132,6 +59172,8 @@ func init() {
 	pulumi.RegisterOutputType(DomainRouteHeadersPtrOutput{})
 	pulumi.RegisterOutputType(DomainRouteHeadersRequestOutput{})
 	pulumi.RegisterOutputType(DomainRouteHeadersRequestPtrOutput{})
+	pulumi.RegisterOutputType(DomainRouteMirrorOutput{})
+	pulumi.RegisterOutputType(DomainRouteMirrorArrayOutput{})
 	pulumi.RegisterOutputType(DomainSpecOutput{})
 	pulumi.RegisterOutputType(DomainSpecPtrOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortOutput{})
@@ -58146,6 +59188,8 @@ func init() {
 	pulumi.RegisterOutputType(DomainSpecPortRouteHeadersPtrOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortRouteHeadersRequestOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortRouteHeadersRequestPtrOutput{})
+	pulumi.RegisterOutputType(DomainSpecPortRouteMirrorOutput{})
+	pulumi.RegisterOutputType(DomainSpecPortRouteMirrorArrayOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortTlsOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortTlsPtrOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortTlsClientCertificateOutput{})
@@ -58542,6 +59586,8 @@ func init() {
 	pulumi.RegisterOutputType(SecretUserpassPtrOutput{})
 	pulumi.RegisterOutputType(VolumeSetAutoscalingOutput{})
 	pulumi.RegisterOutputType(VolumeSetAutoscalingPtrOutput{})
+	pulumi.RegisterOutputType(VolumeSetAutoscalingPredictiveOutput{})
+	pulumi.RegisterOutputType(VolumeSetAutoscalingPredictivePtrOutput{})
 	pulumi.RegisterOutputType(VolumeSetCustomEncryptionOutput{})
 	pulumi.RegisterOutputType(VolumeSetCustomEncryptionPtrOutput{})
 	pulumi.RegisterOutputType(VolumeSetCustomEncryptionRegionsOutput{})
@@ -58610,6 +59656,10 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadFirewallSpecInternalPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadJobOutput{})
 	pulumi.RegisterOutputType(WorkloadJobArrayOutput{})
+	pulumi.RegisterOutputType(WorkloadJobScheduleEntryOutput{})
+	pulumi.RegisterOutputType(WorkloadJobScheduleEntryArrayOutput{})
+	pulumi.RegisterOutputType(WorkloadJobScheduleEntryContainerOverrideOutput{})
+	pulumi.RegisterOutputType(WorkloadJobScheduleEntryContainerOverrideArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadLoadBalancerOutput{})
 	pulumi.RegisterOutputType(WorkloadLoadBalancerPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadLoadBalancerDirectOutput{})
@@ -58810,6 +59860,10 @@ func init() {
 	pulumi.RegisterOutputType(GetWorkloadFirewallSpecInternalArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadJobOutput{})
 	pulumi.RegisterOutputType(GetWorkloadJobArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadJobScheduleEntryOutput{})
+	pulumi.RegisterOutputType(GetWorkloadJobScheduleEntryArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadJobScheduleEntryContainerOverrideOutput{})
+	pulumi.RegisterOutputType(GetWorkloadJobScheduleEntryContainerOverrideArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLoadBalancerOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLoadBalancerArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLoadBalancerDirectOutput{})

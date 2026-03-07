@@ -26,6 +26,12 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<int>? MinFreePercentage { get; set; }
 
         /// <summary>
+        /// Predictive scaling configuration. When enabled, proactively expands volumes based on historical growth rate projections.
+        /// </summary>
+        [Input("predictive")]
+        public Input<Inputs.VolumeSetAutoscalingPredictiveArgs>? Predictive { get; set; }
+
+        /// <summary>
         /// When scaling is necessary, then `NewCapacity = CurrentCapacity * storageScalingFactor`. Minimum value: `1.1`.
         /// </summary>
         [Input("scalingFactor")]

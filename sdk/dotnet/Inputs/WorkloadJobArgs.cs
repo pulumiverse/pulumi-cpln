@@ -38,10 +38,22 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<string>? RestartPolicy { get; set; }
 
         /// <summary>
-        /// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
+        /// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute. Use this for a single schedule, or use ScheduleEntry for multiple schedules.
         /// </summary>
-        [Input("schedule", required: true)]
-        public Input<string> Schedule { get; set; } = null!;
+        [Input("schedule")]
+        public Input<string>? Schedule { get; set; }
+
+        [Input("scheduleEntries")]
+        private InputList<Inputs.WorkloadJobScheduleEntryArgs>? _scheduleEntries;
+
+        /// <summary>
+        /// Multiple schedules with individual container overrides. Use this for workloads that need to run on different schedules with different configurations.
+        /// </summary>
+        public InputList<Inputs.WorkloadJobScheduleEntryArgs> ScheduleEntries
+        {
+            get => _scheduleEntries ?? (_scheduleEntries = new InputList<Inputs.WorkloadJobScheduleEntryArgs>());
+            set => _scheduleEntries = value;
+        }
 
         public WorkloadJobArgs()
         {

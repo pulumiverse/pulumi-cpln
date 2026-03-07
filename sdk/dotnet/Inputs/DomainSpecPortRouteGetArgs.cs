@@ -31,6 +31,18 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("hostRegex")]
         public Input<string>? HostRegex { get; set; }
 
+        [Input("mirrors")]
+        private InputList<Inputs.DomainSpecPortRouteMirrorGetArgs>? _mirrors;
+
+        /// <summary>
+        /// Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+        /// </summary>
+        public InputList<Inputs.DomainSpecPortRouteMirrorGetArgs> Mirrors
+        {
+            get => _mirrors ?? (_mirrors = new InputList<Inputs.DomainSpecPortRouteMirrorGetArgs>());
+            set => _mirrors = value;
+        }
+
         /// <summary>
         /// For the linked workload, the port to route traffic to.
         /// </summary>

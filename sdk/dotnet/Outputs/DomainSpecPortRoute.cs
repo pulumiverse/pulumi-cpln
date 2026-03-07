@@ -27,6 +27,10 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly string? HostRegex;
         /// <summary>
+        /// Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+        /// </summary>
+        public readonly ImmutableArray<Outputs.DomainSpecPortRouteMirror> Mirrors;
+        /// <summary>
         /// For the linked workload, the port to route traffic to.
         /// </summary>
         public readonly int? Port;
@@ -59,6 +63,8 @@ namespace Pulumiverse.Cpln.Outputs
 
             string? hostRegex,
 
+            ImmutableArray<Outputs.DomainSpecPortRouteMirror> mirrors,
+
             int? port,
 
             string? prefix,
@@ -74,6 +80,7 @@ namespace Pulumiverse.Cpln.Outputs
             Headers = headers;
             HostPrefix = hostPrefix;
             HostRegex = hostRegex;
+            Mirrors = mirrors;
             Port = port;
             Prefix = prefix;
             Regex = regex;

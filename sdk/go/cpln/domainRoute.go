@@ -25,6 +25,8 @@ type DomainRoute struct {
 	HostPrefix pulumi.StringPtrOutput `pulumi:"hostPrefix"`
 	// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
 	HostRegex pulumi.StringPtrOutput `pulumi:"hostRegex"`
+	// Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+	Mirrors DomainRouteMirrorArrayOutput `pulumi:"mirrors"`
 	// For the linked workload, the port to route traffic to.
 	Port pulumi.IntPtrOutput `pulumi:"port"`
 	// The path will match any unmatched path prefixes for the subdomain.
@@ -85,6 +87,8 @@ type domainRouteState struct {
 	HostPrefix *string `pulumi:"hostPrefix"`
 	// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
 	HostRegex *string `pulumi:"hostRegex"`
+	// Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+	Mirrors []DomainRouteMirror `pulumi:"mirrors"`
 	// For the linked workload, the port to route traffic to.
 	Port *int `pulumi:"port"`
 	// The path will match any unmatched path prefixes for the subdomain.
@@ -110,6 +114,8 @@ type DomainRouteState struct {
 	HostPrefix pulumi.StringPtrInput
 	// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
 	HostRegex pulumi.StringPtrInput
+	// Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+	Mirrors DomainRouteMirrorArrayInput
 	// For the linked workload, the port to route traffic to.
 	Port pulumi.IntPtrInput
 	// The path will match any unmatched path prefixes for the subdomain.
@@ -139,6 +145,8 @@ type domainRouteArgs struct {
 	HostPrefix *string `pulumi:"hostPrefix"`
 	// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
 	HostRegex *string `pulumi:"hostRegex"`
+	// Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+	Mirrors []DomainRouteMirror `pulumi:"mirrors"`
 	// For the linked workload, the port to route traffic to.
 	Port *int `pulumi:"port"`
 	// The path will match any unmatched path prefixes for the subdomain.
@@ -165,6 +173,8 @@ type DomainRouteArgs struct {
 	HostPrefix pulumi.StringPtrInput
 	// A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
 	HostRegex pulumi.StringPtrInput
+	// Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+	Mirrors DomainRouteMirrorArrayInput
 	// For the linked workload, the port to route traffic to.
 	Port pulumi.IntPtrInput
 	// The path will match any unmatched path prefixes for the subdomain.
@@ -289,6 +299,11 @@ func (o DomainRouteOutput) HostPrefix() pulumi.StringPtrOutput {
 // A regex to match the host header. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configure for wildcard support. Contact your account manager for details.
 func (o DomainRouteOutput) HostRegex() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *DomainRoute) pulumi.StringPtrOutput { return v.HostRegex }).(pulumi.StringPtrOutput)
+}
+
+// Mirror the traffic to the specified workload(s). Only works for workloads running in the same location as the primary workload(s).
+func (o DomainRouteOutput) Mirrors() DomainRouteMirrorArrayOutput {
+	return o.ApplyT(func(v *DomainRoute) DomainRouteMirrorArrayOutput { return v.Mirrors }).(DomainRouteMirrorArrayOutput)
 }
 
 // For the linked workload, the port to route traffic to.

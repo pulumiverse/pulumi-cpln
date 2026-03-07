@@ -23,6 +23,10 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly int? MinFreePercentage;
         /// <summary>
+        /// Predictive scaling configuration. When enabled, proactively expands volumes based on historical growth rate projections.
+        /// </summary>
+        public readonly Outputs.VolumeSetAutoscalingPredictive? Predictive;
+        /// <summary>
         /// When scaling is necessary, then `NewCapacity = CurrentCapacity * storageScalingFactor`. Minimum value: `1.1`.
         /// </summary>
         public readonly double? ScalingFactor;
@@ -33,10 +37,13 @@ namespace Pulumiverse.Cpln.Outputs
 
             int? minFreePercentage,
 
+            Outputs.VolumeSetAutoscalingPredictive? predictive,
+
             double? scalingFactor)
         {
             MaxCapacity = maxCapacity;
             MinFreePercentage = minFreePercentage;
+            Predictive = predictive;
             ScalingFactor = scalingFactor;
         }
     }
