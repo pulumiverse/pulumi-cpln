@@ -1423,28 +1423,7 @@
                         }
                     },
                     "job": {
-                        "maxItemsOne": false,
-                        "elem": {
-                            "fields": {
-                                "schedule_entry": {
-                                    "maxItemsOne": false,
-                                    "elem": {
-                                        "fields": {
-                                            "container_override": {
-                                                "maxItemsOne": false,
-                                                "elem": {
-                                                    "fields": {
-                                                        "args": {
-                                                            "maxItemsOne": false
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        "maxItemsOne": false
                     },
                     "load_balancer": {
                         "maxItemsOne": true,
@@ -2072,28 +2051,7 @@
                         }
                     },
                     "job": {
-                        "maxItemsOne": false,
-                        "elem": {
-                            "fields": {
-                                "schedule_entry": {
-                                    "maxItemsOne": false,
-                                    "elem": {
-                                        "fields": {
-                                            "container_override": {
-                                                "maxItemsOne": false,
-                                                "elem": {
-                                                    "fields": {
-                                                        "args": {
-                                                            "maxItemsOne": false
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        "maxItemsOne": false
                     },
                     "load_balancer": {
                         "maxItemsOne": false,

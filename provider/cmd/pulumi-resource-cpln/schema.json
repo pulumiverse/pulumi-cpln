@@ -6433,92 +6433,23 @@
                 },
                 "schedule": {
                     "type": "string",
-                    "description": "A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute. Use this for a single schedule, or use\u003cspan pulumi-lang-nodejs=\" scheduleEntry \" pulumi-lang-dotnet=\" ScheduleEntry \" pulumi-lang-go=\" scheduleEntry \" pulumi-lang-python=\" schedule_entry \" pulumi-lang-yaml=\" scheduleEntry \" pulumi-lang-java=\" scheduleEntry \"\u003e schedule_entry \u003c/span\u003efor multiple schedules.\n"
-                },
-                "scheduleEntries": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/types/cpln:index/WorkloadJobScheduleEntry:WorkloadJobScheduleEntry"
-                    },
-                    "description": "Multiple schedules with individual container overrides. Use this for workloads that need to run on different schedules with different configurations.\n"
+                    "description": "A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.\n"
                 }
             },
             "type": "object",
+            "required": [
+                "schedule"
+            ],
             "language": {
                 "nodejs": {
                     "requiredOutputs": [
                         "concurrencyPolicy",
                         "historyLimit",
-                        "restartPolicy"
+                        "restartPolicy",
+                        "schedule"
                     ]
                 }
             }
-        },
-        "cpln:index/WorkloadJobScheduleEntry:WorkloadJobScheduleEntry": {
-            "properties": {
-                "containerOverrides": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/types/cpln:index/WorkloadJobScheduleEntryContainerOverride:WorkloadJobScheduleEntryContainerOverride"
-                    },
-                    "description": "Container overrides specific to this schedule execution.\n"
-                },
-                "name": {
-                    "type": "string",
-                    "description": "Unique name for this schedule.\n"
-                },
-                "schedule": {
-                    "type": "string",
-                    "description": "A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) for when this schedule should execute.\n"
-                }
-            },
-            "type": "object",
-            "required": [
-                "name",
-                "schedule"
-            ]
-        },
-        "cpln:index/WorkloadJobScheduleEntryContainerOverride:WorkloadJobScheduleEntryContainerOverride": {
-            "properties": {
-                "args": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "description": "Command line arguments for this execution.\n"
-                },
-                "command": {
-                    "type": "string",
-                    "description": "Optionally override the entrypoint.\n"
-                },
-                "cpu": {
-                    "type": "string",
-                    "description": "CPU allocation override.\n"
-                },
-                "env": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables specific to this execution.\n"
-                },
-                "image": {
-                    "type": "string",
-                    "description": "Image override.\n"
-                },
-                "memory": {
-                    "type": "string",
-                    "description": "Memory allocation override.\n"
-                },
-                "name": {
-                    "type": "string",
-                    "description": "The name of the container to override.\n"
-                }
-            },
-            "type": "object",
-            "required": [
-                "name"
-            ]
         },
         "cpln:index/WorkloadLoadBalancer:WorkloadLoadBalancer": {
             "properties": {
@@ -9318,13 +9249,6 @@
                 "schedule": {
                     "type": "string",
                     "description": "A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.\n"
-                },
-                "scheduleEntries": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/types/cpln:index/getWorkloadJobScheduleEntry:getWorkloadJobScheduleEntry"
-                    },
-                    "description": "Multiple schedules with individual container overrides.\n"
                 }
             },
             "type": "object",
@@ -9334,88 +9258,6 @@
                 "historyLimit",
                 "restartPolicy",
                 "schedule"
-            ],
-            "language": {
-                "nodejs": {
-                    "requiredInputs": []
-                }
-            }
-        },
-        "cpln:index/getWorkloadJobScheduleEntry:getWorkloadJobScheduleEntry": {
-            "properties": {
-                "containerOverrides": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/types/cpln:index/getWorkloadJobScheduleEntryContainerOverride:getWorkloadJobScheduleEntryContainerOverride"
-                    },
-                    "description": "Container overrides specific to this schedule execution.\n"
-                },
-                "name": {
-                    "type": "string",
-                    "description": "Unique name for this schedule.\n"
-                },
-                "schedule": {
-                    "type": "string",
-                    "description": "A standard cron schedule expression for when this schedule should execute.\n"
-                }
-            },
-            "type": "object",
-            "required": [
-                "name",
-                "schedule"
-            ],
-            "language": {
-                "nodejs": {
-                    "requiredInputs": []
-                }
-            }
-        },
-        "cpln:index/getWorkloadJobScheduleEntryContainerOverride:getWorkloadJobScheduleEntryContainerOverride": {
-            "properties": {
-                "args": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "description": "Command line arguments for this execution.\n"
-                },
-                "command": {
-                    "type": "string",
-                    "description": "Optionally override the entrypoint.\n"
-                },
-                "cpu": {
-                    "type": "string",
-                    "description": "CPU allocation override.\n"
-                },
-                "env": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "description": "Environment variables specific to this execution.\n"
-                },
-                "image": {
-                    "type": "string",
-                    "description": "Image override.\n"
-                },
-                "memory": {
-                    "type": "string",
-                    "description": "Memory allocation override.\n"
-                },
-                "name": {
-                    "type": "string",
-                    "description": "The name of the container to override.\n"
-                }
-            },
-            "type": "object",
-            "required": [
-                "args",
-                "command",
-                "cpu",
-                "env",
-                "image",
-                "memory",
-                "name"
             ],
             "language": {
                 "nodejs": {
