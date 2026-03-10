@@ -1677,10 +1677,6 @@ export interface GetWorkloadJob {
      * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
      */
     schedule?: string;
-    /**
-     * Multiple schedules with individual container overrides.
-     */
-    scheduleEntries?: inputs.GetWorkloadJobScheduleEntry[];
 }
 
 export interface GetWorkloadJobArgs {
@@ -1704,102 +1700,6 @@ export interface GetWorkloadJobArgs {
      * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
      */
     schedule?: pulumi.Input<string>;
-    /**
-     * Multiple schedules with individual container overrides.
-     */
-    scheduleEntries?: pulumi.Input<pulumi.Input<inputs.GetWorkloadJobScheduleEntryArgs>[]>;
-}
-
-export interface GetWorkloadJobScheduleEntry {
-    /**
-     * Container overrides specific to this schedule execution.
-     */
-    containerOverrides?: inputs.GetWorkloadJobScheduleEntryContainerOverride[];
-    /**
-     * Unique name for this schedule.
-     */
-    name?: string;
-    /**
-     * A standard cron schedule expression for when this schedule should execute.
-     */
-    schedule?: string;
-}
-
-export interface GetWorkloadJobScheduleEntryArgs {
-    /**
-     * Container overrides specific to this schedule execution.
-     */
-    containerOverrides?: pulumi.Input<pulumi.Input<inputs.GetWorkloadJobScheduleEntryContainerOverrideArgs>[]>;
-    /**
-     * Unique name for this schedule.
-     */
-    name?: pulumi.Input<string>;
-    /**
-     * A standard cron schedule expression for when this schedule should execute.
-     */
-    schedule?: pulumi.Input<string>;
-}
-
-export interface GetWorkloadJobScheduleEntryContainerOverride {
-    /**
-     * Command line arguments for this execution.
-     */
-    args?: string[];
-    /**
-     * Optionally override the entrypoint.
-     */
-    command?: string;
-    /**
-     * CPU allocation override.
-     */
-    cpu?: string;
-    /**
-     * Environment variables specific to this execution.
-     */
-    env?: {[key: string]: string};
-    /**
-     * Image override.
-     */
-    image?: string;
-    /**
-     * Memory allocation override.
-     */
-    memory?: string;
-    /**
-     * The name of the container to override.
-     */
-    name?: string;
-}
-
-export interface GetWorkloadJobScheduleEntryContainerOverrideArgs {
-    /**
-     * Command line arguments for this execution.
-     */
-    args?: pulumi.Input<pulumi.Input<string>[]>;
-    /**
-     * Optionally override the entrypoint.
-     */
-    command?: pulumi.Input<string>;
-    /**
-     * CPU allocation override.
-     */
-    cpu?: pulumi.Input<string>;
-    /**
-     * Environment variables specific to this execution.
-     */
-    env?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
-    /**
-     * Image override.
-     */
-    image?: pulumi.Input<string>;
-    /**
-     * Memory allocation override.
-     */
-    memory?: pulumi.Input<string>;
-    /**
-     * The name of the container to override.
-     */
-    name?: pulumi.Input<string>;
 }
 
 export interface GetWorkloadLoadBalancer {
@@ -5807,59 +5707,9 @@ export interface WorkloadJob {
      */
     restartPolicy?: pulumi.Input<string>;
     /**
-     * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute. Use this for a single schedule, or use scheduleEntry for multiple schedules.
-     */
-    schedule?: pulumi.Input<string>;
-    /**
-     * Multiple schedules with individual container overrides. Use this for workloads that need to run on different schedules with different configurations.
-     */
-    scheduleEntries?: pulumi.Input<pulumi.Input<inputs.WorkloadJobScheduleEntry>[]>;
-}
-
-export interface WorkloadJobScheduleEntry {
-    /**
-     * Container overrides specific to this schedule execution.
-     */
-    containerOverrides?: pulumi.Input<pulumi.Input<inputs.WorkloadJobScheduleEntryContainerOverride>[]>;
-    /**
-     * Unique name for this schedule.
-     */
-    name: pulumi.Input<string>;
-    /**
-     * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) for when this schedule should execute.
+     * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
      */
     schedule: pulumi.Input<string>;
-}
-
-export interface WorkloadJobScheduleEntryContainerOverride {
-    /**
-     * Command line arguments for this execution.
-     */
-    args?: pulumi.Input<pulumi.Input<string>[]>;
-    /**
-     * Optionally override the entrypoint.
-     */
-    command?: pulumi.Input<string>;
-    /**
-     * CPU allocation override.
-     */
-    cpu?: pulumi.Input<string>;
-    /**
-     * Environment variables specific to this execution.
-     */
-    env?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
-    /**
-     * Image override.
-     */
-    image?: pulumi.Input<string>;
-    /**
-     * Memory allocation override.
-     */
-    memory?: pulumi.Input<string>;
-    /**
-     * The name of the container to override.
-     */
-    name: pulumi.Input<string>;
 }
 
 export interface WorkloadLoadBalancer {

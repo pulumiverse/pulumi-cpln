@@ -39387,10 +39387,8 @@ type WorkloadJob struct {
 	HistoryLimit *int `pulumi:"historyLimit"`
 	// Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`.
 	RestartPolicy *string `pulumi:"restartPolicy"`
-	// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute. Use this for a single schedule, or use scheduleEntry for multiple schedules.
-	Schedule *string `pulumi:"schedule"`
-	// Multiple schedules with individual container overrides. Use this for workloads that need to run on different schedules with different configurations.
-	ScheduleEntries []WorkloadJobScheduleEntry `pulumi:"scheduleEntries"`
+	// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
+	Schedule string `pulumi:"schedule"`
 }
 
 // WorkloadJobInput is an input type that accepts WorkloadJobArgs and WorkloadJobOutput values.
@@ -39413,10 +39411,8 @@ type WorkloadJobArgs struct {
 	HistoryLimit pulumi.IntPtrInput `pulumi:"historyLimit"`
 	// Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`.
 	RestartPolicy pulumi.StringPtrInput `pulumi:"restartPolicy"`
-	// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute. Use this for a single schedule, or use scheduleEntry for multiple schedules.
-	Schedule pulumi.StringPtrInput `pulumi:"schedule"`
-	// Multiple schedules with individual container overrides. Use this for workloads that need to run on different schedules with different configurations.
-	ScheduleEntries WorkloadJobScheduleEntryArrayInput `pulumi:"scheduleEntries"`
+	// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
+	Schedule pulumi.StringInput `pulumi:"schedule"`
 }
 
 func (WorkloadJobArgs) ElementType() reflect.Type {
@@ -39490,14 +39486,9 @@ func (o WorkloadJobOutput) RestartPolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v WorkloadJob) *string { return v.RestartPolicy }).(pulumi.StringPtrOutput)
 }
 
-// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute. Use this for a single schedule, or use scheduleEntry for multiple schedules.
-func (o WorkloadJobOutput) Schedule() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v WorkloadJob) *string { return v.Schedule }).(pulumi.StringPtrOutput)
-}
-
-// Multiple schedules with individual container overrides. Use this for workloads that need to run on different schedules with different configurations.
-func (o WorkloadJobOutput) ScheduleEntries() WorkloadJobScheduleEntryArrayOutput {
-	return o.ApplyT(func(v WorkloadJob) []WorkloadJobScheduleEntry { return v.ScheduleEntries }).(WorkloadJobScheduleEntryArrayOutput)
+// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
+func (o WorkloadJobOutput) Schedule() pulumi.StringOutput {
+	return o.ApplyT(func(v WorkloadJob) string { return v.Schedule }).(pulumi.StringOutput)
 }
 
 type WorkloadJobArrayOutput struct{ *pulumi.OutputState }
@@ -39518,274 +39509,6 @@ func (o WorkloadJobArrayOutput) Index(i pulumi.IntInput) WorkloadJobOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadJob {
 		return vs[0].([]WorkloadJob)[vs[1].(int)]
 	}).(WorkloadJobOutput)
-}
-
-type WorkloadJobScheduleEntry struct {
-	// Container overrides specific to this schedule execution.
-	ContainerOverrides []WorkloadJobScheduleEntryContainerOverride `pulumi:"containerOverrides"`
-	// Unique name for this schedule.
-	Name string `pulumi:"name"`
-	// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) for when this schedule should execute.
-	Schedule string `pulumi:"schedule"`
-}
-
-// WorkloadJobScheduleEntryInput is an input type that accepts WorkloadJobScheduleEntryArgs and WorkloadJobScheduleEntryOutput values.
-// You can construct a concrete instance of `WorkloadJobScheduleEntryInput` via:
-//
-//	WorkloadJobScheduleEntryArgs{...}
-type WorkloadJobScheduleEntryInput interface {
-	pulumi.Input
-
-	ToWorkloadJobScheduleEntryOutput() WorkloadJobScheduleEntryOutput
-	ToWorkloadJobScheduleEntryOutputWithContext(context.Context) WorkloadJobScheduleEntryOutput
-}
-
-type WorkloadJobScheduleEntryArgs struct {
-	// Container overrides specific to this schedule execution.
-	ContainerOverrides WorkloadJobScheduleEntryContainerOverrideArrayInput `pulumi:"containerOverrides"`
-	// Unique name for this schedule.
-	Name pulumi.StringInput `pulumi:"name"`
-	// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) for when this schedule should execute.
-	Schedule pulumi.StringInput `pulumi:"schedule"`
-}
-
-func (WorkloadJobScheduleEntryArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*WorkloadJobScheduleEntry)(nil)).Elem()
-}
-
-func (i WorkloadJobScheduleEntryArgs) ToWorkloadJobScheduleEntryOutput() WorkloadJobScheduleEntryOutput {
-	return i.ToWorkloadJobScheduleEntryOutputWithContext(context.Background())
-}
-
-func (i WorkloadJobScheduleEntryArgs) ToWorkloadJobScheduleEntryOutputWithContext(ctx context.Context) WorkloadJobScheduleEntryOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(WorkloadJobScheduleEntryOutput)
-}
-
-// WorkloadJobScheduleEntryArrayInput is an input type that accepts WorkloadJobScheduleEntryArray and WorkloadJobScheduleEntryArrayOutput values.
-// You can construct a concrete instance of `WorkloadJobScheduleEntryArrayInput` via:
-//
-//	WorkloadJobScheduleEntryArray{ WorkloadJobScheduleEntryArgs{...} }
-type WorkloadJobScheduleEntryArrayInput interface {
-	pulumi.Input
-
-	ToWorkloadJobScheduleEntryArrayOutput() WorkloadJobScheduleEntryArrayOutput
-	ToWorkloadJobScheduleEntryArrayOutputWithContext(context.Context) WorkloadJobScheduleEntryArrayOutput
-}
-
-type WorkloadJobScheduleEntryArray []WorkloadJobScheduleEntryInput
-
-func (WorkloadJobScheduleEntryArray) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]WorkloadJobScheduleEntry)(nil)).Elem()
-}
-
-func (i WorkloadJobScheduleEntryArray) ToWorkloadJobScheduleEntryArrayOutput() WorkloadJobScheduleEntryArrayOutput {
-	return i.ToWorkloadJobScheduleEntryArrayOutputWithContext(context.Background())
-}
-
-func (i WorkloadJobScheduleEntryArray) ToWorkloadJobScheduleEntryArrayOutputWithContext(ctx context.Context) WorkloadJobScheduleEntryArrayOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(WorkloadJobScheduleEntryArrayOutput)
-}
-
-type WorkloadJobScheduleEntryOutput struct{ *pulumi.OutputState }
-
-func (WorkloadJobScheduleEntryOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*WorkloadJobScheduleEntry)(nil)).Elem()
-}
-
-func (o WorkloadJobScheduleEntryOutput) ToWorkloadJobScheduleEntryOutput() WorkloadJobScheduleEntryOutput {
-	return o
-}
-
-func (o WorkloadJobScheduleEntryOutput) ToWorkloadJobScheduleEntryOutputWithContext(ctx context.Context) WorkloadJobScheduleEntryOutput {
-	return o
-}
-
-// Container overrides specific to this schedule execution.
-func (o WorkloadJobScheduleEntryOutput) ContainerOverrides() WorkloadJobScheduleEntryContainerOverrideArrayOutput {
-	return o.ApplyT(func(v WorkloadJobScheduleEntry) []WorkloadJobScheduleEntryContainerOverride {
-		return v.ContainerOverrides
-	}).(WorkloadJobScheduleEntryContainerOverrideArrayOutput)
-}
-
-// Unique name for this schedule.
-func (o WorkloadJobScheduleEntryOutput) Name() pulumi.StringOutput {
-	return o.ApplyT(func(v WorkloadJobScheduleEntry) string { return v.Name }).(pulumi.StringOutput)
-}
-
-// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) for when this schedule should execute.
-func (o WorkloadJobScheduleEntryOutput) Schedule() pulumi.StringOutput {
-	return o.ApplyT(func(v WorkloadJobScheduleEntry) string { return v.Schedule }).(pulumi.StringOutput)
-}
-
-type WorkloadJobScheduleEntryArrayOutput struct{ *pulumi.OutputState }
-
-func (WorkloadJobScheduleEntryArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]WorkloadJobScheduleEntry)(nil)).Elem()
-}
-
-func (o WorkloadJobScheduleEntryArrayOutput) ToWorkloadJobScheduleEntryArrayOutput() WorkloadJobScheduleEntryArrayOutput {
-	return o
-}
-
-func (o WorkloadJobScheduleEntryArrayOutput) ToWorkloadJobScheduleEntryArrayOutputWithContext(ctx context.Context) WorkloadJobScheduleEntryArrayOutput {
-	return o
-}
-
-func (o WorkloadJobScheduleEntryArrayOutput) Index(i pulumi.IntInput) WorkloadJobScheduleEntryOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadJobScheduleEntry {
-		return vs[0].([]WorkloadJobScheduleEntry)[vs[1].(int)]
-	}).(WorkloadJobScheduleEntryOutput)
-}
-
-type WorkloadJobScheduleEntryContainerOverride struct {
-	// Command line arguments for this execution.
-	Args []string `pulumi:"args"`
-	// Optionally override the entrypoint.
-	Command *string `pulumi:"command"`
-	// CPU allocation override.
-	Cpu *string `pulumi:"cpu"`
-	// Environment variables specific to this execution.
-	Env map[string]string `pulumi:"env"`
-	// Image override.
-	Image *string `pulumi:"image"`
-	// Memory allocation override.
-	Memory *string `pulumi:"memory"`
-	// The name of the container to override.
-	Name string `pulumi:"name"`
-}
-
-// WorkloadJobScheduleEntryContainerOverrideInput is an input type that accepts WorkloadJobScheduleEntryContainerOverrideArgs and WorkloadJobScheduleEntryContainerOverrideOutput values.
-// You can construct a concrete instance of `WorkloadJobScheduleEntryContainerOverrideInput` via:
-//
-//	WorkloadJobScheduleEntryContainerOverrideArgs{...}
-type WorkloadJobScheduleEntryContainerOverrideInput interface {
-	pulumi.Input
-
-	ToWorkloadJobScheduleEntryContainerOverrideOutput() WorkloadJobScheduleEntryContainerOverrideOutput
-	ToWorkloadJobScheduleEntryContainerOverrideOutputWithContext(context.Context) WorkloadJobScheduleEntryContainerOverrideOutput
-}
-
-type WorkloadJobScheduleEntryContainerOverrideArgs struct {
-	// Command line arguments for this execution.
-	Args pulumi.StringArrayInput `pulumi:"args"`
-	// Optionally override the entrypoint.
-	Command pulumi.StringPtrInput `pulumi:"command"`
-	// CPU allocation override.
-	Cpu pulumi.StringPtrInput `pulumi:"cpu"`
-	// Environment variables specific to this execution.
-	Env pulumi.StringMapInput `pulumi:"env"`
-	// Image override.
-	Image pulumi.StringPtrInput `pulumi:"image"`
-	// Memory allocation override.
-	Memory pulumi.StringPtrInput `pulumi:"memory"`
-	// The name of the container to override.
-	Name pulumi.StringInput `pulumi:"name"`
-}
-
-func (WorkloadJobScheduleEntryContainerOverrideArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*WorkloadJobScheduleEntryContainerOverride)(nil)).Elem()
-}
-
-func (i WorkloadJobScheduleEntryContainerOverrideArgs) ToWorkloadJobScheduleEntryContainerOverrideOutput() WorkloadJobScheduleEntryContainerOverrideOutput {
-	return i.ToWorkloadJobScheduleEntryContainerOverrideOutputWithContext(context.Background())
-}
-
-func (i WorkloadJobScheduleEntryContainerOverrideArgs) ToWorkloadJobScheduleEntryContainerOverrideOutputWithContext(ctx context.Context) WorkloadJobScheduleEntryContainerOverrideOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(WorkloadJobScheduleEntryContainerOverrideOutput)
-}
-
-// WorkloadJobScheduleEntryContainerOverrideArrayInput is an input type that accepts WorkloadJobScheduleEntryContainerOverrideArray and WorkloadJobScheduleEntryContainerOverrideArrayOutput values.
-// You can construct a concrete instance of `WorkloadJobScheduleEntryContainerOverrideArrayInput` via:
-//
-//	WorkloadJobScheduleEntryContainerOverrideArray{ WorkloadJobScheduleEntryContainerOverrideArgs{...} }
-type WorkloadJobScheduleEntryContainerOverrideArrayInput interface {
-	pulumi.Input
-
-	ToWorkloadJobScheduleEntryContainerOverrideArrayOutput() WorkloadJobScheduleEntryContainerOverrideArrayOutput
-	ToWorkloadJobScheduleEntryContainerOverrideArrayOutputWithContext(context.Context) WorkloadJobScheduleEntryContainerOverrideArrayOutput
-}
-
-type WorkloadJobScheduleEntryContainerOverrideArray []WorkloadJobScheduleEntryContainerOverrideInput
-
-func (WorkloadJobScheduleEntryContainerOverrideArray) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]WorkloadJobScheduleEntryContainerOverride)(nil)).Elem()
-}
-
-func (i WorkloadJobScheduleEntryContainerOverrideArray) ToWorkloadJobScheduleEntryContainerOverrideArrayOutput() WorkloadJobScheduleEntryContainerOverrideArrayOutput {
-	return i.ToWorkloadJobScheduleEntryContainerOverrideArrayOutputWithContext(context.Background())
-}
-
-func (i WorkloadJobScheduleEntryContainerOverrideArray) ToWorkloadJobScheduleEntryContainerOverrideArrayOutputWithContext(ctx context.Context) WorkloadJobScheduleEntryContainerOverrideArrayOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(WorkloadJobScheduleEntryContainerOverrideArrayOutput)
-}
-
-type WorkloadJobScheduleEntryContainerOverrideOutput struct{ *pulumi.OutputState }
-
-func (WorkloadJobScheduleEntryContainerOverrideOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*WorkloadJobScheduleEntryContainerOverride)(nil)).Elem()
-}
-
-func (o WorkloadJobScheduleEntryContainerOverrideOutput) ToWorkloadJobScheduleEntryContainerOverrideOutput() WorkloadJobScheduleEntryContainerOverrideOutput {
-	return o
-}
-
-func (o WorkloadJobScheduleEntryContainerOverrideOutput) ToWorkloadJobScheduleEntryContainerOverrideOutputWithContext(ctx context.Context) WorkloadJobScheduleEntryContainerOverrideOutput {
-	return o
-}
-
-// Command line arguments for this execution.
-func (o WorkloadJobScheduleEntryContainerOverrideOutput) Args() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v WorkloadJobScheduleEntryContainerOverride) []string { return v.Args }).(pulumi.StringArrayOutput)
-}
-
-// Optionally override the entrypoint.
-func (o WorkloadJobScheduleEntryContainerOverrideOutput) Command() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v WorkloadJobScheduleEntryContainerOverride) *string { return v.Command }).(pulumi.StringPtrOutput)
-}
-
-// CPU allocation override.
-func (o WorkloadJobScheduleEntryContainerOverrideOutput) Cpu() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v WorkloadJobScheduleEntryContainerOverride) *string { return v.Cpu }).(pulumi.StringPtrOutput)
-}
-
-// Environment variables specific to this execution.
-func (o WorkloadJobScheduleEntryContainerOverrideOutput) Env() pulumi.StringMapOutput {
-	return o.ApplyT(func(v WorkloadJobScheduleEntryContainerOverride) map[string]string { return v.Env }).(pulumi.StringMapOutput)
-}
-
-// Image override.
-func (o WorkloadJobScheduleEntryContainerOverrideOutput) Image() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v WorkloadJobScheduleEntryContainerOverride) *string { return v.Image }).(pulumi.StringPtrOutput)
-}
-
-// Memory allocation override.
-func (o WorkloadJobScheduleEntryContainerOverrideOutput) Memory() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v WorkloadJobScheduleEntryContainerOverride) *string { return v.Memory }).(pulumi.StringPtrOutput)
-}
-
-// The name of the container to override.
-func (o WorkloadJobScheduleEntryContainerOverrideOutput) Name() pulumi.StringOutput {
-	return o.ApplyT(func(v WorkloadJobScheduleEntryContainerOverride) string { return v.Name }).(pulumi.StringOutput)
-}
-
-type WorkloadJobScheduleEntryContainerOverrideArrayOutput struct{ *pulumi.OutputState }
-
-func (WorkloadJobScheduleEntryContainerOverrideArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]WorkloadJobScheduleEntryContainerOverride)(nil)).Elem()
-}
-
-func (o WorkloadJobScheduleEntryContainerOverrideArrayOutput) ToWorkloadJobScheduleEntryContainerOverrideArrayOutput() WorkloadJobScheduleEntryContainerOverrideArrayOutput {
-	return o
-}
-
-func (o WorkloadJobScheduleEntryContainerOverrideArrayOutput) ToWorkloadJobScheduleEntryContainerOverrideArrayOutputWithContext(ctx context.Context) WorkloadJobScheduleEntryContainerOverrideArrayOutput {
-	return o
-}
-
-func (o WorkloadJobScheduleEntryContainerOverrideArrayOutput) Index(i pulumi.IntInput) WorkloadJobScheduleEntryContainerOverrideOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadJobScheduleEntryContainerOverride {
-		return vs[0].([]WorkloadJobScheduleEntryContainerOverride)[vs[1].(int)]
-	}).(WorkloadJobScheduleEntryContainerOverrideOutput)
 }
 
 type WorkloadLoadBalancer struct {
@@ -53722,8 +53445,6 @@ type GetWorkloadJob struct {
 	RestartPolicy string `pulumi:"restartPolicy"`
 	// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
 	Schedule string `pulumi:"schedule"`
-	// Multiple schedules with individual container overrides.
-	ScheduleEntries []GetWorkloadJobScheduleEntry `pulumi:"scheduleEntries"`
 }
 
 // GetWorkloadJobInput is an input type that accepts GetWorkloadJobArgs and GetWorkloadJobOutput values.
@@ -53748,8 +53469,6 @@ type GetWorkloadJobArgs struct {
 	RestartPolicy pulumi.StringInput `pulumi:"restartPolicy"`
 	// A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
 	Schedule pulumi.StringInput `pulumi:"schedule"`
-	// Multiple schedules with individual container overrides.
-	ScheduleEntries GetWorkloadJobScheduleEntryArrayInput `pulumi:"scheduleEntries"`
 }
 
 func (GetWorkloadJobArgs) ElementType() reflect.Type {
@@ -53828,11 +53547,6 @@ func (o GetWorkloadJobOutput) Schedule() pulumi.StringOutput {
 	return o.ApplyT(func(v GetWorkloadJob) string { return v.Schedule }).(pulumi.StringOutput)
 }
 
-// Multiple schedules with individual container overrides.
-func (o GetWorkloadJobOutput) ScheduleEntries() GetWorkloadJobScheduleEntryArrayOutput {
-	return o.ApplyT(func(v GetWorkloadJob) []GetWorkloadJobScheduleEntry { return v.ScheduleEntries }).(GetWorkloadJobScheduleEntryArrayOutput)
-}
-
 type GetWorkloadJobArrayOutput struct{ *pulumi.OutputState }
 
 func (GetWorkloadJobArrayOutput) ElementType() reflect.Type {
@@ -53851,274 +53565,6 @@ func (o GetWorkloadJobArrayOutput) Index(i pulumi.IntInput) GetWorkloadJobOutput
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadJob {
 		return vs[0].([]GetWorkloadJob)[vs[1].(int)]
 	}).(GetWorkloadJobOutput)
-}
-
-type GetWorkloadJobScheduleEntry struct {
-	// Container overrides specific to this schedule execution.
-	ContainerOverrides []GetWorkloadJobScheduleEntryContainerOverride `pulumi:"containerOverrides"`
-	// Unique name for this schedule.
-	Name string `pulumi:"name"`
-	// A standard cron schedule expression for when this schedule should execute.
-	Schedule string `pulumi:"schedule"`
-}
-
-// GetWorkloadJobScheduleEntryInput is an input type that accepts GetWorkloadJobScheduleEntryArgs and GetWorkloadJobScheduleEntryOutput values.
-// You can construct a concrete instance of `GetWorkloadJobScheduleEntryInput` via:
-//
-//	GetWorkloadJobScheduleEntryArgs{...}
-type GetWorkloadJobScheduleEntryInput interface {
-	pulumi.Input
-
-	ToGetWorkloadJobScheduleEntryOutput() GetWorkloadJobScheduleEntryOutput
-	ToGetWorkloadJobScheduleEntryOutputWithContext(context.Context) GetWorkloadJobScheduleEntryOutput
-}
-
-type GetWorkloadJobScheduleEntryArgs struct {
-	// Container overrides specific to this schedule execution.
-	ContainerOverrides GetWorkloadJobScheduleEntryContainerOverrideArrayInput `pulumi:"containerOverrides"`
-	// Unique name for this schedule.
-	Name pulumi.StringInput `pulumi:"name"`
-	// A standard cron schedule expression for when this schedule should execute.
-	Schedule pulumi.StringInput `pulumi:"schedule"`
-}
-
-func (GetWorkloadJobScheduleEntryArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*GetWorkloadJobScheduleEntry)(nil)).Elem()
-}
-
-func (i GetWorkloadJobScheduleEntryArgs) ToGetWorkloadJobScheduleEntryOutput() GetWorkloadJobScheduleEntryOutput {
-	return i.ToGetWorkloadJobScheduleEntryOutputWithContext(context.Background())
-}
-
-func (i GetWorkloadJobScheduleEntryArgs) ToGetWorkloadJobScheduleEntryOutputWithContext(ctx context.Context) GetWorkloadJobScheduleEntryOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadJobScheduleEntryOutput)
-}
-
-// GetWorkloadJobScheduleEntryArrayInput is an input type that accepts GetWorkloadJobScheduleEntryArray and GetWorkloadJobScheduleEntryArrayOutput values.
-// You can construct a concrete instance of `GetWorkloadJobScheduleEntryArrayInput` via:
-//
-//	GetWorkloadJobScheduleEntryArray{ GetWorkloadJobScheduleEntryArgs{...} }
-type GetWorkloadJobScheduleEntryArrayInput interface {
-	pulumi.Input
-
-	ToGetWorkloadJobScheduleEntryArrayOutput() GetWorkloadJobScheduleEntryArrayOutput
-	ToGetWorkloadJobScheduleEntryArrayOutputWithContext(context.Context) GetWorkloadJobScheduleEntryArrayOutput
-}
-
-type GetWorkloadJobScheduleEntryArray []GetWorkloadJobScheduleEntryInput
-
-func (GetWorkloadJobScheduleEntryArray) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]GetWorkloadJobScheduleEntry)(nil)).Elem()
-}
-
-func (i GetWorkloadJobScheduleEntryArray) ToGetWorkloadJobScheduleEntryArrayOutput() GetWorkloadJobScheduleEntryArrayOutput {
-	return i.ToGetWorkloadJobScheduleEntryArrayOutputWithContext(context.Background())
-}
-
-func (i GetWorkloadJobScheduleEntryArray) ToGetWorkloadJobScheduleEntryArrayOutputWithContext(ctx context.Context) GetWorkloadJobScheduleEntryArrayOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadJobScheduleEntryArrayOutput)
-}
-
-type GetWorkloadJobScheduleEntryOutput struct{ *pulumi.OutputState }
-
-func (GetWorkloadJobScheduleEntryOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*GetWorkloadJobScheduleEntry)(nil)).Elem()
-}
-
-func (o GetWorkloadJobScheduleEntryOutput) ToGetWorkloadJobScheduleEntryOutput() GetWorkloadJobScheduleEntryOutput {
-	return o
-}
-
-func (o GetWorkloadJobScheduleEntryOutput) ToGetWorkloadJobScheduleEntryOutputWithContext(ctx context.Context) GetWorkloadJobScheduleEntryOutput {
-	return o
-}
-
-// Container overrides specific to this schedule execution.
-func (o GetWorkloadJobScheduleEntryOutput) ContainerOverrides() GetWorkloadJobScheduleEntryContainerOverrideArrayOutput {
-	return o.ApplyT(func(v GetWorkloadJobScheduleEntry) []GetWorkloadJobScheduleEntryContainerOverride {
-		return v.ContainerOverrides
-	}).(GetWorkloadJobScheduleEntryContainerOverrideArrayOutput)
-}
-
-// Unique name for this schedule.
-func (o GetWorkloadJobScheduleEntryOutput) Name() pulumi.StringOutput {
-	return o.ApplyT(func(v GetWorkloadJobScheduleEntry) string { return v.Name }).(pulumi.StringOutput)
-}
-
-// A standard cron schedule expression for when this schedule should execute.
-func (o GetWorkloadJobScheduleEntryOutput) Schedule() pulumi.StringOutput {
-	return o.ApplyT(func(v GetWorkloadJobScheduleEntry) string { return v.Schedule }).(pulumi.StringOutput)
-}
-
-type GetWorkloadJobScheduleEntryArrayOutput struct{ *pulumi.OutputState }
-
-func (GetWorkloadJobScheduleEntryArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]GetWorkloadJobScheduleEntry)(nil)).Elem()
-}
-
-func (o GetWorkloadJobScheduleEntryArrayOutput) ToGetWorkloadJobScheduleEntryArrayOutput() GetWorkloadJobScheduleEntryArrayOutput {
-	return o
-}
-
-func (o GetWorkloadJobScheduleEntryArrayOutput) ToGetWorkloadJobScheduleEntryArrayOutputWithContext(ctx context.Context) GetWorkloadJobScheduleEntryArrayOutput {
-	return o
-}
-
-func (o GetWorkloadJobScheduleEntryArrayOutput) Index(i pulumi.IntInput) GetWorkloadJobScheduleEntryOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadJobScheduleEntry {
-		return vs[0].([]GetWorkloadJobScheduleEntry)[vs[1].(int)]
-	}).(GetWorkloadJobScheduleEntryOutput)
-}
-
-type GetWorkloadJobScheduleEntryContainerOverride struct {
-	// Command line arguments for this execution.
-	Args []string `pulumi:"args"`
-	// Optionally override the entrypoint.
-	Command string `pulumi:"command"`
-	// CPU allocation override.
-	Cpu string `pulumi:"cpu"`
-	// Environment variables specific to this execution.
-	Env map[string]string `pulumi:"env"`
-	// Image override.
-	Image string `pulumi:"image"`
-	// Memory allocation override.
-	Memory string `pulumi:"memory"`
-	// The name of the container to override.
-	Name string `pulumi:"name"`
-}
-
-// GetWorkloadJobScheduleEntryContainerOverrideInput is an input type that accepts GetWorkloadJobScheduleEntryContainerOverrideArgs and GetWorkloadJobScheduleEntryContainerOverrideOutput values.
-// You can construct a concrete instance of `GetWorkloadJobScheduleEntryContainerOverrideInput` via:
-//
-//	GetWorkloadJobScheduleEntryContainerOverrideArgs{...}
-type GetWorkloadJobScheduleEntryContainerOverrideInput interface {
-	pulumi.Input
-
-	ToGetWorkloadJobScheduleEntryContainerOverrideOutput() GetWorkloadJobScheduleEntryContainerOverrideOutput
-	ToGetWorkloadJobScheduleEntryContainerOverrideOutputWithContext(context.Context) GetWorkloadJobScheduleEntryContainerOverrideOutput
-}
-
-type GetWorkloadJobScheduleEntryContainerOverrideArgs struct {
-	// Command line arguments for this execution.
-	Args pulumi.StringArrayInput `pulumi:"args"`
-	// Optionally override the entrypoint.
-	Command pulumi.StringInput `pulumi:"command"`
-	// CPU allocation override.
-	Cpu pulumi.StringInput `pulumi:"cpu"`
-	// Environment variables specific to this execution.
-	Env pulumi.StringMapInput `pulumi:"env"`
-	// Image override.
-	Image pulumi.StringInput `pulumi:"image"`
-	// Memory allocation override.
-	Memory pulumi.StringInput `pulumi:"memory"`
-	// The name of the container to override.
-	Name pulumi.StringInput `pulumi:"name"`
-}
-
-func (GetWorkloadJobScheduleEntryContainerOverrideArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*GetWorkloadJobScheduleEntryContainerOverride)(nil)).Elem()
-}
-
-func (i GetWorkloadJobScheduleEntryContainerOverrideArgs) ToGetWorkloadJobScheduleEntryContainerOverrideOutput() GetWorkloadJobScheduleEntryContainerOverrideOutput {
-	return i.ToGetWorkloadJobScheduleEntryContainerOverrideOutputWithContext(context.Background())
-}
-
-func (i GetWorkloadJobScheduleEntryContainerOverrideArgs) ToGetWorkloadJobScheduleEntryContainerOverrideOutputWithContext(ctx context.Context) GetWorkloadJobScheduleEntryContainerOverrideOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadJobScheduleEntryContainerOverrideOutput)
-}
-
-// GetWorkloadJobScheduleEntryContainerOverrideArrayInput is an input type that accepts GetWorkloadJobScheduleEntryContainerOverrideArray and GetWorkloadJobScheduleEntryContainerOverrideArrayOutput values.
-// You can construct a concrete instance of `GetWorkloadJobScheduleEntryContainerOverrideArrayInput` via:
-//
-//	GetWorkloadJobScheduleEntryContainerOverrideArray{ GetWorkloadJobScheduleEntryContainerOverrideArgs{...} }
-type GetWorkloadJobScheduleEntryContainerOverrideArrayInput interface {
-	pulumi.Input
-
-	ToGetWorkloadJobScheduleEntryContainerOverrideArrayOutput() GetWorkloadJobScheduleEntryContainerOverrideArrayOutput
-	ToGetWorkloadJobScheduleEntryContainerOverrideArrayOutputWithContext(context.Context) GetWorkloadJobScheduleEntryContainerOverrideArrayOutput
-}
-
-type GetWorkloadJobScheduleEntryContainerOverrideArray []GetWorkloadJobScheduleEntryContainerOverrideInput
-
-func (GetWorkloadJobScheduleEntryContainerOverrideArray) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]GetWorkloadJobScheduleEntryContainerOverride)(nil)).Elem()
-}
-
-func (i GetWorkloadJobScheduleEntryContainerOverrideArray) ToGetWorkloadJobScheduleEntryContainerOverrideArrayOutput() GetWorkloadJobScheduleEntryContainerOverrideArrayOutput {
-	return i.ToGetWorkloadJobScheduleEntryContainerOverrideArrayOutputWithContext(context.Background())
-}
-
-func (i GetWorkloadJobScheduleEntryContainerOverrideArray) ToGetWorkloadJobScheduleEntryContainerOverrideArrayOutputWithContext(ctx context.Context) GetWorkloadJobScheduleEntryContainerOverrideArrayOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadJobScheduleEntryContainerOverrideArrayOutput)
-}
-
-type GetWorkloadJobScheduleEntryContainerOverrideOutput struct{ *pulumi.OutputState }
-
-func (GetWorkloadJobScheduleEntryContainerOverrideOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*GetWorkloadJobScheduleEntryContainerOverride)(nil)).Elem()
-}
-
-func (o GetWorkloadJobScheduleEntryContainerOverrideOutput) ToGetWorkloadJobScheduleEntryContainerOverrideOutput() GetWorkloadJobScheduleEntryContainerOverrideOutput {
-	return o
-}
-
-func (o GetWorkloadJobScheduleEntryContainerOverrideOutput) ToGetWorkloadJobScheduleEntryContainerOverrideOutputWithContext(ctx context.Context) GetWorkloadJobScheduleEntryContainerOverrideOutput {
-	return o
-}
-
-// Command line arguments for this execution.
-func (o GetWorkloadJobScheduleEntryContainerOverrideOutput) Args() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v GetWorkloadJobScheduleEntryContainerOverride) []string { return v.Args }).(pulumi.StringArrayOutput)
-}
-
-// Optionally override the entrypoint.
-func (o GetWorkloadJobScheduleEntryContainerOverrideOutput) Command() pulumi.StringOutput {
-	return o.ApplyT(func(v GetWorkloadJobScheduleEntryContainerOverride) string { return v.Command }).(pulumi.StringOutput)
-}
-
-// CPU allocation override.
-func (o GetWorkloadJobScheduleEntryContainerOverrideOutput) Cpu() pulumi.StringOutput {
-	return o.ApplyT(func(v GetWorkloadJobScheduleEntryContainerOverride) string { return v.Cpu }).(pulumi.StringOutput)
-}
-
-// Environment variables specific to this execution.
-func (o GetWorkloadJobScheduleEntryContainerOverrideOutput) Env() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetWorkloadJobScheduleEntryContainerOverride) map[string]string { return v.Env }).(pulumi.StringMapOutput)
-}
-
-// Image override.
-func (o GetWorkloadJobScheduleEntryContainerOverrideOutput) Image() pulumi.StringOutput {
-	return o.ApplyT(func(v GetWorkloadJobScheduleEntryContainerOverride) string { return v.Image }).(pulumi.StringOutput)
-}
-
-// Memory allocation override.
-func (o GetWorkloadJobScheduleEntryContainerOverrideOutput) Memory() pulumi.StringOutput {
-	return o.ApplyT(func(v GetWorkloadJobScheduleEntryContainerOverride) string { return v.Memory }).(pulumi.StringOutput)
-}
-
-// The name of the container to override.
-func (o GetWorkloadJobScheduleEntryContainerOverrideOutput) Name() pulumi.StringOutput {
-	return o.ApplyT(func(v GetWorkloadJobScheduleEntryContainerOverride) string { return v.Name }).(pulumi.StringOutput)
-}
-
-type GetWorkloadJobScheduleEntryContainerOverrideArrayOutput struct{ *pulumi.OutputState }
-
-func (GetWorkloadJobScheduleEntryContainerOverrideArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]GetWorkloadJobScheduleEntryContainerOverride)(nil)).Elem()
-}
-
-func (o GetWorkloadJobScheduleEntryContainerOverrideArrayOutput) ToGetWorkloadJobScheduleEntryContainerOverrideArrayOutput() GetWorkloadJobScheduleEntryContainerOverrideArrayOutput {
-	return o
-}
-
-func (o GetWorkloadJobScheduleEntryContainerOverrideArrayOutput) ToGetWorkloadJobScheduleEntryContainerOverrideArrayOutputWithContext(ctx context.Context) GetWorkloadJobScheduleEntryContainerOverrideArrayOutput {
-	return o
-}
-
-func (o GetWorkloadJobScheduleEntryContainerOverrideArrayOutput) Index(i pulumi.IntInput) GetWorkloadJobScheduleEntryContainerOverrideOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadJobScheduleEntryContainerOverride {
-		return vs[0].([]GetWorkloadJobScheduleEntryContainerOverride)[vs[1].(int)]
-	}).(GetWorkloadJobScheduleEntryContainerOverrideOutput)
 }
 
 type GetWorkloadLoadBalancer struct {
@@ -58880,10 +58326,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadFirewallSpecInternalPtrInput)(nil)).Elem(), WorkloadFirewallSpecInternalArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadJobInput)(nil)).Elem(), WorkloadJobArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadJobArrayInput)(nil)).Elem(), WorkloadJobArray{})
-	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadJobScheduleEntryInput)(nil)).Elem(), WorkloadJobScheduleEntryArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadJobScheduleEntryArrayInput)(nil)).Elem(), WorkloadJobScheduleEntryArray{})
-	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadJobScheduleEntryContainerOverrideInput)(nil)).Elem(), WorkloadJobScheduleEntryContainerOverrideArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadJobScheduleEntryContainerOverrideArrayInput)(nil)).Elem(), WorkloadJobScheduleEntryContainerOverrideArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerInput)(nil)).Elem(), WorkloadLoadBalancerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerPtrInput)(nil)).Elem(), WorkloadLoadBalancerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLoadBalancerDirectInput)(nil)).Elem(), WorkloadLoadBalancerDirectArgs{})
@@ -59084,10 +58526,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecInternalArrayInput)(nil)).Elem(), GetWorkloadFirewallSpecInternalArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadJobInput)(nil)).Elem(), GetWorkloadJobArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadJobArrayInput)(nil)).Elem(), GetWorkloadJobArray{})
-	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadJobScheduleEntryInput)(nil)).Elem(), GetWorkloadJobScheduleEntryArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadJobScheduleEntryArrayInput)(nil)).Elem(), GetWorkloadJobScheduleEntryArray{})
-	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadJobScheduleEntryContainerOverrideInput)(nil)).Elem(), GetWorkloadJobScheduleEntryContainerOverrideArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadJobScheduleEntryContainerOverrideArrayInput)(nil)).Elem(), GetWorkloadJobScheduleEntryContainerOverrideArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLoadBalancerInput)(nil)).Elem(), GetWorkloadLoadBalancerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLoadBalancerArrayInput)(nil)).Elem(), GetWorkloadLoadBalancerArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLoadBalancerDirectInput)(nil)).Elem(), GetWorkloadLoadBalancerDirectArgs{})
@@ -59656,10 +59094,6 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadFirewallSpecInternalPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadJobOutput{})
 	pulumi.RegisterOutputType(WorkloadJobArrayOutput{})
-	pulumi.RegisterOutputType(WorkloadJobScheduleEntryOutput{})
-	pulumi.RegisterOutputType(WorkloadJobScheduleEntryArrayOutput{})
-	pulumi.RegisterOutputType(WorkloadJobScheduleEntryContainerOverrideOutput{})
-	pulumi.RegisterOutputType(WorkloadJobScheduleEntryContainerOverrideArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadLoadBalancerOutput{})
 	pulumi.RegisterOutputType(WorkloadLoadBalancerPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadLoadBalancerDirectOutput{})
@@ -59860,10 +59294,6 @@ func init() {
 	pulumi.RegisterOutputType(GetWorkloadFirewallSpecInternalArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadJobOutput{})
 	pulumi.RegisterOutputType(GetWorkloadJobArrayOutput{})
-	pulumi.RegisterOutputType(GetWorkloadJobScheduleEntryOutput{})
-	pulumi.RegisterOutputType(GetWorkloadJobScheduleEntryArrayOutput{})
-	pulumi.RegisterOutputType(GetWorkloadJobScheduleEntryContainerOverrideOutput{})
-	pulumi.RegisterOutputType(GetWorkloadJobScheduleEntryContainerOverrideArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLoadBalancerOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLoadBalancerArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLoadBalancerDirectOutput{})

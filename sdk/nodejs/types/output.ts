@@ -1253,56 +1253,6 @@ export interface GetWorkloadJob {
      * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
      */
     schedule: string;
-    /**
-     * Multiple schedules with individual container overrides.
-     */
-    scheduleEntries?: outputs.GetWorkloadJobScheduleEntry[];
-}
-
-export interface GetWorkloadJobScheduleEntry {
-    /**
-     * Container overrides specific to this schedule execution.
-     */
-    containerOverrides?: outputs.GetWorkloadJobScheduleEntryContainerOverride[];
-    /**
-     * Unique name for this schedule.
-     */
-    name: string;
-    /**
-     * A standard cron schedule expression for when this schedule should execute.
-     */
-    schedule: string;
-}
-
-export interface GetWorkloadJobScheduleEntryContainerOverride {
-    /**
-     * Command line arguments for this execution.
-     */
-    args: string[];
-    /**
-     * Optionally override the entrypoint.
-     */
-    command: string;
-    /**
-     * CPU allocation override.
-     */
-    cpu: string;
-    /**
-     * Environment variables specific to this execution.
-     */
-    env: {[key: string]: string};
-    /**
-     * Image override.
-     */
-    image: string;
-    /**
-     * Memory allocation override.
-     */
-    memory: string;
-    /**
-     * The name of the container to override.
-     */
-    name: string;
 }
 
 export interface GetWorkloadLoadBalancer {
@@ -4948,59 +4898,9 @@ export interface WorkloadJob {
      */
     restartPolicy: string;
     /**
-     * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute. Use this for a single schedule, or use scheduleEntry for multiple schedules.
-     */
-    schedule?: string;
-    /**
-     * Multiple schedules with individual container overrides. Use this for workloads that need to run on different schedules with different configurations.
-     */
-    scheduleEntries?: outputs.WorkloadJobScheduleEntry[];
-}
-
-export interface WorkloadJobScheduleEntry {
-    /**
-     * Container overrides specific to this schedule execution.
-     */
-    containerOverrides?: outputs.WorkloadJobScheduleEntryContainerOverride[];
-    /**
-     * Unique name for this schedule.
-     */
-    name: string;
-    /**
-     * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) for when this schedule should execute.
+     * A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
      */
     schedule: string;
-}
-
-export interface WorkloadJobScheduleEntryContainerOverride {
-    /**
-     * Command line arguments for this execution.
-     */
-    args?: string[];
-    /**
-     * Optionally override the entrypoint.
-     */
-    command?: string;
-    /**
-     * CPU allocation override.
-     */
-    cpu?: string;
-    /**
-     * Environment variables specific to this execution.
-     */
-    env?: {[key: string]: string};
-    /**
-     * Image override.
-     */
-    image?: string;
-    /**
-     * Memory allocation override.
-     */
-    memory?: string;
-    /**
-     * The name of the container to override.
-     */
-    name: string;
 }
 
 export interface WorkloadLoadBalancer {

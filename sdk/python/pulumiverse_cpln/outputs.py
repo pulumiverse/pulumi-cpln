@@ -265,8 +265,6 @@ __all__ = [
     'WorkloadFirewallSpecExternalOutboundAllowPort',
     'WorkloadFirewallSpecInternal',
     'WorkloadJob',
-    'WorkloadJobScheduleEntry',
-    'WorkloadJobScheduleEntryContainerOverride',
     'WorkloadLoadBalancer',
     'WorkloadLoadBalancerDirect',
     'WorkloadLoadBalancerDirectPort',
@@ -367,8 +365,6 @@ __all__ = [
     'GetWorkloadFirewallSpecExternalOutboundAllowPortResult',
     'GetWorkloadFirewallSpecInternalResult',
     'GetWorkloadJobResult',
-    'GetWorkloadJobScheduleEntryResult',
-    'GetWorkloadJobScheduleEntryContainerOverrideResult',
     'GetWorkloadLoadBalancerResult',
     'GetWorkloadLoadBalancerDirectResult',
     'GetWorkloadLoadBalancerDirectPortResult',
@@ -14534,8 +14530,6 @@ class WorkloadJob(dict):
             suggest = "history_limit"
         elif key == "restartPolicy":
             suggest = "restart_policy"
-        elif key == "scheduleEntries":
-            suggest = "schedule_entries"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in WorkloadJob. Access the value via the '{suggest}' property getter instead.")
@@ -14549,20 +14543,19 @@ class WorkloadJob(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
+                 schedule: _builtins.str,
                  active_deadline_seconds: Optional[_builtins.int] = None,
                  concurrency_policy: Optional[_builtins.str] = None,
                  history_limit: Optional[_builtins.int] = None,
-                 restart_policy: Optional[_builtins.str] = None,
-                 schedule: Optional[_builtins.str] = None,
-                 schedule_entries: Optional[Sequence['outputs.WorkloadJobScheduleEntry']] = None):
+                 restart_policy: Optional[_builtins.str] = None):
         """
+        :param _builtins.str schedule: A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
         :param _builtins.int active_deadline_seconds: The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
         :param _builtins.str concurrency_policy: Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
         :param _builtins.int history_limit: The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`.
         :param _builtins.str restart_policy: Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`.
-        :param _builtins.str schedule: A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute. Use this for a single schedule, or use schedule_entry for multiple schedules.
-        :param Sequence['WorkloadJobScheduleEntryArgs'] schedule_entries: Multiple schedules with individual container overrides. Use this for workloads that need to run on different schedules with different configurations.
         """
+        pulumi.set(__self__, "schedule", schedule)
         if active_deadline_seconds is not None:
             pulumi.set(__self__, "active_deadline_seconds", active_deadline_seconds)
         if concurrency_policy is not None:
@@ -14571,10 +14564,14 @@ class WorkloadJob(dict):
             pulumi.set(__self__, "history_limit", history_limit)
         if restart_policy is not None:
             pulumi.set(__self__, "restart_policy", restart_policy)
-        if schedule is not None:
-            pulumi.set(__self__, "schedule", schedule)
-        if schedule_entries is not None:
-            pulumi.set(__self__, "schedule_entries", schedule_entries)
+
+    @_builtins.property
+    @pulumi.getter
+    def schedule(self) -> _builtins.str:
+        """
+        A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
+        """
+        return pulumi.get(self, "schedule")
 
     @_builtins.property
     @pulumi.getter(name="activeDeadlineSeconds")
@@ -14607,170 +14604,6 @@ class WorkloadJob(dict):
         Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`.
         """
         return pulumi.get(self, "restart_policy")
-
-    @_builtins.property
-    @pulumi.getter
-    def schedule(self) -> Optional[_builtins.str]:
-        """
-        A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute. Use this for a single schedule, or use schedule_entry for multiple schedules.
-        """
-        return pulumi.get(self, "schedule")
-
-    @_builtins.property
-    @pulumi.getter(name="scheduleEntries")
-    def schedule_entries(self) -> Optional[Sequence['outputs.WorkloadJobScheduleEntry']]:
-        """
-        Multiple schedules with individual container overrides. Use this for workloads that need to run on different schedules with different configurations.
-        """
-        return pulumi.get(self, "schedule_entries")
-
-
-@pulumi.output_type
-class WorkloadJobScheduleEntry(dict):
-    @staticmethod
-    def __key_warning(key: str):
-        suggest = None
-        if key == "containerOverrides":
-            suggest = "container_overrides"
-
-        if suggest:
-            pulumi.log.warn(f"Key '{key}' not found in WorkloadJobScheduleEntry. Access the value via the '{suggest}' property getter instead.")
-
-    def __getitem__(self, key: str) -> Any:
-        WorkloadJobScheduleEntry.__key_warning(key)
-        return super().__getitem__(key)
-
-    def get(self, key: str, default = None) -> Any:
-        WorkloadJobScheduleEntry.__key_warning(key)
-        return super().get(key, default)
-
-    def __init__(__self__, *,
-                 name: _builtins.str,
-                 schedule: _builtins.str,
-                 container_overrides: Optional[Sequence['outputs.WorkloadJobScheduleEntryContainerOverride']] = None):
-        """
-        :param _builtins.str name: Unique name for this schedule.
-        :param _builtins.str schedule: A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) for when this schedule should execute.
-        :param Sequence['WorkloadJobScheduleEntryContainerOverrideArgs'] container_overrides: Container overrides specific to this schedule execution.
-        """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "schedule", schedule)
-        if container_overrides is not None:
-            pulumi.set(__self__, "container_overrides", container_overrides)
-
-    @_builtins.property
-    @pulumi.getter
-    def name(self) -> _builtins.str:
-        """
-        Unique name for this schedule.
-        """
-        return pulumi.get(self, "name")
-
-    @_builtins.property
-    @pulumi.getter
-    def schedule(self) -> _builtins.str:
-        """
-        A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) for when this schedule should execute.
-        """
-        return pulumi.get(self, "schedule")
-
-    @_builtins.property
-    @pulumi.getter(name="containerOverrides")
-    def container_overrides(self) -> Optional[Sequence['outputs.WorkloadJobScheduleEntryContainerOverride']]:
-        """
-        Container overrides specific to this schedule execution.
-        """
-        return pulumi.get(self, "container_overrides")
-
-
-@pulumi.output_type
-class WorkloadJobScheduleEntryContainerOverride(dict):
-    def __init__(__self__, *,
-                 name: _builtins.str,
-                 args: Optional[Sequence[_builtins.str]] = None,
-                 command: Optional[_builtins.str] = None,
-                 cpu: Optional[_builtins.str] = None,
-                 env: Optional[Mapping[str, _builtins.str]] = None,
-                 image: Optional[_builtins.str] = None,
-                 memory: Optional[_builtins.str] = None):
-        """
-        :param _builtins.str name: The name of the container to override.
-        :param Sequence[_builtins.str] args: Command line arguments for this execution.
-        :param _builtins.str command: Optionally override the entrypoint.
-        :param _builtins.str cpu: CPU allocation override.
-        :param Mapping[str, _builtins.str] env: Environment variables specific to this execution.
-        :param _builtins.str image: Image override.
-        :param _builtins.str memory: Memory allocation override.
-        """
-        pulumi.set(__self__, "name", name)
-        if args is not None:
-            pulumi.set(__self__, "args", args)
-        if command is not None:
-            pulumi.set(__self__, "command", command)
-        if cpu is not None:
-            pulumi.set(__self__, "cpu", cpu)
-        if env is not None:
-            pulumi.set(__self__, "env", env)
-        if image is not None:
-            pulumi.set(__self__, "image", image)
-        if memory is not None:
-            pulumi.set(__self__, "memory", memory)
-
-    @_builtins.property
-    @pulumi.getter
-    def name(self) -> _builtins.str:
-        """
-        The name of the container to override.
-        """
-        return pulumi.get(self, "name")
-
-    @_builtins.property
-    @pulumi.getter
-    def args(self) -> Optional[Sequence[_builtins.str]]:
-        """
-        Command line arguments for this execution.
-        """
-        return pulumi.get(self, "args")
-
-    @_builtins.property
-    @pulumi.getter
-    def command(self) -> Optional[_builtins.str]:
-        """
-        Optionally override the entrypoint.
-        """
-        return pulumi.get(self, "command")
-
-    @_builtins.property
-    @pulumi.getter
-    def cpu(self) -> Optional[_builtins.str]:
-        """
-        CPU allocation override.
-        """
-        return pulumi.get(self, "cpu")
-
-    @_builtins.property
-    @pulumi.getter
-    def env(self) -> Optional[Mapping[str, _builtins.str]]:
-        """
-        Environment variables specific to this execution.
-        """
-        return pulumi.get(self, "env")
-
-    @_builtins.property
-    @pulumi.getter
-    def image(self) -> Optional[_builtins.str]:
-        """
-        Image override.
-        """
-        return pulumi.get(self, "image")
-
-    @_builtins.property
-    @pulumi.getter
-    def memory(self) -> Optional[_builtins.str]:
-        """
-        Memory allocation override.
-        """
-        return pulumi.get(self, "memory")
 
 
 @pulumi.output_type
@@ -19631,23 +19464,19 @@ class GetWorkloadJobResult(dict):
                  concurrency_policy: _builtins.str,
                  history_limit: _builtins.int,
                  restart_policy: _builtins.str,
-                 schedule: _builtins.str,
-                 schedule_entries: Optional[Sequence['outputs.GetWorkloadJobScheduleEntryResult']] = None):
+                 schedule: _builtins.str):
         """
         :param _builtins.int active_deadline_seconds: The maximum number of seconds Control Plane will wait for the job to complete. If a job does not succeed or fail in the allotted time, Control Plane will stop the job, moving it into the Removed status.
         :param _builtins.str concurrency_policy: Either 'Forbid', 'Replace', or 'Allow'. This determines what Control Plane will do when the schedule requires a job to start, while a prior instance of the job is still running.
         :param _builtins.int history_limit: The maximum number of completed job instances to display. This should be an integer between 1 and 10. Default: `5`.
         :param _builtins.str restart_policy: Either 'OnFailure' or 'Never'. This determines what Control Plane will do when a job instance fails. Enum: [ OnFailure, Never ] Default: `Never`.
         :param _builtins.str schedule: A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
-        :param Sequence['GetWorkloadJobScheduleEntryArgs'] schedule_entries: Multiple schedules with individual container overrides.
         """
         pulumi.set(__self__, "active_deadline_seconds", active_deadline_seconds)
         pulumi.set(__self__, "concurrency_policy", concurrency_policy)
         pulumi.set(__self__, "history_limit", history_limit)
         pulumi.set(__self__, "restart_policy", restart_policy)
         pulumi.set(__self__, "schedule", schedule)
-        if schedule_entries is not None:
-            pulumi.set(__self__, "schedule_entries", schedule_entries)
 
     @_builtins.property
     @pulumi.getter(name="activeDeadlineSeconds")
@@ -19688,139 +19517,6 @@ class GetWorkloadJobResult(dict):
         A standard cron [schedule expression](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax) used to determine when your job should execute.
         """
         return pulumi.get(self, "schedule")
-
-    @_builtins.property
-    @pulumi.getter(name="scheduleEntries")
-    def schedule_entries(self) -> Optional[Sequence['outputs.GetWorkloadJobScheduleEntryResult']]:
-        """
-        Multiple schedules with individual container overrides.
-        """
-        return pulumi.get(self, "schedule_entries")
-
-
-@pulumi.output_type
-class GetWorkloadJobScheduleEntryResult(dict):
-    def __init__(__self__, *,
-                 name: _builtins.str,
-                 schedule: _builtins.str,
-                 container_overrides: Optional[Sequence['outputs.GetWorkloadJobScheduleEntryContainerOverrideResult']] = None):
-        """
-        :param _builtins.str name: Unique name for this schedule.
-        :param _builtins.str schedule: A standard cron schedule expression for when this schedule should execute.
-        :param Sequence['GetWorkloadJobScheduleEntryContainerOverrideArgs'] container_overrides: Container overrides specific to this schedule execution.
-        """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "schedule", schedule)
-        if container_overrides is not None:
-            pulumi.set(__self__, "container_overrides", container_overrides)
-
-    @_builtins.property
-    @pulumi.getter
-    def name(self) -> _builtins.str:
-        """
-        Unique name for this schedule.
-        """
-        return pulumi.get(self, "name")
-
-    @_builtins.property
-    @pulumi.getter
-    def schedule(self) -> _builtins.str:
-        """
-        A standard cron schedule expression for when this schedule should execute.
-        """
-        return pulumi.get(self, "schedule")
-
-    @_builtins.property
-    @pulumi.getter(name="containerOverrides")
-    def container_overrides(self) -> Optional[Sequence['outputs.GetWorkloadJobScheduleEntryContainerOverrideResult']]:
-        """
-        Container overrides specific to this schedule execution.
-        """
-        return pulumi.get(self, "container_overrides")
-
-
-@pulumi.output_type
-class GetWorkloadJobScheduleEntryContainerOverrideResult(dict):
-    def __init__(__self__, *,
-                 args: Sequence[_builtins.str],
-                 command: _builtins.str,
-                 cpu: _builtins.str,
-                 env: Mapping[str, _builtins.str],
-                 image: _builtins.str,
-                 memory: _builtins.str,
-                 name: _builtins.str):
-        """
-        :param Sequence[_builtins.str] args: Command line arguments for this execution.
-        :param _builtins.str command: Optionally override the entrypoint.
-        :param _builtins.str cpu: CPU allocation override.
-        :param Mapping[str, _builtins.str] env: Environment variables specific to this execution.
-        :param _builtins.str image: Image override.
-        :param _builtins.str memory: Memory allocation override.
-        :param _builtins.str name: The name of the container to override.
-        """
-        pulumi.set(__self__, "args", args)
-        pulumi.set(__self__, "command", command)
-        pulumi.set(__self__, "cpu", cpu)
-        pulumi.set(__self__, "env", env)
-        pulumi.set(__self__, "image", image)
-        pulumi.set(__self__, "memory", memory)
-        pulumi.set(__self__, "name", name)
-
-    @_builtins.property
-    @pulumi.getter
-    def args(self) -> Sequence[_builtins.str]:
-        """
-        Command line arguments for this execution.
-        """
-        return pulumi.get(self, "args")
-
-    @_builtins.property
-    @pulumi.getter
-    def command(self) -> _builtins.str:
-        """
-        Optionally override the entrypoint.
-        """
-        return pulumi.get(self, "command")
-
-    @_builtins.property
-    @pulumi.getter
-    def cpu(self) -> _builtins.str:
-        """
-        CPU allocation override.
-        """
-        return pulumi.get(self, "cpu")
-
-    @_builtins.property
-    @pulumi.getter
-    def env(self) -> Mapping[str, _builtins.str]:
-        """
-        Environment variables specific to this execution.
-        """
-        return pulumi.get(self, "env")
-
-    @_builtins.property
-    @pulumi.getter
-    def image(self) -> _builtins.str:
-        """
-        Image override.
-        """
-        return pulumi.get(self, "image")
-
-    @_builtins.property
-    @pulumi.getter
-    def memory(self) -> _builtins.str:
-        """
-        Memory allocation override.
-        """
-        return pulumi.get(self, "memory")
-
-    @_builtins.property
-    @pulumi.getter
-    def name(self) -> _builtins.str:
-        """
-        The name of the container to override.
-        """
-        return pulumi.get(self, "name")
 
 
 @pulumi.output_type
