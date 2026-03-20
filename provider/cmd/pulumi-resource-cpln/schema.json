@@ -4987,6 +4987,29 @@
                 "listenerHost"
             ]
         },
+        "cpln:index/OrgLoggingOpentelemetryLogging:OrgLoggingOpentelemetryLogging": {
+            "properties": {
+                "credentials": {
+                    "type": "string",
+                    "description": "Full link to a secret of type \u003cspan pulumi-lang-nodejs=\"`opaque`\" pulumi-lang-dotnet=\"`Opaque`\" pulumi-lang-go=\"`opaque`\" pulumi-lang-python=\"`opaque`\" pulumi-lang-yaml=\"`opaque`\" pulumi-lang-java=\"`opaque`\"\u003e`opaque`\u003c/span\u003e.\n"
+                },
+                "endpoint": {
+                    "type": "string",
+                    "description": "OpenTelemetry collector endpoint URI.\n"
+                },
+                "headers": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Custom headers to include in OpenTelemetry export requests.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "endpoint"
+            ]
+        },
         "cpln:index/OrgLoggingS3Logging:OrgLoggingS3Logging": {
             "properties": {
                 "bucket": {
@@ -13101,6 +13124,13 @@
                     "type": "string",
                     "description": "Name of the Org."
                 },
+                "opentelemetryLoggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingOpentelemetryLogging:OrgLoggingOpentelemetryLogging"
+                    },
+                    "description": "For logging and analyzing data within an org using OpenTelemetry."
+                },
                 "s3Loggings": {
                     "type": "array",
                     "items": {
@@ -13180,6 +13210,13 @@
                     },
                     "description": "[Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)"
                 },
+                "opentelemetryLoggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/OrgLoggingOpentelemetryLogging:OrgLoggingOpentelemetryLogging"
+                    },
+                    "description": "For logging and analyzing data within an org using OpenTelemetry."
+                },
                 "s3Loggings": {
                     "type": "array",
                     "items": {
@@ -13254,6 +13291,13 @@
                     "name": {
                         "type": "string",
                         "description": "Name of the Org."
+                    },
+                    "opentelemetryLoggings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/OrgLoggingOpentelemetryLogging:OrgLoggingOpentelemetryLogging"
+                        },
+                        "description": "For logging and analyzing data within an org using OpenTelemetry."
                     },
                     "s3Loggings": {
                         "type": "array",

@@ -62,6 +62,12 @@ namespace Pulumiverse.Cpln
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
+        /// For logging and analyzing data within an org using OpenTelemetry.
+        /// </summary>
+        [Output("opentelemetryLoggings")]
+        public Output<ImmutableArray<Outputs.OrgLoggingOpentelemetryLogging>> OpentelemetryLoggings { get; private set; } = null!;
+
+        /// <summary>
         /// [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
         /// </summary>
         [Output("s3Loggings")]
@@ -196,6 +202,18 @@ namespace Pulumiverse.Cpln
             set => _logzioLoggings = value;
         }
 
+        [Input("opentelemetryLoggings")]
+        private InputList<Inputs.OrgLoggingOpentelemetryLoggingArgs>? _opentelemetryLoggings;
+
+        /// <summary>
+        /// For logging and analyzing data within an org using OpenTelemetry.
+        /// </summary>
+        public InputList<Inputs.OrgLoggingOpentelemetryLoggingArgs> OpentelemetryLoggings
+        {
+            get => _opentelemetryLoggings ?? (_opentelemetryLoggings = new InputList<Inputs.OrgLoggingOpentelemetryLoggingArgs>());
+            set => _opentelemetryLoggings = value;
+        }
+
         [Input("s3Loggings")]
         private InputList<Inputs.OrgLoggingS3LoggingArgs>? _s3Loggings;
 
@@ -313,6 +331,18 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
+
+        [Input("opentelemetryLoggings")]
+        private InputList<Inputs.OrgLoggingOpentelemetryLoggingGetArgs>? _opentelemetryLoggings;
+
+        /// <summary>
+        /// For logging and analyzing data within an org using OpenTelemetry.
+        /// </summary>
+        public InputList<Inputs.OrgLoggingOpentelemetryLoggingGetArgs> OpentelemetryLoggings
+        {
+            get => _opentelemetryLoggings ?? (_opentelemetryLoggings = new InputList<Inputs.OrgLoggingOpentelemetryLoggingGetArgs>());
+            set => _opentelemetryLoggings = value;
+        }
 
         [Input("s3Loggings")]
         private InputList<Inputs.OrgLoggingS3LoggingGetArgs>? _s3Loggings;

@@ -4117,6 +4117,21 @@ export interface OrgLoggingLogzioLogging {
     listenerHost: string;
 }
 
+export interface OrgLoggingOpentelemetryLogging {
+    /**
+     * Full link to a secret of type `opaque`.
+     */
+    credentials?: string;
+    /**
+     * OpenTelemetry collector endpoint URI.
+     */
+    endpoint: string;
+    /**
+     * Custom headers to include in OpenTelemetry export requests.
+     */
+    headers?: {[key: string]: string};
+}
+
 export interface OrgLoggingS3Logging {
     /**
      * Name of S3 bucket.

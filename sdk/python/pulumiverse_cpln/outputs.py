@@ -206,6 +206,7 @@ __all__ = [
     'OrgLoggingElasticLoggingGeneric',
     'OrgLoggingFluentdLogging',
     'OrgLoggingLogzioLogging',
+    'OrgLoggingOpentelemetryLogging',
     'OrgLoggingS3Logging',
     'OrgLoggingStackdriverLogging',
     'OrgLoggingSyslogLogging',
@@ -11527,6 +11528,48 @@ class OrgLoggingLogzioLogging(dict):
         Logzio listener host URI.
         """
         return pulumi.get(self, "listener_host")
+
+
+@pulumi.output_type
+class OrgLoggingOpentelemetryLogging(dict):
+    def __init__(__self__, *,
+                 endpoint: _builtins.str,
+                 credentials: Optional[_builtins.str] = None,
+                 headers: Optional[Mapping[str, _builtins.str]] = None):
+        """
+        :param _builtins.str endpoint: OpenTelemetry collector endpoint URI.
+        :param _builtins.str credentials: Full link to a secret of type `opaque`.
+        :param Mapping[str, _builtins.str] headers: Custom headers to include in OpenTelemetry export requests.
+        """
+        pulumi.set(__self__, "endpoint", endpoint)
+        if credentials is not None:
+            pulumi.set(__self__, "credentials", credentials)
+        if headers is not None:
+            pulumi.set(__self__, "headers", headers)
+
+    @_builtins.property
+    @pulumi.getter
+    def endpoint(self) -> _builtins.str:
+        """
+        OpenTelemetry collector endpoint URI.
+        """
+        return pulumi.get(self, "endpoint")
+
+    @_builtins.property
+    @pulumi.getter
+    def credentials(self) -> Optional[_builtins.str]:
+        """
+        Full link to a secret of type `opaque`.
+        """
+        return pulumi.get(self, "credentials")
+
+    @_builtins.property
+    @pulumi.getter
+    def headers(self) -> Optional[Mapping[str, _builtins.str]]:
+        """
+        Custom headers to include in OpenTelemetry export requests.
+        """
+        return pulumi.get(self, "headers")
 
 
 @pulumi.output_type
