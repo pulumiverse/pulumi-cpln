@@ -27,6 +27,7 @@ class OrgLoggingArgs:
                  elastic_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingElasticLoggingArgs']]]] = None,
                  fluentd_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingFluentdLoggingArgs']]]] = None,
                  logzio_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingLogzioLoggingArgs']]]] = None,
+                 opentelemetry_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingOpentelemetryLoggingArgs']]]] = None,
                  s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]]] = None,
                  stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingStackdriverLoggingArgs']]]] = None,
                  syslog_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingSyslogLoggingArgs']]]] = None):
@@ -36,6 +37,7 @@ class OrgLoggingArgs:
         :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingDatadogLoggingArgs']]] datadog_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
         :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingElasticLoggingArgs']]] elastic_loggings: For logging and analyzing data within an org using Elastic Logging.
         :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingLogzioLoggingArgs']]] logzio_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+        :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingOpentelemetryLoggingArgs']]] opentelemetry_loggings: For logging and analyzing data within an org using OpenTelemetry.
         :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]] s3_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
         """
         if cloud_watch_loggings is not None:
@@ -50,6 +52,8 @@ class OrgLoggingArgs:
             pulumi.set(__self__, "fluentd_loggings", fluentd_loggings)
         if logzio_loggings is not None:
             pulumi.set(__self__, "logzio_loggings", logzio_loggings)
+        if opentelemetry_loggings is not None:
+            pulumi.set(__self__, "opentelemetry_loggings", opentelemetry_loggings)
         if s3_loggings is not None:
             pulumi.set(__self__, "s3_loggings", s3_loggings)
         if stackdriver_loggings is not None:
@@ -124,6 +128,18 @@ class OrgLoggingArgs:
         pulumi.set(self, "logzio_loggings", value)
 
     @_builtins.property
+    @pulumi.getter(name="opentelemetryLoggings")
+    def opentelemetry_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingOpentelemetryLoggingArgs']]]]:
+        """
+        For logging and analyzing data within an org using OpenTelemetry.
+        """
+        return pulumi.get(self, "opentelemetry_loggings")
+
+    @opentelemetry_loggings.setter
+    def opentelemetry_loggings(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingOpentelemetryLoggingArgs']]]]):
+        pulumi.set(self, "opentelemetry_loggings", value)
+
+    @_builtins.property
     @pulumi.getter(name="s3Loggings")
     def s3_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]]]:
         """
@@ -166,6 +182,7 @@ class _OrgLoggingState:
                  fluentd_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingFluentdLoggingArgs']]]] = None,
                  logzio_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingLogzioLoggingArgs']]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
+                 opentelemetry_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingOpentelemetryLoggingArgs']]]] = None,
                  s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]]] = None,
                  self_link: Optional[pulumi.Input[_builtins.str]] = None,
                  stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingStackdriverLoggingArgs']]]] = None,
@@ -180,6 +197,7 @@ class _OrgLoggingState:
         :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingElasticLoggingArgs']]] elastic_loggings: For logging and analyzing data within an org using Elastic Logging.
         :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingLogzioLoggingArgs']]] logzio_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
         :param pulumi.Input[_builtins.str] name: Name of the Org.
+        :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingOpentelemetryLoggingArgs']]] opentelemetry_loggings: For logging and analyzing data within an org using OpenTelemetry.
         :param pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]] s3_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
         :param pulumi.Input[_builtins.str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
@@ -202,6 +220,8 @@ class _OrgLoggingState:
             pulumi.set(__self__, "logzio_loggings", logzio_loggings)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if opentelemetry_loggings is not None:
+            pulumi.set(__self__, "opentelemetry_loggings", opentelemetry_loggings)
         if s3_loggings is not None:
             pulumi.set(__self__, "s3_loggings", s3_loggings)
         if self_link is not None:
@@ -316,6 +336,18 @@ class _OrgLoggingState:
         pulumi.set(self, "name", value)
 
     @_builtins.property
+    @pulumi.getter(name="opentelemetryLoggings")
+    def opentelemetry_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingOpentelemetryLoggingArgs']]]]:
+        """
+        For logging and analyzing data within an org using OpenTelemetry.
+        """
+        return pulumi.get(self, "opentelemetry_loggings")
+
+    @opentelemetry_loggings.setter
+    def opentelemetry_loggings(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingOpentelemetryLoggingArgs']]]]):
+        pulumi.set(self, "opentelemetry_loggings", value)
+
+    @_builtins.property
     @pulumi.getter(name="s3Loggings")
     def s3_loggings(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['OrgLoggingS3LoggingArgs']]]]:
         """
@@ -382,6 +414,7 @@ class OrgLogging(pulumi.CustomResource):
                  elastic_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingElasticLoggingArgs', 'OrgLoggingElasticLoggingArgsDict']]]]] = None,
                  fluentd_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingFluentdLoggingArgs', 'OrgLoggingFluentdLoggingArgsDict']]]]] = None,
                  logzio_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingLogzioLoggingArgs', 'OrgLoggingLogzioLoggingArgsDict']]]]] = None,
+                 opentelemetry_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingOpentelemetryLoggingArgs', 'OrgLoggingOpentelemetryLoggingArgsDict']]]]] = None,
                  s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingS3LoggingArgs', 'OrgLoggingS3LoggingArgsDict']]]]] = None,
                  stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingStackdriverLoggingArgs', 'OrgLoggingStackdriverLoggingArgsDict']]]]] = None,
                  syslog_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingSyslogLoggingArgs', 'OrgLoggingSyslogLoggingArgsDict']]]]] = None,
@@ -394,6 +427,7 @@ class OrgLogging(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingDatadogLoggingArgs', 'OrgLoggingDatadogLoggingArgsDict']]]] datadog_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/datadog)
         :param pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingElasticLoggingArgs', 'OrgLoggingElasticLoggingArgsDict']]]] elastic_loggings: For logging and analyzing data within an org using Elastic Logging.
         :param pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingLogzioLoggingArgs', 'OrgLoggingLogzioLoggingArgsDict']]]] logzio_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
+        :param pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingOpentelemetryLoggingArgs', 'OrgLoggingOpentelemetryLoggingArgsDict']]]] opentelemetry_loggings: For logging and analyzing data within an org using OpenTelemetry.
         :param pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingS3LoggingArgs', 'OrgLoggingS3LoggingArgsDict']]]] s3_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
         """
         ...
@@ -425,6 +459,7 @@ class OrgLogging(pulumi.CustomResource):
                  elastic_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingElasticLoggingArgs', 'OrgLoggingElasticLoggingArgsDict']]]]] = None,
                  fluentd_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingFluentdLoggingArgs', 'OrgLoggingFluentdLoggingArgsDict']]]]] = None,
                  logzio_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingLogzioLoggingArgs', 'OrgLoggingLogzioLoggingArgsDict']]]]] = None,
+                 opentelemetry_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingOpentelemetryLoggingArgs', 'OrgLoggingOpentelemetryLoggingArgsDict']]]]] = None,
                  s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingS3LoggingArgs', 'OrgLoggingS3LoggingArgsDict']]]]] = None,
                  stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingStackdriverLoggingArgs', 'OrgLoggingStackdriverLoggingArgsDict']]]]] = None,
                  syslog_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingSyslogLoggingArgs', 'OrgLoggingSyslogLoggingArgsDict']]]]] = None,
@@ -443,6 +478,7 @@ class OrgLogging(pulumi.CustomResource):
             __props__.__dict__["elastic_loggings"] = elastic_loggings
             __props__.__dict__["fluentd_loggings"] = fluentd_loggings
             __props__.__dict__["logzio_loggings"] = logzio_loggings
+            __props__.__dict__["opentelemetry_loggings"] = opentelemetry_loggings
             __props__.__dict__["s3_loggings"] = s3_loggings
             __props__.__dict__["stackdriver_loggings"] = stackdriver_loggings
             __props__.__dict__["syslog_loggings"] = syslog_loggings
@@ -470,6 +506,7 @@ class OrgLogging(pulumi.CustomResource):
             fluentd_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingFluentdLoggingArgs', 'OrgLoggingFluentdLoggingArgsDict']]]]] = None,
             logzio_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingLogzioLoggingArgs', 'OrgLoggingLogzioLoggingArgsDict']]]]] = None,
             name: Optional[pulumi.Input[_builtins.str]] = None,
+            opentelemetry_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingOpentelemetryLoggingArgs', 'OrgLoggingOpentelemetryLoggingArgsDict']]]]] = None,
             s3_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingS3LoggingArgs', 'OrgLoggingS3LoggingArgsDict']]]]] = None,
             self_link: Optional[pulumi.Input[_builtins.str]] = None,
             stackdriver_loggings: Optional[pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingStackdriverLoggingArgs', 'OrgLoggingStackdriverLoggingArgsDict']]]]] = None,
@@ -489,6 +526,7 @@ class OrgLogging(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingElasticLoggingArgs', 'OrgLoggingElasticLoggingArgsDict']]]] elastic_loggings: For logging and analyzing data within an org using Elastic Logging.
         :param pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingLogzioLoggingArgs', 'OrgLoggingLogzioLoggingArgsDict']]]] logzio_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
         :param pulumi.Input[_builtins.str] name: Name of the Org.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingOpentelemetryLoggingArgs', 'OrgLoggingOpentelemetryLoggingArgsDict']]]] opentelemetry_loggings: For logging and analyzing data within an org using OpenTelemetry.
         :param pulumi.Input[Sequence[pulumi.Input[Union['OrgLoggingS3LoggingArgs', 'OrgLoggingS3LoggingArgsDict']]]] s3_loggings: [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
         :param pulumi.Input[_builtins.str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
@@ -506,6 +544,7 @@ class OrgLogging(pulumi.CustomResource):
         __props__.__dict__["fluentd_loggings"] = fluentd_loggings
         __props__.__dict__["logzio_loggings"] = logzio_loggings
         __props__.__dict__["name"] = name
+        __props__.__dict__["opentelemetry_loggings"] = opentelemetry_loggings
         __props__.__dict__["s3_loggings"] = s3_loggings
         __props__.__dict__["self_link"] = self_link
         __props__.__dict__["stackdriver_loggings"] = stackdriver_loggings
@@ -578,6 +617,14 @@ class OrgLogging(pulumi.CustomResource):
         Name of the Org.
         """
         return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter(name="opentelemetryLoggings")
+    def opentelemetry_loggings(self) -> pulumi.Output[Optional[Sequence['outputs.OrgLoggingOpentelemetryLogging']]]:
+        """
+        For logging and analyzing data within an org using OpenTelemetry.
+        """
+        return pulumi.get(self, "opentelemetry_loggings")
 
     @_builtins.property
     @pulumi.getter(name="s3Loggings")

@@ -395,6 +395,8 @@ __all__ = [
     'OrgLoggingFluentdLoggingArgsDict',
     'OrgLoggingLogzioLoggingArgs',
     'OrgLoggingLogzioLoggingArgsDict',
+    'OrgLoggingOpentelemetryLoggingArgs',
+    'OrgLoggingOpentelemetryLoggingArgsDict',
     'OrgLoggingS3LoggingArgs',
     'OrgLoggingS3LoggingArgsDict',
     'OrgLoggingStackdriverLoggingArgs',
@@ -15265,6 +15267,77 @@ class OrgLoggingLogzioLoggingArgs:
     @listener_host.setter
     def listener_host(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "listener_host", value)
+
+
+if not MYPY:
+    class OrgLoggingOpentelemetryLoggingArgsDict(TypedDict):
+        endpoint: pulumi.Input[_builtins.str]
+        """
+        OpenTelemetry collector endpoint URI.
+        """
+        credentials: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Full link to a secret of type `opaque`.
+        """
+        headers: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+        """
+        Custom headers to include in OpenTelemetry export requests.
+        """
+elif False:
+    OrgLoggingOpentelemetryLoggingArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class OrgLoggingOpentelemetryLoggingArgs:
+    def __init__(__self__, *,
+                 endpoint: pulumi.Input[_builtins.str],
+                 credentials: Optional[pulumi.Input[_builtins.str]] = None,
+                 headers: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None):
+        """
+        :param pulumi.Input[_builtins.str] endpoint: OpenTelemetry collector endpoint URI.
+        :param pulumi.Input[_builtins.str] credentials: Full link to a secret of type `opaque`.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] headers: Custom headers to include in OpenTelemetry export requests.
+        """
+        pulumi.set(__self__, "endpoint", endpoint)
+        if credentials is not None:
+            pulumi.set(__self__, "credentials", credentials)
+        if headers is not None:
+            pulumi.set(__self__, "headers", headers)
+
+    @_builtins.property
+    @pulumi.getter
+    def endpoint(self) -> pulumi.Input[_builtins.str]:
+        """
+        OpenTelemetry collector endpoint URI.
+        """
+        return pulumi.get(self, "endpoint")
+
+    @endpoint.setter
+    def endpoint(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "endpoint", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def credentials(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Full link to a secret of type `opaque`.
+        """
+        return pulumi.get(self, "credentials")
+
+    @credentials.setter
+    def credentials(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "credentials", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def headers(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Custom headers to include in OpenTelemetry export requests.
+        """
+        return pulumi.get(self, "headers")
+
+    @headers.setter
+    def headers(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "headers", value)
 
 
 if not MYPY:

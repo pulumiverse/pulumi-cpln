@@ -65,6 +65,10 @@ export class OrgLogging extends pulumi.CustomResource {
      */
     declare public /*out*/ readonly name: pulumi.Output<string>;
     /**
+     * For logging and analyzing data within an org using OpenTelemetry.
+     */
+    declare public readonly opentelemetryLoggings: pulumi.Output<outputs.OrgLoggingOpentelemetryLogging[] | undefined>;
+    /**
      * [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
      */
     declare public readonly s3Loggings: pulumi.Output<outputs.OrgLoggingS3Logging[] | undefined>;
@@ -101,6 +105,7 @@ export class OrgLogging extends pulumi.CustomResource {
             resourceInputs["fluentdLoggings"] = state?.fluentdLoggings;
             resourceInputs["logzioLoggings"] = state?.logzioLoggings;
             resourceInputs["name"] = state?.name;
+            resourceInputs["opentelemetryLoggings"] = state?.opentelemetryLoggings;
             resourceInputs["s3Loggings"] = state?.s3Loggings;
             resourceInputs["selfLink"] = state?.selfLink;
             resourceInputs["stackdriverLoggings"] = state?.stackdriverLoggings;
@@ -114,6 +119,7 @@ export class OrgLogging extends pulumi.CustomResource {
             resourceInputs["elasticLoggings"] = args?.elasticLoggings;
             resourceInputs["fluentdLoggings"] = args?.fluentdLoggings;
             resourceInputs["logzioLoggings"] = args?.logzioLoggings;
+            resourceInputs["opentelemetryLoggings"] = args?.opentelemetryLoggings;
             resourceInputs["s3Loggings"] = args?.s3Loggings;
             resourceInputs["stackdriverLoggings"] = args?.stackdriverLoggings;
             resourceInputs["syslogLoggings"] = args?.syslogLoggings;
@@ -163,6 +169,10 @@ export interface OrgLoggingState {
      */
     name?: pulumi.Input<string>;
     /**
+     * For logging and analyzing data within an org using OpenTelemetry.
+     */
+    opentelemetryLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingOpentelemetryLogging>[]>;
+    /**
      * [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
      */
     s3Loggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingS3Logging>[]>;
@@ -200,6 +210,10 @@ export interface OrgLoggingArgs {
      * [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
      */
     logzioLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingLogzioLogging>[]>;
+    /**
+     * For logging and analyzing data within an org using OpenTelemetry.
+     */
+    opentelemetryLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingOpentelemetryLogging>[]>;
     /**
      * [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
      */

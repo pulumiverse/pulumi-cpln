@@ -30211,6 +30211,121 @@ func (o OrgLoggingLogzioLoggingArrayOutput) Index(i pulumi.IntInput) OrgLoggingL
 	}).(OrgLoggingLogzioLoggingOutput)
 }
 
+type OrgLoggingOpentelemetryLogging struct {
+	// Full link to a secret of type `opaque`.
+	Credentials *string `pulumi:"credentials"`
+	// OpenTelemetry collector endpoint URI.
+	Endpoint string `pulumi:"endpoint"`
+	// Custom headers to include in OpenTelemetry export requests.
+	Headers map[string]string `pulumi:"headers"`
+}
+
+// OrgLoggingOpentelemetryLoggingInput is an input type that accepts OrgLoggingOpentelemetryLoggingArgs and OrgLoggingOpentelemetryLoggingOutput values.
+// You can construct a concrete instance of `OrgLoggingOpentelemetryLoggingInput` via:
+//
+//	OrgLoggingOpentelemetryLoggingArgs{...}
+type OrgLoggingOpentelemetryLoggingInput interface {
+	pulumi.Input
+
+	ToOrgLoggingOpentelemetryLoggingOutput() OrgLoggingOpentelemetryLoggingOutput
+	ToOrgLoggingOpentelemetryLoggingOutputWithContext(context.Context) OrgLoggingOpentelemetryLoggingOutput
+}
+
+type OrgLoggingOpentelemetryLoggingArgs struct {
+	// Full link to a secret of type `opaque`.
+	Credentials pulumi.StringPtrInput `pulumi:"credentials"`
+	// OpenTelemetry collector endpoint URI.
+	Endpoint pulumi.StringInput `pulumi:"endpoint"`
+	// Custom headers to include in OpenTelemetry export requests.
+	Headers pulumi.StringMapInput `pulumi:"headers"`
+}
+
+func (OrgLoggingOpentelemetryLoggingArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrgLoggingOpentelemetryLogging)(nil)).Elem()
+}
+
+func (i OrgLoggingOpentelemetryLoggingArgs) ToOrgLoggingOpentelemetryLoggingOutput() OrgLoggingOpentelemetryLoggingOutput {
+	return i.ToOrgLoggingOpentelemetryLoggingOutputWithContext(context.Background())
+}
+
+func (i OrgLoggingOpentelemetryLoggingArgs) ToOrgLoggingOpentelemetryLoggingOutputWithContext(ctx context.Context) OrgLoggingOpentelemetryLoggingOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgLoggingOpentelemetryLoggingOutput)
+}
+
+// OrgLoggingOpentelemetryLoggingArrayInput is an input type that accepts OrgLoggingOpentelemetryLoggingArray and OrgLoggingOpentelemetryLoggingArrayOutput values.
+// You can construct a concrete instance of `OrgLoggingOpentelemetryLoggingArrayInput` via:
+//
+//	OrgLoggingOpentelemetryLoggingArray{ OrgLoggingOpentelemetryLoggingArgs{...} }
+type OrgLoggingOpentelemetryLoggingArrayInput interface {
+	pulumi.Input
+
+	ToOrgLoggingOpentelemetryLoggingArrayOutput() OrgLoggingOpentelemetryLoggingArrayOutput
+	ToOrgLoggingOpentelemetryLoggingArrayOutputWithContext(context.Context) OrgLoggingOpentelemetryLoggingArrayOutput
+}
+
+type OrgLoggingOpentelemetryLoggingArray []OrgLoggingOpentelemetryLoggingInput
+
+func (OrgLoggingOpentelemetryLoggingArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]OrgLoggingOpentelemetryLogging)(nil)).Elem()
+}
+
+func (i OrgLoggingOpentelemetryLoggingArray) ToOrgLoggingOpentelemetryLoggingArrayOutput() OrgLoggingOpentelemetryLoggingArrayOutput {
+	return i.ToOrgLoggingOpentelemetryLoggingArrayOutputWithContext(context.Background())
+}
+
+func (i OrgLoggingOpentelemetryLoggingArray) ToOrgLoggingOpentelemetryLoggingArrayOutputWithContext(ctx context.Context) OrgLoggingOpentelemetryLoggingArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgLoggingOpentelemetryLoggingArrayOutput)
+}
+
+type OrgLoggingOpentelemetryLoggingOutput struct{ *pulumi.OutputState }
+
+func (OrgLoggingOpentelemetryLoggingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrgLoggingOpentelemetryLogging)(nil)).Elem()
+}
+
+func (o OrgLoggingOpentelemetryLoggingOutput) ToOrgLoggingOpentelemetryLoggingOutput() OrgLoggingOpentelemetryLoggingOutput {
+	return o
+}
+
+func (o OrgLoggingOpentelemetryLoggingOutput) ToOrgLoggingOpentelemetryLoggingOutputWithContext(ctx context.Context) OrgLoggingOpentelemetryLoggingOutput {
+	return o
+}
+
+// Full link to a secret of type `opaque`.
+func (o OrgLoggingOpentelemetryLoggingOutput) Credentials() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v OrgLoggingOpentelemetryLogging) *string { return v.Credentials }).(pulumi.StringPtrOutput)
+}
+
+// OpenTelemetry collector endpoint URI.
+func (o OrgLoggingOpentelemetryLoggingOutput) Endpoint() pulumi.StringOutput {
+	return o.ApplyT(func(v OrgLoggingOpentelemetryLogging) string { return v.Endpoint }).(pulumi.StringOutput)
+}
+
+// Custom headers to include in OpenTelemetry export requests.
+func (o OrgLoggingOpentelemetryLoggingOutput) Headers() pulumi.StringMapOutput {
+	return o.ApplyT(func(v OrgLoggingOpentelemetryLogging) map[string]string { return v.Headers }).(pulumi.StringMapOutput)
+}
+
+type OrgLoggingOpentelemetryLoggingArrayOutput struct{ *pulumi.OutputState }
+
+func (OrgLoggingOpentelemetryLoggingArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]OrgLoggingOpentelemetryLogging)(nil)).Elem()
+}
+
+func (o OrgLoggingOpentelemetryLoggingArrayOutput) ToOrgLoggingOpentelemetryLoggingArrayOutput() OrgLoggingOpentelemetryLoggingArrayOutput {
+	return o
+}
+
+func (o OrgLoggingOpentelemetryLoggingArrayOutput) ToOrgLoggingOpentelemetryLoggingArrayOutputWithContext(ctx context.Context) OrgLoggingOpentelemetryLoggingArrayOutput {
+	return o
+}
+
+func (o OrgLoggingOpentelemetryLoggingArrayOutput) Index(i pulumi.IntInput) OrgLoggingOpentelemetryLoggingOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) OrgLoggingOpentelemetryLogging {
+		return vs[0].([]OrgLoggingOpentelemetryLogging)[vs[1].(int)]
+	}).(OrgLoggingOpentelemetryLoggingOutput)
+}
+
 type OrgLoggingS3Logging struct {
 	// Name of S3 bucket.
 	Bucket string `pulumi:"bucket"`
@@ -58208,6 +58323,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingFluentdLoggingArrayInput)(nil)).Elem(), OrgLoggingFluentdLoggingArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingLogzioLoggingInput)(nil)).Elem(), OrgLoggingLogzioLoggingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingLogzioLoggingArrayInput)(nil)).Elem(), OrgLoggingLogzioLoggingArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingOpentelemetryLoggingInput)(nil)).Elem(), OrgLoggingOpentelemetryLoggingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingOpentelemetryLoggingArrayInput)(nil)).Elem(), OrgLoggingOpentelemetryLoggingArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingS3LoggingInput)(nil)).Elem(), OrgLoggingS3LoggingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingS3LoggingArrayInput)(nil)).Elem(), OrgLoggingS3LoggingArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingStackdriverLoggingInput)(nil)).Elem(), OrgLoggingStackdriverLoggingArgs{})
@@ -58976,6 +59093,8 @@ func init() {
 	pulumi.RegisterOutputType(OrgLoggingFluentdLoggingArrayOutput{})
 	pulumi.RegisterOutputType(OrgLoggingLogzioLoggingOutput{})
 	pulumi.RegisterOutputType(OrgLoggingLogzioLoggingArrayOutput{})
+	pulumi.RegisterOutputType(OrgLoggingOpentelemetryLoggingOutput{})
+	pulumi.RegisterOutputType(OrgLoggingOpentelemetryLoggingArrayOutput{})
 	pulumi.RegisterOutputType(OrgLoggingS3LoggingOutput{})
 	pulumi.RegisterOutputType(OrgLoggingS3LoggingArrayOutput{})
 	pulumi.RegisterOutputType(OrgLoggingStackdriverLoggingOutput{})

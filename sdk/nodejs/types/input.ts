@@ -4926,6 +4926,21 @@ export interface OrgLoggingLogzioLogging {
     listenerHost: pulumi.Input<string>;
 }
 
+export interface OrgLoggingOpentelemetryLogging {
+    /**
+     * Full link to a secret of type `opaque`.
+     */
+    credentials?: pulumi.Input<string>;
+    /**
+     * OpenTelemetry collector endpoint URI.
+     */
+    endpoint: pulumi.Input<string>;
+    /**
+     * Custom headers to include in OpenTelemetry export requests.
+     */
+    headers?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+}
+
 export interface OrgLoggingS3Logging {
     /**
      * Name of S3 bucket.
