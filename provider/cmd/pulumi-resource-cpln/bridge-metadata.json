@@ -1083,6 +1083,9 @@
                     "logzio_logging": {
                         "maxItemsOne": false
                     },
+                    "opentelemetry_logging": {
+                        "maxItemsOne": false
+                    },
                     "s3_logging": {
                         "maxItemsOne": false
                     },
