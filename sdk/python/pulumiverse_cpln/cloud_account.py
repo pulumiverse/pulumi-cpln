@@ -151,6 +151,7 @@ class _CloudAccountState:
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  ngs: Optional[pulumi.Input['CloudAccountNgsArgs']] = None,
                  self_link: Optional[pulumi.Input[_builtins.str]] = None,
+                 statuses: Optional[pulumi.Input[Sequence[pulumi.Input['CloudAccountStatusArgs']]]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None):
         """
         Input properties used for looking up and filtering CloudAccount resources.
@@ -164,6 +165,7 @@ class _CloudAccountState:
         :param pulumi.Input[_builtins.str] name: Name of the Cloud Account.
         :param pulumi.Input['CloudAccountNgsArgs'] ngs: Contains NGS cloud account configuration.
         :param pulumi.Input[_builtins.str] self_link: Full link to this resource. Can be referenced by other resources.
+        :param pulumi.Input[Sequence[pulumi.Input['CloudAccountStatusArgs']]] statuses: Status of the Cloud Account.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
         """
         if aws is not None:
@@ -186,6 +188,8 @@ class _CloudAccountState:
             pulumi.set(__self__, "ngs", ngs)
         if self_link is not None:
             pulumi.set(__self__, "self_link", self_link)
+        if statuses is not None:
+            pulumi.set(__self__, "statuses", statuses)
         if tags is not None:
             pulumi.set(__self__, "tags", tags)
 
@@ -311,6 +315,18 @@ class _CloudAccountState:
 
     @_builtins.property
     @pulumi.getter
+    def statuses(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['CloudAccountStatusArgs']]]]:
+        """
+        Status of the Cloud Account.
+        """
+        return pulumi.get(self, "statuses")
+
+    @statuses.setter
+    def statuses(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['CloudAccountStatusArgs']]]]):
+        pulumi.set(self, "statuses", value)
+
+    @_builtins.property
+    @pulumi.getter
     def tags(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Key-value map of resource tags.
@@ -398,6 +414,7 @@ class CloudAccount(pulumi.CustomResource):
             __props__.__dict__["gcp_roles"] = None
             __props__.__dict__["gcp_service_account_name"] = None
             __props__.__dict__["self_link"] = None
+            __props__.__dict__["statuses"] = None
         super(CloudAccount, __self__).__init__(
             'cpln:index/cloudAccount:CloudAccount',
             resource_name,
@@ -418,6 +435,7 @@ class CloudAccount(pulumi.CustomResource):
             name: Optional[pulumi.Input[_builtins.str]] = None,
             ngs: Optional[pulumi.Input[Union['CloudAccountNgsArgs', 'CloudAccountNgsArgsDict']]] = None,
             self_link: Optional[pulumi.Input[_builtins.str]] = None,
+            statuses: Optional[pulumi.Input[Sequence[pulumi.Input[Union['CloudAccountStatusArgs', 'CloudAccountStatusArgsDict']]]]] = None,
             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None) -> 'CloudAccount':
         """
         Get an existing CloudAccount resource's state with the given name, id, and optional extra
@@ -436,6 +454,7 @@ class CloudAccount(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] name: Name of the Cloud Account.
         :param pulumi.Input[Union['CloudAccountNgsArgs', 'CloudAccountNgsArgsDict']] ngs: Contains NGS cloud account configuration.
         :param pulumi.Input[_builtins.str] self_link: Full link to this resource. Can be referenced by other resources.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['CloudAccountStatusArgs', 'CloudAccountStatusArgsDict']]]] statuses: Status of the Cloud Account.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -452,6 +471,7 @@ class CloudAccount(pulumi.CustomResource):
         __props__.__dict__["name"] = name
         __props__.__dict__["ngs"] = ngs
         __props__.__dict__["self_link"] = self_link
+        __props__.__dict__["statuses"] = statuses
         __props__.__dict__["tags"] = tags
         return CloudAccount(resource_name, opts=opts, __props__=__props__)
 
@@ -534,6 +554,14 @@ class CloudAccount(pulumi.CustomResource):
         Full link to this resource. Can be referenced by other resources.
         """
         return pulumi.get(self, "self_link")
+
+    @_builtins.property
+    @pulumi.getter
+    def statuses(self) -> pulumi.Output[Sequence['outputs.CloudAccountStatus']]:
+        """
+        Status of the Cloud Account.
+        """
+        return pulumi.get(self, "statuses")
 
     @_builtins.property
     @pulumi.getter

@@ -35,7 +35,7 @@ export class Location extends pulumi.CustomResource {
     }
 
     /**
-     * Cloud Provider of the location.
+     * Cloud Provider of the location. Valid values: `aws`, `gcp`, `azure`, `byok`, `linode`, `vultr`, `equinix`, `oci`.
      */
     declare public /*out*/ readonly cloudProvider: pulumi.Output<string>;
     /**
@@ -59,6 +59,9 @@ export class Location extends pulumi.CustomResource {
      * Name of the location.
      */
     declare public readonly name: pulumi.Output<string>;
+    /**
+     * Origin of the location. Valid values: `builtin`, `default`, `custom`.
+     */
     declare public /*out*/ readonly origin: pulumi.Output<string>;
     /**
      * Region of the location.
@@ -124,7 +127,7 @@ export class Location extends pulumi.CustomResource {
  */
 export interface LocationState {
     /**
-     * Cloud Provider of the location.
+     * Cloud Provider of the location. Valid values: `aws`, `gcp`, `azure`, `byok`, `linode`, `vultr`, `equinix`, `oci`.
      */
     cloudProvider?: pulumi.Input<string>;
     /**
@@ -148,6 +151,9 @@ export interface LocationState {
      * Name of the location.
      */
     name?: pulumi.Input<string>;
+    /**
+     * Origin of the location. Valid values: `builtin`, `default`, `custom`.
+     */
     origin?: pulumi.Input<string>;
     /**
      * Region of the location.

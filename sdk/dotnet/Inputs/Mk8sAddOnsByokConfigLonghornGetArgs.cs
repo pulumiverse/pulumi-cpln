@@ -14,6 +14,18 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class Mk8sAddOnsByokConfigLonghornGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// Mark Longhorn as the default storage class.
+        /// </summary>
+        [Input("isDefault")]
+        public Input<bool>? IsDefault { get; set; }
+
+        /// <summary>
+        /// Replica factor for Longhorn volumes. Minimum: 1.
+        /// </summary>
+        [Input("numberOfReplicas")]
+        public Input<int>? NumberOfReplicas { get; set; }
+
+        /// <summary>
         /// Replica factor for Longhorn volumes. Minimum: 1.
         /// </summary>
         [Input("replicas")]

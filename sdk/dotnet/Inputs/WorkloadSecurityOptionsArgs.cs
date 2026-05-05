@@ -19,6 +19,12 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("fileSystemGroupId")]
         public Input<int>? FileSystemGroupId { get; set; }
 
+        /// <summary>
+        /// The user id assigned to all container processes.
+        /// </summary>
+        [Input("runAsUser")]
+        public Input<int>? RunAsUser { get; set; }
+
         public WorkloadSecurityOptionsArgs()
         {
         }

@@ -20,7 +20,7 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<string> Expression { get; set; } = null!;
 
         /// <summary>
-        /// Language of the expression. Either `Jmespath` or `Javascript`. Default: `Jmespath`.
+        /// Language of the expression. Valid values: `Jmespath`, `Javascript`. Default: `Jmespath`.
         /// </summary>
         [Input("language")]
         public Input<string>? Language { get; set; }

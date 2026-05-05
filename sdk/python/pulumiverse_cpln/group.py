@@ -158,7 +158,7 @@ class _GroupState:
         :param pulumi.Input['GroupIdentityMatcherArgs'] identity_matcher: Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged-in with SAML providers.
         :param pulumi.Input['GroupMemberQueryArgs'] member_query: A predefined set of criteria or conditions used to query and retrieve members within the group.
         :param pulumi.Input[_builtins.str] name: Name of the Group.
-        :param pulumi.Input[_builtins.str] origin: Origin of the service account. Either `builtin` or `default`.
+        :param pulumi.Input[_builtins.str] origin: Origin of the Group. Valid values: `default`, `builtin`, `synthetic`.
         :param pulumi.Input[_builtins.str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] service_accounts: List of service accounts that exists within the configured org. Group membership will fail if the service account does not exits within the org.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
@@ -249,7 +249,7 @@ class _GroupState:
     @pulumi.getter
     def origin(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Origin of the service account. Either `builtin` or `default`.
+        Origin of the Group. Valid values: `default`, `builtin`, `synthetic`.
         """
         return pulumi.get(self, "origin")
 
@@ -413,7 +413,7 @@ class Group(pulumi.CustomResource):
         :param pulumi.Input[Union['GroupIdentityMatcherArgs', 'GroupIdentityMatcherArgsDict']] identity_matcher: Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged-in with SAML providers.
         :param pulumi.Input[Union['GroupMemberQueryArgs', 'GroupMemberQueryArgsDict']] member_query: A predefined set of criteria or conditions used to query and retrieve members within the group.
         :param pulumi.Input[_builtins.str] name: Name of the Group.
-        :param pulumi.Input[_builtins.str] origin: Origin of the service account. Either `builtin` or `default`.
+        :param pulumi.Input[_builtins.str] origin: Origin of the Group. Valid values: `default`, `builtin`, `synthetic`.
         :param pulumi.Input[_builtins.str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] service_accounts: List of service accounts that exists within the configured org. Group membership will fail if the service account does not exits within the org.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
@@ -479,7 +479,7 @@ class Group(pulumi.CustomResource):
     @pulumi.getter
     def origin(self) -> pulumi.Output[_builtins.str]:
         """
-        Origin of the service account. Either `builtin` or `default`.
+        Origin of the Group. Valid values: `default`, `builtin`, `synthetic`.
         """
         return pulumi.get(self, "origin")
 

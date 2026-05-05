@@ -19,6 +19,10 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly Outputs.Mk8sAddOnsByokConfigActuator? Actuator;
         /// <summary>
+        /// BYOK-wide settings.
+        /// </summary>
+        public readonly Outputs.Mk8sAddOnsByokConfigByok? Byok;
+        /// <summary>
         /// Shared rollout settings for BYOK workloads.
         /// </summary>
         public readonly Outputs.Mk8sAddOnsByokConfigCommon? Common;
@@ -34,6 +38,10 @@ namespace Pulumiverse.Cpln.Outputs
         /// Istio service mesh configuration.
         /// </summary>
         public readonly Outputs.Mk8sAddOnsByokConfigIstio? Istio;
+        /// <summary>
+        /// JuiceFS distributed file system add-on settings.
+        /// </summary>
+        public readonly Outputs.Mk8sAddOnsByokConfigJuicefs? Juicefs;
         /// <summary>
         /// Log splitter deployment configuration.
         /// </summary>
@@ -71,6 +79,8 @@ namespace Pulumiverse.Cpln.Outputs
         private Mk8sAddOnsByokConfig(
             Outputs.Mk8sAddOnsByokConfigActuator? actuator,
 
+            Outputs.Mk8sAddOnsByokConfigByok? byok,
+
             Outputs.Mk8sAddOnsByokConfigCommon? common,
 
             Outputs.Mk8sAddOnsByokConfigIngress? ingress,
@@ -78,6 +88,8 @@ namespace Pulumiverse.Cpln.Outputs
             Outputs.Mk8sAddOnsByokConfigInternalDns? internalDns,
 
             Outputs.Mk8sAddOnsByokConfigIstio? istio,
+
+            Outputs.Mk8sAddOnsByokConfigJuicefs? juicefs,
 
             Outputs.Mk8sAddOnsByokConfigLogSplitter? logSplitter,
 
@@ -96,10 +108,12 @@ namespace Pulumiverse.Cpln.Outputs
             Outputs.Mk8sAddOnsByokConfigTempoAgent? tempoAgent)
         {
             Actuator = actuator;
+            Byok = byok;
             Common = common;
             Ingress = ingress;
             InternalDns = internalDns;
             Istio = istio;
+            Juicefs = juicefs;
             LogSplitter = logSplitter;
             Longhorn = longhorn;
             Middlebox = middlebox;

@@ -2,6 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 export class CustomLocation extends pulumi.CustomResource {
@@ -48,6 +50,11 @@ export class CustomLocation extends pulumi.CustomResource {
      * Indication if the custom location is enabled.
      */
     declare public readonly enabled: pulumi.Output<boolean>;
+    declare public /*out*/ readonly geos: pulumi.Output<outputs.CustomLocationGeo[]>;
+    /**
+     * A list of IP ranges of the location.
+     */
+    declare public /*out*/ readonly ipRanges: pulumi.Output<string[]>;
     /**
      * Name of the Custom Location.
      */
@@ -83,6 +90,8 @@ export class CustomLocation extends pulumi.CustomResource {
             resourceInputs["cplnId"] = state?.cplnId;
             resourceInputs["description"] = state?.description;
             resourceInputs["enabled"] = state?.enabled;
+            resourceInputs["geos"] = state?.geos;
+            resourceInputs["ipRanges"] = state?.ipRanges;
             resourceInputs["name"] = state?.name;
             resourceInputs["origin"] = state?.origin;
             resourceInputs["region"] = state?.region;
@@ -102,6 +111,8 @@ export class CustomLocation extends pulumi.CustomResource {
             resourceInputs["name"] = args?.name;
             resourceInputs["tags"] = args?.tags;
             resourceInputs["cplnId"] = undefined /*out*/;
+            resourceInputs["geos"] = undefined /*out*/;
+            resourceInputs["ipRanges"] = undefined /*out*/;
             resourceInputs["origin"] = undefined /*out*/;
             resourceInputs["region"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
@@ -131,6 +142,11 @@ export interface CustomLocationState {
      * Indication if the custom location is enabled.
      */
     enabled?: pulumi.Input<boolean>;
+    geos?: pulumi.Input<pulumi.Input<inputs.CustomLocationGeo>[]>;
+    /**
+     * A list of IP ranges of the location.
+     */
+    ipRanges?: pulumi.Input<pulumi.Input<string>[]>;
     /**
      * Name of the Custom Location.
      */

@@ -20,6 +20,12 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<double> Percent { get; set; } = null!;
 
         /// <summary>
+        /// The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
+        /// </summary>
+        [Input("port")]
+        public Input<int>? Port { get; set; }
+
+        /// <summary>
         /// The workload to mirror traffic to.
         /// </summary>
         [Input("workloadLink", required: true)]

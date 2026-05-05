@@ -20,6 +20,8 @@ type Agent struct {
 	Description pulumi.StringOutput `pulumi:"description"`
 	// Name of the Agent.
 	Name pulumi.StringOutput `pulumi:"name"`
+	// The wormhole protocol version reported by the agent. Valid values: `v1`, `v2`.
+	ProtocolVersion pulumi.StringOutput `pulumi:"protocolVersion"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
 	// Key-value map of resource tags.
@@ -68,6 +70,8 @@ type agentState struct {
 	Description *string `pulumi:"description"`
 	// Name of the Agent.
 	Name *string `pulumi:"name"`
+	// The wormhole protocol version reported by the agent. Valid values: `v1`, `v2`.
+	ProtocolVersion *string `pulumi:"protocolVersion"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink *string `pulumi:"selfLink"`
 	// Key-value map of resource tags.
@@ -83,6 +87,8 @@ type AgentState struct {
 	Description pulumi.StringPtrInput
 	// Name of the Agent.
 	Name pulumi.StringPtrInput
+	// The wormhole protocol version reported by the agent. Valid values: `v1`, `v2`.
+	ProtocolVersion pulumi.StringPtrInput
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringPtrInput
 	// Key-value map of resource tags.
@@ -214,6 +220,11 @@ func (o AgentOutput) Description() pulumi.StringOutput {
 // Name of the Agent.
 func (o AgentOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Agent) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
+}
+
+// The wormhole protocol version reported by the agent. Valid values: `v1`, `v2`.
+func (o AgentOutput) ProtocolVersion() pulumi.StringOutput {
+	return o.ApplyT(func(v *Agent) pulumi.StringOutput { return v.ProtocolVersion }).(pulumi.StringOutput)
 }
 
 // Full link to this resource. Can be referenced by other resources.

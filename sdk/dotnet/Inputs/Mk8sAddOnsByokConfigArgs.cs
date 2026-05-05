@@ -20,6 +20,12 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<Inputs.Mk8sAddOnsByokConfigActuatorArgs>? Actuator { get; set; }
 
         /// <summary>
+        /// BYOK-wide settings.
+        /// </summary>
+        [Input("byok")]
+        public Input<Inputs.Mk8sAddOnsByokConfigByokArgs>? Byok { get; set; }
+
+        /// <summary>
         /// Shared rollout settings for BYOK workloads.
         /// </summary>
         [Input("common")]
@@ -42,6 +48,12 @@ namespace Pulumiverse.Cpln.Inputs
         /// </summary>
         [Input("istio")]
         public Input<Inputs.Mk8sAddOnsByokConfigIstioArgs>? Istio { get; set; }
+
+        /// <summary>
+        /// JuiceFS distributed file system add-on settings.
+        /// </summary>
+        [Input("juicefs")]
+        public Input<Inputs.Mk8sAddOnsByokConfigJuicefsArgs>? Juicefs { get; set; }
 
         /// <summary>
         /// Log splitter deployment configuration.

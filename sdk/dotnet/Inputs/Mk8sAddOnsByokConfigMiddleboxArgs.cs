@@ -25,6 +25,18 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }
 
+        /// <summary>
+        /// IPv4 address bound by the middlebox component.
+        /// </summary>
+        [Input("ip")]
+        public Input<string>? Ip { get; set; }
+
+        /// <summary>
+        /// Listening port for the middlebox component.
+        /// </summary>
+        [Input("port")]
+        public Input<int>? Port { get; set; }
+
         public Mk8sAddOnsByokConfigMiddleboxArgs()
         {
         }

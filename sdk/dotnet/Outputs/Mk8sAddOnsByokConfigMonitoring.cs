@@ -15,6 +15,10 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class Mk8sAddOnsByokConfigMonitoring
     {
         /// <summary>
+        /// Static labels appended to every metric scraped by the BYOK Prometheus stack.
+        /// </summary>
+        public readonly ImmutableDictionary<string, string>? ExternalLabels;
+        /// <summary>
         /// Kube-state-metrics resource overrides.
         /// </summary>
         public readonly Outputs.Mk8sAddOnsByokConfigMonitoringKubeStateMetrics? KubeStateMetrics;
@@ -30,21 +34,31 @@ namespace Pulumiverse.Cpln.Outputs
         /// Prometheus deployment configuration.
         /// </summary>
         public readonly Outputs.Mk8sAddOnsByokConfigMonitoringPrometheus? Prometheus;
+        /// <summary>
+        /// Prometheus RemoteWrite client configurations. Order is preserved as written.
+        /// </summary>
+        public readonly ImmutableArray<Outputs.Mk8sAddOnsByokConfigMonitoringRemoteWrite> RemoteWrites;
 
         [OutputConstructor]
         private Mk8sAddOnsByokConfigMonitoring(
+            ImmutableDictionary<string, string>? externalLabels,
+
             Outputs.Mk8sAddOnsByokConfigMonitoringKubeStateMetrics? kubeStateMetrics,
 
             string? maxMemory,
 
             string? minMemory,
 
-            Outputs.Mk8sAddOnsByokConfigMonitoringPrometheus? prometheus)
+            Outputs.Mk8sAddOnsByokConfigMonitoringPrometheus? prometheus,
+
+            ImmutableArray<Outputs.Mk8sAddOnsByokConfigMonitoringRemoteWrite> remoteWrites)
         {
+            ExternalLabels = externalLabels;
             KubeStateMetrics = kubeStateMetrics;
             MaxMemory = maxMemory;
             MinMemory = minMemory;
             Prometheus = prometheus;
+            RemoteWrites = remoteWrites;
         }
     }
 }

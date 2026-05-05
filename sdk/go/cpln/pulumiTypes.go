@@ -636,6 +636,263 @@ func (o CloudAccountNgsPtrOutput) SecretLink() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+type CloudAccountStatus struct {
+	// ISO-8601 timestamp of the last time the Cloud Account credentials were validated.
+	LastChecked *string `pulumi:"lastChecked"`
+	// The last error message reported when validating the Cloud Account credentials.
+	LastError *string `pulumi:"lastError"`
+	// Whether the Cloud Account credentials are valid and usable by Control Plane.
+	Usable *bool `pulumi:"usable"`
+}
+
+// CloudAccountStatusInput is an input type that accepts CloudAccountStatusArgs and CloudAccountStatusOutput values.
+// You can construct a concrete instance of `CloudAccountStatusInput` via:
+//
+//	CloudAccountStatusArgs{...}
+type CloudAccountStatusInput interface {
+	pulumi.Input
+
+	ToCloudAccountStatusOutput() CloudAccountStatusOutput
+	ToCloudAccountStatusOutputWithContext(context.Context) CloudAccountStatusOutput
+}
+
+type CloudAccountStatusArgs struct {
+	// ISO-8601 timestamp of the last time the Cloud Account credentials were validated.
+	LastChecked pulumi.StringPtrInput `pulumi:"lastChecked"`
+	// The last error message reported when validating the Cloud Account credentials.
+	LastError pulumi.StringPtrInput `pulumi:"lastError"`
+	// Whether the Cloud Account credentials are valid and usable by Control Plane.
+	Usable pulumi.BoolPtrInput `pulumi:"usable"`
+}
+
+func (CloudAccountStatusArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CloudAccountStatus)(nil)).Elem()
+}
+
+func (i CloudAccountStatusArgs) ToCloudAccountStatusOutput() CloudAccountStatusOutput {
+	return i.ToCloudAccountStatusOutputWithContext(context.Background())
+}
+
+func (i CloudAccountStatusArgs) ToCloudAccountStatusOutputWithContext(ctx context.Context) CloudAccountStatusOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CloudAccountStatusOutput)
+}
+
+// CloudAccountStatusArrayInput is an input type that accepts CloudAccountStatusArray and CloudAccountStatusArrayOutput values.
+// You can construct a concrete instance of `CloudAccountStatusArrayInput` via:
+//
+//	CloudAccountStatusArray{ CloudAccountStatusArgs{...} }
+type CloudAccountStatusArrayInput interface {
+	pulumi.Input
+
+	ToCloudAccountStatusArrayOutput() CloudAccountStatusArrayOutput
+	ToCloudAccountStatusArrayOutputWithContext(context.Context) CloudAccountStatusArrayOutput
+}
+
+type CloudAccountStatusArray []CloudAccountStatusInput
+
+func (CloudAccountStatusArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]CloudAccountStatus)(nil)).Elem()
+}
+
+func (i CloudAccountStatusArray) ToCloudAccountStatusArrayOutput() CloudAccountStatusArrayOutput {
+	return i.ToCloudAccountStatusArrayOutputWithContext(context.Background())
+}
+
+func (i CloudAccountStatusArray) ToCloudAccountStatusArrayOutputWithContext(ctx context.Context) CloudAccountStatusArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CloudAccountStatusArrayOutput)
+}
+
+type CloudAccountStatusOutput struct{ *pulumi.OutputState }
+
+func (CloudAccountStatusOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CloudAccountStatus)(nil)).Elem()
+}
+
+func (o CloudAccountStatusOutput) ToCloudAccountStatusOutput() CloudAccountStatusOutput {
+	return o
+}
+
+func (o CloudAccountStatusOutput) ToCloudAccountStatusOutputWithContext(ctx context.Context) CloudAccountStatusOutput {
+	return o
+}
+
+// ISO-8601 timestamp of the last time the Cloud Account credentials were validated.
+func (o CloudAccountStatusOutput) LastChecked() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CloudAccountStatus) *string { return v.LastChecked }).(pulumi.StringPtrOutput)
+}
+
+// The last error message reported when validating the Cloud Account credentials.
+func (o CloudAccountStatusOutput) LastError() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CloudAccountStatus) *string { return v.LastError }).(pulumi.StringPtrOutput)
+}
+
+// Whether the Cloud Account credentials are valid and usable by Control Plane.
+func (o CloudAccountStatusOutput) Usable() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v CloudAccountStatus) *bool { return v.Usable }).(pulumi.BoolPtrOutput)
+}
+
+type CloudAccountStatusArrayOutput struct{ *pulumi.OutputState }
+
+func (CloudAccountStatusArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]CloudAccountStatus)(nil)).Elem()
+}
+
+func (o CloudAccountStatusArrayOutput) ToCloudAccountStatusArrayOutput() CloudAccountStatusArrayOutput {
+	return o
+}
+
+func (o CloudAccountStatusArrayOutput) ToCloudAccountStatusArrayOutputWithContext(ctx context.Context) CloudAccountStatusArrayOutput {
+	return o
+}
+
+func (o CloudAccountStatusArrayOutput) Index(i pulumi.IntInput) CloudAccountStatusOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) CloudAccountStatus {
+		return vs[0].([]CloudAccountStatus)[vs[1].(int)]
+	}).(CloudAccountStatusOutput)
+}
+
+type CustomLocationGeo struct {
+	// City of the location.
+	City *string `pulumi:"city"`
+	// Continent of the location.
+	Continent *string `pulumi:"continent"`
+	// Country of the location.
+	Country *string `pulumi:"country"`
+	// Latitude of the location.
+	Lat *float64 `pulumi:"lat"`
+	// Longitude of the location.
+	Lon *float64 `pulumi:"lon"`
+	// State of the location.
+	State *string `pulumi:"state"`
+}
+
+// CustomLocationGeoInput is an input type that accepts CustomLocationGeoArgs and CustomLocationGeoOutput values.
+// You can construct a concrete instance of `CustomLocationGeoInput` via:
+//
+//	CustomLocationGeoArgs{...}
+type CustomLocationGeoInput interface {
+	pulumi.Input
+
+	ToCustomLocationGeoOutput() CustomLocationGeoOutput
+	ToCustomLocationGeoOutputWithContext(context.Context) CustomLocationGeoOutput
+}
+
+type CustomLocationGeoArgs struct {
+	// City of the location.
+	City pulumi.StringPtrInput `pulumi:"city"`
+	// Continent of the location.
+	Continent pulumi.StringPtrInput `pulumi:"continent"`
+	// Country of the location.
+	Country pulumi.StringPtrInput `pulumi:"country"`
+	// Latitude of the location.
+	Lat pulumi.Float64PtrInput `pulumi:"lat"`
+	// Longitude of the location.
+	Lon pulumi.Float64PtrInput `pulumi:"lon"`
+	// State of the location.
+	State pulumi.StringPtrInput `pulumi:"state"`
+}
+
+func (CustomLocationGeoArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CustomLocationGeo)(nil)).Elem()
+}
+
+func (i CustomLocationGeoArgs) ToCustomLocationGeoOutput() CustomLocationGeoOutput {
+	return i.ToCustomLocationGeoOutputWithContext(context.Background())
+}
+
+func (i CustomLocationGeoArgs) ToCustomLocationGeoOutputWithContext(ctx context.Context) CustomLocationGeoOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CustomLocationGeoOutput)
+}
+
+// CustomLocationGeoArrayInput is an input type that accepts CustomLocationGeoArray and CustomLocationGeoArrayOutput values.
+// You can construct a concrete instance of `CustomLocationGeoArrayInput` via:
+//
+//	CustomLocationGeoArray{ CustomLocationGeoArgs{...} }
+type CustomLocationGeoArrayInput interface {
+	pulumi.Input
+
+	ToCustomLocationGeoArrayOutput() CustomLocationGeoArrayOutput
+	ToCustomLocationGeoArrayOutputWithContext(context.Context) CustomLocationGeoArrayOutput
+}
+
+type CustomLocationGeoArray []CustomLocationGeoInput
+
+func (CustomLocationGeoArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]CustomLocationGeo)(nil)).Elem()
+}
+
+func (i CustomLocationGeoArray) ToCustomLocationGeoArrayOutput() CustomLocationGeoArrayOutput {
+	return i.ToCustomLocationGeoArrayOutputWithContext(context.Background())
+}
+
+func (i CustomLocationGeoArray) ToCustomLocationGeoArrayOutputWithContext(ctx context.Context) CustomLocationGeoArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CustomLocationGeoArrayOutput)
+}
+
+type CustomLocationGeoOutput struct{ *pulumi.OutputState }
+
+func (CustomLocationGeoOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CustomLocationGeo)(nil)).Elem()
+}
+
+func (o CustomLocationGeoOutput) ToCustomLocationGeoOutput() CustomLocationGeoOutput {
+	return o
+}
+
+func (o CustomLocationGeoOutput) ToCustomLocationGeoOutputWithContext(ctx context.Context) CustomLocationGeoOutput {
+	return o
+}
+
+// City of the location.
+func (o CustomLocationGeoOutput) City() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CustomLocationGeo) *string { return v.City }).(pulumi.StringPtrOutput)
+}
+
+// Continent of the location.
+func (o CustomLocationGeoOutput) Continent() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CustomLocationGeo) *string { return v.Continent }).(pulumi.StringPtrOutput)
+}
+
+// Country of the location.
+func (o CustomLocationGeoOutput) Country() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CustomLocationGeo) *string { return v.Country }).(pulumi.StringPtrOutput)
+}
+
+// Latitude of the location.
+func (o CustomLocationGeoOutput) Lat() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v CustomLocationGeo) *float64 { return v.Lat }).(pulumi.Float64PtrOutput)
+}
+
+// Longitude of the location.
+func (o CustomLocationGeoOutput) Lon() pulumi.Float64PtrOutput {
+	return o.ApplyT(func(v CustomLocationGeo) *float64 { return v.Lon }).(pulumi.Float64PtrOutput)
+}
+
+// State of the location.
+func (o CustomLocationGeoOutput) State() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CustomLocationGeo) *string { return v.State }).(pulumi.StringPtrOutput)
+}
+
+type CustomLocationGeoArrayOutput struct{ *pulumi.OutputState }
+
+func (CustomLocationGeoArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]CustomLocationGeo)(nil)).Elem()
+}
+
+func (o CustomLocationGeoArrayOutput) ToCustomLocationGeoArrayOutput() CustomLocationGeoArrayOutput {
+	return o
+}
+
+func (o CustomLocationGeoArrayOutput) ToCustomLocationGeoArrayOutputWithContext(ctx context.Context) CustomLocationGeoArrayOutput {
+	return o
+}
+
+func (o CustomLocationGeoArrayOutput) Index(i pulumi.IntInput) CustomLocationGeoOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) CustomLocationGeo {
+		return vs[0].([]CustomLocationGeo)[vs[1].(int)]
+	}).(CustomLocationGeoOutput)
+}
+
 type DomainRouteHeaders struct {
 	// Manipulates HTTP headers.
 	Request *DomainRouteHeadersRequest `pulumi:"request"`
@@ -913,6 +1170,8 @@ func (o DomainRouteHeadersRequestPtrOutput) Set() pulumi.StringMapOutput {
 type DomainRouteMirror struct {
 	// The percentage of traffic to mirror to the specified workload.
 	Percent float64 `pulumi:"percent"`
+	// The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
+	Port *int `pulumi:"port"`
 	// The workload to mirror traffic to.
 	WorkloadLink string `pulumi:"workloadLink"`
 }
@@ -931,6 +1190,8 @@ type DomainRouteMirrorInput interface {
 type DomainRouteMirrorArgs struct {
 	// The percentage of traffic to mirror to the specified workload.
 	Percent pulumi.Float64Input `pulumi:"percent"`
+	// The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
+	Port pulumi.IntPtrInput `pulumi:"port"`
 	// The workload to mirror traffic to.
 	WorkloadLink pulumi.StringInput `pulumi:"workloadLink"`
 }
@@ -989,6 +1250,11 @@ func (o DomainRouteMirrorOutput) ToDomainRouteMirrorOutputWithContext(ctx contex
 // The percentage of traffic to mirror to the specified workload.
 func (o DomainRouteMirrorOutput) Percent() pulumi.Float64Output {
 	return o.ApplyT(func(v DomainRouteMirror) float64 { return v.Percent }).(pulumi.Float64Output)
+}
+
+// The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
+func (o DomainRouteMirrorOutput) Port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v DomainRouteMirror) *int { return v.Port }).(pulumi.IntPtrOutput)
 }
 
 // The workload to mirror traffic to.
@@ -2190,6 +2456,8 @@ func (o DomainSpecPortRouteHeadersRequestPtrOutput) Set() pulumi.StringMapOutput
 type DomainSpecPortRouteMirror struct {
 	// The percentage of traffic to mirror to the specified workload.
 	Percent float64 `pulumi:"percent"`
+	// The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
+	Port *int `pulumi:"port"`
 	// The workload to mirror traffic to.
 	WorkloadLink string `pulumi:"workloadLink"`
 }
@@ -2208,6 +2476,8 @@ type DomainSpecPortRouteMirrorInput interface {
 type DomainSpecPortRouteMirrorArgs struct {
 	// The percentage of traffic to mirror to the specified workload.
 	Percent pulumi.Float64Input `pulumi:"percent"`
+	// The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
+	Port pulumi.IntPtrInput `pulumi:"port"`
 	// The workload to mirror traffic to.
 	WorkloadLink pulumi.StringInput `pulumi:"workloadLink"`
 }
@@ -2266,6 +2536,11 @@ func (o DomainSpecPortRouteMirrorOutput) ToDomainSpecPortRouteMirrorOutputWithCo
 // The percentage of traffic to mirror to the specified workload.
 func (o DomainSpecPortRouteMirrorOutput) Percent() pulumi.Float64Output {
 	return o.ApplyT(func(v DomainSpecPortRouteMirror) float64 { return v.Percent }).(pulumi.Float64Output)
+}
+
+// The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
+func (o DomainSpecPortRouteMirrorOutput) Port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v DomainSpecPortRouteMirror) *int { return v.Port }).(pulumi.IntPtrOutput)
 }
 
 // The workload to mirror traffic to.
@@ -3239,7 +3514,7 @@ func (o DomainStatusLocationArrayOutput) Index(i pulumi.IntInput) DomainStatusLo
 type GroupIdentityMatcher struct {
 	// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged in with SAML providers.
 	Expression string `pulumi:"expression"`
-	// Language of the expression. Either `jmespath` or `javascript`. Default: `jmespath`.
+	// Language of the expression. Valid values: `jmespath`, `javascript`. Default: `jmespath`.
 	Language *string `pulumi:"language"`
 }
 
@@ -3257,7 +3532,7 @@ type GroupIdentityMatcherInput interface {
 type GroupIdentityMatcherArgs struct {
 	// Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged in with SAML providers.
 	Expression pulumi.StringInput `pulumi:"expression"`
-	// Language of the expression. Either `jmespath` or `javascript`. Default: `jmespath`.
+	// Language of the expression. Valid values: `jmespath`, `javascript`. Default: `jmespath`.
 	Language pulumi.StringPtrInput `pulumi:"language"`
 }
 
@@ -3343,7 +3618,7 @@ func (o GroupIdentityMatcherOutput) Expression() pulumi.StringOutput {
 	return o.ApplyT(func(v GroupIdentityMatcher) string { return v.Expression }).(pulumi.StringOutput)
 }
 
-// Language of the expression. Either `jmespath` or `javascript`. Default: `jmespath`.
+// Language of the expression. Valid values: `jmespath`, `javascript`. Default: `jmespath`.
 func (o GroupIdentityMatcherOutput) Language() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GroupIdentityMatcher) *string { return v.Language }).(pulumi.StringPtrOutput)
 }
@@ -3382,7 +3657,7 @@ func (o GroupIdentityMatcherPtrOutput) Expression() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-// Language of the expression. Either `jmespath` or `javascript`. Default: `jmespath`.
+// Language of the expression. Valid values: `jmespath`, `javascript`. Default: `jmespath`.
 func (o GroupIdentityMatcherPtrOutput) Language() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *GroupIdentityMatcher) *string {
 		if v == nil {
@@ -4991,6 +5266,130 @@ func (o GvcLoadBalancerRedirectClassPtrOutput) Status5xx() pulumi.StringPtrOutpu
 		}
 		return v.Status5xx
 	}).(pulumi.StringPtrOutput)
+}
+
+type GvcLocationOption struct {
+	// Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+	LatencyOffsetMs *int `pulumi:"latencyOffsetMs"`
+	// Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+	LatencyToleranceMs *int `pulumi:"latencyToleranceMs"`
+	// Name of the location these options apply to.
+	Name string `pulumi:"name"`
+	// Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routingTier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+	RoutingTier *int `pulumi:"routingTier"`
+}
+
+// GvcLocationOptionInput is an input type that accepts GvcLocationOptionArgs and GvcLocationOptionOutput values.
+// You can construct a concrete instance of `GvcLocationOptionInput` via:
+//
+//	GvcLocationOptionArgs{...}
+type GvcLocationOptionInput interface {
+	pulumi.Input
+
+	ToGvcLocationOptionOutput() GvcLocationOptionOutput
+	ToGvcLocationOptionOutputWithContext(context.Context) GvcLocationOptionOutput
+}
+
+type GvcLocationOptionArgs struct {
+	// Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+	LatencyOffsetMs pulumi.IntPtrInput `pulumi:"latencyOffsetMs"`
+	// Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+	LatencyToleranceMs pulumi.IntPtrInput `pulumi:"latencyToleranceMs"`
+	// Name of the location these options apply to.
+	Name pulumi.StringInput `pulumi:"name"`
+	// Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routingTier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+	RoutingTier pulumi.IntPtrInput `pulumi:"routingTier"`
+}
+
+func (GvcLocationOptionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GvcLocationOption)(nil)).Elem()
+}
+
+func (i GvcLocationOptionArgs) ToGvcLocationOptionOutput() GvcLocationOptionOutput {
+	return i.ToGvcLocationOptionOutputWithContext(context.Background())
+}
+
+func (i GvcLocationOptionArgs) ToGvcLocationOptionOutputWithContext(ctx context.Context) GvcLocationOptionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcLocationOptionOutput)
+}
+
+// GvcLocationOptionArrayInput is an input type that accepts GvcLocationOptionArray and GvcLocationOptionArrayOutput values.
+// You can construct a concrete instance of `GvcLocationOptionArrayInput` via:
+//
+//	GvcLocationOptionArray{ GvcLocationOptionArgs{...} }
+type GvcLocationOptionArrayInput interface {
+	pulumi.Input
+
+	ToGvcLocationOptionArrayOutput() GvcLocationOptionArrayOutput
+	ToGvcLocationOptionArrayOutputWithContext(context.Context) GvcLocationOptionArrayOutput
+}
+
+type GvcLocationOptionArray []GvcLocationOptionInput
+
+func (GvcLocationOptionArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GvcLocationOption)(nil)).Elem()
+}
+
+func (i GvcLocationOptionArray) ToGvcLocationOptionArrayOutput() GvcLocationOptionArrayOutput {
+	return i.ToGvcLocationOptionArrayOutputWithContext(context.Background())
+}
+
+func (i GvcLocationOptionArray) ToGvcLocationOptionArrayOutputWithContext(ctx context.Context) GvcLocationOptionArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcLocationOptionArrayOutput)
+}
+
+type GvcLocationOptionOutput struct{ *pulumi.OutputState }
+
+func (GvcLocationOptionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GvcLocationOption)(nil)).Elem()
+}
+
+func (o GvcLocationOptionOutput) ToGvcLocationOptionOutput() GvcLocationOptionOutput {
+	return o
+}
+
+func (o GvcLocationOptionOutput) ToGvcLocationOptionOutputWithContext(ctx context.Context) GvcLocationOptionOutput {
+	return o
+}
+
+// Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+func (o GvcLocationOptionOutput) LatencyOffsetMs() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v GvcLocationOption) *int { return v.LatencyOffsetMs }).(pulumi.IntPtrOutput)
+}
+
+// Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+func (o GvcLocationOptionOutput) LatencyToleranceMs() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v GvcLocationOption) *int { return v.LatencyToleranceMs }).(pulumi.IntPtrOutput)
+}
+
+// Name of the location these options apply to.
+func (o GvcLocationOptionOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GvcLocationOption) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routingTier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+func (o GvcLocationOptionOutput) RoutingTier() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v GvcLocationOption) *int { return v.RoutingTier }).(pulumi.IntPtrOutput)
+}
+
+type GvcLocationOptionArrayOutput struct{ *pulumi.OutputState }
+
+func (GvcLocationOptionArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GvcLocationOption)(nil)).Elem()
+}
+
+func (o GvcLocationOptionArrayOutput) ToGvcLocationOptionArrayOutput() GvcLocationOptionArrayOutput {
+	return o
+}
+
+func (o GvcLocationOptionArrayOutput) ToGvcLocationOptionArrayOutputWithContext(ctx context.Context) GvcLocationOptionArrayOutput {
+	return o
+}
+
+func (o GvcLocationOptionArrayOutput) Index(i pulumi.IntInput) GvcLocationOptionOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GvcLocationOption {
+		return vs[0].([]GvcLocationOption)[vs[1].(int)]
+	}).(GvcLocationOptionOutput)
 }
 
 type GvcOtelTracing struct {
@@ -9270,6 +9669,8 @@ func (o Mk8sAddOnsByokPtrOutput) Location() pulumi.StringPtrOutput {
 type Mk8sAddOnsByokConfig struct {
 	// Resource tuning for the actuator component.
 	Actuator *Mk8sAddOnsByokConfigActuator `pulumi:"actuator"`
+	// BYOK-wide settings.
+	Byok *Mk8sAddOnsByokConfigByok `pulumi:"byok"`
 	// Shared rollout settings for BYOK workloads.
 	Common *Mk8sAddOnsByokConfigCommon `pulumi:"common"`
 	// Ingress controller resource configuration.
@@ -9278,6 +9679,8 @@ type Mk8sAddOnsByokConfig struct {
 	InternalDns *Mk8sAddOnsByokConfigInternalDns `pulumi:"internalDns"`
 	// Istio service mesh configuration.
 	Istio *Mk8sAddOnsByokConfigIstio `pulumi:"istio"`
+	// JuiceFS distributed file system add-on settings.
+	Juicefs *Mk8sAddOnsByokConfigJuicefs `pulumi:"juicefs"`
 	// Log splitter deployment configuration.
 	LogSplitter *Mk8sAddOnsByokConfigLogSplitter `pulumi:"logSplitter"`
 	// Longhorn persistent volume settings.
@@ -9310,6 +9713,8 @@ type Mk8sAddOnsByokConfigInput interface {
 type Mk8sAddOnsByokConfigArgs struct {
 	// Resource tuning for the actuator component.
 	Actuator Mk8sAddOnsByokConfigActuatorPtrInput `pulumi:"actuator"`
+	// BYOK-wide settings.
+	Byok Mk8sAddOnsByokConfigByokPtrInput `pulumi:"byok"`
 	// Shared rollout settings for BYOK workloads.
 	Common Mk8sAddOnsByokConfigCommonPtrInput `pulumi:"common"`
 	// Ingress controller resource configuration.
@@ -9318,6 +9723,8 @@ type Mk8sAddOnsByokConfigArgs struct {
 	InternalDns Mk8sAddOnsByokConfigInternalDnsPtrInput `pulumi:"internalDns"`
 	// Istio service mesh configuration.
 	Istio Mk8sAddOnsByokConfigIstioPtrInput `pulumi:"istio"`
+	// JuiceFS distributed file system add-on settings.
+	Juicefs Mk8sAddOnsByokConfigJuicefsPtrInput `pulumi:"juicefs"`
 	// Log splitter deployment configuration.
 	LogSplitter Mk8sAddOnsByokConfigLogSplitterPtrInput `pulumi:"logSplitter"`
 	// Longhorn persistent volume settings.
@@ -9418,6 +9825,11 @@ func (o Mk8sAddOnsByokConfigOutput) Actuator() Mk8sAddOnsByokConfigActuatorPtrOu
 	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigActuator { return v.Actuator }).(Mk8sAddOnsByokConfigActuatorPtrOutput)
 }
 
+// BYOK-wide settings.
+func (o Mk8sAddOnsByokConfigOutput) Byok() Mk8sAddOnsByokConfigByokPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigByok { return v.Byok }).(Mk8sAddOnsByokConfigByokPtrOutput)
+}
+
 // Shared rollout settings for BYOK workloads.
 func (o Mk8sAddOnsByokConfigOutput) Common() Mk8sAddOnsByokConfigCommonPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigCommon { return v.Common }).(Mk8sAddOnsByokConfigCommonPtrOutput)
@@ -9436,6 +9848,11 @@ func (o Mk8sAddOnsByokConfigOutput) InternalDns() Mk8sAddOnsByokConfigInternalDn
 // Istio service mesh configuration.
 func (o Mk8sAddOnsByokConfigOutput) Istio() Mk8sAddOnsByokConfigIstioPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigIstio { return v.Istio }).(Mk8sAddOnsByokConfigIstioPtrOutput)
+}
+
+// JuiceFS distributed file system add-on settings.
+func (o Mk8sAddOnsByokConfigOutput) Juicefs() Mk8sAddOnsByokConfigJuicefsPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigJuicefs { return v.Juicefs }).(Mk8sAddOnsByokConfigJuicefsPtrOutput)
 }
 
 // Log splitter deployment configuration.
@@ -9512,6 +9929,16 @@ func (o Mk8sAddOnsByokConfigPtrOutput) Actuator() Mk8sAddOnsByokConfigActuatorPt
 	}).(Mk8sAddOnsByokConfigActuatorPtrOutput)
 }
 
+// BYOK-wide settings.
+func (o Mk8sAddOnsByokConfigPtrOutput) Byok() Mk8sAddOnsByokConfigByokPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigByok {
+		if v == nil {
+			return nil
+		}
+		return v.Byok
+	}).(Mk8sAddOnsByokConfigByokPtrOutput)
+}
+
 // Shared rollout settings for BYOK workloads.
 func (o Mk8sAddOnsByokConfigPtrOutput) Common() Mk8sAddOnsByokConfigCommonPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigCommon {
@@ -9550,6 +9977,16 @@ func (o Mk8sAddOnsByokConfigPtrOutput) Istio() Mk8sAddOnsByokConfigIstioPtrOutpu
 		}
 		return v.Istio
 	}).(Mk8sAddOnsByokConfigIstioPtrOutput)
+}
+
+// JuiceFS distributed file system add-on settings.
+func (o Mk8sAddOnsByokConfigPtrOutput) Juicefs() Mk8sAddOnsByokConfigJuicefsPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigJuicefs {
+		if v == nil {
+			return nil
+		}
+		return v.Juicefs
+	}).(Mk8sAddOnsByokConfigJuicefsPtrOutput)
 }
 
 // Log splitter deployment configuration.
@@ -9862,6 +10299,143 @@ func (o Mk8sAddOnsByokConfigActuatorPtrOutput) MinMemory() pulumi.StringPtrOutpu
 		}
 		return v.MinMemory
 	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigByok struct {
+	// When set, the BYOK installation does not provision any default storage classes.
+	NoDefaultStorageClasses *bool `pulumi:"noDefaultStorageClasses"`
+}
+
+// Mk8sAddOnsByokConfigByokInput is an input type that accepts Mk8sAddOnsByokConfigByokArgs and Mk8sAddOnsByokConfigByokOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigByokInput` via:
+//
+//	Mk8sAddOnsByokConfigByokArgs{...}
+type Mk8sAddOnsByokConfigByokInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigByokOutput() Mk8sAddOnsByokConfigByokOutput
+	ToMk8sAddOnsByokConfigByokOutputWithContext(context.Context) Mk8sAddOnsByokConfigByokOutput
+}
+
+type Mk8sAddOnsByokConfigByokArgs struct {
+	// When set, the BYOK installation does not provision any default storage classes.
+	NoDefaultStorageClasses pulumi.BoolPtrInput `pulumi:"noDefaultStorageClasses"`
+}
+
+func (Mk8sAddOnsByokConfigByokArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigByok)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigByokArgs) ToMk8sAddOnsByokConfigByokOutput() Mk8sAddOnsByokConfigByokOutput {
+	return i.ToMk8sAddOnsByokConfigByokOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigByokArgs) ToMk8sAddOnsByokConfigByokOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigByokOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigByokOutput)
+}
+
+func (i Mk8sAddOnsByokConfigByokArgs) ToMk8sAddOnsByokConfigByokPtrOutput() Mk8sAddOnsByokConfigByokPtrOutput {
+	return i.ToMk8sAddOnsByokConfigByokPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigByokArgs) ToMk8sAddOnsByokConfigByokPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigByokPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigByokOutput).ToMk8sAddOnsByokConfigByokPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigByokPtrInput is an input type that accepts Mk8sAddOnsByokConfigByokArgs, Mk8sAddOnsByokConfigByokPtr and Mk8sAddOnsByokConfigByokPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigByokPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigByokArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigByokPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigByokPtrOutput() Mk8sAddOnsByokConfigByokPtrOutput
+	ToMk8sAddOnsByokConfigByokPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigByokPtrOutput
+}
+
+type mk8sAddOnsByokConfigByokPtrType Mk8sAddOnsByokConfigByokArgs
+
+func Mk8sAddOnsByokConfigByokPtr(v *Mk8sAddOnsByokConfigByokArgs) Mk8sAddOnsByokConfigByokPtrInput {
+	return (*mk8sAddOnsByokConfigByokPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigByokPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigByok)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigByokPtrType) ToMk8sAddOnsByokConfigByokPtrOutput() Mk8sAddOnsByokConfigByokPtrOutput {
+	return i.ToMk8sAddOnsByokConfigByokPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigByokPtrType) ToMk8sAddOnsByokConfigByokPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigByokPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigByokPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigByokOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigByokOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigByok)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigByokOutput) ToMk8sAddOnsByokConfigByokOutput() Mk8sAddOnsByokConfigByokOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigByokOutput) ToMk8sAddOnsByokConfigByokOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigByokOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigByokOutput) ToMk8sAddOnsByokConfigByokPtrOutput() Mk8sAddOnsByokConfigByokPtrOutput {
+	return o.ToMk8sAddOnsByokConfigByokPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigByokOutput) ToMk8sAddOnsByokConfigByokPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigByokPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigByok) *Mk8sAddOnsByokConfigByok {
+		return &v
+	}).(Mk8sAddOnsByokConfigByokPtrOutput)
+}
+
+// When set, the BYOK installation does not provision any default storage classes.
+func (o Mk8sAddOnsByokConfigByokOutput) NoDefaultStorageClasses() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigByok) *bool { return v.NoDefaultStorageClasses }).(pulumi.BoolPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigByokPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigByokPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigByok)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigByokPtrOutput) ToMk8sAddOnsByokConfigByokPtrOutput() Mk8sAddOnsByokConfigByokPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigByokPtrOutput) ToMk8sAddOnsByokConfigByokPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigByokPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigByokPtrOutput) Elem() Mk8sAddOnsByokConfigByokOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigByok) Mk8sAddOnsByokConfigByok {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigByok
+		return ret
+	}).(Mk8sAddOnsByokConfigByokOutput)
+}
+
+// When set, the BYOK installation does not provision any default storage classes.
+func (o Mk8sAddOnsByokConfigByokPtrOutput) NoDefaultStorageClasses() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigByok) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.NoDefaultStorageClasses
+	}).(pulumi.BoolPtrOutput)
 }
 
 type Mk8sAddOnsByokConfigCommon struct {
@@ -11264,6 +11838,143 @@ func (o Mk8sAddOnsByokConfigIstioSidecarPtrOutput) MinMemory() pulumi.StringPtrO
 	}).(pulumi.StringPtrOutput)
 }
 
+type Mk8sAddOnsByokConfigJuicefs struct {
+	// Whether to install JuiceFS on the BYOK cluster.
+	Enabled *bool `pulumi:"enabled"`
+}
+
+// Mk8sAddOnsByokConfigJuicefsInput is an input type that accepts Mk8sAddOnsByokConfigJuicefsArgs and Mk8sAddOnsByokConfigJuicefsOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigJuicefsInput` via:
+//
+//	Mk8sAddOnsByokConfigJuicefsArgs{...}
+type Mk8sAddOnsByokConfigJuicefsInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigJuicefsOutput() Mk8sAddOnsByokConfigJuicefsOutput
+	ToMk8sAddOnsByokConfigJuicefsOutputWithContext(context.Context) Mk8sAddOnsByokConfigJuicefsOutput
+}
+
+type Mk8sAddOnsByokConfigJuicefsArgs struct {
+	// Whether to install JuiceFS on the BYOK cluster.
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+}
+
+func (Mk8sAddOnsByokConfigJuicefsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigJuicefs)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigJuicefsArgs) ToMk8sAddOnsByokConfigJuicefsOutput() Mk8sAddOnsByokConfigJuicefsOutput {
+	return i.ToMk8sAddOnsByokConfigJuicefsOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigJuicefsArgs) ToMk8sAddOnsByokConfigJuicefsOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigJuicefsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigJuicefsOutput)
+}
+
+func (i Mk8sAddOnsByokConfigJuicefsArgs) ToMk8sAddOnsByokConfigJuicefsPtrOutput() Mk8sAddOnsByokConfigJuicefsPtrOutput {
+	return i.ToMk8sAddOnsByokConfigJuicefsPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigJuicefsArgs) ToMk8sAddOnsByokConfigJuicefsPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigJuicefsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigJuicefsOutput).ToMk8sAddOnsByokConfigJuicefsPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigJuicefsPtrInput is an input type that accepts Mk8sAddOnsByokConfigJuicefsArgs, Mk8sAddOnsByokConfigJuicefsPtr and Mk8sAddOnsByokConfigJuicefsPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigJuicefsPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigJuicefsArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigJuicefsPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigJuicefsPtrOutput() Mk8sAddOnsByokConfigJuicefsPtrOutput
+	ToMk8sAddOnsByokConfigJuicefsPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigJuicefsPtrOutput
+}
+
+type mk8sAddOnsByokConfigJuicefsPtrType Mk8sAddOnsByokConfigJuicefsArgs
+
+func Mk8sAddOnsByokConfigJuicefsPtr(v *Mk8sAddOnsByokConfigJuicefsArgs) Mk8sAddOnsByokConfigJuicefsPtrInput {
+	return (*mk8sAddOnsByokConfigJuicefsPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigJuicefsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigJuicefs)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigJuicefsPtrType) ToMk8sAddOnsByokConfigJuicefsPtrOutput() Mk8sAddOnsByokConfigJuicefsPtrOutput {
+	return i.ToMk8sAddOnsByokConfigJuicefsPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigJuicefsPtrType) ToMk8sAddOnsByokConfigJuicefsPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigJuicefsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigJuicefsPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigJuicefsOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigJuicefsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigJuicefs)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigJuicefsOutput) ToMk8sAddOnsByokConfigJuicefsOutput() Mk8sAddOnsByokConfigJuicefsOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigJuicefsOutput) ToMk8sAddOnsByokConfigJuicefsOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigJuicefsOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigJuicefsOutput) ToMk8sAddOnsByokConfigJuicefsPtrOutput() Mk8sAddOnsByokConfigJuicefsPtrOutput {
+	return o.ToMk8sAddOnsByokConfigJuicefsPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigJuicefsOutput) ToMk8sAddOnsByokConfigJuicefsPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigJuicefsPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigJuicefs) *Mk8sAddOnsByokConfigJuicefs {
+		return &v
+	}).(Mk8sAddOnsByokConfigJuicefsPtrOutput)
+}
+
+// Whether to install JuiceFS on the BYOK cluster.
+func (o Mk8sAddOnsByokConfigJuicefsOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigJuicefs) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigJuicefsPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigJuicefsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigJuicefs)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigJuicefsPtrOutput) ToMk8sAddOnsByokConfigJuicefsPtrOutput() Mk8sAddOnsByokConfigJuicefsPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigJuicefsPtrOutput) ToMk8sAddOnsByokConfigJuicefsPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigJuicefsPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigJuicefsPtrOutput) Elem() Mk8sAddOnsByokConfigJuicefsOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigJuicefs) Mk8sAddOnsByokConfigJuicefs {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigJuicefs
+		return ret
+	}).(Mk8sAddOnsByokConfigJuicefsOutput)
+}
+
+// Whether to install JuiceFS on the BYOK cluster.
+func (o Mk8sAddOnsByokConfigJuicefsPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigJuicefs) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
 type Mk8sAddOnsByokConfigLogSplitter struct {
 	// CPU limit applied to log splitter pods.
 	MaxCpu *string `pulumi:"maxCpu"`
@@ -11497,6 +12208,10 @@ func (o Mk8sAddOnsByokConfigLogSplitterPtrOutput) PerPodRate() pulumi.IntPtrOutp
 }
 
 type Mk8sAddOnsByokConfigLonghorn struct {
+	// Mark Longhorn as the default storage class.
+	IsDefault *bool `pulumi:"isDefault"`
+	// Replica factor for Longhorn volumes. Minimum: 1.
+	NumberOfReplicas *int `pulumi:"numberOfReplicas"`
 	// Replica factor for Longhorn volumes. Minimum: 1.
 	Replicas *int `pulumi:"replicas"`
 }
@@ -11513,6 +12228,10 @@ type Mk8sAddOnsByokConfigLonghornInput interface {
 }
 
 type Mk8sAddOnsByokConfigLonghornArgs struct {
+	// Mark Longhorn as the default storage class.
+	IsDefault pulumi.BoolPtrInput `pulumi:"isDefault"`
+	// Replica factor for Longhorn volumes. Minimum: 1.
+	NumberOfReplicas pulumi.IntPtrInput `pulumi:"numberOfReplicas"`
 	// Replica factor for Longhorn volumes. Minimum: 1.
 	Replicas pulumi.IntPtrInput `pulumi:"replicas"`
 }
@@ -11594,6 +12313,16 @@ func (o Mk8sAddOnsByokConfigLonghornOutput) ToMk8sAddOnsByokConfigLonghornPtrOut
 	}).(Mk8sAddOnsByokConfigLonghornPtrOutput)
 }
 
+// Mark Longhorn as the default storage class.
+func (o Mk8sAddOnsByokConfigLonghornOutput) IsDefault() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigLonghorn) *bool { return v.IsDefault }).(pulumi.BoolPtrOutput)
+}
+
+// Replica factor for Longhorn volumes. Minimum: 1.
+func (o Mk8sAddOnsByokConfigLonghornOutput) NumberOfReplicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigLonghorn) *int { return v.NumberOfReplicas }).(pulumi.IntPtrOutput)
+}
+
 // Replica factor for Longhorn volumes. Minimum: 1.
 func (o Mk8sAddOnsByokConfigLonghornOutput) Replicas() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigLonghorn) *int { return v.Replicas }).(pulumi.IntPtrOutput)
@@ -11623,6 +12352,26 @@ func (o Mk8sAddOnsByokConfigLonghornPtrOutput) Elem() Mk8sAddOnsByokConfigLongho
 	}).(Mk8sAddOnsByokConfigLonghornOutput)
 }
 
+// Mark Longhorn as the default storage class.
+func (o Mk8sAddOnsByokConfigLonghornPtrOutput) IsDefault() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigLonghorn) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.IsDefault
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Replica factor for Longhorn volumes. Minimum: 1.
+func (o Mk8sAddOnsByokConfigLonghornPtrOutput) NumberOfReplicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigLonghorn) *int {
+		if v == nil {
+			return nil
+		}
+		return v.NumberOfReplicas
+	}).(pulumi.IntPtrOutput)
+}
+
 // Replica factor for Longhorn volumes. Minimum: 1.
 func (o Mk8sAddOnsByokConfigLonghornPtrOutput) Replicas() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsByokConfigLonghorn) *int {
@@ -11638,6 +12387,10 @@ type Mk8sAddOnsByokConfigMiddlebox struct {
 	BandwidthAlertMbps *int `pulumi:"bandwidthAlertMbps"`
 	// Whether to deploy the middlebox component.
 	Enabled *bool `pulumi:"enabled"`
+	// IPv4 address bound by the middlebox component.
+	Ip *string `pulumi:"ip"`
+	// Listening port for the middlebox component.
+	Port *int `pulumi:"port"`
 }
 
 // Mk8sAddOnsByokConfigMiddleboxInput is an input type that accepts Mk8sAddOnsByokConfigMiddleboxArgs and Mk8sAddOnsByokConfigMiddleboxOutput values.
@@ -11656,6 +12409,10 @@ type Mk8sAddOnsByokConfigMiddleboxArgs struct {
 	BandwidthAlertMbps pulumi.IntPtrInput `pulumi:"bandwidthAlertMbps"`
 	// Whether to deploy the middlebox component.
 	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// IPv4 address bound by the middlebox component.
+	Ip pulumi.StringPtrInput `pulumi:"ip"`
+	// Listening port for the middlebox component.
+	Port pulumi.IntPtrInput `pulumi:"port"`
 }
 
 func (Mk8sAddOnsByokConfigMiddleboxArgs) ElementType() reflect.Type {
@@ -11745,6 +12502,16 @@ func (o Mk8sAddOnsByokConfigMiddleboxOutput) Enabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMiddlebox) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
 }
 
+// IPv4 address bound by the middlebox component.
+func (o Mk8sAddOnsByokConfigMiddleboxOutput) Ip() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMiddlebox) *string { return v.Ip }).(pulumi.StringPtrOutput)
+}
+
+// Listening port for the middlebox component.
+func (o Mk8sAddOnsByokConfigMiddleboxOutput) Port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMiddlebox) *int { return v.Port }).(pulumi.IntPtrOutput)
+}
+
 type Mk8sAddOnsByokConfigMiddleboxPtrOutput struct{ *pulumi.OutputState }
 
 func (Mk8sAddOnsByokConfigMiddleboxPtrOutput) ElementType() reflect.Type {
@@ -11789,7 +12556,29 @@ func (o Mk8sAddOnsByokConfigMiddleboxPtrOutput) Enabled() pulumi.BoolPtrOutput {
 	}).(pulumi.BoolPtrOutput)
 }
 
+// IPv4 address bound by the middlebox component.
+func (o Mk8sAddOnsByokConfigMiddleboxPtrOutput) Ip() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMiddlebox) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Ip
+	}).(pulumi.StringPtrOutput)
+}
+
+// Listening port for the middlebox component.
+func (o Mk8sAddOnsByokConfigMiddleboxPtrOutput) Port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMiddlebox) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Port
+	}).(pulumi.IntPtrOutput)
+}
+
 type Mk8sAddOnsByokConfigMonitoring struct {
+	// Static labels appended to every metric scraped by the BYOK Prometheus stack.
+	ExternalLabels map[string]string `pulumi:"externalLabels"`
 	// Kube-state-metrics resource overrides.
 	KubeStateMetrics *Mk8sAddOnsByokConfigMonitoringKubeStateMetrics `pulumi:"kubeStateMetrics"`
 	// Maximum memory limit for monitoring components.
@@ -11798,6 +12587,8 @@ type Mk8sAddOnsByokConfigMonitoring struct {
 	MinMemory *string `pulumi:"minMemory"`
 	// Prometheus deployment configuration.
 	Prometheus *Mk8sAddOnsByokConfigMonitoringPrometheus `pulumi:"prometheus"`
+	// Prometheus remoteWrite client configurations. Order is preserved as written.
+	RemoteWrites []Mk8sAddOnsByokConfigMonitoringRemoteWrite `pulumi:"remoteWrites"`
 }
 
 // Mk8sAddOnsByokConfigMonitoringInput is an input type that accepts Mk8sAddOnsByokConfigMonitoringArgs and Mk8sAddOnsByokConfigMonitoringOutput values.
@@ -11812,6 +12603,8 @@ type Mk8sAddOnsByokConfigMonitoringInput interface {
 }
 
 type Mk8sAddOnsByokConfigMonitoringArgs struct {
+	// Static labels appended to every metric scraped by the BYOK Prometheus stack.
+	ExternalLabels pulumi.StringMapInput `pulumi:"externalLabels"`
 	// Kube-state-metrics resource overrides.
 	KubeStateMetrics Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrInput `pulumi:"kubeStateMetrics"`
 	// Maximum memory limit for monitoring components.
@@ -11820,6 +12613,8 @@ type Mk8sAddOnsByokConfigMonitoringArgs struct {
 	MinMemory pulumi.StringPtrInput `pulumi:"minMemory"`
 	// Prometheus deployment configuration.
 	Prometheus Mk8sAddOnsByokConfigMonitoringPrometheusPtrInput `pulumi:"prometheus"`
+	// Prometheus remoteWrite client configurations. Order is preserved as written.
+	RemoteWrites Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayInput `pulumi:"remoteWrites"`
 }
 
 func (Mk8sAddOnsByokConfigMonitoringArgs) ElementType() reflect.Type {
@@ -11899,6 +12694,11 @@ func (o Mk8sAddOnsByokConfigMonitoringOutput) ToMk8sAddOnsByokConfigMonitoringPt
 	}).(Mk8sAddOnsByokConfigMonitoringPtrOutput)
 }
 
+// Static labels appended to every metric scraped by the BYOK Prometheus stack.
+func (o Mk8sAddOnsByokConfigMonitoringOutput) ExternalLabels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoring) map[string]string { return v.ExternalLabels }).(pulumi.StringMapOutput)
+}
+
 // Kube-state-metrics resource overrides.
 func (o Mk8sAddOnsByokConfigMonitoringOutput) KubeStateMetrics() Mk8sAddOnsByokConfigMonitoringKubeStateMetricsPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoring) *Mk8sAddOnsByokConfigMonitoringKubeStateMetrics {
@@ -11919,6 +12719,13 @@ func (o Mk8sAddOnsByokConfigMonitoringOutput) MinMemory() pulumi.StringPtrOutput
 // Prometheus deployment configuration.
 func (o Mk8sAddOnsByokConfigMonitoringOutput) Prometheus() Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoring) *Mk8sAddOnsByokConfigMonitoringPrometheus { return v.Prometheus }).(Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput)
+}
+
+// Prometheus remoteWrite client configurations. Order is preserved as written.
+func (o Mk8sAddOnsByokConfigMonitoringOutput) RemoteWrites() Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoring) []Mk8sAddOnsByokConfigMonitoringRemoteWrite {
+		return v.RemoteWrites
+	}).(Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput)
 }
 
 type Mk8sAddOnsByokConfigMonitoringPtrOutput struct{ *pulumi.OutputState }
@@ -11943,6 +12750,16 @@ func (o Mk8sAddOnsByokConfigMonitoringPtrOutput) Elem() Mk8sAddOnsByokConfigMoni
 		var ret Mk8sAddOnsByokConfigMonitoring
 		return ret
 	}).(Mk8sAddOnsByokConfigMonitoringOutput)
+}
+
+// Static labels appended to every metric scraped by the BYOK Prometheus stack.
+func (o Mk8sAddOnsByokConfigMonitoringPtrOutput) ExternalLabels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoring) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.ExternalLabels
+	}).(pulumi.StringMapOutput)
 }
 
 // Kube-state-metrics resource overrides.
@@ -11983,6 +12800,16 @@ func (o Mk8sAddOnsByokConfigMonitoringPtrOutput) Prometheus() Mk8sAddOnsByokConf
 		}
 		return v.Prometheus
 	}).(Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput)
+}
+
+// Prometheus remoteWrite client configurations. Order is preserved as written.
+func (o Mk8sAddOnsByokConfigMonitoringPtrOutput) RemoteWrites() Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoring) []Mk8sAddOnsByokConfigMonitoringRemoteWrite {
+		if v == nil {
+			return nil
+		}
+		return v.RemoteWrites
+	}).(Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput)
 }
 
 type Mk8sAddOnsByokConfigMonitoringKubeStateMetrics struct {
@@ -12395,6 +13222,665 @@ func (o Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput) Storage() pulumi.
 			return nil
 		}
 		return v.Storage
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringRemoteWrite struct {
+	// HTTP Authorization header credentials.
+	Authorization *Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization `pulumi:"authorization"`
+	// Azure AD authentication parameters as flat key-value pairs.
+	Azuread map[string]string `pulumi:"azuread"`
+	// HTTP basic authentication credentials.
+	BasicAuth *Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth `pulumi:"basicAuth"`
+	// Whether to enable HTTP/2.
+	EnableHttp2 *bool `pulumi:"enableHttp2"`
+	// Whether the HTTP client follows redirects.
+	FollowRedirects *bool `pulumi:"followRedirects"`
+	// Google Cloud IAM authentication parameters as flat key-value pairs.
+	GoogleIam map[string]string `pulumi:"googleIam"`
+	// Custom request headers attached to every remoteWrite call.
+	Headers map[string]string `pulumi:"headers"`
+	// Custom HTTP headers, as flat key-value pairs.
+	HttpHeaders map[string]string `pulumi:"httpHeaders"`
+	// Friendly name used in metrics for this client.
+	Name *string `pulumi:"name"`
+	// Comma-separated list of hosts that bypass the proxy.
+	NoProxy *string `pulumi:"noProxy"`
+	// OAuth 2.0 client configuration as flat key-value pairs.
+	Oauth2 map[string]string `pulumi:"oauth2"`
+	// Headers sent to the proxy on CONNECT, as flat key-value pairs.
+	ProxyConnectHeader map[string]string `pulumi:"proxyConnectHeader"`
+	// Whether to read proxy settings from environment variables.
+	ProxyFromEnvironment *bool `pulumi:"proxyFromEnvironment"`
+	// HTTP proxy URL used for outbound requests.
+	ProxyUrl *string `pulumi:"proxyUrl"`
+	// Tuning parameters for the in-memory remoteWrite queue, as flat key-value pairs.
+	QueueConfig map[string]string `pulumi:"queueConfig"`
+	// Per-request timeout (for example, "30s").
+	RemoteTimeout *string `pulumi:"remoteTimeout"`
+	// Whether to forward Prometheus exemplars.
+	SendExemplars *bool `pulumi:"sendExemplars"`
+	// Whether to forward Prometheus native histograms.
+	SendNativeHistograms *bool `pulumi:"sendNativeHistograms"`
+	// AWS SigV4 authentication parameters as flat key-value pairs.
+	Sigv4 map[string]string `pulumi:"sigv4"`
+	// TLS configuration as flat key-value pairs.
+	TlsConfig map[string]string `pulumi:"tlsConfig"`
+	// Endpoint that receives the remoteWrite payload.
+	Url *string `pulumi:"url"`
+	// Relabel rules applied to samples before they are sent.
+	WriteRelabelConfigs []map[string]string `pulumi:"writeRelabelConfigs"`
+}
+
+// Mk8sAddOnsByokConfigMonitoringRemoteWriteInput is an input type that accepts Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs and Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigMonitoringRemoteWriteInput` via:
+//
+//	Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs{...}
+type Mk8sAddOnsByokConfigMonitoringRemoteWriteInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigMonitoringRemoteWriteOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput
+	ToMk8sAddOnsByokConfigMonitoringRemoteWriteOutputWithContext(context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput
+}
+
+type Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs struct {
+	// HTTP Authorization header credentials.
+	Authorization Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrInput `pulumi:"authorization"`
+	// Azure AD authentication parameters as flat key-value pairs.
+	Azuread pulumi.StringMapInput `pulumi:"azuread"`
+	// HTTP basic authentication credentials.
+	BasicAuth Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrInput `pulumi:"basicAuth"`
+	// Whether to enable HTTP/2.
+	EnableHttp2 pulumi.BoolPtrInput `pulumi:"enableHttp2"`
+	// Whether the HTTP client follows redirects.
+	FollowRedirects pulumi.BoolPtrInput `pulumi:"followRedirects"`
+	// Google Cloud IAM authentication parameters as flat key-value pairs.
+	GoogleIam pulumi.StringMapInput `pulumi:"googleIam"`
+	// Custom request headers attached to every remoteWrite call.
+	Headers pulumi.StringMapInput `pulumi:"headers"`
+	// Custom HTTP headers, as flat key-value pairs.
+	HttpHeaders pulumi.StringMapInput `pulumi:"httpHeaders"`
+	// Friendly name used in metrics for this client.
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// Comma-separated list of hosts that bypass the proxy.
+	NoProxy pulumi.StringPtrInput `pulumi:"noProxy"`
+	// OAuth 2.0 client configuration as flat key-value pairs.
+	Oauth2 pulumi.StringMapInput `pulumi:"oauth2"`
+	// Headers sent to the proxy on CONNECT, as flat key-value pairs.
+	ProxyConnectHeader pulumi.StringMapInput `pulumi:"proxyConnectHeader"`
+	// Whether to read proxy settings from environment variables.
+	ProxyFromEnvironment pulumi.BoolPtrInput `pulumi:"proxyFromEnvironment"`
+	// HTTP proxy URL used for outbound requests.
+	ProxyUrl pulumi.StringPtrInput `pulumi:"proxyUrl"`
+	// Tuning parameters for the in-memory remoteWrite queue, as flat key-value pairs.
+	QueueConfig pulumi.StringMapInput `pulumi:"queueConfig"`
+	// Per-request timeout (for example, "30s").
+	RemoteTimeout pulumi.StringPtrInput `pulumi:"remoteTimeout"`
+	// Whether to forward Prometheus exemplars.
+	SendExemplars pulumi.BoolPtrInput `pulumi:"sendExemplars"`
+	// Whether to forward Prometheus native histograms.
+	SendNativeHistograms pulumi.BoolPtrInput `pulumi:"sendNativeHistograms"`
+	// AWS SigV4 authentication parameters as flat key-value pairs.
+	Sigv4 pulumi.StringMapInput `pulumi:"sigv4"`
+	// TLS configuration as flat key-value pairs.
+	TlsConfig pulumi.StringMapInput `pulumi:"tlsConfig"`
+	// Endpoint that receives the remoteWrite payload.
+	Url pulumi.StringPtrInput `pulumi:"url"`
+	// Relabel rules applied to samples before they are sent.
+	WriteRelabelConfigs pulumi.StringMapArrayInput `pulumi:"writeRelabelConfigs"`
+}
+
+func (Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringRemoteWrite)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs) ToMk8sAddOnsByokConfigMonitoringRemoteWriteOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringRemoteWriteOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs) ToMk8sAddOnsByokConfigMonitoringRemoteWriteOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput)
+}
+
+// Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayInput is an input type that accepts Mk8sAddOnsByokConfigMonitoringRemoteWriteArray and Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayInput` via:
+//
+//	Mk8sAddOnsByokConfigMonitoringRemoteWriteArray{ Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs{...} }
+type Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput
+	ToMk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutputWithContext(context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput
+}
+
+type Mk8sAddOnsByokConfigMonitoringRemoteWriteArray []Mk8sAddOnsByokConfigMonitoringRemoteWriteInput
+
+func (Mk8sAddOnsByokConfigMonitoringRemoteWriteArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sAddOnsByokConfigMonitoringRemoteWrite)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringRemoteWriteArray) ToMk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringRemoteWriteArray) ToMk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringRemoteWrite)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) ToMk8sAddOnsByokConfigMonitoringRemoteWriteOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) ToMk8sAddOnsByokConfigMonitoringRemoteWriteOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput {
+	return o
+}
+
+// HTTP Authorization header credentials.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) Authorization() Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) *Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization {
+		return v.Authorization
+	}).(Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput)
+}
+
+// Azure AD authentication parameters as flat key-value pairs.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) Azuread() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) map[string]string { return v.Azuread }).(pulumi.StringMapOutput)
+}
+
+// HTTP basic authentication credentials.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) BasicAuth() Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) *Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth {
+		return v.BasicAuth
+	}).(Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput)
+}
+
+// Whether to enable HTTP/2.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) EnableHttp2() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) *bool { return v.EnableHttp2 }).(pulumi.BoolPtrOutput)
+}
+
+// Whether the HTTP client follows redirects.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) FollowRedirects() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) *bool { return v.FollowRedirects }).(pulumi.BoolPtrOutput)
+}
+
+// Google Cloud IAM authentication parameters as flat key-value pairs.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) GoogleIam() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) map[string]string { return v.GoogleIam }).(pulumi.StringMapOutput)
+}
+
+// Custom request headers attached to every remoteWrite call.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) Headers() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) map[string]string { return v.Headers }).(pulumi.StringMapOutput)
+}
+
+// Custom HTTP headers, as flat key-value pairs.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) HttpHeaders() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) map[string]string { return v.HttpHeaders }).(pulumi.StringMapOutput)
+}
+
+// Friendly name used in metrics for this client.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+// Comma-separated list of hosts that bypass the proxy.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) NoProxy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) *string { return v.NoProxy }).(pulumi.StringPtrOutput)
+}
+
+// OAuth 2.0 client configuration as flat key-value pairs.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) Oauth2() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) map[string]string { return v.Oauth2 }).(pulumi.StringMapOutput)
+}
+
+// Headers sent to the proxy on CONNECT, as flat key-value pairs.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) ProxyConnectHeader() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) map[string]string { return v.ProxyConnectHeader }).(pulumi.StringMapOutput)
+}
+
+// Whether to read proxy settings from environment variables.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) ProxyFromEnvironment() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) *bool { return v.ProxyFromEnvironment }).(pulumi.BoolPtrOutput)
+}
+
+// HTTP proxy URL used for outbound requests.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) ProxyUrl() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) *string { return v.ProxyUrl }).(pulumi.StringPtrOutput)
+}
+
+// Tuning parameters for the in-memory remoteWrite queue, as flat key-value pairs.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) QueueConfig() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) map[string]string { return v.QueueConfig }).(pulumi.StringMapOutput)
+}
+
+// Per-request timeout (for example, "30s").
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) RemoteTimeout() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) *string { return v.RemoteTimeout }).(pulumi.StringPtrOutput)
+}
+
+// Whether to forward Prometheus exemplars.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) SendExemplars() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) *bool { return v.SendExemplars }).(pulumi.BoolPtrOutput)
+}
+
+// Whether to forward Prometheus native histograms.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) SendNativeHistograms() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) *bool { return v.SendNativeHistograms }).(pulumi.BoolPtrOutput)
+}
+
+// AWS SigV4 authentication parameters as flat key-value pairs.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) Sigv4() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) map[string]string { return v.Sigv4 }).(pulumi.StringMapOutput)
+}
+
+// TLS configuration as flat key-value pairs.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) TlsConfig() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) map[string]string { return v.TlsConfig }).(pulumi.StringMapOutput)
+}
+
+// Endpoint that receives the remoteWrite payload.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) Url() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) *string { return v.Url }).(pulumi.StringPtrOutput)
+}
+
+// Relabel rules applied to samples before they are sent.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) WriteRelabelConfigs() pulumi.StringMapArrayOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) []map[string]string { return v.WriteRelabelConfigs }).(pulumi.StringMapArrayOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]Mk8sAddOnsByokConfigMonitoringRemoteWrite)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput) ToMk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput) ToMk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput) Index(i pulumi.IntInput) Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sAddOnsByokConfigMonitoringRemoteWrite {
+		return vs[0].([]Mk8sAddOnsByokConfigMonitoringRemoteWrite)[vs[1].(int)]
+	}).(Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization struct {
+	// Authorization credentials.
+	Credentials *string `pulumi:"credentials"`
+	// Path to a file containing the credentials.
+	CredentialsFile *string `pulumi:"credentialsFile"`
+	// Authorization scheme (for example, "Bearer").
+	Type *string `pulumi:"type"`
+}
+
+// Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationInput is an input type that accepts Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs and Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationInput` via:
+//
+//	Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs{...}
+type Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput
+	ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutputWithContext(context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput
+}
+
+type Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs struct {
+	// Authorization credentials.
+	Credentials pulumi.StringPtrInput `pulumi:"credentials"`
+	// Path to a file containing the credentials.
+	CredentialsFile pulumi.StringPtrInput `pulumi:"credentialsFile"`
+	// Authorization scheme (for example, "Bearer").
+	Type pulumi.StringPtrInput `pulumi:"type"`
+}
+
+func (Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs) ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs) ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput)
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs) ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs) ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput).ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrInput is an input type that accepts Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs, Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtr and Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput
+	ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput
+}
+
+type mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrType Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs
+
+func Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtr(v *Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs) Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrInput {
+	return (*mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrType) ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrType) ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput) ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput) ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput) ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput {
+	return o.ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput) ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization) *Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization {
+		return &v
+	}).(Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput)
+}
+
+// Authorization credentials.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput) Credentials() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization) *string { return v.Credentials }).(pulumi.StringPtrOutput)
+}
+
+// Path to a file containing the credentials.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput) CredentialsFile() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization) *string { return v.CredentialsFile }).(pulumi.StringPtrOutput)
+}
+
+// Authorization scheme (for example, "Bearer").
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization) *string { return v.Type }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput) ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput) ToMk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput) Elem() Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization) Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization
+		return ret
+	}).(Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput)
+}
+
+// Authorization credentials.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput) Credentials() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Credentials
+	}).(pulumi.StringPtrOutput)
+}
+
+// Path to a file containing the credentials.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput) CredentialsFile() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization) *string {
+		if v == nil {
+			return nil
+		}
+		return v.CredentialsFile
+	}).(pulumi.StringPtrOutput)
+}
+
+// Authorization scheme (for example, "Bearer").
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Type
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth struct {
+	// Password for HTTP basic authentication.
+	Password *string `pulumi:"password"`
+	// Path to a file containing the password.
+	PasswordFile *string `pulumi:"passwordFile"`
+	// Username for HTTP basic authentication.
+	Username *string `pulumi:"username"`
+	// Path to a file containing the username.
+	UsernameFile *string `pulumi:"usernameFile"`
+}
+
+// Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthInput is an input type that accepts Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs and Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthInput` via:
+//
+//	Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs{...}
+type Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput
+	ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutputWithContext(context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput
+}
+
+type Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs struct {
+	// Password for HTTP basic authentication.
+	Password pulumi.StringPtrInput `pulumi:"password"`
+	// Path to a file containing the password.
+	PasswordFile pulumi.StringPtrInput `pulumi:"passwordFile"`
+	// Username for HTTP basic authentication.
+	Username pulumi.StringPtrInput `pulumi:"username"`
+	// Path to a file containing the username.
+	UsernameFile pulumi.StringPtrInput `pulumi:"usernameFile"`
+}
+
+func (Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs) ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs) ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput)
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs) ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs) ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput).ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrInput is an input type that accepts Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs, Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtr and Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput
+	ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput
+}
+
+type mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrType Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs
+
+func Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtr(v *Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs) Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrInput {
+	return (*mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrType) ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput {
+	return i.ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrType) ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput) ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput) ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput) ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput {
+	return o.ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput) ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth) *Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth {
+		return &v
+	}).(Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput)
+}
+
+// Password for HTTP basic authentication.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput) Password() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth) *string { return v.Password }).(pulumi.StringPtrOutput)
+}
+
+// Path to a file containing the password.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput) PasswordFile() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth) *string { return v.PasswordFile }).(pulumi.StringPtrOutput)
+}
+
+// Username for HTTP basic authentication.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput) Username() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth) *string { return v.Username }).(pulumi.StringPtrOutput)
+}
+
+// Path to a file containing the username.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput) UsernameFile() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth) *string { return v.UsernameFile }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput) ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput() Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput) ToMk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput) Elem() Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth) Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth
+		return ret
+	}).(Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput)
+}
+
+// Password for HTTP basic authentication.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput) Password() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Password
+	}).(pulumi.StringPtrOutput)
+}
+
+// Path to a file containing the password.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput) PasswordFile() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth) *string {
+		if v == nil {
+			return nil
+		}
+		return v.PasswordFile
+	}).(pulumi.StringPtrOutput)
+}
+
+// Username for HTTP basic authentication.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput) Username() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Username
+	}).(pulumi.StringPtrOutput)
+}
+
+// Path to a file containing the username.
+func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput) UsernameFile() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UsernameFile
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -44222,6 +45708,8 @@ func (o WorkloadRolloutOptionArrayOutput) Index(i pulumi.IntInput) WorkloadRollo
 type WorkloadSecurityOptions struct {
 	// The group id assigned to any mounted volume.
 	FileSystemGroupId *int `pulumi:"fileSystemGroupId"`
+	// The user id assigned to all container processes.
+	RunAsUser *int `pulumi:"runAsUser"`
 }
 
 // WorkloadSecurityOptionsInput is an input type that accepts WorkloadSecurityOptionsArgs and WorkloadSecurityOptionsOutput values.
@@ -44238,6 +45726,8 @@ type WorkloadSecurityOptionsInput interface {
 type WorkloadSecurityOptionsArgs struct {
 	// The group id assigned to any mounted volume.
 	FileSystemGroupId pulumi.IntPtrInput `pulumi:"fileSystemGroupId"`
+	// The user id assigned to all container processes.
+	RunAsUser pulumi.IntPtrInput `pulumi:"runAsUser"`
 }
 
 func (WorkloadSecurityOptionsArgs) ElementType() reflect.Type {
@@ -44322,6 +45812,11 @@ func (o WorkloadSecurityOptionsOutput) FileSystemGroupId() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadSecurityOptions) *int { return v.FileSystemGroupId }).(pulumi.IntPtrOutput)
 }
 
+// The user id assigned to all container processes.
+func (o WorkloadSecurityOptionsOutput) RunAsUser() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadSecurityOptions) *int { return v.RunAsUser }).(pulumi.IntPtrOutput)
+}
+
 type WorkloadSecurityOptionsPtrOutput struct{ *pulumi.OutputState }
 
 func (WorkloadSecurityOptionsPtrOutput) ElementType() reflect.Type {
@@ -44353,6 +45848,16 @@ func (o WorkloadSecurityOptionsPtrOutput) FileSystemGroupId() pulumi.IntPtrOutpu
 			return nil
 		}
 		return v.FileSystemGroupId
+	}).(pulumi.IntPtrOutput)
+}
+
+// The user id assigned to all container processes.
+func (o WorkloadSecurityOptionsPtrOutput) RunAsUser() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadSecurityOptions) *int {
+		if v == nil {
+			return nil
+		}
+		return v.RunAsUser
 	}).(pulumi.IntPtrOutput)
 }
 
@@ -44506,6 +46011,8 @@ type WorkloadStatus struct {
 	ReplicaInternalNames []string `pulumi:"replicaInternalNames"`
 	// Resolved images for workloads with dynamic tags enabled.
 	ResolvedImages []WorkloadStatusResolvedImage `pulumi:"resolvedImages"`
+	// Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `suspended`.
+	SuspendedStatus *string `pulumi:"suspendedStatus"`
 }
 
 // WorkloadStatusInput is an input type that accepts WorkloadStatusArgs and WorkloadStatusOutput values.
@@ -44536,6 +46043,8 @@ type WorkloadStatusArgs struct {
 	ReplicaInternalNames pulumi.StringArrayInput `pulumi:"replicaInternalNames"`
 	// Resolved images for workloads with dynamic tags enabled.
 	ResolvedImages WorkloadStatusResolvedImageArrayInput `pulumi:"resolvedImages"`
+	// Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `suspended`.
+	SuspendedStatus pulumi.StringPtrInput `pulumi:"suspendedStatus"`
 }
 
 func (WorkloadStatusArgs) ElementType() reflect.Type {
@@ -44630,6 +46139,11 @@ func (o WorkloadStatusOutput) ReplicaInternalNames() pulumi.StringArrayOutput {
 // Resolved images for workloads with dynamic tags enabled.
 func (o WorkloadStatusOutput) ResolvedImages() WorkloadStatusResolvedImageArrayOutput {
 	return o.ApplyT(func(v WorkloadStatus) []WorkloadStatusResolvedImage { return v.ResolvedImages }).(WorkloadStatusResolvedImageArrayOutput)
+}
+
+// Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `suspended`.
+func (o WorkloadStatusOutput) SuspendedStatus() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadStatus) *string { return v.SuspendedStatus }).(pulumi.StringPtrOutput)
 }
 
 type WorkloadStatusArrayOutput struct{ *pulumi.OutputState }
@@ -46417,6 +47931,130 @@ func (o GetGvcLoadBalancerRedirectClassPtrOutput) Status5xx() pulumi.StringPtrOu
 		}
 		return v.Status5xx
 	}).(pulumi.StringPtrOutput)
+}
+
+type GetGvcLocationOption struct {
+	// Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+	LatencyOffsetMs int `pulumi:"latencyOffsetMs"`
+	// Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+	LatencyToleranceMs int `pulumi:"latencyToleranceMs"`
+	// Name of the location these options apply to.
+	Name string `pulumi:"name"`
+	// Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routingTier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+	RoutingTier int `pulumi:"routingTier"`
+}
+
+// GetGvcLocationOptionInput is an input type that accepts GetGvcLocationOptionArgs and GetGvcLocationOptionOutput values.
+// You can construct a concrete instance of `GetGvcLocationOptionInput` via:
+//
+//	GetGvcLocationOptionArgs{...}
+type GetGvcLocationOptionInput interface {
+	pulumi.Input
+
+	ToGetGvcLocationOptionOutput() GetGvcLocationOptionOutput
+	ToGetGvcLocationOptionOutputWithContext(context.Context) GetGvcLocationOptionOutput
+}
+
+type GetGvcLocationOptionArgs struct {
+	// Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+	LatencyOffsetMs pulumi.IntInput `pulumi:"latencyOffsetMs"`
+	// Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+	LatencyToleranceMs pulumi.IntInput `pulumi:"latencyToleranceMs"`
+	// Name of the location these options apply to.
+	Name pulumi.StringInput `pulumi:"name"`
+	// Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routingTier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+	RoutingTier pulumi.IntInput `pulumi:"routingTier"`
+}
+
+func (GetGvcLocationOptionArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetGvcLocationOption)(nil)).Elem()
+}
+
+func (i GetGvcLocationOptionArgs) ToGetGvcLocationOptionOutput() GetGvcLocationOptionOutput {
+	return i.ToGetGvcLocationOptionOutputWithContext(context.Background())
+}
+
+func (i GetGvcLocationOptionArgs) ToGetGvcLocationOptionOutputWithContext(ctx context.Context) GetGvcLocationOptionOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetGvcLocationOptionOutput)
+}
+
+// GetGvcLocationOptionArrayInput is an input type that accepts GetGvcLocationOptionArray and GetGvcLocationOptionArrayOutput values.
+// You can construct a concrete instance of `GetGvcLocationOptionArrayInput` via:
+//
+//	GetGvcLocationOptionArray{ GetGvcLocationOptionArgs{...} }
+type GetGvcLocationOptionArrayInput interface {
+	pulumi.Input
+
+	ToGetGvcLocationOptionArrayOutput() GetGvcLocationOptionArrayOutput
+	ToGetGvcLocationOptionArrayOutputWithContext(context.Context) GetGvcLocationOptionArrayOutput
+}
+
+type GetGvcLocationOptionArray []GetGvcLocationOptionInput
+
+func (GetGvcLocationOptionArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetGvcLocationOption)(nil)).Elem()
+}
+
+func (i GetGvcLocationOptionArray) ToGetGvcLocationOptionArrayOutput() GetGvcLocationOptionArrayOutput {
+	return i.ToGetGvcLocationOptionArrayOutputWithContext(context.Background())
+}
+
+func (i GetGvcLocationOptionArray) ToGetGvcLocationOptionArrayOutputWithContext(ctx context.Context) GetGvcLocationOptionArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetGvcLocationOptionArrayOutput)
+}
+
+type GetGvcLocationOptionOutput struct{ *pulumi.OutputState }
+
+func (GetGvcLocationOptionOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetGvcLocationOption)(nil)).Elem()
+}
+
+func (o GetGvcLocationOptionOutput) ToGetGvcLocationOptionOutput() GetGvcLocationOptionOutput {
+	return o
+}
+
+func (o GetGvcLocationOptionOutput) ToGetGvcLocationOptionOutputWithContext(ctx context.Context) GetGvcLocationOptionOutput {
+	return o
+}
+
+// Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+func (o GetGvcLocationOptionOutput) LatencyOffsetMs() pulumi.IntOutput {
+	return o.ApplyT(func(v GetGvcLocationOption) int { return v.LatencyOffsetMs }).(pulumi.IntOutput)
+}
+
+// Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+func (o GetGvcLocationOptionOutput) LatencyToleranceMs() pulumi.IntOutput {
+	return o.ApplyT(func(v GetGvcLocationOption) int { return v.LatencyToleranceMs }).(pulumi.IntOutput)
+}
+
+// Name of the location these options apply to.
+func (o GetGvcLocationOptionOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetGvcLocationOption) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routingTier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+func (o GetGvcLocationOptionOutput) RoutingTier() pulumi.IntOutput {
+	return o.ApplyT(func(v GetGvcLocationOption) int { return v.RoutingTier }).(pulumi.IntOutput)
+}
+
+type GetGvcLocationOptionArrayOutput struct{ *pulumi.OutputState }
+
+func (GetGvcLocationOptionArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetGvcLocationOption)(nil)).Elem()
+}
+
+func (o GetGvcLocationOptionArrayOutput) ToGetGvcLocationOptionArrayOutput() GetGvcLocationOptionArrayOutput {
+	return o
+}
+
+func (o GetGvcLocationOptionArrayOutput) ToGetGvcLocationOptionArrayOutputWithContext(ctx context.Context) GetGvcLocationOptionArrayOutput {
+	return o
+}
+
+func (o GetGvcLocationOptionArrayOutput) Index(i pulumi.IntInput) GetGvcLocationOptionOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetGvcLocationOption {
+		return vs[0].([]GetGvcLocationOption)[vs[1].(int)]
+	}).(GetGvcLocationOptionOutput)
 }
 
 type GetGvcOtelTracing struct {
@@ -48289,7 +49927,7 @@ func (o GetLocationGeoArrayOutput) Index(i pulumi.IntInput) GetLocationGeoOutput
 }
 
 type GetLocationsLocation struct {
-	// Cloud Provider of the location.
+	// Cloud Provider of the location. Valid values: `aws`, `gcp`, `azure`, `byok`, `linode`, `vultr`, `equinix`, `oci`.
 	CloudProvider string `pulumi:"cloudProvider"`
 	// The ID, in GUID format, of the location.
 	CplnId string `pulumi:"cplnId"`
@@ -48301,7 +49939,8 @@ type GetLocationsLocation struct {
 	// A list of IP ranges of the location.
 	IpRanges []string `pulumi:"ipRanges"`
 	// Name of the location.
-	Name   string `pulumi:"name"`
+	Name string `pulumi:"name"`
+	// Origin of the location. Valid values: `builtin`, `default`, `custom`.
 	Origin string `pulumi:"origin"`
 	// Region of the location.
 	Region string `pulumi:"region"`
@@ -48323,7 +49962,7 @@ type GetLocationsLocationInput interface {
 }
 
 type GetLocationsLocationArgs struct {
-	// Cloud Provider of the location.
+	// Cloud Provider of the location. Valid values: `aws`, `gcp`, `azure`, `byok`, `linode`, `vultr`, `equinix`, `oci`.
 	CloudProvider pulumi.StringInput `pulumi:"cloudProvider"`
 	// The ID, in GUID format, of the location.
 	CplnId pulumi.StringInput `pulumi:"cplnId"`
@@ -48335,7 +49974,8 @@ type GetLocationsLocationArgs struct {
 	// A list of IP ranges of the location.
 	IpRanges pulumi.StringArrayInput `pulumi:"ipRanges"`
 	// Name of the location.
-	Name   pulumi.StringInput `pulumi:"name"`
+	Name pulumi.StringInput `pulumi:"name"`
+	// Origin of the location. Valid values: `builtin`, `default`, `custom`.
 	Origin pulumi.StringInput `pulumi:"origin"`
 	// Region of the location.
 	Region pulumi.StringInput `pulumi:"region"`
@@ -48396,7 +50036,7 @@ func (o GetLocationsLocationOutput) ToGetLocationsLocationOutputWithContext(ctx 
 	return o
 }
 
-// Cloud Provider of the location.
+// Cloud Provider of the location. Valid values: `aws`, `gcp`, `azure`, `byok`, `linode`, `vultr`, `equinix`, `oci`.
 func (o GetLocationsLocationOutput) CloudProvider() pulumi.StringOutput {
 	return o.ApplyT(func(v GetLocationsLocation) string { return v.CloudProvider }).(pulumi.StringOutput)
 }
@@ -48430,6 +50070,7 @@ func (o GetLocationsLocationOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v GetLocationsLocation) string { return v.Name }).(pulumi.StringOutput)
 }
 
+// Origin of the location. Valid values: `builtin`, `default`, `custom`.
 func (o GetLocationsLocationOutput) Origin() pulumi.StringOutput {
 	return o.ApplyT(func(v GetLocationsLocation) string { return v.Origin }).(pulumi.StringOutput)
 }
@@ -56984,6 +58625,8 @@ func (o GetWorkloadRolloutOptionArrayOutput) Index(i pulumi.IntInput) GetWorkloa
 type GetWorkloadSecurityOption struct {
 	// The group id assigned to any mounted volume.
 	FileSystemGroupId int `pulumi:"fileSystemGroupId"`
+	// The user id assigned to all container processes.
+	RunAsUser int `pulumi:"runAsUser"`
 }
 
 // GetWorkloadSecurityOptionInput is an input type that accepts GetWorkloadSecurityOptionArgs and GetWorkloadSecurityOptionOutput values.
@@ -57000,6 +58643,8 @@ type GetWorkloadSecurityOptionInput interface {
 type GetWorkloadSecurityOptionArgs struct {
 	// The group id assigned to any mounted volume.
 	FileSystemGroupId pulumi.IntInput `pulumi:"fileSystemGroupId"`
+	// The user id assigned to all container processes.
+	RunAsUser pulumi.IntInput `pulumi:"runAsUser"`
 }
 
 func (GetWorkloadSecurityOptionArgs) ElementType() reflect.Type {
@@ -57056,6 +58701,11 @@ func (o GetWorkloadSecurityOptionOutput) ToGetWorkloadSecurityOptionOutputWithCo
 // The group id assigned to any mounted volume.
 func (o GetWorkloadSecurityOptionOutput) FileSystemGroupId() pulumi.IntOutput {
 	return o.ApplyT(func(v GetWorkloadSecurityOption) int { return v.FileSystemGroupId }).(pulumi.IntOutput)
+}
+
+// The user id assigned to all container processes.
+func (o GetWorkloadSecurityOptionOutput) RunAsUser() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadSecurityOption) int { return v.RunAsUser }).(pulumi.IntOutput)
 }
 
 type GetWorkloadSecurityOptionArrayOutput struct{ *pulumi.OutputState }
@@ -57189,6 +58839,8 @@ type GetWorkloadStatus struct {
 	ReplicaInternalNames []string `pulumi:"replicaInternalNames"`
 	// Resolved images for workloads with dynamic tags enabled.
 	ResolvedImages []GetWorkloadStatusResolvedImage `pulumi:"resolvedImages"`
+	// Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `suspended`.
+	SuspendedStatus string `pulumi:"suspendedStatus"`
 }
 
 // GetWorkloadStatusInput is an input type that accepts GetWorkloadStatusArgs and GetWorkloadStatusOutput values.
@@ -57219,6 +58871,8 @@ type GetWorkloadStatusArgs struct {
 	ReplicaInternalNames pulumi.StringArrayInput `pulumi:"replicaInternalNames"`
 	// Resolved images for workloads with dynamic tags enabled.
 	ResolvedImages GetWorkloadStatusResolvedImageArrayInput `pulumi:"resolvedImages"`
+	// Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `suspended`.
+	SuspendedStatus pulumi.StringInput `pulumi:"suspendedStatus"`
 }
 
 func (GetWorkloadStatusArgs) ElementType() reflect.Type {
@@ -57313,6 +58967,11 @@ func (o GetWorkloadStatusOutput) ReplicaInternalNames() pulumi.StringArrayOutput
 // Resolved images for workloads with dynamic tags enabled.
 func (o GetWorkloadStatusOutput) ResolvedImages() GetWorkloadStatusResolvedImageArrayOutput {
 	return o.ApplyT(func(v GetWorkloadStatus) []GetWorkloadStatusResolvedImage { return v.ResolvedImages }).(GetWorkloadStatusResolvedImageArrayOutput)
+}
+
+// Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `suspended`.
+func (o GetWorkloadStatusOutput) SuspendedStatus() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadStatus) string { return v.SuspendedStatus }).(pulumi.StringOutput)
 }
 
 type GetWorkloadStatusArrayOutput struct{ *pulumi.OutputState }
@@ -57953,6 +59612,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CloudAccountGcpPtrInput)(nil)).Elem(), CloudAccountGcpArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CloudAccountNgsInput)(nil)).Elem(), CloudAccountNgsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CloudAccountNgsPtrInput)(nil)).Elem(), CloudAccountNgsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CloudAccountStatusInput)(nil)).Elem(), CloudAccountStatusArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CloudAccountStatusArrayInput)(nil)).Elem(), CloudAccountStatusArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CustomLocationGeoInput)(nil)).Elem(), CustomLocationGeoArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CustomLocationGeoArrayInput)(nil)).Elem(), CustomLocationGeoArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainRouteHeadersInput)(nil)).Elem(), DomainRouteHeadersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainRouteHeadersPtrInput)(nil)).Elem(), DomainRouteHeadersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainRouteHeadersRequestInput)(nil)).Elem(), DomainRouteHeadersRequestArgs{})
@@ -58011,6 +59674,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcLoadBalancerRedirectPtrInput)(nil)).Elem(), GvcLoadBalancerRedirectArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcLoadBalancerRedirectClassInput)(nil)).Elem(), GvcLoadBalancerRedirectClassArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcLoadBalancerRedirectClassPtrInput)(nil)).Elem(), GvcLoadBalancerRedirectClassArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GvcLocationOptionInput)(nil)).Elem(), GvcLocationOptionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GvcLocationOptionArrayInput)(nil)).Elem(), GvcLocationOptionArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcOtelTracingInput)(nil)).Elem(), GvcOtelTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcOtelTracingPtrInput)(nil)).Elem(), GvcOtelTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcSidecarInput)(nil)).Elem(), GvcSidecarArgs{})
@@ -58071,6 +59736,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigActuatorInput)(nil)).Elem(), Mk8sAddOnsByokConfigActuatorArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigActuatorPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigActuatorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigByokInput)(nil)).Elem(), Mk8sAddOnsByokConfigByokArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigByokPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigByokArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigCommonInput)(nil)).Elem(), Mk8sAddOnsByokConfigCommonArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigCommonPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigCommonArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigCommonPdbInput)(nil)).Elem(), Mk8sAddOnsByokConfigCommonPdbArgs{})
@@ -58087,6 +59754,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigIstioIstiodPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigIstioIstiodArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigIstioSidecarInput)(nil)).Elem(), Mk8sAddOnsByokConfigIstioSidecarArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigIstioSidecarPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigIstioSidecarArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigJuicefsInput)(nil)).Elem(), Mk8sAddOnsByokConfigJuicefsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigJuicefsPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigJuicefsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigLogSplitterInput)(nil)).Elem(), Mk8sAddOnsByokConfigLogSplitterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigLogSplitterPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigLogSplitterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigLonghornInput)(nil)).Elem(), Mk8sAddOnsByokConfigLonghornArgs{})
@@ -58101,6 +59770,12 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringPrometheusPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigMonitoringPrometheusArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringPrometheusMainInput)(nil)).Elem(), Mk8sAddOnsByokConfigMonitoringPrometheusMainArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigMonitoringPrometheusMainArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringRemoteWriteInput)(nil)).Elem(), Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayInput)(nil)).Elem(), Mk8sAddOnsByokConfigMonitoringRemoteWriteArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationInput)(nil)).Elem(), Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthInput)(nil)).Elem(), Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigRedisInput)(nil)).Elem(), Mk8sAddOnsByokConfigRedisArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigRedisPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigRedisArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigRedisHaInput)(nil)).Elem(), Mk8sAddOnsByokConfigRedisHaArgs{})
@@ -58527,6 +60202,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLoadBalancerRedirectPtrInput)(nil)).Elem(), GetGvcLoadBalancerRedirectArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLoadBalancerRedirectClassInput)(nil)).Elem(), GetGvcLoadBalancerRedirectClassArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLoadBalancerRedirectClassPtrInput)(nil)).Elem(), GetGvcLoadBalancerRedirectClassArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLocationOptionInput)(nil)).Elem(), GetGvcLocationOptionArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLocationOptionArrayInput)(nil)).Elem(), GetGvcLocationOptionArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcOtelTracingInput)(nil)).Elem(), GetGvcOtelTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcOtelTracingPtrInput)(nil)).Elem(), GetGvcOtelTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcSidecarInput)(nil)).Elem(), GetGvcSidecarArgs{})
@@ -58723,6 +60400,10 @@ func init() {
 	pulumi.RegisterOutputType(CloudAccountGcpPtrOutput{})
 	pulumi.RegisterOutputType(CloudAccountNgsOutput{})
 	pulumi.RegisterOutputType(CloudAccountNgsPtrOutput{})
+	pulumi.RegisterOutputType(CloudAccountStatusOutput{})
+	pulumi.RegisterOutputType(CloudAccountStatusArrayOutput{})
+	pulumi.RegisterOutputType(CustomLocationGeoOutput{})
+	pulumi.RegisterOutputType(CustomLocationGeoArrayOutput{})
 	pulumi.RegisterOutputType(DomainRouteHeadersOutput{})
 	pulumi.RegisterOutputType(DomainRouteHeadersPtrOutput{})
 	pulumi.RegisterOutputType(DomainRouteHeadersRequestOutput{})
@@ -58781,6 +60462,8 @@ func init() {
 	pulumi.RegisterOutputType(GvcLoadBalancerRedirectPtrOutput{})
 	pulumi.RegisterOutputType(GvcLoadBalancerRedirectClassOutput{})
 	pulumi.RegisterOutputType(GvcLoadBalancerRedirectClassPtrOutput{})
+	pulumi.RegisterOutputType(GvcLocationOptionOutput{})
+	pulumi.RegisterOutputType(GvcLocationOptionArrayOutput{})
 	pulumi.RegisterOutputType(GvcOtelTracingOutput{})
 	pulumi.RegisterOutputType(GvcOtelTracingPtrOutput{})
 	pulumi.RegisterOutputType(GvcSidecarOutput{})
@@ -58841,6 +60524,8 @@ func init() {
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigActuatorOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigActuatorPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigByokOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigByokPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigCommonOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigCommonPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigCommonPdbOutput{})
@@ -58857,6 +60542,8 @@ func init() {
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigIstioIstiodPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigIstioSidecarOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigIstioSidecarPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigJuicefsOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigJuicefsPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigLogSplitterOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigLogSplitterPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigLonghornOutput{})
@@ -58871,6 +60558,12 @@ func init() {
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMonitoringPrometheusPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMonitoringPrometheusMainOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMonitoringRemoteWriteArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigRedisOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigRedisPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigRedisHaOutput{})
@@ -59297,6 +60990,8 @@ func init() {
 	pulumi.RegisterOutputType(GetGvcLoadBalancerRedirectPtrOutput{})
 	pulumi.RegisterOutputType(GetGvcLoadBalancerRedirectClassOutput{})
 	pulumi.RegisterOutputType(GetGvcLoadBalancerRedirectClassPtrOutput{})
+	pulumi.RegisterOutputType(GetGvcLocationOptionOutput{})
+	pulumi.RegisterOutputType(GetGvcLocationOptionArrayOutput{})
 	pulumi.RegisterOutputType(GetGvcOtelTracingOutput{})
 	pulumi.RegisterOutputType(GetGvcOtelTracingPtrOutput{})
 	pulumi.RegisterOutputType(GetGvcSidecarOutput{})

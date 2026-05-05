@@ -22,7 +22,10 @@ type CustomLocation struct {
 	// Description of the Custom Location.
 	Description pulumi.StringOutput `pulumi:"description"`
 	// Indication if the custom location is enabled.
-	Enabled pulumi.BoolOutput `pulumi:"enabled"`
+	Enabled pulumi.BoolOutput            `pulumi:"enabled"`
+	Geos    CustomLocationGeoArrayOutput `pulumi:"geos"`
+	// A list of IP ranges of the location.
+	IpRanges pulumi.StringArrayOutput `pulumi:"ipRanges"`
 	// Name of the Custom Location.
 	Name   pulumi.StringOutput `pulumi:"name"`
 	Origin pulumi.StringOutput `pulumi:"origin"`
@@ -77,7 +80,10 @@ type customLocationState struct {
 	// Description of the Custom Location.
 	Description *string `pulumi:"description"`
 	// Indication if the custom location is enabled.
-	Enabled *bool `pulumi:"enabled"`
+	Enabled *bool               `pulumi:"enabled"`
+	Geos    []CustomLocationGeo `pulumi:"geos"`
+	// A list of IP ranges of the location.
+	IpRanges []string `pulumi:"ipRanges"`
 	// Name of the Custom Location.
 	Name   *string `pulumi:"name"`
 	Origin *string `pulumi:"origin"`
@@ -98,6 +104,9 @@ type CustomLocationState struct {
 	Description pulumi.StringPtrInput
 	// Indication if the custom location is enabled.
 	Enabled pulumi.BoolPtrInput
+	Geos    CustomLocationGeoArrayInput
+	// A list of IP ranges of the location.
+	IpRanges pulumi.StringArrayInput
 	// Name of the Custom Location.
 	Name   pulumi.StringPtrInput
 	Origin pulumi.StringPtrInput
@@ -245,6 +254,15 @@ func (o CustomLocationOutput) Description() pulumi.StringOutput {
 // Indication if the custom location is enabled.
 func (o CustomLocationOutput) Enabled() pulumi.BoolOutput {
 	return o.ApplyT(func(v *CustomLocation) pulumi.BoolOutput { return v.Enabled }).(pulumi.BoolOutput)
+}
+
+func (o CustomLocationOutput) Geos() CustomLocationGeoArrayOutput {
+	return o.ApplyT(func(v *CustomLocation) CustomLocationGeoArrayOutput { return v.Geos }).(CustomLocationGeoArrayOutput)
+}
+
+// A list of IP ranges of the location.
+func (o CustomLocationOutput) IpRanges() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *CustomLocation) pulumi.StringArrayOutput { return v.IpRanges }).(pulumi.StringArrayOutput)
 }
 
 // Name of the Custom Location.

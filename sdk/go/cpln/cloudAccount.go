@@ -34,6 +34,8 @@ type CloudAccount struct {
 	Ngs CloudAccountNgsPtrOutput `pulumi:"ngs"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
+	// Status of the Cloud Account.
+	Statuses CloudAccountStatusArrayOutput `pulumi:"statuses"`
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapOutput `pulumi:"tags"`
 }
@@ -88,6 +90,8 @@ type cloudAccountState struct {
 	Ngs *CloudAccountNgs `pulumi:"ngs"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink *string `pulumi:"selfLink"`
+	// Status of the Cloud Account.
+	Statuses []CloudAccountStatus `pulumi:"statuses"`
 	// Key-value map of resource tags.
 	Tags map[string]string `pulumi:"tags"`
 }
@@ -113,6 +117,8 @@ type CloudAccountState struct {
 	Ngs CloudAccountNgsPtrInput
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringPtrInput
+	// Status of the Cloud Account.
+	Statuses CloudAccountStatusArrayInput
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapInput
 }
@@ -291,6 +297,11 @@ func (o CloudAccountOutput) Ngs() CloudAccountNgsPtrOutput {
 // Full link to this resource. Can be referenced by other resources.
 func (o CloudAccountOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *CloudAccount) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
+}
+
+// Status of the Cloud Account.
+func (o CloudAccountOutput) Statuses() CloudAccountStatusArrayOutput {
+	return o.ApplyT(func(v *CloudAccount) CloudAccountStatusArrayOutput { return v.Statuses }).(CloudAccountStatusArrayOutput)
 }
 
 // Key-value map of resource tags.

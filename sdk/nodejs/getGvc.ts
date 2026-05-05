@@ -29,6 +29,7 @@ import * as utilities from "./utilities";
  * - **lightstep_tracing** (Block List, Max: 1) (see below).
  * - **otel_tracing** (Block List, Max: 1) (see below).
  * - **controlplane_tracing** (Block List, Max: 1) (see below).
+ * - **location_options** (Block Set) (see below).
  * - **load_balancer** (Block List, Max: 1) (see below).
  *
  * <a id="nestedblock--lightstep_tracing"></a>
@@ -53,6 +54,15 @@ import * as utilities from "./utilities";
  *
  * - **sampling** (Int) Determines what percentage of requests should be traced.
  * - **custom_tags** (Map of String) Key-value map of custom tags.
+ *
+ * <a id="nestedblock--location_options"></a>
+ *
+ * ### `locationOptions`
+ *
+ * - **name** (String) Name of the location these options apply to.
+ * - **routing_tier** (Int) Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routingTier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+ * - **latency_offset_ms** (Int) Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+ * - **latency_tolerance_ms** (Int) Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
  *
  * <a id="nestedblock--load_balancer"></a>
  *
@@ -85,6 +95,7 @@ export function getGvc(args: GetGvcArgs, opts?: pulumi.InvokeOptions): Promise<G
         "keda": args.keda,
         "lightstepTracing": args.lightstepTracing,
         "loadBalancer": args.loadBalancer,
+        "locationOptions": args.locationOptions,
         "locations": args.locations,
         "name": args.name,
         "otelTracing": args.otelTracing,
@@ -108,6 +119,7 @@ export interface GetGvcArgs {
     keda?: inputs.GetGvcKeda;
     lightstepTracing?: inputs.GetGvcLightstepTracing;
     loadBalancer?: inputs.GetGvcLoadBalancer;
+    locationOptions?: inputs.GetGvcLocationOption[];
     locations?: string[];
     name: string;
     otelTracing?: inputs.GetGvcOtelTracing;
@@ -134,6 +146,7 @@ export interface GetGvcResult {
     readonly keda?: outputs.GetGvcKeda;
     readonly lightstepTracing?: outputs.GetGvcLightstepTracing;
     readonly loadBalancer?: outputs.GetGvcLoadBalancer;
+    readonly locationOptions?: outputs.GetGvcLocationOption[];
     readonly locations?: string[];
     readonly name: string;
     readonly otelTracing?: outputs.GetGvcOtelTracing;
@@ -165,6 +178,7 @@ export interface GetGvcResult {
  * - **lightstep_tracing** (Block List, Max: 1) (see below).
  * - **otel_tracing** (Block List, Max: 1) (see below).
  * - **controlplane_tracing** (Block List, Max: 1) (see below).
+ * - **location_options** (Block Set) (see below).
  * - **load_balancer** (Block List, Max: 1) (see below).
  *
  * <a id="nestedblock--lightstep_tracing"></a>
@@ -189,6 +203,15 @@ export interface GetGvcResult {
  *
  * - **sampling** (Int) Determines what percentage of requests should be traced.
  * - **custom_tags** (Map of String) Key-value map of custom tags.
+ *
+ * <a id="nestedblock--location_options"></a>
+ *
+ * ### `locationOptions`
+ *
+ * - **name** (String) Name of the location these options apply to.
+ * - **routing_tier** (Int) Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routingTier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+ * - **latency_offset_ms** (Int) Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+ * - **latency_tolerance_ms** (Int) Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
  *
  * <a id="nestedblock--load_balancer"></a>
  *
@@ -221,6 +244,7 @@ export function getGvcOutput(args: GetGvcOutputArgs, opts?: pulumi.InvokeOutputO
         "keda": args.keda,
         "lightstepTracing": args.lightstepTracing,
         "loadBalancer": args.loadBalancer,
+        "locationOptions": args.locationOptions,
         "locations": args.locations,
         "name": args.name,
         "otelTracing": args.otelTracing,
@@ -244,6 +268,7 @@ export interface GetGvcOutputArgs {
     keda?: pulumi.Input<inputs.GetGvcKedaArgs>;
     lightstepTracing?: pulumi.Input<inputs.GetGvcLightstepTracingArgs>;
     loadBalancer?: pulumi.Input<inputs.GetGvcLoadBalancerArgs>;
+    locationOptions?: pulumi.Input<pulumi.Input<inputs.GetGvcLocationOptionArgs>[]>;
     locations?: pulumi.Input<pulumi.Input<string>[]>;
     name: pulumi.Input<string>;
     otelTracing?: pulumi.Input<inputs.GetGvcOtelTracingArgs>;

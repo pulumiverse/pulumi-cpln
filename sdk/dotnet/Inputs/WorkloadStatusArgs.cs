@@ -83,6 +83,12 @@ namespace Pulumiverse.Cpln.Inputs
             set => _resolvedImages = value;
         }
 
+        /// <summary>
+        /// Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `Suspended`.
+        /// </summary>
+        [Input("suspendedStatus")]
+        public Input<string>? SuspendedStatus { get; set; }
+
         public WorkloadStatusArgs()
         {
         }

@@ -24,7 +24,7 @@ type Group struct {
 	MemberQuery GroupMemberQueryPtrOutput `pulumi:"memberQuery"`
 	// Name of the Group.
 	Name pulumi.StringOutput `pulumi:"name"`
-	// Origin of the service account. Either `builtin` or `default`.
+	// Origin of the Group. Valid values: `default`, `builtin`, `synthetic`.
 	Origin pulumi.StringOutput `pulumi:"origin"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
@@ -76,7 +76,7 @@ type groupState struct {
 	MemberQuery *GroupMemberQuery `pulumi:"memberQuery"`
 	// Name of the Group.
 	Name *string `pulumi:"name"`
-	// Origin of the service account. Either `builtin` or `default`.
+	// Origin of the Group. Valid values: `default`, `builtin`, `synthetic`.
 	Origin *string `pulumi:"origin"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink *string `pulumi:"selfLink"`
@@ -99,7 +99,7 @@ type GroupState struct {
 	MemberQuery GroupMemberQueryPtrInput
 	// Name of the Group.
 	Name pulumi.StringPtrInput
-	// Origin of the service account. Either `builtin` or `default`.
+	// Origin of the Group. Valid values: `default`, `builtin`, `synthetic`.
 	Origin pulumi.StringPtrInput
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringPtrInput
@@ -262,7 +262,7 @@ func (o GroupOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Group) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
-// Origin of the service account. Either `builtin` or `default`.
+// Origin of the Group. Valid values: `default`, `builtin`, `synthetic`.
 func (o GroupOutput) Origin() pulumi.StringOutput {
 	return o.ApplyT(func(v *Group) pulumi.StringOutput { return v.Origin }).(pulumi.StringOutput)
 }

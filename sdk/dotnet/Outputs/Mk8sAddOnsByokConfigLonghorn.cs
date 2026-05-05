@@ -15,13 +15,28 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class Mk8sAddOnsByokConfigLonghorn
     {
         /// <summary>
+        /// Mark Longhorn as the default storage class.
+        /// </summary>
+        public readonly bool? IsDefault;
+        /// <summary>
+        /// Replica factor for Longhorn volumes. Minimum: 1.
+        /// </summary>
+        public readonly int? NumberOfReplicas;
+        /// <summary>
         /// Replica factor for Longhorn volumes. Minimum: 1.
         /// </summary>
         public readonly int? Replicas;
 
         [OutputConstructor]
-        private Mk8sAddOnsByokConfigLonghorn(int? replicas)
+        private Mk8sAddOnsByokConfigLonghorn(
+            bool? isDefault,
+
+            int? numberOfReplicas,
+
+            int? replicas)
         {
+            IsDefault = isDefault;
+            NumberOfReplicas = numberOfReplicas;
             Replicas = replicas;
         }
     }

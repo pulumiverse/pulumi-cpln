@@ -48,6 +48,48 @@ export interface CloudAccountNgs {
     secretLink?: string;
 }
 
+export interface CloudAccountStatus {
+    /**
+     * ISO-8601 timestamp of the last time the Cloud Account credentials were validated.
+     */
+    lastChecked: string;
+    /**
+     * The last error message reported when validating the Cloud Account credentials.
+     */
+    lastError: string;
+    /**
+     * Whether the Cloud Account credentials are valid and usable by Control Plane.
+     */
+    usable: boolean;
+}
+
+export interface CustomLocationGeo {
+    /**
+     * City of the location.
+     */
+    city: string;
+    /**
+     * Continent of the location.
+     */
+    continent: string;
+    /**
+     * Country of the location.
+     */
+    country: string;
+    /**
+     * Latitude of the location.
+     */
+    lat: number;
+    /**
+     * Longitude of the location.
+     */
+    lon: number;
+    /**
+     * State of the location.
+     */
+    state: string;
+}
+
 export interface DomainRouteHeaders {
     /**
      * Manipulates HTTP headers.
@@ -67,6 +109,10 @@ export interface DomainRouteMirror {
      * The percentage of traffic to mirror to the specified workload.
      */
     percent: number;
+    /**
+     * The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
+     */
+    port?: number;
     /**
      * The workload to mirror traffic to.
      */
@@ -224,6 +270,10 @@ export interface DomainSpecPortRouteMirror {
      * The percentage of traffic to mirror to the specified workload.
      */
     percent: number;
+    /**
+     * The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
+     */
+    port?: number;
     /**
      * The workload to mirror traffic to.
      */
@@ -413,6 +463,25 @@ export interface GetGvcLoadBalancerRedirectClass {
      * Specify the redirect url for any 500 level status code.
      */
     status5xx?: string;
+}
+
+export interface GetGvcLocationOption {
+    /**
+     * Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+     */
+    latencyOffsetMs: number;
+    /**
+     * Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+     */
+    latencyToleranceMs: number;
+    /**
+     * Name of the location these options apply to.
+     */
+    name: string;
+    /**
+     * Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routingTier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+     */
+    routingTier: number;
 }
 
 export interface GetGvcOtelTracing {
@@ -652,7 +721,7 @@ export interface GetLocationGeo {
 
 export interface GetLocationsLocation {
     /**
-     * Cloud Provider of the location.
+     * Cloud Provider of the location. Valid values: `aws`, `gcp`, `azure`, `byok`, `linode`, `vultr`, `equinix`, `oci`.
      */
     cloudProvider: string;
     /**
@@ -676,6 +745,9 @@ export interface GetLocationsLocation {
      * Name of the location.
      */
     name: string;
+    /**
+     * Origin of the location. Valid values: `builtin`, `default`, `custom`.
+     */
     origin: string;
     /**
      * Region of the location.
@@ -1724,6 +1796,10 @@ export interface GetWorkloadSecurityOption {
      * The group id assigned to any mounted volume.
      */
     fileSystemGroupId: number;
+    /**
+     * The user id assigned to all container processes.
+     */
+    runAsUser: number;
 }
 
 export interface GetWorkloadSidecar {
@@ -1761,6 +1837,10 @@ export interface GetWorkloadStatus {
      * Resolved images for workloads with dynamic tags enabled.
      */
     resolvedImages: outputs.GetWorkloadStatusResolvedImage[];
+    /**
+     * Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `suspended`.
+     */
+    suspendedStatus: string;
 }
 
 export interface GetWorkloadStatusHealthCheck {
@@ -1849,7 +1929,7 @@ export interface GroupIdentityMatcher {
      */
     expression: string;
     /**
-     * Language of the expression. Either `jmespath` or `javascript`. Default: `jmespath`.
+     * Language of the expression. Valid values: `jmespath`, `javascript`. Default: `jmespath`.
      */
     language: string;
 }
@@ -1981,6 +2061,25 @@ export interface GvcLoadBalancerRedirectClass {
      * Specify the redirect url for any 500 level status code.
      */
     status5xx?: string;
+}
+
+export interface GvcLocationOption {
+    /**
+     * Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+     */
+    latencyOffsetMs?: number;
+    /**
+     * Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+     */
+    latencyToleranceMs?: number;
+    /**
+     * Name of the location these options apply to.
+     */
+    name: string;
+    /**
+     * Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routingTier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+     */
+    routingTier?: number;
 }
 
 export interface GvcOtelTracing {
@@ -2349,6 +2448,10 @@ export interface Mk8sAddOnsByokConfig {
      */
     actuator?: outputs.Mk8sAddOnsByokConfigActuator;
     /**
+     * BYOK-wide settings.
+     */
+    byok?: outputs.Mk8sAddOnsByokConfigByok;
+    /**
      * Shared rollout settings for BYOK workloads.
      */
     common?: outputs.Mk8sAddOnsByokConfigCommon;
@@ -2364,6 +2467,10 @@ export interface Mk8sAddOnsByokConfig {
      * Istio service mesh configuration.
      */
     istio?: outputs.Mk8sAddOnsByokConfigIstio;
+    /**
+     * JuiceFS distributed file system add-on settings.
+     */
+    juicefs?: outputs.Mk8sAddOnsByokConfigJuicefs;
     /**
      * Log splitter deployment configuration.
      */
@@ -2423,6 +2530,13 @@ export interface Mk8sAddOnsByokConfigActuator {
      * Minimum memory request applied to actuator pods (e.g. "128Mi").
      */
     minMemory?: string;
+}
+
+export interface Mk8sAddOnsByokConfigByok {
+    /**
+     * When set, the BYOK installation does not provision any default storage classes.
+     */
+    noDefaultStorageClasses?: boolean;
 }
 
 export interface Mk8sAddOnsByokConfigCommon {
@@ -2545,6 +2659,13 @@ export interface Mk8sAddOnsByokConfigIstioSidecar {
     minMemory?: string;
 }
 
+export interface Mk8sAddOnsByokConfigJuicefs {
+    /**
+     * Whether to install JuiceFS on the BYOK cluster.
+     */
+    enabled?: boolean;
+}
+
 export interface Mk8sAddOnsByokConfigLogSplitter {
     /**
      * CPU limit applied to log splitter pods.
@@ -2574,6 +2695,14 @@ export interface Mk8sAddOnsByokConfigLogSplitter {
 
 export interface Mk8sAddOnsByokConfigLonghorn {
     /**
+     * Mark Longhorn as the default storage class.
+     */
+    isDefault?: boolean;
+    /**
+     * Replica factor for Longhorn volumes. Minimum: 1.
+     */
+    numberOfReplicas?: number;
+    /**
      * Replica factor for Longhorn volumes. Minimum: 1.
      */
     replicas?: number;
@@ -2588,9 +2717,21 @@ export interface Mk8sAddOnsByokConfigMiddlebox {
      * Whether to deploy the middlebox component.
      */
     enabled?: boolean;
+    /**
+     * IPv4 address bound by the middlebox component.
+     */
+    ip?: string;
+    /**
+     * Listening port for the middlebox component.
+     */
+    port?: number;
 }
 
 export interface Mk8sAddOnsByokConfigMonitoring {
+    /**
+     * Static labels appended to every metric scraped by the BYOK Prometheus stack.
+     */
+    externalLabels?: {[key: string]: string};
     /**
      * Kube-state-metrics resource overrides.
      */
@@ -2607,6 +2748,10 @@ export interface Mk8sAddOnsByokConfigMonitoring {
      * Prometheus deployment configuration.
      */
     prometheus?: outputs.Mk8sAddOnsByokConfigMonitoringPrometheus;
+    /**
+     * Prometheus remoteWrite client configurations. Order is preserved as written.
+     */
+    remoteWrites?: outputs.Mk8sAddOnsByokConfigMonitoringRemoteWrite[];
 }
 
 export interface Mk8sAddOnsByokConfigMonitoringKubeStateMetrics {
@@ -2628,6 +2773,131 @@ export interface Mk8sAddOnsByokConfigMonitoringPrometheusMain {
      * Persistent volume size for Prometheus (for example, "50Gi").
      */
     storage?: string;
+}
+
+export interface Mk8sAddOnsByokConfigMonitoringRemoteWrite {
+    /**
+     * HTTP Authorization header credentials.
+     */
+    authorization?: outputs.Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization;
+    /**
+     * Azure AD authentication parameters as flat key-value pairs.
+     */
+    azuread?: {[key: string]: string};
+    /**
+     * HTTP basic authentication credentials.
+     */
+    basicAuth?: outputs.Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth;
+    /**
+     * Whether to enable HTTP/2.
+     */
+    enableHttp2?: boolean;
+    /**
+     * Whether the HTTP client follows redirects.
+     */
+    followRedirects?: boolean;
+    /**
+     * Google Cloud IAM authentication parameters as flat key-value pairs.
+     */
+    googleIam?: {[key: string]: string};
+    /**
+     * Custom request headers attached to every remoteWrite call.
+     */
+    headers?: {[key: string]: string};
+    /**
+     * Custom HTTP headers, as flat key-value pairs.
+     */
+    httpHeaders?: {[key: string]: string};
+    /**
+     * Friendly name used in metrics for this client.
+     */
+    name?: string;
+    /**
+     * Comma-separated list of hosts that bypass the proxy.
+     */
+    noProxy?: string;
+    /**
+     * OAuth 2.0 client configuration as flat key-value pairs.
+     */
+    oauth2?: {[key: string]: string};
+    /**
+     * Headers sent to the proxy on CONNECT, as flat key-value pairs.
+     */
+    proxyConnectHeader?: {[key: string]: string};
+    /**
+     * Whether to read proxy settings from environment variables.
+     */
+    proxyFromEnvironment?: boolean;
+    /**
+     * HTTP proxy URL used for outbound requests.
+     */
+    proxyUrl?: string;
+    /**
+     * Tuning parameters for the in-memory remoteWrite queue, as flat key-value pairs.
+     */
+    queueConfig?: {[key: string]: string};
+    /**
+     * Per-request timeout (for example, "30s").
+     */
+    remoteTimeout?: string;
+    /**
+     * Whether to forward Prometheus exemplars.
+     */
+    sendExemplars?: boolean;
+    /**
+     * Whether to forward Prometheus native histograms.
+     */
+    sendNativeHistograms?: boolean;
+    /**
+     * AWS SigV4 authentication parameters as flat key-value pairs.
+     */
+    sigv4?: {[key: string]: string};
+    /**
+     * TLS configuration as flat key-value pairs.
+     */
+    tlsConfig?: {[key: string]: string};
+    /**
+     * Endpoint that receives the remoteWrite payload.
+     */
+    url?: string;
+    /**
+     * Relabel rules applied to samples before they are sent.
+     */
+    writeRelabelConfigs?: {[key: string]: string}[];
+}
+
+export interface Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization {
+    /**
+     * Authorization credentials.
+     */
+    credentials?: string;
+    /**
+     * Path to a file containing the credentials.
+     */
+    credentialsFile?: string;
+    /**
+     * Authorization scheme (for example, "Bearer").
+     */
+    type?: string;
+}
+
+export interface Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth {
+    /**
+     * Password for HTTP basic authentication.
+     */
+    password?: string;
+    /**
+     * Path to a file containing the password.
+     */
+    passwordFile?: string;
+    /**
+     * Username for HTTP basic authentication.
+     */
+    username?: string;
+    /**
+     * Path to a file containing the username.
+     */
+    usernameFile?: string;
 }
 
 export interface Mk8sAddOnsByokConfigRedis {
@@ -5387,6 +5657,10 @@ export interface WorkloadSecurityOptions {
      * The group id assigned to any mounted volume.
      */
     fileSystemGroupId?: number;
+    /**
+     * The user id assigned to all container processes.
+     */
+    runAsUser?: number;
 }
 
 export interface WorkloadSidecar {
@@ -5424,6 +5698,10 @@ export interface WorkloadStatus {
      * Resolved images for workloads with dynamic tags enabled.
      */
     resolvedImages: outputs.WorkloadStatusResolvedImage[];
+    /**
+     * Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `suspended`.
+     */
+    suspendedStatus: string;
 }
 
 export interface WorkloadStatusHealthCheck {

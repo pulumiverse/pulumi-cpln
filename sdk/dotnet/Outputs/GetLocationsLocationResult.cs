@@ -15,7 +15,7 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class GetLocationsLocationResult
     {
         /// <summary>
-        /// Cloud Provider of the location.
+        /// Cloud Provider of the location. Valid values: `Aws`, `Gcp`, `Azure`, `Byok`, `Linode`, `Vultr`, `Equinix`, `Oci`.
         /// </summary>
         public readonly string CloudProvider;
         /// <summary>
@@ -39,6 +39,9 @@ namespace Pulumiverse.Cpln.Outputs
         /// Name of the location.
         /// </summary>
         public readonly string Name;
+        /// <summary>
+        /// Origin of the location. Valid values: `Builtin`, `Default`, `Custom`.
+        /// </summary>
         public readonly string Origin;
         /// <summary>
         /// Region of the location.

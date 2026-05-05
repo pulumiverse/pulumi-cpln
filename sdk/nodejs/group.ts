@@ -55,7 +55,7 @@ export class Group extends pulumi.CustomResource {
      */
     declare public readonly name: pulumi.Output<string>;
     /**
-     * Origin of the service account. Either `builtin` or `default`.
+     * Origin of the Group. Valid values: `default`, `builtin`, `synthetic`.
      */
     declare public /*out*/ readonly origin: pulumi.Output<string>;
     /**
@@ -141,7 +141,7 @@ export interface GroupState {
      */
     name?: pulumi.Input<string>;
     /**
-     * Origin of the service account. Either `builtin` or `default`.
+     * Origin of the Group. Valid values: `default`, `builtin`, `synthetic`.
      */
     origin?: pulumi.Input<string>;
     /**

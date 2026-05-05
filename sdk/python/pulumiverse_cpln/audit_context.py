@@ -86,6 +86,7 @@ class _AuditContextState:
         :param pulumi.Input[_builtins.str] cpln_id: The ID, in GUID format, of the Audit Context.
         :param pulumi.Input[_builtins.str] description: Description of the Audit Context.
         :param pulumi.Input[_builtins.str] name: Name of the Audit Context.
+        :param pulumi.Input[_builtins.str] origin: Origin of the Audit Context. Valid values: `default` (user-created), `builtin` (system-reserved).
         :param pulumi.Input[_builtins.str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
         """
@@ -141,6 +142,9 @@ class _AuditContextState:
     @_builtins.property
     @pulumi.getter
     def origin(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Origin of the Audit Context. Valid values: `default` (user-created), `builtin` (system-reserved).
+        """
         return pulumi.get(self, "origin")
 
     @origin.setter
@@ -257,6 +261,7 @@ class AuditContext(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] cpln_id: The ID, in GUID format, of the Audit Context.
         :param pulumi.Input[_builtins.str] description: Description of the Audit Context.
         :param pulumi.Input[_builtins.str] name: Name of the Audit Context.
+        :param pulumi.Input[_builtins.str] origin: Origin of the Audit Context. Valid values: `default` (user-created), `builtin` (system-reserved).
         :param pulumi.Input[_builtins.str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
         """
@@ -299,6 +304,9 @@ class AuditContext(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter
     def origin(self) -> pulumi.Output[_builtins.str]:
+        """
+        Origin of the Audit Context. Valid values: `default` (user-created), `builtin` (system-reserved).
+        """
         return pulumi.get(self, "origin")
 
     @_builtins.property

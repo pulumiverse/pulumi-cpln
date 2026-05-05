@@ -75,6 +75,10 @@ export class CloudAccount extends pulumi.CustomResource {
      */
     declare public /*out*/ readonly selfLink: pulumi.Output<string>;
     /**
+     * Status of the Cloud Account.
+     */
+    declare public /*out*/ readonly statuses: pulumi.Output<outputs.CloudAccountStatus[]>;
+    /**
      * Key-value map of resource tags.
      */
     declare public readonly tags: pulumi.Output<{[key: string]: string}>;
@@ -102,6 +106,7 @@ export class CloudAccount extends pulumi.CustomResource {
             resourceInputs["name"] = state?.name;
             resourceInputs["ngs"] = state?.ngs;
             resourceInputs["selfLink"] = state?.selfLink;
+            resourceInputs["statuses"] = state?.statuses;
             resourceInputs["tags"] = state?.tags;
         } else {
             const args = argsOrState as CloudAccountArgs | undefined;
@@ -116,6 +121,7 @@ export class CloudAccount extends pulumi.CustomResource {
             resourceInputs["gcpRoles"] = undefined /*out*/;
             resourceInputs["gcpServiceAccountName"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
+            resourceInputs["statuses"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(CloudAccount.__pulumiType, name, resourceInputs, opts);
@@ -166,6 +172,10 @@ export interface CloudAccountState {
      * Full link to this resource. Can be referenced by other resources.
      */
     selfLink?: pulumi.Input<string>;
+    /**
+     * Status of the Cloud Account.
+     */
+    statuses?: pulumi.Input<pulumi.Input<inputs.CloudAccountStatus>[]>;
     /**
      * Key-value map of resource tags.
      */

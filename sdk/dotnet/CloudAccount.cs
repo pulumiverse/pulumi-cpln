@@ -74,6 +74,12 @@ namespace Pulumiverse.Cpln
         public Output<string> SelfLink { get; private set; } = null!;
 
         /// <summary>
+        /// Status of the Cloud Account.
+        /// </summary>
+        [Output("statuses")]
+        public Output<ImmutableArray<Outputs.CloudAccountStatus>> Statuses { get; private set; } = null!;
+
+        /// <summary>
         /// Key-value map of resource tags.
         /// </summary>
         [Output("tags")]
@@ -259,6 +265,18 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Input("selfLink")]
         public Input<string>? SelfLink { get; set; }
+
+        [Input("statuses")]
+        private InputList<Inputs.CloudAccountStatusGetArgs>? _statuses;
+
+        /// <summary>
+        /// Status of the Cloud Account.
+        /// </summary>
+        public InputList<Inputs.CloudAccountStatusGetArgs> Statuses
+        {
+            get => _statuses ?? (_statuses = new InputList<Inputs.CloudAccountStatusGetArgs>());
+            set => _statuses = value;
+        }
 
         [Input("tags")]
         private InputMap<string>? _tags;
