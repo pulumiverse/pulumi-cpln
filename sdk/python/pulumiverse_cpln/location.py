@@ -89,12 +89,13 @@ class _LocationState:
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None):
         """
         Input properties used for looking up and filtering Location resources.
-        :param pulumi.Input[_builtins.str] cloud_provider: Cloud Provider of the location.
+        :param pulumi.Input[_builtins.str] cloud_provider: Cloud Provider of the location. Valid values: `aws`, `gcp`, `azure`, `byok`, `linode`, `vultr`, `equinix`, `oci`.
         :param pulumi.Input[_builtins.str] cpln_id: The ID, in GUID format, of the location.
         :param pulumi.Input[_builtins.str] description: Description of the location.
         :param pulumi.Input[_builtins.bool] enabled: Indication if location is enabled.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ip_ranges: A list of IP ranges of the location.
         :param pulumi.Input[_builtins.str] name: Name of the location.
+        :param pulumi.Input[_builtins.str] origin: Origin of the location. Valid values: `builtin`, `default`, `custom`.
         :param pulumi.Input[_builtins.str] region: Region of the location.
         :param pulumi.Input[_builtins.str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
@@ -126,7 +127,7 @@ class _LocationState:
     @pulumi.getter(name="cloudProvider")
     def cloud_provider(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Cloud Provider of the location.
+        Cloud Provider of the location. Valid values: `aws`, `gcp`, `azure`, `byok`, `linode`, `vultr`, `equinix`, `oci`.
         """
         return pulumi.get(self, "cloud_provider")
 
@@ -206,6 +207,9 @@ class _LocationState:
     @_builtins.property
     @pulumi.getter
     def origin(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Origin of the location. Valid values: `builtin`, `default`, `custom`.
+        """
         return pulumi.get(self, "origin")
 
     @origin.setter
@@ -343,12 +347,13 @@ class Location(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[_builtins.str] cloud_provider: Cloud Provider of the location.
+        :param pulumi.Input[_builtins.str] cloud_provider: Cloud Provider of the location. Valid values: `aws`, `gcp`, `azure`, `byok`, `linode`, `vultr`, `equinix`, `oci`.
         :param pulumi.Input[_builtins.str] cpln_id: The ID, in GUID format, of the location.
         :param pulumi.Input[_builtins.str] description: Description of the location.
         :param pulumi.Input[_builtins.bool] enabled: Indication if location is enabled.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ip_ranges: A list of IP ranges of the location.
         :param pulumi.Input[_builtins.str] name: Name of the location.
+        :param pulumi.Input[_builtins.str] origin: Origin of the location. Valid values: `builtin`, `default`, `custom`.
         :param pulumi.Input[_builtins.str] region: Region of the location.
         :param pulumi.Input[_builtins.str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
@@ -374,7 +379,7 @@ class Location(pulumi.CustomResource):
     @pulumi.getter(name="cloudProvider")
     def cloud_provider(self) -> pulumi.Output[_builtins.str]:
         """
-        Cloud Provider of the location.
+        Cloud Provider of the location. Valid values: `aws`, `gcp`, `azure`, `byok`, `linode`, `vultr`, `equinix`, `oci`.
         """
         return pulumi.get(self, "cloud_provider")
 
@@ -426,6 +431,9 @@ class Location(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter
     def origin(self) -> pulumi.Output[_builtins.str]:
+        """
+        Origin of the location. Valid values: `builtin`, `default`, `custom`.
+        """
         return pulumi.get(self, "origin")
 
     @_builtins.property

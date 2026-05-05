@@ -15,7 +15,7 @@ import (
 type Location struct {
 	pulumi.CustomResourceState
 
-	// Cloud Provider of the location.
+	// Cloud Provider of the location. Valid values: `aws`, `gcp`, `azure`, `byok`, `linode`, `vultr`, `equinix`, `oci`.
 	CloudProvider pulumi.StringOutput `pulumi:"cloudProvider"`
 	// The ID, in GUID format, of the location.
 	CplnId pulumi.StringOutput `pulumi:"cplnId"`
@@ -27,7 +27,8 @@ type Location struct {
 	// A list of IP ranges of the location.
 	IpRanges pulumi.StringArrayOutput `pulumi:"ipRanges"`
 	// Name of the location.
-	Name   pulumi.StringOutput `pulumi:"name"`
+	Name pulumi.StringOutput `pulumi:"name"`
+	// Origin of the location. Valid values: `builtin`, `default`, `custom`.
 	Origin pulumi.StringOutput `pulumi:"origin"`
 	// Region of the location.
 	Region pulumi.StringOutput `pulumi:"region"`
@@ -70,7 +71,7 @@ func GetLocation(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Location resources.
 type locationState struct {
-	// Cloud Provider of the location.
+	// Cloud Provider of the location. Valid values: `aws`, `gcp`, `azure`, `byok`, `linode`, `vultr`, `equinix`, `oci`.
 	CloudProvider *string `pulumi:"cloudProvider"`
 	// The ID, in GUID format, of the location.
 	CplnId *string `pulumi:"cplnId"`
@@ -82,7 +83,8 @@ type locationState struct {
 	// A list of IP ranges of the location.
 	IpRanges []string `pulumi:"ipRanges"`
 	// Name of the location.
-	Name   *string `pulumi:"name"`
+	Name *string `pulumi:"name"`
+	// Origin of the location. Valid values: `builtin`, `default`, `custom`.
 	Origin *string `pulumi:"origin"`
 	// Region of the location.
 	Region *string `pulumi:"region"`
@@ -93,7 +95,7 @@ type locationState struct {
 }
 
 type LocationState struct {
-	// Cloud Provider of the location.
+	// Cloud Provider of the location. Valid values: `aws`, `gcp`, `azure`, `byok`, `linode`, `vultr`, `equinix`, `oci`.
 	CloudProvider pulumi.StringPtrInput
 	// The ID, in GUID format, of the location.
 	CplnId pulumi.StringPtrInput
@@ -105,7 +107,8 @@ type LocationState struct {
 	// A list of IP ranges of the location.
 	IpRanges pulumi.StringArrayInput
 	// Name of the location.
-	Name   pulumi.StringPtrInput
+	Name pulumi.StringPtrInput
+	// Origin of the location. Valid values: `builtin`, `default`, `custom`.
 	Origin pulumi.StringPtrInput
 	// Region of the location.
 	Region pulumi.StringPtrInput
@@ -225,7 +228,7 @@ func (o LocationOutput) ToLocationOutputWithContext(ctx context.Context) Locatio
 	return o
 }
 
-// Cloud Provider of the location.
+// Cloud Provider of the location. Valid values: `aws`, `gcp`, `azure`, `byok`, `linode`, `vultr`, `equinix`, `oci`.
 func (o LocationOutput) CloudProvider() pulumi.StringOutput {
 	return o.ApplyT(func(v *Location) pulumi.StringOutput { return v.CloudProvider }).(pulumi.StringOutput)
 }
@@ -259,6 +262,7 @@ func (o LocationOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Location) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// Origin of the location. Valid values: `builtin`, `default`, `custom`.
 func (o LocationOutput) Origin() pulumi.StringOutput {
 	return o.ApplyT(func(v *Location) pulumi.StringOutput { return v.Origin }).(pulumi.StringOutput)
 }

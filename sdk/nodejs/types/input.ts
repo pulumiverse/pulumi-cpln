@@ -48,6 +48,48 @@ export interface CloudAccountNgs {
     secretLink?: pulumi.Input<string>;
 }
 
+export interface CloudAccountStatus {
+    /**
+     * ISO-8601 timestamp of the last time the Cloud Account credentials were validated.
+     */
+    lastChecked?: pulumi.Input<string>;
+    /**
+     * The last error message reported when validating the Cloud Account credentials.
+     */
+    lastError?: pulumi.Input<string>;
+    /**
+     * Whether the Cloud Account credentials are valid and usable by Control Plane.
+     */
+    usable?: pulumi.Input<boolean>;
+}
+
+export interface CustomLocationGeo {
+    /**
+     * City of the location.
+     */
+    city?: pulumi.Input<string>;
+    /**
+     * Continent of the location.
+     */
+    continent?: pulumi.Input<string>;
+    /**
+     * Country of the location.
+     */
+    country?: pulumi.Input<string>;
+    /**
+     * Latitude of the location.
+     */
+    lat?: pulumi.Input<number>;
+    /**
+     * Longitude of the location.
+     */
+    lon?: pulumi.Input<number>;
+    /**
+     * State of the location.
+     */
+    state?: pulumi.Input<string>;
+}
+
 export interface DomainRouteHeaders {
     /**
      * Manipulates HTTP headers.
@@ -67,6 +109,10 @@ export interface DomainRouteMirror {
      * The percentage of traffic to mirror to the specified workload.
      */
     percent: pulumi.Input<number>;
+    /**
+     * The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
+     */
+    port?: pulumi.Input<number>;
     /**
      * The workload to mirror traffic to.
      */
@@ -224,6 +270,10 @@ export interface DomainSpecPortRouteMirror {
      * The percentage of traffic to mirror to the specified workload.
      */
     percent: pulumi.Input<number>;
+    /**
+     * The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
+     */
+    port?: pulumi.Input<number>;
     /**
      * The workload to mirror traffic to.
      */
@@ -500,6 +550,44 @@ export interface GetGvcLoadBalancerRedirectClassArgs {
      * Specify the redirect url for any 500 level status code.
      */
     status5xx?: pulumi.Input<string>;
+}
+
+export interface GetGvcLocationOption {
+    /**
+     * Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+     */
+    latencyOffsetMs?: number;
+    /**
+     * Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+     */
+    latencyToleranceMs?: number;
+    /**
+     * Name of the location these options apply to.
+     */
+    name?: string;
+    /**
+     * Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routingTier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+     */
+    routingTier?: number;
+}
+
+export interface GetGvcLocationOptionArgs {
+    /**
+     * Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+     */
+    latencyOffsetMs?: pulumi.Input<number>;
+    /**
+     * Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+     */
+    latencyToleranceMs?: pulumi.Input<number>;
+    /**
+     * Name of the location these options apply to.
+     */
+    name?: pulumi.Input<string>;
+    /**
+     * Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routingTier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+     */
+    routingTier?: pulumi.Input<number>;
 }
 
 export interface GetGvcOtelTracing {
@@ -2635,6 +2723,10 @@ export interface GetWorkloadSecurityOption {
      * The group id assigned to any mounted volume.
      */
     fileSystemGroupId?: number;
+    /**
+     * The user id assigned to all container processes.
+     */
+    runAsUser?: number;
 }
 
 export interface GetWorkloadSecurityOptionArgs {
@@ -2642,6 +2734,10 @@ export interface GetWorkloadSecurityOptionArgs {
      * The group id assigned to any mounted volume.
      */
     fileSystemGroupId?: pulumi.Input<number>;
+    /**
+     * The user id assigned to all container processes.
+     */
+    runAsUser?: pulumi.Input<number>;
 }
 
 export interface GetWorkloadSidecar {
@@ -2658,7 +2754,7 @@ export interface GroupIdentityMatcher {
      */
     expression: pulumi.Input<string>;
     /**
-     * Language of the expression. Either `jmespath` or `javascript`. Default: `jmespath`.
+     * Language of the expression. Valid values: `jmespath`, `javascript`. Default: `jmespath`.
      */
     language?: pulumi.Input<string>;
 }
@@ -2790,6 +2886,25 @@ export interface GvcLoadBalancerRedirectClass {
      * Specify the redirect url for any 500 level status code.
      */
     status5xx?: pulumi.Input<string>;
+}
+
+export interface GvcLocationOption {
+    /**
+     * Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+     */
+    latencyOffsetMs?: pulumi.Input<number>;
+    /**
+     * Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+     */
+    latencyToleranceMs?: pulumi.Input<number>;
+    /**
+     * Name of the location these options apply to.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routingTier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+     */
+    routingTier?: pulumi.Input<number>;
 }
 
 export interface GvcOtelTracing {
@@ -3158,6 +3273,10 @@ export interface Mk8sAddOnsByokConfig {
      */
     actuator?: pulumi.Input<inputs.Mk8sAddOnsByokConfigActuator>;
     /**
+     * BYOK-wide settings.
+     */
+    byok?: pulumi.Input<inputs.Mk8sAddOnsByokConfigByok>;
+    /**
      * Shared rollout settings for BYOK workloads.
      */
     common?: pulumi.Input<inputs.Mk8sAddOnsByokConfigCommon>;
@@ -3173,6 +3292,10 @@ export interface Mk8sAddOnsByokConfig {
      * Istio service mesh configuration.
      */
     istio?: pulumi.Input<inputs.Mk8sAddOnsByokConfigIstio>;
+    /**
+     * JuiceFS distributed file system add-on settings.
+     */
+    juicefs?: pulumi.Input<inputs.Mk8sAddOnsByokConfigJuicefs>;
     /**
      * Log splitter deployment configuration.
      */
@@ -3232,6 +3355,13 @@ export interface Mk8sAddOnsByokConfigActuator {
      * Minimum memory request applied to actuator pods (e.g. "128Mi").
      */
     minMemory?: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsByokConfigByok {
+    /**
+     * When set, the BYOK installation does not provision any default storage classes.
+     */
+    noDefaultStorageClasses?: pulumi.Input<boolean>;
 }
 
 export interface Mk8sAddOnsByokConfigCommon {
@@ -3354,6 +3484,13 @@ export interface Mk8sAddOnsByokConfigIstioSidecar {
     minMemory?: pulumi.Input<string>;
 }
 
+export interface Mk8sAddOnsByokConfigJuicefs {
+    /**
+     * Whether to install JuiceFS on the BYOK cluster.
+     */
+    enabled?: pulumi.Input<boolean>;
+}
+
 export interface Mk8sAddOnsByokConfigLogSplitter {
     /**
      * CPU limit applied to log splitter pods.
@@ -3383,6 +3520,14 @@ export interface Mk8sAddOnsByokConfigLogSplitter {
 
 export interface Mk8sAddOnsByokConfigLonghorn {
     /**
+     * Mark Longhorn as the default storage class.
+     */
+    isDefault?: pulumi.Input<boolean>;
+    /**
+     * Replica factor for Longhorn volumes. Minimum: 1.
+     */
+    numberOfReplicas?: pulumi.Input<number>;
+    /**
      * Replica factor for Longhorn volumes. Minimum: 1.
      */
     replicas?: pulumi.Input<number>;
@@ -3397,9 +3542,21 @@ export interface Mk8sAddOnsByokConfigMiddlebox {
      * Whether to deploy the middlebox component.
      */
     enabled?: pulumi.Input<boolean>;
+    /**
+     * IPv4 address bound by the middlebox component.
+     */
+    ip?: pulumi.Input<string>;
+    /**
+     * Listening port for the middlebox component.
+     */
+    port?: pulumi.Input<number>;
 }
 
 export interface Mk8sAddOnsByokConfigMonitoring {
+    /**
+     * Static labels appended to every metric scraped by the BYOK Prometheus stack.
+     */
+    externalLabels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * Kube-state-metrics resource overrides.
      */
@@ -3416,6 +3573,10 @@ export interface Mk8sAddOnsByokConfigMonitoring {
      * Prometheus deployment configuration.
      */
     prometheus?: pulumi.Input<inputs.Mk8sAddOnsByokConfigMonitoringPrometheus>;
+    /**
+     * Prometheus remoteWrite client configurations. Order is preserved as written.
+     */
+    remoteWrites?: pulumi.Input<pulumi.Input<inputs.Mk8sAddOnsByokConfigMonitoringRemoteWrite>[]>;
 }
 
 export interface Mk8sAddOnsByokConfigMonitoringKubeStateMetrics {
@@ -3437,6 +3598,131 @@ export interface Mk8sAddOnsByokConfigMonitoringPrometheusMain {
      * Persistent volume size for Prometheus (for example, "50Gi").
      */
     storage?: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsByokConfigMonitoringRemoteWrite {
+    /**
+     * HTTP Authorization header credentials.
+     */
+    authorization?: pulumi.Input<inputs.Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization>;
+    /**
+     * Azure AD authentication parameters as flat key-value pairs.
+     */
+    azuread?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * HTTP basic authentication credentials.
+     */
+    basicAuth?: pulumi.Input<inputs.Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth>;
+    /**
+     * Whether to enable HTTP/2.
+     */
+    enableHttp2?: pulumi.Input<boolean>;
+    /**
+     * Whether the HTTP client follows redirects.
+     */
+    followRedirects?: pulumi.Input<boolean>;
+    /**
+     * Google Cloud IAM authentication parameters as flat key-value pairs.
+     */
+    googleIam?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Custom request headers attached to every remoteWrite call.
+     */
+    headers?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Custom HTTP headers, as flat key-value pairs.
+     */
+    httpHeaders?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Friendly name used in metrics for this client.
+     */
+    name?: pulumi.Input<string>;
+    /**
+     * Comma-separated list of hosts that bypass the proxy.
+     */
+    noProxy?: pulumi.Input<string>;
+    /**
+     * OAuth 2.0 client configuration as flat key-value pairs.
+     */
+    oauth2?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Headers sent to the proxy on CONNECT, as flat key-value pairs.
+     */
+    proxyConnectHeader?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Whether to read proxy settings from environment variables.
+     */
+    proxyFromEnvironment?: pulumi.Input<boolean>;
+    /**
+     * HTTP proxy URL used for outbound requests.
+     */
+    proxyUrl?: pulumi.Input<string>;
+    /**
+     * Tuning parameters for the in-memory remoteWrite queue, as flat key-value pairs.
+     */
+    queueConfig?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Per-request timeout (for example, "30s").
+     */
+    remoteTimeout?: pulumi.Input<string>;
+    /**
+     * Whether to forward Prometheus exemplars.
+     */
+    sendExemplars?: pulumi.Input<boolean>;
+    /**
+     * Whether to forward Prometheus native histograms.
+     */
+    sendNativeHistograms?: pulumi.Input<boolean>;
+    /**
+     * AWS SigV4 authentication parameters as flat key-value pairs.
+     */
+    sigv4?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * TLS configuration as flat key-value pairs.
+     */
+    tlsConfig?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * Endpoint that receives the remoteWrite payload.
+     */
+    url?: pulumi.Input<string>;
+    /**
+     * Relabel rules applied to samples before they are sent.
+     */
+    writeRelabelConfigs?: pulumi.Input<pulumi.Input<{[key: string]: pulumi.Input<string>}>[]>;
+}
+
+export interface Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization {
+    /**
+     * Authorization credentials.
+     */
+    credentials?: pulumi.Input<string>;
+    /**
+     * Path to a file containing the credentials.
+     */
+    credentialsFile?: pulumi.Input<string>;
+    /**
+     * Authorization scheme (for example, "Bearer").
+     */
+    type?: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth {
+    /**
+     * Password for HTTP basic authentication.
+     */
+    password?: pulumi.Input<string>;
+    /**
+     * Path to a file containing the password.
+     */
+    passwordFile?: pulumi.Input<string>;
+    /**
+     * Username for HTTP basic authentication.
+     */
+    username?: pulumi.Input<string>;
+    /**
+     * Path to a file containing the username.
+     */
+    usernameFile?: pulumi.Input<string>;
 }
 
 export interface Mk8sAddOnsByokConfigRedis {
@@ -6196,6 +6482,10 @@ export interface WorkloadSecurityOptions {
      * The group id assigned to any mounted volume.
      */
     fileSystemGroupId?: pulumi.Input<number>;
+    /**
+     * The user id assigned to all container processes.
+     */
+    runAsUser?: pulumi.Input<number>;
 }
 
 export interface WorkloadSidecar {
@@ -6233,6 +6523,10 @@ export interface WorkloadStatus {
      * Resolved images for workloads with dynamic tags enabled.
      */
     resolvedImages?: pulumi.Input<pulumi.Input<inputs.WorkloadStatusResolvedImage>[]>;
+    /**
+     * Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `suspended`.
+     */
+    suspendedStatus?: pulumi.Input<string>;
 }
 
 export interface WorkloadStatusHealthCheck {

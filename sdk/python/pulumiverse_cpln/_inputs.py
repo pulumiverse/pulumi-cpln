@@ -25,6 +25,10 @@ __all__ = [
     'CloudAccountGcpArgsDict',
     'CloudAccountNgsArgs',
     'CloudAccountNgsArgsDict',
+    'CloudAccountStatusArgs',
+    'CloudAccountStatusArgsDict',
+    'CustomLocationGeoArgs',
+    'CustomLocationGeoArgsDict',
     'DomainRouteHeadersArgs',
     'DomainRouteHeadersArgsDict',
     'DomainRouteHeadersRequestArgs',
@@ -83,6 +87,8 @@ __all__ = [
     'GvcLoadBalancerRedirectArgsDict',
     'GvcLoadBalancerRedirectClassArgs',
     'GvcLoadBalancerRedirectClassArgsDict',
+    'GvcLocationOptionArgs',
+    'GvcLocationOptionArgsDict',
     'GvcOtelTracingArgs',
     'GvcOtelTracingArgsDict',
     'GvcSidecarArgs',
@@ -143,6 +149,8 @@ __all__ = [
     'Mk8sAddOnsByokConfigArgsDict',
     'Mk8sAddOnsByokConfigActuatorArgs',
     'Mk8sAddOnsByokConfigActuatorArgsDict',
+    'Mk8sAddOnsByokConfigByokArgs',
+    'Mk8sAddOnsByokConfigByokArgsDict',
     'Mk8sAddOnsByokConfigCommonArgs',
     'Mk8sAddOnsByokConfigCommonArgsDict',
     'Mk8sAddOnsByokConfigCommonPdbArgs',
@@ -159,6 +167,8 @@ __all__ = [
     'Mk8sAddOnsByokConfigIstioIstiodArgsDict',
     'Mk8sAddOnsByokConfigIstioSidecarArgs',
     'Mk8sAddOnsByokConfigIstioSidecarArgsDict',
+    'Mk8sAddOnsByokConfigJuicefsArgs',
+    'Mk8sAddOnsByokConfigJuicefsArgsDict',
     'Mk8sAddOnsByokConfigLogSplitterArgs',
     'Mk8sAddOnsByokConfigLogSplitterArgsDict',
     'Mk8sAddOnsByokConfigLonghornArgs',
@@ -173,6 +183,12 @@ __all__ = [
     'Mk8sAddOnsByokConfigMonitoringPrometheusArgsDict',
     'Mk8sAddOnsByokConfigMonitoringPrometheusMainArgs',
     'Mk8sAddOnsByokConfigMonitoringPrometheusMainArgsDict',
+    'Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs',
+    'Mk8sAddOnsByokConfigMonitoringRemoteWriteArgsDict',
+    'Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs',
+    'Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgsDict',
+    'Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs',
+    'Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgsDict',
     'Mk8sAddOnsByokConfigRedisArgs',
     'Mk8sAddOnsByokConfigRedisArgsDict',
     'Mk8sAddOnsByokConfigRedisHaArgs',
@@ -599,6 +615,8 @@ __all__ = [
     'GetGvcLoadBalancerRedirectArgsDict',
     'GetGvcLoadBalancerRedirectClassArgs',
     'GetGvcLoadBalancerRedirectClassArgsDict',
+    'GetGvcLocationOptionArgs',
+    'GetGvcLocationOptionArgsDict',
     'GetGvcOtelTracingArgs',
     'GetGvcOtelTracingArgsDict',
     'GetGvcSidecarArgs',
@@ -956,6 +974,210 @@ class CloudAccountNgsArgs:
 
 
 if not MYPY:
+    class CloudAccountStatusArgsDict(TypedDict):
+        last_checked: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        ISO-8601 timestamp of the last time the Cloud Account credentials were validated.
+        """
+        last_error: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        The last error message reported when validating the Cloud Account credentials.
+        """
+        usable: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Whether the Cloud Account credentials are valid and usable by Control Plane.
+        """
+elif False:
+    CloudAccountStatusArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class CloudAccountStatusArgs:
+    def __init__(__self__, *,
+                 last_checked: Optional[pulumi.Input[_builtins.str]] = None,
+                 last_error: Optional[pulumi.Input[_builtins.str]] = None,
+                 usable: Optional[pulumi.Input[_builtins.bool]] = None):
+        """
+        :param pulumi.Input[_builtins.str] last_checked: ISO-8601 timestamp of the last time the Cloud Account credentials were validated.
+        :param pulumi.Input[_builtins.str] last_error: The last error message reported when validating the Cloud Account credentials.
+        :param pulumi.Input[_builtins.bool] usable: Whether the Cloud Account credentials are valid and usable by Control Plane.
+        """
+        if last_checked is not None:
+            pulumi.set(__self__, "last_checked", last_checked)
+        if last_error is not None:
+            pulumi.set(__self__, "last_error", last_error)
+        if usable is not None:
+            pulumi.set(__self__, "usable", usable)
+
+    @_builtins.property
+    @pulumi.getter(name="lastChecked")
+    def last_checked(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        ISO-8601 timestamp of the last time the Cloud Account credentials were validated.
+        """
+        return pulumi.get(self, "last_checked")
+
+    @last_checked.setter
+    def last_checked(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "last_checked", value)
+
+    @_builtins.property
+    @pulumi.getter(name="lastError")
+    def last_error(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The last error message reported when validating the Cloud Account credentials.
+        """
+        return pulumi.get(self, "last_error")
+
+    @last_error.setter
+    def last_error(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "last_error", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def usable(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Whether the Cloud Account credentials are valid and usable by Control Plane.
+        """
+        return pulumi.get(self, "usable")
+
+    @usable.setter
+    def usable(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "usable", value)
+
+
+if not MYPY:
+    class CustomLocationGeoArgsDict(TypedDict):
+        city: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        City of the location.
+        """
+        continent: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Continent of the location.
+        """
+        country: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Country of the location.
+        """
+        lat: NotRequired[pulumi.Input[_builtins.float]]
+        """
+        Latitude of the location.
+        """
+        lon: NotRequired[pulumi.Input[_builtins.float]]
+        """
+        Longitude of the location.
+        """
+        state: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        State of the location.
+        """
+elif False:
+    CustomLocationGeoArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class CustomLocationGeoArgs:
+    def __init__(__self__, *,
+                 city: Optional[pulumi.Input[_builtins.str]] = None,
+                 continent: Optional[pulumi.Input[_builtins.str]] = None,
+                 country: Optional[pulumi.Input[_builtins.str]] = None,
+                 lat: Optional[pulumi.Input[_builtins.float]] = None,
+                 lon: Optional[pulumi.Input[_builtins.float]] = None,
+                 state: Optional[pulumi.Input[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] city: City of the location.
+        :param pulumi.Input[_builtins.str] continent: Continent of the location.
+        :param pulumi.Input[_builtins.str] country: Country of the location.
+        :param pulumi.Input[_builtins.float] lat: Latitude of the location.
+        :param pulumi.Input[_builtins.float] lon: Longitude of the location.
+        :param pulumi.Input[_builtins.str] state: State of the location.
+        """
+        if city is not None:
+            pulumi.set(__self__, "city", city)
+        if continent is not None:
+            pulumi.set(__self__, "continent", continent)
+        if country is not None:
+            pulumi.set(__self__, "country", country)
+        if lat is not None:
+            pulumi.set(__self__, "lat", lat)
+        if lon is not None:
+            pulumi.set(__self__, "lon", lon)
+        if state is not None:
+            pulumi.set(__self__, "state", state)
+
+    @_builtins.property
+    @pulumi.getter
+    def city(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        City of the location.
+        """
+        return pulumi.get(self, "city")
+
+    @city.setter
+    def city(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "city", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def continent(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Continent of the location.
+        """
+        return pulumi.get(self, "continent")
+
+    @continent.setter
+    def continent(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "continent", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def country(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Country of the location.
+        """
+        return pulumi.get(self, "country")
+
+    @country.setter
+    def country(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "country", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def lat(self) -> Optional[pulumi.Input[_builtins.float]]:
+        """
+        Latitude of the location.
+        """
+        return pulumi.get(self, "lat")
+
+    @lat.setter
+    def lat(self, value: Optional[pulumi.Input[_builtins.float]]):
+        pulumi.set(self, "lat", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def lon(self) -> Optional[pulumi.Input[_builtins.float]]:
+        """
+        Longitude of the location.
+        """
+        return pulumi.get(self, "lon")
+
+    @lon.setter
+    def lon(self, value: Optional[pulumi.Input[_builtins.float]]):
+        pulumi.set(self, "lon", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def state(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        State of the location.
+        """
+        return pulumi.get(self, "state")
+
+    @state.setter
+    def state(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "state", value)
+
+
+if not MYPY:
     class DomainRouteHeadersArgsDict(TypedDict):
         request: NotRequired[pulumi.Input['DomainRouteHeadersRequestArgsDict']]
         """
@@ -1029,6 +1251,10 @@ if not MYPY:
         """
         The workload to mirror traffic to.
         """
+        port: NotRequired[pulumi.Input[_builtins.int]]
+        """
+        The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
+        """
 elif False:
     DomainRouteMirrorArgsDict: TypeAlias = Mapping[str, Any]
 
@@ -1036,13 +1262,17 @@ elif False:
 class DomainRouteMirrorArgs:
     def __init__(__self__, *,
                  percent: pulumi.Input[_builtins.float],
-                 workload_link: pulumi.Input[_builtins.str]):
+                 workload_link: pulumi.Input[_builtins.str],
+                 port: Optional[pulumi.Input[_builtins.int]] = None):
         """
         :param pulumi.Input[_builtins.float] percent: The percentage of traffic to mirror to the specified workload.
         :param pulumi.Input[_builtins.str] workload_link: The workload to mirror traffic to.
+        :param pulumi.Input[_builtins.int] port: The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
         """
         pulumi.set(__self__, "percent", percent)
         pulumi.set(__self__, "workload_link", workload_link)
+        if port is not None:
+            pulumi.set(__self__, "port", port)
 
     @_builtins.property
     @pulumi.getter
@@ -1067,6 +1297,18 @@ class DomainRouteMirrorArgs:
     @workload_link.setter
     def workload_link(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "workload_link", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def port(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "port", value)
 
 
 if not MYPY:
@@ -1795,6 +2037,10 @@ if not MYPY:
         """
         The workload to mirror traffic to.
         """
+        port: NotRequired[pulumi.Input[_builtins.int]]
+        """
+        The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
+        """
 elif False:
     DomainSpecPortRouteMirrorArgsDict: TypeAlias = Mapping[str, Any]
 
@@ -1802,13 +2048,17 @@ elif False:
 class DomainSpecPortRouteMirrorArgs:
     def __init__(__self__, *,
                  percent: pulumi.Input[_builtins.float],
-                 workload_link: pulumi.Input[_builtins.str]):
+                 workload_link: pulumi.Input[_builtins.str],
+                 port: Optional[pulumi.Input[_builtins.int]] = None):
         """
         :param pulumi.Input[_builtins.float] percent: The percentage of traffic to mirror to the specified workload.
         :param pulumi.Input[_builtins.str] workload_link: The workload to mirror traffic to.
+        :param pulumi.Input[_builtins.int] port: The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
         """
         pulumi.set(__self__, "percent", percent)
         pulumi.set(__self__, "workload_link", workload_link)
+        if port is not None:
+            pulumi.set(__self__, "port", port)
 
     @_builtins.property
     @pulumi.getter
@@ -1833,6 +2083,18 @@ class DomainSpecPortRouteMirrorArgs:
     @workload_link.setter
     def workload_link(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "workload_link", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def port(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "port", value)
 
 
 if not MYPY:
@@ -2320,7 +2582,7 @@ if not MYPY:
         """
         language: NotRequired[pulumi.Input[_builtins.str]]
         """
-        Language of the expression. Either `jmespath` or `javascript`. Default: `jmespath`.
+        Language of the expression. Valid values: `jmespath`, `javascript`. Default: `jmespath`.
         """
 elif False:
     GroupIdentityMatcherArgsDict: TypeAlias = Mapping[str, Any]
@@ -2332,7 +2594,7 @@ class GroupIdentityMatcherArgs:
                  language: Optional[pulumi.Input[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] expression: Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged in with SAML providers.
-        :param pulumi.Input[_builtins.str] language: Language of the expression. Either `jmespath` or `javascript`. Default: `jmespath`.
+        :param pulumi.Input[_builtins.str] language: Language of the expression. Valid values: `jmespath`, `javascript`. Default: `jmespath`.
         """
         pulumi.set(__self__, "expression", expression)
         if language is not None:
@@ -2354,7 +2616,7 @@ class GroupIdentityMatcherArgs:
     @pulumi.getter
     def language(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Language of the expression. Either `jmespath` or `javascript`. Default: `jmespath`.
+        Language of the expression. Valid values: `jmespath`, `javascript`. Default: `jmespath`.
         """
         return pulumi.get(self, "language")
 
@@ -2995,6 +3257,97 @@ class GvcLoadBalancerRedirectClassArgs:
     @status5xx.setter
     def status5xx(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "status5xx", value)
+
+
+if not MYPY:
+    class GvcLocationOptionArgsDict(TypedDict):
+        name: pulumi.Input[_builtins.str]
+        """
+        Name of the location these options apply to.
+        """
+        latency_offset_ms: NotRequired[pulumi.Input[_builtins.int]]
+        """
+        Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+        """
+        latency_tolerance_ms: NotRequired[pulumi.Input[_builtins.int]]
+        """
+        Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+        """
+        routing_tier: NotRequired[pulumi.Input[_builtins.int]]
+        """
+        Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routing_tier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+        """
+elif False:
+    GvcLocationOptionArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class GvcLocationOptionArgs:
+    def __init__(__self__, *,
+                 name: pulumi.Input[_builtins.str],
+                 latency_offset_ms: Optional[pulumi.Input[_builtins.int]] = None,
+                 latency_tolerance_ms: Optional[pulumi.Input[_builtins.int]] = None,
+                 routing_tier: Optional[pulumi.Input[_builtins.int]] = None):
+        """
+        :param pulumi.Input[_builtins.str] name: Name of the location these options apply to.
+        :param pulumi.Input[_builtins.int] latency_offset_ms: Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+        :param pulumi.Input[_builtins.int] latency_tolerance_ms: Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+        :param pulumi.Input[_builtins.int] routing_tier: Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routing_tier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+        """
+        pulumi.set(__self__, "name", name)
+        if latency_offset_ms is not None:
+            pulumi.set(__self__, "latency_offset_ms", latency_offset_ms)
+        if latency_tolerance_ms is not None:
+            pulumi.set(__self__, "latency_tolerance_ms", latency_tolerance_ms)
+        if routing_tier is not None:
+            pulumi.set(__self__, "routing_tier", routing_tier)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> pulumi.Input[_builtins.str]:
+        """
+        Name of the location these options apply to.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter(name="latencyOffsetMs")
+    def latency_offset_ms(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+        """
+        return pulumi.get(self, "latency_offset_ms")
+
+    @latency_offset_ms.setter
+    def latency_offset_ms(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "latency_offset_ms", value)
+
+    @_builtins.property
+    @pulumi.getter(name="latencyToleranceMs")
+    def latency_tolerance_ms(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+        """
+        return pulumi.get(self, "latency_tolerance_ms")
+
+    @latency_tolerance_ms.setter
+    def latency_tolerance_ms(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "latency_tolerance_ms", value)
+
+    @_builtins.property
+    @pulumi.getter(name="routingTier")
+    def routing_tier(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routing_tier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+        """
+        return pulumi.get(self, "routing_tier")
+
+    @routing_tier.setter
+    def routing_tier(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "routing_tier", value)
 
 
 if not MYPY:
@@ -4884,6 +5237,10 @@ if not MYPY:
         """
         Resource tuning for the actuator component.
         """
+        byok: NotRequired[pulumi.Input['Mk8sAddOnsByokConfigByokArgsDict']]
+        """
+        BYOK-wide settings.
+        """
         common: NotRequired[pulumi.Input['Mk8sAddOnsByokConfigCommonArgsDict']]
         """
         Shared rollout settings for BYOK workloads.
@@ -4899,6 +5256,10 @@ if not MYPY:
         istio: NotRequired[pulumi.Input['Mk8sAddOnsByokConfigIstioArgsDict']]
         """
         Istio service mesh configuration.
+        """
+        juicefs: NotRequired[pulumi.Input['Mk8sAddOnsByokConfigJuicefsArgsDict']]
+        """
+        JuiceFS distributed file system add-on settings.
         """
         log_splitter: NotRequired[pulumi.Input['Mk8sAddOnsByokConfigLogSplitterArgsDict']]
         """
@@ -4939,10 +5300,12 @@ elif False:
 class Mk8sAddOnsByokConfigArgs:
     def __init__(__self__, *,
                  actuator: Optional[pulumi.Input['Mk8sAddOnsByokConfigActuatorArgs']] = None,
+                 byok: Optional[pulumi.Input['Mk8sAddOnsByokConfigByokArgs']] = None,
                  common: Optional[pulumi.Input['Mk8sAddOnsByokConfigCommonArgs']] = None,
                  ingress: Optional[pulumi.Input['Mk8sAddOnsByokConfigIngressArgs']] = None,
                  internal_dns: Optional[pulumi.Input['Mk8sAddOnsByokConfigInternalDnsArgs']] = None,
                  istio: Optional[pulumi.Input['Mk8sAddOnsByokConfigIstioArgs']] = None,
+                 juicefs: Optional[pulumi.Input['Mk8sAddOnsByokConfigJuicefsArgs']] = None,
                  log_splitter: Optional[pulumi.Input['Mk8sAddOnsByokConfigLogSplitterArgs']] = None,
                  longhorn: Optional[pulumi.Input['Mk8sAddOnsByokConfigLonghornArgs']] = None,
                  middlebox: Optional[pulumi.Input['Mk8sAddOnsByokConfigMiddleboxArgs']] = None,
@@ -4953,10 +5316,12 @@ class Mk8sAddOnsByokConfigArgs:
                  tempo_agent: Optional[pulumi.Input['Mk8sAddOnsByokConfigTempoAgentArgs']] = None):
         """
         :param pulumi.Input['Mk8sAddOnsByokConfigActuatorArgs'] actuator: Resource tuning for the actuator component.
+        :param pulumi.Input['Mk8sAddOnsByokConfigByokArgs'] byok: BYOK-wide settings.
         :param pulumi.Input['Mk8sAddOnsByokConfigCommonArgs'] common: Shared rollout settings for BYOK workloads.
         :param pulumi.Input['Mk8sAddOnsByokConfigIngressArgs'] ingress: Ingress controller resource configuration.
         :param pulumi.Input['Mk8sAddOnsByokConfigInternalDnsArgs'] internal_dns: Internal DNS deployment settings.
         :param pulumi.Input['Mk8sAddOnsByokConfigIstioArgs'] istio: Istio service mesh configuration.
+        :param pulumi.Input['Mk8sAddOnsByokConfigJuicefsArgs'] juicefs: JuiceFS distributed file system add-on settings.
         :param pulumi.Input['Mk8sAddOnsByokConfigLogSplitterArgs'] log_splitter: Log splitter deployment configuration.
         :param pulumi.Input['Mk8sAddOnsByokConfigLonghornArgs'] longhorn: Longhorn persistent volume settings.
         :param pulumi.Input['Mk8sAddOnsByokConfigMiddleboxArgs'] middlebox: Configuration for the optional middlebox traffic shaper.
@@ -4968,6 +5333,8 @@ class Mk8sAddOnsByokConfigArgs:
         """
         if actuator is not None:
             pulumi.set(__self__, "actuator", actuator)
+        if byok is not None:
+            pulumi.set(__self__, "byok", byok)
         if common is not None:
             pulumi.set(__self__, "common", common)
         if ingress is not None:
@@ -4976,6 +5343,8 @@ class Mk8sAddOnsByokConfigArgs:
             pulumi.set(__self__, "internal_dns", internal_dns)
         if istio is not None:
             pulumi.set(__self__, "istio", istio)
+        if juicefs is not None:
+            pulumi.set(__self__, "juicefs", juicefs)
         if log_splitter is not None:
             pulumi.set(__self__, "log_splitter", log_splitter)
         if longhorn is not None:
@@ -5004,6 +5373,18 @@ class Mk8sAddOnsByokConfigArgs:
     @actuator.setter
     def actuator(self, value: Optional[pulumi.Input['Mk8sAddOnsByokConfigActuatorArgs']]):
         pulumi.set(self, "actuator", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def byok(self) -> Optional[pulumi.Input['Mk8sAddOnsByokConfigByokArgs']]:
+        """
+        BYOK-wide settings.
+        """
+        return pulumi.get(self, "byok")
+
+    @byok.setter
+    def byok(self, value: Optional[pulumi.Input['Mk8sAddOnsByokConfigByokArgs']]):
+        pulumi.set(self, "byok", value)
 
     @_builtins.property
     @pulumi.getter
@@ -5052,6 +5433,18 @@ class Mk8sAddOnsByokConfigArgs:
     @istio.setter
     def istio(self, value: Optional[pulumi.Input['Mk8sAddOnsByokConfigIstioArgs']]):
         pulumi.set(self, "istio", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def juicefs(self) -> Optional[pulumi.Input['Mk8sAddOnsByokConfigJuicefsArgs']]:
+        """
+        JuiceFS distributed file system add-on settings.
+        """
+        return pulumi.get(self, "juicefs")
+
+    @juicefs.setter
+    def juicefs(self, value: Optional[pulumi.Input['Mk8sAddOnsByokConfigJuicefsArgs']]):
+        pulumi.set(self, "juicefs", value)
 
     @_builtins.property
     @pulumi.getter(name="logSplitter")
@@ -5280,6 +5673,38 @@ class Mk8sAddOnsByokConfigActuatorArgs:
     @min_memory.setter
     def min_memory(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "min_memory", value)
+
+
+if not MYPY:
+    class Mk8sAddOnsByokConfigByokArgsDict(TypedDict):
+        no_default_storage_classes: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        When set, the BYOK installation does not provision any default storage classes.
+        """
+elif False:
+    Mk8sAddOnsByokConfigByokArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class Mk8sAddOnsByokConfigByokArgs:
+    def __init__(__self__, *,
+                 no_default_storage_classes: Optional[pulumi.Input[_builtins.bool]] = None):
+        """
+        :param pulumi.Input[_builtins.bool] no_default_storage_classes: When set, the BYOK installation does not provision any default storage classes.
+        """
+        if no_default_storage_classes is not None:
+            pulumi.set(__self__, "no_default_storage_classes", no_default_storage_classes)
+
+    @_builtins.property
+    @pulumi.getter(name="noDefaultStorageClasses")
+    def no_default_storage_classes(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        When set, the BYOK installation does not provision any default storage classes.
+        """
+        return pulumi.get(self, "no_default_storage_classes")
+
+    @no_default_storage_classes.setter
+    def no_default_storage_classes(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "no_default_storage_classes", value)
 
 
 if not MYPY:
@@ -5859,6 +6284,38 @@ class Mk8sAddOnsByokConfigIstioSidecarArgs:
 
 
 if not MYPY:
+    class Mk8sAddOnsByokConfigJuicefsArgsDict(TypedDict):
+        enabled: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Whether to install JuiceFS on the BYOK cluster.
+        """
+elif False:
+    Mk8sAddOnsByokConfigJuicefsArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class Mk8sAddOnsByokConfigJuicefsArgs:
+    def __init__(__self__, *,
+                 enabled: Optional[pulumi.Input[_builtins.bool]] = None):
+        """
+        :param pulumi.Input[_builtins.bool] enabled: Whether to install JuiceFS on the BYOK cluster.
+        """
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+
+    @_builtins.property
+    @pulumi.getter
+    def enabled(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Whether to install JuiceFS on the BYOK cluster.
+        """
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "enabled", value)
+
+
+if not MYPY:
     class Mk8sAddOnsByokConfigLogSplitterArgsDict(TypedDict):
         max_cpu: NotRequired[pulumi.Input[_builtins.str]]
         """
@@ -5992,6 +6449,14 @@ class Mk8sAddOnsByokConfigLogSplitterArgs:
 
 if not MYPY:
     class Mk8sAddOnsByokConfigLonghornArgsDict(TypedDict):
+        is_default: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Mark Longhorn as the default storage class.
+        """
+        number_of_replicas: NotRequired[pulumi.Input[_builtins.int]]
+        """
+        Replica factor for Longhorn volumes. Minimum: 1.
+        """
         replicas: NotRequired[pulumi.Input[_builtins.int]]
         """
         Replica factor for Longhorn volumes. Minimum: 1.
@@ -6002,12 +6467,44 @@ elif False:
 @pulumi.input_type
 class Mk8sAddOnsByokConfigLonghornArgs:
     def __init__(__self__, *,
+                 is_default: Optional[pulumi.Input[_builtins.bool]] = None,
+                 number_of_replicas: Optional[pulumi.Input[_builtins.int]] = None,
                  replicas: Optional[pulumi.Input[_builtins.int]] = None):
         """
+        :param pulumi.Input[_builtins.bool] is_default: Mark Longhorn as the default storage class.
+        :param pulumi.Input[_builtins.int] number_of_replicas: Replica factor for Longhorn volumes. Minimum: 1.
         :param pulumi.Input[_builtins.int] replicas: Replica factor for Longhorn volumes. Minimum: 1.
         """
+        if is_default is not None:
+            pulumi.set(__self__, "is_default", is_default)
+        if number_of_replicas is not None:
+            pulumi.set(__self__, "number_of_replicas", number_of_replicas)
         if replicas is not None:
             pulumi.set(__self__, "replicas", replicas)
+
+    @_builtins.property
+    @pulumi.getter(name="isDefault")
+    def is_default(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Mark Longhorn as the default storage class.
+        """
+        return pulumi.get(self, "is_default")
+
+    @is_default.setter
+    def is_default(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "is_default", value)
+
+    @_builtins.property
+    @pulumi.getter(name="numberOfReplicas")
+    def number_of_replicas(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        Replica factor for Longhorn volumes. Minimum: 1.
+        """
+        return pulumi.get(self, "number_of_replicas")
+
+    @number_of_replicas.setter
+    def number_of_replicas(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "number_of_replicas", value)
 
     @_builtins.property
     @pulumi.getter
@@ -6032,6 +6529,14 @@ if not MYPY:
         """
         Whether to deploy the middlebox component.
         """
+        ip: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        IPv4 address bound by the middlebox component.
+        """
+        port: NotRequired[pulumi.Input[_builtins.int]]
+        """
+        Listening port for the middlebox component.
+        """
 elif False:
     Mk8sAddOnsByokConfigMiddleboxArgsDict: TypeAlias = Mapping[str, Any]
 
@@ -6039,15 +6544,23 @@ elif False:
 class Mk8sAddOnsByokConfigMiddleboxArgs:
     def __init__(__self__, *,
                  bandwidth_alert_mbps: Optional[pulumi.Input[_builtins.int]] = None,
-                 enabled: Optional[pulumi.Input[_builtins.bool]] = None):
+                 enabled: Optional[pulumi.Input[_builtins.bool]] = None,
+                 ip: Optional[pulumi.Input[_builtins.str]] = None,
+                 port: Optional[pulumi.Input[_builtins.int]] = None):
         """
         :param pulumi.Input[_builtins.int] bandwidth_alert_mbps: Alert threshold, in Mbps, for middlebox bandwidth usage.
         :param pulumi.Input[_builtins.bool] enabled: Whether to deploy the middlebox component.
+        :param pulumi.Input[_builtins.str] ip: IPv4 address bound by the middlebox component.
+        :param pulumi.Input[_builtins.int] port: Listening port for the middlebox component.
         """
         if bandwidth_alert_mbps is not None:
             pulumi.set(__self__, "bandwidth_alert_mbps", bandwidth_alert_mbps)
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
+        if ip is not None:
+            pulumi.set(__self__, "ip", ip)
+        if port is not None:
+            pulumi.set(__self__, "port", port)
 
     @_builtins.property
     @pulumi.getter(name="bandwidthAlertMbps")
@@ -6073,9 +6586,37 @@ class Mk8sAddOnsByokConfigMiddleboxArgs:
     def enabled(self, value: Optional[pulumi.Input[_builtins.bool]]):
         pulumi.set(self, "enabled", value)
 
+    @_builtins.property
+    @pulumi.getter
+    def ip(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        IPv4 address bound by the middlebox component.
+        """
+        return pulumi.get(self, "ip")
+
+    @ip.setter
+    def ip(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "ip", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def port(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        Listening port for the middlebox component.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "port", value)
+
 
 if not MYPY:
     class Mk8sAddOnsByokConfigMonitoringArgsDict(TypedDict):
+        external_labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+        """
+        Static labels appended to every metric scraped by the BYOK Prometheus stack.
+        """
         kube_state_metrics: NotRequired[pulumi.Input['Mk8sAddOnsByokConfigMonitoringKubeStateMetricsArgsDict']]
         """
         Kube-state-metrics resource overrides.
@@ -6092,22 +6633,32 @@ if not MYPY:
         """
         Prometheus deployment configuration.
         """
+        remote_writes: NotRequired[pulumi.Input[Sequence[pulumi.Input['Mk8sAddOnsByokConfigMonitoringRemoteWriteArgsDict']]]]
+        """
+        Prometheus remote_write client configurations. Order is preserved as written.
+        """
 elif False:
     Mk8sAddOnsByokConfigMonitoringArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class Mk8sAddOnsByokConfigMonitoringArgs:
     def __init__(__self__, *,
+                 external_labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  kube_state_metrics: Optional[pulumi.Input['Mk8sAddOnsByokConfigMonitoringKubeStateMetricsArgs']] = None,
                  max_memory: Optional[pulumi.Input[_builtins.str]] = None,
                  min_memory: Optional[pulumi.Input[_builtins.str]] = None,
-                 prometheus: Optional[pulumi.Input['Mk8sAddOnsByokConfigMonitoringPrometheusArgs']] = None):
+                 prometheus: Optional[pulumi.Input['Mk8sAddOnsByokConfigMonitoringPrometheusArgs']] = None,
+                 remote_writes: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs']]]] = None):
         """
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] external_labels: Static labels appended to every metric scraped by the BYOK Prometheus stack.
         :param pulumi.Input['Mk8sAddOnsByokConfigMonitoringKubeStateMetricsArgs'] kube_state_metrics: Kube-state-metrics resource overrides.
         :param pulumi.Input[_builtins.str] max_memory: Maximum memory limit for monitoring components.
         :param pulumi.Input[_builtins.str] min_memory: Minimum memory request for monitoring components.
         :param pulumi.Input['Mk8sAddOnsByokConfigMonitoringPrometheusArgs'] prometheus: Prometheus deployment configuration.
+        :param pulumi.Input[Sequence[pulumi.Input['Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs']]] remote_writes: Prometheus remote_write client configurations. Order is preserved as written.
         """
+        if external_labels is not None:
+            pulumi.set(__self__, "external_labels", external_labels)
         if kube_state_metrics is not None:
             pulumi.set(__self__, "kube_state_metrics", kube_state_metrics)
         if max_memory is not None:
@@ -6116,6 +6667,20 @@ class Mk8sAddOnsByokConfigMonitoringArgs:
             pulumi.set(__self__, "min_memory", min_memory)
         if prometheus is not None:
             pulumi.set(__self__, "prometheus", prometheus)
+        if remote_writes is not None:
+            pulumi.set(__self__, "remote_writes", remote_writes)
+
+    @_builtins.property
+    @pulumi.getter(name="externalLabels")
+    def external_labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Static labels appended to every metric scraped by the BYOK Prometheus stack.
+        """
+        return pulumi.get(self, "external_labels")
+
+    @external_labels.setter
+    def external_labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "external_labels", value)
 
     @_builtins.property
     @pulumi.getter(name="kubeStateMetrics")
@@ -6164,6 +6729,18 @@ class Mk8sAddOnsByokConfigMonitoringArgs:
     @prometheus.setter
     def prometheus(self, value: Optional[pulumi.Input['Mk8sAddOnsByokConfigMonitoringPrometheusArgs']]):
         pulumi.set(self, "prometheus", value)
+
+    @_builtins.property
+    @pulumi.getter(name="remoteWrites")
+    def remote_writes(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs']]]]:
+        """
+        Prometheus remote_write client configurations. Order is preserved as written.
+        """
+        return pulumi.get(self, "remote_writes")
+
+    @remote_writes.setter
+    def remote_writes(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs']]]]):
+        pulumi.set(self, "remote_writes", value)
 
 
 if not MYPY:
@@ -6260,6 +6837,622 @@ class Mk8sAddOnsByokConfigMonitoringPrometheusMainArgs:
     @storage.setter
     def storage(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "storage", value)
+
+
+if not MYPY:
+    class Mk8sAddOnsByokConfigMonitoringRemoteWriteArgsDict(TypedDict):
+        authorization: NotRequired[pulumi.Input['Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgsDict']]
+        """
+        HTTP Authorization header credentials.
+        """
+        azuread: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+        """
+        Azure AD authentication parameters as flat key-value pairs.
+        """
+        basic_auth: NotRequired[pulumi.Input['Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgsDict']]
+        """
+        HTTP basic authentication credentials.
+        """
+        enable_http2: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Whether to enable HTTP/2.
+        """
+        follow_redirects: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Whether the HTTP client follows redirects.
+        """
+        google_iam: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+        """
+        Google Cloud IAM authentication parameters as flat key-value pairs.
+        """
+        headers: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+        """
+        Custom request headers attached to every remote_write call.
+        """
+        http_headers: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+        """
+        Custom HTTP headers, as flat key-value pairs.
+        """
+        name: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Friendly name used in metrics for this client.
+        """
+        no_proxy: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Comma-separated list of hosts that bypass the proxy.
+        """
+        oauth2: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+        """
+        OAuth 2.0 client configuration as flat key-value pairs.
+        """
+        proxy_connect_header: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+        """
+        Headers sent to the proxy on CONNECT, as flat key-value pairs.
+        """
+        proxy_from_environment: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Whether to read proxy settings from environment variables.
+        """
+        proxy_url: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        HTTP proxy URL used for outbound requests.
+        """
+        queue_config: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+        """
+        Tuning parameters for the in-memory remote_write queue, as flat key-value pairs.
+        """
+        remote_timeout: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Per-request timeout (for example, "30s").
+        """
+        send_exemplars: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Whether to forward Prometheus exemplars.
+        """
+        send_native_histograms: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Whether to forward Prometheus native histograms.
+        """
+        sigv4: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+        """
+        AWS SigV4 authentication parameters as flat key-value pairs.
+        """
+        tls_config: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+        """
+        TLS configuration as flat key-value pairs.
+        """
+        url: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Endpoint that receives the remote_write payload.
+        """
+        write_relabel_configs: NotRequired[pulumi.Input[Sequence[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]]]
+        """
+        Relabel rules applied to samples before they are sent.
+        """
+elif False:
+    Mk8sAddOnsByokConfigMonitoringRemoteWriteArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs:
+    def __init__(__self__, *,
+                 authorization: Optional[pulumi.Input['Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs']] = None,
+                 azuread: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 basic_auth: Optional[pulumi.Input['Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs']] = None,
+                 enable_http2: Optional[pulumi.Input[_builtins.bool]] = None,
+                 follow_redirects: Optional[pulumi.Input[_builtins.bool]] = None,
+                 google_iam: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 headers: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 http_headers: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 name: Optional[pulumi.Input[_builtins.str]] = None,
+                 no_proxy: Optional[pulumi.Input[_builtins.str]] = None,
+                 oauth2: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 proxy_connect_header: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 proxy_from_environment: Optional[pulumi.Input[_builtins.bool]] = None,
+                 proxy_url: Optional[pulumi.Input[_builtins.str]] = None,
+                 queue_config: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 remote_timeout: Optional[pulumi.Input[_builtins.str]] = None,
+                 send_exemplars: Optional[pulumi.Input[_builtins.bool]] = None,
+                 send_native_histograms: Optional[pulumi.Input[_builtins.bool]] = None,
+                 sigv4: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 tls_config: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 url: Optional[pulumi.Input[_builtins.str]] = None,
+                 write_relabel_configs: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]]] = None):
+        """
+        :param pulumi.Input['Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs'] authorization: HTTP Authorization header credentials.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] azuread: Azure AD authentication parameters as flat key-value pairs.
+        :param pulumi.Input['Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs'] basic_auth: HTTP basic authentication credentials.
+        :param pulumi.Input[_builtins.bool] enable_http2: Whether to enable HTTP/2.
+        :param pulumi.Input[_builtins.bool] follow_redirects: Whether the HTTP client follows redirects.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] google_iam: Google Cloud IAM authentication parameters as flat key-value pairs.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] headers: Custom request headers attached to every remote_write call.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] http_headers: Custom HTTP headers, as flat key-value pairs.
+        :param pulumi.Input[_builtins.str] name: Friendly name used in metrics for this client.
+        :param pulumi.Input[_builtins.str] no_proxy: Comma-separated list of hosts that bypass the proxy.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] oauth2: OAuth 2.0 client configuration as flat key-value pairs.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] proxy_connect_header: Headers sent to the proxy on CONNECT, as flat key-value pairs.
+        :param pulumi.Input[_builtins.bool] proxy_from_environment: Whether to read proxy settings from environment variables.
+        :param pulumi.Input[_builtins.str] proxy_url: HTTP proxy URL used for outbound requests.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] queue_config: Tuning parameters for the in-memory remote_write queue, as flat key-value pairs.
+        :param pulumi.Input[_builtins.str] remote_timeout: Per-request timeout (for example, "30s").
+        :param pulumi.Input[_builtins.bool] send_exemplars: Whether to forward Prometheus exemplars.
+        :param pulumi.Input[_builtins.bool] send_native_histograms: Whether to forward Prometheus native histograms.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] sigv4: AWS SigV4 authentication parameters as flat key-value pairs.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tls_config: TLS configuration as flat key-value pairs.
+        :param pulumi.Input[_builtins.str] url: Endpoint that receives the remote_write payload.
+        :param pulumi.Input[Sequence[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]] write_relabel_configs: Relabel rules applied to samples before they are sent.
+        """
+        if authorization is not None:
+            pulumi.set(__self__, "authorization", authorization)
+        if azuread is not None:
+            pulumi.set(__self__, "azuread", azuread)
+        if basic_auth is not None:
+            pulumi.set(__self__, "basic_auth", basic_auth)
+        if enable_http2 is not None:
+            pulumi.set(__self__, "enable_http2", enable_http2)
+        if follow_redirects is not None:
+            pulumi.set(__self__, "follow_redirects", follow_redirects)
+        if google_iam is not None:
+            pulumi.set(__self__, "google_iam", google_iam)
+        if headers is not None:
+            pulumi.set(__self__, "headers", headers)
+        if http_headers is not None:
+            pulumi.set(__self__, "http_headers", http_headers)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if no_proxy is not None:
+            pulumi.set(__self__, "no_proxy", no_proxy)
+        if oauth2 is not None:
+            pulumi.set(__self__, "oauth2", oauth2)
+        if proxy_connect_header is not None:
+            pulumi.set(__self__, "proxy_connect_header", proxy_connect_header)
+        if proxy_from_environment is not None:
+            pulumi.set(__self__, "proxy_from_environment", proxy_from_environment)
+        if proxy_url is not None:
+            pulumi.set(__self__, "proxy_url", proxy_url)
+        if queue_config is not None:
+            pulumi.set(__self__, "queue_config", queue_config)
+        if remote_timeout is not None:
+            pulumi.set(__self__, "remote_timeout", remote_timeout)
+        if send_exemplars is not None:
+            pulumi.set(__self__, "send_exemplars", send_exemplars)
+        if send_native_histograms is not None:
+            pulumi.set(__self__, "send_native_histograms", send_native_histograms)
+        if sigv4 is not None:
+            pulumi.set(__self__, "sigv4", sigv4)
+        if tls_config is not None:
+            pulumi.set(__self__, "tls_config", tls_config)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+        if write_relabel_configs is not None:
+            pulumi.set(__self__, "write_relabel_configs", write_relabel_configs)
+
+    @_builtins.property
+    @pulumi.getter
+    def authorization(self) -> Optional[pulumi.Input['Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs']]:
+        """
+        HTTP Authorization header credentials.
+        """
+        return pulumi.get(self, "authorization")
+
+    @authorization.setter
+    def authorization(self, value: Optional[pulumi.Input['Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs']]):
+        pulumi.set(self, "authorization", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def azuread(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Azure AD authentication parameters as flat key-value pairs.
+        """
+        return pulumi.get(self, "azuread")
+
+    @azuread.setter
+    def azuread(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "azuread", value)
+
+    @_builtins.property
+    @pulumi.getter(name="basicAuth")
+    def basic_auth(self) -> Optional[pulumi.Input['Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs']]:
+        """
+        HTTP basic authentication credentials.
+        """
+        return pulumi.get(self, "basic_auth")
+
+    @basic_auth.setter
+    def basic_auth(self, value: Optional[pulumi.Input['Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs']]):
+        pulumi.set(self, "basic_auth", value)
+
+    @_builtins.property
+    @pulumi.getter(name="enableHttp2")
+    def enable_http2(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Whether to enable HTTP/2.
+        """
+        return pulumi.get(self, "enable_http2")
+
+    @enable_http2.setter
+    def enable_http2(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "enable_http2", value)
+
+    @_builtins.property
+    @pulumi.getter(name="followRedirects")
+    def follow_redirects(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Whether the HTTP client follows redirects.
+        """
+        return pulumi.get(self, "follow_redirects")
+
+    @follow_redirects.setter
+    def follow_redirects(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "follow_redirects", value)
+
+    @_builtins.property
+    @pulumi.getter(name="googleIam")
+    def google_iam(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Google Cloud IAM authentication parameters as flat key-value pairs.
+        """
+        return pulumi.get(self, "google_iam")
+
+    @google_iam.setter
+    def google_iam(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "google_iam", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def headers(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Custom request headers attached to every remote_write call.
+        """
+        return pulumi.get(self, "headers")
+
+    @headers.setter
+    def headers(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "headers", value)
+
+    @_builtins.property
+    @pulumi.getter(name="httpHeaders")
+    def http_headers(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Custom HTTP headers, as flat key-value pairs.
+        """
+        return pulumi.get(self, "http_headers")
+
+    @http_headers.setter
+    def http_headers(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "http_headers", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Friendly name used in metrics for this client.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter(name="noProxy")
+    def no_proxy(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Comma-separated list of hosts that bypass the proxy.
+        """
+        return pulumi.get(self, "no_proxy")
+
+    @no_proxy.setter
+    def no_proxy(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "no_proxy", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def oauth2(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        OAuth 2.0 client configuration as flat key-value pairs.
+        """
+        return pulumi.get(self, "oauth2")
+
+    @oauth2.setter
+    def oauth2(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "oauth2", value)
+
+    @_builtins.property
+    @pulumi.getter(name="proxyConnectHeader")
+    def proxy_connect_header(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Headers sent to the proxy on CONNECT, as flat key-value pairs.
+        """
+        return pulumi.get(self, "proxy_connect_header")
+
+    @proxy_connect_header.setter
+    def proxy_connect_header(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "proxy_connect_header", value)
+
+    @_builtins.property
+    @pulumi.getter(name="proxyFromEnvironment")
+    def proxy_from_environment(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Whether to read proxy settings from environment variables.
+        """
+        return pulumi.get(self, "proxy_from_environment")
+
+    @proxy_from_environment.setter
+    def proxy_from_environment(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "proxy_from_environment", value)
+
+    @_builtins.property
+    @pulumi.getter(name="proxyUrl")
+    def proxy_url(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        HTTP proxy URL used for outbound requests.
+        """
+        return pulumi.get(self, "proxy_url")
+
+    @proxy_url.setter
+    def proxy_url(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "proxy_url", value)
+
+    @_builtins.property
+    @pulumi.getter(name="queueConfig")
+    def queue_config(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        Tuning parameters for the in-memory remote_write queue, as flat key-value pairs.
+        """
+        return pulumi.get(self, "queue_config")
+
+    @queue_config.setter
+    def queue_config(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "queue_config", value)
+
+    @_builtins.property
+    @pulumi.getter(name="remoteTimeout")
+    def remote_timeout(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Per-request timeout (for example, "30s").
+        """
+        return pulumi.get(self, "remote_timeout")
+
+    @remote_timeout.setter
+    def remote_timeout(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "remote_timeout", value)
+
+    @_builtins.property
+    @pulumi.getter(name="sendExemplars")
+    def send_exemplars(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Whether to forward Prometheus exemplars.
+        """
+        return pulumi.get(self, "send_exemplars")
+
+    @send_exemplars.setter
+    def send_exemplars(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "send_exemplars", value)
+
+    @_builtins.property
+    @pulumi.getter(name="sendNativeHistograms")
+    def send_native_histograms(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Whether to forward Prometheus native histograms.
+        """
+        return pulumi.get(self, "send_native_histograms")
+
+    @send_native_histograms.setter
+    def send_native_histograms(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "send_native_histograms", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def sigv4(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        AWS SigV4 authentication parameters as flat key-value pairs.
+        """
+        return pulumi.get(self, "sigv4")
+
+    @sigv4.setter
+    def sigv4(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "sigv4", value)
+
+    @_builtins.property
+    @pulumi.getter(name="tlsConfig")
+    def tls_config(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
+        """
+        TLS configuration as flat key-value pairs.
+        """
+        return pulumi.get(self, "tls_config")
+
+    @tls_config.setter
+    def tls_config(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "tls_config", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Endpoint that receives the remote_write payload.
+        """
+        return pulumi.get(self, "url")
+
+    @url.setter
+    def url(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "url", value)
+
+    @_builtins.property
+    @pulumi.getter(name="writeRelabelConfigs")
+    def write_relabel_configs(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]]]:
+        """
+        Relabel rules applied to samples before they are sent.
+        """
+        return pulumi.get(self, "write_relabel_configs")
+
+    @write_relabel_configs.setter
+    def write_relabel_configs(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]]]):
+        pulumi.set(self, "write_relabel_configs", value)
+
+
+if not MYPY:
+    class Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgsDict(TypedDict):
+        credentials: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Authorization credentials.
+        """
+        credentials_file: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Path to a file containing the credentials.
+        """
+        type: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Authorization scheme (for example, "Bearer").
+        """
+elif False:
+    Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs:
+    def __init__(__self__, *,
+                 credentials: Optional[pulumi.Input[_builtins.str]] = None,
+                 credentials_file: Optional[pulumi.Input[_builtins.str]] = None,
+                 type: Optional[pulumi.Input[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] credentials: Authorization credentials.
+        :param pulumi.Input[_builtins.str] credentials_file: Path to a file containing the credentials.
+        :param pulumi.Input[_builtins.str] type: Authorization scheme (for example, "Bearer").
+        """
+        if credentials is not None:
+            pulumi.set(__self__, "credentials", credentials)
+        if credentials_file is not None:
+            pulumi.set(__self__, "credentials_file", credentials_file)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
+
+    @_builtins.property
+    @pulumi.getter
+    def credentials(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Authorization credentials.
+        """
+        return pulumi.get(self, "credentials")
+
+    @credentials.setter
+    def credentials(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "credentials", value)
+
+    @_builtins.property
+    @pulumi.getter(name="credentialsFile")
+    def credentials_file(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Path to a file containing the credentials.
+        """
+        return pulumi.get(self, "credentials_file")
+
+    @credentials_file.setter
+    def credentials_file(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "credentials_file", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def type(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Authorization scheme (for example, "Bearer").
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "type", value)
+
+
+if not MYPY:
+    class Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgsDict(TypedDict):
+        password: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Password for HTTP basic authentication.
+        """
+        password_file: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Path to a file containing the password.
+        """
+        username: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Username for HTTP basic authentication.
+        """
+        username_file: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Path to a file containing the username.
+        """
+elif False:
+    Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs:
+    def __init__(__self__, *,
+                 password: Optional[pulumi.Input[_builtins.str]] = None,
+                 password_file: Optional[pulumi.Input[_builtins.str]] = None,
+                 username: Optional[pulumi.Input[_builtins.str]] = None,
+                 username_file: Optional[pulumi.Input[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] password: Password for HTTP basic authentication.
+        :param pulumi.Input[_builtins.str] password_file: Path to a file containing the password.
+        :param pulumi.Input[_builtins.str] username: Username for HTTP basic authentication.
+        :param pulumi.Input[_builtins.str] username_file: Path to a file containing the username.
+        """
+        if password is not None:
+            pulumi.set(__self__, "password", password)
+        if password_file is not None:
+            pulumi.set(__self__, "password_file", password_file)
+        if username is not None:
+            pulumi.set(__self__, "username", username)
+        if username_file is not None:
+            pulumi.set(__self__, "username_file", username_file)
+
+    @_builtins.property
+    @pulumi.getter
+    def password(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Password for HTTP basic authentication.
+        """
+        return pulumi.get(self, "password")
+
+    @password.setter
+    def password(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "password", value)
+
+    @_builtins.property
+    @pulumi.getter(name="passwordFile")
+    def password_file(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Path to a file containing the password.
+        """
+        return pulumi.get(self, "password_file")
+
+    @password_file.setter
+    def password_file(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "password_file", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def username(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Username for HTTP basic authentication.
+        """
+        return pulumi.get(self, "username")
+
+    @username.setter
+    def username(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "username", value)
+
+    @_builtins.property
+    @pulumi.getter(name="usernameFile")
+    def username_file(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Path to a file containing the username.
+        """
+        return pulumi.get(self, "username_file")
+
+    @username_file.setter
+    def username_file(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "username_file", value)
 
 
 if not MYPY:
@@ -21693,18 +22886,26 @@ if not MYPY:
         """
         The group id assigned to any mounted volume.
         """
+        run_as_user: NotRequired[pulumi.Input[_builtins.int]]
+        """
+        The user id assigned to all container processes.
+        """
 elif False:
     WorkloadSecurityOptionsArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class WorkloadSecurityOptionsArgs:
     def __init__(__self__, *,
-                 file_system_group_id: Optional[pulumi.Input[_builtins.int]] = None):
+                 file_system_group_id: Optional[pulumi.Input[_builtins.int]] = None,
+                 run_as_user: Optional[pulumi.Input[_builtins.int]] = None):
         """
         :param pulumi.Input[_builtins.int] file_system_group_id: The group id assigned to any mounted volume.
+        :param pulumi.Input[_builtins.int] run_as_user: The user id assigned to all container processes.
         """
         if file_system_group_id is not None:
             pulumi.set(__self__, "file_system_group_id", file_system_group_id)
+        if run_as_user is not None:
+            pulumi.set(__self__, "run_as_user", run_as_user)
 
     @_builtins.property
     @pulumi.getter(name="fileSystemGroupId")
@@ -21717,6 +22918,18 @@ class WorkloadSecurityOptionsArgs:
     @file_system_group_id.setter
     def file_system_group_id(self, value: Optional[pulumi.Input[_builtins.int]]):
         pulumi.set(self, "file_system_group_id", value)
+
+    @_builtins.property
+    @pulumi.getter(name="runAsUser")
+    def run_as_user(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        The user id assigned to all container processes.
+        """
+        return pulumi.get(self, "run_as_user")
+
+    @run_as_user.setter
+    def run_as_user(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "run_as_user", value)
 
 
 if not MYPY:
@@ -21773,6 +22986,10 @@ if not MYPY:
         """
         Resolved images for workloads with dynamic tags enabled.
         """
+        suspended_status: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `suspended`.
+        """
 elif False:
     WorkloadStatusArgsDict: TypeAlias = Mapping[str, Any]
 
@@ -21787,7 +23004,8 @@ class WorkloadStatusArgs:
                  load_balancers: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusLoadBalancerArgs']]]] = None,
                  parent_id: Optional[pulumi.Input[_builtins.str]] = None,
                  replica_internal_names: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 resolved_images: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageArgs']]]] = None):
+                 resolved_images: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageArgs']]]] = None,
+                 suspended_status: Optional[pulumi.Input[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] canonical_endpoint: Canonical endpoint for the workload.
         :param pulumi.Input[_builtins.int] current_replica_count: Current amount of replicas deployed.
@@ -21796,6 +23014,7 @@ class WorkloadStatusArgs:
         :param pulumi.Input[_builtins.str] internal_name: Internal hostname for the workload. Used for service-to-service requests.
         :param pulumi.Input[_builtins.str] parent_id: ID of the parent object.
         :param pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageArgs']]] resolved_images: Resolved images for workloads with dynamic tags enabled.
+        :param pulumi.Input[_builtins.str] suspended_status: Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `suspended`.
         """
         if canonical_endpoint is not None:
             pulumi.set(__self__, "canonical_endpoint", canonical_endpoint)
@@ -21815,6 +23034,8 @@ class WorkloadStatusArgs:
             pulumi.set(__self__, "replica_internal_names", replica_internal_names)
         if resolved_images is not None:
             pulumi.set(__self__, "resolved_images", resolved_images)
+        if suspended_status is not None:
+            pulumi.set(__self__, "suspended_status", suspended_status)
 
     @_builtins.property
     @pulumi.getter(name="canonicalEndpoint")
@@ -21917,6 +23138,18 @@ class WorkloadStatusArgs:
     @resolved_images.setter
     def resolved_images(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusResolvedImageArgs']]]]):
         pulumi.set(self, "resolved_images", value)
+
+    @_builtins.property
+    @pulumi.getter(name="suspendedStatus")
+    def suspended_status(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `suspended`.
+        """
+        return pulumi.get(self, "suspended_status")
+
+    @suspended_status.setter
+    def suspended_status(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "suspended_status", value)
 
 
 if not MYPY:
@@ -22762,6 +23995,94 @@ class GetGvcLoadBalancerRedirectClassArgs:
     @status5xx.setter
     def status5xx(self, value: Optional[_builtins.str]):
         pulumi.set(self, "status5xx", value)
+
+
+if not MYPY:
+    class GetGvcLocationOptionArgsDict(TypedDict):
+        latency_offset_ms: _builtins.int
+        """
+        Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+        """
+        latency_tolerance_ms: _builtins.int
+        """
+        Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+        """
+        name: _builtins.str
+        """
+        Name of the location these options apply to.
+        """
+        routing_tier: _builtins.int
+        """
+        Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routing_tier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+        """
+elif False:
+    GetGvcLocationOptionArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class GetGvcLocationOptionArgs:
+    def __init__(__self__, *,
+                 latency_offset_ms: _builtins.int,
+                 latency_tolerance_ms: _builtins.int,
+                 name: _builtins.str,
+                 routing_tier: _builtins.int):
+        """
+        :param _builtins.int latency_offset_ms: Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+        :param _builtins.int latency_tolerance_ms: Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+        :param _builtins.str name: Name of the location these options apply to.
+        :param _builtins.int routing_tier: Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routing_tier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+        """
+        pulumi.set(__self__, "latency_offset_ms", latency_offset_ms)
+        pulumi.set(__self__, "latency_tolerance_ms", latency_tolerance_ms)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "routing_tier", routing_tier)
+
+    @_builtins.property
+    @pulumi.getter(name="latencyOffsetMs")
+    def latency_offset_ms(self) -> _builtins.int:
+        """
+        Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+        """
+        return pulumi.get(self, "latency_offset_ms")
+
+    @latency_offset_ms.setter
+    def latency_offset_ms(self, value: _builtins.int):
+        pulumi.set(self, "latency_offset_ms", value)
+
+    @_builtins.property
+    @pulumi.getter(name="latencyToleranceMs")
+    def latency_tolerance_ms(self) -> _builtins.int:
+        """
+        Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+        """
+        return pulumi.get(self, "latency_tolerance_ms")
+
+    @latency_tolerance_ms.setter
+    def latency_tolerance_ms(self, value: _builtins.int):
+        pulumi.set(self, "latency_tolerance_ms", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        Name of the location these options apply to.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: _builtins.str):
+        pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter(name="routingTier")
+    def routing_tier(self) -> _builtins.int:
+        """
+        Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routing_tier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+        """
+        return pulumi.get(self, "routing_tier")
+
+    @routing_tier.setter
+    def routing_tier(self, value: _builtins.int):
+        pulumi.set(self, "routing_tier", value)
 
 
 if not MYPY:
@@ -28052,17 +29373,24 @@ if not MYPY:
         """
         The group id assigned to any mounted volume.
         """
+        run_as_user: _builtins.int
+        """
+        The user id assigned to all container processes.
+        """
 elif False:
     GetWorkloadSecurityOptionArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetWorkloadSecurityOptionArgs:
     def __init__(__self__, *,
-                 file_system_group_id: _builtins.int):
+                 file_system_group_id: _builtins.int,
+                 run_as_user: _builtins.int):
         """
         :param _builtins.int file_system_group_id: The group id assigned to any mounted volume.
+        :param _builtins.int run_as_user: The user id assigned to all container processes.
         """
         pulumi.set(__self__, "file_system_group_id", file_system_group_id)
+        pulumi.set(__self__, "run_as_user", run_as_user)
 
     @_builtins.property
     @pulumi.getter(name="fileSystemGroupId")
@@ -28075,6 +29403,18 @@ class GetWorkloadSecurityOptionArgs:
     @file_system_group_id.setter
     def file_system_group_id(self, value: _builtins.int):
         pulumi.set(self, "file_system_group_id", value)
+
+    @_builtins.property
+    @pulumi.getter(name="runAsUser")
+    def run_as_user(self) -> _builtins.int:
+        """
+        The user id assigned to all container processes.
+        """
+        return pulumi.get(self, "run_as_user")
+
+    @run_as_user.setter
+    def run_as_user(self, value: _builtins.int):
+        pulumi.set(self, "run_as_user", value)
 
 
 if not MYPY:

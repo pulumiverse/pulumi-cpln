@@ -37,6 +37,15 @@ namespace Pulumiverse.Cpln
         [Output("enabled")]
         public Output<bool> Enabled { get; private set; } = null!;
 
+        [Output("geos")]
+        public Output<ImmutableArray<Outputs.CustomLocationGeo>> Geos { get; private set; } = null!;
+
+        /// <summary>
+        /// A list of IP ranges of the location.
+        /// </summary>
+        [Output("ipRanges")]
+        public Output<ImmutableArray<string>> IpRanges { get; private set; } = null!;
+
         /// <summary>
         /// Name of the Custom Location.
         /// </summary>
@@ -178,6 +187,26 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Input("enabled")]
         public Input<bool>? Enabled { get; set; }
+
+        [Input("geos")]
+        private InputList<Inputs.CustomLocationGeoGetArgs>? _geos;
+        public InputList<Inputs.CustomLocationGeoGetArgs> Geos
+        {
+            get => _geos ?? (_geos = new InputList<Inputs.CustomLocationGeoGetArgs>());
+            set => _geos = value;
+        }
+
+        [Input("ipRanges")]
+        private InputList<string>? _ipRanges;
+
+        /// <summary>
+        /// A list of IP ranges of the location.
+        /// </summary>
+        public InputList<string> IpRanges
+        {
+            get => _ipRanges ?? (_ipRanges = new InputList<string>());
+            set => _ipRanges = value;
+        }
 
         /// <summary>
         /// Name of the Custom Location.

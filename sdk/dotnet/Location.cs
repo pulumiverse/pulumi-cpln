@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln
     public partial class Location : global::Pulumi.CustomResource
     {
         /// <summary>
-        /// Cloud Provider of the location.
+        /// Cloud Provider of the location. Valid values: `Aws`, `Gcp`, `Azure`, `Byok`, `Linode`, `Vultr`, `Equinix`, `Oci`.
         /// </summary>
         [Output("cloudProvider")]
         public Output<string> CloudProvider { get; private set; } = null!;
@@ -52,6 +52,9 @@ namespace Pulumiverse.Cpln
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Origin of the location. Valid values: `Builtin`, `Default`, `Custom`.
+        /// </summary>
         [Output("origin")]
         public Output<string> Origin { get; private set; } = null!;
 
@@ -153,7 +156,7 @@ namespace Pulumiverse.Cpln
     public sealed class LocationState : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Cloud Provider of the location.
+        /// Cloud Provider of the location. Valid values: `Aws`, `Gcp`, `Azure`, `Byok`, `Linode`, `Vultr`, `Equinix`, `Oci`.
         /// </summary>
         [Input("cloudProvider")]
         public Input<string>? CloudProvider { get; set; }
@@ -202,6 +205,9 @@ namespace Pulumiverse.Cpln
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Origin of the location. Valid values: `Builtin`, `Default`, `Custom`.
+        /// </summary>
         [Input("origin")]
         public Input<string>? Origin { get; set; }
 

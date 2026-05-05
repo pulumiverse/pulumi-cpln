@@ -21,6 +21,8 @@ __all__ = [
     'CloudAccountAzure',
     'CloudAccountGcp',
     'CloudAccountNgs',
+    'CloudAccountStatus',
+    'CustomLocationGeo',
     'DomainRouteHeaders',
     'DomainRouteHeadersRequest',
     'DomainRouteMirror',
@@ -50,6 +52,7 @@ __all__ = [
     'GvcLoadBalancerMultiZone',
     'GvcLoadBalancerRedirect',
     'GvcLoadBalancerRedirectClass',
+    'GvcLocationOption',
     'GvcOtelTracing',
     'GvcSidecar',
     'HelmReleasePostrender',
@@ -80,6 +83,7 @@ __all__ = [
     'Mk8sAddOnsByok',
     'Mk8sAddOnsByokConfig',
     'Mk8sAddOnsByokConfigActuator',
+    'Mk8sAddOnsByokConfigByok',
     'Mk8sAddOnsByokConfigCommon',
     'Mk8sAddOnsByokConfigCommonPdb',
     'Mk8sAddOnsByokConfigIngress',
@@ -88,6 +92,7 @@ __all__ = [
     'Mk8sAddOnsByokConfigIstioIngressGateway',
     'Mk8sAddOnsByokConfigIstioIstiod',
     'Mk8sAddOnsByokConfigIstioSidecar',
+    'Mk8sAddOnsByokConfigJuicefs',
     'Mk8sAddOnsByokConfigLogSplitter',
     'Mk8sAddOnsByokConfigLonghorn',
     'Mk8sAddOnsByokConfigMiddlebox',
@@ -95,6 +100,9 @@ __all__ = [
     'Mk8sAddOnsByokConfigMonitoringKubeStateMetrics',
     'Mk8sAddOnsByokConfigMonitoringPrometheus',
     'Mk8sAddOnsByokConfigMonitoringPrometheusMain',
+    'Mk8sAddOnsByokConfigMonitoringRemoteWrite',
+    'Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization',
+    'Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth',
     'Mk8sAddOnsByokConfigRedis',
     'Mk8sAddOnsByokConfigRedisHa',
     'Mk8sAddOnsByokConfigRedisSentinel',
@@ -308,6 +316,7 @@ __all__ = [
     'GetGvcLoadBalancerMultiZoneResult',
     'GetGvcLoadBalancerRedirectResult',
     'GetGvcLoadBalancerRedirectClassResult',
+    'GetGvcLocationOptionResult',
     'GetGvcOtelTracingResult',
     'GetGvcSidecarResult',
     'GetHelmTemplatePostrenderResult',
@@ -591,6 +600,147 @@ class CloudAccountNgs(dict):
 
 
 @pulumi.output_type
+class CloudAccountStatus(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "lastChecked":
+            suggest = "last_checked"
+        elif key == "lastError":
+            suggest = "last_error"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in CloudAccountStatus. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        CloudAccountStatus.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        CloudAccountStatus.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 last_checked: Optional[_builtins.str] = None,
+                 last_error: Optional[_builtins.str] = None,
+                 usable: Optional[_builtins.bool] = None):
+        """
+        :param _builtins.str last_checked: ISO-8601 timestamp of the last time the Cloud Account credentials were validated.
+        :param _builtins.str last_error: The last error message reported when validating the Cloud Account credentials.
+        :param _builtins.bool usable: Whether the Cloud Account credentials are valid and usable by Control Plane.
+        """
+        if last_checked is not None:
+            pulumi.set(__self__, "last_checked", last_checked)
+        if last_error is not None:
+            pulumi.set(__self__, "last_error", last_error)
+        if usable is not None:
+            pulumi.set(__self__, "usable", usable)
+
+    @_builtins.property
+    @pulumi.getter(name="lastChecked")
+    def last_checked(self) -> Optional[_builtins.str]:
+        """
+        ISO-8601 timestamp of the last time the Cloud Account credentials were validated.
+        """
+        return pulumi.get(self, "last_checked")
+
+    @_builtins.property
+    @pulumi.getter(name="lastError")
+    def last_error(self) -> Optional[_builtins.str]:
+        """
+        The last error message reported when validating the Cloud Account credentials.
+        """
+        return pulumi.get(self, "last_error")
+
+    @_builtins.property
+    @pulumi.getter
+    def usable(self) -> Optional[_builtins.bool]:
+        """
+        Whether the Cloud Account credentials are valid and usable by Control Plane.
+        """
+        return pulumi.get(self, "usable")
+
+
+@pulumi.output_type
+class CustomLocationGeo(dict):
+    def __init__(__self__, *,
+                 city: Optional[_builtins.str] = None,
+                 continent: Optional[_builtins.str] = None,
+                 country: Optional[_builtins.str] = None,
+                 lat: Optional[_builtins.float] = None,
+                 lon: Optional[_builtins.float] = None,
+                 state: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str city: City of the location.
+        :param _builtins.str continent: Continent of the location.
+        :param _builtins.str country: Country of the location.
+        :param _builtins.float lat: Latitude of the location.
+        :param _builtins.float lon: Longitude of the location.
+        :param _builtins.str state: State of the location.
+        """
+        if city is not None:
+            pulumi.set(__self__, "city", city)
+        if continent is not None:
+            pulumi.set(__self__, "continent", continent)
+        if country is not None:
+            pulumi.set(__self__, "country", country)
+        if lat is not None:
+            pulumi.set(__self__, "lat", lat)
+        if lon is not None:
+            pulumi.set(__self__, "lon", lon)
+        if state is not None:
+            pulumi.set(__self__, "state", state)
+
+    @_builtins.property
+    @pulumi.getter
+    def city(self) -> Optional[_builtins.str]:
+        """
+        City of the location.
+        """
+        return pulumi.get(self, "city")
+
+    @_builtins.property
+    @pulumi.getter
+    def continent(self) -> Optional[_builtins.str]:
+        """
+        Continent of the location.
+        """
+        return pulumi.get(self, "continent")
+
+    @_builtins.property
+    @pulumi.getter
+    def country(self) -> Optional[_builtins.str]:
+        """
+        Country of the location.
+        """
+        return pulumi.get(self, "country")
+
+    @_builtins.property
+    @pulumi.getter
+    def lat(self) -> Optional[_builtins.float]:
+        """
+        Latitude of the location.
+        """
+        return pulumi.get(self, "lat")
+
+    @_builtins.property
+    @pulumi.getter
+    def lon(self) -> Optional[_builtins.float]:
+        """
+        Longitude of the location.
+        """
+        return pulumi.get(self, "lon")
+
+    @_builtins.property
+    @pulumi.getter
+    def state(self) -> Optional[_builtins.str]:
+        """
+        State of the location.
+        """
+        return pulumi.get(self, "state")
+
+
+@pulumi.output_type
 class DomainRouteHeaders(dict):
     def __init__(__self__, *,
                  request: Optional['outputs.DomainRouteHeadersRequest'] = None):
@@ -649,13 +799,17 @@ class DomainRouteMirror(dict):
 
     def __init__(__self__, *,
                  percent: _builtins.float,
-                 workload_link: _builtins.str):
+                 workload_link: _builtins.str,
+                 port: Optional[_builtins.int] = None):
         """
         :param _builtins.float percent: The percentage of traffic to mirror to the specified workload.
         :param _builtins.str workload_link: The workload to mirror traffic to.
+        :param _builtins.int port: The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
         """
         pulumi.set(__self__, "percent", percent)
         pulumi.set(__self__, "workload_link", workload_link)
+        if port is not None:
+            pulumi.set(__self__, "port", port)
 
     @_builtins.property
     @pulumi.getter
@@ -672,6 +826,14 @@ class DomainRouteMirror(dict):
         The workload to mirror traffic to.
         """
         return pulumi.get(self, "workload_link")
+
+    @_builtins.property
+    @pulumi.getter
+    def port(self) -> Optional[_builtins.int]:
+        """
+        The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
+        """
+        return pulumi.get(self, "port")
 
 
 @pulumi.output_type
@@ -1200,13 +1362,17 @@ class DomainSpecPortRouteMirror(dict):
 
     def __init__(__self__, *,
                  percent: _builtins.float,
-                 workload_link: _builtins.str):
+                 workload_link: _builtins.str,
+                 port: Optional[_builtins.int] = None):
         """
         :param _builtins.float percent: The percentage of traffic to mirror to the specified workload.
         :param _builtins.str workload_link: The workload to mirror traffic to.
+        :param _builtins.int port: The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
         """
         pulumi.set(__self__, "percent", percent)
         pulumi.set(__self__, "workload_link", workload_link)
+        if port is not None:
+            pulumi.set(__self__, "port", port)
 
     @_builtins.property
     @pulumi.getter
@@ -1223,6 +1389,14 @@ class DomainSpecPortRouteMirror(dict):
         The workload to mirror traffic to.
         """
         return pulumi.get(self, "workload_link")
+
+    @_builtins.property
+    @pulumi.getter
+    def port(self) -> Optional[_builtins.int]:
+        """
+        The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
+        """
+        return pulumi.get(self, "port")
 
 
 @pulumi.output_type
@@ -1625,7 +1799,7 @@ class GroupIdentityMatcher(dict):
                  language: Optional[_builtins.str] = None):
         """
         :param _builtins.str expression: Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged in with SAML providers.
-        :param _builtins.str language: Language of the expression. Either `jmespath` or `javascript`. Default: `jmespath`.
+        :param _builtins.str language: Language of the expression. Valid values: `jmespath`, `javascript`. Default: `jmespath`.
         """
         pulumi.set(__self__, "expression", expression)
         if language is not None:
@@ -1643,7 +1817,7 @@ class GroupIdentityMatcher(dict):
     @pulumi.getter
     def language(self) -> Optional[_builtins.str]:
         """
-        Language of the expression. Either `jmespath` or `javascript`. Default: `jmespath`.
+        Language of the expression. Valid values: `jmespath`, `javascript`. Default: `jmespath`.
         """
         return pulumi.get(self, "language")
 
@@ -2110,6 +2284,81 @@ class GvcLoadBalancerRedirectClass(dict):
         Specify the redirect url for any 500 level status code.
         """
         return pulumi.get(self, "status5xx")
+
+
+@pulumi.output_type
+class GvcLocationOption(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "latencyOffsetMs":
+            suggest = "latency_offset_ms"
+        elif key == "latencyToleranceMs":
+            suggest = "latency_tolerance_ms"
+        elif key == "routingTier":
+            suggest = "routing_tier"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in GvcLocationOption. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        GvcLocationOption.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        GvcLocationOption.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 name: _builtins.str,
+                 latency_offset_ms: Optional[_builtins.int] = None,
+                 latency_tolerance_ms: Optional[_builtins.int] = None,
+                 routing_tier: Optional[_builtins.int] = None):
+        """
+        :param _builtins.str name: Name of the location these options apply to.
+        :param _builtins.int latency_offset_ms: Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+        :param _builtins.int latency_tolerance_ms: Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+        :param _builtins.int routing_tier: Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routing_tier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+        """
+        pulumi.set(__self__, "name", name)
+        if latency_offset_ms is not None:
+            pulumi.set(__self__, "latency_offset_ms", latency_offset_ms)
+        if latency_tolerance_ms is not None:
+            pulumi.set(__self__, "latency_tolerance_ms", latency_tolerance_ms)
+        if routing_tier is not None:
+            pulumi.set(__self__, "routing_tier", routing_tier)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        Name of the location these options apply to.
+        """
+        return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter(name="latencyOffsetMs")
+    def latency_offset_ms(self) -> Optional[_builtins.int]:
+        """
+        Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+        """
+        return pulumi.get(self, "latency_offset_ms")
+
+    @_builtins.property
+    @pulumi.getter(name="latencyToleranceMs")
+    def latency_tolerance_ms(self) -> Optional[_builtins.int]:
+        """
+        Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+        """
+        return pulumi.get(self, "latency_tolerance_ms")
+
+    @_builtins.property
+    @pulumi.getter(name="routingTier")
+    def routing_tier(self) -> Optional[_builtins.int]:
+        """
+        Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routing_tier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+        """
+        return pulumi.get(self, "routing_tier")
 
 
 @pulumi.output_type
@@ -3609,10 +3858,12 @@ class Mk8sAddOnsByokConfig(dict):
 
     def __init__(__self__, *,
                  actuator: Optional['outputs.Mk8sAddOnsByokConfigActuator'] = None,
+                 byok: Optional['outputs.Mk8sAddOnsByokConfigByok'] = None,
                  common: Optional['outputs.Mk8sAddOnsByokConfigCommon'] = None,
                  ingress: Optional['outputs.Mk8sAddOnsByokConfigIngress'] = None,
                  internal_dns: Optional['outputs.Mk8sAddOnsByokConfigInternalDns'] = None,
                  istio: Optional['outputs.Mk8sAddOnsByokConfigIstio'] = None,
+                 juicefs: Optional['outputs.Mk8sAddOnsByokConfigJuicefs'] = None,
                  log_splitter: Optional['outputs.Mk8sAddOnsByokConfigLogSplitter'] = None,
                  longhorn: Optional['outputs.Mk8sAddOnsByokConfigLonghorn'] = None,
                  middlebox: Optional['outputs.Mk8sAddOnsByokConfigMiddlebox'] = None,
@@ -3623,10 +3874,12 @@ class Mk8sAddOnsByokConfig(dict):
                  tempo_agent: Optional['outputs.Mk8sAddOnsByokConfigTempoAgent'] = None):
         """
         :param 'Mk8sAddOnsByokConfigActuatorArgs' actuator: Resource tuning for the actuator component.
+        :param 'Mk8sAddOnsByokConfigByokArgs' byok: BYOK-wide settings.
         :param 'Mk8sAddOnsByokConfigCommonArgs' common: Shared rollout settings for BYOK workloads.
         :param 'Mk8sAddOnsByokConfigIngressArgs' ingress: Ingress controller resource configuration.
         :param 'Mk8sAddOnsByokConfigInternalDnsArgs' internal_dns: Internal DNS deployment settings.
         :param 'Mk8sAddOnsByokConfigIstioArgs' istio: Istio service mesh configuration.
+        :param 'Mk8sAddOnsByokConfigJuicefsArgs' juicefs: JuiceFS distributed file system add-on settings.
         :param 'Mk8sAddOnsByokConfigLogSplitterArgs' log_splitter: Log splitter deployment configuration.
         :param 'Mk8sAddOnsByokConfigLonghornArgs' longhorn: Longhorn persistent volume settings.
         :param 'Mk8sAddOnsByokConfigMiddleboxArgs' middlebox: Configuration for the optional middlebox traffic shaper.
@@ -3638,6 +3891,8 @@ class Mk8sAddOnsByokConfig(dict):
         """
         if actuator is not None:
             pulumi.set(__self__, "actuator", actuator)
+        if byok is not None:
+            pulumi.set(__self__, "byok", byok)
         if common is not None:
             pulumi.set(__self__, "common", common)
         if ingress is not None:
@@ -3646,6 +3901,8 @@ class Mk8sAddOnsByokConfig(dict):
             pulumi.set(__self__, "internal_dns", internal_dns)
         if istio is not None:
             pulumi.set(__self__, "istio", istio)
+        if juicefs is not None:
+            pulumi.set(__self__, "juicefs", juicefs)
         if log_splitter is not None:
             pulumi.set(__self__, "log_splitter", log_splitter)
         if longhorn is not None:
@@ -3670,6 +3927,14 @@ class Mk8sAddOnsByokConfig(dict):
         Resource tuning for the actuator component.
         """
         return pulumi.get(self, "actuator")
+
+    @_builtins.property
+    @pulumi.getter
+    def byok(self) -> Optional['outputs.Mk8sAddOnsByokConfigByok']:
+        """
+        BYOK-wide settings.
+        """
+        return pulumi.get(self, "byok")
 
     @_builtins.property
     @pulumi.getter
@@ -3702,6 +3967,14 @@ class Mk8sAddOnsByokConfig(dict):
         Istio service mesh configuration.
         """
         return pulumi.get(self, "istio")
+
+    @_builtins.property
+    @pulumi.getter
+    def juicefs(self) -> Optional['outputs.Mk8sAddOnsByokConfigJuicefs']:
+        """
+        JuiceFS distributed file system add-on settings.
+        """
+        return pulumi.get(self, "juicefs")
 
     @_builtins.property
     @pulumi.getter(name="logSplitter")
@@ -3870,6 +4143,42 @@ class Mk8sAddOnsByokConfigActuator(dict):
         Minimum memory request applied to actuator pods (e.g. "128Mi").
         """
         return pulumi.get(self, "min_memory")
+
+
+@pulumi.output_type
+class Mk8sAddOnsByokConfigByok(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "noDefaultStorageClasses":
+            suggest = "no_default_storage_classes"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOnsByokConfigByok. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAddOnsByokConfigByok.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAddOnsByokConfigByok.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 no_default_storage_classes: Optional[_builtins.bool] = None):
+        """
+        :param _builtins.bool no_default_storage_classes: When set, the BYOK installation does not provision any default storage classes.
+        """
+        if no_default_storage_classes is not None:
+            pulumi.set(__self__, "no_default_storage_classes", no_default_storage_classes)
+
+    @_builtins.property
+    @pulumi.getter(name="noDefaultStorageClasses")
+    def no_default_storage_classes(self) -> Optional[_builtins.bool]:
+        """
+        When set, the BYOK installation does not provision any default storage classes.
+        """
+        return pulumi.get(self, "no_default_storage_classes")
 
 
 @pulumi.output_type
@@ -4369,6 +4678,25 @@ class Mk8sAddOnsByokConfigIstioSidecar(dict):
 
 
 @pulumi.output_type
+class Mk8sAddOnsByokConfigJuicefs(dict):
+    def __init__(__self__, *,
+                 enabled: Optional[_builtins.bool] = None):
+        """
+        :param _builtins.bool enabled: Whether to install JuiceFS on the BYOK cluster.
+        """
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+
+    @_builtins.property
+    @pulumi.getter
+    def enabled(self) -> Optional[_builtins.bool]:
+        """
+        Whether to install JuiceFS on the BYOK cluster.
+        """
+        return pulumi.get(self, "enabled")
+
+
+@pulumi.output_type
 class Mk8sAddOnsByokConfigLogSplitter(dict):
     @staticmethod
     def __key_warning(key: str):
@@ -4476,13 +4804,56 @@ class Mk8sAddOnsByokConfigLogSplitter(dict):
 
 @pulumi.output_type
 class Mk8sAddOnsByokConfigLonghorn(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "isDefault":
+            suggest = "is_default"
+        elif key == "numberOfReplicas":
+            suggest = "number_of_replicas"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOnsByokConfigLonghorn. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAddOnsByokConfigLonghorn.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAddOnsByokConfigLonghorn.__key_warning(key)
+        return super().get(key, default)
+
     def __init__(__self__, *,
+                 is_default: Optional[_builtins.bool] = None,
+                 number_of_replicas: Optional[_builtins.int] = None,
                  replicas: Optional[_builtins.int] = None):
         """
+        :param _builtins.bool is_default: Mark Longhorn as the default storage class.
+        :param _builtins.int number_of_replicas: Replica factor for Longhorn volumes. Minimum: 1.
         :param _builtins.int replicas: Replica factor for Longhorn volumes. Minimum: 1.
         """
+        if is_default is not None:
+            pulumi.set(__self__, "is_default", is_default)
+        if number_of_replicas is not None:
+            pulumi.set(__self__, "number_of_replicas", number_of_replicas)
         if replicas is not None:
             pulumi.set(__self__, "replicas", replicas)
+
+    @_builtins.property
+    @pulumi.getter(name="isDefault")
+    def is_default(self) -> Optional[_builtins.bool]:
+        """
+        Mark Longhorn as the default storage class.
+        """
+        return pulumi.get(self, "is_default")
+
+    @_builtins.property
+    @pulumi.getter(name="numberOfReplicas")
+    def number_of_replicas(self) -> Optional[_builtins.int]:
+        """
+        Replica factor for Longhorn volumes. Minimum: 1.
+        """
+        return pulumi.get(self, "number_of_replicas")
 
     @_builtins.property
     @pulumi.getter
@@ -4514,15 +4885,23 @@ class Mk8sAddOnsByokConfigMiddlebox(dict):
 
     def __init__(__self__, *,
                  bandwidth_alert_mbps: Optional[_builtins.int] = None,
-                 enabled: Optional[_builtins.bool] = None):
+                 enabled: Optional[_builtins.bool] = None,
+                 ip: Optional[_builtins.str] = None,
+                 port: Optional[_builtins.int] = None):
         """
         :param _builtins.int bandwidth_alert_mbps: Alert threshold, in Mbps, for middlebox bandwidth usage.
         :param _builtins.bool enabled: Whether to deploy the middlebox component.
+        :param _builtins.str ip: IPv4 address bound by the middlebox component.
+        :param _builtins.int port: Listening port for the middlebox component.
         """
         if bandwidth_alert_mbps is not None:
             pulumi.set(__self__, "bandwidth_alert_mbps", bandwidth_alert_mbps)
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
+        if ip is not None:
+            pulumi.set(__self__, "ip", ip)
+        if port is not None:
+            pulumi.set(__self__, "port", port)
 
     @_builtins.property
     @pulumi.getter(name="bandwidthAlertMbps")
@@ -4540,18 +4919,38 @@ class Mk8sAddOnsByokConfigMiddlebox(dict):
         """
         return pulumi.get(self, "enabled")
 
+    @_builtins.property
+    @pulumi.getter
+    def ip(self) -> Optional[_builtins.str]:
+        """
+        IPv4 address bound by the middlebox component.
+        """
+        return pulumi.get(self, "ip")
+
+    @_builtins.property
+    @pulumi.getter
+    def port(self) -> Optional[_builtins.int]:
+        """
+        Listening port for the middlebox component.
+        """
+        return pulumi.get(self, "port")
+
 
 @pulumi.output_type
 class Mk8sAddOnsByokConfigMonitoring(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "kubeStateMetrics":
+        if key == "externalLabels":
+            suggest = "external_labels"
+        elif key == "kubeStateMetrics":
             suggest = "kube_state_metrics"
         elif key == "maxMemory":
             suggest = "max_memory"
         elif key == "minMemory":
             suggest = "min_memory"
+        elif key == "remoteWrites":
+            suggest = "remote_writes"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOnsByokConfigMonitoring. Access the value via the '{suggest}' property getter instead.")
@@ -4565,16 +4964,22 @@ class Mk8sAddOnsByokConfigMonitoring(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
+                 external_labels: Optional[Mapping[str, _builtins.str]] = None,
                  kube_state_metrics: Optional['outputs.Mk8sAddOnsByokConfigMonitoringKubeStateMetrics'] = None,
                  max_memory: Optional[_builtins.str] = None,
                  min_memory: Optional[_builtins.str] = None,
-                 prometheus: Optional['outputs.Mk8sAddOnsByokConfigMonitoringPrometheus'] = None):
+                 prometheus: Optional['outputs.Mk8sAddOnsByokConfigMonitoringPrometheus'] = None,
+                 remote_writes: Optional[Sequence['outputs.Mk8sAddOnsByokConfigMonitoringRemoteWrite']] = None):
         """
+        :param Mapping[str, _builtins.str] external_labels: Static labels appended to every metric scraped by the BYOK Prometheus stack.
         :param 'Mk8sAddOnsByokConfigMonitoringKubeStateMetricsArgs' kube_state_metrics: Kube-state-metrics resource overrides.
         :param _builtins.str max_memory: Maximum memory limit for monitoring components.
         :param _builtins.str min_memory: Minimum memory request for monitoring components.
         :param 'Mk8sAddOnsByokConfigMonitoringPrometheusArgs' prometheus: Prometheus deployment configuration.
+        :param Sequence['Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs'] remote_writes: Prometheus remote_write client configurations. Order is preserved as written.
         """
+        if external_labels is not None:
+            pulumi.set(__self__, "external_labels", external_labels)
         if kube_state_metrics is not None:
             pulumi.set(__self__, "kube_state_metrics", kube_state_metrics)
         if max_memory is not None:
@@ -4583,6 +4988,16 @@ class Mk8sAddOnsByokConfigMonitoring(dict):
             pulumi.set(__self__, "min_memory", min_memory)
         if prometheus is not None:
             pulumi.set(__self__, "prometheus", prometheus)
+        if remote_writes is not None:
+            pulumi.set(__self__, "remote_writes", remote_writes)
+
+    @_builtins.property
+    @pulumi.getter(name="externalLabels")
+    def external_labels(self) -> Optional[Mapping[str, _builtins.str]]:
+        """
+        Static labels appended to every metric scraped by the BYOK Prometheus stack.
+        """
+        return pulumi.get(self, "external_labels")
 
     @_builtins.property
     @pulumi.getter(name="kubeStateMetrics")
@@ -4615,6 +5030,14 @@ class Mk8sAddOnsByokConfigMonitoring(dict):
         Prometheus deployment configuration.
         """
         return pulumi.get(self, "prometheus")
+
+    @_builtins.property
+    @pulumi.getter(name="remoteWrites")
+    def remote_writes(self) -> Optional[Sequence['outputs.Mk8sAddOnsByokConfigMonitoringRemoteWrite']]:
+        """
+        Prometheus remote_write client configurations. Order is preserved as written.
+        """
+        return pulumi.get(self, "remote_writes")
 
 
 @pulumi.output_type
@@ -4689,6 +5112,456 @@ class Mk8sAddOnsByokConfigMonitoringPrometheusMain(dict):
         Persistent volume size for Prometheus (for example, "50Gi").
         """
         return pulumi.get(self, "storage")
+
+
+@pulumi.output_type
+class Mk8sAddOnsByokConfigMonitoringRemoteWrite(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "basicAuth":
+            suggest = "basic_auth"
+        elif key == "enableHttp2":
+            suggest = "enable_http2"
+        elif key == "followRedirects":
+            suggest = "follow_redirects"
+        elif key == "googleIam":
+            suggest = "google_iam"
+        elif key == "httpHeaders":
+            suggest = "http_headers"
+        elif key == "noProxy":
+            suggest = "no_proxy"
+        elif key == "proxyConnectHeader":
+            suggest = "proxy_connect_header"
+        elif key == "proxyFromEnvironment":
+            suggest = "proxy_from_environment"
+        elif key == "proxyUrl":
+            suggest = "proxy_url"
+        elif key == "queueConfig":
+            suggest = "queue_config"
+        elif key == "remoteTimeout":
+            suggest = "remote_timeout"
+        elif key == "sendExemplars":
+            suggest = "send_exemplars"
+        elif key == "sendNativeHistograms":
+            suggest = "send_native_histograms"
+        elif key == "tlsConfig":
+            suggest = "tls_config"
+        elif key == "writeRelabelConfigs":
+            suggest = "write_relabel_configs"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOnsByokConfigMonitoringRemoteWrite. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAddOnsByokConfigMonitoringRemoteWrite.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAddOnsByokConfigMonitoringRemoteWrite.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 authorization: Optional['outputs.Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization'] = None,
+                 azuread: Optional[Mapping[str, _builtins.str]] = None,
+                 basic_auth: Optional['outputs.Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth'] = None,
+                 enable_http2: Optional[_builtins.bool] = None,
+                 follow_redirects: Optional[_builtins.bool] = None,
+                 google_iam: Optional[Mapping[str, _builtins.str]] = None,
+                 headers: Optional[Mapping[str, _builtins.str]] = None,
+                 http_headers: Optional[Mapping[str, _builtins.str]] = None,
+                 name: Optional[_builtins.str] = None,
+                 no_proxy: Optional[_builtins.str] = None,
+                 oauth2: Optional[Mapping[str, _builtins.str]] = None,
+                 proxy_connect_header: Optional[Mapping[str, _builtins.str]] = None,
+                 proxy_from_environment: Optional[_builtins.bool] = None,
+                 proxy_url: Optional[_builtins.str] = None,
+                 queue_config: Optional[Mapping[str, _builtins.str]] = None,
+                 remote_timeout: Optional[_builtins.str] = None,
+                 send_exemplars: Optional[_builtins.bool] = None,
+                 send_native_histograms: Optional[_builtins.bool] = None,
+                 sigv4: Optional[Mapping[str, _builtins.str]] = None,
+                 tls_config: Optional[Mapping[str, _builtins.str]] = None,
+                 url: Optional[_builtins.str] = None,
+                 write_relabel_configs: Optional[Sequence[Mapping[str, _builtins.str]]] = None):
+        """
+        :param 'Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs' authorization: HTTP Authorization header credentials.
+        :param Mapping[str, _builtins.str] azuread: Azure AD authentication parameters as flat key-value pairs.
+        :param 'Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs' basic_auth: HTTP basic authentication credentials.
+        :param _builtins.bool enable_http2: Whether to enable HTTP/2.
+        :param _builtins.bool follow_redirects: Whether the HTTP client follows redirects.
+        :param Mapping[str, _builtins.str] google_iam: Google Cloud IAM authentication parameters as flat key-value pairs.
+        :param Mapping[str, _builtins.str] headers: Custom request headers attached to every remote_write call.
+        :param Mapping[str, _builtins.str] http_headers: Custom HTTP headers, as flat key-value pairs.
+        :param _builtins.str name: Friendly name used in metrics for this client.
+        :param _builtins.str no_proxy: Comma-separated list of hosts that bypass the proxy.
+        :param Mapping[str, _builtins.str] oauth2: OAuth 2.0 client configuration as flat key-value pairs.
+        :param Mapping[str, _builtins.str] proxy_connect_header: Headers sent to the proxy on CONNECT, as flat key-value pairs.
+        :param _builtins.bool proxy_from_environment: Whether to read proxy settings from environment variables.
+        :param _builtins.str proxy_url: HTTP proxy URL used for outbound requests.
+        :param Mapping[str, _builtins.str] queue_config: Tuning parameters for the in-memory remote_write queue, as flat key-value pairs.
+        :param _builtins.str remote_timeout: Per-request timeout (for example, "30s").
+        :param _builtins.bool send_exemplars: Whether to forward Prometheus exemplars.
+        :param _builtins.bool send_native_histograms: Whether to forward Prometheus native histograms.
+        :param Mapping[str, _builtins.str] sigv4: AWS SigV4 authentication parameters as flat key-value pairs.
+        :param Mapping[str, _builtins.str] tls_config: TLS configuration as flat key-value pairs.
+        :param _builtins.str url: Endpoint that receives the remote_write payload.
+        :param Sequence[Mapping[str, _builtins.str]] write_relabel_configs: Relabel rules applied to samples before they are sent.
+        """
+        if authorization is not None:
+            pulumi.set(__self__, "authorization", authorization)
+        if azuread is not None:
+            pulumi.set(__self__, "azuread", azuread)
+        if basic_auth is not None:
+            pulumi.set(__self__, "basic_auth", basic_auth)
+        if enable_http2 is not None:
+            pulumi.set(__self__, "enable_http2", enable_http2)
+        if follow_redirects is not None:
+            pulumi.set(__self__, "follow_redirects", follow_redirects)
+        if google_iam is not None:
+            pulumi.set(__self__, "google_iam", google_iam)
+        if headers is not None:
+            pulumi.set(__self__, "headers", headers)
+        if http_headers is not None:
+            pulumi.set(__self__, "http_headers", http_headers)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if no_proxy is not None:
+            pulumi.set(__self__, "no_proxy", no_proxy)
+        if oauth2 is not None:
+            pulumi.set(__self__, "oauth2", oauth2)
+        if proxy_connect_header is not None:
+            pulumi.set(__self__, "proxy_connect_header", proxy_connect_header)
+        if proxy_from_environment is not None:
+            pulumi.set(__self__, "proxy_from_environment", proxy_from_environment)
+        if proxy_url is not None:
+            pulumi.set(__self__, "proxy_url", proxy_url)
+        if queue_config is not None:
+            pulumi.set(__self__, "queue_config", queue_config)
+        if remote_timeout is not None:
+            pulumi.set(__self__, "remote_timeout", remote_timeout)
+        if send_exemplars is not None:
+            pulumi.set(__self__, "send_exemplars", send_exemplars)
+        if send_native_histograms is not None:
+            pulumi.set(__self__, "send_native_histograms", send_native_histograms)
+        if sigv4 is not None:
+            pulumi.set(__self__, "sigv4", sigv4)
+        if tls_config is not None:
+            pulumi.set(__self__, "tls_config", tls_config)
+        if url is not None:
+            pulumi.set(__self__, "url", url)
+        if write_relabel_configs is not None:
+            pulumi.set(__self__, "write_relabel_configs", write_relabel_configs)
+
+    @_builtins.property
+    @pulumi.getter
+    def authorization(self) -> Optional['outputs.Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization']:
+        """
+        HTTP Authorization header credentials.
+        """
+        return pulumi.get(self, "authorization")
+
+    @_builtins.property
+    @pulumi.getter
+    def azuread(self) -> Optional[Mapping[str, _builtins.str]]:
+        """
+        Azure AD authentication parameters as flat key-value pairs.
+        """
+        return pulumi.get(self, "azuread")
+
+    @_builtins.property
+    @pulumi.getter(name="basicAuth")
+    def basic_auth(self) -> Optional['outputs.Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth']:
+        """
+        HTTP basic authentication credentials.
+        """
+        return pulumi.get(self, "basic_auth")
+
+    @_builtins.property
+    @pulumi.getter(name="enableHttp2")
+    def enable_http2(self) -> Optional[_builtins.bool]:
+        """
+        Whether to enable HTTP/2.
+        """
+        return pulumi.get(self, "enable_http2")
+
+    @_builtins.property
+    @pulumi.getter(name="followRedirects")
+    def follow_redirects(self) -> Optional[_builtins.bool]:
+        """
+        Whether the HTTP client follows redirects.
+        """
+        return pulumi.get(self, "follow_redirects")
+
+    @_builtins.property
+    @pulumi.getter(name="googleIam")
+    def google_iam(self) -> Optional[Mapping[str, _builtins.str]]:
+        """
+        Google Cloud IAM authentication parameters as flat key-value pairs.
+        """
+        return pulumi.get(self, "google_iam")
+
+    @_builtins.property
+    @pulumi.getter
+    def headers(self) -> Optional[Mapping[str, _builtins.str]]:
+        """
+        Custom request headers attached to every remote_write call.
+        """
+        return pulumi.get(self, "headers")
+
+    @_builtins.property
+    @pulumi.getter(name="httpHeaders")
+    def http_headers(self) -> Optional[Mapping[str, _builtins.str]]:
+        """
+        Custom HTTP headers, as flat key-value pairs.
+        """
+        return pulumi.get(self, "http_headers")
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> Optional[_builtins.str]:
+        """
+        Friendly name used in metrics for this client.
+        """
+        return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter(name="noProxy")
+    def no_proxy(self) -> Optional[_builtins.str]:
+        """
+        Comma-separated list of hosts that bypass the proxy.
+        """
+        return pulumi.get(self, "no_proxy")
+
+    @_builtins.property
+    @pulumi.getter
+    def oauth2(self) -> Optional[Mapping[str, _builtins.str]]:
+        """
+        OAuth 2.0 client configuration as flat key-value pairs.
+        """
+        return pulumi.get(self, "oauth2")
+
+    @_builtins.property
+    @pulumi.getter(name="proxyConnectHeader")
+    def proxy_connect_header(self) -> Optional[Mapping[str, _builtins.str]]:
+        """
+        Headers sent to the proxy on CONNECT, as flat key-value pairs.
+        """
+        return pulumi.get(self, "proxy_connect_header")
+
+    @_builtins.property
+    @pulumi.getter(name="proxyFromEnvironment")
+    def proxy_from_environment(self) -> Optional[_builtins.bool]:
+        """
+        Whether to read proxy settings from environment variables.
+        """
+        return pulumi.get(self, "proxy_from_environment")
+
+    @_builtins.property
+    @pulumi.getter(name="proxyUrl")
+    def proxy_url(self) -> Optional[_builtins.str]:
+        """
+        HTTP proxy URL used for outbound requests.
+        """
+        return pulumi.get(self, "proxy_url")
+
+    @_builtins.property
+    @pulumi.getter(name="queueConfig")
+    def queue_config(self) -> Optional[Mapping[str, _builtins.str]]:
+        """
+        Tuning parameters for the in-memory remote_write queue, as flat key-value pairs.
+        """
+        return pulumi.get(self, "queue_config")
+
+    @_builtins.property
+    @pulumi.getter(name="remoteTimeout")
+    def remote_timeout(self) -> Optional[_builtins.str]:
+        """
+        Per-request timeout (for example, "30s").
+        """
+        return pulumi.get(self, "remote_timeout")
+
+    @_builtins.property
+    @pulumi.getter(name="sendExemplars")
+    def send_exemplars(self) -> Optional[_builtins.bool]:
+        """
+        Whether to forward Prometheus exemplars.
+        """
+        return pulumi.get(self, "send_exemplars")
+
+    @_builtins.property
+    @pulumi.getter(name="sendNativeHistograms")
+    def send_native_histograms(self) -> Optional[_builtins.bool]:
+        """
+        Whether to forward Prometheus native histograms.
+        """
+        return pulumi.get(self, "send_native_histograms")
+
+    @_builtins.property
+    @pulumi.getter
+    def sigv4(self) -> Optional[Mapping[str, _builtins.str]]:
+        """
+        AWS SigV4 authentication parameters as flat key-value pairs.
+        """
+        return pulumi.get(self, "sigv4")
+
+    @_builtins.property
+    @pulumi.getter(name="tlsConfig")
+    def tls_config(self) -> Optional[Mapping[str, _builtins.str]]:
+        """
+        TLS configuration as flat key-value pairs.
+        """
+        return pulumi.get(self, "tls_config")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> Optional[_builtins.str]:
+        """
+        Endpoint that receives the remote_write payload.
+        """
+        return pulumi.get(self, "url")
+
+    @_builtins.property
+    @pulumi.getter(name="writeRelabelConfigs")
+    def write_relabel_configs(self) -> Optional[Sequence[Mapping[str, _builtins.str]]]:
+        """
+        Relabel rules applied to samples before they are sent.
+        """
+        return pulumi.get(self, "write_relabel_configs")
+
+
+@pulumi.output_type
+class Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "credentialsFile":
+            suggest = "credentials_file"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 credentials: Optional[_builtins.str] = None,
+                 credentials_file: Optional[_builtins.str] = None,
+                 type: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str credentials: Authorization credentials.
+        :param _builtins.str credentials_file: Path to a file containing the credentials.
+        :param _builtins.str type: Authorization scheme (for example, "Bearer").
+        """
+        if credentials is not None:
+            pulumi.set(__self__, "credentials", credentials)
+        if credentials_file is not None:
+            pulumi.set(__self__, "credentials_file", credentials_file)
+        if type is not None:
+            pulumi.set(__self__, "type", type)
+
+    @_builtins.property
+    @pulumi.getter
+    def credentials(self) -> Optional[_builtins.str]:
+        """
+        Authorization credentials.
+        """
+        return pulumi.get(self, "credentials")
+
+    @_builtins.property
+    @pulumi.getter(name="credentialsFile")
+    def credentials_file(self) -> Optional[_builtins.str]:
+        """
+        Path to a file containing the credentials.
+        """
+        return pulumi.get(self, "credentials_file")
+
+    @_builtins.property
+    @pulumi.getter
+    def type(self) -> Optional[_builtins.str]:
+        """
+        Authorization scheme (for example, "Bearer").
+        """
+        return pulumi.get(self, "type")
+
+
+@pulumi.output_type
+class Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "passwordFile":
+            suggest = "password_file"
+        elif key == "usernameFile":
+            suggest = "username_file"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 password: Optional[_builtins.str] = None,
+                 password_file: Optional[_builtins.str] = None,
+                 username: Optional[_builtins.str] = None,
+                 username_file: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str password: Password for HTTP basic authentication.
+        :param _builtins.str password_file: Path to a file containing the password.
+        :param _builtins.str username: Username for HTTP basic authentication.
+        :param _builtins.str username_file: Path to a file containing the username.
+        """
+        if password is not None:
+            pulumi.set(__self__, "password", password)
+        if password_file is not None:
+            pulumi.set(__self__, "password_file", password_file)
+        if username is not None:
+            pulumi.set(__self__, "username", username)
+        if username_file is not None:
+            pulumi.set(__self__, "username_file", username_file)
+
+    @_builtins.property
+    @pulumi.getter
+    def password(self) -> Optional[_builtins.str]:
+        """
+        Password for HTTP basic authentication.
+        """
+        return pulumi.get(self, "password")
+
+    @_builtins.property
+    @pulumi.getter(name="passwordFile")
+    def password_file(self) -> Optional[_builtins.str]:
+        """
+        Path to a file containing the password.
+        """
+        return pulumi.get(self, "password_file")
+
+    @_builtins.property
+    @pulumi.getter
+    def username(self) -> Optional[_builtins.str]:
+        """
+        Username for HTTP basic authentication.
+        """
+        return pulumi.get(self, "username")
+
+    @_builtins.property
+    @pulumi.getter(name="usernameFile")
+    def username_file(self) -> Optional[_builtins.str]:
+        """
+        Path to a file containing the username.
+        """
+        return pulumi.get(self, "username_file")
 
 
 @pulumi.output_type
@@ -16397,6 +17270,8 @@ class WorkloadSecurityOptions(dict):
         suggest = None
         if key == "fileSystemGroupId":
             suggest = "file_system_group_id"
+        elif key == "runAsUser":
+            suggest = "run_as_user"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in WorkloadSecurityOptions. Access the value via the '{suggest}' property getter instead.")
@@ -16410,12 +17285,16 @@ class WorkloadSecurityOptions(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 file_system_group_id: Optional[_builtins.int] = None):
+                 file_system_group_id: Optional[_builtins.int] = None,
+                 run_as_user: Optional[_builtins.int] = None):
         """
         :param _builtins.int file_system_group_id: The group id assigned to any mounted volume.
+        :param _builtins.int run_as_user: The user id assigned to all container processes.
         """
         if file_system_group_id is not None:
             pulumi.set(__self__, "file_system_group_id", file_system_group_id)
+        if run_as_user is not None:
+            pulumi.set(__self__, "run_as_user", run_as_user)
 
     @_builtins.property
     @pulumi.getter(name="fileSystemGroupId")
@@ -16424,6 +17303,14 @@ class WorkloadSecurityOptions(dict):
         The group id assigned to any mounted volume.
         """
         return pulumi.get(self, "file_system_group_id")
+
+    @_builtins.property
+    @pulumi.getter(name="runAsUser")
+    def run_as_user(self) -> Optional[_builtins.int]:
+        """
+        The user id assigned to all container processes.
+        """
+        return pulumi.get(self, "run_as_user")
 
 
 @pulumi.output_type
@@ -16459,6 +17346,8 @@ class WorkloadStatus(dict):
             suggest = "replica_internal_names"
         elif key == "resolvedImages":
             suggest = "resolved_images"
+        elif key == "suspendedStatus":
+            suggest = "suspended_status"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in WorkloadStatus. Access the value via the '{suggest}' property getter instead.")
@@ -16480,7 +17369,8 @@ class WorkloadStatus(dict):
                  load_balancers: Optional[Sequence['outputs.WorkloadStatusLoadBalancer']] = None,
                  parent_id: Optional[_builtins.str] = None,
                  replica_internal_names: Optional[Sequence[_builtins.str]] = None,
-                 resolved_images: Optional[Sequence['outputs.WorkloadStatusResolvedImage']] = None):
+                 resolved_images: Optional[Sequence['outputs.WorkloadStatusResolvedImage']] = None,
+                 suspended_status: Optional[_builtins.str] = None):
         """
         :param _builtins.str canonical_endpoint: Canonical endpoint for the workload.
         :param _builtins.int current_replica_count: Current amount of replicas deployed.
@@ -16489,6 +17379,7 @@ class WorkloadStatus(dict):
         :param _builtins.str internal_name: Internal hostname for the workload. Used for service-to-service requests.
         :param _builtins.str parent_id: ID of the parent object.
         :param Sequence['WorkloadStatusResolvedImageArgs'] resolved_images: Resolved images for workloads with dynamic tags enabled.
+        :param _builtins.str suspended_status: Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `suspended`.
         """
         if canonical_endpoint is not None:
             pulumi.set(__self__, "canonical_endpoint", canonical_endpoint)
@@ -16508,6 +17399,8 @@ class WorkloadStatus(dict):
             pulumi.set(__self__, "replica_internal_names", replica_internal_names)
         if resolved_images is not None:
             pulumi.set(__self__, "resolved_images", resolved_images)
+        if suspended_status is not None:
+            pulumi.set(__self__, "suspended_status", suspended_status)
 
     @_builtins.property
     @pulumi.getter(name="canonicalEndpoint")
@@ -16574,6 +17467,14 @@ class WorkloadStatus(dict):
         Resolved images for workloads with dynamic tags enabled.
         """
         return pulumi.get(self, "resolved_images")
+
+    @_builtins.property
+    @pulumi.getter(name="suspendedStatus")
+    def suspended_status(self) -> Optional[_builtins.str]:
+        """
+        Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `suspended`.
+        """
+        return pulumi.get(self, "suspended_status")
 
 
 @pulumi.output_type
@@ -17133,6 +18034,57 @@ class GetGvcLoadBalancerRedirectClassResult(dict):
         Specify the redirect url for any 500 level status code.
         """
         return pulumi.get(self, "status5xx")
+
+
+@pulumi.output_type
+class GetGvcLocationOptionResult(dict):
+    def __init__(__self__, *,
+                 latency_offset_ms: _builtins.int,
+                 latency_tolerance_ms: _builtins.int,
+                 name: _builtins.str,
+                 routing_tier: _builtins.int):
+        """
+        :param _builtins.int latency_offset_ms: Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+        :param _builtins.int latency_tolerance_ms: Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+        :param _builtins.str name: Name of the location these options apply to.
+        :param _builtins.int routing_tier: Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routing_tier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+        """
+        pulumi.set(__self__, "latency_offset_ms", latency_offset_ms)
+        pulumi.set(__self__, "latency_tolerance_ms", latency_tolerance_ms)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "routing_tier", routing_tier)
+
+    @_builtins.property
+    @pulumi.getter(name="latencyOffsetMs")
+    def latency_offset_ms(self) -> _builtins.int:
+        """
+        Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+        """
+        return pulumi.get(self, "latency_offset_ms")
+
+    @_builtins.property
+    @pulumi.getter(name="latencyToleranceMs")
+    def latency_tolerance_ms(self) -> _builtins.int:
+        """
+        Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
+        """
+        return pulumi.get(self, "latency_tolerance_ms")
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        Name of the location these options apply to.
+        """
+        return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter(name="routingTier")
+    def routing_tier(self) -> _builtins.int:
+        """
+        Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routing_tier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+        """
+        return pulumi.get(self, "routing_tier")
 
 
 @pulumi.output_type
@@ -17789,12 +18741,13 @@ class GetLocationsLocationResult(dict):
                  self_link: _builtins.str,
                  tags: Mapping[str, _builtins.str]):
         """
-        :param _builtins.str cloud_provider: Cloud Provider of the location.
+        :param _builtins.str cloud_provider: Cloud Provider of the location. Valid values: `aws`, `gcp`, `azure`, `byok`, `linode`, `vultr`, `equinix`, `oci`.
         :param _builtins.str cpln_id: The ID, in GUID format, of the location.
         :param _builtins.str description: Description of the location.
         :param _builtins.bool enabled: Indication if location is enabled.
         :param Sequence[_builtins.str] ip_ranges: A list of IP ranges of the location.
         :param _builtins.str name: Name of the location.
+        :param _builtins.str origin: Origin of the location. Valid values: `builtin`, `default`, `custom`.
         :param _builtins.str region: Region of the location.
         :param _builtins.str self_link: Full link to this resource. Can be referenced by other resources.
         :param Mapping[str, _builtins.str] tags: Key-value map of resource tags.
@@ -17815,7 +18768,7 @@ class GetLocationsLocationResult(dict):
     @pulumi.getter(name="cloudProvider")
     def cloud_provider(self) -> _builtins.str:
         """
-        Cloud Provider of the location.
+        Cloud Provider of the location. Valid values: `aws`, `gcp`, `azure`, `byok`, `linode`, `vultr`, `equinix`, `oci`.
         """
         return pulumi.get(self, "cloud_provider")
 
@@ -17867,6 +18820,9 @@ class GetLocationsLocationResult(dict):
     @_builtins.property
     @pulumi.getter
     def origin(self) -> _builtins.str:
+        """
+        Origin of the location. Valid values: `builtin`, `default`, `custom`.
+        """
         return pulumi.get(self, "origin")
 
     @_builtins.property
@@ -20870,11 +21826,14 @@ class GetWorkloadRolloutOptionResult(dict):
 @pulumi.output_type
 class GetWorkloadSecurityOptionResult(dict):
     def __init__(__self__, *,
-                 file_system_group_id: _builtins.int):
+                 file_system_group_id: _builtins.int,
+                 run_as_user: _builtins.int):
         """
         :param _builtins.int file_system_group_id: The group id assigned to any mounted volume.
+        :param _builtins.int run_as_user: The user id assigned to all container processes.
         """
         pulumi.set(__self__, "file_system_group_id", file_system_group_id)
+        pulumi.set(__self__, "run_as_user", run_as_user)
 
     @_builtins.property
     @pulumi.getter(name="fileSystemGroupId")
@@ -20883,6 +21842,14 @@ class GetWorkloadSecurityOptionResult(dict):
         The group id assigned to any mounted volume.
         """
         return pulumi.get(self, "file_system_group_id")
+
+    @_builtins.property
+    @pulumi.getter(name="runAsUser")
+    def run_as_user(self) -> _builtins.int:
+        """
+        The user id assigned to all container processes.
+        """
+        return pulumi.get(self, "run_as_user")
 
 
 @pulumi.output_type
@@ -20908,7 +21875,8 @@ class GetWorkloadStatusResult(dict):
                  load_balancers: Sequence['outputs.GetWorkloadStatusLoadBalancerResult'],
                  parent_id: _builtins.str,
                  replica_internal_names: Sequence[_builtins.str],
-                 resolved_images: Sequence['outputs.GetWorkloadStatusResolvedImageResult']):
+                 resolved_images: Sequence['outputs.GetWorkloadStatusResolvedImageResult'],
+                 suspended_status: _builtins.str):
         """
         :param _builtins.str canonical_endpoint: Canonical endpoint for the workload.
         :param _builtins.int current_replica_count: Current amount of replicas deployed.
@@ -20917,6 +21885,7 @@ class GetWorkloadStatusResult(dict):
         :param _builtins.str internal_name: Internal hostname for the workload. Used for service-to-service requests.
         :param _builtins.str parent_id: ID of the parent object.
         :param Sequence['GetWorkloadStatusResolvedImageArgs'] resolved_images: Resolved images for workloads with dynamic tags enabled.
+        :param _builtins.str suspended_status: Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `suspended`.
         """
         pulumi.set(__self__, "canonical_endpoint", canonical_endpoint)
         pulumi.set(__self__, "current_replica_count", current_replica_count)
@@ -20927,6 +21896,7 @@ class GetWorkloadStatusResult(dict):
         pulumi.set(__self__, "parent_id", parent_id)
         pulumi.set(__self__, "replica_internal_names", replica_internal_names)
         pulumi.set(__self__, "resolved_images", resolved_images)
+        pulumi.set(__self__, "suspended_status", suspended_status)
 
     @_builtins.property
     @pulumi.getter(name="canonicalEndpoint")
@@ -20993,6 +21963,14 @@ class GetWorkloadStatusResult(dict):
         Resolved images for workloads with dynamic tags enabled.
         """
         return pulumi.get(self, "resolved_images")
+
+    @_builtins.property
+    @pulumi.getter(name="suspendedStatus")
+    def suspended_status(self) -> _builtins.str:
+        """
+        Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `suspended`.
+        """
+        return pulumi.get(self, "suspended_status")
 
 
 @pulumi.output_type

@@ -13,6 +13,8 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
+from . import outputs
+from ._inputs import *
 
 __all__ = ['CustomLocationArgs', 'CustomLocation']
 
@@ -109,6 +111,8 @@ class _CustomLocationState:
                  cpln_id: Optional[pulumi.Input[_builtins.str]] = None,
                  description: Optional[pulumi.Input[_builtins.str]] = None,
                  enabled: Optional[pulumi.Input[_builtins.bool]] = None,
+                 geos: Optional[pulumi.Input[Sequence[pulumi.Input['CustomLocationGeoArgs']]]] = None,
+                 ip_ranges: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  origin: Optional[pulumi.Input[_builtins.str]] = None,
                  region: Optional[pulumi.Input[_builtins.str]] = None,
@@ -120,6 +124,7 @@ class _CustomLocationState:
         :param pulumi.Input[_builtins.str] cpln_id: The ID, in GUID format, of the Custom Location.
         :param pulumi.Input[_builtins.str] description: Description of the Custom Location.
         :param pulumi.Input[_builtins.bool] enabled: Indication if the custom location is enabled.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ip_ranges: A list of IP ranges of the location.
         :param pulumi.Input[_builtins.str] name: Name of the Custom Location.
         :param pulumi.Input[_builtins.str] region: Region of the location.
         :param pulumi.Input[_builtins.str] self_link: Full link to this resource. Can be referenced by other resources.
@@ -133,6 +138,10 @@ class _CustomLocationState:
             pulumi.set(__self__, "description", description)
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
+        if geos is not None:
+            pulumi.set(__self__, "geos", geos)
+        if ip_ranges is not None:
+            pulumi.set(__self__, "ip_ranges", ip_ranges)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if origin is not None:
@@ -191,6 +200,27 @@ class _CustomLocationState:
     @enabled.setter
     def enabled(self, value: Optional[pulumi.Input[_builtins.bool]]):
         pulumi.set(self, "enabled", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def geos(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['CustomLocationGeoArgs']]]]:
+        return pulumi.get(self, "geos")
+
+    @geos.setter
+    def geos(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['CustomLocationGeoArgs']]]]):
+        pulumi.set(self, "geos", value)
+
+    @_builtins.property
+    @pulumi.getter(name="ipRanges")
+    def ip_ranges(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        A list of IP ranges of the location.
+        """
+        return pulumi.get(self, "ip_ranges")
+
+    @ip_ranges.setter
+    def ip_ranges(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "ip_ranges", value)
 
     @_builtins.property
     @pulumi.getter
@@ -319,6 +349,8 @@ class CustomLocation(pulumi.CustomResource):
             __props__.__dict__["name"] = name
             __props__.__dict__["tags"] = tags
             __props__.__dict__["cpln_id"] = None
+            __props__.__dict__["geos"] = None
+            __props__.__dict__["ip_ranges"] = None
             __props__.__dict__["origin"] = None
             __props__.__dict__["region"] = None
             __props__.__dict__["self_link"] = None
@@ -336,6 +368,8 @@ class CustomLocation(pulumi.CustomResource):
             cpln_id: Optional[pulumi.Input[_builtins.str]] = None,
             description: Optional[pulumi.Input[_builtins.str]] = None,
             enabled: Optional[pulumi.Input[_builtins.bool]] = None,
+            geos: Optional[pulumi.Input[Sequence[pulumi.Input[Union['CustomLocationGeoArgs', 'CustomLocationGeoArgsDict']]]]] = None,
+            ip_ranges: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
             name: Optional[pulumi.Input[_builtins.str]] = None,
             origin: Optional[pulumi.Input[_builtins.str]] = None,
             region: Optional[pulumi.Input[_builtins.str]] = None,
@@ -352,6 +386,7 @@ class CustomLocation(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] cpln_id: The ID, in GUID format, of the Custom Location.
         :param pulumi.Input[_builtins.str] description: Description of the Custom Location.
         :param pulumi.Input[_builtins.bool] enabled: Indication if the custom location is enabled.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ip_ranges: A list of IP ranges of the location.
         :param pulumi.Input[_builtins.str] name: Name of the Custom Location.
         :param pulumi.Input[_builtins.str] region: Region of the location.
         :param pulumi.Input[_builtins.str] self_link: Full link to this resource. Can be referenced by other resources.
@@ -365,6 +400,8 @@ class CustomLocation(pulumi.CustomResource):
         __props__.__dict__["cpln_id"] = cpln_id
         __props__.__dict__["description"] = description
         __props__.__dict__["enabled"] = enabled
+        __props__.__dict__["geos"] = geos
+        __props__.__dict__["ip_ranges"] = ip_ranges
         __props__.__dict__["name"] = name
         __props__.__dict__["origin"] = origin
         __props__.__dict__["region"] = region
@@ -403,6 +440,19 @@ class CustomLocation(pulumi.CustomResource):
         Indication if the custom location is enabled.
         """
         return pulumi.get(self, "enabled")
+
+    @_builtins.property
+    @pulumi.getter
+    def geos(self) -> pulumi.Output[Sequence['outputs.CustomLocationGeo']]:
+        return pulumi.get(self, "geos")
+
+    @_builtins.property
+    @pulumi.getter(name="ipRanges")
+    def ip_ranges(self) -> pulumi.Output[Sequence[_builtins.str]]:
+        """
+        A list of IP ranges of the location.
+        """
+        return pulumi.get(self, "ip_ranges")
 
     @_builtins.property
     @pulumi.getter

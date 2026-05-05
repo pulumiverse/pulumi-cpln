@@ -44,6 +44,10 @@ namespace Pulumiverse.Cpln.Outputs
         /// Resolved images for workloads with dynamic tags enabled.
         /// </summary>
         public readonly ImmutableArray<Outputs.WorkloadStatusResolvedImage> ResolvedImages;
+        /// <summary>
+        /// Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `Suspended`.
+        /// </summary>
+        public readonly string? SuspendedStatus;
 
         [OutputConstructor]
         private WorkloadStatus(
@@ -63,7 +67,9 @@ namespace Pulumiverse.Cpln.Outputs
 
             ImmutableArray<string> replicaInternalNames,
 
-            ImmutableArray<Outputs.WorkloadStatusResolvedImage> resolvedImages)
+            ImmutableArray<Outputs.WorkloadStatusResolvedImage> resolvedImages,
+
+            string? suspendedStatus)
         {
             CanonicalEndpoint = canonicalEndpoint;
             CurrentReplicaCount = currentReplicaCount;
@@ -74,6 +80,7 @@ namespace Pulumiverse.Cpln.Outputs
             ParentId = parentId;
             ReplicaInternalNames = replicaInternalNames;
             ResolvedImages = resolvedImages;
+            SuspendedStatus = suspendedStatus;
         }
     }
 }

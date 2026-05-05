@@ -68,6 +68,12 @@ namespace Pulumiverse.Cpln
         public Output<Outputs.GvcLoadBalancer?> LoadBalancer { get; private set; } = null!;
 
         /// <summary>
+        /// Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `Locations`.
+        /// </summary>
+        [Output("locationOptions")]
+        public Output<ImmutableArray<Outputs.GvcLocationOption>> LocationOptions { get; private set; } = null!;
+
+        /// <summary>
         /// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
         /// </summary>
         [Output("locations")]
@@ -198,6 +204,18 @@ namespace Pulumiverse.Cpln
         [Input("loadBalancer")]
         public Input<Inputs.GvcLoadBalancerArgs>? LoadBalancer { get; set; }
 
+        [Input("locationOptions")]
+        private InputList<Inputs.GvcLocationOptionArgs>? _locationOptions;
+
+        /// <summary>
+        /// Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `Locations`.
+        /// </summary>
+        public InputList<Inputs.GvcLocationOptionArgs> LocationOptions
+        {
+            get => _locationOptions ?? (_locationOptions = new InputList<Inputs.GvcLocationOptionArgs>());
+            set => _locationOptions = value;
+        }
+
         [Input("locations")]
         private InputList<string>? _locations;
 
@@ -313,6 +331,18 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Input("loadBalancer")]
         public Input<Inputs.GvcLoadBalancerGetArgs>? LoadBalancer { get; set; }
+
+        [Input("locationOptions")]
+        private InputList<Inputs.GvcLocationOptionGetArgs>? _locationOptions;
+
+        /// <summary>
+        /// Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `Locations`.
+        /// </summary>
+        public InputList<Inputs.GvcLocationOptionGetArgs> LocationOptions
+        {
+            get => _locationOptions ?? (_locationOptions = new InputList<Inputs.GvcLocationOptionGetArgs>());
+            set => _locationOptions = value;
+        }
 
         [Input("locations")]
         private InputList<string>? _locations;

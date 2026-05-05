@@ -45,6 +45,10 @@ export class Agent extends pulumi.CustomResource {
      */
     declare public readonly name: pulumi.Output<string>;
     /**
+     * The wormhole protocol version reported by the agent. Valid values: `v1`, `v2`.
+     */
+    declare public /*out*/ readonly protocolVersion: pulumi.Output<string>;
+    /**
      * Full link to this resource. Can be referenced by other resources.
      */
     declare public /*out*/ readonly selfLink: pulumi.Output<string>;
@@ -73,6 +77,7 @@ export class Agent extends pulumi.CustomResource {
             resourceInputs["cplnId"] = state?.cplnId;
             resourceInputs["description"] = state?.description;
             resourceInputs["name"] = state?.name;
+            resourceInputs["protocolVersion"] = state?.protocolVersion;
             resourceInputs["selfLink"] = state?.selfLink;
             resourceInputs["tags"] = state?.tags;
             resourceInputs["userData"] = state?.userData;
@@ -82,6 +87,7 @@ export class Agent extends pulumi.CustomResource {
             resourceInputs["name"] = args?.name;
             resourceInputs["tags"] = args?.tags;
             resourceInputs["cplnId"] = undefined /*out*/;
+            resourceInputs["protocolVersion"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
             resourceInputs["userData"] = undefined /*out*/;
         }
@@ -108,6 +114,10 @@ export interface AgentState {
      * Name of the Agent.
      */
     name?: pulumi.Input<string>;
+    /**
+     * The wormhole protocol version reported by the agent. Valid values: `v1`, `v2`.
+     */
+    protocolVersion?: pulumi.Input<string>;
     /**
      * Full link to this resource. Can be referenced by other resources.
      */

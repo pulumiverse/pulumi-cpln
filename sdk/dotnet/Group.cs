@@ -44,7 +44,7 @@ namespace Pulumiverse.Cpln
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
-        /// Origin of the service account. Either `Builtin` or `Default`.
+        /// Origin of the Group. Valid values: `Default`, `Builtin`, `Synthetic`.
         /// </summary>
         [Output("origin")]
         public Output<string> Origin { get; private set; } = null!;
@@ -219,7 +219,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// Origin of the service account. Either `Builtin` or `Default`.
+        /// Origin of the Group. Valid values: `Default`, `Builtin`, `Synthetic`.
         /// </summary>
         [Input("origin")]
         public Input<string>? Origin { get; set; }

@@ -32,6 +32,12 @@ namespace Pulumiverse.Cpln
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
+        /// The wormhole protocol version reported by the agent. Valid values: `V1`, `V2`.
+        /// </summary>
+        [Output("protocolVersion")]
+        public Output<string> ProtocolVersion { get; private set; } = null!;
+
+        /// <summary>
         /// Full link to this resource. Can be referenced by other resources.
         /// </summary>
         [Output("selfLink")]
@@ -149,6 +155,12 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
+
+        /// <summary>
+        /// The wormhole protocol version reported by the agent. Valid values: `V1`, `V2`.
+        /// </summary>
+        [Input("protocolVersion")]
+        public Input<string>? ProtocolVersion { get; set; }
 
         /// <summary>
         /// Full link to this resource. Can be referenced by other resources.

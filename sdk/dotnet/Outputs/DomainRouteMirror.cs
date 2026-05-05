@@ -19,6 +19,10 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly double Percent;
         /// <summary>
+        /// The port on the mirrored workload to send traffic to. If not provided, traffic will be mirrored to the first discovered port on the mirrored workload.
+        /// </summary>
+        public readonly int? Port;
+        /// <summary>
         /// The workload to mirror traffic to.
         /// </summary>
         public readonly string WorkloadLink;
@@ -27,9 +31,12 @@ namespace Pulumiverse.Cpln.Outputs
         private DomainRouteMirror(
             double percent,
 
+            int? port,
+
             string workloadLink)
         {
             Percent = percent;
+            Port = port;
             WorkloadLink = workloadLink;
         }
     }

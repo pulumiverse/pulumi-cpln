@@ -32,11 +32,22 @@
                     },
                     "ngs": {
                         "maxItemsOne": true
+                    },
+                    "status": {
+                        "maxItemsOne": false
                     }
                 }
             },
             "cpln_custom_location": {
-                "current": "cpln:index/customLocation:CustomLocation"
+                "current": "cpln:index/customLocation:CustomLocation",
+                "fields": {
+                    "geo": {
+                        "maxItemsOne": false
+                    },
+                    "ip_ranges": {
+                        "maxItemsOne": false
+                    }
+                }
             },
             "cpln_domain": {
                 "current": "cpln:index/domain:Domain",
@@ -215,6 +226,9 @@
                                 }
                             }
                         }
+                    },
+                    "location_options": {
+                        "maxItemsOne": false
                     },
                     "locations": {
                         "maxItemsOne": false
@@ -419,6 +433,28 @@
                                 },
                                 "azure_workload_identity": {
                                     "maxItemsOne": true
+                                },
+                                "byok": {
+                                    "fields": {
+                                        "config": {
+                                            "fields": {
+                                                "monitoring": {
+                                                    "fields": {
+                                                        "remote_write": {
+                                                            "maxItemsOne": false,
+                                                            "elem": {
+                                                                "fields": {
+                                                                    "write_relabel_configs": {
+                                                                        "maxItemsOne": false
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 },
                                 "logs": {
                                     "maxItemsOne": true
@@ -1660,6 +1696,9 @@
                                 }
                             }
                         }
+                    },
+                    "location_options": {
+                        "maxItemsOne": false
                     },
                     "locations": {
                         "maxItemsOne": false

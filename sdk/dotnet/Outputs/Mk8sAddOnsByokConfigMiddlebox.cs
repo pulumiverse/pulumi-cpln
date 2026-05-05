@@ -22,15 +22,29 @@ namespace Pulumiverse.Cpln.Outputs
         /// Whether to deploy the middlebox component.
         /// </summary>
         public readonly bool? Enabled;
+        /// <summary>
+        /// IPv4 address bound by the middlebox component.
+        /// </summary>
+        public readonly string? Ip;
+        /// <summary>
+        /// Listening port for the middlebox component.
+        /// </summary>
+        public readonly int? Port;
 
         [OutputConstructor]
         private Mk8sAddOnsByokConfigMiddlebox(
             int? bandwidthAlertMbps,
 
-            bool? enabled)
+            bool? enabled,
+
+            string? ip,
+
+            int? port)
         {
             BandwidthAlertMbps = bandwidthAlertMbps;
             Enabled = enabled;
+            Ip = ip;
+            Port = port;
         }
     }
 }

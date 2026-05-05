@@ -33,6 +33,7 @@ import (
 // - **lightstep_tracing** (Block List, Max: 1) (see below).
 // - **otel_tracing** (Block List, Max: 1) (see below).
 // - **controlplane_tracing** (Block List, Max: 1) (see below).
+// - **location_options** (Block Set) (see below).
 // - **load_balancer** (Block List, Max: 1) (see below).
 //
 // <a id="nestedblock--lightstep_tracing"></a>
@@ -57,6 +58,15 @@ import (
 //
 // - **sampling** (Int) Determines what percentage of requests should be traced.
 // - **custom_tags** (Map of String) Key-value map of custom tags.
+//
+// <a id="nestedblock--location_options"></a>
+//
+// ### `locationOptions`
+//
+// - **name** (String) Name of the location these options apply to.
+// - **routing_tier** (Int) Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routingTier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+// - **latency_offset_ms** (Int) Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+// - **latency_tolerance_ms** (Int) Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
 //
 // <a id="nestedblock--load_balancer"></a>
 //
@@ -113,6 +123,7 @@ type LookupGvcArgs struct {
 	Keda                 *GetGvcKeda             `pulumi:"keda"`
 	LightstepTracing     *GetGvcLightstepTracing `pulumi:"lightstepTracing"`
 	LoadBalancer         *GetGvcLoadBalancer     `pulumi:"loadBalancer"`
+	LocationOptions      []GetGvcLocationOption  `pulumi:"locationOptions"`
 	Locations            []string                `pulumi:"locations"`
 	Name                 string                  `pulumi:"name"`
 	OtelTracing          *GetGvcOtelTracing      `pulumi:"otelTracing"`
@@ -135,6 +146,7 @@ type LookupGvcResult struct {
 	Keda                 *GetGvcKeda             `pulumi:"keda"`
 	LightstepTracing     *GetGvcLightstepTracing `pulumi:"lightstepTracing"`
 	LoadBalancer         *GetGvcLoadBalancer     `pulumi:"loadBalancer"`
+	LocationOptions      []GetGvcLocationOption  `pulumi:"locationOptions"`
 	Locations            []string                `pulumi:"locations"`
 	Name                 string                  `pulumi:"name"`
 	OtelTracing          *GetGvcOtelTracing      `pulumi:"otelTracing"`
@@ -163,6 +175,7 @@ type LookupGvcOutputArgs struct {
 	Keda                 GetGvcKedaPtrInput             `pulumi:"keda"`
 	LightstepTracing     GetGvcLightstepTracingPtrInput `pulumi:"lightstepTracing"`
 	LoadBalancer         GetGvcLoadBalancerPtrInput     `pulumi:"loadBalancer"`
+	LocationOptions      GetGvcLocationOptionArrayInput `pulumi:"locationOptions"`
 	Locations            pulumi.StringArrayInput        `pulumi:"locations"`
 	Name                 pulumi.StringInput             `pulumi:"name"`
 	OtelTracing          GetGvcOtelTracingPtrInput      `pulumi:"otelTracing"`
@@ -233,6 +246,10 @@ func (o LookupGvcResultOutput) LightstepTracing() GetGvcLightstepTracingPtrOutpu
 
 func (o LookupGvcResultOutput) LoadBalancer() GetGvcLoadBalancerPtrOutput {
 	return o.ApplyT(func(v LookupGvcResult) *GetGvcLoadBalancer { return v.LoadBalancer }).(GetGvcLoadBalancerPtrOutput)
+}
+
+func (o LookupGvcResultOutput) LocationOptions() GetGvcLocationOptionArrayOutput {
+	return o.ApplyT(func(v LookupGvcResult) []GetGvcLocationOption { return v.LocationOptions }).(GetGvcLocationOptionArrayOutput)
 }
 
 func (o LookupGvcResultOutput) Locations() pulumi.StringArrayOutput {

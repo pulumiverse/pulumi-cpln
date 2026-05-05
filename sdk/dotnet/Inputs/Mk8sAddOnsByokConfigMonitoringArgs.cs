@@ -13,6 +13,18 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class Mk8sAddOnsByokConfigMonitoringArgs : global::Pulumi.ResourceArgs
     {
+        [Input("externalLabels")]
+        private InputMap<string>? _externalLabels;
+
+        /// <summary>
+        /// Static labels appended to every metric scraped by the BYOK Prometheus stack.
+        /// </summary>
+        public InputMap<string> ExternalLabels
+        {
+            get => _externalLabels ?? (_externalLabels = new InputMap<string>());
+            set => _externalLabels = value;
+        }
+
         /// <summary>
         /// Kube-state-metrics resource overrides.
         /// </summary>
@@ -36,6 +48,18 @@ namespace Pulumiverse.Cpln.Inputs
         /// </summary>
         [Input("prometheus")]
         public Input<Inputs.Mk8sAddOnsByokConfigMonitoringPrometheusArgs>? Prometheus { get; set; }
+
+        [Input("remoteWrites")]
+        private InputList<Inputs.Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs>? _remoteWrites;
+
+        /// <summary>
+        /// Prometheus RemoteWrite client configurations. Order is preserved as written.
+        /// </summary>
+        public InputList<Inputs.Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs> RemoteWrites
+        {
+            get => _remoteWrites ?? (_remoteWrites = new InputList<Inputs.Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs>());
+            set => _remoteWrites = value;
+        }
 
         public Mk8sAddOnsByokConfigMonitoringArgs()
         {

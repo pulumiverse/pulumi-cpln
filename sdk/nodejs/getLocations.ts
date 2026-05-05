@@ -23,8 +23,8 @@ import * as utilities from "./utilities";
  * - **name** (String) Name of the location.
  * - **description** (String) Description of the location.
  * - **tags** (Map of String) Key-value map of resource tags.
- * - **origin** (String)
- * - **cloud_provider** (String) Cloud Provider of the location.
+ * - **origin** (String) Origin of the location. Valid values: `builtin`, `default`, `custom`.
+ * - **cloud_provider** (String) Cloud Provider of the location. Valid values: `aws`, `gcp`, `azure`, `byok`, `linode`, `vultr`, `equinix`, `oci`.
  * - **region** (String) Region of the location.
  * - **enabled** (Boolean) Indication if location is enabled.
  * - **geo** (Block List, Max: 1) (see below)
@@ -91,8 +91,8 @@ export interface GetLocationsResult {
  * - **name** (String) Name of the location.
  * - **description** (String) Description of the location.
  * - **tags** (Map of String) Key-value map of resource tags.
- * - **origin** (String)
- * - **cloud_provider** (String) Cloud Provider of the location.
+ * - **origin** (String) Origin of the location. Valid values: `builtin`, `default`, `custom`.
+ * - **cloud_provider** (String) Cloud Provider of the location. Valid values: `aws`, `gcp`, `azure`, `byok`, `linode`, `vultr`, `equinix`, `oci`.
  * - **region** (String) Region of the location.
  * - **enabled** (Boolean) Indication if location is enabled.
  * - **geo** (Block List, Max: 1) (see below)

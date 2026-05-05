@@ -44,6 +44,9 @@ export class AuditContext extends pulumi.CustomResource {
      * Name of the Audit Context.
      */
     declare public readonly name: pulumi.Output<string>;
+    /**
+     * Origin of the Audit Context. Valid values: `default` (user-created), `builtin` (system-reserved).
+     */
     declare public /*out*/ readonly origin: pulumi.Output<string>;
     /**
      * Full link to this resource. Can be referenced by other resources.
@@ -103,6 +106,9 @@ export interface AuditContextState {
      * Name of the Audit Context.
      */
     name?: pulumi.Input<string>;
+    /**
+     * Origin of the Audit Context. Valid values: `default` (user-created), `builtin` (system-reserved).
+     */
     origin?: pulumi.Input<string>;
     /**
      * Full link to this resource. Can be referenced by other resources.

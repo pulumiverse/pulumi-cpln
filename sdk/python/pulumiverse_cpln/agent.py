@@ -78,6 +78,7 @@ class _AgentState:
                  cpln_id: Optional[pulumi.Input[_builtins.str]] = None,
                  description: Optional[pulumi.Input[_builtins.str]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
+                 protocol_version: Optional[pulumi.Input[_builtins.str]] = None,
                  self_link: Optional[pulumi.Input[_builtins.str]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  user_data: Optional[pulumi.Input[_builtins.str]] = None):
@@ -86,6 +87,7 @@ class _AgentState:
         :param pulumi.Input[_builtins.str] cpln_id: The ID, in GUID format, of the Agent.
         :param pulumi.Input[_builtins.str] description: Description of the Agent.
         :param pulumi.Input[_builtins.str] name: Name of the Agent.
+        :param pulumi.Input[_builtins.str] protocol_version: The wormhole protocol version reported by the agent. Valid values: `v1`, `v2`.
         :param pulumi.Input[_builtins.str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
         :param pulumi.Input[_builtins.str] user_data: The JSON output needed when creating an agent.
@@ -96,6 +98,8 @@ class _AgentState:
             pulumi.set(__self__, "description", description)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if protocol_version is not None:
+            pulumi.set(__self__, "protocol_version", protocol_version)
         if self_link is not None:
             pulumi.set(__self__, "self_link", self_link)
         if tags is not None:
@@ -138,6 +142,18 @@ class _AgentState:
     @name.setter
     def name(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter(name="protocolVersion")
+    def protocol_version(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The wormhole protocol version reported by the agent. Valid values: `v1`, `v2`.
+        """
+        return pulumi.get(self, "protocol_version")
+
+    @protocol_version.setter
+    def protocol_version(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "protocol_version", value)
 
     @_builtins.property
     @pulumi.getter(name="selfLink")
@@ -233,6 +249,7 @@ class Agent(pulumi.CustomResource):
             __props__.__dict__["name"] = name
             __props__.__dict__["tags"] = tags
             __props__.__dict__["cpln_id"] = None
+            __props__.__dict__["protocol_version"] = None
             __props__.__dict__["self_link"] = None
             __props__.__dict__["user_data"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["userData"])
@@ -250,6 +267,7 @@ class Agent(pulumi.CustomResource):
             cpln_id: Optional[pulumi.Input[_builtins.str]] = None,
             description: Optional[pulumi.Input[_builtins.str]] = None,
             name: Optional[pulumi.Input[_builtins.str]] = None,
+            protocol_version: Optional[pulumi.Input[_builtins.str]] = None,
             self_link: Optional[pulumi.Input[_builtins.str]] = None,
             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
             user_data: Optional[pulumi.Input[_builtins.str]] = None) -> 'Agent':
@@ -263,6 +281,7 @@ class Agent(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] cpln_id: The ID, in GUID format, of the Agent.
         :param pulumi.Input[_builtins.str] description: Description of the Agent.
         :param pulumi.Input[_builtins.str] name: Name of the Agent.
+        :param pulumi.Input[_builtins.str] protocol_version: The wormhole protocol version reported by the agent. Valid values: `v1`, `v2`.
         :param pulumi.Input[_builtins.str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
         :param pulumi.Input[_builtins.str] user_data: The JSON output needed when creating an agent.
@@ -274,6 +293,7 @@ class Agent(pulumi.CustomResource):
         __props__.__dict__["cpln_id"] = cpln_id
         __props__.__dict__["description"] = description
         __props__.__dict__["name"] = name
+        __props__.__dict__["protocol_version"] = protocol_version
         __props__.__dict__["self_link"] = self_link
         __props__.__dict__["tags"] = tags
         __props__.__dict__["user_data"] = user_data
@@ -302,6 +322,14 @@ class Agent(pulumi.CustomResource):
         Name of the Agent.
         """
         return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter(name="protocolVersion")
+    def protocol_version(self) -> pulumi.Output[_builtins.str]:
+        """
+        The wormhole protocol version reported by the agent. Valid values: `v1`, `v2`.
+        """
+        return pulumi.get(self, "protocol_version")
 
     @_builtins.property
     @pulumi.getter(name="selfLink")

@@ -18,11 +18,19 @@ namespace Pulumiverse.Cpln.Outputs
         /// The group id assigned to any mounted volume.
         /// </summary>
         public readonly int? FileSystemGroupId;
+        /// <summary>
+        /// The user id assigned to all container processes.
+        /// </summary>
+        public readonly int? RunAsUser;
 
         [OutputConstructor]
-        private WorkloadSecurityOptions(int? fileSystemGroupId)
+        private WorkloadSecurityOptions(
+            int? fileSystemGroupId,
+
+            int? runAsUser)
         {
             FileSystemGroupId = fileSystemGroupId;
+            RunAsUser = runAsUser;
         }
     }
 }

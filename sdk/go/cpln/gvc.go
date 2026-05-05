@@ -34,6 +34,8 @@ type Gvc struct {
 	LightstepTracing GvcLightstepTracingPtrOutput `pulumi:"lightstepTracing"`
 	// Dedicated load balancer configuration.
 	LoadBalancer GvcLoadBalancerPtrOutput `pulumi:"loadBalancer"`
+	// Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `locations`.
+	LocationOptions GvcLocationOptionArrayOutput `pulumi:"locationOptions"`
 	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
 	Locations pulumi.StringArrayOutput `pulumi:"locations"`
 	// Name of the Global Virtual Cloud.
@@ -98,6 +100,8 @@ type gvcState struct {
 	LightstepTracing *GvcLightstepTracing `pulumi:"lightstepTracing"`
 	// Dedicated load balancer configuration.
 	LoadBalancer *GvcLoadBalancer `pulumi:"loadBalancer"`
+	// Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `locations`.
+	LocationOptions []GvcLocationOption `pulumi:"locationOptions"`
 	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
 	Locations []string `pulumi:"locations"`
 	// Name of the Global Virtual Cloud.
@@ -133,6 +137,8 @@ type GvcState struct {
 	LightstepTracing GvcLightstepTracingPtrInput
 	// Dedicated load balancer configuration.
 	LoadBalancer GvcLoadBalancerPtrInput
+	// Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `locations`.
+	LocationOptions GvcLocationOptionArrayInput
 	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
 	Locations pulumi.StringArrayInput
 	// Name of the Global Virtual Cloud.
@@ -168,6 +174,8 @@ type gvcArgs struct {
 	LightstepTracing *GvcLightstepTracing `pulumi:"lightstepTracing"`
 	// Dedicated load balancer configuration.
 	LoadBalancer *GvcLoadBalancer `pulumi:"loadBalancer"`
+	// Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `locations`.
+	LocationOptions []GvcLocationOption `pulumi:"locationOptions"`
 	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
 	Locations []string `pulumi:"locations"`
 	// Name of the Global Virtual Cloud.
@@ -198,6 +206,8 @@ type GvcArgs struct {
 	LightstepTracing GvcLightstepTracingPtrInput
 	// Dedicated load balancer configuration.
 	LoadBalancer GvcLoadBalancerPtrInput
+	// Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `locations`.
+	LocationOptions GvcLocationOptionArrayInput
 	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
 	Locations pulumi.StringArrayInput
 	// Name of the Global Virtual Cloud.
@@ -345,6 +355,11 @@ func (o GvcOutput) LightstepTracing() GvcLightstepTracingPtrOutput {
 // Dedicated load balancer configuration.
 func (o GvcOutput) LoadBalancer() GvcLoadBalancerPtrOutput {
 	return o.ApplyT(func(v *Gvc) GvcLoadBalancerPtrOutput { return v.LoadBalancer }).(GvcLoadBalancerPtrOutput)
+}
+
+// Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `locations`.
+func (o GvcOutput) LocationOptions() GvcLocationOptionArrayOutput {
+	return o.ApplyT(func(v *Gvc) GvcLocationOptionArrayOutput { return v.LocationOptions }).(GvcLocationOptionArrayOutput)
 }
 
 // A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.

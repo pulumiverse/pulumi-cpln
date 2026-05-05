@@ -19,7 +19,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly string Expression;
         /// <summary>
-        /// Language of the expression. Either `Jmespath` or `Javascript`. Default: `Jmespath`.
+        /// Language of the expression. Valid values: `Jmespath`, `Javascript`. Default: `Jmespath`.
         /// </summary>
         public readonly string? Language;
 

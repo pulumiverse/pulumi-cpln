@@ -707,6 +707,7 @@ def get_workload(containers: Optional[Sequence[Union['GetWorkloadContainerArgs',
     Read-Only:
 
     - **file_system_group_id** (Number) Group ID applied to mounted volumes.
+    - **run_as_user** (Number) The user id assigned to all container processes.
 
     <a id="nestedblock--load_balancer"></a>
 
@@ -787,6 +788,7 @@ def get_workload(containers: Optional[Sequence[Union['GetWorkloadContainerArgs',
     - **current_replica_count** (Number) Current number of replicas deployed.
     - **resolved_images** (Block List) (see below).
     - **load_balancer** (Block List) (see below).
+    - **suspended_status** (String) Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `suspended`.
 
     <a id="nestedblock--status--health_check"></a>
 
@@ -1368,6 +1370,7 @@ def get_workload_output(containers: Optional[pulumi.Input[Optional[Sequence[Unio
     Read-Only:
 
     - **file_system_group_id** (Number) Group ID applied to mounted volumes.
+    - **run_as_user** (Number) The user id assigned to all container processes.
 
     <a id="nestedblock--load_balancer"></a>
 
@@ -1448,6 +1451,7 @@ def get_workload_output(containers: Optional[pulumi.Input[Optional[Sequence[Unio
     - **current_replica_count** (Number) Current number of replicas deployed.
     - **resolved_images** (Block List) (see below).
     - **load_balancer** (Block List) (see below).
+    - **suspended_status** (String) Computed suspension state of the workload. Valid values: `notSuspended`, `partiallySuspended`, `suspended`.
 
     <a id="nestedblock--status--health_check"></a>
 

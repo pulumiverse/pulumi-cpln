@@ -35,6 +35,7 @@ namespace Pulumiverse.Cpln
         /// - **lightstep_tracing** (Block List, Max: 1) (see below).
         /// - **otel_tracing** (Block List, Max: 1) (see below).
         /// - **controlplane_tracing** (Block List, Max: 1) (see below).
+        /// - **location_options** (Block Set) (see below).
         /// - **load_balancer** (Block List, Max: 1) (see below).
         /// 
         /// &lt;a id="nestedblock--lightstep_tracing"&gt;&lt;/a&gt;
@@ -59,6 +60,15 @@ namespace Pulumiverse.Cpln
         /// 
         /// - **sampling** (Int) Determines what percentage of requests should be traced.
         /// - **custom_tags** (Map of String) Key-value map of custom tags.
+        /// 
+        /// &lt;a id="nestedblock--location_options"&gt;&lt;/a&gt;
+        /// 
+        /// ### `LocationOptions`
+        /// 
+        /// - **name** (String) Name of the location these options apply to.
+        /// - **routing_tier** (Int) Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `RoutingTier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+        /// - **latency_offset_ms** (Int) Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+        /// - **latency_tolerance_ms** (Int) Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
         /// 
         /// &lt;a id="nestedblock--load_balancer"&gt;&lt;/a&gt;
         /// 
@@ -117,6 +127,7 @@ namespace Pulumiverse.Cpln
         /// - **lightstep_tracing** (Block List, Max: 1) (see below).
         /// - **otel_tracing** (Block List, Max: 1) (see below).
         /// - **controlplane_tracing** (Block List, Max: 1) (see below).
+        /// - **location_options** (Block Set) (see below).
         /// - **load_balancer** (Block List, Max: 1) (see below).
         /// 
         /// &lt;a id="nestedblock--lightstep_tracing"&gt;&lt;/a&gt;
@@ -141,6 +152,15 @@ namespace Pulumiverse.Cpln
         /// 
         /// - **sampling** (Int) Determines what percentage of requests should be traced.
         /// - **custom_tags** (Map of String) Key-value map of custom tags.
+        /// 
+        /// &lt;a id="nestedblock--location_options"&gt;&lt;/a&gt;
+        /// 
+        /// ### `LocationOptions`
+        /// 
+        /// - **name** (String) Name of the location these options apply to.
+        /// - **routing_tier** (Int) Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `RoutingTier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+        /// - **latency_offset_ms** (Int) Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+        /// - **latency_tolerance_ms** (Int) Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
         /// 
         /// &lt;a id="nestedblock--load_balancer"&gt;&lt;/a&gt;
         /// 
@@ -199,6 +219,7 @@ namespace Pulumiverse.Cpln
         /// - **lightstep_tracing** (Block List, Max: 1) (see below).
         /// - **otel_tracing** (Block List, Max: 1) (see below).
         /// - **controlplane_tracing** (Block List, Max: 1) (see below).
+        /// - **location_options** (Block Set) (see below).
         /// - **load_balancer** (Block List, Max: 1) (see below).
         /// 
         /// &lt;a id="nestedblock--lightstep_tracing"&gt;&lt;/a&gt;
@@ -223,6 +244,15 @@ namespace Pulumiverse.Cpln
         /// 
         /// - **sampling** (Int) Determines what percentage of requests should be traced.
         /// - **custom_tags** (Map of String) Key-value map of custom tags.
+        /// 
+        /// &lt;a id="nestedblock--location_options"&gt;&lt;/a&gt;
+        /// 
+        /// ### `LocationOptions`
+        /// 
+        /// - **name** (String) Name of the location these options apply to.
+        /// - **routing_tier** (Int) Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `RoutingTier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
+        /// - **latency_offset_ms** (Int) Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: `0`.
+        /// - **latency_tolerance_ms** (Int) Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.
         /// 
         /// &lt;a id="nestedblock--load_balancer"&gt;&lt;/a&gt;
         /// 
@@ -287,6 +317,14 @@ namespace Pulumiverse.Cpln
 
         [Input("loadBalancer")]
         public Inputs.GetGvcLoadBalancerArgs? LoadBalancer { get; set; }
+
+        [Input("locationOptions")]
+        private List<Inputs.GetGvcLocationOptionArgs>? _locationOptions;
+        public List<Inputs.GetGvcLocationOptionArgs> LocationOptions
+        {
+            get => _locationOptions ?? (_locationOptions = new List<Inputs.GetGvcLocationOptionArgs>());
+            set => _locationOptions = value;
+        }
 
         [Input("locations")]
         private List<string>? _locations;
@@ -355,6 +393,14 @@ namespace Pulumiverse.Cpln
         [Input("loadBalancer")]
         public Input<Inputs.GetGvcLoadBalancerInputArgs>? LoadBalancer { get; set; }
 
+        [Input("locationOptions")]
+        private InputList<Inputs.GetGvcLocationOptionInputArgs>? _locationOptions;
+        public InputList<Inputs.GetGvcLocationOptionInputArgs> LocationOptions
+        {
+            get => _locationOptions ?? (_locationOptions = new InputList<Inputs.GetGvcLocationOptionInputArgs>());
+            set => _locationOptions = value;
+        }
+
         [Input("locations")]
         private InputList<string>? _locations;
         public InputList<string> Locations
@@ -409,6 +455,7 @@ namespace Pulumiverse.Cpln
         public readonly Outputs.GetGvcKedaResult? Keda;
         public readonly Outputs.GetGvcLightstepTracingResult? LightstepTracing;
         public readonly Outputs.GetGvcLoadBalancerResult? LoadBalancer;
+        public readonly ImmutableArray<Outputs.GetGvcLocationOptionResult> LocationOptions;
         public readonly ImmutableArray<string> Locations;
         public readonly string Name;
         public readonly Outputs.GetGvcOtelTracingResult? OtelTracing;
@@ -441,6 +488,8 @@ namespace Pulumiverse.Cpln
 
             Outputs.GetGvcLoadBalancerResult? loadBalancer,
 
+            ImmutableArray<Outputs.GetGvcLocationOptionResult> locationOptions,
+
             ImmutableArray<string> locations,
 
             string name,
@@ -466,6 +515,7 @@ namespace Pulumiverse.Cpln
             Keda = keda;
             LightstepTracing = lightstepTracing;
             LoadBalancer = loadBalancer;
+            LocationOptions = locationOptions;
             Locations = locations;
             Name = name;
             OtelTracing = otelTracing;
