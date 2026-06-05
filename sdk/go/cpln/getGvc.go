@@ -33,6 +33,7 @@ import (
 // - **lightstep_tracing** (Block List, Max: 1) (see below).
 // - **otel_tracing** (Block List, Max: 1) (see below).
 // - **controlplane_tracing** (Block List, Max: 1) (see below).
+// - **location_query** (Block List, Max: 1) (see below).
 // - **location_options** (Block Set) (see below).
 // - **load_balancer** (Block List, Max: 1) (see below).
 //
@@ -58,6 +59,34 @@ import (
 //
 // - **sampling** (Int) Determines what percentage of requests should be traced.
 // - **custom_tags** (Map of String) Key-value map of custom tags.
+//
+// <a id="nestedblock--location_query"></a>
+//
+// ### `locationQuery`
+//
+// A query that dynamically selects the locations making up the Global Virtual Cloud.
+//
+// - **fetch** (String) Type of fetch. Specify either: `links` or `items`. Default: `items`.
+// - **spec** (Block List, Max: 1) (see below).
+//
+// <a id="nestedblock--location_query--spec"></a>
+//
+// ### `location_query.spec`
+//
+// - **match** (String) Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+// - **terms** (Block List) (see below).
+//
+// <a id="nestedblock--location_query--spec--terms"></a>
+//
+// ### `location_query.spec.terms`
+//
+// Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+//
+// - **op** (String) Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
+// - **property** (String) Property to use for query evaluation.
+// - **rel** (String) Relation to use for query evaluation.
+// - **tag** (String) Tag key to use for query evaluation.
+// - **value** (String) Testing value for query evaluation.
 //
 // <a id="nestedblock--location_options"></a>
 //
@@ -124,6 +153,7 @@ type LookupGvcArgs struct {
 	LightstepTracing     *GetGvcLightstepTracing `pulumi:"lightstepTracing"`
 	LoadBalancer         *GetGvcLoadBalancer     `pulumi:"loadBalancer"`
 	LocationOptions      []GetGvcLocationOption  `pulumi:"locationOptions"`
+	LocationQueries      []GetGvcLocationQuery   `pulumi:"locationQueries"`
 	Locations            []string                `pulumi:"locations"`
 	Name                 string                  `pulumi:"name"`
 	OtelTracing          *GetGvcOtelTracing      `pulumi:"otelTracing"`
@@ -147,6 +177,7 @@ type LookupGvcResult struct {
 	LightstepTracing     *GetGvcLightstepTracing `pulumi:"lightstepTracing"`
 	LoadBalancer         *GetGvcLoadBalancer     `pulumi:"loadBalancer"`
 	LocationOptions      []GetGvcLocationOption  `pulumi:"locationOptions"`
+	LocationQueries      []GetGvcLocationQuery   `pulumi:"locationQueries"`
 	Locations            []string                `pulumi:"locations"`
 	Name                 string                  `pulumi:"name"`
 	OtelTracing          *GetGvcOtelTracing      `pulumi:"otelTracing"`
@@ -176,6 +207,7 @@ type LookupGvcOutputArgs struct {
 	LightstepTracing     GetGvcLightstepTracingPtrInput `pulumi:"lightstepTracing"`
 	LoadBalancer         GetGvcLoadBalancerPtrInput     `pulumi:"loadBalancer"`
 	LocationOptions      GetGvcLocationOptionArrayInput `pulumi:"locationOptions"`
+	LocationQueries      GetGvcLocationQueryArrayInput  `pulumi:"locationQueries"`
 	Locations            pulumi.StringArrayInput        `pulumi:"locations"`
 	Name                 pulumi.StringInput             `pulumi:"name"`
 	OtelTracing          GetGvcOtelTracingPtrInput      `pulumi:"otelTracing"`
@@ -250,6 +282,10 @@ func (o LookupGvcResultOutput) LoadBalancer() GetGvcLoadBalancerPtrOutput {
 
 func (o LookupGvcResultOutput) LocationOptions() GetGvcLocationOptionArrayOutput {
 	return o.ApplyT(func(v LookupGvcResult) []GetGvcLocationOption { return v.LocationOptions }).(GetGvcLocationOptionArrayOutput)
+}
+
+func (o LookupGvcResultOutput) LocationQueries() GetGvcLocationQueryArrayOutput {
+	return o.ApplyT(func(v LookupGvcResult) []GetGvcLocationQuery { return v.LocationQueries }).(GetGvcLocationQueryArrayOutput)
 }
 
 func (o LookupGvcResultOutput) Locations() pulumi.StringArrayOutput {

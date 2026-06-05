@@ -35,6 +35,7 @@ namespace Pulumiverse.Cpln
         /// - **lightstep_tracing** (Block List, Max: 1) (see below).
         /// - **otel_tracing** (Block List, Max: 1) (see below).
         /// - **controlplane_tracing** (Block List, Max: 1) (see below).
+        /// - **location_query** (Block List, Max: 1) (see below).
         /// - **location_options** (Block Set) (see below).
         /// - **load_balancer** (Block List, Max: 1) (see below).
         /// 
@@ -60,6 +61,34 @@ namespace Pulumiverse.Cpln
         /// 
         /// - **sampling** (Int) Determines what percentage of requests should be traced.
         /// - **custom_tags** (Map of String) Key-value map of custom tags.
+        /// 
+        /// &lt;a id="nestedblock--location_query"&gt;&lt;/a&gt;
+        /// 
+        /// ### `LocationQuery`
+        /// 
+        /// A query that dynamically selects the locations making up the Global Virtual Cloud.
+        /// 
+        /// - **fetch** (String) Type of fetch. Specify either: `Links` or `Items`. Default: `Items`.
+        /// - **spec** (Block List, Max: 1) (see below).
+        /// 
+        /// &lt;a id="nestedblock--location_query--spec"&gt;&lt;/a&gt;
+        /// 
+        /// ### `location_query.spec`
+        /// 
+        /// - **match** (String) Type of match. Available values: `All`, `Any`, `None`. Default: `All`.
+        /// - **terms** (Block List) (see below).
+        /// 
+        /// &lt;a id="nestedblock--location_query--spec--terms"&gt;&lt;/a&gt;
+        /// 
+        /// ### `location_query.spec.terms`
+        /// 
+        /// Terms can only contain one of the following attributes: `Property`, `Rel`, `Tag`.
+        /// 
+        /// - **op** (String) Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `~`, `=~`, `Exists`, `!exists`, `Contains`. Default: `=`.
+        /// - **property** (String) Property to use for query evaluation.
+        /// - **rel** (String) Relation to use for query evaluation.
+        /// - **tag** (String) Tag key to use for query evaluation.
+        /// - **value** (String) Testing value for query evaluation.
         /// 
         /// &lt;a id="nestedblock--location_options"&gt;&lt;/a&gt;
         /// 
@@ -127,6 +156,7 @@ namespace Pulumiverse.Cpln
         /// - **lightstep_tracing** (Block List, Max: 1) (see below).
         /// - **otel_tracing** (Block List, Max: 1) (see below).
         /// - **controlplane_tracing** (Block List, Max: 1) (see below).
+        /// - **location_query** (Block List, Max: 1) (see below).
         /// - **location_options** (Block Set) (see below).
         /// - **load_balancer** (Block List, Max: 1) (see below).
         /// 
@@ -152,6 +182,34 @@ namespace Pulumiverse.Cpln
         /// 
         /// - **sampling** (Int) Determines what percentage of requests should be traced.
         /// - **custom_tags** (Map of String) Key-value map of custom tags.
+        /// 
+        /// &lt;a id="nestedblock--location_query"&gt;&lt;/a&gt;
+        /// 
+        /// ### `LocationQuery`
+        /// 
+        /// A query that dynamically selects the locations making up the Global Virtual Cloud.
+        /// 
+        /// - **fetch** (String) Type of fetch. Specify either: `Links` or `Items`. Default: `Items`.
+        /// - **spec** (Block List, Max: 1) (see below).
+        /// 
+        /// &lt;a id="nestedblock--location_query--spec"&gt;&lt;/a&gt;
+        /// 
+        /// ### `location_query.spec`
+        /// 
+        /// - **match** (String) Type of match. Available values: `All`, `Any`, `None`. Default: `All`.
+        /// - **terms** (Block List) (see below).
+        /// 
+        /// &lt;a id="nestedblock--location_query--spec--terms"&gt;&lt;/a&gt;
+        /// 
+        /// ### `location_query.spec.terms`
+        /// 
+        /// Terms can only contain one of the following attributes: `Property`, `Rel`, `Tag`.
+        /// 
+        /// - **op** (String) Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `~`, `=~`, `Exists`, `!exists`, `Contains`. Default: `=`.
+        /// - **property** (String) Property to use for query evaluation.
+        /// - **rel** (String) Relation to use for query evaluation.
+        /// - **tag** (String) Tag key to use for query evaluation.
+        /// - **value** (String) Testing value for query evaluation.
         /// 
         /// &lt;a id="nestedblock--location_options"&gt;&lt;/a&gt;
         /// 
@@ -219,6 +277,7 @@ namespace Pulumiverse.Cpln
         /// - **lightstep_tracing** (Block List, Max: 1) (see below).
         /// - **otel_tracing** (Block List, Max: 1) (see below).
         /// - **controlplane_tracing** (Block List, Max: 1) (see below).
+        /// - **location_query** (Block List, Max: 1) (see below).
         /// - **location_options** (Block Set) (see below).
         /// - **load_balancer** (Block List, Max: 1) (see below).
         /// 
@@ -244,6 +303,34 @@ namespace Pulumiverse.Cpln
         /// 
         /// - **sampling** (Int) Determines what percentage of requests should be traced.
         /// - **custom_tags** (Map of String) Key-value map of custom tags.
+        /// 
+        /// &lt;a id="nestedblock--location_query"&gt;&lt;/a&gt;
+        /// 
+        /// ### `LocationQuery`
+        /// 
+        /// A query that dynamically selects the locations making up the Global Virtual Cloud.
+        /// 
+        /// - **fetch** (String) Type of fetch. Specify either: `Links` or `Items`. Default: `Items`.
+        /// - **spec** (Block List, Max: 1) (see below).
+        /// 
+        /// &lt;a id="nestedblock--location_query--spec"&gt;&lt;/a&gt;
+        /// 
+        /// ### `location_query.spec`
+        /// 
+        /// - **match** (String) Type of match. Available values: `All`, `Any`, `None`. Default: `All`.
+        /// - **terms** (Block List) (see below).
+        /// 
+        /// &lt;a id="nestedblock--location_query--spec--terms"&gt;&lt;/a&gt;
+        /// 
+        /// ### `location_query.spec.terms`
+        /// 
+        /// Terms can only contain one of the following attributes: `Property`, `Rel`, `Tag`.
+        /// 
+        /// - **op** (String) Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `~`, `=~`, `Exists`, `!exists`, `Contains`. Default: `=`.
+        /// - **property** (String) Property to use for query evaluation.
+        /// - **rel** (String) Relation to use for query evaluation.
+        /// - **tag** (String) Tag key to use for query evaluation.
+        /// - **value** (String) Testing value for query evaluation.
         /// 
         /// &lt;a id="nestedblock--location_options"&gt;&lt;/a&gt;
         /// 
@@ -326,6 +413,14 @@ namespace Pulumiverse.Cpln
             set => _locationOptions = value;
         }
 
+        [Input("locationQueries")]
+        private List<Inputs.GetGvcLocationQueryArgs>? _locationQueries;
+        public List<Inputs.GetGvcLocationQueryArgs> LocationQueries
+        {
+            get => _locationQueries ?? (_locationQueries = new List<Inputs.GetGvcLocationQueryArgs>());
+            set => _locationQueries = value;
+        }
+
         [Input("locations")]
         private List<string>? _locations;
         public List<string> Locations
@@ -401,6 +496,14 @@ namespace Pulumiverse.Cpln
             set => _locationOptions = value;
         }
 
+        [Input("locationQueries")]
+        private InputList<Inputs.GetGvcLocationQueryInputArgs>? _locationQueries;
+        public InputList<Inputs.GetGvcLocationQueryInputArgs> LocationQueries
+        {
+            get => _locationQueries ?? (_locationQueries = new InputList<Inputs.GetGvcLocationQueryInputArgs>());
+            set => _locationQueries = value;
+        }
+
         [Input("locations")]
         private InputList<string>? _locations;
         public InputList<string> Locations
@@ -456,6 +559,7 @@ namespace Pulumiverse.Cpln
         public readonly Outputs.GetGvcLightstepTracingResult? LightstepTracing;
         public readonly Outputs.GetGvcLoadBalancerResult? LoadBalancer;
         public readonly ImmutableArray<Outputs.GetGvcLocationOptionResult> LocationOptions;
+        public readonly ImmutableArray<Outputs.GetGvcLocationQueryResult> LocationQueries;
         public readonly ImmutableArray<string> Locations;
         public readonly string Name;
         public readonly Outputs.GetGvcOtelTracingResult? OtelTracing;
@@ -490,6 +594,8 @@ namespace Pulumiverse.Cpln
 
             ImmutableArray<Outputs.GetGvcLocationOptionResult> locationOptions,
 
+            ImmutableArray<Outputs.GetGvcLocationQueryResult> locationQueries,
+
             ImmutableArray<string> locations,
 
             string name,
@@ -516,6 +622,7 @@ namespace Pulumiverse.Cpln
             LightstepTracing = lightstepTracing;
             LoadBalancer = loadBalancer;
             LocationOptions = locationOptions;
+            LocationQueries = locationQueries;
             Locations = locations;
             Name = name;
             OtelTracing = otelTracing;

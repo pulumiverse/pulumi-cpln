@@ -12,40 +12,40 @@ namespace Pulumiverse.Cpln.Outputs
 {
 
     [OutputType]
-    public sealed class PolicyTargetQuerySpecTerm
+    public sealed class GetGvcLocationQuerySpecTermResult
     {
         /// <summary>
         /// Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `~`, `=~`, `Exists`, `!exists`, `Contains`. Default: `=`.
         /// </summary>
-        public readonly string? Op;
+        public readonly string Op;
         /// <summary>
         /// Property to use for query evaluation.
         /// </summary>
-        public readonly string? Property;
+        public readonly string Property;
         /// <summary>
         /// Relation to use for query evaluation.
         /// </summary>
-        public readonly string? Rel;
+        public readonly string Rel;
         /// <summary>
         /// Tag key to use for query evaluation.
         /// </summary>
-        public readonly string? Tag;
+        public readonly string Tag;
         /// <summary>
         /// Testing value for query evaluation.
         /// </summary>
-        public readonly string? Value;
+        public readonly string Value;
 
         [OutputConstructor]
-        private PolicyTargetQuerySpecTerm(
-            string? op,
+        private GetGvcLocationQuerySpecTermResult(
+            string op,
 
-            string? property,
+            string property,
 
-            string? rel,
+            string rel,
 
-            string? tag,
+            string tag,
 
-            string? value)
+            string value)
         {
             Op = op;
             Property = property;

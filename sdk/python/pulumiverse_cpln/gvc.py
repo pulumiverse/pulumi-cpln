@@ -30,6 +30,7 @@ class GvcArgs:
                  lightstep_tracing: Optional[pulumi.Input['GvcLightstepTracingArgs']] = None,
                  load_balancer: Optional[pulumi.Input['GvcLoadBalancerArgs']] = None,
                  location_options: Optional[pulumi.Input[Sequence[pulumi.Input['GvcLocationOptionArgs']]]] = None,
+                 location_query: Optional[pulumi.Input['GvcLocationQueryArgs']] = None,
                  locations: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  otel_tracing: Optional[pulumi.Input['GvcOtelTracingArgs']] = None,
@@ -45,6 +46,7 @@ class GvcArgs:
         :param pulumi.Input['GvcKedaArgs'] keda: KEDA configuration for the GVC.
         :param pulumi.Input['GvcLoadBalancerArgs'] load_balancer: Dedicated load balancer configuration.
         :param pulumi.Input[Sequence[pulumi.Input['GvcLocationOptionArgs']]] location_options: Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `locations`.
+        :param pulumi.Input['GvcLocationQueryArgs'] location_query: A query that dynamically selects the locations making up the Global Virtual Cloud.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] locations: A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
         :param pulumi.Input[_builtins.str] name: Name of the Global Virtual Cloud.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] pull_secrets: A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
@@ -71,6 +73,8 @@ class GvcArgs:
             pulumi.set(__self__, "load_balancer", load_balancer)
         if location_options is not None:
             pulumi.set(__self__, "location_options", location_options)
+        if location_query is not None:
+            pulumi.set(__self__, "location_query", location_query)
         if locations is not None:
             pulumi.set(__self__, "locations", locations)
         if name is not None:
@@ -188,6 +192,18 @@ class GvcArgs:
         pulumi.set(self, "location_options", value)
 
     @_builtins.property
+    @pulumi.getter(name="locationQuery")
+    def location_query(self) -> Optional[pulumi.Input['GvcLocationQueryArgs']]:
+        """
+        A query that dynamically selects the locations making up the Global Virtual Cloud.
+        """
+        return pulumi.get(self, "location_query")
+
+    @location_query.setter
+    def location_query(self, value: Optional[pulumi.Input['GvcLocationQueryArgs']]):
+        pulumi.set(self, "location_query", value)
+
+    @_builtins.property
     @pulumi.getter
     def locations(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
         """
@@ -268,6 +284,7 @@ class _GvcState:
                  lightstep_tracing: Optional[pulumi.Input['GvcLightstepTracingArgs']] = None,
                  load_balancer: Optional[pulumi.Input['GvcLoadBalancerArgs']] = None,
                  location_options: Optional[pulumi.Input[Sequence[pulumi.Input['GvcLocationOptionArgs']]]] = None,
+                 location_query: Optional[pulumi.Input['GvcLocationQueryArgs']] = None,
                  locations: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  otel_tracing: Optional[pulumi.Input['GvcOtelTracingArgs']] = None,
@@ -286,6 +303,7 @@ class _GvcState:
         :param pulumi.Input['GvcKedaArgs'] keda: KEDA configuration for the GVC.
         :param pulumi.Input['GvcLoadBalancerArgs'] load_balancer: Dedicated load balancer configuration.
         :param pulumi.Input[Sequence[pulumi.Input['GvcLocationOptionArgs']]] location_options: Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `locations`.
+        :param pulumi.Input['GvcLocationQueryArgs'] location_query: A query that dynamically selects the locations making up the Global Virtual Cloud.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] locations: A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
         :param pulumi.Input[_builtins.str] name: Name of the Global Virtual Cloud.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] pull_secrets: A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
@@ -317,6 +335,8 @@ class _GvcState:
             pulumi.set(__self__, "load_balancer", load_balancer)
         if location_options is not None:
             pulumi.set(__self__, "location_options", location_options)
+        if location_query is not None:
+            pulumi.set(__self__, "location_query", location_query)
         if locations is not None:
             pulumi.set(__self__, "locations", locations)
         if name is not None:
@@ -460,6 +480,18 @@ class _GvcState:
         pulumi.set(self, "location_options", value)
 
     @_builtins.property
+    @pulumi.getter(name="locationQuery")
+    def location_query(self) -> Optional[pulumi.Input['GvcLocationQueryArgs']]:
+        """
+        A query that dynamically selects the locations making up the Global Virtual Cloud.
+        """
+        return pulumi.get(self, "location_query")
+
+    @location_query.setter
+    def location_query(self, value: Optional[pulumi.Input['GvcLocationQueryArgs']]):
+        pulumi.set(self, "location_query", value)
+
+    @_builtins.property
     @pulumi.getter
     def locations(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
         """
@@ -553,6 +585,7 @@ class Gvc(pulumi.CustomResource):
                  lightstep_tracing: Optional[pulumi.Input[Union['GvcLightstepTracingArgs', 'GvcLightstepTracingArgsDict']]] = None,
                  load_balancer: Optional[pulumi.Input[Union['GvcLoadBalancerArgs', 'GvcLoadBalancerArgsDict']]] = None,
                  location_options: Optional[pulumi.Input[Sequence[pulumi.Input[Union['GvcLocationOptionArgs', 'GvcLocationOptionArgsDict']]]]] = None,
+                 location_query: Optional[pulumi.Input[Union['GvcLocationQueryArgs', 'GvcLocationQueryArgsDict']]] = None,
                  locations: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  otel_tracing: Optional[pulumi.Input[Union['GvcOtelTracingArgs', 'GvcOtelTracingArgsDict']]] = None,
@@ -571,6 +604,7 @@ class Gvc(pulumi.CustomResource):
         :param pulumi.Input[Union['GvcKedaArgs', 'GvcKedaArgsDict']] keda: KEDA configuration for the GVC.
         :param pulumi.Input[Union['GvcLoadBalancerArgs', 'GvcLoadBalancerArgsDict']] load_balancer: Dedicated load balancer configuration.
         :param pulumi.Input[Sequence[pulumi.Input[Union['GvcLocationOptionArgs', 'GvcLocationOptionArgsDict']]]] location_options: Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `locations`.
+        :param pulumi.Input[Union['GvcLocationQueryArgs', 'GvcLocationQueryArgsDict']] location_query: A query that dynamically selects the locations making up the Global Virtual Cloud.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] locations: A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
         :param pulumi.Input[_builtins.str] name: Name of the Global Virtual Cloud.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] pull_secrets: A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
@@ -608,6 +642,7 @@ class Gvc(pulumi.CustomResource):
                  lightstep_tracing: Optional[pulumi.Input[Union['GvcLightstepTracingArgs', 'GvcLightstepTracingArgsDict']]] = None,
                  load_balancer: Optional[pulumi.Input[Union['GvcLoadBalancerArgs', 'GvcLoadBalancerArgsDict']]] = None,
                  location_options: Optional[pulumi.Input[Sequence[pulumi.Input[Union['GvcLocationOptionArgs', 'GvcLocationOptionArgsDict']]]]] = None,
+                 location_query: Optional[pulumi.Input[Union['GvcLocationQueryArgs', 'GvcLocationQueryArgsDict']]] = None,
                  locations: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  otel_tracing: Optional[pulumi.Input[Union['GvcOtelTracingArgs', 'GvcOtelTracingArgsDict']]] = None,
@@ -632,6 +667,7 @@ class Gvc(pulumi.CustomResource):
             __props__.__dict__["lightstep_tracing"] = lightstep_tracing
             __props__.__dict__["load_balancer"] = load_balancer
             __props__.__dict__["location_options"] = location_options
+            __props__.__dict__["location_query"] = location_query
             __props__.__dict__["locations"] = locations
             __props__.__dict__["name"] = name
             __props__.__dict__["otel_tracing"] = otel_tracing
@@ -662,6 +698,7 @@ class Gvc(pulumi.CustomResource):
             lightstep_tracing: Optional[pulumi.Input[Union['GvcLightstepTracingArgs', 'GvcLightstepTracingArgsDict']]] = None,
             load_balancer: Optional[pulumi.Input[Union['GvcLoadBalancerArgs', 'GvcLoadBalancerArgsDict']]] = None,
             location_options: Optional[pulumi.Input[Sequence[pulumi.Input[Union['GvcLocationOptionArgs', 'GvcLocationOptionArgsDict']]]]] = None,
+            location_query: Optional[pulumi.Input[Union['GvcLocationQueryArgs', 'GvcLocationQueryArgsDict']]] = None,
             locations: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
             name: Optional[pulumi.Input[_builtins.str]] = None,
             otel_tracing: Optional[pulumi.Input[Union['GvcOtelTracingArgs', 'GvcOtelTracingArgsDict']]] = None,
@@ -685,6 +722,7 @@ class Gvc(pulumi.CustomResource):
         :param pulumi.Input[Union['GvcKedaArgs', 'GvcKedaArgsDict']] keda: KEDA configuration for the GVC.
         :param pulumi.Input[Union['GvcLoadBalancerArgs', 'GvcLoadBalancerArgsDict']] load_balancer: Dedicated load balancer configuration.
         :param pulumi.Input[Sequence[pulumi.Input[Union['GvcLocationOptionArgs', 'GvcLocationOptionArgsDict']]]] location_options: Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `locations`.
+        :param pulumi.Input[Union['GvcLocationQueryArgs', 'GvcLocationQueryArgsDict']] location_query: A query that dynamically selects the locations making up the Global Virtual Cloud.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] locations: A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
         :param pulumi.Input[_builtins.str] name: Name of the Global Virtual Cloud.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] pull_secrets: A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
@@ -706,6 +744,7 @@ class Gvc(pulumi.CustomResource):
         __props__.__dict__["lightstep_tracing"] = lightstep_tracing
         __props__.__dict__["load_balancer"] = load_balancer
         __props__.__dict__["location_options"] = location_options
+        __props__.__dict__["location_query"] = location_query
         __props__.__dict__["locations"] = locations
         __props__.__dict__["name"] = name
         __props__.__dict__["otel_tracing"] = otel_tracing
@@ -797,6 +836,14 @@ class Gvc(pulumi.CustomResource):
         Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `locations`.
         """
         return pulumi.get(self, "location_options")
+
+    @_builtins.property
+    @pulumi.getter(name="locationQuery")
+    def location_query(self) -> pulumi.Output[Optional['outputs.GvcLocationQuery']]:
+        """
+        A query that dynamically selects the locations making up the Global Virtual Cloud.
+        """
+        return pulumi.get(self, "location_query")
 
     @_builtins.property
     @pulumi.getter

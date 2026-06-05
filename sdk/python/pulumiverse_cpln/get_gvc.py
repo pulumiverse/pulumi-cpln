@@ -28,7 +28,7 @@ class GetGvcResult:
     """
     A collection of values returned by getGvc.
     """
-    def __init__(__self__, alias=None, controlplane_tracing=None, cpln_id=None, description=None, domain=None, endpoint_naming_format=None, env=None, id=None, keda=None, lightstep_tracing=None, load_balancer=None, location_options=None, locations=None, name=None, otel_tracing=None, pull_secrets=None, self_link=None, sidecar=None, tags=None):
+    def __init__(__self__, alias=None, controlplane_tracing=None, cpln_id=None, description=None, domain=None, endpoint_naming_format=None, env=None, id=None, keda=None, lightstep_tracing=None, load_balancer=None, location_options=None, location_queries=None, locations=None, name=None, otel_tracing=None, pull_secrets=None, self_link=None, sidecar=None, tags=None):
         if alias and not isinstance(alias, str):
             raise TypeError("Expected argument 'alias' to be a str")
         pulumi.set(__self__, "alias", alias)
@@ -65,6 +65,9 @@ class GetGvcResult:
         if location_options and not isinstance(location_options, list):
             raise TypeError("Expected argument 'location_options' to be a list")
         pulumi.set(__self__, "location_options", location_options)
+        if location_queries and not isinstance(location_queries, list):
+            raise TypeError("Expected argument 'location_queries' to be a list")
+        pulumi.set(__self__, "location_queries", location_queries)
         if locations and not isinstance(locations, list):
             raise TypeError("Expected argument 'locations' to be a list")
         pulumi.set(__self__, "locations", locations)
@@ -149,6 +152,11 @@ class GetGvcResult:
         return pulumi.get(self, "location_options")
 
     @_builtins.property
+    @pulumi.getter(name="locationQueries")
+    def location_queries(self) -> Optional[Sequence['outputs.GetGvcLocationQueryResult']]:
+        return pulumi.get(self, "location_queries")
+
+    @_builtins.property
     @pulumi.getter
     def locations(self) -> Optional[Sequence[_builtins.str]]:
         return pulumi.get(self, "locations")
@@ -202,6 +210,7 @@ class AwaitableGetGvcResult(GetGvcResult):
             lightstep_tracing=self.lightstep_tracing,
             load_balancer=self.load_balancer,
             location_options=self.location_options,
+            location_queries=self.location_queries,
             locations=self.locations,
             name=self.name,
             otel_tracing=self.otel_tracing,
@@ -219,6 +228,7 @@ def get_gvc(controlplane_tracing: Optional[Union['GetGvcControlplaneTracingArgs'
             lightstep_tracing: Optional[Union['GetGvcLightstepTracingArgs', 'GetGvcLightstepTracingArgsDict']] = None,
             load_balancer: Optional[Union['GetGvcLoadBalancerArgs', 'GetGvcLoadBalancerArgsDict']] = None,
             location_options: Optional[Sequence[Union['GetGvcLocationOptionArgs', 'GetGvcLocationOptionArgsDict']]] = None,
+            location_queries: Optional[Sequence[Union['GetGvcLocationQueryArgs', 'GetGvcLocationQueryArgsDict']]] = None,
             locations: Optional[Sequence[_builtins.str]] = None,
             name: Optional[_builtins.str] = None,
             otel_tracing: Optional[Union['GetGvcOtelTracingArgs', 'GetGvcOtelTracingArgsDict']] = None,
@@ -249,6 +259,7 @@ def get_gvc(controlplane_tracing: Optional[Union['GetGvcControlplaneTracingArgs'
     - **lightstep_tracing** (Block List, Max: 1) (see below).
     - **otel_tracing** (Block List, Max: 1) (see below).
     - **controlplane_tracing** (Block List, Max: 1) (see below).
+    - **location_query** (Block List, Max: 1) (see below).
     - **location_options** (Block Set) (see below).
     - **load_balancer** (Block List, Max: 1) (see below).
 
@@ -274,6 +285,34 @@ def get_gvc(controlplane_tracing: Optional[Union['GetGvcControlplaneTracingArgs'
 
     - **sampling** (Int) Determines what percentage of requests should be traced.
     - **custom_tags** (Map of String) Key-value map of custom tags.
+
+    <a id="nestedblock--location_query"></a>
+
+    ### `location_query`
+
+    A query that dynamically selects the locations making up the Global Virtual Cloud.
+
+    - **fetch** (String) Type of fetch. Specify either: `links` or `items`. Default: `items`.
+    - **spec** (Block List, Max: 1) (see below).
+
+    <a id="nestedblock--location_query--spec"></a>
+
+    ### `location_query.spec`
+
+    - **match** (String) Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+    - **terms** (Block List) (see below).
+
+    <a id="nestedblock--location_query--spec--terms"></a>
+
+    ### `location_query.spec.terms`
+
+    Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+
+    - **op** (String) Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
+    - **property** (String) Property to use for query evaluation.
+    - **rel** (String) Relation to use for query evaluation.
+    - **tag** (String) Tag key to use for query evaluation.
+    - **value** (String) Testing value for query evaluation.
 
     <a id="nestedblock--location_options"></a>
 
@@ -312,6 +351,7 @@ def get_gvc(controlplane_tracing: Optional[Union['GetGvcControlplaneTracingArgs'
     __args__['lightstepTracing'] = lightstep_tracing
     __args__['loadBalancer'] = load_balancer
     __args__['locationOptions'] = location_options
+    __args__['locationQueries'] = location_queries
     __args__['locations'] = locations
     __args__['name'] = name
     __args__['otelTracing'] = otel_tracing
@@ -334,6 +374,7 @@ def get_gvc(controlplane_tracing: Optional[Union['GetGvcControlplaneTracingArgs'
         lightstep_tracing=pulumi.get(__ret__, 'lightstep_tracing'),
         load_balancer=pulumi.get(__ret__, 'load_balancer'),
         location_options=pulumi.get(__ret__, 'location_options'),
+        location_queries=pulumi.get(__ret__, 'location_queries'),
         locations=pulumi.get(__ret__, 'locations'),
         name=pulumi.get(__ret__, 'name'),
         otel_tracing=pulumi.get(__ret__, 'otel_tracing'),
@@ -349,6 +390,7 @@ def get_gvc_output(controlplane_tracing: Optional[pulumi.Input[Optional[Union['G
                    lightstep_tracing: Optional[pulumi.Input[Optional[Union['GetGvcLightstepTracingArgs', 'GetGvcLightstepTracingArgsDict']]]] = None,
                    load_balancer: Optional[pulumi.Input[Optional[Union['GetGvcLoadBalancerArgs', 'GetGvcLoadBalancerArgsDict']]]] = None,
                    location_options: Optional[pulumi.Input[Optional[Sequence[Union['GetGvcLocationOptionArgs', 'GetGvcLocationOptionArgsDict']]]]] = None,
+                   location_queries: Optional[pulumi.Input[Optional[Sequence[Union['GetGvcLocationQueryArgs', 'GetGvcLocationQueryArgsDict']]]]] = None,
                    locations: Optional[pulumi.Input[Optional[Sequence[_builtins.str]]]] = None,
                    name: Optional[pulumi.Input[_builtins.str]] = None,
                    otel_tracing: Optional[pulumi.Input[Optional[Union['GetGvcOtelTracingArgs', 'GetGvcOtelTracingArgsDict']]]] = None,
@@ -379,6 +421,7 @@ def get_gvc_output(controlplane_tracing: Optional[pulumi.Input[Optional[Union['G
     - **lightstep_tracing** (Block List, Max: 1) (see below).
     - **otel_tracing** (Block List, Max: 1) (see below).
     - **controlplane_tracing** (Block List, Max: 1) (see below).
+    - **location_query** (Block List, Max: 1) (see below).
     - **location_options** (Block Set) (see below).
     - **load_balancer** (Block List, Max: 1) (see below).
 
@@ -404,6 +447,34 @@ def get_gvc_output(controlplane_tracing: Optional[pulumi.Input[Optional[Union['G
 
     - **sampling** (Int) Determines what percentage of requests should be traced.
     - **custom_tags** (Map of String) Key-value map of custom tags.
+
+    <a id="nestedblock--location_query"></a>
+
+    ### `location_query`
+
+    A query that dynamically selects the locations making up the Global Virtual Cloud.
+
+    - **fetch** (String) Type of fetch. Specify either: `links` or `items`. Default: `items`.
+    - **spec** (Block List, Max: 1) (see below).
+
+    <a id="nestedblock--location_query--spec"></a>
+
+    ### `location_query.spec`
+
+    - **match** (String) Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+    - **terms** (Block List) (see below).
+
+    <a id="nestedblock--location_query--spec--terms"></a>
+
+    ### `location_query.spec.terms`
+
+    Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+
+    - **op** (String) Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
+    - **property** (String) Property to use for query evaluation.
+    - **rel** (String) Relation to use for query evaluation.
+    - **tag** (String) Tag key to use for query evaluation.
+    - **value** (String) Testing value for query evaluation.
 
     <a id="nestedblock--location_options"></a>
 
@@ -442,6 +513,7 @@ def get_gvc_output(controlplane_tracing: Optional[pulumi.Input[Optional[Union['G
     __args__['lightstepTracing'] = lightstep_tracing
     __args__['loadBalancer'] = load_balancer
     __args__['locationOptions'] = location_options
+    __args__['locationQueries'] = location_queries
     __args__['locations'] = locations
     __args__['name'] = name
     __args__['otelTracing'] = otel_tracing
@@ -463,6 +535,7 @@ def get_gvc_output(controlplane_tracing: Optional[pulumi.Input[Optional[Union['G
         lightstep_tracing=pulumi.get(__response__, 'lightstep_tracing'),
         load_balancer=pulumi.get(__response__, 'load_balancer'),
         location_options=pulumi.get(__response__, 'location_options'),
+        location_queries=pulumi.get(__response__, 'location_queries'),
         locations=pulumi.get(__response__, 'locations'),
         name=pulumi.get(__response__, 'name'),
         otel_tracing=pulumi.get(__response__, 'otel_tracing'),

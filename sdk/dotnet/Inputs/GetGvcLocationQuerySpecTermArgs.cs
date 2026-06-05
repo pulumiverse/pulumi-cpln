@@ -8,50 +8,44 @@ using System.Threading.Tasks;
 using Pulumi.Serialization;
 using Pulumi;
 
-namespace Pulumiverse.Cpln.Outputs
+namespace Pulumiverse.Cpln.Inputs
 {
 
-    [OutputType]
-    public sealed class PolicyTargetQuerySpecTerm
+    public sealed class GetGvcLocationQuerySpecTermInputArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
         /// Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `~`, `=~`, `Exists`, `!exists`, `Contains`. Default: `=`.
         /// </summary>
-        public readonly string? Op;
+        [Input("op", required: true)]
+        public Input<string> Op { get; set; } = null!;
+
         /// <summary>
         /// Property to use for query evaluation.
         /// </summary>
-        public readonly string? Property;
+        [Input("property", required: true)]
+        public Input<string> Property { get; set; } = null!;
+
         /// <summary>
         /// Relation to use for query evaluation.
         /// </summary>
-        public readonly string? Rel;
+        [Input("rel", required: true)]
+        public Input<string> Rel { get; set; } = null!;
+
         /// <summary>
         /// Tag key to use for query evaluation.
         /// </summary>
-        public readonly string? Tag;
+        [Input("tag", required: true)]
+        public Input<string> Tag { get; set; } = null!;
+
         /// <summary>
         /// Testing value for query evaluation.
         /// </summary>
-        public readonly string? Value;
+        [Input("value", required: true)]
+        public Input<string> Value { get; set; } = null!;
 
-        [OutputConstructor]
-        private PolicyTargetQuerySpecTerm(
-            string? op,
-
-            string? property,
-
-            string? rel,
-
-            string? tag,
-
-            string? value)
+        public GetGvcLocationQuerySpecTermInputArgs()
         {
-            Op = op;
-            Property = property;
-            Rel = rel;
-            Tag = tag;
-            Value = value;
         }
+        public static new GetGvcLocationQuerySpecTermInputArgs Empty => new GetGvcLocationQuerySpecTermInputArgs();
     }
 }

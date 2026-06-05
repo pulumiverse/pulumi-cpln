@@ -29,6 +29,7 @@ import * as utilities from "./utilities";
  * - **lightstep_tracing** (Block List, Max: 1) (see below).
  * - **otel_tracing** (Block List, Max: 1) (see below).
  * - **controlplane_tracing** (Block List, Max: 1) (see below).
+ * - **location_query** (Block List, Max: 1) (see below).
  * - **location_options** (Block Set) (see below).
  * - **load_balancer** (Block List, Max: 1) (see below).
  *
@@ -54,6 +55,34 @@ import * as utilities from "./utilities";
  *
  * - **sampling** (Int) Determines what percentage of requests should be traced.
  * - **custom_tags** (Map of String) Key-value map of custom tags.
+ *
+ * <a id="nestedblock--location_query"></a>
+ *
+ * ### `locationQuery`
+ *
+ * A query that dynamically selects the locations making up the Global Virtual Cloud.
+ *
+ * - **fetch** (String) Type of fetch. Specify either: `links` or `items`. Default: `items`.
+ * - **spec** (Block List, Max: 1) (see below).
+ *
+ * <a id="nestedblock--location_query--spec"></a>
+ *
+ * ### `location_query.spec`
+ *
+ * - **match** (String) Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+ * - **terms** (Block List) (see below).
+ *
+ * <a id="nestedblock--location_query--spec--terms"></a>
+ *
+ * ### `location_query.spec.terms`
+ *
+ * Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+ *
+ * - **op** (String) Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
+ * - **property** (String) Property to use for query evaluation.
+ * - **rel** (String) Relation to use for query evaluation.
+ * - **tag** (String) Tag key to use for query evaluation.
+ * - **value** (String) Testing value for query evaluation.
  *
  * <a id="nestedblock--location_options"></a>
  *
@@ -96,6 +125,7 @@ export function getGvc(args: GetGvcArgs, opts?: pulumi.InvokeOptions): Promise<G
         "lightstepTracing": args.lightstepTracing,
         "loadBalancer": args.loadBalancer,
         "locationOptions": args.locationOptions,
+        "locationQueries": args.locationQueries,
         "locations": args.locations,
         "name": args.name,
         "otelTracing": args.otelTracing,
@@ -120,6 +150,7 @@ export interface GetGvcArgs {
     lightstepTracing?: inputs.GetGvcLightstepTracing;
     loadBalancer?: inputs.GetGvcLoadBalancer;
     locationOptions?: inputs.GetGvcLocationOption[];
+    locationQueries?: inputs.GetGvcLocationQuery[];
     locations?: string[];
     name: string;
     otelTracing?: inputs.GetGvcOtelTracing;
@@ -147,6 +178,7 @@ export interface GetGvcResult {
     readonly lightstepTracing?: outputs.GetGvcLightstepTracing;
     readonly loadBalancer?: outputs.GetGvcLoadBalancer;
     readonly locationOptions?: outputs.GetGvcLocationOption[];
+    readonly locationQueries?: outputs.GetGvcLocationQuery[];
     readonly locations?: string[];
     readonly name: string;
     readonly otelTracing?: outputs.GetGvcOtelTracing;
@@ -178,6 +210,7 @@ export interface GetGvcResult {
  * - **lightstep_tracing** (Block List, Max: 1) (see below).
  * - **otel_tracing** (Block List, Max: 1) (see below).
  * - **controlplane_tracing** (Block List, Max: 1) (see below).
+ * - **location_query** (Block List, Max: 1) (see below).
  * - **location_options** (Block Set) (see below).
  * - **load_balancer** (Block List, Max: 1) (see below).
  *
@@ -203,6 +236,34 @@ export interface GetGvcResult {
  *
  * - **sampling** (Int) Determines what percentage of requests should be traced.
  * - **custom_tags** (Map of String) Key-value map of custom tags.
+ *
+ * <a id="nestedblock--location_query"></a>
+ *
+ * ### `locationQuery`
+ *
+ * A query that dynamically selects the locations making up the Global Virtual Cloud.
+ *
+ * - **fetch** (String) Type of fetch. Specify either: `links` or `items`. Default: `items`.
+ * - **spec** (Block List, Max: 1) (see below).
+ *
+ * <a id="nestedblock--location_query--spec"></a>
+ *
+ * ### `location_query.spec`
+ *
+ * - **match** (String) Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+ * - **terms** (Block List) (see below).
+ *
+ * <a id="nestedblock--location_query--spec--terms"></a>
+ *
+ * ### `location_query.spec.terms`
+ *
+ * Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+ *
+ * - **op** (String) Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
+ * - **property** (String) Property to use for query evaluation.
+ * - **rel** (String) Relation to use for query evaluation.
+ * - **tag** (String) Tag key to use for query evaluation.
+ * - **value** (String) Testing value for query evaluation.
  *
  * <a id="nestedblock--location_options"></a>
  *
@@ -245,6 +306,7 @@ export function getGvcOutput(args: GetGvcOutputArgs, opts?: pulumi.InvokeOutputO
         "lightstepTracing": args.lightstepTracing,
         "loadBalancer": args.loadBalancer,
         "locationOptions": args.locationOptions,
+        "locationQueries": args.locationQueries,
         "locations": args.locations,
         "name": args.name,
         "otelTracing": args.otelTracing,
@@ -269,6 +331,7 @@ export interface GetGvcOutputArgs {
     lightstepTracing?: pulumi.Input<inputs.GetGvcLightstepTracingArgs>;
     loadBalancer?: pulumi.Input<inputs.GetGvcLoadBalancerArgs>;
     locationOptions?: pulumi.Input<pulumi.Input<inputs.GetGvcLocationOptionArgs>[]>;
+    locationQueries?: pulumi.Input<pulumi.Input<inputs.GetGvcLocationQueryArgs>[]>;
     locations?: pulumi.Input<pulumi.Input<string>[]>;
     name: pulumi.Input<string>;
     otelTracing?: pulumi.Input<inputs.GetGvcOtelTracingArgs>;
