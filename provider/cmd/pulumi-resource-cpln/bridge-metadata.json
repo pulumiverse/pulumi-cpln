@@ -230,6 +230,23 @@
                     "location_options": {
                         "maxItemsOne": false
                     },
+                    "location_query": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "spec": {
+                                    "maxItemsOne": true,
+                                    "elem": {
+                                        "fields": {
+                                            "terms": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
                     "locations": {
                         "maxItemsOne": false
                     },
@@ -1699,6 +1716,23 @@
                     },
                     "location_options": {
                         "maxItemsOne": false
+                    },
+                    "location_query": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "spec": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "terms": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "locations": {
                         "maxItemsOne": false
