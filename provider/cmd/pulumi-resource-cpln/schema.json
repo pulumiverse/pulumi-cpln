@@ -729,7 +729,7 @@
             "properties": {
                 "op": {
                     "type": "string",
-                    "description": "Type of query operation. Available values: `=`, `\u003e`, `\u003e=`, `\u003c`, `\u003c=`, `!=`, \u003cspan pulumi-lang-nodejs=\"`exists`\" pulumi-lang-dotnet=\"`Exists`\" pulumi-lang-go=\"`exists`\" pulumi-lang-python=\"`exists`\" pulumi-lang-yaml=\"`exists`\" pulumi-lang-java=\"`exists`\"\u003e`exists`\u003c/span\u003e, `!exists`. Default: `=`.\n"
+                    "description": "Type of query operation. Available values: `=`, `\u003e`, `\u003e=`, `\u003c`, `\u003c=`, `!=`, `~`, `=~`, \u003cspan pulumi-lang-nodejs=\"`exists`\" pulumi-lang-dotnet=\"`Exists`\" pulumi-lang-go=\"`exists`\" pulumi-lang-python=\"`exists`\" pulumi-lang-yaml=\"`exists`\" pulumi-lang-java=\"`exists`\"\u003e`exists`\u003c/span\u003e, `!exists`, \u003cspan pulumi-lang-nodejs=\"`contains`\" pulumi-lang-dotnet=\"`Contains`\" pulumi-lang-go=\"`contains`\" pulumi-lang-python=\"`contains`\" pulumi-lang-yaml=\"`contains`\" pulumi-lang-java=\"`contains`\"\u003e`contains`\u003c/span\u003e. Default: `=`.\n"
                 },
                 "property": {
                     "type": "string",
@@ -922,6 +922,80 @@
             "required": [
                 "name"
             ]
+        },
+        "cpln:index/GvcLocationQuery:GvcLocationQuery": {
+            "properties": {
+                "fetch": {
+                    "type": "string",
+                    "description": "Type of fetch. Specify either: \u003cspan pulumi-lang-nodejs=\"`links`\" pulumi-lang-dotnet=\"`Links`\" pulumi-lang-go=\"`links`\" pulumi-lang-python=\"`links`\" pulumi-lang-yaml=\"`links`\" pulumi-lang-java=\"`links`\"\u003e`links`\u003c/span\u003e or \u003cspan pulumi-lang-nodejs=\"`items`\" pulumi-lang-dotnet=\"`Items`\" pulumi-lang-go=\"`items`\" pulumi-lang-python=\"`items`\" pulumi-lang-yaml=\"`items`\" pulumi-lang-java=\"`items`\"\u003e`items`\u003c/span\u003e. Default: \u003cspan pulumi-lang-nodejs=\"`items`\" pulumi-lang-dotnet=\"`Items`\" pulumi-lang-go=\"`items`\" pulumi-lang-python=\"`items`\" pulumi-lang-yaml=\"`items`\" pulumi-lang-java=\"`items`\"\u003e`items`\u003c/span\u003e.\n"
+                },
+                "spec": {
+                    "$ref": "#/types/cpln:index/GvcLocationQuerySpec:GvcLocationQuerySpec"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "fetch"
+                    ]
+                }
+            }
+        },
+        "cpln:index/GvcLocationQuerySpec:GvcLocationQuerySpec": {
+            "properties": {
+                "match": {
+                    "type": "string",
+                    "description": "Type of match. Available values: \u003cspan pulumi-lang-nodejs=\"`all`\" pulumi-lang-dotnet=\"`All`\" pulumi-lang-go=\"`all`\" pulumi-lang-python=\"`all`\" pulumi-lang-yaml=\"`all`\" pulumi-lang-java=\"`all`\"\u003e`all`\u003c/span\u003e, \u003cspan pulumi-lang-nodejs=\"`any`\" pulumi-lang-dotnet=\"`Any`\" pulumi-lang-go=\"`any`\" pulumi-lang-python=\"`any`\" pulumi-lang-yaml=\"`any`\" pulumi-lang-java=\"`any`\"\u003e`any`\u003c/span\u003e, \u003cspan pulumi-lang-nodejs=\"`none`\" pulumi-lang-dotnet=\"`None`\" pulumi-lang-go=\"`none`\" pulumi-lang-python=\"`none`\" pulumi-lang-yaml=\"`none`\" pulumi-lang-java=\"`none`\"\u003e`none`\u003c/span\u003e. Default: \u003cspan pulumi-lang-nodejs=\"`all`\" pulumi-lang-dotnet=\"`All`\" pulumi-lang-go=\"`all`\" pulumi-lang-python=\"`all`\" pulumi-lang-yaml=\"`all`\" pulumi-lang-java=\"`all`\"\u003e`all`\u003c/span\u003e.\n"
+                },
+                "terms": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/GvcLocationQuerySpecTerm:GvcLocationQuerySpecTerm"
+                    },
+                    "description": "Terms can only contain one of the following attributes: \u003cspan pulumi-lang-nodejs=\"`property`\" pulumi-lang-dotnet=\"`Property`\" pulumi-lang-go=\"`property`\" pulumi-lang-python=\"`property`\" pulumi-lang-yaml=\"`property`\" pulumi-lang-java=\"`property`\"\u003e`property`\u003c/span\u003e, \u003cspan pulumi-lang-nodejs=\"`rel`\" pulumi-lang-dotnet=\"`Rel`\" pulumi-lang-go=\"`rel`\" pulumi-lang-python=\"`rel`\" pulumi-lang-yaml=\"`rel`\" pulumi-lang-java=\"`rel`\"\u003e`rel`\u003c/span\u003e, \u003cspan pulumi-lang-nodejs=\"`tag`\" pulumi-lang-dotnet=\"`Tag`\" pulumi-lang-go=\"`tag`\" pulumi-lang-python=\"`tag`\" pulumi-lang-yaml=\"`tag`\" pulumi-lang-java=\"`tag`\"\u003e`tag`\u003c/span\u003e.\n"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "match"
+                    ]
+                }
+            }
+        },
+        "cpln:index/GvcLocationQuerySpecTerm:GvcLocationQuerySpecTerm": {
+            "properties": {
+                "op": {
+                    "type": "string",
+                    "description": "Type of query operation. Available values: `=`, `\u003e`, `\u003e=`, `\u003c`, `\u003c=`, `!=`, `~`, `=~`, \u003cspan pulumi-lang-nodejs=\"`exists`\" pulumi-lang-dotnet=\"`Exists`\" pulumi-lang-go=\"`exists`\" pulumi-lang-python=\"`exists`\" pulumi-lang-yaml=\"`exists`\" pulumi-lang-java=\"`exists`\"\u003e`exists`\u003c/span\u003e, `!exists`, \u003cspan pulumi-lang-nodejs=\"`contains`\" pulumi-lang-dotnet=\"`Contains`\" pulumi-lang-go=\"`contains`\" pulumi-lang-python=\"`contains`\" pulumi-lang-yaml=\"`contains`\" pulumi-lang-java=\"`contains`\"\u003e`contains`\u003c/span\u003e. Default: `=`.\n"
+                },
+                "property": {
+                    "type": "string",
+                    "description": "Property to use for query evaluation.\n"
+                },
+                "rel": {
+                    "type": "string",
+                    "description": "Relation to use for query evaluation.\n"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "Tag key to use for query evaluation.\n"
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Testing value for query evaluation.\n"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "op"
+                    ]
+                }
+            }
         },
         "cpln:index/GvcOtelTracing:GvcOtelTracing": {
             "properties": {
@@ -5685,7 +5759,7 @@
             "properties": {
                 "op": {
                     "type": "string",
-                    "description": "Type of query operation. Available values: `=`, `\u003e`, `\u003e=`, `\u003c`, `\u003c=`, `!=`, \u003cspan pulumi-lang-nodejs=\"`exists`\" pulumi-lang-dotnet=\"`Exists`\" pulumi-lang-go=\"`exists`\" pulumi-lang-python=\"`exists`\" pulumi-lang-yaml=\"`exists`\" pulumi-lang-java=\"`exists`\"\u003e`exists`\u003c/span\u003e, `!exists`. Default: `=`.\n"
+                    "description": "Type of query operation. Available values: `=`, `\u003e`, `\u003e=`, `\u003c`, `\u003c=`, `!=`, `~`, `=~`, \u003cspan pulumi-lang-nodejs=\"`exists`\" pulumi-lang-dotnet=\"`Exists`\" pulumi-lang-go=\"`exists`\" pulumi-lang-python=\"`exists`\" pulumi-lang-yaml=\"`exists`\" pulumi-lang-java=\"`exists`\"\u003e`exists`\u003c/span\u003e, `!exists`, \u003cspan pulumi-lang-nodejs=\"`contains`\" pulumi-lang-dotnet=\"`Contains`\" pulumi-lang-go=\"`contains`\" pulumi-lang-python=\"`contains`\" pulumi-lang-yaml=\"`contains`\" pulumi-lang-java=\"`contains`\"\u003e`contains`\u003c/span\u003e. Default: `=`.\n"
                 },
                 "property": {
                     "type": "string",
@@ -7910,6 +7984,90 @@
                 "latencyToleranceMs",
                 "name",
                 "routingTier"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "cpln:index/getGvcLocationQuery:getGvcLocationQuery": {
+            "properties": {
+                "fetch": {
+                    "type": "string",
+                    "description": "Type of fetch. Specify either: \u003cspan pulumi-lang-nodejs=\"`links`\" pulumi-lang-dotnet=\"`Links`\" pulumi-lang-go=\"`links`\" pulumi-lang-python=\"`links`\" pulumi-lang-yaml=\"`links`\" pulumi-lang-java=\"`links`\"\u003e`links`\u003c/span\u003e or \u003cspan pulumi-lang-nodejs=\"`items`\" pulumi-lang-dotnet=\"`Items`\" pulumi-lang-go=\"`items`\" pulumi-lang-python=\"`items`\" pulumi-lang-yaml=\"`items`\" pulumi-lang-java=\"`items`\"\u003e`items`\u003c/span\u003e. Default: \u003cspan pulumi-lang-nodejs=\"`items`\" pulumi-lang-dotnet=\"`Items`\" pulumi-lang-go=\"`items`\" pulumi-lang-python=\"`items`\" pulumi-lang-yaml=\"`items`\" pulumi-lang-java=\"`items`\"\u003e`items`\u003c/span\u003e.\n"
+                },
+                "specs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/getGvcLocationQuerySpec:getGvcLocationQuerySpec"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "fetch"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "cpln:index/getGvcLocationQuerySpec:getGvcLocationQuerySpec": {
+            "properties": {
+                "match": {
+                    "type": "string",
+                    "description": "Type of match. Available values: \u003cspan pulumi-lang-nodejs=\"`all`\" pulumi-lang-dotnet=\"`All`\" pulumi-lang-go=\"`all`\" pulumi-lang-python=\"`all`\" pulumi-lang-yaml=\"`all`\" pulumi-lang-java=\"`all`\"\u003e`all`\u003c/span\u003e, \u003cspan pulumi-lang-nodejs=\"`any`\" pulumi-lang-dotnet=\"`Any`\" pulumi-lang-go=\"`any`\" pulumi-lang-python=\"`any`\" pulumi-lang-yaml=\"`any`\" pulumi-lang-java=\"`any`\"\u003e`any`\u003c/span\u003e, \u003cspan pulumi-lang-nodejs=\"`none`\" pulumi-lang-dotnet=\"`None`\" pulumi-lang-go=\"`none`\" pulumi-lang-python=\"`none`\" pulumi-lang-yaml=\"`none`\" pulumi-lang-java=\"`none`\"\u003e`none`\u003c/span\u003e. Default: \u003cspan pulumi-lang-nodejs=\"`all`\" pulumi-lang-dotnet=\"`All`\" pulumi-lang-go=\"`all`\" pulumi-lang-python=\"`all`\" pulumi-lang-yaml=\"`all`\" pulumi-lang-java=\"`all`\"\u003e`all`\u003c/span\u003e.\n"
+                },
+                "terms": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/cpln:index/getGvcLocationQuerySpecTerm:getGvcLocationQuerySpecTerm"
+                    },
+                    "description": "Terms can only contain one of the following attributes: \u003cspan pulumi-lang-nodejs=\"`property`\" pulumi-lang-dotnet=\"`Property`\" pulumi-lang-go=\"`property`\" pulumi-lang-python=\"`property`\" pulumi-lang-yaml=\"`property`\" pulumi-lang-java=\"`property`\"\u003e`property`\u003c/span\u003e, \u003cspan pulumi-lang-nodejs=\"`rel`\" pulumi-lang-dotnet=\"`Rel`\" pulumi-lang-go=\"`rel`\" pulumi-lang-python=\"`rel`\" pulumi-lang-yaml=\"`rel`\" pulumi-lang-java=\"`rel`\"\u003e`rel`\u003c/span\u003e, \u003cspan pulumi-lang-nodejs=\"`tag`\" pulumi-lang-dotnet=\"`Tag`\" pulumi-lang-go=\"`tag`\" pulumi-lang-python=\"`tag`\" pulumi-lang-yaml=\"`tag`\" pulumi-lang-java=\"`tag`\"\u003e`tag`\u003c/span\u003e.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "match"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "cpln:index/getGvcLocationQuerySpecTerm:getGvcLocationQuerySpecTerm": {
+            "properties": {
+                "op": {
+                    "type": "string",
+                    "description": "Type of query operation. Available values: `=`, `\u003e`, `\u003e=`, `\u003c`, `\u003c=`, `!=`, `~`, `=~`, \u003cspan pulumi-lang-nodejs=\"`exists`\" pulumi-lang-dotnet=\"`Exists`\" pulumi-lang-go=\"`exists`\" pulumi-lang-python=\"`exists`\" pulumi-lang-yaml=\"`exists`\" pulumi-lang-java=\"`exists`\"\u003e`exists`\u003c/span\u003e, `!exists`, \u003cspan pulumi-lang-nodejs=\"`contains`\" pulumi-lang-dotnet=\"`Contains`\" pulumi-lang-go=\"`contains`\" pulumi-lang-python=\"`contains`\" pulumi-lang-yaml=\"`contains`\" pulumi-lang-java=\"`contains`\"\u003e`contains`\u003c/span\u003e. Default: `=`.\n"
+                },
+                "property": {
+                    "type": "string",
+                    "description": "Property to use for query evaluation.\n"
+                },
+                "rel": {
+                    "type": "string",
+                    "description": "Relation to use for query evaluation.\n"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "Tag key to use for query evaluation.\n"
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Testing value for query evaluation.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "op",
+                "property",
+                "rel",
+                "tag",
+                "value"
             ],
             "language": {
                 "nodejs": {
@@ -11967,6 +12125,10 @@
                     },
                     "description": "Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in \u003cspan pulumi-lang-nodejs=\"`locations`\" pulumi-lang-dotnet=\"`Locations`\" pulumi-lang-go=\"`locations`\" pulumi-lang-python=\"`locations`\" pulumi-lang-yaml=\"`locations`\" pulumi-lang-java=\"`locations`\"\u003e`locations`\u003c/span\u003e."
                 },
+                "locationQuery": {
+                    "$ref": "#/types/cpln:index/GvcLocationQuery:GvcLocationQuery",
+                    "description": "A query that dynamically selects the locations making up the Global Virtual Cloud."
+                },
                 "locations": {
                     "type": "array",
                     "items": {
@@ -12054,6 +12216,10 @@
                     },
                     "description": "Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in \u003cspan pulumi-lang-nodejs=\"`locations`\" pulumi-lang-dotnet=\"`Locations`\" pulumi-lang-go=\"`locations`\" pulumi-lang-python=\"`locations`\" pulumi-lang-yaml=\"`locations`\" pulumi-lang-java=\"`locations`\"\u003e`locations`\u003c/span\u003e."
                 },
+                "locationQuery": {
+                    "$ref": "#/types/cpln:index/GvcLocationQuery:GvcLocationQuery",
+                    "description": "A query that dynamically selects the locations making up the Global Virtual Cloud."
+                },
                 "locations": {
                     "type": "array",
                     "items": {
@@ -12137,6 +12303,10 @@
                             "$ref": "#/types/cpln:index/GvcLocationOption:GvcLocationOption"
                         },
                         "description": "Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in \u003cspan pulumi-lang-nodejs=\"`locations`\" pulumi-lang-dotnet=\"`Locations`\" pulumi-lang-go=\"`locations`\" pulumi-lang-python=\"`locations`\" pulumi-lang-yaml=\"`locations`\" pulumi-lang-java=\"`locations`\"\u003e`locations`\u003c/span\u003e."
+                    },
+                    "locationQuery": {
+                        "$ref": "#/types/cpln:index/GvcLocationQuery:GvcLocationQuery",
+                        "description": "A query that dynamically selects the locations making up the Global Virtual Cloud."
                     },
                     "locations": {
                         "type": "array",
@@ -15042,7 +15212,7 @@
             }
         },
         "cpln:index/getGvc:getGvc": {
-            "description": "Use this data source to access information about an existing [Global Virtual Cloud (GVC)](https://docs.controlplane.com/reference/gvc) within Control Plane. \n\n## Required\n\n- **name** (String) Name of the GVC.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the GVC.\n- **name** (String) Name of the GVC.\n- **alias** (String) The alias name of the GVC.\n- **description** (String) Description of the GVC.\n- **tags** (Map of String) Key-value map of resource tags.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n- **domain** (String) Custom domain name used by associated workloads.\n- **locations** (List of String) A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.\n- **pull_secrets** (List of String) A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.\n- **lightstep_tracing** (Block List, Max: 1) (see below).\n- **otel_tracing** (Block List, Max: 1) (see below).\n- **controlplane_tracing** (Block List, Max: 1) (see below).\n- **location_options** (Block Set) (see below).\n- **load_balancer** (Block List, Max: 1) (see below).\n\n\u003ca id=\"nestedblock--lightstep_tracing\"\u003e\u003c/a\u003e\n\n### \u003cspan pulumi-lang-nodejs=\"`lightstepTracing`\" pulumi-lang-dotnet=\"`LightstepTracing`\" pulumi-lang-go=\"`lightstepTracing`\" pulumi-lang-python=\"`lightstep_tracing`\" pulumi-lang-yaml=\"`lightstepTracing`\" pulumi-lang-java=\"`lightstepTracing`\"\u003e`lightstep_tracing`\u003c/span\u003e\n\n- **sampling** (Int) Sampling percentage.\n- **endpoint** (String) Tracing Endpoint Workload. Either the canonical endpoint or the internal endpoint.\n- **credentials** (String) Full link to referenced Opaque Secret.\n\n\u003ca id=\"nestedblock--otel_tracing\"\u003e\u003c/a\u003e\n\n### \u003cspan pulumi-lang-nodejs=\"`otelTracing`\" pulumi-lang-dotnet=\"`OtelTracing`\" pulumi-lang-go=\"`otelTracing`\" pulumi-lang-python=\"`otel_tracing`\" pulumi-lang-yaml=\"`otelTracing`\" pulumi-lang-java=\"`otelTracing`\"\u003e`otel_tracing`\u003c/span\u003e\n\n- **sampling** (Int) Determines what percentage of requests should be traced.\n- **endpoint** (String) Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.\n- **custom_tags** (Map of String) Key-value map of custom tags.\n\n\u003ca id=\"nestedblock--controlplane_tracing\"\u003e\u003c/a\u003e\n\n### \u003cspan pulumi-lang-nodejs=\"`controlplaneTracing`\" pulumi-lang-dotnet=\"`ControlplaneTracing`\" pulumi-lang-go=\"`controlplaneTracing`\" pulumi-lang-python=\"`controlplane_tracing`\" pulumi-lang-yaml=\"`controlplaneTracing`\" pulumi-lang-java=\"`controlplaneTracing`\"\u003e`controlplane_tracing`\u003c/span\u003e\n\n- **sampling** (Int) Determines what percentage of requests should be traced.\n- **custom_tags** (Map of String) Key-value map of custom tags.\n\n\u003ca id=\"nestedblock--location_options\"\u003e\u003c/a\u003e\n\n### \u003cspan pulumi-lang-nodejs=\"`locationOptions`\" pulumi-lang-dotnet=\"`LocationOptions`\" pulumi-lang-go=\"`locationOptions`\" pulumi-lang-python=\"`location_options`\" pulumi-lang-yaml=\"`locationOptions`\" pulumi-lang-java=\"`locationOptions`\"\u003e`location_options`\u003c/span\u003e\n\n- **name** (String) Name of the location these options apply to.\n- **routing_tier** (Int) Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same \u003cspan pulumi-lang-nodejs=\"`routingTier`\" pulumi-lang-dotnet=\"`RoutingTier`\" pulumi-lang-go=\"`routingTier`\" pulumi-lang-python=\"`routing_tier`\" pulumi-lang-yaml=\"`routingTier`\" pulumi-lang-java=\"`routingTier`\"\u003e`routing_tier`\u003c/span\u003e form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.\n- **latency_offset_ms** (Int) Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: \u003cspan pulumi-lang-nodejs=\"`0`\" pulumi-lang-dotnet=\"`0`\" pulumi-lang-go=\"`0`\" pulumi-lang-python=\"`0`\" pulumi-lang-yaml=\"`0`\" pulumi-lang-java=\"`0`\"\u003e`0`\u003c/span\u003e.\n- **latency_tolerance_ms** (Int) Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.\n\n\u003ca id=\"nestedblock--load_balancer\"\u003e\u003c/a\u003e\n\n### \u003cspan pulumi-lang-nodejs=\"`loadBalancer`\" pulumi-lang-dotnet=\"`LoadBalancer`\" pulumi-lang-go=\"`loadBalancer`\" pulumi-lang-python=\"`load_balancer`\" pulumi-lang-yaml=\"`loadBalancer`\" pulumi-lang-java=\"`loadBalancer`\"\u003e`load_balancer`\u003c/span\u003e\n\n- **dedicated** (Boolean) Creates a dedicated load balancer in each location and enables additional Domain features: custom ports, protocols and wildcard hostnames. Charges apply for each location.\n\n- **trusted_proxies** (Int) Controls the address used for request logging and for setting the X-Envoy-External-Address header. If set to 1, then the last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If set to 2, then the second to last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If the XFF header does not have at least two addresses or does not exist then the source client IP address will be used instead.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nconst gvc = cpln.getGvc({\n    name: \"gvc-example\",\n});\nexport const gvcId = gvc.then(gvc =\u003e gvc.id);\nexport const gvcLocations = gvc.then(gvc =\u003e gvc.locations);\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\ngvc = cpln.get_gvc(name=\"gvc-example\")\npulumi.export(\"gvcId\", gvc.id)\npulumi.export(\"gvcLocations\", gvc.locations)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var gvc = Cpln.GetGvc.Invoke(new()\n    {\n        Name = \"gvc-example\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"gvcId\"] = gvc.Apply(getGvcResult =\u003e getGvcResult.Id),\n        [\"gvcLocations\"] = gvc.Apply(getGvcResult =\u003e getGvcResult.Locations),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tgvc, err := cpln.LookupGvc(ctx, \u0026cpln.LookupGvcArgs{\n\t\t\tName: \"gvc-example\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"gvcId\", gvc.Id)\n\t\tctx.Export(\"gvcLocations\", gvc.Locations)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport com.pulumi.cpln.inputs.GetGvcArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var gvc = CplnFunctions.getGvc(GetGvcArgs.builder()\n            .name(\"gvc-example\")\n            .build());\n\n        ctx.export(\"gvcId\", gvc.id());\n        ctx.export(\"gvcLocations\", gvc.locations());\n    }\n}\n```\n```yaml\nvariables:\n  gvc:\n    fn::invoke:\n      function: cpln:getGvc\n      arguments:\n        name: gvc-example\noutputs:\n  gvcId: ${gvc.id}\n  gvcLocations: ${gvc.locations}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "description": "Use this data source to access information about an existing [Global Virtual Cloud (GVC)](https://docs.controlplane.com/reference/gvc) within Control Plane. \n\n## Required\n\n- **name** (String) Name of the GVC.\n\n## Outputs\n\nThe following attributes are exported:\n\n- **cpln_id** (String) The ID, in GUID format, of the GVC.\n- **name** (String) Name of the GVC.\n- **alias** (String) The alias name of the GVC.\n- **description** (String) Description of the GVC.\n- **tags** (Map of String) Key-value map of resource tags.\n- **self_link** (String) Full link to this resource. Can be referenced by other resources.\n- **domain** (String) Custom domain name used by associated workloads.\n- **locations** (List of String) A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.\n- **pull_secrets** (List of String) A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.\n- **lightstep_tracing** (Block List, Max: 1) (see below).\n- **otel_tracing** (Block List, Max: 1) (see below).\n- **controlplane_tracing** (Block List, Max: 1) (see below).\n- **location_query** (Block List, Max: 1) (see below).\n- **location_options** (Block Set) (see below).\n- **load_balancer** (Block List, Max: 1) (see below).\n\n\u003ca id=\"nestedblock--lightstep_tracing\"\u003e\u003c/a\u003e\n\n### \u003cspan pulumi-lang-nodejs=\"`lightstepTracing`\" pulumi-lang-dotnet=\"`LightstepTracing`\" pulumi-lang-go=\"`lightstepTracing`\" pulumi-lang-python=\"`lightstep_tracing`\" pulumi-lang-yaml=\"`lightstepTracing`\" pulumi-lang-java=\"`lightstepTracing`\"\u003e`lightstep_tracing`\u003c/span\u003e\n\n- **sampling** (Int) Sampling percentage.\n- **endpoint** (String) Tracing Endpoint Workload. Either the canonical endpoint or the internal endpoint.\n- **credentials** (String) Full link to referenced Opaque Secret.\n\n\u003ca id=\"nestedblock--otel_tracing\"\u003e\u003c/a\u003e\n\n### \u003cspan pulumi-lang-nodejs=\"`otelTracing`\" pulumi-lang-dotnet=\"`OtelTracing`\" pulumi-lang-go=\"`otelTracing`\" pulumi-lang-python=\"`otel_tracing`\" pulumi-lang-yaml=\"`otelTracing`\" pulumi-lang-java=\"`otelTracing`\"\u003e`otel_tracing`\u003c/span\u003e\n\n- **sampling** (Int) Determines what percentage of requests should be traced.\n- **endpoint** (String) Tracing Endpoint Workload. Either the canonical endpoint or internal endpoint.\n- **custom_tags** (Map of String) Key-value map of custom tags.\n\n\u003ca id=\"nestedblock--controlplane_tracing\"\u003e\u003c/a\u003e\n\n### \u003cspan pulumi-lang-nodejs=\"`controlplaneTracing`\" pulumi-lang-dotnet=\"`ControlplaneTracing`\" pulumi-lang-go=\"`controlplaneTracing`\" pulumi-lang-python=\"`controlplane_tracing`\" pulumi-lang-yaml=\"`controlplaneTracing`\" pulumi-lang-java=\"`controlplaneTracing`\"\u003e`controlplane_tracing`\u003c/span\u003e\n\n- **sampling** (Int) Determines what percentage of requests should be traced.\n- **custom_tags** (Map of String) Key-value map of custom tags.\n\n\u003ca id=\"nestedblock--location_query\"\u003e\u003c/a\u003e\n\n### \u003cspan pulumi-lang-nodejs=\"`locationQuery`\" pulumi-lang-dotnet=\"`LocationQuery`\" pulumi-lang-go=\"`locationQuery`\" pulumi-lang-python=\"`location_query`\" pulumi-lang-yaml=\"`locationQuery`\" pulumi-lang-java=\"`locationQuery`\"\u003e`location_query`\u003c/span\u003e\n\nA query that dynamically selects the locations making up the Global Virtual Cloud.\n\n- **fetch** (String) Type of fetch. Specify either: \u003cspan pulumi-lang-nodejs=\"`links`\" pulumi-lang-dotnet=\"`Links`\" pulumi-lang-go=\"`links`\" pulumi-lang-python=\"`links`\" pulumi-lang-yaml=\"`links`\" pulumi-lang-java=\"`links`\"\u003e`links`\u003c/span\u003e or \u003cspan pulumi-lang-nodejs=\"`items`\" pulumi-lang-dotnet=\"`Items`\" pulumi-lang-go=\"`items`\" pulumi-lang-python=\"`items`\" pulumi-lang-yaml=\"`items`\" pulumi-lang-java=\"`items`\"\u003e`items`\u003c/span\u003e. Default: \u003cspan pulumi-lang-nodejs=\"`items`\" pulumi-lang-dotnet=\"`Items`\" pulumi-lang-go=\"`items`\" pulumi-lang-python=\"`items`\" pulumi-lang-yaml=\"`items`\" pulumi-lang-java=\"`items`\"\u003e`items`\u003c/span\u003e.\n- **spec** (Block List, Max: 1) (see below).\n\n\u003ca id=\"nestedblock--location_query--spec\"\u003e\u003c/a\u003e\n\n### `location_query.spec`\n\n- **match** (String) Type of match. Available values: \u003cspan pulumi-lang-nodejs=\"`all`\" pulumi-lang-dotnet=\"`All`\" pulumi-lang-go=\"`all`\" pulumi-lang-python=\"`all`\" pulumi-lang-yaml=\"`all`\" pulumi-lang-java=\"`all`\"\u003e`all`\u003c/span\u003e, \u003cspan pulumi-lang-nodejs=\"`any`\" pulumi-lang-dotnet=\"`Any`\" pulumi-lang-go=\"`any`\" pulumi-lang-python=\"`any`\" pulumi-lang-yaml=\"`any`\" pulumi-lang-java=\"`any`\"\u003e`any`\u003c/span\u003e, \u003cspan pulumi-lang-nodejs=\"`none`\" pulumi-lang-dotnet=\"`None`\" pulumi-lang-go=\"`none`\" pulumi-lang-python=\"`none`\" pulumi-lang-yaml=\"`none`\" pulumi-lang-java=\"`none`\"\u003e`none`\u003c/span\u003e. Default: \u003cspan pulumi-lang-nodejs=\"`all`\" pulumi-lang-dotnet=\"`All`\" pulumi-lang-go=\"`all`\" pulumi-lang-python=\"`all`\" pulumi-lang-yaml=\"`all`\" pulumi-lang-java=\"`all`\"\u003e`all`\u003c/span\u003e.\n- **terms** (Block List) (see below).\n\n\u003ca id=\"nestedblock--location_query--spec--terms\"\u003e\u003c/a\u003e\n\n### `location_query.spec.terms`\n\nTerms can only contain one of the following attributes: \u003cspan pulumi-lang-nodejs=\"`property`\" pulumi-lang-dotnet=\"`Property`\" pulumi-lang-go=\"`property`\" pulumi-lang-python=\"`property`\" pulumi-lang-yaml=\"`property`\" pulumi-lang-java=\"`property`\"\u003e`property`\u003c/span\u003e, \u003cspan pulumi-lang-nodejs=\"`rel`\" pulumi-lang-dotnet=\"`Rel`\" pulumi-lang-go=\"`rel`\" pulumi-lang-python=\"`rel`\" pulumi-lang-yaml=\"`rel`\" pulumi-lang-java=\"`rel`\"\u003e`rel`\u003c/span\u003e, \u003cspan pulumi-lang-nodejs=\"`tag`\" pulumi-lang-dotnet=\"`Tag`\" pulumi-lang-go=\"`tag`\" pulumi-lang-python=\"`tag`\" pulumi-lang-yaml=\"`tag`\" pulumi-lang-java=\"`tag`\"\u003e`tag`\u003c/span\u003e.\n\n- **op** (String) Type of query operation. Available values: `=`, `\u003e`, `\u003e=`, `\u003c`, `\u003c=`, `!=`, `~`, `=~`, \u003cspan pulumi-lang-nodejs=\"`exists`\" pulumi-lang-dotnet=\"`Exists`\" pulumi-lang-go=\"`exists`\" pulumi-lang-python=\"`exists`\" pulumi-lang-yaml=\"`exists`\" pulumi-lang-java=\"`exists`\"\u003e`exists`\u003c/span\u003e, `!exists`, \u003cspan pulumi-lang-nodejs=\"`contains`\" pulumi-lang-dotnet=\"`Contains`\" pulumi-lang-go=\"`contains`\" pulumi-lang-python=\"`contains`\" pulumi-lang-yaml=\"`contains`\" pulumi-lang-java=\"`contains`\"\u003e`contains`\u003c/span\u003e. Default: `=`.\n- **property** (String) Property to use for query evaluation.\n- **rel** (String) Relation to use for query evaluation.\n- **tag** (String) Tag key to use for query evaluation.\n- **value** (String) Testing value for query evaluation.\n\n\u003ca id=\"nestedblock--location_options\"\u003e\u003c/a\u003e\n\n### \u003cspan pulumi-lang-nodejs=\"`locationOptions`\" pulumi-lang-dotnet=\"`LocationOptions`\" pulumi-lang-go=\"`locationOptions`\" pulumi-lang-python=\"`location_options`\" pulumi-lang-yaml=\"`locationOptions`\" pulumi-lang-java=\"`locationOptions`\"\u003e`location_options`\u003c/span\u003e\n\n- **name** (String) Name of the location these options apply to.\n- **routing_tier** (Int) Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same \u003cspan pulumi-lang-nodejs=\"`routingTier`\" pulumi-lang-dotnet=\"`RoutingTier`\" pulumi-lang-go=\"`routingTier`\" pulumi-lang-python=\"`routing_tier`\" pulumi-lang-yaml=\"`routingTier`\" pulumi-lang-java=\"`routingTier`\"\u003e`routing_tier`\u003c/span\u003e form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.\n- **latency_offset_ms** (Int) Artificial latency offset in milliseconds added to measured latency. Positive values push traffic away from this location, negative values attract traffic. Default: \u003cspan pulumi-lang-nodejs=\"`0`\" pulumi-lang-dotnet=\"`0`\" pulumi-lang-go=\"`0`\" pulumi-lang-python=\"`0`\" pulumi-lang-yaml=\"`0`\" pulumi-lang-java=\"`0`\"\u003e`0`\u003c/span\u003e.\n- **latency_tolerance_ms** (Int) Maximum acceptable latency in milliseconds. If measured latency exceeds this value, the location is treated as unavailable for DNS geo routing.\n\n\u003ca id=\"nestedblock--load_balancer\"\u003e\u003c/a\u003e\n\n### \u003cspan pulumi-lang-nodejs=\"`loadBalancer`\" pulumi-lang-dotnet=\"`LoadBalancer`\" pulumi-lang-go=\"`loadBalancer`\" pulumi-lang-python=\"`load_balancer`\" pulumi-lang-yaml=\"`loadBalancer`\" pulumi-lang-java=\"`loadBalancer`\"\u003e`load_balancer`\u003c/span\u003e\n\n- **dedicated** (Boolean) Creates a dedicated load balancer in each location and enables additional Domain features: custom ports, protocols and wildcard hostnames. Charges apply for each location.\n\n- **trusted_proxies** (Int) Controls the address used for request logging and for setting the X-Envoy-External-Address header. If set to 1, then the last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If set to 2, then the second to last address in an existing X-Forwarded-For header will be used in place of the source client IP address. If the XFF header does not have at least two addresses or does not exist then the source client IP address will be used instead.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as cpln from \"@pulumiverse/cpln\";\n\nconst gvc = cpln.getGvc({\n    name: \"gvc-example\",\n});\nexport const gvcId = gvc.then(gvc =\u003e gvc.id);\nexport const gvcLocations = gvc.then(gvc =\u003e gvc.locations);\n```\n```python\nimport pulumi\nimport pulumi_cpln as cpln\n\ngvc = cpln.get_gvc(name=\"gvc-example\")\npulumi.export(\"gvcId\", gvc.id)\npulumi.export(\"gvcLocations\", gvc.locations)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Cpln = Pulumi.Cpln;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var gvc = Cpln.GetGvc.Invoke(new()\n    {\n        Name = \"gvc-example\",\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"gvcId\"] = gvc.Apply(getGvcResult =\u003e getGvcResult.Id),\n        [\"gvcLocations\"] = gvc.Apply(getGvcResult =\u003e getGvcResult.Locations),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n\t\"github.com/pulumiverse/pulumi-cpln/sdk/go/cpln\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tgvc, err := cpln.LookupGvc(ctx, \u0026cpln.LookupGvcArgs{\n\t\t\tName: \"gvc-example\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx.Export(\"gvcId\", gvc.Id)\n\t\tctx.Export(\"gvcLocations\", gvc.Locations)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.cpln.CplnFunctions;\nimport com.pulumi.cpln.inputs.GetGvcArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var gvc = CplnFunctions.getGvc(GetGvcArgs.builder()\n            .name(\"gvc-example\")\n            .build());\n\n        ctx.export(\"gvcId\", gvc.id());\n        ctx.export(\"gvcLocations\", gvc.locations());\n    }\n}\n```\n```yaml\nvariables:\n  gvc:\n    fn::invoke:\n      function: cpln:getGvc\n      arguments:\n        name: gvc-example\noutputs:\n  gvcId: ${gvc.id}\n  gvcLocations: ${gvc.locations}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getGvc.\n",
                 "properties": {
@@ -15075,6 +15245,12 @@
                         "type": "array",
                         "items": {
                             "$ref": "#/types/cpln:index/getGvcLocationOption:getGvcLocationOption"
+                        }
+                    },
+                    "locationQueries": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/cpln:index/getGvcLocationQuery:getGvcLocationQuery"
                         }
                     },
                     "locations": {
@@ -15153,6 +15329,12 @@
                     "locationOptions": {
                         "items": {
                             "$ref": "#/types/cpln:index/getGvcLocationOption:getGvcLocationOption"
+                        },
+                        "type": "array"
+                    },
+                    "locationQueries": {
+                        "items": {
+                            "$ref": "#/types/cpln:index/getGvcLocationQuery:getGvcLocationQuery"
                         },
                         "type": "array"
                     },

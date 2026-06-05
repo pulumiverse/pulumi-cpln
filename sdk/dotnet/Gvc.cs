@@ -74,6 +74,12 @@ namespace Pulumiverse.Cpln
         public Output<ImmutableArray<Outputs.GvcLocationOption>> LocationOptions { get; private set; } = null!;
 
         /// <summary>
+        /// A query that dynamically selects the locations making up the Global Virtual Cloud.
+        /// </summary>
+        [Output("locationQuery")]
+        public Output<Outputs.GvcLocationQuery?> LocationQuery { get; private set; } = null!;
+
+        /// <summary>
         /// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
         /// </summary>
         [Output("locations")]
@@ -216,6 +222,12 @@ namespace Pulumiverse.Cpln
             set => _locationOptions = value;
         }
 
+        /// <summary>
+        /// A query that dynamically selects the locations making up the Global Virtual Cloud.
+        /// </summary>
+        [Input("locationQuery")]
+        public Input<Inputs.GvcLocationQueryArgs>? LocationQuery { get; set; }
+
         [Input("locations")]
         private InputList<string>? _locations;
 
@@ -343,6 +355,12 @@ namespace Pulumiverse.Cpln
             get => _locationOptions ?? (_locationOptions = new InputList<Inputs.GvcLocationOptionGetArgs>());
             set => _locationOptions = value;
         }
+
+        /// <summary>
+        /// A query that dynamically selects the locations making up the Global Virtual Cloud.
+        /// </summary>
+        [Input("locationQuery")]
+        public Input<Inputs.GvcLocationQueryGetArgs>? LocationQuery { get; set; }
 
         [Input("locations")]
         private InputList<string>? _locations;

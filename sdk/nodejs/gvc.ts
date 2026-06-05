@@ -75,6 +75,10 @@ export class Gvc extends pulumi.CustomResource {
      */
     declare public readonly locationOptions: pulumi.Output<outputs.GvcLocationOption[] | undefined>;
     /**
+     * A query that dynamically selects the locations making up the Global Virtual Cloud.
+     */
+    declare public readonly locationQuery: pulumi.Output<outputs.GvcLocationQuery | undefined>;
+    /**
      * A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
      */
     declare public readonly locations: pulumi.Output<string[] | undefined>;
@@ -121,6 +125,7 @@ export class Gvc extends pulumi.CustomResource {
             resourceInputs["lightstepTracing"] = state?.lightstepTracing;
             resourceInputs["loadBalancer"] = state?.loadBalancer;
             resourceInputs["locationOptions"] = state?.locationOptions;
+            resourceInputs["locationQuery"] = state?.locationQuery;
             resourceInputs["locations"] = state?.locations;
             resourceInputs["name"] = state?.name;
             resourceInputs["otelTracing"] = state?.otelTracing;
@@ -139,6 +144,7 @@ export class Gvc extends pulumi.CustomResource {
             resourceInputs["lightstepTracing"] = args?.lightstepTracing;
             resourceInputs["loadBalancer"] = args?.loadBalancer;
             resourceInputs["locationOptions"] = args?.locationOptions;
+            resourceInputs["locationQuery"] = args?.locationQuery;
             resourceInputs["locations"] = args?.locations;
             resourceInputs["name"] = args?.name;
             resourceInputs["otelTracing"] = args?.otelTracing;
@@ -199,6 +205,10 @@ export interface GvcState {
      */
     locationOptions?: pulumi.Input<pulumi.Input<inputs.GvcLocationOption>[]>;
     /**
+     * A query that dynamically selects the locations making up the Global Virtual Cloud.
+     */
+    locationQuery?: pulumi.Input<inputs.GvcLocationQuery>;
+    /**
      * A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
      */
     locations?: pulumi.Input<pulumi.Input<string>[]>;
@@ -258,6 +268,10 @@ export interface GvcArgs {
      * Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `locations`.
      */
     locationOptions?: pulumi.Input<pulumi.Input<inputs.GvcLocationOption>[]>;
+    /**
+     * A query that dynamically selects the locations making up the Global Virtual Cloud.
+     */
+    locationQuery?: pulumi.Input<inputs.GvcLocationQuery>;
     /**
      * A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
      */

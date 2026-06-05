@@ -12,7 +12,7 @@ namespace Pulumiverse.Cpln.Outputs
 {
 
     [OutputType]
-    public sealed class PolicyTargetQuerySpecTerm
+    public sealed class GvcLocationQuerySpecTerm
     {
         /// <summary>
         /// Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `~`, `=~`, `Exists`, `!exists`, `Contains`. Default: `=`.
@@ -36,7 +36,7 @@ namespace Pulumiverse.Cpln.Outputs
         public readonly string? Value;
 
         [OutputConstructor]
-        private PolicyTargetQuerySpecTerm(
+        private GvcLocationQuerySpecTerm(
             string? op,
 
             string? property,

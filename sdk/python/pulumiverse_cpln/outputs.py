@@ -53,6 +53,9 @@ __all__ = [
     'GvcLoadBalancerRedirect',
     'GvcLoadBalancerRedirectClass',
     'GvcLocationOption',
+    'GvcLocationQuery',
+    'GvcLocationQuerySpec',
+    'GvcLocationQuerySpecTerm',
     'GvcOtelTracing',
     'GvcSidecar',
     'HelmReleasePostrender',
@@ -317,6 +320,9 @@ __all__ = [
     'GetGvcLoadBalancerRedirectResult',
     'GetGvcLoadBalancerRedirectClassResult',
     'GetGvcLocationOptionResult',
+    'GetGvcLocationQueryResult',
+    'GetGvcLocationQuerySpecResult',
+    'GetGvcLocationQuerySpecTermResult',
     'GetGvcOtelTracingResult',
     'GetGvcSidecarResult',
     'GetHelmTemplatePostrenderResult',
@@ -1889,7 +1895,7 @@ class GroupMemberQuerySpecTerm(dict):
                  tag: Optional[_builtins.str] = None,
                  value: Optional[_builtins.str] = None):
         """
-        :param _builtins.str op: Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+        :param _builtins.str op: Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
         :param _builtins.str property: Property to use for query evaluation.
         :param _builtins.str rel: Relation to use for query evaluation.
         :param _builtins.str tag: Tag key to use for query evaluation.
@@ -1910,7 +1916,7 @@ class GroupMemberQuerySpecTerm(dict):
     @pulumi.getter
     def op(self) -> Optional[_builtins.str]:
         """
-        Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+        Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
         """
         return pulumi.get(self, "op")
 
@@ -2359,6 +2365,131 @@ class GvcLocationOption(dict):
         Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routing_tier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
         """
         return pulumi.get(self, "routing_tier")
+
+
+@pulumi.output_type
+class GvcLocationQuery(dict):
+    def __init__(__self__, *,
+                 fetch: Optional[_builtins.str] = None,
+                 spec: Optional['outputs.GvcLocationQuerySpec'] = None):
+        """
+        :param _builtins.str fetch: Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        """
+        if fetch is not None:
+            pulumi.set(__self__, "fetch", fetch)
+        if spec is not None:
+            pulumi.set(__self__, "spec", spec)
+
+    @_builtins.property
+    @pulumi.getter
+    def fetch(self) -> Optional[_builtins.str]:
+        """
+        Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        """
+        return pulumi.get(self, "fetch")
+
+    @_builtins.property
+    @pulumi.getter
+    def spec(self) -> Optional['outputs.GvcLocationQuerySpec']:
+        return pulumi.get(self, "spec")
+
+
+@pulumi.output_type
+class GvcLocationQuerySpec(dict):
+    def __init__(__self__, *,
+                 match: Optional[_builtins.str] = None,
+                 terms: Optional[Sequence['outputs.GvcLocationQuerySpecTerm']] = None):
+        """
+        :param _builtins.str match: Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        :param Sequence['GvcLocationQuerySpecTermArgs'] terms: Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        """
+        if match is not None:
+            pulumi.set(__self__, "match", match)
+        if terms is not None:
+            pulumi.set(__self__, "terms", terms)
+
+    @_builtins.property
+    @pulumi.getter
+    def match(self) -> Optional[_builtins.str]:
+        """
+        Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        """
+        return pulumi.get(self, "match")
+
+    @_builtins.property
+    @pulumi.getter
+    def terms(self) -> Optional[Sequence['outputs.GvcLocationQuerySpecTerm']]:
+        """
+        Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        """
+        return pulumi.get(self, "terms")
+
+
+@pulumi.output_type
+class GvcLocationQuerySpecTerm(dict):
+    def __init__(__self__, *,
+                 op: Optional[_builtins.str] = None,
+                 property: Optional[_builtins.str] = None,
+                 rel: Optional[_builtins.str] = None,
+                 tag: Optional[_builtins.str] = None,
+                 value: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str op: Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
+        :param _builtins.str property: Property to use for query evaluation.
+        :param _builtins.str rel: Relation to use for query evaluation.
+        :param _builtins.str tag: Tag key to use for query evaluation.
+        :param _builtins.str value: Testing value for query evaluation.
+        """
+        if op is not None:
+            pulumi.set(__self__, "op", op)
+        if property is not None:
+            pulumi.set(__self__, "property", property)
+        if rel is not None:
+            pulumi.set(__self__, "rel", rel)
+        if tag is not None:
+            pulumi.set(__self__, "tag", tag)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def op(self) -> Optional[_builtins.str]:
+        """
+        Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
+        """
+        return pulumi.get(self, "op")
+
+    @_builtins.property
+    @pulumi.getter
+    def property(self) -> Optional[_builtins.str]:
+        """
+        Property to use for query evaluation.
+        """
+        return pulumi.get(self, "property")
+
+    @_builtins.property
+    @pulumi.getter
+    def rel(self) -> Optional[_builtins.str]:
+        """
+        Relation to use for query evaluation.
+        """
+        return pulumi.get(self, "rel")
+
+    @_builtins.property
+    @pulumi.getter
+    def tag(self) -> Optional[_builtins.str]:
+        """
+        Tag key to use for query evaluation.
+        """
+        return pulumi.get(self, "tag")
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> Optional[_builtins.str]:
+        """
+        Testing value for query evaluation.
+        """
+        return pulumi.get(self, "value")
 
 
 @pulumi.output_type
@@ -13145,7 +13276,7 @@ class PolicyTargetQuerySpecTerm(dict):
                  tag: Optional[_builtins.str] = None,
                  value: Optional[_builtins.str] = None):
         """
-        :param _builtins.str op: Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+        :param _builtins.str op: Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
         :param _builtins.str property: Property to use for query evaluation.
         :param _builtins.str rel: Relation to use for query evaluation.
         :param _builtins.str tag: Tag key to use for query evaluation.
@@ -13166,7 +13297,7 @@ class PolicyTargetQuerySpecTerm(dict):
     @pulumi.getter
     def op(self) -> Optional[_builtins.str]:
         """
-        Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+        Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
         """
         return pulumi.get(self, "op")
 
@@ -18085,6 +18216,124 @@ class GetGvcLocationOptionResult(dict):
         Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routing_tier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
         """
         return pulumi.get(self, "routing_tier")
+
+
+@pulumi.output_type
+class GetGvcLocationQueryResult(dict):
+    def __init__(__self__, *,
+                 fetch: _builtins.str,
+                 specs: Optional[Sequence['outputs.GetGvcLocationQuerySpecResult']] = None):
+        """
+        :param _builtins.str fetch: Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        """
+        pulumi.set(__self__, "fetch", fetch)
+        if specs is not None:
+            pulumi.set(__self__, "specs", specs)
+
+    @_builtins.property
+    @pulumi.getter
+    def fetch(self) -> _builtins.str:
+        """
+        Type of fetch. Specify either: `links` or `items`. Default: `items`.
+        """
+        return pulumi.get(self, "fetch")
+
+    @_builtins.property
+    @pulumi.getter
+    def specs(self) -> Optional[Sequence['outputs.GetGvcLocationQuerySpecResult']]:
+        return pulumi.get(self, "specs")
+
+
+@pulumi.output_type
+class GetGvcLocationQuerySpecResult(dict):
+    def __init__(__self__, *,
+                 match: _builtins.str,
+                 terms: Optional[Sequence['outputs.GetGvcLocationQuerySpecTermResult']] = None):
+        """
+        :param _builtins.str match: Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        :param Sequence['GetGvcLocationQuerySpecTermArgs'] terms: Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        """
+        pulumi.set(__self__, "match", match)
+        if terms is not None:
+            pulumi.set(__self__, "terms", terms)
+
+    @_builtins.property
+    @pulumi.getter
+    def match(self) -> _builtins.str:
+        """
+        Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+        """
+        return pulumi.get(self, "match")
+
+    @_builtins.property
+    @pulumi.getter
+    def terms(self) -> Optional[Sequence['outputs.GetGvcLocationQuerySpecTermResult']]:
+        """
+        Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+        """
+        return pulumi.get(self, "terms")
+
+
+@pulumi.output_type
+class GetGvcLocationQuerySpecTermResult(dict):
+    def __init__(__self__, *,
+                 op: _builtins.str,
+                 property: _builtins.str,
+                 rel: _builtins.str,
+                 tag: _builtins.str,
+                 value: _builtins.str):
+        """
+        :param _builtins.str op: Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
+        :param _builtins.str property: Property to use for query evaluation.
+        :param _builtins.str rel: Relation to use for query evaluation.
+        :param _builtins.str tag: Tag key to use for query evaluation.
+        :param _builtins.str value: Testing value for query evaluation.
+        """
+        pulumi.set(__self__, "op", op)
+        pulumi.set(__self__, "property", property)
+        pulumi.set(__self__, "rel", rel)
+        pulumi.set(__self__, "tag", tag)
+        pulumi.set(__self__, "value", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def op(self) -> _builtins.str:
+        """
+        Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
+        """
+        return pulumi.get(self, "op")
+
+    @_builtins.property
+    @pulumi.getter
+    def property(self) -> _builtins.str:
+        """
+        Property to use for query evaluation.
+        """
+        return pulumi.get(self, "property")
+
+    @_builtins.property
+    @pulumi.getter
+    def rel(self) -> _builtins.str:
+        """
+        Relation to use for query evaluation.
+        """
+        return pulumi.get(self, "rel")
+
+    @_builtins.property
+    @pulumi.getter
+    def tag(self) -> _builtins.str:
+        """
+        Tag key to use for query evaluation.
+        """
+        return pulumi.get(self, "tag")
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> _builtins.str:
+        """
+        Testing value for query evaluation.
+        """
+        return pulumi.get(self, "value")
 
 
 @pulumi.output_type

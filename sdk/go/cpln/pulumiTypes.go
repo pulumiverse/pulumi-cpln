@@ -3976,7 +3976,7 @@ func (o GroupMemberQuerySpecPtrOutput) Terms() GroupMemberQuerySpecTermArrayOutp
 }
 
 type GroupMemberQuerySpecTerm struct {
-	// Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+	// Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
 	Op *string `pulumi:"op"`
 	// Property to use for query evaluation.
 	Property *string `pulumi:"property"`
@@ -4000,7 +4000,7 @@ type GroupMemberQuerySpecTermInput interface {
 }
 
 type GroupMemberQuerySpecTermArgs struct {
-	// Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+	// Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
 	Op pulumi.StringPtrInput `pulumi:"op"`
 	// Property to use for query evaluation.
 	Property pulumi.StringPtrInput `pulumi:"property"`
@@ -4063,7 +4063,7 @@ func (o GroupMemberQuerySpecTermOutput) ToGroupMemberQuerySpecTermOutputWithCont
 	return o
 }
 
-// Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+// Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
 func (o GroupMemberQuerySpecTermOutput) Op() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GroupMemberQuerySpecTerm) *string { return v.Op }).(pulumi.StringPtrOutput)
 }
@@ -5390,6 +5390,447 @@ func (o GvcLocationOptionArrayOutput) Index(i pulumi.IntInput) GvcLocationOption
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GvcLocationOption {
 		return vs[0].([]GvcLocationOption)[vs[1].(int)]
 	}).(GvcLocationOptionOutput)
+}
+
+type GvcLocationQuery struct {
+	// Type of fetch. Specify either: `links` or `items`. Default: `items`.
+	Fetch *string               `pulumi:"fetch"`
+	Spec  *GvcLocationQuerySpec `pulumi:"spec"`
+}
+
+// GvcLocationQueryInput is an input type that accepts GvcLocationQueryArgs and GvcLocationQueryOutput values.
+// You can construct a concrete instance of `GvcLocationQueryInput` via:
+//
+//	GvcLocationQueryArgs{...}
+type GvcLocationQueryInput interface {
+	pulumi.Input
+
+	ToGvcLocationQueryOutput() GvcLocationQueryOutput
+	ToGvcLocationQueryOutputWithContext(context.Context) GvcLocationQueryOutput
+}
+
+type GvcLocationQueryArgs struct {
+	// Type of fetch. Specify either: `links` or `items`. Default: `items`.
+	Fetch pulumi.StringPtrInput        `pulumi:"fetch"`
+	Spec  GvcLocationQuerySpecPtrInput `pulumi:"spec"`
+}
+
+func (GvcLocationQueryArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GvcLocationQuery)(nil)).Elem()
+}
+
+func (i GvcLocationQueryArgs) ToGvcLocationQueryOutput() GvcLocationQueryOutput {
+	return i.ToGvcLocationQueryOutputWithContext(context.Background())
+}
+
+func (i GvcLocationQueryArgs) ToGvcLocationQueryOutputWithContext(ctx context.Context) GvcLocationQueryOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcLocationQueryOutput)
+}
+
+func (i GvcLocationQueryArgs) ToGvcLocationQueryPtrOutput() GvcLocationQueryPtrOutput {
+	return i.ToGvcLocationQueryPtrOutputWithContext(context.Background())
+}
+
+func (i GvcLocationQueryArgs) ToGvcLocationQueryPtrOutputWithContext(ctx context.Context) GvcLocationQueryPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcLocationQueryOutput).ToGvcLocationQueryPtrOutputWithContext(ctx)
+}
+
+// GvcLocationQueryPtrInput is an input type that accepts GvcLocationQueryArgs, GvcLocationQueryPtr and GvcLocationQueryPtrOutput values.
+// You can construct a concrete instance of `GvcLocationQueryPtrInput` via:
+//
+//	        GvcLocationQueryArgs{...}
+//
+//	or:
+//
+//	        nil
+type GvcLocationQueryPtrInput interface {
+	pulumi.Input
+
+	ToGvcLocationQueryPtrOutput() GvcLocationQueryPtrOutput
+	ToGvcLocationQueryPtrOutputWithContext(context.Context) GvcLocationQueryPtrOutput
+}
+
+type gvcLocationQueryPtrType GvcLocationQueryArgs
+
+func GvcLocationQueryPtr(v *GvcLocationQueryArgs) GvcLocationQueryPtrInput {
+	return (*gvcLocationQueryPtrType)(v)
+}
+
+func (*gvcLocationQueryPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GvcLocationQuery)(nil)).Elem()
+}
+
+func (i *gvcLocationQueryPtrType) ToGvcLocationQueryPtrOutput() GvcLocationQueryPtrOutput {
+	return i.ToGvcLocationQueryPtrOutputWithContext(context.Background())
+}
+
+func (i *gvcLocationQueryPtrType) ToGvcLocationQueryPtrOutputWithContext(ctx context.Context) GvcLocationQueryPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcLocationQueryPtrOutput)
+}
+
+type GvcLocationQueryOutput struct{ *pulumi.OutputState }
+
+func (GvcLocationQueryOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GvcLocationQuery)(nil)).Elem()
+}
+
+func (o GvcLocationQueryOutput) ToGvcLocationQueryOutput() GvcLocationQueryOutput {
+	return o
+}
+
+func (o GvcLocationQueryOutput) ToGvcLocationQueryOutputWithContext(ctx context.Context) GvcLocationQueryOutput {
+	return o
+}
+
+func (o GvcLocationQueryOutput) ToGvcLocationQueryPtrOutput() GvcLocationQueryPtrOutput {
+	return o.ToGvcLocationQueryPtrOutputWithContext(context.Background())
+}
+
+func (o GvcLocationQueryOutput) ToGvcLocationQueryPtrOutputWithContext(ctx context.Context) GvcLocationQueryPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GvcLocationQuery) *GvcLocationQuery {
+		return &v
+	}).(GvcLocationQueryPtrOutput)
+}
+
+// Type of fetch. Specify either: `links` or `items`. Default: `items`.
+func (o GvcLocationQueryOutput) Fetch() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GvcLocationQuery) *string { return v.Fetch }).(pulumi.StringPtrOutput)
+}
+
+func (o GvcLocationQueryOutput) Spec() GvcLocationQuerySpecPtrOutput {
+	return o.ApplyT(func(v GvcLocationQuery) *GvcLocationQuerySpec { return v.Spec }).(GvcLocationQuerySpecPtrOutput)
+}
+
+type GvcLocationQueryPtrOutput struct{ *pulumi.OutputState }
+
+func (GvcLocationQueryPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GvcLocationQuery)(nil)).Elem()
+}
+
+func (o GvcLocationQueryPtrOutput) ToGvcLocationQueryPtrOutput() GvcLocationQueryPtrOutput {
+	return o
+}
+
+func (o GvcLocationQueryPtrOutput) ToGvcLocationQueryPtrOutputWithContext(ctx context.Context) GvcLocationQueryPtrOutput {
+	return o
+}
+
+func (o GvcLocationQueryPtrOutput) Elem() GvcLocationQueryOutput {
+	return o.ApplyT(func(v *GvcLocationQuery) GvcLocationQuery {
+		if v != nil {
+			return *v
+		}
+		var ret GvcLocationQuery
+		return ret
+	}).(GvcLocationQueryOutput)
+}
+
+// Type of fetch. Specify either: `links` or `items`. Default: `items`.
+func (o GvcLocationQueryPtrOutput) Fetch() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GvcLocationQuery) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Fetch
+	}).(pulumi.StringPtrOutput)
+}
+
+func (o GvcLocationQueryPtrOutput) Spec() GvcLocationQuerySpecPtrOutput {
+	return o.ApplyT(func(v *GvcLocationQuery) *GvcLocationQuerySpec {
+		if v == nil {
+			return nil
+		}
+		return v.Spec
+	}).(GvcLocationQuerySpecPtrOutput)
+}
+
+type GvcLocationQuerySpec struct {
+	// Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+	Match *string `pulumi:"match"`
+	// Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+	Terms []GvcLocationQuerySpecTerm `pulumi:"terms"`
+}
+
+// GvcLocationQuerySpecInput is an input type that accepts GvcLocationQuerySpecArgs and GvcLocationQuerySpecOutput values.
+// You can construct a concrete instance of `GvcLocationQuerySpecInput` via:
+//
+//	GvcLocationQuerySpecArgs{...}
+type GvcLocationQuerySpecInput interface {
+	pulumi.Input
+
+	ToGvcLocationQuerySpecOutput() GvcLocationQuerySpecOutput
+	ToGvcLocationQuerySpecOutputWithContext(context.Context) GvcLocationQuerySpecOutput
+}
+
+type GvcLocationQuerySpecArgs struct {
+	// Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+	Match pulumi.StringPtrInput `pulumi:"match"`
+	// Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+	Terms GvcLocationQuerySpecTermArrayInput `pulumi:"terms"`
+}
+
+func (GvcLocationQuerySpecArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GvcLocationQuerySpec)(nil)).Elem()
+}
+
+func (i GvcLocationQuerySpecArgs) ToGvcLocationQuerySpecOutput() GvcLocationQuerySpecOutput {
+	return i.ToGvcLocationQuerySpecOutputWithContext(context.Background())
+}
+
+func (i GvcLocationQuerySpecArgs) ToGvcLocationQuerySpecOutputWithContext(ctx context.Context) GvcLocationQuerySpecOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcLocationQuerySpecOutput)
+}
+
+func (i GvcLocationQuerySpecArgs) ToGvcLocationQuerySpecPtrOutput() GvcLocationQuerySpecPtrOutput {
+	return i.ToGvcLocationQuerySpecPtrOutputWithContext(context.Background())
+}
+
+func (i GvcLocationQuerySpecArgs) ToGvcLocationQuerySpecPtrOutputWithContext(ctx context.Context) GvcLocationQuerySpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcLocationQuerySpecOutput).ToGvcLocationQuerySpecPtrOutputWithContext(ctx)
+}
+
+// GvcLocationQuerySpecPtrInput is an input type that accepts GvcLocationQuerySpecArgs, GvcLocationQuerySpecPtr and GvcLocationQuerySpecPtrOutput values.
+// You can construct a concrete instance of `GvcLocationQuerySpecPtrInput` via:
+//
+//	        GvcLocationQuerySpecArgs{...}
+//
+//	or:
+//
+//	        nil
+type GvcLocationQuerySpecPtrInput interface {
+	pulumi.Input
+
+	ToGvcLocationQuerySpecPtrOutput() GvcLocationQuerySpecPtrOutput
+	ToGvcLocationQuerySpecPtrOutputWithContext(context.Context) GvcLocationQuerySpecPtrOutput
+}
+
+type gvcLocationQuerySpecPtrType GvcLocationQuerySpecArgs
+
+func GvcLocationQuerySpecPtr(v *GvcLocationQuerySpecArgs) GvcLocationQuerySpecPtrInput {
+	return (*gvcLocationQuerySpecPtrType)(v)
+}
+
+func (*gvcLocationQuerySpecPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GvcLocationQuerySpec)(nil)).Elem()
+}
+
+func (i *gvcLocationQuerySpecPtrType) ToGvcLocationQuerySpecPtrOutput() GvcLocationQuerySpecPtrOutput {
+	return i.ToGvcLocationQuerySpecPtrOutputWithContext(context.Background())
+}
+
+func (i *gvcLocationQuerySpecPtrType) ToGvcLocationQuerySpecPtrOutputWithContext(ctx context.Context) GvcLocationQuerySpecPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcLocationQuerySpecPtrOutput)
+}
+
+type GvcLocationQuerySpecOutput struct{ *pulumi.OutputState }
+
+func (GvcLocationQuerySpecOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GvcLocationQuerySpec)(nil)).Elem()
+}
+
+func (o GvcLocationQuerySpecOutput) ToGvcLocationQuerySpecOutput() GvcLocationQuerySpecOutput {
+	return o
+}
+
+func (o GvcLocationQuerySpecOutput) ToGvcLocationQuerySpecOutputWithContext(ctx context.Context) GvcLocationQuerySpecOutput {
+	return o
+}
+
+func (o GvcLocationQuerySpecOutput) ToGvcLocationQuerySpecPtrOutput() GvcLocationQuerySpecPtrOutput {
+	return o.ToGvcLocationQuerySpecPtrOutputWithContext(context.Background())
+}
+
+func (o GvcLocationQuerySpecOutput) ToGvcLocationQuerySpecPtrOutputWithContext(ctx context.Context) GvcLocationQuerySpecPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GvcLocationQuerySpec) *GvcLocationQuerySpec {
+		return &v
+	}).(GvcLocationQuerySpecPtrOutput)
+}
+
+// Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+func (o GvcLocationQuerySpecOutput) Match() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GvcLocationQuerySpec) *string { return v.Match }).(pulumi.StringPtrOutput)
+}
+
+// Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+func (o GvcLocationQuerySpecOutput) Terms() GvcLocationQuerySpecTermArrayOutput {
+	return o.ApplyT(func(v GvcLocationQuerySpec) []GvcLocationQuerySpecTerm { return v.Terms }).(GvcLocationQuerySpecTermArrayOutput)
+}
+
+type GvcLocationQuerySpecPtrOutput struct{ *pulumi.OutputState }
+
+func (GvcLocationQuerySpecPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GvcLocationQuerySpec)(nil)).Elem()
+}
+
+func (o GvcLocationQuerySpecPtrOutput) ToGvcLocationQuerySpecPtrOutput() GvcLocationQuerySpecPtrOutput {
+	return o
+}
+
+func (o GvcLocationQuerySpecPtrOutput) ToGvcLocationQuerySpecPtrOutputWithContext(ctx context.Context) GvcLocationQuerySpecPtrOutput {
+	return o
+}
+
+func (o GvcLocationQuerySpecPtrOutput) Elem() GvcLocationQuerySpecOutput {
+	return o.ApplyT(func(v *GvcLocationQuerySpec) GvcLocationQuerySpec {
+		if v != nil {
+			return *v
+		}
+		var ret GvcLocationQuerySpec
+		return ret
+	}).(GvcLocationQuerySpecOutput)
+}
+
+// Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+func (o GvcLocationQuerySpecPtrOutput) Match() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GvcLocationQuerySpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Match
+	}).(pulumi.StringPtrOutput)
+}
+
+// Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+func (o GvcLocationQuerySpecPtrOutput) Terms() GvcLocationQuerySpecTermArrayOutput {
+	return o.ApplyT(func(v *GvcLocationQuerySpec) []GvcLocationQuerySpecTerm {
+		if v == nil {
+			return nil
+		}
+		return v.Terms
+	}).(GvcLocationQuerySpecTermArrayOutput)
+}
+
+type GvcLocationQuerySpecTerm struct {
+	// Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
+	Op *string `pulumi:"op"`
+	// Property to use for query evaluation.
+	Property *string `pulumi:"property"`
+	// Relation to use for query evaluation.
+	Rel *string `pulumi:"rel"`
+	// Tag key to use for query evaluation.
+	Tag *string `pulumi:"tag"`
+	// Testing value for query evaluation.
+	Value *string `pulumi:"value"`
+}
+
+// GvcLocationQuerySpecTermInput is an input type that accepts GvcLocationQuerySpecTermArgs and GvcLocationQuerySpecTermOutput values.
+// You can construct a concrete instance of `GvcLocationQuerySpecTermInput` via:
+//
+//	GvcLocationQuerySpecTermArgs{...}
+type GvcLocationQuerySpecTermInput interface {
+	pulumi.Input
+
+	ToGvcLocationQuerySpecTermOutput() GvcLocationQuerySpecTermOutput
+	ToGvcLocationQuerySpecTermOutputWithContext(context.Context) GvcLocationQuerySpecTermOutput
+}
+
+type GvcLocationQuerySpecTermArgs struct {
+	// Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
+	Op pulumi.StringPtrInput `pulumi:"op"`
+	// Property to use for query evaluation.
+	Property pulumi.StringPtrInput `pulumi:"property"`
+	// Relation to use for query evaluation.
+	Rel pulumi.StringPtrInput `pulumi:"rel"`
+	// Tag key to use for query evaluation.
+	Tag pulumi.StringPtrInput `pulumi:"tag"`
+	// Testing value for query evaluation.
+	Value pulumi.StringPtrInput `pulumi:"value"`
+}
+
+func (GvcLocationQuerySpecTermArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GvcLocationQuerySpecTerm)(nil)).Elem()
+}
+
+func (i GvcLocationQuerySpecTermArgs) ToGvcLocationQuerySpecTermOutput() GvcLocationQuerySpecTermOutput {
+	return i.ToGvcLocationQuerySpecTermOutputWithContext(context.Background())
+}
+
+func (i GvcLocationQuerySpecTermArgs) ToGvcLocationQuerySpecTermOutputWithContext(ctx context.Context) GvcLocationQuerySpecTermOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcLocationQuerySpecTermOutput)
+}
+
+// GvcLocationQuerySpecTermArrayInput is an input type that accepts GvcLocationQuerySpecTermArray and GvcLocationQuerySpecTermArrayOutput values.
+// You can construct a concrete instance of `GvcLocationQuerySpecTermArrayInput` via:
+//
+//	GvcLocationQuerySpecTermArray{ GvcLocationQuerySpecTermArgs{...} }
+type GvcLocationQuerySpecTermArrayInput interface {
+	pulumi.Input
+
+	ToGvcLocationQuerySpecTermArrayOutput() GvcLocationQuerySpecTermArrayOutput
+	ToGvcLocationQuerySpecTermArrayOutputWithContext(context.Context) GvcLocationQuerySpecTermArrayOutput
+}
+
+type GvcLocationQuerySpecTermArray []GvcLocationQuerySpecTermInput
+
+func (GvcLocationQuerySpecTermArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GvcLocationQuerySpecTerm)(nil)).Elem()
+}
+
+func (i GvcLocationQuerySpecTermArray) ToGvcLocationQuerySpecTermArrayOutput() GvcLocationQuerySpecTermArrayOutput {
+	return i.ToGvcLocationQuerySpecTermArrayOutputWithContext(context.Background())
+}
+
+func (i GvcLocationQuerySpecTermArray) ToGvcLocationQuerySpecTermArrayOutputWithContext(ctx context.Context) GvcLocationQuerySpecTermArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GvcLocationQuerySpecTermArrayOutput)
+}
+
+type GvcLocationQuerySpecTermOutput struct{ *pulumi.OutputState }
+
+func (GvcLocationQuerySpecTermOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GvcLocationQuerySpecTerm)(nil)).Elem()
+}
+
+func (o GvcLocationQuerySpecTermOutput) ToGvcLocationQuerySpecTermOutput() GvcLocationQuerySpecTermOutput {
+	return o
+}
+
+func (o GvcLocationQuerySpecTermOutput) ToGvcLocationQuerySpecTermOutputWithContext(ctx context.Context) GvcLocationQuerySpecTermOutput {
+	return o
+}
+
+// Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
+func (o GvcLocationQuerySpecTermOutput) Op() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GvcLocationQuerySpecTerm) *string { return v.Op }).(pulumi.StringPtrOutput)
+}
+
+// Property to use for query evaluation.
+func (o GvcLocationQuerySpecTermOutput) Property() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GvcLocationQuerySpecTerm) *string { return v.Property }).(pulumi.StringPtrOutput)
+}
+
+// Relation to use for query evaluation.
+func (o GvcLocationQuerySpecTermOutput) Rel() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GvcLocationQuerySpecTerm) *string { return v.Rel }).(pulumi.StringPtrOutput)
+}
+
+// Tag key to use for query evaluation.
+func (o GvcLocationQuerySpecTermOutput) Tag() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GvcLocationQuerySpecTerm) *string { return v.Tag }).(pulumi.StringPtrOutput)
+}
+
+// Testing value for query evaluation.
+func (o GvcLocationQuerySpecTermOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GvcLocationQuerySpecTerm) *string { return v.Value }).(pulumi.StringPtrOutput)
+}
+
+type GvcLocationQuerySpecTermArrayOutput struct{ *pulumi.OutputState }
+
+func (GvcLocationQuerySpecTermArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GvcLocationQuerySpecTerm)(nil)).Elem()
+}
+
+func (o GvcLocationQuerySpecTermArrayOutput) ToGvcLocationQuerySpecTermArrayOutput() GvcLocationQuerySpecTermArrayOutput {
+	return o
+}
+
+func (o GvcLocationQuerySpecTermArrayOutput) ToGvcLocationQuerySpecTermArrayOutputWithContext(ctx context.Context) GvcLocationQuerySpecTermArrayOutput {
+	return o
+}
+
+func (o GvcLocationQuerySpecTermArrayOutput) Index(i pulumi.IntInput) GvcLocationQuerySpecTermOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GvcLocationQuerySpecTerm {
+		return vs[0].([]GvcLocationQuerySpecTerm)[vs[1].(int)]
+	}).(GvcLocationQuerySpecTermOutput)
 }
 
 type GvcOtelTracing struct {
@@ -33904,7 +34345,7 @@ func (o PolicyTargetQuerySpecPtrOutput) Terms() PolicyTargetQuerySpecTermArrayOu
 }
 
 type PolicyTargetQuerySpecTerm struct {
-	// Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+	// Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
 	Op *string `pulumi:"op"`
 	// Property to use for query evaluation.
 	Property *string `pulumi:"property"`
@@ -33928,7 +34369,7 @@ type PolicyTargetQuerySpecTermInput interface {
 }
 
 type PolicyTargetQuerySpecTermArgs struct {
-	// Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+	// Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
 	Op pulumi.StringPtrInput `pulumi:"op"`
 	// Property to use for query evaluation.
 	Property pulumi.StringPtrInput `pulumi:"property"`
@@ -33991,7 +34432,7 @@ func (o PolicyTargetQuerySpecTermOutput) ToPolicyTargetQuerySpecTermOutputWithCo
 	return o
 }
 
-// Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+// Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
 func (o PolicyTargetQuerySpecTermOutput) Op() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v PolicyTargetQuerySpecTerm) *string { return v.Op }).(pulumi.StringPtrOutput)
 }
@@ -48057,6 +48498,348 @@ func (o GetGvcLocationOptionArrayOutput) Index(i pulumi.IntInput) GetGvcLocation
 	}).(GetGvcLocationOptionOutput)
 }
 
+type GetGvcLocationQuery struct {
+	// Type of fetch. Specify either: `links` or `items`. Default: `items`.
+	Fetch string                    `pulumi:"fetch"`
+	Specs []GetGvcLocationQuerySpec `pulumi:"specs"`
+}
+
+// GetGvcLocationQueryInput is an input type that accepts GetGvcLocationQueryArgs and GetGvcLocationQueryOutput values.
+// You can construct a concrete instance of `GetGvcLocationQueryInput` via:
+//
+//	GetGvcLocationQueryArgs{...}
+type GetGvcLocationQueryInput interface {
+	pulumi.Input
+
+	ToGetGvcLocationQueryOutput() GetGvcLocationQueryOutput
+	ToGetGvcLocationQueryOutputWithContext(context.Context) GetGvcLocationQueryOutput
+}
+
+type GetGvcLocationQueryArgs struct {
+	// Type of fetch. Specify either: `links` or `items`. Default: `items`.
+	Fetch pulumi.StringInput                `pulumi:"fetch"`
+	Specs GetGvcLocationQuerySpecArrayInput `pulumi:"specs"`
+}
+
+func (GetGvcLocationQueryArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetGvcLocationQuery)(nil)).Elem()
+}
+
+func (i GetGvcLocationQueryArgs) ToGetGvcLocationQueryOutput() GetGvcLocationQueryOutput {
+	return i.ToGetGvcLocationQueryOutputWithContext(context.Background())
+}
+
+func (i GetGvcLocationQueryArgs) ToGetGvcLocationQueryOutputWithContext(ctx context.Context) GetGvcLocationQueryOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetGvcLocationQueryOutput)
+}
+
+// GetGvcLocationQueryArrayInput is an input type that accepts GetGvcLocationQueryArray and GetGvcLocationQueryArrayOutput values.
+// You can construct a concrete instance of `GetGvcLocationQueryArrayInput` via:
+//
+//	GetGvcLocationQueryArray{ GetGvcLocationQueryArgs{...} }
+type GetGvcLocationQueryArrayInput interface {
+	pulumi.Input
+
+	ToGetGvcLocationQueryArrayOutput() GetGvcLocationQueryArrayOutput
+	ToGetGvcLocationQueryArrayOutputWithContext(context.Context) GetGvcLocationQueryArrayOutput
+}
+
+type GetGvcLocationQueryArray []GetGvcLocationQueryInput
+
+func (GetGvcLocationQueryArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetGvcLocationQuery)(nil)).Elem()
+}
+
+func (i GetGvcLocationQueryArray) ToGetGvcLocationQueryArrayOutput() GetGvcLocationQueryArrayOutput {
+	return i.ToGetGvcLocationQueryArrayOutputWithContext(context.Background())
+}
+
+func (i GetGvcLocationQueryArray) ToGetGvcLocationQueryArrayOutputWithContext(ctx context.Context) GetGvcLocationQueryArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetGvcLocationQueryArrayOutput)
+}
+
+type GetGvcLocationQueryOutput struct{ *pulumi.OutputState }
+
+func (GetGvcLocationQueryOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetGvcLocationQuery)(nil)).Elem()
+}
+
+func (o GetGvcLocationQueryOutput) ToGetGvcLocationQueryOutput() GetGvcLocationQueryOutput {
+	return o
+}
+
+func (o GetGvcLocationQueryOutput) ToGetGvcLocationQueryOutputWithContext(ctx context.Context) GetGvcLocationQueryOutput {
+	return o
+}
+
+// Type of fetch. Specify either: `links` or `items`. Default: `items`.
+func (o GetGvcLocationQueryOutput) Fetch() pulumi.StringOutput {
+	return o.ApplyT(func(v GetGvcLocationQuery) string { return v.Fetch }).(pulumi.StringOutput)
+}
+
+func (o GetGvcLocationQueryOutput) Specs() GetGvcLocationQuerySpecArrayOutput {
+	return o.ApplyT(func(v GetGvcLocationQuery) []GetGvcLocationQuerySpec { return v.Specs }).(GetGvcLocationQuerySpecArrayOutput)
+}
+
+type GetGvcLocationQueryArrayOutput struct{ *pulumi.OutputState }
+
+func (GetGvcLocationQueryArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetGvcLocationQuery)(nil)).Elem()
+}
+
+func (o GetGvcLocationQueryArrayOutput) ToGetGvcLocationQueryArrayOutput() GetGvcLocationQueryArrayOutput {
+	return o
+}
+
+func (o GetGvcLocationQueryArrayOutput) ToGetGvcLocationQueryArrayOutputWithContext(ctx context.Context) GetGvcLocationQueryArrayOutput {
+	return o
+}
+
+func (o GetGvcLocationQueryArrayOutput) Index(i pulumi.IntInput) GetGvcLocationQueryOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetGvcLocationQuery {
+		return vs[0].([]GetGvcLocationQuery)[vs[1].(int)]
+	}).(GetGvcLocationQueryOutput)
+}
+
+type GetGvcLocationQuerySpec struct {
+	// Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+	Match string `pulumi:"match"`
+	// Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+	Terms []GetGvcLocationQuerySpecTerm `pulumi:"terms"`
+}
+
+// GetGvcLocationQuerySpecInput is an input type that accepts GetGvcLocationQuerySpecArgs and GetGvcLocationQuerySpecOutput values.
+// You can construct a concrete instance of `GetGvcLocationQuerySpecInput` via:
+//
+//	GetGvcLocationQuerySpecArgs{...}
+type GetGvcLocationQuerySpecInput interface {
+	pulumi.Input
+
+	ToGetGvcLocationQuerySpecOutput() GetGvcLocationQuerySpecOutput
+	ToGetGvcLocationQuerySpecOutputWithContext(context.Context) GetGvcLocationQuerySpecOutput
+}
+
+type GetGvcLocationQuerySpecArgs struct {
+	// Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+	Match pulumi.StringInput `pulumi:"match"`
+	// Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+	Terms GetGvcLocationQuerySpecTermArrayInput `pulumi:"terms"`
+}
+
+func (GetGvcLocationQuerySpecArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetGvcLocationQuerySpec)(nil)).Elem()
+}
+
+func (i GetGvcLocationQuerySpecArgs) ToGetGvcLocationQuerySpecOutput() GetGvcLocationQuerySpecOutput {
+	return i.ToGetGvcLocationQuerySpecOutputWithContext(context.Background())
+}
+
+func (i GetGvcLocationQuerySpecArgs) ToGetGvcLocationQuerySpecOutputWithContext(ctx context.Context) GetGvcLocationQuerySpecOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetGvcLocationQuerySpecOutput)
+}
+
+// GetGvcLocationQuerySpecArrayInput is an input type that accepts GetGvcLocationQuerySpecArray and GetGvcLocationQuerySpecArrayOutput values.
+// You can construct a concrete instance of `GetGvcLocationQuerySpecArrayInput` via:
+//
+//	GetGvcLocationQuerySpecArray{ GetGvcLocationQuerySpecArgs{...} }
+type GetGvcLocationQuerySpecArrayInput interface {
+	pulumi.Input
+
+	ToGetGvcLocationQuerySpecArrayOutput() GetGvcLocationQuerySpecArrayOutput
+	ToGetGvcLocationQuerySpecArrayOutputWithContext(context.Context) GetGvcLocationQuerySpecArrayOutput
+}
+
+type GetGvcLocationQuerySpecArray []GetGvcLocationQuerySpecInput
+
+func (GetGvcLocationQuerySpecArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetGvcLocationQuerySpec)(nil)).Elem()
+}
+
+func (i GetGvcLocationQuerySpecArray) ToGetGvcLocationQuerySpecArrayOutput() GetGvcLocationQuerySpecArrayOutput {
+	return i.ToGetGvcLocationQuerySpecArrayOutputWithContext(context.Background())
+}
+
+func (i GetGvcLocationQuerySpecArray) ToGetGvcLocationQuerySpecArrayOutputWithContext(ctx context.Context) GetGvcLocationQuerySpecArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetGvcLocationQuerySpecArrayOutput)
+}
+
+type GetGvcLocationQuerySpecOutput struct{ *pulumi.OutputState }
+
+func (GetGvcLocationQuerySpecOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetGvcLocationQuerySpec)(nil)).Elem()
+}
+
+func (o GetGvcLocationQuerySpecOutput) ToGetGvcLocationQuerySpecOutput() GetGvcLocationQuerySpecOutput {
+	return o
+}
+
+func (o GetGvcLocationQuerySpecOutput) ToGetGvcLocationQuerySpecOutputWithContext(ctx context.Context) GetGvcLocationQuerySpecOutput {
+	return o
+}
+
+// Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+func (o GetGvcLocationQuerySpecOutput) Match() pulumi.StringOutput {
+	return o.ApplyT(func(v GetGvcLocationQuerySpec) string { return v.Match }).(pulumi.StringOutput)
+}
+
+// Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+func (o GetGvcLocationQuerySpecOutput) Terms() GetGvcLocationQuerySpecTermArrayOutput {
+	return o.ApplyT(func(v GetGvcLocationQuerySpec) []GetGvcLocationQuerySpecTerm { return v.Terms }).(GetGvcLocationQuerySpecTermArrayOutput)
+}
+
+type GetGvcLocationQuerySpecArrayOutput struct{ *pulumi.OutputState }
+
+func (GetGvcLocationQuerySpecArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetGvcLocationQuerySpec)(nil)).Elem()
+}
+
+func (o GetGvcLocationQuerySpecArrayOutput) ToGetGvcLocationQuerySpecArrayOutput() GetGvcLocationQuerySpecArrayOutput {
+	return o
+}
+
+func (o GetGvcLocationQuerySpecArrayOutput) ToGetGvcLocationQuerySpecArrayOutputWithContext(ctx context.Context) GetGvcLocationQuerySpecArrayOutput {
+	return o
+}
+
+func (o GetGvcLocationQuerySpecArrayOutput) Index(i pulumi.IntInput) GetGvcLocationQuerySpecOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetGvcLocationQuerySpec {
+		return vs[0].([]GetGvcLocationQuerySpec)[vs[1].(int)]
+	}).(GetGvcLocationQuerySpecOutput)
+}
+
+type GetGvcLocationQuerySpecTerm struct {
+	// Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
+	Op string `pulumi:"op"`
+	// Property to use for query evaluation.
+	Property string `pulumi:"property"`
+	// Relation to use for query evaluation.
+	Rel string `pulumi:"rel"`
+	// Tag key to use for query evaluation.
+	Tag string `pulumi:"tag"`
+	// Testing value for query evaluation.
+	Value string `pulumi:"value"`
+}
+
+// GetGvcLocationQuerySpecTermInput is an input type that accepts GetGvcLocationQuerySpecTermArgs and GetGvcLocationQuerySpecTermOutput values.
+// You can construct a concrete instance of `GetGvcLocationQuerySpecTermInput` via:
+//
+//	GetGvcLocationQuerySpecTermArgs{...}
+type GetGvcLocationQuerySpecTermInput interface {
+	pulumi.Input
+
+	ToGetGvcLocationQuerySpecTermOutput() GetGvcLocationQuerySpecTermOutput
+	ToGetGvcLocationQuerySpecTermOutputWithContext(context.Context) GetGvcLocationQuerySpecTermOutput
+}
+
+type GetGvcLocationQuerySpecTermArgs struct {
+	// Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
+	Op pulumi.StringInput `pulumi:"op"`
+	// Property to use for query evaluation.
+	Property pulumi.StringInput `pulumi:"property"`
+	// Relation to use for query evaluation.
+	Rel pulumi.StringInput `pulumi:"rel"`
+	// Tag key to use for query evaluation.
+	Tag pulumi.StringInput `pulumi:"tag"`
+	// Testing value for query evaluation.
+	Value pulumi.StringInput `pulumi:"value"`
+}
+
+func (GetGvcLocationQuerySpecTermArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetGvcLocationQuerySpecTerm)(nil)).Elem()
+}
+
+func (i GetGvcLocationQuerySpecTermArgs) ToGetGvcLocationQuerySpecTermOutput() GetGvcLocationQuerySpecTermOutput {
+	return i.ToGetGvcLocationQuerySpecTermOutputWithContext(context.Background())
+}
+
+func (i GetGvcLocationQuerySpecTermArgs) ToGetGvcLocationQuerySpecTermOutputWithContext(ctx context.Context) GetGvcLocationQuerySpecTermOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetGvcLocationQuerySpecTermOutput)
+}
+
+// GetGvcLocationQuerySpecTermArrayInput is an input type that accepts GetGvcLocationQuerySpecTermArray and GetGvcLocationQuerySpecTermArrayOutput values.
+// You can construct a concrete instance of `GetGvcLocationQuerySpecTermArrayInput` via:
+//
+//	GetGvcLocationQuerySpecTermArray{ GetGvcLocationQuerySpecTermArgs{...} }
+type GetGvcLocationQuerySpecTermArrayInput interface {
+	pulumi.Input
+
+	ToGetGvcLocationQuerySpecTermArrayOutput() GetGvcLocationQuerySpecTermArrayOutput
+	ToGetGvcLocationQuerySpecTermArrayOutputWithContext(context.Context) GetGvcLocationQuerySpecTermArrayOutput
+}
+
+type GetGvcLocationQuerySpecTermArray []GetGvcLocationQuerySpecTermInput
+
+func (GetGvcLocationQuerySpecTermArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetGvcLocationQuerySpecTerm)(nil)).Elem()
+}
+
+func (i GetGvcLocationQuerySpecTermArray) ToGetGvcLocationQuerySpecTermArrayOutput() GetGvcLocationQuerySpecTermArrayOutput {
+	return i.ToGetGvcLocationQuerySpecTermArrayOutputWithContext(context.Background())
+}
+
+func (i GetGvcLocationQuerySpecTermArray) ToGetGvcLocationQuerySpecTermArrayOutputWithContext(ctx context.Context) GetGvcLocationQuerySpecTermArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetGvcLocationQuerySpecTermArrayOutput)
+}
+
+type GetGvcLocationQuerySpecTermOutput struct{ *pulumi.OutputState }
+
+func (GetGvcLocationQuerySpecTermOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetGvcLocationQuerySpecTerm)(nil)).Elem()
+}
+
+func (o GetGvcLocationQuerySpecTermOutput) ToGetGvcLocationQuerySpecTermOutput() GetGvcLocationQuerySpecTermOutput {
+	return o
+}
+
+func (o GetGvcLocationQuerySpecTermOutput) ToGetGvcLocationQuerySpecTermOutputWithContext(ctx context.Context) GetGvcLocationQuerySpecTermOutput {
+	return o
+}
+
+// Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
+func (o GetGvcLocationQuerySpecTermOutput) Op() pulumi.StringOutput {
+	return o.ApplyT(func(v GetGvcLocationQuerySpecTerm) string { return v.Op }).(pulumi.StringOutput)
+}
+
+// Property to use for query evaluation.
+func (o GetGvcLocationQuerySpecTermOutput) Property() pulumi.StringOutput {
+	return o.ApplyT(func(v GetGvcLocationQuerySpecTerm) string { return v.Property }).(pulumi.StringOutput)
+}
+
+// Relation to use for query evaluation.
+func (o GetGvcLocationQuerySpecTermOutput) Rel() pulumi.StringOutput {
+	return o.ApplyT(func(v GetGvcLocationQuerySpecTerm) string { return v.Rel }).(pulumi.StringOutput)
+}
+
+// Tag key to use for query evaluation.
+func (o GetGvcLocationQuerySpecTermOutput) Tag() pulumi.StringOutput {
+	return o.ApplyT(func(v GetGvcLocationQuerySpecTerm) string { return v.Tag }).(pulumi.StringOutput)
+}
+
+// Testing value for query evaluation.
+func (o GetGvcLocationQuerySpecTermOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v GetGvcLocationQuerySpecTerm) string { return v.Value }).(pulumi.StringOutput)
+}
+
+type GetGvcLocationQuerySpecTermArrayOutput struct{ *pulumi.OutputState }
+
+func (GetGvcLocationQuerySpecTermArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetGvcLocationQuerySpecTerm)(nil)).Elem()
+}
+
+func (o GetGvcLocationQuerySpecTermArrayOutput) ToGetGvcLocationQuerySpecTermArrayOutput() GetGvcLocationQuerySpecTermArrayOutput {
+	return o
+}
+
+func (o GetGvcLocationQuerySpecTermArrayOutput) ToGetGvcLocationQuerySpecTermArrayOutputWithContext(ctx context.Context) GetGvcLocationQuerySpecTermArrayOutput {
+	return o
+}
+
+func (o GetGvcLocationQuerySpecTermArrayOutput) Index(i pulumi.IntInput) GetGvcLocationQuerySpecTermOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetGvcLocationQuerySpecTerm {
+		return vs[0].([]GetGvcLocationQuerySpecTerm)[vs[1].(int)]
+	}).(GetGvcLocationQuerySpecTermOutput)
+}
+
 type GetGvcOtelTracing struct {
 	// Key-value map of custom tags.
 	CustomTags map[string]string `pulumi:"customTags"`
@@ -59676,6 +60459,12 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcLoadBalancerRedirectClassPtrInput)(nil)).Elem(), GvcLoadBalancerRedirectClassArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcLocationOptionInput)(nil)).Elem(), GvcLocationOptionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcLocationOptionArrayInput)(nil)).Elem(), GvcLocationOptionArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GvcLocationQueryInput)(nil)).Elem(), GvcLocationQueryArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GvcLocationQueryPtrInput)(nil)).Elem(), GvcLocationQueryArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GvcLocationQuerySpecInput)(nil)).Elem(), GvcLocationQuerySpecArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GvcLocationQuerySpecPtrInput)(nil)).Elem(), GvcLocationQuerySpecArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GvcLocationQuerySpecTermInput)(nil)).Elem(), GvcLocationQuerySpecTermArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GvcLocationQuerySpecTermArrayInput)(nil)).Elem(), GvcLocationQuerySpecTermArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcOtelTracingInput)(nil)).Elem(), GvcOtelTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcOtelTracingPtrInput)(nil)).Elem(), GvcOtelTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GvcSidecarInput)(nil)).Elem(), GvcSidecarArgs{})
@@ -60204,6 +60993,12 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLoadBalancerRedirectClassPtrInput)(nil)).Elem(), GetGvcLoadBalancerRedirectClassArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLocationOptionInput)(nil)).Elem(), GetGvcLocationOptionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLocationOptionArrayInput)(nil)).Elem(), GetGvcLocationOptionArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLocationQueryInput)(nil)).Elem(), GetGvcLocationQueryArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLocationQueryArrayInput)(nil)).Elem(), GetGvcLocationQueryArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLocationQuerySpecInput)(nil)).Elem(), GetGvcLocationQuerySpecArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLocationQuerySpecArrayInput)(nil)).Elem(), GetGvcLocationQuerySpecArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLocationQuerySpecTermInput)(nil)).Elem(), GetGvcLocationQuerySpecTermArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcLocationQuerySpecTermArrayInput)(nil)).Elem(), GetGvcLocationQuerySpecTermArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcOtelTracingInput)(nil)).Elem(), GetGvcOtelTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcOtelTracingPtrInput)(nil)).Elem(), GetGvcOtelTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcSidecarInput)(nil)).Elem(), GetGvcSidecarArgs{})
@@ -60464,6 +61259,12 @@ func init() {
 	pulumi.RegisterOutputType(GvcLoadBalancerRedirectClassPtrOutput{})
 	pulumi.RegisterOutputType(GvcLocationOptionOutput{})
 	pulumi.RegisterOutputType(GvcLocationOptionArrayOutput{})
+	pulumi.RegisterOutputType(GvcLocationQueryOutput{})
+	pulumi.RegisterOutputType(GvcLocationQueryPtrOutput{})
+	pulumi.RegisterOutputType(GvcLocationQuerySpecOutput{})
+	pulumi.RegisterOutputType(GvcLocationQuerySpecPtrOutput{})
+	pulumi.RegisterOutputType(GvcLocationQuerySpecTermOutput{})
+	pulumi.RegisterOutputType(GvcLocationQuerySpecTermArrayOutput{})
 	pulumi.RegisterOutputType(GvcOtelTracingOutput{})
 	pulumi.RegisterOutputType(GvcOtelTracingPtrOutput{})
 	pulumi.RegisterOutputType(GvcSidecarOutput{})
@@ -60992,6 +61793,12 @@ func init() {
 	pulumi.RegisterOutputType(GetGvcLoadBalancerRedirectClassPtrOutput{})
 	pulumi.RegisterOutputType(GetGvcLocationOptionOutput{})
 	pulumi.RegisterOutputType(GetGvcLocationOptionArrayOutput{})
+	pulumi.RegisterOutputType(GetGvcLocationQueryOutput{})
+	pulumi.RegisterOutputType(GetGvcLocationQueryArrayOutput{})
+	pulumi.RegisterOutputType(GetGvcLocationQuerySpecOutput{})
+	pulumi.RegisterOutputType(GetGvcLocationQuerySpecArrayOutput{})
+	pulumi.RegisterOutputType(GetGvcLocationQuerySpecTermOutput{})
+	pulumi.RegisterOutputType(GetGvcLocationQuerySpecTermArrayOutput{})
 	pulumi.RegisterOutputType(GetGvcOtelTracingOutput{})
 	pulumi.RegisterOutputType(GetGvcOtelTracingPtrOutput{})
 	pulumi.RegisterOutputType(GetGvcSidecarOutput{})

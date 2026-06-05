@@ -484,6 +484,48 @@ export interface GetGvcLocationOption {
     routingTier: number;
 }
 
+export interface GetGvcLocationQuery {
+    /**
+     * Type of fetch. Specify either: `links` or `items`. Default: `items`.
+     */
+    fetch: string;
+    specs?: outputs.GetGvcLocationQuerySpec[];
+}
+
+export interface GetGvcLocationQuerySpec {
+    /**
+     * Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+     */
+    match: string;
+    /**
+     * Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+     */
+    terms?: outputs.GetGvcLocationQuerySpecTerm[];
+}
+
+export interface GetGvcLocationQuerySpecTerm {
+    /**
+     * Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
+     */
+    op: string;
+    /**
+     * Property to use for query evaluation.
+     */
+    property: string;
+    /**
+     * Relation to use for query evaluation.
+     */
+    rel: string;
+    /**
+     * Tag key to use for query evaluation.
+     */
+    tag: string;
+    /**
+     * Testing value for query evaluation.
+     */
+    value: string;
+}
+
 export interface GetGvcOtelTracing {
     /**
      * Key-value map of custom tags.
@@ -1955,7 +1997,7 @@ export interface GroupMemberQuerySpec {
 
 export interface GroupMemberQuerySpecTerm {
     /**
-     * Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+     * Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
      */
     op: string;
     /**
@@ -2080,6 +2122,48 @@ export interface GvcLocationOption {
      * Routing tier for DNS geo routing. Lower value = higher priority. Locations with the same `routingTier` form a group; within a group, lowest latency wins. If all locations in the highest-priority group are unavailable, the next group is used.
      */
     routingTier?: number;
+}
+
+export interface GvcLocationQuery {
+    /**
+     * Type of fetch. Specify either: `links` or `items`. Default: `items`.
+     */
+    fetch: string;
+    spec?: outputs.GvcLocationQuerySpec;
+}
+
+export interface GvcLocationQuerySpec {
+    /**
+     * Type of match. Available values: `all`, `any`, `none`. Default: `all`.
+     */
+    match: string;
+    /**
+     * Terms can only contain one of the following attributes: `property`, `rel`, `tag`.
+     */
+    terms?: outputs.GvcLocationQuerySpecTerm[];
+}
+
+export interface GvcLocationQuerySpecTerm {
+    /**
+     * Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
+     */
+    op: string;
+    /**
+     * Property to use for query evaluation.
+     */
+    property?: string;
+    /**
+     * Relation to use for query evaluation.
+     */
+    rel?: string;
+    /**
+     * Tag key to use for query evaluation.
+     */
+    tag?: string;
+    /**
+     * Testing value for query evaluation.
+     */
+    value?: string;
 }
 
 export interface GvcOtelTracing {
@@ -4597,7 +4681,7 @@ export interface PolicyTargetQuerySpec {
 
 export interface PolicyTargetQuerySpecTerm {
     /**
-     * Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `exists`, `!exists`. Default: `=`.
+     * Type of query operation. Available values: `=`, `>`, `>=`, `<`, `<=`, `!=`, `~`, `=~`, `exists`, `!exists`, `contains`. Default: `=`.
      */
     op: string;
     /**

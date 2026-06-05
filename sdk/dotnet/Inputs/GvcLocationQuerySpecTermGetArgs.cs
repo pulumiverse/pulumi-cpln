@@ -8,50 +8,44 @@ using System.Threading.Tasks;
 using Pulumi.Serialization;
 using Pulumi;
 
-namespace Pulumiverse.Cpln.Outputs
+namespace Pulumiverse.Cpln.Inputs
 {
 
-    [OutputType]
-    public sealed class PolicyTargetQuerySpecTerm
+    public sealed class GvcLocationQuerySpecTermGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
         /// Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `~`, `=~`, `Exists`, `!exists`, `Contains`. Default: `=`.
         /// </summary>
-        public readonly string? Op;
+        [Input("op")]
+        public Input<string>? Op { get; set; }
+
         /// <summary>
         /// Property to use for query evaluation.
         /// </summary>
-        public readonly string? Property;
+        [Input("property")]
+        public Input<string>? Property { get; set; }
+
         /// <summary>
         /// Relation to use for query evaluation.
         /// </summary>
-        public readonly string? Rel;
+        [Input("rel")]
+        public Input<string>? Rel { get; set; }
+
         /// <summary>
         /// Tag key to use for query evaluation.
         /// </summary>
-        public readonly string? Tag;
+        [Input("tag")]
+        public Input<string>? Tag { get; set; }
+
         /// <summary>
         /// Testing value for query evaluation.
         /// </summary>
-        public readonly string? Value;
+        [Input("value")]
+        public Input<string>? Value { get; set; }
 
-        [OutputConstructor]
-        private PolicyTargetQuerySpecTerm(
-            string? op,
-
-            string? property,
-
-            string? rel,
-
-            string? tag,
-
-            string? value)
+        public GvcLocationQuerySpecTermGetArgs()
         {
-            Op = op;
-            Property = property;
-            Rel = rel;
-            Tag = tag;
-            Value = value;
         }
+        public static new GvcLocationQuerySpecTermGetArgs Empty => new GvcLocationQuerySpecTermGetArgs();
     }
 }

@@ -36,6 +36,8 @@ type Gvc struct {
 	LoadBalancer GvcLoadBalancerPtrOutput `pulumi:"loadBalancer"`
 	// Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `locations`.
 	LocationOptions GvcLocationOptionArrayOutput `pulumi:"locationOptions"`
+	// A query that dynamically selects the locations making up the Global Virtual Cloud.
+	LocationQuery GvcLocationQueryPtrOutput `pulumi:"locationQuery"`
 	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
 	Locations pulumi.StringArrayOutput `pulumi:"locations"`
 	// Name of the Global Virtual Cloud.
@@ -102,6 +104,8 @@ type gvcState struct {
 	LoadBalancer *GvcLoadBalancer `pulumi:"loadBalancer"`
 	// Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `locations`.
 	LocationOptions []GvcLocationOption `pulumi:"locationOptions"`
+	// A query that dynamically selects the locations making up the Global Virtual Cloud.
+	LocationQuery *GvcLocationQuery `pulumi:"locationQuery"`
 	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
 	Locations []string `pulumi:"locations"`
 	// Name of the Global Virtual Cloud.
@@ -139,6 +143,8 @@ type GvcState struct {
 	LoadBalancer GvcLoadBalancerPtrInput
 	// Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `locations`.
 	LocationOptions GvcLocationOptionArrayInput
+	// A query that dynamically selects the locations making up the Global Virtual Cloud.
+	LocationQuery GvcLocationQueryPtrInput
 	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
 	Locations pulumi.StringArrayInput
 	// Name of the Global Virtual Cloud.
@@ -176,6 +182,8 @@ type gvcArgs struct {
 	LoadBalancer *GvcLoadBalancer `pulumi:"loadBalancer"`
 	// Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `locations`.
 	LocationOptions []GvcLocationOption `pulumi:"locationOptions"`
+	// A query that dynamically selects the locations making up the Global Virtual Cloud.
+	LocationQuery *GvcLocationQuery `pulumi:"locationQuery"`
 	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
 	Locations []string `pulumi:"locations"`
 	// Name of the Global Virtual Cloud.
@@ -208,6 +216,8 @@ type GvcArgs struct {
 	LoadBalancer GvcLoadBalancerPtrInput
 	// Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `locations`.
 	LocationOptions GvcLocationOptionArrayInput
+	// A query that dynamically selects the locations making up the Global Virtual Cloud.
+	LocationQuery GvcLocationQueryPtrInput
 	// A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
 	Locations pulumi.StringArrayInput
 	// Name of the Global Virtual Cloud.
@@ -360,6 +370,11 @@ func (o GvcOutput) LoadBalancer() GvcLoadBalancerPtrOutput {
 // Per-location routing options for DNS geo routing. Allows configuring priority-based failover and latency adjustments per location. Each entry references a location listed in `locations`.
 func (o GvcOutput) LocationOptions() GvcLocationOptionArrayOutput {
 	return o.ApplyT(func(v *Gvc) GvcLocationOptionArrayOutput { return v.LocationOptions }).(GvcLocationOptionArrayOutput)
+}
+
+// A query that dynamically selects the locations making up the Global Virtual Cloud.
+func (o GvcOutput) LocationQuery() GvcLocationQueryPtrOutput {
+	return o.ApplyT(func(v *Gvc) GvcLocationQueryPtrOutput { return v.LocationQuery }).(GvcLocationQueryPtrOutput)
 }
 
 // A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.

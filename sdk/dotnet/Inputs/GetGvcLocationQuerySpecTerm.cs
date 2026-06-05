@@ -8,50 +8,44 @@ using System.Threading.Tasks;
 using Pulumi.Serialization;
 using Pulumi;
 
-namespace Pulumiverse.Cpln.Outputs
+namespace Pulumiverse.Cpln.Inputs
 {
 
-    [OutputType]
-    public sealed class PolicyTargetQuerySpecTerm
+    public sealed class GetGvcLocationQuerySpecTermArgs : global::Pulumi.InvokeArgs
     {
         /// <summary>
         /// Type of query operation. Available values: `=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=`, `~`, `=~`, `Exists`, `!exists`, `Contains`. Default: `=`.
         /// </summary>
-        public readonly string? Op;
+        [Input("op", required: true)]
+        public string Op { get; set; } = null!;
+
         /// <summary>
         /// Property to use for query evaluation.
         /// </summary>
-        public readonly string? Property;
+        [Input("property", required: true)]
+        public string Property { get; set; } = null!;
+
         /// <summary>
         /// Relation to use for query evaluation.
         /// </summary>
-        public readonly string? Rel;
+        [Input("rel", required: true)]
+        public string Rel { get; set; } = null!;
+
         /// <summary>
         /// Tag key to use for query evaluation.
         /// </summary>
-        public readonly string? Tag;
+        [Input("tag", required: true)]
+        public string Tag { get; set; } = null!;
+
         /// <summary>
         /// Testing value for query evaluation.
         /// </summary>
-        public readonly string? Value;
+        [Input("value", required: true)]
+        public string Value { get; set; } = null!;
 
-        [OutputConstructor]
-        private PolicyTargetQuerySpecTerm(
-            string? op,
-
-            string? property,
-
-            string? rel,
-
-            string? tag,
-
-            string? value)
+        public GetGvcLocationQuerySpecTermArgs()
         {
-            Op = op;
-            Property = property;
-            Rel = rel;
-            Tag = tag;
-            Value = value;
         }
+        public static new GetGvcLocationQuerySpecTermArgs Empty => new GetGvcLocationQuerySpecTermArgs();
     }
 }
