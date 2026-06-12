@@ -17340,7 +17340,7 @@ class WorkloadRolloutOption(dict):
         :param _builtins.str max_unavailable_replicas: The number of replicas that can be unavailable during the update process.
         :param _builtins.int min_ready_seconds: The minimum number of seconds a container must run without crashing to be considered available.
         :param _builtins.str scaling_policy: The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
-        :param _builtins.int termination_grace_period_seconds: The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run.
+        :param _builtins.int termination_grace_period_seconds: The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run. Valid values: `0` - `3600`. Default: `90`. Note: the API caps this at `900` unless the workload is tagged with `cpln/relaxGracePeriodMax`.
         """
         if max_surge_replicas is not None:
             pulumi.set(__self__, "max_surge_replicas", max_surge_replicas)
@@ -17389,7 +17389,7 @@ class WorkloadRolloutOption(dict):
     @pulumi.getter(name="terminationGracePeriodSeconds")
     def termination_grace_period_seconds(self) -> Optional[_builtins.int]:
         """
-        The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run.
+        The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run. Valid values: `0` - `3600`. Default: `90`. Note: the API caps this at `900` unless the workload is tagged with `cpln/relaxGracePeriodMax`.
         """
         return pulumi.get(self, "termination_grace_period_seconds")
 
