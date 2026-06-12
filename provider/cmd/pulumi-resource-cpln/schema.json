@@ -7543,7 +7543,7 @@
                 },
                 "terminationGracePeriodSeconds": {
                     "type": "integer",
-                    "description": "The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run.\n"
+                    "description": "The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run. Valid values: \u003cspan pulumi-lang-nodejs=\"`0`\" pulumi-lang-dotnet=\"`0`\" pulumi-lang-go=\"`0`\" pulumi-lang-python=\"`0`\" pulumi-lang-yaml=\"`0`\" pulumi-lang-java=\"`0`\"\u003e`0`\u003c/span\u003e - \u003cspan pulumi-lang-nodejs=\"`3600`\" pulumi-lang-dotnet=\"`3600`\" pulumi-lang-go=\"`3600`\" pulumi-lang-python=\"`3600`\" pulumi-lang-yaml=\"`3600`\" pulumi-lang-java=\"`3600`\"\u003e`3600`\u003c/span\u003e. Default: \u003cspan pulumi-lang-nodejs=\"`90`\" pulumi-lang-dotnet=\"`90`\" pulumi-lang-go=\"`90`\" pulumi-lang-python=\"`90`\" pulumi-lang-yaml=\"`90`\" pulumi-lang-java=\"`90`\"\u003e`90`\u003c/span\u003e. Note: the API caps this at \u003cspan pulumi-lang-nodejs=\"`900`\" pulumi-lang-dotnet=\"`900`\" pulumi-lang-go=\"`900`\" pulumi-lang-python=\"`900`\" pulumi-lang-yaml=\"`900`\" pulumi-lang-java=\"`900`\"\u003e`900`\u003c/span\u003e unless the workload is tagged with `cpln/relaxGracePeriodMax`.\n"
                 }
             },
             "type": "object",
