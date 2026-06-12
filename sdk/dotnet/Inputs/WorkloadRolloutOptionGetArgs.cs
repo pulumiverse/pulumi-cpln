@@ -38,7 +38,7 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<string>? ScalingPolicy { get; set; }
 
         /// <summary>
-        /// The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run.
+        /// The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run. Valid values: `0` - `3600`. Default: `90`. Note: the API caps this at `900` unless the workload is tagged with `cpln/relaxGracePeriodMax`.
         /// </summary>
         [Input("terminationGracePeriodSeconds")]
         public Input<int>? TerminationGracePeriodSeconds { get; set; }

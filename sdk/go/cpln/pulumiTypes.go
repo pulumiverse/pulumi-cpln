@@ -46022,7 +46022,7 @@ type WorkloadRolloutOption struct {
 	MinReadySeconds *int `pulumi:"minReadySeconds"`
 	// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
 	ScalingPolicy *string `pulumi:"scalingPolicy"`
-	// The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run.
+	// The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run. Valid values: `0` - `3600`. Default: `90`. Note: the API caps this at `900` unless the workload is tagged with `cpln/relaxGracePeriodMax`.
 	TerminationGracePeriodSeconds *int `pulumi:"terminationGracePeriodSeconds"`
 }
 
@@ -46046,7 +46046,7 @@ type WorkloadRolloutOptionArgs struct {
 	MinReadySeconds pulumi.IntPtrInput `pulumi:"minReadySeconds"`
 	// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
 	ScalingPolicy pulumi.StringPtrInput `pulumi:"scalingPolicy"`
-	// The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run.
+	// The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run. Valid values: `0` - `3600`. Default: `90`. Note: the API caps this at `900` unless the workload is tagged with `cpln/relaxGracePeriodMax`.
 	TerminationGracePeriodSeconds pulumi.IntPtrInput `pulumi:"terminationGracePeriodSeconds"`
 }
 
@@ -46121,7 +46121,7 @@ func (o WorkloadRolloutOptionOutput) ScalingPolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v WorkloadRolloutOption) *string { return v.ScalingPolicy }).(pulumi.StringPtrOutput)
 }
 
-// The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run.
+// The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run. Valid values: `0` - `3600`. Default: `90`. Note: the API caps this at `900` unless the workload is tagged with `cpln/relaxGracePeriodMax`.
 func (o WorkloadRolloutOptionOutput) TerminationGracePeriodSeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadRolloutOption) *int { return v.TerminationGracePeriodSeconds }).(pulumi.IntPtrOutput)
 }
