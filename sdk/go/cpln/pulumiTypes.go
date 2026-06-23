@@ -8908,13 +8908,17 @@ type Mk8sAddOns struct {
 	AzureAcr              *Mk8sAddOnsAzureAcr              `pulumi:"azureAcr"`
 	AzureWorkloadIdentity *Mk8sAddOnsAzureWorkloadIdentity `pulumi:"azureWorkloadIdentity"`
 	// Bring-your-own Kubernetes (BYOK) add-on settings.
-	Byok             *Mk8sAddOnsByok `pulumi:"byok"`
-	Dashboard        *bool           `pulumi:"dashboard"`
-	Headlamp         *bool           `pulumi:"headlamp"`
-	LocalPathStorage *bool           `pulumi:"localPathStorage"`
-	Logs             *Mk8sAddOnsLogs `pulumi:"logs"`
+	Byok      *Mk8sAddOnsByok `pulumi:"byok"`
+	Dashboard *bool           `pulumi:"dashboard"`
+	Headlamp  *bool           `pulumi:"headlamp"`
+	// Enables type=vm workloads by installing the KubeVirt and CDI operators on the cluster.
+	Kubevirt         *Mk8sAddOnsKubevirt `pulumi:"kubevirt"`
+	LocalPathStorage *bool               `pulumi:"localPathStorage"`
+	Logs             *Mk8sAddOnsLogs     `pulumi:"logs"`
 	// Scrape pods annotated with prometheus.io/scrape=true
-	Metrics        *Mk8sAddOnsMetrics        `pulumi:"metrics"`
+	Metrics *Mk8sAddOnsMetrics `pulumi:"metrics"`
+	// Per-node CoreDNS cache. Required by the kubevirt add-on.
+	NodeLocalDns   *bool                     `pulumi:"nodeLocalDns"`
 	Nvidia         *Mk8sAddOnsNvidia         `pulumi:"nvidia"`
 	RegistryMirror *Mk8sAddOnsRegistryMirror `pulumi:"registryMirror"`
 	Sysbox         *bool                     `pulumi:"sysbox"`
@@ -8939,13 +8943,17 @@ type Mk8sAddOnsArgs struct {
 	AzureAcr              Mk8sAddOnsAzureAcrPtrInput              `pulumi:"azureAcr"`
 	AzureWorkloadIdentity Mk8sAddOnsAzureWorkloadIdentityPtrInput `pulumi:"azureWorkloadIdentity"`
 	// Bring-your-own Kubernetes (BYOK) add-on settings.
-	Byok             Mk8sAddOnsByokPtrInput `pulumi:"byok"`
-	Dashboard        pulumi.BoolPtrInput    `pulumi:"dashboard"`
-	Headlamp         pulumi.BoolPtrInput    `pulumi:"headlamp"`
-	LocalPathStorage pulumi.BoolPtrInput    `pulumi:"localPathStorage"`
-	Logs             Mk8sAddOnsLogsPtrInput `pulumi:"logs"`
+	Byok      Mk8sAddOnsByokPtrInput `pulumi:"byok"`
+	Dashboard pulumi.BoolPtrInput    `pulumi:"dashboard"`
+	Headlamp  pulumi.BoolPtrInput    `pulumi:"headlamp"`
+	// Enables type=vm workloads by installing the KubeVirt and CDI operators on the cluster.
+	Kubevirt         Mk8sAddOnsKubevirtPtrInput `pulumi:"kubevirt"`
+	LocalPathStorage pulumi.BoolPtrInput        `pulumi:"localPathStorage"`
+	Logs             Mk8sAddOnsLogsPtrInput     `pulumi:"logs"`
 	// Scrape pods annotated with prometheus.io/scrape=true
-	Metrics        Mk8sAddOnsMetricsPtrInput        `pulumi:"metrics"`
+	Metrics Mk8sAddOnsMetricsPtrInput `pulumi:"metrics"`
+	// Per-node CoreDNS cache. Required by the kubevirt add-on.
+	NodeLocalDns   pulumi.BoolPtrInput              `pulumi:"nodeLocalDns"`
 	Nvidia         Mk8sAddOnsNvidiaPtrInput         `pulumi:"nvidia"`
 	RegistryMirror Mk8sAddOnsRegistryMirrorPtrInput `pulumi:"registryMirror"`
 	Sysbox         pulumi.BoolPtrInput              `pulumi:"sysbox"`
@@ -9065,6 +9073,11 @@ func (o Mk8sAddOnsOutput) Headlamp() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOns) *bool { return v.Headlamp }).(pulumi.BoolPtrOutput)
 }
 
+// Enables type=vm workloads by installing the KubeVirt and CDI operators on the cluster.
+func (o Mk8sAddOnsOutput) Kubevirt() Mk8sAddOnsKubevirtPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOns) *Mk8sAddOnsKubevirt { return v.Kubevirt }).(Mk8sAddOnsKubevirtPtrOutput)
+}
+
 func (o Mk8sAddOnsOutput) LocalPathStorage() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOns) *bool { return v.LocalPathStorage }).(pulumi.BoolPtrOutput)
 }
@@ -9076,6 +9089,11 @@ func (o Mk8sAddOnsOutput) Logs() Mk8sAddOnsLogsPtrOutput {
 // Scrape pods annotated with prometheus.io/scrape=true
 func (o Mk8sAddOnsOutput) Metrics() Mk8sAddOnsMetricsPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOns) *Mk8sAddOnsMetrics { return v.Metrics }).(Mk8sAddOnsMetricsPtrOutput)
+}
+
+// Per-node CoreDNS cache. Required by the kubevirt add-on.
+func (o Mk8sAddOnsOutput) NodeLocalDns() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOns) *bool { return v.NodeLocalDns }).(pulumi.BoolPtrOutput)
 }
 
 func (o Mk8sAddOnsOutput) Nvidia() Mk8sAddOnsNvidiaPtrOutput {
@@ -9196,6 +9214,16 @@ func (o Mk8sAddOnsPtrOutput) Headlamp() pulumi.BoolPtrOutput {
 	}).(pulumi.BoolPtrOutput)
 }
 
+// Enables type=vm workloads by installing the KubeVirt and CDI operators on the cluster.
+func (o Mk8sAddOnsPtrOutput) Kubevirt() Mk8sAddOnsKubevirtPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOns) *Mk8sAddOnsKubevirt {
+		if v == nil {
+			return nil
+		}
+		return v.Kubevirt
+	}).(Mk8sAddOnsKubevirtPtrOutput)
+}
+
 func (o Mk8sAddOnsPtrOutput) LocalPathStorage() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOns) *bool {
 		if v == nil {
@@ -9222,6 +9250,16 @@ func (o Mk8sAddOnsPtrOutput) Metrics() Mk8sAddOnsMetricsPtrOutput {
 		}
 		return v.Metrics
 	}).(Mk8sAddOnsMetricsPtrOutput)
+}
+
+// Per-node CoreDNS cache. Required by the kubevirt add-on.
+func (o Mk8sAddOnsPtrOutput) NodeLocalDns() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOns) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.NodeLocalDns
+	}).(pulumi.BoolPtrOutput)
 }
 
 func (o Mk8sAddOnsPtrOutput) Nvidia() Mk8sAddOnsNvidiaPtrOutput {
@@ -15117,6 +15155,143 @@ func (o Mk8sAddOnsByokConfigTempoAgentPtrOutput) MinMemory() pulumi.StringPtrOut
 			return nil
 		}
 		return v.MinMemory
+	}).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsKubevirt struct {
+	// Filesystem-mode StorageClass CDI uses for import scratch space. Required when the cluster default StorageClass is block-mode.
+	ScratchSpaceStorageClass *string `pulumi:"scratchSpaceStorageClass"`
+}
+
+// Mk8sAddOnsKubevirtInput is an input type that accepts Mk8sAddOnsKubevirtArgs and Mk8sAddOnsKubevirtOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsKubevirtInput` via:
+//
+//	Mk8sAddOnsKubevirtArgs{...}
+type Mk8sAddOnsKubevirtInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsKubevirtOutput() Mk8sAddOnsKubevirtOutput
+	ToMk8sAddOnsKubevirtOutputWithContext(context.Context) Mk8sAddOnsKubevirtOutput
+}
+
+type Mk8sAddOnsKubevirtArgs struct {
+	// Filesystem-mode StorageClass CDI uses for import scratch space. Required when the cluster default StorageClass is block-mode.
+	ScratchSpaceStorageClass pulumi.StringPtrInput `pulumi:"scratchSpaceStorageClass"`
+}
+
+func (Mk8sAddOnsKubevirtArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsKubevirt)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsKubevirtArgs) ToMk8sAddOnsKubevirtOutput() Mk8sAddOnsKubevirtOutput {
+	return i.ToMk8sAddOnsKubevirtOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsKubevirtArgs) ToMk8sAddOnsKubevirtOutputWithContext(ctx context.Context) Mk8sAddOnsKubevirtOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsKubevirtOutput)
+}
+
+func (i Mk8sAddOnsKubevirtArgs) ToMk8sAddOnsKubevirtPtrOutput() Mk8sAddOnsKubevirtPtrOutput {
+	return i.ToMk8sAddOnsKubevirtPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsKubevirtArgs) ToMk8sAddOnsKubevirtPtrOutputWithContext(ctx context.Context) Mk8sAddOnsKubevirtPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsKubevirtOutput).ToMk8sAddOnsKubevirtPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsKubevirtPtrInput is an input type that accepts Mk8sAddOnsKubevirtArgs, Mk8sAddOnsKubevirtPtr and Mk8sAddOnsKubevirtPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsKubevirtPtrInput` via:
+//
+//	        Mk8sAddOnsKubevirtArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsKubevirtPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsKubevirtPtrOutput() Mk8sAddOnsKubevirtPtrOutput
+	ToMk8sAddOnsKubevirtPtrOutputWithContext(context.Context) Mk8sAddOnsKubevirtPtrOutput
+}
+
+type mk8sAddOnsKubevirtPtrType Mk8sAddOnsKubevirtArgs
+
+func Mk8sAddOnsKubevirtPtr(v *Mk8sAddOnsKubevirtArgs) Mk8sAddOnsKubevirtPtrInput {
+	return (*mk8sAddOnsKubevirtPtrType)(v)
+}
+
+func (*mk8sAddOnsKubevirtPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsKubevirt)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsKubevirtPtrType) ToMk8sAddOnsKubevirtPtrOutput() Mk8sAddOnsKubevirtPtrOutput {
+	return i.ToMk8sAddOnsKubevirtPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsKubevirtPtrType) ToMk8sAddOnsKubevirtPtrOutputWithContext(ctx context.Context) Mk8sAddOnsKubevirtPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsKubevirtPtrOutput)
+}
+
+type Mk8sAddOnsKubevirtOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsKubevirtOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsKubevirt)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsKubevirtOutput) ToMk8sAddOnsKubevirtOutput() Mk8sAddOnsKubevirtOutput {
+	return o
+}
+
+func (o Mk8sAddOnsKubevirtOutput) ToMk8sAddOnsKubevirtOutputWithContext(ctx context.Context) Mk8sAddOnsKubevirtOutput {
+	return o
+}
+
+func (o Mk8sAddOnsKubevirtOutput) ToMk8sAddOnsKubevirtPtrOutput() Mk8sAddOnsKubevirtPtrOutput {
+	return o.ToMk8sAddOnsKubevirtPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsKubevirtOutput) ToMk8sAddOnsKubevirtPtrOutputWithContext(ctx context.Context) Mk8sAddOnsKubevirtPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsKubevirt) *Mk8sAddOnsKubevirt {
+		return &v
+	}).(Mk8sAddOnsKubevirtPtrOutput)
+}
+
+// Filesystem-mode StorageClass CDI uses for import scratch space. Required when the cluster default StorageClass is block-mode.
+func (o Mk8sAddOnsKubevirtOutput) ScratchSpaceStorageClass() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsKubevirt) *string { return v.ScratchSpaceStorageClass }).(pulumi.StringPtrOutput)
+}
+
+type Mk8sAddOnsKubevirtPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsKubevirtPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsKubevirt)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsKubevirtPtrOutput) ToMk8sAddOnsKubevirtPtrOutput() Mk8sAddOnsKubevirtPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsKubevirtPtrOutput) ToMk8sAddOnsKubevirtPtrOutputWithContext(ctx context.Context) Mk8sAddOnsKubevirtPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsKubevirtPtrOutput) Elem() Mk8sAddOnsKubevirtOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsKubevirt) Mk8sAddOnsKubevirt {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsKubevirt
+		return ret
+	}).(Mk8sAddOnsKubevirtOutput)
+}
+
+// Filesystem-mode StorageClass CDI uses for import scratch space. Required when the cluster default StorageClass is block-mode.
+func (o Mk8sAddOnsKubevirtPtrOutput) ScratchSpaceStorageClass() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsKubevirt) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ScratchSpaceStorageClass
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -37169,8 +37344,8 @@ type WorkloadContainer struct {
 	GpuCustom *WorkloadContainerGpuCustom `pulumi:"gpuCustom"`
 	// GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
 	GpuNvidia *WorkloadContainerGpuNvidia `pulumi:"gpuNvidia"`
-	// The full image and tag path.
-	Image string `pulumi:"image"`
+	// The full image and tag path. Required for all workload types except `vm`, which boots from `vm.boot_disk.source` instead.
+	Image *string `pulumi:"image"`
 	// Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
 	InheritEnv *bool `pulumi:"inheritEnv"`
 	// Lifecycle [Reference Page](https://docs.controlplane.com/reference/workload#lifecycle).
@@ -37224,8 +37399,8 @@ type WorkloadContainerArgs struct {
 	GpuCustom WorkloadContainerGpuCustomPtrInput `pulumi:"gpuCustom"`
 	// GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
 	GpuNvidia WorkloadContainerGpuNvidiaPtrInput `pulumi:"gpuNvidia"`
-	// The full image and tag path.
-	Image pulumi.StringInput `pulumi:"image"`
+	// The full image and tag path. Required for all workload types except `vm`, which boots from `vm.boot_disk.source` instead.
+	Image pulumi.StringPtrInput `pulumi:"image"`
 	// Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
 	InheritEnv pulumi.BoolPtrInput `pulumi:"inheritEnv"`
 	// Lifecycle [Reference Page](https://docs.controlplane.com/reference/workload#lifecycle).
@@ -37336,9 +37511,9 @@ func (o WorkloadContainerOutput) GpuNvidia() WorkloadContainerGpuNvidiaPtrOutput
 	return o.ApplyT(func(v WorkloadContainer) *WorkloadContainerGpuNvidia { return v.GpuNvidia }).(WorkloadContainerGpuNvidiaPtrOutput)
 }
 
-// The full image and tag path.
-func (o WorkloadContainerOutput) Image() pulumi.StringOutput {
-	return o.ApplyT(func(v WorkloadContainer) string { return v.Image }).(pulumi.StringOutput)
+// The full image and tag path. Required for all workload types except `vm`, which boots from `vm.boot_disk.source` instead.
+func (o WorkloadContainerOutput) Image() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadContainer) *string { return v.Image }).(pulumi.StringPtrOutput)
 }
 
 // Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
@@ -40381,8 +40556,14 @@ func (o WorkloadContainerReadinessProbeTcpSocketPtrOutput) Port() pulumi.IntPtrO
 }
 
 type WorkloadContainerVolume struct {
-	// File path added to workload pointing to the volume.
-	Path string `pulumi:"path"`
+	// VM disk boot order. Only valid for `vm` workloads. Valid values: `1` - `16`.
+	BootOrder *int `pulumi:"bootOrder"`
+	// VM disk bus. Only valid for `vm` workloads. A `cpln://secret/` volume on a `sata` or `scsi` bus is presented to the guest as a read-only CD-ROM. Valid values: `virtio`, `sata`, `scsi`.
+	Bus *string `pulumi:"bus"`
+	// VM disk name. Required for `vm` workloads; rejected for other workload types.
+	Name *string `pulumi:"name"`
+	// File path added to workload pointing to the volume. Required for non-`vm` workloads; rejected for `vm` workloads (the volume is attached to the VM as a block device).
+	Path *string `pulumi:"path"`
 	// Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
 	RecoveryPolicy *string `pulumi:"recoveryPolicy"`
 	// URI of a volume hosted at Control Plane (Volume Set) or at a cloud provider (AWS, Azure, GCP).
@@ -40401,8 +40582,14 @@ type WorkloadContainerVolumeInput interface {
 }
 
 type WorkloadContainerVolumeArgs struct {
-	// File path added to workload pointing to the volume.
-	Path pulumi.StringInput `pulumi:"path"`
+	// VM disk boot order. Only valid for `vm` workloads. Valid values: `1` - `16`.
+	BootOrder pulumi.IntPtrInput `pulumi:"bootOrder"`
+	// VM disk bus. Only valid for `vm` workloads. A `cpln://secret/` volume on a `sata` or `scsi` bus is presented to the guest as a read-only CD-ROM. Valid values: `virtio`, `sata`, `scsi`.
+	Bus pulumi.StringPtrInput `pulumi:"bus"`
+	// VM disk name. Required for `vm` workloads; rejected for other workload types.
+	Name pulumi.StringPtrInput `pulumi:"name"`
+	// File path added to workload pointing to the volume. Required for non-`vm` workloads; rejected for `vm` workloads (the volume is attached to the VM as a block device).
+	Path pulumi.StringPtrInput `pulumi:"path"`
 	// Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
 	RecoveryPolicy pulumi.StringPtrInput `pulumi:"recoveryPolicy"`
 	// URI of a volume hosted at Control Plane (Volume Set) or at a cloud provider (AWS, Azure, GCP).
@@ -40460,9 +40647,24 @@ func (o WorkloadContainerVolumeOutput) ToWorkloadContainerVolumeOutputWithContex
 	return o
 }
 
-// File path added to workload pointing to the volume.
-func (o WorkloadContainerVolumeOutput) Path() pulumi.StringOutput {
-	return o.ApplyT(func(v WorkloadContainerVolume) string { return v.Path }).(pulumi.StringOutput)
+// VM disk boot order. Only valid for `vm` workloads. Valid values: `1` - `16`.
+func (o WorkloadContainerVolumeOutput) BootOrder() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadContainerVolume) *int { return v.BootOrder }).(pulumi.IntPtrOutput)
+}
+
+// VM disk bus. Only valid for `vm` workloads. A `cpln://secret/` volume on a `sata` or `scsi` bus is presented to the guest as a read-only CD-ROM. Valid values: `virtio`, `sata`, `scsi`.
+func (o WorkloadContainerVolumeOutput) Bus() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadContainerVolume) *string { return v.Bus }).(pulumi.StringPtrOutput)
+}
+
+// VM disk name. Required for `vm` workloads; rejected for other workload types.
+func (o WorkloadContainerVolumeOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadContainerVolume) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+// File path added to workload pointing to the volume. Required for non-`vm` workloads; rejected for `vm` workloads (the volume is attached to the VM as a block device).
+func (o WorkloadContainerVolumeOutput) Path() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadContainerVolume) *string { return v.Path }).(pulumi.StringPtrOutput)
 }
 
 // Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
@@ -47212,6 +47414,2238 @@ func (o WorkloadStatusResolvedImageImageManifestArrayOutput) Index(i pulumi.IntI
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadStatusResolvedImageImageManifest {
 		return vs[0].([]WorkloadStatusResolvedImageImageManifest)[vs[1].(int)]
 	}).(WorkloadStatusResolvedImageImageManifestOutput)
+}
+
+type WorkloadVm struct {
+	// SSH public keys injected at runtime via the guest agent or config drive.
+	AccessCredentials []WorkloadVmAccessCredential `pulumi:"accessCredentials"`
+	// Boot disk configuration. When `source` is omitted, `containers[0].image` is used as an OCI containerDisk.
+	BootDisk *WorkloadVmBootDisk `pulumi:"bootDisk"`
+	// Guest clock configuration.
+	Clock *WorkloadVmClock `pulumi:"clock"`
+	// Cloud-init configuration for the guest. Exactly one of `userData`, `userDataBase64`, or `userDataSecret` must be specified.
+	CloudInit *WorkloadVmCloudInit `pulumi:"cloudInit"`
+	// CPU topology visible to the guest. Cores are derived from `containers[0].cpu`.
+	Cpu *WorkloadVmCpu `pulumi:"cpu"`
+	// Firmware configuration for the guest.
+	Firmware *WorkloadVmFirmware `pulumi:"firmware"`
+	// Guest operating system family. Drives the per-OS cloud-init payload. Valid values: `linux`, `windows`. Default: `linux`.
+	GuestOs *string `pulumi:"guestOs"`
+	// Hostname reported to the guest.
+	Hostname *string `pulumi:"hostname"`
+	// Pod-network interfaces for the VM. Only a single network is supported.
+	Networks []WorkloadVmNetwork `pulumi:"networks"`
+	// KubeVirt RunStrategy. Use `Halted` to keep the pool defined but powered off. Valid values: `Always`, `RerunOnFailure`, `Manual`, `Halted`. Default: `Always`.
+	RunStrategy *string `pulumi:"runStrategy"`
+	// Subdomain used by the guest for replica-to-replica addressing.
+	Subdomain *string `pulumi:"subdomain"`
+}
+
+// WorkloadVmInput is an input type that accepts WorkloadVmArgs and WorkloadVmOutput values.
+// You can construct a concrete instance of `WorkloadVmInput` via:
+//
+//	WorkloadVmArgs{...}
+type WorkloadVmInput interface {
+	pulumi.Input
+
+	ToWorkloadVmOutput() WorkloadVmOutput
+	ToWorkloadVmOutputWithContext(context.Context) WorkloadVmOutput
+}
+
+type WorkloadVmArgs struct {
+	// SSH public keys injected at runtime via the guest agent or config drive.
+	AccessCredentials WorkloadVmAccessCredentialArrayInput `pulumi:"accessCredentials"`
+	// Boot disk configuration. When `source` is omitted, `containers[0].image` is used as an OCI containerDisk.
+	BootDisk WorkloadVmBootDiskPtrInput `pulumi:"bootDisk"`
+	// Guest clock configuration.
+	Clock WorkloadVmClockPtrInput `pulumi:"clock"`
+	// Cloud-init configuration for the guest. Exactly one of `userData`, `userDataBase64`, or `userDataSecret` must be specified.
+	CloudInit WorkloadVmCloudInitPtrInput `pulumi:"cloudInit"`
+	// CPU topology visible to the guest. Cores are derived from `containers[0].cpu`.
+	Cpu WorkloadVmCpuPtrInput `pulumi:"cpu"`
+	// Firmware configuration for the guest.
+	Firmware WorkloadVmFirmwarePtrInput `pulumi:"firmware"`
+	// Guest operating system family. Drives the per-OS cloud-init payload. Valid values: `linux`, `windows`. Default: `linux`.
+	GuestOs pulumi.StringPtrInput `pulumi:"guestOs"`
+	// Hostname reported to the guest.
+	Hostname pulumi.StringPtrInput `pulumi:"hostname"`
+	// Pod-network interfaces for the VM. Only a single network is supported.
+	Networks WorkloadVmNetworkArrayInput `pulumi:"networks"`
+	// KubeVirt RunStrategy. Use `Halted` to keep the pool defined but powered off. Valid values: `Always`, `RerunOnFailure`, `Manual`, `Halted`. Default: `Always`.
+	RunStrategy pulumi.StringPtrInput `pulumi:"runStrategy"`
+	// Subdomain used by the guest for replica-to-replica addressing.
+	Subdomain pulumi.StringPtrInput `pulumi:"subdomain"`
+}
+
+func (WorkloadVmArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVm)(nil)).Elem()
+}
+
+func (i WorkloadVmArgs) ToWorkloadVmOutput() WorkloadVmOutput {
+	return i.ToWorkloadVmOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmArgs) ToWorkloadVmOutputWithContext(ctx context.Context) WorkloadVmOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmOutput)
+}
+
+func (i WorkloadVmArgs) ToWorkloadVmPtrOutput() WorkloadVmPtrOutput {
+	return i.ToWorkloadVmPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmArgs) ToWorkloadVmPtrOutputWithContext(ctx context.Context) WorkloadVmPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmOutput).ToWorkloadVmPtrOutputWithContext(ctx)
+}
+
+// WorkloadVmPtrInput is an input type that accepts WorkloadVmArgs, WorkloadVmPtr and WorkloadVmPtrOutput values.
+// You can construct a concrete instance of `WorkloadVmPtrInput` via:
+//
+//	        WorkloadVmArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadVmPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadVmPtrOutput() WorkloadVmPtrOutput
+	ToWorkloadVmPtrOutputWithContext(context.Context) WorkloadVmPtrOutput
+}
+
+type workloadVmPtrType WorkloadVmArgs
+
+func WorkloadVmPtr(v *WorkloadVmArgs) WorkloadVmPtrInput {
+	return (*workloadVmPtrType)(v)
+}
+
+func (*workloadVmPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVm)(nil)).Elem()
+}
+
+func (i *workloadVmPtrType) ToWorkloadVmPtrOutput() WorkloadVmPtrOutput {
+	return i.ToWorkloadVmPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadVmPtrType) ToWorkloadVmPtrOutputWithContext(ctx context.Context) WorkloadVmPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmPtrOutput)
+}
+
+type WorkloadVmOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVm)(nil)).Elem()
+}
+
+func (o WorkloadVmOutput) ToWorkloadVmOutput() WorkloadVmOutput {
+	return o
+}
+
+func (o WorkloadVmOutput) ToWorkloadVmOutputWithContext(ctx context.Context) WorkloadVmOutput {
+	return o
+}
+
+func (o WorkloadVmOutput) ToWorkloadVmPtrOutput() WorkloadVmPtrOutput {
+	return o.ToWorkloadVmPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadVmOutput) ToWorkloadVmPtrOutputWithContext(ctx context.Context) WorkloadVmPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadVm) *WorkloadVm {
+		return &v
+	}).(WorkloadVmPtrOutput)
+}
+
+// SSH public keys injected at runtime via the guest agent or config drive.
+func (o WorkloadVmOutput) AccessCredentials() WorkloadVmAccessCredentialArrayOutput {
+	return o.ApplyT(func(v WorkloadVm) []WorkloadVmAccessCredential { return v.AccessCredentials }).(WorkloadVmAccessCredentialArrayOutput)
+}
+
+// Boot disk configuration. When `source` is omitted, `containers[0].image` is used as an OCI containerDisk.
+func (o WorkloadVmOutput) BootDisk() WorkloadVmBootDiskPtrOutput {
+	return o.ApplyT(func(v WorkloadVm) *WorkloadVmBootDisk { return v.BootDisk }).(WorkloadVmBootDiskPtrOutput)
+}
+
+// Guest clock configuration.
+func (o WorkloadVmOutput) Clock() WorkloadVmClockPtrOutput {
+	return o.ApplyT(func(v WorkloadVm) *WorkloadVmClock { return v.Clock }).(WorkloadVmClockPtrOutput)
+}
+
+// Cloud-init configuration for the guest. Exactly one of `userData`, `userDataBase64`, or `userDataSecret` must be specified.
+func (o WorkloadVmOutput) CloudInit() WorkloadVmCloudInitPtrOutput {
+	return o.ApplyT(func(v WorkloadVm) *WorkloadVmCloudInit { return v.CloudInit }).(WorkloadVmCloudInitPtrOutput)
+}
+
+// CPU topology visible to the guest. Cores are derived from `containers[0].cpu`.
+func (o WorkloadVmOutput) Cpu() WorkloadVmCpuPtrOutput {
+	return o.ApplyT(func(v WorkloadVm) *WorkloadVmCpu { return v.Cpu }).(WorkloadVmCpuPtrOutput)
+}
+
+// Firmware configuration for the guest.
+func (o WorkloadVmOutput) Firmware() WorkloadVmFirmwarePtrOutput {
+	return o.ApplyT(func(v WorkloadVm) *WorkloadVmFirmware { return v.Firmware }).(WorkloadVmFirmwarePtrOutput)
+}
+
+// Guest operating system family. Drives the per-OS cloud-init payload. Valid values: `linux`, `windows`. Default: `linux`.
+func (o WorkloadVmOutput) GuestOs() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVm) *string { return v.GuestOs }).(pulumi.StringPtrOutput)
+}
+
+// Hostname reported to the guest.
+func (o WorkloadVmOutput) Hostname() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVm) *string { return v.Hostname }).(pulumi.StringPtrOutput)
+}
+
+// Pod-network interfaces for the VM. Only a single network is supported.
+func (o WorkloadVmOutput) Networks() WorkloadVmNetworkArrayOutput {
+	return o.ApplyT(func(v WorkloadVm) []WorkloadVmNetwork { return v.Networks }).(WorkloadVmNetworkArrayOutput)
+}
+
+// KubeVirt RunStrategy. Use `Halted` to keep the pool defined but powered off. Valid values: `Always`, `RerunOnFailure`, `Manual`, `Halted`. Default: `Always`.
+func (o WorkloadVmOutput) RunStrategy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVm) *string { return v.RunStrategy }).(pulumi.StringPtrOutput)
+}
+
+// Subdomain used by the guest for replica-to-replica addressing.
+func (o WorkloadVmOutput) Subdomain() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVm) *string { return v.Subdomain }).(pulumi.StringPtrOutput)
+}
+
+type WorkloadVmPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVm)(nil)).Elem()
+}
+
+func (o WorkloadVmPtrOutput) ToWorkloadVmPtrOutput() WorkloadVmPtrOutput {
+	return o
+}
+
+func (o WorkloadVmPtrOutput) ToWorkloadVmPtrOutputWithContext(ctx context.Context) WorkloadVmPtrOutput {
+	return o
+}
+
+func (o WorkloadVmPtrOutput) Elem() WorkloadVmOutput {
+	return o.ApplyT(func(v *WorkloadVm) WorkloadVm {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadVm
+		return ret
+	}).(WorkloadVmOutput)
+}
+
+// SSH public keys injected at runtime via the guest agent or config drive.
+func (o WorkloadVmPtrOutput) AccessCredentials() WorkloadVmAccessCredentialArrayOutput {
+	return o.ApplyT(func(v *WorkloadVm) []WorkloadVmAccessCredential {
+		if v == nil {
+			return nil
+		}
+		return v.AccessCredentials
+	}).(WorkloadVmAccessCredentialArrayOutput)
+}
+
+// Boot disk configuration. When `source` is omitted, `containers[0].image` is used as an OCI containerDisk.
+func (o WorkloadVmPtrOutput) BootDisk() WorkloadVmBootDiskPtrOutput {
+	return o.ApplyT(func(v *WorkloadVm) *WorkloadVmBootDisk {
+		if v == nil {
+			return nil
+		}
+		return v.BootDisk
+	}).(WorkloadVmBootDiskPtrOutput)
+}
+
+// Guest clock configuration.
+func (o WorkloadVmPtrOutput) Clock() WorkloadVmClockPtrOutput {
+	return o.ApplyT(func(v *WorkloadVm) *WorkloadVmClock {
+		if v == nil {
+			return nil
+		}
+		return v.Clock
+	}).(WorkloadVmClockPtrOutput)
+}
+
+// Cloud-init configuration for the guest. Exactly one of `userData`, `userDataBase64`, or `userDataSecret` must be specified.
+func (o WorkloadVmPtrOutput) CloudInit() WorkloadVmCloudInitPtrOutput {
+	return o.ApplyT(func(v *WorkloadVm) *WorkloadVmCloudInit {
+		if v == nil {
+			return nil
+		}
+		return v.CloudInit
+	}).(WorkloadVmCloudInitPtrOutput)
+}
+
+// CPU topology visible to the guest. Cores are derived from `containers[0].cpu`.
+func (o WorkloadVmPtrOutput) Cpu() WorkloadVmCpuPtrOutput {
+	return o.ApplyT(func(v *WorkloadVm) *WorkloadVmCpu {
+		if v == nil {
+			return nil
+		}
+		return v.Cpu
+	}).(WorkloadVmCpuPtrOutput)
+}
+
+// Firmware configuration for the guest.
+func (o WorkloadVmPtrOutput) Firmware() WorkloadVmFirmwarePtrOutput {
+	return o.ApplyT(func(v *WorkloadVm) *WorkloadVmFirmware {
+		if v == nil {
+			return nil
+		}
+		return v.Firmware
+	}).(WorkloadVmFirmwarePtrOutput)
+}
+
+// Guest operating system family. Drives the per-OS cloud-init payload. Valid values: `linux`, `windows`. Default: `linux`.
+func (o WorkloadVmPtrOutput) GuestOs() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVm) *string {
+		if v == nil {
+			return nil
+		}
+		return v.GuestOs
+	}).(pulumi.StringPtrOutput)
+}
+
+// Hostname reported to the guest.
+func (o WorkloadVmPtrOutput) Hostname() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVm) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Hostname
+	}).(pulumi.StringPtrOutput)
+}
+
+// Pod-network interfaces for the VM. Only a single network is supported.
+func (o WorkloadVmPtrOutput) Networks() WorkloadVmNetworkArrayOutput {
+	return o.ApplyT(func(v *WorkloadVm) []WorkloadVmNetwork {
+		if v == nil {
+			return nil
+		}
+		return v.Networks
+	}).(WorkloadVmNetworkArrayOutput)
+}
+
+// KubeVirt RunStrategy. Use `Halted` to keep the pool defined but powered off. Valid values: `Always`, `RerunOnFailure`, `Manual`, `Halted`. Default: `Always`.
+func (o WorkloadVmPtrOutput) RunStrategy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVm) *string {
+		if v == nil {
+			return nil
+		}
+		return v.RunStrategy
+	}).(pulumi.StringPtrOutput)
+}
+
+// Subdomain used by the guest for replica-to-replica addressing.
+func (o WorkloadVmPtrOutput) Subdomain() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVm) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Subdomain
+	}).(pulumi.StringPtrOutput)
+}
+
+type WorkloadVmAccessCredential struct {
+	// Delivery method for the access credential. Valid values: `qemuGuestAgent`, `configDrive`. Default: `qemuGuestAgent`.
+	DeliveryMethod *string `pulumi:"deliveryMethod"`
+	// Secret containing the SSH public keys to inject.
+	SshPublicKeySecret string `pulumi:"sshPublicKeySecret"`
+	// Guest OS users the SSH public keys are injected for.
+	Users []string `pulumi:"users"`
+}
+
+// WorkloadVmAccessCredentialInput is an input type that accepts WorkloadVmAccessCredentialArgs and WorkloadVmAccessCredentialOutput values.
+// You can construct a concrete instance of `WorkloadVmAccessCredentialInput` via:
+//
+//	WorkloadVmAccessCredentialArgs{...}
+type WorkloadVmAccessCredentialInput interface {
+	pulumi.Input
+
+	ToWorkloadVmAccessCredentialOutput() WorkloadVmAccessCredentialOutput
+	ToWorkloadVmAccessCredentialOutputWithContext(context.Context) WorkloadVmAccessCredentialOutput
+}
+
+type WorkloadVmAccessCredentialArgs struct {
+	// Delivery method for the access credential. Valid values: `qemuGuestAgent`, `configDrive`. Default: `qemuGuestAgent`.
+	DeliveryMethod pulumi.StringPtrInput `pulumi:"deliveryMethod"`
+	// Secret containing the SSH public keys to inject.
+	SshPublicKeySecret pulumi.StringInput `pulumi:"sshPublicKeySecret"`
+	// Guest OS users the SSH public keys are injected for.
+	Users pulumi.StringArrayInput `pulumi:"users"`
+}
+
+func (WorkloadVmAccessCredentialArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmAccessCredential)(nil)).Elem()
+}
+
+func (i WorkloadVmAccessCredentialArgs) ToWorkloadVmAccessCredentialOutput() WorkloadVmAccessCredentialOutput {
+	return i.ToWorkloadVmAccessCredentialOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmAccessCredentialArgs) ToWorkloadVmAccessCredentialOutputWithContext(ctx context.Context) WorkloadVmAccessCredentialOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmAccessCredentialOutput)
+}
+
+// WorkloadVmAccessCredentialArrayInput is an input type that accepts WorkloadVmAccessCredentialArray and WorkloadVmAccessCredentialArrayOutput values.
+// You can construct a concrete instance of `WorkloadVmAccessCredentialArrayInput` via:
+//
+//	WorkloadVmAccessCredentialArray{ WorkloadVmAccessCredentialArgs{...} }
+type WorkloadVmAccessCredentialArrayInput interface {
+	pulumi.Input
+
+	ToWorkloadVmAccessCredentialArrayOutput() WorkloadVmAccessCredentialArrayOutput
+	ToWorkloadVmAccessCredentialArrayOutputWithContext(context.Context) WorkloadVmAccessCredentialArrayOutput
+}
+
+type WorkloadVmAccessCredentialArray []WorkloadVmAccessCredentialInput
+
+func (WorkloadVmAccessCredentialArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadVmAccessCredential)(nil)).Elem()
+}
+
+func (i WorkloadVmAccessCredentialArray) ToWorkloadVmAccessCredentialArrayOutput() WorkloadVmAccessCredentialArrayOutput {
+	return i.ToWorkloadVmAccessCredentialArrayOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmAccessCredentialArray) ToWorkloadVmAccessCredentialArrayOutputWithContext(ctx context.Context) WorkloadVmAccessCredentialArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmAccessCredentialArrayOutput)
+}
+
+type WorkloadVmAccessCredentialOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmAccessCredentialOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmAccessCredential)(nil)).Elem()
+}
+
+func (o WorkloadVmAccessCredentialOutput) ToWorkloadVmAccessCredentialOutput() WorkloadVmAccessCredentialOutput {
+	return o
+}
+
+func (o WorkloadVmAccessCredentialOutput) ToWorkloadVmAccessCredentialOutputWithContext(ctx context.Context) WorkloadVmAccessCredentialOutput {
+	return o
+}
+
+// Delivery method for the access credential. Valid values: `qemuGuestAgent`, `configDrive`. Default: `qemuGuestAgent`.
+func (o WorkloadVmAccessCredentialOutput) DeliveryMethod() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVmAccessCredential) *string { return v.DeliveryMethod }).(pulumi.StringPtrOutput)
+}
+
+// Secret containing the SSH public keys to inject.
+func (o WorkloadVmAccessCredentialOutput) SshPublicKeySecret() pulumi.StringOutput {
+	return o.ApplyT(func(v WorkloadVmAccessCredential) string { return v.SshPublicKeySecret }).(pulumi.StringOutput)
+}
+
+// Guest OS users the SSH public keys are injected for.
+func (o WorkloadVmAccessCredentialOutput) Users() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v WorkloadVmAccessCredential) []string { return v.Users }).(pulumi.StringArrayOutput)
+}
+
+type WorkloadVmAccessCredentialArrayOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmAccessCredentialArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadVmAccessCredential)(nil)).Elem()
+}
+
+func (o WorkloadVmAccessCredentialArrayOutput) ToWorkloadVmAccessCredentialArrayOutput() WorkloadVmAccessCredentialArrayOutput {
+	return o
+}
+
+func (o WorkloadVmAccessCredentialArrayOutput) ToWorkloadVmAccessCredentialArrayOutputWithContext(ctx context.Context) WorkloadVmAccessCredentialArrayOutput {
+	return o
+}
+
+func (o WorkloadVmAccessCredentialArrayOutput) Index(i pulumi.IntInput) WorkloadVmAccessCredentialOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadVmAccessCredential {
+		return vs[0].([]WorkloadVmAccessCredential)[vs[1].(int)]
+	}).(WorkloadVmAccessCredentialOutput)
+}
+
+type WorkloadVmBootDisk struct {
+	// Boot order of the boot disk. Valid values: `1` - `16`. Default: `1`.
+	BootOrder *int `pulumi:"bootOrder"`
+	// Disk bus exposed to the guest. Valid values: `virtio`, `sata`, `scsi`. Default: `virtio`.
+	Bus *string `pulumi:"bus"`
+	// Per-replica boot PVC populated via CDI. Required for any non-OCI source.
+	Persist *WorkloadVmBootDiskPersist `pulumi:"persist"`
+	// Boot disk image source. Exactly one of `oci` or `http` must be specified.
+	Source *WorkloadVmBootDiskSource `pulumi:"source"`
+}
+
+// WorkloadVmBootDiskInput is an input type that accepts WorkloadVmBootDiskArgs and WorkloadVmBootDiskOutput values.
+// You can construct a concrete instance of `WorkloadVmBootDiskInput` via:
+//
+//	WorkloadVmBootDiskArgs{...}
+type WorkloadVmBootDiskInput interface {
+	pulumi.Input
+
+	ToWorkloadVmBootDiskOutput() WorkloadVmBootDiskOutput
+	ToWorkloadVmBootDiskOutputWithContext(context.Context) WorkloadVmBootDiskOutput
+}
+
+type WorkloadVmBootDiskArgs struct {
+	// Boot order of the boot disk. Valid values: `1` - `16`. Default: `1`.
+	BootOrder pulumi.IntPtrInput `pulumi:"bootOrder"`
+	// Disk bus exposed to the guest. Valid values: `virtio`, `sata`, `scsi`. Default: `virtio`.
+	Bus pulumi.StringPtrInput `pulumi:"bus"`
+	// Per-replica boot PVC populated via CDI. Required for any non-OCI source.
+	Persist WorkloadVmBootDiskPersistPtrInput `pulumi:"persist"`
+	// Boot disk image source. Exactly one of `oci` or `http` must be specified.
+	Source WorkloadVmBootDiskSourcePtrInput `pulumi:"source"`
+}
+
+func (WorkloadVmBootDiskArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmBootDisk)(nil)).Elem()
+}
+
+func (i WorkloadVmBootDiskArgs) ToWorkloadVmBootDiskOutput() WorkloadVmBootDiskOutput {
+	return i.ToWorkloadVmBootDiskOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmBootDiskArgs) ToWorkloadVmBootDiskOutputWithContext(ctx context.Context) WorkloadVmBootDiskOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmBootDiskOutput)
+}
+
+func (i WorkloadVmBootDiskArgs) ToWorkloadVmBootDiskPtrOutput() WorkloadVmBootDiskPtrOutput {
+	return i.ToWorkloadVmBootDiskPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmBootDiskArgs) ToWorkloadVmBootDiskPtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmBootDiskOutput).ToWorkloadVmBootDiskPtrOutputWithContext(ctx)
+}
+
+// WorkloadVmBootDiskPtrInput is an input type that accepts WorkloadVmBootDiskArgs, WorkloadVmBootDiskPtr and WorkloadVmBootDiskPtrOutput values.
+// You can construct a concrete instance of `WorkloadVmBootDiskPtrInput` via:
+//
+//	        WorkloadVmBootDiskArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadVmBootDiskPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadVmBootDiskPtrOutput() WorkloadVmBootDiskPtrOutput
+	ToWorkloadVmBootDiskPtrOutputWithContext(context.Context) WorkloadVmBootDiskPtrOutput
+}
+
+type workloadVmBootDiskPtrType WorkloadVmBootDiskArgs
+
+func WorkloadVmBootDiskPtr(v *WorkloadVmBootDiskArgs) WorkloadVmBootDiskPtrInput {
+	return (*workloadVmBootDiskPtrType)(v)
+}
+
+func (*workloadVmBootDiskPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmBootDisk)(nil)).Elem()
+}
+
+func (i *workloadVmBootDiskPtrType) ToWorkloadVmBootDiskPtrOutput() WorkloadVmBootDiskPtrOutput {
+	return i.ToWorkloadVmBootDiskPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadVmBootDiskPtrType) ToWorkloadVmBootDiskPtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmBootDiskPtrOutput)
+}
+
+type WorkloadVmBootDiskOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmBootDiskOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmBootDisk)(nil)).Elem()
+}
+
+func (o WorkloadVmBootDiskOutput) ToWorkloadVmBootDiskOutput() WorkloadVmBootDiskOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskOutput) ToWorkloadVmBootDiskOutputWithContext(ctx context.Context) WorkloadVmBootDiskOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskOutput) ToWorkloadVmBootDiskPtrOutput() WorkloadVmBootDiskPtrOutput {
+	return o.ToWorkloadVmBootDiskPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadVmBootDiskOutput) ToWorkloadVmBootDiskPtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadVmBootDisk) *WorkloadVmBootDisk {
+		return &v
+	}).(WorkloadVmBootDiskPtrOutput)
+}
+
+// Boot order of the boot disk. Valid values: `1` - `16`. Default: `1`.
+func (o WorkloadVmBootDiskOutput) BootOrder() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadVmBootDisk) *int { return v.BootOrder }).(pulumi.IntPtrOutput)
+}
+
+// Disk bus exposed to the guest. Valid values: `virtio`, `sata`, `scsi`. Default: `virtio`.
+func (o WorkloadVmBootDiskOutput) Bus() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVmBootDisk) *string { return v.Bus }).(pulumi.StringPtrOutput)
+}
+
+// Per-replica boot PVC populated via CDI. Required for any non-OCI source.
+func (o WorkloadVmBootDiskOutput) Persist() WorkloadVmBootDiskPersistPtrOutput {
+	return o.ApplyT(func(v WorkloadVmBootDisk) *WorkloadVmBootDiskPersist { return v.Persist }).(WorkloadVmBootDiskPersistPtrOutput)
+}
+
+// Boot disk image source. Exactly one of `oci` or `http` must be specified.
+func (o WorkloadVmBootDiskOutput) Source() WorkloadVmBootDiskSourcePtrOutput {
+	return o.ApplyT(func(v WorkloadVmBootDisk) *WorkloadVmBootDiskSource { return v.Source }).(WorkloadVmBootDiskSourcePtrOutput)
+}
+
+type WorkloadVmBootDiskPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmBootDiskPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmBootDisk)(nil)).Elem()
+}
+
+func (o WorkloadVmBootDiskPtrOutput) ToWorkloadVmBootDiskPtrOutput() WorkloadVmBootDiskPtrOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskPtrOutput) ToWorkloadVmBootDiskPtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskPtrOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskPtrOutput) Elem() WorkloadVmBootDiskOutput {
+	return o.ApplyT(func(v *WorkloadVmBootDisk) WorkloadVmBootDisk {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadVmBootDisk
+		return ret
+	}).(WorkloadVmBootDiskOutput)
+}
+
+// Boot order of the boot disk. Valid values: `1` - `16`. Default: `1`.
+func (o WorkloadVmBootDiskPtrOutput) BootOrder() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmBootDisk) *int {
+		if v == nil {
+			return nil
+		}
+		return v.BootOrder
+	}).(pulumi.IntPtrOutput)
+}
+
+// Disk bus exposed to the guest. Valid values: `virtio`, `sata`, `scsi`. Default: `virtio`.
+func (o WorkloadVmBootDiskPtrOutput) Bus() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmBootDisk) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Bus
+	}).(pulumi.StringPtrOutput)
+}
+
+// Per-replica boot PVC populated via CDI. Required for any non-OCI source.
+func (o WorkloadVmBootDiskPtrOutput) Persist() WorkloadVmBootDiskPersistPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmBootDisk) *WorkloadVmBootDiskPersist {
+		if v == nil {
+			return nil
+		}
+		return v.Persist
+	}).(WorkloadVmBootDiskPersistPtrOutput)
+}
+
+// Boot disk image source. Exactly one of `oci` or `http` must be specified.
+func (o WorkloadVmBootDiskPtrOutput) Source() WorkloadVmBootDiskSourcePtrOutput {
+	return o.ApplyT(func(v *WorkloadVmBootDisk) *WorkloadVmBootDiskSource {
+		if v == nil {
+			return nil
+		}
+		return v.Source
+	}).(WorkloadVmBootDiskSourcePtrOutput)
+}
+
+type WorkloadVmBootDiskPersist struct {
+	// VolumeSet URI used to provision one PVC per replica for the boot disk. Format: `cpln://volumeset/<name>`.
+	VolumeSet string `pulumi:"volumeSet"`
+}
+
+// WorkloadVmBootDiskPersistInput is an input type that accepts WorkloadVmBootDiskPersistArgs and WorkloadVmBootDiskPersistOutput values.
+// You can construct a concrete instance of `WorkloadVmBootDiskPersistInput` via:
+//
+//	WorkloadVmBootDiskPersistArgs{...}
+type WorkloadVmBootDiskPersistInput interface {
+	pulumi.Input
+
+	ToWorkloadVmBootDiskPersistOutput() WorkloadVmBootDiskPersistOutput
+	ToWorkloadVmBootDiskPersistOutputWithContext(context.Context) WorkloadVmBootDiskPersistOutput
+}
+
+type WorkloadVmBootDiskPersistArgs struct {
+	// VolumeSet URI used to provision one PVC per replica for the boot disk. Format: `cpln://volumeset/<name>`.
+	VolumeSet pulumi.StringInput `pulumi:"volumeSet"`
+}
+
+func (WorkloadVmBootDiskPersistArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmBootDiskPersist)(nil)).Elem()
+}
+
+func (i WorkloadVmBootDiskPersistArgs) ToWorkloadVmBootDiskPersistOutput() WorkloadVmBootDiskPersistOutput {
+	return i.ToWorkloadVmBootDiskPersistOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmBootDiskPersistArgs) ToWorkloadVmBootDiskPersistOutputWithContext(ctx context.Context) WorkloadVmBootDiskPersistOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmBootDiskPersistOutput)
+}
+
+func (i WorkloadVmBootDiskPersistArgs) ToWorkloadVmBootDiskPersistPtrOutput() WorkloadVmBootDiskPersistPtrOutput {
+	return i.ToWorkloadVmBootDiskPersistPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmBootDiskPersistArgs) ToWorkloadVmBootDiskPersistPtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskPersistPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmBootDiskPersistOutput).ToWorkloadVmBootDiskPersistPtrOutputWithContext(ctx)
+}
+
+// WorkloadVmBootDiskPersistPtrInput is an input type that accepts WorkloadVmBootDiskPersistArgs, WorkloadVmBootDiskPersistPtr and WorkloadVmBootDiskPersistPtrOutput values.
+// You can construct a concrete instance of `WorkloadVmBootDiskPersistPtrInput` via:
+//
+//	        WorkloadVmBootDiskPersistArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadVmBootDiskPersistPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadVmBootDiskPersistPtrOutput() WorkloadVmBootDiskPersistPtrOutput
+	ToWorkloadVmBootDiskPersistPtrOutputWithContext(context.Context) WorkloadVmBootDiskPersistPtrOutput
+}
+
+type workloadVmBootDiskPersistPtrType WorkloadVmBootDiskPersistArgs
+
+func WorkloadVmBootDiskPersistPtr(v *WorkloadVmBootDiskPersistArgs) WorkloadVmBootDiskPersistPtrInput {
+	return (*workloadVmBootDiskPersistPtrType)(v)
+}
+
+func (*workloadVmBootDiskPersistPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmBootDiskPersist)(nil)).Elem()
+}
+
+func (i *workloadVmBootDiskPersistPtrType) ToWorkloadVmBootDiskPersistPtrOutput() WorkloadVmBootDiskPersistPtrOutput {
+	return i.ToWorkloadVmBootDiskPersistPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadVmBootDiskPersistPtrType) ToWorkloadVmBootDiskPersistPtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskPersistPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmBootDiskPersistPtrOutput)
+}
+
+type WorkloadVmBootDiskPersistOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmBootDiskPersistOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmBootDiskPersist)(nil)).Elem()
+}
+
+func (o WorkloadVmBootDiskPersistOutput) ToWorkloadVmBootDiskPersistOutput() WorkloadVmBootDiskPersistOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskPersistOutput) ToWorkloadVmBootDiskPersistOutputWithContext(ctx context.Context) WorkloadVmBootDiskPersistOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskPersistOutput) ToWorkloadVmBootDiskPersistPtrOutput() WorkloadVmBootDiskPersistPtrOutput {
+	return o.ToWorkloadVmBootDiskPersistPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadVmBootDiskPersistOutput) ToWorkloadVmBootDiskPersistPtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskPersistPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadVmBootDiskPersist) *WorkloadVmBootDiskPersist {
+		return &v
+	}).(WorkloadVmBootDiskPersistPtrOutput)
+}
+
+// VolumeSet URI used to provision one PVC per replica for the boot disk. Format: `cpln://volumeset/<name>`.
+func (o WorkloadVmBootDiskPersistOutput) VolumeSet() pulumi.StringOutput {
+	return o.ApplyT(func(v WorkloadVmBootDiskPersist) string { return v.VolumeSet }).(pulumi.StringOutput)
+}
+
+type WorkloadVmBootDiskPersistPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmBootDiskPersistPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmBootDiskPersist)(nil)).Elem()
+}
+
+func (o WorkloadVmBootDiskPersistPtrOutput) ToWorkloadVmBootDiskPersistPtrOutput() WorkloadVmBootDiskPersistPtrOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskPersistPtrOutput) ToWorkloadVmBootDiskPersistPtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskPersistPtrOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskPersistPtrOutput) Elem() WorkloadVmBootDiskPersistOutput {
+	return o.ApplyT(func(v *WorkloadVmBootDiskPersist) WorkloadVmBootDiskPersist {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadVmBootDiskPersist
+		return ret
+	}).(WorkloadVmBootDiskPersistOutput)
+}
+
+// VolumeSet URI used to provision one PVC per replica for the boot disk. Format: `cpln://volumeset/<name>`.
+func (o WorkloadVmBootDiskPersistPtrOutput) VolumeSet() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmBootDiskPersist) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.VolumeSet
+	}).(pulumi.StringPtrOutput)
+}
+
+type WorkloadVmBootDiskSource struct {
+	// Boot disk image fetched over HTTP/HTTPS. Requires `persist.volume_set`.
+	Http *WorkloadVmBootDiskSourceHttp `pulumi:"http"`
+	// Boot from an OCI containerDisk image.
+	Oci *WorkloadVmBootDiskSourceOci `pulumi:"oci"`
+}
+
+// WorkloadVmBootDiskSourceInput is an input type that accepts WorkloadVmBootDiskSourceArgs and WorkloadVmBootDiskSourceOutput values.
+// You can construct a concrete instance of `WorkloadVmBootDiskSourceInput` via:
+//
+//	WorkloadVmBootDiskSourceArgs{...}
+type WorkloadVmBootDiskSourceInput interface {
+	pulumi.Input
+
+	ToWorkloadVmBootDiskSourceOutput() WorkloadVmBootDiskSourceOutput
+	ToWorkloadVmBootDiskSourceOutputWithContext(context.Context) WorkloadVmBootDiskSourceOutput
+}
+
+type WorkloadVmBootDiskSourceArgs struct {
+	// Boot disk image fetched over HTTP/HTTPS. Requires `persist.volume_set`.
+	Http WorkloadVmBootDiskSourceHttpPtrInput `pulumi:"http"`
+	// Boot from an OCI containerDisk image.
+	Oci WorkloadVmBootDiskSourceOciPtrInput `pulumi:"oci"`
+}
+
+func (WorkloadVmBootDiskSourceArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmBootDiskSource)(nil)).Elem()
+}
+
+func (i WorkloadVmBootDiskSourceArgs) ToWorkloadVmBootDiskSourceOutput() WorkloadVmBootDiskSourceOutput {
+	return i.ToWorkloadVmBootDiskSourceOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmBootDiskSourceArgs) ToWorkloadVmBootDiskSourceOutputWithContext(ctx context.Context) WorkloadVmBootDiskSourceOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmBootDiskSourceOutput)
+}
+
+func (i WorkloadVmBootDiskSourceArgs) ToWorkloadVmBootDiskSourcePtrOutput() WorkloadVmBootDiskSourcePtrOutput {
+	return i.ToWorkloadVmBootDiskSourcePtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmBootDiskSourceArgs) ToWorkloadVmBootDiskSourcePtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskSourcePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmBootDiskSourceOutput).ToWorkloadVmBootDiskSourcePtrOutputWithContext(ctx)
+}
+
+// WorkloadVmBootDiskSourcePtrInput is an input type that accepts WorkloadVmBootDiskSourceArgs, WorkloadVmBootDiskSourcePtr and WorkloadVmBootDiskSourcePtrOutput values.
+// You can construct a concrete instance of `WorkloadVmBootDiskSourcePtrInput` via:
+//
+//	        WorkloadVmBootDiskSourceArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadVmBootDiskSourcePtrInput interface {
+	pulumi.Input
+
+	ToWorkloadVmBootDiskSourcePtrOutput() WorkloadVmBootDiskSourcePtrOutput
+	ToWorkloadVmBootDiskSourcePtrOutputWithContext(context.Context) WorkloadVmBootDiskSourcePtrOutput
+}
+
+type workloadVmBootDiskSourcePtrType WorkloadVmBootDiskSourceArgs
+
+func WorkloadVmBootDiskSourcePtr(v *WorkloadVmBootDiskSourceArgs) WorkloadVmBootDiskSourcePtrInput {
+	return (*workloadVmBootDiskSourcePtrType)(v)
+}
+
+func (*workloadVmBootDiskSourcePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmBootDiskSource)(nil)).Elem()
+}
+
+func (i *workloadVmBootDiskSourcePtrType) ToWorkloadVmBootDiskSourcePtrOutput() WorkloadVmBootDiskSourcePtrOutput {
+	return i.ToWorkloadVmBootDiskSourcePtrOutputWithContext(context.Background())
+}
+
+func (i *workloadVmBootDiskSourcePtrType) ToWorkloadVmBootDiskSourcePtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskSourcePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmBootDiskSourcePtrOutput)
+}
+
+type WorkloadVmBootDiskSourceOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmBootDiskSourceOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmBootDiskSource)(nil)).Elem()
+}
+
+func (o WorkloadVmBootDiskSourceOutput) ToWorkloadVmBootDiskSourceOutput() WorkloadVmBootDiskSourceOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskSourceOutput) ToWorkloadVmBootDiskSourceOutputWithContext(ctx context.Context) WorkloadVmBootDiskSourceOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskSourceOutput) ToWorkloadVmBootDiskSourcePtrOutput() WorkloadVmBootDiskSourcePtrOutput {
+	return o.ToWorkloadVmBootDiskSourcePtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadVmBootDiskSourceOutput) ToWorkloadVmBootDiskSourcePtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskSourcePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadVmBootDiskSource) *WorkloadVmBootDiskSource {
+		return &v
+	}).(WorkloadVmBootDiskSourcePtrOutput)
+}
+
+// Boot disk image fetched over HTTP/HTTPS. Requires `persist.volume_set`.
+func (o WorkloadVmBootDiskSourceOutput) Http() WorkloadVmBootDiskSourceHttpPtrOutput {
+	return o.ApplyT(func(v WorkloadVmBootDiskSource) *WorkloadVmBootDiskSourceHttp { return v.Http }).(WorkloadVmBootDiskSourceHttpPtrOutput)
+}
+
+// Boot from an OCI containerDisk image.
+func (o WorkloadVmBootDiskSourceOutput) Oci() WorkloadVmBootDiskSourceOciPtrOutput {
+	return o.ApplyT(func(v WorkloadVmBootDiskSource) *WorkloadVmBootDiskSourceOci { return v.Oci }).(WorkloadVmBootDiskSourceOciPtrOutput)
+}
+
+type WorkloadVmBootDiskSourcePtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmBootDiskSourcePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmBootDiskSource)(nil)).Elem()
+}
+
+func (o WorkloadVmBootDiskSourcePtrOutput) ToWorkloadVmBootDiskSourcePtrOutput() WorkloadVmBootDiskSourcePtrOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskSourcePtrOutput) ToWorkloadVmBootDiskSourcePtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskSourcePtrOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskSourcePtrOutput) Elem() WorkloadVmBootDiskSourceOutput {
+	return o.ApplyT(func(v *WorkloadVmBootDiskSource) WorkloadVmBootDiskSource {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadVmBootDiskSource
+		return ret
+	}).(WorkloadVmBootDiskSourceOutput)
+}
+
+// Boot disk image fetched over HTTP/HTTPS. Requires `persist.volume_set`.
+func (o WorkloadVmBootDiskSourcePtrOutput) Http() WorkloadVmBootDiskSourceHttpPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmBootDiskSource) *WorkloadVmBootDiskSourceHttp {
+		if v == nil {
+			return nil
+		}
+		return v.Http
+	}).(WorkloadVmBootDiskSourceHttpPtrOutput)
+}
+
+// Boot from an OCI containerDisk image.
+func (o WorkloadVmBootDiskSourcePtrOutput) Oci() WorkloadVmBootDiskSourceOciPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmBootDiskSource) *WorkloadVmBootDiskSourceOci {
+		if v == nil {
+			return nil
+		}
+		return v.Oci
+	}).(WorkloadVmBootDiskSourceOciPtrOutput)
+}
+
+type WorkloadVmBootDiskSourceHttp struct {
+	// Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+	Checksum *string `pulumi:"checksum"`
+	// HTTP/HTTPS URL of the boot disk image.
+	Url string `pulumi:"url"`
+}
+
+// WorkloadVmBootDiskSourceHttpInput is an input type that accepts WorkloadVmBootDiskSourceHttpArgs and WorkloadVmBootDiskSourceHttpOutput values.
+// You can construct a concrete instance of `WorkloadVmBootDiskSourceHttpInput` via:
+//
+//	WorkloadVmBootDiskSourceHttpArgs{...}
+type WorkloadVmBootDiskSourceHttpInput interface {
+	pulumi.Input
+
+	ToWorkloadVmBootDiskSourceHttpOutput() WorkloadVmBootDiskSourceHttpOutput
+	ToWorkloadVmBootDiskSourceHttpOutputWithContext(context.Context) WorkloadVmBootDiskSourceHttpOutput
+}
+
+type WorkloadVmBootDiskSourceHttpArgs struct {
+	// Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+	Checksum pulumi.StringPtrInput `pulumi:"checksum"`
+	// HTTP/HTTPS URL of the boot disk image.
+	Url pulumi.StringInput `pulumi:"url"`
+}
+
+func (WorkloadVmBootDiskSourceHttpArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmBootDiskSourceHttp)(nil)).Elem()
+}
+
+func (i WorkloadVmBootDiskSourceHttpArgs) ToWorkloadVmBootDiskSourceHttpOutput() WorkloadVmBootDiskSourceHttpOutput {
+	return i.ToWorkloadVmBootDiskSourceHttpOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmBootDiskSourceHttpArgs) ToWorkloadVmBootDiskSourceHttpOutputWithContext(ctx context.Context) WorkloadVmBootDiskSourceHttpOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmBootDiskSourceHttpOutput)
+}
+
+func (i WorkloadVmBootDiskSourceHttpArgs) ToWorkloadVmBootDiskSourceHttpPtrOutput() WorkloadVmBootDiskSourceHttpPtrOutput {
+	return i.ToWorkloadVmBootDiskSourceHttpPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmBootDiskSourceHttpArgs) ToWorkloadVmBootDiskSourceHttpPtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskSourceHttpPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmBootDiskSourceHttpOutput).ToWorkloadVmBootDiskSourceHttpPtrOutputWithContext(ctx)
+}
+
+// WorkloadVmBootDiskSourceHttpPtrInput is an input type that accepts WorkloadVmBootDiskSourceHttpArgs, WorkloadVmBootDiskSourceHttpPtr and WorkloadVmBootDiskSourceHttpPtrOutput values.
+// You can construct a concrete instance of `WorkloadVmBootDiskSourceHttpPtrInput` via:
+//
+//	        WorkloadVmBootDiskSourceHttpArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadVmBootDiskSourceHttpPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadVmBootDiskSourceHttpPtrOutput() WorkloadVmBootDiskSourceHttpPtrOutput
+	ToWorkloadVmBootDiskSourceHttpPtrOutputWithContext(context.Context) WorkloadVmBootDiskSourceHttpPtrOutput
+}
+
+type workloadVmBootDiskSourceHttpPtrType WorkloadVmBootDiskSourceHttpArgs
+
+func WorkloadVmBootDiskSourceHttpPtr(v *WorkloadVmBootDiskSourceHttpArgs) WorkloadVmBootDiskSourceHttpPtrInput {
+	return (*workloadVmBootDiskSourceHttpPtrType)(v)
+}
+
+func (*workloadVmBootDiskSourceHttpPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmBootDiskSourceHttp)(nil)).Elem()
+}
+
+func (i *workloadVmBootDiskSourceHttpPtrType) ToWorkloadVmBootDiskSourceHttpPtrOutput() WorkloadVmBootDiskSourceHttpPtrOutput {
+	return i.ToWorkloadVmBootDiskSourceHttpPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadVmBootDiskSourceHttpPtrType) ToWorkloadVmBootDiskSourceHttpPtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskSourceHttpPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmBootDiskSourceHttpPtrOutput)
+}
+
+type WorkloadVmBootDiskSourceHttpOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmBootDiskSourceHttpOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmBootDiskSourceHttp)(nil)).Elem()
+}
+
+func (o WorkloadVmBootDiskSourceHttpOutput) ToWorkloadVmBootDiskSourceHttpOutput() WorkloadVmBootDiskSourceHttpOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskSourceHttpOutput) ToWorkloadVmBootDiskSourceHttpOutputWithContext(ctx context.Context) WorkloadVmBootDiskSourceHttpOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskSourceHttpOutput) ToWorkloadVmBootDiskSourceHttpPtrOutput() WorkloadVmBootDiskSourceHttpPtrOutput {
+	return o.ToWorkloadVmBootDiskSourceHttpPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadVmBootDiskSourceHttpOutput) ToWorkloadVmBootDiskSourceHttpPtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskSourceHttpPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadVmBootDiskSourceHttp) *WorkloadVmBootDiskSourceHttp {
+		return &v
+	}).(WorkloadVmBootDiskSourceHttpPtrOutput)
+}
+
+// Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+func (o WorkloadVmBootDiskSourceHttpOutput) Checksum() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVmBootDiskSourceHttp) *string { return v.Checksum }).(pulumi.StringPtrOutput)
+}
+
+// HTTP/HTTPS URL of the boot disk image.
+func (o WorkloadVmBootDiskSourceHttpOutput) Url() pulumi.StringOutput {
+	return o.ApplyT(func(v WorkloadVmBootDiskSourceHttp) string { return v.Url }).(pulumi.StringOutput)
+}
+
+type WorkloadVmBootDiskSourceHttpPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmBootDiskSourceHttpPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmBootDiskSourceHttp)(nil)).Elem()
+}
+
+func (o WorkloadVmBootDiskSourceHttpPtrOutput) ToWorkloadVmBootDiskSourceHttpPtrOutput() WorkloadVmBootDiskSourceHttpPtrOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskSourceHttpPtrOutput) ToWorkloadVmBootDiskSourceHttpPtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskSourceHttpPtrOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskSourceHttpPtrOutput) Elem() WorkloadVmBootDiskSourceHttpOutput {
+	return o.ApplyT(func(v *WorkloadVmBootDiskSourceHttp) WorkloadVmBootDiskSourceHttp {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadVmBootDiskSourceHttp
+		return ret
+	}).(WorkloadVmBootDiskSourceHttpOutput)
+}
+
+// Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+func (o WorkloadVmBootDiskSourceHttpPtrOutput) Checksum() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmBootDiskSourceHttp) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Checksum
+	}).(pulumi.StringPtrOutput)
+}
+
+// HTTP/HTTPS URL of the boot disk image.
+func (o WorkloadVmBootDiskSourceHttpPtrOutput) Url() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmBootDiskSourceHttp) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Url
+	}).(pulumi.StringPtrOutput)
+}
+
+type WorkloadVmBootDiskSourceOci struct {
+	// Full image reference of a containerDisk (e.g., `quay.io/containerdisks/ubuntu:22.04` or `/org/<org>/image/<name>:<tag>`).
+	Image string `pulumi:"image"`
+}
+
+// WorkloadVmBootDiskSourceOciInput is an input type that accepts WorkloadVmBootDiskSourceOciArgs and WorkloadVmBootDiskSourceOciOutput values.
+// You can construct a concrete instance of `WorkloadVmBootDiskSourceOciInput` via:
+//
+//	WorkloadVmBootDiskSourceOciArgs{...}
+type WorkloadVmBootDiskSourceOciInput interface {
+	pulumi.Input
+
+	ToWorkloadVmBootDiskSourceOciOutput() WorkloadVmBootDiskSourceOciOutput
+	ToWorkloadVmBootDiskSourceOciOutputWithContext(context.Context) WorkloadVmBootDiskSourceOciOutput
+}
+
+type WorkloadVmBootDiskSourceOciArgs struct {
+	// Full image reference of a containerDisk (e.g., `quay.io/containerdisks/ubuntu:22.04` or `/org/<org>/image/<name>:<tag>`).
+	Image pulumi.StringInput `pulumi:"image"`
+}
+
+func (WorkloadVmBootDiskSourceOciArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmBootDiskSourceOci)(nil)).Elem()
+}
+
+func (i WorkloadVmBootDiskSourceOciArgs) ToWorkloadVmBootDiskSourceOciOutput() WorkloadVmBootDiskSourceOciOutput {
+	return i.ToWorkloadVmBootDiskSourceOciOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmBootDiskSourceOciArgs) ToWorkloadVmBootDiskSourceOciOutputWithContext(ctx context.Context) WorkloadVmBootDiskSourceOciOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmBootDiskSourceOciOutput)
+}
+
+func (i WorkloadVmBootDiskSourceOciArgs) ToWorkloadVmBootDiskSourceOciPtrOutput() WorkloadVmBootDiskSourceOciPtrOutput {
+	return i.ToWorkloadVmBootDiskSourceOciPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmBootDiskSourceOciArgs) ToWorkloadVmBootDiskSourceOciPtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskSourceOciPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmBootDiskSourceOciOutput).ToWorkloadVmBootDiskSourceOciPtrOutputWithContext(ctx)
+}
+
+// WorkloadVmBootDiskSourceOciPtrInput is an input type that accepts WorkloadVmBootDiskSourceOciArgs, WorkloadVmBootDiskSourceOciPtr and WorkloadVmBootDiskSourceOciPtrOutput values.
+// You can construct a concrete instance of `WorkloadVmBootDiskSourceOciPtrInput` via:
+//
+//	        WorkloadVmBootDiskSourceOciArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadVmBootDiskSourceOciPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadVmBootDiskSourceOciPtrOutput() WorkloadVmBootDiskSourceOciPtrOutput
+	ToWorkloadVmBootDiskSourceOciPtrOutputWithContext(context.Context) WorkloadVmBootDiskSourceOciPtrOutput
+}
+
+type workloadVmBootDiskSourceOciPtrType WorkloadVmBootDiskSourceOciArgs
+
+func WorkloadVmBootDiskSourceOciPtr(v *WorkloadVmBootDiskSourceOciArgs) WorkloadVmBootDiskSourceOciPtrInput {
+	return (*workloadVmBootDiskSourceOciPtrType)(v)
+}
+
+func (*workloadVmBootDiskSourceOciPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmBootDiskSourceOci)(nil)).Elem()
+}
+
+func (i *workloadVmBootDiskSourceOciPtrType) ToWorkloadVmBootDiskSourceOciPtrOutput() WorkloadVmBootDiskSourceOciPtrOutput {
+	return i.ToWorkloadVmBootDiskSourceOciPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadVmBootDiskSourceOciPtrType) ToWorkloadVmBootDiskSourceOciPtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskSourceOciPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmBootDiskSourceOciPtrOutput)
+}
+
+type WorkloadVmBootDiskSourceOciOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmBootDiskSourceOciOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmBootDiskSourceOci)(nil)).Elem()
+}
+
+func (o WorkloadVmBootDiskSourceOciOutput) ToWorkloadVmBootDiskSourceOciOutput() WorkloadVmBootDiskSourceOciOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskSourceOciOutput) ToWorkloadVmBootDiskSourceOciOutputWithContext(ctx context.Context) WorkloadVmBootDiskSourceOciOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskSourceOciOutput) ToWorkloadVmBootDiskSourceOciPtrOutput() WorkloadVmBootDiskSourceOciPtrOutput {
+	return o.ToWorkloadVmBootDiskSourceOciPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadVmBootDiskSourceOciOutput) ToWorkloadVmBootDiskSourceOciPtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskSourceOciPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadVmBootDiskSourceOci) *WorkloadVmBootDiskSourceOci {
+		return &v
+	}).(WorkloadVmBootDiskSourceOciPtrOutput)
+}
+
+// Full image reference of a containerDisk (e.g., `quay.io/containerdisks/ubuntu:22.04` or `/org/<org>/image/<name>:<tag>`).
+func (o WorkloadVmBootDiskSourceOciOutput) Image() pulumi.StringOutput {
+	return o.ApplyT(func(v WorkloadVmBootDiskSourceOci) string { return v.Image }).(pulumi.StringOutput)
+}
+
+type WorkloadVmBootDiskSourceOciPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmBootDiskSourceOciPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmBootDiskSourceOci)(nil)).Elem()
+}
+
+func (o WorkloadVmBootDiskSourceOciPtrOutput) ToWorkloadVmBootDiskSourceOciPtrOutput() WorkloadVmBootDiskSourceOciPtrOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskSourceOciPtrOutput) ToWorkloadVmBootDiskSourceOciPtrOutputWithContext(ctx context.Context) WorkloadVmBootDiskSourceOciPtrOutput {
+	return o
+}
+
+func (o WorkloadVmBootDiskSourceOciPtrOutput) Elem() WorkloadVmBootDiskSourceOciOutput {
+	return o.ApplyT(func(v *WorkloadVmBootDiskSourceOci) WorkloadVmBootDiskSourceOci {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadVmBootDiskSourceOci
+		return ret
+	}).(WorkloadVmBootDiskSourceOciOutput)
+}
+
+// Full image reference of a containerDisk (e.g., `quay.io/containerdisks/ubuntu:22.04` or `/org/<org>/image/<name>:<tag>`).
+func (o WorkloadVmBootDiskSourceOciPtrOutput) Image() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmBootDiskSourceOci) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Image
+	}).(pulumi.StringPtrOutput)
+}
+
+type WorkloadVmClock struct {
+	// Guest timezone. Default: `UTC`.
+	Timezone *string `pulumi:"timezone"`
+}
+
+// WorkloadVmClockInput is an input type that accepts WorkloadVmClockArgs and WorkloadVmClockOutput values.
+// You can construct a concrete instance of `WorkloadVmClockInput` via:
+//
+//	WorkloadVmClockArgs{...}
+type WorkloadVmClockInput interface {
+	pulumi.Input
+
+	ToWorkloadVmClockOutput() WorkloadVmClockOutput
+	ToWorkloadVmClockOutputWithContext(context.Context) WorkloadVmClockOutput
+}
+
+type WorkloadVmClockArgs struct {
+	// Guest timezone. Default: `UTC`.
+	Timezone pulumi.StringPtrInput `pulumi:"timezone"`
+}
+
+func (WorkloadVmClockArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmClock)(nil)).Elem()
+}
+
+func (i WorkloadVmClockArgs) ToWorkloadVmClockOutput() WorkloadVmClockOutput {
+	return i.ToWorkloadVmClockOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmClockArgs) ToWorkloadVmClockOutputWithContext(ctx context.Context) WorkloadVmClockOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmClockOutput)
+}
+
+func (i WorkloadVmClockArgs) ToWorkloadVmClockPtrOutput() WorkloadVmClockPtrOutput {
+	return i.ToWorkloadVmClockPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmClockArgs) ToWorkloadVmClockPtrOutputWithContext(ctx context.Context) WorkloadVmClockPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmClockOutput).ToWorkloadVmClockPtrOutputWithContext(ctx)
+}
+
+// WorkloadVmClockPtrInput is an input type that accepts WorkloadVmClockArgs, WorkloadVmClockPtr and WorkloadVmClockPtrOutput values.
+// You can construct a concrete instance of `WorkloadVmClockPtrInput` via:
+//
+//	        WorkloadVmClockArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadVmClockPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadVmClockPtrOutput() WorkloadVmClockPtrOutput
+	ToWorkloadVmClockPtrOutputWithContext(context.Context) WorkloadVmClockPtrOutput
+}
+
+type workloadVmClockPtrType WorkloadVmClockArgs
+
+func WorkloadVmClockPtr(v *WorkloadVmClockArgs) WorkloadVmClockPtrInput {
+	return (*workloadVmClockPtrType)(v)
+}
+
+func (*workloadVmClockPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmClock)(nil)).Elem()
+}
+
+func (i *workloadVmClockPtrType) ToWorkloadVmClockPtrOutput() WorkloadVmClockPtrOutput {
+	return i.ToWorkloadVmClockPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadVmClockPtrType) ToWorkloadVmClockPtrOutputWithContext(ctx context.Context) WorkloadVmClockPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmClockPtrOutput)
+}
+
+type WorkloadVmClockOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmClockOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmClock)(nil)).Elem()
+}
+
+func (o WorkloadVmClockOutput) ToWorkloadVmClockOutput() WorkloadVmClockOutput {
+	return o
+}
+
+func (o WorkloadVmClockOutput) ToWorkloadVmClockOutputWithContext(ctx context.Context) WorkloadVmClockOutput {
+	return o
+}
+
+func (o WorkloadVmClockOutput) ToWorkloadVmClockPtrOutput() WorkloadVmClockPtrOutput {
+	return o.ToWorkloadVmClockPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadVmClockOutput) ToWorkloadVmClockPtrOutputWithContext(ctx context.Context) WorkloadVmClockPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadVmClock) *WorkloadVmClock {
+		return &v
+	}).(WorkloadVmClockPtrOutput)
+}
+
+// Guest timezone. Default: `UTC`.
+func (o WorkloadVmClockOutput) Timezone() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVmClock) *string { return v.Timezone }).(pulumi.StringPtrOutput)
+}
+
+type WorkloadVmClockPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmClockPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmClock)(nil)).Elem()
+}
+
+func (o WorkloadVmClockPtrOutput) ToWorkloadVmClockPtrOutput() WorkloadVmClockPtrOutput {
+	return o
+}
+
+func (o WorkloadVmClockPtrOutput) ToWorkloadVmClockPtrOutputWithContext(ctx context.Context) WorkloadVmClockPtrOutput {
+	return o
+}
+
+func (o WorkloadVmClockPtrOutput) Elem() WorkloadVmClockOutput {
+	return o.ApplyT(func(v *WorkloadVmClock) WorkloadVmClock {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadVmClock
+		return ret
+	}).(WorkloadVmClockOutput)
+}
+
+// Guest timezone. Default: `UTC`.
+func (o WorkloadVmClockPtrOutput) Timezone() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmClock) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Timezone
+	}).(pulumi.StringPtrOutput)
+}
+
+type WorkloadVmCloudInit struct {
+	// SSH public keys injected via cloud-init. Each Secret may carry one or more keys.
+	SshPublicKeySecrets []string `pulumi:"sshPublicKeySecrets"`
+	// Inline cloud-init user-data. Not encrypted at rest in the data-service - use `userDataSecret` for sensitive payloads.
+	UserData *string `pulumi:"userData"`
+	// Inline cloud-init user-data, base64-encoded. Same caveats as `userData`.
+	UserDataBase64 *string `pulumi:"userDataBase64"`
+	// Secret containing cloud-init user-data (key: `userdata` or `user-data`).
+	UserDataSecret *string `pulumi:"userDataSecret"`
+}
+
+// WorkloadVmCloudInitInput is an input type that accepts WorkloadVmCloudInitArgs and WorkloadVmCloudInitOutput values.
+// You can construct a concrete instance of `WorkloadVmCloudInitInput` via:
+//
+//	WorkloadVmCloudInitArgs{...}
+type WorkloadVmCloudInitInput interface {
+	pulumi.Input
+
+	ToWorkloadVmCloudInitOutput() WorkloadVmCloudInitOutput
+	ToWorkloadVmCloudInitOutputWithContext(context.Context) WorkloadVmCloudInitOutput
+}
+
+type WorkloadVmCloudInitArgs struct {
+	// SSH public keys injected via cloud-init. Each Secret may carry one or more keys.
+	SshPublicKeySecrets pulumi.StringArrayInput `pulumi:"sshPublicKeySecrets"`
+	// Inline cloud-init user-data. Not encrypted at rest in the data-service - use `userDataSecret` for sensitive payloads.
+	UserData pulumi.StringPtrInput `pulumi:"userData"`
+	// Inline cloud-init user-data, base64-encoded. Same caveats as `userData`.
+	UserDataBase64 pulumi.StringPtrInput `pulumi:"userDataBase64"`
+	// Secret containing cloud-init user-data (key: `userdata` or `user-data`).
+	UserDataSecret pulumi.StringPtrInput `pulumi:"userDataSecret"`
+}
+
+func (WorkloadVmCloudInitArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmCloudInit)(nil)).Elem()
+}
+
+func (i WorkloadVmCloudInitArgs) ToWorkloadVmCloudInitOutput() WorkloadVmCloudInitOutput {
+	return i.ToWorkloadVmCloudInitOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmCloudInitArgs) ToWorkloadVmCloudInitOutputWithContext(ctx context.Context) WorkloadVmCloudInitOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmCloudInitOutput)
+}
+
+func (i WorkloadVmCloudInitArgs) ToWorkloadVmCloudInitPtrOutput() WorkloadVmCloudInitPtrOutput {
+	return i.ToWorkloadVmCloudInitPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmCloudInitArgs) ToWorkloadVmCloudInitPtrOutputWithContext(ctx context.Context) WorkloadVmCloudInitPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmCloudInitOutput).ToWorkloadVmCloudInitPtrOutputWithContext(ctx)
+}
+
+// WorkloadVmCloudInitPtrInput is an input type that accepts WorkloadVmCloudInitArgs, WorkloadVmCloudInitPtr and WorkloadVmCloudInitPtrOutput values.
+// You can construct a concrete instance of `WorkloadVmCloudInitPtrInput` via:
+//
+//	        WorkloadVmCloudInitArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadVmCloudInitPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadVmCloudInitPtrOutput() WorkloadVmCloudInitPtrOutput
+	ToWorkloadVmCloudInitPtrOutputWithContext(context.Context) WorkloadVmCloudInitPtrOutput
+}
+
+type workloadVmCloudInitPtrType WorkloadVmCloudInitArgs
+
+func WorkloadVmCloudInitPtr(v *WorkloadVmCloudInitArgs) WorkloadVmCloudInitPtrInput {
+	return (*workloadVmCloudInitPtrType)(v)
+}
+
+func (*workloadVmCloudInitPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmCloudInit)(nil)).Elem()
+}
+
+func (i *workloadVmCloudInitPtrType) ToWorkloadVmCloudInitPtrOutput() WorkloadVmCloudInitPtrOutput {
+	return i.ToWorkloadVmCloudInitPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadVmCloudInitPtrType) ToWorkloadVmCloudInitPtrOutputWithContext(ctx context.Context) WorkloadVmCloudInitPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmCloudInitPtrOutput)
+}
+
+type WorkloadVmCloudInitOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmCloudInitOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmCloudInit)(nil)).Elem()
+}
+
+func (o WorkloadVmCloudInitOutput) ToWorkloadVmCloudInitOutput() WorkloadVmCloudInitOutput {
+	return o
+}
+
+func (o WorkloadVmCloudInitOutput) ToWorkloadVmCloudInitOutputWithContext(ctx context.Context) WorkloadVmCloudInitOutput {
+	return o
+}
+
+func (o WorkloadVmCloudInitOutput) ToWorkloadVmCloudInitPtrOutput() WorkloadVmCloudInitPtrOutput {
+	return o.ToWorkloadVmCloudInitPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadVmCloudInitOutput) ToWorkloadVmCloudInitPtrOutputWithContext(ctx context.Context) WorkloadVmCloudInitPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadVmCloudInit) *WorkloadVmCloudInit {
+		return &v
+	}).(WorkloadVmCloudInitPtrOutput)
+}
+
+// SSH public keys injected via cloud-init. Each Secret may carry one or more keys.
+func (o WorkloadVmCloudInitOutput) SshPublicKeySecrets() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v WorkloadVmCloudInit) []string { return v.SshPublicKeySecrets }).(pulumi.StringArrayOutput)
+}
+
+// Inline cloud-init user-data. Not encrypted at rest in the data-service - use `userDataSecret` for sensitive payloads.
+func (o WorkloadVmCloudInitOutput) UserData() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVmCloudInit) *string { return v.UserData }).(pulumi.StringPtrOutput)
+}
+
+// Inline cloud-init user-data, base64-encoded. Same caveats as `userData`.
+func (o WorkloadVmCloudInitOutput) UserDataBase64() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVmCloudInit) *string { return v.UserDataBase64 }).(pulumi.StringPtrOutput)
+}
+
+// Secret containing cloud-init user-data (key: `userdata` or `user-data`).
+func (o WorkloadVmCloudInitOutput) UserDataSecret() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVmCloudInit) *string { return v.UserDataSecret }).(pulumi.StringPtrOutput)
+}
+
+type WorkloadVmCloudInitPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmCloudInitPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmCloudInit)(nil)).Elem()
+}
+
+func (o WorkloadVmCloudInitPtrOutput) ToWorkloadVmCloudInitPtrOutput() WorkloadVmCloudInitPtrOutput {
+	return o
+}
+
+func (o WorkloadVmCloudInitPtrOutput) ToWorkloadVmCloudInitPtrOutputWithContext(ctx context.Context) WorkloadVmCloudInitPtrOutput {
+	return o
+}
+
+func (o WorkloadVmCloudInitPtrOutput) Elem() WorkloadVmCloudInitOutput {
+	return o.ApplyT(func(v *WorkloadVmCloudInit) WorkloadVmCloudInit {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadVmCloudInit
+		return ret
+	}).(WorkloadVmCloudInitOutput)
+}
+
+// SSH public keys injected via cloud-init. Each Secret may carry one or more keys.
+func (o WorkloadVmCloudInitPtrOutput) SshPublicKeySecrets() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *WorkloadVmCloudInit) []string {
+		if v == nil {
+			return nil
+		}
+		return v.SshPublicKeySecrets
+	}).(pulumi.StringArrayOutput)
+}
+
+// Inline cloud-init user-data. Not encrypted at rest in the data-service - use `userDataSecret` for sensitive payloads.
+func (o WorkloadVmCloudInitPtrOutput) UserData() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmCloudInit) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UserData
+	}).(pulumi.StringPtrOutput)
+}
+
+// Inline cloud-init user-data, base64-encoded. Same caveats as `userData`.
+func (o WorkloadVmCloudInitPtrOutput) UserDataBase64() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmCloudInit) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UserDataBase64
+	}).(pulumi.StringPtrOutput)
+}
+
+// Secret containing cloud-init user-data (key: `userdata` or `user-data`).
+func (o WorkloadVmCloudInitPtrOutput) UserDataSecret() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmCloudInit) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UserDataSecret
+	}).(pulumi.StringPtrOutput)
+}
+
+type WorkloadVmCpu struct {
+	// CPU sockets visible to the guest. Valid values: `1` - `32`.
+	Sockets *int `pulumi:"sockets"`
+	// CPU threads per core visible to the guest. Valid values: `1` - `8`.
+	Threads *int `pulumi:"threads"`
+}
+
+// WorkloadVmCpuInput is an input type that accepts WorkloadVmCpuArgs and WorkloadVmCpuOutput values.
+// You can construct a concrete instance of `WorkloadVmCpuInput` via:
+//
+//	WorkloadVmCpuArgs{...}
+type WorkloadVmCpuInput interface {
+	pulumi.Input
+
+	ToWorkloadVmCpuOutput() WorkloadVmCpuOutput
+	ToWorkloadVmCpuOutputWithContext(context.Context) WorkloadVmCpuOutput
+}
+
+type WorkloadVmCpuArgs struct {
+	// CPU sockets visible to the guest. Valid values: `1` - `32`.
+	Sockets pulumi.IntPtrInput `pulumi:"sockets"`
+	// CPU threads per core visible to the guest. Valid values: `1` - `8`.
+	Threads pulumi.IntPtrInput `pulumi:"threads"`
+}
+
+func (WorkloadVmCpuArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmCpu)(nil)).Elem()
+}
+
+func (i WorkloadVmCpuArgs) ToWorkloadVmCpuOutput() WorkloadVmCpuOutput {
+	return i.ToWorkloadVmCpuOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmCpuArgs) ToWorkloadVmCpuOutputWithContext(ctx context.Context) WorkloadVmCpuOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmCpuOutput)
+}
+
+func (i WorkloadVmCpuArgs) ToWorkloadVmCpuPtrOutput() WorkloadVmCpuPtrOutput {
+	return i.ToWorkloadVmCpuPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmCpuArgs) ToWorkloadVmCpuPtrOutputWithContext(ctx context.Context) WorkloadVmCpuPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmCpuOutput).ToWorkloadVmCpuPtrOutputWithContext(ctx)
+}
+
+// WorkloadVmCpuPtrInput is an input type that accepts WorkloadVmCpuArgs, WorkloadVmCpuPtr and WorkloadVmCpuPtrOutput values.
+// You can construct a concrete instance of `WorkloadVmCpuPtrInput` via:
+//
+//	        WorkloadVmCpuArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadVmCpuPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadVmCpuPtrOutput() WorkloadVmCpuPtrOutput
+	ToWorkloadVmCpuPtrOutputWithContext(context.Context) WorkloadVmCpuPtrOutput
+}
+
+type workloadVmCpuPtrType WorkloadVmCpuArgs
+
+func WorkloadVmCpuPtr(v *WorkloadVmCpuArgs) WorkloadVmCpuPtrInput {
+	return (*workloadVmCpuPtrType)(v)
+}
+
+func (*workloadVmCpuPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmCpu)(nil)).Elem()
+}
+
+func (i *workloadVmCpuPtrType) ToWorkloadVmCpuPtrOutput() WorkloadVmCpuPtrOutput {
+	return i.ToWorkloadVmCpuPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadVmCpuPtrType) ToWorkloadVmCpuPtrOutputWithContext(ctx context.Context) WorkloadVmCpuPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmCpuPtrOutput)
+}
+
+type WorkloadVmCpuOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmCpuOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmCpu)(nil)).Elem()
+}
+
+func (o WorkloadVmCpuOutput) ToWorkloadVmCpuOutput() WorkloadVmCpuOutput {
+	return o
+}
+
+func (o WorkloadVmCpuOutput) ToWorkloadVmCpuOutputWithContext(ctx context.Context) WorkloadVmCpuOutput {
+	return o
+}
+
+func (o WorkloadVmCpuOutput) ToWorkloadVmCpuPtrOutput() WorkloadVmCpuPtrOutput {
+	return o.ToWorkloadVmCpuPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadVmCpuOutput) ToWorkloadVmCpuPtrOutputWithContext(ctx context.Context) WorkloadVmCpuPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadVmCpu) *WorkloadVmCpu {
+		return &v
+	}).(WorkloadVmCpuPtrOutput)
+}
+
+// CPU sockets visible to the guest. Valid values: `1` - `32`.
+func (o WorkloadVmCpuOutput) Sockets() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadVmCpu) *int { return v.Sockets }).(pulumi.IntPtrOutput)
+}
+
+// CPU threads per core visible to the guest. Valid values: `1` - `8`.
+func (o WorkloadVmCpuOutput) Threads() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadVmCpu) *int { return v.Threads }).(pulumi.IntPtrOutput)
+}
+
+type WorkloadVmCpuPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmCpuPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmCpu)(nil)).Elem()
+}
+
+func (o WorkloadVmCpuPtrOutput) ToWorkloadVmCpuPtrOutput() WorkloadVmCpuPtrOutput {
+	return o
+}
+
+func (o WorkloadVmCpuPtrOutput) ToWorkloadVmCpuPtrOutputWithContext(ctx context.Context) WorkloadVmCpuPtrOutput {
+	return o
+}
+
+func (o WorkloadVmCpuPtrOutput) Elem() WorkloadVmCpuOutput {
+	return o.ApplyT(func(v *WorkloadVmCpu) WorkloadVmCpu {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadVmCpu
+		return ret
+	}).(WorkloadVmCpuOutput)
+}
+
+// CPU sockets visible to the guest. Valid values: `1` - `32`.
+func (o WorkloadVmCpuPtrOutput) Sockets() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmCpu) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Sockets
+	}).(pulumi.IntPtrOutput)
+}
+
+// CPU threads per core visible to the guest. Valid values: `1` - `8`.
+func (o WorkloadVmCpuPtrOutput) Threads() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmCpu) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Threads
+	}).(pulumi.IntPtrOutput)
+}
+
+type WorkloadVmFirmware struct {
+	// Bootloader used by the guest. Valid values: `bios`, `efi`. Default: `efi`.
+	Bootloader *string `pulumi:"bootloader"`
+	// Enable UEFI Secure Boot. Default: `false`.
+	SecureBoot *bool `pulumi:"secureBoot"`
+	// SMBIOS system serial number reported to the guest.
+	Serial *string `pulumi:"serial"`
+	// SMBIOS system information reported to the guest.
+	Smbios *WorkloadVmFirmwareSmbios `pulumi:"smbios"`
+	// Fixed SMBIOS UUID for the VM. KubeVirt generates one when omitted.
+	Uuid *string `pulumi:"uuid"`
+}
+
+// WorkloadVmFirmwareInput is an input type that accepts WorkloadVmFirmwareArgs and WorkloadVmFirmwareOutput values.
+// You can construct a concrete instance of `WorkloadVmFirmwareInput` via:
+//
+//	WorkloadVmFirmwareArgs{...}
+type WorkloadVmFirmwareInput interface {
+	pulumi.Input
+
+	ToWorkloadVmFirmwareOutput() WorkloadVmFirmwareOutput
+	ToWorkloadVmFirmwareOutputWithContext(context.Context) WorkloadVmFirmwareOutput
+}
+
+type WorkloadVmFirmwareArgs struct {
+	// Bootloader used by the guest. Valid values: `bios`, `efi`. Default: `efi`.
+	Bootloader pulumi.StringPtrInput `pulumi:"bootloader"`
+	// Enable UEFI Secure Boot. Default: `false`.
+	SecureBoot pulumi.BoolPtrInput `pulumi:"secureBoot"`
+	// SMBIOS system serial number reported to the guest.
+	Serial pulumi.StringPtrInput `pulumi:"serial"`
+	// SMBIOS system information reported to the guest.
+	Smbios WorkloadVmFirmwareSmbiosPtrInput `pulumi:"smbios"`
+	// Fixed SMBIOS UUID for the VM. KubeVirt generates one when omitted.
+	Uuid pulumi.StringPtrInput `pulumi:"uuid"`
+}
+
+func (WorkloadVmFirmwareArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmFirmware)(nil)).Elem()
+}
+
+func (i WorkloadVmFirmwareArgs) ToWorkloadVmFirmwareOutput() WorkloadVmFirmwareOutput {
+	return i.ToWorkloadVmFirmwareOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmFirmwareArgs) ToWorkloadVmFirmwareOutputWithContext(ctx context.Context) WorkloadVmFirmwareOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmFirmwareOutput)
+}
+
+func (i WorkloadVmFirmwareArgs) ToWorkloadVmFirmwarePtrOutput() WorkloadVmFirmwarePtrOutput {
+	return i.ToWorkloadVmFirmwarePtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmFirmwareArgs) ToWorkloadVmFirmwarePtrOutputWithContext(ctx context.Context) WorkloadVmFirmwarePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmFirmwareOutput).ToWorkloadVmFirmwarePtrOutputWithContext(ctx)
+}
+
+// WorkloadVmFirmwarePtrInput is an input type that accepts WorkloadVmFirmwareArgs, WorkloadVmFirmwarePtr and WorkloadVmFirmwarePtrOutput values.
+// You can construct a concrete instance of `WorkloadVmFirmwarePtrInput` via:
+//
+//	        WorkloadVmFirmwareArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadVmFirmwarePtrInput interface {
+	pulumi.Input
+
+	ToWorkloadVmFirmwarePtrOutput() WorkloadVmFirmwarePtrOutput
+	ToWorkloadVmFirmwarePtrOutputWithContext(context.Context) WorkloadVmFirmwarePtrOutput
+}
+
+type workloadVmFirmwarePtrType WorkloadVmFirmwareArgs
+
+func WorkloadVmFirmwarePtr(v *WorkloadVmFirmwareArgs) WorkloadVmFirmwarePtrInput {
+	return (*workloadVmFirmwarePtrType)(v)
+}
+
+func (*workloadVmFirmwarePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmFirmware)(nil)).Elem()
+}
+
+func (i *workloadVmFirmwarePtrType) ToWorkloadVmFirmwarePtrOutput() WorkloadVmFirmwarePtrOutput {
+	return i.ToWorkloadVmFirmwarePtrOutputWithContext(context.Background())
+}
+
+func (i *workloadVmFirmwarePtrType) ToWorkloadVmFirmwarePtrOutputWithContext(ctx context.Context) WorkloadVmFirmwarePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmFirmwarePtrOutput)
+}
+
+type WorkloadVmFirmwareOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmFirmwareOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmFirmware)(nil)).Elem()
+}
+
+func (o WorkloadVmFirmwareOutput) ToWorkloadVmFirmwareOutput() WorkloadVmFirmwareOutput {
+	return o
+}
+
+func (o WorkloadVmFirmwareOutput) ToWorkloadVmFirmwareOutputWithContext(ctx context.Context) WorkloadVmFirmwareOutput {
+	return o
+}
+
+func (o WorkloadVmFirmwareOutput) ToWorkloadVmFirmwarePtrOutput() WorkloadVmFirmwarePtrOutput {
+	return o.ToWorkloadVmFirmwarePtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadVmFirmwareOutput) ToWorkloadVmFirmwarePtrOutputWithContext(ctx context.Context) WorkloadVmFirmwarePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadVmFirmware) *WorkloadVmFirmware {
+		return &v
+	}).(WorkloadVmFirmwarePtrOutput)
+}
+
+// Bootloader used by the guest. Valid values: `bios`, `efi`. Default: `efi`.
+func (o WorkloadVmFirmwareOutput) Bootloader() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVmFirmware) *string { return v.Bootloader }).(pulumi.StringPtrOutput)
+}
+
+// Enable UEFI Secure Boot. Default: `false`.
+func (o WorkloadVmFirmwareOutput) SecureBoot() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadVmFirmware) *bool { return v.SecureBoot }).(pulumi.BoolPtrOutput)
+}
+
+// SMBIOS system serial number reported to the guest.
+func (o WorkloadVmFirmwareOutput) Serial() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVmFirmware) *string { return v.Serial }).(pulumi.StringPtrOutput)
+}
+
+// SMBIOS system information reported to the guest.
+func (o WorkloadVmFirmwareOutput) Smbios() WorkloadVmFirmwareSmbiosPtrOutput {
+	return o.ApplyT(func(v WorkloadVmFirmware) *WorkloadVmFirmwareSmbios { return v.Smbios }).(WorkloadVmFirmwareSmbiosPtrOutput)
+}
+
+// Fixed SMBIOS UUID for the VM. KubeVirt generates one when omitted.
+func (o WorkloadVmFirmwareOutput) Uuid() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVmFirmware) *string { return v.Uuid }).(pulumi.StringPtrOutput)
+}
+
+type WorkloadVmFirmwarePtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmFirmwarePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmFirmware)(nil)).Elem()
+}
+
+func (o WorkloadVmFirmwarePtrOutput) ToWorkloadVmFirmwarePtrOutput() WorkloadVmFirmwarePtrOutput {
+	return o
+}
+
+func (o WorkloadVmFirmwarePtrOutput) ToWorkloadVmFirmwarePtrOutputWithContext(ctx context.Context) WorkloadVmFirmwarePtrOutput {
+	return o
+}
+
+func (o WorkloadVmFirmwarePtrOutput) Elem() WorkloadVmFirmwareOutput {
+	return o.ApplyT(func(v *WorkloadVmFirmware) WorkloadVmFirmware {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadVmFirmware
+		return ret
+	}).(WorkloadVmFirmwareOutput)
+}
+
+// Bootloader used by the guest. Valid values: `bios`, `efi`. Default: `efi`.
+func (o WorkloadVmFirmwarePtrOutput) Bootloader() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmFirmware) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Bootloader
+	}).(pulumi.StringPtrOutput)
+}
+
+// Enable UEFI Secure Boot. Default: `false`.
+func (o WorkloadVmFirmwarePtrOutput) SecureBoot() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmFirmware) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.SecureBoot
+	}).(pulumi.BoolPtrOutput)
+}
+
+// SMBIOS system serial number reported to the guest.
+func (o WorkloadVmFirmwarePtrOutput) Serial() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmFirmware) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Serial
+	}).(pulumi.StringPtrOutput)
+}
+
+// SMBIOS system information reported to the guest.
+func (o WorkloadVmFirmwarePtrOutput) Smbios() WorkloadVmFirmwareSmbiosPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmFirmware) *WorkloadVmFirmwareSmbios {
+		if v == nil {
+			return nil
+		}
+		return v.Smbios
+	}).(WorkloadVmFirmwareSmbiosPtrOutput)
+}
+
+// Fixed SMBIOS UUID for the VM. KubeVirt generates one when omitted.
+func (o WorkloadVmFirmwarePtrOutput) Uuid() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmFirmware) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Uuid
+	}).(pulumi.StringPtrOutput)
+}
+
+type WorkloadVmFirmwareSmbios struct {
+	// SMBIOS system family.
+	Family *string `pulumi:"family"`
+	// SMBIOS system manufacturer.
+	Manufacturer *string `pulumi:"manufacturer"`
+	// SMBIOS system product name.
+	Product *string `pulumi:"product"`
+	// SMBIOS system SKU.
+	Sku *string `pulumi:"sku"`
+	// SMBIOS system version.
+	Version *string `pulumi:"version"`
+}
+
+// WorkloadVmFirmwareSmbiosInput is an input type that accepts WorkloadVmFirmwareSmbiosArgs and WorkloadVmFirmwareSmbiosOutput values.
+// You can construct a concrete instance of `WorkloadVmFirmwareSmbiosInput` via:
+//
+//	WorkloadVmFirmwareSmbiosArgs{...}
+type WorkloadVmFirmwareSmbiosInput interface {
+	pulumi.Input
+
+	ToWorkloadVmFirmwareSmbiosOutput() WorkloadVmFirmwareSmbiosOutput
+	ToWorkloadVmFirmwareSmbiosOutputWithContext(context.Context) WorkloadVmFirmwareSmbiosOutput
+}
+
+type WorkloadVmFirmwareSmbiosArgs struct {
+	// SMBIOS system family.
+	Family pulumi.StringPtrInput `pulumi:"family"`
+	// SMBIOS system manufacturer.
+	Manufacturer pulumi.StringPtrInput `pulumi:"manufacturer"`
+	// SMBIOS system product name.
+	Product pulumi.StringPtrInput `pulumi:"product"`
+	// SMBIOS system SKU.
+	Sku pulumi.StringPtrInput `pulumi:"sku"`
+	// SMBIOS system version.
+	Version pulumi.StringPtrInput `pulumi:"version"`
+}
+
+func (WorkloadVmFirmwareSmbiosArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmFirmwareSmbios)(nil)).Elem()
+}
+
+func (i WorkloadVmFirmwareSmbiosArgs) ToWorkloadVmFirmwareSmbiosOutput() WorkloadVmFirmwareSmbiosOutput {
+	return i.ToWorkloadVmFirmwareSmbiosOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmFirmwareSmbiosArgs) ToWorkloadVmFirmwareSmbiosOutputWithContext(ctx context.Context) WorkloadVmFirmwareSmbiosOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmFirmwareSmbiosOutput)
+}
+
+func (i WorkloadVmFirmwareSmbiosArgs) ToWorkloadVmFirmwareSmbiosPtrOutput() WorkloadVmFirmwareSmbiosPtrOutput {
+	return i.ToWorkloadVmFirmwareSmbiosPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmFirmwareSmbiosArgs) ToWorkloadVmFirmwareSmbiosPtrOutputWithContext(ctx context.Context) WorkloadVmFirmwareSmbiosPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmFirmwareSmbiosOutput).ToWorkloadVmFirmwareSmbiosPtrOutputWithContext(ctx)
+}
+
+// WorkloadVmFirmwareSmbiosPtrInput is an input type that accepts WorkloadVmFirmwareSmbiosArgs, WorkloadVmFirmwareSmbiosPtr and WorkloadVmFirmwareSmbiosPtrOutput values.
+// You can construct a concrete instance of `WorkloadVmFirmwareSmbiosPtrInput` via:
+//
+//	        WorkloadVmFirmwareSmbiosArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadVmFirmwareSmbiosPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadVmFirmwareSmbiosPtrOutput() WorkloadVmFirmwareSmbiosPtrOutput
+	ToWorkloadVmFirmwareSmbiosPtrOutputWithContext(context.Context) WorkloadVmFirmwareSmbiosPtrOutput
+}
+
+type workloadVmFirmwareSmbiosPtrType WorkloadVmFirmwareSmbiosArgs
+
+func WorkloadVmFirmwareSmbiosPtr(v *WorkloadVmFirmwareSmbiosArgs) WorkloadVmFirmwareSmbiosPtrInput {
+	return (*workloadVmFirmwareSmbiosPtrType)(v)
+}
+
+func (*workloadVmFirmwareSmbiosPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmFirmwareSmbios)(nil)).Elem()
+}
+
+func (i *workloadVmFirmwareSmbiosPtrType) ToWorkloadVmFirmwareSmbiosPtrOutput() WorkloadVmFirmwareSmbiosPtrOutput {
+	return i.ToWorkloadVmFirmwareSmbiosPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadVmFirmwareSmbiosPtrType) ToWorkloadVmFirmwareSmbiosPtrOutputWithContext(ctx context.Context) WorkloadVmFirmwareSmbiosPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmFirmwareSmbiosPtrOutput)
+}
+
+type WorkloadVmFirmwareSmbiosOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmFirmwareSmbiosOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmFirmwareSmbios)(nil)).Elem()
+}
+
+func (o WorkloadVmFirmwareSmbiosOutput) ToWorkloadVmFirmwareSmbiosOutput() WorkloadVmFirmwareSmbiosOutput {
+	return o
+}
+
+func (o WorkloadVmFirmwareSmbiosOutput) ToWorkloadVmFirmwareSmbiosOutputWithContext(ctx context.Context) WorkloadVmFirmwareSmbiosOutput {
+	return o
+}
+
+func (o WorkloadVmFirmwareSmbiosOutput) ToWorkloadVmFirmwareSmbiosPtrOutput() WorkloadVmFirmwareSmbiosPtrOutput {
+	return o.ToWorkloadVmFirmwareSmbiosPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadVmFirmwareSmbiosOutput) ToWorkloadVmFirmwareSmbiosPtrOutputWithContext(ctx context.Context) WorkloadVmFirmwareSmbiosPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadVmFirmwareSmbios) *WorkloadVmFirmwareSmbios {
+		return &v
+	}).(WorkloadVmFirmwareSmbiosPtrOutput)
+}
+
+// SMBIOS system family.
+func (o WorkloadVmFirmwareSmbiosOutput) Family() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVmFirmwareSmbios) *string { return v.Family }).(pulumi.StringPtrOutput)
+}
+
+// SMBIOS system manufacturer.
+func (o WorkloadVmFirmwareSmbiosOutput) Manufacturer() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVmFirmwareSmbios) *string { return v.Manufacturer }).(pulumi.StringPtrOutput)
+}
+
+// SMBIOS system product name.
+func (o WorkloadVmFirmwareSmbiosOutput) Product() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVmFirmwareSmbios) *string { return v.Product }).(pulumi.StringPtrOutput)
+}
+
+// SMBIOS system SKU.
+func (o WorkloadVmFirmwareSmbiosOutput) Sku() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVmFirmwareSmbios) *string { return v.Sku }).(pulumi.StringPtrOutput)
+}
+
+// SMBIOS system version.
+func (o WorkloadVmFirmwareSmbiosOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVmFirmwareSmbios) *string { return v.Version }).(pulumi.StringPtrOutput)
+}
+
+type WorkloadVmFirmwareSmbiosPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmFirmwareSmbiosPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadVmFirmwareSmbios)(nil)).Elem()
+}
+
+func (o WorkloadVmFirmwareSmbiosPtrOutput) ToWorkloadVmFirmwareSmbiosPtrOutput() WorkloadVmFirmwareSmbiosPtrOutput {
+	return o
+}
+
+func (o WorkloadVmFirmwareSmbiosPtrOutput) ToWorkloadVmFirmwareSmbiosPtrOutputWithContext(ctx context.Context) WorkloadVmFirmwareSmbiosPtrOutput {
+	return o
+}
+
+func (o WorkloadVmFirmwareSmbiosPtrOutput) Elem() WorkloadVmFirmwareSmbiosOutput {
+	return o.ApplyT(func(v *WorkloadVmFirmwareSmbios) WorkloadVmFirmwareSmbios {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadVmFirmwareSmbios
+		return ret
+	}).(WorkloadVmFirmwareSmbiosOutput)
+}
+
+// SMBIOS system family.
+func (o WorkloadVmFirmwareSmbiosPtrOutput) Family() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmFirmwareSmbios) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Family
+	}).(pulumi.StringPtrOutput)
+}
+
+// SMBIOS system manufacturer.
+func (o WorkloadVmFirmwareSmbiosPtrOutput) Manufacturer() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmFirmwareSmbios) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Manufacturer
+	}).(pulumi.StringPtrOutput)
+}
+
+// SMBIOS system product name.
+func (o WorkloadVmFirmwareSmbiosPtrOutput) Product() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmFirmwareSmbios) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Product
+	}).(pulumi.StringPtrOutput)
+}
+
+// SMBIOS system SKU.
+func (o WorkloadVmFirmwareSmbiosPtrOutput) Sku() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmFirmwareSmbios) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Sku
+	}).(pulumi.StringPtrOutput)
+}
+
+// SMBIOS system version.
+func (o WorkloadVmFirmwareSmbiosPtrOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadVmFirmwareSmbios) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Version
+	}).(pulumi.StringPtrOutput)
+}
+
+type WorkloadVmNetwork struct {
+	// Network interface name. Default: `default`.
+	Name *string `pulumi:"name"`
+}
+
+// WorkloadVmNetworkInput is an input type that accepts WorkloadVmNetworkArgs and WorkloadVmNetworkOutput values.
+// You can construct a concrete instance of `WorkloadVmNetworkInput` via:
+//
+//	WorkloadVmNetworkArgs{...}
+type WorkloadVmNetworkInput interface {
+	pulumi.Input
+
+	ToWorkloadVmNetworkOutput() WorkloadVmNetworkOutput
+	ToWorkloadVmNetworkOutputWithContext(context.Context) WorkloadVmNetworkOutput
+}
+
+type WorkloadVmNetworkArgs struct {
+	// Network interface name. Default: `default`.
+	Name pulumi.StringPtrInput `pulumi:"name"`
+}
+
+func (WorkloadVmNetworkArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmNetwork)(nil)).Elem()
+}
+
+func (i WorkloadVmNetworkArgs) ToWorkloadVmNetworkOutput() WorkloadVmNetworkOutput {
+	return i.ToWorkloadVmNetworkOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmNetworkArgs) ToWorkloadVmNetworkOutputWithContext(ctx context.Context) WorkloadVmNetworkOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmNetworkOutput)
+}
+
+// WorkloadVmNetworkArrayInput is an input type that accepts WorkloadVmNetworkArray and WorkloadVmNetworkArrayOutput values.
+// You can construct a concrete instance of `WorkloadVmNetworkArrayInput` via:
+//
+//	WorkloadVmNetworkArray{ WorkloadVmNetworkArgs{...} }
+type WorkloadVmNetworkArrayInput interface {
+	pulumi.Input
+
+	ToWorkloadVmNetworkArrayOutput() WorkloadVmNetworkArrayOutput
+	ToWorkloadVmNetworkArrayOutputWithContext(context.Context) WorkloadVmNetworkArrayOutput
+}
+
+type WorkloadVmNetworkArray []WorkloadVmNetworkInput
+
+func (WorkloadVmNetworkArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadVmNetwork)(nil)).Elem()
+}
+
+func (i WorkloadVmNetworkArray) ToWorkloadVmNetworkArrayOutput() WorkloadVmNetworkArrayOutput {
+	return i.ToWorkloadVmNetworkArrayOutputWithContext(context.Background())
+}
+
+func (i WorkloadVmNetworkArray) ToWorkloadVmNetworkArrayOutputWithContext(ctx context.Context) WorkloadVmNetworkArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadVmNetworkArrayOutput)
+}
+
+type WorkloadVmNetworkOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmNetworkOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadVmNetwork)(nil)).Elem()
+}
+
+func (o WorkloadVmNetworkOutput) ToWorkloadVmNetworkOutput() WorkloadVmNetworkOutput {
+	return o
+}
+
+func (o WorkloadVmNetworkOutput) ToWorkloadVmNetworkOutputWithContext(ctx context.Context) WorkloadVmNetworkOutput {
+	return o
+}
+
+// Network interface name. Default: `default`.
+func (o WorkloadVmNetworkOutput) Name() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadVmNetwork) *string { return v.Name }).(pulumi.StringPtrOutput)
+}
+
+type WorkloadVmNetworkArrayOutput struct{ *pulumi.OutputState }
+
+func (WorkloadVmNetworkArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadVmNetwork)(nil)).Elem()
+}
+
+func (o WorkloadVmNetworkArrayOutput) ToWorkloadVmNetworkArrayOutput() WorkloadVmNetworkArrayOutput {
+	return o
+}
+
+func (o WorkloadVmNetworkArrayOutput) ToWorkloadVmNetworkArrayOutputWithContext(ctx context.Context) WorkloadVmNetworkArrayOutput {
+	return o
+}
+
+func (o WorkloadVmNetworkArrayOutput) Index(i pulumi.IntInput) WorkloadVmNetworkOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadVmNetwork {
+		return vs[0].([]WorkloadVmNetwork)[vs[1].(int)]
+	}).(WorkloadVmNetworkOutput)
 }
 
 type GetGvcControlplaneTracing struct {
@@ -55174,7 +57608,13 @@ func (o GetWorkloadContainerReadinessProbeTcpSocketArrayOutput) Index(i pulumi.I
 }
 
 type GetWorkloadContainerVolume struct {
-	// File path added to workload pointing to the volume.
+	// VM disk boot order. Only valid for `vm` workloads.
+	BootOrder int `pulumi:"bootOrder"`
+	// VM disk bus. Only valid for `vm` workloads. Valid values: `virtio`, `sata`, `scsi`.
+	Bus string `pulumi:"bus"`
+	// VM disk name. Required for `vm` workloads; rejected for other workload types.
+	Name string `pulumi:"name"`
+	// File path added to workload pointing to the volume. Required for non-`vm` workloads; rejected for `vm` workloads (the volume is attached to the VM as a block device).
 	Path string `pulumi:"path"`
 	// Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
 	RecoveryPolicy string `pulumi:"recoveryPolicy"`
@@ -55194,7 +57634,13 @@ type GetWorkloadContainerVolumeInput interface {
 }
 
 type GetWorkloadContainerVolumeArgs struct {
-	// File path added to workload pointing to the volume.
+	// VM disk boot order. Only valid for `vm` workloads.
+	BootOrder pulumi.IntInput `pulumi:"bootOrder"`
+	// VM disk bus. Only valid for `vm` workloads. Valid values: `virtio`, `sata`, `scsi`.
+	Bus pulumi.StringInput `pulumi:"bus"`
+	// VM disk name. Required for `vm` workloads; rejected for other workload types.
+	Name pulumi.StringInput `pulumi:"name"`
+	// File path added to workload pointing to the volume. Required for non-`vm` workloads; rejected for `vm` workloads (the volume is attached to the VM as a block device).
 	Path pulumi.StringInput `pulumi:"path"`
 	// Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
 	RecoveryPolicy pulumi.StringInput `pulumi:"recoveryPolicy"`
@@ -55253,7 +57699,22 @@ func (o GetWorkloadContainerVolumeOutput) ToGetWorkloadContainerVolumeOutputWith
 	return o
 }
 
-// File path added to workload pointing to the volume.
+// VM disk boot order. Only valid for `vm` workloads.
+func (o GetWorkloadContainerVolumeOutput) BootOrder() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadContainerVolume) int { return v.BootOrder }).(pulumi.IntOutput)
+}
+
+// VM disk bus. Only valid for `vm` workloads. Valid values: `virtio`, `sata`, `scsi`.
+func (o GetWorkloadContainerVolumeOutput) Bus() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainerVolume) string { return v.Bus }).(pulumi.StringOutput)
+}
+
+// VM disk name. Required for `vm` workloads; rejected for other workload types.
+func (o GetWorkloadContainerVolumeOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainerVolume) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// File path added to workload pointing to the volume. Required for non-`vm` workloads; rejected for `vm` workloads (the volume is attached to the VM as a block device).
 func (o GetWorkloadContainerVolumeOutput) Path() pulumi.StringOutput {
 	return o.ApplyT(func(v GetWorkloadContainerVolume) string { return v.Path }).(pulumi.StringOutput)
 }
@@ -55971,6 +58432,103 @@ func (o GetWorkloadFirewallSpecInternalArrayOutput) Index(i pulumi.IntInput) Get
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadFirewallSpecInternal {
 		return vs[0].([]GetWorkloadFirewallSpecInternal)[vs[1].(int)]
 	}).(GetWorkloadFirewallSpecInternalOutput)
+}
+
+type GetWorkloadHealth struct {
+	// Readiness of the workload.
+	Readiness string `pulumi:"readiness"`
+	// Number of locations where the workload is ready.
+	ReadyLocations int `pulumi:"readyLocations"`
+	// Number of ready replicas across all locations.
+	ReadyReplicas int `pulumi:"readyReplicas"`
+	// Whether the most recent sync of the workload failed.
+	SyncFailed bool `pulumi:"syncFailed"`
+	// Total number of locations the workload is deployed to.
+	TotalLocations int `pulumi:"totalLocations"`
+	// Total number of replicas across all locations.
+	TotalReplicas int `pulumi:"totalReplicas"`
+}
+
+// GetWorkloadHealthInput is an input type that accepts GetWorkloadHealthArgs and GetWorkloadHealthOutput values.
+// You can construct a concrete instance of `GetWorkloadHealthInput` via:
+//
+//	GetWorkloadHealthArgs{...}
+type GetWorkloadHealthInput interface {
+	pulumi.Input
+
+	ToGetWorkloadHealthOutput() GetWorkloadHealthOutput
+	ToGetWorkloadHealthOutputWithContext(context.Context) GetWorkloadHealthOutput
+}
+
+type GetWorkloadHealthArgs struct {
+	// Readiness of the workload.
+	Readiness pulumi.StringInput `pulumi:"readiness"`
+	// Number of locations where the workload is ready.
+	ReadyLocations pulumi.IntInput `pulumi:"readyLocations"`
+	// Number of ready replicas across all locations.
+	ReadyReplicas pulumi.IntInput `pulumi:"readyReplicas"`
+	// Whether the most recent sync of the workload failed.
+	SyncFailed pulumi.BoolInput `pulumi:"syncFailed"`
+	// Total number of locations the workload is deployed to.
+	TotalLocations pulumi.IntInput `pulumi:"totalLocations"`
+	// Total number of replicas across all locations.
+	TotalReplicas pulumi.IntInput `pulumi:"totalReplicas"`
+}
+
+func (GetWorkloadHealthArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadHealth)(nil)).Elem()
+}
+
+func (i GetWorkloadHealthArgs) ToGetWorkloadHealthOutput() GetWorkloadHealthOutput {
+	return i.ToGetWorkloadHealthOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadHealthArgs) ToGetWorkloadHealthOutputWithContext(ctx context.Context) GetWorkloadHealthOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadHealthOutput)
+}
+
+type GetWorkloadHealthOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadHealthOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadHealth)(nil)).Elem()
+}
+
+func (o GetWorkloadHealthOutput) ToGetWorkloadHealthOutput() GetWorkloadHealthOutput {
+	return o
+}
+
+func (o GetWorkloadHealthOutput) ToGetWorkloadHealthOutputWithContext(ctx context.Context) GetWorkloadHealthOutput {
+	return o
+}
+
+// Readiness of the workload.
+func (o GetWorkloadHealthOutput) Readiness() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadHealth) string { return v.Readiness }).(pulumi.StringOutput)
+}
+
+// Number of locations where the workload is ready.
+func (o GetWorkloadHealthOutput) ReadyLocations() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadHealth) int { return v.ReadyLocations }).(pulumi.IntOutput)
+}
+
+// Number of ready replicas across all locations.
+func (o GetWorkloadHealthOutput) ReadyReplicas() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadHealth) int { return v.ReadyReplicas }).(pulumi.IntOutput)
+}
+
+// Whether the most recent sync of the workload failed.
+func (o GetWorkloadHealthOutput) SyncFailed() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadHealth) bool { return v.SyncFailed }).(pulumi.BoolOutput)
+}
+
+// Total number of locations the workload is deployed to.
+func (o GetWorkloadHealthOutput) TotalLocations() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadHealth) int { return v.TotalLocations }).(pulumi.IntOutput)
+}
+
+// Total number of replicas across all locations.
+func (o GetWorkloadHealthOutput) TotalReplicas() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadHealth) int { return v.TotalReplicas }).(pulumi.IntOutput)
 }
 
 type GetWorkloadJob struct {
@@ -60384,6 +62942,1033 @@ func (o GetWorkloadStatusResolvedImageImageManifestArrayOutput) Index(i pulumi.I
 	}).(GetWorkloadStatusResolvedImageImageManifestOutput)
 }
 
+type GetWorkloadVm struct {
+	// SSH public keys injected at runtime via the guest agent or config drive.
+	AccessCredentials []GetWorkloadVmAccessCredential `pulumi:"accessCredentials"`
+	// Boot disk configuration.
+	BootDisk GetWorkloadVmBootDisk `pulumi:"bootDisk"`
+	// Guest clock configuration.
+	Clock GetWorkloadVmClock `pulumi:"clock"`
+	// Cloud-init configuration for the guest.
+	CloudInit GetWorkloadVmCloudInit `pulumi:"cloudInit"`
+	// CPU topology visible to the guest.
+	Cpu GetWorkloadVmCpu `pulumi:"cpu"`
+	// Firmware configuration for the guest.
+	Firmware GetWorkloadVmFirmware `pulumi:"firmware"`
+	// Guest operating system family. Either `linux` or `windows`.
+	GuestOs string `pulumi:"guestOs"`
+	// Hostname reported to the guest.
+	Hostname string `pulumi:"hostname"`
+	// Pod-network interfaces for the VM.
+	Networks []GetWorkloadVmNetwork `pulumi:"networks"`
+	// KubeVirt RunStrategy. Either `Always`, `RerunOnFailure`, `Manual`, or `Halted`.
+	RunStrategy string `pulumi:"runStrategy"`
+	// Subdomain used by the guest for replica-to-replica addressing.
+	Subdomain string `pulumi:"subdomain"`
+}
+
+// GetWorkloadVmInput is an input type that accepts GetWorkloadVmArgs and GetWorkloadVmOutput values.
+// You can construct a concrete instance of `GetWorkloadVmInput` via:
+//
+//	GetWorkloadVmArgs{...}
+type GetWorkloadVmInput interface {
+	pulumi.Input
+
+	ToGetWorkloadVmOutput() GetWorkloadVmOutput
+	ToGetWorkloadVmOutputWithContext(context.Context) GetWorkloadVmOutput
+}
+
+type GetWorkloadVmArgs struct {
+	// SSH public keys injected at runtime via the guest agent or config drive.
+	AccessCredentials GetWorkloadVmAccessCredentialArrayInput `pulumi:"accessCredentials"`
+	// Boot disk configuration.
+	BootDisk GetWorkloadVmBootDiskInput `pulumi:"bootDisk"`
+	// Guest clock configuration.
+	Clock GetWorkloadVmClockInput `pulumi:"clock"`
+	// Cloud-init configuration for the guest.
+	CloudInit GetWorkloadVmCloudInitInput `pulumi:"cloudInit"`
+	// CPU topology visible to the guest.
+	Cpu GetWorkloadVmCpuInput `pulumi:"cpu"`
+	// Firmware configuration for the guest.
+	Firmware GetWorkloadVmFirmwareInput `pulumi:"firmware"`
+	// Guest operating system family. Either `linux` or `windows`.
+	GuestOs pulumi.StringInput `pulumi:"guestOs"`
+	// Hostname reported to the guest.
+	Hostname pulumi.StringInput `pulumi:"hostname"`
+	// Pod-network interfaces for the VM.
+	Networks GetWorkloadVmNetworkArrayInput `pulumi:"networks"`
+	// KubeVirt RunStrategy. Either `Always`, `RerunOnFailure`, `Manual`, or `Halted`.
+	RunStrategy pulumi.StringInput `pulumi:"runStrategy"`
+	// Subdomain used by the guest for replica-to-replica addressing.
+	Subdomain pulumi.StringInput `pulumi:"subdomain"`
+}
+
+func (GetWorkloadVmArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVm)(nil)).Elem()
+}
+
+func (i GetWorkloadVmArgs) ToGetWorkloadVmOutput() GetWorkloadVmOutput {
+	return i.ToGetWorkloadVmOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadVmArgs) ToGetWorkloadVmOutputWithContext(ctx context.Context) GetWorkloadVmOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadVmOutput)
+}
+
+type GetWorkloadVmOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadVmOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVm)(nil)).Elem()
+}
+
+func (o GetWorkloadVmOutput) ToGetWorkloadVmOutput() GetWorkloadVmOutput {
+	return o
+}
+
+func (o GetWorkloadVmOutput) ToGetWorkloadVmOutputWithContext(ctx context.Context) GetWorkloadVmOutput {
+	return o
+}
+
+// SSH public keys injected at runtime via the guest agent or config drive.
+func (o GetWorkloadVmOutput) AccessCredentials() GetWorkloadVmAccessCredentialArrayOutput {
+	return o.ApplyT(func(v GetWorkloadVm) []GetWorkloadVmAccessCredential { return v.AccessCredentials }).(GetWorkloadVmAccessCredentialArrayOutput)
+}
+
+// Boot disk configuration.
+func (o GetWorkloadVmOutput) BootDisk() GetWorkloadVmBootDiskOutput {
+	return o.ApplyT(func(v GetWorkloadVm) GetWorkloadVmBootDisk { return v.BootDisk }).(GetWorkloadVmBootDiskOutput)
+}
+
+// Guest clock configuration.
+func (o GetWorkloadVmOutput) Clock() GetWorkloadVmClockOutput {
+	return o.ApplyT(func(v GetWorkloadVm) GetWorkloadVmClock { return v.Clock }).(GetWorkloadVmClockOutput)
+}
+
+// Cloud-init configuration for the guest.
+func (o GetWorkloadVmOutput) CloudInit() GetWorkloadVmCloudInitOutput {
+	return o.ApplyT(func(v GetWorkloadVm) GetWorkloadVmCloudInit { return v.CloudInit }).(GetWorkloadVmCloudInitOutput)
+}
+
+// CPU topology visible to the guest.
+func (o GetWorkloadVmOutput) Cpu() GetWorkloadVmCpuOutput {
+	return o.ApplyT(func(v GetWorkloadVm) GetWorkloadVmCpu { return v.Cpu }).(GetWorkloadVmCpuOutput)
+}
+
+// Firmware configuration for the guest.
+func (o GetWorkloadVmOutput) Firmware() GetWorkloadVmFirmwareOutput {
+	return o.ApplyT(func(v GetWorkloadVm) GetWorkloadVmFirmware { return v.Firmware }).(GetWorkloadVmFirmwareOutput)
+}
+
+// Guest operating system family. Either `linux` or `windows`.
+func (o GetWorkloadVmOutput) GuestOs() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVm) string { return v.GuestOs }).(pulumi.StringOutput)
+}
+
+// Hostname reported to the guest.
+func (o GetWorkloadVmOutput) Hostname() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVm) string { return v.Hostname }).(pulumi.StringOutput)
+}
+
+// Pod-network interfaces for the VM.
+func (o GetWorkloadVmOutput) Networks() GetWorkloadVmNetworkArrayOutput {
+	return o.ApplyT(func(v GetWorkloadVm) []GetWorkloadVmNetwork { return v.Networks }).(GetWorkloadVmNetworkArrayOutput)
+}
+
+// KubeVirt RunStrategy. Either `Always`, `RerunOnFailure`, `Manual`, or `Halted`.
+func (o GetWorkloadVmOutput) RunStrategy() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVm) string { return v.RunStrategy }).(pulumi.StringOutput)
+}
+
+// Subdomain used by the guest for replica-to-replica addressing.
+func (o GetWorkloadVmOutput) Subdomain() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVm) string { return v.Subdomain }).(pulumi.StringOutput)
+}
+
+type GetWorkloadVmAccessCredential struct {
+	// Delivery method for the access credential. Either `qemuGuestAgent` or `configDrive`.
+	DeliveryMethod string `pulumi:"deliveryMethod"`
+	// Secret containing the SSH public keys to inject.
+	SshPublicKeySecret string `pulumi:"sshPublicKeySecret"`
+	// Guest OS users the SSH public keys are injected for.
+	Users []string `pulumi:"users"`
+}
+
+// GetWorkloadVmAccessCredentialInput is an input type that accepts GetWorkloadVmAccessCredentialArgs and GetWorkloadVmAccessCredentialOutput values.
+// You can construct a concrete instance of `GetWorkloadVmAccessCredentialInput` via:
+//
+//	GetWorkloadVmAccessCredentialArgs{...}
+type GetWorkloadVmAccessCredentialInput interface {
+	pulumi.Input
+
+	ToGetWorkloadVmAccessCredentialOutput() GetWorkloadVmAccessCredentialOutput
+	ToGetWorkloadVmAccessCredentialOutputWithContext(context.Context) GetWorkloadVmAccessCredentialOutput
+}
+
+type GetWorkloadVmAccessCredentialArgs struct {
+	// Delivery method for the access credential. Either `qemuGuestAgent` or `configDrive`.
+	DeliveryMethod pulumi.StringInput `pulumi:"deliveryMethod"`
+	// Secret containing the SSH public keys to inject.
+	SshPublicKeySecret pulumi.StringInput `pulumi:"sshPublicKeySecret"`
+	// Guest OS users the SSH public keys are injected for.
+	Users pulumi.StringArrayInput `pulumi:"users"`
+}
+
+func (GetWorkloadVmAccessCredentialArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmAccessCredential)(nil)).Elem()
+}
+
+func (i GetWorkloadVmAccessCredentialArgs) ToGetWorkloadVmAccessCredentialOutput() GetWorkloadVmAccessCredentialOutput {
+	return i.ToGetWorkloadVmAccessCredentialOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadVmAccessCredentialArgs) ToGetWorkloadVmAccessCredentialOutputWithContext(ctx context.Context) GetWorkloadVmAccessCredentialOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadVmAccessCredentialOutput)
+}
+
+// GetWorkloadVmAccessCredentialArrayInput is an input type that accepts GetWorkloadVmAccessCredentialArray and GetWorkloadVmAccessCredentialArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadVmAccessCredentialArrayInput` via:
+//
+//	GetWorkloadVmAccessCredentialArray{ GetWorkloadVmAccessCredentialArgs{...} }
+type GetWorkloadVmAccessCredentialArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadVmAccessCredentialArrayOutput() GetWorkloadVmAccessCredentialArrayOutput
+	ToGetWorkloadVmAccessCredentialArrayOutputWithContext(context.Context) GetWorkloadVmAccessCredentialArrayOutput
+}
+
+type GetWorkloadVmAccessCredentialArray []GetWorkloadVmAccessCredentialInput
+
+func (GetWorkloadVmAccessCredentialArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadVmAccessCredential)(nil)).Elem()
+}
+
+func (i GetWorkloadVmAccessCredentialArray) ToGetWorkloadVmAccessCredentialArrayOutput() GetWorkloadVmAccessCredentialArrayOutput {
+	return i.ToGetWorkloadVmAccessCredentialArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadVmAccessCredentialArray) ToGetWorkloadVmAccessCredentialArrayOutputWithContext(ctx context.Context) GetWorkloadVmAccessCredentialArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadVmAccessCredentialArrayOutput)
+}
+
+type GetWorkloadVmAccessCredentialOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadVmAccessCredentialOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmAccessCredential)(nil)).Elem()
+}
+
+func (o GetWorkloadVmAccessCredentialOutput) ToGetWorkloadVmAccessCredentialOutput() GetWorkloadVmAccessCredentialOutput {
+	return o
+}
+
+func (o GetWorkloadVmAccessCredentialOutput) ToGetWorkloadVmAccessCredentialOutputWithContext(ctx context.Context) GetWorkloadVmAccessCredentialOutput {
+	return o
+}
+
+// Delivery method for the access credential. Either `qemuGuestAgent` or `configDrive`.
+func (o GetWorkloadVmAccessCredentialOutput) DeliveryMethod() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmAccessCredential) string { return v.DeliveryMethod }).(pulumi.StringOutput)
+}
+
+// Secret containing the SSH public keys to inject.
+func (o GetWorkloadVmAccessCredentialOutput) SshPublicKeySecret() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmAccessCredential) string { return v.SshPublicKeySecret }).(pulumi.StringOutput)
+}
+
+// Guest OS users the SSH public keys are injected for.
+func (o GetWorkloadVmAccessCredentialOutput) Users() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadVmAccessCredential) []string { return v.Users }).(pulumi.StringArrayOutput)
+}
+
+type GetWorkloadVmAccessCredentialArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadVmAccessCredentialArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadVmAccessCredential)(nil)).Elem()
+}
+
+func (o GetWorkloadVmAccessCredentialArrayOutput) ToGetWorkloadVmAccessCredentialArrayOutput() GetWorkloadVmAccessCredentialArrayOutput {
+	return o
+}
+
+func (o GetWorkloadVmAccessCredentialArrayOutput) ToGetWorkloadVmAccessCredentialArrayOutputWithContext(ctx context.Context) GetWorkloadVmAccessCredentialArrayOutput {
+	return o
+}
+
+func (o GetWorkloadVmAccessCredentialArrayOutput) Index(i pulumi.IntInput) GetWorkloadVmAccessCredentialOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadVmAccessCredential {
+		return vs[0].([]GetWorkloadVmAccessCredential)[vs[1].(int)]
+	}).(GetWorkloadVmAccessCredentialOutput)
+}
+
+type GetWorkloadVmBootDisk struct {
+	// Boot order of the boot disk.
+	BootOrder int `pulumi:"bootOrder"`
+	// Disk bus exposed to the guest. Either `virtio`, `sata`, or `scsi`.
+	Bus string `pulumi:"bus"`
+	// Per-replica boot PVC populated via CDI.
+	Persist GetWorkloadVmBootDiskPersist `pulumi:"persist"`
+	// Boot disk image source.
+	Source GetWorkloadVmBootDiskSource `pulumi:"source"`
+}
+
+// GetWorkloadVmBootDiskInput is an input type that accepts GetWorkloadVmBootDiskArgs and GetWorkloadVmBootDiskOutput values.
+// You can construct a concrete instance of `GetWorkloadVmBootDiskInput` via:
+//
+//	GetWorkloadVmBootDiskArgs{...}
+type GetWorkloadVmBootDiskInput interface {
+	pulumi.Input
+
+	ToGetWorkloadVmBootDiskOutput() GetWorkloadVmBootDiskOutput
+	ToGetWorkloadVmBootDiskOutputWithContext(context.Context) GetWorkloadVmBootDiskOutput
+}
+
+type GetWorkloadVmBootDiskArgs struct {
+	// Boot order of the boot disk.
+	BootOrder pulumi.IntInput `pulumi:"bootOrder"`
+	// Disk bus exposed to the guest. Either `virtio`, `sata`, or `scsi`.
+	Bus pulumi.StringInput `pulumi:"bus"`
+	// Per-replica boot PVC populated via CDI.
+	Persist GetWorkloadVmBootDiskPersistInput `pulumi:"persist"`
+	// Boot disk image source.
+	Source GetWorkloadVmBootDiskSourceInput `pulumi:"source"`
+}
+
+func (GetWorkloadVmBootDiskArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmBootDisk)(nil)).Elem()
+}
+
+func (i GetWorkloadVmBootDiskArgs) ToGetWorkloadVmBootDiskOutput() GetWorkloadVmBootDiskOutput {
+	return i.ToGetWorkloadVmBootDiskOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadVmBootDiskArgs) ToGetWorkloadVmBootDiskOutputWithContext(ctx context.Context) GetWorkloadVmBootDiskOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadVmBootDiskOutput)
+}
+
+type GetWorkloadVmBootDiskOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadVmBootDiskOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmBootDisk)(nil)).Elem()
+}
+
+func (o GetWorkloadVmBootDiskOutput) ToGetWorkloadVmBootDiskOutput() GetWorkloadVmBootDiskOutput {
+	return o
+}
+
+func (o GetWorkloadVmBootDiskOutput) ToGetWorkloadVmBootDiskOutputWithContext(ctx context.Context) GetWorkloadVmBootDiskOutput {
+	return o
+}
+
+// Boot order of the boot disk.
+func (o GetWorkloadVmBootDiskOutput) BootOrder() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadVmBootDisk) int { return v.BootOrder }).(pulumi.IntOutput)
+}
+
+// Disk bus exposed to the guest. Either `virtio`, `sata`, or `scsi`.
+func (o GetWorkloadVmBootDiskOutput) Bus() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmBootDisk) string { return v.Bus }).(pulumi.StringOutput)
+}
+
+// Per-replica boot PVC populated via CDI.
+func (o GetWorkloadVmBootDiskOutput) Persist() GetWorkloadVmBootDiskPersistOutput {
+	return o.ApplyT(func(v GetWorkloadVmBootDisk) GetWorkloadVmBootDiskPersist { return v.Persist }).(GetWorkloadVmBootDiskPersistOutput)
+}
+
+// Boot disk image source.
+func (o GetWorkloadVmBootDiskOutput) Source() GetWorkloadVmBootDiskSourceOutput {
+	return o.ApplyT(func(v GetWorkloadVmBootDisk) GetWorkloadVmBootDiskSource { return v.Source }).(GetWorkloadVmBootDiskSourceOutput)
+}
+
+type GetWorkloadVmBootDiskPersist struct {
+	// VolumeSet URI used to provision one PVC per replica for the boot disk.
+	VolumeSet string `pulumi:"volumeSet"`
+}
+
+// GetWorkloadVmBootDiskPersistInput is an input type that accepts GetWorkloadVmBootDiskPersistArgs and GetWorkloadVmBootDiskPersistOutput values.
+// You can construct a concrete instance of `GetWorkloadVmBootDiskPersistInput` via:
+//
+//	GetWorkloadVmBootDiskPersistArgs{...}
+type GetWorkloadVmBootDiskPersistInput interface {
+	pulumi.Input
+
+	ToGetWorkloadVmBootDiskPersistOutput() GetWorkloadVmBootDiskPersistOutput
+	ToGetWorkloadVmBootDiskPersistOutputWithContext(context.Context) GetWorkloadVmBootDiskPersistOutput
+}
+
+type GetWorkloadVmBootDiskPersistArgs struct {
+	// VolumeSet URI used to provision one PVC per replica for the boot disk.
+	VolumeSet pulumi.StringInput `pulumi:"volumeSet"`
+}
+
+func (GetWorkloadVmBootDiskPersistArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmBootDiskPersist)(nil)).Elem()
+}
+
+func (i GetWorkloadVmBootDiskPersistArgs) ToGetWorkloadVmBootDiskPersistOutput() GetWorkloadVmBootDiskPersistOutput {
+	return i.ToGetWorkloadVmBootDiskPersistOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadVmBootDiskPersistArgs) ToGetWorkloadVmBootDiskPersistOutputWithContext(ctx context.Context) GetWorkloadVmBootDiskPersistOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadVmBootDiskPersistOutput)
+}
+
+type GetWorkloadVmBootDiskPersistOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadVmBootDiskPersistOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmBootDiskPersist)(nil)).Elem()
+}
+
+func (o GetWorkloadVmBootDiskPersistOutput) ToGetWorkloadVmBootDiskPersistOutput() GetWorkloadVmBootDiskPersistOutput {
+	return o
+}
+
+func (o GetWorkloadVmBootDiskPersistOutput) ToGetWorkloadVmBootDiskPersistOutputWithContext(ctx context.Context) GetWorkloadVmBootDiskPersistOutput {
+	return o
+}
+
+// VolumeSet URI used to provision one PVC per replica for the boot disk.
+func (o GetWorkloadVmBootDiskPersistOutput) VolumeSet() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmBootDiskPersist) string { return v.VolumeSet }).(pulumi.StringOutput)
+}
+
+type GetWorkloadVmBootDiskSource struct {
+	// Boot disk image fetched over HTTP/HTTPS.
+	Http GetWorkloadVmBootDiskSourceHttp `pulumi:"http"`
+	// Boot from an OCI containerDisk image.
+	Oci GetWorkloadVmBootDiskSourceOci `pulumi:"oci"`
+}
+
+// GetWorkloadVmBootDiskSourceInput is an input type that accepts GetWorkloadVmBootDiskSourceArgs and GetWorkloadVmBootDiskSourceOutput values.
+// You can construct a concrete instance of `GetWorkloadVmBootDiskSourceInput` via:
+//
+//	GetWorkloadVmBootDiskSourceArgs{...}
+type GetWorkloadVmBootDiskSourceInput interface {
+	pulumi.Input
+
+	ToGetWorkloadVmBootDiskSourceOutput() GetWorkloadVmBootDiskSourceOutput
+	ToGetWorkloadVmBootDiskSourceOutputWithContext(context.Context) GetWorkloadVmBootDiskSourceOutput
+}
+
+type GetWorkloadVmBootDiskSourceArgs struct {
+	// Boot disk image fetched over HTTP/HTTPS.
+	Http GetWorkloadVmBootDiskSourceHttpInput `pulumi:"http"`
+	// Boot from an OCI containerDisk image.
+	Oci GetWorkloadVmBootDiskSourceOciInput `pulumi:"oci"`
+}
+
+func (GetWorkloadVmBootDiskSourceArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmBootDiskSource)(nil)).Elem()
+}
+
+func (i GetWorkloadVmBootDiskSourceArgs) ToGetWorkloadVmBootDiskSourceOutput() GetWorkloadVmBootDiskSourceOutput {
+	return i.ToGetWorkloadVmBootDiskSourceOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadVmBootDiskSourceArgs) ToGetWorkloadVmBootDiskSourceOutputWithContext(ctx context.Context) GetWorkloadVmBootDiskSourceOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadVmBootDiskSourceOutput)
+}
+
+type GetWorkloadVmBootDiskSourceOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadVmBootDiskSourceOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmBootDiskSource)(nil)).Elem()
+}
+
+func (o GetWorkloadVmBootDiskSourceOutput) ToGetWorkloadVmBootDiskSourceOutput() GetWorkloadVmBootDiskSourceOutput {
+	return o
+}
+
+func (o GetWorkloadVmBootDiskSourceOutput) ToGetWorkloadVmBootDiskSourceOutputWithContext(ctx context.Context) GetWorkloadVmBootDiskSourceOutput {
+	return o
+}
+
+// Boot disk image fetched over HTTP/HTTPS.
+func (o GetWorkloadVmBootDiskSourceOutput) Http() GetWorkloadVmBootDiskSourceHttpOutput {
+	return o.ApplyT(func(v GetWorkloadVmBootDiskSource) GetWorkloadVmBootDiskSourceHttp { return v.Http }).(GetWorkloadVmBootDiskSourceHttpOutput)
+}
+
+// Boot from an OCI containerDisk image.
+func (o GetWorkloadVmBootDiskSourceOutput) Oci() GetWorkloadVmBootDiskSourceOciOutput {
+	return o.ApplyT(func(v GetWorkloadVmBootDiskSource) GetWorkloadVmBootDiskSourceOci { return v.Oci }).(GetWorkloadVmBootDiskSourceOciOutput)
+}
+
+type GetWorkloadVmBootDiskSourceHttp struct {
+	// Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+	Checksum string `pulumi:"checksum"`
+	// HTTP/HTTPS URL of the boot disk image.
+	Url string `pulumi:"url"`
+}
+
+// GetWorkloadVmBootDiskSourceHttpInput is an input type that accepts GetWorkloadVmBootDiskSourceHttpArgs and GetWorkloadVmBootDiskSourceHttpOutput values.
+// You can construct a concrete instance of `GetWorkloadVmBootDiskSourceHttpInput` via:
+//
+//	GetWorkloadVmBootDiskSourceHttpArgs{...}
+type GetWorkloadVmBootDiskSourceHttpInput interface {
+	pulumi.Input
+
+	ToGetWorkloadVmBootDiskSourceHttpOutput() GetWorkloadVmBootDiskSourceHttpOutput
+	ToGetWorkloadVmBootDiskSourceHttpOutputWithContext(context.Context) GetWorkloadVmBootDiskSourceHttpOutput
+}
+
+type GetWorkloadVmBootDiskSourceHttpArgs struct {
+	// Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+	Checksum pulumi.StringInput `pulumi:"checksum"`
+	// HTTP/HTTPS URL of the boot disk image.
+	Url pulumi.StringInput `pulumi:"url"`
+}
+
+func (GetWorkloadVmBootDiskSourceHttpArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmBootDiskSourceHttp)(nil)).Elem()
+}
+
+func (i GetWorkloadVmBootDiskSourceHttpArgs) ToGetWorkloadVmBootDiskSourceHttpOutput() GetWorkloadVmBootDiskSourceHttpOutput {
+	return i.ToGetWorkloadVmBootDiskSourceHttpOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadVmBootDiskSourceHttpArgs) ToGetWorkloadVmBootDiskSourceHttpOutputWithContext(ctx context.Context) GetWorkloadVmBootDiskSourceHttpOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadVmBootDiskSourceHttpOutput)
+}
+
+type GetWorkloadVmBootDiskSourceHttpOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadVmBootDiskSourceHttpOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmBootDiskSourceHttp)(nil)).Elem()
+}
+
+func (o GetWorkloadVmBootDiskSourceHttpOutput) ToGetWorkloadVmBootDiskSourceHttpOutput() GetWorkloadVmBootDiskSourceHttpOutput {
+	return o
+}
+
+func (o GetWorkloadVmBootDiskSourceHttpOutput) ToGetWorkloadVmBootDiskSourceHttpOutputWithContext(ctx context.Context) GetWorkloadVmBootDiskSourceHttpOutput {
+	return o
+}
+
+// Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+func (o GetWorkloadVmBootDiskSourceHttpOutput) Checksum() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmBootDiskSourceHttp) string { return v.Checksum }).(pulumi.StringOutput)
+}
+
+// HTTP/HTTPS URL of the boot disk image.
+func (o GetWorkloadVmBootDiskSourceHttpOutput) Url() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmBootDiskSourceHttp) string { return v.Url }).(pulumi.StringOutput)
+}
+
+type GetWorkloadVmBootDiskSourceOci struct {
+	// Full image reference of a containerDisk.
+	Image string `pulumi:"image"`
+}
+
+// GetWorkloadVmBootDiskSourceOciInput is an input type that accepts GetWorkloadVmBootDiskSourceOciArgs and GetWorkloadVmBootDiskSourceOciOutput values.
+// You can construct a concrete instance of `GetWorkloadVmBootDiskSourceOciInput` via:
+//
+//	GetWorkloadVmBootDiskSourceOciArgs{...}
+type GetWorkloadVmBootDiskSourceOciInput interface {
+	pulumi.Input
+
+	ToGetWorkloadVmBootDiskSourceOciOutput() GetWorkloadVmBootDiskSourceOciOutput
+	ToGetWorkloadVmBootDiskSourceOciOutputWithContext(context.Context) GetWorkloadVmBootDiskSourceOciOutput
+}
+
+type GetWorkloadVmBootDiskSourceOciArgs struct {
+	// Full image reference of a containerDisk.
+	Image pulumi.StringInput `pulumi:"image"`
+}
+
+func (GetWorkloadVmBootDiskSourceOciArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmBootDiskSourceOci)(nil)).Elem()
+}
+
+func (i GetWorkloadVmBootDiskSourceOciArgs) ToGetWorkloadVmBootDiskSourceOciOutput() GetWorkloadVmBootDiskSourceOciOutput {
+	return i.ToGetWorkloadVmBootDiskSourceOciOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadVmBootDiskSourceOciArgs) ToGetWorkloadVmBootDiskSourceOciOutputWithContext(ctx context.Context) GetWorkloadVmBootDiskSourceOciOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadVmBootDiskSourceOciOutput)
+}
+
+type GetWorkloadVmBootDiskSourceOciOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadVmBootDiskSourceOciOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmBootDiskSourceOci)(nil)).Elem()
+}
+
+func (o GetWorkloadVmBootDiskSourceOciOutput) ToGetWorkloadVmBootDiskSourceOciOutput() GetWorkloadVmBootDiskSourceOciOutput {
+	return o
+}
+
+func (o GetWorkloadVmBootDiskSourceOciOutput) ToGetWorkloadVmBootDiskSourceOciOutputWithContext(ctx context.Context) GetWorkloadVmBootDiskSourceOciOutput {
+	return o
+}
+
+// Full image reference of a containerDisk.
+func (o GetWorkloadVmBootDiskSourceOciOutput) Image() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmBootDiskSourceOci) string { return v.Image }).(pulumi.StringOutput)
+}
+
+type GetWorkloadVmClock struct {
+	// Guest timezone.
+	Timezone string `pulumi:"timezone"`
+}
+
+// GetWorkloadVmClockInput is an input type that accepts GetWorkloadVmClockArgs and GetWorkloadVmClockOutput values.
+// You can construct a concrete instance of `GetWorkloadVmClockInput` via:
+//
+//	GetWorkloadVmClockArgs{...}
+type GetWorkloadVmClockInput interface {
+	pulumi.Input
+
+	ToGetWorkloadVmClockOutput() GetWorkloadVmClockOutput
+	ToGetWorkloadVmClockOutputWithContext(context.Context) GetWorkloadVmClockOutput
+}
+
+type GetWorkloadVmClockArgs struct {
+	// Guest timezone.
+	Timezone pulumi.StringInput `pulumi:"timezone"`
+}
+
+func (GetWorkloadVmClockArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmClock)(nil)).Elem()
+}
+
+func (i GetWorkloadVmClockArgs) ToGetWorkloadVmClockOutput() GetWorkloadVmClockOutput {
+	return i.ToGetWorkloadVmClockOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadVmClockArgs) ToGetWorkloadVmClockOutputWithContext(ctx context.Context) GetWorkloadVmClockOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadVmClockOutput)
+}
+
+type GetWorkloadVmClockOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadVmClockOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmClock)(nil)).Elem()
+}
+
+func (o GetWorkloadVmClockOutput) ToGetWorkloadVmClockOutput() GetWorkloadVmClockOutput {
+	return o
+}
+
+func (o GetWorkloadVmClockOutput) ToGetWorkloadVmClockOutputWithContext(ctx context.Context) GetWorkloadVmClockOutput {
+	return o
+}
+
+// Guest timezone.
+func (o GetWorkloadVmClockOutput) Timezone() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmClock) string { return v.Timezone }).(pulumi.StringOutput)
+}
+
+type GetWorkloadVmCloudInit struct {
+	// SSH public keys injected via cloud-init.
+	SshPublicKeySecrets []string `pulumi:"sshPublicKeySecrets"`
+	// Inline cloud-init user-data.
+	UserData string `pulumi:"userData"`
+	// Inline cloud-init user-data, base64-encoded.
+	UserDataBase64 string `pulumi:"userDataBase64"`
+	// Secret containing cloud-init user-data.
+	UserDataSecret string `pulumi:"userDataSecret"`
+}
+
+// GetWorkloadVmCloudInitInput is an input type that accepts GetWorkloadVmCloudInitArgs and GetWorkloadVmCloudInitOutput values.
+// You can construct a concrete instance of `GetWorkloadVmCloudInitInput` via:
+//
+//	GetWorkloadVmCloudInitArgs{...}
+type GetWorkloadVmCloudInitInput interface {
+	pulumi.Input
+
+	ToGetWorkloadVmCloudInitOutput() GetWorkloadVmCloudInitOutput
+	ToGetWorkloadVmCloudInitOutputWithContext(context.Context) GetWorkloadVmCloudInitOutput
+}
+
+type GetWorkloadVmCloudInitArgs struct {
+	// SSH public keys injected via cloud-init.
+	SshPublicKeySecrets pulumi.StringArrayInput `pulumi:"sshPublicKeySecrets"`
+	// Inline cloud-init user-data.
+	UserData pulumi.StringInput `pulumi:"userData"`
+	// Inline cloud-init user-data, base64-encoded.
+	UserDataBase64 pulumi.StringInput `pulumi:"userDataBase64"`
+	// Secret containing cloud-init user-data.
+	UserDataSecret pulumi.StringInput `pulumi:"userDataSecret"`
+}
+
+func (GetWorkloadVmCloudInitArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmCloudInit)(nil)).Elem()
+}
+
+func (i GetWorkloadVmCloudInitArgs) ToGetWorkloadVmCloudInitOutput() GetWorkloadVmCloudInitOutput {
+	return i.ToGetWorkloadVmCloudInitOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadVmCloudInitArgs) ToGetWorkloadVmCloudInitOutputWithContext(ctx context.Context) GetWorkloadVmCloudInitOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadVmCloudInitOutput)
+}
+
+type GetWorkloadVmCloudInitOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadVmCloudInitOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmCloudInit)(nil)).Elem()
+}
+
+func (o GetWorkloadVmCloudInitOutput) ToGetWorkloadVmCloudInitOutput() GetWorkloadVmCloudInitOutput {
+	return o
+}
+
+func (o GetWorkloadVmCloudInitOutput) ToGetWorkloadVmCloudInitOutputWithContext(ctx context.Context) GetWorkloadVmCloudInitOutput {
+	return o
+}
+
+// SSH public keys injected via cloud-init.
+func (o GetWorkloadVmCloudInitOutput) SshPublicKeySecrets() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetWorkloadVmCloudInit) []string { return v.SshPublicKeySecrets }).(pulumi.StringArrayOutput)
+}
+
+// Inline cloud-init user-data.
+func (o GetWorkloadVmCloudInitOutput) UserData() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmCloudInit) string { return v.UserData }).(pulumi.StringOutput)
+}
+
+// Inline cloud-init user-data, base64-encoded.
+func (o GetWorkloadVmCloudInitOutput) UserDataBase64() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmCloudInit) string { return v.UserDataBase64 }).(pulumi.StringOutput)
+}
+
+// Secret containing cloud-init user-data.
+func (o GetWorkloadVmCloudInitOutput) UserDataSecret() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmCloudInit) string { return v.UserDataSecret }).(pulumi.StringOutput)
+}
+
+type GetWorkloadVmCpu struct {
+	// CPU sockets visible to the guest.
+	Sockets int `pulumi:"sockets"`
+	// CPU threads per core visible to the guest.
+	Threads int `pulumi:"threads"`
+}
+
+// GetWorkloadVmCpuInput is an input type that accepts GetWorkloadVmCpuArgs and GetWorkloadVmCpuOutput values.
+// You can construct a concrete instance of `GetWorkloadVmCpuInput` via:
+//
+//	GetWorkloadVmCpuArgs{...}
+type GetWorkloadVmCpuInput interface {
+	pulumi.Input
+
+	ToGetWorkloadVmCpuOutput() GetWorkloadVmCpuOutput
+	ToGetWorkloadVmCpuOutputWithContext(context.Context) GetWorkloadVmCpuOutput
+}
+
+type GetWorkloadVmCpuArgs struct {
+	// CPU sockets visible to the guest.
+	Sockets pulumi.IntInput `pulumi:"sockets"`
+	// CPU threads per core visible to the guest.
+	Threads pulumi.IntInput `pulumi:"threads"`
+}
+
+func (GetWorkloadVmCpuArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmCpu)(nil)).Elem()
+}
+
+func (i GetWorkloadVmCpuArgs) ToGetWorkloadVmCpuOutput() GetWorkloadVmCpuOutput {
+	return i.ToGetWorkloadVmCpuOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadVmCpuArgs) ToGetWorkloadVmCpuOutputWithContext(ctx context.Context) GetWorkloadVmCpuOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadVmCpuOutput)
+}
+
+type GetWorkloadVmCpuOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadVmCpuOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmCpu)(nil)).Elem()
+}
+
+func (o GetWorkloadVmCpuOutput) ToGetWorkloadVmCpuOutput() GetWorkloadVmCpuOutput {
+	return o
+}
+
+func (o GetWorkloadVmCpuOutput) ToGetWorkloadVmCpuOutputWithContext(ctx context.Context) GetWorkloadVmCpuOutput {
+	return o
+}
+
+// CPU sockets visible to the guest.
+func (o GetWorkloadVmCpuOutput) Sockets() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadVmCpu) int { return v.Sockets }).(pulumi.IntOutput)
+}
+
+// CPU threads per core visible to the guest.
+func (o GetWorkloadVmCpuOutput) Threads() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadVmCpu) int { return v.Threads }).(pulumi.IntOutput)
+}
+
+type GetWorkloadVmFirmware struct {
+	// Bootloader used by the guest. Either `bios` or `efi`.
+	Bootloader string `pulumi:"bootloader"`
+	// Whether UEFI Secure Boot is enabled.
+	SecureBoot bool `pulumi:"secureBoot"`
+	// SMBIOS system serial number reported to the guest.
+	Serial string `pulumi:"serial"`
+	// SMBIOS system information reported to the guest.
+	Smbios GetWorkloadVmFirmwareSmbios `pulumi:"smbios"`
+	// Fixed SMBIOS UUID for the VM.
+	Uuid string `pulumi:"uuid"`
+}
+
+// GetWorkloadVmFirmwareInput is an input type that accepts GetWorkloadVmFirmwareArgs and GetWorkloadVmFirmwareOutput values.
+// You can construct a concrete instance of `GetWorkloadVmFirmwareInput` via:
+//
+//	GetWorkloadVmFirmwareArgs{...}
+type GetWorkloadVmFirmwareInput interface {
+	pulumi.Input
+
+	ToGetWorkloadVmFirmwareOutput() GetWorkloadVmFirmwareOutput
+	ToGetWorkloadVmFirmwareOutputWithContext(context.Context) GetWorkloadVmFirmwareOutput
+}
+
+type GetWorkloadVmFirmwareArgs struct {
+	// Bootloader used by the guest. Either `bios` or `efi`.
+	Bootloader pulumi.StringInput `pulumi:"bootloader"`
+	// Whether UEFI Secure Boot is enabled.
+	SecureBoot pulumi.BoolInput `pulumi:"secureBoot"`
+	// SMBIOS system serial number reported to the guest.
+	Serial pulumi.StringInput `pulumi:"serial"`
+	// SMBIOS system information reported to the guest.
+	Smbios GetWorkloadVmFirmwareSmbiosInput `pulumi:"smbios"`
+	// Fixed SMBIOS UUID for the VM.
+	Uuid pulumi.StringInput `pulumi:"uuid"`
+}
+
+func (GetWorkloadVmFirmwareArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmFirmware)(nil)).Elem()
+}
+
+func (i GetWorkloadVmFirmwareArgs) ToGetWorkloadVmFirmwareOutput() GetWorkloadVmFirmwareOutput {
+	return i.ToGetWorkloadVmFirmwareOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadVmFirmwareArgs) ToGetWorkloadVmFirmwareOutputWithContext(ctx context.Context) GetWorkloadVmFirmwareOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadVmFirmwareOutput)
+}
+
+type GetWorkloadVmFirmwareOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadVmFirmwareOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmFirmware)(nil)).Elem()
+}
+
+func (o GetWorkloadVmFirmwareOutput) ToGetWorkloadVmFirmwareOutput() GetWorkloadVmFirmwareOutput {
+	return o
+}
+
+func (o GetWorkloadVmFirmwareOutput) ToGetWorkloadVmFirmwareOutputWithContext(ctx context.Context) GetWorkloadVmFirmwareOutput {
+	return o
+}
+
+// Bootloader used by the guest. Either `bios` or `efi`.
+func (o GetWorkloadVmFirmwareOutput) Bootloader() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmFirmware) string { return v.Bootloader }).(pulumi.StringOutput)
+}
+
+// Whether UEFI Secure Boot is enabled.
+func (o GetWorkloadVmFirmwareOutput) SecureBoot() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadVmFirmware) bool { return v.SecureBoot }).(pulumi.BoolOutput)
+}
+
+// SMBIOS system serial number reported to the guest.
+func (o GetWorkloadVmFirmwareOutput) Serial() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmFirmware) string { return v.Serial }).(pulumi.StringOutput)
+}
+
+// SMBIOS system information reported to the guest.
+func (o GetWorkloadVmFirmwareOutput) Smbios() GetWorkloadVmFirmwareSmbiosOutput {
+	return o.ApplyT(func(v GetWorkloadVmFirmware) GetWorkloadVmFirmwareSmbios { return v.Smbios }).(GetWorkloadVmFirmwareSmbiosOutput)
+}
+
+// Fixed SMBIOS UUID for the VM.
+func (o GetWorkloadVmFirmwareOutput) Uuid() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmFirmware) string { return v.Uuid }).(pulumi.StringOutput)
+}
+
+type GetWorkloadVmFirmwareSmbios struct {
+	// SMBIOS system family.
+	Family string `pulumi:"family"`
+	// SMBIOS system manufacturer.
+	Manufacturer string `pulumi:"manufacturer"`
+	// SMBIOS system product name.
+	Product string `pulumi:"product"`
+	// SMBIOS system SKU.
+	Sku string `pulumi:"sku"`
+	// SMBIOS system version.
+	Version string `pulumi:"version"`
+}
+
+// GetWorkloadVmFirmwareSmbiosInput is an input type that accepts GetWorkloadVmFirmwareSmbiosArgs and GetWorkloadVmFirmwareSmbiosOutput values.
+// You can construct a concrete instance of `GetWorkloadVmFirmwareSmbiosInput` via:
+//
+//	GetWorkloadVmFirmwareSmbiosArgs{...}
+type GetWorkloadVmFirmwareSmbiosInput interface {
+	pulumi.Input
+
+	ToGetWorkloadVmFirmwareSmbiosOutput() GetWorkloadVmFirmwareSmbiosOutput
+	ToGetWorkloadVmFirmwareSmbiosOutputWithContext(context.Context) GetWorkloadVmFirmwareSmbiosOutput
+}
+
+type GetWorkloadVmFirmwareSmbiosArgs struct {
+	// SMBIOS system family.
+	Family pulumi.StringInput `pulumi:"family"`
+	// SMBIOS system manufacturer.
+	Manufacturer pulumi.StringInput `pulumi:"manufacturer"`
+	// SMBIOS system product name.
+	Product pulumi.StringInput `pulumi:"product"`
+	// SMBIOS system SKU.
+	Sku pulumi.StringInput `pulumi:"sku"`
+	// SMBIOS system version.
+	Version pulumi.StringInput `pulumi:"version"`
+}
+
+func (GetWorkloadVmFirmwareSmbiosArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmFirmwareSmbios)(nil)).Elem()
+}
+
+func (i GetWorkloadVmFirmwareSmbiosArgs) ToGetWorkloadVmFirmwareSmbiosOutput() GetWorkloadVmFirmwareSmbiosOutput {
+	return i.ToGetWorkloadVmFirmwareSmbiosOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadVmFirmwareSmbiosArgs) ToGetWorkloadVmFirmwareSmbiosOutputWithContext(ctx context.Context) GetWorkloadVmFirmwareSmbiosOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadVmFirmwareSmbiosOutput)
+}
+
+type GetWorkloadVmFirmwareSmbiosOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadVmFirmwareSmbiosOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmFirmwareSmbios)(nil)).Elem()
+}
+
+func (o GetWorkloadVmFirmwareSmbiosOutput) ToGetWorkloadVmFirmwareSmbiosOutput() GetWorkloadVmFirmwareSmbiosOutput {
+	return o
+}
+
+func (o GetWorkloadVmFirmwareSmbiosOutput) ToGetWorkloadVmFirmwareSmbiosOutputWithContext(ctx context.Context) GetWorkloadVmFirmwareSmbiosOutput {
+	return o
+}
+
+// SMBIOS system family.
+func (o GetWorkloadVmFirmwareSmbiosOutput) Family() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmFirmwareSmbios) string { return v.Family }).(pulumi.StringOutput)
+}
+
+// SMBIOS system manufacturer.
+func (o GetWorkloadVmFirmwareSmbiosOutput) Manufacturer() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmFirmwareSmbios) string { return v.Manufacturer }).(pulumi.StringOutput)
+}
+
+// SMBIOS system product name.
+func (o GetWorkloadVmFirmwareSmbiosOutput) Product() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmFirmwareSmbios) string { return v.Product }).(pulumi.StringOutput)
+}
+
+// SMBIOS system SKU.
+func (o GetWorkloadVmFirmwareSmbiosOutput) Sku() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmFirmwareSmbios) string { return v.Sku }).(pulumi.StringOutput)
+}
+
+// SMBIOS system version.
+func (o GetWorkloadVmFirmwareSmbiosOutput) Version() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmFirmwareSmbios) string { return v.Version }).(pulumi.StringOutput)
+}
+
+type GetWorkloadVmNetwork struct {
+	// Network interface name.
+	Name string `pulumi:"name"`
+}
+
+// GetWorkloadVmNetworkInput is an input type that accepts GetWorkloadVmNetworkArgs and GetWorkloadVmNetworkOutput values.
+// You can construct a concrete instance of `GetWorkloadVmNetworkInput` via:
+//
+//	GetWorkloadVmNetworkArgs{...}
+type GetWorkloadVmNetworkInput interface {
+	pulumi.Input
+
+	ToGetWorkloadVmNetworkOutput() GetWorkloadVmNetworkOutput
+	ToGetWorkloadVmNetworkOutputWithContext(context.Context) GetWorkloadVmNetworkOutput
+}
+
+type GetWorkloadVmNetworkArgs struct {
+	// Network interface name.
+	Name pulumi.StringInput `pulumi:"name"`
+}
+
+func (GetWorkloadVmNetworkArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmNetwork)(nil)).Elem()
+}
+
+func (i GetWorkloadVmNetworkArgs) ToGetWorkloadVmNetworkOutput() GetWorkloadVmNetworkOutput {
+	return i.ToGetWorkloadVmNetworkOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadVmNetworkArgs) ToGetWorkloadVmNetworkOutputWithContext(ctx context.Context) GetWorkloadVmNetworkOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadVmNetworkOutput)
+}
+
+// GetWorkloadVmNetworkArrayInput is an input type that accepts GetWorkloadVmNetworkArray and GetWorkloadVmNetworkArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadVmNetworkArrayInput` via:
+//
+//	GetWorkloadVmNetworkArray{ GetWorkloadVmNetworkArgs{...} }
+type GetWorkloadVmNetworkArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadVmNetworkArrayOutput() GetWorkloadVmNetworkArrayOutput
+	ToGetWorkloadVmNetworkArrayOutputWithContext(context.Context) GetWorkloadVmNetworkArrayOutput
+}
+
+type GetWorkloadVmNetworkArray []GetWorkloadVmNetworkInput
+
+func (GetWorkloadVmNetworkArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadVmNetwork)(nil)).Elem()
+}
+
+func (i GetWorkloadVmNetworkArray) ToGetWorkloadVmNetworkArrayOutput() GetWorkloadVmNetworkArrayOutput {
+	return i.ToGetWorkloadVmNetworkArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadVmNetworkArray) ToGetWorkloadVmNetworkArrayOutputWithContext(ctx context.Context) GetWorkloadVmNetworkArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadVmNetworkArrayOutput)
+}
+
+type GetWorkloadVmNetworkOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadVmNetworkOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadVmNetwork)(nil)).Elem()
+}
+
+func (o GetWorkloadVmNetworkOutput) ToGetWorkloadVmNetworkOutput() GetWorkloadVmNetworkOutput {
+	return o
+}
+
+func (o GetWorkloadVmNetworkOutput) ToGetWorkloadVmNetworkOutputWithContext(ctx context.Context) GetWorkloadVmNetworkOutput {
+	return o
+}
+
+// Network interface name.
+func (o GetWorkloadVmNetworkOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadVmNetwork) string { return v.Name }).(pulumi.StringOutput)
+}
+
+type GetWorkloadVmNetworkArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadVmNetworkArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadVmNetwork)(nil)).Elem()
+}
+
+func (o GetWorkloadVmNetworkArrayOutput) ToGetWorkloadVmNetworkArrayOutput() GetWorkloadVmNetworkArrayOutput {
+	return o
+}
+
+func (o GetWorkloadVmNetworkArrayOutput) ToGetWorkloadVmNetworkArrayOutputWithContext(ctx context.Context) GetWorkloadVmNetworkArrayOutput {
+	return o
+}
+
+func (o GetWorkloadVmNetworkArrayOutput) Index(i pulumi.IntInput) GetWorkloadVmNetworkOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadVmNetwork {
+		return vs[0].([]GetWorkloadVmNetwork)[vs[1].(int)]
+	}).(GetWorkloadVmNetworkOutput)
+}
+
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CatalogTemplateResourceInput)(nil)).Elem(), CatalogTemplateResourceArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CatalogTemplateResourceArrayInput)(nil)).Elem(), CatalogTemplateResourceArray{})
@@ -60573,6 +64158,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigRedisSentinelPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigRedisSentinelArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigTempoAgentInput)(nil)).Elem(), Mk8sAddOnsByokConfigTempoAgentArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigTempoAgentPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigTempoAgentArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsKubevirtInput)(nil)).Elem(), Mk8sAddOnsKubevirtArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsKubevirtPtrInput)(nil)).Elem(), Mk8sAddOnsKubevirtArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsLogsInput)(nil)).Elem(), Mk8sAddOnsLogsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsLogsPtrInput)(nil)).Elem(), Mk8sAddOnsLogsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsMetricsInput)(nil)).Elem(), Mk8sAddOnsMetricsArgs{})
@@ -60977,6 +64564,32 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadStatusResolvedImageImageArrayInput)(nil)).Elem(), WorkloadStatusResolvedImageImageArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadStatusResolvedImageImageManifestInput)(nil)).Elem(), WorkloadStatusResolvedImageImageManifestArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadStatusResolvedImageImageManifestArrayInput)(nil)).Elem(), WorkloadStatusResolvedImageImageManifestArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmInput)(nil)).Elem(), WorkloadVmArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmPtrInput)(nil)).Elem(), WorkloadVmArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmAccessCredentialInput)(nil)).Elem(), WorkloadVmAccessCredentialArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmAccessCredentialArrayInput)(nil)).Elem(), WorkloadVmAccessCredentialArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmBootDiskInput)(nil)).Elem(), WorkloadVmBootDiskArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmBootDiskPtrInput)(nil)).Elem(), WorkloadVmBootDiskArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmBootDiskPersistInput)(nil)).Elem(), WorkloadVmBootDiskPersistArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmBootDiskPersistPtrInput)(nil)).Elem(), WorkloadVmBootDiskPersistArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmBootDiskSourceInput)(nil)).Elem(), WorkloadVmBootDiskSourceArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmBootDiskSourcePtrInput)(nil)).Elem(), WorkloadVmBootDiskSourceArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmBootDiskSourceHttpInput)(nil)).Elem(), WorkloadVmBootDiskSourceHttpArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmBootDiskSourceHttpPtrInput)(nil)).Elem(), WorkloadVmBootDiskSourceHttpArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmBootDiskSourceOciInput)(nil)).Elem(), WorkloadVmBootDiskSourceOciArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmBootDiskSourceOciPtrInput)(nil)).Elem(), WorkloadVmBootDiskSourceOciArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmClockInput)(nil)).Elem(), WorkloadVmClockArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmClockPtrInput)(nil)).Elem(), WorkloadVmClockArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmCloudInitInput)(nil)).Elem(), WorkloadVmCloudInitArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmCloudInitPtrInput)(nil)).Elem(), WorkloadVmCloudInitArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmCpuInput)(nil)).Elem(), WorkloadVmCpuArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmCpuPtrInput)(nil)).Elem(), WorkloadVmCpuArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmFirmwareInput)(nil)).Elem(), WorkloadVmFirmwareArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmFirmwarePtrInput)(nil)).Elem(), WorkloadVmFirmwareArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmFirmwareSmbiosInput)(nil)).Elem(), WorkloadVmFirmwareSmbiosArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmFirmwareSmbiosPtrInput)(nil)).Elem(), WorkloadVmFirmwareSmbiosArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmNetworkInput)(nil)).Elem(), WorkloadVmNetworkArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadVmNetworkArrayInput)(nil)).Elem(), WorkloadVmNetworkArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcControlplaneTracingInput)(nil)).Elem(), GetGvcControlplaneTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcControlplaneTracingPtrInput)(nil)).Elem(), GetGvcControlplaneTracingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetGvcKedaInput)(nil)).Elem(), GetGvcKedaArgs{})
@@ -61113,6 +64726,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecExternalOutboundAllowPortArrayInput)(nil)).Elem(), GetWorkloadFirewallSpecExternalOutboundAllowPortArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecInternalInput)(nil)).Elem(), GetWorkloadFirewallSpecInternalArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecInternalArrayInput)(nil)).Elem(), GetWorkloadFirewallSpecInternalArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadHealthInput)(nil)).Elem(), GetWorkloadHealthArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadJobInput)(nil)).Elem(), GetWorkloadJobArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadJobArrayInput)(nil)).Elem(), GetWorkloadJobArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLoadBalancerInput)(nil)).Elem(), GetWorkloadLoadBalancerArgs{})
@@ -61185,6 +64799,21 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadStatusResolvedImageImageArrayInput)(nil)).Elem(), GetWorkloadStatusResolvedImageImageArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadStatusResolvedImageImageManifestInput)(nil)).Elem(), GetWorkloadStatusResolvedImageImageManifestArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadStatusResolvedImageImageManifestArrayInput)(nil)).Elem(), GetWorkloadStatusResolvedImageImageManifestArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadVmInput)(nil)).Elem(), GetWorkloadVmArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadVmAccessCredentialInput)(nil)).Elem(), GetWorkloadVmAccessCredentialArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadVmAccessCredentialArrayInput)(nil)).Elem(), GetWorkloadVmAccessCredentialArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadVmBootDiskInput)(nil)).Elem(), GetWorkloadVmBootDiskArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadVmBootDiskPersistInput)(nil)).Elem(), GetWorkloadVmBootDiskPersistArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadVmBootDiskSourceInput)(nil)).Elem(), GetWorkloadVmBootDiskSourceArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadVmBootDiskSourceHttpInput)(nil)).Elem(), GetWorkloadVmBootDiskSourceHttpArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadVmBootDiskSourceOciInput)(nil)).Elem(), GetWorkloadVmBootDiskSourceOciArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadVmClockInput)(nil)).Elem(), GetWorkloadVmClockArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadVmCloudInitInput)(nil)).Elem(), GetWorkloadVmCloudInitArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadVmCpuInput)(nil)).Elem(), GetWorkloadVmCpuArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadVmFirmwareInput)(nil)).Elem(), GetWorkloadVmFirmwareArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadVmFirmwareSmbiosInput)(nil)).Elem(), GetWorkloadVmFirmwareSmbiosArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadVmNetworkInput)(nil)).Elem(), GetWorkloadVmNetworkArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadVmNetworkArrayInput)(nil)).Elem(), GetWorkloadVmNetworkArray{})
 	pulumi.RegisterOutputType(CatalogTemplateResourceOutput{})
 	pulumi.RegisterOutputType(CatalogTemplateResourceArrayOutput{})
 	pulumi.RegisterOutputType(CloudAccountAwsOutput{})
@@ -61373,6 +65002,8 @@ func init() {
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigRedisSentinelPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigTempoAgentOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigTempoAgentPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsKubevirtOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsKubevirtPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsLogsOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsLogsPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsMetricsOutput{})
@@ -61777,6 +65408,32 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadStatusResolvedImageImageArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadStatusResolvedImageImageManifestOutput{})
 	pulumi.RegisterOutputType(WorkloadStatusResolvedImageImageManifestArrayOutput{})
+	pulumi.RegisterOutputType(WorkloadVmOutput{})
+	pulumi.RegisterOutputType(WorkloadVmPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadVmAccessCredentialOutput{})
+	pulumi.RegisterOutputType(WorkloadVmAccessCredentialArrayOutput{})
+	pulumi.RegisterOutputType(WorkloadVmBootDiskOutput{})
+	pulumi.RegisterOutputType(WorkloadVmBootDiskPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadVmBootDiskPersistOutput{})
+	pulumi.RegisterOutputType(WorkloadVmBootDiskPersistPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadVmBootDiskSourceOutput{})
+	pulumi.RegisterOutputType(WorkloadVmBootDiskSourcePtrOutput{})
+	pulumi.RegisterOutputType(WorkloadVmBootDiskSourceHttpOutput{})
+	pulumi.RegisterOutputType(WorkloadVmBootDiskSourceHttpPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadVmBootDiskSourceOciOutput{})
+	pulumi.RegisterOutputType(WorkloadVmBootDiskSourceOciPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadVmClockOutput{})
+	pulumi.RegisterOutputType(WorkloadVmClockPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadVmCloudInitOutput{})
+	pulumi.RegisterOutputType(WorkloadVmCloudInitPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadVmCpuOutput{})
+	pulumi.RegisterOutputType(WorkloadVmCpuPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadVmFirmwareOutput{})
+	pulumi.RegisterOutputType(WorkloadVmFirmwarePtrOutput{})
+	pulumi.RegisterOutputType(WorkloadVmFirmwareSmbiosOutput{})
+	pulumi.RegisterOutputType(WorkloadVmFirmwareSmbiosPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadVmNetworkOutput{})
+	pulumi.RegisterOutputType(WorkloadVmNetworkArrayOutput{})
 	pulumi.RegisterOutputType(GetGvcControlplaneTracingOutput{})
 	pulumi.RegisterOutputType(GetGvcControlplaneTracingPtrOutput{})
 	pulumi.RegisterOutputType(GetGvcKedaOutput{})
@@ -61913,6 +65570,7 @@ func init() {
 	pulumi.RegisterOutputType(GetWorkloadFirewallSpecExternalOutboundAllowPortArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadFirewallSpecInternalOutput{})
 	pulumi.RegisterOutputType(GetWorkloadFirewallSpecInternalArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadHealthOutput{})
 	pulumi.RegisterOutputType(GetWorkloadJobOutput{})
 	pulumi.RegisterOutputType(GetWorkloadJobArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLoadBalancerOutput{})
@@ -61985,4 +65643,19 @@ func init() {
 	pulumi.RegisterOutputType(GetWorkloadStatusResolvedImageImageArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadStatusResolvedImageImageManifestOutput{})
 	pulumi.RegisterOutputType(GetWorkloadStatusResolvedImageImageManifestArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadVmOutput{})
+	pulumi.RegisterOutputType(GetWorkloadVmAccessCredentialOutput{})
+	pulumi.RegisterOutputType(GetWorkloadVmAccessCredentialArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadVmBootDiskOutput{})
+	pulumi.RegisterOutputType(GetWorkloadVmBootDiskPersistOutput{})
+	pulumi.RegisterOutputType(GetWorkloadVmBootDiskSourceOutput{})
+	pulumi.RegisterOutputType(GetWorkloadVmBootDiskSourceHttpOutput{})
+	pulumi.RegisterOutputType(GetWorkloadVmBootDiskSourceOciOutput{})
+	pulumi.RegisterOutputType(GetWorkloadVmClockOutput{})
+	pulumi.RegisterOutputType(GetWorkloadVmCloudInitOutput{})
+	pulumi.RegisterOutputType(GetWorkloadVmCpuOutput{})
+	pulumi.RegisterOutputType(GetWorkloadVmFirmwareOutput{})
+	pulumi.RegisterOutputType(GetWorkloadVmFirmwareSmbiosOutput{})
+	pulumi.RegisterOutputType(GetWorkloadVmNetworkOutput{})
+	pulumi.RegisterOutputType(GetWorkloadVmNetworkArrayOutput{})
 }

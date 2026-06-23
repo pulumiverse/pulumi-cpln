@@ -38,11 +38,12 @@ class WorkloadArgs:
                  security_options: Optional[pulumi.Input['WorkloadSecurityOptionsArgs']] = None,
                  sidecar: Optional[pulumi.Input['WorkloadSidecarArgs']] = None,
                  support_dynamic_tags: Optional[pulumi.Input[_builtins.bool]] = None,
-                 tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None):
+                 tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 vm: Optional[pulumi.Input['WorkloadVmArgs']] = None):
         """
         The set of arguments for constructing a Workload resource.
         :param pulumi.Input[_builtins.str] gvc: Name of the associated GVC.
-        :param pulumi.Input[_builtins.str] type: Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+        :param pulumi.Input[_builtins.str] type: Workload Type. Either `serverless`, `standard`, `stateful`, `cron`, or `vm`.
         :param pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
         :param pulumi.Input[_builtins.str] description: Description of the workload.
         :param pulumi.Input[_builtins.str] extras: Extra Kubernetes modifications. Only used for BYOK.
@@ -56,6 +57,7 @@ class WorkloadArgs:
         :param pulumi.Input['WorkloadSecurityOptionsArgs'] security_options: Allows for the configuration of the `file system group id` and `geo location`.
         :param pulumi.Input[_builtins.bool] support_dynamic_tags: Workload will automatically redeploy when one of the container images is updated in the container registry. Default: false.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
+        :param pulumi.Input['WorkloadVmArgs'] vm: VM-only configuration. Required when `type` is `vm`; rejected otherwise.
         """
         pulumi.set(__self__, "gvc", gvc)
         pulumi.set(__self__, "type", type)
@@ -91,6 +93,8 @@ class WorkloadArgs:
             pulumi.set(__self__, "support_dynamic_tags", support_dynamic_tags)
         if tags is not None:
             pulumi.set(__self__, "tags", tags)
+        if vm is not None:
+            pulumi.set(__self__, "vm", vm)
 
     @_builtins.property
     @pulumi.getter
@@ -108,7 +112,7 @@ class WorkloadArgs:
     @pulumi.getter
     def type(self) -> pulumi.Input[_builtins.str]:
         """
-        Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+        Workload Type. Either `serverless`, `standard`, `stateful`, `cron`, or `vm`.
         """
         return pulumi.get(self, "type")
 
@@ -299,6 +303,18 @@ class WorkloadArgs:
     def tags(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "tags", value)
 
+    @_builtins.property
+    @pulumi.getter
+    def vm(self) -> Optional[pulumi.Input['WorkloadVmArgs']]:
+        """
+        VM-only configuration. Required when `type` is `vm`; rejected otherwise.
+        """
+        return pulumi.get(self, "vm")
+
+    @vm.setter
+    def vm(self, value: Optional[pulumi.Input['WorkloadVmArgs']]):
+        pulumi.set(self, "vm", value)
+
 
 @pulumi.input_type
 class _WorkloadState:
@@ -323,7 +339,8 @@ class _WorkloadState:
                  statuses: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadStatusArgs']]]] = None,
                  support_dynamic_tags: Optional[pulumi.Input[_builtins.bool]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 type: Optional[pulumi.Input[_builtins.str]] = None):
+                 type: Optional[pulumi.Input[_builtins.str]] = None,
+                 vm: Optional[pulumi.Input['WorkloadVmArgs']] = None):
         """
         Input properties used for looking up and filtering Workload resources.
         :param pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
@@ -343,7 +360,8 @@ class _WorkloadState:
         :param pulumi.Input[Sequence[pulumi.Input['WorkloadStatusArgs']]] statuses: Status of the workload.
         :param pulumi.Input[_builtins.bool] support_dynamic_tags: Workload will automatically redeploy when one of the container images is updated in the container registry. Default: false.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
-        :param pulumi.Input[_builtins.str] type: Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+        :param pulumi.Input[_builtins.str] type: Workload Type. Either `serverless`, `standard`, `stateful`, `cron`, or `vm`.
+        :param pulumi.Input['WorkloadVmArgs'] vm: VM-only configuration. Required when `type` is `vm`; rejected otherwise.
         """
         if containers is not None:
             pulumi.set(__self__, "containers", containers)
@@ -387,6 +405,8 @@ class _WorkloadState:
             pulumi.set(__self__, "tags", tags)
         if type is not None:
             pulumi.set(__self__, "type", type)
+        if vm is not None:
+            pulumi.set(__self__, "vm", vm)
 
     @_builtins.property
     @pulumi.getter
@@ -623,13 +643,25 @@ class _WorkloadState:
     @pulumi.getter
     def type(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+        Workload Type. Either `serverless`, `standard`, `stateful`, `cron`, or `vm`.
         """
         return pulumi.get(self, "type")
 
     @type.setter
     def type(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "type", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def vm(self) -> Optional[pulumi.Input['WorkloadVmArgs']]:
+        """
+        VM-only configuration. Required when `type` is `vm`; rejected otherwise.
+        """
+        return pulumi.get(self, "vm")
+
+    @vm.setter
+    def vm(self, value: Optional[pulumi.Input['WorkloadVmArgs']]):
+        pulumi.set(self, "vm", value)
 
 
 @pulumi.type_token("cpln:index/workload:Workload")
@@ -656,6 +688,7 @@ class Workload(pulumi.CustomResource):
                  support_dynamic_tags: Optional[pulumi.Input[_builtins.bool]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  type: Optional[pulumi.Input[_builtins.str]] = None,
+                 vm: Optional[pulumi.Input[Union['WorkloadVmArgs', 'WorkloadVmArgsDict']]] = None,
                  __props__=None):
         """
         Create a Workload resource with the given unique name, props, and options.
@@ -675,7 +708,8 @@ class Workload(pulumi.CustomResource):
         :param pulumi.Input[Union['WorkloadSecurityOptionsArgs', 'WorkloadSecurityOptionsArgsDict']] security_options: Allows for the configuration of the `file system group id` and `geo location`.
         :param pulumi.Input[_builtins.bool] support_dynamic_tags: Workload will automatically redeploy when one of the container images is updated in the container registry. Default: false.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
-        :param pulumi.Input[_builtins.str] type: Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+        :param pulumi.Input[_builtins.str] type: Workload Type. Either `serverless`, `standard`, `stateful`, `cron`, or `vm`.
+        :param pulumi.Input[Union['WorkloadVmArgs', 'WorkloadVmArgsDict']] vm: VM-only configuration. Required when `type` is `vm`; rejected otherwise.
         """
         ...
     @overload
@@ -718,6 +752,7 @@ class Workload(pulumi.CustomResource):
                  support_dynamic_tags: Optional[pulumi.Input[_builtins.bool]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  type: Optional[pulumi.Input[_builtins.str]] = None,
+                 vm: Optional[pulumi.Input[Union['WorkloadVmArgs', 'WorkloadVmArgsDict']]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -749,6 +784,7 @@ class Workload(pulumi.CustomResource):
             if type is None and not opts.urn:
                 raise TypeError("Missing required property 'type'")
             __props__.__dict__["type"] = type
+            __props__.__dict__["vm"] = vm
             __props__.__dict__["cpln_id"] = None
             __props__.__dict__["self_link"] = None
             __props__.__dict__["statuses"] = None
@@ -782,7 +818,8 @@ class Workload(pulumi.CustomResource):
             statuses: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadStatusArgs', 'WorkloadStatusArgsDict']]]]] = None,
             support_dynamic_tags: Optional[pulumi.Input[_builtins.bool]] = None,
             tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-            type: Optional[pulumi.Input[_builtins.str]] = None) -> 'Workload':
+            type: Optional[pulumi.Input[_builtins.str]] = None,
+            vm: Optional[pulumi.Input[Union['WorkloadVmArgs', 'WorkloadVmArgsDict']]] = None) -> 'Workload':
         """
         Get an existing Workload resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -807,7 +844,8 @@ class Workload(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[Union['WorkloadStatusArgs', 'WorkloadStatusArgsDict']]]] statuses: Status of the workload.
         :param pulumi.Input[_builtins.bool] support_dynamic_tags: Workload will automatically redeploy when one of the container images is updated in the container registry. Default: false.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
-        :param pulumi.Input[_builtins.str] type: Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+        :param pulumi.Input[_builtins.str] type: Workload Type. Either `serverless`, `standard`, `stateful`, `cron`, or `vm`.
+        :param pulumi.Input[Union['WorkloadVmArgs', 'WorkloadVmArgsDict']] vm: VM-only configuration. Required when `type` is `vm`; rejected otherwise.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -834,6 +872,7 @@ class Workload(pulumi.CustomResource):
         __props__.__dict__["support_dynamic_tags"] = support_dynamic_tags
         __props__.__dict__["tags"] = tags
         __props__.__dict__["type"] = type
+        __props__.__dict__["vm"] = vm
         return Workload(resource_name, opts=opts, __props__=__props__)
 
     @_builtins.property
@@ -991,7 +1030,15 @@ class Workload(pulumi.CustomResource):
     @pulumi.getter
     def type(self) -> pulumi.Output[_builtins.str]:
         """
-        Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+        Workload Type. Either `serverless`, `standard`, `stateful`, `cron`, or `vm`.
         """
         return pulumi.get(self, "type")
+
+    @_builtins.property
+    @pulumi.getter
+    def vm(self) -> pulumi.Output[Optional['outputs.WorkloadVm']]:
+        """
+        VM-only configuration. Required when `type` is `vm`; rejected otherwise.
+        """
+        return pulumi.get(self, "vm")
 

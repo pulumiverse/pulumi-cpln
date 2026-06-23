@@ -125,10 +125,16 @@ namespace Pulumiverse.Cpln
         public Output<ImmutableDictionary<string, string>> Tags { get; private set; } = null!;
 
         /// <summary>
-        /// Workload Type. Either `Serverless`, `Standard`, `Stateful`, or `Cron`.
+        /// Workload Type. Either `Serverless`, `Standard`, `Stateful`, `Cron`, or `Vm`.
         /// </summary>
         [Output("type")]
         public Output<string> Type { get; private set; } = null!;
+
+        /// <summary>
+        /// VM-only configuration. Required when `Type` is `Vm`; rejected otherwise.
+        /// </summary>
+        [Output("vm")]
+        public Output<Outputs.WorkloadVm?> Vm { get; private set; } = null!;
 
 
         /// <summary>
@@ -301,10 +307,16 @@ namespace Pulumiverse.Cpln
         }
 
         /// <summary>
-        /// Workload Type. Either `Serverless`, `Standard`, `Stateful`, or `Cron`.
+        /// Workload Type. Either `Serverless`, `Standard`, `Stateful`, `Cron`, or `Vm`.
         /// </summary>
         [Input("type", required: true)]
         public Input<string> Type { get; set; } = null!;
+
+        /// <summary>
+        /// VM-only configuration. Required when `Type` is `Vm`; rejected otherwise.
+        /// </summary>
+        [Input("vm")]
+        public Input<Inputs.WorkloadVmArgs>? Vm { get; set; }
 
         public WorkloadArgs()
         {
@@ -462,10 +474,16 @@ namespace Pulumiverse.Cpln
         }
 
         /// <summary>
-        /// Workload Type. Either `Serverless`, `Standard`, `Stateful`, or `Cron`.
+        /// Workload Type. Either `Serverless`, `Standard`, `Stateful`, `Cron`, or `Vm`.
         /// </summary>
         [Input("type")]
         public Input<string>? Type { get; set; }
+
+        /// <summary>
+        /// VM-only configuration. Required when `Type` is `Vm`; rejected otherwise.
+        /// </summary>
+        [Input("vm")]
+        public Input<Inputs.WorkloadVmGetArgs>? Vm { get; set; }
 
         public WorkloadState()
         {

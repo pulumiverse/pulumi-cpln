@@ -43,6 +43,12 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("headlamp")]
         public Input<bool>? Headlamp { get; set; }
 
+        /// <summary>
+        /// Enables type=vm workloads by installing the KubeVirt and CDI operators on the cluster.
+        /// </summary>
+        [Input("kubevirt")]
+        public Input<Inputs.Mk8sAddOnsKubevirtArgs>? Kubevirt { get; set; }
+
         [Input("localPathStorage")]
         public Input<bool>? LocalPathStorage { get; set; }
 
@@ -54,6 +60,12 @@ namespace Pulumiverse.Cpln.Inputs
         /// </summary>
         [Input("metrics")]
         public Input<Inputs.Mk8sAddOnsMetricsArgs>? Metrics { get; set; }
+
+        /// <summary>
+        /// Per-node CoreDNS cache. Required by the kubevirt add-on.
+        /// </summary>
+        [Input("nodeLocalDns")]
+        public Input<bool>? NodeLocalDns { get; set; }
 
         [Input("nvidia")]
         public Input<Inputs.Mk8sAddOnsNvidiaArgs>? Nvidia { get; set; }

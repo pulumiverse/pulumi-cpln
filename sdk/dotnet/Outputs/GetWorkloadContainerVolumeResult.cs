@@ -15,7 +15,19 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class GetWorkloadContainerVolumeResult
     {
         /// <summary>
-        /// File path added to workload pointing to the volume.
+        /// VM disk boot order. Only valid for `Vm` workloads.
+        /// </summary>
+        public readonly int BootOrder;
+        /// <summary>
+        /// VM disk bus. Only valid for `Vm` workloads. Valid values: `Virtio`, `Sata`, `Scsi`.
+        /// </summary>
+        public readonly string Bus;
+        /// <summary>
+        /// VM disk name. Required for `Vm` workloads; rejected for other workload types.
+        /// </summary>
+        public readonly string Name;
+        /// <summary>
+        /// File path added to workload pointing to the volume. Required for non-`Vm` workloads; rejected for `Vm` workloads (the volume is attached to the VM as a block device).
         /// </summary>
         public readonly string Path;
         /// <summary>
@@ -29,12 +41,21 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private GetWorkloadContainerVolumeResult(
+            int bootOrder,
+
+            string bus,
+
+            string name,
+
             string path,
 
             string recoveryPolicy,
 
             string uri)
         {
+            BootOrder = bootOrder;
+            Bus = bus;
+            Name = name;
             Path = path;
             RecoveryPolicy = recoveryPolicy;
             Uri = uri;

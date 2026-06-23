@@ -110,6 +110,7 @@ __all__ = [
     'Mk8sAddOnsByokConfigRedisHa',
     'Mk8sAddOnsByokConfigRedisSentinel',
     'Mk8sAddOnsByokConfigTempoAgent',
+    'Mk8sAddOnsKubevirt',
     'Mk8sAddOnsLogs',
     'Mk8sAddOnsMetrics',
     'Mk8sAddOnsMetricsScrapeAnnotated',
@@ -312,6 +313,19 @@ __all__ = [
     'WorkloadStatusResolvedImage',
     'WorkloadStatusResolvedImageImage',
     'WorkloadStatusResolvedImageImageManifest',
+    'WorkloadVm',
+    'WorkloadVmAccessCredential',
+    'WorkloadVmBootDisk',
+    'WorkloadVmBootDiskPersist',
+    'WorkloadVmBootDiskSource',
+    'WorkloadVmBootDiskSourceHttp',
+    'WorkloadVmBootDiskSourceOci',
+    'WorkloadVmClock',
+    'WorkloadVmCloudInit',
+    'WorkloadVmCpu',
+    'WorkloadVmFirmware',
+    'WorkloadVmFirmwareSmbios',
+    'WorkloadVmNetwork',
     'GetGvcControlplaneTracingResult',
     'GetGvcKedaResult',
     'GetGvcLightstepTracingResult',
@@ -380,6 +394,7 @@ __all__ = [
     'GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterResult',
     'GetWorkloadFirewallSpecExternalOutboundAllowPortResult',
     'GetWorkloadFirewallSpecInternalResult',
+    'GetWorkloadHealthResult',
     'GetWorkloadJobResult',
     'GetWorkloadLoadBalancerResult',
     'GetWorkloadLoadBalancerDirectResult',
@@ -416,6 +431,19 @@ __all__ = [
     'GetWorkloadStatusResolvedImageResult',
     'GetWorkloadStatusResolvedImageImageResult',
     'GetWorkloadStatusResolvedImageImageManifestResult',
+    'GetWorkloadVmResult',
+    'GetWorkloadVmAccessCredentialResult',
+    'GetWorkloadVmBootDiskResult',
+    'GetWorkloadVmBootDiskPersistResult',
+    'GetWorkloadVmBootDiskSourceResult',
+    'GetWorkloadVmBootDiskSourceHttpResult',
+    'GetWorkloadVmBootDiskSourceOciResult',
+    'GetWorkloadVmClockResult',
+    'GetWorkloadVmCloudInitResult',
+    'GetWorkloadVmCpuResult',
+    'GetWorkloadVmFirmwareResult',
+    'GetWorkloadVmFirmwareSmbiosResult',
+    'GetWorkloadVmNetworkResult',
 ]
 
 @pulumi.output_type
@@ -3581,6 +3609,8 @@ class Mk8sAddOns(dict):
             suggest = "azure_workload_identity"
         elif key == "localPathStorage":
             suggest = "local_path_storage"
+        elif key == "nodeLocalDns":
+            suggest = "node_local_dns"
         elif key == "registryMirror":
             suggest = "registry_mirror"
 
@@ -3605,15 +3635,19 @@ class Mk8sAddOns(dict):
                  byok: Optional['outputs.Mk8sAddOnsByok'] = None,
                  dashboard: Optional[_builtins.bool] = None,
                  headlamp: Optional[_builtins.bool] = None,
+                 kubevirt: Optional['outputs.Mk8sAddOnsKubevirt'] = None,
                  local_path_storage: Optional[_builtins.bool] = None,
                  logs: Optional['outputs.Mk8sAddOnsLogs'] = None,
                  metrics: Optional['outputs.Mk8sAddOnsMetrics'] = None,
+                 node_local_dns: Optional[_builtins.bool] = None,
                  nvidia: Optional['outputs.Mk8sAddOnsNvidia'] = None,
                  registry_mirror: Optional['outputs.Mk8sAddOnsRegistryMirror'] = None,
                  sysbox: Optional[_builtins.bool] = None):
         """
         :param 'Mk8sAddOnsByokArgs' byok: Bring-your-own Kubernetes (BYOK) add-on settings.
+        :param 'Mk8sAddOnsKubevirtArgs' kubevirt: Enables type=vm workloads by installing the KubeVirt and CDI operators on the cluster.
         :param 'Mk8sAddOnsMetricsArgs' metrics: Scrape pods annotated with prometheus.io/scrape=true
+        :param _builtins.bool node_local_dns: Per-node CoreDNS cache. Required by the kubevirt add-on.
         """
         if aws_ecr is not None:
             pulumi.set(__self__, "aws_ecr", aws_ecr)
@@ -3633,12 +3667,16 @@ class Mk8sAddOns(dict):
             pulumi.set(__self__, "dashboard", dashboard)
         if headlamp is not None:
             pulumi.set(__self__, "headlamp", headlamp)
+        if kubevirt is not None:
+            pulumi.set(__self__, "kubevirt", kubevirt)
         if local_path_storage is not None:
             pulumi.set(__self__, "local_path_storage", local_path_storage)
         if logs is not None:
             pulumi.set(__self__, "logs", logs)
         if metrics is not None:
             pulumi.set(__self__, "metrics", metrics)
+        if node_local_dns is not None:
+            pulumi.set(__self__, "node_local_dns", node_local_dns)
         if nvidia is not None:
             pulumi.set(__self__, "nvidia", nvidia)
         if registry_mirror is not None:
@@ -3695,6 +3733,14 @@ class Mk8sAddOns(dict):
         return pulumi.get(self, "headlamp")
 
     @_builtins.property
+    @pulumi.getter
+    def kubevirt(self) -> Optional['outputs.Mk8sAddOnsKubevirt']:
+        """
+        Enables type=vm workloads by installing the KubeVirt and CDI operators on the cluster.
+        """
+        return pulumi.get(self, "kubevirt")
+
+    @_builtins.property
     @pulumi.getter(name="localPathStorage")
     def local_path_storage(self) -> Optional[_builtins.bool]:
         return pulumi.get(self, "local_path_storage")
@@ -3711,6 +3757,14 @@ class Mk8sAddOns(dict):
         Scrape pods annotated with prometheus.io/scrape=true
         """
         return pulumi.get(self, "metrics")
+
+    @_builtins.property
+    @pulumi.getter(name="nodeLocalDns")
+    def node_local_dns(self) -> Optional[_builtins.bool]:
+        """
+        Per-node CoreDNS cache. Required by the kubevirt add-on.
+        """
+        return pulumi.get(self, "node_local_dns")
 
     @_builtins.property
     @pulumi.getter
@@ -6013,6 +6067,42 @@ class Mk8sAddOnsByokConfigTempoAgent(dict):
         Memory request applied to tempo agent pods.
         """
         return pulumi.get(self, "min_memory")
+
+
+@pulumi.output_type
+class Mk8sAddOnsKubevirt(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "scratchSpaceStorageClass":
+            suggest = "scratch_space_storage_class"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOnsKubevirt. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAddOnsKubevirt.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAddOnsKubevirt.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 scratch_space_storage_class: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str scratch_space_storage_class: Filesystem-mode StorageClass CDI uses for import scratch space. Required when the cluster default StorageClass is block-mode.
+        """
+        if scratch_space_storage_class is not None:
+            pulumi.set(__self__, "scratch_space_storage_class", scratch_space_storage_class)
+
+    @_builtins.property
+    @pulumi.getter(name="scratchSpaceStorageClass")
+    def scratch_space_storage_class(self) -> Optional[_builtins.str]:
+        """
+        Filesystem-mode StorageClass CDI uses for import scratch space. Required when the cluster default StorageClass is block-mode.
+        """
+        return pulumi.get(self, "scratch_space_storage_class")
 
 
 @pulumi.output_type
@@ -14239,7 +14329,6 @@ class WorkloadContainer(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 image: _builtins.str,
                  name: _builtins.str,
                  args: Optional[Sequence[_builtins.str]] = None,
                  command: Optional[_builtins.str] = None,
@@ -14247,6 +14336,7 @@ class WorkloadContainer(dict):
                  env: Optional[Mapping[str, _builtins.str]] = None,
                  gpu_custom: Optional['outputs.WorkloadContainerGpuCustom'] = None,
                  gpu_nvidia: Optional['outputs.WorkloadContainerGpuNvidia'] = None,
+                 image: Optional[_builtins.str] = None,
                  inherit_env: Optional[_builtins.bool] = None,
                  lifecycle: Optional['outputs.WorkloadContainerLifecycle'] = None,
                  liveness_probe: Optional['outputs.WorkloadContainerLivenessProbe'] = None,
@@ -14260,13 +14350,13 @@ class WorkloadContainer(dict):
                  volumes: Optional[Sequence['outputs.WorkloadContainerVolume']] = None,
                  working_directory: Optional[_builtins.str] = None):
         """
-        :param _builtins.str image: The full image and tag path.
         :param _builtins.str name: Name of the container.
         :param Sequence[_builtins.str] args: Command line arguments passed to the container at runtime. Replaces the CMD arguments of the running container. It is an ordered list.
         :param _builtins.str command: Override the entry point.
         :param _builtins.str cpu: Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
         :param Mapping[str, _builtins.str] env: Name-Value list of environment variables.
         :param 'WorkloadContainerGpuNvidiaArgs' gpu_nvidia: GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
+        :param _builtins.str image: The full image and tag path. Required for all workload types except `vm`, which boots from `vm.boot_disk.source` instead.
         :param _builtins.bool inherit_env: Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
         :param 'WorkloadContainerLifecycleArgs' lifecycle: Lifecycle [Reference Page](https://docs.controlplane.com/reference/workload#lifecycle).
         :param 'WorkloadContainerLivenessProbeArgs' liveness_probe: Liveness Probe
@@ -14280,7 +14370,6 @@ class WorkloadContainer(dict):
         :param Sequence['WorkloadContainerVolumeArgs'] volumes: Mount Object Store (S3, GCS, AzureBlob) buckets as file system.
         :param _builtins.str working_directory: Override the working directory. Must be an absolute path.
         """
-        pulumi.set(__self__, "image", image)
         pulumi.set(__self__, "name", name)
         if args is not None:
             pulumi.set(__self__, "args", args)
@@ -14294,6 +14383,8 @@ class WorkloadContainer(dict):
             pulumi.set(__self__, "gpu_custom", gpu_custom)
         if gpu_nvidia is not None:
             pulumi.set(__self__, "gpu_nvidia", gpu_nvidia)
+        if image is not None:
+            pulumi.set(__self__, "image", image)
         if inherit_env is not None:
             pulumi.set(__self__, "inherit_env", inherit_env)
         if lifecycle is not None:
@@ -14318,14 +14409,6 @@ class WorkloadContainer(dict):
             pulumi.set(__self__, "volumes", volumes)
         if working_directory is not None:
             pulumi.set(__self__, "working_directory", working_directory)
-
-    @_builtins.property
-    @pulumi.getter
-    def image(self) -> _builtins.str:
-        """
-        The full image and tag path.
-        """
-        return pulumi.get(self, "image")
 
     @_builtins.property
     @pulumi.getter
@@ -14379,6 +14462,14 @@ class WorkloadContainer(dict):
         GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
         """
         return pulumi.get(self, "gpu_nvidia")
+
+    @_builtins.property
+    @pulumi.getter
+    def image(self) -> Optional[_builtins.str]:
+        """
+        The full image and tag path. Required for all workload types except `vm`, which boots from `vm.boot_disk.source` instead.
+        """
+        return pulumi.get(self, "image")
 
     @_builtins.property
     @pulumi.getter(name="inheritEnv")
@@ -15186,7 +15277,9 @@ class WorkloadContainerVolume(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "recoveryPolicy":
+        if key == "bootOrder":
+            suggest = "boot_order"
+        elif key == "recoveryPolicy":
             suggest = "recovery_policy"
 
         if suggest:
@@ -15201,26 +15294,31 @@ class WorkloadContainerVolume(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 path: _builtins.str,
                  uri: _builtins.str,
+                 boot_order: Optional[_builtins.int] = None,
+                 bus: Optional[_builtins.str] = None,
+                 name: Optional[_builtins.str] = None,
+                 path: Optional[_builtins.str] = None,
                  recovery_policy: Optional[_builtins.str] = None):
         """
-        :param _builtins.str path: File path added to workload pointing to the volume.
         :param _builtins.str uri: URI of a volume hosted at Control Plane (Volume Set) or at a cloud provider (AWS, Azure, GCP).
+        :param _builtins.int boot_order: VM disk boot order. Only valid for `vm` workloads. Valid values: `1` - `16`.
+        :param _builtins.str bus: VM disk bus. Only valid for `vm` workloads. A `cpln://secret/` volume on a `sata` or `scsi` bus is presented to the guest as a read-only CD-ROM. Valid values: `virtio`, `sata`, `scsi`.
+        :param _builtins.str name: VM disk name. Required for `vm` workloads; rejected for other workload types.
+        :param _builtins.str path: File path added to workload pointing to the volume. Required for non-`vm` workloads; rejected for `vm` workloads (the volume is attached to the VM as a block device).
         :param _builtins.str recovery_policy: Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
         """
-        pulumi.set(__self__, "path", path)
         pulumi.set(__self__, "uri", uri)
+        if boot_order is not None:
+            pulumi.set(__self__, "boot_order", boot_order)
+        if bus is not None:
+            pulumi.set(__self__, "bus", bus)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+        if path is not None:
+            pulumi.set(__self__, "path", path)
         if recovery_policy is not None:
             pulumi.set(__self__, "recovery_policy", recovery_policy)
-
-    @_builtins.property
-    @pulumi.getter
-    def path(self) -> _builtins.str:
-        """
-        File path added to workload pointing to the volume.
-        """
-        return pulumi.get(self, "path")
 
     @_builtins.property
     @pulumi.getter
@@ -15229,6 +15327,38 @@ class WorkloadContainerVolume(dict):
         URI of a volume hosted at Control Plane (Volume Set) or at a cloud provider (AWS, Azure, GCP).
         """
         return pulumi.get(self, "uri")
+
+    @_builtins.property
+    @pulumi.getter(name="bootOrder")
+    def boot_order(self) -> Optional[_builtins.int]:
+        """
+        VM disk boot order. Only valid for `vm` workloads. Valid values: `1` - `16`.
+        """
+        return pulumi.get(self, "boot_order")
+
+    @_builtins.property
+    @pulumi.getter
+    def bus(self) -> Optional[_builtins.str]:
+        """
+        VM disk bus. Only valid for `vm` workloads. A `cpln://secret/` volume on a `sata` or `scsi` bus is presented to the guest as a read-only CD-ROM. Valid values: `virtio`, `sata`, `scsi`.
+        """
+        return pulumi.get(self, "bus")
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> Optional[_builtins.str]:
+        """
+        VM disk name. Required for `vm` workloads; rejected for other workload types.
+        """
+        return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter
+    def path(self) -> Optional[_builtins.str]:
+        """
+        File path added to workload pointing to the volume. Required for non-`vm` workloads; rejected for `vm` workloads (the volume is attached to the VM as a block device).
+        """
+        return pulumi.get(self, "path")
 
     @_builtins.property
     @pulumi.getter(name="recoveryPolicy")
@@ -17919,6 +18049,714 @@ class WorkloadStatusResolvedImageImageManifest(dict):
 
 
 @pulumi.output_type
+class WorkloadVm(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "accessCredentials":
+            suggest = "access_credentials"
+        elif key == "bootDisk":
+            suggest = "boot_disk"
+        elif key == "cloudInit":
+            suggest = "cloud_init"
+        elif key == "guestOs":
+            suggest = "guest_os"
+        elif key == "runStrategy":
+            suggest = "run_strategy"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadVm. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadVm.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadVm.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 access_credentials: Optional[Sequence['outputs.WorkloadVmAccessCredential']] = None,
+                 boot_disk: Optional['outputs.WorkloadVmBootDisk'] = None,
+                 clock: Optional['outputs.WorkloadVmClock'] = None,
+                 cloud_init: Optional['outputs.WorkloadVmCloudInit'] = None,
+                 cpu: Optional['outputs.WorkloadVmCpu'] = None,
+                 firmware: Optional['outputs.WorkloadVmFirmware'] = None,
+                 guest_os: Optional[_builtins.str] = None,
+                 hostname: Optional[_builtins.str] = None,
+                 networks: Optional[Sequence['outputs.WorkloadVmNetwork']] = None,
+                 run_strategy: Optional[_builtins.str] = None,
+                 subdomain: Optional[_builtins.str] = None):
+        """
+        :param Sequence['WorkloadVmAccessCredentialArgs'] access_credentials: SSH public keys injected at runtime via the guest agent or config drive.
+        :param 'WorkloadVmBootDiskArgs' boot_disk: Boot disk configuration. When `source` is omitted, `containers[0].image` is used as an OCI containerDisk.
+        :param 'WorkloadVmClockArgs' clock: Guest clock configuration.
+        :param 'WorkloadVmCloudInitArgs' cloud_init: Cloud-init configuration for the guest. Exactly one of `user_data`, `user_data_base64`, or `user_data_secret` must be specified.
+        :param 'WorkloadVmCpuArgs' cpu: CPU topology visible to the guest. Cores are derived from `containers[0].cpu`.
+        :param 'WorkloadVmFirmwareArgs' firmware: Firmware configuration for the guest.
+        :param _builtins.str guest_os: Guest operating system family. Drives the per-OS cloud-init payload. Valid values: `linux`, `windows`. Default: `linux`.
+        :param _builtins.str hostname: Hostname reported to the guest.
+        :param Sequence['WorkloadVmNetworkArgs'] networks: Pod-network interfaces for the VM. Only a single network is supported.
+        :param _builtins.str run_strategy: KubeVirt RunStrategy. Use `Halted` to keep the pool defined but powered off. Valid values: `Always`, `RerunOnFailure`, `Manual`, `Halted`. Default: `Always`.
+        :param _builtins.str subdomain: Subdomain used by the guest for replica-to-replica addressing.
+        """
+        if access_credentials is not None:
+            pulumi.set(__self__, "access_credentials", access_credentials)
+        if boot_disk is not None:
+            pulumi.set(__self__, "boot_disk", boot_disk)
+        if clock is not None:
+            pulumi.set(__self__, "clock", clock)
+        if cloud_init is not None:
+            pulumi.set(__self__, "cloud_init", cloud_init)
+        if cpu is not None:
+            pulumi.set(__self__, "cpu", cpu)
+        if firmware is not None:
+            pulumi.set(__self__, "firmware", firmware)
+        if guest_os is not None:
+            pulumi.set(__self__, "guest_os", guest_os)
+        if hostname is not None:
+            pulumi.set(__self__, "hostname", hostname)
+        if networks is not None:
+            pulumi.set(__self__, "networks", networks)
+        if run_strategy is not None:
+            pulumi.set(__self__, "run_strategy", run_strategy)
+        if subdomain is not None:
+            pulumi.set(__self__, "subdomain", subdomain)
+
+    @_builtins.property
+    @pulumi.getter(name="accessCredentials")
+    def access_credentials(self) -> Optional[Sequence['outputs.WorkloadVmAccessCredential']]:
+        """
+        SSH public keys injected at runtime via the guest agent or config drive.
+        """
+        return pulumi.get(self, "access_credentials")
+
+    @_builtins.property
+    @pulumi.getter(name="bootDisk")
+    def boot_disk(self) -> Optional['outputs.WorkloadVmBootDisk']:
+        """
+        Boot disk configuration. When `source` is omitted, `containers[0].image` is used as an OCI containerDisk.
+        """
+        return pulumi.get(self, "boot_disk")
+
+    @_builtins.property
+    @pulumi.getter
+    def clock(self) -> Optional['outputs.WorkloadVmClock']:
+        """
+        Guest clock configuration.
+        """
+        return pulumi.get(self, "clock")
+
+    @_builtins.property
+    @pulumi.getter(name="cloudInit")
+    def cloud_init(self) -> Optional['outputs.WorkloadVmCloudInit']:
+        """
+        Cloud-init configuration for the guest. Exactly one of `user_data`, `user_data_base64`, or `user_data_secret` must be specified.
+        """
+        return pulumi.get(self, "cloud_init")
+
+    @_builtins.property
+    @pulumi.getter
+    def cpu(self) -> Optional['outputs.WorkloadVmCpu']:
+        """
+        CPU topology visible to the guest. Cores are derived from `containers[0].cpu`.
+        """
+        return pulumi.get(self, "cpu")
+
+    @_builtins.property
+    @pulumi.getter
+    def firmware(self) -> Optional['outputs.WorkloadVmFirmware']:
+        """
+        Firmware configuration for the guest.
+        """
+        return pulumi.get(self, "firmware")
+
+    @_builtins.property
+    @pulumi.getter(name="guestOs")
+    def guest_os(self) -> Optional[_builtins.str]:
+        """
+        Guest operating system family. Drives the per-OS cloud-init payload. Valid values: `linux`, `windows`. Default: `linux`.
+        """
+        return pulumi.get(self, "guest_os")
+
+    @_builtins.property
+    @pulumi.getter
+    def hostname(self) -> Optional[_builtins.str]:
+        """
+        Hostname reported to the guest.
+        """
+        return pulumi.get(self, "hostname")
+
+    @_builtins.property
+    @pulumi.getter
+    def networks(self) -> Optional[Sequence['outputs.WorkloadVmNetwork']]:
+        """
+        Pod-network interfaces for the VM. Only a single network is supported.
+        """
+        return pulumi.get(self, "networks")
+
+    @_builtins.property
+    @pulumi.getter(name="runStrategy")
+    def run_strategy(self) -> Optional[_builtins.str]:
+        """
+        KubeVirt RunStrategy. Use `Halted` to keep the pool defined but powered off. Valid values: `Always`, `RerunOnFailure`, `Manual`, `Halted`. Default: `Always`.
+        """
+        return pulumi.get(self, "run_strategy")
+
+    @_builtins.property
+    @pulumi.getter
+    def subdomain(self) -> Optional[_builtins.str]:
+        """
+        Subdomain used by the guest for replica-to-replica addressing.
+        """
+        return pulumi.get(self, "subdomain")
+
+
+@pulumi.output_type
+class WorkloadVmAccessCredential(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "sshPublicKeySecret":
+            suggest = "ssh_public_key_secret"
+        elif key == "deliveryMethod":
+            suggest = "delivery_method"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadVmAccessCredential. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadVmAccessCredential.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadVmAccessCredential.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 ssh_public_key_secret: _builtins.str,
+                 users: Sequence[_builtins.str],
+                 delivery_method: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str ssh_public_key_secret: Secret containing the SSH public keys to inject.
+        :param Sequence[_builtins.str] users: Guest OS users the SSH public keys are injected for.
+        :param _builtins.str delivery_method: Delivery method for the access credential. Valid values: `qemuGuestAgent`, `configDrive`. Default: `qemuGuestAgent`.
+        """
+        pulumi.set(__self__, "ssh_public_key_secret", ssh_public_key_secret)
+        pulumi.set(__self__, "users", users)
+        if delivery_method is not None:
+            pulumi.set(__self__, "delivery_method", delivery_method)
+
+    @_builtins.property
+    @pulumi.getter(name="sshPublicKeySecret")
+    def ssh_public_key_secret(self) -> _builtins.str:
+        """
+        Secret containing the SSH public keys to inject.
+        """
+        return pulumi.get(self, "ssh_public_key_secret")
+
+    @_builtins.property
+    @pulumi.getter
+    def users(self) -> Sequence[_builtins.str]:
+        """
+        Guest OS users the SSH public keys are injected for.
+        """
+        return pulumi.get(self, "users")
+
+    @_builtins.property
+    @pulumi.getter(name="deliveryMethod")
+    def delivery_method(self) -> Optional[_builtins.str]:
+        """
+        Delivery method for the access credential. Valid values: `qemuGuestAgent`, `configDrive`. Default: `qemuGuestAgent`.
+        """
+        return pulumi.get(self, "delivery_method")
+
+
+@pulumi.output_type
+class WorkloadVmBootDisk(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "bootOrder":
+            suggest = "boot_order"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadVmBootDisk. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadVmBootDisk.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadVmBootDisk.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 boot_order: Optional[_builtins.int] = None,
+                 bus: Optional[_builtins.str] = None,
+                 persist: Optional['outputs.WorkloadVmBootDiskPersist'] = None,
+                 source: Optional['outputs.WorkloadVmBootDiskSource'] = None):
+        """
+        :param _builtins.int boot_order: Boot order of the boot disk. Valid values: `1` - `16`. Default: `1`.
+        :param _builtins.str bus: Disk bus exposed to the guest. Valid values: `virtio`, `sata`, `scsi`. Default: `virtio`.
+        :param 'WorkloadVmBootDiskPersistArgs' persist: Per-replica boot PVC populated via CDI. Required for any non-OCI source.
+        :param 'WorkloadVmBootDiskSourceArgs' source: Boot disk image source. Exactly one of `oci` or `http` must be specified.
+        """
+        if boot_order is not None:
+            pulumi.set(__self__, "boot_order", boot_order)
+        if bus is not None:
+            pulumi.set(__self__, "bus", bus)
+        if persist is not None:
+            pulumi.set(__self__, "persist", persist)
+        if source is not None:
+            pulumi.set(__self__, "source", source)
+
+    @_builtins.property
+    @pulumi.getter(name="bootOrder")
+    def boot_order(self) -> Optional[_builtins.int]:
+        """
+        Boot order of the boot disk. Valid values: `1` - `16`. Default: `1`.
+        """
+        return pulumi.get(self, "boot_order")
+
+    @_builtins.property
+    @pulumi.getter
+    def bus(self) -> Optional[_builtins.str]:
+        """
+        Disk bus exposed to the guest. Valid values: `virtio`, `sata`, `scsi`. Default: `virtio`.
+        """
+        return pulumi.get(self, "bus")
+
+    @_builtins.property
+    @pulumi.getter
+    def persist(self) -> Optional['outputs.WorkloadVmBootDiskPersist']:
+        """
+        Per-replica boot PVC populated via CDI. Required for any non-OCI source.
+        """
+        return pulumi.get(self, "persist")
+
+    @_builtins.property
+    @pulumi.getter
+    def source(self) -> Optional['outputs.WorkloadVmBootDiskSource']:
+        """
+        Boot disk image source. Exactly one of `oci` or `http` must be specified.
+        """
+        return pulumi.get(self, "source")
+
+
+@pulumi.output_type
+class WorkloadVmBootDiskPersist(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "volumeSet":
+            suggest = "volume_set"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadVmBootDiskPersist. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadVmBootDiskPersist.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadVmBootDiskPersist.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 volume_set: _builtins.str):
+        """
+        :param _builtins.str volume_set: VolumeSet URI used to provision one PVC per replica for the boot disk. Format: `cpln://volumeset/<name>`.
+        """
+        pulumi.set(__self__, "volume_set", volume_set)
+
+    @_builtins.property
+    @pulumi.getter(name="volumeSet")
+    def volume_set(self) -> _builtins.str:
+        """
+        VolumeSet URI used to provision one PVC per replica for the boot disk. Format: `cpln://volumeset/<name>`.
+        """
+        return pulumi.get(self, "volume_set")
+
+
+@pulumi.output_type
+class WorkloadVmBootDiskSource(dict):
+    def __init__(__self__, *,
+                 http: Optional['outputs.WorkloadVmBootDiskSourceHttp'] = None,
+                 oci: Optional['outputs.WorkloadVmBootDiskSourceOci'] = None):
+        """
+        :param 'WorkloadVmBootDiskSourceHttpArgs' http: Boot disk image fetched over HTTP/HTTPS. Requires `persist.volume_set`.
+        :param 'WorkloadVmBootDiskSourceOciArgs' oci: Boot from an OCI containerDisk image.
+        """
+        if http is not None:
+            pulumi.set(__self__, "http", http)
+        if oci is not None:
+            pulumi.set(__self__, "oci", oci)
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> Optional['outputs.WorkloadVmBootDiskSourceHttp']:
+        """
+        Boot disk image fetched over HTTP/HTTPS. Requires `persist.volume_set`.
+        """
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def oci(self) -> Optional['outputs.WorkloadVmBootDiskSourceOci']:
+        """
+        Boot from an OCI containerDisk image.
+        """
+        return pulumi.get(self, "oci")
+
+
+@pulumi.output_type
+class WorkloadVmBootDiskSourceHttp(dict):
+    def __init__(__self__, *,
+                 url: _builtins.str,
+                 checksum: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str url: HTTP/HTTPS URL of the boot disk image.
+        :param _builtins.str checksum: Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+        """
+        pulumi.set(__self__, "url", url)
+        if checksum is not None:
+            pulumi.set(__self__, "checksum", checksum)
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> _builtins.str:
+        """
+        HTTP/HTTPS URL of the boot disk image.
+        """
+        return pulumi.get(self, "url")
+
+    @_builtins.property
+    @pulumi.getter
+    def checksum(self) -> Optional[_builtins.str]:
+        """
+        Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+        """
+        return pulumi.get(self, "checksum")
+
+
+@pulumi.output_type
+class WorkloadVmBootDiskSourceOci(dict):
+    def __init__(__self__, *,
+                 image: _builtins.str):
+        """
+        :param _builtins.str image: Full image reference of a containerDisk (e.g., `quay.io/containerdisks/ubuntu:22.04` or `/org/<org>/image/<name>:<tag>`).
+        """
+        pulumi.set(__self__, "image", image)
+
+    @_builtins.property
+    @pulumi.getter
+    def image(self) -> _builtins.str:
+        """
+        Full image reference of a containerDisk (e.g., `quay.io/containerdisks/ubuntu:22.04` or `/org/<org>/image/<name>:<tag>`).
+        """
+        return pulumi.get(self, "image")
+
+
+@pulumi.output_type
+class WorkloadVmClock(dict):
+    def __init__(__self__, *,
+                 timezone: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str timezone: Guest timezone. Default: `UTC`.
+        """
+        if timezone is not None:
+            pulumi.set(__self__, "timezone", timezone)
+
+    @_builtins.property
+    @pulumi.getter
+    def timezone(self) -> Optional[_builtins.str]:
+        """
+        Guest timezone. Default: `UTC`.
+        """
+        return pulumi.get(self, "timezone")
+
+
+@pulumi.output_type
+class WorkloadVmCloudInit(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "sshPublicKeySecrets":
+            suggest = "ssh_public_key_secrets"
+        elif key == "userData":
+            suggest = "user_data"
+        elif key == "userDataBase64":
+            suggest = "user_data_base64"
+        elif key == "userDataSecret":
+            suggest = "user_data_secret"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadVmCloudInit. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadVmCloudInit.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadVmCloudInit.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 ssh_public_key_secrets: Optional[Sequence[_builtins.str]] = None,
+                 user_data: Optional[_builtins.str] = None,
+                 user_data_base64: Optional[_builtins.str] = None,
+                 user_data_secret: Optional[_builtins.str] = None):
+        """
+        :param Sequence[_builtins.str] ssh_public_key_secrets: SSH public keys injected via cloud-init. Each Secret may carry one or more keys.
+        :param _builtins.str user_data: Inline cloud-init user-data. Not encrypted at rest in the data-service - use `user_data_secret` for sensitive payloads.
+        :param _builtins.str user_data_base64: Inline cloud-init user-data, base64-encoded. Same caveats as `user_data`.
+        :param _builtins.str user_data_secret: Secret containing cloud-init user-data (key: `userdata` or `user-data`).
+        """
+        if ssh_public_key_secrets is not None:
+            pulumi.set(__self__, "ssh_public_key_secrets", ssh_public_key_secrets)
+        if user_data is not None:
+            pulumi.set(__self__, "user_data", user_data)
+        if user_data_base64 is not None:
+            pulumi.set(__self__, "user_data_base64", user_data_base64)
+        if user_data_secret is not None:
+            pulumi.set(__self__, "user_data_secret", user_data_secret)
+
+    @_builtins.property
+    @pulumi.getter(name="sshPublicKeySecrets")
+    def ssh_public_key_secrets(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        SSH public keys injected via cloud-init. Each Secret may carry one or more keys.
+        """
+        return pulumi.get(self, "ssh_public_key_secrets")
+
+    @_builtins.property
+    @pulumi.getter(name="userData")
+    def user_data(self) -> Optional[_builtins.str]:
+        """
+        Inline cloud-init user-data. Not encrypted at rest in the data-service - use `user_data_secret` for sensitive payloads.
+        """
+        return pulumi.get(self, "user_data")
+
+    @_builtins.property
+    @pulumi.getter(name="userDataBase64")
+    def user_data_base64(self) -> Optional[_builtins.str]:
+        """
+        Inline cloud-init user-data, base64-encoded. Same caveats as `user_data`.
+        """
+        return pulumi.get(self, "user_data_base64")
+
+    @_builtins.property
+    @pulumi.getter(name="userDataSecret")
+    def user_data_secret(self) -> Optional[_builtins.str]:
+        """
+        Secret containing cloud-init user-data (key: `userdata` or `user-data`).
+        """
+        return pulumi.get(self, "user_data_secret")
+
+
+@pulumi.output_type
+class WorkloadVmCpu(dict):
+    def __init__(__self__, *,
+                 sockets: Optional[_builtins.int] = None,
+                 threads: Optional[_builtins.int] = None):
+        """
+        :param _builtins.int sockets: CPU sockets visible to the guest. Valid values: `1` - `32`.
+        :param _builtins.int threads: CPU threads per core visible to the guest. Valid values: `1` - `8`.
+        """
+        if sockets is not None:
+            pulumi.set(__self__, "sockets", sockets)
+        if threads is not None:
+            pulumi.set(__self__, "threads", threads)
+
+    @_builtins.property
+    @pulumi.getter
+    def sockets(self) -> Optional[_builtins.int]:
+        """
+        CPU sockets visible to the guest. Valid values: `1` - `32`.
+        """
+        return pulumi.get(self, "sockets")
+
+    @_builtins.property
+    @pulumi.getter
+    def threads(self) -> Optional[_builtins.int]:
+        """
+        CPU threads per core visible to the guest. Valid values: `1` - `8`.
+        """
+        return pulumi.get(self, "threads")
+
+
+@pulumi.output_type
+class WorkloadVmFirmware(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "secureBoot":
+            suggest = "secure_boot"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadVmFirmware. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadVmFirmware.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadVmFirmware.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 bootloader: Optional[_builtins.str] = None,
+                 secure_boot: Optional[_builtins.bool] = None,
+                 serial: Optional[_builtins.str] = None,
+                 smbios: Optional['outputs.WorkloadVmFirmwareSmbios'] = None,
+                 uuid: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str bootloader: Bootloader used by the guest. Valid values: `bios`, `efi`. Default: `efi`.
+        :param _builtins.bool secure_boot: Enable UEFI Secure Boot. Default: `false`.
+        :param _builtins.str serial: SMBIOS system serial number reported to the guest.
+        :param 'WorkloadVmFirmwareSmbiosArgs' smbios: SMBIOS system information reported to the guest.
+        :param _builtins.str uuid: Fixed SMBIOS UUID for the VM. KubeVirt generates one when omitted.
+        """
+        if bootloader is not None:
+            pulumi.set(__self__, "bootloader", bootloader)
+        if secure_boot is not None:
+            pulumi.set(__self__, "secure_boot", secure_boot)
+        if serial is not None:
+            pulumi.set(__self__, "serial", serial)
+        if smbios is not None:
+            pulumi.set(__self__, "smbios", smbios)
+        if uuid is not None:
+            pulumi.set(__self__, "uuid", uuid)
+
+    @_builtins.property
+    @pulumi.getter
+    def bootloader(self) -> Optional[_builtins.str]:
+        """
+        Bootloader used by the guest. Valid values: `bios`, `efi`. Default: `efi`.
+        """
+        return pulumi.get(self, "bootloader")
+
+    @_builtins.property
+    @pulumi.getter(name="secureBoot")
+    def secure_boot(self) -> Optional[_builtins.bool]:
+        """
+        Enable UEFI Secure Boot. Default: `false`.
+        """
+        return pulumi.get(self, "secure_boot")
+
+    @_builtins.property
+    @pulumi.getter
+    def serial(self) -> Optional[_builtins.str]:
+        """
+        SMBIOS system serial number reported to the guest.
+        """
+        return pulumi.get(self, "serial")
+
+    @_builtins.property
+    @pulumi.getter
+    def smbios(self) -> Optional['outputs.WorkloadVmFirmwareSmbios']:
+        """
+        SMBIOS system information reported to the guest.
+        """
+        return pulumi.get(self, "smbios")
+
+    @_builtins.property
+    @pulumi.getter
+    def uuid(self) -> Optional[_builtins.str]:
+        """
+        Fixed SMBIOS UUID for the VM. KubeVirt generates one when omitted.
+        """
+        return pulumi.get(self, "uuid")
+
+
+@pulumi.output_type
+class WorkloadVmFirmwareSmbios(dict):
+    def __init__(__self__, *,
+                 family: Optional[_builtins.str] = None,
+                 manufacturer: Optional[_builtins.str] = None,
+                 product: Optional[_builtins.str] = None,
+                 sku: Optional[_builtins.str] = None,
+                 version: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str family: SMBIOS system family.
+        :param _builtins.str manufacturer: SMBIOS system manufacturer.
+        :param _builtins.str product: SMBIOS system product name.
+        :param _builtins.str sku: SMBIOS system SKU.
+        :param _builtins.str version: SMBIOS system version.
+        """
+        if family is not None:
+            pulumi.set(__self__, "family", family)
+        if manufacturer is not None:
+            pulumi.set(__self__, "manufacturer", manufacturer)
+        if product is not None:
+            pulumi.set(__self__, "product", product)
+        if sku is not None:
+            pulumi.set(__self__, "sku", sku)
+        if version is not None:
+            pulumi.set(__self__, "version", version)
+
+    @_builtins.property
+    @pulumi.getter
+    def family(self) -> Optional[_builtins.str]:
+        """
+        SMBIOS system family.
+        """
+        return pulumi.get(self, "family")
+
+    @_builtins.property
+    @pulumi.getter
+    def manufacturer(self) -> Optional[_builtins.str]:
+        """
+        SMBIOS system manufacturer.
+        """
+        return pulumi.get(self, "manufacturer")
+
+    @_builtins.property
+    @pulumi.getter
+    def product(self) -> Optional[_builtins.str]:
+        """
+        SMBIOS system product name.
+        """
+        return pulumi.get(self, "product")
+
+    @_builtins.property
+    @pulumi.getter
+    def sku(self) -> Optional[_builtins.str]:
+        """
+        SMBIOS system SKU.
+        """
+        return pulumi.get(self, "sku")
+
+    @_builtins.property
+    @pulumi.getter
+    def version(self) -> Optional[_builtins.str]:
+        """
+        SMBIOS system version.
+        """
+        return pulumi.get(self, "version")
+
+
+@pulumi.output_type
+class WorkloadVmNetwork(dict):
+    def __init__(__self__, *,
+                 name: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str name: Network interface name. Default: `default`.
+        """
+        if name is not None:
+            pulumi.set(__self__, "name", name)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> Optional[_builtins.str]:
+        """
+        Network interface name. Default: `default`.
+        """
+        return pulumi.get(self, "name")
+
+
+@pulumi.output_type
 class GetGvcControlplaneTracingResult(dict):
     def __init__(__self__, *,
                  sampling: _builtins.float,
@@ -20434,23 +21272,56 @@ class GetWorkloadContainerReadinessProbeTcpSocketResult(dict):
 @pulumi.output_type
 class GetWorkloadContainerVolumeResult(dict):
     def __init__(__self__, *,
+                 boot_order: _builtins.int,
+                 bus: _builtins.str,
+                 name: _builtins.str,
                  path: _builtins.str,
                  recovery_policy: _builtins.str,
                  uri: _builtins.str):
         """
-        :param _builtins.str path: File path added to workload pointing to the volume.
+        :param _builtins.int boot_order: VM disk boot order. Only valid for `vm` workloads.
+        :param _builtins.str bus: VM disk bus. Only valid for `vm` workloads. Valid values: `virtio`, `sata`, `scsi`.
+        :param _builtins.str name: VM disk name. Required for `vm` workloads; rejected for other workload types.
+        :param _builtins.str path: File path added to workload pointing to the volume. Required for non-`vm` workloads; rejected for `vm` workloads (the volume is attached to the VM as a block device).
         :param _builtins.str recovery_policy: Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
         :param _builtins.str uri: URI of a volume hosted at Control Plane (Volume Set) or at a cloud provider (AWS, Azure, GCP).
         """
+        pulumi.set(__self__, "boot_order", boot_order)
+        pulumi.set(__self__, "bus", bus)
+        pulumi.set(__self__, "name", name)
         pulumi.set(__self__, "path", path)
         pulumi.set(__self__, "recovery_policy", recovery_policy)
         pulumi.set(__self__, "uri", uri)
 
     @_builtins.property
+    @pulumi.getter(name="bootOrder")
+    def boot_order(self) -> _builtins.int:
+        """
+        VM disk boot order. Only valid for `vm` workloads.
+        """
+        return pulumi.get(self, "boot_order")
+
+    @_builtins.property
+    @pulumi.getter
+    def bus(self) -> _builtins.str:
+        """
+        VM disk bus. Only valid for `vm` workloads. Valid values: `virtio`, `sata`, `scsi`.
+        """
+        return pulumi.get(self, "bus")
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        VM disk name. Required for `vm` workloads; rejected for other workload types.
+        """
+        return pulumi.get(self, "name")
+
+    @_builtins.property
     @pulumi.getter
     def path(self) -> _builtins.str:
         """
-        File path added to workload pointing to the volume.
+        File path added to workload pointing to the volume. Required for non-`vm` workloads; rejected for `vm` workloads (the volume is attached to the VM as a block device).
         """
         return pulumi.get(self, "path")
 
@@ -20703,6 +21574,79 @@ class GetWorkloadFirewallSpecInternalResult(dict):
         A list of specific workloads which are allowed to access this workload internally. This list is only used if the 'inboundAllowType' is set to 'workload-list'.
         """
         return pulumi.get(self, "inbound_allow_workloads")
+
+
+@pulumi.output_type
+class GetWorkloadHealthResult(dict):
+    def __init__(__self__, *,
+                 readiness: _builtins.str,
+                 ready_locations: _builtins.int,
+                 ready_replicas: _builtins.int,
+                 sync_failed: _builtins.bool,
+                 total_locations: _builtins.int,
+                 total_replicas: _builtins.int):
+        """
+        :param _builtins.str readiness: Readiness of the workload.
+        :param _builtins.int ready_locations: Number of locations where the workload is ready.
+        :param _builtins.int ready_replicas: Number of ready replicas across all locations.
+        :param _builtins.bool sync_failed: Whether the most recent sync of the workload failed.
+        :param _builtins.int total_locations: Total number of locations the workload is deployed to.
+        :param _builtins.int total_replicas: Total number of replicas across all locations.
+        """
+        pulumi.set(__self__, "readiness", readiness)
+        pulumi.set(__self__, "ready_locations", ready_locations)
+        pulumi.set(__self__, "ready_replicas", ready_replicas)
+        pulumi.set(__self__, "sync_failed", sync_failed)
+        pulumi.set(__self__, "total_locations", total_locations)
+        pulumi.set(__self__, "total_replicas", total_replicas)
+
+    @_builtins.property
+    @pulumi.getter
+    def readiness(self) -> _builtins.str:
+        """
+        Readiness of the workload.
+        """
+        return pulumi.get(self, "readiness")
+
+    @_builtins.property
+    @pulumi.getter(name="readyLocations")
+    def ready_locations(self) -> _builtins.int:
+        """
+        Number of locations where the workload is ready.
+        """
+        return pulumi.get(self, "ready_locations")
+
+    @_builtins.property
+    @pulumi.getter(name="readyReplicas")
+    def ready_replicas(self) -> _builtins.int:
+        """
+        Number of ready replicas across all locations.
+        """
+        return pulumi.get(self, "ready_replicas")
+
+    @_builtins.property
+    @pulumi.getter(name="syncFailed")
+    def sync_failed(self) -> _builtins.bool:
+        """
+        Whether the most recent sync of the workload failed.
+        """
+        return pulumi.get(self, "sync_failed")
+
+    @_builtins.property
+    @pulumi.getter(name="totalLocations")
+    def total_locations(self) -> _builtins.int:
+        """
+        Total number of locations the workload is deployed to.
+        """
+        return pulumi.get(self, "total_locations")
+
+    @_builtins.property
+    @pulumi.getter(name="totalReplicas")
+    def total_replicas(self) -> _builtins.int:
+        """
+        Total number of replicas across all locations.
+        """
+        return pulumi.get(self, "total_replicas")
 
 
 @pulumi.output_type
@@ -22453,5 +23397,558 @@ class GetWorkloadStatusResolvedImageImageManifestResult(dict):
         Key-value map of strings. The combination of the operating system and architecture for which the image is built.
         """
         return pulumi.get(self, "platform")
+
+
+@pulumi.output_type
+class GetWorkloadVmResult(dict):
+    def __init__(__self__, *,
+                 access_credentials: Sequence['outputs.GetWorkloadVmAccessCredentialResult'],
+                 boot_disk: 'outputs.GetWorkloadVmBootDiskResult',
+                 clock: 'outputs.GetWorkloadVmClockResult',
+                 cloud_init: 'outputs.GetWorkloadVmCloudInitResult',
+                 cpu: 'outputs.GetWorkloadVmCpuResult',
+                 firmware: 'outputs.GetWorkloadVmFirmwareResult',
+                 guest_os: _builtins.str,
+                 hostname: _builtins.str,
+                 networks: Sequence['outputs.GetWorkloadVmNetworkResult'],
+                 run_strategy: _builtins.str,
+                 subdomain: _builtins.str):
+        """
+        :param Sequence['GetWorkloadVmAccessCredentialArgs'] access_credentials: SSH public keys injected at runtime via the guest agent or config drive.
+        :param 'GetWorkloadVmBootDiskArgs' boot_disk: Boot disk configuration.
+        :param 'GetWorkloadVmClockArgs' clock: Guest clock configuration.
+        :param 'GetWorkloadVmCloudInitArgs' cloud_init: Cloud-init configuration for the guest.
+        :param 'GetWorkloadVmCpuArgs' cpu: CPU topology visible to the guest.
+        :param 'GetWorkloadVmFirmwareArgs' firmware: Firmware configuration for the guest.
+        :param _builtins.str guest_os: Guest operating system family. Either `linux` or `windows`.
+        :param _builtins.str hostname: Hostname reported to the guest.
+        :param Sequence['GetWorkloadVmNetworkArgs'] networks: Pod-network interfaces for the VM.
+        :param _builtins.str run_strategy: KubeVirt RunStrategy. Either `Always`, `RerunOnFailure`, `Manual`, or `Halted`.
+        :param _builtins.str subdomain: Subdomain used by the guest for replica-to-replica addressing.
+        """
+        pulumi.set(__self__, "access_credentials", access_credentials)
+        pulumi.set(__self__, "boot_disk", boot_disk)
+        pulumi.set(__self__, "clock", clock)
+        pulumi.set(__self__, "cloud_init", cloud_init)
+        pulumi.set(__self__, "cpu", cpu)
+        pulumi.set(__self__, "firmware", firmware)
+        pulumi.set(__self__, "guest_os", guest_os)
+        pulumi.set(__self__, "hostname", hostname)
+        pulumi.set(__self__, "networks", networks)
+        pulumi.set(__self__, "run_strategy", run_strategy)
+        pulumi.set(__self__, "subdomain", subdomain)
+
+    @_builtins.property
+    @pulumi.getter(name="accessCredentials")
+    def access_credentials(self) -> Sequence['outputs.GetWorkloadVmAccessCredentialResult']:
+        """
+        SSH public keys injected at runtime via the guest agent or config drive.
+        """
+        return pulumi.get(self, "access_credentials")
+
+    @_builtins.property
+    @pulumi.getter(name="bootDisk")
+    def boot_disk(self) -> 'outputs.GetWorkloadVmBootDiskResult':
+        """
+        Boot disk configuration.
+        """
+        return pulumi.get(self, "boot_disk")
+
+    @_builtins.property
+    @pulumi.getter
+    def clock(self) -> 'outputs.GetWorkloadVmClockResult':
+        """
+        Guest clock configuration.
+        """
+        return pulumi.get(self, "clock")
+
+    @_builtins.property
+    @pulumi.getter(name="cloudInit")
+    def cloud_init(self) -> 'outputs.GetWorkloadVmCloudInitResult':
+        """
+        Cloud-init configuration for the guest.
+        """
+        return pulumi.get(self, "cloud_init")
+
+    @_builtins.property
+    @pulumi.getter
+    def cpu(self) -> 'outputs.GetWorkloadVmCpuResult':
+        """
+        CPU topology visible to the guest.
+        """
+        return pulumi.get(self, "cpu")
+
+    @_builtins.property
+    @pulumi.getter
+    def firmware(self) -> 'outputs.GetWorkloadVmFirmwareResult':
+        """
+        Firmware configuration for the guest.
+        """
+        return pulumi.get(self, "firmware")
+
+    @_builtins.property
+    @pulumi.getter(name="guestOs")
+    def guest_os(self) -> _builtins.str:
+        """
+        Guest operating system family. Either `linux` or `windows`.
+        """
+        return pulumi.get(self, "guest_os")
+
+    @_builtins.property
+    @pulumi.getter
+    def hostname(self) -> _builtins.str:
+        """
+        Hostname reported to the guest.
+        """
+        return pulumi.get(self, "hostname")
+
+    @_builtins.property
+    @pulumi.getter
+    def networks(self) -> Sequence['outputs.GetWorkloadVmNetworkResult']:
+        """
+        Pod-network interfaces for the VM.
+        """
+        return pulumi.get(self, "networks")
+
+    @_builtins.property
+    @pulumi.getter(name="runStrategy")
+    def run_strategy(self) -> _builtins.str:
+        """
+        KubeVirt RunStrategy. Either `Always`, `RerunOnFailure`, `Manual`, or `Halted`.
+        """
+        return pulumi.get(self, "run_strategy")
+
+    @_builtins.property
+    @pulumi.getter
+    def subdomain(self) -> _builtins.str:
+        """
+        Subdomain used by the guest for replica-to-replica addressing.
+        """
+        return pulumi.get(self, "subdomain")
+
+
+@pulumi.output_type
+class GetWorkloadVmAccessCredentialResult(dict):
+    def __init__(__self__, *,
+                 delivery_method: _builtins.str,
+                 ssh_public_key_secret: _builtins.str,
+                 users: Sequence[_builtins.str]):
+        """
+        :param _builtins.str delivery_method: Delivery method for the access credential. Either `qemuGuestAgent` or `configDrive`.
+        :param _builtins.str ssh_public_key_secret: Secret containing the SSH public keys to inject.
+        :param Sequence[_builtins.str] users: Guest OS users the SSH public keys are injected for.
+        """
+        pulumi.set(__self__, "delivery_method", delivery_method)
+        pulumi.set(__self__, "ssh_public_key_secret", ssh_public_key_secret)
+        pulumi.set(__self__, "users", users)
+
+    @_builtins.property
+    @pulumi.getter(name="deliveryMethod")
+    def delivery_method(self) -> _builtins.str:
+        """
+        Delivery method for the access credential. Either `qemuGuestAgent` or `configDrive`.
+        """
+        return pulumi.get(self, "delivery_method")
+
+    @_builtins.property
+    @pulumi.getter(name="sshPublicKeySecret")
+    def ssh_public_key_secret(self) -> _builtins.str:
+        """
+        Secret containing the SSH public keys to inject.
+        """
+        return pulumi.get(self, "ssh_public_key_secret")
+
+    @_builtins.property
+    @pulumi.getter
+    def users(self) -> Sequence[_builtins.str]:
+        """
+        Guest OS users the SSH public keys are injected for.
+        """
+        return pulumi.get(self, "users")
+
+
+@pulumi.output_type
+class GetWorkloadVmBootDiskResult(dict):
+    def __init__(__self__, *,
+                 boot_order: _builtins.int,
+                 bus: _builtins.str,
+                 persist: 'outputs.GetWorkloadVmBootDiskPersistResult',
+                 source: 'outputs.GetWorkloadVmBootDiskSourceResult'):
+        """
+        :param _builtins.int boot_order: Boot order of the boot disk.
+        :param _builtins.str bus: Disk bus exposed to the guest. Either `virtio`, `sata`, or `scsi`.
+        :param 'GetWorkloadVmBootDiskPersistArgs' persist: Per-replica boot PVC populated via CDI.
+        :param 'GetWorkloadVmBootDiskSourceArgs' source: Boot disk image source.
+        """
+        pulumi.set(__self__, "boot_order", boot_order)
+        pulumi.set(__self__, "bus", bus)
+        pulumi.set(__self__, "persist", persist)
+        pulumi.set(__self__, "source", source)
+
+    @_builtins.property
+    @pulumi.getter(name="bootOrder")
+    def boot_order(self) -> _builtins.int:
+        """
+        Boot order of the boot disk.
+        """
+        return pulumi.get(self, "boot_order")
+
+    @_builtins.property
+    @pulumi.getter
+    def bus(self) -> _builtins.str:
+        """
+        Disk bus exposed to the guest. Either `virtio`, `sata`, or `scsi`.
+        """
+        return pulumi.get(self, "bus")
+
+    @_builtins.property
+    @pulumi.getter
+    def persist(self) -> 'outputs.GetWorkloadVmBootDiskPersistResult':
+        """
+        Per-replica boot PVC populated via CDI.
+        """
+        return pulumi.get(self, "persist")
+
+    @_builtins.property
+    @pulumi.getter
+    def source(self) -> 'outputs.GetWorkloadVmBootDiskSourceResult':
+        """
+        Boot disk image source.
+        """
+        return pulumi.get(self, "source")
+
+
+@pulumi.output_type
+class GetWorkloadVmBootDiskPersistResult(dict):
+    def __init__(__self__, *,
+                 volume_set: _builtins.str):
+        """
+        :param _builtins.str volume_set: VolumeSet URI used to provision one PVC per replica for the boot disk.
+        """
+        pulumi.set(__self__, "volume_set", volume_set)
+
+    @_builtins.property
+    @pulumi.getter(name="volumeSet")
+    def volume_set(self) -> _builtins.str:
+        """
+        VolumeSet URI used to provision one PVC per replica for the boot disk.
+        """
+        return pulumi.get(self, "volume_set")
+
+
+@pulumi.output_type
+class GetWorkloadVmBootDiskSourceResult(dict):
+    def __init__(__self__, *,
+                 http: 'outputs.GetWorkloadVmBootDiskSourceHttpResult',
+                 oci: 'outputs.GetWorkloadVmBootDiskSourceOciResult'):
+        """
+        :param 'GetWorkloadVmBootDiskSourceHttpArgs' http: Boot disk image fetched over HTTP/HTTPS.
+        :param 'GetWorkloadVmBootDiskSourceOciArgs' oci: Boot from an OCI containerDisk image.
+        """
+        pulumi.set(__self__, "http", http)
+        pulumi.set(__self__, "oci", oci)
+
+    @_builtins.property
+    @pulumi.getter
+    def http(self) -> 'outputs.GetWorkloadVmBootDiskSourceHttpResult':
+        """
+        Boot disk image fetched over HTTP/HTTPS.
+        """
+        return pulumi.get(self, "http")
+
+    @_builtins.property
+    @pulumi.getter
+    def oci(self) -> 'outputs.GetWorkloadVmBootDiskSourceOciResult':
+        """
+        Boot from an OCI containerDisk image.
+        """
+        return pulumi.get(self, "oci")
+
+
+@pulumi.output_type
+class GetWorkloadVmBootDiskSourceHttpResult(dict):
+    def __init__(__self__, *,
+                 checksum: _builtins.str,
+                 url: _builtins.str):
+        """
+        :param _builtins.str checksum: Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+        :param _builtins.str url: HTTP/HTTPS URL of the boot disk image.
+        """
+        pulumi.set(__self__, "checksum", checksum)
+        pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter
+    def checksum(self) -> _builtins.str:
+        """
+        Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+        """
+        return pulumi.get(self, "checksum")
+
+    @_builtins.property
+    @pulumi.getter
+    def url(self) -> _builtins.str:
+        """
+        HTTP/HTTPS URL of the boot disk image.
+        """
+        return pulumi.get(self, "url")
+
+
+@pulumi.output_type
+class GetWorkloadVmBootDiskSourceOciResult(dict):
+    def __init__(__self__, *,
+                 image: _builtins.str):
+        """
+        :param _builtins.str image: Full image reference of a containerDisk.
+        """
+        pulumi.set(__self__, "image", image)
+
+    @_builtins.property
+    @pulumi.getter
+    def image(self) -> _builtins.str:
+        """
+        Full image reference of a containerDisk.
+        """
+        return pulumi.get(self, "image")
+
+
+@pulumi.output_type
+class GetWorkloadVmClockResult(dict):
+    def __init__(__self__, *,
+                 timezone: _builtins.str):
+        """
+        :param _builtins.str timezone: Guest timezone.
+        """
+        pulumi.set(__self__, "timezone", timezone)
+
+    @_builtins.property
+    @pulumi.getter
+    def timezone(self) -> _builtins.str:
+        """
+        Guest timezone.
+        """
+        return pulumi.get(self, "timezone")
+
+
+@pulumi.output_type
+class GetWorkloadVmCloudInitResult(dict):
+    def __init__(__self__, *,
+                 ssh_public_key_secrets: Sequence[_builtins.str],
+                 user_data: _builtins.str,
+                 user_data_base64: _builtins.str,
+                 user_data_secret: _builtins.str):
+        """
+        :param Sequence[_builtins.str] ssh_public_key_secrets: SSH public keys injected via cloud-init.
+        :param _builtins.str user_data: Inline cloud-init user-data.
+        :param _builtins.str user_data_base64: Inline cloud-init user-data, base64-encoded.
+        :param _builtins.str user_data_secret: Secret containing cloud-init user-data.
+        """
+        pulumi.set(__self__, "ssh_public_key_secrets", ssh_public_key_secrets)
+        pulumi.set(__self__, "user_data", user_data)
+        pulumi.set(__self__, "user_data_base64", user_data_base64)
+        pulumi.set(__self__, "user_data_secret", user_data_secret)
+
+    @_builtins.property
+    @pulumi.getter(name="sshPublicKeySecrets")
+    def ssh_public_key_secrets(self) -> Sequence[_builtins.str]:
+        """
+        SSH public keys injected via cloud-init.
+        """
+        return pulumi.get(self, "ssh_public_key_secrets")
+
+    @_builtins.property
+    @pulumi.getter(name="userData")
+    def user_data(self) -> _builtins.str:
+        """
+        Inline cloud-init user-data.
+        """
+        return pulumi.get(self, "user_data")
+
+    @_builtins.property
+    @pulumi.getter(name="userDataBase64")
+    def user_data_base64(self) -> _builtins.str:
+        """
+        Inline cloud-init user-data, base64-encoded.
+        """
+        return pulumi.get(self, "user_data_base64")
+
+    @_builtins.property
+    @pulumi.getter(name="userDataSecret")
+    def user_data_secret(self) -> _builtins.str:
+        """
+        Secret containing cloud-init user-data.
+        """
+        return pulumi.get(self, "user_data_secret")
+
+
+@pulumi.output_type
+class GetWorkloadVmCpuResult(dict):
+    def __init__(__self__, *,
+                 sockets: _builtins.int,
+                 threads: _builtins.int):
+        """
+        :param _builtins.int sockets: CPU sockets visible to the guest.
+        :param _builtins.int threads: CPU threads per core visible to the guest.
+        """
+        pulumi.set(__self__, "sockets", sockets)
+        pulumi.set(__self__, "threads", threads)
+
+    @_builtins.property
+    @pulumi.getter
+    def sockets(self) -> _builtins.int:
+        """
+        CPU sockets visible to the guest.
+        """
+        return pulumi.get(self, "sockets")
+
+    @_builtins.property
+    @pulumi.getter
+    def threads(self) -> _builtins.int:
+        """
+        CPU threads per core visible to the guest.
+        """
+        return pulumi.get(self, "threads")
+
+
+@pulumi.output_type
+class GetWorkloadVmFirmwareResult(dict):
+    def __init__(__self__, *,
+                 bootloader: _builtins.str,
+                 secure_boot: _builtins.bool,
+                 serial: _builtins.str,
+                 smbios: 'outputs.GetWorkloadVmFirmwareSmbiosResult',
+                 uuid: _builtins.str):
+        """
+        :param _builtins.str bootloader: Bootloader used by the guest. Either `bios` or `efi`.
+        :param _builtins.bool secure_boot: Whether UEFI Secure Boot is enabled.
+        :param _builtins.str serial: SMBIOS system serial number reported to the guest.
+        :param 'GetWorkloadVmFirmwareSmbiosArgs' smbios: SMBIOS system information reported to the guest.
+        :param _builtins.str uuid: Fixed SMBIOS UUID for the VM.
+        """
+        pulumi.set(__self__, "bootloader", bootloader)
+        pulumi.set(__self__, "secure_boot", secure_boot)
+        pulumi.set(__self__, "serial", serial)
+        pulumi.set(__self__, "smbios", smbios)
+        pulumi.set(__self__, "uuid", uuid)
+
+    @_builtins.property
+    @pulumi.getter
+    def bootloader(self) -> _builtins.str:
+        """
+        Bootloader used by the guest. Either `bios` or `efi`.
+        """
+        return pulumi.get(self, "bootloader")
+
+    @_builtins.property
+    @pulumi.getter(name="secureBoot")
+    def secure_boot(self) -> _builtins.bool:
+        """
+        Whether UEFI Secure Boot is enabled.
+        """
+        return pulumi.get(self, "secure_boot")
+
+    @_builtins.property
+    @pulumi.getter
+    def serial(self) -> _builtins.str:
+        """
+        SMBIOS system serial number reported to the guest.
+        """
+        return pulumi.get(self, "serial")
+
+    @_builtins.property
+    @pulumi.getter
+    def smbios(self) -> 'outputs.GetWorkloadVmFirmwareSmbiosResult':
+        """
+        SMBIOS system information reported to the guest.
+        """
+        return pulumi.get(self, "smbios")
+
+    @_builtins.property
+    @pulumi.getter
+    def uuid(self) -> _builtins.str:
+        """
+        Fixed SMBIOS UUID for the VM.
+        """
+        return pulumi.get(self, "uuid")
+
+
+@pulumi.output_type
+class GetWorkloadVmFirmwareSmbiosResult(dict):
+    def __init__(__self__, *,
+                 family: _builtins.str,
+                 manufacturer: _builtins.str,
+                 product: _builtins.str,
+                 sku: _builtins.str,
+                 version: _builtins.str):
+        """
+        :param _builtins.str family: SMBIOS system family.
+        :param _builtins.str manufacturer: SMBIOS system manufacturer.
+        :param _builtins.str product: SMBIOS system product name.
+        :param _builtins.str sku: SMBIOS system SKU.
+        :param _builtins.str version: SMBIOS system version.
+        """
+        pulumi.set(__self__, "family", family)
+        pulumi.set(__self__, "manufacturer", manufacturer)
+        pulumi.set(__self__, "product", product)
+        pulumi.set(__self__, "sku", sku)
+        pulumi.set(__self__, "version", version)
+
+    @_builtins.property
+    @pulumi.getter
+    def family(self) -> _builtins.str:
+        """
+        SMBIOS system family.
+        """
+        return pulumi.get(self, "family")
+
+    @_builtins.property
+    @pulumi.getter
+    def manufacturer(self) -> _builtins.str:
+        """
+        SMBIOS system manufacturer.
+        """
+        return pulumi.get(self, "manufacturer")
+
+    @_builtins.property
+    @pulumi.getter
+    def product(self) -> _builtins.str:
+        """
+        SMBIOS system product name.
+        """
+        return pulumi.get(self, "product")
+
+    @_builtins.property
+    @pulumi.getter
+    def sku(self) -> _builtins.str:
+        """
+        SMBIOS system SKU.
+        """
+        return pulumi.get(self, "sku")
+
+    @_builtins.property
+    @pulumi.getter
+    def version(self) -> _builtins.str:
+        """
+        SMBIOS system version.
+        """
+        return pulumi.get(self, "version")
+
+
+@pulumi.output_type
+class GetWorkloadVmNetworkResult(dict):
+    def __init__(__self__, *,
+                 name: _builtins.str):
+        """
+        :param _builtins.str name: Network interface name.
+        """
+        pulumi.set(__self__, "name", name)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        Network interface name.
+        """
+        return pulumi.get(self, "name")
 
 

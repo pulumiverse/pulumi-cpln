@@ -1247,7 +1247,19 @@ export interface GetWorkloadContainerReadinessProbeTcpSocket {
 
 export interface GetWorkloadContainerVolume {
     /**
-     * File path added to workload pointing to the volume.
+     * VM disk boot order. Only valid for `vm` workloads.
+     */
+    bootOrder: number;
+    /**
+     * VM disk bus. Only valid for `vm` workloads. Valid values: `virtio`, `sata`, `scsi`.
+     */
+    bus: string;
+    /**
+     * VM disk name. Required for `vm` workloads; rejected for other workload types.
+     */
+    name: string;
+    /**
+     * File path added to workload pointing to the volume. Required for non-`vm` workloads; rejected for `vm` workloads (the volume is attached to the VM as a block device).
      */
     path: string;
     /**
@@ -1344,6 +1356,33 @@ export interface GetWorkloadFirewallSpecInternal {
      * A list of specific workloads which are allowed to access this workload internally. This list is only used if the 'inboundAllowType' is set to 'workload-list'.
      */
     inboundAllowWorkloads: string[];
+}
+
+export interface GetWorkloadHealth {
+    /**
+     * Readiness of the workload.
+     */
+    readiness: string;
+    /**
+     * Number of locations where the workload is ready.
+     */
+    readyLocations: number;
+    /**
+     * Number of ready replicas across all locations.
+     */
+    readyReplicas: number;
+    /**
+     * Whether the most recent sync of the workload failed.
+     */
+    syncFailed: boolean;
+    /**
+     * Total number of locations the workload is deployed to.
+     */
+    totalLocations: number;
+    /**
+     * Total number of replicas across all locations.
+     */
+    totalReplicas: number;
 }
 
 export interface GetWorkloadJob {
@@ -1965,6 +2004,213 @@ export interface GetWorkloadStatusResolvedImageImageManifest {
     platform: {[key: string]: string};
 }
 
+export interface GetWorkloadVm {
+    /**
+     * SSH public keys injected at runtime via the guest agent or config drive.
+     */
+    accessCredentials: outputs.GetWorkloadVmAccessCredential[];
+    /**
+     * Boot disk configuration.
+     */
+    bootDisk: outputs.GetWorkloadVmBootDisk;
+    /**
+     * Guest clock configuration.
+     */
+    clock: outputs.GetWorkloadVmClock;
+    /**
+     * Cloud-init configuration for the guest.
+     */
+    cloudInit: outputs.GetWorkloadVmCloudInit;
+    /**
+     * CPU topology visible to the guest.
+     */
+    cpu: outputs.GetWorkloadVmCpu;
+    /**
+     * Firmware configuration for the guest.
+     */
+    firmware: outputs.GetWorkloadVmFirmware;
+    /**
+     * Guest operating system family. Either `linux` or `windows`.
+     */
+    guestOs: string;
+    /**
+     * Hostname reported to the guest.
+     */
+    hostname: string;
+    /**
+     * Pod-network interfaces for the VM.
+     */
+    networks: outputs.GetWorkloadVmNetwork[];
+    /**
+     * KubeVirt RunStrategy. Either `Always`, `RerunOnFailure`, `Manual`, or `Halted`.
+     */
+    runStrategy: string;
+    /**
+     * Subdomain used by the guest for replica-to-replica addressing.
+     */
+    subdomain: string;
+}
+
+export interface GetWorkloadVmAccessCredential {
+    /**
+     * Delivery method for the access credential. Either `qemuGuestAgent` or `configDrive`.
+     */
+    deliveryMethod: string;
+    /**
+     * Secret containing the SSH public keys to inject.
+     */
+    sshPublicKeySecret: string;
+    /**
+     * Guest OS users the SSH public keys are injected for.
+     */
+    users: string[];
+}
+
+export interface GetWorkloadVmBootDisk {
+    /**
+     * Boot order of the boot disk.
+     */
+    bootOrder: number;
+    /**
+     * Disk bus exposed to the guest. Either `virtio`, `sata`, or `scsi`.
+     */
+    bus: string;
+    /**
+     * Per-replica boot PVC populated via CDI.
+     */
+    persist: outputs.GetWorkloadVmBootDiskPersist;
+    /**
+     * Boot disk image source.
+     */
+    source: outputs.GetWorkloadVmBootDiskSource;
+}
+
+export interface GetWorkloadVmBootDiskPersist {
+    /**
+     * VolumeSet URI used to provision one PVC per replica for the boot disk.
+     */
+    volumeSet: string;
+}
+
+export interface GetWorkloadVmBootDiskSource {
+    /**
+     * Boot disk image fetched over HTTP/HTTPS.
+     */
+    http: outputs.GetWorkloadVmBootDiskSourceHttp;
+    /**
+     * Boot from an OCI containerDisk image.
+     */
+    oci: outputs.GetWorkloadVmBootDiskSourceOci;
+}
+
+export interface GetWorkloadVmBootDiskSourceHttp {
+    /**
+     * Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+     */
+    checksum: string;
+    /**
+     * HTTP/HTTPS URL of the boot disk image.
+     */
+    url: string;
+}
+
+export interface GetWorkloadVmBootDiskSourceOci {
+    /**
+     * Full image reference of a containerDisk.
+     */
+    image: string;
+}
+
+export interface GetWorkloadVmClock {
+    /**
+     * Guest timezone.
+     */
+    timezone: string;
+}
+
+export interface GetWorkloadVmCloudInit {
+    /**
+     * SSH public keys injected via cloud-init.
+     */
+    sshPublicKeySecrets: string[];
+    /**
+     * Inline cloud-init user-data.
+     */
+    userData: string;
+    /**
+     * Inline cloud-init user-data, base64-encoded.
+     */
+    userDataBase64: string;
+    /**
+     * Secret containing cloud-init user-data.
+     */
+    userDataSecret: string;
+}
+
+export interface GetWorkloadVmCpu {
+    /**
+     * CPU sockets visible to the guest.
+     */
+    sockets: number;
+    /**
+     * CPU threads per core visible to the guest.
+     */
+    threads: number;
+}
+
+export interface GetWorkloadVmFirmware {
+    /**
+     * Bootloader used by the guest. Either `bios` or `efi`.
+     */
+    bootloader: string;
+    /**
+     * Whether UEFI Secure Boot is enabled.
+     */
+    secureBoot: boolean;
+    /**
+     * SMBIOS system serial number reported to the guest.
+     */
+    serial: string;
+    /**
+     * SMBIOS system information reported to the guest.
+     */
+    smbios: outputs.GetWorkloadVmFirmwareSmbios;
+    /**
+     * Fixed SMBIOS UUID for the VM.
+     */
+    uuid: string;
+}
+
+export interface GetWorkloadVmFirmwareSmbios {
+    /**
+     * SMBIOS system family.
+     */
+    family: string;
+    /**
+     * SMBIOS system manufacturer.
+     */
+    manufacturer: string;
+    /**
+     * SMBIOS system product name.
+     */
+    product: string;
+    /**
+     * SMBIOS system SKU.
+     */
+    sku: string;
+    /**
+     * SMBIOS system version.
+     */
+    version: string;
+}
+
+export interface GetWorkloadVmNetwork {
+    /**
+     * Network interface name.
+     */
+    name: string;
+}
+
 export interface GroupIdentityMatcher {
     /**
      * Executes the expression against the users' claims to decide whether a user belongs to this group. This method is useful for managing the grouping of users logged in with SAML providers.
@@ -2468,12 +2714,20 @@ export interface Mk8sAddOns {
     byok?: outputs.Mk8sAddOnsByok;
     dashboard?: boolean;
     headlamp?: boolean;
+    /**
+     * Enables type=vm workloads by installing the KubeVirt and CDI operators on the cluster.
+     */
+    kubevirt?: outputs.Mk8sAddOnsKubevirt;
     localPathStorage?: boolean;
     logs?: outputs.Mk8sAddOnsLogs;
     /**
      * Scrape pods annotated with prometheus.io/scrape=true
      */
     metrics?: outputs.Mk8sAddOnsMetrics;
+    /**
+     * Per-node CoreDNS cache. Required by the kubevirt add-on.
+     */
+    nodeLocalDns?: boolean;
     nvidia?: outputs.Mk8sAddOnsNvidia;
     registryMirror?: outputs.Mk8sAddOnsRegistryMirror;
     sysbox?: boolean;
@@ -3062,6 +3316,13 @@ export interface Mk8sAddOnsByokConfigTempoAgent {
      * Memory request applied to tempo agent pods.
      */
     minMemory?: string;
+}
+
+export interface Mk8sAddOnsKubevirt {
+    /**
+     * Filesystem-mode StorageClass CDI uses for import scratch space. Required when the cluster default StorageClass is block-mode.
+     */
+    scratchSpaceStorageClass?: string;
 }
 
 export interface Mk8sAddOnsLogs {
@@ -4954,9 +5215,9 @@ export interface WorkloadContainer {
      */
     gpuNvidia?: outputs.WorkloadContainerGpuNvidia;
     /**
-     * The full image and tag path.
+     * The full image and tag path. Required for all workload types except `vm`, which boots from `vm.boot_disk.source` instead.
      */
-    image: string;
+    image?: string;
     /**
      * Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
      */
@@ -5150,9 +5411,21 @@ export interface WorkloadContainerReadinessProbeTcpSocket {
 
 export interface WorkloadContainerVolume {
     /**
-     * File path added to workload pointing to the volume.
+     * VM disk boot order. Only valid for `vm` workloads. Valid values: `1` - `16`.
      */
-    path: string;
+    bootOrder?: number;
+    /**
+     * VM disk bus. Only valid for `vm` workloads. A `cpln://secret/` volume on a `sata` or `scsi` bus is presented to the guest as a read-only CD-ROM. Valid values: `virtio`, `sata`, `scsi`.
+     */
+    bus?: string;
+    /**
+     * VM disk name. Required for `vm` workloads; rejected for other workload types.
+     */
+    name?: string;
+    /**
+     * File path added to workload pointing to the volume. Required for non-`vm` workloads; rejected for `vm` workloads (the volume is attached to the VM as a block device).
+     */
+    path?: string;
     /**
      * Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
      */
@@ -5866,5 +6139,212 @@ export interface WorkloadStatusResolvedImageImageManifest {
      * Key-value map of strings. The combination of the operating system and architecture for which the image is built.
      */
     platform: {[key: string]: string};
+}
+
+export interface WorkloadVm {
+    /**
+     * SSH public keys injected at runtime via the guest agent or config drive.
+     */
+    accessCredentials?: outputs.WorkloadVmAccessCredential[];
+    /**
+     * Boot disk configuration. When `source` is omitted, `containers[0].image` is used as an OCI containerDisk.
+     */
+    bootDisk?: outputs.WorkloadVmBootDisk;
+    /**
+     * Guest clock configuration.
+     */
+    clock?: outputs.WorkloadVmClock;
+    /**
+     * Cloud-init configuration for the guest. Exactly one of `userData`, `userDataBase64`, or `userDataSecret` must be specified.
+     */
+    cloudInit?: outputs.WorkloadVmCloudInit;
+    /**
+     * CPU topology visible to the guest. Cores are derived from `containers[0].cpu`.
+     */
+    cpu?: outputs.WorkloadVmCpu;
+    /**
+     * Firmware configuration for the guest.
+     */
+    firmware?: outputs.WorkloadVmFirmware;
+    /**
+     * Guest operating system family. Drives the per-OS cloud-init payload. Valid values: `linux`, `windows`. Default: `linux`.
+     */
+    guestOs: string;
+    /**
+     * Hostname reported to the guest.
+     */
+    hostname?: string;
+    /**
+     * Pod-network interfaces for the VM. Only a single network is supported.
+     */
+    networks?: outputs.WorkloadVmNetwork[];
+    /**
+     * KubeVirt RunStrategy. Use `Halted` to keep the pool defined but powered off. Valid values: `Always`, `RerunOnFailure`, `Manual`, `Halted`. Default: `Always`.
+     */
+    runStrategy: string;
+    /**
+     * Subdomain used by the guest for replica-to-replica addressing.
+     */
+    subdomain?: string;
+}
+
+export interface WorkloadVmAccessCredential {
+    /**
+     * Delivery method for the access credential. Valid values: `qemuGuestAgent`, `configDrive`. Default: `qemuGuestAgent`.
+     */
+    deliveryMethod: string;
+    /**
+     * Secret containing the SSH public keys to inject.
+     */
+    sshPublicKeySecret: string;
+    /**
+     * Guest OS users the SSH public keys are injected for.
+     */
+    users: string[];
+}
+
+export interface WorkloadVmBootDisk {
+    /**
+     * Boot order of the boot disk. Valid values: `1` - `16`. Default: `1`.
+     */
+    bootOrder: number;
+    /**
+     * Disk bus exposed to the guest. Valid values: `virtio`, `sata`, `scsi`. Default: `virtio`.
+     */
+    bus: string;
+    /**
+     * Per-replica boot PVC populated via CDI. Required for any non-OCI source.
+     */
+    persist?: outputs.WorkloadVmBootDiskPersist;
+    /**
+     * Boot disk image source. Exactly one of `oci` or `http` must be specified.
+     */
+    source?: outputs.WorkloadVmBootDiskSource;
+}
+
+export interface WorkloadVmBootDiskPersist {
+    /**
+     * VolumeSet URI used to provision one PVC per replica for the boot disk. Format: `cpln://volumeset/<name>`.
+     */
+    volumeSet: string;
+}
+
+export interface WorkloadVmBootDiskSource {
+    /**
+     * Boot disk image fetched over HTTP/HTTPS. Requires `persist.volume_set`.
+     */
+    http?: outputs.WorkloadVmBootDiskSourceHttp;
+    /**
+     * Boot from an OCI containerDisk image.
+     */
+    oci?: outputs.WorkloadVmBootDiskSourceOci;
+}
+
+export interface WorkloadVmBootDiskSourceHttp {
+    /**
+     * Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+     */
+    checksum?: string;
+    /**
+     * HTTP/HTTPS URL of the boot disk image.
+     */
+    url: string;
+}
+
+export interface WorkloadVmBootDiskSourceOci {
+    /**
+     * Full image reference of a containerDisk (e.g., `quay.io/containerdisks/ubuntu:22.04` or `/org/<org>/image/<name>:<tag>`).
+     */
+    image: string;
+}
+
+export interface WorkloadVmClock {
+    /**
+     * Guest timezone. Default: `UTC`.
+     */
+    timezone: string;
+}
+
+export interface WorkloadVmCloudInit {
+    /**
+     * SSH public keys injected via cloud-init. Each Secret may carry one or more keys.
+     */
+    sshPublicKeySecrets?: string[];
+    /**
+     * Inline cloud-init user-data. Not encrypted at rest in the data-service - use `userDataSecret` for sensitive payloads.
+     */
+    userData?: string;
+    /**
+     * Inline cloud-init user-data, base64-encoded. Same caveats as `userData`.
+     */
+    userDataBase64?: string;
+    /**
+     * Secret containing cloud-init user-data (key: `userdata` or `user-data`).
+     */
+    userDataSecret?: string;
+}
+
+export interface WorkloadVmCpu {
+    /**
+     * CPU sockets visible to the guest. Valid values: `1` - `32`.
+     */
+    sockets?: number;
+    /**
+     * CPU threads per core visible to the guest. Valid values: `1` - `8`.
+     */
+    threads?: number;
+}
+
+export interface WorkloadVmFirmware {
+    /**
+     * Bootloader used by the guest. Valid values: `bios`, `efi`. Default: `efi`.
+     */
+    bootloader: string;
+    /**
+     * Enable UEFI Secure Boot. Default: `false`.
+     */
+    secureBoot: boolean;
+    /**
+     * SMBIOS system serial number reported to the guest.
+     */
+    serial?: string;
+    /**
+     * SMBIOS system information reported to the guest.
+     */
+    smbios?: outputs.WorkloadVmFirmwareSmbios;
+    /**
+     * Fixed SMBIOS UUID for the VM. KubeVirt generates one when omitted.
+     */
+    uuid?: string;
+}
+
+export interface WorkloadVmFirmwareSmbios {
+    /**
+     * SMBIOS system family.
+     */
+    family?: string;
+    /**
+     * SMBIOS system manufacturer.
+     */
+    manufacturer?: string;
+    /**
+     * SMBIOS system product name.
+     */
+    product?: string;
+    /**
+     * SMBIOS system SKU.
+     */
+    sku?: string;
+    /**
+     * SMBIOS system version.
+     */
+    version?: string;
+}
+
+export interface WorkloadVmNetwork {
+    /**
+     * Network interface name. Default: `default`.
+     */
+    name: string;
 }
 

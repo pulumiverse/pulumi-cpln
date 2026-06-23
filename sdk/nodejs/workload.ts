@@ -106,9 +106,13 @@ export class Workload extends pulumi.CustomResource {
      */
     declare public readonly tags: pulumi.Output<{[key: string]: string}>;
     /**
-     * Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+     * Workload Type. Either `serverless`, `standard`, `stateful`, `cron`, or `vm`.
      */
     declare public readonly type: pulumi.Output<string>;
+    /**
+     * VM-only configuration. Required when `type` is `vm`; rejected otherwise.
+     */
+    declare public readonly vm: pulumi.Output<outputs.WorkloadVm | undefined>;
 
     /**
      * Create a Workload resource with the given unique name, arguments, and options.
@@ -144,6 +148,7 @@ export class Workload extends pulumi.CustomResource {
             resourceInputs["supportDynamicTags"] = state?.supportDynamicTags;
             resourceInputs["tags"] = state?.tags;
             resourceInputs["type"] = state?.type;
+            resourceInputs["vm"] = state?.vm;
         } else {
             const args = argsOrState as WorkloadArgs | undefined;
             if (args?.gvc === undefined && !opts.urn) {
@@ -170,6 +175,7 @@ export class Workload extends pulumi.CustomResource {
             resourceInputs["supportDynamicTags"] = args?.supportDynamicTags;
             resourceInputs["tags"] = args?.tags;
             resourceInputs["type"] = args?.type;
+            resourceInputs["vm"] = args?.vm;
             resourceInputs["cplnId"] = undefined /*out*/;
             resourceInputs["selfLink"] = undefined /*out*/;
             resourceInputs["statuses"] = undefined /*out*/;
@@ -255,9 +261,13 @@ export interface WorkloadState {
      */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+     * Workload Type. Either `serverless`, `standard`, `stateful`, `cron`, or `vm`.
      */
     type?: pulumi.Input<string>;
+    /**
+     * VM-only configuration. Required when `type` is `vm`; rejected otherwise.
+     */
+    vm?: pulumi.Input<inputs.WorkloadVm>;
 }
 
 /**
@@ -324,7 +334,11 @@ export interface WorkloadArgs {
      */
     tags?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+     * Workload Type. Either `serverless`, `standard`, `stateful`, `cron`, or `vm`.
      */
     type: pulumi.Input<string>;
+    /**
+     * VM-only configuration. Required when `type` is `vm`; rejected otherwise.
+     */
+    vm?: pulumi.Input<inputs.WorkloadVm>;
 }

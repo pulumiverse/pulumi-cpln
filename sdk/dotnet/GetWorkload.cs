@@ -28,7 +28,7 @@ namespace Pulumiverse.Cpln
         /// - **cpln_id** (String) The ID, in GUID format, of the workload.
         /// - **name** (String) Name of the workload.
         /// - **gvc** (String) Name of the associated GVC.
-        /// - **type** (String) Workload type. Either `Serverless`, `Standard`, `Stateful`, or `Cron`.
+        /// - **type** (String) Workload type. Either `Serverless`, `Standard`, `Stateful`, `Cron`, or `Vm`.
         /// - **description** (String) Description of the workload.
         /// - **tags** (Map of String) Key-value map of resource tags.
         /// - **self_link** (String) Full link to this resource. Can be referenced by other resources.
@@ -45,6 +45,8 @@ namespace Pulumiverse.Cpln
         /// - **security_options** (Block List, Max: 1) (see below).
         /// - **load_balancer** (Block List, Max: 1) (see below).
         /// - **request_retry_policy** (Block List, Max: 1) (see below).
+        /// - **vm** (Attributes) VM-only configuration. Present when `Type` is `Vm` (see below).
+        /// - **health** (Attributes) Health summary of the workload (see below).
         /// - **status** (Block List) (see below).
         /// 
         /// &lt;a id="nestedblock--container"&gt;&lt;/a&gt;
@@ -221,6 +223,9 @@ namespace Pulumiverse.Cpln
         /// - **uri** (String) URI of a volume hosted in Control Plane (Volume Set) or a supported cloud provider.
         /// - **recovery_policy** (String) Recovery policy for persistent volumes. Either `Retain` or `Recycle`. **Deprecated – no longer used.**
         /// - **path** (String) File-system path where the volume is mounted inside the container.
+        /// - **name** (String) VM disk name. Only set for `Vm` workloads.
+        /// - **bus** (String) VM disk bus. Only set for `Vm` workloads. Either `Virtio`, `Sata`, or `Scsi`.
+        /// - **boot_order** (Number) VM disk boot order. Only set for `Vm` workloads.
         /// 
         /// &lt;a id="nestedblock--firewall_spec"&gt;&lt;/a&gt;
         /// 
@@ -531,6 +536,156 @@ namespace Pulumiverse.Cpln
         /// 
         /// - **attempts** (Number) Number of retry attempts. Default: `2`.
         /// - **retry_on** (List of String) Retry conditions that trigger another attempt.
+        /// 
+        /// &lt;a id="nestedblock--vm"&gt;&lt;/a&gt;
+        /// 
+        /// ### `Vm`
+        /// 
+        /// VM-only configuration for workloads of `Type` `Vm`.
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **boot_disk** (Attributes) Boot disk configuration (see below).
+        /// - **cpu** (Attributes) CPU topology visible to the guest (see below).
+        /// - **firmware** (Attributes) Firmware configuration for the guest (see below).
+        /// - **guest_os** (String) Guest operating system family. Either `Linux` or `Windows`.
+        /// - **network** (Attributes List) Pod-network interface for the VM (see below).
+        /// - **cloud_init** (Attributes) Cloud-init configuration for the guest (see below).
+        /// - **access_credential** (Attributes Set) SSH public keys injected at runtime (see below).
+        /// - **run_strategy** (String) KubeVirt RunStrategy. Either `Always`, `RerunOnFailure`, `Manual`, or `Halted`.
+        /// - **clock** (Attributes) Guest clock configuration (see below).
+        /// - **hostname** (String) Hostname reported to the guest.
+        /// - **subdomain** (String) Subdomain used by the guest for replica-to-replica addressing.
+        /// 
+        /// &lt;a id="nestedblock--vm--boot_disk"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.boot_disk`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **source** (Attributes) Boot disk image source (see below).
+        /// - **persist** (Attributes) Per-replica boot PVC populated via CDI (see below).
+        /// - **bus** (String) Disk bus exposed to the guest. Either `Virtio`, `Sata`, or `Scsi`.
+        /// - **boot_order** (Number) Boot order of the boot disk.
+        /// 
+        /// &lt;a id="nestedblock--vm--boot_disk--source"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.boot_disk.source`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **oci** (Attributes) Boot from an OCI containerDisk image (see below).
+        /// - **http** (Attributes) Boot disk image fetched over HTTP/HTTPS (see below).
+        /// 
+        /// &lt;a id="nestedblock--vm--boot_disk--source--oci"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.boot_disk.source.oci`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **image** (String) Full image reference of a containerDisk.
+        /// 
+        /// &lt;a id="nestedblock--vm--boot_disk--source--http"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.boot_disk.source.http`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **url** (String) HTTP/HTTPS URL of the boot disk image.
+        /// - **checksum** (String) Disk image checksum, formatted as `sha256:&lt;hex&gt;` or `sha512:&lt;hex&gt;`.
+        /// 
+        /// &lt;a id="nestedblock--vm--boot_disk--persist"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.boot_disk.persist`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **volume_set** (String) VolumeSet URI used to provision one PVC per replica for the boot disk.
+        /// 
+        /// &lt;a id="nestedblock--vm--cpu"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.cpu`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **sockets** (Number) CPU sockets visible to the guest.
+        /// - **threads** (Number) CPU threads per core visible to the guest.
+        /// 
+        /// &lt;a id="nestedblock--vm--firmware"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.firmware`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **bootloader** (String) Bootloader used by the guest. Either `Bios` or `Efi`.
+        /// - **secure_boot** (Boolean) Whether UEFI Secure Boot is enabled.
+        /// - **uuid** (String) Fixed SMBIOS UUID for the VM.
+        /// - **serial** (String) SMBIOS system serial number reported to the guest.
+        /// - **smbios** (Attributes) SMBIOS system information reported to the guest (see below).
+        /// 
+        /// &lt;a id="nestedblock--vm--firmware--smbios"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.firmware.smbios`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **manufacturer** (String) SMBIOS system manufacturer.
+        /// - **product** (String) SMBIOS system product name.
+        /// - **version** (String) SMBIOS system version.
+        /// - **sku** (String) SMBIOS system SKU.
+        /// - **family** (String) SMBIOS system family.
+        /// 
+        /// &lt;a id="nestedblock--vm--network"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.network`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **name** (String) Network interface name.
+        /// 
+        /// &lt;a id="nestedblock--vm--cloud_init"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.cloud_init`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **user_data** (String) Inline cloud-init user-data.
+        /// - **user_data_base64** (String) Inline cloud-init user-data, base64-encoded.
+        /// - **user_data_secret** (String) Secret containing cloud-init user-data.
+        /// - **ssh_public_key_secrets** (Set of String) SSH public keys injected via cloud-init.
+        /// 
+        /// &lt;a id="nestedblock--vm--access_credential"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.access_credential`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **ssh_public_key_secret** (String) Secret containing the SSH public keys to inject.
+        /// - **users** (Set of String) Guest OS users the SSH public keys are injected for.
+        /// - **delivery_method** (String) Delivery method for the access credential. Either `qemuGuestAgent` or `configDrive`.
+        /// 
+        /// &lt;a id="nestedblock--vm--clock"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.clock`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **timezone** (String) Guest timezone.
+        /// 
+        /// &lt;a id="nestedblock--health"&gt;&lt;/a&gt;
+        /// 
+        /// ### `Health`
+        /// 
+        /// Health summary of the workload.
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **readiness** (String) Readiness of the workload.
+        /// - **sync_failed** (Boolean) Whether the most recent sync of the workload failed.
+        /// - **ready_locations** (Number) Number of locations where the workload is ready.
+        /// - **total_locations** (Number) Total number of locations the workload is deployed to.
+        /// - **ready_replicas** (Number) Number of ready replicas across all locations.
+        /// - **total_replicas** (Number) Total number of replicas across all locations.
         /// 
         /// &lt;a id="nestedblock--status"&gt;&lt;/a&gt;
         /// 
@@ -652,7 +807,7 @@ namespace Pulumiverse.Cpln
         /// - **cpln_id** (String) The ID, in GUID format, of the workload.
         /// - **name** (String) Name of the workload.
         /// - **gvc** (String) Name of the associated GVC.
-        /// - **type** (String) Workload type. Either `Serverless`, `Standard`, `Stateful`, or `Cron`.
+        /// - **type** (String) Workload type. Either `Serverless`, `Standard`, `Stateful`, `Cron`, or `Vm`.
         /// - **description** (String) Description of the workload.
         /// - **tags** (Map of String) Key-value map of resource tags.
         /// - **self_link** (String) Full link to this resource. Can be referenced by other resources.
@@ -669,6 +824,8 @@ namespace Pulumiverse.Cpln
         /// - **security_options** (Block List, Max: 1) (see below).
         /// - **load_balancer** (Block List, Max: 1) (see below).
         /// - **request_retry_policy** (Block List, Max: 1) (see below).
+        /// - **vm** (Attributes) VM-only configuration. Present when `Type` is `Vm` (see below).
+        /// - **health** (Attributes) Health summary of the workload (see below).
         /// - **status** (Block List) (see below).
         /// 
         /// &lt;a id="nestedblock--container"&gt;&lt;/a&gt;
@@ -845,6 +1002,9 @@ namespace Pulumiverse.Cpln
         /// - **uri** (String) URI of a volume hosted in Control Plane (Volume Set) or a supported cloud provider.
         /// - **recovery_policy** (String) Recovery policy for persistent volumes. Either `Retain` or `Recycle`. **Deprecated – no longer used.**
         /// - **path** (String) File-system path where the volume is mounted inside the container.
+        /// - **name** (String) VM disk name. Only set for `Vm` workloads.
+        /// - **bus** (String) VM disk bus. Only set for `Vm` workloads. Either `Virtio`, `Sata`, or `Scsi`.
+        /// - **boot_order** (Number) VM disk boot order. Only set for `Vm` workloads.
         /// 
         /// &lt;a id="nestedblock--firewall_spec"&gt;&lt;/a&gt;
         /// 
@@ -1155,6 +1315,156 @@ namespace Pulumiverse.Cpln
         /// 
         /// - **attempts** (Number) Number of retry attempts. Default: `2`.
         /// - **retry_on** (List of String) Retry conditions that trigger another attempt.
+        /// 
+        /// &lt;a id="nestedblock--vm"&gt;&lt;/a&gt;
+        /// 
+        /// ### `Vm`
+        /// 
+        /// VM-only configuration for workloads of `Type` `Vm`.
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **boot_disk** (Attributes) Boot disk configuration (see below).
+        /// - **cpu** (Attributes) CPU topology visible to the guest (see below).
+        /// - **firmware** (Attributes) Firmware configuration for the guest (see below).
+        /// - **guest_os** (String) Guest operating system family. Either `Linux` or `Windows`.
+        /// - **network** (Attributes List) Pod-network interface for the VM (see below).
+        /// - **cloud_init** (Attributes) Cloud-init configuration for the guest (see below).
+        /// - **access_credential** (Attributes Set) SSH public keys injected at runtime (see below).
+        /// - **run_strategy** (String) KubeVirt RunStrategy. Either `Always`, `RerunOnFailure`, `Manual`, or `Halted`.
+        /// - **clock** (Attributes) Guest clock configuration (see below).
+        /// - **hostname** (String) Hostname reported to the guest.
+        /// - **subdomain** (String) Subdomain used by the guest for replica-to-replica addressing.
+        /// 
+        /// &lt;a id="nestedblock--vm--boot_disk"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.boot_disk`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **source** (Attributes) Boot disk image source (see below).
+        /// - **persist** (Attributes) Per-replica boot PVC populated via CDI (see below).
+        /// - **bus** (String) Disk bus exposed to the guest. Either `Virtio`, `Sata`, or `Scsi`.
+        /// - **boot_order** (Number) Boot order of the boot disk.
+        /// 
+        /// &lt;a id="nestedblock--vm--boot_disk--source"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.boot_disk.source`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **oci** (Attributes) Boot from an OCI containerDisk image (see below).
+        /// - **http** (Attributes) Boot disk image fetched over HTTP/HTTPS (see below).
+        /// 
+        /// &lt;a id="nestedblock--vm--boot_disk--source--oci"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.boot_disk.source.oci`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **image** (String) Full image reference of a containerDisk.
+        /// 
+        /// &lt;a id="nestedblock--vm--boot_disk--source--http"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.boot_disk.source.http`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **url** (String) HTTP/HTTPS URL of the boot disk image.
+        /// - **checksum** (String) Disk image checksum, formatted as `sha256:&lt;hex&gt;` or `sha512:&lt;hex&gt;`.
+        /// 
+        /// &lt;a id="nestedblock--vm--boot_disk--persist"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.boot_disk.persist`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **volume_set** (String) VolumeSet URI used to provision one PVC per replica for the boot disk.
+        /// 
+        /// &lt;a id="nestedblock--vm--cpu"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.cpu`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **sockets** (Number) CPU sockets visible to the guest.
+        /// - **threads** (Number) CPU threads per core visible to the guest.
+        /// 
+        /// &lt;a id="nestedblock--vm--firmware"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.firmware`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **bootloader** (String) Bootloader used by the guest. Either `Bios` or `Efi`.
+        /// - **secure_boot** (Boolean) Whether UEFI Secure Boot is enabled.
+        /// - **uuid** (String) Fixed SMBIOS UUID for the VM.
+        /// - **serial** (String) SMBIOS system serial number reported to the guest.
+        /// - **smbios** (Attributes) SMBIOS system information reported to the guest (see below).
+        /// 
+        /// &lt;a id="nestedblock--vm--firmware--smbios"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.firmware.smbios`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **manufacturer** (String) SMBIOS system manufacturer.
+        /// - **product** (String) SMBIOS system product name.
+        /// - **version** (String) SMBIOS system version.
+        /// - **sku** (String) SMBIOS system SKU.
+        /// - **family** (String) SMBIOS system family.
+        /// 
+        /// &lt;a id="nestedblock--vm--network"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.network`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **name** (String) Network interface name.
+        /// 
+        /// &lt;a id="nestedblock--vm--cloud_init"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.cloud_init`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **user_data** (String) Inline cloud-init user-data.
+        /// - **user_data_base64** (String) Inline cloud-init user-data, base64-encoded.
+        /// - **user_data_secret** (String) Secret containing cloud-init user-data.
+        /// - **ssh_public_key_secrets** (Set of String) SSH public keys injected via cloud-init.
+        /// 
+        /// &lt;a id="nestedblock--vm--access_credential"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.access_credential`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **ssh_public_key_secret** (String) Secret containing the SSH public keys to inject.
+        /// - **users** (Set of String) Guest OS users the SSH public keys are injected for.
+        /// - **delivery_method** (String) Delivery method for the access credential. Either `qemuGuestAgent` or `configDrive`.
+        /// 
+        /// &lt;a id="nestedblock--vm--clock"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.clock`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **timezone** (String) Guest timezone.
+        /// 
+        /// &lt;a id="nestedblock--health"&gt;&lt;/a&gt;
+        /// 
+        /// ### `Health`
+        /// 
+        /// Health summary of the workload.
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **readiness** (String) Readiness of the workload.
+        /// - **sync_failed** (Boolean) Whether the most recent sync of the workload failed.
+        /// - **ready_locations** (Number) Number of locations where the workload is ready.
+        /// - **total_locations** (Number) Total number of locations the workload is deployed to.
+        /// - **ready_replicas** (Number) Number of ready replicas across all locations.
+        /// - **total_replicas** (Number) Total number of replicas across all locations.
         /// 
         /// &lt;a id="nestedblock--status"&gt;&lt;/a&gt;
         /// 
@@ -1276,7 +1586,7 @@ namespace Pulumiverse.Cpln
         /// - **cpln_id** (String) The ID, in GUID format, of the workload.
         /// - **name** (String) Name of the workload.
         /// - **gvc** (String) Name of the associated GVC.
-        /// - **type** (String) Workload type. Either `Serverless`, `Standard`, `Stateful`, or `Cron`.
+        /// - **type** (String) Workload type. Either `Serverless`, `Standard`, `Stateful`, `Cron`, or `Vm`.
         /// - **description** (String) Description of the workload.
         /// - **tags** (Map of String) Key-value map of resource tags.
         /// - **self_link** (String) Full link to this resource. Can be referenced by other resources.
@@ -1293,6 +1603,8 @@ namespace Pulumiverse.Cpln
         /// - **security_options** (Block List, Max: 1) (see below).
         /// - **load_balancer** (Block List, Max: 1) (see below).
         /// - **request_retry_policy** (Block List, Max: 1) (see below).
+        /// - **vm** (Attributes) VM-only configuration. Present when `Type` is `Vm` (see below).
+        /// - **health** (Attributes) Health summary of the workload (see below).
         /// - **status** (Block List) (see below).
         /// 
         /// &lt;a id="nestedblock--container"&gt;&lt;/a&gt;
@@ -1469,6 +1781,9 @@ namespace Pulumiverse.Cpln
         /// - **uri** (String) URI of a volume hosted in Control Plane (Volume Set) or a supported cloud provider.
         /// - **recovery_policy** (String) Recovery policy for persistent volumes. Either `Retain` or `Recycle`. **Deprecated – no longer used.**
         /// - **path** (String) File-system path where the volume is mounted inside the container.
+        /// - **name** (String) VM disk name. Only set for `Vm` workloads.
+        /// - **bus** (String) VM disk bus. Only set for `Vm` workloads. Either `Virtio`, `Sata`, or `Scsi`.
+        /// - **boot_order** (Number) VM disk boot order. Only set for `Vm` workloads.
         /// 
         /// &lt;a id="nestedblock--firewall_spec"&gt;&lt;/a&gt;
         /// 
@@ -1779,6 +2094,156 @@ namespace Pulumiverse.Cpln
         /// 
         /// - **attempts** (Number) Number of retry attempts. Default: `2`.
         /// - **retry_on** (List of String) Retry conditions that trigger another attempt.
+        /// 
+        /// &lt;a id="nestedblock--vm"&gt;&lt;/a&gt;
+        /// 
+        /// ### `Vm`
+        /// 
+        /// VM-only configuration for workloads of `Type` `Vm`.
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **boot_disk** (Attributes) Boot disk configuration (see below).
+        /// - **cpu** (Attributes) CPU topology visible to the guest (see below).
+        /// - **firmware** (Attributes) Firmware configuration for the guest (see below).
+        /// - **guest_os** (String) Guest operating system family. Either `Linux` or `Windows`.
+        /// - **network** (Attributes List) Pod-network interface for the VM (see below).
+        /// - **cloud_init** (Attributes) Cloud-init configuration for the guest (see below).
+        /// - **access_credential** (Attributes Set) SSH public keys injected at runtime (see below).
+        /// - **run_strategy** (String) KubeVirt RunStrategy. Either `Always`, `RerunOnFailure`, `Manual`, or `Halted`.
+        /// - **clock** (Attributes) Guest clock configuration (see below).
+        /// - **hostname** (String) Hostname reported to the guest.
+        /// - **subdomain** (String) Subdomain used by the guest for replica-to-replica addressing.
+        /// 
+        /// &lt;a id="nestedblock--vm--boot_disk"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.boot_disk`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **source** (Attributes) Boot disk image source (see below).
+        /// - **persist** (Attributes) Per-replica boot PVC populated via CDI (see below).
+        /// - **bus** (String) Disk bus exposed to the guest. Either `Virtio`, `Sata`, or `Scsi`.
+        /// - **boot_order** (Number) Boot order of the boot disk.
+        /// 
+        /// &lt;a id="nestedblock--vm--boot_disk--source"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.boot_disk.source`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **oci** (Attributes) Boot from an OCI containerDisk image (see below).
+        /// - **http** (Attributes) Boot disk image fetched over HTTP/HTTPS (see below).
+        /// 
+        /// &lt;a id="nestedblock--vm--boot_disk--source--oci"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.boot_disk.source.oci`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **image** (String) Full image reference of a containerDisk.
+        /// 
+        /// &lt;a id="nestedblock--vm--boot_disk--source--http"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.boot_disk.source.http`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **url** (String) HTTP/HTTPS URL of the boot disk image.
+        /// - **checksum** (String) Disk image checksum, formatted as `sha256:&lt;hex&gt;` or `sha512:&lt;hex&gt;`.
+        /// 
+        /// &lt;a id="nestedblock--vm--boot_disk--persist"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.boot_disk.persist`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **volume_set** (String) VolumeSet URI used to provision one PVC per replica for the boot disk.
+        /// 
+        /// &lt;a id="nestedblock--vm--cpu"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.cpu`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **sockets** (Number) CPU sockets visible to the guest.
+        /// - **threads** (Number) CPU threads per core visible to the guest.
+        /// 
+        /// &lt;a id="nestedblock--vm--firmware"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.firmware`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **bootloader** (String) Bootloader used by the guest. Either `Bios` or `Efi`.
+        /// - **secure_boot** (Boolean) Whether UEFI Secure Boot is enabled.
+        /// - **uuid** (String) Fixed SMBIOS UUID for the VM.
+        /// - **serial** (String) SMBIOS system serial number reported to the guest.
+        /// - **smbios** (Attributes) SMBIOS system information reported to the guest (see below).
+        /// 
+        /// &lt;a id="nestedblock--vm--firmware--smbios"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.firmware.smbios`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **manufacturer** (String) SMBIOS system manufacturer.
+        /// - **product** (String) SMBIOS system product name.
+        /// - **version** (String) SMBIOS system version.
+        /// - **sku** (String) SMBIOS system SKU.
+        /// - **family** (String) SMBIOS system family.
+        /// 
+        /// &lt;a id="nestedblock--vm--network"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.network`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **name** (String) Network interface name.
+        /// 
+        /// &lt;a id="nestedblock--vm--cloud_init"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.cloud_init`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **user_data** (String) Inline cloud-init user-data.
+        /// - **user_data_base64** (String) Inline cloud-init user-data, base64-encoded.
+        /// - **user_data_secret** (String) Secret containing cloud-init user-data.
+        /// - **ssh_public_key_secrets** (Set of String) SSH public keys injected via cloud-init.
+        /// 
+        /// &lt;a id="nestedblock--vm--access_credential"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.access_credential`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **ssh_public_key_secret** (String) Secret containing the SSH public keys to inject.
+        /// - **users** (Set of String) Guest OS users the SSH public keys are injected for.
+        /// - **delivery_method** (String) Delivery method for the access credential. Either `qemuGuestAgent` or `configDrive`.
+        /// 
+        /// &lt;a id="nestedblock--vm--clock"&gt;&lt;/a&gt;
+        /// 
+        /// ### `vm.clock`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **timezone** (String) Guest timezone.
+        /// 
+        /// &lt;a id="nestedblock--health"&gt;&lt;/a&gt;
+        /// 
+        /// ### `Health`
+        /// 
+        /// Health summary of the workload.
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **readiness** (String) Readiness of the workload.
+        /// - **sync_failed** (Boolean) Whether the most recent sync of the workload failed.
+        /// - **ready_locations** (Number) Number of locations where the workload is ready.
+        /// - **total_locations** (Number) Total number of locations the workload is deployed to.
+        /// - **ready_replicas** (Number) Number of ready replicas across all locations.
+        /// - **total_replicas** (Number) Total number of replicas across all locations.
         /// 
         /// &lt;a id="nestedblock--status"&gt;&lt;/a&gt;
         /// 
@@ -2100,6 +2565,7 @@ namespace Pulumiverse.Cpln
         public readonly string Extras;
         public readonly ImmutableArray<Outputs.GetWorkloadFirewallSpecResult> FirewallSpecs;
         public readonly string Gvc;
+        public readonly Outputs.GetWorkloadHealthResult Health;
         public readonly string Id;
         public readonly string IdentityLink;
         public readonly ImmutableArray<Outputs.GetWorkloadJobResult> Jobs;
@@ -2116,6 +2582,7 @@ namespace Pulumiverse.Cpln
         public readonly bool SupportDynamicTags;
         public readonly ImmutableDictionary<string, string> Tags;
         public readonly string Type;
+        public readonly Outputs.GetWorkloadVmResult Vm;
 
         [OutputConstructor]
         private GetWorkloadResult(
@@ -2130,6 +2597,8 @@ namespace Pulumiverse.Cpln
             ImmutableArray<Outputs.GetWorkloadFirewallSpecResult> firewallSpecs,
 
             string gvc,
+
+            Outputs.GetWorkloadHealthResult health,
 
             string id,
 
@@ -2161,7 +2630,9 @@ namespace Pulumiverse.Cpln
 
             ImmutableDictionary<string, string> tags,
 
-            string type)
+            string type,
+
+            Outputs.GetWorkloadVmResult vm)
         {
             Containers = containers;
             CplnId = cplnId;
@@ -2169,6 +2640,7 @@ namespace Pulumiverse.Cpln
             Extras = extras;
             FirewallSpecs = firewallSpecs;
             Gvc = gvc;
+            Health = health;
             Id = id;
             IdentityLink = identityLink;
             Jobs = jobs;
@@ -2185,6 +2657,7 @@ namespace Pulumiverse.Cpln
             SupportDynamicTags = supportDynamicTags;
             Tags = tags;
             Type = type;
+            Vm = vm;
         }
     }
 }
