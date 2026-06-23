@@ -26,12 +26,20 @@ namespace Pulumiverse.Cpln.Outputs
         public readonly Outputs.Mk8sAddOnsByok? Byok;
         public readonly bool? Dashboard;
         public readonly bool? Headlamp;
+        /// <summary>
+        /// Enables type=vm workloads by installing the KubeVirt and CDI operators on the cluster.
+        /// </summary>
+        public readonly Outputs.Mk8sAddOnsKubevirt? Kubevirt;
         public readonly bool? LocalPathStorage;
         public readonly Outputs.Mk8sAddOnsLogs? Logs;
         /// <summary>
         /// Scrape pods annotated with prometheus.io/scrape=true
         /// </summary>
         public readonly Outputs.Mk8sAddOnsMetrics? Metrics;
+        /// <summary>
+        /// Per-node CoreDNS cache. Required by the kubevirt add-on.
+        /// </summary>
+        public readonly bool? NodeLocalDns;
         public readonly Outputs.Mk8sAddOnsNvidia? Nvidia;
         public readonly Outputs.Mk8sAddOnsRegistryMirror? RegistryMirror;
         public readonly bool? Sysbox;
@@ -56,11 +64,15 @@ namespace Pulumiverse.Cpln.Outputs
 
             bool? headlamp,
 
+            Outputs.Mk8sAddOnsKubevirt? kubevirt,
+
             bool? localPathStorage,
 
             Outputs.Mk8sAddOnsLogs? logs,
 
             Outputs.Mk8sAddOnsMetrics? metrics,
+
+            bool? nodeLocalDns,
 
             Outputs.Mk8sAddOnsNvidia? nvidia,
 
@@ -77,9 +89,11 @@ namespace Pulumiverse.Cpln.Outputs
             Byok = byok;
             Dashboard = dashboard;
             Headlamp = headlamp;
+            Kubevirt = kubevirt;
             LocalPathStorage = localPathStorage;
             Logs = logs;
             Metrics = metrics;
+            NodeLocalDns = nodeLocalDns;
             Nvidia = nvidia;
             RegistryMirror = registryMirror;
             Sysbox = sysbox;

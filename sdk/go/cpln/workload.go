@@ -52,8 +52,10 @@ type Workload struct {
 	SupportDynamicTags pulumi.BoolOutput `pulumi:"supportDynamicTags"`
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapOutput `pulumi:"tags"`
-	// Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+	// Workload Type. Either `serverless`, `standard`, `stateful`, `cron`, or `vm`.
 	Type pulumi.StringOutput `pulumi:"type"`
+	// VM-only configuration. Required when `type` is `vm`; rejected otherwise.
+	Vm WorkloadVmPtrOutput `pulumi:"vm"`
 }
 
 // NewWorkload registers a new resource with the given unique name, arguments, and options.
@@ -129,8 +131,10 @@ type workloadState struct {
 	SupportDynamicTags *bool `pulumi:"supportDynamicTags"`
 	// Key-value map of resource tags.
 	Tags map[string]string `pulumi:"tags"`
-	// Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+	// Workload Type. Either `serverless`, `standard`, `stateful`, `cron`, or `vm`.
 	Type *string `pulumi:"type"`
+	// VM-only configuration. Required when `type` is `vm`; rejected otherwise.
+	Vm *WorkloadVm `pulumi:"vm"`
 }
 
 type WorkloadState struct {
@@ -171,8 +175,10 @@ type WorkloadState struct {
 	SupportDynamicTags pulumi.BoolPtrInput
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapInput
-	// Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+	// Workload Type. Either `serverless`, `standard`, `stateful`, `cron`, or `vm`.
 	Type pulumi.StringPtrInput
+	// VM-only configuration. Required when `type` is `vm`; rejected otherwise.
+	Vm WorkloadVmPtrInput
 }
 
 func (WorkloadState) ElementType() reflect.Type {
@@ -211,8 +217,10 @@ type workloadArgs struct {
 	SupportDynamicTags *bool `pulumi:"supportDynamicTags"`
 	// Key-value map of resource tags.
 	Tags map[string]string `pulumi:"tags"`
-	// Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+	// Workload Type. Either `serverless`, `standard`, `stateful`, `cron`, or `vm`.
 	Type string `pulumi:"type"`
+	// VM-only configuration. Required when `type` is `vm`; rejected otherwise.
+	Vm *WorkloadVm `pulumi:"vm"`
 }
 
 // The set of arguments for constructing a Workload resource.
@@ -248,8 +256,10 @@ type WorkloadArgs struct {
 	SupportDynamicTags pulumi.BoolPtrInput
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapInput
-	// Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+	// Workload Type. Either `serverless`, `standard`, `stateful`, `cron`, or `vm`.
 	Type pulumi.StringInput
+	// VM-only configuration. Required when `type` is `vm`; rejected otherwise.
+	Vm WorkloadVmPtrInput
 }
 
 func (WorkloadArgs) ElementType() reflect.Type {
@@ -436,9 +446,14 @@ func (o WorkloadOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
 }
 
-// Workload Type. Either `serverless`, `standard`, `stateful`, or `cron`.
+// Workload Type. Either `serverless`, `standard`, `stateful`, `cron`, or `vm`.
 func (o WorkloadOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringOutput { return v.Type }).(pulumi.StringOutput)
+}
+
+// VM-only configuration. Required when `type` is `vm`; rejected otherwise.
+func (o WorkloadOutput) Vm() WorkloadVmPtrOutput {
+	return o.ApplyT(func(v *Workload) WorkloadVmPtrOutput { return v.Vm }).(WorkloadVmPtrOutput)
 }
 
 type WorkloadArrayOutput struct{ *pulumi.OutputState }

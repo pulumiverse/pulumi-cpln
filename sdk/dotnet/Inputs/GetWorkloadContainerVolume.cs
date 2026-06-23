@@ -14,7 +14,25 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class GetWorkloadContainerVolumeArgs : global::Pulumi.InvokeArgs
     {
         /// <summary>
-        /// File path added to workload pointing to the volume.
+        /// VM disk boot order. Only valid for `Vm` workloads.
+        /// </summary>
+        [Input("bootOrder", required: true)]
+        public int BootOrder { get; set; }
+
+        /// <summary>
+        /// VM disk bus. Only valid for `Vm` workloads. Valid values: `Virtio`, `Sata`, `Scsi`.
+        /// </summary>
+        [Input("bus", required: true)]
+        public string Bus { get; set; } = null!;
+
+        /// <summary>
+        /// VM disk name. Required for `Vm` workloads; rejected for other workload types.
+        /// </summary>
+        [Input("name", required: true)]
+        public string Name { get; set; } = null!;
+
+        /// <summary>
+        /// File path added to workload pointing to the volume. Required for non-`Vm` workloads; rejected for `Vm` workloads (the volume is attached to the VM as a block device).
         /// </summary>
         [Input("path", required: true)]
         public string Path { get; set; } = null!;

@@ -1628,7 +1628,19 @@ export interface GetWorkloadContainerReadinessProbeTcpSocketArgs {
 
 export interface GetWorkloadContainerVolume {
     /**
-     * File path added to workload pointing to the volume.
+     * VM disk boot order. Only valid for `vm` workloads.
+     */
+    bootOrder?: number;
+    /**
+     * VM disk bus. Only valid for `vm` workloads. Valid values: `virtio`, `sata`, `scsi`.
+     */
+    bus?: string;
+    /**
+     * VM disk name. Required for `vm` workloads; rejected for other workload types.
+     */
+    name?: string;
+    /**
+     * File path added to workload pointing to the volume. Required for non-`vm` workloads; rejected for `vm` workloads (the volume is attached to the VM as a block device).
      */
     path?: string;
     /**
@@ -1643,7 +1655,19 @@ export interface GetWorkloadContainerVolume {
 
 export interface GetWorkloadContainerVolumeArgs {
     /**
-     * File path added to workload pointing to the volume.
+     * VM disk boot order. Only valid for `vm` workloads.
+     */
+    bootOrder?: pulumi.Input<number>;
+    /**
+     * VM disk bus. Only valid for `vm` workloads. Valid values: `virtio`, `sata`, `scsi`.
+     */
+    bus?: pulumi.Input<string>;
+    /**
+     * VM disk name. Required for `vm` workloads; rejected for other workload types.
+     */
+    name?: pulumi.Input<string>;
+    /**
+     * File path added to workload pointing to the volume. Required for non-`vm` workloads; rejected for `vm` workloads (the volume is attached to the VM as a block device).
      */
     path?: pulumi.Input<string>;
     /**
@@ -3335,12 +3359,20 @@ export interface Mk8sAddOns {
     byok?: pulumi.Input<inputs.Mk8sAddOnsByok>;
     dashboard?: pulumi.Input<boolean>;
     headlamp?: pulumi.Input<boolean>;
+    /**
+     * Enables type=vm workloads by installing the KubeVirt and CDI operators on the cluster.
+     */
+    kubevirt?: pulumi.Input<inputs.Mk8sAddOnsKubevirt>;
     localPathStorage?: pulumi.Input<boolean>;
     logs?: pulumi.Input<inputs.Mk8sAddOnsLogs>;
     /**
      * Scrape pods annotated with prometheus.io/scrape=true
      */
     metrics?: pulumi.Input<inputs.Mk8sAddOnsMetrics>;
+    /**
+     * Per-node CoreDNS cache. Required by the kubevirt add-on.
+     */
+    nodeLocalDns?: pulumi.Input<boolean>;
     nvidia?: pulumi.Input<inputs.Mk8sAddOnsNvidia>;
     registryMirror?: pulumi.Input<inputs.Mk8sAddOnsRegistryMirror>;
     sysbox?: pulumi.Input<boolean>;
@@ -3929,6 +3961,13 @@ export interface Mk8sAddOnsByokConfigTempoAgent {
      * Memory request applied to tempo agent pods.
      */
     minMemory?: pulumi.Input<string>;
+}
+
+export interface Mk8sAddOnsKubevirt {
+    /**
+     * Filesystem-mode StorageClass CDI uses for import scratch space. Required when the cluster default StorageClass is block-mode.
+     */
+    scratchSpaceStorageClass?: pulumi.Input<string>;
 }
 
 export interface Mk8sAddOnsLogs {
@@ -5821,9 +5860,9 @@ export interface WorkloadContainer {
      */
     gpuNvidia?: pulumi.Input<inputs.WorkloadContainerGpuNvidia>;
     /**
-     * The full image and tag path.
+     * The full image and tag path. Required for all workload types except `vm`, which boots from `vm.boot_disk.source` instead.
      */
-    image: pulumi.Input<string>;
+    image?: pulumi.Input<string>;
     /**
      * Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
      */
@@ -6017,9 +6056,21 @@ export interface WorkloadContainerReadinessProbeTcpSocket {
 
 export interface WorkloadContainerVolume {
     /**
-     * File path added to workload pointing to the volume.
+     * VM disk boot order. Only valid for `vm` workloads. Valid values: `1` - `16`.
      */
-    path: pulumi.Input<string>;
+    bootOrder?: pulumi.Input<number>;
+    /**
+     * VM disk bus. Only valid for `vm` workloads. A `cpln://secret/` volume on a `sata` or `scsi` bus is presented to the guest as a read-only CD-ROM. Valid values: `virtio`, `sata`, `scsi`.
+     */
+    bus?: pulumi.Input<string>;
+    /**
+     * VM disk name. Required for `vm` workloads; rejected for other workload types.
+     */
+    name?: pulumi.Input<string>;
+    /**
+     * File path added to workload pointing to the volume. Required for non-`vm` workloads; rejected for `vm` workloads (the volume is attached to the VM as a block device).
+     */
+    path?: pulumi.Input<string>;
     /**
      * Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `retain`, `recycle`. Default: `retain`. **DEPRECATED - No longer being used.**
      */
@@ -6733,4 +6784,211 @@ export interface WorkloadStatusResolvedImageImageManifest {
      * Key-value map of strings. The combination of the operating system and architecture for which the image is built.
      */
     platform?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+}
+
+export interface WorkloadVm {
+    /**
+     * SSH public keys injected at runtime via the guest agent or config drive.
+     */
+    accessCredentials?: pulumi.Input<pulumi.Input<inputs.WorkloadVmAccessCredential>[]>;
+    /**
+     * Boot disk configuration. When `source` is omitted, `containers[0].image` is used as an OCI containerDisk.
+     */
+    bootDisk?: pulumi.Input<inputs.WorkloadVmBootDisk>;
+    /**
+     * Guest clock configuration.
+     */
+    clock?: pulumi.Input<inputs.WorkloadVmClock>;
+    /**
+     * Cloud-init configuration for the guest. Exactly one of `userData`, `userDataBase64`, or `userDataSecret` must be specified.
+     */
+    cloudInit?: pulumi.Input<inputs.WorkloadVmCloudInit>;
+    /**
+     * CPU topology visible to the guest. Cores are derived from `containers[0].cpu`.
+     */
+    cpu?: pulumi.Input<inputs.WorkloadVmCpu>;
+    /**
+     * Firmware configuration for the guest.
+     */
+    firmware?: pulumi.Input<inputs.WorkloadVmFirmware>;
+    /**
+     * Guest operating system family. Drives the per-OS cloud-init payload. Valid values: `linux`, `windows`. Default: `linux`.
+     */
+    guestOs?: pulumi.Input<string>;
+    /**
+     * Hostname reported to the guest.
+     */
+    hostname?: pulumi.Input<string>;
+    /**
+     * Pod-network interfaces for the VM. Only a single network is supported.
+     */
+    networks?: pulumi.Input<pulumi.Input<inputs.WorkloadVmNetwork>[]>;
+    /**
+     * KubeVirt RunStrategy. Use `Halted` to keep the pool defined but powered off. Valid values: `Always`, `RerunOnFailure`, `Manual`, `Halted`. Default: `Always`.
+     */
+    runStrategy?: pulumi.Input<string>;
+    /**
+     * Subdomain used by the guest for replica-to-replica addressing.
+     */
+    subdomain?: pulumi.Input<string>;
+}
+
+export interface WorkloadVmAccessCredential {
+    /**
+     * Delivery method for the access credential. Valid values: `qemuGuestAgent`, `configDrive`. Default: `qemuGuestAgent`.
+     */
+    deliveryMethod?: pulumi.Input<string>;
+    /**
+     * Secret containing the SSH public keys to inject.
+     */
+    sshPublicKeySecret: pulumi.Input<string>;
+    /**
+     * Guest OS users the SSH public keys are injected for.
+     */
+    users: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface WorkloadVmBootDisk {
+    /**
+     * Boot order of the boot disk. Valid values: `1` - `16`. Default: `1`.
+     */
+    bootOrder?: pulumi.Input<number>;
+    /**
+     * Disk bus exposed to the guest. Valid values: `virtio`, `sata`, `scsi`. Default: `virtio`.
+     */
+    bus?: pulumi.Input<string>;
+    /**
+     * Per-replica boot PVC populated via CDI. Required for any non-OCI source.
+     */
+    persist?: pulumi.Input<inputs.WorkloadVmBootDiskPersist>;
+    /**
+     * Boot disk image source. Exactly one of `oci` or `http` must be specified.
+     */
+    source?: pulumi.Input<inputs.WorkloadVmBootDiskSource>;
+}
+
+export interface WorkloadVmBootDiskPersist {
+    /**
+     * VolumeSet URI used to provision one PVC per replica for the boot disk. Format: `cpln://volumeset/<name>`.
+     */
+    volumeSet: pulumi.Input<string>;
+}
+
+export interface WorkloadVmBootDiskSource {
+    /**
+     * Boot disk image fetched over HTTP/HTTPS. Requires `persist.volume_set`.
+     */
+    http?: pulumi.Input<inputs.WorkloadVmBootDiskSourceHttp>;
+    /**
+     * Boot from an OCI containerDisk image.
+     */
+    oci?: pulumi.Input<inputs.WorkloadVmBootDiskSourceOci>;
+}
+
+export interface WorkloadVmBootDiskSourceHttp {
+    /**
+     * Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+     */
+    checksum?: pulumi.Input<string>;
+    /**
+     * HTTP/HTTPS URL of the boot disk image.
+     */
+    url: pulumi.Input<string>;
+}
+
+export interface WorkloadVmBootDiskSourceOci {
+    /**
+     * Full image reference of a containerDisk (e.g., `quay.io/containerdisks/ubuntu:22.04` or `/org/<org>/image/<name>:<tag>`).
+     */
+    image: pulumi.Input<string>;
+}
+
+export interface WorkloadVmClock {
+    /**
+     * Guest timezone. Default: `UTC`.
+     */
+    timezone?: pulumi.Input<string>;
+}
+
+export interface WorkloadVmCloudInit {
+    /**
+     * SSH public keys injected via cloud-init. Each Secret may carry one or more keys.
+     */
+    sshPublicKeySecrets?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Inline cloud-init user-data. Not encrypted at rest in the data-service - use `userDataSecret` for sensitive payloads.
+     */
+    userData?: pulumi.Input<string>;
+    /**
+     * Inline cloud-init user-data, base64-encoded. Same caveats as `userData`.
+     */
+    userDataBase64?: pulumi.Input<string>;
+    /**
+     * Secret containing cloud-init user-data (key: `userdata` or `user-data`).
+     */
+    userDataSecret?: pulumi.Input<string>;
+}
+
+export interface WorkloadVmCpu {
+    /**
+     * CPU sockets visible to the guest. Valid values: `1` - `32`.
+     */
+    sockets?: pulumi.Input<number>;
+    /**
+     * CPU threads per core visible to the guest. Valid values: `1` - `8`.
+     */
+    threads?: pulumi.Input<number>;
+}
+
+export interface WorkloadVmFirmware {
+    /**
+     * Bootloader used by the guest. Valid values: `bios`, `efi`. Default: `efi`.
+     */
+    bootloader?: pulumi.Input<string>;
+    /**
+     * Enable UEFI Secure Boot. Default: `false`.
+     */
+    secureBoot?: pulumi.Input<boolean>;
+    /**
+     * SMBIOS system serial number reported to the guest.
+     */
+    serial?: pulumi.Input<string>;
+    /**
+     * SMBIOS system information reported to the guest.
+     */
+    smbios?: pulumi.Input<inputs.WorkloadVmFirmwareSmbios>;
+    /**
+     * Fixed SMBIOS UUID for the VM. KubeVirt generates one when omitted.
+     */
+    uuid?: pulumi.Input<string>;
+}
+
+export interface WorkloadVmFirmwareSmbios {
+    /**
+     * SMBIOS system family.
+     */
+    family?: pulumi.Input<string>;
+    /**
+     * SMBIOS system manufacturer.
+     */
+    manufacturer?: pulumi.Input<string>;
+    /**
+     * SMBIOS system product name.
+     */
+    product?: pulumi.Input<string>;
+    /**
+     * SMBIOS system SKU.
+     */
+    sku?: pulumi.Input<string>;
+    /**
+     * SMBIOS system version.
+     */
+    version?: pulumi.Input<string>;
+}
+
+export interface WorkloadVmNetwork {
+    /**
+     * Network interface name. Default: `default`.
+     */
+    name?: pulumi.Input<string>;
 }

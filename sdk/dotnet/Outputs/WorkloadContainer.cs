@@ -36,9 +36,9 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly Outputs.WorkloadContainerGpuNvidia? GpuNvidia;
         /// <summary>
-        /// The full image and tag path.
+        /// The full image and tag path. Required for all workload types except `Vm`, which boots from `vm.boot_disk.source` instead.
         /// </summary>
-        public readonly string Image;
+        public readonly string? Image;
         /// <summary>
         /// Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
         /// </summary>
@@ -106,7 +106,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             Outputs.WorkloadContainerGpuNvidia? gpuNvidia,
 
-            string image,
+            string? image,
 
             bool? inheritEnv,
 

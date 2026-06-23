@@ -59,10 +59,10 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<Inputs.WorkloadContainerGpuNvidiaGetArgs>? GpuNvidia { get; set; }
 
         /// <summary>
-        /// The full image and tag path.
+        /// The full image and tag path. Required for all workload types except `Vm`, which boots from `vm.boot_disk.source` instead.
         /// </summary>
-        [Input("image", required: true)]
-        public Input<string> Image { get; set; } = null!;
+        [Input("image")]
+        public Input<string>? Image { get; set; }
 
         /// <summary>
         /// Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.

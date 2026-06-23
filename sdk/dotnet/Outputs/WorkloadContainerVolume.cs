@@ -15,9 +15,21 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class WorkloadContainerVolume
     {
         /// <summary>
-        /// File path added to workload pointing to the volume.
+        /// VM disk boot order. Only valid for `Vm` workloads. Valid values: `1` - `16`.
         /// </summary>
-        public readonly string Path;
+        public readonly int? BootOrder;
+        /// <summary>
+        /// VM disk bus. Only valid for `Vm` workloads. A `cpln://secret/` volume on a `Sata` or `Scsi` bus is presented to the guest as a read-only CD-ROM. Valid values: `Virtio`, `Sata`, `Scsi`.
+        /// </summary>
+        public readonly string? Bus;
+        /// <summary>
+        /// VM disk name. Required for `Vm` workloads; rejected for other workload types.
+        /// </summary>
+        public readonly string? Name;
+        /// <summary>
+        /// File path added to workload pointing to the volume. Required for non-`Vm` workloads; rejected for `Vm` workloads (the volume is attached to the VM as a block device).
+        /// </summary>
+        public readonly string? Path;
         /// <summary>
         /// Only applicable to persistent volumes, this determines what Control Plane will do when creating a new workload replica if a corresponding volume exists. Available Values: `Retain`, `Recycle`. Default: `Retain`. **DEPRECATED - No longer being used.**
         /// </summary>
@@ -29,12 +41,21 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private WorkloadContainerVolume(
-            string path,
+            int? bootOrder,
+
+            string? bus,
+
+            string? name,
+
+            string? path,
 
             string? recoveryPolicy,
 
             string uri)
         {
+            BootOrder = bootOrder;
+            Bus = bus;
+            Name = name;
             Path = path;
             RecoveryPolicy = recoveryPolicy;
             Uri = uri;

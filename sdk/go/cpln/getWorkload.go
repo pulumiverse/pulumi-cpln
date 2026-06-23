@@ -26,7 +26,7 @@ import (
 // - **cpln_id** (String) The ID, in GUID format, of the workload.
 // - **name** (String) Name of the workload.
 // - **gvc** (String) Name of the associated GVC.
-// - **type** (String) Workload type. Either `serverless`, `standard`, `stateful`, or `cron`.
+// - **type** (String) Workload type. Either `serverless`, `standard`, `stateful`, `cron`, or `vm`.
 // - **description** (String) Description of the workload.
 // - **tags** (Map of String) Key-value map of resource tags.
 // - **self_link** (String) Full link to this resource. Can be referenced by other resources.
@@ -43,6 +43,8 @@ import (
 // - **security_options** (Block List, Max: 1) (see below).
 // - **load_balancer** (Block List, Max: 1) (see below).
 // - **request_retry_policy** (Block List, Max: 1) (see below).
+// - **vm** (Attributes) VM-only configuration. Present when `type` is `vm` (see below).
+// - **health** (Attributes) Health summary of the workload (see below).
 // - **status** (Block List) (see below).
 //
 // <a id="nestedblock--container"></a>
@@ -219,6 +221,9 @@ import (
 // - **uri** (String) URI of a volume hosted in Control Plane (Volume Set) or a supported cloud provider.
 // - **recovery_policy** (String) Recovery policy for persistent volumes. Either `retain` or `recycle`. **Deprecated – no longer used.**
 // - **path** (String) File-system path where the volume is mounted inside the container.
+// - **name** (String) VM disk name. Only set for `vm` workloads.
+// - **bus** (String) VM disk bus. Only set for `vm` workloads. Either `virtio`, `sata`, or `scsi`.
+// - **boot_order** (Number) VM disk boot order. Only set for `vm` workloads.
 //
 // <a id="nestedblock--firewall_spec"></a>
 //
@@ -530,6 +535,156 @@ import (
 // - **attempts** (Number) Number of retry attempts. Default: `2`.
 // - **retry_on** (List of String) Retry conditions that trigger another attempt.
 //
+// <a id="nestedblock--vm"></a>
+//
+// ### `vm`
+//
+// VM-only configuration for workloads of `type` `vm`.
+//
+// Read-Only:
+//
+// - **boot_disk** (Attributes) Boot disk configuration (see below).
+// - **cpu** (Attributes) CPU topology visible to the guest (see below).
+// - **firmware** (Attributes) Firmware configuration for the guest (see below).
+// - **guest_os** (String) Guest operating system family. Either `linux` or `windows`.
+// - **network** (Attributes List) Pod-network interface for the VM (see below).
+// - **cloud_init** (Attributes) Cloud-init configuration for the guest (see below).
+// - **access_credential** (Attributes Set) SSH public keys injected at runtime (see below).
+// - **run_strategy** (String) KubeVirt RunStrategy. Either `Always`, `RerunOnFailure`, `Manual`, or `Halted`.
+// - **clock** (Attributes) Guest clock configuration (see below).
+// - **hostname** (String) Hostname reported to the guest.
+// - **subdomain** (String) Subdomain used by the guest for replica-to-replica addressing.
+//
+// <a id="nestedblock--vm--boot_disk"></a>
+//
+// ### `vm.boot_disk`
+//
+// Read-Only:
+//
+// - **source** (Attributes) Boot disk image source (see below).
+// - **persist** (Attributes) Per-replica boot PVC populated via CDI (see below).
+// - **bus** (String) Disk bus exposed to the guest. Either `virtio`, `sata`, or `scsi`.
+// - **boot_order** (Number) Boot order of the boot disk.
+//
+// <a id="nestedblock--vm--boot_disk--source"></a>
+//
+// ### `vm.boot_disk.source`
+//
+// Read-Only:
+//
+// - **oci** (Attributes) Boot from an OCI containerDisk image (see below).
+// - **http** (Attributes) Boot disk image fetched over HTTP/HTTPS (see below).
+//
+// <a id="nestedblock--vm--boot_disk--source--oci"></a>
+//
+// ### `vm.boot_disk.source.oci`
+//
+// Read-Only:
+//
+// - **image** (String) Full image reference of a containerDisk.
+//
+// <a id="nestedblock--vm--boot_disk--source--http"></a>
+//
+// ### `vm.boot_disk.source.http`
+//
+// Read-Only:
+//
+// - **url** (String) HTTP/HTTPS URL of the boot disk image.
+// - **checksum** (String) Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+//
+// <a id="nestedblock--vm--boot_disk--persist"></a>
+//
+// ### `vm.boot_disk.persist`
+//
+// Read-Only:
+//
+// - **volume_set** (String) VolumeSet URI used to provision one PVC per replica for the boot disk.
+//
+// <a id="nestedblock--vm--cpu"></a>
+//
+// ### `vm.cpu`
+//
+// Read-Only:
+//
+// - **sockets** (Number) CPU sockets visible to the guest.
+// - **threads** (Number) CPU threads per core visible to the guest.
+//
+// <a id="nestedblock--vm--firmware"></a>
+//
+// ### `vm.firmware`
+//
+// Read-Only:
+//
+// - **bootloader** (String) Bootloader used by the guest. Either `bios` or `efi`.
+// - **secure_boot** (Boolean) Whether UEFI Secure Boot is enabled.
+// - **uuid** (String) Fixed SMBIOS UUID for the VM.
+// - **serial** (String) SMBIOS system serial number reported to the guest.
+// - **smbios** (Attributes) SMBIOS system information reported to the guest (see below).
+//
+// <a id="nestedblock--vm--firmware--smbios"></a>
+//
+// ### `vm.firmware.smbios`
+//
+// Read-Only:
+//
+// - **manufacturer** (String) SMBIOS system manufacturer.
+// - **product** (String) SMBIOS system product name.
+// - **version** (String) SMBIOS system version.
+// - **sku** (String) SMBIOS system SKU.
+// - **family** (String) SMBIOS system family.
+//
+// <a id="nestedblock--vm--network"></a>
+//
+// ### `vm.network`
+//
+// Read-Only:
+//
+// - **name** (String) Network interface name.
+//
+// <a id="nestedblock--vm--cloud_init"></a>
+//
+// ### `vm.cloud_init`
+//
+// Read-Only:
+//
+// - **user_data** (String) Inline cloud-init user-data.
+// - **user_data_base64** (String) Inline cloud-init user-data, base64-encoded.
+// - **user_data_secret** (String) Secret containing cloud-init user-data.
+// - **ssh_public_key_secrets** (Set of String) SSH public keys injected via cloud-init.
+//
+// <a id="nestedblock--vm--access_credential"></a>
+//
+// ### `vm.access_credential`
+//
+// Read-Only:
+//
+// - **ssh_public_key_secret** (String) Secret containing the SSH public keys to inject.
+// - **users** (Set of String) Guest OS users the SSH public keys are injected for.
+// - **delivery_method** (String) Delivery method for the access credential. Either `qemuGuestAgent` or `configDrive`.
+//
+// <a id="nestedblock--vm--clock"></a>
+//
+// ### `vm.clock`
+//
+// Read-Only:
+//
+// - **timezone** (String) Guest timezone.
+//
+// <a id="nestedblock--health"></a>
+//
+// ### `health`
+//
+// Health summary of the workload.
+//
+// Read-Only:
+//
+// - **readiness** (String) Readiness of the workload.
+// - **sync_failed** (Boolean) Whether the most recent sync of the workload failed.
+// - **ready_locations** (Number) Number of locations where the workload is ready.
+// - **total_locations** (Number) Total number of locations the workload is deployed to.
+// - **ready_replicas** (Number) Number of ready replicas across all locations.
+// - **total_replicas** (Number) Total number of replicas across all locations.
+//
 // <a id="nestedblock--status"></a>
 //
 // ### `status`
@@ -670,6 +825,7 @@ type LookupWorkloadResult struct {
 	Extras               string                          `pulumi:"extras"`
 	FirewallSpecs        []GetWorkloadFirewallSpec       `pulumi:"firewallSpecs"`
 	Gvc                  string                          `pulumi:"gvc"`
+	Health               GetWorkloadHealth               `pulumi:"health"`
 	Id                   string                          `pulumi:"id"`
 	IdentityLink         string                          `pulumi:"identityLink"`
 	Jobs                 []GetWorkloadJob                `pulumi:"jobs"`
@@ -686,6 +842,7 @@ type LookupWorkloadResult struct {
 	SupportDynamicTags   bool                            `pulumi:"supportDynamicTags"`
 	Tags                 map[string]string               `pulumi:"tags"`
 	Type                 string                          `pulumi:"type"`
+	Vm                   GetWorkloadVm                   `pulumi:"vm"`
 }
 
 func LookupWorkloadOutput(ctx *pulumi.Context, args LookupWorkloadOutputArgs, opts ...pulumi.InvokeOption) LookupWorkloadResultOutput {
@@ -757,6 +914,10 @@ func (o LookupWorkloadResultOutput) Gvc() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupWorkloadResult) string { return v.Gvc }).(pulumi.StringOutput)
 }
 
+func (o LookupWorkloadResultOutput) Health() GetWorkloadHealthOutput {
+	return o.ApplyT(func(v LookupWorkloadResult) GetWorkloadHealth { return v.Health }).(GetWorkloadHealthOutput)
+}
+
 func (o LookupWorkloadResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupWorkloadResult) string { return v.Id }).(pulumi.StringOutput)
 }
@@ -819,6 +980,10 @@ func (o LookupWorkloadResultOutput) Tags() pulumi.StringMapOutput {
 
 func (o LookupWorkloadResultOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupWorkloadResult) string { return v.Type }).(pulumi.StringOutput)
+}
+
+func (o LookupWorkloadResultOutput) Vm() GetWorkloadVmOutput {
+	return o.ApplyT(func(v LookupWorkloadResult) GetWorkloadVm { return v.Vm }).(GetWorkloadVmOutput)
 }
 
 func init() {
