@@ -13,6 +13,18 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class DomainSpecPortRouteArgs : global::Pulumi.ResourceArgs
     {
+        [Input("canaries")]
+        private InputList<Inputs.DomainSpecPortRouteCanaryArgs>? _canaries;
+
+        /// <summary>
+        /// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+        /// </summary>
+        public InputList<Inputs.DomainSpecPortRouteCanaryArgs> Canaries
+        {
+            get => _canaries ?? (_canaries = new InputList<Inputs.DomainSpecPortRouteCanaryArgs>());
+            set => _canaries = value;
+        }
+
         /// <summary>
         /// Modify the headers for all http requests for this route.
         /// </summary>

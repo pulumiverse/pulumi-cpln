@@ -15,6 +15,10 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class DomainSpecPortRoute
     {
         /// <summary>
+        /// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+        /// </summary>
+        public readonly ImmutableArray<Outputs.DomainSpecPortRouteCanary> Canaries;
+        /// <summary>
         /// Modify the headers for all http requests for this route.
         /// </summary>
         public readonly Outputs.DomainSpecPortRouteHeaders? Headers;
@@ -57,6 +61,8 @@ namespace Pulumiverse.Cpln.Outputs
 
         [OutputConstructor]
         private DomainSpecPortRoute(
+            ImmutableArray<Outputs.DomainSpecPortRouteCanary> canaries,
+
             Outputs.DomainSpecPortRouteHeaders? headers,
 
             string? hostPrefix,
@@ -77,6 +83,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             string workloadLink)
         {
+            Canaries = canaries;
             Headers = headers;
             HostPrefix = hostPrefix;
             HostRegex = hostRegex;

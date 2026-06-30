@@ -23,6 +23,7 @@ __all__ = [
     'CloudAccountNgs',
     'CloudAccountStatus',
     'CustomLocationGeo',
+    'DomainRouteCanary',
     'DomainRouteHeaders',
     'DomainRouteHeadersRequest',
     'DomainRouteMirror',
@@ -31,6 +32,7 @@ __all__ = [
     'DomainSpecPortCors',
     'DomainSpecPortCorsAllowOrigin',
     'DomainSpecPortRoute',
+    'DomainSpecPortRouteCanary',
     'DomainSpecPortRouteHeaders',
     'DomainSpecPortRouteHeadersRequest',
     'DomainSpecPortRouteMirror',
@@ -123,6 +125,7 @@ __all__ = [
     'Mk8sAwsProviderImage',
     'Mk8sAwsProviderNetworking',
     'Mk8sAwsProviderNodePool',
+    'Mk8sAwsProviderNodePoolCpuOptions',
     'Mk8sAwsProviderNodePoolOverrideImage',
     'Mk8sAwsProviderNodePoolTaint',
     'Mk8sAzureProvider',
@@ -218,6 +221,7 @@ __all__ = [
     'OrgLoggingElasticLoggingGeneric',
     'OrgLoggingFluentdLogging',
     'OrgLoggingLogzioLogging',
+    'OrgLoggingLokiLogging',
     'OrgLoggingOpentelemetryLogging',
     'OrgLoggingS3Logging',
     'OrgLoggingStackdriverLogging',
@@ -775,6 +779,64 @@ class CustomLocationGeo(dict):
 
 
 @pulumi.output_type
+class DomainRouteCanary(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "workloadLink":
+            suggest = "workload_link"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in DomainRouteCanary. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        DomainRouteCanary.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        DomainRouteCanary.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 weight: _builtins.int,
+                 workload_link: _builtins.str,
+                 port: Optional[_builtins.int] = None):
+        """
+        :param _builtins.int weight: The percentage of traffic to send to this canary workload. A weight of 0 disables the canary so it can be toggled on and off without removing it.
+        :param _builtins.str workload_link: The canary workload to route a weighted percentage of traffic to.
+        :param _builtins.int port: The port to send canary traffic to. If not provided, the first configured port on the workload is used.
+        """
+        pulumi.set(__self__, "weight", weight)
+        pulumi.set(__self__, "workload_link", workload_link)
+        if port is not None:
+            pulumi.set(__self__, "port", port)
+
+    @_builtins.property
+    @pulumi.getter
+    def weight(self) -> _builtins.int:
+        """
+        The percentage of traffic to send to this canary workload. A weight of 0 disables the canary so it can be toggled on and off without removing it.
+        """
+        return pulumi.get(self, "weight")
+
+    @_builtins.property
+    @pulumi.getter(name="workloadLink")
+    def workload_link(self) -> _builtins.str:
+        """
+        The canary workload to route a weighted percentage of traffic to.
+        """
+        return pulumi.get(self, "workload_link")
+
+    @_builtins.property
+    @pulumi.getter
+    def port(self) -> Optional[_builtins.int]:
+        """
+        The port to send canary traffic to. If not provided, the first configured port on the workload is used.
+        """
+        return pulumi.get(self, "port")
+
+
+@pulumi.output_type
 class DomainRouteHeaders(dict):
     def __init__(__self__, *,
                  request: Optional['outputs.DomainRouteHeadersRequest'] = None):
@@ -1215,6 +1277,7 @@ class DomainSpecPortRoute(dict):
 
     def __init__(__self__, *,
                  workload_link: _builtins.str,
+                 canaries: Optional[Sequence['outputs.DomainSpecPortRouteCanary']] = None,
                  headers: Optional['outputs.DomainSpecPortRouteHeaders'] = None,
                  host_prefix: Optional[_builtins.str] = None,
                  host_regex: Optional[_builtins.str] = None,
@@ -1226,6 +1289,7 @@ class DomainSpecPortRoute(dict):
                  replica: Optional[_builtins.int] = None):
         """
         :param _builtins.str workload_link: The link of the workload to map the prefix to.
+        :param Sequence['DomainSpecPortRouteCanaryArgs'] canaries: Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
         :param 'DomainSpecPortRouteHeadersArgs' headers: Modify the headers for all http requests for this route.
         :param _builtins.str host_prefix: This option allows forwarding traffic for different host headers to different workloads.
         :param _builtins.str host_regex: A regex to match the host header.
@@ -1237,6 +1301,8 @@ class DomainSpecPortRoute(dict):
         :param _builtins.int replica: The replica number of a stateful workload to route to. If not provided, traffic will be routed to all replicas.
         """
         pulumi.set(__self__, "workload_link", workload_link)
+        if canaries is not None:
+            pulumi.set(__self__, "canaries", canaries)
         if headers is not None:
             pulumi.set(__self__, "headers", headers)
         if host_prefix is not None:
@@ -1263,6 +1329,14 @@ class DomainSpecPortRoute(dict):
         The link of the workload to map the prefix to.
         """
         return pulumi.get(self, "workload_link")
+
+    @_builtins.property
+    @pulumi.getter
+    def canaries(self) -> Optional[Sequence['outputs.DomainSpecPortRouteCanary']]:
+        """
+        Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+        """
+        return pulumi.get(self, "canaries")
 
     @_builtins.property
     @pulumi.getter
@@ -1335,6 +1409,64 @@ class DomainSpecPortRoute(dict):
         The replica number of a stateful workload to route to. If not provided, traffic will be routed to all replicas.
         """
         return pulumi.get(self, "replica")
+
+
+@pulumi.output_type
+class DomainSpecPortRouteCanary(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "workloadLink":
+            suggest = "workload_link"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in DomainSpecPortRouteCanary. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        DomainSpecPortRouteCanary.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        DomainSpecPortRouteCanary.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 weight: _builtins.int,
+                 workload_link: _builtins.str,
+                 port: Optional[_builtins.int] = None):
+        """
+        :param _builtins.int weight: The percentage of traffic to send to this canary workload. A weight of 0 disables the canary so it can be toggled on and off without removing it.
+        :param _builtins.str workload_link: The canary workload to route a weighted percentage of traffic to.
+        :param _builtins.int port: The port to send canary traffic to. If not provided, the first configured port on the workload is used.
+        """
+        pulumi.set(__self__, "weight", weight)
+        pulumi.set(__self__, "workload_link", workload_link)
+        if port is not None:
+            pulumi.set(__self__, "port", port)
+
+    @_builtins.property
+    @pulumi.getter
+    def weight(self) -> _builtins.int:
+        """
+        The percentage of traffic to send to this canary workload. A weight of 0 disables the canary so it can be toggled on and off without removing it.
+        """
+        return pulumi.get(self, "weight")
+
+    @_builtins.property
+    @pulumi.getter(name="workloadLink")
+    def workload_link(self) -> _builtins.str:
+        """
+        The canary workload to route a weighted percentage of traffic to.
+        """
+        return pulumi.get(self, "workload_link")
+
+    @_builtins.property
+    @pulumi.getter
+    def port(self) -> Optional[_builtins.int]:
+        """
+        The port to send canary traffic to. If not provided, the first configured port on the workload is used.
+        """
+        return pulumi.get(self, "port")
 
 
 @pulumi.output_type
@@ -2951,33 +3083,26 @@ class IdentityNativeNetworkResource(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 fqdn: _builtins.str,
                  name: _builtins.str,
                  ports: Sequence[_builtins.int],
                  aws_private_link: Optional['outputs.IdentityNativeNetworkResourceAwsPrivateLink'] = None,
+                 fqdn: Optional[_builtins.str] = None,
                  gcp_service_connect: Optional['outputs.IdentityNativeNetworkResourceGcpServiceConnect'] = None):
         """
-        :param _builtins.str fqdn: Fully qualified domain name.
         :param _builtins.str name: Name of the Native Network Resource.
-        :param Sequence[_builtins.int] ports: Ports to expose. At least one port is required.
+        :param Sequence[_builtins.int] ports: Ports to expose. Between 1 and 10 entries.
         :param 'IdentityNativeNetworkResourceAwsPrivateLinkArgs' aws_private_link: A feature provided by AWS that enables private connectivity between private VPCs and compute running at Control Plane without traversing the public internet.
+        :param _builtins.str fqdn: Fully qualified domain name.
         :param 'IdentityNativeNetworkResourceGcpServiceConnectArgs' gcp_service_connect: Capability provided by GCP that allows private communication between private VPC networks and compute running at Control Plane.
         """
-        pulumi.set(__self__, "fqdn", fqdn)
         pulumi.set(__self__, "name", name)
         pulumi.set(__self__, "ports", ports)
         if aws_private_link is not None:
             pulumi.set(__self__, "aws_private_link", aws_private_link)
+        if fqdn is not None:
+            pulumi.set(__self__, "fqdn", fqdn)
         if gcp_service_connect is not None:
             pulumi.set(__self__, "gcp_service_connect", gcp_service_connect)
-
-    @_builtins.property
-    @pulumi.getter
-    def fqdn(self) -> _builtins.str:
-        """
-        Fully qualified domain name.
-        """
-        return pulumi.get(self, "fqdn")
 
     @_builtins.property
     @pulumi.getter
@@ -2991,7 +3116,7 @@ class IdentityNativeNetworkResource(dict):
     @pulumi.getter
     def ports(self) -> Sequence[_builtins.int]:
         """
-        Ports to expose. At least one port is required.
+        Ports to expose. Between 1 and 10 entries.
         """
         return pulumi.get(self, "ports")
 
@@ -3002,6 +3127,14 @@ class IdentityNativeNetworkResource(dict):
         A feature provided by AWS that enables private connectivity between private VPCs and compute running at Control Plane without traversing the public internet.
         """
         return pulumi.get(self, "aws_private_link")
+
+    @_builtins.property
+    @pulumi.getter
+    def fqdn(self) -> Optional[_builtins.str]:
+        """
+        Fully qualified domain name.
+        """
+        return pulumi.get(self, "fqdn")
 
     @_builtins.property
     @pulumi.getter(name="gcpServiceConnect")
@@ -3112,10 +3245,10 @@ class IdentityNetworkResource(dict):
                  resolver_ip: Optional[_builtins.str] = None):
         """
         :param _builtins.str name: Name of the Network Resource.
-        :param Sequence[_builtins.int] ports: Ports to expose.
+        :param Sequence[_builtins.int] ports: Ports to expose. Between 1 and 10 entries.
         :param _builtins.str agent_link: Full link to referenced Agent.
         :param _builtins.str fqdn: Fully qualified domain name.
-        :param Sequence[_builtins.str] ips: List of IP addresses.
+        :param Sequence[_builtins.str] ips: List of IP addresses. Up to 5 entries.
         :param _builtins.str resolver_ip: Resolver IP.
         """
         pulumi.set(__self__, "name", name)
@@ -3141,7 +3274,7 @@ class IdentityNetworkResource(dict):
     @pulumi.getter
     def ports(self) -> Sequence[_builtins.int]:
         """
-        Ports to expose.
+        Ports to expose. Between 1 and 10 entries.
         """
         return pulumi.get(self, "ports")
 
@@ -3165,7 +3298,7 @@ class IdentityNetworkResource(dict):
     @pulumi.getter
     def ips(self) -> Optional[Sequence[_builtins.str]]:
         """
-        List of IP addresses.
+        List of IP addresses. Up to 5 entries.
         """
         return pulumi.get(self, "ips")
 
@@ -3322,7 +3455,7 @@ class IdentityNgsAccessPolicyResp(dict):
                  max: Optional[_builtins.int] = None,
                  ttl: Optional[_builtins.str] = None):
         """
-        :param _builtins.int max: Number of responses allowed on the replyTo subject, -1 means no limit. Default: -1
+        :param _builtins.int max: Number of responses allowed on the replyTo subject, -1 means no limit. Default: 1
         :param _builtins.str ttl: Deadline to send replies on the replyTo subject [#ms(millis) | #s(econds) | m(inutes) | h(ours)]. -1 means no restriction.
         """
         if max is not None:
@@ -3334,7 +3467,7 @@ class IdentityNgsAccessPolicyResp(dict):
     @pulumi.getter
     def max(self) -> Optional[_builtins.int]:
         """
-        Number of responses allowed on the replyTo subject, -1 means no limit. Default: -1
+        Number of responses allowed on the replyTo subject, -1 means no limit. Default: 1
         """
         return pulumi.get(self, "max")
 
@@ -5056,6 +5189,8 @@ class Mk8sAddOnsByokConfigMiddlebox(dict):
         suggest = None
         if key == "bandwidthAlertMbps":
             suggest = "bandwidth_alert_mbps"
+        elif key == "ingressReplicas":
+            suggest = "ingress_replicas"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in Mk8sAddOnsByokConfigMiddlebox. Access the value via the '{suggest}' property getter instead.")
@@ -5071,11 +5206,13 @@ class Mk8sAddOnsByokConfigMiddlebox(dict):
     def __init__(__self__, *,
                  bandwidth_alert_mbps: Optional[_builtins.int] = None,
                  enabled: Optional[_builtins.bool] = None,
+                 ingress_replicas: Optional[_builtins.int] = None,
                  ip: Optional[_builtins.str] = None,
                  port: Optional[_builtins.int] = None):
         """
         :param _builtins.int bandwidth_alert_mbps: Alert threshold, in Mbps, for middlebox bandwidth usage.
         :param _builtins.bool enabled: Whether to deploy the middlebox component.
+        :param _builtins.int ingress_replicas: Number of ingress replicas deployed for the middlebox component. Default: `0`.
         :param _builtins.str ip: IPv4 address bound by the middlebox component.
         :param _builtins.int port: Listening port for the middlebox component.
         """
@@ -5083,6 +5220,8 @@ class Mk8sAddOnsByokConfigMiddlebox(dict):
             pulumi.set(__self__, "bandwidth_alert_mbps", bandwidth_alert_mbps)
         if enabled is not None:
             pulumi.set(__self__, "enabled", enabled)
+        if ingress_replicas is not None:
+            pulumi.set(__self__, "ingress_replicas", ingress_replicas)
         if ip is not None:
             pulumi.set(__self__, "ip", ip)
         if port is not None:
@@ -5103,6 +5242,14 @@ class Mk8sAddOnsByokConfigMiddlebox(dict):
         Whether to deploy the middlebox component.
         """
         return pulumi.get(self, "enabled")
+
+    @_builtins.property
+    @pulumi.getter(name="ingressReplicas")
+    def ingress_replicas(self) -> Optional[_builtins.int]:
+        """
+        Number of ingress replicas deployed for the middlebox component. Default: `0`.
+        """
+        return pulumi.get(self, "ingress_replicas")
 
     @_builtins.property
     @pulumi.getter
@@ -6864,6 +7011,8 @@ class Mk8sAwsProviderNodePool(dict):
             suggest = "subnet_ids"
         elif key == "bootDiskSize":
             suggest = "boot_disk_size"
+        elif key == "cpuOptions":
+            suggest = "cpu_options"
         elif key == "extraSecurityGroupIds":
             suggest = "extra_security_group_ids"
         elif key == "maxSize":
@@ -6895,6 +7044,7 @@ class Mk8sAwsProviderNodePool(dict):
                  name: _builtins.str,
                  subnet_ids: Sequence[_builtins.str],
                  boot_disk_size: Optional[_builtins.int] = None,
+                 cpu_options: Optional['outputs.Mk8sAwsProviderNodePoolCpuOptions'] = None,
                  extra_security_group_ids: Optional[Sequence[_builtins.str]] = None,
                  labels: Optional[Mapping[str, _builtins.str]] = None,
                  max_size: Optional[_builtins.int] = None,
@@ -6906,6 +7056,7 @@ class Mk8sAwsProviderNodePool(dict):
                  taints: Optional[Sequence['outputs.Mk8sAwsProviderNodePoolTaint']] = None):
         """
         :param _builtins.int boot_disk_size: Size in GB.
+        :param 'Mk8sAwsProviderNodePoolCpuOptionsArgs' cpu_options: CPU options for the node pool instances.
         :param Sequence[_builtins.str] extra_security_group_ids: Security groups to deploy nodes to. Security groups control if the cluster is multi-zone or single-zon.
         :param Mapping[str, _builtins.str] labels: Labels to attach to nodes of a node pool.
         :param 'Mk8sAwsProviderNodePoolOverrideImageArgs' override_image: Default image for all nodes.
@@ -6916,6 +7067,8 @@ class Mk8sAwsProviderNodePool(dict):
         pulumi.set(__self__, "subnet_ids", subnet_ids)
         if boot_disk_size is not None:
             pulumi.set(__self__, "boot_disk_size", boot_disk_size)
+        if cpu_options is not None:
+            pulumi.set(__self__, "cpu_options", cpu_options)
         if extra_security_group_ids is not None:
             pulumi.set(__self__, "extra_security_group_ids", extra_security_group_ids)
         if labels is not None:
@@ -6957,6 +7110,14 @@ class Mk8sAwsProviderNodePool(dict):
         Size in GB.
         """
         return pulumi.get(self, "boot_disk_size")
+
+    @_builtins.property
+    @pulumi.getter(name="cpuOptions")
+    def cpu_options(self) -> Optional['outputs.Mk8sAwsProviderNodePoolCpuOptions']:
+        """
+        CPU options for the node pool instances.
+        """
+        return pulumi.get(self, "cpu_options")
 
     @_builtins.property
     @pulumi.getter(name="extraSecurityGroupIds")
@@ -7014,6 +7175,42 @@ class Mk8sAwsProviderNodePool(dict):
         Taint for the nodes of a pool.
         """
         return pulumi.get(self, "taints")
+
+
+@pulumi.output_type
+class Mk8sAwsProviderNodePoolCpuOptions(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "nestedVirtualization":
+            suggest = "nested_virtualization"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sAwsProviderNodePoolCpuOptions. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sAwsProviderNodePoolCpuOptions.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sAwsProviderNodePoolCpuOptions.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 nested_virtualization: Optional[_builtins.bool] = None):
+        """
+        :param _builtins.bool nested_virtualization: Enable nested virtualization. Only supported on 8th generation Intel instance types (c8i, m8i, r8i and variants).
+        """
+        if nested_virtualization is not None:
+            pulumi.set(__self__, "nested_virtualization", nested_virtualization)
+
+    @_builtins.property
+    @pulumi.getter(name="nestedVirtualization")
+    def nested_virtualization(self) -> Optional[_builtins.bool]:
+        """
+        Enable nested virtualization. Only supported on 8th generation Intel instance types (c8i, m8i, r8i and variants).
+        """
+        return pulumi.get(self, "nested_virtualization")
 
 
 @pulumi.output_type
@@ -12625,6 +12822,65 @@ class OrgLoggingLogzioLogging(dict):
 
 
 @pulumi.output_type
+class OrgLoggingLokiLogging(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "tenantId":
+            suggest = "tenant_id"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in OrgLoggingLokiLogging. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        OrgLoggingLokiLogging.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        OrgLoggingLokiLogging.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 endpoint: _builtins.str,
+                 credentials: Optional[_builtins.str] = None,
+                 tenant_id: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str endpoint: Loki endpoint to push logs to (e.g. `https://logs-prod-012.grafana.net`).
+        :param _builtins.str credentials: Full link to a secret of type `userpass`. For Grafana Cloud, set the username to the instance ID and the password to an access token.
+        :param _builtins.str tenant_id: The `X-Scope-OrgID` header value used for self-hosted multi-tenant Loki.
+        """
+        pulumi.set(__self__, "endpoint", endpoint)
+        if credentials is not None:
+            pulumi.set(__self__, "credentials", credentials)
+        if tenant_id is not None:
+            pulumi.set(__self__, "tenant_id", tenant_id)
+
+    @_builtins.property
+    @pulumi.getter
+    def endpoint(self) -> _builtins.str:
+        """
+        Loki endpoint to push logs to (e.g. `https://logs-prod-012.grafana.net`).
+        """
+        return pulumi.get(self, "endpoint")
+
+    @_builtins.property
+    @pulumi.getter
+    def credentials(self) -> Optional[_builtins.str]:
+        """
+        Full link to a secret of type `userpass`. For Grafana Cloud, set the username to the instance ID and the password to an access token.
+        """
+        return pulumi.get(self, "credentials")
+
+    @_builtins.property
+    @pulumi.getter(name="tenantId")
+    def tenant_id(self) -> Optional[_builtins.str]:
+        """
+        The `X-Scope-OrgID` header value used for self-hosted multi-tenant Loki.
+        """
+        return pulumi.get(self, "tenant_id")
+
+
+@pulumi.output_type
 class OrgLoggingOpentelemetryLogging(dict):
     def __init__(__self__, *,
                  endpoint: _builtins.str,
@@ -12844,9 +13100,9 @@ class OrgObservability(dict):
                  traces_retention_days: Optional[_builtins.int] = None):
         """
         :param Sequence[_builtins.str] default_alert_emails: These emails are configured as alert recipients in Grafana when the 'grafana-default-email' contact delivery type is 'Email'.
-        :param _builtins.int logs_retention_days: Log retention days. Default: 30
-        :param _builtins.int metrics_retention_days: Metrics retention days. Default: 30
-        :param _builtins.int traces_retention_days: Traces retention days. Default: 30
+        :param _builtins.int logs_retention_days: Log retention days. Min: 0. Max: 3650. Default: 30
+        :param _builtins.int metrics_retention_days: Metrics retention days. Min: 0. Max: 3650. Default: 30
+        :param _builtins.int traces_retention_days: Traces retention days. Min: 0. Max: 3650. Default: 30
         """
         if default_alert_emails is not None:
             pulumi.set(__self__, "default_alert_emails", default_alert_emails)
@@ -12869,7 +13125,7 @@ class OrgObservability(dict):
     @pulumi.getter(name="logsRetentionDays")
     def logs_retention_days(self) -> Optional[_builtins.int]:
         """
-        Log retention days. Default: 30
+        Log retention days. Min: 0. Max: 3650. Default: 30
         """
         return pulumi.get(self, "logs_retention_days")
 
@@ -12877,7 +13133,7 @@ class OrgObservability(dict):
     @pulumi.getter(name="metricsRetentionDays")
     def metrics_retention_days(self) -> Optional[_builtins.int]:
         """
-        Metrics retention days. Default: 30
+        Metrics retention days. Min: 0. Max: 3650. Default: 30
         """
         return pulumi.get(self, "metrics_retention_days")
 
@@ -12885,7 +13141,7 @@ class OrgObservability(dict):
     @pulumi.getter(name="tracesRetentionDays")
     def traces_retention_days(self) -> Optional[_builtins.int]:
         """
-        Traces retention days. Default: 30
+        Traces retention days. Min: 0. Max: 3650. Default: 30
         """
         return pulumi.get(self, "traces_retention_days")
 
@@ -12987,7 +13243,7 @@ class OrgSecurityThreatDetectionSyslog(dict):
                  transport: Optional[_builtins.str] = None):
         """
         :param _builtins.str host: The hostname to send syslog messages to.
-        :param _builtins.int port: The port to send syslog messages to.
+        :param _builtins.int port: The port to send syslog messages to. Min: 1. Max: 100000.
         :param _builtins.str transport: The transport-layer protocol to send the syslog messages over. If TCP is chosen, messages will be sent with TLS. Default: `tcp`.
         """
         pulumi.set(__self__, "host", host)
@@ -13007,7 +13263,7 @@ class OrgSecurityThreatDetectionSyslog(dict):
     @pulumi.getter
     def port(self) -> _builtins.int:
         """
-        The port to send syslog messages to.
+        The port to send syslog messages to. Min: 1. Max: 100000.
         """
         return pulumi.get(self, "port")
 
@@ -13702,8 +13958,8 @@ class SecretNatsAccount(dict):
                  account_id: _builtins.str,
                  private_key: _builtins.str):
         """
-        :param _builtins.str account_id: Account ID.
-        :param _builtins.str private_key: Private Key.
+        :param _builtins.str account_id: Account ID. Must be a 56-character NATS account public key beginning with `A`.
+        :param _builtins.str private_key: Private Key. Must be a 58-character NATS account seed beginning with `SA`.
         """
         pulumi.set(__self__, "account_id", account_id)
         pulumi.set(__self__, "private_key", private_key)
@@ -13712,7 +13968,7 @@ class SecretNatsAccount(dict):
     @pulumi.getter(name="accountId")
     def account_id(self) -> _builtins.str:
         """
-        Account ID.
+        Account ID. Must be a 56-character NATS account public key beginning with `A`.
         """
         return pulumi.get(self, "account_id")
 
@@ -13720,7 +13976,7 @@ class SecretNatsAccount(dict):
     @pulumi.getter(name="privateKey")
     def private_key(self) -> _builtins.str:
         """
-        Private Key.
+        Private Key. Must be a 58-character NATS account seed beginning with `SA`.
         """
         return pulumi.get(self, "private_key")
 
@@ -13759,17 +14015,18 @@ class SecretOpaque(dict):
 class SecretTls(dict):
     def __init__(__self__, *,
                  cert: _builtins.str,
-                 key: _builtins.str,
-                 chain: Optional[_builtins.str] = None):
+                 chain: Optional[_builtins.str] = None,
+                 key: Optional[_builtins.str] = None):
         """
         :param _builtins.str cert: Public Certificate.
-        :param _builtins.str key: Private Certificate.
         :param _builtins.str chain: Chain Certificate.
+        :param _builtins.str key: Private Certificate.
         """
         pulumi.set(__self__, "cert", cert)
-        pulumi.set(__self__, "key", key)
         if chain is not None:
             pulumi.set(__self__, "chain", chain)
+        if key is not None:
+            pulumi.set(__self__, "key", key)
 
     @_builtins.property
     @pulumi.getter
@@ -13781,19 +14038,19 @@ class SecretTls(dict):
 
     @_builtins.property
     @pulumi.getter
-    def key(self) -> _builtins.str:
-        """
-        Private Certificate.
-        """
-        return pulumi.get(self, "key")
-
-    @_builtins.property
-    @pulumi.getter
     def chain(self) -> Optional[_builtins.str]:
         """
         Chain Certificate.
         """
         return pulumi.get(self, "chain")
+
+    @_builtins.property
+    @pulumi.getter
+    def key(self) -> Optional[_builtins.str]:
+        """
+        Private Certificate.
+        """
+        return pulumi.get(self, "key")
 
 
 @pulumi.output_type
@@ -15439,7 +15696,7 @@ class WorkloadFirewallSpecExternal(dict):
                  outbound_blocked_cidrs: Optional[Sequence[_builtins.str]] = None):
         """
         :param 'WorkloadFirewallSpecExternalHttpArgs' http: Firewall options for HTTP workloads.
-        :param Sequence[_builtins.str] inbound_allow_cidrs: The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+        :param Sequence[_builtins.str] inbound_allow_cidrs: The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet. Max: `250`.
         :param Sequence[_builtins.str] inbound_blocked_cidrs: The list of ipv4/ipv6 addresses or cidr blocks that are NOT allowed to access this workload. Addresses in the allow list will only be allowed if they do not exist in this list.
         :param Sequence[_builtins.str] outbound_allow_cidrs: The list of ipv4/ipv6 addresses or cidr blocks that this workload is allowed reach. No outbound access is allowed by default. Specify '0.0.0.0/0' to allow outbound access to the public internet.
         :param Sequence[_builtins.str] outbound_allow_hostnames: The list of public hostnames that this workload is allowed to reach. No outbound access is allowed by default. A wildcard `*` is allowed on the prefix of the hostname only, ex: `*.amazonaws.com`. Use `outboundAllowCIDR` to allow access to all external websites.
@@ -15473,7 +15730,7 @@ class WorkloadFirewallSpecExternal(dict):
     @pulumi.getter(name="inboundAllowCidrs")
     def inbound_allow_cidrs(self) -> Optional[Sequence[_builtins.str]]:
         """
-        The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+        The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet. Max: `250`.
         """
         return pulumi.get(self, "inbound_allow_cidrs")
 
@@ -15621,7 +15878,7 @@ class WorkloadFirewallSpecExternalOutboundAllowPort(dict):
                  number: _builtins.int,
                  protocol: _builtins.str):
         """
-        :param _builtins.int number: Port number. Max: 65000
+        :param _builtins.int number: Port number. Min: `80`. Max: `65000`.
         :param _builtins.str protocol: Either `http`, `https` or `tcp`.
         """
         pulumi.set(__self__, "number", number)
@@ -15631,7 +15888,7 @@ class WorkloadFirewallSpecExternalOutboundAllowPort(dict):
     @pulumi.getter
     def number(self) -> _builtins.int:
         """
-        Port number. Max: 65000
+        Port number. Min: `80`. Max: `65000`.
         """
         return pulumi.get(self, "number")
 
@@ -16193,7 +16450,7 @@ class WorkloadLocalOptionAutoscaling(dict):
                  target: Optional[_builtins.int] = None):
         """
         :param 'WorkloadLocalOptionAutoscalingKedaArgs' keda: KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
-        :param _builtins.int max_concurrency: A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+        :param _builtins.int max_concurrency: A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
         :param _builtins.int max_scale: The maximum allowed number of replicas. Min: `0`. Default `5`.
         :param _builtins.str metric: Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
         :param _builtins.str metric_percentile: For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
@@ -16232,7 +16489,7 @@ class WorkloadLocalOptionAutoscaling(dict):
     @pulumi.getter(name="maxConcurrency")
     def max_concurrency(self) -> Optional[_builtins.int]:
         """
-        A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+        A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
         """
         return pulumi.get(self, "max_concurrency")
 
@@ -16681,7 +16938,7 @@ class WorkloadLocalOptionAutoscalingMulti(dict):
                  metric: Optional[_builtins.str] = None,
                  target: Optional[_builtins.int] = None):
         """
-        :param _builtins.str metric: Valid values: `cpu` or `memory`.
+        :param _builtins.str metric: Valid values: `cpu`, `memory`, or `rps`.
         :param _builtins.int target: Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
         """
         if metric is not None:
@@ -16693,7 +16950,7 @@ class WorkloadLocalOptionAutoscalingMulti(dict):
     @pulumi.getter
     def metric(self) -> Optional[_builtins.str]:
         """
-        Valid values: `cpu` or `memory`.
+        Valid values: `cpu`, `memory`, or `rps`.
         """
         return pulumi.get(self, "metric")
 
@@ -16868,7 +17125,7 @@ class WorkloadOptionsAutoscaling(dict):
                  target: Optional[_builtins.int] = None):
         """
         :param 'WorkloadOptionsAutoscalingKedaArgs' keda: KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
-        :param _builtins.int max_concurrency: A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+        :param _builtins.int max_concurrency: A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
         :param _builtins.int max_scale: The maximum allowed number of replicas. Min: `0`. Default `5`.
         :param _builtins.str metric: Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
         :param _builtins.str metric_percentile: For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
@@ -16907,7 +17164,7 @@ class WorkloadOptionsAutoscaling(dict):
     @pulumi.getter(name="maxConcurrency")
     def max_concurrency(self) -> Optional[_builtins.int]:
         """
-        A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+        A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
         """
         return pulumi.get(self, "max_concurrency")
 
@@ -17356,7 +17613,7 @@ class WorkloadOptionsAutoscalingMulti(dict):
                  metric: Optional[_builtins.str] = None,
                  target: Optional[_builtins.int] = None):
         """
-        :param _builtins.str metric: Valid values: `cpu` or `memory`.
+        :param _builtins.str metric: Valid values: `cpu`, `memory`, or `rps`.
         :param _builtins.int target: Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
         """
         if metric is not None:
@@ -17368,7 +17625,7 @@ class WorkloadOptionsAutoscalingMulti(dict):
     @pulumi.getter
     def metric(self) -> Optional[_builtins.str]:
         """
-        Valid values: `cpu` or `memory`.
+        Valid values: `cpu`, `memory`, or `rps`.
         """
         return pulumi.get(self, "metric")
 
@@ -18090,13 +18347,13 @@ class WorkloadVm(dict):
         """
         :param Sequence['WorkloadVmAccessCredentialArgs'] access_credentials: SSH public keys injected at runtime via the guest agent or config drive.
         :param 'WorkloadVmBootDiskArgs' boot_disk: Boot disk configuration. When `source` is omitted, `containers[0].image` is used as an OCI containerDisk.
-        :param 'WorkloadVmClockArgs' clock: Guest clock configuration.
+        :param 'WorkloadVmClockArgs' clock: Guest clock configuration. Defaults to `timezone = UTC` when omitted.
         :param 'WorkloadVmCloudInitArgs' cloud_init: Cloud-init configuration for the guest. Exactly one of `user_data`, `user_data_base64`, or `user_data_secret` must be specified.
         :param 'WorkloadVmCpuArgs' cpu: CPU topology visible to the guest. Cores are derived from `containers[0].cpu`.
-        :param 'WorkloadVmFirmwareArgs' firmware: Firmware configuration for the guest.
+        :param 'WorkloadVmFirmwareArgs' firmware: Firmware configuration for the guest. Defaults to `bootloader = efi` and `secure_boot = false` when omitted.
         :param _builtins.str guest_os: Guest operating system family. Drives the per-OS cloud-init payload. Valid values: `linux`, `windows`. Default: `linux`.
         :param _builtins.str hostname: Hostname reported to the guest.
-        :param Sequence['WorkloadVmNetworkArgs'] networks: Pod-network interfaces for the VM. Only a single network is supported.
+        :param Sequence['WorkloadVmNetworkArgs'] networks: Pod-network interfaces for the VM. Only a single network is supported. Defaults to a single `default` network when omitted.
         :param _builtins.str run_strategy: KubeVirt RunStrategy. Use `Halted` to keep the pool defined but powered off. Valid values: `Always`, `RerunOnFailure`, `Manual`, `Halted`. Default: `Always`.
         :param _builtins.str subdomain: Subdomain used by the guest for replica-to-replica addressing.
         """
@@ -18143,7 +18400,7 @@ class WorkloadVm(dict):
     @pulumi.getter
     def clock(self) -> Optional['outputs.WorkloadVmClock']:
         """
-        Guest clock configuration.
+        Guest clock configuration. Defaults to `timezone = UTC` when omitted.
         """
         return pulumi.get(self, "clock")
 
@@ -18167,7 +18424,7 @@ class WorkloadVm(dict):
     @pulumi.getter
     def firmware(self) -> Optional['outputs.WorkloadVmFirmware']:
         """
-        Firmware configuration for the guest.
+        Firmware configuration for the guest. Defaults to `bootloader = efi` and `secure_boot = false` when omitted.
         """
         return pulumi.get(self, "firmware")
 
@@ -18191,7 +18448,7 @@ class WorkloadVm(dict):
     @pulumi.getter
     def networks(self) -> Optional[Sequence['outputs.WorkloadVmNetwork']]:
         """
-        Pod-network interfaces for the VM. Only a single network is supported.
+        Pod-network interfaces for the VM. Only a single network is supported. Defaults to a single `default` network when omitted.
         """
         return pulumi.get(self, "networks")
 
@@ -18239,7 +18496,7 @@ class WorkloadVmAccessCredential(dict):
                  delivery_method: Optional[_builtins.str] = None):
         """
         :param _builtins.str ssh_public_key_secret: Secret containing the SSH public keys to inject.
-        :param Sequence[_builtins.str] users: Guest OS users the SSH public keys are injected for.
+        :param Sequence[_builtins.str] users: Guest OS users the SSH public keys are injected for. Min: `1`. Max: `16`. Each user must be at most 32 characters and match `^[a-z_][a-z0-9_-]*$`.
         :param _builtins.str delivery_method: Delivery method for the access credential. Valid values: `qemuGuestAgent`, `configDrive`. Default: `qemuGuestAgent`.
         """
         pulumi.set(__self__, "ssh_public_key_secret", ssh_public_key_secret)
@@ -18259,7 +18516,7 @@ class WorkloadVmAccessCredential(dict):
     @pulumi.getter
     def users(self) -> Sequence[_builtins.str]:
         """
-        Guest OS users the SSH public keys are injected for.
+        Guest OS users the SSH public keys are injected for. Min: `1`. Max: `16`. Each user must be at most 32 characters and match `^[a-z_][a-z0-9_-]*$`.
         """
         return pulumi.get(self, "users")
 
@@ -18417,7 +18674,7 @@ class WorkloadVmBootDiskSourceHttp(dict):
                  checksum: Optional[_builtins.str] = None):
         """
         :param _builtins.str url: HTTP/HTTPS URL of the boot disk image.
-        :param _builtins.str checksum: Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+        :param _builtins.str checksum: Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`. Max: `160`.
         """
         pulumi.set(__self__, "url", url)
         if checksum is not None:
@@ -18435,7 +18692,7 @@ class WorkloadVmBootDiskSourceHttp(dict):
     @pulumi.getter
     def checksum(self) -> Optional[_builtins.str]:
         """
-        Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+        Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`. Max: `160`.
         """
         return pulumi.get(self, "checksum")
 
@@ -18508,7 +18765,7 @@ class WorkloadVmCloudInit(dict):
                  user_data_base64: Optional[_builtins.str] = None,
                  user_data_secret: Optional[_builtins.str] = None):
         """
-        :param Sequence[_builtins.str] ssh_public_key_secrets: SSH public keys injected via cloud-init. Each Secret may carry one or more keys.
+        :param Sequence[_builtins.str] ssh_public_key_secrets: SSH public keys injected via cloud-init. Each Secret may carry one or more keys. Max: `8`.
         :param _builtins.str user_data: Inline cloud-init user-data. Not encrypted at rest in the data-service - use `user_data_secret` for sensitive payloads.
         :param _builtins.str user_data_base64: Inline cloud-init user-data, base64-encoded. Same caveats as `user_data`.
         :param _builtins.str user_data_secret: Secret containing cloud-init user-data (key: `userdata` or `user-data`).
@@ -18526,7 +18783,7 @@ class WorkloadVmCloudInit(dict):
     @pulumi.getter(name="sshPublicKeySecrets")
     def ssh_public_key_secrets(self) -> Optional[Sequence[_builtins.str]]:
         """
-        SSH public keys injected via cloud-init. Each Secret may carry one or more keys.
+        SSH public keys injected via cloud-init. Each Secret may carry one or more keys. Max: `8`.
         """
         return pulumi.get(self, "ssh_public_key_secrets")
 
@@ -20048,9 +20305,9 @@ class GetOrgObservabilityResult(dict):
                  traces_retention_days: _builtins.int):
         """
         :param Sequence[_builtins.str] default_alert_emails: These emails are configured as alert recipients in Grafana when the 'grafana-default-email' contact delivery type is 'Email'.
-        :param _builtins.int logs_retention_days: Log retention days. Default: 30
-        :param _builtins.int metrics_retention_days: Metrics retention days. Default: 30
-        :param _builtins.int traces_retention_days: Traces retention days. Default: 30
+        :param _builtins.int logs_retention_days: Log retention days. Min: 0. Max: 3650. Default: 30
+        :param _builtins.int metrics_retention_days: Metrics retention days. Min: 0. Max: 3650. Default: 30
+        :param _builtins.int traces_retention_days: Traces retention days. Min: 0. Max: 3650. Default: 30
         """
         pulumi.set(__self__, "default_alert_emails", default_alert_emails)
         pulumi.set(__self__, "logs_retention_days", logs_retention_days)
@@ -20069,7 +20326,7 @@ class GetOrgObservabilityResult(dict):
     @pulumi.getter(name="logsRetentionDays")
     def logs_retention_days(self) -> _builtins.int:
         """
-        Log retention days. Default: 30
+        Log retention days. Min: 0. Max: 3650. Default: 30
         """
         return pulumi.get(self, "logs_retention_days")
 
@@ -20077,7 +20334,7 @@ class GetOrgObservabilityResult(dict):
     @pulumi.getter(name="metricsRetentionDays")
     def metrics_retention_days(self) -> _builtins.int:
         """
-        Metrics retention days. Default: 30
+        Metrics retention days. Min: 0. Max: 3650. Default: 30
         """
         return pulumi.get(self, "metrics_retention_days")
 
@@ -20085,7 +20342,7 @@ class GetOrgObservabilityResult(dict):
     @pulumi.getter(name="tracesRetentionDays")
     def traces_retention_days(self) -> _builtins.int:
         """
-        Traces retention days. Default: 30
+        Traces retention days. Min: 0. Max: 3650. Default: 30
         """
         return pulumi.get(self, "traces_retention_days")
 
@@ -20153,7 +20410,7 @@ class GetOrgSecurityThreatDetectionSyslogResult(dict):
                  transport: _builtins.str):
         """
         :param _builtins.str host: The hostname to send syslog messages to.
-        :param _builtins.int port: The port to send syslog messages to.
+        :param _builtins.int port: The port to send syslog messages to. Min: 1. Max: 100000.
         :param _builtins.str transport: The transport-layer protocol to send the syslog messages over. If TCP is chosen, messages will be sent with TLS. Default: `tcp`.
         """
         pulumi.set(__self__, "host", host)
@@ -20172,7 +20429,7 @@ class GetOrgSecurityThreatDetectionSyslogResult(dict):
     @pulumi.getter
     def port(self) -> _builtins.int:
         """
-        The port to send syslog messages to.
+        The port to send syslog messages to. Min: 1. Max: 100000.
         """
         return pulumi.get(self, "port")
 
@@ -20305,23 +20562,22 @@ class GetSecretAzureConnectorResult(dict):
 class GetSecretEcrResult(dict):
     def __init__(__self__, *,
                  access_key: _builtins.str,
+                 external_id: _builtins.str,
                  repos: Sequence[_builtins.str],
                  role_arn: _builtins.str,
-                 secret_key: _builtins.str,
-                 external_id: Optional[_builtins.str] = None):
+                 secret_key: _builtins.str):
         """
         :param _builtins.str access_key: Access Key provided by AWS.
+        :param _builtins.str external_id: AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
         :param Sequence[_builtins.str] repos: List of ECR repositories.
         :param _builtins.str role_arn: Role ARN provided by AWS.
         :param _builtins.str secret_key: Secret Key provided by AWS.
-        :param _builtins.str external_id: AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
         """
         pulumi.set(__self__, "access_key", access_key)
+        pulumi.set(__self__, "external_id", external_id)
         pulumi.set(__self__, "repos", repos)
         pulumi.set(__self__, "role_arn", role_arn)
         pulumi.set(__self__, "secret_key", secret_key)
-        if external_id is not None:
-            pulumi.set(__self__, "external_id", external_id)
 
     @_builtins.property
     @pulumi.getter(name="accessKey")
@@ -20330,6 +20586,14 @@ class GetSecretEcrResult(dict):
         Access Key provided by AWS.
         """
         return pulumi.get(self, "access_key")
+
+    @_builtins.property
+    @pulumi.getter(name="externalId")
+    def external_id(self) -> _builtins.str:
+        """
+        AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
+        """
+        return pulumi.get(self, "external_id")
 
     @_builtins.property
     @pulumi.getter
@@ -20354,14 +20618,6 @@ class GetSecretEcrResult(dict):
         Secret Key provided by AWS.
         """
         return pulumi.get(self, "secret_key")
-
-    @_builtins.property
-    @pulumi.getter(name="externalId")
-    def external_id(self) -> Optional[_builtins.str]:
-        """
-        AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
-        """
-        return pulumi.get(self, "external_id")
 
 
 @pulumi.output_type
@@ -22020,7 +22276,7 @@ class GetWorkloadLocalOptionAutoscalingResult(dict):
                  kedas: Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingKedaResult']] = None,
                  multis: Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingMultiResult']] = None):
         """
-        :param _builtins.int max_concurrency: A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+        :param _builtins.int max_concurrency: A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
         :param _builtins.int max_scale: The maximum allowed number of replicas. Min: `0`. Default `5`.
         :param _builtins.str metric: Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
         :param _builtins.str metric_percentile: For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
@@ -22045,7 +22301,7 @@ class GetWorkloadLocalOptionAutoscalingResult(dict):
     @pulumi.getter(name="maxConcurrency")
     def max_concurrency(self) -> _builtins.int:
         """
-        A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+        A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
         """
         return pulumi.get(self, "max_concurrency")
 
@@ -22395,7 +22651,7 @@ class GetWorkloadLocalOptionAutoscalingMultiResult(dict):
                  metric: _builtins.str,
                  target: _builtins.int):
         """
-        :param _builtins.str metric: Valid values: `cpu` or `memory`.
+        :param _builtins.str metric: Valid values: `cpu`, `memory`, or `rps`.
         :param _builtins.int target: Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
         """
         pulumi.set(__self__, "metric", metric)
@@ -22405,7 +22661,7 @@ class GetWorkloadLocalOptionAutoscalingMultiResult(dict):
     @pulumi.getter
     def metric(self) -> _builtins.str:
         """
-        Valid values: `cpu` or `memory`.
+        Valid values: `cpu`, `memory`, or `rps`.
         """
         return pulumi.get(self, "metric")
 
@@ -22525,7 +22781,7 @@ class GetWorkloadOptionAutoscalingResult(dict):
                  kedas: Optional[Sequence['outputs.GetWorkloadOptionAutoscalingKedaResult']] = None,
                  multis: Optional[Sequence['outputs.GetWorkloadOptionAutoscalingMultiResult']] = None):
         """
-        :param _builtins.int max_concurrency: A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+        :param _builtins.int max_concurrency: A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
         :param _builtins.int max_scale: The maximum allowed number of replicas. Min: `0`. Default `5`.
         :param _builtins.str metric: Valid values: `concurrency`, `cpu`, `memory`, `rps`, `latency`, `keda` or `disabled`.
         :param _builtins.str metric_percentile: For metrics represented as a distribution (e.g. latency) a percentile within the distribution must be chosen as the target.
@@ -22550,7 +22806,7 @@ class GetWorkloadOptionAutoscalingResult(dict):
     @pulumi.getter(name="maxConcurrency")
     def max_concurrency(self) -> _builtins.int:
         """
-        A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+        A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
         """
         return pulumi.get(self, "max_concurrency")
 
@@ -22900,7 +23156,7 @@ class GetWorkloadOptionAutoscalingMultiResult(dict):
                  metric: _builtins.str,
                  target: _builtins.int):
         """
-        :param _builtins.str metric: Valid values: `cpu` or `memory`.
+        :param _builtins.str metric: Valid values: `cpu`, `memory`, or `rps`.
         :param _builtins.int target: Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
         """
         pulumi.set(__self__, "metric", metric)
@@ -22910,7 +23166,7 @@ class GetWorkloadOptionAutoscalingMultiResult(dict):
     @pulumi.getter
     def metric(self) -> _builtins.str:
         """
-        Valid values: `cpu` or `memory`.
+        Valid values: `cpu`, `memory`, or `rps`.
         """
         return pulumi.get(self, "metric")
 

@@ -15,7 +15,7 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class WorkloadVmBootDiskSourceHttp
     {
         /// <summary>
-        /// Disk image checksum, formatted as `sha256:&lt;hex&gt;` or `sha512:&lt;hex&gt;`.
+        /// Disk image checksum, formatted as `sha256:&lt;hex&gt;` or `sha512:&lt;hex&gt;`. Max: `160`.
         /// </summary>
         public readonly string? Checksum;
         /// <summary>

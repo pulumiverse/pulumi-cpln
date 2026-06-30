@@ -20,7 +20,7 @@ namespace Pulumiverse.Cpln
         public Output<string> Created { get; private set; } = null!;
 
         /// <summary>
-        /// Description of the Service Account Key.
+        /// Description of the Service Account Key. Max: 250.
         /// </summary>
         [Output("description")]
         public Output<string> Description { get; private set; } = null!;
@@ -95,7 +95,7 @@ namespace Pulumiverse.Cpln
     public sealed class ServiceAccountKeyArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Description of the Service Account Key.
+        /// Description of the Service Account Key. Max: 250.
         /// </summary>
         [Input("description", required: true)]
         public Input<string> Description { get; set; } = null!;
@@ -121,7 +121,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Created { get; set; }
 
         /// <summary>
-        /// Description of the Service Account Key.
+        /// Description of the Service Account Key. Max: 250.
         /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }

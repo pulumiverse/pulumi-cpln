@@ -35,6 +35,10 @@ export class DomainRoute extends pulumi.CustomResource {
     }
 
     /**
+     * Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+     */
+    declare public readonly canaries: pulumi.Output<outputs.DomainRouteCanary[] | undefined>;
+    /**
      * The self link of the domain to add the route to.
      */
     declare public readonly domainLink: pulumi.Output<string>;
@@ -96,6 +100,7 @@ export class DomainRoute extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DomainRouteState | undefined;
+            resourceInputs["canaries"] = state?.canaries;
             resourceInputs["domainLink"] = state?.domainLink;
             resourceInputs["domainPort"] = state?.domainPort;
             resourceInputs["headers"] = state?.headers;
@@ -116,6 +121,7 @@ export class DomainRoute extends pulumi.CustomResource {
             if (args?.workloadLink === undefined && !opts.urn) {
                 throw new Error("Missing required property 'workloadLink'");
             }
+            resourceInputs["canaries"] = args?.canaries;
             resourceInputs["domainLink"] = args?.domainLink;
             resourceInputs["domainPort"] = args?.domainPort;
             resourceInputs["headers"] = args?.headers;
@@ -138,6 +144,10 @@ export class DomainRoute extends pulumi.CustomResource {
  * Input properties used for looking up and filtering DomainRoute resources.
  */
 export interface DomainRouteState {
+    /**
+     * Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+     */
+    canaries?: pulumi.Input<pulumi.Input<inputs.DomainRouteCanary>[]>;
     /**
      * The self link of the domain to add the route to.
      */
@@ -192,6 +202,10 @@ export interface DomainRouteState {
  * The set of arguments for constructing a DomainRoute resource.
  */
 export interface DomainRouteArgs {
+    /**
+     * Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+     */
+    canaries?: pulumi.Input<pulumi.Input<inputs.DomainRouteCanary>[]>;
     /**
      * The self link of the domain to add the route to.
      */

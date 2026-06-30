@@ -19,15 +19,15 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly ImmutableArray<string> DefaultAlertEmails;
         /// <summary>
-        /// Log retention days. Default: 30
+        /// Log retention days. Min: 0. Max: 3650. Default: 30
         /// </summary>
         public readonly int? LogsRetentionDays;
         /// <summary>
-        /// Metrics retention days. Default: 30
+        /// Metrics retention days. Min: 0. Max: 3650. Default: 30
         /// </summary>
         public readonly int? MetricsRetentionDays;
         /// <summary>
-        /// Traces retention days. Default: 30
+        /// Traces retention days. Min: 0. Max: 3650. Default: 30
         /// </summary>
         public readonly int? TracesRetentionDays;
 

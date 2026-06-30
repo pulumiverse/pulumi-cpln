@@ -25,7 +25,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// <summary>
         /// Private Certificate.
         /// </summary>
-        public readonly string Key;
+        public readonly string? Key;
 
         [OutputConstructor]
         private SecretTls(
@@ -33,7 +33,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             string? chain,
 
-            string key)
+            string? key)
         {
             Cert = cert;
             Chain = chain;

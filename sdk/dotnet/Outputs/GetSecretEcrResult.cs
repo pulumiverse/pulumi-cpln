@@ -21,7 +21,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// <summary>
         /// AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
         /// </summary>
-        public readonly string? ExternalId;
+        public readonly string ExternalId;
         /// <summary>
         /// List of ECR repositories.
         /// </summary>
@@ -39,7 +39,7 @@ namespace Pulumiverse.Cpln.Outputs
         private GetSecretEcrResult(
             string accessKey,
 
-            string? externalId,
+            string externalId,
 
             ImmutableArray<string> repos,
 

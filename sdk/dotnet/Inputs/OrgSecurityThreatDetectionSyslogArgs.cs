@@ -20,7 +20,7 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<string> Host { get; set; } = null!;
 
         /// <summary>
-        /// The port to send syslog messages to.
+        /// The port to send syslog messages to. Min: 1. Max: 100000.
         /// </summary>
         [Input("port", required: true)]
         public Input<int> Port { get; set; } = null!;

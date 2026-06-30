@@ -15,7 +15,7 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class WorkloadVmCloudInit
     {
         /// <summary>
-        /// SSH public keys injected via cloud-init. Each Secret may carry one or more keys.
+        /// SSH public keys injected via cloud-init. Each Secret may carry one or more keys. Max: `8`.
         /// </summary>
         public readonly ImmutableArray<string> SshPublicKeySecrets;
         /// <summary>

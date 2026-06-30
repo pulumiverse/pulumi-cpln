@@ -17,7 +17,7 @@ type ServiceAccountKey struct {
 
 	// The timestamp, in UTC, when the key was created.
 	Created pulumi.StringOutput `pulumi:"created"`
-	// Description of the Service Account Key.
+	// Description of the Service Account Key. Max: 250.
 	Description pulumi.StringOutput `pulumi:"description"`
 	// The generated key.
 	Key pulumi.StringOutput `pulumi:"key"`
@@ -69,7 +69,7 @@ func GetServiceAccountKey(ctx *pulumi.Context,
 type serviceAccountKeyState struct {
 	// The timestamp, in UTC, when the key was created.
 	Created *string `pulumi:"created"`
-	// Description of the Service Account Key.
+	// Description of the Service Account Key. Max: 250.
 	Description *string `pulumi:"description"`
 	// The generated key.
 	Key *string `pulumi:"key"`
@@ -82,7 +82,7 @@ type serviceAccountKeyState struct {
 type ServiceAccountKeyState struct {
 	// The timestamp, in UTC, when the key was created.
 	Created pulumi.StringPtrInput
-	// Description of the Service Account Key.
+	// Description of the Service Account Key. Max: 250.
 	Description pulumi.StringPtrInput
 	// The generated key.
 	Key pulumi.StringPtrInput
@@ -97,7 +97,7 @@ func (ServiceAccountKeyState) ElementType() reflect.Type {
 }
 
 type serviceAccountKeyArgs struct {
-	// Description of the Service Account Key.
+	// Description of the Service Account Key. Max: 250.
 	Description string `pulumi:"description"`
 	// The name of an existing Service Account this key will belong to.
 	ServiceAccountName string `pulumi:"serviceAccountName"`
@@ -105,7 +105,7 @@ type serviceAccountKeyArgs struct {
 
 // The set of arguments for constructing a ServiceAccountKey resource.
 type ServiceAccountKeyArgs struct {
-	// Description of the Service Account Key.
+	// Description of the Service Account Key. Max: 250.
 	Description pulumi.StringInput
 	// The name of an existing Service Account this key will belong to.
 	ServiceAccountName pulumi.StringInput
@@ -203,7 +203,7 @@ func (o ServiceAccountKeyOutput) Created() pulumi.StringOutput {
 	return o.ApplyT(func(v *ServiceAccountKey) pulumi.StringOutput { return v.Created }).(pulumi.StringOutput)
 }
 
-// Description of the Service Account Key.
+// Description of the Service Account Key. Max: 250.
 func (o ServiceAccountKeyOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v *ServiceAccountKey) pulumi.StringOutput { return v.Description }).(pulumi.StringOutput)
 }

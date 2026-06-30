@@ -25,7 +25,7 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("chain")]
         public Input<string>? Chain { get; set; }
 
-        [Input("key", required: true)]
+        [Input("key")]
         private Input<string>? _key;
 
         /// <summary>

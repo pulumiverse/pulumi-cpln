@@ -31,7 +31,7 @@ type Org struct {
 	Security      OrgSecurityPtrOutput      `pulumi:"security"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
-	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
 	SessionTimeoutSeconds pulumi.IntOutput `pulumi:"sessionTimeoutSeconds"`
 	// Status of the org.
 	Statuses OrgStatusArrayOutput `pulumi:"statuses"`
@@ -86,7 +86,7 @@ type orgState struct {
 	Security      *OrgSecurity      `pulumi:"security"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink *string `pulumi:"selfLink"`
-	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
 	SessionTimeoutSeconds *int `pulumi:"sessionTimeoutSeconds"`
 	// Status of the org.
 	Statuses []OrgStatus `pulumi:"statuses"`
@@ -112,7 +112,7 @@ type OrgState struct {
 	Security      OrgSecurityPtrInput
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringPtrInput
-	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
 	SessionTimeoutSeconds pulumi.IntPtrInput
 	// Status of the org.
 	Statuses OrgStatusArrayInput
@@ -136,7 +136,7 @@ type orgArgs struct {
 	// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
 	Observability *OrgObservability `pulumi:"observability"`
 	Security      *OrgSecurity      `pulumi:"security"`
-	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
 	SessionTimeoutSeconds *int `pulumi:"sessionTimeoutSeconds"`
 	// Key-value map of resource tags.
 	Tags map[string]string `pulumi:"tags"`
@@ -155,7 +155,7 @@ type OrgArgs struct {
 	// The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
 	Observability OrgObservabilityPtrInput
 	Security      OrgSecurityPtrInput
-	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+	// The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
 	SessionTimeoutSeconds pulumi.IntPtrInput
 	// Key-value map of resource tags.
 	Tags pulumi.StringMapInput
@@ -292,7 +292,7 @@ func (o OrgOutput) SelfLink() pulumi.StringOutput {
 	return o.ApplyT(func(v *Org) pulumi.StringOutput { return v.SelfLink }).(pulumi.StringOutput)
 }
 
-// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+// The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
 func (o OrgOutput) SessionTimeoutSeconds() pulumi.IntOutput {
 	return o.ApplyT(func(v *Org) pulumi.IntOutput { return v.SessionTimeoutSeconds }).(pulumi.IntOutput)
 }

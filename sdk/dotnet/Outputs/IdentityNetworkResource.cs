@@ -23,7 +23,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly string? Fqdn;
         /// <summary>
-        /// List of IP addresses.
+        /// List of IP addresses. Up to 5 entries.
         /// </summary>
         public readonly ImmutableArray<string> Ips;
         /// <summary>
@@ -31,7 +31,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly string Name;
         /// <summary>
-        /// Ports to expose.
+        /// Ports to expose. Between 1 and 10 entries.
         /// </summary>
         public readonly ImmutableArray<int> Ports;
         /// <summary>

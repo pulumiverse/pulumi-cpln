@@ -29,7 +29,7 @@ namespace Pulumiverse.Cpln.Inputs
         private InputList<string>? _ips;
 
         /// <summary>
-        /// List of IP addresses.
+        /// List of IP addresses. Up to 5 entries.
         /// </summary>
         public InputList<string> Ips
         {
@@ -47,7 +47,7 @@ namespace Pulumiverse.Cpln.Inputs
         private InputList<int>? _ports;
 
         /// <summary>
-        /// Ports to expose.
+        /// Ports to expose. Between 1 and 10 entries.
         /// </summary>
         public InputList<int> Ports
         {

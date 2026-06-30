@@ -21,6 +21,7 @@ __all__ = ['GvcArgs', 'Gvc']
 @pulumi.input_type
 class GvcArgs:
     def __init__(__self__, *,
+                 alias_workload_link: Optional[pulumi.Input[_builtins.str]] = None,
                  controlplane_tracing: Optional[pulumi.Input['GvcControlplaneTracingArgs']] = None,
                  description: Optional[pulumi.Input[_builtins.str]] = None,
                  domain: Optional[pulumi.Input[_builtins.str]] = None,
@@ -39,6 +40,7 @@ class GvcArgs:
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None):
         """
         The set of arguments for constructing a Gvc resource.
+        :param pulumi.Input[_builtins.str] alias_workload_link: A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
         :param pulumi.Input[_builtins.str] description: Description of the Global Virtual Cloud.
         :param pulumi.Input[_builtins.str] domain: Custom domain name used by associated workloads.
         :param pulumi.Input[_builtins.str] endpoint_naming_format: Customizes the subdomain format for the canonical workload endpoint. `legacy` leaves it as '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${orgEndpointPrefix}.cpln.app'.
@@ -52,6 +54,8 @@ class GvcArgs:
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] pull_secrets: A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
         """
+        if alias_workload_link is not None:
+            pulumi.set(__self__, "alias_workload_link", alias_workload_link)
         if controlplane_tracing is not None:
             pulumi.set(__self__, "controlplane_tracing", controlplane_tracing)
         if description is not None:
@@ -87,6 +91,18 @@ class GvcArgs:
             pulumi.set(__self__, "sidecar", sidecar)
         if tags is not None:
             pulumi.set(__self__, "tags", tags)
+
+    @_builtins.property
+    @pulumi.getter(name="aliasWorkloadLink")
+    def alias_workload_link(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
+        """
+        return pulumi.get(self, "alias_workload_link")
+
+    @alias_workload_link.setter
+    def alias_workload_link(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "alias_workload_link", value)
 
     @_builtins.property
     @pulumi.getter(name="controlplaneTracing")
@@ -274,6 +290,7 @@ class GvcArgs:
 class _GvcState:
     def __init__(__self__, *,
                  alias: Optional[pulumi.Input[_builtins.str]] = None,
+                 alias_workload_link: Optional[pulumi.Input[_builtins.str]] = None,
                  controlplane_tracing: Optional[pulumi.Input['GvcControlplaneTracingArgs']] = None,
                  cpln_id: Optional[pulumi.Input[_builtins.str]] = None,
                  description: Optional[pulumi.Input[_builtins.str]] = None,
@@ -295,6 +312,7 @@ class _GvcState:
         """
         Input properties used for looking up and filtering Gvc resources.
         :param pulumi.Input[_builtins.str] alias: The alias name of the GVC.
+        :param pulumi.Input[_builtins.str] alias_workload_link: A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
         :param pulumi.Input[_builtins.str] cpln_id: The ID, in GUID format, of the Global Virtual Cloud.
         :param pulumi.Input[_builtins.str] description: Description of the Global Virtual Cloud.
         :param pulumi.Input[_builtins.str] domain: Custom domain name used by associated workloads.
@@ -312,6 +330,8 @@ class _GvcState:
         """
         if alias is not None:
             pulumi.set(__self__, "alias", alias)
+        if alias_workload_link is not None:
+            pulumi.set(__self__, "alias_workload_link", alias_workload_link)
         if controlplane_tracing is not None:
             pulumi.set(__self__, "controlplane_tracing", controlplane_tracing)
         if cpln_id is not None:
@@ -363,6 +383,18 @@ class _GvcState:
     @alias.setter
     def alias(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "alias", value)
+
+    @_builtins.property
+    @pulumi.getter(name="aliasWorkloadLink")
+    def alias_workload_link(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
+        """
+        return pulumi.get(self, "alias_workload_link")
+
+    @alias_workload_link.setter
+    def alias_workload_link(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "alias_workload_link", value)
 
     @_builtins.property
     @pulumi.getter(name="controlplaneTracing")
@@ -576,6 +608,7 @@ class Gvc(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 alias_workload_link: Optional[pulumi.Input[_builtins.str]] = None,
                  controlplane_tracing: Optional[pulumi.Input[Union['GvcControlplaneTracingArgs', 'GvcControlplaneTracingArgsDict']]] = None,
                  description: Optional[pulumi.Input[_builtins.str]] = None,
                  domain: Optional[pulumi.Input[_builtins.str]] = None,
@@ -597,6 +630,7 @@ class Gvc(pulumi.CustomResource):
         Create a Gvc resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[_builtins.str] alias_workload_link: A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
         :param pulumi.Input[_builtins.str] description: Description of the Global Virtual Cloud.
         :param pulumi.Input[_builtins.str] domain: Custom domain name used by associated workloads.
         :param pulumi.Input[_builtins.str] endpoint_naming_format: Customizes the subdomain format for the canonical workload endpoint. `legacy` leaves it as '${workloadName}-${gvcName}.cpln.app'. `org` follows the scheme '${workloadName}-${gvcName}.${orgEndpointPrefix}.cpln.app'.
@@ -633,6 +667,7 @@ class Gvc(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 alias_workload_link: Optional[pulumi.Input[_builtins.str]] = None,
                  controlplane_tracing: Optional[pulumi.Input[Union['GvcControlplaneTracingArgs', 'GvcControlplaneTracingArgsDict']]] = None,
                  description: Optional[pulumi.Input[_builtins.str]] = None,
                  domain: Optional[pulumi.Input[_builtins.str]] = None,
@@ -658,6 +693,7 @@ class Gvc(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = GvcArgs.__new__(GvcArgs)
 
+            __props__.__dict__["alias_workload_link"] = alias_workload_link
             __props__.__dict__["controlplane_tracing"] = controlplane_tracing
             __props__.__dict__["description"] = description
             __props__.__dict__["domain"] = domain
@@ -688,6 +724,7 @@ class Gvc(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             alias: Optional[pulumi.Input[_builtins.str]] = None,
+            alias_workload_link: Optional[pulumi.Input[_builtins.str]] = None,
             controlplane_tracing: Optional[pulumi.Input[Union['GvcControlplaneTracingArgs', 'GvcControlplaneTracingArgsDict']]] = None,
             cpln_id: Optional[pulumi.Input[_builtins.str]] = None,
             description: Optional[pulumi.Input[_builtins.str]] = None,
@@ -714,6 +751,7 @@ class Gvc(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] alias: The alias name of the GVC.
+        :param pulumi.Input[_builtins.str] alias_workload_link: A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
         :param pulumi.Input[_builtins.str] cpln_id: The ID, in GUID format, of the Global Virtual Cloud.
         :param pulumi.Input[_builtins.str] description: Description of the Global Virtual Cloud.
         :param pulumi.Input[_builtins.str] domain: Custom domain name used by associated workloads.
@@ -734,6 +772,7 @@ class Gvc(pulumi.CustomResource):
         __props__ = _GvcState.__new__(_GvcState)
 
         __props__.__dict__["alias"] = alias
+        __props__.__dict__["alias_workload_link"] = alias_workload_link
         __props__.__dict__["controlplane_tracing"] = controlplane_tracing
         __props__.__dict__["cpln_id"] = cpln_id
         __props__.__dict__["description"] = description
@@ -761,6 +800,14 @@ class Gvc(pulumi.CustomResource):
         The alias name of the GVC.
         """
         return pulumi.get(self, "alias")
+
+    @_builtins.property
+    @pulumi.getter(name="aliasWorkloadLink")
+    def alias_workload_link(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
+        """
+        return pulumi.get(self, "alias_workload_link")
 
     @_builtins.property
     @pulumi.getter(name="controlplaneTracing")

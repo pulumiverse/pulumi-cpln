@@ -15,11 +15,11 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class SecretNatsAccount
     {
         /// <summary>
-        /// Account ID.
+        /// Account ID. Must be a 56-character NATS account public key beginning with `A`.
         /// </summary>
         public readonly string AccountId;
         /// <summary>
-        /// Private Key.
+        /// Private Key. Must be a 58-character NATS account seed beginning with `SA`.
         /// </summary>
         public readonly string PrivateKey;
 

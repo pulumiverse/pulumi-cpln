@@ -23,13 +23,13 @@ class VolumeSetArgs:
     def __init__(__self__, *,
                  gvc: pulumi.Input[_builtins.str],
                  initial_capacity: pulumi.Input[_builtins.int],
-                 performance_class: pulumi.Input[_builtins.str],
                  autoscaling: Optional[pulumi.Input['VolumeSetAutoscalingArgs']] = None,
                  custom_encryption: Optional[pulumi.Input['VolumeSetCustomEncryptionArgs']] = None,
                  description: Optional[pulumi.Input[_builtins.str]] = None,
                  file_system_type: Optional[pulumi.Input[_builtins.str]] = None,
                  mount_options: Optional[pulumi.Input['VolumeSetMountOptionsArgs']] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
+                 performance_class: Optional[pulumi.Input[_builtins.str]] = None,
                  snapshots: Optional[pulumi.Input['VolumeSetSnapshotsArgs']] = None,
                  storage_class_suffix: Optional[pulumi.Input[_builtins.str]] = None,
                  tags: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None):
@@ -37,20 +37,19 @@ class VolumeSetArgs:
         The set of arguments for constructing a VolumeSet resource.
         :param pulumi.Input[_builtins.str] gvc: Name of the associated GVC.
         :param pulumi.Input[_builtins.int] initial_capacity: The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd` is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
-        :param pulumi.Input[_builtins.str] performance_class: Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
         :param pulumi.Input['VolumeSetAutoscalingArgs'] autoscaling: Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
         :param pulumi.Input['VolumeSetCustomEncryptionArgs'] custom_encryption: Configuration for customer-managed encryption keys, keyed by region.
         :param pulumi.Input[_builtins.str] description: Description of the volume set.
-        :param pulumi.Input[_builtins.str] file_system_type: Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+        :param pulumi.Input[_builtins.str] file_system_type: Each volume set has a single, immutable file system. Valid types: `ext4`, `xfs`, or `shared`. Default: `ext4`.
         :param pulumi.Input['VolumeSetMountOptionsArgs'] mount_options: A list of mount options to use when mounting volumes in this set.
         :param pulumi.Input[_builtins.str] name: Name of the volume set.
+        :param pulumi.Input[_builtins.str] performance_class: Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `shared`. Required unless `file_system_type` is `shared`, in which case it is automatically set to `shared`.
         :param pulumi.Input['VolumeSetSnapshotsArgs'] snapshots: Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
         :param pulumi.Input[_builtins.str] storage_class_suffix: For self-hosted locations only. The storage class used for volumes in this set will be {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be {performanceClass}-{fileSystemType}
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
         """
         pulumi.set(__self__, "gvc", gvc)
         pulumi.set(__self__, "initial_capacity", initial_capacity)
-        pulumi.set(__self__, "performance_class", performance_class)
         if autoscaling is not None:
             pulumi.set(__self__, "autoscaling", autoscaling)
         if custom_encryption is not None:
@@ -63,6 +62,8 @@ class VolumeSetArgs:
             pulumi.set(__self__, "mount_options", mount_options)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if performance_class is not None:
+            pulumi.set(__self__, "performance_class", performance_class)
         if snapshots is not None:
             pulumi.set(__self__, "snapshots", snapshots)
         if storage_class_suffix is not None:
@@ -93,18 +94,6 @@ class VolumeSetArgs:
     @initial_capacity.setter
     def initial_capacity(self, value: pulumi.Input[_builtins.int]):
         pulumi.set(self, "initial_capacity", value)
-
-    @_builtins.property
-    @pulumi.getter(name="performanceClass")
-    def performance_class(self) -> pulumi.Input[_builtins.str]:
-        """
-        Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
-        """
-        return pulumi.get(self, "performance_class")
-
-    @performance_class.setter
-    def performance_class(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "performance_class", value)
 
     @_builtins.property
     @pulumi.getter
@@ -146,7 +135,7 @@ class VolumeSetArgs:
     @pulumi.getter(name="fileSystemType")
     def file_system_type(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+        Each volume set has a single, immutable file system. Valid types: `ext4`, `xfs`, or `shared`. Default: `ext4`.
         """
         return pulumi.get(self, "file_system_type")
 
@@ -177,6 +166,18 @@ class VolumeSetArgs:
     @name.setter
     def name(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter(name="performanceClass")
+    def performance_class(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `shared`. Required unless `file_system_type` is `shared`, in which case it is automatically set to `shared`.
+        """
+        return pulumi.get(self, "performance_class")
+
+    @performance_class.setter
+    def performance_class(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "performance_class", value)
 
     @_builtins.property
     @pulumi.getter
@@ -240,12 +241,12 @@ class _VolumeSetState:
         :param pulumi.Input[_builtins.str] cpln_id: The ID, in GUID format, of the volume set.
         :param pulumi.Input['VolumeSetCustomEncryptionArgs'] custom_encryption: Configuration for customer-managed encryption keys, keyed by region.
         :param pulumi.Input[_builtins.str] description: Description of the volume set.
-        :param pulumi.Input[_builtins.str] file_system_type: Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+        :param pulumi.Input[_builtins.str] file_system_type: Each volume set has a single, immutable file system. Valid types: `ext4`, `xfs`, or `shared`. Default: `ext4`.
         :param pulumi.Input[_builtins.str] gvc: Name of the associated GVC.
         :param pulumi.Input[_builtins.int] initial_capacity: The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd` is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
         :param pulumi.Input['VolumeSetMountOptionsArgs'] mount_options: A list of mount options to use when mounting volumes in this set.
         :param pulumi.Input[_builtins.str] name: Name of the volume set.
-        :param pulumi.Input[_builtins.str] performance_class: Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
+        :param pulumi.Input[_builtins.str] performance_class: Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `shared`. Required unless `file_system_type` is `shared`, in which case it is automatically set to `shared`.
         :param pulumi.Input[_builtins.str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input['VolumeSetSnapshotsArgs'] snapshots: Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
         :param pulumi.Input[Sequence[pulumi.Input['VolumeSetStatusArgs']]] statuses: Status of the Volume Set.
@@ -338,7 +339,7 @@ class _VolumeSetState:
     @pulumi.getter(name="fileSystemType")
     def file_system_type(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+        Each volume set has a single, immutable file system. Valid types: `ext4`, `xfs`, or `shared`. Default: `ext4`.
         """
         return pulumi.get(self, "file_system_type")
 
@@ -398,7 +399,7 @@ class _VolumeSetState:
     @pulumi.getter(name="performanceClass")
     def performance_class(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
+        Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `shared`. Required unless `file_system_type` is `shared`, in which case it is automatically set to `shared`.
         """
         return pulumi.get(self, "performance_class")
 
@@ -505,12 +506,12 @@ class VolumeSet(pulumi.CustomResource):
         :param pulumi.Input[Union['VolumeSetAutoscalingArgs', 'VolumeSetAutoscalingArgsDict']] autoscaling: Automated adjustment of the volume set's capacity based on predefined metrics or conditions.
         :param pulumi.Input[Union['VolumeSetCustomEncryptionArgs', 'VolumeSetCustomEncryptionArgsDict']] custom_encryption: Configuration for customer-managed encryption keys, keyed by region.
         :param pulumi.Input[_builtins.str] description: Description of the volume set.
-        :param pulumi.Input[_builtins.str] file_system_type: Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+        :param pulumi.Input[_builtins.str] file_system_type: Each volume set has a single, immutable file system. Valid types: `ext4`, `xfs`, or `shared`. Default: `ext4`.
         :param pulumi.Input[_builtins.str] gvc: Name of the associated GVC.
         :param pulumi.Input[_builtins.int] initial_capacity: The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd` is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
         :param pulumi.Input[Union['VolumeSetMountOptionsArgs', 'VolumeSetMountOptionsArgsDict']] mount_options: A list of mount options to use when mounting volumes in this set.
         :param pulumi.Input[_builtins.str] name: Name of the volume set.
-        :param pulumi.Input[_builtins.str] performance_class: Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
+        :param pulumi.Input[_builtins.str] performance_class: Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `shared`. Required unless `file_system_type` is `shared`, in which case it is automatically set to `shared`.
         :param pulumi.Input[Union['VolumeSetSnapshotsArgs', 'VolumeSetSnapshotsArgsDict']] snapshots: Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
         :param pulumi.Input[_builtins.str] storage_class_suffix: For self-hosted locations only. The storage class used for volumes in this set will be {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be {performanceClass}-{fileSystemType}
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
@@ -571,8 +572,6 @@ class VolumeSet(pulumi.CustomResource):
             __props__.__dict__["initial_capacity"] = initial_capacity
             __props__.__dict__["mount_options"] = mount_options
             __props__.__dict__["name"] = name
-            if performance_class is None and not opts.urn:
-                raise TypeError("Missing required property 'performance_class'")
             __props__.__dict__["performance_class"] = performance_class
             __props__.__dict__["snapshots"] = snapshots
             __props__.__dict__["storage_class_suffix"] = storage_class_suffix
@@ -618,12 +617,12 @@ class VolumeSet(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] cpln_id: The ID, in GUID format, of the volume set.
         :param pulumi.Input[Union['VolumeSetCustomEncryptionArgs', 'VolumeSetCustomEncryptionArgsDict']] custom_encryption: Configuration for customer-managed encryption keys, keyed by region.
         :param pulumi.Input[_builtins.str] description: Description of the volume set.
-        :param pulumi.Input[_builtins.str] file_system_type: Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+        :param pulumi.Input[_builtins.str] file_system_type: Each volume set has a single, immutable file system. Valid types: `ext4`, `xfs`, or `shared`. Default: `ext4`.
         :param pulumi.Input[_builtins.str] gvc: Name of the associated GVC.
         :param pulumi.Input[_builtins.int] initial_capacity: The initial volume size in this set, specified in GB. The minimum size for the performance class `general-purpose-ssd` is `10 GB`, while `high-throughput-ssd` requires at least `200 GB`.
         :param pulumi.Input[Union['VolumeSetMountOptionsArgs', 'VolumeSetMountOptionsArgsDict']] mount_options: A list of mount options to use when mounting volumes in this set.
         :param pulumi.Input[_builtins.str] name: Name of the volume set.
-        :param pulumi.Input[_builtins.str] performance_class: Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
+        :param pulumi.Input[_builtins.str] performance_class: Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `shared`. Required unless `file_system_type` is `shared`, in which case it is automatically set to `shared`.
         :param pulumi.Input[_builtins.str] self_link: Full link to this resource. Can be referenced by other resources.
         :param pulumi.Input[Union['VolumeSetSnapshotsArgs', 'VolumeSetSnapshotsArgsDict']] snapshots: Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
         :param pulumi.Input[Sequence[pulumi.Input[Union['VolumeSetStatusArgs', 'VolumeSetStatusArgsDict']]]] statuses: Status of the Volume Set.
@@ -689,7 +688,7 @@ class VolumeSet(pulumi.CustomResource):
     @pulumi.getter(name="fileSystemType")
     def file_system_type(self) -> pulumi.Output[_builtins.str]:
         """
-        Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+        Each volume set has a single, immutable file system. Valid types: `ext4`, `xfs`, or `shared`. Default: `ext4`.
         """
         return pulumi.get(self, "file_system_type")
 
@@ -729,7 +728,7 @@ class VolumeSet(pulumi.CustomResource):
     @pulumi.getter(name="performanceClass")
     def performance_class(self) -> pulumi.Output[_builtins.str]:
         """
-        Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
+        Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `shared`. Required unless `file_system_type` is `shared`, in which case it is automatically set to `shared`.
         """
         return pulumi.get(self, "performance_class")
 

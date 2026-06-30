@@ -176,7 +176,7 @@ def get_org(auth_config: Optional[Union['GetOrgAuthConfigArgs', 'GetOrgAuthConfi
     - **observability** (Block List, Max: 1) (see below).
     - **account_id** (String) The associated account ID that was used when creating the org.
     - **invitees** (Set of String) Email addresses that received invitations to join the org and were assigned to the `superusers` group.
-    - **session_timeout_seconds** (Int) The idle time (in seconds) after which the console UI signs out the user. Default: `900`.
+    - **session_timeout_seconds** (Int) The idle time (in seconds) after which the console UI signs out the user. Min: `900`. Default: `900`.
     - **auth_config** (Block List, Max: 1) (see below).
     - **security** (Block List, Max: 1) (see below).
     - **status** (List of Object) (see below).
@@ -189,9 +189,9 @@ def get_org(auth_config: Optional[Union['GetOrgAuthConfigArgs', 'GetOrgAuthConfi
 
     Read-Only:
 
-    - **logs_retention_days** (Number) Log retention days. Default: `30`.
-    - **metrics_retention_days** (Number) Metrics retention days. Default: `30`.
-    - **traces_retention_days** (Number) Traces retention days. Default: `30`.
+    - **logs_retention_days** (Number) Log retention days. Min: `0`. Max: `3650`. Default: `30`.
+    - **metrics_retention_days** (Number) Metrics retention days. Min: `0`. Max: `3650`. Default: `30`.
+    - **traces_retention_days** (Number) Traces retention days. Min: `0`. Max: `3650`. Default: `30`.
     - **default_alert_emails** (Set of String) These emails are configured as alert recipients in Grafana when the `grafana-default-email` contact delivery type is `Email`.
 
     <a id="nestedblock--auth_config"></a>
@@ -229,7 +229,7 @@ def get_org(auth_config: Optional[Union['GetOrgAuthConfigArgs', 'GetOrgAuthConfi
 
     Read-Only:
 
-    - **port** (Number) The port to send syslog messages to.
+    - **port** (Number) The port to send syslog messages to. Min: `1`. Max: `100000`.
     - **transport** (String) The transport-layer protocol used for syslog messages. If `tcp` is chosen, messages are sent with TLS. Default: `tcp`.
     - **host** (String) The hostname to send syslog messages to.
 
@@ -302,7 +302,7 @@ def get_org_output(auth_config: Optional[pulumi.Input[Optional[Union['GetOrgAuth
     - **observability** (Block List, Max: 1) (see below).
     - **account_id** (String) The associated account ID that was used when creating the org.
     - **invitees** (Set of String) Email addresses that received invitations to join the org and were assigned to the `superusers` group.
-    - **session_timeout_seconds** (Int) The idle time (in seconds) after which the console UI signs out the user. Default: `900`.
+    - **session_timeout_seconds** (Int) The idle time (in seconds) after which the console UI signs out the user. Min: `900`. Default: `900`.
     - **auth_config** (Block List, Max: 1) (see below).
     - **security** (Block List, Max: 1) (see below).
     - **status** (List of Object) (see below).
@@ -315,9 +315,9 @@ def get_org_output(auth_config: Optional[pulumi.Input[Optional[Union['GetOrgAuth
 
     Read-Only:
 
-    - **logs_retention_days** (Number) Log retention days. Default: `30`.
-    - **metrics_retention_days** (Number) Metrics retention days. Default: `30`.
-    - **traces_retention_days** (Number) Traces retention days. Default: `30`.
+    - **logs_retention_days** (Number) Log retention days. Min: `0`. Max: `3650`. Default: `30`.
+    - **metrics_retention_days** (Number) Metrics retention days. Min: `0`. Max: `3650`. Default: `30`.
+    - **traces_retention_days** (Number) Traces retention days. Min: `0`. Max: `3650`. Default: `30`.
     - **default_alert_emails** (Set of String) These emails are configured as alert recipients in Grafana when the `grafana-default-email` contact delivery type is `Email`.
 
     <a id="nestedblock--auth_config"></a>
@@ -355,7 +355,7 @@ def get_org_output(auth_config: Optional[pulumi.Input[Optional[Union['GetOrgAuth
 
     Read-Only:
 
-    - **port** (Number) The port to send syslog messages to.
+    - **port** (Number) The port to send syslog messages to. Min: `1`. Max: `100000`.
     - **transport** (String) The transport-layer protocol used for syslog messages. If `tcp` is chosen, messages are sent with TLS. Default: `tcp`.
     - **host** (String) The hostname to send syslog messages to.
 

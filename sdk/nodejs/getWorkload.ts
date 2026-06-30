@@ -115,7 +115,7 @@ import * as utilities from "./utilities";
  *
  * Read-Only:
  *
- * - **initial_delay_seconds** (Number) Initial delay before the probe runs. Default: `10`. Min: `0`. Max: `600`.
+ * - **initial_delay_seconds** (Number) Initial delay before the probe runs. Default: `60`. Min: `0`. Max: `600`.
  * - **period_seconds** (Number) Interval between probes. Default: `10`. Min: `1`. Max: `600`.
  * - **timeout_seconds** (Number) Probe timeout. Default: `1`. Min: `1`. Max: `600`.
  * - **success_threshold** (Number) Minimum consecutive successes to be considered healthy. Default: `1`. Min: `1`. Max: `20`.
@@ -210,7 +210,7 @@ import * as utilities from "./utilities";
  *
  * > **Note** The following paths are reserved and cannot be used: `/dev`, `/dev/log`, `/tmp`, `/var`, `/var/log`.
  *
- * > **Note** Valid URI prefixes include `s3://bucket`, `gs://bucket`, `azureblob://storageAccount/container`, `azurefs://storageAccount/share`, `cpln://secret`, `cpln://volumeset`, and `scratch://`.
+ * > **Note** Valid URI prefixes include `s3://bucket`, `gs://bucket`, `azureblob://storageAccount/container`, `azurefs://storageAccount/share`, `cpln://secret`, `cpln://volumeset`, `scratch://`, and `k8s://secret`.
  *
  * Read-Only:
  *
@@ -318,7 +318,7 @@ import * as utilities from "./utilities";
  * - **min_scale** (Number) Minimum replicas allowed. Min: `0`. Max: `maxScale`. Default: `1`.
  * - **max_scale** (Number) Maximum replicas allowed. Min: `0`. Default: `5`.
  * - **scale_to_zero_delay** (Number) Seconds without requests before scaling to zero. Min: `30`. Max: `3600`. Default: `300`.
- * - **max_concurrency** (Number) Maximum concurrent requests per replica. Min: `0`. Max: `1000`. Default: `0`.
+ * - **max_concurrency** (Number) Maximum concurrent requests per replica. Min: `0`. Max: `30000`. Default: `0`.
  * - **multi** (Block List, Max: 1) (see below).
  * - **keda** (Block List, Max: 1) (see below).
  *
@@ -328,7 +328,7 @@ import * as utilities from "./utilities";
  *
  * Read-Only:
  *
- * - **metric** (String) Either `cpu` or `memory`.
+ * - **metric** (String) Either `cpu`, `memory`, or `rps`.
  * - **target** (Number) Target value for the metric. Min: `1`. Max: `20000`.
  *
  * <a id="nestedblock--options--autoscaling--keda"></a>
@@ -948,7 +948,7 @@ export interface GetWorkloadResult {
  *
  * Read-Only:
  *
- * - **initial_delay_seconds** (Number) Initial delay before the probe runs. Default: `10`. Min: `0`. Max: `600`.
+ * - **initial_delay_seconds** (Number) Initial delay before the probe runs. Default: `60`. Min: `0`. Max: `600`.
  * - **period_seconds** (Number) Interval between probes. Default: `10`. Min: `1`. Max: `600`.
  * - **timeout_seconds** (Number) Probe timeout. Default: `1`. Min: `1`. Max: `600`.
  * - **success_threshold** (Number) Minimum consecutive successes to be considered healthy. Default: `1`. Min: `1`. Max: `20`.
@@ -1043,7 +1043,7 @@ export interface GetWorkloadResult {
  *
  * > **Note** The following paths are reserved and cannot be used: `/dev`, `/dev/log`, `/tmp`, `/var`, `/var/log`.
  *
- * > **Note** Valid URI prefixes include `s3://bucket`, `gs://bucket`, `azureblob://storageAccount/container`, `azurefs://storageAccount/share`, `cpln://secret`, `cpln://volumeset`, and `scratch://`.
+ * > **Note** Valid URI prefixes include `s3://bucket`, `gs://bucket`, `azureblob://storageAccount/container`, `azurefs://storageAccount/share`, `cpln://secret`, `cpln://volumeset`, `scratch://`, and `k8s://secret`.
  *
  * Read-Only:
  *
@@ -1151,7 +1151,7 @@ export interface GetWorkloadResult {
  * - **min_scale** (Number) Minimum replicas allowed. Min: `0`. Max: `maxScale`. Default: `1`.
  * - **max_scale** (Number) Maximum replicas allowed. Min: `0`. Default: `5`.
  * - **scale_to_zero_delay** (Number) Seconds without requests before scaling to zero. Min: `30`. Max: `3600`. Default: `300`.
- * - **max_concurrency** (Number) Maximum concurrent requests per replica. Min: `0`. Max: `1000`. Default: `0`.
+ * - **max_concurrency** (Number) Maximum concurrent requests per replica. Min: `0`. Max: `30000`. Default: `0`.
  * - **multi** (Block List, Max: 1) (see below).
  * - **keda** (Block List, Max: 1) (see below).
  *
@@ -1161,7 +1161,7 @@ export interface GetWorkloadResult {
  *
  * Read-Only:
  *
- * - **metric** (String) Either `cpu` or `memory`.
+ * - **metric** (String) Either `cpu`, `memory`, or `rps`.
  * - **target** (Number) Target value for the metric. Min: `1`. Max: `20000`.
  *
  * <a id="nestedblock--options--autoscaling--keda"></a>

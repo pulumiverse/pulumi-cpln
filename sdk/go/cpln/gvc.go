@@ -15,7 +15,9 @@ type Gvc struct {
 	pulumi.CustomResourceState
 
 	// The alias name of the GVC.
-	Alias               pulumi.StringOutput             `pulumi:"alias"`
+	Alias pulumi.StringOutput `pulumi:"alias"`
+	// A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
+	AliasWorkloadLink   pulumi.StringPtrOutput          `pulumi:"aliasWorkloadLink"`
 	ControlplaneTracing GvcControlplaneTracingPtrOutput `pulumi:"controlplaneTracing"`
 	// The ID, in GUID format, of the Global Virtual Cloud.
 	CplnId pulumi.StringOutput `pulumi:"cplnId"`
@@ -83,7 +85,9 @@ func GetGvc(ctx *pulumi.Context,
 // Input properties used for looking up and filtering Gvc resources.
 type gvcState struct {
 	// The alias name of the GVC.
-	Alias               *string                 `pulumi:"alias"`
+	Alias *string `pulumi:"alias"`
+	// A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
+	AliasWorkloadLink   *string                 `pulumi:"aliasWorkloadLink"`
 	ControlplaneTracing *GvcControlplaneTracing `pulumi:"controlplaneTracing"`
 	// The ID, in GUID format, of the Global Virtual Cloud.
 	CplnId *string `pulumi:"cplnId"`
@@ -122,7 +126,9 @@ type gvcState struct {
 
 type GvcState struct {
 	// The alias name of the GVC.
-	Alias               pulumi.StringPtrInput
+	Alias pulumi.StringPtrInput
+	// A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
+	AliasWorkloadLink   pulumi.StringPtrInput
 	ControlplaneTracing GvcControlplaneTracingPtrInput
 	// The ID, in GUID format, of the Global Virtual Cloud.
 	CplnId pulumi.StringPtrInput
@@ -164,6 +170,8 @@ func (GvcState) ElementType() reflect.Type {
 }
 
 type gvcArgs struct {
+	// A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
+	AliasWorkloadLink   *string                 `pulumi:"aliasWorkloadLink"`
 	ControlplaneTracing *GvcControlplaneTracing `pulumi:"controlplaneTracing"`
 	// Description of the Global Virtual Cloud.
 	Description *string `pulumi:"description"`
@@ -198,6 +206,8 @@ type gvcArgs struct {
 
 // The set of arguments for constructing a Gvc resource.
 type GvcArgs struct {
+	// A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
+	AliasWorkloadLink   pulumi.StringPtrInput
 	ControlplaneTracing GvcControlplaneTracingPtrInput
 	// Description of the Global Virtual Cloud.
 	Description pulumi.StringPtrInput
@@ -320,6 +330,11 @@ func (o GvcOutput) ToGvcOutputWithContext(ctx context.Context) GvcOutput {
 // The alias name of the GVC.
 func (o GvcOutput) Alias() pulumi.StringOutput {
 	return o.ApplyT(func(v *Gvc) pulumi.StringOutput { return v.Alias }).(pulumi.StringOutput)
+}
+
+// A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
+func (o GvcOutput) AliasWorkloadLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Gvc) pulumi.StringPtrOutput { return v.AliasWorkloadLink }).(pulumi.StringPtrOutput)
 }
 
 func (o GvcOutput) ControlplaneTracing() GvcControlplaneTracingPtrOutput {

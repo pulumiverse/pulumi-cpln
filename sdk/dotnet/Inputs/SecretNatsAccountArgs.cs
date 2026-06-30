@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class SecretNatsAccountArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Account ID.
+        /// Account ID. Must be a 56-character NATS account public key beginning with `A`.
         /// </summary>
         [Input("accountId", required: true)]
         public Input<string> AccountId { get; set; } = null!;
@@ -23,7 +23,7 @@ namespace Pulumiverse.Cpln.Inputs
         private Input<string>? _privateKey;
 
         /// <summary>
-        /// Private Key.
+        /// Private Key. Must be a 58-character NATS account seed beginning with `SA`.
         /// </summary>
         public Input<string>? PrivateKey
         {

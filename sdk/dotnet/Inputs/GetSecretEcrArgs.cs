@@ -32,8 +32,8 @@ namespace Pulumiverse.Cpln.Inputs
         /// <summary>
         /// AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
         /// </summary>
-        [Input("externalId")]
-        public Input<string>? ExternalId { get; set; }
+        [Input("externalId", required: true)]
+        public Input<string> ExternalId { get; set; } = null!;
 
         [Input("repos", required: true)]
         private InputList<string>? _repos;

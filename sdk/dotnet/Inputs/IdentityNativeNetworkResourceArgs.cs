@@ -22,8 +22,8 @@ namespace Pulumiverse.Cpln.Inputs
         /// <summary>
         /// Fully qualified domain name.
         /// </summary>
-        [Input("fqdn", required: true)]
-        public Input<string> Fqdn { get; set; } = null!;
+        [Input("fqdn")]
+        public Input<string>? Fqdn { get; set; }
 
         /// <summary>
         /// Capability provided by GCP that allows private communication between private VPC networks and compute running at Control Plane.
@@ -41,7 +41,7 @@ namespace Pulumiverse.Cpln.Inputs
         private InputList<int>? _ports;
 
         /// <summary>
-        /// Ports to expose. At least one port is required.
+        /// Ports to expose. Between 1 and 10 entries.
         /// </summary>
         public InputList<int> Ports
         {

@@ -68,7 +68,7 @@ export class Org extends pulumi.CustomResource {
      */
     declare public /*out*/ readonly selfLink: pulumi.Output<string>;
     /**
-     * The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+     * The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
      */
     declare public readonly sessionTimeoutSeconds: pulumi.Output<number>;
     /**
@@ -163,7 +163,7 @@ export interface OrgState {
      */
     selfLink?: pulumi.Input<string>;
     /**
-     * The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+     * The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
      */
     sessionTimeoutSeconds?: pulumi.Input<number>;
     /**
@@ -202,7 +202,7 @@ export interface OrgArgs {
     observability?: pulumi.Input<inputs.OrgObservability>;
     security?: pulumi.Input<inputs.OrgSecurity>;
     /**
-     * The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+     * The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
      */
     sessionTimeoutSeconds?: pulumi.Input<number>;
     /**

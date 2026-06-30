@@ -83,6 +83,9 @@
                                                 "maxItemsOne": false,
                                                 "elem": {
                                                     "fields": {
+                                                        "canary": {
+                                                            "maxItemsOne": false
+                                                        },
                                                         "headers": {
                                                             "maxItemsOne": true,
                                                             "elem": {
@@ -142,6 +145,9 @@
             "cpln_domain_route": {
                 "current": "cpln:index/domainRoute:DomainRoute",
                 "fields": {
+                    "canary": {
+                        "maxItemsOne": false
+                    },
                     "headers": {
                         "maxItemsOne": true,
                         "elem": {
@@ -1134,6 +1140,9 @@
                         "maxItemsOne": false
                     },
                     "logzio_logging": {
+                        "maxItemsOne": false
+                    },
+                    "loki_logging": {
                         "maxItemsOne": false
                     },
                     "opentelemetry_logging": {

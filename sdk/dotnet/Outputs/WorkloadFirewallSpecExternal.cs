@@ -19,7 +19,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly Outputs.WorkloadFirewallSpecExternalHttp? Http;
         /// <summary>
-        /// The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+        /// The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet. Max: `250`.
         /// </summary>
         public readonly ImmutableArray<string> InboundAllowCidrs;
         /// <summary>

@@ -19,6 +19,10 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly int? BootDiskSize;
         /// <summary>
+        /// CPU options for the node pool instances.
+        /// </summary>
+        public readonly Outputs.Mk8sAwsProviderNodePoolCpuOptions? CpuOptions;
+        /// <summary>
         /// Security groups to deploy nodes to. Security groups control if the cluster is multi-zone or single-zon.
         /// </summary>
         public readonly ImmutableArray<string> ExtraSecurityGroupIds;
@@ -47,6 +51,8 @@ namespace Pulumiverse.Cpln.Outputs
         private Mk8sAwsProviderNodePool(
             int? bootDiskSize,
 
+            Outputs.Mk8sAwsProviderNodePoolCpuOptions? cpuOptions,
+
             ImmutableArray<string> extraSecurityGroupIds,
 
             ImmutableArray<string> instanceTypes,
@@ -72,6 +78,7 @@ namespace Pulumiverse.Cpln.Outputs
             ImmutableArray<Outputs.Mk8sAwsProviderNodePoolTaint> taints)
         {
             BootDiskSize = bootDiskSize;
+            CpuOptions = cpuOptions;
             ExtraSecurityGroupIds = extraSecurityGroupIds;
             InstanceTypes = instanceTypes;
             Labels = labels;

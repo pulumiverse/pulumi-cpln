@@ -23,6 +23,10 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly bool? Enabled;
         /// <summary>
+        /// Number of ingress replicas deployed for the middlebox component. Default: `0`.
+        /// </summary>
+        public readonly int? IngressReplicas;
+        /// <summary>
         /// IPv4 address bound by the middlebox component.
         /// </summary>
         public readonly string? Ip;
@@ -37,12 +41,15 @@ namespace Pulumiverse.Cpln.Outputs
 
             bool? enabled,
 
+            int? ingressReplicas,
+
             string? ip,
 
             int? port)
         {
             BandwidthAlertMbps = bandwidthAlertMbps;
             Enabled = enabled;
+            IngressReplicas = ingressReplicas;
             Ip = ip;
             Port = port;
         }

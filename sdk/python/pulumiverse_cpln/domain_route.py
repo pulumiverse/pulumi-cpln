@@ -23,6 +23,7 @@ class DomainRouteArgs:
     def __init__(__self__, *,
                  domain_link: pulumi.Input[_builtins.str],
                  workload_link: pulumi.Input[_builtins.str],
+                 canaries: Optional[pulumi.Input[Sequence[pulumi.Input['DomainRouteCanaryArgs']]]] = None,
                  domain_port: Optional[pulumi.Input[_builtins.int]] = None,
                  headers: Optional[pulumi.Input['DomainRouteHeadersArgs']] = None,
                  host_prefix: Optional[pulumi.Input[_builtins.str]] = None,
@@ -37,6 +38,7 @@ class DomainRouteArgs:
         The set of arguments for constructing a DomainRoute resource.
         :param pulumi.Input[_builtins.str] domain_link: The self link of the domain to add the route to.
         :param pulumi.Input[_builtins.str] workload_link: The link of the workload to map the prefix to.
+        :param pulumi.Input[Sequence[pulumi.Input['DomainRouteCanaryArgs']]] canaries: Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
         :param pulumi.Input[_builtins.int] domain_port: The port the route corresponds to. Default: 443
         :param pulumi.Input['DomainRouteHeadersArgs'] headers: Modify the headers for all http requests for this route.
         :param pulumi.Input[_builtins.str] host_prefix: This option allows forwarding traffic for different host headers to different workloads. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on Slack or at support@controlplane.com for additional details.
@@ -50,6 +52,8 @@ class DomainRouteArgs:
         """
         pulumi.set(__self__, "domain_link", domain_link)
         pulumi.set(__self__, "workload_link", workload_link)
+        if canaries is not None:
+            pulumi.set(__self__, "canaries", canaries)
         if domain_port is not None:
             pulumi.set(__self__, "domain_port", domain_port)
         if headers is not None:
@@ -94,6 +98,18 @@ class DomainRouteArgs:
     @workload_link.setter
     def workload_link(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "workload_link", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def canaries(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['DomainRouteCanaryArgs']]]]:
+        """
+        Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+        """
+        return pulumi.get(self, "canaries")
+
+    @canaries.setter
+    def canaries(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['DomainRouteCanaryArgs']]]]):
+        pulumi.set(self, "canaries", value)
 
     @_builtins.property
     @pulumi.getter(name="domainPort")
@@ -219,6 +235,7 @@ class DomainRouteArgs:
 @pulumi.input_type
 class _DomainRouteState:
     def __init__(__self__, *,
+                 canaries: Optional[pulumi.Input[Sequence[pulumi.Input['DomainRouteCanaryArgs']]]] = None,
                  domain_link: Optional[pulumi.Input[_builtins.str]] = None,
                  domain_port: Optional[pulumi.Input[_builtins.int]] = None,
                  headers: Optional[pulumi.Input['DomainRouteHeadersArgs']] = None,
@@ -233,6 +250,7 @@ class _DomainRouteState:
                  workload_link: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering DomainRoute resources.
+        :param pulumi.Input[Sequence[pulumi.Input['DomainRouteCanaryArgs']]] canaries: Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
         :param pulumi.Input[_builtins.str] domain_link: The self link of the domain to add the route to.
         :param pulumi.Input[_builtins.int] domain_port: The port the route corresponds to. Default: 443
         :param pulumi.Input['DomainRouteHeadersArgs'] headers: Modify the headers for all http requests for this route.
@@ -246,6 +264,8 @@ class _DomainRouteState:
         :param pulumi.Input[_builtins.int] replica: The replica number of a stateful workload to route to. If not provided, traffic will be routed to all replicas.
         :param pulumi.Input[_builtins.str] workload_link: The link of the workload to map the prefix to.
         """
+        if canaries is not None:
+            pulumi.set(__self__, "canaries", canaries)
         if domain_link is not None:
             pulumi.set(__self__, "domain_link", domain_link)
         if domain_port is not None:
@@ -270,6 +290,18 @@ class _DomainRouteState:
             pulumi.set(__self__, "replica", replica)
         if workload_link is not None:
             pulumi.set(__self__, "workload_link", workload_link)
+
+    @_builtins.property
+    @pulumi.getter
+    def canaries(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['DomainRouteCanaryArgs']]]]:
+        """
+        Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+        """
+        return pulumi.get(self, "canaries")
+
+    @canaries.setter
+    def canaries(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['DomainRouteCanaryArgs']]]]):
+        pulumi.set(self, "canaries", value)
 
     @_builtins.property
     @pulumi.getter(name="domainLink")
@@ -422,6 +454,7 @@ class DomainRoute(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 canaries: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DomainRouteCanaryArgs', 'DomainRouteCanaryArgsDict']]]]] = None,
                  domain_link: Optional[pulumi.Input[_builtins.str]] = None,
                  domain_port: Optional[pulumi.Input[_builtins.int]] = None,
                  headers: Optional[pulumi.Input[Union['DomainRouteHeadersArgs', 'DomainRouteHeadersArgsDict']]] = None,
@@ -439,6 +472,7 @@ class DomainRoute(pulumi.CustomResource):
         Create a DomainRoute resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['DomainRouteCanaryArgs', 'DomainRouteCanaryArgsDict']]]] canaries: Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
         :param pulumi.Input[_builtins.str] domain_link: The self link of the domain to add the route to.
         :param pulumi.Input[_builtins.int] domain_port: The port the route corresponds to. Default: 443
         :param pulumi.Input[Union['DomainRouteHeadersArgs', 'DomainRouteHeadersArgsDict']] headers: Modify the headers for all http requests for this route.
@@ -475,6 +509,7 @@ class DomainRoute(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 canaries: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DomainRouteCanaryArgs', 'DomainRouteCanaryArgsDict']]]]] = None,
                  domain_link: Optional[pulumi.Input[_builtins.str]] = None,
                  domain_port: Optional[pulumi.Input[_builtins.int]] = None,
                  headers: Optional[pulumi.Input[Union['DomainRouteHeadersArgs', 'DomainRouteHeadersArgsDict']]] = None,
@@ -496,6 +531,7 @@ class DomainRoute(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = DomainRouteArgs.__new__(DomainRouteArgs)
 
+            __props__.__dict__["canaries"] = canaries
             if domain_link is None and not opts.urn:
                 raise TypeError("Missing required property 'domain_link'")
             __props__.__dict__["domain_link"] = domain_link
@@ -522,6 +558,7 @@ class DomainRoute(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
+            canaries: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DomainRouteCanaryArgs', 'DomainRouteCanaryArgsDict']]]]] = None,
             domain_link: Optional[pulumi.Input[_builtins.str]] = None,
             domain_port: Optional[pulumi.Input[_builtins.int]] = None,
             headers: Optional[pulumi.Input[Union['DomainRouteHeadersArgs', 'DomainRouteHeadersArgsDict']]] = None,
@@ -541,6 +578,7 @@ class DomainRoute(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['DomainRouteCanaryArgs', 'DomainRouteCanaryArgsDict']]]] canaries: Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
         :param pulumi.Input[_builtins.str] domain_link: The self link of the domain to add the route to.
         :param pulumi.Input[_builtins.int] domain_port: The port the route corresponds to. Default: 443
         :param pulumi.Input[Union['DomainRouteHeadersArgs', 'DomainRouteHeadersArgsDict']] headers: Modify the headers for all http requests for this route.
@@ -558,6 +596,7 @@ class DomainRoute(pulumi.CustomResource):
 
         __props__ = _DomainRouteState.__new__(_DomainRouteState)
 
+        __props__.__dict__["canaries"] = canaries
         __props__.__dict__["domain_link"] = domain_link
         __props__.__dict__["domain_port"] = domain_port
         __props__.__dict__["headers"] = headers
@@ -571,6 +610,14 @@ class DomainRoute(pulumi.CustomResource):
         __props__.__dict__["replica"] = replica
         __props__.__dict__["workload_link"] = workload_link
         return DomainRoute(resource_name, opts=opts, __props__=__props__)
+
+    @_builtins.property
+    @pulumi.getter
+    def canaries(self) -> pulumi.Output[Optional[Sequence['outputs.DomainRouteCanary']]]:
+        """
+        Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+        """
+        return pulumi.get(self, "canaries")
 
     @_builtins.property
     @pulumi.getter(name="domainLink")

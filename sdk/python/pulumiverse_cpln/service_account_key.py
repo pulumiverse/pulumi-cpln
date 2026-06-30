@@ -23,7 +23,7 @@ class ServiceAccountKeyArgs:
                  service_account_name: pulumi.Input[_builtins.str]):
         """
         The set of arguments for constructing a ServiceAccountKey resource.
-        :param pulumi.Input[_builtins.str] description: Description of the Service Account Key.
+        :param pulumi.Input[_builtins.str] description: Description of the Service Account Key. Max: 250.
         :param pulumi.Input[_builtins.str] service_account_name: The name of an existing Service Account this key will belong to.
         """
         pulumi.set(__self__, "description", description)
@@ -33,7 +33,7 @@ class ServiceAccountKeyArgs:
     @pulumi.getter
     def description(self) -> pulumi.Input[_builtins.str]:
         """
-        Description of the Service Account Key.
+        Description of the Service Account Key. Max: 250.
         """
         return pulumi.get(self, "description")
 
@@ -65,7 +65,7 @@ class _ServiceAccountKeyState:
         """
         Input properties used for looking up and filtering ServiceAccountKey resources.
         :param pulumi.Input[_builtins.str] created: The timestamp, in UTC, when the key was created.
-        :param pulumi.Input[_builtins.str] description: Description of the Service Account Key.
+        :param pulumi.Input[_builtins.str] description: Description of the Service Account Key. Max: 250.
         :param pulumi.Input[_builtins.str] key: The generated key.
         :param pulumi.Input[_builtins.str] name: The generated name of the key.
         :param pulumi.Input[_builtins.str] service_account_name: The name of an existing Service Account this key will belong to.
@@ -97,7 +97,7 @@ class _ServiceAccountKeyState:
     @pulumi.getter
     def description(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Description of the Service Account Key.
+        Description of the Service Account Key. Max: 250.
         """
         return pulumi.get(self, "description")
 
@@ -155,7 +155,7 @@ class ServiceAccountKey(pulumi.CustomResource):
         Create a ServiceAccountKey resource with the given unique name, props, and options.
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[_builtins.str] description: Description of the Service Account Key.
+        :param pulumi.Input[_builtins.str] description: Description of the Service Account Key. Max: 250.
         :param pulumi.Input[_builtins.str] service_account_name: The name of an existing Service Account this key will belong to.
         """
         ...
@@ -226,7 +226,7 @@ class ServiceAccountKey(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] created: The timestamp, in UTC, when the key was created.
-        :param pulumi.Input[_builtins.str] description: Description of the Service Account Key.
+        :param pulumi.Input[_builtins.str] description: Description of the Service Account Key. Max: 250.
         :param pulumi.Input[_builtins.str] key: The generated key.
         :param pulumi.Input[_builtins.str] name: The generated name of the key.
         :param pulumi.Input[_builtins.str] service_account_name: The name of an existing Service Account this key will belong to.
@@ -254,7 +254,7 @@ class ServiceAccountKey(pulumi.CustomResource):
     @pulumi.getter
     def description(self) -> pulumi.Output[_builtins.str]:
         """
-        Description of the Service Account Key.
+        Description of the Service Account Key. Max: 250.
         """
         return pulumi.get(self, "description")
 
