@@ -26,19 +26,19 @@ namespace Pulumiverse.Cpln.Inputs
         }
 
         /// <summary>
-        /// Log retention days. Default: 30
+        /// Log retention days. Min: 0. Max: 3650. Default: 30
         /// </summary>
         [Input("logsRetentionDays", required: true)]
         public int LogsRetentionDays { get; set; }
 
         /// <summary>
-        /// Metrics retention days. Default: 30
+        /// Metrics retention days. Min: 0. Max: 3650. Default: 30
         /// </summary>
         [Input("metricsRetentionDays", required: true)]
         public int MetricsRetentionDays { get; set; }
 
         /// <summary>
-        /// Traces retention days. Default: 30
+        /// Traces retention days. Min: 0. Max: 3650. Default: 30
         /// </summary>
         [Input("tracesRetentionDays", required: true)]
         public int TracesRetentionDays { get; set; }

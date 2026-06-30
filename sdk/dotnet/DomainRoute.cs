@@ -14,6 +14,12 @@ namespace Pulumiverse.Cpln
     public partial class DomainRoute : global::Pulumi.CustomResource
     {
         /// <summary>
+        /// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+        /// </summary>
+        [Output("canaries")]
+        public Output<ImmutableArray<Outputs.DomainRouteCanary>> Canaries { get; private set; } = null!;
+
+        /// <summary>
         /// The self link of the domain to add the route to.
         /// </summary>
         [Output("domainLink")]
@@ -132,6 +138,18 @@ namespace Pulumiverse.Cpln
 
     public sealed class DomainRouteArgs : global::Pulumi.ResourceArgs
     {
+        [Input("canaries")]
+        private InputList<Inputs.DomainRouteCanaryArgs>? _canaries;
+
+        /// <summary>
+        /// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+        /// </summary>
+        public InputList<Inputs.DomainRouteCanaryArgs> Canaries
+        {
+            get => _canaries ?? (_canaries = new InputList<Inputs.DomainRouteCanaryArgs>());
+            set => _canaries = value;
+        }
+
         /// <summary>
         /// The self link of the domain to add the route to.
         /// </summary>
@@ -218,6 +236,18 @@ namespace Pulumiverse.Cpln
 
     public sealed class DomainRouteState : global::Pulumi.ResourceArgs
     {
+        [Input("canaries")]
+        private InputList<Inputs.DomainRouteCanaryGetArgs>? _canaries;
+
+        /// <summary>
+        /// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+        /// </summary>
+        public InputList<Inputs.DomainRouteCanaryGetArgs> Canaries
+        {
+            get => _canaries ?? (_canaries = new InputList<Inputs.DomainRouteCanaryGetArgs>());
+            set => _canaries = value;
+        }
+
         /// <summary>
         /// The self link of the domain to add the route to.
         /// </summary>

@@ -90,6 +90,21 @@ export interface CustomLocationGeo {
     state: string;
 }
 
+export interface DomainRouteCanary {
+    /**
+     * The port to send canary traffic to. If not provided, the first configured port on the workload is used.
+     */
+    port?: number;
+    /**
+     * The percentage of traffic to send to this canary workload. A weight of 0 disables the canary so it can be toggled on and off without removing it.
+     */
+    weight: number;
+    /**
+     * The canary workload to route a weighted percentage of traffic to.
+     */
+    workloadLink: string;
+}
+
 export interface DomainRouteHeaders {
     /**
      * Manipulates HTTP headers.
@@ -210,6 +225,10 @@ export interface DomainSpecPortCorsAllowOrigin {
 
 export interface DomainSpecPortRoute {
     /**
+     * Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+     */
+    canaries?: outputs.DomainSpecPortRouteCanary[];
+    /**
      * Modify the headers for all http requests for this route.
      */
     headers?: outputs.DomainSpecPortRouteHeaders;
@@ -247,6 +266,21 @@ export interface DomainSpecPortRoute {
     replica?: number;
     /**
      * The link of the workload to map the prefix to.
+     */
+    workloadLink: string;
+}
+
+export interface DomainSpecPortRouteCanary {
+    /**
+     * The port to send canary traffic to. If not provided, the first configured port on the workload is used.
+     */
+    port?: number;
+    /**
+     * The percentage of traffic to send to this canary workload. A weight of 0 disables the canary so it can be toggled on and off without removing it.
+     */
+    weight: number;
+    /**
+     * The canary workload to route a weighted percentage of traffic to.
      */
     workloadLink: string;
 }
@@ -849,15 +883,15 @@ export interface GetOrgObservability {
      */
     defaultAlertEmails: string[];
     /**
-     * Log retention days. Default: 30
+     * Log retention days. Min: 0. Max: 3650. Default: 30
      */
     logsRetentionDays: number;
     /**
-     * Metrics retention days. Default: 30
+     * Metrics retention days. Min: 0. Max: 3650. Default: 30
      */
     metricsRetentionDays: number;
     /**
-     * Traces retention days. Default: 30
+     * Traces retention days. Min: 0. Max: 3650. Default: 30
      */
     tracesRetentionDays: number;
 }
@@ -887,7 +921,7 @@ export interface GetOrgSecurityThreatDetectionSyslog {
      */
     host: string;
     /**
-     * The port to send syslog messages to.
+     * The port to send syslog messages to. Min: 1. Max: 100000.
      */
     port: number;
     /**
@@ -946,7 +980,7 @@ export interface GetSecretEcr {
     /**
      * AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
      */
-    externalId?: string;
+    externalId: string;
     /**
      * List of ECR repositories.
      */
@@ -1516,7 +1550,7 @@ export interface GetWorkloadLocalOptionAutoscaling {
      */
     kedas?: outputs.GetWorkloadLocalOptionAutoscalingKeda[];
     /**
-     * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+     * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
      */
     maxConcurrency: number;
     /**
@@ -1650,7 +1684,7 @@ export interface GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef {
 
 export interface GetWorkloadLocalOptionAutoscalingMulti {
     /**
-     * Valid values: `cpu` or `memory`.
+     * Valid values: `cpu`, `memory`, or `rps`.
      */
     metric: string;
     /**
@@ -1697,7 +1731,7 @@ export interface GetWorkloadOptionAutoscaling {
      */
     kedas?: outputs.GetWorkloadOptionAutoscalingKeda[];
     /**
-     * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+     * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
      */
     maxConcurrency: number;
     /**
@@ -1831,7 +1865,7 @@ export interface GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRef {
 
 export interface GetWorkloadOptionAutoscalingMulti {
     /**
-     * Valid values: `cpu` or `memory`.
+     * Valid values: `cpu`, `memory`, or `rps`.
      */
     metric: string;
     /**
@@ -2532,7 +2566,7 @@ export interface IdentityNativeNetworkResource {
     /**
      * Fully qualified domain name.
      */
-    fqdn: string;
+    fqdn?: string;
     /**
      * Capability provided by GCP that allows private communication between private VPC networks and compute running at Control Plane.
      */
@@ -2542,7 +2576,7 @@ export interface IdentityNativeNetworkResource {
      */
     name: string;
     /**
-     * Ports to expose. At least one port is required.
+     * Ports to expose. Between 1 and 10 entries.
      */
     ports: number[];
 }
@@ -2571,7 +2605,7 @@ export interface IdentityNetworkResource {
      */
     fqdn?: string;
     /**
-     * List of IP addresses.
+     * List of IP addresses. Up to 5 entries.
      */
     ips?: string[];
     /**
@@ -2579,7 +2613,7 @@ export interface IdentityNetworkResource {
      */
     name: string;
     /**
-     * Ports to expose.
+     * Ports to expose. Between 1 and 10 entries.
      */
     ports: number[];
     /**
@@ -2632,7 +2666,7 @@ export interface IdentityNgsAccessPolicyPub {
 
 export interface IdentityNgsAccessPolicyResp {
     /**
-     * Number of responses allowed on the replyTo subject, -1 means no limit. Default: -1
+     * Number of responses allowed on the replyTo subject, -1 means no limit. Default: 1
      */
     max: number;
     /**
@@ -3055,6 +3089,10 @@ export interface Mk8sAddOnsByokConfigMiddlebox {
      * Whether to deploy the middlebox component.
      */
     enabled?: boolean;
+    /**
+     * Number of ingress replicas deployed for the middlebox component. Default: `0`.
+     */
+    ingressReplicas: number;
     /**
      * IPv4 address bound by the middlebox component.
      */
@@ -3494,6 +3532,10 @@ export interface Mk8sAwsProviderNodePool {
      */
     bootDiskSize: number;
     /**
+     * CPU options for the node pool instances.
+     */
+    cpuOptions?: outputs.Mk8sAwsProviderNodePoolCpuOptions;
+    /**
      * Security groups to deploy nodes to. Security groups control if the cluster is multi-zone or single-zon.
      */
     extraSecurityGroupIds?: string[];
@@ -3517,6 +3559,13 @@ export interface Mk8sAwsProviderNodePool {
      * Taint for the nodes of a pool.
      */
     taints?: outputs.Mk8sAwsProviderNodePoolTaint[];
+}
+
+export interface Mk8sAwsProviderNodePoolCpuOptions {
+    /**
+     * Enable nested virtualization. Only supported on 8th generation Intel instance types (c8i, m8i, r8i and variants).
+     */
+    nestedVirtualization?: boolean;
 }
 
 export interface Mk8sAwsProviderNodePoolOverrideImage {
@@ -4732,6 +4781,21 @@ export interface OrgLoggingLogzioLogging {
     listenerHost: string;
 }
 
+export interface OrgLoggingLokiLogging {
+    /**
+     * Full link to a secret of type `userpass`. For Grafana Cloud, set the username to the instance ID and the password to an access token.
+     */
+    credentials?: string;
+    /**
+     * Loki endpoint to push logs to (e.g. `https://logs-prod-012.grafana.net`).
+     */
+    endpoint: string;
+    /**
+     * The `X-Scope-OrgID` header value used for self-hosted multi-tenant Loki.
+     */
+    tenantId?: string;
+}
+
 export interface OrgLoggingOpentelemetryLogging {
     /**
      * Full link to a secret of type `opaque`.
@@ -4806,15 +4870,15 @@ export interface OrgObservability {
      */
     defaultAlertEmails: string[];
     /**
-     * Log retention days. Default: 30
+     * Log retention days. Min: 0. Max: 3650. Default: 30
      */
     logsRetentionDays: number;
     /**
-     * Metrics retention days. Default: 30
+     * Metrics retention days. Min: 0. Max: 3650. Default: 30
      */
     metricsRetentionDays: number;
     /**
-     * Traces retention days. Default: 30
+     * Traces retention days. Min: 0. Max: 3650. Default: 30
      */
     tracesRetentionDays: number;
 }
@@ -4844,7 +4908,7 @@ export interface OrgSecurityThreatDetectionSyslog {
      */
     host: string;
     /**
-     * The port to send syslog messages to.
+     * The port to send syslog messages to. Min: 1. Max: 100000.
      */
     port: number;
     /**
@@ -5033,11 +5097,11 @@ export interface SecretKeypair {
 
 export interface SecretNatsAccount {
     /**
-     * Account ID.
+     * Account ID. Must be a 56-character NATS account public key beginning with `A`.
      */
     accountId: string;
     /**
-     * Private Key.
+     * Private Key. Must be a 58-character NATS account seed beginning with `SA`.
      */
     privateKey: string;
 }
@@ -5065,7 +5129,7 @@ export interface SecretTls {
     /**
      * Private Certificate.
      */
-    key: string;
+    key?: string;
 }
 
 export interface SecretUserpass {
@@ -5453,7 +5517,7 @@ export interface WorkloadFirewallSpecExternal {
      */
     http?: outputs.WorkloadFirewallSpecExternalHttp;
     /**
-     * The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+     * The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet. Max: `250`.
      */
     inboundAllowCidrs: string[];
     /**
@@ -5502,7 +5566,7 @@ export interface WorkloadFirewallSpecExternalHttpInboundHeaderFilter {
 
 export interface WorkloadFirewallSpecExternalOutboundAllowPort {
     /**
-     * Port number. Max: 65000
+     * Port number. Min: `80`. Max: `65000`.
      */
     number: number;
     /**
@@ -5653,7 +5717,7 @@ export interface WorkloadLocalOptionAutoscaling {
      */
     keda?: outputs.WorkloadLocalOptionAutoscalingKeda;
     /**
-     * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+     * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
      */
     maxConcurrency: number;
     /**
@@ -5787,7 +5851,7 @@ export interface WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef {
 
 export interface WorkloadLocalOptionAutoscalingMulti {
     /**
-     * Valid values: `cpu` or `memory`.
+     * Valid values: `cpu`, `memory`, or `rps`.
      */
     metric?: string;
     /**
@@ -5834,7 +5898,7 @@ export interface WorkloadOptionsAutoscaling {
      */
     keda?: outputs.WorkloadOptionsAutoscalingKeda;
     /**
-     * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+     * A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
      */
     maxConcurrency: number;
     /**
@@ -5968,7 +6032,7 @@ export interface WorkloadOptionsAutoscalingKedaTriggerAuthenticationRef {
 
 export interface WorkloadOptionsAutoscalingMulti {
     /**
-     * Valid values: `cpu` or `memory`.
+     * Valid values: `cpu`, `memory`, or `rps`.
      */
     metric?: string;
     /**
@@ -6151,9 +6215,9 @@ export interface WorkloadVm {
      */
     bootDisk?: outputs.WorkloadVmBootDisk;
     /**
-     * Guest clock configuration.
+     * Guest clock configuration. Defaults to `timezone = UTC` when omitted.
      */
-    clock?: outputs.WorkloadVmClock;
+    clock: outputs.WorkloadVmClock;
     /**
      * Cloud-init configuration for the guest. Exactly one of `userData`, `userDataBase64`, or `userDataSecret` must be specified.
      */
@@ -6163,9 +6227,9 @@ export interface WorkloadVm {
      */
     cpu?: outputs.WorkloadVmCpu;
     /**
-     * Firmware configuration for the guest.
+     * Firmware configuration for the guest. Defaults to `bootloader = efi` and `secureBoot = false` when omitted.
      */
-    firmware?: outputs.WorkloadVmFirmware;
+    firmware: outputs.WorkloadVmFirmware;
     /**
      * Guest operating system family. Drives the per-OS cloud-init payload. Valid values: `linux`, `windows`. Default: `linux`.
      */
@@ -6175,9 +6239,9 @@ export interface WorkloadVm {
      */
     hostname?: string;
     /**
-     * Pod-network interfaces for the VM. Only a single network is supported.
+     * Pod-network interfaces for the VM. Only a single network is supported. Defaults to a single `default` network when omitted.
      */
-    networks?: outputs.WorkloadVmNetwork[];
+    networks: outputs.WorkloadVmNetwork[];
     /**
      * KubeVirt RunStrategy. Use `Halted` to keep the pool defined but powered off. Valid values: `Always`, `RerunOnFailure`, `Manual`, `Halted`. Default: `Always`.
      */
@@ -6198,7 +6262,7 @@ export interface WorkloadVmAccessCredential {
      */
     sshPublicKeySecret: string;
     /**
-     * Guest OS users the SSH public keys are injected for.
+     * Guest OS users the SSH public keys are injected for. Min: `1`. Max: `16`. Each user must be at most 32 characters and match `^[a-z_][a-z0-9_-]*$`.
      */
     users: string[];
 }
@@ -6242,7 +6306,7 @@ export interface WorkloadVmBootDiskSource {
 
 export interface WorkloadVmBootDiskSourceHttp {
     /**
-     * Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+     * Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`. Max: `160`.
      */
     checksum?: string;
     /**
@@ -6267,7 +6331,7 @@ export interface WorkloadVmClock {
 
 export interface WorkloadVmCloudInit {
     /**
-     * SSH public keys injected via cloud-init. Each Secret may carry one or more keys.
+     * SSH public keys injected via cloud-init. Each Secret may carry one or more keys. Max: `8`.
      */
     sshPublicKeySecrets?: string[];
     /**

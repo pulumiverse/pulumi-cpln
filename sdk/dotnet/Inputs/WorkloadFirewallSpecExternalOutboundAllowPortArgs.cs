@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class WorkloadFirewallSpecExternalOutboundAllowPortArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Port number. Max: 65000
+        /// Port number. Min: `80`. Max: `65000`.
         /// </summary>
         [Input("number", required: true)]
         public Input<int> Number { get; set; } = null!;

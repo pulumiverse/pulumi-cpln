@@ -28,6 +28,8 @@ type OrgLogging struct {
 	FluentdLoggings OrgLoggingFluentdLoggingArrayOutput `pulumi:"fluentdLoggings"`
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
 	LogzioLoggings OrgLoggingLogzioLoggingArrayOutput `pulumi:"logzioLoggings"`
+	// For logging and analyzing data within an org using Grafana Loki.
+	LokiLoggings OrgLoggingLokiLoggingArrayOutput `pulumi:"lokiLoggings"`
 	// Name of the Org.
 	Name pulumi.StringOutput `pulumi:"name"`
 	// For logging and analyzing data within an org using OpenTelemetry.
@@ -86,6 +88,8 @@ type orgLoggingState struct {
 	FluentdLoggings []OrgLoggingFluentdLogging `pulumi:"fluentdLoggings"`
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
 	LogzioLoggings []OrgLoggingLogzioLogging `pulumi:"logzioLoggings"`
+	// For logging and analyzing data within an org using Grafana Loki.
+	LokiLoggings []OrgLoggingLokiLogging `pulumi:"lokiLoggings"`
 	// Name of the Org.
 	Name *string `pulumi:"name"`
 	// For logging and analyzing data within an org using OpenTelemetry.
@@ -115,6 +119,8 @@ type OrgLoggingState struct {
 	FluentdLoggings OrgLoggingFluentdLoggingArrayInput
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
 	LogzioLoggings OrgLoggingLogzioLoggingArrayInput
+	// For logging and analyzing data within an org using Grafana Loki.
+	LokiLoggings OrgLoggingLokiLoggingArrayInput
 	// Name of the Org.
 	Name pulumi.StringPtrInput
 	// For logging and analyzing data within an org using OpenTelemetry.
@@ -144,6 +150,8 @@ type orgLoggingArgs struct {
 	FluentdLoggings []OrgLoggingFluentdLogging `pulumi:"fluentdLoggings"`
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
 	LogzioLoggings []OrgLoggingLogzioLogging `pulumi:"logzioLoggings"`
+	// For logging and analyzing data within an org using Grafana Loki.
+	LokiLoggings []OrgLoggingLokiLogging `pulumi:"lokiLoggings"`
 	// For logging and analyzing data within an org using OpenTelemetry.
 	OpentelemetryLoggings []OrgLoggingOpentelemetryLogging `pulumi:"opentelemetryLoggings"`
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
@@ -164,6 +172,8 @@ type OrgLoggingArgs struct {
 	FluentdLoggings OrgLoggingFluentdLoggingArrayInput
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
 	LogzioLoggings OrgLoggingLogzioLoggingArrayInput
+	// For logging and analyzing data within an org using Grafana Loki.
+	LokiLoggings OrgLoggingLokiLoggingArrayInput
 	// For logging and analyzing data within an org using OpenTelemetry.
 	OpentelemetryLoggings OrgLoggingOpentelemetryLoggingArrayInput
 	// [Documentation Reference](https://docs.controlplane.com/external-logging/s3)
@@ -295,6 +305,11 @@ func (o OrgLoggingOutput) FluentdLoggings() OrgLoggingFluentdLoggingArrayOutput 
 // [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
 func (o OrgLoggingOutput) LogzioLoggings() OrgLoggingLogzioLoggingArrayOutput {
 	return o.ApplyT(func(v *OrgLogging) OrgLoggingLogzioLoggingArrayOutput { return v.LogzioLoggings }).(OrgLoggingLogzioLoggingArrayOutput)
+}
+
+// For logging and analyzing data within an org using Grafana Loki.
+func (o OrgLoggingOutput) LokiLoggings() OrgLoggingLokiLoggingArrayOutput {
+	return o.ApplyT(func(v *OrgLogging) OrgLoggingLokiLoggingArrayOutput { return v.LokiLoggings }).(OrgLoggingLokiLoggingArrayOutput)
 }
 
 // Name of the Org.

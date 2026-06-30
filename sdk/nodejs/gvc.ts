@@ -38,6 +38,10 @@ export class Gvc extends pulumi.CustomResource {
      * The alias name of the GVC.
      */
     declare public /*out*/ readonly alias: pulumi.Output<string>;
+    /**
+     * A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
+     */
+    declare public readonly aliasWorkloadLink: pulumi.Output<string | undefined>;
     declare public readonly controlplaneTracing: pulumi.Output<outputs.GvcControlplaneTracing | undefined>;
     /**
      * The ID, in GUID format, of the Global Virtual Cloud.
@@ -115,6 +119,7 @@ export class Gvc extends pulumi.CustomResource {
         if (opts.id) {
             const state = argsOrState as GvcState | undefined;
             resourceInputs["alias"] = state?.alias;
+            resourceInputs["aliasWorkloadLink"] = state?.aliasWorkloadLink;
             resourceInputs["controlplaneTracing"] = state?.controlplaneTracing;
             resourceInputs["cplnId"] = state?.cplnId;
             resourceInputs["description"] = state?.description;
@@ -135,6 +140,7 @@ export class Gvc extends pulumi.CustomResource {
             resourceInputs["tags"] = state?.tags;
         } else {
             const args = argsOrState as GvcArgs | undefined;
+            resourceInputs["aliasWorkloadLink"] = args?.aliasWorkloadLink;
             resourceInputs["controlplaneTracing"] = args?.controlplaneTracing;
             resourceInputs["description"] = args?.description;
             resourceInputs["domain"] = args?.domain;
@@ -168,6 +174,10 @@ export interface GvcState {
      * The alias name of the GVC.
      */
     alias?: pulumi.Input<string>;
+    /**
+     * A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
+     */
+    aliasWorkloadLink?: pulumi.Input<string>;
     controlplaneTracing?: pulumi.Input<inputs.GvcControlplaneTracing>;
     /**
      * The ID, in GUID format, of the Global Virtual Cloud.
@@ -236,6 +246,10 @@ export interface GvcState {
  * The set of arguments for constructing a Gvc resource.
  */
 export interface GvcArgs {
+    /**
+     * A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
+     */
+    aliasWorkloadLink?: pulumi.Input<string>;
     controlplaneTracing?: pulumi.Input<inputs.GvcControlplaneTracing>;
     /**
      * Description of the Global Virtual Cloud.

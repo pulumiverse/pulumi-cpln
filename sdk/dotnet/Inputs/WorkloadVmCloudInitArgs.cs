@@ -17,7 +17,7 @@ namespace Pulumiverse.Cpln.Inputs
         private InputList<string>? _sshPublicKeySecrets;
 
         /// <summary>
-        /// SSH public keys injected via cloud-init. Each Secret may carry one or more keys.
+        /// SSH public keys injected via cloud-init. Each Secret may carry one or more keys. Max: `8`.
         /// </summary>
         public InputList<string> SshPublicKeySecrets
         {

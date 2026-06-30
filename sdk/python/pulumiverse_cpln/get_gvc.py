@@ -28,10 +28,13 @@ class GetGvcResult:
     """
     A collection of values returned by getGvc.
     """
-    def __init__(__self__, alias=None, controlplane_tracing=None, cpln_id=None, description=None, domain=None, endpoint_naming_format=None, env=None, id=None, keda=None, lightstep_tracing=None, load_balancer=None, location_options=None, location_queries=None, locations=None, name=None, otel_tracing=None, pull_secrets=None, self_link=None, sidecar=None, tags=None):
+    def __init__(__self__, alias=None, alias_workload_link=None, controlplane_tracing=None, cpln_id=None, description=None, domain=None, endpoint_naming_format=None, env=None, id=None, keda=None, lightstep_tracing=None, load_balancer=None, location_options=None, location_queries=None, locations=None, name=None, otel_tracing=None, pull_secrets=None, self_link=None, sidecar=None, tags=None):
         if alias and not isinstance(alias, str):
             raise TypeError("Expected argument 'alias' to be a str")
         pulumi.set(__self__, "alias", alias)
+        if alias_workload_link and not isinstance(alias_workload_link, str):
+            raise TypeError("Expected argument 'alias_workload_link' to be a str")
+        pulumi.set(__self__, "alias_workload_link", alias_workload_link)
         if controlplane_tracing and not isinstance(controlplane_tracing, dict):
             raise TypeError("Expected argument 'controlplane_tracing' to be a dict")
         pulumi.set(__self__, "controlplane_tracing", controlplane_tracing)
@@ -94,6 +97,11 @@ class GetGvcResult:
     @pulumi.getter
     def alias(self) -> _builtins.str:
         return pulumi.get(self, "alias")
+
+    @_builtins.property
+    @pulumi.getter(name="aliasWorkloadLink")
+    def alias_workload_link(self) -> _builtins.str:
+        return pulumi.get(self, "alias_workload_link")
 
     @_builtins.property
     @pulumi.getter(name="controlplaneTracing")
@@ -199,6 +207,7 @@ class AwaitableGetGvcResult(GetGvcResult):
             yield self
         return GetGvcResult(
             alias=self.alias,
+            alias_workload_link=self.alias_workload_link,
             controlplane_tracing=self.controlplane_tracing,
             cpln_id=self.cpln_id,
             description=self.description,
@@ -254,6 +263,7 @@ def get_gvc(controlplane_tracing: Optional[Union['GetGvcControlplaneTracingArgs'
     - **tags** (Map of String) Key-value map of resource tags.
     - **self_link** (String) Full link to this resource. Can be referenced by other resources.
     - **domain** (String) Custom domain name used by associated workloads.
+    - **alias_workload_link** (String) A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
     - **locations** (List of String) A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
     - **pull_secrets** (List of String) A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
     - **lightstep_tracing** (Block List, Max: 1) (see below).
@@ -363,6 +373,7 @@ def get_gvc(controlplane_tracing: Optional[Union['GetGvcControlplaneTracingArgs'
 
     return AwaitableGetGvcResult(
         alias=pulumi.get(__ret__, 'alias'),
+        alias_workload_link=pulumi.get(__ret__, 'alias_workload_link'),
         controlplane_tracing=pulumi.get(__ret__, 'controlplane_tracing'),
         cpln_id=pulumi.get(__ret__, 'cpln_id'),
         description=pulumi.get(__ret__, 'description'),
@@ -416,6 +427,7 @@ def get_gvc_output(controlplane_tracing: Optional[pulumi.Input[Optional[Union['G
     - **tags** (Map of String) Key-value map of resource tags.
     - **self_link** (String) Full link to this resource. Can be referenced by other resources.
     - **domain** (String) Custom domain name used by associated workloads.
+    - **alias_workload_link** (String) A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
     - **locations** (List of String) A list of [locations](https://docs.controlplane.com/reference/location#current) making up the Global Virtual Cloud.
     - **pull_secrets** (List of String) A list of [pull secret](https://docs.controlplane.com/reference/gvc#pull-secrets) names used to authenticate to any private image repository referenced by Workloads within the GVC.
     - **lightstep_tracing** (Block List, Max: 1) (see below).
@@ -524,6 +536,7 @@ def get_gvc_output(controlplane_tracing: Optional[pulumi.Input[Optional[Union['G
     __ret__ = pulumi.runtime.invoke_output('cpln:index/getGvc:getGvc', __args__, opts=opts, typ=GetGvcResult)
     return __ret__.apply(lambda __response__: GetGvcResult(
         alias=pulumi.get(__response__, 'alias'),
+        alias_workload_link=pulumi.get(__response__, 'alias_workload_link'),
         controlplane_tracing=pulumi.get(__response__, 'controlplane_tracing'),
         cpln_id=pulumi.get(__response__, 'cpln_id'),
         description=pulumi.get(__response__, 'description'),

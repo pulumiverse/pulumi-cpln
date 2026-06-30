@@ -32,7 +32,7 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<Inputs.WorkloadVmBootDiskArgs>? BootDisk { get; set; }
 
         /// <summary>
-        /// Guest clock configuration.
+        /// Guest clock configuration. Defaults to `timezone = UTC` when omitted.
         /// </summary>
         [Input("clock")]
         public Input<Inputs.WorkloadVmClockArgs>? Clock { get; set; }
@@ -50,7 +50,7 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<Inputs.WorkloadVmCpuArgs>? Cpu { get; set; }
 
         /// <summary>
-        /// Firmware configuration for the guest.
+        /// Firmware configuration for the guest. Defaults to `bootloader = efi` and `SecureBoot = false` when omitted.
         /// </summary>
         [Input("firmware")]
         public Input<Inputs.WorkloadVmFirmwareArgs>? Firmware { get; set; }
@@ -71,7 +71,7 @@ namespace Pulumiverse.Cpln.Inputs
         private InputList<Inputs.WorkloadVmNetworkArgs>? _networks;
 
         /// <summary>
-        /// Pod-network interfaces for the VM. Only a single network is supported.
+        /// Pod-network interfaces for the VM. Only a single network is supported. Defaults to a single `Default` network when omitted.
         /// </summary>
         public InputList<Inputs.WorkloadVmNetworkArgs> Networks
         {

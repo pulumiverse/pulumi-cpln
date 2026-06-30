@@ -19,7 +19,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly string Host;
         /// <summary>
-        /// The port to send syslog messages to.
+        /// The port to send syslog messages to. Min: 1. Max: 100000.
         /// </summary>
         public readonly int Port;
         /// <summary>

@@ -26,7 +26,7 @@ namespace Pulumiverse.Cpln.Inputs
         }
 
         /// <summary>
-        /// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+        /// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
         /// </summary>
         [Input("maxConcurrency", required: true)]
         public int MaxConcurrency { get; set; }

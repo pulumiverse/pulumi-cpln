@@ -28,7 +28,7 @@ namespace Pulumiverse.Cpln
         /// - **observability** (Block List, Max: 1) (see below).
         /// - **account_id** (String) The associated account ID that was used when creating the org.
         /// - **invitees** (Set of String) Email addresses that received invitations to join the org and were assigned to the `Superusers` group.
-        /// - **session_timeout_seconds** (Int) The idle time (in seconds) after which the console UI signs out the user. Default: `900`.
+        /// - **session_timeout_seconds** (Int) The idle time (in seconds) after which the console UI signs out the user. Min: `900`. Default: `900`.
         /// - **auth_config** (Block List, Max: 1) (see below).
         /// - **security** (Block List, Max: 1) (see below).
         /// - **status** (List of Object) (see below).
@@ -41,9 +41,9 @@ namespace Pulumiverse.Cpln
         /// 
         /// Read-Only:
         /// 
-        /// - **logs_retention_days** (Number) Log retention days. Default: `30`.
-        /// - **metrics_retention_days** (Number) Metrics retention days. Default: `30`.
-        /// - **traces_retention_days** (Number) Traces retention days. Default: `30`.
+        /// - **logs_retention_days** (Number) Log retention days. Min: `0`. Max: `3650`. Default: `30`.
+        /// - **metrics_retention_days** (Number) Metrics retention days. Min: `0`. Max: `3650`. Default: `30`.
+        /// - **traces_retention_days** (Number) Traces retention days. Min: `0`. Max: `3650`. Default: `30`.
         /// - **default_alert_emails** (Set of String) These emails are configured as alert recipients in Grafana when the `grafana-default-email` contact delivery type is `Email`.
         /// 
         /// &lt;a id="nestedblock--auth_config"&gt;&lt;/a&gt;
@@ -81,7 +81,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// Read-Only:
         /// 
-        /// - **port** (Number) The port to send syslog messages to.
+        /// - **port** (Number) The port to send syslog messages to. Min: `1`. Max: `100000`.
         /// - **transport** (String) The transport-layer protocol used for syslog messages. If `Tcp` is chosen, messages are sent with TLS. Default: `Tcp`.
         /// - **host** (String) The hostname to send syslog messages to.
         /// 
@@ -142,7 +142,7 @@ namespace Pulumiverse.Cpln
         /// - **observability** (Block List, Max: 1) (see below).
         /// - **account_id** (String) The associated account ID that was used when creating the org.
         /// - **invitees** (Set of String) Email addresses that received invitations to join the org and were assigned to the `Superusers` group.
-        /// - **session_timeout_seconds** (Int) The idle time (in seconds) after which the console UI signs out the user. Default: `900`.
+        /// - **session_timeout_seconds** (Int) The idle time (in seconds) after which the console UI signs out the user. Min: `900`. Default: `900`.
         /// - **auth_config** (Block List, Max: 1) (see below).
         /// - **security** (Block List, Max: 1) (see below).
         /// - **status** (List of Object) (see below).
@@ -155,9 +155,9 @@ namespace Pulumiverse.Cpln
         /// 
         /// Read-Only:
         /// 
-        /// - **logs_retention_days** (Number) Log retention days. Default: `30`.
-        /// - **metrics_retention_days** (Number) Metrics retention days. Default: `30`.
-        /// - **traces_retention_days** (Number) Traces retention days. Default: `30`.
+        /// - **logs_retention_days** (Number) Log retention days. Min: `0`. Max: `3650`. Default: `30`.
+        /// - **metrics_retention_days** (Number) Metrics retention days. Min: `0`. Max: `3650`. Default: `30`.
+        /// - **traces_retention_days** (Number) Traces retention days. Min: `0`. Max: `3650`. Default: `30`.
         /// - **default_alert_emails** (Set of String) These emails are configured as alert recipients in Grafana when the `grafana-default-email` contact delivery type is `Email`.
         /// 
         /// &lt;a id="nestedblock--auth_config"&gt;&lt;/a&gt;
@@ -195,7 +195,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// Read-Only:
         /// 
-        /// - **port** (Number) The port to send syslog messages to.
+        /// - **port** (Number) The port to send syslog messages to. Min: `1`. Max: `100000`.
         /// - **transport** (String) The transport-layer protocol used for syslog messages. If `Tcp` is chosen, messages are sent with TLS. Default: `Tcp`.
         /// - **host** (String) The hostname to send syslog messages to.
         /// 
@@ -256,7 +256,7 @@ namespace Pulumiverse.Cpln
         /// - **observability** (Block List, Max: 1) (see below).
         /// - **account_id** (String) The associated account ID that was used when creating the org.
         /// - **invitees** (Set of String) Email addresses that received invitations to join the org and were assigned to the `Superusers` group.
-        /// - **session_timeout_seconds** (Int) The idle time (in seconds) after which the console UI signs out the user. Default: `900`.
+        /// - **session_timeout_seconds** (Int) The idle time (in seconds) after which the console UI signs out the user. Min: `900`. Default: `900`.
         /// - **auth_config** (Block List, Max: 1) (see below).
         /// - **security** (Block List, Max: 1) (see below).
         /// - **status** (List of Object) (see below).
@@ -269,9 +269,9 @@ namespace Pulumiverse.Cpln
         /// 
         /// Read-Only:
         /// 
-        /// - **logs_retention_days** (Number) Log retention days. Default: `30`.
-        /// - **metrics_retention_days** (Number) Metrics retention days. Default: `30`.
-        /// - **traces_retention_days** (Number) Traces retention days. Default: `30`.
+        /// - **logs_retention_days** (Number) Log retention days. Min: `0`. Max: `3650`. Default: `30`.
+        /// - **metrics_retention_days** (Number) Metrics retention days. Min: `0`. Max: `3650`. Default: `30`.
+        /// - **traces_retention_days** (Number) Traces retention days. Min: `0`. Max: `3650`. Default: `30`.
         /// - **default_alert_emails** (Set of String) These emails are configured as alert recipients in Grafana when the `grafana-default-email` contact delivery type is `Email`.
         /// 
         /// &lt;a id="nestedblock--auth_config"&gt;&lt;/a&gt;
@@ -309,7 +309,7 @@ namespace Pulumiverse.Cpln
         /// 
         /// Read-Only:
         /// 
-        /// - **port** (Number) The port to send syslog messages to.
+        /// - **port** (Number) The port to send syslog messages to. Min: `1`. Max: `100000`.
         /// - **transport** (String) The transport-layer protocol used for syslog messages. If `Tcp` is chosen, messages are sent with TLS. Default: `Tcp`.
         /// - **host** (String) The hostname to send syslog messages to.
         /// 

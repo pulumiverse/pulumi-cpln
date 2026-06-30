@@ -26,6 +26,12 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<bool>? Enabled { get; set; }
 
         /// <summary>
+        /// Number of ingress replicas deployed for the middlebox component. Default: `0`.
+        /// </summary>
+        [Input("ingressReplicas")]
+        public Input<int>? IngressReplicas { get; set; }
+
+        /// <summary>
         /// IPv4 address bound by the middlebox component.
         /// </summary>
         [Input("ip")]

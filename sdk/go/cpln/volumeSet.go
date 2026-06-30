@@ -23,7 +23,7 @@ type VolumeSet struct {
 	CustomEncryption VolumeSetCustomEncryptionPtrOutput `pulumi:"customEncryption"`
 	// Description of the volume set.
 	Description pulumi.StringOutput `pulumi:"description"`
-	// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+	// Each volume set has a single, immutable file system. Valid types: `ext4`, `xfs`, or `shared`. Default: `ext4`.
 	FileSystemType pulumi.StringOutput `pulumi:"fileSystemType"`
 	// Name of the associated GVC.
 	Gvc pulumi.StringOutput `pulumi:"gvc"`
@@ -33,7 +33,7 @@ type VolumeSet struct {
 	MountOptions VolumeSetMountOptionsPtrOutput `pulumi:"mountOptions"`
 	// Name of the volume set.
 	Name pulumi.StringOutput `pulumi:"name"`
-	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
+	// Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `shared`. Required unless `fileSystemType` is `shared`, in which case it is automatically set to `shared`.
 	PerformanceClass pulumi.StringOutput `pulumi:"performanceClass"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringOutput `pulumi:"selfLink"`
@@ -61,9 +61,6 @@ func NewVolumeSet(ctx *pulumi.Context,
 	}
 	if args.InitialCapacity == nil {
 		return nil, errors.New("invalid value for required argument 'InitialCapacity'")
-	}
-	if args.PerformanceClass == nil {
-		return nil, errors.New("invalid value for required argument 'PerformanceClass'")
 	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource VolumeSet
@@ -96,7 +93,7 @@ type volumeSetState struct {
 	CustomEncryption *VolumeSetCustomEncryption `pulumi:"customEncryption"`
 	// Description of the volume set.
 	Description *string `pulumi:"description"`
-	// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+	// Each volume set has a single, immutable file system. Valid types: `ext4`, `xfs`, or `shared`. Default: `ext4`.
 	FileSystemType *string `pulumi:"fileSystemType"`
 	// Name of the associated GVC.
 	Gvc *string `pulumi:"gvc"`
@@ -106,7 +103,7 @@ type volumeSetState struct {
 	MountOptions *VolumeSetMountOptions `pulumi:"mountOptions"`
 	// Name of the volume set.
 	Name *string `pulumi:"name"`
-	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
+	// Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `shared`. Required unless `fileSystemType` is `shared`, in which case it is automatically set to `shared`.
 	PerformanceClass *string `pulumi:"performanceClass"`
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink *string `pulumi:"selfLink"`
@@ -131,7 +128,7 @@ type VolumeSetState struct {
 	CustomEncryption VolumeSetCustomEncryptionPtrInput
 	// Description of the volume set.
 	Description pulumi.StringPtrInput
-	// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+	// Each volume set has a single, immutable file system. Valid types: `ext4`, `xfs`, or `shared`. Default: `ext4`.
 	FileSystemType pulumi.StringPtrInput
 	// Name of the associated GVC.
 	Gvc pulumi.StringPtrInput
@@ -141,7 +138,7 @@ type VolumeSetState struct {
 	MountOptions VolumeSetMountOptionsPtrInput
 	// Name of the volume set.
 	Name pulumi.StringPtrInput
-	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
+	// Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `shared`. Required unless `fileSystemType` is `shared`, in which case it is automatically set to `shared`.
 	PerformanceClass pulumi.StringPtrInput
 	// Full link to this resource. Can be referenced by other resources.
 	SelfLink pulumi.StringPtrInput
@@ -168,7 +165,7 @@ type volumeSetArgs struct {
 	CustomEncryption *VolumeSetCustomEncryption `pulumi:"customEncryption"`
 	// Description of the volume set.
 	Description *string `pulumi:"description"`
-	// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+	// Each volume set has a single, immutable file system. Valid types: `ext4`, `xfs`, or `shared`. Default: `ext4`.
 	FileSystemType *string `pulumi:"fileSystemType"`
 	// Name of the associated GVC.
 	Gvc string `pulumi:"gvc"`
@@ -178,8 +175,8 @@ type volumeSetArgs struct {
 	MountOptions *VolumeSetMountOptions `pulumi:"mountOptions"`
 	// Name of the volume set.
 	Name *string `pulumi:"name"`
-	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
-	PerformanceClass string `pulumi:"performanceClass"`
+	// Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `shared`. Required unless `fileSystemType` is `shared`, in which case it is automatically set to `shared`.
+	PerformanceClass *string `pulumi:"performanceClass"`
 	// Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
 	Snapshots *VolumeSetSnapshots `pulumi:"snapshots"`
 	// For self-hosted locations only. The storage class used for volumes in this set will be {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be {performanceClass}-{fileSystemType}
@@ -196,7 +193,7 @@ type VolumeSetArgs struct {
 	CustomEncryption VolumeSetCustomEncryptionPtrInput
 	// Description of the volume set.
 	Description pulumi.StringPtrInput
-	// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+	// Each volume set has a single, immutable file system. Valid types: `ext4`, `xfs`, or `shared`. Default: `ext4`.
 	FileSystemType pulumi.StringPtrInput
 	// Name of the associated GVC.
 	Gvc pulumi.StringInput
@@ -206,8 +203,8 @@ type VolumeSetArgs struct {
 	MountOptions VolumeSetMountOptionsPtrInput
 	// Name of the volume set.
 	Name pulumi.StringPtrInput
-	// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
-	PerformanceClass pulumi.StringInput
+	// Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `shared`. Required unless `fileSystemType` is `shared`, in which case it is automatically set to `shared`.
+	PerformanceClass pulumi.StringPtrInput
 	// Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
 	Snapshots VolumeSetSnapshotsPtrInput
 	// For self-hosted locations only. The storage class used for volumes in this set will be {performanceClass}-{fileSystemType}-{storageClassSuffix} if it exists, otherwise it will be {performanceClass}-{fileSystemType}
@@ -323,7 +320,7 @@ func (o VolumeSetOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringOutput { return v.Description }).(pulumi.StringOutput)
 }
 
-// Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+// Each volume set has a single, immutable file system. Valid types: `ext4`, `xfs`, or `shared`. Default: `ext4`.
 func (o VolumeSetOutput) FileSystemType() pulumi.StringOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringOutput { return v.FileSystemType }).(pulumi.StringOutput)
 }
@@ -348,7 +345,7 @@ func (o VolumeSetOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
-// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
+// Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `shared`. Required unless `fileSystemType` is `shared`, in which case it is automatically set to `shared`.
 func (o VolumeSetOutput) PerformanceClass() pulumi.StringOutput {
 	return o.ApplyT(func(v *VolumeSet) pulumi.StringOutput { return v.PerformanceClass }).(pulumi.StringOutput)
 }

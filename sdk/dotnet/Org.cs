@@ -65,7 +65,7 @@ namespace Pulumiverse.Cpln
         public Output<string> SelfLink { get; private set; } = null!;
 
         /// <summary>
-        /// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+        /// The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
         /// </summary>
         [Output("sessionTimeoutSeconds")]
         public Output<int> SessionTimeoutSeconds { get; private set; } = null!;
@@ -169,7 +169,7 @@ namespace Pulumiverse.Cpln
         public Input<Inputs.OrgSecurityArgs>? Security { get; set; }
 
         /// <summary>
-        /// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+        /// The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
         /// </summary>
         [Input("sessionTimeoutSeconds")]
         public Input<int>? SessionTimeoutSeconds { get; set; }
@@ -252,7 +252,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? SelfLink { get; set; }
 
         /// <summary>
-        /// The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+        /// The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
         /// </summary>
         [Input("sessionTimeoutSeconds")]
         public Input<int>? SessionTimeoutSeconds { get; set; }

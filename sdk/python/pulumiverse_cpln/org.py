@@ -36,7 +36,7 @@ class OrgArgs:
         :param pulumi.Input[_builtins.str] description: Description of the Organization.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] invitees: When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to the `superusers` group. The user account used when creating the org will be included in this list.
         :param pulumi.Input['OrgObservabilityArgs'] observability: The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
-        :param pulumi.Input[_builtins.int] session_timeout_seconds: The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+        :param pulumi.Input[_builtins.int] session_timeout_seconds: The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
         """
         if account_id is not None:
@@ -129,7 +129,7 @@ class OrgArgs:
     @pulumi.getter(name="sessionTimeoutSeconds")
     def session_timeout_seconds(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
-        The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+        The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
         """
         return pulumi.get(self, "session_timeout_seconds")
 
@@ -175,7 +175,7 @@ class _OrgState:
         :param pulumi.Input[_builtins.str] name: Name of the Organization.
         :param pulumi.Input['OrgObservabilityArgs'] observability: The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
         :param pulumi.Input[_builtins.str] self_link: Full link to this resource. Can be referenced by other resources.
-        :param pulumi.Input[_builtins.int] session_timeout_seconds: The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+        :param pulumi.Input[_builtins.int] session_timeout_seconds: The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
         :param pulumi.Input[Sequence[pulumi.Input['OrgStatusArgs']]] statuses: Status of the org.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
         """
@@ -313,7 +313,7 @@ class _OrgState:
     @pulumi.getter(name="sessionTimeoutSeconds")
     def session_timeout_seconds(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
-        The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+        The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
         """
         return pulumi.get(self, "session_timeout_seconds")
 
@@ -370,7 +370,7 @@ class Org(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] description: Description of the Organization.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] invitees: When an org is created, the list of email addresses which will receive an invitation to join the org and be assigned to the `superusers` group. The user account used when creating the org will be included in this list.
         :param pulumi.Input[Union['OrgObservabilityArgs', 'OrgObservabilityArgsDict']] observability: The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
-        :param pulumi.Input[_builtins.int] session_timeout_seconds: The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+        :param pulumi.Input[_builtins.int] session_timeout_seconds: The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
         """
         ...
@@ -462,7 +462,7 @@ class Org(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] name: Name of the Organization.
         :param pulumi.Input[Union['OrgObservabilityArgs', 'OrgObservabilityArgsDict']] observability: The retention period (in days) for logs, metrics, and traces. Charges apply for storage beyond the 30 day default.
         :param pulumi.Input[_builtins.str] self_link: Full link to this resource. Can be referenced by other resources.
-        :param pulumi.Input[_builtins.int] session_timeout_seconds: The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+        :param pulumi.Input[_builtins.int] session_timeout_seconds: The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
         :param pulumi.Input[Sequence[pulumi.Input[Union['OrgStatusArgs', 'OrgStatusArgsDict']]]] statuses: Status of the org.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tags: Key-value map of resource tags.
         """
@@ -557,7 +557,7 @@ class Org(pulumi.CustomResource):
     @pulumi.getter(name="sessionTimeoutSeconds")
     def session_timeout_seconds(self) -> pulumi.Output[_builtins.int]:
         """
-        The idle time (in seconds) in which the console UI will automatically sign-out the user. Default: 900 (15 minutes)
+        The idle time (in seconds) in which the console UI will automatically sign-out the user. Min: 900. Default: 900 (15 minutes)
         """
         return pulumi.get(self, "session_timeout_seconds")
 

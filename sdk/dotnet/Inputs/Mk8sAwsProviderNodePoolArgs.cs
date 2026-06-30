@@ -19,6 +19,12 @@ namespace Pulumiverse.Cpln.Inputs
         [Input("bootDiskSize")]
         public Input<int>? BootDiskSize { get; set; }
 
+        /// <summary>
+        /// CPU options for the node pool instances.
+        /// </summary>
+        [Input("cpuOptions")]
+        public Input<Inputs.Mk8sAwsProviderNodePoolCpuOptionsArgs>? CpuOptions { get; set; }
+
         [Input("extraSecurityGroupIds")]
         private InputList<string>? _extraSecurityGroupIds;
 

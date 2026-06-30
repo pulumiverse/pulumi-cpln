@@ -56,6 +56,12 @@ namespace Pulumiverse.Cpln
         public Output<ImmutableArray<Outputs.OrgLoggingLogzioLogging>> LogzioLoggings { get; private set; } = null!;
 
         /// <summary>
+        /// For logging and analyzing data within an org using Grafana Loki.
+        /// </summary>
+        [Output("lokiLoggings")]
+        public Output<ImmutableArray<Outputs.OrgLoggingLokiLogging>> LokiLoggings { get; private set; } = null!;
+
+        /// <summary>
         /// Name of the Org.
         /// </summary>
         [Output("name")]
@@ -202,6 +208,18 @@ namespace Pulumiverse.Cpln
             set => _logzioLoggings = value;
         }
 
+        [Input("lokiLoggings")]
+        private InputList<Inputs.OrgLoggingLokiLoggingArgs>? _lokiLoggings;
+
+        /// <summary>
+        /// For logging and analyzing data within an org using Grafana Loki.
+        /// </summary>
+        public InputList<Inputs.OrgLoggingLokiLoggingArgs> LokiLoggings
+        {
+            get => _lokiLoggings ?? (_lokiLoggings = new InputList<Inputs.OrgLoggingLokiLoggingArgs>());
+            set => _lokiLoggings = value;
+        }
+
         [Input("opentelemetryLoggings")]
         private InputList<Inputs.OrgLoggingOpentelemetryLoggingArgs>? _opentelemetryLoggings;
 
@@ -324,6 +342,18 @@ namespace Pulumiverse.Cpln
         {
             get => _logzioLoggings ?? (_logzioLoggings = new InputList<Inputs.OrgLoggingLogzioLoggingGetArgs>());
             set => _logzioLoggings = value;
+        }
+
+        [Input("lokiLoggings")]
+        private InputList<Inputs.OrgLoggingLokiLoggingGetArgs>? _lokiLoggings;
+
+        /// <summary>
+        /// For logging and analyzing data within an org using Grafana Loki.
+        /// </summary>
+        public InputList<Inputs.OrgLoggingLokiLoggingGetArgs> LokiLoggings
+        {
+            get => _lokiLoggings ?? (_lokiLoggings = new InputList<Inputs.OrgLoggingLokiLoggingGetArgs>());
+            set => _lokiLoggings = value;
         }
 
         /// <summary>

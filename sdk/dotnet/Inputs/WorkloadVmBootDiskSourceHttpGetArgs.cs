@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class WorkloadVmBootDiskSourceHttpGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Disk image checksum, formatted as `sha256:&lt;hex&gt;` or `sha512:&lt;hex&gt;`.
+        /// Disk image checksum, formatted as `sha256:&lt;hex&gt;` or `sha512:&lt;hex&gt;`. Max: `160`.
         /// </summary>
         [Input("checksum")]
         public Input<string>? Checksum { get; set; }

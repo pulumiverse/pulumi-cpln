@@ -38,7 +38,7 @@ namespace Pulumiverse.Cpln
         public Output<string> Description { get; private set; } = null!;
 
         /// <summary>
-        /// Each volume set has a single, immutable file system. Valid types: `Xfs` or `Ext4`.
+        /// Each volume set has a single, immutable file system. Valid types: `Ext4`, `Xfs`, or `Shared`. Default: `Ext4`.
         /// </summary>
         [Output("fileSystemType")]
         public Output<string> FileSystemType { get; private set; } = null!;
@@ -68,7 +68,7 @@ namespace Pulumiverse.Cpln
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
-        /// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
+        /// Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `Shared`. Required unless `FileSystemType` is `Shared`, in which case it is automatically set to `Shared`.
         /// </summary>
         [Output("performanceClass")]
         public Output<string> PerformanceClass { get; private set; } = null!;
@@ -175,7 +175,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Description { get; set; }
 
         /// <summary>
-        /// Each volume set has a single, immutable file system. Valid types: `Xfs` or `Ext4`.
+        /// Each volume set has a single, immutable file system. Valid types: `Ext4`, `Xfs`, or `Shared`. Default: `Ext4`.
         /// </summary>
         [Input("fileSystemType")]
         public Input<string>? FileSystemType { get; set; }
@@ -205,10 +205,10 @@ namespace Pulumiverse.Cpln
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
+        /// Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `Shared`. Required unless `FileSystemType` is `Shared`, in which case it is automatically set to `Shared`.
         /// </summary>
-        [Input("performanceClass", required: true)]
-        public Input<string> PerformanceClass { get; set; } = null!;
+        [Input("performanceClass")]
+        public Input<string>? PerformanceClass { get; set; }
 
         /// <summary>
         /// Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
@@ -267,7 +267,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Description { get; set; }
 
         /// <summary>
-        /// Each volume set has a single, immutable file system. Valid types: `Xfs` or `Ext4`.
+        /// Each volume set has a single, immutable file system. Valid types: `Ext4`, `Xfs`, or `Shared`. Default: `Ext4`.
         /// </summary>
         [Input("fileSystemType")]
         public Input<string>? FileSystemType { get; set; }
@@ -297,7 +297,7 @@ namespace Pulumiverse.Cpln
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
+        /// Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `Shared`. Required unless `FileSystemType` is `Shared`, in which case it is automatically set to `Shared`.
         /// </summary>
         [Input("performanceClass")]
         public Input<string>? PerformanceClass { get; set; }

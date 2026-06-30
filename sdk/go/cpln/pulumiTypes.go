@@ -893,6 +893,121 @@ func (o CustomLocationGeoArrayOutput) Index(i pulumi.IntInput) CustomLocationGeo
 	}).(CustomLocationGeoOutput)
 }
 
+type DomainRouteCanary struct {
+	// The port to send canary traffic to. If not provided, the first configured port on the workload is used.
+	Port *int `pulumi:"port"`
+	// The percentage of traffic to send to this canary workload. A weight of 0 disables the canary so it can be toggled on and off without removing it.
+	Weight int `pulumi:"weight"`
+	// The canary workload to route a weighted percentage of traffic to.
+	WorkloadLink string `pulumi:"workloadLink"`
+}
+
+// DomainRouteCanaryInput is an input type that accepts DomainRouteCanaryArgs and DomainRouteCanaryOutput values.
+// You can construct a concrete instance of `DomainRouteCanaryInput` via:
+//
+//	DomainRouteCanaryArgs{...}
+type DomainRouteCanaryInput interface {
+	pulumi.Input
+
+	ToDomainRouteCanaryOutput() DomainRouteCanaryOutput
+	ToDomainRouteCanaryOutputWithContext(context.Context) DomainRouteCanaryOutput
+}
+
+type DomainRouteCanaryArgs struct {
+	// The port to send canary traffic to. If not provided, the first configured port on the workload is used.
+	Port pulumi.IntPtrInput `pulumi:"port"`
+	// The percentage of traffic to send to this canary workload. A weight of 0 disables the canary so it can be toggled on and off without removing it.
+	Weight pulumi.IntInput `pulumi:"weight"`
+	// The canary workload to route a weighted percentage of traffic to.
+	WorkloadLink pulumi.StringInput `pulumi:"workloadLink"`
+}
+
+func (DomainRouteCanaryArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*DomainRouteCanary)(nil)).Elem()
+}
+
+func (i DomainRouteCanaryArgs) ToDomainRouteCanaryOutput() DomainRouteCanaryOutput {
+	return i.ToDomainRouteCanaryOutputWithContext(context.Background())
+}
+
+func (i DomainRouteCanaryArgs) ToDomainRouteCanaryOutputWithContext(ctx context.Context) DomainRouteCanaryOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DomainRouteCanaryOutput)
+}
+
+// DomainRouteCanaryArrayInput is an input type that accepts DomainRouteCanaryArray and DomainRouteCanaryArrayOutput values.
+// You can construct a concrete instance of `DomainRouteCanaryArrayInput` via:
+//
+//	DomainRouteCanaryArray{ DomainRouteCanaryArgs{...} }
+type DomainRouteCanaryArrayInput interface {
+	pulumi.Input
+
+	ToDomainRouteCanaryArrayOutput() DomainRouteCanaryArrayOutput
+	ToDomainRouteCanaryArrayOutputWithContext(context.Context) DomainRouteCanaryArrayOutput
+}
+
+type DomainRouteCanaryArray []DomainRouteCanaryInput
+
+func (DomainRouteCanaryArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]DomainRouteCanary)(nil)).Elem()
+}
+
+func (i DomainRouteCanaryArray) ToDomainRouteCanaryArrayOutput() DomainRouteCanaryArrayOutput {
+	return i.ToDomainRouteCanaryArrayOutputWithContext(context.Background())
+}
+
+func (i DomainRouteCanaryArray) ToDomainRouteCanaryArrayOutputWithContext(ctx context.Context) DomainRouteCanaryArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DomainRouteCanaryArrayOutput)
+}
+
+type DomainRouteCanaryOutput struct{ *pulumi.OutputState }
+
+func (DomainRouteCanaryOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*DomainRouteCanary)(nil)).Elem()
+}
+
+func (o DomainRouteCanaryOutput) ToDomainRouteCanaryOutput() DomainRouteCanaryOutput {
+	return o
+}
+
+func (o DomainRouteCanaryOutput) ToDomainRouteCanaryOutputWithContext(ctx context.Context) DomainRouteCanaryOutput {
+	return o
+}
+
+// The port to send canary traffic to. If not provided, the first configured port on the workload is used.
+func (o DomainRouteCanaryOutput) Port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v DomainRouteCanary) *int { return v.Port }).(pulumi.IntPtrOutput)
+}
+
+// The percentage of traffic to send to this canary workload. A weight of 0 disables the canary so it can be toggled on and off without removing it.
+func (o DomainRouteCanaryOutput) Weight() pulumi.IntOutput {
+	return o.ApplyT(func(v DomainRouteCanary) int { return v.Weight }).(pulumi.IntOutput)
+}
+
+// The canary workload to route a weighted percentage of traffic to.
+func (o DomainRouteCanaryOutput) WorkloadLink() pulumi.StringOutput {
+	return o.ApplyT(func(v DomainRouteCanary) string { return v.WorkloadLink }).(pulumi.StringOutput)
+}
+
+type DomainRouteCanaryArrayOutput struct{ *pulumi.OutputState }
+
+func (DomainRouteCanaryArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]DomainRouteCanary)(nil)).Elem()
+}
+
+func (o DomainRouteCanaryArrayOutput) ToDomainRouteCanaryArrayOutput() DomainRouteCanaryArrayOutput {
+	return o
+}
+
+func (o DomainRouteCanaryArrayOutput) ToDomainRouteCanaryArrayOutputWithContext(ctx context.Context) DomainRouteCanaryArrayOutput {
+	return o
+}
+
+func (o DomainRouteCanaryArrayOutput) Index(i pulumi.IntInput) DomainRouteCanaryOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) DomainRouteCanary {
+		return vs[0].([]DomainRouteCanary)[vs[1].(int)]
+	}).(DomainRouteCanaryOutput)
+}
+
 type DomainRouteHeaders struct {
 	// Manipulates HTTP headers.
 	Request *DomainRouteHeadersRequest `pulumi:"request"`
@@ -2002,6 +2117,8 @@ func (o DomainSpecPortCorsAllowOriginArrayOutput) Index(i pulumi.IntInput) Domai
 }
 
 type DomainSpecPortRoute struct {
+	// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+	Canaries []DomainSpecPortRouteCanary `pulumi:"canaries"`
 	// Modify the headers for all http requests for this route.
 	Headers *DomainSpecPortRouteHeaders `pulumi:"headers"`
 	// This option allows forwarding traffic for different host headers to different workloads.
@@ -2036,6 +2153,8 @@ type DomainSpecPortRouteInput interface {
 }
 
 type DomainSpecPortRouteArgs struct {
+	// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+	Canaries DomainSpecPortRouteCanaryArrayInput `pulumi:"canaries"`
 	// Modify the headers for all http requests for this route.
 	Headers DomainSpecPortRouteHeadersPtrInput `pulumi:"headers"`
 	// This option allows forwarding traffic for different host headers to different workloads.
@@ -2109,6 +2228,11 @@ func (o DomainSpecPortRouteOutput) ToDomainSpecPortRouteOutputWithContext(ctx co
 	return o
 }
 
+// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+func (o DomainSpecPortRouteOutput) Canaries() DomainSpecPortRouteCanaryArrayOutput {
+	return o.ApplyT(func(v DomainSpecPortRoute) []DomainSpecPortRouteCanary { return v.Canaries }).(DomainSpecPortRouteCanaryArrayOutput)
+}
+
 // Modify the headers for all http requests for this route.
 func (o DomainSpecPortRouteOutput) Headers() DomainSpecPortRouteHeadersPtrOutput {
 	return o.ApplyT(func(v DomainSpecPortRoute) *DomainSpecPortRouteHeaders { return v.Headers }).(DomainSpecPortRouteHeadersPtrOutput)
@@ -2177,6 +2301,121 @@ func (o DomainSpecPortRouteArrayOutput) Index(i pulumi.IntInput) DomainSpecPortR
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) DomainSpecPortRoute {
 		return vs[0].([]DomainSpecPortRoute)[vs[1].(int)]
 	}).(DomainSpecPortRouteOutput)
+}
+
+type DomainSpecPortRouteCanary struct {
+	// The port to send canary traffic to. If not provided, the first configured port on the workload is used.
+	Port *int `pulumi:"port"`
+	// The percentage of traffic to send to this canary workload. A weight of 0 disables the canary so it can be toggled on and off without removing it.
+	Weight int `pulumi:"weight"`
+	// The canary workload to route a weighted percentage of traffic to.
+	WorkloadLink string `pulumi:"workloadLink"`
+}
+
+// DomainSpecPortRouteCanaryInput is an input type that accepts DomainSpecPortRouteCanaryArgs and DomainSpecPortRouteCanaryOutput values.
+// You can construct a concrete instance of `DomainSpecPortRouteCanaryInput` via:
+//
+//	DomainSpecPortRouteCanaryArgs{...}
+type DomainSpecPortRouteCanaryInput interface {
+	pulumi.Input
+
+	ToDomainSpecPortRouteCanaryOutput() DomainSpecPortRouteCanaryOutput
+	ToDomainSpecPortRouteCanaryOutputWithContext(context.Context) DomainSpecPortRouteCanaryOutput
+}
+
+type DomainSpecPortRouteCanaryArgs struct {
+	// The port to send canary traffic to. If not provided, the first configured port on the workload is used.
+	Port pulumi.IntPtrInput `pulumi:"port"`
+	// The percentage of traffic to send to this canary workload. A weight of 0 disables the canary so it can be toggled on and off without removing it.
+	Weight pulumi.IntInput `pulumi:"weight"`
+	// The canary workload to route a weighted percentage of traffic to.
+	WorkloadLink pulumi.StringInput `pulumi:"workloadLink"`
+}
+
+func (DomainSpecPortRouteCanaryArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*DomainSpecPortRouteCanary)(nil)).Elem()
+}
+
+func (i DomainSpecPortRouteCanaryArgs) ToDomainSpecPortRouteCanaryOutput() DomainSpecPortRouteCanaryOutput {
+	return i.ToDomainSpecPortRouteCanaryOutputWithContext(context.Background())
+}
+
+func (i DomainSpecPortRouteCanaryArgs) ToDomainSpecPortRouteCanaryOutputWithContext(ctx context.Context) DomainSpecPortRouteCanaryOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DomainSpecPortRouteCanaryOutput)
+}
+
+// DomainSpecPortRouteCanaryArrayInput is an input type that accepts DomainSpecPortRouteCanaryArray and DomainSpecPortRouteCanaryArrayOutput values.
+// You can construct a concrete instance of `DomainSpecPortRouteCanaryArrayInput` via:
+//
+//	DomainSpecPortRouteCanaryArray{ DomainSpecPortRouteCanaryArgs{...} }
+type DomainSpecPortRouteCanaryArrayInput interface {
+	pulumi.Input
+
+	ToDomainSpecPortRouteCanaryArrayOutput() DomainSpecPortRouteCanaryArrayOutput
+	ToDomainSpecPortRouteCanaryArrayOutputWithContext(context.Context) DomainSpecPortRouteCanaryArrayOutput
+}
+
+type DomainSpecPortRouteCanaryArray []DomainSpecPortRouteCanaryInput
+
+func (DomainSpecPortRouteCanaryArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]DomainSpecPortRouteCanary)(nil)).Elem()
+}
+
+func (i DomainSpecPortRouteCanaryArray) ToDomainSpecPortRouteCanaryArrayOutput() DomainSpecPortRouteCanaryArrayOutput {
+	return i.ToDomainSpecPortRouteCanaryArrayOutputWithContext(context.Background())
+}
+
+func (i DomainSpecPortRouteCanaryArray) ToDomainSpecPortRouteCanaryArrayOutputWithContext(ctx context.Context) DomainSpecPortRouteCanaryArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DomainSpecPortRouteCanaryArrayOutput)
+}
+
+type DomainSpecPortRouteCanaryOutput struct{ *pulumi.OutputState }
+
+func (DomainSpecPortRouteCanaryOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*DomainSpecPortRouteCanary)(nil)).Elem()
+}
+
+func (o DomainSpecPortRouteCanaryOutput) ToDomainSpecPortRouteCanaryOutput() DomainSpecPortRouteCanaryOutput {
+	return o
+}
+
+func (o DomainSpecPortRouteCanaryOutput) ToDomainSpecPortRouteCanaryOutputWithContext(ctx context.Context) DomainSpecPortRouteCanaryOutput {
+	return o
+}
+
+// The port to send canary traffic to. If not provided, the first configured port on the workload is used.
+func (o DomainSpecPortRouteCanaryOutput) Port() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v DomainSpecPortRouteCanary) *int { return v.Port }).(pulumi.IntPtrOutput)
+}
+
+// The percentage of traffic to send to this canary workload. A weight of 0 disables the canary so it can be toggled on and off without removing it.
+func (o DomainSpecPortRouteCanaryOutput) Weight() pulumi.IntOutput {
+	return o.ApplyT(func(v DomainSpecPortRouteCanary) int { return v.Weight }).(pulumi.IntOutput)
+}
+
+// The canary workload to route a weighted percentage of traffic to.
+func (o DomainSpecPortRouteCanaryOutput) WorkloadLink() pulumi.StringOutput {
+	return o.ApplyT(func(v DomainSpecPortRouteCanary) string { return v.WorkloadLink }).(pulumi.StringOutput)
+}
+
+type DomainSpecPortRouteCanaryArrayOutput struct{ *pulumi.OutputState }
+
+func (DomainSpecPortRouteCanaryArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]DomainSpecPortRouteCanary)(nil)).Elem()
+}
+
+func (o DomainSpecPortRouteCanaryArrayOutput) ToDomainSpecPortRouteCanaryArrayOutput() DomainSpecPortRouteCanaryArrayOutput {
+	return o
+}
+
+func (o DomainSpecPortRouteCanaryArrayOutput) ToDomainSpecPortRouteCanaryArrayOutputWithContext(ctx context.Context) DomainSpecPortRouteCanaryArrayOutput {
+	return o
+}
+
+func (o DomainSpecPortRouteCanaryArrayOutput) Index(i pulumi.IntInput) DomainSpecPortRouteCanaryOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) DomainSpecPortRouteCanary {
+		return vs[0].([]DomainSpecPortRouteCanary)[vs[1].(int)]
+	}).(DomainSpecPortRouteCanaryOutput)
 }
 
 type DomainSpecPortRouteHeaders struct {
@@ -7163,12 +7402,12 @@ type IdentityNativeNetworkResource struct {
 	// A feature provided by AWS that enables private connectivity between private VPCs and compute running at Control Plane without traversing the public internet.
 	AwsPrivateLink *IdentityNativeNetworkResourceAwsPrivateLink `pulumi:"awsPrivateLink"`
 	// Fully qualified domain name.
-	Fqdn string `pulumi:"fqdn"`
+	Fqdn *string `pulumi:"fqdn"`
 	// Capability provided by GCP that allows private communication between private VPC networks and compute running at Control Plane.
 	GcpServiceConnect *IdentityNativeNetworkResourceGcpServiceConnect `pulumi:"gcpServiceConnect"`
 	// Name of the Native Network Resource.
 	Name string `pulumi:"name"`
-	// Ports to expose. At least one port is required.
+	// Ports to expose. Between 1 and 10 entries.
 	Ports []int `pulumi:"ports"`
 }
 
@@ -7187,12 +7426,12 @@ type IdentityNativeNetworkResourceArgs struct {
 	// A feature provided by AWS that enables private connectivity between private VPCs and compute running at Control Plane without traversing the public internet.
 	AwsPrivateLink IdentityNativeNetworkResourceAwsPrivateLinkPtrInput `pulumi:"awsPrivateLink"`
 	// Fully qualified domain name.
-	Fqdn pulumi.StringInput `pulumi:"fqdn"`
+	Fqdn pulumi.StringPtrInput `pulumi:"fqdn"`
 	// Capability provided by GCP that allows private communication between private VPC networks and compute running at Control Plane.
 	GcpServiceConnect IdentityNativeNetworkResourceGcpServiceConnectPtrInput `pulumi:"gcpServiceConnect"`
 	// Name of the Native Network Resource.
 	Name pulumi.StringInput `pulumi:"name"`
-	// Ports to expose. At least one port is required.
+	// Ports to expose. Between 1 and 10 entries.
 	Ports pulumi.IntArrayInput `pulumi:"ports"`
 }
 
@@ -7255,8 +7494,8 @@ func (o IdentityNativeNetworkResourceOutput) AwsPrivateLink() IdentityNativeNetw
 }
 
 // Fully qualified domain name.
-func (o IdentityNativeNetworkResourceOutput) Fqdn() pulumi.StringOutput {
-	return o.ApplyT(func(v IdentityNativeNetworkResource) string { return v.Fqdn }).(pulumi.StringOutput)
+func (o IdentityNativeNetworkResourceOutput) Fqdn() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v IdentityNativeNetworkResource) *string { return v.Fqdn }).(pulumi.StringPtrOutput)
 }
 
 // Capability provided by GCP that allows private communication between private VPC networks and compute running at Control Plane.
@@ -7271,7 +7510,7 @@ func (o IdentityNativeNetworkResourceOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v IdentityNativeNetworkResource) string { return v.Name }).(pulumi.StringOutput)
 }
 
-// Ports to expose. At least one port is required.
+// Ports to expose. Between 1 and 10 entries.
 func (o IdentityNativeNetworkResourceOutput) Ports() pulumi.IntArrayOutput {
 	return o.ApplyT(func(v IdentityNativeNetworkResource) []int { return v.Ports }).(pulumi.IntArrayOutput)
 }
@@ -7575,11 +7814,11 @@ type IdentityNetworkResource struct {
 	AgentLink *string `pulumi:"agentLink"`
 	// Fully qualified domain name.
 	Fqdn *string `pulumi:"fqdn"`
-	// List of IP addresses.
+	// List of IP addresses. Up to 5 entries.
 	Ips []string `pulumi:"ips"`
 	// Name of the Network Resource.
 	Name string `pulumi:"name"`
-	// Ports to expose.
+	// Ports to expose. Between 1 and 10 entries.
 	Ports []int `pulumi:"ports"`
 	// Resolver IP.
 	ResolverIp *string `pulumi:"resolverIp"`
@@ -7601,11 +7840,11 @@ type IdentityNetworkResourceArgs struct {
 	AgentLink pulumi.StringPtrInput `pulumi:"agentLink"`
 	// Fully qualified domain name.
 	Fqdn pulumi.StringPtrInput `pulumi:"fqdn"`
-	// List of IP addresses.
+	// List of IP addresses. Up to 5 entries.
 	Ips pulumi.StringArrayInput `pulumi:"ips"`
 	// Name of the Network Resource.
 	Name pulumi.StringInput `pulumi:"name"`
-	// Ports to expose.
+	// Ports to expose. Between 1 and 10 entries.
 	Ports pulumi.IntArrayInput `pulumi:"ports"`
 	// Resolver IP.
 	ResolverIp pulumi.StringPtrInput `pulumi:"resolverIp"`
@@ -7672,7 +7911,7 @@ func (o IdentityNetworkResourceOutput) Fqdn() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v IdentityNetworkResource) *string { return v.Fqdn }).(pulumi.StringPtrOutput)
 }
 
-// List of IP addresses.
+// List of IP addresses. Up to 5 entries.
 func (o IdentityNetworkResourceOutput) Ips() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v IdentityNetworkResource) []string { return v.Ips }).(pulumi.StringArrayOutput)
 }
@@ -7682,7 +7921,7 @@ func (o IdentityNetworkResourceOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v IdentityNetworkResource) string { return v.Name }).(pulumi.StringOutput)
 }
 
-// Ports to expose.
+// Ports to expose. Between 1 and 10 entries.
 func (o IdentityNetworkResourceOutput) Ports() pulumi.IntArrayOutput {
 	return o.ApplyT(func(v IdentityNetworkResource) []int { return v.Ports }).(pulumi.IntArrayOutput)
 }
@@ -8120,7 +8359,7 @@ func (o IdentityNgsAccessPolicyPubPtrOutput) Denies() pulumi.StringArrayOutput {
 }
 
 type IdentityNgsAccessPolicyResp struct {
-	// Number of responses allowed on the replyTo subject, -1 means no limit. Default: -1
+	// Number of responses allowed on the replyTo subject, -1 means no limit. Default: 1
 	Max *int `pulumi:"max"`
 	// Deadline to send replies on the replyTo subject [#ms(millis) | #s(econds) | m(inutes) | h(ours)]. -1 means no restriction.
 	Ttl *string `pulumi:"ttl"`
@@ -8138,7 +8377,7 @@ type IdentityNgsAccessPolicyRespInput interface {
 }
 
 type IdentityNgsAccessPolicyRespArgs struct {
-	// Number of responses allowed on the replyTo subject, -1 means no limit. Default: -1
+	// Number of responses allowed on the replyTo subject, -1 means no limit. Default: 1
 	Max pulumi.IntPtrInput `pulumi:"max"`
 	// Deadline to send replies on the replyTo subject [#ms(millis) | #s(econds) | m(inutes) | h(ours)]. -1 means no restriction.
 	Ttl pulumi.StringPtrInput `pulumi:"ttl"`
@@ -8221,7 +8460,7 @@ func (o IdentityNgsAccessPolicyRespOutput) ToIdentityNgsAccessPolicyRespPtrOutpu
 	}).(IdentityNgsAccessPolicyRespPtrOutput)
 }
 
-// Number of responses allowed on the replyTo subject, -1 means no limit. Default: -1
+// Number of responses allowed on the replyTo subject, -1 means no limit. Default: 1
 func (o IdentityNgsAccessPolicyRespOutput) Max() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v IdentityNgsAccessPolicyResp) *int { return v.Max }).(pulumi.IntPtrOutput)
 }
@@ -8255,7 +8494,7 @@ func (o IdentityNgsAccessPolicyRespPtrOutput) Elem() IdentityNgsAccessPolicyResp
 	}).(IdentityNgsAccessPolicyRespOutput)
 }
 
-// Number of responses allowed on the replyTo subject, -1 means no limit. Default: -1
+// Number of responses allowed on the replyTo subject, -1 means no limit. Default: 1
 func (o IdentityNgsAccessPolicyRespPtrOutput) Max() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *IdentityNgsAccessPolicyResp) *int {
 		if v == nil {
@@ -12866,6 +13105,8 @@ type Mk8sAddOnsByokConfigMiddlebox struct {
 	BandwidthAlertMbps *int `pulumi:"bandwidthAlertMbps"`
 	// Whether to deploy the middlebox component.
 	Enabled *bool `pulumi:"enabled"`
+	// Number of ingress replicas deployed for the middlebox component. Default: `0`.
+	IngressReplicas *int `pulumi:"ingressReplicas"`
 	// IPv4 address bound by the middlebox component.
 	Ip *string `pulumi:"ip"`
 	// Listening port for the middlebox component.
@@ -12888,6 +13129,8 @@ type Mk8sAddOnsByokConfigMiddleboxArgs struct {
 	BandwidthAlertMbps pulumi.IntPtrInput `pulumi:"bandwidthAlertMbps"`
 	// Whether to deploy the middlebox component.
 	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+	// Number of ingress replicas deployed for the middlebox component. Default: `0`.
+	IngressReplicas pulumi.IntPtrInput `pulumi:"ingressReplicas"`
 	// IPv4 address bound by the middlebox component.
 	Ip pulumi.StringPtrInput `pulumi:"ip"`
 	// Listening port for the middlebox component.
@@ -12981,6 +13224,11 @@ func (o Mk8sAddOnsByokConfigMiddleboxOutput) Enabled() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMiddlebox) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
 }
 
+// Number of ingress replicas deployed for the middlebox component. Default: `0`.
+func (o Mk8sAddOnsByokConfigMiddleboxOutput) IngressReplicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMiddlebox) *int { return v.IngressReplicas }).(pulumi.IntPtrOutput)
+}
+
 // IPv4 address bound by the middlebox component.
 func (o Mk8sAddOnsByokConfigMiddleboxOutput) Ip() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMiddlebox) *string { return v.Ip }).(pulumi.StringPtrOutput)
@@ -13033,6 +13281,16 @@ func (o Mk8sAddOnsByokConfigMiddleboxPtrOutput) Enabled() pulumi.BoolPtrOutput {
 		}
 		return v.Enabled
 	}).(pulumi.BoolPtrOutput)
+}
+
+// Number of ingress replicas deployed for the middlebox component. Default: `0`.
+func (o Mk8sAddOnsByokConfigMiddleboxPtrOutput) IngressReplicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMiddlebox) *int {
+		if v == nil {
+			return nil
+		}
+		return v.IngressReplicas
+	}).(pulumi.IntPtrOutput)
 }
 
 // IPv4 address bound by the middlebox component.
@@ -17333,6 +17591,8 @@ func (o Mk8sAwsProviderNetworkingPtrOutput) ServiceNetwork() pulumi.StringPtrOut
 type Mk8sAwsProviderNodePool struct {
 	// Size in GB.
 	BootDiskSize *int `pulumi:"bootDiskSize"`
+	// CPU options for the node pool instances.
+	CpuOptions *Mk8sAwsProviderNodePoolCpuOptions `pulumi:"cpuOptions"`
 	// Security groups to deploy nodes to. Security groups control if the cluster is multi-zone or single-zon.
 	ExtraSecurityGroupIds []string `pulumi:"extraSecurityGroupIds"`
 	InstanceTypes         []string `pulumi:"instanceTypes"`
@@ -17365,6 +17625,8 @@ type Mk8sAwsProviderNodePoolInput interface {
 type Mk8sAwsProviderNodePoolArgs struct {
 	// Size in GB.
 	BootDiskSize pulumi.IntPtrInput `pulumi:"bootDiskSize"`
+	// CPU options for the node pool instances.
+	CpuOptions Mk8sAwsProviderNodePoolCpuOptionsPtrInput `pulumi:"cpuOptions"`
 	// Security groups to deploy nodes to. Security groups control if the cluster is multi-zone or single-zon.
 	ExtraSecurityGroupIds pulumi.StringArrayInput `pulumi:"extraSecurityGroupIds"`
 	InstanceTypes         pulumi.StringArrayInput `pulumi:"instanceTypes"`
@@ -17439,6 +17701,11 @@ func (o Mk8sAwsProviderNodePoolOutput) BootDiskSize() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v Mk8sAwsProviderNodePool) *int { return v.BootDiskSize }).(pulumi.IntPtrOutput)
 }
 
+// CPU options for the node pool instances.
+func (o Mk8sAwsProviderNodePoolOutput) CpuOptions() Mk8sAwsProviderNodePoolCpuOptionsPtrOutput {
+	return o.ApplyT(func(v Mk8sAwsProviderNodePool) *Mk8sAwsProviderNodePoolCpuOptions { return v.CpuOptions }).(Mk8sAwsProviderNodePoolCpuOptionsPtrOutput)
+}
+
 // Security groups to deploy nodes to. Security groups control if the cluster is multi-zone or single-zon.
 func (o Mk8sAwsProviderNodePoolOutput) ExtraSecurityGroupIds() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v Mk8sAwsProviderNodePool) []string { return v.ExtraSecurityGroupIds }).(pulumi.StringArrayOutput)
@@ -17509,6 +17776,143 @@ func (o Mk8sAwsProviderNodePoolArrayOutput) Index(i pulumi.IntInput) Mk8sAwsProv
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) Mk8sAwsProviderNodePool {
 		return vs[0].([]Mk8sAwsProviderNodePool)[vs[1].(int)]
 	}).(Mk8sAwsProviderNodePoolOutput)
+}
+
+type Mk8sAwsProviderNodePoolCpuOptions struct {
+	// Enable nested virtualization. Only supported on 8th generation Intel instance types (c8i, m8i, r8i and variants).
+	NestedVirtualization *bool `pulumi:"nestedVirtualization"`
+}
+
+// Mk8sAwsProviderNodePoolCpuOptionsInput is an input type that accepts Mk8sAwsProviderNodePoolCpuOptionsArgs and Mk8sAwsProviderNodePoolCpuOptionsOutput values.
+// You can construct a concrete instance of `Mk8sAwsProviderNodePoolCpuOptionsInput` via:
+//
+//	Mk8sAwsProviderNodePoolCpuOptionsArgs{...}
+type Mk8sAwsProviderNodePoolCpuOptionsInput interface {
+	pulumi.Input
+
+	ToMk8sAwsProviderNodePoolCpuOptionsOutput() Mk8sAwsProviderNodePoolCpuOptionsOutput
+	ToMk8sAwsProviderNodePoolCpuOptionsOutputWithContext(context.Context) Mk8sAwsProviderNodePoolCpuOptionsOutput
+}
+
+type Mk8sAwsProviderNodePoolCpuOptionsArgs struct {
+	// Enable nested virtualization. Only supported on 8th generation Intel instance types (c8i, m8i, r8i and variants).
+	NestedVirtualization pulumi.BoolPtrInput `pulumi:"nestedVirtualization"`
+}
+
+func (Mk8sAwsProviderNodePoolCpuOptionsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAwsProviderNodePoolCpuOptions)(nil)).Elem()
+}
+
+func (i Mk8sAwsProviderNodePoolCpuOptionsArgs) ToMk8sAwsProviderNodePoolCpuOptionsOutput() Mk8sAwsProviderNodePoolCpuOptionsOutput {
+	return i.ToMk8sAwsProviderNodePoolCpuOptionsOutputWithContext(context.Background())
+}
+
+func (i Mk8sAwsProviderNodePoolCpuOptionsArgs) ToMk8sAwsProviderNodePoolCpuOptionsOutputWithContext(ctx context.Context) Mk8sAwsProviderNodePoolCpuOptionsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAwsProviderNodePoolCpuOptionsOutput)
+}
+
+func (i Mk8sAwsProviderNodePoolCpuOptionsArgs) ToMk8sAwsProviderNodePoolCpuOptionsPtrOutput() Mk8sAwsProviderNodePoolCpuOptionsPtrOutput {
+	return i.ToMk8sAwsProviderNodePoolCpuOptionsPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAwsProviderNodePoolCpuOptionsArgs) ToMk8sAwsProviderNodePoolCpuOptionsPtrOutputWithContext(ctx context.Context) Mk8sAwsProviderNodePoolCpuOptionsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAwsProviderNodePoolCpuOptionsOutput).ToMk8sAwsProviderNodePoolCpuOptionsPtrOutputWithContext(ctx)
+}
+
+// Mk8sAwsProviderNodePoolCpuOptionsPtrInput is an input type that accepts Mk8sAwsProviderNodePoolCpuOptionsArgs, Mk8sAwsProviderNodePoolCpuOptionsPtr and Mk8sAwsProviderNodePoolCpuOptionsPtrOutput values.
+// You can construct a concrete instance of `Mk8sAwsProviderNodePoolCpuOptionsPtrInput` via:
+//
+//	        Mk8sAwsProviderNodePoolCpuOptionsArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAwsProviderNodePoolCpuOptionsPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAwsProviderNodePoolCpuOptionsPtrOutput() Mk8sAwsProviderNodePoolCpuOptionsPtrOutput
+	ToMk8sAwsProviderNodePoolCpuOptionsPtrOutputWithContext(context.Context) Mk8sAwsProviderNodePoolCpuOptionsPtrOutput
+}
+
+type mk8sAwsProviderNodePoolCpuOptionsPtrType Mk8sAwsProviderNodePoolCpuOptionsArgs
+
+func Mk8sAwsProviderNodePoolCpuOptionsPtr(v *Mk8sAwsProviderNodePoolCpuOptionsArgs) Mk8sAwsProviderNodePoolCpuOptionsPtrInput {
+	return (*mk8sAwsProviderNodePoolCpuOptionsPtrType)(v)
+}
+
+func (*mk8sAwsProviderNodePoolCpuOptionsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAwsProviderNodePoolCpuOptions)(nil)).Elem()
+}
+
+func (i *mk8sAwsProviderNodePoolCpuOptionsPtrType) ToMk8sAwsProviderNodePoolCpuOptionsPtrOutput() Mk8sAwsProviderNodePoolCpuOptionsPtrOutput {
+	return i.ToMk8sAwsProviderNodePoolCpuOptionsPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAwsProviderNodePoolCpuOptionsPtrType) ToMk8sAwsProviderNodePoolCpuOptionsPtrOutputWithContext(ctx context.Context) Mk8sAwsProviderNodePoolCpuOptionsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAwsProviderNodePoolCpuOptionsPtrOutput)
+}
+
+type Mk8sAwsProviderNodePoolCpuOptionsOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAwsProviderNodePoolCpuOptionsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAwsProviderNodePoolCpuOptions)(nil)).Elem()
+}
+
+func (o Mk8sAwsProviderNodePoolCpuOptionsOutput) ToMk8sAwsProviderNodePoolCpuOptionsOutput() Mk8sAwsProviderNodePoolCpuOptionsOutput {
+	return o
+}
+
+func (o Mk8sAwsProviderNodePoolCpuOptionsOutput) ToMk8sAwsProviderNodePoolCpuOptionsOutputWithContext(ctx context.Context) Mk8sAwsProviderNodePoolCpuOptionsOutput {
+	return o
+}
+
+func (o Mk8sAwsProviderNodePoolCpuOptionsOutput) ToMk8sAwsProviderNodePoolCpuOptionsPtrOutput() Mk8sAwsProviderNodePoolCpuOptionsPtrOutput {
+	return o.ToMk8sAwsProviderNodePoolCpuOptionsPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAwsProviderNodePoolCpuOptionsOutput) ToMk8sAwsProviderNodePoolCpuOptionsPtrOutputWithContext(ctx context.Context) Mk8sAwsProviderNodePoolCpuOptionsPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAwsProviderNodePoolCpuOptions) *Mk8sAwsProviderNodePoolCpuOptions {
+		return &v
+	}).(Mk8sAwsProviderNodePoolCpuOptionsPtrOutput)
+}
+
+// Enable nested virtualization. Only supported on 8th generation Intel instance types (c8i, m8i, r8i and variants).
+func (o Mk8sAwsProviderNodePoolCpuOptionsOutput) NestedVirtualization() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAwsProviderNodePoolCpuOptions) *bool { return v.NestedVirtualization }).(pulumi.BoolPtrOutput)
+}
+
+type Mk8sAwsProviderNodePoolCpuOptionsPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAwsProviderNodePoolCpuOptionsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAwsProviderNodePoolCpuOptions)(nil)).Elem()
+}
+
+func (o Mk8sAwsProviderNodePoolCpuOptionsPtrOutput) ToMk8sAwsProviderNodePoolCpuOptionsPtrOutput() Mk8sAwsProviderNodePoolCpuOptionsPtrOutput {
+	return o
+}
+
+func (o Mk8sAwsProviderNodePoolCpuOptionsPtrOutput) ToMk8sAwsProviderNodePoolCpuOptionsPtrOutputWithContext(ctx context.Context) Mk8sAwsProviderNodePoolCpuOptionsPtrOutput {
+	return o
+}
+
+func (o Mk8sAwsProviderNodePoolCpuOptionsPtrOutput) Elem() Mk8sAwsProviderNodePoolCpuOptionsOutput {
+	return o.ApplyT(func(v *Mk8sAwsProviderNodePoolCpuOptions) Mk8sAwsProviderNodePoolCpuOptions {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAwsProviderNodePoolCpuOptions
+		return ret
+	}).(Mk8sAwsProviderNodePoolCpuOptionsOutput)
+}
+
+// Enable nested virtualization. Only supported on 8th generation Intel instance types (c8i, m8i, r8i and variants).
+func (o Mk8sAwsProviderNodePoolCpuOptionsPtrOutput) NestedVirtualization() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAwsProviderNodePoolCpuOptions) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.NestedVirtualization
+	}).(pulumi.BoolPtrOutput)
 }
 
 type Mk8sAwsProviderNodePoolOverrideImage struct {
@@ -32313,6 +32717,121 @@ func (o OrgLoggingLogzioLoggingArrayOutput) Index(i pulumi.IntInput) OrgLoggingL
 	}).(OrgLoggingLogzioLoggingOutput)
 }
 
+type OrgLoggingLokiLogging struct {
+	// Full link to a secret of type `userpass`. For Grafana Cloud, set the username to the instance ID and the password to an access token.
+	Credentials *string `pulumi:"credentials"`
+	// Loki endpoint to push logs to (e.g. `https://logs-prod-012.grafana.net`).
+	Endpoint string `pulumi:"endpoint"`
+	// The `X-Scope-OrgID` header value used for self-hosted multi-tenant Loki.
+	TenantId *string `pulumi:"tenantId"`
+}
+
+// OrgLoggingLokiLoggingInput is an input type that accepts OrgLoggingLokiLoggingArgs and OrgLoggingLokiLoggingOutput values.
+// You can construct a concrete instance of `OrgLoggingLokiLoggingInput` via:
+//
+//	OrgLoggingLokiLoggingArgs{...}
+type OrgLoggingLokiLoggingInput interface {
+	pulumi.Input
+
+	ToOrgLoggingLokiLoggingOutput() OrgLoggingLokiLoggingOutput
+	ToOrgLoggingLokiLoggingOutputWithContext(context.Context) OrgLoggingLokiLoggingOutput
+}
+
+type OrgLoggingLokiLoggingArgs struct {
+	// Full link to a secret of type `userpass`. For Grafana Cloud, set the username to the instance ID and the password to an access token.
+	Credentials pulumi.StringPtrInput `pulumi:"credentials"`
+	// Loki endpoint to push logs to (e.g. `https://logs-prod-012.grafana.net`).
+	Endpoint pulumi.StringInput `pulumi:"endpoint"`
+	// The `X-Scope-OrgID` header value used for self-hosted multi-tenant Loki.
+	TenantId pulumi.StringPtrInput `pulumi:"tenantId"`
+}
+
+func (OrgLoggingLokiLoggingArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrgLoggingLokiLogging)(nil)).Elem()
+}
+
+func (i OrgLoggingLokiLoggingArgs) ToOrgLoggingLokiLoggingOutput() OrgLoggingLokiLoggingOutput {
+	return i.ToOrgLoggingLokiLoggingOutputWithContext(context.Background())
+}
+
+func (i OrgLoggingLokiLoggingArgs) ToOrgLoggingLokiLoggingOutputWithContext(ctx context.Context) OrgLoggingLokiLoggingOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgLoggingLokiLoggingOutput)
+}
+
+// OrgLoggingLokiLoggingArrayInput is an input type that accepts OrgLoggingLokiLoggingArray and OrgLoggingLokiLoggingArrayOutput values.
+// You can construct a concrete instance of `OrgLoggingLokiLoggingArrayInput` via:
+//
+//	OrgLoggingLokiLoggingArray{ OrgLoggingLokiLoggingArgs{...} }
+type OrgLoggingLokiLoggingArrayInput interface {
+	pulumi.Input
+
+	ToOrgLoggingLokiLoggingArrayOutput() OrgLoggingLokiLoggingArrayOutput
+	ToOrgLoggingLokiLoggingArrayOutputWithContext(context.Context) OrgLoggingLokiLoggingArrayOutput
+}
+
+type OrgLoggingLokiLoggingArray []OrgLoggingLokiLoggingInput
+
+func (OrgLoggingLokiLoggingArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]OrgLoggingLokiLogging)(nil)).Elem()
+}
+
+func (i OrgLoggingLokiLoggingArray) ToOrgLoggingLokiLoggingArrayOutput() OrgLoggingLokiLoggingArrayOutput {
+	return i.ToOrgLoggingLokiLoggingArrayOutputWithContext(context.Background())
+}
+
+func (i OrgLoggingLokiLoggingArray) ToOrgLoggingLokiLoggingArrayOutputWithContext(ctx context.Context) OrgLoggingLokiLoggingArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrgLoggingLokiLoggingArrayOutput)
+}
+
+type OrgLoggingLokiLoggingOutput struct{ *pulumi.OutputState }
+
+func (OrgLoggingLokiLoggingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrgLoggingLokiLogging)(nil)).Elem()
+}
+
+func (o OrgLoggingLokiLoggingOutput) ToOrgLoggingLokiLoggingOutput() OrgLoggingLokiLoggingOutput {
+	return o
+}
+
+func (o OrgLoggingLokiLoggingOutput) ToOrgLoggingLokiLoggingOutputWithContext(ctx context.Context) OrgLoggingLokiLoggingOutput {
+	return o
+}
+
+// Full link to a secret of type `userpass`. For Grafana Cloud, set the username to the instance ID and the password to an access token.
+func (o OrgLoggingLokiLoggingOutput) Credentials() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v OrgLoggingLokiLogging) *string { return v.Credentials }).(pulumi.StringPtrOutput)
+}
+
+// Loki endpoint to push logs to (e.g. `https://logs-prod-012.grafana.net`).
+func (o OrgLoggingLokiLoggingOutput) Endpoint() pulumi.StringOutput {
+	return o.ApplyT(func(v OrgLoggingLokiLogging) string { return v.Endpoint }).(pulumi.StringOutput)
+}
+
+// The `X-Scope-OrgID` header value used for self-hosted multi-tenant Loki.
+func (o OrgLoggingLokiLoggingOutput) TenantId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v OrgLoggingLokiLogging) *string { return v.TenantId }).(pulumi.StringPtrOutput)
+}
+
+type OrgLoggingLokiLoggingArrayOutput struct{ *pulumi.OutputState }
+
+func (OrgLoggingLokiLoggingArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]OrgLoggingLokiLogging)(nil)).Elem()
+}
+
+func (o OrgLoggingLokiLoggingArrayOutput) ToOrgLoggingLokiLoggingArrayOutput() OrgLoggingLokiLoggingArrayOutput {
+	return o
+}
+
+func (o OrgLoggingLokiLoggingArrayOutput) ToOrgLoggingLokiLoggingArrayOutputWithContext(ctx context.Context) OrgLoggingLokiLoggingArrayOutput {
+	return o
+}
+
+func (o OrgLoggingLokiLoggingArrayOutput) Index(i pulumi.IntInput) OrgLoggingLokiLoggingOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) OrgLoggingLokiLogging {
+		return vs[0].([]OrgLoggingLokiLogging)[vs[1].(int)]
+	}).(OrgLoggingLokiLoggingOutput)
+}
+
 type OrgLoggingOpentelemetryLogging struct {
 	// Full link to a secret of type `opaque`.
 	Credentials *string `pulumi:"credentials"`
@@ -32794,11 +33313,11 @@ func (o OrgLoggingSyslogLoggingArrayOutput) Index(i pulumi.IntInput) OrgLoggingS
 type OrgObservability struct {
 	// These emails are configured as alert recipients in Grafana when the 'grafana-default-email' contact delivery type is 'Email'.
 	DefaultAlertEmails []string `pulumi:"defaultAlertEmails"`
-	// Log retention days. Default: 30
+	// Log retention days. Min: 0. Max: 3650. Default: 30
 	LogsRetentionDays *int `pulumi:"logsRetentionDays"`
-	// Metrics retention days. Default: 30
+	// Metrics retention days. Min: 0. Max: 3650. Default: 30
 	MetricsRetentionDays *int `pulumi:"metricsRetentionDays"`
-	// Traces retention days. Default: 30
+	// Traces retention days. Min: 0. Max: 3650. Default: 30
 	TracesRetentionDays *int `pulumi:"tracesRetentionDays"`
 }
 
@@ -32816,11 +33335,11 @@ type OrgObservabilityInput interface {
 type OrgObservabilityArgs struct {
 	// These emails are configured as alert recipients in Grafana when the 'grafana-default-email' contact delivery type is 'Email'.
 	DefaultAlertEmails pulumi.StringArrayInput `pulumi:"defaultAlertEmails"`
-	// Log retention days. Default: 30
+	// Log retention days. Min: 0. Max: 3650. Default: 30
 	LogsRetentionDays pulumi.IntPtrInput `pulumi:"logsRetentionDays"`
-	// Metrics retention days. Default: 30
+	// Metrics retention days. Min: 0. Max: 3650. Default: 30
 	MetricsRetentionDays pulumi.IntPtrInput `pulumi:"metricsRetentionDays"`
-	// Traces retention days. Default: 30
+	// Traces retention days. Min: 0. Max: 3650. Default: 30
 	TracesRetentionDays pulumi.IntPtrInput `pulumi:"tracesRetentionDays"`
 }
 
@@ -32906,17 +33425,17 @@ func (o OrgObservabilityOutput) DefaultAlertEmails() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v OrgObservability) []string { return v.DefaultAlertEmails }).(pulumi.StringArrayOutput)
 }
 
-// Log retention days. Default: 30
+// Log retention days. Min: 0. Max: 3650. Default: 30
 func (o OrgObservabilityOutput) LogsRetentionDays() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v OrgObservability) *int { return v.LogsRetentionDays }).(pulumi.IntPtrOutput)
 }
 
-// Metrics retention days. Default: 30
+// Metrics retention days. Min: 0. Max: 3650. Default: 30
 func (o OrgObservabilityOutput) MetricsRetentionDays() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v OrgObservability) *int { return v.MetricsRetentionDays }).(pulumi.IntPtrOutput)
 }
 
-// Traces retention days. Default: 30
+// Traces retention days. Min: 0. Max: 3650. Default: 30
 func (o OrgObservabilityOutput) TracesRetentionDays() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v OrgObservability) *int { return v.TracesRetentionDays }).(pulumi.IntPtrOutput)
 }
@@ -32955,7 +33474,7 @@ func (o OrgObservabilityPtrOutput) DefaultAlertEmails() pulumi.StringArrayOutput
 	}).(pulumi.StringArrayOutput)
 }
 
-// Log retention days. Default: 30
+// Log retention days. Min: 0. Max: 3650. Default: 30
 func (o OrgObservabilityPtrOutput) LogsRetentionDays() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *OrgObservability) *int {
 		if v == nil {
@@ -32965,7 +33484,7 @@ func (o OrgObservabilityPtrOutput) LogsRetentionDays() pulumi.IntPtrOutput {
 	}).(pulumi.IntPtrOutput)
 }
 
-// Metrics retention days. Default: 30
+// Metrics retention days. Min: 0. Max: 3650. Default: 30
 func (o OrgObservabilityPtrOutput) MetricsRetentionDays() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *OrgObservability) *int {
 		if v == nil {
@@ -32975,7 +33494,7 @@ func (o OrgObservabilityPtrOutput) MetricsRetentionDays() pulumi.IntPtrOutput {
 	}).(pulumi.IntPtrOutput)
 }
 
-// Traces retention days. Default: 30
+// Traces retention days. Min: 0. Max: 3650. Default: 30
 func (o OrgObservabilityPtrOutput) TracesRetentionDays() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *OrgObservability) *int {
 		if v == nil {
@@ -33296,7 +33815,7 @@ func (o OrgSecurityThreatDetectionPtrOutput) Syslog() OrgSecurityThreatDetection
 type OrgSecurityThreatDetectionSyslog struct {
 	// The hostname to send syslog messages to.
 	Host string `pulumi:"host"`
-	// The port to send syslog messages to.
+	// The port to send syslog messages to. Min: 1. Max: 100000.
 	Port int `pulumi:"port"`
 	// The transport-layer protocol to send the syslog messages over. If TCP is chosen, messages will be sent with TLS. Default: `tcp`.
 	Transport *string `pulumi:"transport"`
@@ -33316,7 +33835,7 @@ type OrgSecurityThreatDetectionSyslogInput interface {
 type OrgSecurityThreatDetectionSyslogArgs struct {
 	// The hostname to send syslog messages to.
 	Host pulumi.StringInput `pulumi:"host"`
-	// The port to send syslog messages to.
+	// The port to send syslog messages to. Min: 1. Max: 100000.
 	Port pulumi.IntInput `pulumi:"port"`
 	// The transport-layer protocol to send the syslog messages over. If TCP is chosen, messages will be sent with TLS. Default: `tcp`.
 	Transport pulumi.StringPtrInput `pulumi:"transport"`
@@ -33404,7 +33923,7 @@ func (o OrgSecurityThreatDetectionSyslogOutput) Host() pulumi.StringOutput {
 	return o.ApplyT(func(v OrgSecurityThreatDetectionSyslog) string { return v.Host }).(pulumi.StringOutput)
 }
 
-// The port to send syslog messages to.
+// The port to send syslog messages to. Min: 1. Max: 100000.
 func (o OrgSecurityThreatDetectionSyslogOutput) Port() pulumi.IntOutput {
 	return o.ApplyT(func(v OrgSecurityThreatDetectionSyslog) int { return v.Port }).(pulumi.IntOutput)
 }
@@ -33448,7 +33967,7 @@ func (o OrgSecurityThreatDetectionSyslogPtrOutput) Host() pulumi.StringPtrOutput
 	}).(pulumi.StringPtrOutput)
 }
 
-// The port to send syslog messages to.
+// The port to send syslog messages to. Min: 1. Max: 100000.
 func (o OrgSecurityThreatDetectionSyslogPtrOutput) Port() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *OrgSecurityThreatDetectionSyslog) *int {
 		if v == nil {
@@ -35391,9 +35910,9 @@ func (o SecretKeypairPtrOutput) SecretKey() pulumi.StringPtrOutput {
 }
 
 type SecretNatsAccount struct {
-	// Account ID.
+	// Account ID. Must be a 56-character NATS account public key beginning with `A`.
 	AccountId string `pulumi:"accountId"`
-	// Private Key.
+	// Private Key. Must be a 58-character NATS account seed beginning with `SA`.
 	PrivateKey string `pulumi:"privateKey"`
 }
 
@@ -35409,9 +35928,9 @@ type SecretNatsAccountInput interface {
 }
 
 type SecretNatsAccountArgs struct {
-	// Account ID.
+	// Account ID. Must be a 56-character NATS account public key beginning with `A`.
 	AccountId pulumi.StringInput `pulumi:"accountId"`
-	// Private Key.
+	// Private Key. Must be a 58-character NATS account seed beginning with `SA`.
 	PrivateKey pulumi.StringInput `pulumi:"privateKey"`
 }
 
@@ -35492,12 +36011,12 @@ func (o SecretNatsAccountOutput) ToSecretNatsAccountPtrOutputWithContext(ctx con
 	}).(SecretNatsAccountPtrOutput)
 }
 
-// Account ID.
+// Account ID. Must be a 56-character NATS account public key beginning with `A`.
 func (o SecretNatsAccountOutput) AccountId() pulumi.StringOutput {
 	return o.ApplyT(func(v SecretNatsAccount) string { return v.AccountId }).(pulumi.StringOutput)
 }
 
-// Private Key.
+// Private Key. Must be a 58-character NATS account seed beginning with `SA`.
 func (o SecretNatsAccountOutput) PrivateKey() pulumi.StringOutput {
 	return o.ApplyT(func(v SecretNatsAccount) string { return v.PrivateKey }).(pulumi.StringOutput)
 }
@@ -35526,7 +36045,7 @@ func (o SecretNatsAccountPtrOutput) Elem() SecretNatsAccountOutput {
 	}).(SecretNatsAccountOutput)
 }
 
-// Account ID.
+// Account ID. Must be a 56-character NATS account public key beginning with `A`.
 func (o SecretNatsAccountPtrOutput) AccountId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *SecretNatsAccount) *string {
 		if v == nil {
@@ -35536,7 +36055,7 @@ func (o SecretNatsAccountPtrOutput) AccountId() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-// Private Key.
+// Private Key. Must be a 58-character NATS account seed beginning with `SA`.
 func (o SecretNatsAccountPtrOutput) PrivateKey() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *SecretNatsAccount) *string {
 		if v == nil {
@@ -35708,7 +36227,7 @@ type SecretTls struct {
 	// Chain Certificate.
 	Chain *string `pulumi:"chain"`
 	// Private Certificate.
-	Key string `pulumi:"key"`
+	Key *string `pulumi:"key"`
 }
 
 // SecretTlsInput is an input type that accepts SecretTlsArgs and SecretTlsOutput values.
@@ -35728,7 +36247,7 @@ type SecretTlsArgs struct {
 	// Chain Certificate.
 	Chain pulumi.StringPtrInput `pulumi:"chain"`
 	// Private Certificate.
-	Key pulumi.StringInput `pulumi:"key"`
+	Key pulumi.StringPtrInput `pulumi:"key"`
 }
 
 func (SecretTlsArgs) ElementType() reflect.Type {
@@ -35819,8 +36338,8 @@ func (o SecretTlsOutput) Chain() pulumi.StringPtrOutput {
 }
 
 // Private Certificate.
-func (o SecretTlsOutput) Key() pulumi.StringOutput {
-	return o.ApplyT(func(v SecretTls) string { return v.Key }).(pulumi.StringOutput)
+func (o SecretTlsOutput) Key() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SecretTls) *string { return v.Key }).(pulumi.StringPtrOutput)
 }
 
 type SecretTlsPtrOutput struct{ *pulumi.OutputState }
@@ -35873,7 +36392,7 @@ func (o SecretTlsPtrOutput) Key() pulumi.StringPtrOutput {
 		if v == nil {
 			return nil
 		}
-		return &v.Key
+		return v.Key
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -40856,7 +41375,7 @@ func (o WorkloadFirewallSpecPtrOutput) Internal() WorkloadFirewallSpecInternalPt
 type WorkloadFirewallSpecExternal struct {
 	// Firewall options for HTTP workloads.
 	Http *WorkloadFirewallSpecExternalHttp `pulumi:"http"`
-	// The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+	// The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet. Max: `250`.
 	InboundAllowCidrs []string `pulumi:"inboundAllowCidrs"`
 	// The list of ipv4/ipv6 addresses or cidr blocks that are NOT allowed to access this workload. Addresses in the allow list will only be allowed if they do not exist in this list.
 	InboundBlockedCidrs []string `pulumi:"inboundBlockedCidrs"`
@@ -40884,7 +41403,7 @@ type WorkloadFirewallSpecExternalInput interface {
 type WorkloadFirewallSpecExternalArgs struct {
 	// Firewall options for HTTP workloads.
 	Http WorkloadFirewallSpecExternalHttpPtrInput `pulumi:"http"`
-	// The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+	// The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet. Max: `250`.
 	InboundAllowCidrs pulumi.StringArrayInput `pulumi:"inboundAllowCidrs"`
 	// The list of ipv4/ipv6 addresses or cidr blocks that are NOT allowed to access this workload. Addresses in the allow list will only be allowed if they do not exist in this list.
 	InboundBlockedCidrs pulumi.StringArrayInput `pulumi:"inboundBlockedCidrs"`
@@ -40980,7 +41499,7 @@ func (o WorkloadFirewallSpecExternalOutput) Http() WorkloadFirewallSpecExternalH
 	return o.ApplyT(func(v WorkloadFirewallSpecExternal) *WorkloadFirewallSpecExternalHttp { return v.Http }).(WorkloadFirewallSpecExternalHttpPtrOutput)
 }
 
-// The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+// The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet. Max: `250`.
 func (o WorkloadFirewallSpecExternalOutput) InboundAllowCidrs() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v WorkloadFirewallSpecExternal) []string { return v.InboundAllowCidrs }).(pulumi.StringArrayOutput)
 }
@@ -41046,7 +41565,7 @@ func (o WorkloadFirewallSpecExternalPtrOutput) Http() WorkloadFirewallSpecExtern
 	}).(WorkloadFirewallSpecExternalHttpPtrOutput)
 }
 
-// The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet.
+// The list of ipv4/ipv6 addresses or cidr blocks that are allowed to access this workload. No external access is allowed by default. Specify '0.0.0.0/0' to allow access to the public internet. Max: `250`.
 func (o WorkloadFirewallSpecExternalPtrOutput) InboundAllowCidrs() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *WorkloadFirewallSpecExternal) []string {
 		if v == nil {
@@ -41361,7 +41880,7 @@ func (o WorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput) Index(i 
 }
 
 type WorkloadFirewallSpecExternalOutboundAllowPort struct {
-	// Port number. Max: 65000
+	// Port number. Min: `80`. Max: `65000`.
 	Number int `pulumi:"number"`
 	// Either `http`, `https` or `tcp`.
 	Protocol string `pulumi:"protocol"`
@@ -41379,7 +41898,7 @@ type WorkloadFirewallSpecExternalOutboundAllowPortInput interface {
 }
 
 type WorkloadFirewallSpecExternalOutboundAllowPortArgs struct {
-	// Port number. Max: 65000
+	// Port number. Min: `80`. Max: `65000`.
 	Number pulumi.IntInput `pulumi:"number"`
 	// Either `http`, `https` or `tcp`.
 	Protocol pulumi.StringInput `pulumi:"protocol"`
@@ -41436,7 +41955,7 @@ func (o WorkloadFirewallSpecExternalOutboundAllowPortOutput) ToWorkloadFirewallS
 	return o
 }
 
-// Port number. Max: 65000
+// Port number. Min: `80`. Max: `65000`.
 func (o WorkloadFirewallSpecExternalOutboundAllowPortOutput) Number() pulumi.IntOutput {
 	return o.ApplyT(func(v WorkloadFirewallSpecExternalOutboundAllowPort) int { return v.Number }).(pulumi.IntOutput)
 }
@@ -42727,7 +43246,7 @@ func (o WorkloadLocalOptionArrayOutput) Index(i pulumi.IntInput) WorkloadLocalOp
 type WorkloadLocalOptionAutoscaling struct {
 	// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
 	Keda *WorkloadLocalOptionAutoscalingKeda `pulumi:"keda"`
-	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
 	MaxConcurrency *int `pulumi:"maxConcurrency"`
 	// The maximum allowed number of replicas. Min: `0`. Default `5`.
 	MaxScale *int `pulumi:"maxScale"`
@@ -42758,7 +43277,7 @@ type WorkloadLocalOptionAutoscalingInput interface {
 type WorkloadLocalOptionAutoscalingArgs struct {
 	// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
 	Keda WorkloadLocalOptionAutoscalingKedaPtrInput `pulumi:"keda"`
-	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
 	MaxConcurrency pulumi.IntPtrInput `pulumi:"maxConcurrency"`
 	// The maximum allowed number of replicas. Min: `0`. Default `5`.
 	MaxScale pulumi.IntPtrInput `pulumi:"maxScale"`
@@ -42857,7 +43376,7 @@ func (o WorkloadLocalOptionAutoscalingOutput) Keda() WorkloadLocalOptionAutoscal
 	return o.ApplyT(func(v WorkloadLocalOptionAutoscaling) *WorkloadLocalOptionAutoscalingKeda { return v.Keda }).(WorkloadLocalOptionAutoscalingKedaPtrOutput)
 }
 
-// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
 func (o WorkloadLocalOptionAutoscalingOutput) MaxConcurrency() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadLocalOptionAutoscaling) *int { return v.MaxConcurrency }).(pulumi.IntPtrOutput)
 }
@@ -42930,7 +43449,7 @@ func (o WorkloadLocalOptionAutoscalingPtrOutput) Keda() WorkloadLocalOptionAutos
 	}).(WorkloadLocalOptionAutoscalingKedaPtrOutput)
 }
 
-// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
 func (o WorkloadLocalOptionAutoscalingPtrOutput) MaxConcurrency() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *WorkloadLocalOptionAutoscaling) *int {
 		if v == nil {
@@ -44037,7 +44556,7 @@ func (o WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefPtrOutput) Nam
 }
 
 type WorkloadLocalOptionAutoscalingMulti struct {
-	// Valid values: `cpu` or `memory`.
+	// Valid values: `cpu`, `memory`, or `rps`.
 	Metric *string `pulumi:"metric"`
 	// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
 	Target *int `pulumi:"target"`
@@ -44055,7 +44574,7 @@ type WorkloadLocalOptionAutoscalingMultiInput interface {
 }
 
 type WorkloadLocalOptionAutoscalingMultiArgs struct {
-	// Valid values: `cpu` or `memory`.
+	// Valid values: `cpu`, `memory`, or `rps`.
 	Metric pulumi.StringPtrInput `pulumi:"metric"`
 	// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
 	Target pulumi.IntPtrInput `pulumi:"target"`
@@ -44112,7 +44631,7 @@ func (o WorkloadLocalOptionAutoscalingMultiOutput) ToWorkloadLocalOptionAutoscal
 	return o
 }
 
-// Valid values: `cpu` or `memory`.
+// Valid values: `cpu`, `memory`, or `rps`.
 func (o WorkloadLocalOptionAutoscalingMultiOutput) Metric() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingMulti) *string { return v.Metric }).(pulumi.StringPtrOutput)
 }
@@ -44525,7 +45044,7 @@ func (o WorkloadOptionsPtrOutput) TimeoutSeconds() pulumi.IntPtrOutput {
 type WorkloadOptionsAutoscaling struct {
 	// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
 	Keda *WorkloadOptionsAutoscalingKeda `pulumi:"keda"`
-	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
 	MaxConcurrency *int `pulumi:"maxConcurrency"`
 	// The maximum allowed number of replicas. Min: `0`. Default `5`.
 	MaxScale *int `pulumi:"maxScale"`
@@ -44556,7 +45075,7 @@ type WorkloadOptionsAutoscalingInput interface {
 type WorkloadOptionsAutoscalingArgs struct {
 	// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
 	Keda WorkloadOptionsAutoscalingKedaPtrInput `pulumi:"keda"`
-	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
 	MaxConcurrency pulumi.IntPtrInput `pulumi:"maxConcurrency"`
 	// The maximum allowed number of replicas. Min: `0`. Default `5`.
 	MaxScale pulumi.IntPtrInput `pulumi:"maxScale"`
@@ -44655,7 +45174,7 @@ func (o WorkloadOptionsAutoscalingOutput) Keda() WorkloadOptionsAutoscalingKedaP
 	return o.ApplyT(func(v WorkloadOptionsAutoscaling) *WorkloadOptionsAutoscalingKeda { return v.Keda }).(WorkloadOptionsAutoscalingKedaPtrOutput)
 }
 
-// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
 func (o WorkloadOptionsAutoscalingOutput) MaxConcurrency() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadOptionsAutoscaling) *int { return v.MaxConcurrency }).(pulumi.IntPtrOutput)
 }
@@ -44728,7 +45247,7 @@ func (o WorkloadOptionsAutoscalingPtrOutput) Keda() WorkloadOptionsAutoscalingKe
 	}).(WorkloadOptionsAutoscalingKedaPtrOutput)
 }
 
-// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
 func (o WorkloadOptionsAutoscalingPtrOutput) MaxConcurrency() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *WorkloadOptionsAutoscaling) *int {
 		if v == nil {
@@ -45829,7 +46348,7 @@ func (o WorkloadOptionsAutoscalingKedaTriggerAuthenticationRefPtrOutput) Name() 
 }
 
 type WorkloadOptionsAutoscalingMulti struct {
-	// Valid values: `cpu` or `memory`.
+	// Valid values: `cpu`, `memory`, or `rps`.
 	Metric *string `pulumi:"metric"`
 	// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
 	Target *int `pulumi:"target"`
@@ -45847,7 +46366,7 @@ type WorkloadOptionsAutoscalingMultiInput interface {
 }
 
 type WorkloadOptionsAutoscalingMultiArgs struct {
-	// Valid values: `cpu` or `memory`.
+	// Valid values: `cpu`, `memory`, or `rps`.
 	Metric pulumi.StringPtrInput `pulumi:"metric"`
 	// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
 	Target pulumi.IntPtrInput `pulumi:"target"`
@@ -45904,7 +46423,7 @@ func (o WorkloadOptionsAutoscalingMultiOutput) ToWorkloadOptionsAutoscalingMulti
 	return o
 }
 
-// Valid values: `cpu` or `memory`.
+// Valid values: `cpu`, `memory`, or `rps`.
 func (o WorkloadOptionsAutoscalingMultiOutput) Metric() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v WorkloadOptionsAutoscalingMulti) *string { return v.Metric }).(pulumi.StringPtrOutput)
 }
@@ -47421,19 +47940,19 @@ type WorkloadVm struct {
 	AccessCredentials []WorkloadVmAccessCredential `pulumi:"accessCredentials"`
 	// Boot disk configuration. When `source` is omitted, `containers[0].image` is used as an OCI containerDisk.
 	BootDisk *WorkloadVmBootDisk `pulumi:"bootDisk"`
-	// Guest clock configuration.
+	// Guest clock configuration. Defaults to `timezone = UTC` when omitted.
 	Clock *WorkloadVmClock `pulumi:"clock"`
 	// Cloud-init configuration for the guest. Exactly one of `userData`, `userDataBase64`, or `userDataSecret` must be specified.
 	CloudInit *WorkloadVmCloudInit `pulumi:"cloudInit"`
 	// CPU topology visible to the guest. Cores are derived from `containers[0].cpu`.
 	Cpu *WorkloadVmCpu `pulumi:"cpu"`
-	// Firmware configuration for the guest.
+	// Firmware configuration for the guest. Defaults to `bootloader = efi` and `secureBoot = false` when omitted.
 	Firmware *WorkloadVmFirmware `pulumi:"firmware"`
 	// Guest operating system family. Drives the per-OS cloud-init payload. Valid values: `linux`, `windows`. Default: `linux`.
 	GuestOs *string `pulumi:"guestOs"`
 	// Hostname reported to the guest.
 	Hostname *string `pulumi:"hostname"`
-	// Pod-network interfaces for the VM. Only a single network is supported.
+	// Pod-network interfaces for the VM. Only a single network is supported. Defaults to a single `default` network when omitted.
 	Networks []WorkloadVmNetwork `pulumi:"networks"`
 	// KubeVirt RunStrategy. Use `Halted` to keep the pool defined but powered off. Valid values: `Always`, `RerunOnFailure`, `Manual`, `Halted`. Default: `Always`.
 	RunStrategy *string `pulumi:"runStrategy"`
@@ -47457,19 +47976,19 @@ type WorkloadVmArgs struct {
 	AccessCredentials WorkloadVmAccessCredentialArrayInput `pulumi:"accessCredentials"`
 	// Boot disk configuration. When `source` is omitted, `containers[0].image` is used as an OCI containerDisk.
 	BootDisk WorkloadVmBootDiskPtrInput `pulumi:"bootDisk"`
-	// Guest clock configuration.
+	// Guest clock configuration. Defaults to `timezone = UTC` when omitted.
 	Clock WorkloadVmClockPtrInput `pulumi:"clock"`
 	// Cloud-init configuration for the guest. Exactly one of `userData`, `userDataBase64`, or `userDataSecret` must be specified.
 	CloudInit WorkloadVmCloudInitPtrInput `pulumi:"cloudInit"`
 	// CPU topology visible to the guest. Cores are derived from `containers[0].cpu`.
 	Cpu WorkloadVmCpuPtrInput `pulumi:"cpu"`
-	// Firmware configuration for the guest.
+	// Firmware configuration for the guest. Defaults to `bootloader = efi` and `secureBoot = false` when omitted.
 	Firmware WorkloadVmFirmwarePtrInput `pulumi:"firmware"`
 	// Guest operating system family. Drives the per-OS cloud-init payload. Valid values: `linux`, `windows`. Default: `linux`.
 	GuestOs pulumi.StringPtrInput `pulumi:"guestOs"`
 	// Hostname reported to the guest.
 	Hostname pulumi.StringPtrInput `pulumi:"hostname"`
-	// Pod-network interfaces for the VM. Only a single network is supported.
+	// Pod-network interfaces for the VM. Only a single network is supported. Defaults to a single `default` network when omitted.
 	Networks WorkloadVmNetworkArrayInput `pulumi:"networks"`
 	// KubeVirt RunStrategy. Use `Halted` to keep the pool defined but powered off. Valid values: `Always`, `RerunOnFailure`, `Manual`, `Halted`. Default: `Always`.
 	RunStrategy pulumi.StringPtrInput `pulumi:"runStrategy"`
@@ -47564,7 +48083,7 @@ func (o WorkloadVmOutput) BootDisk() WorkloadVmBootDiskPtrOutput {
 	return o.ApplyT(func(v WorkloadVm) *WorkloadVmBootDisk { return v.BootDisk }).(WorkloadVmBootDiskPtrOutput)
 }
 
-// Guest clock configuration.
+// Guest clock configuration. Defaults to `timezone = UTC` when omitted.
 func (o WorkloadVmOutput) Clock() WorkloadVmClockPtrOutput {
 	return o.ApplyT(func(v WorkloadVm) *WorkloadVmClock { return v.Clock }).(WorkloadVmClockPtrOutput)
 }
@@ -47579,7 +48098,7 @@ func (o WorkloadVmOutput) Cpu() WorkloadVmCpuPtrOutput {
 	return o.ApplyT(func(v WorkloadVm) *WorkloadVmCpu { return v.Cpu }).(WorkloadVmCpuPtrOutput)
 }
 
-// Firmware configuration for the guest.
+// Firmware configuration for the guest. Defaults to `bootloader = efi` and `secureBoot = false` when omitted.
 func (o WorkloadVmOutput) Firmware() WorkloadVmFirmwarePtrOutput {
 	return o.ApplyT(func(v WorkloadVm) *WorkloadVmFirmware { return v.Firmware }).(WorkloadVmFirmwarePtrOutput)
 }
@@ -47594,7 +48113,7 @@ func (o WorkloadVmOutput) Hostname() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v WorkloadVm) *string { return v.Hostname }).(pulumi.StringPtrOutput)
 }
 
-// Pod-network interfaces for the VM. Only a single network is supported.
+// Pod-network interfaces for the VM. Only a single network is supported. Defaults to a single `default` network when omitted.
 func (o WorkloadVmOutput) Networks() WorkloadVmNetworkArrayOutput {
 	return o.ApplyT(func(v WorkloadVm) []WorkloadVmNetwork { return v.Networks }).(WorkloadVmNetworkArrayOutput)
 }
@@ -47653,7 +48172,7 @@ func (o WorkloadVmPtrOutput) BootDisk() WorkloadVmBootDiskPtrOutput {
 	}).(WorkloadVmBootDiskPtrOutput)
 }
 
-// Guest clock configuration.
+// Guest clock configuration. Defaults to `timezone = UTC` when omitted.
 func (o WorkloadVmPtrOutput) Clock() WorkloadVmClockPtrOutput {
 	return o.ApplyT(func(v *WorkloadVm) *WorkloadVmClock {
 		if v == nil {
@@ -47683,7 +48202,7 @@ func (o WorkloadVmPtrOutput) Cpu() WorkloadVmCpuPtrOutput {
 	}).(WorkloadVmCpuPtrOutput)
 }
 
-// Firmware configuration for the guest.
+// Firmware configuration for the guest. Defaults to `bootloader = efi` and `secureBoot = false` when omitted.
 func (o WorkloadVmPtrOutput) Firmware() WorkloadVmFirmwarePtrOutput {
 	return o.ApplyT(func(v *WorkloadVm) *WorkloadVmFirmware {
 		if v == nil {
@@ -47713,7 +48232,7 @@ func (o WorkloadVmPtrOutput) Hostname() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-// Pod-network interfaces for the VM. Only a single network is supported.
+// Pod-network interfaces for the VM. Only a single network is supported. Defaults to a single `default` network when omitted.
 func (o WorkloadVmPtrOutput) Networks() WorkloadVmNetworkArrayOutput {
 	return o.ApplyT(func(v *WorkloadVm) []WorkloadVmNetwork {
 		if v == nil {
@@ -47748,7 +48267,7 @@ type WorkloadVmAccessCredential struct {
 	DeliveryMethod *string `pulumi:"deliveryMethod"`
 	// Secret containing the SSH public keys to inject.
 	SshPublicKeySecret string `pulumi:"sshPublicKeySecret"`
-	// Guest OS users the SSH public keys are injected for.
+	// Guest OS users the SSH public keys are injected for. Min: `1`. Max: `16`. Each user must be at most 32 characters and match `^[a-z_][a-z0-9_-]*$`.
 	Users []string `pulumi:"users"`
 }
 
@@ -47768,7 +48287,7 @@ type WorkloadVmAccessCredentialArgs struct {
 	DeliveryMethod pulumi.StringPtrInput `pulumi:"deliveryMethod"`
 	// Secret containing the SSH public keys to inject.
 	SshPublicKeySecret pulumi.StringInput `pulumi:"sshPublicKeySecret"`
-	// Guest OS users the SSH public keys are injected for.
+	// Guest OS users the SSH public keys are injected for. Min: `1`. Max: `16`. Each user must be at most 32 characters and match `^[a-z_][a-z0-9_-]*$`.
 	Users pulumi.StringArrayInput `pulumi:"users"`
 }
 
@@ -47833,7 +48352,7 @@ func (o WorkloadVmAccessCredentialOutput) SshPublicKeySecret() pulumi.StringOutp
 	return o.ApplyT(func(v WorkloadVmAccessCredential) string { return v.SshPublicKeySecret }).(pulumi.StringOutput)
 }
 
-// Guest OS users the SSH public keys are injected for.
+// Guest OS users the SSH public keys are injected for. Min: `1`. Max: `16`. Each user must be at most 32 characters and match `^[a-z_][a-z0-9_-]*$`.
 func (o WorkloadVmAccessCredentialOutput) Users() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v WorkloadVmAccessCredential) []string { return v.Users }).(pulumi.StringArrayOutput)
 }
@@ -48346,7 +48865,7 @@ func (o WorkloadVmBootDiskSourcePtrOutput) Oci() WorkloadVmBootDiskSourceOciPtrO
 }
 
 type WorkloadVmBootDiskSourceHttp struct {
-	// Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+	// Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`. Max: `160`.
 	Checksum *string `pulumi:"checksum"`
 	// HTTP/HTTPS URL of the boot disk image.
 	Url string `pulumi:"url"`
@@ -48364,7 +48883,7 @@ type WorkloadVmBootDiskSourceHttpInput interface {
 }
 
 type WorkloadVmBootDiskSourceHttpArgs struct {
-	// Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+	// Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`. Max: `160`.
 	Checksum pulumi.StringPtrInput `pulumi:"checksum"`
 	// HTTP/HTTPS URL of the boot disk image.
 	Url pulumi.StringInput `pulumi:"url"`
@@ -48447,7 +48966,7 @@ func (o WorkloadVmBootDiskSourceHttpOutput) ToWorkloadVmBootDiskSourceHttpPtrOut
 	}).(WorkloadVmBootDiskSourceHttpPtrOutput)
 }
 
-// Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+// Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`. Max: `160`.
 func (o WorkloadVmBootDiskSourceHttpOutput) Checksum() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v WorkloadVmBootDiskSourceHttp) *string { return v.Checksum }).(pulumi.StringPtrOutput)
 }
@@ -48481,7 +49000,7 @@ func (o WorkloadVmBootDiskSourceHttpPtrOutput) Elem() WorkloadVmBootDiskSourceHt
 	}).(WorkloadVmBootDiskSourceHttpOutput)
 }
 
-// Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`.
+// Disk image checksum, formatted as `sha256:<hex>` or `sha512:<hex>`. Max: `160`.
 func (o WorkloadVmBootDiskSourceHttpPtrOutput) Checksum() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *WorkloadVmBootDiskSourceHttp) *string {
 		if v == nil {
@@ -48776,7 +49295,7 @@ func (o WorkloadVmClockPtrOutput) Timezone() pulumi.StringPtrOutput {
 }
 
 type WorkloadVmCloudInit struct {
-	// SSH public keys injected via cloud-init. Each Secret may carry one or more keys.
+	// SSH public keys injected via cloud-init. Each Secret may carry one or more keys. Max: `8`.
 	SshPublicKeySecrets []string `pulumi:"sshPublicKeySecrets"`
 	// Inline cloud-init user-data. Not encrypted at rest in the data-service - use `userDataSecret` for sensitive payloads.
 	UserData *string `pulumi:"userData"`
@@ -48798,7 +49317,7 @@ type WorkloadVmCloudInitInput interface {
 }
 
 type WorkloadVmCloudInitArgs struct {
-	// SSH public keys injected via cloud-init. Each Secret may carry one or more keys.
+	// SSH public keys injected via cloud-init. Each Secret may carry one or more keys. Max: `8`.
 	SshPublicKeySecrets pulumi.StringArrayInput `pulumi:"sshPublicKeySecrets"`
 	// Inline cloud-init user-data. Not encrypted at rest in the data-service - use `userDataSecret` for sensitive payloads.
 	UserData pulumi.StringPtrInput `pulumi:"userData"`
@@ -48885,7 +49404,7 @@ func (o WorkloadVmCloudInitOutput) ToWorkloadVmCloudInitPtrOutputWithContext(ctx
 	}).(WorkloadVmCloudInitPtrOutput)
 }
 
-// SSH public keys injected via cloud-init. Each Secret may carry one or more keys.
+// SSH public keys injected via cloud-init. Each Secret may carry one or more keys. Max: `8`.
 func (o WorkloadVmCloudInitOutput) SshPublicKeySecrets() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v WorkloadVmCloudInit) []string { return v.SshPublicKeySecrets }).(pulumi.StringArrayOutput)
 }
@@ -48929,7 +49448,7 @@ func (o WorkloadVmCloudInitPtrOutput) Elem() WorkloadVmCloudInitOutput {
 	}).(WorkloadVmCloudInitOutput)
 }
 
-// SSH public keys injected via cloud-init. Each Secret may carry one or more keys.
+// SSH public keys injected via cloud-init. Each Secret may carry one or more keys. Max: `8`.
 func (o WorkloadVmCloudInitPtrOutput) SshPublicKeySecrets() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *WorkloadVmCloudInit) []string {
 		if v == nil {
@@ -53628,11 +54147,11 @@ func (o GetOrgAuthConfigPtrOutput) SamlOnly() pulumi.BoolPtrOutput {
 type GetOrgObservability struct {
 	// These emails are configured as alert recipients in Grafana when the 'grafana-default-email' contact delivery type is 'Email'.
 	DefaultAlertEmails []string `pulumi:"defaultAlertEmails"`
-	// Log retention days. Default: 30
+	// Log retention days. Min: 0. Max: 3650. Default: 30
 	LogsRetentionDays int `pulumi:"logsRetentionDays"`
-	// Metrics retention days. Default: 30
+	// Metrics retention days. Min: 0. Max: 3650. Default: 30
 	MetricsRetentionDays int `pulumi:"metricsRetentionDays"`
-	// Traces retention days. Default: 30
+	// Traces retention days. Min: 0. Max: 3650. Default: 30
 	TracesRetentionDays int `pulumi:"tracesRetentionDays"`
 }
 
@@ -53650,11 +54169,11 @@ type GetOrgObservabilityInput interface {
 type GetOrgObservabilityArgs struct {
 	// These emails are configured as alert recipients in Grafana when the 'grafana-default-email' contact delivery type is 'Email'.
 	DefaultAlertEmails pulumi.StringArrayInput `pulumi:"defaultAlertEmails"`
-	// Log retention days. Default: 30
+	// Log retention days. Min: 0. Max: 3650. Default: 30
 	LogsRetentionDays pulumi.IntInput `pulumi:"logsRetentionDays"`
-	// Metrics retention days. Default: 30
+	// Metrics retention days. Min: 0. Max: 3650. Default: 30
 	MetricsRetentionDays pulumi.IntInput `pulumi:"metricsRetentionDays"`
-	// Traces retention days. Default: 30
+	// Traces retention days. Min: 0. Max: 3650. Default: 30
 	TracesRetentionDays pulumi.IntInput `pulumi:"tracesRetentionDays"`
 }
 
@@ -53740,17 +54259,17 @@ func (o GetOrgObservabilityOutput) DefaultAlertEmails() pulumi.StringArrayOutput
 	return o.ApplyT(func(v GetOrgObservability) []string { return v.DefaultAlertEmails }).(pulumi.StringArrayOutput)
 }
 
-// Log retention days. Default: 30
+// Log retention days. Min: 0. Max: 3650. Default: 30
 func (o GetOrgObservabilityOutput) LogsRetentionDays() pulumi.IntOutput {
 	return o.ApplyT(func(v GetOrgObservability) int { return v.LogsRetentionDays }).(pulumi.IntOutput)
 }
 
-// Metrics retention days. Default: 30
+// Metrics retention days. Min: 0. Max: 3650. Default: 30
 func (o GetOrgObservabilityOutput) MetricsRetentionDays() pulumi.IntOutput {
 	return o.ApplyT(func(v GetOrgObservability) int { return v.MetricsRetentionDays }).(pulumi.IntOutput)
 }
 
-// Traces retention days. Default: 30
+// Traces retention days. Min: 0. Max: 3650. Default: 30
 func (o GetOrgObservabilityOutput) TracesRetentionDays() pulumi.IntOutput {
 	return o.ApplyT(func(v GetOrgObservability) int { return v.TracesRetentionDays }).(pulumi.IntOutput)
 }
@@ -53789,7 +54308,7 @@ func (o GetOrgObservabilityPtrOutput) DefaultAlertEmails() pulumi.StringArrayOut
 	}).(pulumi.StringArrayOutput)
 }
 
-// Log retention days. Default: 30
+// Log retention days. Min: 0. Max: 3650. Default: 30
 func (o GetOrgObservabilityPtrOutput) LogsRetentionDays() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *GetOrgObservability) *int {
 		if v == nil {
@@ -53799,7 +54318,7 @@ func (o GetOrgObservabilityPtrOutput) LogsRetentionDays() pulumi.IntPtrOutput {
 	}).(pulumi.IntPtrOutput)
 }
 
-// Metrics retention days. Default: 30
+// Metrics retention days. Min: 0. Max: 3650. Default: 30
 func (o GetOrgObservabilityPtrOutput) MetricsRetentionDays() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *GetOrgObservability) *int {
 		if v == nil {
@@ -53809,7 +54328,7 @@ func (o GetOrgObservabilityPtrOutput) MetricsRetentionDays() pulumi.IntPtrOutput
 	}).(pulumi.IntPtrOutput)
 }
 
-// Traces retention days. Default: 30
+// Traces retention days. Min: 0. Max: 3650. Default: 30
 func (o GetOrgObservabilityPtrOutput) TracesRetentionDays() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *GetOrgObservability) *int {
 		if v == nil {
@@ -54130,7 +54649,7 @@ func (o GetOrgSecurityThreatDetectionPtrOutput) Syslog() GetOrgSecurityThreatDet
 type GetOrgSecurityThreatDetectionSyslog struct {
 	// The hostname to send syslog messages to.
 	Host string `pulumi:"host"`
-	// The port to send syslog messages to.
+	// The port to send syslog messages to. Min: 1. Max: 100000.
 	Port int `pulumi:"port"`
 	// The transport-layer protocol to send the syslog messages over. If TCP is chosen, messages will be sent with TLS. Default: `tcp`.
 	Transport string `pulumi:"transport"`
@@ -54150,7 +54669,7 @@ type GetOrgSecurityThreatDetectionSyslogInput interface {
 type GetOrgSecurityThreatDetectionSyslogArgs struct {
 	// The hostname to send syslog messages to.
 	Host pulumi.StringInput `pulumi:"host"`
-	// The port to send syslog messages to.
+	// The port to send syslog messages to. Min: 1. Max: 100000.
 	Port pulumi.IntInput `pulumi:"port"`
 	// The transport-layer protocol to send the syslog messages over. If TCP is chosen, messages will be sent with TLS. Default: `tcp`.
 	Transport pulumi.StringInput `pulumi:"transport"`
@@ -54238,7 +54757,7 @@ func (o GetOrgSecurityThreatDetectionSyslogOutput) Host() pulumi.StringOutput {
 	return o.ApplyT(func(v GetOrgSecurityThreatDetectionSyslog) string { return v.Host }).(pulumi.StringOutput)
 }
 
-// The port to send syslog messages to.
+// The port to send syslog messages to. Min: 1. Max: 100000.
 func (o GetOrgSecurityThreatDetectionSyslogOutput) Port() pulumi.IntOutput {
 	return o.ApplyT(func(v GetOrgSecurityThreatDetectionSyslog) int { return v.Port }).(pulumi.IntOutput)
 }
@@ -54282,7 +54801,7 @@ func (o GetOrgSecurityThreatDetectionSyslogPtrOutput) Host() pulumi.StringPtrOut
 	}).(pulumi.StringPtrOutput)
 }
 
-// The port to send syslog messages to.
+// The port to send syslog messages to. Min: 1. Max: 100000.
 func (o GetOrgSecurityThreatDetectionSyslogPtrOutput) Port() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *GetOrgSecurityThreatDetectionSyslog) *int {
 		if v == nil {
@@ -54648,7 +55167,7 @@ type GetSecretEcr struct {
 	// Access Key provided by AWS.
 	AccessKey string `pulumi:"accessKey"`
 	// AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
-	ExternalId *string `pulumi:"externalId"`
+	ExternalId string `pulumi:"externalId"`
 	// List of ECR repositories.
 	Repos []string `pulumi:"repos"`
 	// Role ARN provided by AWS.
@@ -54672,7 +55191,7 @@ type GetSecretEcrArgs struct {
 	// Access Key provided by AWS.
 	AccessKey pulumi.StringInput `pulumi:"accessKey"`
 	// AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
-	ExternalId pulumi.StringPtrInput `pulumi:"externalId"`
+	ExternalId pulumi.StringInput `pulumi:"externalId"`
 	// List of ECR repositories.
 	Repos pulumi.StringArrayInput `pulumi:"repos"`
 	// Role ARN provided by AWS.
@@ -54738,8 +55257,8 @@ func (o GetSecretEcrOutput) AccessKey() pulumi.StringOutput {
 }
 
 // AWS IAM Role External ID. Used when setting up cross-account access to your ECR repositories.
-func (o GetSecretEcrOutput) ExternalId() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetSecretEcr) *string { return v.ExternalId }).(pulumi.StringPtrOutput)
+func (o GetSecretEcrOutput) ExternalId() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSecretEcr) string { return v.ExternalId }).(pulumi.StringOutput)
 }
 
 // List of ECR repositories.
@@ -59401,7 +59920,7 @@ func (o GetWorkloadLocalOptionArrayOutput) Index(i pulumi.IntInput) GetWorkloadL
 type GetWorkloadLocalOptionAutoscaling struct {
 	// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
 	Kedas []GetWorkloadLocalOptionAutoscalingKeda `pulumi:"kedas"`
-	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
 	MaxConcurrency int `pulumi:"maxConcurrency"`
 	// The maximum allowed number of replicas. Min: `0`. Default `5`.
 	MaxScale int `pulumi:"maxScale"`
@@ -59432,7 +59951,7 @@ type GetWorkloadLocalOptionAutoscalingInput interface {
 type GetWorkloadLocalOptionAutoscalingArgs struct {
 	// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
 	Kedas GetWorkloadLocalOptionAutoscalingKedaArrayInput `pulumi:"kedas"`
-	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
 	MaxConcurrency pulumi.IntInput `pulumi:"maxConcurrency"`
 	// The maximum allowed number of replicas. Min: `0`. Default `5`.
 	MaxScale pulumi.IntInput `pulumi:"maxScale"`
@@ -59505,7 +60024,7 @@ func (o GetWorkloadLocalOptionAutoscalingOutput) Kedas() GetWorkloadLocalOptionA
 	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscaling) []GetWorkloadLocalOptionAutoscalingKeda { return v.Kedas }).(GetWorkloadLocalOptionAutoscalingKedaArrayOutput)
 }
 
-// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
 func (o GetWorkloadLocalOptionAutoscalingOutput) MaxConcurrency() pulumi.IntOutput {
 	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscaling) int { return v.MaxConcurrency }).(pulumi.IntOutput)
 }
@@ -60292,7 +60811,7 @@ func (o GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput
 }
 
 type GetWorkloadLocalOptionAutoscalingMulti struct {
-	// Valid values: `cpu` or `memory`.
+	// Valid values: `cpu`, `memory`, or `rps`.
 	Metric string `pulumi:"metric"`
 	// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
 	Target int `pulumi:"target"`
@@ -60310,7 +60829,7 @@ type GetWorkloadLocalOptionAutoscalingMultiInput interface {
 }
 
 type GetWorkloadLocalOptionAutoscalingMultiArgs struct {
-	// Valid values: `cpu` or `memory`.
+	// Valid values: `cpu`, `memory`, or `rps`.
 	Metric pulumi.StringInput `pulumi:"metric"`
 	// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
 	Target pulumi.IntInput `pulumi:"target"`
@@ -60367,7 +60886,7 @@ func (o GetWorkloadLocalOptionAutoscalingMultiOutput) ToGetWorkloadLocalOptionAu
 	return o
 }
 
-// Valid values: `cpu` or `memory`.
+// Valid values: `cpu`, `memory`, or `rps`.
 func (o GetWorkloadLocalOptionAutoscalingMultiOutput) Metric() pulumi.StringOutput {
 	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingMulti) string { return v.Metric }).(pulumi.StringOutput)
 }
@@ -60642,7 +61161,7 @@ func (o GetWorkloadOptionArrayOutput) Index(i pulumi.IntInput) GetWorkloadOption
 type GetWorkloadOptionAutoscaling struct {
 	// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
 	Kedas []GetWorkloadOptionAutoscalingKeda `pulumi:"kedas"`
-	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
 	MaxConcurrency int `pulumi:"maxConcurrency"`
 	// The maximum allowed number of replicas. Min: `0`. Default `5`.
 	MaxScale int `pulumi:"maxScale"`
@@ -60673,7 +61192,7 @@ type GetWorkloadOptionAutoscalingInput interface {
 type GetWorkloadOptionAutoscalingArgs struct {
 	// KEDA (Kubernetes-based Event Driven Autoscaling) allows for advanced autoscaling based on external metrics and triggers.
 	Kedas GetWorkloadOptionAutoscalingKedaArrayInput `pulumi:"kedas"`
-	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+	// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
 	MaxConcurrency pulumi.IntInput `pulumi:"maxConcurrency"`
 	// The maximum allowed number of replicas. Min: `0`. Default `5`.
 	MaxScale pulumi.IntInput `pulumi:"maxScale"`
@@ -60746,7 +61265,7 @@ func (o GetWorkloadOptionAutoscalingOutput) Kedas() GetWorkloadOptionAutoscaling
 	return o.ApplyT(func(v GetWorkloadOptionAutoscaling) []GetWorkloadOptionAutoscalingKeda { return v.Kedas }).(GetWorkloadOptionAutoscalingKedaArrayOutput)
 }
 
-// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out.Min: `0`. Max: `1000`. Default `0`.
+// A hard maximum for the number of concurrent requests allowed to a replica. If no replicas are available to fulfill the request then it will be queued until a replica with capacity is available and delivered as soon as one is available again. Capacity can be available from requests completing or when a new replica is available from scale out. Min: `0`. Max: `30000`. Default `0`.
 func (o GetWorkloadOptionAutoscalingOutput) MaxConcurrency() pulumi.IntOutput {
 	return o.ApplyT(func(v GetWorkloadOptionAutoscaling) int { return v.MaxConcurrency }).(pulumi.IntOutput)
 }
@@ -61531,7 +62050,7 @@ func (o GetWorkloadOptionAutoscalingKedaTriggerAuthenticationRefArrayOutput) Ind
 }
 
 type GetWorkloadOptionAutoscalingMulti struct {
-	// Valid values: `cpu` or `memory`.
+	// Valid values: `cpu`, `memory`, or `rps`.
 	Metric string `pulumi:"metric"`
 	// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
 	Target int `pulumi:"target"`
@@ -61549,7 +62068,7 @@ type GetWorkloadOptionAutoscalingMultiInput interface {
 }
 
 type GetWorkloadOptionAutoscalingMultiArgs struct {
-	// Valid values: `cpu` or `memory`.
+	// Valid values: `cpu`, `memory`, or `rps`.
 	Metric pulumi.StringInput `pulumi:"metric"`
 	// Control Plane will scale the number of replicas for this deployment up/down in order to be as close as possible to the target metric across all replicas of a deployment. Min: `1`. Max: `20000`.
 	Target pulumi.IntInput `pulumi:"target"`
@@ -61606,7 +62125,7 @@ func (o GetWorkloadOptionAutoscalingMultiOutput) ToGetWorkloadOptionAutoscalingM
 	return o
 }
 
-// Valid values: `cpu` or `memory`.
+// Valid values: `cpu`, `memory`, or `rps`.
 func (o GetWorkloadOptionAutoscalingMultiOutput) Metric() pulumi.StringOutput {
 	return o.ApplyT(func(v GetWorkloadOptionAutoscalingMulti) string { return v.Metric }).(pulumi.StringOutput)
 }
@@ -63984,6 +64503,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CloudAccountStatusArrayInput)(nil)).Elem(), CloudAccountStatusArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CustomLocationGeoInput)(nil)).Elem(), CustomLocationGeoArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CustomLocationGeoArrayInput)(nil)).Elem(), CustomLocationGeoArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*DomainRouteCanaryInput)(nil)).Elem(), DomainRouteCanaryArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*DomainRouteCanaryArrayInput)(nil)).Elem(), DomainRouteCanaryArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainRouteHeadersInput)(nil)).Elem(), DomainRouteHeadersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainRouteHeadersPtrInput)(nil)).Elem(), DomainRouteHeadersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainRouteHeadersRequestInput)(nil)).Elem(), DomainRouteHeadersRequestArgs{})
@@ -64000,6 +64521,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortCorsAllowOriginArrayInput)(nil)).Elem(), DomainSpecPortCorsAllowOriginArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortRouteInput)(nil)).Elem(), DomainSpecPortRouteArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortRouteArrayInput)(nil)).Elem(), DomainSpecPortRouteArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortRouteCanaryInput)(nil)).Elem(), DomainSpecPortRouteCanaryArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortRouteCanaryArrayInput)(nil)).Elem(), DomainSpecPortRouteCanaryArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortRouteHeadersInput)(nil)).Elem(), DomainSpecPortRouteHeadersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortRouteHeadersPtrInput)(nil)).Elem(), DomainSpecPortRouteHeadersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DomainSpecPortRouteHeadersRequestInput)(nil)).Elem(), DomainSpecPortRouteHeadersRequestArgs{})
@@ -64184,6 +64707,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderNetworkingPtrInput)(nil)).Elem(), Mk8sAwsProviderNetworkingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderNodePoolInput)(nil)).Elem(), Mk8sAwsProviderNodePoolArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderNodePoolArrayInput)(nil)).Elem(), Mk8sAwsProviderNodePoolArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderNodePoolCpuOptionsInput)(nil)).Elem(), Mk8sAwsProviderNodePoolCpuOptionsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderNodePoolCpuOptionsPtrInput)(nil)).Elem(), Mk8sAwsProviderNodePoolCpuOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderNodePoolOverrideImageInput)(nil)).Elem(), Mk8sAwsProviderNodePoolOverrideImageArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderNodePoolOverrideImagePtrInput)(nil)).Elem(), Mk8sAwsProviderNodePoolOverrideImageArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAwsProviderNodePoolTaintInput)(nil)).Elem(), Mk8sAwsProviderNodePoolTaintArgs{})
@@ -64374,6 +64899,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingFluentdLoggingArrayInput)(nil)).Elem(), OrgLoggingFluentdLoggingArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingLogzioLoggingInput)(nil)).Elem(), OrgLoggingLogzioLoggingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingLogzioLoggingArrayInput)(nil)).Elem(), OrgLoggingLogzioLoggingArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingLokiLoggingInput)(nil)).Elem(), OrgLoggingLokiLoggingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingLokiLoggingArrayInput)(nil)).Elem(), OrgLoggingLokiLoggingArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingOpentelemetryLoggingInput)(nil)).Elem(), OrgLoggingOpentelemetryLoggingArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingOpentelemetryLoggingArrayInput)(nil)).Elem(), OrgLoggingOpentelemetryLoggingArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OrgLoggingS3LoggingInput)(nil)).Elem(), OrgLoggingS3LoggingArgs{})
@@ -64828,6 +65355,8 @@ func init() {
 	pulumi.RegisterOutputType(CloudAccountStatusArrayOutput{})
 	pulumi.RegisterOutputType(CustomLocationGeoOutput{})
 	pulumi.RegisterOutputType(CustomLocationGeoArrayOutput{})
+	pulumi.RegisterOutputType(DomainRouteCanaryOutput{})
+	pulumi.RegisterOutputType(DomainRouteCanaryArrayOutput{})
 	pulumi.RegisterOutputType(DomainRouteHeadersOutput{})
 	pulumi.RegisterOutputType(DomainRouteHeadersPtrOutput{})
 	pulumi.RegisterOutputType(DomainRouteHeadersRequestOutput{})
@@ -64844,6 +65373,8 @@ func init() {
 	pulumi.RegisterOutputType(DomainSpecPortCorsAllowOriginArrayOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortRouteOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortRouteArrayOutput{})
+	pulumi.RegisterOutputType(DomainSpecPortRouteCanaryOutput{})
+	pulumi.RegisterOutputType(DomainSpecPortRouteCanaryArrayOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortRouteHeadersOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortRouteHeadersPtrOutput{})
 	pulumi.RegisterOutputType(DomainSpecPortRouteHeadersRequestOutput{})
@@ -65028,6 +65559,8 @@ func init() {
 	pulumi.RegisterOutputType(Mk8sAwsProviderNetworkingPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAwsProviderNodePoolOutput{})
 	pulumi.RegisterOutputType(Mk8sAwsProviderNodePoolArrayOutput{})
+	pulumi.RegisterOutputType(Mk8sAwsProviderNodePoolCpuOptionsOutput{})
+	pulumi.RegisterOutputType(Mk8sAwsProviderNodePoolCpuOptionsPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAwsProviderNodePoolOverrideImageOutput{})
 	pulumi.RegisterOutputType(Mk8sAwsProviderNodePoolOverrideImagePtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAwsProviderNodePoolTaintOutput{})
@@ -65218,6 +65751,8 @@ func init() {
 	pulumi.RegisterOutputType(OrgLoggingFluentdLoggingArrayOutput{})
 	pulumi.RegisterOutputType(OrgLoggingLogzioLoggingOutput{})
 	pulumi.RegisterOutputType(OrgLoggingLogzioLoggingArrayOutput{})
+	pulumi.RegisterOutputType(OrgLoggingLokiLoggingOutput{})
+	pulumi.RegisterOutputType(OrgLoggingLokiLoggingArrayOutput{})
 	pulumi.RegisterOutputType(OrgLoggingOpentelemetryLoggingOutput{})
 	pulumi.RegisterOutputType(OrgLoggingOpentelemetryLoggingArrayOutput{})
 	pulumi.RegisterOutputType(OrgLoggingS3LoggingOutput{})

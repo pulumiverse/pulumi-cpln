@@ -51,7 +51,7 @@ export class VolumeSet extends pulumi.CustomResource {
      */
     declare public readonly description: pulumi.Output<string>;
     /**
-     * Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+     * Each volume set has a single, immutable file system. Valid types: `ext4`, `xfs`, or `shared`. Default: `ext4`.
      */
     declare public readonly fileSystemType: pulumi.Output<string>;
     /**
@@ -71,7 +71,7 @@ export class VolumeSet extends pulumi.CustomResource {
      */
     declare public readonly name: pulumi.Output<string>;
     /**
-     * Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
+     * Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `shared`. Required unless `fileSystemType` is `shared`, in which case it is automatically set to `shared`.
      */
     declare public readonly performanceClass: pulumi.Output<string>;
     /**
@@ -136,9 +136,6 @@ export class VolumeSet extends pulumi.CustomResource {
             if (args?.initialCapacity === undefined && !opts.urn) {
                 throw new Error("Missing required property 'initialCapacity'");
             }
-            if (args?.performanceClass === undefined && !opts.urn) {
-                throw new Error("Missing required property 'performanceClass'");
-            }
             resourceInputs["autoscaling"] = args?.autoscaling;
             resourceInputs["customEncryption"] = args?.customEncryption;
             resourceInputs["description"] = args?.description;
@@ -182,7 +179,7 @@ export interface VolumeSetState {
      */
     description?: pulumi.Input<string>;
     /**
-     * Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+     * Each volume set has a single, immutable file system. Valid types: `ext4`, `xfs`, or `shared`. Default: `ext4`.
      */
     fileSystemType?: pulumi.Input<string>;
     /**
@@ -202,7 +199,7 @@ export interface VolumeSetState {
      */
     name?: pulumi.Input<string>;
     /**
-     * Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
+     * Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `shared`. Required unless `fileSystemType` is `shared`, in which case it is automatically set to `shared`.
      */
     performanceClass?: pulumi.Input<string>;
     /**
@@ -248,7 +245,7 @@ export interface VolumeSetArgs {
      */
     description?: pulumi.Input<string>;
     /**
-     * Each volume set has a single, immutable file system. Valid types: `xfs` or `ext4`.
+     * Each volume set has a single, immutable file system. Valid types: `ext4`, `xfs`, or `shared`. Default: `ext4`.
      */
     fileSystemType?: pulumi.Input<string>;
     /**
@@ -268,9 +265,9 @@ export interface VolumeSetArgs {
      */
     name?: pulumi.Input<string>;
     /**
-     * Each volume set has a single, immutable, performance class. Valid classes: `general-purpose-ssd` or `high-throughput-ssd`.
+     * Each volume set has a single, immutable performance class. Valid classes: `general-purpose-ssd`, `high-throughput-ssd`, or `shared`. Required unless `fileSystemType` is `shared`, in which case it is automatically set to `shared`.
      */
-    performanceClass: pulumi.Input<string>;
+    performanceClass?: pulumi.Input<string>;
     /**
      * Point-in-time copies of data stored within the volume set, capturing the state of the data at a specific moment.
      */

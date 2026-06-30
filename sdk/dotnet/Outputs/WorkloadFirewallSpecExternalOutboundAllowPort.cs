@@ -15,7 +15,7 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class WorkloadFirewallSpecExternalOutboundAllowPort
     {
         /// <summary>
-        /// Port number. Max: 65000
+        /// Port number. Min: `80`. Max: `65000`.
         /// </summary>
         public readonly int Number;
         /// <summary>

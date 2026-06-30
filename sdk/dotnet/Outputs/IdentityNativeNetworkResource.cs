@@ -21,7 +21,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// <summary>
         /// Fully qualified domain name.
         /// </summary>
-        public readonly string Fqdn;
+        public readonly string? Fqdn;
         /// <summary>
         /// Capability provided by GCP that allows private communication between private VPC networks and compute running at Control Plane.
         /// </summary>
@@ -31,7 +31,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly string Name;
         /// <summary>
-        /// Ports to expose. At least one port is required.
+        /// Ports to expose. Between 1 and 10 entries.
         /// </summary>
         public readonly ImmutableArray<int> Ports;
 
@@ -39,7 +39,7 @@ namespace Pulumiverse.Cpln.Outputs
         private IdentityNativeNetworkResource(
             Outputs.IdentityNativeNetworkResourceAwsPrivateLink? awsPrivateLink,
 
-            string fqdn,
+            string? fqdn,
 
             Outputs.IdentityNativeNetworkResourceGcpServiceConnect? gcpServiceConnect,
 

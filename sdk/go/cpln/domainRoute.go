@@ -15,6 +15,8 @@ import (
 type DomainRoute struct {
 	pulumi.CustomResourceState
 
+	// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+	Canaries DomainRouteCanaryArrayOutput `pulumi:"canaries"`
 	// The self link of the domain to add the route to.
 	DomainLink pulumi.StringOutput `pulumi:"domainLink"`
 	// The port the route corresponds to. Default: 443
@@ -77,6 +79,8 @@ func GetDomainRoute(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering DomainRoute resources.
 type domainRouteState struct {
+	// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+	Canaries []DomainRouteCanary `pulumi:"canaries"`
 	// The self link of the domain to add the route to.
 	DomainLink *string `pulumi:"domainLink"`
 	// The port the route corresponds to. Default: 443
@@ -104,6 +108,8 @@ type domainRouteState struct {
 }
 
 type DomainRouteState struct {
+	// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+	Canaries DomainRouteCanaryArrayInput
 	// The self link of the domain to add the route to.
 	DomainLink pulumi.StringPtrInput
 	// The port the route corresponds to. Default: 443
@@ -135,6 +141,8 @@ func (DomainRouteState) ElementType() reflect.Type {
 }
 
 type domainRouteArgs struct {
+	// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+	Canaries []DomainRouteCanary `pulumi:"canaries"`
 	// The self link of the domain to add the route to.
 	DomainLink string `pulumi:"domainLink"`
 	// The port the route corresponds to. Default: 443
@@ -163,6 +171,8 @@ type domainRouteArgs struct {
 
 // The set of arguments for constructing a DomainRoute resource.
 type DomainRouteArgs struct {
+	// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+	Canaries DomainRouteCanaryArrayInput
 	// The self link of the domain to add the route to.
 	DomainLink pulumi.StringInput
 	// The port the route corresponds to. Default: 443
@@ -274,6 +284,11 @@ func (o DomainRouteOutput) ToDomainRouteOutput() DomainRouteOutput {
 
 func (o DomainRouteOutput) ToDomainRouteOutputWithContext(ctx context.Context) DomainRouteOutput {
 	return o
+}
+
+// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+func (o DomainRouteOutput) Canaries() DomainRouteCanaryArrayOutput {
+	return o.ApplyT(func(v *DomainRoute) DomainRouteCanaryArrayOutput { return v.Canaries }).(DomainRouteCanaryArrayOutput)
 }
 
 // The self link of the domain to add the route to.

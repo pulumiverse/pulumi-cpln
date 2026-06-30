@@ -37,7 +37,7 @@ export class ServiceAccountKey extends pulumi.CustomResource {
      */
     declare public /*out*/ readonly created: pulumi.Output<string>;
     /**
-     * Description of the Service Account Key.
+     * Description of the Service Account Key. Max: 250.
      */
     declare public readonly description: pulumi.Output<string>;
     /**
@@ -101,7 +101,7 @@ export interface ServiceAccountKeyState {
      */
     created?: pulumi.Input<string>;
     /**
-     * Description of the Service Account Key.
+     * Description of the Service Account Key. Max: 250.
      */
     description?: pulumi.Input<string>;
     /**
@@ -123,7 +123,7 @@ export interface ServiceAccountKeyState {
  */
 export interface ServiceAccountKeyArgs {
     /**
-     * Description of the Service Account Key.
+     * Description of the Service Account Key. Max: 250.
      */
     description: pulumi.Input<string>;
     /**

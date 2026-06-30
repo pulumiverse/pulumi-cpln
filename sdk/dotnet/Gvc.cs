@@ -19,6 +19,12 @@ namespace Pulumiverse.Cpln
         [Output("alias")]
         public Output<string> Alias { get; private set; } = null!;
 
+        /// <summary>
+        /// A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
+        /// </summary>
+        [Output("aliasWorkloadLink")]
+        public Output<string?> AliasWorkloadLink { get; private set; } = null!;
+
         [Output("controlplaneTracing")]
         public Output<Outputs.GvcControlplaneTracing?> ControlplaneTracing { get; private set; } = null!;
 
@@ -162,6 +168,12 @@ namespace Pulumiverse.Cpln
 
     public sealed class GvcArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
+        /// </summary>
+        [Input("aliasWorkloadLink")]
+        public Input<string>? AliasWorkloadLink { get; set; }
+
         [Input("controlplaneTracing")]
         public Input<Inputs.GvcControlplaneTracingArgs>? ControlplaneTracing { get; set; }
 
@@ -289,6 +301,12 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Input("alias")]
         public Input<string>? Alias { get; set; }
+
+        /// <summary>
+        /// A link to a workload in this GVC whose canonical endpoint backs the GVC alias DNS record. When set, the GVC alias is published as a CNAME to the workload's canonical endpoint, inheriting its HTTP health probes and per-location geo failover. When unset, the alias resolves directly to cluster ingress endpoints with no application-level health awareness. Has no effect while the referenced workload is globally suspended.
+        /// </summary>
+        [Input("aliasWorkloadLink")]
+        public Input<string>? AliasWorkloadLink { get; set; }
 
         [Input("controlplaneTracing")]
         public Input<Inputs.GvcControlplaneTracingGetArgs>? ControlplaneTracing { get; set; }

@@ -23,7 +23,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly string SshPublicKeySecret;
         /// <summary>
-        /// Guest OS users the SSH public keys are injected for.
+        /// Guest OS users the SSH public keys are injected for. Min: `1`. Max: `16`. Each user must be at most 32 characters and match `^[a-z_][a-z0-9_-]*$`.
         /// </summary>
         public readonly ImmutableArray<string> Users;
 

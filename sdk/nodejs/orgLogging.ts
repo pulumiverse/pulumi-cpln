@@ -61,6 +61,10 @@ export class OrgLogging extends pulumi.CustomResource {
      */
     declare public readonly logzioLoggings: pulumi.Output<outputs.OrgLoggingLogzioLogging[] | undefined>;
     /**
+     * For logging and analyzing data within an org using Grafana Loki.
+     */
+    declare public readonly lokiLoggings: pulumi.Output<outputs.OrgLoggingLokiLogging[] | undefined>;
+    /**
      * Name of the Org.
      */
     declare public /*out*/ readonly name: pulumi.Output<string>;
@@ -104,6 +108,7 @@ export class OrgLogging extends pulumi.CustomResource {
             resourceInputs["elasticLoggings"] = state?.elasticLoggings;
             resourceInputs["fluentdLoggings"] = state?.fluentdLoggings;
             resourceInputs["logzioLoggings"] = state?.logzioLoggings;
+            resourceInputs["lokiLoggings"] = state?.lokiLoggings;
             resourceInputs["name"] = state?.name;
             resourceInputs["opentelemetryLoggings"] = state?.opentelemetryLoggings;
             resourceInputs["s3Loggings"] = state?.s3Loggings;
@@ -119,6 +124,7 @@ export class OrgLogging extends pulumi.CustomResource {
             resourceInputs["elasticLoggings"] = args?.elasticLoggings;
             resourceInputs["fluentdLoggings"] = args?.fluentdLoggings;
             resourceInputs["logzioLoggings"] = args?.logzioLoggings;
+            resourceInputs["lokiLoggings"] = args?.lokiLoggings;
             resourceInputs["opentelemetryLoggings"] = args?.opentelemetryLoggings;
             resourceInputs["s3Loggings"] = args?.s3Loggings;
             resourceInputs["stackdriverLoggings"] = args?.stackdriverLoggings;
@@ -165,6 +171,10 @@ export interface OrgLoggingState {
      */
     logzioLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingLogzioLogging>[]>;
     /**
+     * For logging and analyzing data within an org using Grafana Loki.
+     */
+    lokiLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingLokiLogging>[]>;
+    /**
      * Name of the Org.
      */
     name?: pulumi.Input<string>;
@@ -210,6 +220,10 @@ export interface OrgLoggingArgs {
      * [Documentation Reference](https://docs.controlplane.com/external-logging/logz-io)
      */
     logzioLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingLogzioLogging>[]>;
+    /**
+     * For logging and analyzing data within an org using Grafana Loki.
+     */
+    lokiLoggings?: pulumi.Input<pulumi.Input<inputs.OrgLoggingLokiLogging>[]>;
     /**
      * For logging and analyzing data within an org using OpenTelemetry.
      */
