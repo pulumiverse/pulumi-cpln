@@ -1,5 +1,0 @@
-# Overwrites mise configuration at .config/mise.toml
-[tools]
-# @pulumi/pulumi 3.249.0 and later declare engines.node >= 22
-node = '24.18.0'
-"github:pulumi/pulumictl" = 'v0.0.48'
