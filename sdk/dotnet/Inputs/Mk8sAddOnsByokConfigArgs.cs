@@ -68,6 +68,12 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<Inputs.Mk8sAddOnsByokConfigLonghornArgs>? Longhorn { get; set; }
 
         /// <summary>
+        /// Settings for the maintainer component.
+        /// </summary>
+        [Input("maintainer")]
+        public Input<Inputs.Mk8sAddOnsByokConfigMaintainerArgs>? Maintainer { get; set; }
+
+        /// <summary>
         /// Configuration for the optional middlebox traffic shaper.
         /// </summary>
         [Input("middlebox")]

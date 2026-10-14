@@ -2119,6 +2119,8 @@ func (o DomainSpecPortCorsAllowOriginArrayOutput) Index(i pulumi.IntInput) Domai
 type DomainSpecPortRoute struct {
 	// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
 	Canaries []DomainSpecPortRouteCanary `pulumi:"canaries"`
+	// When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+	CaseInsensitive *bool `pulumi:"caseInsensitive"`
 	// Modify the headers for all http requests for this route.
 	Headers *DomainSpecPortRouteHeaders `pulumi:"headers"`
 	// This option allows forwarding traffic for different host headers to different workloads.
@@ -2155,6 +2157,8 @@ type DomainSpecPortRouteInput interface {
 type DomainSpecPortRouteArgs struct {
 	// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
 	Canaries DomainSpecPortRouteCanaryArrayInput `pulumi:"canaries"`
+	// When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+	CaseInsensitive pulumi.BoolPtrInput `pulumi:"caseInsensitive"`
 	// Modify the headers for all http requests for this route.
 	Headers DomainSpecPortRouteHeadersPtrInput `pulumi:"headers"`
 	// This option allows forwarding traffic for different host headers to different workloads.
@@ -2231,6 +2235,11 @@ func (o DomainSpecPortRouteOutput) ToDomainSpecPortRouteOutputWithContext(ctx co
 // Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
 func (o DomainSpecPortRouteOutput) Canaries() DomainSpecPortRouteCanaryArrayOutput {
 	return o.ApplyT(func(v DomainSpecPortRoute) []DomainSpecPortRouteCanary { return v.Canaries }).(DomainSpecPortRouteCanaryArrayOutput)
+}
+
+// When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+func (o DomainSpecPortRouteOutput) CaseInsensitive() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v DomainSpecPortRoute) *bool { return v.CaseInsensitive }).(pulumi.BoolPtrOutput)
 }
 
 // Modify the headers for all http requests for this route.
@@ -9150,6 +9159,8 @@ type Mk8sAddOns struct {
 	Byok      *Mk8sAddOnsByok `pulumi:"byok"`
 	Dashboard *bool           `pulumi:"dashboard"`
 	Headlamp  *bool           `pulumi:"headlamp"`
+	// Installs Kata Containers for VM-isolated workloads on node pools labeled `cpln.io/nodeType=vm`.
+	Kata *bool `pulumi:"kata"`
 	// Enables type=vm workloads by installing the KubeVirt and CDI operators on the cluster.
 	Kubevirt         *Mk8sAddOnsKubevirt `pulumi:"kubevirt"`
 	LocalPathStorage *bool               `pulumi:"localPathStorage"`
@@ -9185,6 +9196,8 @@ type Mk8sAddOnsArgs struct {
 	Byok      Mk8sAddOnsByokPtrInput `pulumi:"byok"`
 	Dashboard pulumi.BoolPtrInput    `pulumi:"dashboard"`
 	Headlamp  pulumi.BoolPtrInput    `pulumi:"headlamp"`
+	// Installs Kata Containers for VM-isolated workloads on node pools labeled `cpln.io/nodeType=vm`.
+	Kata pulumi.BoolPtrInput `pulumi:"kata"`
 	// Enables type=vm workloads by installing the KubeVirt and CDI operators on the cluster.
 	Kubevirt         Mk8sAddOnsKubevirtPtrInput `pulumi:"kubevirt"`
 	LocalPathStorage pulumi.BoolPtrInput        `pulumi:"localPathStorage"`
@@ -9310,6 +9323,11 @@ func (o Mk8sAddOnsOutput) Dashboard() pulumi.BoolPtrOutput {
 
 func (o Mk8sAddOnsOutput) Headlamp() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOns) *bool { return v.Headlamp }).(pulumi.BoolPtrOutput)
+}
+
+// Installs Kata Containers for VM-isolated workloads on node pools labeled `cpln.io/nodeType=vm`.
+func (o Mk8sAddOnsOutput) Kata() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOns) *bool { return v.Kata }).(pulumi.BoolPtrOutput)
 }
 
 // Enables type=vm workloads by installing the KubeVirt and CDI operators on the cluster.
@@ -9450,6 +9468,16 @@ func (o Mk8sAddOnsPtrOutput) Headlamp() pulumi.BoolPtrOutput {
 			return nil
 		}
 		return v.Headlamp
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Installs Kata Containers for VM-isolated workloads on node pools labeled `cpln.io/nodeType=vm`.
+func (o Mk8sAddOnsPtrOutput) Kata() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOns) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Kata
 	}).(pulumi.BoolPtrOutput)
 }
 
@@ -10403,6 +10431,8 @@ type Mk8sAddOnsByokConfig struct {
 	LogSplitter *Mk8sAddOnsByokConfigLogSplitter `pulumi:"logSplitter"`
 	// Longhorn persistent volume settings.
 	Longhorn *Mk8sAddOnsByokConfigLonghorn `pulumi:"longhorn"`
+	// Settings for the maintainer component.
+	Maintainer *Mk8sAddOnsByokConfigMaintainer `pulumi:"maintainer"`
 	// Configuration for the optional middlebox traffic shaper.
 	Middlebox *Mk8sAddOnsByokConfigMiddlebox `pulumi:"middlebox"`
 	// Monitoring stack configuration.
@@ -10447,6 +10477,8 @@ type Mk8sAddOnsByokConfigArgs struct {
 	LogSplitter Mk8sAddOnsByokConfigLogSplitterPtrInput `pulumi:"logSplitter"`
 	// Longhorn persistent volume settings.
 	Longhorn Mk8sAddOnsByokConfigLonghornPtrInput `pulumi:"longhorn"`
+	// Settings for the maintainer component.
+	Maintainer Mk8sAddOnsByokConfigMaintainerPtrInput `pulumi:"maintainer"`
 	// Configuration for the optional middlebox traffic shaper.
 	Middlebox Mk8sAddOnsByokConfigMiddleboxPtrInput `pulumi:"middlebox"`
 	// Monitoring stack configuration.
@@ -10581,6 +10613,11 @@ func (o Mk8sAddOnsByokConfigOutput) LogSplitter() Mk8sAddOnsByokConfigLogSplitte
 // Longhorn persistent volume settings.
 func (o Mk8sAddOnsByokConfigOutput) Longhorn() Mk8sAddOnsByokConfigLonghornPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigLonghorn { return v.Longhorn }).(Mk8sAddOnsByokConfigLonghornPtrOutput)
+}
+
+// Settings for the maintainer component.
+func (o Mk8sAddOnsByokConfigOutput) Maintainer() Mk8sAddOnsByokConfigMaintainerPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigMaintainer { return v.Maintainer }).(Mk8sAddOnsByokConfigMaintainerPtrOutput)
 }
 
 // Configuration for the optional middlebox traffic shaper.
@@ -10725,6 +10762,16 @@ func (o Mk8sAddOnsByokConfigPtrOutput) Longhorn() Mk8sAddOnsByokConfigLonghornPt
 		}
 		return v.Longhorn
 	}).(Mk8sAddOnsByokConfigLonghornPtrOutput)
+}
+
+// Settings for the maintainer component.
+func (o Mk8sAddOnsByokConfigPtrOutput) Maintainer() Mk8sAddOnsByokConfigMaintainerPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfig) *Mk8sAddOnsByokConfigMaintainer {
+		if v == nil {
+			return nil
+		}
+		return v.Maintainer
+	}).(Mk8sAddOnsByokConfigMaintainerPtrOutput)
 }
 
 // Configuration for the optional middlebox traffic shaper.
@@ -13098,6 +13145,143 @@ func (o Mk8sAddOnsByokConfigLonghornPtrOutput) Replicas() pulumi.IntPtrOutput {
 		}
 		return v.Replicas
 	}).(pulumi.IntPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMaintainer struct {
+	// Additional environment variables injected into maintainer pods.
+	Env map[string]string `pulumi:"env"`
+}
+
+// Mk8sAddOnsByokConfigMaintainerInput is an input type that accepts Mk8sAddOnsByokConfigMaintainerArgs and Mk8sAddOnsByokConfigMaintainerOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigMaintainerInput` via:
+//
+//	Mk8sAddOnsByokConfigMaintainerArgs{...}
+type Mk8sAddOnsByokConfigMaintainerInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigMaintainerOutput() Mk8sAddOnsByokConfigMaintainerOutput
+	ToMk8sAddOnsByokConfigMaintainerOutputWithContext(context.Context) Mk8sAddOnsByokConfigMaintainerOutput
+}
+
+type Mk8sAddOnsByokConfigMaintainerArgs struct {
+	// Additional environment variables injected into maintainer pods.
+	Env pulumi.StringMapInput `pulumi:"env"`
+}
+
+func (Mk8sAddOnsByokConfigMaintainerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigMaintainer)(nil)).Elem()
+}
+
+func (i Mk8sAddOnsByokConfigMaintainerArgs) ToMk8sAddOnsByokConfigMaintainerOutput() Mk8sAddOnsByokConfigMaintainerOutput {
+	return i.ToMk8sAddOnsByokConfigMaintainerOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigMaintainerArgs) ToMk8sAddOnsByokConfigMaintainerOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMaintainerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMaintainerOutput)
+}
+
+func (i Mk8sAddOnsByokConfigMaintainerArgs) ToMk8sAddOnsByokConfigMaintainerPtrOutput() Mk8sAddOnsByokConfigMaintainerPtrOutput {
+	return i.ToMk8sAddOnsByokConfigMaintainerPtrOutputWithContext(context.Background())
+}
+
+func (i Mk8sAddOnsByokConfigMaintainerArgs) ToMk8sAddOnsByokConfigMaintainerPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMaintainerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMaintainerOutput).ToMk8sAddOnsByokConfigMaintainerPtrOutputWithContext(ctx)
+}
+
+// Mk8sAddOnsByokConfigMaintainerPtrInput is an input type that accepts Mk8sAddOnsByokConfigMaintainerArgs, Mk8sAddOnsByokConfigMaintainerPtr and Mk8sAddOnsByokConfigMaintainerPtrOutput values.
+// You can construct a concrete instance of `Mk8sAddOnsByokConfigMaintainerPtrInput` via:
+//
+//	        Mk8sAddOnsByokConfigMaintainerArgs{...}
+//
+//	or:
+//
+//	        nil
+type Mk8sAddOnsByokConfigMaintainerPtrInput interface {
+	pulumi.Input
+
+	ToMk8sAddOnsByokConfigMaintainerPtrOutput() Mk8sAddOnsByokConfigMaintainerPtrOutput
+	ToMk8sAddOnsByokConfigMaintainerPtrOutputWithContext(context.Context) Mk8sAddOnsByokConfigMaintainerPtrOutput
+}
+
+type mk8sAddOnsByokConfigMaintainerPtrType Mk8sAddOnsByokConfigMaintainerArgs
+
+func Mk8sAddOnsByokConfigMaintainerPtr(v *Mk8sAddOnsByokConfigMaintainerArgs) Mk8sAddOnsByokConfigMaintainerPtrInput {
+	return (*mk8sAddOnsByokConfigMaintainerPtrType)(v)
+}
+
+func (*mk8sAddOnsByokConfigMaintainerPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigMaintainer)(nil)).Elem()
+}
+
+func (i *mk8sAddOnsByokConfigMaintainerPtrType) ToMk8sAddOnsByokConfigMaintainerPtrOutput() Mk8sAddOnsByokConfigMaintainerPtrOutput {
+	return i.ToMk8sAddOnsByokConfigMaintainerPtrOutputWithContext(context.Background())
+}
+
+func (i *mk8sAddOnsByokConfigMaintainerPtrType) ToMk8sAddOnsByokConfigMaintainerPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMaintainerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(Mk8sAddOnsByokConfigMaintainerPtrOutput)
+}
+
+type Mk8sAddOnsByokConfigMaintainerOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigMaintainerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*Mk8sAddOnsByokConfigMaintainer)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigMaintainerOutput) ToMk8sAddOnsByokConfigMaintainerOutput() Mk8sAddOnsByokConfigMaintainerOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMaintainerOutput) ToMk8sAddOnsByokConfigMaintainerOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMaintainerOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMaintainerOutput) ToMk8sAddOnsByokConfigMaintainerPtrOutput() Mk8sAddOnsByokConfigMaintainerPtrOutput {
+	return o.ToMk8sAddOnsByokConfigMaintainerPtrOutputWithContext(context.Background())
+}
+
+func (o Mk8sAddOnsByokConfigMaintainerOutput) ToMk8sAddOnsByokConfigMaintainerPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMaintainerPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v Mk8sAddOnsByokConfigMaintainer) *Mk8sAddOnsByokConfigMaintainer {
+		return &v
+	}).(Mk8sAddOnsByokConfigMaintainerPtrOutput)
+}
+
+// Additional environment variables injected into maintainer pods.
+func (o Mk8sAddOnsByokConfigMaintainerOutput) Env() pulumi.StringMapOutput {
+	return o.ApplyT(func(v Mk8sAddOnsByokConfigMaintainer) map[string]string { return v.Env }).(pulumi.StringMapOutput)
+}
+
+type Mk8sAddOnsByokConfigMaintainerPtrOutput struct{ *pulumi.OutputState }
+
+func (Mk8sAddOnsByokConfigMaintainerPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**Mk8sAddOnsByokConfigMaintainer)(nil)).Elem()
+}
+
+func (o Mk8sAddOnsByokConfigMaintainerPtrOutput) ToMk8sAddOnsByokConfigMaintainerPtrOutput() Mk8sAddOnsByokConfigMaintainerPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMaintainerPtrOutput) ToMk8sAddOnsByokConfigMaintainerPtrOutputWithContext(ctx context.Context) Mk8sAddOnsByokConfigMaintainerPtrOutput {
+	return o
+}
+
+func (o Mk8sAddOnsByokConfigMaintainerPtrOutput) Elem() Mk8sAddOnsByokConfigMaintainerOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMaintainer) Mk8sAddOnsByokConfigMaintainer {
+		if v != nil {
+			return *v
+		}
+		var ret Mk8sAddOnsByokConfigMaintainer
+		return ret
+	}).(Mk8sAddOnsByokConfigMaintainerOutput)
+}
+
+// Additional environment variables injected into maintainer pods.
+func (o Mk8sAddOnsByokConfigMaintainerPtrOutput) Env() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsByokConfigMaintainer) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Env
+	}).(pulumi.StringMapOutput)
 }
 
 type Mk8sAddOnsByokConfigMiddlebox struct {
@@ -43767,6 +43951,8 @@ func (o WorkloadLocalOptionAutoscalingKedaPtrOutput) Triggers() WorkloadLocalOpt
 }
 
 type WorkloadLocalOptionAutoscalingKedaAdvanced struct {
+	// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+	HorizontalPodAutoscalerConfig *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig `pulumi:"horizontalPodAutoscalerConfig"`
 	// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
 	ScalingModifiers *WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers `pulumi:"scalingModifiers"`
 }
@@ -43783,6 +43969,8 @@ type WorkloadLocalOptionAutoscalingKedaAdvancedInput interface {
 }
 
 type WorkloadLocalOptionAutoscalingKedaAdvancedArgs struct {
+	// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+	HorizontalPodAutoscalerConfig WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrInput `pulumi:"horizontalPodAutoscalerConfig"`
 	// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
 	ScalingModifiers WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrInput `pulumi:"scalingModifiers"`
 }
@@ -43864,6 +44052,13 @@ func (o WorkloadLocalOptionAutoscalingKedaAdvancedOutput) ToWorkloadLocalOptionA
 	}).(WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput)
 }
 
+// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedOutput) HorizontalPodAutoscalerConfig() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvanced) *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+		return v.HorizontalPodAutoscalerConfig
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput)
+}
+
 // Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
 func (o WorkloadLocalOptionAutoscalingKedaAdvancedOutput) ScalingModifiers() WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput {
 	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvanced) *WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers {
@@ -43895,6 +44090,16 @@ func (o WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput) Elem() WorkloadLoca
 	}).(WorkloadLocalOptionAutoscalingKedaAdvancedOutput)
 }
 
+// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput) HorizontalPodAutoscalerConfig() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvanced) *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+		if v == nil {
+			return nil
+		}
+		return v.HorizontalPodAutoscalerConfig
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput)
+}
+
 // Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
 func (o WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput) ScalingModifiers() WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput {
 	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvanced) *WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers {
@@ -43903,6 +44108,909 @@ func (o WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput) ScalingModifiers() 
 		}
 		return v.ScalingModifiers
 	}).(WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig struct {
+	// Configures the scaling behavior of the HPA that KEDA creates for this workload.
+	Behavior *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior `pulumi:"behavior"`
+}
+
+// WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs and WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigInput` via:
+//
+//	WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs{...}
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs struct {
+	// Configures the scaling behavior of the HPA that KEDA creates for this workload.
+	Behavior WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrInput `pulumi:"behavior"`
+}
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig)(nil)).Elem()
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput)
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput).ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutputWithContext(ctx)
+}
+
+// WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs, WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtr and WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrInput` via:
+//
+//	        WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput
+}
+
+type workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrType WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs
+
+func WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtr(v *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrInput {
+	return (*workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrType)(v)
+}
+
+func (*workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig)(nil)).Elem()
+}
+
+func (i *workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrType) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrType) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return o.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig) *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+		return &v
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput)
+}
+
+// Configures the scaling behavior of the HPA that KEDA creates for this workload.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) Behavior() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig) *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+		return v.Behavior
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput) Elem() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig
+		return ret
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput)
+}
+
+// Configures the scaling behavior of the HPA that KEDA creates for this workload.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput) Behavior() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig) *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+		if v == nil {
+			return nil
+		}
+		return v.Behavior
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior struct {
+	// Scaling policies for scaling down.
+	ScaleDown *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown `pulumi:"scaleDown"`
+	// Scaling policies for scaling up.
+	ScaleUp *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp `pulumi:"scaleUp"`
+}
+
+// WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs and WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorInput` via:
+//
+//	WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs{...}
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs struct {
+	// Scaling policies for scaling down.
+	ScaleDown WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrInput `pulumi:"scaleDown"`
+	// Scaling policies for scaling up.
+	ScaleUp WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrInput `pulumi:"scaleUp"`
+}
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior)(nil)).Elem()
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput)
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput).ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutputWithContext(ctx)
+}
+
+// WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs, WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtr and WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrInput` via:
+//
+//	        WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput
+}
+
+type workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrType WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs
+
+func WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtr(v *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrInput {
+	return (*workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrType)(v)
+}
+
+func (*workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior)(nil)).Elem()
+}
+
+func (i *workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrType) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrType) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return o.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior) *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+		return &v
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput)
+}
+
+// Scaling policies for scaling down.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ScaleDown() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior) *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+		return v.ScaleDown
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput)
+}
+
+// Scaling policies for scaling up.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ScaleUp() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior) *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+		return v.ScaleUp
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput) Elem() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior
+		return ret
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput)
+}
+
+// Scaling policies for scaling down.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput) ScaleDown() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior) *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+		if v == nil {
+			return nil
+		}
+		return v.ScaleDown
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput)
+}
+
+// Scaling policies for scaling up.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput) ScaleUp() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior) *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+		if v == nil {
+			return nil
+		}
+		return v.ScaleUp
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown struct {
+	// A scaling policy that can be used during scaling.
+	Policies []WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy `pulumi:"policies"`
+	// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+	SelectPolicy *string `pulumi:"selectPolicy"`
+	// Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+	StabilizationWindowSeconds *int `pulumi:"stabilizationWindowSeconds"`
+}
+
+// WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs and WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownInput` via:
+//
+//	WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs{...}
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs struct {
+	// A scaling policy that can be used during scaling.
+	Policies WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput `pulumi:"policies"`
+	// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+	SelectPolicy pulumi.StringPtrInput `pulumi:"selectPolicy"`
+	// Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+	StabilizationWindowSeconds pulumi.IntPtrInput `pulumi:"stabilizationWindowSeconds"`
+}
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown)(nil)).Elem()
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput)
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput).ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutputWithContext(ctx)
+}
+
+// WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs, WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtr and WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrInput` via:
+//
+//	        WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput
+}
+
+type workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrType WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs
+
+func WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtr(v *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrInput {
+	return (*workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrType)(v)
+}
+
+func (*workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown)(nil)).Elem()
+}
+
+func (i *workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrType) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrType) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return o.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+		return &v
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput)
+}
+
+// A scaling policy that can be used during scaling.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) Policies() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) []WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy {
+		return v.Policies
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput)
+}
+
+// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) SelectPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) *string {
+		return v.SelectPolicy
+	}).(pulumi.StringPtrOutput)
+}
+
+// Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) StabilizationWindowSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) *int {
+		return v.StabilizationWindowSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput) Elem() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown
+		return ret
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput)
+}
+
+// A scaling policy that can be used during scaling.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput) Policies() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) []WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy {
+		if v == nil {
+			return nil
+		}
+		return v.Policies
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput)
+}
+
+// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput) SelectPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) *string {
+		if v == nil {
+			return nil
+		}
+		return v.SelectPolicy
+	}).(pulumi.StringPtrOutput)
+}
+
+// Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput) StabilizationWindowSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) *int {
+		if v == nil {
+			return nil
+		}
+		return v.StabilizationWindowSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy struct {
+	// The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+	PeriodSeconds int `pulumi:"periodSeconds"`
+	// The type of the scaling policy. Valid values: `Pods`, `Percent`.
+	Type string `pulumi:"type"`
+	// The amount of change permitted by the policy. Min: `1`.
+	Value int `pulumi:"value"`
+}
+
+// WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs and WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput` via:
+//
+//	WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs{...}
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs struct {
+	// The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+	PeriodSeconds pulumi.IntInput `pulumi:"periodSeconds"`
+	// The type of the scaling policy. Valid values: `Pods`, `Percent`.
+	Type pulumi.StringInput `pulumi:"type"`
+	// The amount of change permitted by the policy. Min: `1`.
+	Value pulumi.IntInput `pulumi:"value"`
+}
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)(nil)).Elem()
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput)
+}
+
+// WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray and WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput` via:
+//
+//	WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray{ WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs{...} }
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray []WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)(nil)).Elem()
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return o
+}
+
+// The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) PeriodSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy) int {
+		return v.PeriodSeconds
+	}).(pulumi.IntOutput)
+}
+
+// The type of the scaling policy. Valid values: `Pods`, `Percent`.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy) string {
+		return v.Type
+	}).(pulumi.StringOutput)
+}
+
+// The amount of change permitted by the policy. Min: `1`.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) Value() pulumi.IntOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy) int {
+		return v.Value
+	}).(pulumi.IntOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput) Index(i pulumi.IntInput) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy {
+		return vs[0].([]WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)[vs[1].(int)]
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp struct {
+	// A scaling policy that can be used during scaling.
+	Policies []WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy `pulumi:"policies"`
+	// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+	SelectPolicy *string `pulumi:"selectPolicy"`
+	// Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+	StabilizationWindowSeconds *int `pulumi:"stabilizationWindowSeconds"`
+}
+
+// WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs and WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpInput` via:
+//
+//	WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs{...}
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs struct {
+	// A scaling policy that can be used during scaling.
+	Policies WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput `pulumi:"policies"`
+	// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+	SelectPolicy pulumi.StringPtrInput `pulumi:"selectPolicy"`
+	// Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+	StabilizationWindowSeconds pulumi.IntPtrInput `pulumi:"stabilizationWindowSeconds"`
+}
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp)(nil)).Elem()
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput)
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput).ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutputWithContext(ctx)
+}
+
+// WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs, WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtr and WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrInput` via:
+//
+//	        WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput
+}
+
+type workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrType WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs
+
+func WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtr(v *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrInput {
+	return (*workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrType)(v)
+}
+
+func (*workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp)(nil)).Elem()
+}
+
+func (i *workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrType) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrType) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return o.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+		return &v
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput)
+}
+
+// A scaling policy that can be used during scaling.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) Policies() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) []WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy {
+		return v.Policies
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput)
+}
+
+// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) SelectPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) *string {
+		return v.SelectPolicy
+	}).(pulumi.StringPtrOutput)
+}
+
+// Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) StabilizationWindowSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) *int {
+		return v.StabilizationWindowSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput) Elem() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp
+		return ret
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput)
+}
+
+// A scaling policy that can be used during scaling.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput) Policies() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) []WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy {
+		if v == nil {
+			return nil
+		}
+		return v.Policies
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput)
+}
+
+// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput) SelectPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) *string {
+		if v == nil {
+			return nil
+		}
+		return v.SelectPolicy
+	}).(pulumi.StringPtrOutput)
+}
+
+// Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput) StabilizationWindowSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) *int {
+		if v == nil {
+			return nil
+		}
+		return v.StabilizationWindowSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy struct {
+	// The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+	PeriodSeconds int `pulumi:"periodSeconds"`
+	// The type of the scaling policy. Valid values: `Pods`, `Percent`.
+	Type string `pulumi:"type"`
+	// The amount of change permitted by the policy. Min: `1`.
+	Value int `pulumi:"value"`
+}
+
+// WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs and WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput` via:
+//
+//	WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs{...}
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs struct {
+	// The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+	PeriodSeconds pulumi.IntInput `pulumi:"periodSeconds"`
+	// The type of the scaling policy. Valid values: `Pods`, `Percent`.
+	Type pulumi.StringInput `pulumi:"type"`
+	// The amount of change permitted by the policy. Min: `1`.
+	Value pulumi.IntInput `pulumi:"value"`
+}
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)(nil)).Elem()
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput)
+}
+
+// WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput is an input type that accepts WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray and WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput values.
+// You can construct a concrete instance of `WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput` via:
+//
+//	WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray{ WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs{...} }
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput interface {
+	pulumi.Input
+
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput
+	ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutputWithContext(context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray []WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)(nil)).Elem()
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return i.ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutputWithContext(context.Background())
+}
+
+func (i WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return o
+}
+
+// The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) PeriodSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy) int {
+		return v.PeriodSeconds
+	}).(pulumi.IntOutput)
+}
+
+// The type of the scaling policy. Valid values: `Pods`, `Percent`.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy) string {
+		return v.Type
+	}).(pulumi.StringOutput)
+}
+
+// The amount of change permitted by the policy. Min: `1`.
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) Value() pulumi.IntOutput {
+	return o.ApplyT(func(v WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy) int {
+		return v.Value
+	}).(pulumi.IntOutput)
+}
+
+type WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput struct{ *pulumi.OutputState }
+
+func (WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)(nil)).Elem()
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput() WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput) ToWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutputWithContext(ctx context.Context) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return o
+}
+
+func (o WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput) Index(i pulumi.IntInput) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy {
+		return vs[0].([]WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)[vs[1].(int)]
+	}).(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput)
 }
 
 type WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers struct {
@@ -45559,6 +46667,8 @@ func (o WorkloadOptionsAutoscalingKedaPtrOutput) Triggers() WorkloadOptionsAutos
 }
 
 type WorkloadOptionsAutoscalingKedaAdvanced struct {
+	// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+	HorizontalPodAutoscalerConfig *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig `pulumi:"horizontalPodAutoscalerConfig"`
 	// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
 	ScalingModifiers *WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers `pulumi:"scalingModifiers"`
 }
@@ -45575,6 +46685,8 @@ type WorkloadOptionsAutoscalingKedaAdvancedInput interface {
 }
 
 type WorkloadOptionsAutoscalingKedaAdvancedArgs struct {
+	// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+	HorizontalPodAutoscalerConfig WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrInput `pulumi:"horizontalPodAutoscalerConfig"`
 	// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
 	ScalingModifiers WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrInput `pulumi:"scalingModifiers"`
 }
@@ -45656,6 +46768,13 @@ func (o WorkloadOptionsAutoscalingKedaAdvancedOutput) ToWorkloadOptionsAutoscali
 	}).(WorkloadOptionsAutoscalingKedaAdvancedPtrOutput)
 }
 
+// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+func (o WorkloadOptionsAutoscalingKedaAdvancedOutput) HorizontalPodAutoscalerConfig() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvanced) *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+		return v.HorizontalPodAutoscalerConfig
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput)
+}
+
 // Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
 func (o WorkloadOptionsAutoscalingKedaAdvancedOutput) ScalingModifiers() WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput {
 	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvanced) *WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers {
@@ -45687,6 +46806,16 @@ func (o WorkloadOptionsAutoscalingKedaAdvancedPtrOutput) Elem() WorkloadOptionsA
 	}).(WorkloadOptionsAutoscalingKedaAdvancedOutput)
 }
 
+// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+func (o WorkloadOptionsAutoscalingKedaAdvancedPtrOutput) HorizontalPodAutoscalerConfig() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvanced) *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+		if v == nil {
+			return nil
+		}
+		return v.HorizontalPodAutoscalerConfig
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput)
+}
+
 // Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
 func (o WorkloadOptionsAutoscalingKedaAdvancedPtrOutput) ScalingModifiers() WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput {
 	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvanced) *WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers {
@@ -45695,6 +46824,909 @@ func (o WorkloadOptionsAutoscalingKedaAdvancedPtrOutput) ScalingModifiers() Work
 		}
 		return v.ScalingModifiers
 	}).(WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig struct {
+	// Configures the scaling behavior of the HPA that KEDA creates for this workload.
+	Behavior *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior `pulumi:"behavior"`
+}
+
+// WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigInput is an input type that accepts WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs and WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigInput` via:
+//
+//	WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs{...}
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs struct {
+	// Configures the scaling behavior of the HPA that KEDA creates for this workload.
+	Behavior WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrInput `pulumi:"behavior"`
+}
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig)(nil)).Elem()
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput)
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput).ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutputWithContext(ctx)
+}
+
+// WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrInput is an input type that accepts WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs, WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtr and WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrInput` via:
+//
+//	        WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput
+}
+
+type workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrType WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs
+
+func WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtr(v *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrInput {
+	return (*workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrType)(v)
+}
+
+func (*workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig)(nil)).Elem()
+}
+
+func (i *workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrType) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrType) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return o.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig) *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+		return &v
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput)
+}
+
+// Configures the scaling behavior of the HPA that KEDA creates for this workload.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) Behavior() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig) *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+		return v.Behavior
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput) Elem() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig
+		return ret
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput)
+}
+
+// Configures the scaling behavior of the HPA that KEDA creates for this workload.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput) Behavior() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig) *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+		if v == nil {
+			return nil
+		}
+		return v.Behavior
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior struct {
+	// Scaling policies for scaling down.
+	ScaleDown *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown `pulumi:"scaleDown"`
+	// Scaling policies for scaling up.
+	ScaleUp *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp `pulumi:"scaleUp"`
+}
+
+// WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorInput is an input type that accepts WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs and WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorInput` via:
+//
+//	WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs{...}
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs struct {
+	// Scaling policies for scaling down.
+	ScaleDown WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrInput `pulumi:"scaleDown"`
+	// Scaling policies for scaling up.
+	ScaleUp WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrInput `pulumi:"scaleUp"`
+}
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior)(nil)).Elem()
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput)
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput).ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutputWithContext(ctx)
+}
+
+// WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrInput is an input type that accepts WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs, WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtr and WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrInput` via:
+//
+//	        WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput
+}
+
+type workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrType WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs
+
+func WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtr(v *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrInput {
+	return (*workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrType)(v)
+}
+
+func (*workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior)(nil)).Elem()
+}
+
+func (i *workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrType) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrType) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return o.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior) *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+		return &v
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput)
+}
+
+// Scaling policies for scaling down.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ScaleDown() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior) *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+		return v.ScaleDown
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput)
+}
+
+// Scaling policies for scaling up.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ScaleUp() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior) *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+		return v.ScaleUp
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput) Elem() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior
+		return ret
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput)
+}
+
+// Scaling policies for scaling down.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput) ScaleDown() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior) *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+		if v == nil {
+			return nil
+		}
+		return v.ScaleDown
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput)
+}
+
+// Scaling policies for scaling up.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput) ScaleUp() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior) *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+		if v == nil {
+			return nil
+		}
+		return v.ScaleUp
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown struct {
+	// A scaling policy that can be used during scaling.
+	Policies []WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy `pulumi:"policies"`
+	// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+	SelectPolicy *string `pulumi:"selectPolicy"`
+	// Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+	StabilizationWindowSeconds *int `pulumi:"stabilizationWindowSeconds"`
+}
+
+// WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownInput is an input type that accepts WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs and WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownInput` via:
+//
+//	WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs{...}
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs struct {
+	// A scaling policy that can be used during scaling.
+	Policies WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput `pulumi:"policies"`
+	// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+	SelectPolicy pulumi.StringPtrInput `pulumi:"selectPolicy"`
+	// Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+	StabilizationWindowSeconds pulumi.IntPtrInput `pulumi:"stabilizationWindowSeconds"`
+}
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown)(nil)).Elem()
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput)
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput).ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutputWithContext(ctx)
+}
+
+// WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrInput is an input type that accepts WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs, WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtr and WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrInput` via:
+//
+//	        WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput
+}
+
+type workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrType WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs
+
+func WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtr(v *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrInput {
+	return (*workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrType)(v)
+}
+
+func (*workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown)(nil)).Elem()
+}
+
+func (i *workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrType) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrType) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return o.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+		return &v
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput)
+}
+
+// A scaling policy that can be used during scaling.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) Policies() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) []WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy {
+		return v.Policies
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput)
+}
+
+// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) SelectPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) *string {
+		return v.SelectPolicy
+	}).(pulumi.StringPtrOutput)
+}
+
+// Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) StabilizationWindowSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) *int {
+		return v.StabilizationWindowSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput) Elem() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown
+		return ret
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput)
+}
+
+// A scaling policy that can be used during scaling.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput) Policies() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) []WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy {
+		if v == nil {
+			return nil
+		}
+		return v.Policies
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput)
+}
+
+// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput) SelectPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) *string {
+		if v == nil {
+			return nil
+		}
+		return v.SelectPolicy
+	}).(pulumi.StringPtrOutput)
+}
+
+// Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput) StabilizationWindowSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) *int {
+		if v == nil {
+			return nil
+		}
+		return v.StabilizationWindowSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy struct {
+	// The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+	PeriodSeconds int `pulumi:"periodSeconds"`
+	// The type of the scaling policy. Valid values: `Pods`, `Percent`.
+	Type string `pulumi:"type"`
+	// The amount of change permitted by the policy. Min: `1`.
+	Value int `pulumi:"value"`
+}
+
+// WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput is an input type that accepts WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs and WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput` via:
+//
+//	WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs{...}
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs struct {
+	// The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+	PeriodSeconds pulumi.IntInput `pulumi:"periodSeconds"`
+	// The type of the scaling policy. Valid values: `Pods`, `Percent`.
+	Type pulumi.StringInput `pulumi:"type"`
+	// The amount of change permitted by the policy. Min: `1`.
+	Value pulumi.IntInput `pulumi:"value"`
+}
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)(nil)).Elem()
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput)
+}
+
+// WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput is an input type that accepts WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray and WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput` via:
+//
+//	WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray{ WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs{...} }
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray []WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)(nil)).Elem()
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return o
+}
+
+// The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) PeriodSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy) int {
+		return v.PeriodSeconds
+	}).(pulumi.IntOutput)
+}
+
+// The type of the scaling policy. Valid values: `Pods`, `Percent`.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy) string {
+		return v.Type
+	}).(pulumi.StringOutput)
+}
+
+// The amount of change permitted by the policy. Min: `1`.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) Value() pulumi.IntOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy) int {
+		return v.Value
+	}).(pulumi.IntOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput) Index(i pulumi.IntInput) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy {
+		return vs[0].([]WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)[vs[1].(int)]
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp struct {
+	// A scaling policy that can be used during scaling.
+	Policies []WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy `pulumi:"policies"`
+	// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+	SelectPolicy *string `pulumi:"selectPolicy"`
+	// Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+	StabilizationWindowSeconds *int `pulumi:"stabilizationWindowSeconds"`
+}
+
+// WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpInput is an input type that accepts WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs and WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpInput` via:
+//
+//	WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs{...}
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs struct {
+	// A scaling policy that can be used during scaling.
+	Policies WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput `pulumi:"policies"`
+	// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+	SelectPolicy pulumi.StringPtrInput `pulumi:"selectPolicy"`
+	// Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+	StabilizationWindowSeconds pulumi.IntPtrInput `pulumi:"stabilizationWindowSeconds"`
+}
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp)(nil)).Elem()
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput)
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput).ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutputWithContext(ctx)
+}
+
+// WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrInput is an input type that accepts WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs, WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtr and WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrInput` via:
+//
+//	        WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput
+}
+
+type workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrType WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs
+
+func WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtr(v *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrInput {
+	return (*workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrType)(v)
+}
+
+func (*workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp)(nil)).Elem()
+}
+
+func (i *workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrType) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrType) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return o.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+		return &v
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput)
+}
+
+// A scaling policy that can be used during scaling.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) Policies() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) []WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy {
+		return v.Policies
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput)
+}
+
+// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) SelectPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) *string {
+		return v.SelectPolicy
+	}).(pulumi.StringPtrOutput)
+}
+
+// Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) StabilizationWindowSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) *int {
+		return v.StabilizationWindowSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput) Elem() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp
+		return ret
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput)
+}
+
+// A scaling policy that can be used during scaling.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput) Policies() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) []WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy {
+		if v == nil {
+			return nil
+		}
+		return v.Policies
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput)
+}
+
+// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput) SelectPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) *string {
+		if v == nil {
+			return nil
+		}
+		return v.SelectPolicy
+	}).(pulumi.StringPtrOutput)
+}
+
+// Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput) StabilizationWindowSeconds() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) *int {
+		if v == nil {
+			return nil
+		}
+		return v.StabilizationWindowSeconds
+	}).(pulumi.IntPtrOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy struct {
+	// The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+	PeriodSeconds int `pulumi:"periodSeconds"`
+	// The type of the scaling policy. Valid values: `Pods`, `Percent`.
+	Type string `pulumi:"type"`
+	// The amount of change permitted by the policy. Min: `1`.
+	Value int `pulumi:"value"`
+}
+
+// WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput is an input type that accepts WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs and WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput` via:
+//
+//	WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs{...}
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs struct {
+	// The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+	PeriodSeconds pulumi.IntInput `pulumi:"periodSeconds"`
+	// The type of the scaling policy. Valid values: `Pods`, `Percent`.
+	Type pulumi.StringInput `pulumi:"type"`
+	// The amount of change permitted by the policy. Min: `1`.
+	Value pulumi.IntInput `pulumi:"value"`
+}
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)(nil)).Elem()
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput)
+}
+
+// WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput is an input type that accepts WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray and WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput values.
+// You can construct a concrete instance of `WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput` via:
+//
+//	WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray{ WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs{...} }
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput interface {
+	pulumi.Input
+
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput
+	ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutputWithContext(context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray []WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)(nil)).Elem()
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return i.ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutputWithContext(context.Background())
+}
+
+func (i WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return o
+}
+
+// The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) PeriodSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy) int {
+		return v.PeriodSeconds
+	}).(pulumi.IntOutput)
+}
+
+// The type of the scaling policy. Valid values: `Pods`, `Percent`.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy) string {
+		return v.Type
+	}).(pulumi.StringOutput)
+}
+
+// The amount of change permitted by the policy. Min: `1`.
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) Value() pulumi.IntOutput {
+	return o.ApplyT(func(v WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy) int {
+		return v.Value
+	}).(pulumi.IntOutput)
+}
+
+type WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput struct{ *pulumi.OutputState }
+
+func (WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)(nil)).Elem()
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput() WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput) ToWorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutputWithContext(ctx context.Context) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return o
+}
+
+func (o WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput) Index(i pulumi.IntInput) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy {
+		return vs[0].([]WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)[vs[1].(int)]
+	}).(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput)
 }
 
 type WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers struct {
@@ -60232,6 +62264,8 @@ func (o GetWorkloadLocalOptionAutoscalingKedaArrayOutput) Index(i pulumi.IntInpu
 }
 
 type GetWorkloadLocalOptionAutoscalingKedaAdvanced struct {
+	// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+	HorizontalPodAutoscalerConfigs []GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig `pulumi:"horizontalPodAutoscalerConfigs"`
 	// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
 	ScalingModifiers []GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier `pulumi:"scalingModifiers"`
 }
@@ -60248,6 +62282,8 @@ type GetWorkloadLocalOptionAutoscalingKedaAdvancedInput interface {
 }
 
 type GetWorkloadLocalOptionAutoscalingKedaAdvancedArgs struct {
+	// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+	HorizontalPodAutoscalerConfigs GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayInput `pulumi:"horizontalPodAutoscalerConfigs"`
 	// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
 	ScalingModifiers GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayInput `pulumi:"scalingModifiers"`
 }
@@ -60303,6 +62339,13 @@ func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput) ToGetWorkloadLocalO
 	return o
 }
 
+// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput) HorizontalPodAutoscalerConfigs() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvanced) []GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+		return v.HorizontalPodAutoscalerConfigs
+	}).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput)
+}
+
 // Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
 func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput) ScalingModifiers() GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput {
 	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvanced) []GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier {
@@ -60328,6 +62371,699 @@ func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput) Index(i pulumi
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLocalOptionAutoscalingKedaAdvanced {
 		return vs[0].([]GetWorkloadLocalOptionAutoscalingKedaAdvanced)[vs[1].(int)]
 	}).(GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig struct {
+	// Configures the scaling behavior of the HPA that KEDA creates for this workload.
+	Behaviors []GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior `pulumi:"behaviors"`
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs and GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs{...}
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs struct {
+	// Configures the scaling behavior of the HPA that KEDA creates for this workload.
+	Behaviors GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayInput `pulumi:"behaviors"`
+}
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput)
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArray and GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArray{ GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs{...} }
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArray []GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigInput
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArray) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArray) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return o
+}
+
+// Configures the scaling behavior of the HPA that KEDA creates for this workload.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) Behaviors() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig) []GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+		return v.Behaviors
+	}).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput) Index(i pulumi.IntInput) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+		return vs[0].([]GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig)[vs[1].(int)]
+	}).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior struct {
+	// Scaling policies for scaling down.
+	ScaleDowns []GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown `pulumi:"scaleDowns"`
+	// Scaling policies for scaling up.
+	ScaleUps []GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp `pulumi:"scaleUps"`
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs and GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs{...}
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs struct {
+	// Scaling policies for scaling down.
+	ScaleDowns GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayInput `pulumi:"scaleDowns"`
+	// Scaling policies for scaling up.
+	ScaleUps GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayInput `pulumi:"scaleUps"`
+}
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput)
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArray and GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArray{ GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs{...} }
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArray []GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorInput
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArray) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArray) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return o
+}
+
+// Scaling policies for scaling down.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ScaleDowns() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior) []GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+		return v.ScaleDowns
+	}).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput)
+}
+
+// Scaling policies for scaling up.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ScaleUps() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior) []GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+		return v.ScaleUps
+	}).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput) Index(i pulumi.IntInput) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+		return vs[0].([]GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior)[vs[1].(int)]
+	}).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown struct {
+	// A scaling policy that can be used during scaling.
+	Policies []GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy `pulumi:"policies"`
+	// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+	SelectPolicy string `pulumi:"selectPolicy"`
+	// Number of seconds for which past recommendations are considered while scaling.
+	StabilizationWindowSeconds int `pulumi:"stabilizationWindowSeconds"`
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs and GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs{...}
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs struct {
+	// A scaling policy that can be used during scaling.
+	Policies GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput `pulumi:"policies"`
+	// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+	SelectPolicy pulumi.StringInput `pulumi:"selectPolicy"`
+	// Number of seconds for which past recommendations are considered while scaling.
+	StabilizationWindowSeconds pulumi.IntInput `pulumi:"stabilizationWindowSeconds"`
+}
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput)
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArray and GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArray{ GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs{...} }
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArray []GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownInput
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArray) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArray) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return o
+}
+
+// A scaling policy that can be used during scaling.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) Policies() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) []GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy {
+		return v.Policies
+	}).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput)
+}
+
+// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) SelectPolicy() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) string {
+		return v.SelectPolicy
+	}).(pulumi.StringOutput)
+}
+
+// Number of seconds for which past recommendations are considered while scaling.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) StabilizationWindowSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) int {
+		return v.StabilizationWindowSeconds
+	}).(pulumi.IntOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput) Index(i pulumi.IntInput) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+		return vs[0].([]GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown)[vs[1].(int)]
+	}).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy struct {
+	// The window of time for which the policy holds true.
+	PeriodSeconds int `pulumi:"periodSeconds"`
+	// The type of the scaling policy.
+	Type string `pulumi:"type"`
+	// The amount of change permitted by the policy.
+	Value int `pulumi:"value"`
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs and GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs{...}
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs struct {
+	// The window of time for which the policy holds true.
+	PeriodSeconds pulumi.IntInput `pulumi:"periodSeconds"`
+	// The type of the scaling policy.
+	Type pulumi.StringInput `pulumi:"type"`
+	// The amount of change permitted by the policy.
+	Value pulumi.IntInput `pulumi:"value"`
+}
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput)
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray and GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray{ GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs{...} }
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray []GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return o
+}
+
+// The window of time for which the policy holds true.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) PeriodSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy) int {
+		return v.PeriodSeconds
+	}).(pulumi.IntOutput)
+}
+
+// The type of the scaling policy.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy) string {
+		return v.Type
+	}).(pulumi.StringOutput)
+}
+
+// The amount of change permitted by the policy.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) Value() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy) int {
+		return v.Value
+	}).(pulumi.IntOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput) Index(i pulumi.IntInput) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy {
+		return vs[0].([]GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)[vs[1].(int)]
+	}).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp struct {
+	// A scaling policy that can be used during scaling.
+	Policies []GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy `pulumi:"policies"`
+	// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+	SelectPolicy string `pulumi:"selectPolicy"`
+	// Number of seconds for which past recommendations are considered while scaling.
+	StabilizationWindowSeconds int `pulumi:"stabilizationWindowSeconds"`
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs and GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs{...}
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs struct {
+	// A scaling policy that can be used during scaling.
+	Policies GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput `pulumi:"policies"`
+	// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+	SelectPolicy pulumi.StringInput `pulumi:"selectPolicy"`
+	// Number of seconds for which past recommendations are considered while scaling.
+	StabilizationWindowSeconds pulumi.IntInput `pulumi:"stabilizationWindowSeconds"`
+}
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput)
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArray and GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArray{ GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs{...} }
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArray []GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpInput
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArray) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArray) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return o
+}
+
+// A scaling policy that can be used during scaling.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) Policies() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) []GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy {
+		return v.Policies
+	}).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput)
+}
+
+// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) SelectPolicy() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) string {
+		return v.SelectPolicy
+	}).(pulumi.StringOutput)
+}
+
+// Number of seconds for which past recommendations are considered while scaling.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) StabilizationWindowSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) int {
+		return v.StabilizationWindowSeconds
+	}).(pulumi.IntOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput) Index(i pulumi.IntInput) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+		return vs[0].([]GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp)[vs[1].(int)]
+	}).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy struct {
+	// The window of time for which the policy holds true.
+	PeriodSeconds int `pulumi:"periodSeconds"`
+	// The type of the scaling policy.
+	Type string `pulumi:"type"`
+	// The amount of change permitted by the policy.
+	Value int `pulumi:"value"`
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs and GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs{...}
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs struct {
+	// The window of time for which the policy holds true.
+	PeriodSeconds pulumi.IntInput `pulumi:"periodSeconds"`
+	// The type of the scaling policy.
+	Type pulumi.StringInput `pulumi:"type"`
+	// The amount of change permitted by the policy.
+	Value pulumi.IntInput `pulumi:"value"`
+}
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput)
+}
+
+// GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput is an input type that accepts GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray and GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput` via:
+//
+//	GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray{ GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs{...} }
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput
+	ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutputWithContext(context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray []GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)(nil)).Elem()
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return i.ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return o
+}
+
+// The window of time for which the policy holds true.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) PeriodSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy) int {
+		return v.PeriodSeconds
+	}).(pulumi.IntOutput)
+}
+
+// The type of the scaling policy.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy) string {
+		return v.Type
+	}).(pulumi.StringOutput)
+}
+
+// The amount of change permitted by the policy.
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) Value() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy) int {
+		return v.Value
+	}).(pulumi.IntOutput)
+}
+
+type GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)(nil)).Elem()
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput() GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput) ToGetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutputWithContext(ctx context.Context) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return o
+}
+
+func (o GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput) Index(i pulumi.IntInput) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy {
+		return vs[0].([]GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)[vs[1].(int)]
+	}).(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput)
 }
 
 type GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier struct {
@@ -61471,6 +64207,8 @@ func (o GetWorkloadOptionAutoscalingKedaArrayOutput) Index(i pulumi.IntInput) Ge
 }
 
 type GetWorkloadOptionAutoscalingKedaAdvanced struct {
+	// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+	HorizontalPodAutoscalerConfigs []GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig `pulumi:"horizontalPodAutoscalerConfigs"`
 	// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
 	ScalingModifiers []GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier `pulumi:"scalingModifiers"`
 }
@@ -61487,6 +64225,8 @@ type GetWorkloadOptionAutoscalingKedaAdvancedInput interface {
 }
 
 type GetWorkloadOptionAutoscalingKedaAdvancedArgs struct {
+	// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+	HorizontalPodAutoscalerConfigs GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayInput `pulumi:"horizontalPodAutoscalerConfigs"`
 	// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
 	ScalingModifiers GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayInput `pulumi:"scalingModifiers"`
 }
@@ -61542,6 +64282,13 @@ func (o GetWorkloadOptionAutoscalingKedaAdvancedOutput) ToGetWorkloadOptionAutos
 	return o
 }
 
+// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedOutput) HorizontalPodAutoscalerConfigs() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvanced) []GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+		return v.HorizontalPodAutoscalerConfigs
+	}).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput)
+}
+
 // Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
 func (o GetWorkloadOptionAutoscalingKedaAdvancedOutput) ScalingModifiers() GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput {
 	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvanced) []GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier {
@@ -61567,6 +64314,699 @@ func (o GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput) Index(i pulumi.IntI
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadOptionAutoscalingKedaAdvanced {
 		return vs[0].([]GetWorkloadOptionAutoscalingKedaAdvanced)[vs[1].(int)]
 	}).(GetWorkloadOptionAutoscalingKedaAdvancedOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig struct {
+	// Configures the scaling behavior of the HPA that KEDA creates for this workload.
+	Behaviors []GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior `pulumi:"behaviors"`
+}
+
+// GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigInput is an input type that accepts GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs and GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs{...}
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs struct {
+	// Configures the scaling behavior of the HPA that KEDA creates for this workload.
+	Behaviors GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayInput `pulumi:"behaviors"`
+}
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput)
+}
+
+// GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayInput is an input type that accepts GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArray and GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArray{ GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs{...} }
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArray []GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigInput
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArray) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArray) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return o
+}
+
+// Configures the scaling behavior of the HPA that KEDA creates for this workload.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput) Behaviors() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig) []GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+		return v.Behaviors
+	}).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput) Index(i pulumi.IntInput) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+		return vs[0].([]GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig)[vs[1].(int)]
+	}).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior struct {
+	// Scaling policies for scaling down.
+	ScaleDowns []GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown `pulumi:"scaleDowns"`
+	// Scaling policies for scaling up.
+	ScaleUps []GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp `pulumi:"scaleUps"`
+}
+
+// GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorInput is an input type that accepts GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs and GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs{...}
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs struct {
+	// Scaling policies for scaling down.
+	ScaleDowns GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayInput `pulumi:"scaleDowns"`
+	// Scaling policies for scaling up.
+	ScaleUps GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayInput `pulumi:"scaleUps"`
+}
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput)
+}
+
+// GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayInput is an input type that accepts GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArray and GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArray{ GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs{...} }
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArray []GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorInput
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArray) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArray) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return o
+}
+
+// Scaling policies for scaling down.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ScaleDowns() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior) []GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+		return v.ScaleDowns
+	}).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput)
+}
+
+// Scaling policies for scaling up.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput) ScaleUps() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior) []GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+		return v.ScaleUps
+	}).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput) Index(i pulumi.IntInput) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+		return vs[0].([]GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior)[vs[1].(int)]
+	}).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown struct {
+	// A scaling policy that can be used during scaling.
+	Policies []GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy `pulumi:"policies"`
+	// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+	SelectPolicy string `pulumi:"selectPolicy"`
+	// Number of seconds for which past recommendations are considered while scaling.
+	StabilizationWindowSeconds int `pulumi:"stabilizationWindowSeconds"`
+}
+
+// GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownInput is an input type that accepts GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs and GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs{...}
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs struct {
+	// A scaling policy that can be used during scaling.
+	Policies GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput `pulumi:"policies"`
+	// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+	SelectPolicy pulumi.StringInput `pulumi:"selectPolicy"`
+	// Number of seconds for which past recommendations are considered while scaling.
+	StabilizationWindowSeconds pulumi.IntInput `pulumi:"stabilizationWindowSeconds"`
+}
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput)
+}
+
+// GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayInput is an input type that accepts GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArray and GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArray{ GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs{...} }
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArray []GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownInput
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArray) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArray) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return o
+}
+
+// A scaling policy that can be used during scaling.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) Policies() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) []GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy {
+		return v.Policies
+	}).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput)
+}
+
+// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) SelectPolicy() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) string {
+		return v.SelectPolicy
+	}).(pulumi.StringOutput)
+}
+
+// Number of seconds for which past recommendations are considered while scaling.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput) StabilizationWindowSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown) int {
+		return v.StabilizationWindowSeconds
+	}).(pulumi.IntOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput) Index(i pulumi.IntInput) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+		return vs[0].([]GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown)[vs[1].(int)]
+	}).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy struct {
+	// The window of time for which the policy holds true.
+	PeriodSeconds int `pulumi:"periodSeconds"`
+	// The type of the scaling policy.
+	Type string `pulumi:"type"`
+	// The amount of change permitted by the policy.
+	Value int `pulumi:"value"`
+}
+
+// GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput is an input type that accepts GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs and GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs{...}
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs struct {
+	// The window of time for which the policy holds true.
+	PeriodSeconds pulumi.IntInput `pulumi:"periodSeconds"`
+	// The type of the scaling policy.
+	Type pulumi.StringInput `pulumi:"type"`
+	// The amount of change permitted by the policy.
+	Value pulumi.IntInput `pulumi:"value"`
+}
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput)
+}
+
+// GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput is an input type that accepts GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray and GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray{ GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs{...} }
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray []GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return o
+}
+
+// The window of time for which the policy holds true.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) PeriodSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy) int {
+		return v.PeriodSeconds
+	}).(pulumi.IntOutput)
+}
+
+// The type of the scaling policy.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy) string {
+		return v.Type
+	}).(pulumi.StringOutput)
+}
+
+// The amount of change permitted by the policy.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput) Value() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy) int {
+		return v.Value
+	}).(pulumi.IntOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput) Index(i pulumi.IntInput) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy {
+		return vs[0].([]GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy)[vs[1].(int)]
+	}).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp struct {
+	// A scaling policy that can be used during scaling.
+	Policies []GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy `pulumi:"policies"`
+	// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+	SelectPolicy string `pulumi:"selectPolicy"`
+	// Number of seconds for which past recommendations are considered while scaling.
+	StabilizationWindowSeconds int `pulumi:"stabilizationWindowSeconds"`
+}
+
+// GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpInput is an input type that accepts GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs and GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs{...}
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs struct {
+	// A scaling policy that can be used during scaling.
+	Policies GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput `pulumi:"policies"`
+	// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+	SelectPolicy pulumi.StringInput `pulumi:"selectPolicy"`
+	// Number of seconds for which past recommendations are considered while scaling.
+	StabilizationWindowSeconds pulumi.IntInput `pulumi:"stabilizationWindowSeconds"`
+}
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput)
+}
+
+// GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayInput is an input type that accepts GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArray and GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArray{ GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs{...} }
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArray []GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpInput
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArray) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArray) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return o
+}
+
+// A scaling policy that can be used during scaling.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) Policies() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) []GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy {
+		return v.Policies
+	}).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput)
+}
+
+// Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) SelectPolicy() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) string {
+		return v.SelectPolicy
+	}).(pulumi.StringOutput)
+}
+
+// Number of seconds for which past recommendations are considered while scaling.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput) StabilizationWindowSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp) int {
+		return v.StabilizationWindowSeconds
+	}).(pulumi.IntOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput) Index(i pulumi.IntInput) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+		return vs[0].([]GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp)[vs[1].(int)]
+	}).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy struct {
+	// The window of time for which the policy holds true.
+	PeriodSeconds int `pulumi:"periodSeconds"`
+	// The type of the scaling policy.
+	Type string `pulumi:"type"`
+	// The amount of change permitted by the policy.
+	Value int `pulumi:"value"`
+}
+
+// GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput is an input type that accepts GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs and GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs{...}
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs struct {
+	// The window of time for which the policy holds true.
+	PeriodSeconds pulumi.IntInput `pulumi:"periodSeconds"`
+	// The type of the scaling policy.
+	Type pulumi.StringInput `pulumi:"type"`
+	// The amount of change permitted by the policy.
+	Value pulumi.IntInput `pulumi:"value"`
+}
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput)
+}
+
+// GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput is an input type that accepts GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray and GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput` via:
+//
+//	GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray{ GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs{...} }
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput
+	ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutputWithContext(context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray []GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)(nil)).Elem()
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return i.ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return o
+}
+
+// The window of time for which the policy holds true.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) PeriodSeconds() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy) int {
+		return v.PeriodSeconds
+	}).(pulumi.IntOutput)
+}
+
+// The type of the scaling policy.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy) string {
+		return v.Type
+	}).(pulumi.StringOutput)
+}
+
+// The amount of change permitted by the policy.
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput) Value() pulumi.IntOutput {
+	return o.ApplyT(func(v GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy) int {
+		return v.Value
+	}).(pulumi.IntOutput)
+}
+
+type GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)(nil)).Elem()
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput() GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput) ToGetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutputWithContext(ctx context.Context) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput {
+	return o
+}
+
+func (o GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput) Index(i pulumi.IntInput) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy {
+		return vs[0].([]GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy)[vs[1].(int)]
+	}).(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput)
 }
 
 type GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier struct {
@@ -64657,6 +68097,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigLogSplitterPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigLogSplitterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigLonghornInput)(nil)).Elem(), Mk8sAddOnsByokConfigLonghornArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigLonghornPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigLonghornArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMaintainerInput)(nil)).Elem(), Mk8sAddOnsByokConfigMaintainerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMaintainerPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigMaintainerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMiddleboxInput)(nil)).Elem(), Mk8sAddOnsByokConfigMiddleboxArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMiddleboxPtrInput)(nil)).Elem(), Mk8sAddOnsByokConfigMiddleboxArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*Mk8sAddOnsByokConfigMonitoringInput)(nil)).Elem(), Mk8sAddOnsByokConfigMonitoringArgs{})
@@ -65039,6 +68481,18 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaPtrInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedPtrInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingKedaFallbackInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingKedaFallbackArgs{})
@@ -65059,6 +68513,18 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaPtrInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedPtrInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingKedaFallbackInput)(nil)).Elem(), WorkloadOptionsAutoscalingKedaFallbackArgs{})
@@ -65274,6 +68740,18 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingKedaFallbackInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingKedaFallbackArgs{})
@@ -65294,6 +68772,18 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingKedaFallbackInput)(nil)).Elem(), GetWorkloadOptionAutoscalingKedaFallbackArgs{})
@@ -65509,6 +68999,8 @@ func init() {
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigLogSplitterPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigLonghornOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigLonghornPtrOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMaintainerOutput{})
+	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMaintainerPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMiddleboxOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMiddleboxPtrOutput{})
 	pulumi.RegisterOutputType(Mk8sAddOnsByokConfigMonitoringOutput{})
@@ -65891,6 +69383,18 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput{})
+	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingKedaFallbackOutput{})
@@ -65911,6 +69415,18 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput{})
+	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingKedaFallbackOutput{})
@@ -66126,6 +69642,18 @@ func init() {
 	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput{})
+	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingKedaFallbackOutput{})
@@ -66146,6 +69674,18 @@ func init() {
 	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedOutput{})
 	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyOutput{})
+	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierOutput{})
 	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingKedaFallbackOutput{})

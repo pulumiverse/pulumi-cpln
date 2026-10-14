@@ -39,6 +39,10 @@ export class DomainRoute extends pulumi.CustomResource {
      */
     declare public readonly canaries: pulumi.Output<outputs.DomainRouteCanary[] | undefined>;
     /**
+     * When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+     */
+    declare public readonly caseInsensitive: pulumi.Output<boolean | undefined>;
+    /**
      * The self link of the domain to add the route to.
      */
     declare public readonly domainLink: pulumi.Output<string>;
@@ -101,6 +105,7 @@ export class DomainRoute extends pulumi.CustomResource {
         if (opts.id) {
             const state = argsOrState as DomainRouteState | undefined;
             resourceInputs["canaries"] = state?.canaries;
+            resourceInputs["caseInsensitive"] = state?.caseInsensitive;
             resourceInputs["domainLink"] = state?.domainLink;
             resourceInputs["domainPort"] = state?.domainPort;
             resourceInputs["headers"] = state?.headers;
@@ -122,6 +127,7 @@ export class DomainRoute extends pulumi.CustomResource {
                 throw new Error("Missing required property 'workloadLink'");
             }
             resourceInputs["canaries"] = args?.canaries;
+            resourceInputs["caseInsensitive"] = args?.caseInsensitive;
             resourceInputs["domainLink"] = args?.domainLink;
             resourceInputs["domainPort"] = args?.domainPort;
             resourceInputs["headers"] = args?.headers;
@@ -148,6 +154,10 @@ export interface DomainRouteState {
      * Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
      */
     canaries?: pulumi.Input<pulumi.Input<inputs.DomainRouteCanary>[]>;
+    /**
+     * When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+     */
+    caseInsensitive?: pulumi.Input<boolean>;
     /**
      * The self link of the domain to add the route to.
      */
@@ -206,6 +216,10 @@ export interface DomainRouteArgs {
      * Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
      */
     canaries?: pulumi.Input<pulumi.Input<inputs.DomainRouteCanary>[]>;
+    /**
+     * When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+     */
+    caseInsensitive?: pulumi.Input<boolean>;
     /**
      * The self link of the domain to add the route to.
      */

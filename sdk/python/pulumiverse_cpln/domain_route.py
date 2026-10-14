@@ -24,6 +24,7 @@ class DomainRouteArgs:
                  domain_link: pulumi.Input[_builtins.str],
                  workload_link: pulumi.Input[_builtins.str],
                  canaries: Optional[pulumi.Input[Sequence[pulumi.Input['DomainRouteCanaryArgs']]]] = None,
+                 case_insensitive: Optional[pulumi.Input[_builtins.bool]] = None,
                  domain_port: Optional[pulumi.Input[_builtins.int]] = None,
                  headers: Optional[pulumi.Input['DomainRouteHeadersArgs']] = None,
                  host_prefix: Optional[pulumi.Input[_builtins.str]] = None,
@@ -39,6 +40,7 @@ class DomainRouteArgs:
         :param pulumi.Input[_builtins.str] domain_link: The self link of the domain to add the route to.
         :param pulumi.Input[_builtins.str] workload_link: The link of the workload to map the prefix to.
         :param pulumi.Input[Sequence[pulumi.Input['DomainRouteCanaryArgs']]] canaries: Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+        :param pulumi.Input[_builtins.bool] case_insensitive: When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
         :param pulumi.Input[_builtins.int] domain_port: The port the route corresponds to. Default: 443
         :param pulumi.Input['DomainRouteHeadersArgs'] headers: Modify the headers for all http requests for this route.
         :param pulumi.Input[_builtins.str] host_prefix: This option allows forwarding traffic for different host headers to different workloads. This will only be used when the target GVC has dedicated load balancing enabled and the Domain is configured for wildcard support. Please contact us on Slack or at support@controlplane.com for additional details.
@@ -54,6 +56,8 @@ class DomainRouteArgs:
         pulumi.set(__self__, "workload_link", workload_link)
         if canaries is not None:
             pulumi.set(__self__, "canaries", canaries)
+        if case_insensitive is not None:
+            pulumi.set(__self__, "case_insensitive", case_insensitive)
         if domain_port is not None:
             pulumi.set(__self__, "domain_port", domain_port)
         if headers is not None:
@@ -110,6 +114,18 @@ class DomainRouteArgs:
     @canaries.setter
     def canaries(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['DomainRouteCanaryArgs']]]]):
         pulumi.set(self, "canaries", value)
+
+    @_builtins.property
+    @pulumi.getter(name="caseInsensitive")
+    def case_insensitive(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+        """
+        return pulumi.get(self, "case_insensitive")
+
+    @case_insensitive.setter
+    def case_insensitive(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "case_insensitive", value)
 
     @_builtins.property
     @pulumi.getter(name="domainPort")
@@ -236,6 +252,7 @@ class DomainRouteArgs:
 class _DomainRouteState:
     def __init__(__self__, *,
                  canaries: Optional[pulumi.Input[Sequence[pulumi.Input['DomainRouteCanaryArgs']]]] = None,
+                 case_insensitive: Optional[pulumi.Input[_builtins.bool]] = None,
                  domain_link: Optional[pulumi.Input[_builtins.str]] = None,
                  domain_port: Optional[pulumi.Input[_builtins.int]] = None,
                  headers: Optional[pulumi.Input['DomainRouteHeadersArgs']] = None,
@@ -251,6 +268,7 @@ class _DomainRouteState:
         """
         Input properties used for looking up and filtering DomainRoute resources.
         :param pulumi.Input[Sequence[pulumi.Input['DomainRouteCanaryArgs']]] canaries: Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+        :param pulumi.Input[_builtins.bool] case_insensitive: When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
         :param pulumi.Input[_builtins.str] domain_link: The self link of the domain to add the route to.
         :param pulumi.Input[_builtins.int] domain_port: The port the route corresponds to. Default: 443
         :param pulumi.Input['DomainRouteHeadersArgs'] headers: Modify the headers for all http requests for this route.
@@ -266,6 +284,8 @@ class _DomainRouteState:
         """
         if canaries is not None:
             pulumi.set(__self__, "canaries", canaries)
+        if case_insensitive is not None:
+            pulumi.set(__self__, "case_insensitive", case_insensitive)
         if domain_link is not None:
             pulumi.set(__self__, "domain_link", domain_link)
         if domain_port is not None:
@@ -302,6 +322,18 @@ class _DomainRouteState:
     @canaries.setter
     def canaries(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['DomainRouteCanaryArgs']]]]):
         pulumi.set(self, "canaries", value)
+
+    @_builtins.property
+    @pulumi.getter(name="caseInsensitive")
+    def case_insensitive(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+        """
+        return pulumi.get(self, "case_insensitive")
+
+    @case_insensitive.setter
+    def case_insensitive(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "case_insensitive", value)
 
     @_builtins.property
     @pulumi.getter(name="domainLink")
@@ -455,6 +487,7 @@ class DomainRoute(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  canaries: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DomainRouteCanaryArgs', 'DomainRouteCanaryArgsDict']]]]] = None,
+                 case_insensitive: Optional[pulumi.Input[_builtins.bool]] = None,
                  domain_link: Optional[pulumi.Input[_builtins.str]] = None,
                  domain_port: Optional[pulumi.Input[_builtins.int]] = None,
                  headers: Optional[pulumi.Input[Union['DomainRouteHeadersArgs', 'DomainRouteHeadersArgsDict']]] = None,
@@ -473,6 +506,7 @@ class DomainRoute(pulumi.CustomResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Sequence[pulumi.Input[Union['DomainRouteCanaryArgs', 'DomainRouteCanaryArgsDict']]]] canaries: Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+        :param pulumi.Input[_builtins.bool] case_insensitive: When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
         :param pulumi.Input[_builtins.str] domain_link: The self link of the domain to add the route to.
         :param pulumi.Input[_builtins.int] domain_port: The port the route corresponds to. Default: 443
         :param pulumi.Input[Union['DomainRouteHeadersArgs', 'DomainRouteHeadersArgsDict']] headers: Modify the headers for all http requests for this route.
@@ -510,6 +544,7 @@ class DomainRoute(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  canaries: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DomainRouteCanaryArgs', 'DomainRouteCanaryArgsDict']]]]] = None,
+                 case_insensitive: Optional[pulumi.Input[_builtins.bool]] = None,
                  domain_link: Optional[pulumi.Input[_builtins.str]] = None,
                  domain_port: Optional[pulumi.Input[_builtins.int]] = None,
                  headers: Optional[pulumi.Input[Union['DomainRouteHeadersArgs', 'DomainRouteHeadersArgsDict']]] = None,
@@ -532,6 +567,7 @@ class DomainRoute(pulumi.CustomResource):
             __props__ = DomainRouteArgs.__new__(DomainRouteArgs)
 
             __props__.__dict__["canaries"] = canaries
+            __props__.__dict__["case_insensitive"] = case_insensitive
             if domain_link is None and not opts.urn:
                 raise TypeError("Missing required property 'domain_link'")
             __props__.__dict__["domain_link"] = domain_link
@@ -559,6 +595,7 @@ class DomainRoute(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             canaries: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DomainRouteCanaryArgs', 'DomainRouteCanaryArgsDict']]]]] = None,
+            case_insensitive: Optional[pulumi.Input[_builtins.bool]] = None,
             domain_link: Optional[pulumi.Input[_builtins.str]] = None,
             domain_port: Optional[pulumi.Input[_builtins.int]] = None,
             headers: Optional[pulumi.Input[Union['DomainRouteHeadersArgs', 'DomainRouteHeadersArgsDict']]] = None,
@@ -579,6 +616,7 @@ class DomainRoute(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Sequence[pulumi.Input[Union['DomainRouteCanaryArgs', 'DomainRouteCanaryArgsDict']]]] canaries: Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+        :param pulumi.Input[_builtins.bool] case_insensitive: When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
         :param pulumi.Input[_builtins.str] domain_link: The self link of the domain to add the route to.
         :param pulumi.Input[_builtins.int] domain_port: The port the route corresponds to. Default: 443
         :param pulumi.Input[Union['DomainRouteHeadersArgs', 'DomainRouteHeadersArgsDict']] headers: Modify the headers for all http requests for this route.
@@ -597,6 +635,7 @@ class DomainRoute(pulumi.CustomResource):
         __props__ = _DomainRouteState.__new__(_DomainRouteState)
 
         __props__.__dict__["canaries"] = canaries
+        __props__.__dict__["case_insensitive"] = case_insensitive
         __props__.__dict__["domain_link"] = domain_link
         __props__.__dict__["domain_port"] = domain_port
         __props__.__dict__["headers"] = headers
@@ -618,6 +657,14 @@ class DomainRoute(pulumi.CustomResource):
         Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
         """
         return pulumi.get(self, "canaries")
+
+    @_builtins.property
+    @pulumi.getter(name="caseInsensitive")
+    def case_insensitive(self) -> pulumi.Output[Optional[_builtins.bool]]:
+        """
+        When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+        """
+        return pulumi.get(self, "case_insensitive")
 
     @_builtins.property
     @pulumi.getter(name="domainLink")

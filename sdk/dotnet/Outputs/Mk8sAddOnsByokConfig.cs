@@ -51,6 +51,10 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly Outputs.Mk8sAddOnsByokConfigLonghorn? Longhorn;
         /// <summary>
+        /// Settings for the maintainer component.
+        /// </summary>
+        public readonly Outputs.Mk8sAddOnsByokConfigMaintainer? Maintainer;
+        /// <summary>
         /// Configuration for the optional middlebox traffic shaper.
         /// </summary>
         public readonly Outputs.Mk8sAddOnsByokConfigMiddlebox? Middlebox;
@@ -95,6 +99,8 @@ namespace Pulumiverse.Cpln.Outputs
 
             Outputs.Mk8sAddOnsByokConfigLonghorn? longhorn,
 
+            Outputs.Mk8sAddOnsByokConfigMaintainer? maintainer,
+
             Outputs.Mk8sAddOnsByokConfigMiddlebox? middlebox,
 
             Outputs.Mk8sAddOnsByokConfigMonitoring? monitoring,
@@ -116,6 +122,7 @@ namespace Pulumiverse.Cpln.Outputs
             Juicefs = juicefs;
             LogSplitter = logSplitter;
             Longhorn = longhorn;
+            Maintainer = maintainer;
             Middlebox = middlebox;
             Monitoring = monitoring;
             Redis = redis;

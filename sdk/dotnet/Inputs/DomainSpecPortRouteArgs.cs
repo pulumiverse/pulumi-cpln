@@ -26,6 +26,12 @@ namespace Pulumiverse.Cpln.Inputs
         }
 
         /// <summary>
+        /// When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+        /// </summary>
+        [Input("caseInsensitive")]
+        public Input<bool>? CaseInsensitive { get; set; }
+
+        /// <summary>
         /// Modify the headers for all http requests for this route.
         /// </summary>
         [Input("headers")]
