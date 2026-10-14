@@ -18,22 +18,20 @@ package main
 
 import (
 	"context"
+
 	_ "embed"
 
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/pf/tfbridge"
+
 	cpln "github.com/pulumiverse/pulumi-cpln/provider"
 )
 
 //go:embed schema-embed.json
 var pulumiSchema []byte
 
-//go:embed bridge-metadata.json
-var bridgeMetadata []byte
-
 func main() {
 	meta := tfbridge.ProviderMetadata{
-		PackageSchema:  pulumiSchema,
-		BridgeMetadata: bridgeMetadata,
+		PackageSchema: pulumiSchema,
 	}
 
 	// Modify the path to point to the new provider
