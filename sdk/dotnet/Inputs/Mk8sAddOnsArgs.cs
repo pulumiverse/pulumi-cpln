@@ -44,6 +44,12 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<bool>? Headlamp { get; set; }
 
         /// <summary>
+        /// Installs Kata Containers for VM-isolated workloads on node pools labeled `cpln.io/nodeType=vm`.
+        /// </summary>
+        [Input("kata")]
+        public Input<bool>? Kata { get; set; }
+
+        /// <summary>
         /// Enables type=vm workloads by installing the KubeVirt and CDI operators on the cluster.
         /// </summary>
         [Input("kubevirt")]

@@ -100,6 +100,7 @@ __all__ = [
     'Mk8sAddOnsByokConfigJuicefs',
     'Mk8sAddOnsByokConfigLogSplitter',
     'Mk8sAddOnsByokConfigLonghorn',
+    'Mk8sAddOnsByokConfigMaintainer',
     'Mk8sAddOnsByokConfigMiddlebox',
     'Mk8sAddOnsByokConfigMonitoring',
     'Mk8sAddOnsByokConfigMonitoringKubeStateMetrics',
@@ -291,6 +292,12 @@ __all__ = [
     'WorkloadLocalOptionAutoscaling',
     'WorkloadLocalOptionAutoscalingKeda',
     'WorkloadLocalOptionAutoscalingKedaAdvanced',
+    'WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig',
+    'WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior',
+    'WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown',
+    'WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy',
+    'WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp',
+    'WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy',
     'WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers',
     'WorkloadLocalOptionAutoscalingKedaFallback',
     'WorkloadLocalOptionAutoscalingKedaTrigger',
@@ -301,6 +308,12 @@ __all__ = [
     'WorkloadOptionsAutoscaling',
     'WorkloadOptionsAutoscalingKeda',
     'WorkloadOptionsAutoscalingKedaAdvanced',
+    'WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig',
+    'WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior',
+    'WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown',
+    'WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy',
+    'WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp',
+    'WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy',
     'WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers',
     'WorkloadOptionsAutoscalingKedaFallback',
     'WorkloadOptionsAutoscalingKedaTrigger',
@@ -409,6 +422,12 @@ __all__ = [
     'GetWorkloadLocalOptionAutoscalingResult',
     'GetWorkloadLocalOptionAutoscalingKedaResult',
     'GetWorkloadLocalOptionAutoscalingKedaAdvancedResult',
+    'GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigResult',
+    'GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorResult',
+    'GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownResult',
+    'GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyResult',
+    'GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpResult',
+    'GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyResult',
     'GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierResult',
     'GetWorkloadLocalOptionAutoscalingKedaFallbackResult',
     'GetWorkloadLocalOptionAutoscalingKedaTriggerResult',
@@ -419,6 +438,12 @@ __all__ = [
     'GetWorkloadOptionAutoscalingResult',
     'GetWorkloadOptionAutoscalingKedaResult',
     'GetWorkloadOptionAutoscalingKedaAdvancedResult',
+    'GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigResult',
+    'GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorResult',
+    'GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownResult',
+    'GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyResult',
+    'GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpResult',
+    'GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyResult',
     'GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierResult',
     'GetWorkloadOptionAutoscalingKedaFallbackResult',
     'GetWorkloadOptionAutoscalingKedaTriggerResult',
@@ -1257,6 +1282,8 @@ class DomainSpecPortRoute(dict):
         suggest = None
         if key == "workloadLink":
             suggest = "workload_link"
+        elif key == "caseInsensitive":
+            suggest = "case_insensitive"
         elif key == "hostPrefix":
             suggest = "host_prefix"
         elif key == "hostRegex":
@@ -1278,6 +1305,7 @@ class DomainSpecPortRoute(dict):
     def __init__(__self__, *,
                  workload_link: _builtins.str,
                  canaries: Optional[Sequence['outputs.DomainSpecPortRouteCanary']] = None,
+                 case_insensitive: Optional[_builtins.bool] = None,
                  headers: Optional['outputs.DomainSpecPortRouteHeaders'] = None,
                  host_prefix: Optional[_builtins.str] = None,
                  host_regex: Optional[_builtins.str] = None,
@@ -1290,6 +1318,7 @@ class DomainSpecPortRoute(dict):
         """
         :param _builtins.str workload_link: The link of the workload to map the prefix to.
         :param Sequence['DomainSpecPortRouteCanaryArgs'] canaries: Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
+        :param _builtins.bool case_insensitive: When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
         :param 'DomainSpecPortRouteHeadersArgs' headers: Modify the headers for all http requests for this route.
         :param _builtins.str host_prefix: This option allows forwarding traffic for different host headers to different workloads.
         :param _builtins.str host_regex: A regex to match the host header.
@@ -1303,6 +1332,8 @@ class DomainSpecPortRoute(dict):
         pulumi.set(__self__, "workload_link", workload_link)
         if canaries is not None:
             pulumi.set(__self__, "canaries", canaries)
+        if case_insensitive is not None:
+            pulumi.set(__self__, "case_insensitive", case_insensitive)
         if headers is not None:
             pulumi.set(__self__, "headers", headers)
         if host_prefix is not None:
@@ -1337,6 +1368,14 @@ class DomainSpecPortRoute(dict):
         Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
         """
         return pulumi.get(self, "canaries")
+
+    @_builtins.property
+    @pulumi.getter(name="caseInsensitive")
+    def case_insensitive(self) -> Optional[_builtins.bool]:
+        """
+        When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+        """
+        return pulumi.get(self, "case_insensitive")
 
     @_builtins.property
     @pulumi.getter
@@ -3768,6 +3807,7 @@ class Mk8sAddOns(dict):
                  byok: Optional['outputs.Mk8sAddOnsByok'] = None,
                  dashboard: Optional[_builtins.bool] = None,
                  headlamp: Optional[_builtins.bool] = None,
+                 kata: Optional[_builtins.bool] = None,
                  kubevirt: Optional['outputs.Mk8sAddOnsKubevirt'] = None,
                  local_path_storage: Optional[_builtins.bool] = None,
                  logs: Optional['outputs.Mk8sAddOnsLogs'] = None,
@@ -3778,6 +3818,7 @@ class Mk8sAddOns(dict):
                  sysbox: Optional[_builtins.bool] = None):
         """
         :param 'Mk8sAddOnsByokArgs' byok: Bring-your-own Kubernetes (BYOK) add-on settings.
+        :param _builtins.bool kata: Installs Kata Containers for VM-isolated workloads on node pools labeled `cpln.io/nodeType=vm`.
         :param 'Mk8sAddOnsKubevirtArgs' kubevirt: Enables type=vm workloads by installing the KubeVirt and CDI operators on the cluster.
         :param 'Mk8sAddOnsMetricsArgs' metrics: Scrape pods annotated with prometheus.io/scrape=true
         :param _builtins.bool node_local_dns: Per-node CoreDNS cache. Required by the kubevirt add-on.
@@ -3800,6 +3841,8 @@ class Mk8sAddOns(dict):
             pulumi.set(__self__, "dashboard", dashboard)
         if headlamp is not None:
             pulumi.set(__self__, "headlamp", headlamp)
+        if kata is not None:
+            pulumi.set(__self__, "kata", kata)
         if kubevirt is not None:
             pulumi.set(__self__, "kubevirt", kubevirt)
         if local_path_storage is not None:
@@ -3864,6 +3907,14 @@ class Mk8sAddOns(dict):
     @pulumi.getter
     def headlamp(self) -> Optional[_builtins.bool]:
         return pulumi.get(self, "headlamp")
+
+    @_builtins.property
+    @pulumi.getter
+    def kata(self) -> Optional[_builtins.bool]:
+        """
+        Installs Kata Containers for VM-isolated workloads on node pools labeled `cpln.io/nodeType=vm`.
+        """
+        return pulumi.get(self, "kata")
 
     @_builtins.property
     @pulumi.getter
@@ -4184,6 +4235,7 @@ class Mk8sAddOnsByokConfig(dict):
                  juicefs: Optional['outputs.Mk8sAddOnsByokConfigJuicefs'] = None,
                  log_splitter: Optional['outputs.Mk8sAddOnsByokConfigLogSplitter'] = None,
                  longhorn: Optional['outputs.Mk8sAddOnsByokConfigLonghorn'] = None,
+                 maintainer: Optional['outputs.Mk8sAddOnsByokConfigMaintainer'] = None,
                  middlebox: Optional['outputs.Mk8sAddOnsByokConfigMiddlebox'] = None,
                  monitoring: Optional['outputs.Mk8sAddOnsByokConfigMonitoring'] = None,
                  redis: Optional['outputs.Mk8sAddOnsByokConfigRedis'] = None,
@@ -4200,6 +4252,7 @@ class Mk8sAddOnsByokConfig(dict):
         :param 'Mk8sAddOnsByokConfigJuicefsArgs' juicefs: JuiceFS distributed file system add-on settings.
         :param 'Mk8sAddOnsByokConfigLogSplitterArgs' log_splitter: Log splitter deployment configuration.
         :param 'Mk8sAddOnsByokConfigLonghornArgs' longhorn: Longhorn persistent volume settings.
+        :param 'Mk8sAddOnsByokConfigMaintainerArgs' maintainer: Settings for the maintainer component.
         :param 'Mk8sAddOnsByokConfigMiddleboxArgs' middlebox: Configuration for the optional middlebox traffic shaper.
         :param 'Mk8sAddOnsByokConfigMonitoringArgs' monitoring: Monitoring stack configuration.
         :param 'Mk8sAddOnsByokConfigRedisArgs' redis: Redis cache configuration.
@@ -4225,6 +4278,8 @@ class Mk8sAddOnsByokConfig(dict):
             pulumi.set(__self__, "log_splitter", log_splitter)
         if longhorn is not None:
             pulumi.set(__self__, "longhorn", longhorn)
+        if maintainer is not None:
+            pulumi.set(__self__, "maintainer", maintainer)
         if middlebox is not None:
             pulumi.set(__self__, "middlebox", middlebox)
         if monitoring is not None:
@@ -4309,6 +4364,14 @@ class Mk8sAddOnsByokConfig(dict):
         Longhorn persistent volume settings.
         """
         return pulumi.get(self, "longhorn")
+
+    @_builtins.property
+    @pulumi.getter
+    def maintainer(self) -> Optional['outputs.Mk8sAddOnsByokConfigMaintainer']:
+        """
+        Settings for the maintainer component.
+        """
+        return pulumi.get(self, "maintainer")
 
     @_builtins.property
     @pulumi.getter
@@ -5180,6 +5243,25 @@ class Mk8sAddOnsByokConfigLonghorn(dict):
         Replica factor for Longhorn volumes. Minimum: 1.
         """
         return pulumi.get(self, "replicas")
+
+
+@pulumi.output_type
+class Mk8sAddOnsByokConfigMaintainer(dict):
+    def __init__(__self__, *,
+                 env: Optional[Mapping[str, _builtins.str]] = None):
+        """
+        :param Mapping[str, _builtins.str] env: Additional environment variables injected into maintainer pods.
+        """
+        if env is not None:
+            pulumi.set(__self__, "env", env)
+
+    @_builtins.property
+    @pulumi.getter
+    def env(self) -> Optional[Mapping[str, _builtins.str]]:
+        """
+        Additional environment variables injected into maintainer pods.
+        """
+        return pulumi.get(self, "env")
 
 
 @pulumi.output_type
@@ -16652,7 +16734,9 @@ class WorkloadLocalOptionAutoscalingKedaAdvanced(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "scalingModifiers":
+        if key == "horizontalPodAutoscalerConfig":
+            suggest = "horizontal_pod_autoscaler_config"
+        elif key == "scalingModifiers":
             suggest = "scaling_modifiers"
 
         if suggest:
@@ -16667,12 +16751,24 @@ class WorkloadLocalOptionAutoscalingKedaAdvanced(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
+                 horizontal_pod_autoscaler_config: Optional['outputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig'] = None,
                  scaling_modifiers: Optional['outputs.WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers'] = None):
         """
+        :param 'WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs' horizontal_pod_autoscaler_config: Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
         :param 'WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiersArgs' scaling_modifiers: Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
         """
+        if horizontal_pod_autoscaler_config is not None:
+            pulumi.set(__self__, "horizontal_pod_autoscaler_config", horizontal_pod_autoscaler_config)
         if scaling_modifiers is not None:
             pulumi.set(__self__, "scaling_modifiers", scaling_modifiers)
+
+    @_builtins.property
+    @pulumi.getter(name="horizontalPodAutoscalerConfig")
+    def horizontal_pod_autoscaler_config(self) -> Optional['outputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig']:
+        """
+        Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+        """
+        return pulumi.get(self, "horizontal_pod_autoscaler_config")
 
     @_builtins.property
     @pulumi.getter(name="scalingModifiers")
@@ -16681,6 +16777,313 @@ class WorkloadLocalOptionAutoscalingKedaAdvanced(dict):
         Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
         """
         return pulumi.get(self, "scaling_modifiers")
+
+
+@pulumi.output_type
+class WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig(dict):
+    def __init__(__self__, *,
+                 behavior: Optional['outputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior'] = None):
+        """
+        :param 'WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs' behavior: Configures the scaling behavior of the HPA that KEDA creates for this workload.
+        """
+        if behavior is not None:
+            pulumi.set(__self__, "behavior", behavior)
+
+    @_builtins.property
+    @pulumi.getter
+    def behavior(self) -> Optional['outputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior']:
+        """
+        Configures the scaling behavior of the HPA that KEDA creates for this workload.
+        """
+        return pulumi.get(self, "behavior")
+
+
+@pulumi.output_type
+class WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "scaleDown":
+            suggest = "scale_down"
+        elif key == "scaleUp":
+            suggest = "scale_up"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 scale_down: Optional['outputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown'] = None,
+                 scale_up: Optional['outputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp'] = None):
+        """
+        :param 'WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs' scale_down: Scaling policies for scaling down.
+        :param 'WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs' scale_up: Scaling policies for scaling up.
+        """
+        if scale_down is not None:
+            pulumi.set(__self__, "scale_down", scale_down)
+        if scale_up is not None:
+            pulumi.set(__self__, "scale_up", scale_up)
+
+    @_builtins.property
+    @pulumi.getter(name="scaleDown")
+    def scale_down(self) -> Optional['outputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown']:
+        """
+        Scaling policies for scaling down.
+        """
+        return pulumi.get(self, "scale_down")
+
+    @_builtins.property
+    @pulumi.getter(name="scaleUp")
+    def scale_up(self) -> Optional['outputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp']:
+        """
+        Scaling policies for scaling up.
+        """
+        return pulumi.get(self, "scale_up")
+
+
+@pulumi.output_type
+class WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "selectPolicy":
+            suggest = "select_policy"
+        elif key == "stabilizationWindowSeconds":
+            suggest = "stabilization_window_seconds"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 policies: Optional[Sequence['outputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy']] = None,
+                 select_policy: Optional[_builtins.str] = None,
+                 stabilization_window_seconds: Optional[_builtins.int] = None):
+        """
+        :param Sequence['WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs'] policies: A scaling policy that can be used during scaling.
+        :param _builtins.str select_policy: Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+        :param _builtins.int stabilization_window_seconds: Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+        """
+        if policies is not None:
+            pulumi.set(__self__, "policies", policies)
+        if select_policy is not None:
+            pulumi.set(__self__, "select_policy", select_policy)
+        if stabilization_window_seconds is not None:
+            pulumi.set(__self__, "stabilization_window_seconds", stabilization_window_seconds)
+
+    @_builtins.property
+    @pulumi.getter
+    def policies(self) -> Optional[Sequence['outputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy']]:
+        """
+        A scaling policy that can be used during scaling.
+        """
+        return pulumi.get(self, "policies")
+
+    @_builtins.property
+    @pulumi.getter(name="selectPolicy")
+    def select_policy(self) -> Optional[_builtins.str]:
+        """
+        Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+        """
+        return pulumi.get(self, "select_policy")
+
+    @_builtins.property
+    @pulumi.getter(name="stabilizationWindowSeconds")
+    def stabilization_window_seconds(self) -> Optional[_builtins.int]:
+        """
+        Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+        """
+        return pulumi.get(self, "stabilization_window_seconds")
+
+
+@pulumi.output_type
+class WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "periodSeconds":
+            suggest = "period_seconds"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 period_seconds: _builtins.int,
+                 type: _builtins.str,
+                 value: _builtins.int):
+        """
+        :param _builtins.int period_seconds: The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+        :param _builtins.str type: The type of the scaling policy. Valid values: `Pods`, `Percent`.
+        :param _builtins.int value: The amount of change permitted by the policy. Min: `1`.
+        """
+        pulumi.set(__self__, "period_seconds", period_seconds)
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "value", value)
+
+    @_builtins.property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> _builtins.int:
+        """
+        The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @_builtins.property
+    @pulumi.getter
+    def type(self) -> _builtins.str:
+        """
+        The type of the scaling policy. Valid values: `Pods`, `Percent`.
+        """
+        return pulumi.get(self, "type")
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> _builtins.int:
+        """
+        The amount of change permitted by the policy. Min: `1`.
+        """
+        return pulumi.get(self, "value")
+
+
+@pulumi.output_type
+class WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "selectPolicy":
+            suggest = "select_policy"
+        elif key == "stabilizationWindowSeconds":
+            suggest = "stabilization_window_seconds"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 policies: Optional[Sequence['outputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy']] = None,
+                 select_policy: Optional[_builtins.str] = None,
+                 stabilization_window_seconds: Optional[_builtins.int] = None):
+        """
+        :param Sequence['WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs'] policies: A scaling policy that can be used during scaling.
+        :param _builtins.str select_policy: Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+        :param _builtins.int stabilization_window_seconds: Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+        """
+        if policies is not None:
+            pulumi.set(__self__, "policies", policies)
+        if select_policy is not None:
+            pulumi.set(__self__, "select_policy", select_policy)
+        if stabilization_window_seconds is not None:
+            pulumi.set(__self__, "stabilization_window_seconds", stabilization_window_seconds)
+
+    @_builtins.property
+    @pulumi.getter
+    def policies(self) -> Optional[Sequence['outputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy']]:
+        """
+        A scaling policy that can be used during scaling.
+        """
+        return pulumi.get(self, "policies")
+
+    @_builtins.property
+    @pulumi.getter(name="selectPolicy")
+    def select_policy(self) -> Optional[_builtins.str]:
+        """
+        Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+        """
+        return pulumi.get(self, "select_policy")
+
+    @_builtins.property
+    @pulumi.getter(name="stabilizationWindowSeconds")
+    def stabilization_window_seconds(self) -> Optional[_builtins.int]:
+        """
+        Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+        """
+        return pulumi.get(self, "stabilization_window_seconds")
+
+
+@pulumi.output_type
+class WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "periodSeconds":
+            suggest = "period_seconds"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 period_seconds: _builtins.int,
+                 type: _builtins.str,
+                 value: _builtins.int):
+        """
+        :param _builtins.int period_seconds: The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+        :param _builtins.str type: The type of the scaling policy. Valid values: `Pods`, `Percent`.
+        :param _builtins.int value: The amount of change permitted by the policy. Min: `1`.
+        """
+        pulumi.set(__self__, "period_seconds", period_seconds)
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "value", value)
+
+    @_builtins.property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> _builtins.int:
+        """
+        The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @_builtins.property
+    @pulumi.getter
+    def type(self) -> _builtins.str:
+        """
+        The type of the scaling policy. Valid values: `Pods`, `Percent`.
+        """
+        return pulumi.get(self, "type")
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> _builtins.int:
+        """
+        The amount of change permitted by the policy. Min: `1`.
+        """
+        return pulumi.get(self, "value")
 
 
 @pulumi.output_type
@@ -17327,7 +17730,9 @@ class WorkloadOptionsAutoscalingKedaAdvanced(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "scalingModifiers":
+        if key == "horizontalPodAutoscalerConfig":
+            suggest = "horizontal_pod_autoscaler_config"
+        elif key == "scalingModifiers":
             suggest = "scaling_modifiers"
 
         if suggest:
@@ -17342,12 +17747,24 @@ class WorkloadOptionsAutoscalingKedaAdvanced(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
+                 horizontal_pod_autoscaler_config: Optional['outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig'] = None,
                  scaling_modifiers: Optional['outputs.WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers'] = None):
         """
+        :param 'WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs' horizontal_pod_autoscaler_config: Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
         :param 'WorkloadOptionsAutoscalingKedaAdvancedScalingModifiersArgs' scaling_modifiers: Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
         """
+        if horizontal_pod_autoscaler_config is not None:
+            pulumi.set(__self__, "horizontal_pod_autoscaler_config", horizontal_pod_autoscaler_config)
         if scaling_modifiers is not None:
             pulumi.set(__self__, "scaling_modifiers", scaling_modifiers)
+
+    @_builtins.property
+    @pulumi.getter(name="horizontalPodAutoscalerConfig")
+    def horizontal_pod_autoscaler_config(self) -> Optional['outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig']:
+        """
+        Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+        """
+        return pulumi.get(self, "horizontal_pod_autoscaler_config")
 
     @_builtins.property
     @pulumi.getter(name="scalingModifiers")
@@ -17356,6 +17773,313 @@ class WorkloadOptionsAutoscalingKedaAdvanced(dict):
         Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
         """
         return pulumi.get(self, "scaling_modifiers")
+
+
+@pulumi.output_type
+class WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig(dict):
+    def __init__(__self__, *,
+                 behavior: Optional['outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior'] = None):
+        """
+        :param 'WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs' behavior: Configures the scaling behavior of the HPA that KEDA creates for this workload.
+        """
+        if behavior is not None:
+            pulumi.set(__self__, "behavior", behavior)
+
+    @_builtins.property
+    @pulumi.getter
+    def behavior(self) -> Optional['outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior']:
+        """
+        Configures the scaling behavior of the HPA that KEDA creates for this workload.
+        """
+        return pulumi.get(self, "behavior")
+
+
+@pulumi.output_type
+class WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "scaleDown":
+            suggest = "scale_down"
+        elif key == "scaleUp":
+            suggest = "scale_up"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 scale_down: Optional['outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown'] = None,
+                 scale_up: Optional['outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp'] = None):
+        """
+        :param 'WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs' scale_down: Scaling policies for scaling down.
+        :param 'WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs' scale_up: Scaling policies for scaling up.
+        """
+        if scale_down is not None:
+            pulumi.set(__self__, "scale_down", scale_down)
+        if scale_up is not None:
+            pulumi.set(__self__, "scale_up", scale_up)
+
+    @_builtins.property
+    @pulumi.getter(name="scaleDown")
+    def scale_down(self) -> Optional['outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown']:
+        """
+        Scaling policies for scaling down.
+        """
+        return pulumi.get(self, "scale_down")
+
+    @_builtins.property
+    @pulumi.getter(name="scaleUp")
+    def scale_up(self) -> Optional['outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp']:
+        """
+        Scaling policies for scaling up.
+        """
+        return pulumi.get(self, "scale_up")
+
+
+@pulumi.output_type
+class WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "selectPolicy":
+            suggest = "select_policy"
+        elif key == "stabilizationWindowSeconds":
+            suggest = "stabilization_window_seconds"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 policies: Optional[Sequence['outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy']] = None,
+                 select_policy: Optional[_builtins.str] = None,
+                 stabilization_window_seconds: Optional[_builtins.int] = None):
+        """
+        :param Sequence['WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs'] policies: A scaling policy that can be used during scaling.
+        :param _builtins.str select_policy: Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+        :param _builtins.int stabilization_window_seconds: Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+        """
+        if policies is not None:
+            pulumi.set(__self__, "policies", policies)
+        if select_policy is not None:
+            pulumi.set(__self__, "select_policy", select_policy)
+        if stabilization_window_seconds is not None:
+            pulumi.set(__self__, "stabilization_window_seconds", stabilization_window_seconds)
+
+    @_builtins.property
+    @pulumi.getter
+    def policies(self) -> Optional[Sequence['outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy']]:
+        """
+        A scaling policy that can be used during scaling.
+        """
+        return pulumi.get(self, "policies")
+
+    @_builtins.property
+    @pulumi.getter(name="selectPolicy")
+    def select_policy(self) -> Optional[_builtins.str]:
+        """
+        Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+        """
+        return pulumi.get(self, "select_policy")
+
+    @_builtins.property
+    @pulumi.getter(name="stabilizationWindowSeconds")
+    def stabilization_window_seconds(self) -> Optional[_builtins.int]:
+        """
+        Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+        """
+        return pulumi.get(self, "stabilization_window_seconds")
+
+
+@pulumi.output_type
+class WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "periodSeconds":
+            suggest = "period_seconds"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 period_seconds: _builtins.int,
+                 type: _builtins.str,
+                 value: _builtins.int):
+        """
+        :param _builtins.int period_seconds: The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+        :param _builtins.str type: The type of the scaling policy. Valid values: `Pods`, `Percent`.
+        :param _builtins.int value: The amount of change permitted by the policy. Min: `1`.
+        """
+        pulumi.set(__self__, "period_seconds", period_seconds)
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "value", value)
+
+    @_builtins.property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> _builtins.int:
+        """
+        The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @_builtins.property
+    @pulumi.getter
+    def type(self) -> _builtins.str:
+        """
+        The type of the scaling policy. Valid values: `Pods`, `Percent`.
+        """
+        return pulumi.get(self, "type")
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> _builtins.int:
+        """
+        The amount of change permitted by the policy. Min: `1`.
+        """
+        return pulumi.get(self, "value")
+
+
+@pulumi.output_type
+class WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "selectPolicy":
+            suggest = "select_policy"
+        elif key == "stabilizationWindowSeconds":
+            suggest = "stabilization_window_seconds"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 policies: Optional[Sequence['outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy']] = None,
+                 select_policy: Optional[_builtins.str] = None,
+                 stabilization_window_seconds: Optional[_builtins.int] = None):
+        """
+        :param Sequence['WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs'] policies: A scaling policy that can be used during scaling.
+        :param _builtins.str select_policy: Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+        :param _builtins.int stabilization_window_seconds: Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+        """
+        if policies is not None:
+            pulumi.set(__self__, "policies", policies)
+        if select_policy is not None:
+            pulumi.set(__self__, "select_policy", select_policy)
+        if stabilization_window_seconds is not None:
+            pulumi.set(__self__, "stabilization_window_seconds", stabilization_window_seconds)
+
+    @_builtins.property
+    @pulumi.getter
+    def policies(self) -> Optional[Sequence['outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy']]:
+        """
+        A scaling policy that can be used during scaling.
+        """
+        return pulumi.get(self, "policies")
+
+    @_builtins.property
+    @pulumi.getter(name="selectPolicy")
+    def select_policy(self) -> Optional[_builtins.str]:
+        """
+        Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+        """
+        return pulumi.get(self, "select_policy")
+
+    @_builtins.property
+    @pulumi.getter(name="stabilizationWindowSeconds")
+    def stabilization_window_seconds(self) -> Optional[_builtins.int]:
+        """
+        Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+        """
+        return pulumi.get(self, "stabilization_window_seconds")
+
+
+@pulumi.output_type
+class WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "periodSeconds":
+            suggest = "period_seconds"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 period_seconds: _builtins.int,
+                 type: _builtins.str,
+                 value: _builtins.int):
+        """
+        :param _builtins.int period_seconds: The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+        :param _builtins.str type: The type of the scaling policy. Valid values: `Pods`, `Percent`.
+        :param _builtins.int value: The amount of change permitted by the policy. Min: `1`.
+        """
+        pulumi.set(__self__, "period_seconds", period_seconds)
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "value", value)
+
+    @_builtins.property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> _builtins.int:
+        """
+        The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @_builtins.property
+    @pulumi.getter
+    def type(self) -> _builtins.str:
+        """
+        The type of the scaling policy. Valid values: `Pods`, `Percent`.
+        """
+        return pulumi.get(self, "type")
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> _builtins.int:
+        """
+        The amount of change permitted by the policy. Min: `1`.
+        """
+        return pulumi.get(self, "value")
 
 
 @pulumi.output_type
@@ -22446,12 +23170,24 @@ class GetWorkloadLocalOptionAutoscalingKedaResult(dict):
 @pulumi.output_type
 class GetWorkloadLocalOptionAutoscalingKedaAdvancedResult(dict):
     def __init__(__self__, *,
+                 horizontal_pod_autoscaler_configs: Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigResult']] = None,
                  scaling_modifiers: Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierResult']] = None):
         """
+        :param Sequence['GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs'] horizontal_pod_autoscaler_configs: Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
         :param Sequence['GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArgs'] scaling_modifiers: Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
         """
+        if horizontal_pod_autoscaler_configs is not None:
+            pulumi.set(__self__, "horizontal_pod_autoscaler_configs", horizontal_pod_autoscaler_configs)
         if scaling_modifiers is not None:
             pulumi.set(__self__, "scaling_modifiers", scaling_modifiers)
+
+    @_builtins.property
+    @pulumi.getter(name="horizontalPodAutoscalerConfigs")
+    def horizontal_pod_autoscaler_configs(self) -> Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigResult']]:
+        """
+        Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+        """
+        return pulumi.get(self, "horizontal_pod_autoscaler_configs")
 
     @_builtins.property
     @pulumi.getter(name="scalingModifiers")
@@ -22460,6 +23196,218 @@ class GetWorkloadLocalOptionAutoscalingKedaAdvancedResult(dict):
         Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
         """
         return pulumi.get(self, "scaling_modifiers")
+
+
+@pulumi.output_type
+class GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigResult(dict):
+    def __init__(__self__, *,
+                 behaviors: Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorResult']] = None):
+        """
+        :param Sequence['GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs'] behaviors: Configures the scaling behavior of the HPA that KEDA creates for this workload.
+        """
+        if behaviors is not None:
+            pulumi.set(__self__, "behaviors", behaviors)
+
+    @_builtins.property
+    @pulumi.getter
+    def behaviors(self) -> Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorResult']]:
+        """
+        Configures the scaling behavior of the HPA that KEDA creates for this workload.
+        """
+        return pulumi.get(self, "behaviors")
+
+
+@pulumi.output_type
+class GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorResult(dict):
+    def __init__(__self__, *,
+                 scale_downs: Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownResult']] = None,
+                 scale_ups: Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpResult']] = None):
+        """
+        :param Sequence['GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs'] scale_downs: Scaling policies for scaling down.
+        :param Sequence['GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs'] scale_ups: Scaling policies for scaling up.
+        """
+        if scale_downs is not None:
+            pulumi.set(__self__, "scale_downs", scale_downs)
+        if scale_ups is not None:
+            pulumi.set(__self__, "scale_ups", scale_ups)
+
+    @_builtins.property
+    @pulumi.getter(name="scaleDowns")
+    def scale_downs(self) -> Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownResult']]:
+        """
+        Scaling policies for scaling down.
+        """
+        return pulumi.get(self, "scale_downs")
+
+    @_builtins.property
+    @pulumi.getter(name="scaleUps")
+    def scale_ups(self) -> Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpResult']]:
+        """
+        Scaling policies for scaling up.
+        """
+        return pulumi.get(self, "scale_ups")
+
+
+@pulumi.output_type
+class GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownResult(dict):
+    def __init__(__self__, *,
+                 select_policy: _builtins.str,
+                 stabilization_window_seconds: _builtins.int,
+                 policies: Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyResult']] = None):
+        """
+        :param _builtins.str select_policy: Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+        :param _builtins.int stabilization_window_seconds: Number of seconds for which past recommendations are considered while scaling.
+        :param Sequence['GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs'] policies: A scaling policy that can be used during scaling.
+        """
+        pulumi.set(__self__, "select_policy", select_policy)
+        pulumi.set(__self__, "stabilization_window_seconds", stabilization_window_seconds)
+        if policies is not None:
+            pulumi.set(__self__, "policies", policies)
+
+    @_builtins.property
+    @pulumi.getter(name="selectPolicy")
+    def select_policy(self) -> _builtins.str:
+        """
+        Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+        """
+        return pulumi.get(self, "select_policy")
+
+    @_builtins.property
+    @pulumi.getter(name="stabilizationWindowSeconds")
+    def stabilization_window_seconds(self) -> _builtins.int:
+        """
+        Number of seconds for which past recommendations are considered while scaling.
+        """
+        return pulumi.get(self, "stabilization_window_seconds")
+
+    @_builtins.property
+    @pulumi.getter
+    def policies(self) -> Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyResult']]:
+        """
+        A scaling policy that can be used during scaling.
+        """
+        return pulumi.get(self, "policies")
+
+
+@pulumi.output_type
+class GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyResult(dict):
+    def __init__(__self__, *,
+                 period_seconds: _builtins.int,
+                 type: _builtins.str,
+                 value: _builtins.int):
+        """
+        :param _builtins.int period_seconds: The window of time for which the policy holds true.
+        :param _builtins.str type: The type of the scaling policy.
+        :param _builtins.int value: The amount of change permitted by the policy.
+        """
+        pulumi.set(__self__, "period_seconds", period_seconds)
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "value", value)
+
+    @_builtins.property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> _builtins.int:
+        """
+        The window of time for which the policy holds true.
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @_builtins.property
+    @pulumi.getter
+    def type(self) -> _builtins.str:
+        """
+        The type of the scaling policy.
+        """
+        return pulumi.get(self, "type")
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> _builtins.int:
+        """
+        The amount of change permitted by the policy.
+        """
+        return pulumi.get(self, "value")
+
+
+@pulumi.output_type
+class GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpResult(dict):
+    def __init__(__self__, *,
+                 select_policy: _builtins.str,
+                 stabilization_window_seconds: _builtins.int,
+                 policies: Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyResult']] = None):
+        """
+        :param _builtins.str select_policy: Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+        :param _builtins.int stabilization_window_seconds: Number of seconds for which past recommendations are considered while scaling.
+        :param Sequence['GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs'] policies: A scaling policy that can be used during scaling.
+        """
+        pulumi.set(__self__, "select_policy", select_policy)
+        pulumi.set(__self__, "stabilization_window_seconds", stabilization_window_seconds)
+        if policies is not None:
+            pulumi.set(__self__, "policies", policies)
+
+    @_builtins.property
+    @pulumi.getter(name="selectPolicy")
+    def select_policy(self) -> _builtins.str:
+        """
+        Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+        """
+        return pulumi.get(self, "select_policy")
+
+    @_builtins.property
+    @pulumi.getter(name="stabilizationWindowSeconds")
+    def stabilization_window_seconds(self) -> _builtins.int:
+        """
+        Number of seconds for which past recommendations are considered while scaling.
+        """
+        return pulumi.get(self, "stabilization_window_seconds")
+
+    @_builtins.property
+    @pulumi.getter
+    def policies(self) -> Optional[Sequence['outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyResult']]:
+        """
+        A scaling policy that can be used during scaling.
+        """
+        return pulumi.get(self, "policies")
+
+
+@pulumi.output_type
+class GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyResult(dict):
+    def __init__(__self__, *,
+                 period_seconds: _builtins.int,
+                 type: _builtins.str,
+                 value: _builtins.int):
+        """
+        :param _builtins.int period_seconds: The window of time for which the policy holds true.
+        :param _builtins.str type: The type of the scaling policy.
+        :param _builtins.int value: The amount of change permitted by the policy.
+        """
+        pulumi.set(__self__, "period_seconds", period_seconds)
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "value", value)
+
+    @_builtins.property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> _builtins.int:
+        """
+        The window of time for which the policy holds true.
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @_builtins.property
+    @pulumi.getter
+    def type(self) -> _builtins.str:
+        """
+        The type of the scaling policy.
+        """
+        return pulumi.get(self, "type")
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> _builtins.int:
+        """
+        The amount of change permitted by the policy.
+        """
+        return pulumi.get(self, "value")
 
 
 @pulumi.output_type
@@ -22951,12 +23899,24 @@ class GetWorkloadOptionAutoscalingKedaResult(dict):
 @pulumi.output_type
 class GetWorkloadOptionAutoscalingKedaAdvancedResult(dict):
     def __init__(__self__, *,
+                 horizontal_pod_autoscaler_configs: Optional[Sequence['outputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigResult']] = None,
                  scaling_modifiers: Optional[Sequence['outputs.GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierResult']] = None):
         """
+        :param Sequence['GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs'] horizontal_pod_autoscaler_configs: Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
         :param Sequence['GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArgs'] scaling_modifiers: Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
         """
+        if horizontal_pod_autoscaler_configs is not None:
+            pulumi.set(__self__, "horizontal_pod_autoscaler_configs", horizontal_pod_autoscaler_configs)
         if scaling_modifiers is not None:
             pulumi.set(__self__, "scaling_modifiers", scaling_modifiers)
+
+    @_builtins.property
+    @pulumi.getter(name="horizontalPodAutoscalerConfigs")
+    def horizontal_pod_autoscaler_configs(self) -> Optional[Sequence['outputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigResult']]:
+        """
+        Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+        """
+        return pulumi.get(self, "horizontal_pod_autoscaler_configs")
 
     @_builtins.property
     @pulumi.getter(name="scalingModifiers")
@@ -22965,6 +23925,218 @@ class GetWorkloadOptionAutoscalingKedaAdvancedResult(dict):
         Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
         """
         return pulumi.get(self, "scaling_modifiers")
+
+
+@pulumi.output_type
+class GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigResult(dict):
+    def __init__(__self__, *,
+                 behaviors: Optional[Sequence['outputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorResult']] = None):
+        """
+        :param Sequence['GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs'] behaviors: Configures the scaling behavior of the HPA that KEDA creates for this workload.
+        """
+        if behaviors is not None:
+            pulumi.set(__self__, "behaviors", behaviors)
+
+    @_builtins.property
+    @pulumi.getter
+    def behaviors(self) -> Optional[Sequence['outputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorResult']]:
+        """
+        Configures the scaling behavior of the HPA that KEDA creates for this workload.
+        """
+        return pulumi.get(self, "behaviors")
+
+
+@pulumi.output_type
+class GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorResult(dict):
+    def __init__(__self__, *,
+                 scale_downs: Optional[Sequence['outputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownResult']] = None,
+                 scale_ups: Optional[Sequence['outputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpResult']] = None):
+        """
+        :param Sequence['GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs'] scale_downs: Scaling policies for scaling down.
+        :param Sequence['GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs'] scale_ups: Scaling policies for scaling up.
+        """
+        if scale_downs is not None:
+            pulumi.set(__self__, "scale_downs", scale_downs)
+        if scale_ups is not None:
+            pulumi.set(__self__, "scale_ups", scale_ups)
+
+    @_builtins.property
+    @pulumi.getter(name="scaleDowns")
+    def scale_downs(self) -> Optional[Sequence['outputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownResult']]:
+        """
+        Scaling policies for scaling down.
+        """
+        return pulumi.get(self, "scale_downs")
+
+    @_builtins.property
+    @pulumi.getter(name="scaleUps")
+    def scale_ups(self) -> Optional[Sequence['outputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpResult']]:
+        """
+        Scaling policies for scaling up.
+        """
+        return pulumi.get(self, "scale_ups")
+
+
+@pulumi.output_type
+class GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownResult(dict):
+    def __init__(__self__, *,
+                 select_policy: _builtins.str,
+                 stabilization_window_seconds: _builtins.int,
+                 policies: Optional[Sequence['outputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyResult']] = None):
+        """
+        :param _builtins.str select_policy: Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+        :param _builtins.int stabilization_window_seconds: Number of seconds for which past recommendations are considered while scaling.
+        :param Sequence['GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs'] policies: A scaling policy that can be used during scaling.
+        """
+        pulumi.set(__self__, "select_policy", select_policy)
+        pulumi.set(__self__, "stabilization_window_seconds", stabilization_window_seconds)
+        if policies is not None:
+            pulumi.set(__self__, "policies", policies)
+
+    @_builtins.property
+    @pulumi.getter(name="selectPolicy")
+    def select_policy(self) -> _builtins.str:
+        """
+        Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+        """
+        return pulumi.get(self, "select_policy")
+
+    @_builtins.property
+    @pulumi.getter(name="stabilizationWindowSeconds")
+    def stabilization_window_seconds(self) -> _builtins.int:
+        """
+        Number of seconds for which past recommendations are considered while scaling.
+        """
+        return pulumi.get(self, "stabilization_window_seconds")
+
+    @_builtins.property
+    @pulumi.getter
+    def policies(self) -> Optional[Sequence['outputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyResult']]:
+        """
+        A scaling policy that can be used during scaling.
+        """
+        return pulumi.get(self, "policies")
+
+
+@pulumi.output_type
+class GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyResult(dict):
+    def __init__(__self__, *,
+                 period_seconds: _builtins.int,
+                 type: _builtins.str,
+                 value: _builtins.int):
+        """
+        :param _builtins.int period_seconds: The window of time for which the policy holds true.
+        :param _builtins.str type: The type of the scaling policy.
+        :param _builtins.int value: The amount of change permitted by the policy.
+        """
+        pulumi.set(__self__, "period_seconds", period_seconds)
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "value", value)
+
+    @_builtins.property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> _builtins.int:
+        """
+        The window of time for which the policy holds true.
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @_builtins.property
+    @pulumi.getter
+    def type(self) -> _builtins.str:
+        """
+        The type of the scaling policy.
+        """
+        return pulumi.get(self, "type")
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> _builtins.int:
+        """
+        The amount of change permitted by the policy.
+        """
+        return pulumi.get(self, "value")
+
+
+@pulumi.output_type
+class GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpResult(dict):
+    def __init__(__self__, *,
+                 select_policy: _builtins.str,
+                 stabilization_window_seconds: _builtins.int,
+                 policies: Optional[Sequence['outputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyResult']] = None):
+        """
+        :param _builtins.str select_policy: Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+        :param _builtins.int stabilization_window_seconds: Number of seconds for which past recommendations are considered while scaling.
+        :param Sequence['GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs'] policies: A scaling policy that can be used during scaling.
+        """
+        pulumi.set(__self__, "select_policy", select_policy)
+        pulumi.set(__self__, "stabilization_window_seconds", stabilization_window_seconds)
+        if policies is not None:
+            pulumi.set(__self__, "policies", policies)
+
+    @_builtins.property
+    @pulumi.getter(name="selectPolicy")
+    def select_policy(self) -> _builtins.str:
+        """
+        Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+        """
+        return pulumi.get(self, "select_policy")
+
+    @_builtins.property
+    @pulumi.getter(name="stabilizationWindowSeconds")
+    def stabilization_window_seconds(self) -> _builtins.int:
+        """
+        Number of seconds for which past recommendations are considered while scaling.
+        """
+        return pulumi.get(self, "stabilization_window_seconds")
+
+    @_builtins.property
+    @pulumi.getter
+    def policies(self) -> Optional[Sequence['outputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyResult']]:
+        """
+        A scaling policy that can be used during scaling.
+        """
+        return pulumi.get(self, "policies")
+
+
+@pulumi.output_type
+class GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyResult(dict):
+    def __init__(__self__, *,
+                 period_seconds: _builtins.int,
+                 type: _builtins.str,
+                 value: _builtins.int):
+        """
+        :param _builtins.int period_seconds: The window of time for which the policy holds true.
+        :param _builtins.str type: The type of the scaling policy.
+        :param _builtins.int value: The amount of change permitted by the policy.
+        """
+        pulumi.set(__self__, "period_seconds", period_seconds)
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "value", value)
+
+    @_builtins.property
+    @pulumi.getter(name="periodSeconds")
+    def period_seconds(self) -> _builtins.int:
+        """
+        The window of time for which the policy holds true.
+        """
+        return pulumi.get(self, "period_seconds")
+
+    @_builtins.property
+    @pulumi.getter
+    def type(self) -> _builtins.str:
+        """
+        The type of the scaling policy.
+        """
+        return pulumi.get(self, "type")
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> _builtins.int:
+        """
+        The amount of change permitted by the policy.
+        """
+        return pulumi.get(self, "value")
 
 
 @pulumi.output_type

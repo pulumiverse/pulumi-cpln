@@ -17,6 +17,8 @@ type DomainRoute struct {
 
 	// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
 	Canaries DomainRouteCanaryArrayOutput `pulumi:"canaries"`
+	// When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+	CaseInsensitive pulumi.BoolPtrOutput `pulumi:"caseInsensitive"`
 	// The self link of the domain to add the route to.
 	DomainLink pulumi.StringOutput `pulumi:"domainLink"`
 	// The port the route corresponds to. Default: 443
@@ -81,6 +83,8 @@ func GetDomainRoute(ctx *pulumi.Context,
 type domainRouteState struct {
 	// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
 	Canaries []DomainRouteCanary `pulumi:"canaries"`
+	// When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+	CaseInsensitive *bool `pulumi:"caseInsensitive"`
 	// The self link of the domain to add the route to.
 	DomainLink *string `pulumi:"domainLink"`
 	// The port the route corresponds to. Default: 443
@@ -110,6 +114,8 @@ type domainRouteState struct {
 type DomainRouteState struct {
 	// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
 	Canaries DomainRouteCanaryArrayInput
+	// When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+	CaseInsensitive pulumi.BoolPtrInput
 	// The self link of the domain to add the route to.
 	DomainLink pulumi.StringPtrInput
 	// The port the route corresponds to. Default: 443
@@ -143,6 +149,8 @@ func (DomainRouteState) ElementType() reflect.Type {
 type domainRouteArgs struct {
 	// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
 	Canaries []DomainRouteCanary `pulumi:"canaries"`
+	// When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+	CaseInsensitive *bool `pulumi:"caseInsensitive"`
 	// The self link of the domain to add the route to.
 	DomainLink string `pulumi:"domainLink"`
 	// The port the route corresponds to. Default: 443
@@ -173,6 +181,8 @@ type domainRouteArgs struct {
 type DomainRouteArgs struct {
 	// Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
 	Canaries DomainRouteCanaryArrayInput
+	// When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+	CaseInsensitive pulumi.BoolPtrInput
 	// The self link of the domain to add the route to.
 	DomainLink pulumi.StringInput
 	// The port the route corresponds to. Default: 443
@@ -289,6 +299,11 @@ func (o DomainRouteOutput) ToDomainRouteOutputWithContext(ctx context.Context) D
 // Routes a weighted percentage of traffic to one or more additional workloads. The combined weight of all canaries on a route must not exceed 100; the remaining weight goes to the primary workload. Only supported on http and http2 ports.
 func (o DomainRouteOutput) Canaries() DomainRouteCanaryArrayOutput {
 	return o.ApplyT(func(v *DomainRoute) DomainRouteCanaryArrayOutput { return v.Canaries }).(DomainRouteCanaryArrayOutput)
+}
+
+// When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+func (o DomainRouteOutput) CaseInsensitive() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *DomainRoute) pulumi.BoolPtrOutput { return v.CaseInsensitive }).(pulumi.BoolPtrOutput)
 }
 
 // The self link of the domain to add the route to.

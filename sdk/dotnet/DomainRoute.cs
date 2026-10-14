@@ -20,6 +20,12 @@ namespace Pulumiverse.Cpln
         public Output<ImmutableArray<Outputs.DomainRouteCanary>> Canaries { get; private set; } = null!;
 
         /// <summary>
+        /// When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+        /// </summary>
+        [Output("caseInsensitive")]
+        public Output<bool?> CaseInsensitive { get; private set; } = null!;
+
+        /// <summary>
         /// The self link of the domain to add the route to.
         /// </summary>
         [Output("domainLink")]
@@ -151,6 +157,12 @@ namespace Pulumiverse.Cpln
         }
 
         /// <summary>
+        /// When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+        /// </summary>
+        [Input("caseInsensitive")]
+        public Input<bool>? CaseInsensitive { get; set; }
+
+        /// <summary>
         /// The self link of the domain to add the route to.
         /// </summary>
         [Input("domainLink", required: true)]
@@ -247,6 +259,12 @@ namespace Pulumiverse.Cpln
             get => _canaries ?? (_canaries = new InputList<Inputs.DomainRouteCanaryGetArgs>());
             set => _canaries = value;
         }
+
+        /// <summary>
+        /// When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+        /// </summary>
+        [Input("caseInsensitive")]
+        public Input<bool>? CaseInsensitive { get; set; }
 
         /// <summary>
         /// The self link of the domain to add the route to.

@@ -229,6 +229,10 @@ export interface DomainSpecPortRoute {
      */
     canaries?: pulumi.Input<pulumi.Input<inputs.DomainSpecPortRouteCanary>[]>;
     /**
+     * When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+     */
+    caseInsensitive?: pulumi.Input<boolean>;
+    /**
      * Modify the headers for all http requests for this route.
      */
     headers?: pulumi.Input<inputs.DomainSpecPortRouteHeaders>;
@@ -2264,6 +2268,10 @@ export interface GetWorkloadLocalOptionAutoscalingKedaArgs {
 
 export interface GetWorkloadLocalOptionAutoscalingKedaAdvanced {
     /**
+     * Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+     */
+    horizontalPodAutoscalerConfigs?: inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig[];
+    /**
      * Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
      */
     scalingModifiers?: inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier[];
@@ -2271,9 +2279,169 @@ export interface GetWorkloadLocalOptionAutoscalingKedaAdvanced {
 
 export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedArgs {
     /**
+     * Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+     */
+    horizontalPodAutoscalerConfigs?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs>[]>;
+    /**
      * Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
      */
     scalingModifiers?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArgs>[]>;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+    /**
+     * Configures the scaling behavior of the HPA that KEDA creates for this workload.
+     */
+    behaviors?: inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior[];
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs {
+    /**
+     * Configures the scaling behavior of the HPA that KEDA creates for this workload.
+     */
+    behaviors?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs>[]>;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+    /**
+     * Scaling policies for scaling down.
+     */
+    scaleDowns?: inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown[];
+    /**
+     * Scaling policies for scaling up.
+     */
+    scaleUps?: inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp[];
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs {
+    /**
+     * Scaling policies for scaling down.
+     */
+    scaleDowns?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs>[]>;
+    /**
+     * Scaling policies for scaling up.
+     */
+    scaleUps?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs>[]>;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy[];
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+     */
+    selectPolicy?: string;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling.
+     */
+    stabilizationWindowSeconds?: number;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs>[]>;
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+     */
+    selectPolicy?: pulumi.Input<string>;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling.
+     */
+    stabilizationWindowSeconds?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy {
+    /**
+     * The window of time for which the policy holds true.
+     */
+    periodSeconds?: number;
+    /**
+     * The type of the scaling policy.
+     */
+    type?: string;
+    /**
+     * The amount of change permitted by the policy.
+     */
+    value?: number;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs {
+    /**
+     * The window of time for which the policy holds true.
+     */
+    periodSeconds?: pulumi.Input<number>;
+    /**
+     * The type of the scaling policy.
+     */
+    type?: pulumi.Input<string>;
+    /**
+     * The amount of change permitted by the policy.
+     */
+    value?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy[];
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+     */
+    selectPolicy?: string;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling.
+     */
+    stabilizationWindowSeconds?: number;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: pulumi.Input<pulumi.Input<inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs>[]>;
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+     */
+    selectPolicy?: pulumi.Input<string>;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling.
+     */
+    stabilizationWindowSeconds?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy {
+    /**
+     * The window of time for which the policy holds true.
+     */
+    periodSeconds?: number;
+    /**
+     * The type of the scaling policy.
+     */
+    type?: string;
+    /**
+     * The amount of change permitted by the policy.
+     */
+    value?: number;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs {
+    /**
+     * The window of time for which the policy holds true.
+     */
+    periodSeconds?: pulumi.Input<number>;
+    /**
+     * The type of the scaling policy.
+     */
+    type?: pulumi.Input<string>;
+    /**
+     * The amount of change permitted by the policy.
+     */
+    value?: pulumi.Input<number>;
 }
 
 export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier {
@@ -2626,6 +2794,10 @@ export interface GetWorkloadOptionAutoscalingKedaArgs {
 
 export interface GetWorkloadOptionAutoscalingKedaAdvanced {
     /**
+     * Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+     */
+    horizontalPodAutoscalerConfigs?: inputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig[];
+    /**
      * Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
      */
     scalingModifiers?: inputs.GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier[];
@@ -2633,9 +2805,169 @@ export interface GetWorkloadOptionAutoscalingKedaAdvanced {
 
 export interface GetWorkloadOptionAutoscalingKedaAdvancedArgs {
     /**
+     * Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+     */
+    horizontalPodAutoscalerConfigs?: pulumi.Input<pulumi.Input<inputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs>[]>;
+    /**
      * Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
      */
     scalingModifiers?: pulumi.Input<pulumi.Input<inputs.GetWorkloadOptionAutoscalingKedaAdvancedScalingModifierArgs>[]>;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+    /**
+     * Configures the scaling behavior of the HPA that KEDA creates for this workload.
+     */
+    behaviors?: inputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior[];
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs {
+    /**
+     * Configures the scaling behavior of the HPA that KEDA creates for this workload.
+     */
+    behaviors?: pulumi.Input<pulumi.Input<inputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs>[]>;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+    /**
+     * Scaling policies for scaling down.
+     */
+    scaleDowns?: inputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown[];
+    /**
+     * Scaling policies for scaling up.
+     */
+    scaleUps?: inputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp[];
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorArgs {
+    /**
+     * Scaling policies for scaling down.
+     */
+    scaleDowns?: pulumi.Input<pulumi.Input<inputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs>[]>;
+    /**
+     * Scaling policies for scaling up.
+     */
+    scaleUps?: pulumi.Input<pulumi.Input<inputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs>[]>;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: inputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy[];
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+     */
+    selectPolicy?: string;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling.
+     */
+    stabilizationWindowSeconds?: number;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownArgs {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: pulumi.Input<pulumi.Input<inputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs>[]>;
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+     */
+    selectPolicy?: pulumi.Input<string>;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling.
+     */
+    stabilizationWindowSeconds?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy {
+    /**
+     * The window of time for which the policy holds true.
+     */
+    periodSeconds?: number;
+    /**
+     * The type of the scaling policy.
+     */
+    type?: string;
+    /**
+     * The amount of change permitted by the policy.
+     */
+    value?: number;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicyArgs {
+    /**
+     * The window of time for which the policy holds true.
+     */
+    periodSeconds?: pulumi.Input<number>;
+    /**
+     * The type of the scaling policy.
+     */
+    type?: pulumi.Input<string>;
+    /**
+     * The amount of change permitted by the policy.
+     */
+    value?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: inputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy[];
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+     */
+    selectPolicy?: string;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling.
+     */
+    stabilizationWindowSeconds?: number;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpArgs {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: pulumi.Input<pulumi.Input<inputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs>[]>;
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+     */
+    selectPolicy?: pulumi.Input<string>;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling.
+     */
+    stabilizationWindowSeconds?: pulumi.Input<number>;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy {
+    /**
+     * The window of time for which the policy holds true.
+     */
+    periodSeconds?: number;
+    /**
+     * The type of the scaling policy.
+     */
+    type?: string;
+    /**
+     * The amount of change permitted by the policy.
+     */
+    value?: number;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicyArgs {
+    /**
+     * The window of time for which the policy holds true.
+     */
+    periodSeconds?: pulumi.Input<number>;
+    /**
+     * The type of the scaling policy.
+     */
+    type?: pulumi.Input<string>;
+    /**
+     * The amount of change permitted by the policy.
+     */
+    value?: pulumi.Input<number>;
 }
 
 export interface GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier {
@@ -3394,6 +3726,10 @@ export interface Mk8sAddOns {
     dashboard?: pulumi.Input<boolean>;
     headlamp?: pulumi.Input<boolean>;
     /**
+     * Installs Kata Containers for VM-isolated workloads on node pools labeled `cpln.io/nodeType=vm`.
+     */
+    kata?: pulumi.Input<boolean>;
+    /**
      * Enables type=vm workloads by installing the KubeVirt and CDI operators on the cluster.
      */
     kubevirt?: pulumi.Input<inputs.Mk8sAddOnsKubevirt>;
@@ -3496,6 +3832,10 @@ export interface Mk8sAddOnsByokConfig {
      * Longhorn persistent volume settings.
      */
     longhorn?: pulumi.Input<inputs.Mk8sAddOnsByokConfigLonghorn>;
+    /**
+     * Settings for the maintainer component.
+     */
+    maintainer?: pulumi.Input<inputs.Mk8sAddOnsByokConfigMaintainer>;
     /**
      * Configuration for the optional middlebox traffic shaper.
      */
@@ -3723,6 +4063,13 @@ export interface Mk8sAddOnsByokConfigLonghorn {
      * Replica factor for Longhorn volumes. Minimum: 1.
      */
     replicas?: pulumi.Input<number>;
+}
+
+export interface Mk8sAddOnsByokConfigMaintainer {
+    /**
+     * Additional environment variables injected into maintainer pods.
+     */
+    env?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }
 
 export interface Mk8sAddOnsByokConfigMiddlebox {
@@ -6421,9 +6768,91 @@ export interface WorkloadLocalOptionAutoscalingKeda {
 
 export interface WorkloadLocalOptionAutoscalingKedaAdvanced {
     /**
+     * Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+     */
+    horizontalPodAutoscalerConfig?: pulumi.Input<inputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig>;
+    /**
      * Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
      */
     scalingModifiers?: pulumi.Input<inputs.WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers>;
+}
+
+export interface WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+    /**
+     * Configures the scaling behavior of the HPA that KEDA creates for this workload.
+     */
+    behavior?: pulumi.Input<inputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior>;
+}
+
+export interface WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+    /**
+     * Scaling policies for scaling down.
+     */
+    scaleDown?: pulumi.Input<inputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown>;
+    /**
+     * Scaling policies for scaling up.
+     */
+    scaleUp?: pulumi.Input<inputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp>;
+}
+
+export interface WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: pulumi.Input<pulumi.Input<inputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy>[]>;
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+     */
+    selectPolicy?: pulumi.Input<string>;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+     */
+    stabilizationWindowSeconds?: pulumi.Input<number>;
+}
+
+export interface WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy {
+    /**
+     * The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+     */
+    periodSeconds: pulumi.Input<number>;
+    /**
+     * The type of the scaling policy. Valid values: `Pods`, `Percent`.
+     */
+    type: pulumi.Input<string>;
+    /**
+     * The amount of change permitted by the policy. Min: `1`.
+     */
+    value: pulumi.Input<number>;
+}
+
+export interface WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: pulumi.Input<pulumi.Input<inputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy>[]>;
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+     */
+    selectPolicy?: pulumi.Input<string>;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+     */
+    stabilizationWindowSeconds?: pulumi.Input<number>;
+}
+
+export interface WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy {
+    /**
+     * The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+     */
+    periodSeconds: pulumi.Input<number>;
+    /**
+     * The type of the scaling policy. Valid values: `Pods`, `Percent`.
+     */
+    type: pulumi.Input<string>;
+    /**
+     * The amount of change permitted by the policy. Min: `1`.
+     */
+    value: pulumi.Input<number>;
 }
 
 export interface WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers {
@@ -6602,9 +7031,91 @@ export interface WorkloadOptionsAutoscalingKeda {
 
 export interface WorkloadOptionsAutoscalingKedaAdvanced {
     /**
+     * Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+     */
+    horizontalPodAutoscalerConfig?: pulumi.Input<inputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig>;
+    /**
      * Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
      */
     scalingModifiers?: pulumi.Input<inputs.WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers>;
+}
+
+export interface WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+    /**
+     * Configures the scaling behavior of the HPA that KEDA creates for this workload.
+     */
+    behavior?: pulumi.Input<inputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior>;
+}
+
+export interface WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+    /**
+     * Scaling policies for scaling down.
+     */
+    scaleDown?: pulumi.Input<inputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown>;
+    /**
+     * Scaling policies for scaling up.
+     */
+    scaleUp?: pulumi.Input<inputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp>;
+}
+
+export interface WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: pulumi.Input<pulumi.Input<inputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy>[]>;
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+     */
+    selectPolicy?: pulumi.Input<string>;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+     */
+    stabilizationWindowSeconds?: pulumi.Input<number>;
+}
+
+export interface WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy {
+    /**
+     * The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+     */
+    periodSeconds: pulumi.Input<number>;
+    /**
+     * The type of the scaling policy. Valid values: `Pods`, `Percent`.
+     */
+    type: pulumi.Input<string>;
+    /**
+     * The amount of change permitted by the policy. Min: `1`.
+     */
+    value: pulumi.Input<number>;
+}
+
+export interface WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: pulumi.Input<pulumi.Input<inputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy>[]>;
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+     */
+    selectPolicy?: pulumi.Input<string>;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+     */
+    stabilizationWindowSeconds?: pulumi.Input<number>;
+}
+
+export interface WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy {
+    /**
+     * The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+     */
+    periodSeconds: pulumi.Input<number>;
+    /**
+     * The type of the scaling policy. Valid values: `Pods`, `Percent`.
+     */
+    type: pulumi.Input<string>;
+    /**
+     * The amount of change permitted by the policy. Min: `1`.
+     */
+    value: pulumi.Input<number>;
 }
 
 export interface WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers {

@@ -15,13 +15,21 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class WorkloadOptionsAutoscalingKedaAdvanced
     {
         /// <summary>
+        /// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+        /// </summary>
+        public readonly Outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig? HorizontalPodAutoscalerConfig;
+        /// <summary>
         /// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
         /// </summary>
         public readonly Outputs.WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers? ScalingModifiers;
 
         [OutputConstructor]
-        private WorkloadOptionsAutoscalingKedaAdvanced(Outputs.WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers? scalingModifiers)
+        private WorkloadOptionsAutoscalingKedaAdvanced(
+            Outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig? horizontalPodAutoscalerConfig,
+
+            Outputs.WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers? scalingModifiers)
         {
+            HorizontalPodAutoscalerConfig = horizontalPodAutoscalerConfig;
             ScalingModifiers = scalingModifiers;
         }
     }

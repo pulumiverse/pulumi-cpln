@@ -19,6 +19,10 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly ImmutableArray<Outputs.DomainSpecPortRouteCanary> Canaries;
         /// <summary>
+        /// When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+        /// </summary>
+        public readonly bool? CaseInsensitive;
+        /// <summary>
         /// Modify the headers for all http requests for this route.
         /// </summary>
         public readonly Outputs.DomainSpecPortRouteHeaders? Headers;
@@ -63,6 +67,8 @@ namespace Pulumiverse.Cpln.Outputs
         private DomainSpecPortRoute(
             ImmutableArray<Outputs.DomainSpecPortRouteCanary> canaries,
 
+            bool? caseInsensitive,
+
             Outputs.DomainSpecPortRouteHeaders? headers,
 
             string? hostPrefix,
@@ -84,6 +90,7 @@ namespace Pulumiverse.Cpln.Outputs
             string workloadLink)
         {
             Canaries = canaries;
+            CaseInsensitive = caseInsensitive;
             Headers = headers;
             HostPrefix = hostPrefix;
             HostRegex = hostRegex;

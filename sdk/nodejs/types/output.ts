@@ -229,6 +229,10 @@ export interface DomainSpecPortRoute {
      */
     canaries?: outputs.DomainSpecPortRouteCanary[];
     /**
+     * When true, the prefix is matched against the URI path without regard to case. Applies to prefix only; for a case-insensitive regex, start the regex with `(?i)`.
+     */
+    caseInsensitive?: boolean;
+    /**
      * Modify the headers for all http requests for this route.
      */
     headers?: outputs.DomainSpecPortRouteHeaders;
@@ -1609,9 +1613,91 @@ export interface GetWorkloadLocalOptionAutoscalingKeda {
 
 export interface GetWorkloadLocalOptionAutoscalingKedaAdvanced {
     /**
+     * Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+     */
+    horizontalPodAutoscalerConfigs?: outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig[];
+    /**
      * Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
      */
     scalingModifiers?: outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier[];
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+    /**
+     * Configures the scaling behavior of the HPA that KEDA creates for this workload.
+     */
+    behaviors?: outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior[];
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+    /**
+     * Scaling policies for scaling down.
+     */
+    scaleDowns?: outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown[];
+    /**
+     * Scaling policies for scaling up.
+     */
+    scaleUps?: outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp[];
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy[];
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+     */
+    selectPolicy: string;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling.
+     */
+    stabilizationWindowSeconds: number;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy {
+    /**
+     * The window of time for which the policy holds true.
+     */
+    periodSeconds: number;
+    /**
+     * The type of the scaling policy.
+     */
+    type: string;
+    /**
+     * The amount of change permitted by the policy.
+     */
+    value: number;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: outputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy[];
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+     */
+    selectPolicy: string;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling.
+     */
+    stabilizationWindowSeconds: number;
+}
+
+export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy {
+    /**
+     * The window of time for which the policy holds true.
+     */
+    periodSeconds: number;
+    /**
+     * The type of the scaling policy.
+     */
+    type: string;
+    /**
+     * The amount of change permitted by the policy.
+     */
+    value: number;
 }
 
 export interface GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifier {
@@ -1790,9 +1876,91 @@ export interface GetWorkloadOptionAutoscalingKeda {
 
 export interface GetWorkloadOptionAutoscalingKedaAdvanced {
     /**
+     * Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+     */
+    horizontalPodAutoscalerConfigs?: outputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig[];
+    /**
      * Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
      */
     scalingModifiers?: outputs.GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier[];
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+    /**
+     * Configures the scaling behavior of the HPA that KEDA creates for this workload.
+     */
+    behaviors?: outputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior[];
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+    /**
+     * Scaling policies for scaling down.
+     */
+    scaleDowns?: outputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown[];
+    /**
+     * Scaling policies for scaling up.
+     */
+    scaleUps?: outputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp[];
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: outputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy[];
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+     */
+    selectPolicy: string;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling.
+     */
+    stabilizationWindowSeconds: number;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy {
+    /**
+     * The window of time for which the policy holds true.
+     */
+    periodSeconds: number;
+    /**
+     * The type of the scaling policy.
+     */
+    type: string;
+    /**
+     * The amount of change permitted by the policy.
+     */
+    value: number;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: outputs.GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy[];
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+     */
+    selectPolicy: string;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling.
+     */
+    stabilizationWindowSeconds: number;
+}
+
+export interface GetWorkloadOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy {
+    /**
+     * The window of time for which the policy holds true.
+     */
+    periodSeconds: number;
+    /**
+     * The type of the scaling policy.
+     */
+    type: string;
+    /**
+     * The amount of change permitted by the policy.
+     */
+    value: number;
 }
 
 export interface GetWorkloadOptionAutoscalingKedaAdvancedScalingModifier {
@@ -2749,6 +2917,10 @@ export interface Mk8sAddOns {
     dashboard?: boolean;
     headlamp?: boolean;
     /**
+     * Installs Kata Containers for VM-isolated workloads on node pools labeled `cpln.io/nodeType=vm`.
+     */
+    kata?: boolean;
+    /**
      * Enables type=vm workloads by installing the KubeVirt and CDI operators on the cluster.
      */
     kubevirt?: outputs.Mk8sAddOnsKubevirt;
@@ -2851,6 +3023,10 @@ export interface Mk8sAddOnsByokConfig {
      * Longhorn persistent volume settings.
      */
     longhorn?: outputs.Mk8sAddOnsByokConfigLonghorn;
+    /**
+     * Settings for the maintainer component.
+     */
+    maintainer?: outputs.Mk8sAddOnsByokConfigMaintainer;
     /**
      * Configuration for the optional middlebox traffic shaper.
      */
@@ -3078,6 +3254,13 @@ export interface Mk8sAddOnsByokConfigLonghorn {
      * Replica factor for Longhorn volumes. Minimum: 1.
      */
     replicas?: number;
+}
+
+export interface Mk8sAddOnsByokConfigMaintainer {
+    /**
+     * Additional environment variables injected into maintainer pods.
+     */
+    env?: {[key: string]: string};
 }
 
 export interface Mk8sAddOnsByokConfigMiddlebox {
@@ -5402,7 +5585,7 @@ export interface WorkloadContainerLivenessProbeExec {
 }
 
 export interface WorkloadContainerLivenessProbeGrpc {
-    port?: number;
+    port: number;
 }
 
 export interface WorkloadContainerLivenessProbeHttpGet {
@@ -5413,7 +5596,7 @@ export interface WorkloadContainerLivenessProbeHttpGet {
 }
 
 export interface WorkloadContainerLivenessProbeTcpSocket {
-    port?: number;
+    port: number;
 }
 
 export interface WorkloadContainerMetrics {
@@ -5459,7 +5642,7 @@ export interface WorkloadContainerReadinessProbeExec {
 }
 
 export interface WorkloadContainerReadinessProbeGrpc {
-    port?: number;
+    port: number;
 }
 
 export interface WorkloadContainerReadinessProbeHttpGet {
@@ -5470,7 +5653,7 @@ export interface WorkloadContainerReadinessProbeHttpGet {
 }
 
 export interface WorkloadContainerReadinessProbeTcpSocket {
-    port?: number;
+    port: number;
 }
 
 export interface WorkloadContainerVolume {
@@ -5776,9 +5959,91 @@ export interface WorkloadLocalOptionAutoscalingKeda {
 
 export interface WorkloadLocalOptionAutoscalingKedaAdvanced {
     /**
+     * Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+     */
+    horizontalPodAutoscalerConfig?: outputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig;
+    /**
      * Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
      */
     scalingModifiers?: outputs.WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers;
+}
+
+export interface WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+    /**
+     * Configures the scaling behavior of the HPA that KEDA creates for this workload.
+     */
+    behavior?: outputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior;
+}
+
+export interface WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+    /**
+     * Scaling policies for scaling down.
+     */
+    scaleDown?: outputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown;
+    /**
+     * Scaling policies for scaling up.
+     */
+    scaleUp?: outputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp;
+}
+
+export interface WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: outputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy[];
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+     */
+    selectPolicy?: string;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+     */
+    stabilizationWindowSeconds?: number;
+}
+
+export interface WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy {
+    /**
+     * The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+     */
+    periodSeconds: number;
+    /**
+     * The type of the scaling policy. Valid values: `Pods`, `Percent`.
+     */
+    type: string;
+    /**
+     * The amount of change permitted by the policy. Min: `1`.
+     */
+    value: number;
+}
+
+export interface WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: outputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy[];
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+     */
+    selectPolicy?: string;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+     */
+    stabilizationWindowSeconds?: number;
+}
+
+export interface WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy {
+    /**
+     * The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+     */
+    periodSeconds: number;
+    /**
+     * The type of the scaling policy. Valid values: `Pods`, `Percent`.
+     */
+    type: string;
+    /**
+     * The amount of change permitted by the policy. Min: `1`.
+     */
+    value: number;
 }
 
 export interface WorkloadLocalOptionAutoscalingKedaAdvancedScalingModifiers {
@@ -5957,9 +6222,91 @@ export interface WorkloadOptionsAutoscalingKeda {
 
 export interface WorkloadOptionsAutoscalingKedaAdvanced {
     /**
+     * Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+     */
+    horizontalPodAutoscalerConfig?: outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig;
+    /**
      * Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
      */
     scalingModifiers?: outputs.WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers;
+}
+
+export interface WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfig {
+    /**
+     * Configures the scaling behavior of the HPA that KEDA creates for this workload.
+     */
+    behavior?: outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior;
+}
+
+export interface WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehavior {
+    /**
+     * Scaling policies for scaling down.
+     */
+    scaleDown?: outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown;
+    /**
+     * Scaling policies for scaling up.
+     */
+    scaleUp?: outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp;
+}
+
+export interface WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDown {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy[];
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+     */
+    selectPolicy?: string;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+     */
+    stabilizationWindowSeconds?: number;
+}
+
+export interface WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleDownPolicy {
+    /**
+     * The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+     */
+    periodSeconds: number;
+    /**
+     * The type of the scaling policy. Valid values: `Pods`, `Percent`.
+     */
+    type: string;
+    /**
+     * The amount of change permitted by the policy. Min: `1`.
+     */
+    value: number;
+}
+
+export interface WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUp {
+    /**
+     * A scaling policy that can be used during scaling.
+     */
+    policies?: outputs.WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy[];
+    /**
+     * Policy used when multiple policies apply. `Disabled` turns off scaling in this direction. Valid values: `Max`, `Min`, `Disabled`.
+     */
+    selectPolicy?: string;
+    /**
+     * Number of seconds for which past recommendations are considered while scaling. Min: `0`. Max: `3600`.
+     */
+    stabilizationWindowSeconds?: number;
+}
+
+export interface WorkloadOptionsAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigBehaviorScaleUpPolicy {
+    /**
+     * The window of time for which the policy holds true. Min: `1`. Max: `1800`.
+     */
+    periodSeconds: number;
+    /**
+     * The type of the scaling policy. Valid values: `Pods`, `Percent`.
+     */
+    type: string;
+    /**
+     * The amount of change permitted by the policy. Min: `1`.
+     */
+    value: number;
 }
 
 export interface WorkloadOptionsAutoscalingKedaAdvancedScalingModifiers {

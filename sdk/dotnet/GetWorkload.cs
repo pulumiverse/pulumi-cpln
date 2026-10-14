@@ -384,6 +384,7 @@ namespace Pulumiverse.Cpln
         /// Read-Only:
         /// 
         /// - **scaling_modifiers** (Block List) (see below).
+        /// - **horizontal_pod_autoscaler_config** (Block List) (see below).
         /// 
         /// &lt;a id="nestedblock--options--autoscaling--keda--advanced--scaling_modifiers"&gt;&lt;/a&gt;
         /// 
@@ -395,6 +396,45 @@ namespace Pulumiverse.Cpln
         /// - **activation_target** (String) Activation target for the composed metric.
         /// - **metric_type** (String) Metric type used for the composed metric.
         /// - **formula** (String) Expression that combines or transforms metrics.
+        /// 
+        /// &lt;a id="nestedblock--options--autoscaling--keda--advanced--horizontal_pod_autoscaler_config"&gt;&lt;/a&gt;
+        /// 
+        /// ### `options.autoscaling.keda.advanced.horizontal_pod_autoscaler_config`
+        /// 
+        /// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **behavior** (Block List) (see below).
+        /// 
+        /// &lt;a id="nestedblock--options--autoscaling--keda--advanced--horizontal_pod_autoscaler_config--behavior"&gt;&lt;/a&gt;
+        /// 
+        /// ### `options.autoscaling.keda.advanced.horizontal_pod_autoscaler_config.behavior`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **scale_up** (Block List) Scaling policies for scaling up. (see below).
+        /// - **scale_down** (Block List) Scaling policies for scaling down. (see below).
+        /// 
+        /// &lt;a id="nestedblock--options--autoscaling--keda--advanced--horizontal_pod_autoscaler_config--behavior--scaling_rules"&gt;&lt;/a&gt;
+        /// 
+        /// ### `options.autoscaling.keda.advanced.horizontal_pod_autoscaler_config.behavior.scale_up` / `ScaleDown`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **stabilization_window_seconds** (Number) Number of seconds for which past recommendations are considered while scaling.
+        /// - **select_policy** (String) Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+        /// - **policy** (Block Set) (see below).
+        /// 
+        /// &lt;a id="nestedblock--options--autoscaling--keda--advanced--horizontal_pod_autoscaler_config--behavior--scaling_rules--policy"&gt;&lt;/a&gt;
+        /// 
+        /// ### `options.autoscaling.keda.advanced.horizontal_pod_autoscaler_config.behavior.scale_up.policy` / `scale_down.policy`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **type** (String) The type of the scaling policy.
+        /// - **value** (Number) The amount of change permitted by the policy.
+        /// - **period_seconds** (Number) The window of time for which the policy holds true.
         /// 
         /// &lt;a id="nestedblock--options--autoscaling--keda--fallback"&gt;&lt;/a&gt;
         /// 
@@ -1163,6 +1203,7 @@ namespace Pulumiverse.Cpln
         /// Read-Only:
         /// 
         /// - **scaling_modifiers** (Block List) (see below).
+        /// - **horizontal_pod_autoscaler_config** (Block List) (see below).
         /// 
         /// &lt;a id="nestedblock--options--autoscaling--keda--advanced--scaling_modifiers"&gt;&lt;/a&gt;
         /// 
@@ -1174,6 +1215,45 @@ namespace Pulumiverse.Cpln
         /// - **activation_target** (String) Activation target for the composed metric.
         /// - **metric_type** (String) Metric type used for the composed metric.
         /// - **formula** (String) Expression that combines or transforms metrics.
+        /// 
+        /// &lt;a id="nestedblock--options--autoscaling--keda--advanced--horizontal_pod_autoscaler_config"&gt;&lt;/a&gt;
+        /// 
+        /// ### `options.autoscaling.keda.advanced.horizontal_pod_autoscaler_config`
+        /// 
+        /// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **behavior** (Block List) (see below).
+        /// 
+        /// &lt;a id="nestedblock--options--autoscaling--keda--advanced--horizontal_pod_autoscaler_config--behavior"&gt;&lt;/a&gt;
+        /// 
+        /// ### `options.autoscaling.keda.advanced.horizontal_pod_autoscaler_config.behavior`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **scale_up** (Block List) Scaling policies for scaling up. (see below).
+        /// - **scale_down** (Block List) Scaling policies for scaling down. (see below).
+        /// 
+        /// &lt;a id="nestedblock--options--autoscaling--keda--advanced--horizontal_pod_autoscaler_config--behavior--scaling_rules"&gt;&lt;/a&gt;
+        /// 
+        /// ### `options.autoscaling.keda.advanced.horizontal_pod_autoscaler_config.behavior.scale_up` / `ScaleDown`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **stabilization_window_seconds** (Number) Number of seconds for which past recommendations are considered while scaling.
+        /// - **select_policy** (String) Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+        /// - **policy** (Block Set) (see below).
+        /// 
+        /// &lt;a id="nestedblock--options--autoscaling--keda--advanced--horizontal_pod_autoscaler_config--behavior--scaling_rules--policy"&gt;&lt;/a&gt;
+        /// 
+        /// ### `options.autoscaling.keda.advanced.horizontal_pod_autoscaler_config.behavior.scale_up.policy` / `scale_down.policy`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **type** (String) The type of the scaling policy.
+        /// - **value** (Number) The amount of change permitted by the policy.
+        /// - **period_seconds** (Number) The window of time for which the policy holds true.
         /// 
         /// &lt;a id="nestedblock--options--autoscaling--keda--fallback"&gt;&lt;/a&gt;
         /// 
@@ -1942,6 +2022,7 @@ namespace Pulumiverse.Cpln
         /// Read-Only:
         /// 
         /// - **scaling_modifiers** (Block List) (see below).
+        /// - **horizontal_pod_autoscaler_config** (Block List) (see below).
         /// 
         /// &lt;a id="nestedblock--options--autoscaling--keda--advanced--scaling_modifiers"&gt;&lt;/a&gt;
         /// 
@@ -1953,6 +2034,45 @@ namespace Pulumiverse.Cpln
         /// - **activation_target** (String) Activation target for the composed metric.
         /// - **metric_type** (String) Metric type used for the composed metric.
         /// - **formula** (String) Expression that combines or transforms metrics.
+        /// 
+        /// &lt;a id="nestedblock--options--autoscaling--keda--advanced--horizontal_pod_autoscaler_config"&gt;&lt;/a&gt;
+        /// 
+        /// ### `options.autoscaling.keda.advanced.horizontal_pod_autoscaler_config`
+        /// 
+        /// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **behavior** (Block List) (see below).
+        /// 
+        /// &lt;a id="nestedblock--options--autoscaling--keda--advanced--horizontal_pod_autoscaler_config--behavior"&gt;&lt;/a&gt;
+        /// 
+        /// ### `options.autoscaling.keda.advanced.horizontal_pod_autoscaler_config.behavior`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **scale_up** (Block List) Scaling policies for scaling up. (see below).
+        /// - **scale_down** (Block List) Scaling policies for scaling down. (see below).
+        /// 
+        /// &lt;a id="nestedblock--options--autoscaling--keda--advanced--horizontal_pod_autoscaler_config--behavior--scaling_rules"&gt;&lt;/a&gt;
+        /// 
+        /// ### `options.autoscaling.keda.advanced.horizontal_pod_autoscaler_config.behavior.scale_up` / `ScaleDown`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **stabilization_window_seconds** (Number) Number of seconds for which past recommendations are considered while scaling.
+        /// - **select_policy** (String) Policy used when multiple policies apply. `Disabled` turns off scaling in this direction.
+        /// - **policy** (Block Set) (see below).
+        /// 
+        /// &lt;a id="nestedblock--options--autoscaling--keda--advanced--horizontal_pod_autoscaler_config--behavior--scaling_rules--policy"&gt;&lt;/a&gt;
+        /// 
+        /// ### `options.autoscaling.keda.advanced.horizontal_pod_autoscaler_config.behavior.scale_up.policy` / `scale_down.policy`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **type** (String) The type of the scaling policy.
+        /// - **value** (Number) The amount of change permitted by the policy.
+        /// - **period_seconds** (Number) The window of time for which the policy holds true.
         /// 
         /// &lt;a id="nestedblock--options--autoscaling--keda--fallback"&gt;&lt;/a&gt;
         /// 

@@ -27,6 +27,10 @@ namespace Pulumiverse.Cpln.Outputs
         public readonly bool? Dashboard;
         public readonly bool? Headlamp;
         /// <summary>
+        /// Installs Kata Containers for VM-isolated workloads on node pools labeled `cpln.io/nodeType=vm`.
+        /// </summary>
+        public readonly bool? Kata;
+        /// <summary>
         /// Enables type=vm workloads by installing the KubeVirt and CDI operators on the cluster.
         /// </summary>
         public readonly Outputs.Mk8sAddOnsKubevirt? Kubevirt;
@@ -64,6 +68,8 @@ namespace Pulumiverse.Cpln.Outputs
 
             bool? headlamp,
 
+            bool? kata,
+
             Outputs.Mk8sAddOnsKubevirt? kubevirt,
 
             bool? localPathStorage,
@@ -89,6 +95,7 @@ namespace Pulumiverse.Cpln.Outputs
             Byok = byok;
             Dashboard = dashboard;
             Headlamp = headlamp;
+            Kata = kata;
             Kubevirt = kubevirt;
             LocalPathStorage = localPathStorage;
             Logs = logs;

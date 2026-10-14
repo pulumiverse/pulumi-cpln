@@ -14,6 +14,12 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class WorkloadLocalOptionAutoscalingKedaAdvancedGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+        /// </summary>
+        [Input("horizontalPodAutoscalerConfig")]
+        public Input<Inputs.WorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigGetArgs>? HorizontalPodAutoscalerConfig { get; set; }
+
+        /// <summary>
         /// Scaling modifiers allow for fine-tuning the scaling behavior of KEDA.
         /// </summary>
         [Input("scalingModifiers")]

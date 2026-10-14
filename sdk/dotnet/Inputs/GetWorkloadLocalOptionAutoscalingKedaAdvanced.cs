@@ -13,6 +13,18 @@ namespace Pulumiverse.Cpln.Inputs
 
     public sealed class GetWorkloadLocalOptionAutoscalingKedaAdvancedArgs : global::Pulumi.InvokeArgs
     {
+        [Input("horizontalPodAutoscalerConfigs")]
+        private List<Inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs>? _horizontalPodAutoscalerConfigs;
+
+        /// <summary>
+        /// Configuration of the HorizontalPodAutoscaler that KEDA creates for this workload.
+        /// </summary>
+        public List<Inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs> HorizontalPodAutoscalerConfigs
+        {
+            get => _horizontalPodAutoscalerConfigs ?? (_horizontalPodAutoscalerConfigs = new List<Inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedHorizontalPodAutoscalerConfigArgs>());
+            set => _horizontalPodAutoscalerConfigs = value;
+        }
+
         [Input("scalingModifiers")]
         private List<Inputs.GetWorkloadLocalOptionAutoscalingKedaAdvancedScalingModifierArgs>? _scalingModifiers;
 
