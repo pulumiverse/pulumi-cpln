@@ -19,7 +19,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly Outputs.Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization? Authorization;
         /// <summary>
-        /// Azure AD authentication parameters as flat key-value pairs.
+        /// Azure AD authentication parameters. Numbers, booleans, lists and objects are given as JSON text, for example `ManagedIdentity = jsonencode({ ClientId = "id" })`.
         /// </summary>
         public readonly ImmutableDictionary<string, string>? Azuread;
         /// <summary>
@@ -35,7 +35,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly bool? FollowRedirects;
         /// <summary>
-        /// Google Cloud IAM authentication parameters as flat key-value pairs.
+        /// Google Cloud IAM authentication parameters. Numbers, booleans, lists and objects are given as JSON text.
         /// </summary>
         public readonly ImmutableDictionary<string, string>? GoogleIam;
         /// <summary>
@@ -43,7 +43,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly ImmutableDictionary<string, string>? Headers;
         /// <summary>
-        /// Custom HTTP headers, as flat key-value pairs.
+        /// Custom HTTP headers. Each value is a JSON object holding `Values`, `Secrets` or `Files` lists, for example `jsonencode({ values = ["value"] })`.
         /// </summary>
         public readonly ImmutableDictionary<string, string>? HttpHeaders;
         /// <summary>
@@ -55,11 +55,11 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly string? NoProxy;
         /// <summary>
-        /// OAuth 2.0 client configuration as flat key-value pairs.
+        /// OAuth 2.0 client configuration. Numbers, booleans, lists and objects are given as JSON text, for example `scopes = jsonencode(["read"])`.
         /// </summary>
         public readonly ImmutableDictionary<string, string>? Oauth2;
         /// <summary>
-        /// Headers sent to the proxy on CONNECT, as flat key-value pairs.
+        /// Headers sent to the proxy on CONNECT. Each value is a JSON list of strings, for example `jsonencode(["value"])`.
         /// </summary>
         public readonly ImmutableDictionary<string, string>? ProxyConnectHeader;
         /// <summary>
@@ -71,7 +71,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly string? ProxyUrl;
         /// <summary>
-        /// Tuning parameters for the in-memory RemoteWrite queue, as flat key-value pairs.
+        /// Tuning parameters for the in-memory RemoteWrite queue. Numbers, booleans, lists and objects are given as JSON text, for example `capacity = "2500"`.
         /// </summary>
         public readonly ImmutableDictionary<string, string>? QueueConfig;
         /// <summary>
@@ -87,11 +87,11 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly bool? SendNativeHistograms;
         /// <summary>
-        /// AWS SigV4 authentication parameters as flat key-value pairs.
+        /// AWS SigV4 authentication parameters. Numbers, booleans, lists and objects are given as JSON text.
         /// </summary>
         public readonly ImmutableDictionary<string, string>? Sigv4;
         /// <summary>
-        /// TLS configuration as flat key-value pairs.
+        /// TLS configuration. Numbers, booleans, lists and objects are given as JSON text, for example `InsecureSkipVerify = "true"`.
         /// </summary>
         public readonly ImmutableDictionary<string, string>? TlsConfig;
         /// <summary>
@@ -99,7 +99,7 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly string? Url;
         /// <summary>
-        /// Relabel rules applied to samples before they are sent.
+        /// Relabel rules applied to samples before they are sent. `SourceLabels` and `Modulus` are given as JSON text, for example `SourceLabels = jsonencode(["__name__"])`. Every other value, such as `Regex`, is sent as written.
         /// </summary>
         public readonly ImmutableArray<ImmutableDictionary<string, string>> WriteRelabelConfigs;
 

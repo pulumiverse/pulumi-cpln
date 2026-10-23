@@ -27,9 +27,9 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly string Index;
         /// <summary>
-        /// Logging path.
+        /// Logging path. Must start with `/`.
         /// </summary>
-        public readonly string Path;
+        public readonly string? Path;
         /// <summary>
         /// Port. Default: 443
         /// </summary>
@@ -47,7 +47,7 @@ namespace Pulumiverse.Cpln.Outputs
 
             string index,
 
-            string path,
+            string? path,
 
             int port,
 

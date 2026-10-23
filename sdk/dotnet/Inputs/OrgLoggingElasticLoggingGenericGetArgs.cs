@@ -32,10 +32,10 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<string> Index { get; set; } = null!;
 
         /// <summary>
-        /// Logging path.
+        /// Logging path. Must start with `/`.
         /// </summary>
-        [Input("path", required: true)]
-        public Input<string> Path { get; set; } = null!;
+        [Input("path")]
+        public Input<string>? Path { get; set; }
 
         /// <summary>
         /// Port. Default: 443

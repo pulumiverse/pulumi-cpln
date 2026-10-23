@@ -1493,6 +1493,10 @@ if not MYPY:
         """
         Defines the method used to prove domain ownership for certificate issuance.
         """
+        certificate_generator_link: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Link to a certificate generator that issues the certificate instead of the built-in one. The generator defines the challenge type, so `cert_challenge_type` must not be set. Cannot be combined with a TLS server certificate.
+        """
         dns_mode: NotRequired[pulumi.Input[_builtins.str]]
         """
         In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
@@ -1518,6 +1522,7 @@ class DomainSpecArgs:
                  accept_all_hosts: Optional[pulumi.Input[_builtins.bool]] = None,
                  accept_all_subdomains: Optional[pulumi.Input[_builtins.bool]] = None,
                  cert_challenge_type: Optional[pulumi.Input[_builtins.str]] = None,
+                 certificate_generator_link: Optional[pulumi.Input[_builtins.str]] = None,
                  dns_mode: Optional[pulumi.Input[_builtins.str]] = None,
                  gvc_link: Optional[pulumi.Input[_builtins.str]] = None,
                  ports: Optional[pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgs']]]] = None,
@@ -1526,6 +1531,7 @@ class DomainSpecArgs:
         :param pulumi.Input[_builtins.bool] accept_all_hosts: Allows domain to accept wildcards. The associated GVC must have dedicated load balancing enabled.
         :param pulumi.Input[_builtins.bool] accept_all_subdomains: Accept all subdomains will accept any host that is a sub domain of the domain so *.$DOMAIN
         :param pulumi.Input[_builtins.str] cert_challenge_type: Defines the method used to prove domain ownership for certificate issuance.
+        :param pulumi.Input[_builtins.str] certificate_generator_link: Link to a certificate generator that issues the certificate instead of the built-in one. The generator defines the challenge type, so `cert_challenge_type` must not be set. Cannot be combined with a TLS server certificate.
         :param pulumi.Input[_builtins.str] dns_mode: In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
         :param pulumi.Input[_builtins.str] gvc_link: This value is set to a target GVC (using a full link) for use by subdomain based routing. Each workload in the GVC will receive a subdomain in the form ${workload.name}.${domain.name}. **Do not include if path based routing is used.**
         :param pulumi.Input[Sequence[pulumi.Input['DomainSpecPortArgs']]] ports: Domain port specifications.
@@ -1537,6 +1543,8 @@ class DomainSpecArgs:
             pulumi.set(__self__, "accept_all_subdomains", accept_all_subdomains)
         if cert_challenge_type is not None:
             pulumi.set(__self__, "cert_challenge_type", cert_challenge_type)
+        if certificate_generator_link is not None:
+            pulumi.set(__self__, "certificate_generator_link", certificate_generator_link)
         if dns_mode is not None:
             pulumi.set(__self__, "dns_mode", dns_mode)
         if gvc_link is not None:
@@ -1581,6 +1589,18 @@ class DomainSpecArgs:
     @cert_challenge_type.setter
     def cert_challenge_type(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "cert_challenge_type", value)
+
+    @_builtins.property
+    @pulumi.getter(name="certificateGeneratorLink")
+    def certificate_generator_link(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Link to a certificate generator that issues the certificate instead of the built-in one. The generator defines the challenge type, so `cert_challenge_type` must not be set. Cannot be combined with a TLS server certificate.
+        """
+        return pulumi.get(self, "certificate_generator_link")
+
+    @certificate_generator_link.setter
+    def certificate_generator_link(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "certificate_generator_link", value)
 
     @_builtins.property
     @pulumi.getter(name="dnsMode")
@@ -7467,7 +7487,7 @@ if not MYPY:
         """
         azuread: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
         """
-        Azure AD authentication parameters as flat key-value pairs.
+        Azure AD authentication parameters. Numbers, booleans, lists and objects are given as JSON text, for example `managed_identity = jsonencode({ client_id = "id" })`.
         """
         basic_auth: NotRequired[pulumi.Input['Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgsDict']]
         """
@@ -7483,7 +7503,7 @@ if not MYPY:
         """
         google_iam: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
         """
-        Google Cloud IAM authentication parameters as flat key-value pairs.
+        Google Cloud IAM authentication parameters. Numbers, booleans, lists and objects are given as JSON text.
         """
         headers: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
         """
@@ -7491,7 +7511,7 @@ if not MYPY:
         """
         http_headers: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
         """
-        Custom HTTP headers, as flat key-value pairs.
+        Custom HTTP headers. Each value is a JSON object holding `values`, `secrets` or `files` lists, for example `jsonencode({ values = ["value"] })`.
         """
         name: NotRequired[pulumi.Input[_builtins.str]]
         """
@@ -7503,11 +7523,11 @@ if not MYPY:
         """
         oauth2: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
         """
-        OAuth 2.0 client configuration as flat key-value pairs.
+        OAuth 2.0 client configuration. Numbers, booleans, lists and objects are given as JSON text, for example `scopes = jsonencode(["read"])`.
         """
         proxy_connect_header: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
         """
-        Headers sent to the proxy on CONNECT, as flat key-value pairs.
+        Headers sent to the proxy on CONNECT. Each value is a JSON list of strings, for example `jsonencode(["value"])`.
         """
         proxy_from_environment: NotRequired[pulumi.Input[_builtins.bool]]
         """
@@ -7519,7 +7539,7 @@ if not MYPY:
         """
         queue_config: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
         """
-        Tuning parameters for the in-memory remote_write queue, as flat key-value pairs.
+        Tuning parameters for the in-memory remote_write queue. Numbers, booleans, lists and objects are given as JSON text, for example `capacity = "2500"`.
         """
         remote_timeout: NotRequired[pulumi.Input[_builtins.str]]
         """
@@ -7535,11 +7555,11 @@ if not MYPY:
         """
         sigv4: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
         """
-        AWS SigV4 authentication parameters as flat key-value pairs.
+        AWS SigV4 authentication parameters. Numbers, booleans, lists and objects are given as JSON text.
         """
         tls_config: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
         """
-        TLS configuration as flat key-value pairs.
+        TLS configuration. Numbers, booleans, lists and objects are given as JSON text, for example `insecure_skip_verify = "true"`.
         """
         url: NotRequired[pulumi.Input[_builtins.str]]
         """
@@ -7547,7 +7567,7 @@ if not MYPY:
         """
         write_relabel_configs: NotRequired[pulumi.Input[Sequence[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]]]
         """
-        Relabel rules applied to samples before they are sent.
+        Relabel rules applied to samples before they are sent. `source_labels` and `modulus` are given as JSON text, for example `source_labels = jsonencode(["__name__"])`. Every other value, such as `regex`, is sent as written.
         """
 elif False:
     Mk8sAddOnsByokConfigMonitoringRemoteWriteArgsDict: TypeAlias = Mapping[str, Any]
@@ -7579,27 +7599,27 @@ class Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs:
                  write_relabel_configs: Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]]] = None):
         """
         :param pulumi.Input['Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationArgs'] authorization: HTTP Authorization header credentials.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] azuread: Azure AD authentication parameters as flat key-value pairs.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] azuread: Azure AD authentication parameters. Numbers, booleans, lists and objects are given as JSON text, for example `managed_identity = jsonencode({ client_id = "id" })`.
         :param pulumi.Input['Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthArgs'] basic_auth: HTTP basic authentication credentials.
         :param pulumi.Input[_builtins.bool] enable_http2: Whether to enable HTTP/2.
         :param pulumi.Input[_builtins.bool] follow_redirects: Whether the HTTP client follows redirects.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] google_iam: Google Cloud IAM authentication parameters as flat key-value pairs.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] google_iam: Google Cloud IAM authentication parameters. Numbers, booleans, lists and objects are given as JSON text.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] headers: Custom request headers attached to every remote_write call.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] http_headers: Custom HTTP headers, as flat key-value pairs.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] http_headers: Custom HTTP headers. Each value is a JSON object holding `values`, `secrets` or `files` lists, for example `jsonencode({ values = ["value"] })`.
         :param pulumi.Input[_builtins.str] name: Friendly name used in metrics for this client.
         :param pulumi.Input[_builtins.str] no_proxy: Comma-separated list of hosts that bypass the proxy.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] oauth2: OAuth 2.0 client configuration as flat key-value pairs.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] proxy_connect_header: Headers sent to the proxy on CONNECT, as flat key-value pairs.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] oauth2: OAuth 2.0 client configuration. Numbers, booleans, lists and objects are given as JSON text, for example `scopes = jsonencode(["read"])`.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] proxy_connect_header: Headers sent to the proxy on CONNECT. Each value is a JSON list of strings, for example `jsonencode(["value"])`.
         :param pulumi.Input[_builtins.bool] proxy_from_environment: Whether to read proxy settings from environment variables.
         :param pulumi.Input[_builtins.str] proxy_url: HTTP proxy URL used for outbound requests.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] queue_config: Tuning parameters for the in-memory remote_write queue, as flat key-value pairs.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] queue_config: Tuning parameters for the in-memory remote_write queue. Numbers, booleans, lists and objects are given as JSON text, for example `capacity = "2500"`.
         :param pulumi.Input[_builtins.str] remote_timeout: Per-request timeout (for example, "30s").
         :param pulumi.Input[_builtins.bool] send_exemplars: Whether to forward Prometheus exemplars.
         :param pulumi.Input[_builtins.bool] send_native_histograms: Whether to forward Prometheus native histograms.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] sigv4: AWS SigV4 authentication parameters as flat key-value pairs.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tls_config: TLS configuration as flat key-value pairs.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] sigv4: AWS SigV4 authentication parameters. Numbers, booleans, lists and objects are given as JSON text.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] tls_config: TLS configuration. Numbers, booleans, lists and objects are given as JSON text, for example `insecure_skip_verify = "true"`.
         :param pulumi.Input[_builtins.str] url: Endpoint that receives the remote_write payload.
-        :param pulumi.Input[Sequence[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]] write_relabel_configs: Relabel rules applied to samples before they are sent.
+        :param pulumi.Input[Sequence[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]] write_relabel_configs: Relabel rules applied to samples before they are sent. `source_labels` and `modulus` are given as JSON text, for example `source_labels = jsonencode(["__name__"])`. Every other value, such as `regex`, is sent as written.
         """
         if authorization is not None:
             pulumi.set(__self__, "authorization", authorization)
@@ -7662,7 +7682,7 @@ class Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs:
     @pulumi.getter
     def azuread(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        Azure AD authentication parameters as flat key-value pairs.
+        Azure AD authentication parameters. Numbers, booleans, lists and objects are given as JSON text, for example `managed_identity = jsonencode({ client_id = "id" })`.
         """
         return pulumi.get(self, "azuread")
 
@@ -7710,7 +7730,7 @@ class Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs:
     @pulumi.getter(name="googleIam")
     def google_iam(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        Google Cloud IAM authentication parameters as flat key-value pairs.
+        Google Cloud IAM authentication parameters. Numbers, booleans, lists and objects are given as JSON text.
         """
         return pulumi.get(self, "google_iam")
 
@@ -7734,7 +7754,7 @@ class Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs:
     @pulumi.getter(name="httpHeaders")
     def http_headers(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        Custom HTTP headers, as flat key-value pairs.
+        Custom HTTP headers. Each value is a JSON object holding `values`, `secrets` or `files` lists, for example `jsonencode({ values = ["value"] })`.
         """
         return pulumi.get(self, "http_headers")
 
@@ -7770,7 +7790,7 @@ class Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs:
     @pulumi.getter
     def oauth2(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        OAuth 2.0 client configuration as flat key-value pairs.
+        OAuth 2.0 client configuration. Numbers, booleans, lists and objects are given as JSON text, for example `scopes = jsonencode(["read"])`.
         """
         return pulumi.get(self, "oauth2")
 
@@ -7782,7 +7802,7 @@ class Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs:
     @pulumi.getter(name="proxyConnectHeader")
     def proxy_connect_header(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        Headers sent to the proxy on CONNECT, as flat key-value pairs.
+        Headers sent to the proxy on CONNECT. Each value is a JSON list of strings, for example `jsonencode(["value"])`.
         """
         return pulumi.get(self, "proxy_connect_header")
 
@@ -7818,7 +7838,7 @@ class Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs:
     @pulumi.getter(name="queueConfig")
     def queue_config(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        Tuning parameters for the in-memory remote_write queue, as flat key-value pairs.
+        Tuning parameters for the in-memory remote_write queue. Numbers, booleans, lists and objects are given as JSON text, for example `capacity = "2500"`.
         """
         return pulumi.get(self, "queue_config")
 
@@ -7866,7 +7886,7 @@ class Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs:
     @pulumi.getter
     def sigv4(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        AWS SigV4 authentication parameters as flat key-value pairs.
+        AWS SigV4 authentication parameters. Numbers, booleans, lists and objects are given as JSON text.
         """
         return pulumi.get(self, "sigv4")
 
@@ -7878,7 +7898,7 @@ class Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs:
     @pulumi.getter(name="tlsConfig")
     def tls_config(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        TLS configuration as flat key-value pairs.
+        TLS configuration. Numbers, booleans, lists and objects are given as JSON text, for example `insecure_skip_verify = "true"`.
         """
         return pulumi.get(self, "tls_config")
 
@@ -7902,7 +7922,7 @@ class Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs:
     @pulumi.getter(name="writeRelabelConfigs")
     def write_relabel_configs(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]]]:
         """
-        Relabel rules applied to samples before they are sent.
+        Relabel rules applied to samples before they are sent. `source_labels` and `modulus` are given as JSON text, for example `source_labels = jsonencode(["__name__"])`. Every other value, such as `regex`, is sent as written.
         """
         return pulumi.get(self, "write_relabel_configs")
 
@@ -16953,10 +16973,6 @@ if not MYPY:
         """
         Logging Index.
         """
-        path: pulumi.Input[_builtins.str]
-        """
-        Logging path.
-        """
         port: pulumi.Input[_builtins.int]
         """
         Port. Default: 443
@@ -16964,6 +16980,10 @@ if not MYPY:
         type: pulumi.Input[_builtins.str]
         """
         Logging Type.
+        """
+        path: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Logging path. Must start with `/`.
         """
 elif False:
     OrgLoggingElasticLoggingGenericArgsDict: TypeAlias = Mapping[str, Any]
@@ -16974,23 +16994,24 @@ class OrgLoggingElasticLoggingGenericArgs:
                  credentials: pulumi.Input[_builtins.str],
                  host: pulumi.Input[_builtins.str],
                  index: pulumi.Input[_builtins.str],
-                 path: pulumi.Input[_builtins.str],
                  port: pulumi.Input[_builtins.int],
-                 type: pulumi.Input[_builtins.str]):
+                 type: pulumi.Input[_builtins.str],
+                 path: Optional[pulumi.Input[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] credentials: Full Link to a secret of type `userpass`.
         :param pulumi.Input[_builtins.str] host: A valid Elastic Search provider hostname.
         :param pulumi.Input[_builtins.str] index: Logging Index.
-        :param pulumi.Input[_builtins.str] path: Logging path.
         :param pulumi.Input[_builtins.int] port: Port. Default: 443
         :param pulumi.Input[_builtins.str] type: Logging Type.
+        :param pulumi.Input[_builtins.str] path: Logging path. Must start with `/`.
         """
         pulumi.set(__self__, "credentials", credentials)
         pulumi.set(__self__, "host", host)
         pulumi.set(__self__, "index", index)
-        pulumi.set(__self__, "path", path)
         pulumi.set(__self__, "port", port)
         pulumi.set(__self__, "type", type)
+        if path is not None:
+            pulumi.set(__self__, "path", path)
 
     @_builtins.property
     @pulumi.getter
@@ -17030,18 +17051,6 @@ class OrgLoggingElasticLoggingGenericArgs:
 
     @_builtins.property
     @pulumi.getter
-    def path(self) -> pulumi.Input[_builtins.str]:
-        """
-        Logging path.
-        """
-        return pulumi.get(self, "path")
-
-    @path.setter
-    def path(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "path", value)
-
-    @_builtins.property
-    @pulumi.getter
     def port(self) -> pulumi.Input[_builtins.int]:
         """
         Port. Default: 443
@@ -17063,6 +17072,18 @@ class OrgLoggingElasticLoggingGenericArgs:
     @type.setter
     def type(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "type", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def path(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Logging path. Must start with `/`.
+        """
+        return pulumi.get(self, "path")
+
+    @path.setter
+    def path(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "path", value)
 
 
 if not MYPY:
