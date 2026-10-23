@@ -287,6 +287,10 @@
                     "type": "string",
                     "description": "Defines the method used to prove domain ownership for certificate issuance.\n"
                 },
+                "certificateGeneratorLink": {
+                    "type": "string",
+                    "description": "Link to a certificate generator that issues the certificate instead of the built-in one. The generator defines the challenge type, so \u003cspan pulumi-lang-nodejs=\"`certChallengeType`\" pulumi-lang-dotnet=\"`CertChallengeType`\" pulumi-lang-go=\"`certChallengeType`\" pulumi-lang-python=\"`cert_challenge_type`\" pulumi-lang-yaml=\"`certChallengeType`\" pulumi-lang-java=\"`certChallengeType`\"\u003e`cert_challenge_type`\u003c/span\u003e must not be set. Cannot be combined with a TLS server certificate.\n"
+                },
                 "dnsMode": {
                     "type": "string",
                     "description": "In \u003cspan pulumi-lang-nodejs=\"`cname`\" pulumi-lang-dotnet=\"`Cname`\" pulumi-lang-go=\"`cname`\" pulumi-lang-python=\"`cname`\" pulumi-lang-yaml=\"`cname`\" pulumi-lang-java=\"`cname`\"\u003e`cname`\u003c/span\u003e dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently \u003cspan pulumi-lang-nodejs=\"`cname`\" pulumi-lang-dotnet=\"`Cname`\" pulumi-lang-go=\"`cname`\" pulumi-lang-python=\"`cname`\" pulumi-lang-yaml=\"`cname`\" pulumi-lang-java=\"`cname`\"\u003e`cname`\u003c/span\u003e dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In \u003cspan pulumi-lang-nodejs=\"`ns`\" pulumi-lang-dotnet=\"`Ns`\" pulumi-lang-go=\"`ns`\" pulumi-lang-python=\"`ns`\" pulumi-lang-yaml=\"`ns`\" pulumi-lang-java=\"`ns`\"\u003e`ns`\u003c/span\u003e dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: \u003cspan pulumi-lang-nodejs=\"`cname`\" pulumi-lang-dotnet=\"`Cname`\" pulumi-lang-go=\"`cname`\" pulumi-lang-python=\"`cname`\" pulumi-lang-yaml=\"`cname`\" pulumi-lang-java=\"`cname`\"\u003e`cname`\u003c/span\u003e, \u003cspan pulumi-lang-nodejs=\"`ns`\" pulumi-lang-dotnet=\"`Ns`\" pulumi-lang-go=\"`ns`\" pulumi-lang-python=\"`ns`\" pulumi-lang-yaml=\"`ns`\" pulumi-lang-java=\"`ns`\"\u003e`ns`\u003c/span\u003e. Default: \u003cspan pulumi-lang-nodejs=\"`cname`\" pulumi-lang-dotnet=\"`Cname`\" pulumi-lang-go=\"`cname`\" pulumi-lang-python=\"`cname`\" pulumi-lang-yaml=\"`cname`\" pulumi-lang-java=\"`cname`\"\u003e`cname`\u003c/span\u003e.\n"
@@ -2116,7 +2120,7 @@
                     "additionalProperties": {
                         "type": "string"
                     },
-                    "description": "Azure AD authentication parameters as flat key-value pairs.\n",
+                    "description": "Azure AD authentication parameters. Numbers, booleans, lists and objects are given as JSON text, for example \u003cspan pulumi-lang-nodejs=\"`managedIdentity \" pulumi-lang-dotnet=\"`ManagedIdentity \" pulumi-lang-go=\"`managedIdentity \" pulumi-lang-python=\"`managed_identity \" pulumi-lang-yaml=\"`managedIdentity \" pulumi-lang-java=\"`managedIdentity \"\u003e`managed_identity \u003c/span\u003e= jsonencode({\u003cspan pulumi-lang-nodejs=\" clientId \" pulumi-lang-dotnet=\" ClientId \" pulumi-lang-go=\" clientId \" pulumi-lang-python=\" client_id \" pulumi-lang-yaml=\" clientId \" pulumi-lang-java=\" clientId \"\u003e client_id \u003c/span\u003e= \"id\" })`.\n",
                     "secret": true
                 },
                 "basicAuth": {
@@ -2136,7 +2140,7 @@
                     "additionalProperties": {
                         "type": "string"
                     },
-                    "description": "Google Cloud IAM authentication parameters as flat key-value pairs.\n",
+                    "description": "Google Cloud IAM authentication parameters. Numbers, booleans, lists and objects are given as JSON text.\n",
                     "secret": true
                 },
                 "headers": {
@@ -2151,7 +2155,7 @@
                     "additionalProperties": {
                         "type": "string"
                     },
-                    "description": "Custom HTTP headers, as flat key-value pairs.\n"
+                    "description": "Custom HTTP headers. Each value is a JSON object holding \u003cspan pulumi-lang-nodejs=\"`values`\" pulumi-lang-dotnet=\"`Values`\" pulumi-lang-go=\"`values`\" pulumi-lang-python=\"`values`\" pulumi-lang-yaml=\"`values`\" pulumi-lang-java=\"`values`\"\u003e`values`\u003c/span\u003e, \u003cspan pulumi-lang-nodejs=\"`secrets`\" pulumi-lang-dotnet=\"`Secrets`\" pulumi-lang-go=\"`secrets`\" pulumi-lang-python=\"`secrets`\" pulumi-lang-yaml=\"`secrets`\" pulumi-lang-java=\"`secrets`\"\u003e`secrets`\u003c/span\u003e or \u003cspan pulumi-lang-nodejs=\"`files`\" pulumi-lang-dotnet=\"`Files`\" pulumi-lang-go=\"`files`\" pulumi-lang-python=\"`files`\" pulumi-lang-yaml=\"`files`\" pulumi-lang-java=\"`files`\"\u003e`files`\u003c/span\u003e lists, for example `jsonencode({ values = [\"value\"] })`.\n"
                 },
                 "name": {
                     "type": "string",
@@ -2166,7 +2170,7 @@
                     "additionalProperties": {
                         "type": "string"
                     },
-                    "description": "OAuth 2.0 client configuration as flat key-value pairs.\n",
+                    "description": "OAuth 2.0 client configuration. Numbers, booleans, lists and objects are given as JSON text, for example `scopes = jsonencode([\"read\"])`.\n",
                     "secret": true
                 },
                 "proxyConnectHeader": {
@@ -2174,7 +2178,7 @@
                     "additionalProperties": {
                         "type": "string"
                     },
-                    "description": "Headers sent to the proxy on CONNECT, as flat key-value pairs.\n"
+                    "description": "Headers sent to the proxy on CONNECT. Each value is a JSON list of strings, for example `jsonencode([\"value\"])`.\n"
                 },
                 "proxyFromEnvironment": {
                     "type": "boolean",
@@ -2189,7 +2193,7 @@
                     "additionalProperties": {
                         "type": "string"
                     },
-                    "description": "Tuning parameters for the in-memory\u003cspan pulumi-lang-nodejs=\" remoteWrite \" pulumi-lang-dotnet=\" RemoteWrite \" pulumi-lang-go=\" remoteWrite \" pulumi-lang-python=\" remote_write \" pulumi-lang-yaml=\" remoteWrite \" pulumi-lang-java=\" remoteWrite \"\u003e remote_write \u003c/span\u003equeue, as flat key-value pairs.\n"
+                    "description": "Tuning parameters for the in-memory\u003cspan pulumi-lang-nodejs=\" remoteWrite \" pulumi-lang-dotnet=\" RemoteWrite \" pulumi-lang-go=\" remoteWrite \" pulumi-lang-python=\" remote_write \" pulumi-lang-yaml=\" remoteWrite \" pulumi-lang-java=\" remoteWrite \"\u003e remote_write \u003c/span\u003equeue. Numbers, booleans, lists and objects are given as JSON text, for example `capacity = \"2500\"`.\n"
                 },
                 "remoteTimeout": {
                     "type": "string",
@@ -2208,7 +2212,7 @@
                     "additionalProperties": {
                         "type": "string"
                     },
-                    "description": "AWS SigV4 authentication parameters as flat key-value pairs.\n",
+                    "description": "AWS SigV4 authentication parameters. Numbers, booleans, lists and objects are given as JSON text.\n",
                     "secret": true
                 },
                 "tlsConfig": {
@@ -2216,7 +2220,7 @@
                     "additionalProperties": {
                         "type": "string"
                     },
-                    "description": "TLS configuration as flat key-value pairs.\n"
+                    "description": "TLS configuration. Numbers, booleans, lists and objects are given as JSON text, for example \u003cspan pulumi-lang-nodejs=\"`insecureSkipVerify \" pulumi-lang-dotnet=\"`InsecureSkipVerify \" pulumi-lang-go=\"`insecureSkipVerify \" pulumi-lang-python=\"`insecure_skip_verify \" pulumi-lang-yaml=\"`insecureSkipVerify \" pulumi-lang-java=\"`insecureSkipVerify \"\u003e`insecure_skip_verify \u003c/span\u003e= \"true\"`.\n"
                 },
                 "url": {
                     "type": "string",
@@ -2230,7 +2234,7 @@
                             "type": "string"
                         }
                     },
-                    "description": "Relabel rules applied to samples before they are sent.\n"
+                    "description": "Relabel rules applied to samples before they are sent. \u003cspan pulumi-lang-nodejs=\"`sourceLabels`\" pulumi-lang-dotnet=\"`SourceLabels`\" pulumi-lang-go=\"`sourceLabels`\" pulumi-lang-python=\"`source_labels`\" pulumi-lang-yaml=\"`sourceLabels`\" pulumi-lang-java=\"`sourceLabels`\"\u003e`source_labels`\u003c/span\u003e and \u003cspan pulumi-lang-nodejs=\"`modulus`\" pulumi-lang-dotnet=\"`Modulus`\" pulumi-lang-go=\"`modulus`\" pulumi-lang-python=\"`modulus`\" pulumi-lang-yaml=\"`modulus`\" pulumi-lang-java=\"`modulus`\"\u003e`modulus`\u003c/span\u003e are given as JSON text, for example \u003cspan pulumi-lang-nodejs=\"`sourceLabels \" pulumi-lang-dotnet=\"`SourceLabels \" pulumi-lang-go=\"`sourceLabels \" pulumi-lang-python=\"`source_labels \" pulumi-lang-yaml=\"`sourceLabels \" pulumi-lang-java=\"`sourceLabels \"\u003e`source_labels \u003c/span\u003e= jsonencode([\"__name__\"])`. Every other value, such as \u003cspan pulumi-lang-nodejs=\"`regex`\" pulumi-lang-dotnet=\"`Regex`\" pulumi-lang-go=\"`regex`\" pulumi-lang-python=\"`regex`\" pulumi-lang-yaml=\"`regex`\" pulumi-lang-java=\"`regex`\"\u003e`regex`\u003c/span\u003e, is sent as written.\n"
                 }
             },
             "type": "object"
@@ -5437,7 +5441,7 @@
                 },
                 "path": {
                     "type": "string",
-                    "description": "Logging path.\n"
+                    "description": "Logging path. Must start with `/`.\n"
                 },
                 "port": {
                     "type": "integer",
@@ -5453,7 +5457,6 @@
                 "credentials",
                 "host",
                 "index",
-                "path",
                 "port",
                 "type"
             ]
