@@ -27,6 +27,10 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly string? CertChallengeType;
         /// <summary>
+        /// Link to a certificate generator that issues the certificate instead of the built-in one. The generator defines the challenge type, so `CertChallengeType` must not be set. Cannot be combined with a TLS server certificate.
+        /// </summary>
+        public readonly string? CertificateGeneratorLink;
+        /// <summary>
         /// In `Cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `Cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `Ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `Cname`, `Ns`. Default: `Cname`.
         /// </summary>
         public readonly string? DnsMode;
@@ -51,6 +55,8 @@ namespace Pulumiverse.Cpln.Outputs
 
             string? certChallengeType,
 
+            string? certificateGeneratorLink,
+
             string? dnsMode,
 
             string? gvcLink,
@@ -62,6 +68,7 @@ namespace Pulumiverse.Cpln.Outputs
             AcceptAllHosts = acceptAllHosts;
             AcceptAllSubdomains = acceptAllSubdomains;
             CertChallengeType = certChallengeType;
+            CertificateGeneratorLink = certificateGeneratorLink;
             DnsMode = dnsMode;
             GvcLink = gvcLink;
             Ports = ports;

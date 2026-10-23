@@ -23,7 +23,7 @@ namespace Pulumiverse.Cpln.Inputs
         private InputMap<string>? _azuread;
 
         /// <summary>
-        /// Azure AD authentication parameters as flat key-value pairs.
+        /// Azure AD authentication parameters. Numbers, booleans, lists and objects are given as JSON text, for example `ManagedIdentity = jsonencode({ ClientId = "id" })`.
         /// </summary>
         public InputMap<string> Azuread
         {
@@ -57,7 +57,7 @@ namespace Pulumiverse.Cpln.Inputs
         private InputMap<string>? _googleIam;
 
         /// <summary>
-        /// Google Cloud IAM authentication parameters as flat key-value pairs.
+        /// Google Cloud IAM authentication parameters. Numbers, booleans, lists and objects are given as JSON text.
         /// </summary>
         public InputMap<string> GoogleIam
         {
@@ -85,7 +85,7 @@ namespace Pulumiverse.Cpln.Inputs
         private InputMap<string>? _httpHeaders;
 
         /// <summary>
-        /// Custom HTTP headers, as flat key-value pairs.
+        /// Custom HTTP headers. Each value is a JSON object holding `Values`, `Secrets` or `Files` lists, for example `jsonencode({ values = ["value"] })`.
         /// </summary>
         public InputMap<string> HttpHeaders
         {
@@ -109,7 +109,7 @@ namespace Pulumiverse.Cpln.Inputs
         private InputMap<string>? _oauth2;
 
         /// <summary>
-        /// OAuth 2.0 client configuration as flat key-value pairs.
+        /// OAuth 2.0 client configuration. Numbers, booleans, lists and objects are given as JSON text, for example `scopes = jsonencode(["read"])`.
         /// </summary>
         public InputMap<string> Oauth2
         {
@@ -125,7 +125,7 @@ namespace Pulumiverse.Cpln.Inputs
         private InputMap<string>? _proxyConnectHeader;
 
         /// <summary>
-        /// Headers sent to the proxy on CONNECT, as flat key-value pairs.
+        /// Headers sent to the proxy on CONNECT. Each value is a JSON list of strings, for example `jsonencode(["value"])`.
         /// </summary>
         public InputMap<string> ProxyConnectHeader
         {
@@ -149,7 +149,7 @@ namespace Pulumiverse.Cpln.Inputs
         private InputMap<string>? _queueConfig;
 
         /// <summary>
-        /// Tuning parameters for the in-memory RemoteWrite queue, as flat key-value pairs.
+        /// Tuning parameters for the in-memory RemoteWrite queue. Numbers, booleans, lists and objects are given as JSON text, for example `capacity = "2500"`.
         /// </summary>
         public InputMap<string> QueueConfig
         {
@@ -179,7 +179,7 @@ namespace Pulumiverse.Cpln.Inputs
         private InputMap<string>? _sigv4;
 
         /// <summary>
-        /// AWS SigV4 authentication parameters as flat key-value pairs.
+        /// AWS SigV4 authentication parameters. Numbers, booleans, lists and objects are given as JSON text.
         /// </summary>
         public InputMap<string> Sigv4
         {
@@ -195,7 +195,7 @@ namespace Pulumiverse.Cpln.Inputs
         private InputMap<string>? _tlsConfig;
 
         /// <summary>
-        /// TLS configuration as flat key-value pairs.
+        /// TLS configuration. Numbers, booleans, lists and objects are given as JSON text, for example `InsecureSkipVerify = "true"`.
         /// </summary>
         public InputMap<string> TlsConfig
         {
@@ -213,7 +213,7 @@ namespace Pulumiverse.Cpln.Inputs
         private InputList<ImmutableDictionary<string, string>>? _writeRelabelConfigs;
 
         /// <summary>
-        /// Relabel rules applied to samples before they are sent.
+        /// Relabel rules applied to samples before they are sent. `SourceLabels` and `Modulus` are given as JSON text, for example `SourceLabels = jsonencode(["__name__"])`. Every other value, such as `Regex`, is sent as written.
         /// </summary>
         public InputList<ImmutableDictionary<string, string>> WriteRelabelConfigs
         {

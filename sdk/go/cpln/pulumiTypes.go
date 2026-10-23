@@ -1404,6 +1404,8 @@ type DomainSpec struct {
 	AcceptAllSubdomains *bool `pulumi:"acceptAllSubdomains"`
 	// Defines the method used to prove domain ownership for certificate issuance.
 	CertChallengeType *string `pulumi:"certChallengeType"`
+	// Link to a certificate generator that issues the certificate instead of the built-in one. The generator defines the challenge type, so `certChallengeType` must not be set. Cannot be combined with a TLS server certificate.
+	CertificateGeneratorLink *string `pulumi:"certificateGeneratorLink"`
 	// In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
 	DnsMode *string `pulumi:"dnsMode"`
 	// This value is set to a target GVC (using a full link) for use by subdomain based routing. Each workload in the GVC will receive a subdomain in the form ${workload.name}.${domain.name}. **Do not include if path based routing is used.**
@@ -1432,6 +1434,8 @@ type DomainSpecArgs struct {
 	AcceptAllSubdomains pulumi.BoolPtrInput `pulumi:"acceptAllSubdomains"`
 	// Defines the method used to prove domain ownership for certificate issuance.
 	CertChallengeType pulumi.StringPtrInput `pulumi:"certChallengeType"`
+	// Link to a certificate generator that issues the certificate instead of the built-in one. The generator defines the challenge type, so `certChallengeType` must not be set. Cannot be combined with a TLS server certificate.
+	CertificateGeneratorLink pulumi.StringPtrInput `pulumi:"certificateGeneratorLink"`
 	// In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
 	DnsMode pulumi.StringPtrInput `pulumi:"dnsMode"`
 	// This value is set to a target GVC (using a full link) for use by subdomain based routing. Each workload in the GVC will receive a subdomain in the form ${workload.name}.${domain.name}. **Do not include if path based routing is used.**
@@ -1534,6 +1538,11 @@ func (o DomainSpecOutput) CertChallengeType() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v DomainSpec) *string { return v.CertChallengeType }).(pulumi.StringPtrOutput)
 }
 
+// Link to a certificate generator that issues the certificate instead of the built-in one. The generator defines the challenge type, so `certChallengeType` must not be set. Cannot be combined with a TLS server certificate.
+func (o DomainSpecOutput) CertificateGeneratorLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DomainSpec) *string { return v.CertificateGeneratorLink }).(pulumi.StringPtrOutput)
+}
+
 // In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
 func (o DomainSpecOutput) DnsMode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v DomainSpec) *string { return v.DnsMode }).(pulumi.StringPtrOutput)
@@ -1605,6 +1614,16 @@ func (o DomainSpecPtrOutput) CertChallengeType() pulumi.StringPtrOutput {
 			return nil
 		}
 		return v.CertChallengeType
+	}).(pulumi.StringPtrOutput)
+}
+
+// Link to a certificate generator that issues the certificate instead of the built-in one. The generator defines the challenge type, so `certChallengeType` must not be set. Cannot be combined with a TLS server certificate.
+func (o DomainSpecPtrOutput) CertificateGeneratorLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *DomainSpec) *string {
+		if v == nil {
+			return nil
+		}
+		return v.CertificateGeneratorLink
 	}).(pulumi.StringPtrOutput)
 }
 
@@ -14149,7 +14168,7 @@ func (o Mk8sAddOnsByokConfigMonitoringPrometheusMainPtrOutput) Storage() pulumi.
 type Mk8sAddOnsByokConfigMonitoringRemoteWrite struct {
 	// HTTP Authorization header credentials.
 	Authorization *Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization `pulumi:"authorization"`
-	// Azure AD authentication parameters as flat key-value pairs.
+	// Azure AD authentication parameters. Numbers, booleans, lists and objects are given as JSON text, for example `managedIdentity = jsonencode({ clientId = "id" })`.
 	Azuread map[string]string `pulumi:"azuread"`
 	// HTTP basic authentication credentials.
 	BasicAuth *Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuth `pulumi:"basicAuth"`
@@ -14157,25 +14176,25 @@ type Mk8sAddOnsByokConfigMonitoringRemoteWrite struct {
 	EnableHttp2 *bool `pulumi:"enableHttp2"`
 	// Whether the HTTP client follows redirects.
 	FollowRedirects *bool `pulumi:"followRedirects"`
-	// Google Cloud IAM authentication parameters as flat key-value pairs.
+	// Google Cloud IAM authentication parameters. Numbers, booleans, lists and objects are given as JSON text.
 	GoogleIam map[string]string `pulumi:"googleIam"`
 	// Custom request headers attached to every remoteWrite call.
 	Headers map[string]string `pulumi:"headers"`
-	// Custom HTTP headers, as flat key-value pairs.
+	// Custom HTTP headers. Each value is a JSON object holding `values`, `secrets` or `files` lists, for example `jsonencode({ values = ["value"] })`.
 	HttpHeaders map[string]string `pulumi:"httpHeaders"`
 	// Friendly name used in metrics for this client.
 	Name *string `pulumi:"name"`
 	// Comma-separated list of hosts that bypass the proxy.
 	NoProxy *string `pulumi:"noProxy"`
-	// OAuth 2.0 client configuration as flat key-value pairs.
+	// OAuth 2.0 client configuration. Numbers, booleans, lists and objects are given as JSON text, for example `scopes = jsonencode(["read"])`.
 	Oauth2 map[string]string `pulumi:"oauth2"`
-	// Headers sent to the proxy on CONNECT, as flat key-value pairs.
+	// Headers sent to the proxy on CONNECT. Each value is a JSON list of strings, for example `jsonencode(["value"])`.
 	ProxyConnectHeader map[string]string `pulumi:"proxyConnectHeader"`
 	// Whether to read proxy settings from environment variables.
 	ProxyFromEnvironment *bool `pulumi:"proxyFromEnvironment"`
 	// HTTP proxy URL used for outbound requests.
 	ProxyUrl *string `pulumi:"proxyUrl"`
-	// Tuning parameters for the in-memory remoteWrite queue, as flat key-value pairs.
+	// Tuning parameters for the in-memory remoteWrite queue. Numbers, booleans, lists and objects are given as JSON text, for example `capacity = "2500"`.
 	QueueConfig map[string]string `pulumi:"queueConfig"`
 	// Per-request timeout (for example, "30s").
 	RemoteTimeout *string `pulumi:"remoteTimeout"`
@@ -14183,13 +14202,13 @@ type Mk8sAddOnsByokConfigMonitoringRemoteWrite struct {
 	SendExemplars *bool `pulumi:"sendExemplars"`
 	// Whether to forward Prometheus native histograms.
 	SendNativeHistograms *bool `pulumi:"sendNativeHistograms"`
-	// AWS SigV4 authentication parameters as flat key-value pairs.
+	// AWS SigV4 authentication parameters. Numbers, booleans, lists and objects are given as JSON text.
 	Sigv4 map[string]string `pulumi:"sigv4"`
-	// TLS configuration as flat key-value pairs.
+	// TLS configuration. Numbers, booleans, lists and objects are given as JSON text, for example `insecureSkipVerify = "true"`.
 	TlsConfig map[string]string `pulumi:"tlsConfig"`
 	// Endpoint that receives the remoteWrite payload.
 	Url *string `pulumi:"url"`
-	// Relabel rules applied to samples before they are sent.
+	// Relabel rules applied to samples before they are sent. `sourceLabels` and `modulus` are given as JSON text, for example `sourceLabels = jsonencode(["__name__"])`. Every other value, such as `regex`, is sent as written.
 	WriteRelabelConfigs []map[string]string `pulumi:"writeRelabelConfigs"`
 }
 
@@ -14207,7 +14226,7 @@ type Mk8sAddOnsByokConfigMonitoringRemoteWriteInput interface {
 type Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs struct {
 	// HTTP Authorization header credentials.
 	Authorization Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrInput `pulumi:"authorization"`
-	// Azure AD authentication parameters as flat key-value pairs.
+	// Azure AD authentication parameters. Numbers, booleans, lists and objects are given as JSON text, for example `managedIdentity = jsonencode({ clientId = "id" })`.
 	Azuread pulumi.StringMapInput `pulumi:"azuread"`
 	// HTTP basic authentication credentials.
 	BasicAuth Mk8sAddOnsByokConfigMonitoringRemoteWriteBasicAuthPtrInput `pulumi:"basicAuth"`
@@ -14215,25 +14234,25 @@ type Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs struct {
 	EnableHttp2 pulumi.BoolPtrInput `pulumi:"enableHttp2"`
 	// Whether the HTTP client follows redirects.
 	FollowRedirects pulumi.BoolPtrInput `pulumi:"followRedirects"`
-	// Google Cloud IAM authentication parameters as flat key-value pairs.
+	// Google Cloud IAM authentication parameters. Numbers, booleans, lists and objects are given as JSON text.
 	GoogleIam pulumi.StringMapInput `pulumi:"googleIam"`
 	// Custom request headers attached to every remoteWrite call.
 	Headers pulumi.StringMapInput `pulumi:"headers"`
-	// Custom HTTP headers, as flat key-value pairs.
+	// Custom HTTP headers. Each value is a JSON object holding `values`, `secrets` or `files` lists, for example `jsonencode({ values = ["value"] })`.
 	HttpHeaders pulumi.StringMapInput `pulumi:"httpHeaders"`
 	// Friendly name used in metrics for this client.
 	Name pulumi.StringPtrInput `pulumi:"name"`
 	// Comma-separated list of hosts that bypass the proxy.
 	NoProxy pulumi.StringPtrInput `pulumi:"noProxy"`
-	// OAuth 2.0 client configuration as flat key-value pairs.
+	// OAuth 2.0 client configuration. Numbers, booleans, lists and objects are given as JSON text, for example `scopes = jsonencode(["read"])`.
 	Oauth2 pulumi.StringMapInput `pulumi:"oauth2"`
-	// Headers sent to the proxy on CONNECT, as flat key-value pairs.
+	// Headers sent to the proxy on CONNECT. Each value is a JSON list of strings, for example `jsonencode(["value"])`.
 	ProxyConnectHeader pulumi.StringMapInput `pulumi:"proxyConnectHeader"`
 	// Whether to read proxy settings from environment variables.
 	ProxyFromEnvironment pulumi.BoolPtrInput `pulumi:"proxyFromEnvironment"`
 	// HTTP proxy URL used for outbound requests.
 	ProxyUrl pulumi.StringPtrInput `pulumi:"proxyUrl"`
-	// Tuning parameters for the in-memory remoteWrite queue, as flat key-value pairs.
+	// Tuning parameters for the in-memory remoteWrite queue. Numbers, booleans, lists and objects are given as JSON text, for example `capacity = "2500"`.
 	QueueConfig pulumi.StringMapInput `pulumi:"queueConfig"`
 	// Per-request timeout (for example, "30s").
 	RemoteTimeout pulumi.StringPtrInput `pulumi:"remoteTimeout"`
@@ -14241,13 +14260,13 @@ type Mk8sAddOnsByokConfigMonitoringRemoteWriteArgs struct {
 	SendExemplars pulumi.BoolPtrInput `pulumi:"sendExemplars"`
 	// Whether to forward Prometheus native histograms.
 	SendNativeHistograms pulumi.BoolPtrInput `pulumi:"sendNativeHistograms"`
-	// AWS SigV4 authentication parameters as flat key-value pairs.
+	// AWS SigV4 authentication parameters. Numbers, booleans, lists and objects are given as JSON text.
 	Sigv4 pulumi.StringMapInput `pulumi:"sigv4"`
-	// TLS configuration as flat key-value pairs.
+	// TLS configuration. Numbers, booleans, lists and objects are given as JSON text, for example `insecureSkipVerify = "true"`.
 	TlsConfig pulumi.StringMapInput `pulumi:"tlsConfig"`
 	// Endpoint that receives the remoteWrite payload.
 	Url pulumi.StringPtrInput `pulumi:"url"`
-	// Relabel rules applied to samples before they are sent.
+	// Relabel rules applied to samples before they are sent. `sourceLabels` and `modulus` are given as JSON text, for example `sourceLabels = jsonencode(["__name__"])`. Every other value, such as `regex`, is sent as written.
 	WriteRelabelConfigs pulumi.StringMapArrayInput `pulumi:"writeRelabelConfigs"`
 }
 
@@ -14309,7 +14328,7 @@ func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) Authorization() Mk8sAdd
 	}).(Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorizationPtrOutput)
 }
 
-// Azure AD authentication parameters as flat key-value pairs.
+// Azure AD authentication parameters. Numbers, booleans, lists and objects are given as JSON text, for example `managedIdentity = jsonencode({ clientId = "id" })`.
 func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) Azuread() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) map[string]string { return v.Azuread }).(pulumi.StringMapOutput)
 }
@@ -14331,7 +14350,7 @@ func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) FollowRedirects() pulum
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) *bool { return v.FollowRedirects }).(pulumi.BoolPtrOutput)
 }
 
-// Google Cloud IAM authentication parameters as flat key-value pairs.
+// Google Cloud IAM authentication parameters. Numbers, booleans, lists and objects are given as JSON text.
 func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) GoogleIam() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) map[string]string { return v.GoogleIam }).(pulumi.StringMapOutput)
 }
@@ -14341,7 +14360,7 @@ func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) Headers() pulumi.String
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) map[string]string { return v.Headers }).(pulumi.StringMapOutput)
 }
 
-// Custom HTTP headers, as flat key-value pairs.
+// Custom HTTP headers. Each value is a JSON object holding `values`, `secrets` or `files` lists, for example `jsonencode({ values = ["value"] })`.
 func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) HttpHeaders() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) map[string]string { return v.HttpHeaders }).(pulumi.StringMapOutput)
 }
@@ -14356,12 +14375,12 @@ func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) NoProxy() pulumi.String
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) *string { return v.NoProxy }).(pulumi.StringPtrOutput)
 }
 
-// OAuth 2.0 client configuration as flat key-value pairs.
+// OAuth 2.0 client configuration. Numbers, booleans, lists and objects are given as JSON text, for example `scopes = jsonencode(["read"])`.
 func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) Oauth2() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) map[string]string { return v.Oauth2 }).(pulumi.StringMapOutput)
 }
 
-// Headers sent to the proxy on CONNECT, as flat key-value pairs.
+// Headers sent to the proxy on CONNECT. Each value is a JSON list of strings, for example `jsonencode(["value"])`.
 func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) ProxyConnectHeader() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) map[string]string { return v.ProxyConnectHeader }).(pulumi.StringMapOutput)
 }
@@ -14376,7 +14395,7 @@ func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) ProxyUrl() pulumi.Strin
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) *string { return v.ProxyUrl }).(pulumi.StringPtrOutput)
 }
 
-// Tuning parameters for the in-memory remoteWrite queue, as flat key-value pairs.
+// Tuning parameters for the in-memory remoteWrite queue. Numbers, booleans, lists and objects are given as JSON text, for example `capacity = "2500"`.
 func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) QueueConfig() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) map[string]string { return v.QueueConfig }).(pulumi.StringMapOutput)
 }
@@ -14396,12 +14415,12 @@ func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) SendNativeHistograms() 
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) *bool { return v.SendNativeHistograms }).(pulumi.BoolPtrOutput)
 }
 
-// AWS SigV4 authentication parameters as flat key-value pairs.
+// AWS SigV4 authentication parameters. Numbers, booleans, lists and objects are given as JSON text.
 func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) Sigv4() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) map[string]string { return v.Sigv4 }).(pulumi.StringMapOutput)
 }
 
-// TLS configuration as flat key-value pairs.
+// TLS configuration. Numbers, booleans, lists and objects are given as JSON text, for example `insecureSkipVerify = "true"`.
 func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) TlsConfig() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) map[string]string { return v.TlsConfig }).(pulumi.StringMapOutput)
 }
@@ -14411,7 +14430,7 @@ func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) Url() pulumi.StringPtrO
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) *string { return v.Url }).(pulumi.StringPtrOutput)
 }
 
-// Relabel rules applied to samples before they are sent.
+// Relabel rules applied to samples before they are sent. `sourceLabels` and `modulus` are given as JSON text, for example `sourceLabels = jsonencode(["__name__"])`. Every other value, such as `regex`, is sent as written.
 func (o Mk8sAddOnsByokConfigMonitoringRemoteWriteOutput) WriteRelabelConfigs() pulumi.StringMapArrayOutput {
 	return o.ApplyT(func(v Mk8sAddOnsByokConfigMonitoringRemoteWrite) []map[string]string { return v.WriteRelabelConfigs }).(pulumi.StringMapArrayOutput)
 }
@@ -32464,8 +32483,8 @@ type OrgLoggingElasticLoggingGeneric struct {
 	Host string `pulumi:"host"`
 	// Logging Index.
 	Index string `pulumi:"index"`
-	// Logging path.
-	Path string `pulumi:"path"`
+	// Logging path. Must start with `/`.
+	Path *string `pulumi:"path"`
 	// Port. Default: 443
 	Port int `pulumi:"port"`
 	// Logging Type.
@@ -32490,8 +32509,8 @@ type OrgLoggingElasticLoggingGenericArgs struct {
 	Host pulumi.StringInput `pulumi:"host"`
 	// Logging Index.
 	Index pulumi.StringInput `pulumi:"index"`
-	// Logging path.
-	Path pulumi.StringInput `pulumi:"path"`
+	// Logging path. Must start with `/`.
+	Path pulumi.StringPtrInput `pulumi:"path"`
 	// Port. Default: 443
 	Port pulumi.IntInput `pulumi:"port"`
 	// Logging Type.
@@ -32590,9 +32609,9 @@ func (o OrgLoggingElasticLoggingGenericOutput) Index() pulumi.StringOutput {
 	return o.ApplyT(func(v OrgLoggingElasticLoggingGeneric) string { return v.Index }).(pulumi.StringOutput)
 }
 
-// Logging path.
-func (o OrgLoggingElasticLoggingGenericOutput) Path() pulumi.StringOutput {
-	return o.ApplyT(func(v OrgLoggingElasticLoggingGeneric) string { return v.Path }).(pulumi.StringOutput)
+// Logging path. Must start with `/`.
+func (o OrgLoggingElasticLoggingGenericOutput) Path() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v OrgLoggingElasticLoggingGeneric) *string { return v.Path }).(pulumi.StringPtrOutput)
 }
 
 // Port. Default: 443
@@ -32659,13 +32678,13 @@ func (o OrgLoggingElasticLoggingGenericPtrOutput) Index() pulumi.StringPtrOutput
 	}).(pulumi.StringPtrOutput)
 }
 
-// Logging path.
+// Logging path. Must start with `/`.
 func (o OrgLoggingElasticLoggingGenericPtrOutput) Path() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *OrgLoggingElasticLoggingGeneric) *string {
 		if v == nil {
 			return nil
 		}
-		return &v.Path
+		return v.Path
 	}).(pulumi.StringPtrOutput)
 }
 

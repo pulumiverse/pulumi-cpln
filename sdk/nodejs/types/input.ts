@@ -148,6 +148,10 @@ export interface DomainSpec {
      */
     certChallengeType?: pulumi.Input<string>;
     /**
+     * Link to a certificate generator that issues the certificate instead of the built-in one. The generator defines the challenge type, so `certChallengeType` must not be set. Cannot be combined with a TLS server certificate.
+     */
+    certificateGeneratorLink?: pulumi.Input<string>;
+    /**
      * In `cname` dnsMode, Control Plane will configure workloads to accept traffic for the domain but will not manage DNS records for the domain. End users must configure CNAME records in their own DNS pointed to the canonical workload endpoint. Currently `cname` dnsMode requires that a TLS server certificate be configured when subdomain based routing is used. In `ns` dnsMode, Control Plane will manage the subdomains and create all necessary DNS records. End users configure NS records to forward DNS requests to the Control Plane managed DNS servers. Valid values: `cname`, `ns`. Default: `cname`.
      */
     dnsMode?: pulumi.Input<string>;
@@ -4149,7 +4153,7 @@ export interface Mk8sAddOnsByokConfigMonitoringRemoteWrite {
      */
     authorization?: pulumi.Input<inputs.Mk8sAddOnsByokConfigMonitoringRemoteWriteAuthorization>;
     /**
-     * Azure AD authentication parameters as flat key-value pairs.
+     * Azure AD authentication parameters. Numbers, booleans, lists and objects are given as JSON text, for example `managedIdentity = jsonencode({ clientId = "id" })`.
      */
     azuread?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
@@ -4165,7 +4169,7 @@ export interface Mk8sAddOnsByokConfigMonitoringRemoteWrite {
      */
     followRedirects?: pulumi.Input<boolean>;
     /**
-     * Google Cloud IAM authentication parameters as flat key-value pairs.
+     * Google Cloud IAM authentication parameters. Numbers, booleans, lists and objects are given as JSON text.
      */
     googleIam?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
@@ -4173,7 +4177,7 @@ export interface Mk8sAddOnsByokConfigMonitoringRemoteWrite {
      */
     headers?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * Custom HTTP headers, as flat key-value pairs.
+     * Custom HTTP headers. Each value is a JSON object holding `values`, `secrets` or `files` lists, for example `jsonencode({ values = ["value"] })`.
      */
     httpHeaders?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
@@ -4185,11 +4189,11 @@ export interface Mk8sAddOnsByokConfigMonitoringRemoteWrite {
      */
     noProxy?: pulumi.Input<string>;
     /**
-     * OAuth 2.0 client configuration as flat key-value pairs.
+     * OAuth 2.0 client configuration. Numbers, booleans, lists and objects are given as JSON text, for example `scopes = jsonencode(["read"])`.
      */
     oauth2?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * Headers sent to the proxy on CONNECT, as flat key-value pairs.
+     * Headers sent to the proxy on CONNECT. Each value is a JSON list of strings, for example `jsonencode(["value"])`.
      */
     proxyConnectHeader?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
@@ -4201,7 +4205,7 @@ export interface Mk8sAddOnsByokConfigMonitoringRemoteWrite {
      */
     proxyUrl?: pulumi.Input<string>;
     /**
-     * Tuning parameters for the in-memory remoteWrite queue, as flat key-value pairs.
+     * Tuning parameters for the in-memory remoteWrite queue. Numbers, booleans, lists and objects are given as JSON text, for example `capacity = "2500"`.
      */
     queueConfig?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
@@ -4217,11 +4221,11 @@ export interface Mk8sAddOnsByokConfigMonitoringRemoteWrite {
      */
     sendNativeHistograms?: pulumi.Input<boolean>;
     /**
-     * AWS SigV4 authentication parameters as flat key-value pairs.
+     * AWS SigV4 authentication parameters. Numbers, booleans, lists and objects are given as JSON text.
      */
     sigv4?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * TLS configuration as flat key-value pairs.
+     * TLS configuration. Numbers, booleans, lists and objects are given as JSON text, for example `insecureSkipVerify = "true"`.
      */
     tlsConfig?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
@@ -4229,7 +4233,7 @@ export interface Mk8sAddOnsByokConfigMonitoringRemoteWrite {
      */
     url?: pulumi.Input<string>;
     /**
-     * Relabel rules applied to samples before they are sent.
+     * Relabel rules applied to samples before they are sent. `sourceLabels` and `modulus` are given as JSON text, for example `sourceLabels = jsonencode(["__name__"])`. Every other value, such as `regex`, is sent as written.
      */
     writeRelabelConfigs?: pulumi.Input<pulumi.Input<{[key: string]: pulumi.Input<string>}>[]>;
 }
@@ -5738,9 +5742,9 @@ export interface OrgLoggingElasticLoggingGeneric {
      */
     index: pulumi.Input<string>;
     /**
-     * Logging path.
+     * Logging path. Must start with `/`.
      */
-    path: pulumi.Input<string>;
+    path?: pulumi.Input<string>;
     /**
      * Port. Default: 443
      */
