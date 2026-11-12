@@ -19,49 +19,91 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly bool? ApiServer;
         /// <summary>
+        /// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+        /// </summary>
+        public readonly string? ApiServerDrop;
+        /// <summary>
         /// Enable CNI-level container stats.
         /// </summary>
         public readonly bool? Cadvisor;
+        /// <summary>
+        /// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+        /// </summary>
+        public readonly string? CadvisorDrop;
         /// <summary>
         /// Enable scraping of core-dns service.
         /// </summary>
         public readonly bool? CoreDns;
         /// <summary>
+        /// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+        /// </summary>
+        public readonly string? CoreDnsDrop;
+        /// <summary>
         /// Enable kube-state metrics.
         /// </summary>
         public readonly bool? KubeState;
+        /// <summary>
+        /// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+        /// </summary>
+        public readonly string? KubeStateDrop;
         /// <summary>
         /// Enable scraping kubelet stats.
         /// </summary>
         public readonly bool? Kubelet;
         /// <summary>
+        /// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+        /// </summary>
+        public readonly string? KubeletDrop;
+        /// <summary>
         /// Enable collecting node-level stats (disk, network, filesystem, etc).
         /// </summary>
         public readonly bool? NodeExporter;
+        /// <summary>
+        /// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+        /// </summary>
+        public readonly string? NodeExporterDrop;
         public readonly Outputs.Mk8sAddOnsMetricsScrapeAnnotated? ScrapeAnnotated;
 
         [OutputConstructor]
         private Mk8sAddOnsMetrics(
             bool? apiServer,
 
+            string? apiServerDrop,
+
             bool? cadvisor,
+
+            string? cadvisorDrop,
 
             bool? coreDns,
 
+            string? coreDnsDrop,
+
             bool? kubeState,
+
+            string? kubeStateDrop,
 
             bool? kubelet,
 
+            string? kubeletDrop,
+
             bool? nodeExporter,
+
+            string? nodeExporterDrop,
 
             Outputs.Mk8sAddOnsMetricsScrapeAnnotated? scrapeAnnotated)
         {
             ApiServer = apiServer;
+            ApiServerDrop = apiServerDrop;
             Cadvisor = cadvisor;
+            CadvisorDrop = cadvisorDrop;
             CoreDns = coreDns;
+            CoreDnsDrop = coreDnsDrop;
             KubeState = kubeState;
+            KubeStateDrop = kubeStateDrop;
             Kubelet = kubelet;
+            KubeletDrop = kubeletDrop;
             NodeExporter = nodeExporter;
+            NodeExporterDrop = nodeExporterDrop;
             ScrapeAnnotated = scrapeAnnotated;
         }
     }

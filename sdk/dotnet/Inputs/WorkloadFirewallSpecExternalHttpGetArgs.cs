@@ -17,7 +17,7 @@ namespace Pulumiverse.Cpln.Inputs
         private InputList<Inputs.WorkloadFirewallSpecExternalHttpInboundHeaderFilterGetArgs>? _inboundHeaderFilters;
 
         /// <summary>
-        /// A list of header filters for HTTP workloads.
+        /// A list of header filters for HTTP workloads. Each header key may appear only once, compared case-insensitively.
         /// </summary>
         public InputList<Inputs.WorkloadFirewallSpecExternalHttpInboundHeaderFilterGetArgs> InboundHeaderFilters
         {

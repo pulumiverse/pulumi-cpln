@@ -16,6 +16,7 @@
         "agent.ts",
         "auditContext.ts",
         "catalogTemplate.ts",
+        "certificateGenerator.ts",
         "cloudAccount.ts",
         "config/index.ts",
         "config/vars.ts",

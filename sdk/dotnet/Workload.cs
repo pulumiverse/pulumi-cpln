@@ -32,6 +32,12 @@ namespace Pulumiverse.Cpln
         public Output<string> Description { get; private set; } = null!;
 
         /// <summary>
+        /// Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `MinAvailable` or `MaxUnavailable`. A `MinAvailable` that would allow no evictions at the `MinScale` of `Options` or any `LocalOptions` is rejected. Not supported for `Cron` or `Vm` workloads. When omitted, workloads with `MinScale` 4 or more allow 20% of replicas to be unavailable.
+        /// </summary>
+        [Output("disruptionBudget")]
+        public Output<Outputs.WorkloadDisruptionBudget?> DisruptionBudget { get; private set; } = null!;
+
+        /// <summary>
         /// Extra Kubernetes modifications. Only used for BYOK.
         /// </summary>
         [Output("extras")]
@@ -75,6 +81,12 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
+
+        /// <summary>
+        /// Internal service-to-service networking configuration.
+        /// </summary>
+        [Output("networking")]
+        public Output<Outputs.WorkloadNetworking> Networking { get; private set; } = null!;
 
         /// <summary>
         /// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
@@ -202,6 +214,12 @@ namespace Pulumiverse.Cpln
         public Input<string>? Description { get; set; }
 
         /// <summary>
+        /// Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `MinAvailable` or `MaxUnavailable`. A `MinAvailable` that would allow no evictions at the `MinScale` of `Options` or any `LocalOptions` is rejected. Not supported for `Cron` or `Vm` workloads. When omitted, workloads with `MinScale` 4 or more allow 20% of replicas to be unavailable.
+        /// </summary>
+        [Input("disruptionBudget")]
+        public Input<Inputs.WorkloadDisruptionBudgetArgs>? DisruptionBudget { get; set; }
+
+        /// <summary>
         /// Extra Kubernetes modifications. Only used for BYOK.
         /// </summary>
         [Input("extras")]
@@ -257,6 +275,12 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
+
+        /// <summary>
+        /// Internal service-to-service networking configuration.
+        /// </summary>
+        [Input("networking")]
+        public Input<Inputs.WorkloadNetworkingArgs>? Networking { get; set; }
 
         /// <summary>
         /// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
@@ -351,6 +375,12 @@ namespace Pulumiverse.Cpln
         public Input<string>? Description { get; set; }
 
         /// <summary>
+        /// Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `MinAvailable` or `MaxUnavailable`. A `MinAvailable` that would allow no evictions at the `MinScale` of `Options` or any `LocalOptions` is rejected. Not supported for `Cron` or `Vm` workloads. When omitted, workloads with `MinScale` 4 or more allow 20% of replicas to be unavailable.
+        /// </summary>
+        [Input("disruptionBudget")]
+        public Input<Inputs.WorkloadDisruptionBudgetGetArgs>? DisruptionBudget { get; set; }
+
+        /// <summary>
         /// Extra Kubernetes modifications. Only used for BYOK.
         /// </summary>
         [Input("extras")]
@@ -406,6 +436,12 @@ namespace Pulumiverse.Cpln
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
+
+        /// <summary>
+        /// Internal service-to-service networking configuration.
+        /// </summary>
+        [Input("networking")]
+        public Input<Inputs.WorkloadNetworkingGetArgs>? Networking { get; set; }
 
         /// <summary>
         /// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.

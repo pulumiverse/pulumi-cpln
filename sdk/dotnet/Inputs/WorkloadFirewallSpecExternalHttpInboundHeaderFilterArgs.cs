@@ -17,7 +17,7 @@ namespace Pulumiverse.Cpln.Inputs
         private InputList<string>? _allowedValues;
 
         /// <summary>
-        /// A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
+        /// A list of regular expressions to match for allowed header values. When included, http requests must have AT LEAST ONE of these headers to be sent to the workload.
         /// </summary>
         public InputList<string> AllowedValues
         {
@@ -29,7 +29,7 @@ namespace Pulumiverse.Cpln.Inputs
         private InputList<string>? _blockedValues;
 
         /// <summary>
-        /// A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
+        /// A list of regular expressions to match for blocked header values. When included, http requests with ANY of these headers will be filtered and will not reach the workload.
         /// </summary>
         public InputList<string> BlockedValues
         {
@@ -38,7 +38,7 @@ namespace Pulumiverse.Cpln.Inputs
         }
 
         /// <summary>
-        /// The header to match for.
+        /// The header to match for: an HTTP header name (RFC 9110 token) or one of the pseudo-headers `:authority`, `:method`, `:path` and `:scheme`. Header names are case-insensitive.
         /// </summary>
         [Input("key", required: true)]
         public Input<string> Key { get; set; } = null!;

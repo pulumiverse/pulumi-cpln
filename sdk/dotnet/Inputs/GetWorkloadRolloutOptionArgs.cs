@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class GetWorkloadRolloutOptionInputArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The number of replicas that can be created above the desired amount of replicas during an update.
+        /// The number of replicas that can be created above the desired amount of replicas during an update. Not supported for `Vm` workloads.
         /// </summary>
         [Input("maxSurgeReplicas", required: true)]
         public Input<string> MaxSurgeReplicas { get; set; } = null!;
@@ -32,7 +32,13 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<int> MinReadySeconds { get; set; } = null!;
 
         /// <summary>
-        /// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+        /// When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified.
+        /// </summary>
+        [Input("rolloutOnReferenceChange", required: true)]
+        public Input<bool> RolloutOnReferenceChange { get; set; } = null!;
+
+        /// <summary>
+        /// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`. Cannot be set for `Vm` workloads.
         /// </summary>
         [Input("scalingPolicy", required: true)]
         public Input<string> ScalingPolicy { get; set; } = null!;

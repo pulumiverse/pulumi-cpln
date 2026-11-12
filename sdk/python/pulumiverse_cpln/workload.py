@@ -25,6 +25,7 @@ class WorkloadArgs:
                  type: pulumi.Input[_builtins.str],
                  containers: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]]] = None,
                  description: Optional[pulumi.Input[_builtins.str]] = None,
+                 disruption_budget: Optional[pulumi.Input['WorkloadDisruptionBudgetArgs']] = None,
                  extras: Optional[pulumi.Input[_builtins.str]] = None,
                  firewall_spec: Optional[pulumi.Input['WorkloadFirewallSpecArgs']] = None,
                  identity_link: Optional[pulumi.Input[_builtins.str]] = None,
@@ -32,6 +33,7 @@ class WorkloadArgs:
                  load_balancer: Optional[pulumi.Input['WorkloadLoadBalancerArgs']] = None,
                  local_options: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadLocalOptionArgs']]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
+                 networking: Optional[pulumi.Input['WorkloadNetworkingArgs']] = None,
                  options: Optional[pulumi.Input['WorkloadOptionsArgs']] = None,
                  request_retry_policy: Optional[pulumi.Input['WorkloadRequestRetryPolicyArgs']] = None,
                  rollout_options: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadRolloutOptionArgs']]]] = None,
@@ -46,12 +48,14 @@ class WorkloadArgs:
         :param pulumi.Input[_builtins.str] type: Workload Type. Either `serverless`, `standard`, `stateful`, `cron`, or `vm`.
         :param pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
         :param pulumi.Input[_builtins.str] description: Description of the workload.
+        :param pulumi.Input['WorkloadDisruptionBudgetArgs'] disruption_budget: Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `min_available` or `max_unavailable`. A `min_available` that would allow no evictions at the `min_scale` of `options` or any `local_options` is rejected. Not supported for `cron` or `vm` workloads. When omitted, workloads with `min_scale` 4 or more allow 20% of replicas to be unavailable.
         :param pulumi.Input[_builtins.str] extras: Extra Kubernetes modifications. Only used for BYOK.
         :param pulumi.Input['WorkloadFirewallSpecArgs'] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
         :param pulumi.Input[_builtins.str] identity_link: The identityLink is used as the access scope for 3rd party cloud resources. A single identity can provide access to multiple cloud providers.
         :param pulumi.Input[Sequence[pulumi.Input['WorkloadJobArgs']]] jobs: [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
         :param pulumi.Input[Sequence[pulumi.Input['WorkloadLocalOptionArgs']]] local_options: Override defaultOptions for the workload in specific Control Plane Locations.
         :param pulumi.Input[_builtins.str] name: Name of the workload.
+        :param pulumi.Input['WorkloadNetworkingArgs'] networking: Internal service-to-service networking configuration.
         :param pulumi.Input['WorkloadOptionsArgs'] options: Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
         :param pulumi.Input[Sequence[pulumi.Input['WorkloadRolloutOptionArgs']]] rollout_options: Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable replicas, surge replicas, and scaling policies.
         :param pulumi.Input['WorkloadSecurityOptionsArgs'] security_options: Allows for the configuration of the `file system group id` and `geo location`.
@@ -65,6 +69,8 @@ class WorkloadArgs:
             pulumi.set(__self__, "containers", containers)
         if description is not None:
             pulumi.set(__self__, "description", description)
+        if disruption_budget is not None:
+            pulumi.set(__self__, "disruption_budget", disruption_budget)
         if extras is not None:
             pulumi.set(__self__, "extras", extras)
         if firewall_spec is not None:
@@ -79,6 +85,8 @@ class WorkloadArgs:
             pulumi.set(__self__, "local_options", local_options)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if networking is not None:
+            pulumi.set(__self__, "networking", networking)
         if options is not None:
             pulumi.set(__self__, "options", options)
         if request_retry_policy is not None:
@@ -143,6 +151,18 @@ class WorkloadArgs:
     @description.setter
     def description(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "description", value)
+
+    @_builtins.property
+    @pulumi.getter(name="disruptionBudget")
+    def disruption_budget(self) -> Optional[pulumi.Input['WorkloadDisruptionBudgetArgs']]:
+        """
+        Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `min_available` or `max_unavailable`. A `min_available` that would allow no evictions at the `min_scale` of `options` or any `local_options` is rejected. Not supported for `cron` or `vm` workloads. When omitted, workloads with `min_scale` 4 or more allow 20% of replicas to be unavailable.
+        """
+        return pulumi.get(self, "disruption_budget")
+
+    @disruption_budget.setter
+    def disruption_budget(self, value: Optional[pulumi.Input['WorkloadDisruptionBudgetArgs']]):
+        pulumi.set(self, "disruption_budget", value)
 
     @_builtins.property
     @pulumi.getter
@@ -224,6 +244,18 @@ class WorkloadArgs:
     @name.setter
     def name(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def networking(self) -> Optional[pulumi.Input['WorkloadNetworkingArgs']]:
+        """
+        Internal service-to-service networking configuration.
+        """
+        return pulumi.get(self, "networking")
+
+    @networking.setter
+    def networking(self, value: Optional[pulumi.Input['WorkloadNetworkingArgs']]):
+        pulumi.set(self, "networking", value)
 
     @_builtins.property
     @pulumi.getter
@@ -322,6 +354,7 @@ class _WorkloadState:
                  containers: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]]] = None,
                  cpln_id: Optional[pulumi.Input[_builtins.str]] = None,
                  description: Optional[pulumi.Input[_builtins.str]] = None,
+                 disruption_budget: Optional[pulumi.Input['WorkloadDisruptionBudgetArgs']] = None,
                  extras: Optional[pulumi.Input[_builtins.str]] = None,
                  firewall_spec: Optional[pulumi.Input['WorkloadFirewallSpecArgs']] = None,
                  gvc: Optional[pulumi.Input[_builtins.str]] = None,
@@ -330,6 +363,7 @@ class _WorkloadState:
                  load_balancer: Optional[pulumi.Input['WorkloadLoadBalancerArgs']] = None,
                  local_options: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadLocalOptionArgs']]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
+                 networking: Optional[pulumi.Input['WorkloadNetworkingArgs']] = None,
                  options: Optional[pulumi.Input['WorkloadOptionsArgs']] = None,
                  request_retry_policy: Optional[pulumi.Input['WorkloadRequestRetryPolicyArgs']] = None,
                  rollout_options: Optional[pulumi.Input[Sequence[pulumi.Input['WorkloadRolloutOptionArgs']]]] = None,
@@ -346,6 +380,7 @@ class _WorkloadState:
         :param pulumi.Input[Sequence[pulumi.Input['WorkloadContainerArgs']]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
         :param pulumi.Input[_builtins.str] cpln_id: The ID, in GUID format, of the workload.
         :param pulumi.Input[_builtins.str] description: Description of the workload.
+        :param pulumi.Input['WorkloadDisruptionBudgetArgs'] disruption_budget: Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `min_available` or `max_unavailable`. A `min_available` that would allow no evictions at the `min_scale` of `options` or any `local_options` is rejected. Not supported for `cron` or `vm` workloads. When omitted, workloads with `min_scale` 4 or more allow 20% of replicas to be unavailable.
         :param pulumi.Input[_builtins.str] extras: Extra Kubernetes modifications. Only used for BYOK.
         :param pulumi.Input['WorkloadFirewallSpecArgs'] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
         :param pulumi.Input[_builtins.str] gvc: Name of the associated GVC.
@@ -353,6 +388,7 @@ class _WorkloadState:
         :param pulumi.Input[Sequence[pulumi.Input['WorkloadJobArgs']]] jobs: [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
         :param pulumi.Input[Sequence[pulumi.Input['WorkloadLocalOptionArgs']]] local_options: Override defaultOptions for the workload in specific Control Plane Locations.
         :param pulumi.Input[_builtins.str] name: Name of the workload.
+        :param pulumi.Input['WorkloadNetworkingArgs'] networking: Internal service-to-service networking configuration.
         :param pulumi.Input['WorkloadOptionsArgs'] options: Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
         :param pulumi.Input[Sequence[pulumi.Input['WorkloadRolloutOptionArgs']]] rollout_options: Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable replicas, surge replicas, and scaling policies.
         :param pulumi.Input['WorkloadSecurityOptionsArgs'] security_options: Allows for the configuration of the `file system group id` and `geo location`.
@@ -369,6 +405,8 @@ class _WorkloadState:
             pulumi.set(__self__, "cpln_id", cpln_id)
         if description is not None:
             pulumi.set(__self__, "description", description)
+        if disruption_budget is not None:
+            pulumi.set(__self__, "disruption_budget", disruption_budget)
         if extras is not None:
             pulumi.set(__self__, "extras", extras)
         if firewall_spec is not None:
@@ -385,6 +423,8 @@ class _WorkloadState:
             pulumi.set(__self__, "local_options", local_options)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if networking is not None:
+            pulumi.set(__self__, "networking", networking)
         if options is not None:
             pulumi.set(__self__, "options", options)
         if request_retry_policy is not None:
@@ -443,6 +483,18 @@ class _WorkloadState:
     @description.setter
     def description(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "description", value)
+
+    @_builtins.property
+    @pulumi.getter(name="disruptionBudget")
+    def disruption_budget(self) -> Optional[pulumi.Input['WorkloadDisruptionBudgetArgs']]:
+        """
+        Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `min_available` or `max_unavailable`. A `min_available` that would allow no evictions at the `min_scale` of `options` or any `local_options` is rejected. Not supported for `cron` or `vm` workloads. When omitted, workloads with `min_scale` 4 or more allow 20% of replicas to be unavailable.
+        """
+        return pulumi.get(self, "disruption_budget")
+
+    @disruption_budget.setter
+    def disruption_budget(self, value: Optional[pulumi.Input['WorkloadDisruptionBudgetArgs']]):
+        pulumi.set(self, "disruption_budget", value)
 
     @_builtins.property
     @pulumi.getter
@@ -536,6 +588,18 @@ class _WorkloadState:
     @name.setter
     def name(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def networking(self) -> Optional[pulumi.Input['WorkloadNetworkingArgs']]:
+        """
+        Internal service-to-service networking configuration.
+        """
+        return pulumi.get(self, "networking")
+
+    @networking.setter
+    def networking(self, value: Optional[pulumi.Input['WorkloadNetworkingArgs']]):
+        pulumi.set(self, "networking", value)
 
     @_builtins.property
     @pulumi.getter
@@ -672,6 +736,7 @@ class Workload(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  containers: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadContainerArgs', 'WorkloadContainerArgsDict']]]]] = None,
                  description: Optional[pulumi.Input[_builtins.str]] = None,
+                 disruption_budget: Optional[pulumi.Input[Union['WorkloadDisruptionBudgetArgs', 'WorkloadDisruptionBudgetArgsDict']]] = None,
                  extras: Optional[pulumi.Input[_builtins.str]] = None,
                  firewall_spec: Optional[pulumi.Input[Union['WorkloadFirewallSpecArgs', 'WorkloadFirewallSpecArgsDict']]] = None,
                  gvc: Optional[pulumi.Input[_builtins.str]] = None,
@@ -680,6 +745,7 @@ class Workload(pulumi.CustomResource):
                  load_balancer: Optional[pulumi.Input[Union['WorkloadLoadBalancerArgs', 'WorkloadLoadBalancerArgsDict']]] = None,
                  local_options: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadLocalOptionArgs', 'WorkloadLocalOptionArgsDict']]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
+                 networking: Optional[pulumi.Input[Union['WorkloadNetworkingArgs', 'WorkloadNetworkingArgsDict']]] = None,
                  options: Optional[pulumi.Input[Union['WorkloadOptionsArgs', 'WorkloadOptionsArgsDict']]] = None,
                  request_retry_policy: Optional[pulumi.Input[Union['WorkloadRequestRetryPolicyArgs', 'WorkloadRequestRetryPolicyArgsDict']]] = None,
                  rollout_options: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadRolloutOptionArgs', 'WorkloadRolloutOptionArgsDict']]]]] = None,
@@ -696,6 +762,7 @@ class Workload(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Sequence[pulumi.Input[Union['WorkloadContainerArgs', 'WorkloadContainerArgsDict']]]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
         :param pulumi.Input[_builtins.str] description: Description of the workload.
+        :param pulumi.Input[Union['WorkloadDisruptionBudgetArgs', 'WorkloadDisruptionBudgetArgsDict']] disruption_budget: Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `min_available` or `max_unavailable`. A `min_available` that would allow no evictions at the `min_scale` of `options` or any `local_options` is rejected. Not supported for `cron` or `vm` workloads. When omitted, workloads with `min_scale` 4 or more allow 20% of replicas to be unavailable.
         :param pulumi.Input[_builtins.str] extras: Extra Kubernetes modifications. Only used for BYOK.
         :param pulumi.Input[Union['WorkloadFirewallSpecArgs', 'WorkloadFirewallSpecArgsDict']] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
         :param pulumi.Input[_builtins.str] gvc: Name of the associated GVC.
@@ -703,6 +770,7 @@ class Workload(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[Union['WorkloadJobArgs', 'WorkloadJobArgsDict']]]] jobs: [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
         :param pulumi.Input[Sequence[pulumi.Input[Union['WorkloadLocalOptionArgs', 'WorkloadLocalOptionArgsDict']]]] local_options: Override defaultOptions for the workload in specific Control Plane Locations.
         :param pulumi.Input[_builtins.str] name: Name of the workload.
+        :param pulumi.Input[Union['WorkloadNetworkingArgs', 'WorkloadNetworkingArgsDict']] networking: Internal service-to-service networking configuration.
         :param pulumi.Input[Union['WorkloadOptionsArgs', 'WorkloadOptionsArgsDict']] options: Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
         :param pulumi.Input[Sequence[pulumi.Input[Union['WorkloadRolloutOptionArgs', 'WorkloadRolloutOptionArgsDict']]]] rollout_options: Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable replicas, surge replicas, and scaling policies.
         :param pulumi.Input[Union['WorkloadSecurityOptionsArgs', 'WorkloadSecurityOptionsArgsDict']] security_options: Allows for the configuration of the `file system group id` and `geo location`.
@@ -736,6 +804,7 @@ class Workload(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  containers: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadContainerArgs', 'WorkloadContainerArgsDict']]]]] = None,
                  description: Optional[pulumi.Input[_builtins.str]] = None,
+                 disruption_budget: Optional[pulumi.Input[Union['WorkloadDisruptionBudgetArgs', 'WorkloadDisruptionBudgetArgsDict']]] = None,
                  extras: Optional[pulumi.Input[_builtins.str]] = None,
                  firewall_spec: Optional[pulumi.Input[Union['WorkloadFirewallSpecArgs', 'WorkloadFirewallSpecArgsDict']]] = None,
                  gvc: Optional[pulumi.Input[_builtins.str]] = None,
@@ -744,6 +813,7 @@ class Workload(pulumi.CustomResource):
                  load_balancer: Optional[pulumi.Input[Union['WorkloadLoadBalancerArgs', 'WorkloadLoadBalancerArgsDict']]] = None,
                  local_options: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadLocalOptionArgs', 'WorkloadLocalOptionArgsDict']]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
+                 networking: Optional[pulumi.Input[Union['WorkloadNetworkingArgs', 'WorkloadNetworkingArgsDict']]] = None,
                  options: Optional[pulumi.Input[Union['WorkloadOptionsArgs', 'WorkloadOptionsArgsDict']]] = None,
                  request_retry_policy: Optional[pulumi.Input[Union['WorkloadRequestRetryPolicyArgs', 'WorkloadRequestRetryPolicyArgsDict']]] = None,
                  rollout_options: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadRolloutOptionArgs', 'WorkloadRolloutOptionArgsDict']]]]] = None,
@@ -764,6 +834,7 @@ class Workload(pulumi.CustomResource):
 
             __props__.__dict__["containers"] = containers
             __props__.__dict__["description"] = description
+            __props__.__dict__["disruption_budget"] = disruption_budget
             __props__.__dict__["extras"] = extras
             __props__.__dict__["firewall_spec"] = firewall_spec
             if gvc is None and not opts.urn:
@@ -774,6 +845,7 @@ class Workload(pulumi.CustomResource):
             __props__.__dict__["load_balancer"] = load_balancer
             __props__.__dict__["local_options"] = local_options
             __props__.__dict__["name"] = name
+            __props__.__dict__["networking"] = networking
             __props__.__dict__["options"] = options
             __props__.__dict__["request_retry_policy"] = request_retry_policy
             __props__.__dict__["rollout_options"] = rollout_options
@@ -801,6 +873,7 @@ class Workload(pulumi.CustomResource):
             containers: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadContainerArgs', 'WorkloadContainerArgsDict']]]]] = None,
             cpln_id: Optional[pulumi.Input[_builtins.str]] = None,
             description: Optional[pulumi.Input[_builtins.str]] = None,
+            disruption_budget: Optional[pulumi.Input[Union['WorkloadDisruptionBudgetArgs', 'WorkloadDisruptionBudgetArgsDict']]] = None,
             extras: Optional[pulumi.Input[_builtins.str]] = None,
             firewall_spec: Optional[pulumi.Input[Union['WorkloadFirewallSpecArgs', 'WorkloadFirewallSpecArgsDict']]] = None,
             gvc: Optional[pulumi.Input[_builtins.str]] = None,
@@ -809,6 +882,7 @@ class Workload(pulumi.CustomResource):
             load_balancer: Optional[pulumi.Input[Union['WorkloadLoadBalancerArgs', 'WorkloadLoadBalancerArgsDict']]] = None,
             local_options: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadLocalOptionArgs', 'WorkloadLocalOptionArgsDict']]]]] = None,
             name: Optional[pulumi.Input[_builtins.str]] = None,
+            networking: Optional[pulumi.Input[Union['WorkloadNetworkingArgs', 'WorkloadNetworkingArgsDict']]] = None,
             options: Optional[pulumi.Input[Union['WorkloadOptionsArgs', 'WorkloadOptionsArgsDict']]] = None,
             request_retry_policy: Optional[pulumi.Input[Union['WorkloadRequestRetryPolicyArgs', 'WorkloadRequestRetryPolicyArgsDict']]] = None,
             rollout_options: Optional[pulumi.Input[Sequence[pulumi.Input[Union['WorkloadRolloutOptionArgs', 'WorkloadRolloutOptionArgsDict']]]]] = None,
@@ -830,6 +904,7 @@ class Workload(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[Union['WorkloadContainerArgs', 'WorkloadContainerArgsDict']]]] containers: An isolated and lightweight runtime environment that encapsulates an application and its dependencies.
         :param pulumi.Input[_builtins.str] cpln_id: The ID, in GUID format, of the workload.
         :param pulumi.Input[_builtins.str] description: Description of the workload.
+        :param pulumi.Input[Union['WorkloadDisruptionBudgetArgs', 'WorkloadDisruptionBudgetArgsDict']] disruption_budget: Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `min_available` or `max_unavailable`. A `min_available` that would allow no evictions at the `min_scale` of `options` or any `local_options` is rejected. Not supported for `cron` or `vm` workloads. When omitted, workloads with `min_scale` 4 or more allow 20% of replicas to be unavailable.
         :param pulumi.Input[_builtins.str] extras: Extra Kubernetes modifications. Only used for BYOK.
         :param pulumi.Input[Union['WorkloadFirewallSpecArgs', 'WorkloadFirewallSpecArgsDict']] firewall_spec: Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
         :param pulumi.Input[_builtins.str] gvc: Name of the associated GVC.
@@ -837,6 +912,7 @@ class Workload(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[Union['WorkloadJobArgs', 'WorkloadJobArgsDict']]]] jobs: [Cron Job Reference Page](https://docs.controlplane.com/reference/workload#cron).
         :param pulumi.Input[Sequence[pulumi.Input[Union['WorkloadLocalOptionArgs', 'WorkloadLocalOptionArgsDict']]]] local_options: Override defaultOptions for the workload in specific Control Plane Locations.
         :param pulumi.Input[_builtins.str] name: Name of the workload.
+        :param pulumi.Input[Union['WorkloadNetworkingArgs', 'WorkloadNetworkingArgsDict']] networking: Internal service-to-service networking configuration.
         :param pulumi.Input[Union['WorkloadOptionsArgs', 'WorkloadOptionsArgsDict']] options: Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
         :param pulumi.Input[Sequence[pulumi.Input[Union['WorkloadRolloutOptionArgs', 'WorkloadRolloutOptionArgsDict']]]] rollout_options: Defines the parameters for updating applications and services, including settings for minimum readiness, unavailable replicas, surge replicas, and scaling policies.
         :param pulumi.Input[Union['WorkloadSecurityOptionsArgs', 'WorkloadSecurityOptionsArgsDict']] security_options: Allows for the configuration of the `file system group id` and `geo location`.
@@ -854,6 +930,7 @@ class Workload(pulumi.CustomResource):
         __props__.__dict__["containers"] = containers
         __props__.__dict__["cpln_id"] = cpln_id
         __props__.__dict__["description"] = description
+        __props__.__dict__["disruption_budget"] = disruption_budget
         __props__.__dict__["extras"] = extras
         __props__.__dict__["firewall_spec"] = firewall_spec
         __props__.__dict__["gvc"] = gvc
@@ -862,6 +939,7 @@ class Workload(pulumi.CustomResource):
         __props__.__dict__["load_balancer"] = load_balancer
         __props__.__dict__["local_options"] = local_options
         __props__.__dict__["name"] = name
+        __props__.__dict__["networking"] = networking
         __props__.__dict__["options"] = options
         __props__.__dict__["request_retry_policy"] = request_retry_policy
         __props__.__dict__["rollout_options"] = rollout_options
@@ -898,6 +976,14 @@ class Workload(pulumi.CustomResource):
         Description of the workload.
         """
         return pulumi.get(self, "description")
+
+    @_builtins.property
+    @pulumi.getter(name="disruptionBudget")
+    def disruption_budget(self) -> pulumi.Output[Optional['outputs.WorkloadDisruptionBudget']]:
+        """
+        Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `min_available` or `max_unavailable`. A `min_available` that would allow no evictions at the `min_scale` of `options` or any `local_options` is rejected. Not supported for `cron` or `vm` workloads. When omitted, workloads with `min_scale` 4 or more allow 20% of replicas to be unavailable.
+        """
+        return pulumi.get(self, "disruption_budget")
 
     @_builtins.property
     @pulumi.getter
@@ -959,6 +1045,14 @@ class Workload(pulumi.CustomResource):
         Name of the workload.
         """
         return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter
+    def networking(self) -> pulumi.Output['outputs.WorkloadNetworking']:
+        """
+        Internal service-to-service networking configuration.
+        """
+        return pulumi.get(self, "networking")
 
     @_builtins.property
     @pulumi.getter

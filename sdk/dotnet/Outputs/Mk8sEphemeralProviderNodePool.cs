@@ -35,6 +35,10 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly ImmutableDictionary<string, string>? Labels;
         /// <summary>
+        /// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+        /// </summary>
+        public readonly int? MaxPods;
+        /// <summary>
         /// Allocated memory.
         /// </summary>
         public readonly string Memory;
@@ -56,6 +60,8 @@ namespace Pulumiverse.Cpln.Outputs
 
             ImmutableDictionary<string, string>? labels,
 
+            int? maxPods,
+
             string memory,
 
             string name,
@@ -67,6 +73,7 @@ namespace Pulumiverse.Cpln.Outputs
             Cpu = cpu;
             Flavor = flavor;
             Labels = labels;
+            MaxPods = maxPods;
             Memory = memory;
             Name = name;
             Taints = taints;

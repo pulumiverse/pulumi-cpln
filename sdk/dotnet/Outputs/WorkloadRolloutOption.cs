@@ -15,7 +15,7 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class WorkloadRolloutOption
     {
         /// <summary>
-        /// The number of replicas that can be created above the desired amount of replicas during an update.
+        /// The number of replicas that can be created above the desired amount of replicas during an update. Not supported for `Vm` workloads.
         /// </summary>
         public readonly string? MaxSurgeReplicas;
         /// <summary>
@@ -27,7 +27,11 @@ namespace Pulumiverse.Cpln.Outputs
         /// </summary>
         public readonly int? MinReadySeconds;
         /// <summary>
-        /// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+        /// When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified. Not supported for `Vm` workloads.
+        /// </summary>
+        public readonly bool? RolloutOnReferenceChange;
+        /// <summary>
+        /// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`. Cannot be set for `Vm` workloads.
         /// </summary>
         public readonly string? ScalingPolicy;
         /// <summary>
@@ -43,6 +47,8 @@ namespace Pulumiverse.Cpln.Outputs
 
             int? minReadySeconds,
 
+            bool? rolloutOnReferenceChange,
+
             string? scalingPolicy,
 
             int? terminationGracePeriodSeconds)
@@ -50,6 +56,7 @@ namespace Pulumiverse.Cpln.Outputs
             MaxSurgeReplicas = maxSurgeReplicas;
             MaxUnavailableReplicas = maxUnavailableReplicas;
             MinReadySeconds = minReadySeconds;
+            RolloutOnReferenceChange = rolloutOnReferenceChange;
             ScalingPolicy = scalingPolicy;
             TerminationGracePeriodSeconds = terminationGracePeriodSeconds;
         }

@@ -20,6 +20,136 @@ export interface CatalogTemplateResource {
     name: string;
 }
 
+export interface CertificateGeneratorAcme {
+    /**
+     * How ACME challenges are solved. Exactly one of `http01` or `dns01` must be set. Changing the challenge type recreates the certificate generator.
+     */
+    challenge: outputs.CertificateGeneratorAcmeChallenge;
+    /**
+     * Contact email registered with the ACME account.
+     */
+    email?: string;
+    /**
+     * Binds the ACME account to an existing account at the CA. Required by most commercial CAs.
+     */
+    externalAccountBinding?: outputs.CertificateGeneratorAcmeExternalAccountBinding;
+    /**
+     * ACME directory URL of the CA, e.g. `https://acme-v02.api.letsencrypt.org/directory`. Must use `https`. Changing it recreates the certificate generator.
+     */
+    server: string;
+}
+
+export interface CertificateGeneratorAcmeChallenge {
+    /**
+     * Solve ACME challenges with TXT records, either delegated to Control Plane (`cpln`) or written into DNS zones the org controls. Required for wildcard certificates.
+     */
+    dns01?: outputs.CertificateGeneratorAcmeChallengeDns01;
+    /**
+     * Solve ACME challenges over HTTP on the domain itself. Only domain-name certificates can be issued; wildcards require `dns01`.
+     */
+    http01?: outputs.CertificateGeneratorAcmeChallengeHttp01;
+}
+
+export interface CertificateGeneratorAcmeChallengeDns01 {
+    /**
+     * Azure DNS settings. Required when `provider` is `azureDns`.
+     */
+    azureDns?: outputs.CertificateGeneratorAcmeChallengeDns01AzureDns;
+    /**
+     * Google Cloud DNS settings. Required when `provider` is `cloudDns`.
+     */
+    cloudDns?: outputs.CertificateGeneratorAcmeChallengeDns01CloudDns;
+    /**
+     * Cloudflare settings. Required when `provider` is `cloudflare`.
+     */
+    cloudflare?: outputs.CertificateGeneratorAcmeChallengeDns01Cloudflare;
+    /**
+     * DNS provider that hosts the zones of the domains using this generator. `cpln`: domains CNAME `_acme-challenge` to Control Plane, no credentials needed. Valid values: `cpln`, `route53`, `cloudDns`, `azureDns`, `cloudflare`. Default: `cpln`.
+     */
+    provider: string;
+    /**
+     * Route53 settings. Required when `provider` is `route53`.
+     */
+    route53?: outputs.CertificateGeneratorAcmeChallengeDns01Route53;
+}
+
+export interface CertificateGeneratorAcmeChallengeDns01AzureDns {
+    /**
+     * Restrict record updates to this DNS zone; discovered from the domain when omitted.
+     */
+    hostedZoneName?: string;
+    /**
+     * Resource group that contains the DNS zone.
+     */
+    resourceGroupName: string;
+    /**
+     * Link to a secret of type `azure-sdk`. Its service principal must be a DNS Zone Contributor on the zone.
+     */
+    secretLink: string;
+}
+
+export interface CertificateGeneratorAcmeChallengeDns01CloudDns {
+    /**
+     * GCP project that owns the Cloud DNS zone.
+     */
+    project: string;
+    /**
+     * Link to a secret of type `gcp` holding a service account key with the DNS Administrator role.
+     */
+    secretLink: string;
+}
+
+export interface CertificateGeneratorAcmeChallengeDns01Cloudflare {
+    /**
+     * Link to a secret of type `opaque` whose payload is a Cloudflare API token with Zone:DNS:Edit permission.
+     */
+    secretLink: string;
+}
+
+export interface CertificateGeneratorAcmeChallengeDns01Route53 {
+    /**
+     * Restrict record updates to this hosted zone; discovered from the domain when omitted.
+     */
+    hostedZoneId?: string;
+    /**
+     * AWS region of the Route53 API to use, e.g. `us-east-1`.
+     */
+    region: string;
+    /**
+     * Link to a secret of type `aws`. The access key must be allowed to change TXT records in the hosted zone.
+     */
+    secretLink: string;
+}
+
+export interface CertificateGeneratorAcmeChallengeHttp01 {
+}
+
+export interface CertificateGeneratorAcmeExternalAccountBinding {
+    /**
+     * Key identifier issued by the CA.
+     */
+    keyId: string;
+    /**
+     * Link to a secret of type `opaque` whose payload is the base64url encoded HMAC key exactly as issued by the CA (encoding `plain`).
+     */
+    secretLink: string;
+}
+
+export interface CertificateGeneratorStatus {
+    /**
+     * Timestamp of the last status update.
+     */
+    lastUpdated: string;
+    /**
+     * Reason the generator is not ready.
+     */
+    message: string;
+    /**
+     * True once the generator is registered with the CA and can issue certificates.
+     */
+    ready: boolean;
+}
+
 export interface CloudAccountAws {
     /**
      * Amazon Resource Name (ARN) Role.
@@ -1087,6 +1217,10 @@ export interface GetWorkloadContainer {
      * Name-Value list of environment variables.
      */
     env: {[key: string]: string};
+    /**
+     * Dictionary secrets whose key/value pairs are injected as environment variables. An explicit `env` variable overrides an `envFrom` key of the same name; later entries override earlier ones.
+     */
+    envFroms: outputs.GetWorkloadContainerEnvFrom[];
     gpuCustoms?: outputs.GetWorkloadContainerGpuCustom[];
     /**
      * GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
@@ -1150,6 +1284,20 @@ export interface GetWorkloadContainer {
      * Override the working directory. Must be an absolute path.
      */
     workingDirectory: string;
+}
+
+export interface GetWorkloadContainerEnvFrom {
+    /**
+     * References a dictionary secret whose key/value pairs are injected as environment variables.
+     */
+    secretRef: outputs.GetWorkloadContainerEnvFromSecretRef;
+}
+
+export interface GetWorkloadContainerEnvFromSecretRef {
+    /**
+     * Name of a dictionary secret whose keys are injected as environment variables.
+     */
+    name: string;
 }
 
 export interface GetWorkloadContainerGpuCustom {
@@ -1314,6 +1462,17 @@ export interface GetWorkloadContainerVolume {
     uri: string;
 }
 
+export interface GetWorkloadDisruptionBudget {
+    /**
+     * Maximum number or percentage of replicas that can be unavailable during voluntary disruptions such as node drains.
+     */
+    maxUnavailable: string;
+    /**
+     * Minimum number or percentage of replicas that must stay available during voluntary disruptions such as node drains.
+     */
+    minAvailable: string;
+}
+
 export interface GetWorkloadFirewallSpec {
     /**
      * The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
@@ -1358,22 +1517,22 @@ export interface GetWorkloadFirewallSpecExternal {
 
 export interface GetWorkloadFirewallSpecExternalHttp {
     /**
-     * A list of header filters for HTTP workloads.
+     * A list of header filters for HTTP workloads. Each header key may appear only once, compared case-insensitively.
      */
     inboundHeaderFilters?: outputs.GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter[];
 }
 
 export interface GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter {
     /**
-     * A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
+     * A list of regular expressions to match for allowed header values. When included, http requests must have AT LEAST ONE of these headers to be sent to the workload.
      */
     allowedValues: string[];
     /**
-     * A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
+     * A list of regular expressions to match for blocked header values. When included, http requests with ANY of these headers will be filtered and will not reach the workload.
      */
     blockedValues: string[];
     /**
-     * The header to match for.
+     * The header to match for: an HTTP header name (RFC 9110 token) or one of the pseudo-headers `:authority`, `:method`, `:path` and `:scheme`. Header names are case-insensitive.
      */
     key: string;
 }
@@ -1787,6 +1946,20 @@ export interface GetWorkloadLocalOptionMultiZone {
     enabled: boolean;
 }
 
+export interface GetWorkloadNetworking {
+    /**
+     * Routing of internal (`cpln.local`) requests.
+     */
+    internal: outputs.GetWorkloadNetworkingInternal;
+}
+
+export interface GetWorkloadNetworkingInternal {
+    /**
+     * How requests to `<workload>.<gvc>.cpln.local` from the same GVC are routed. `locationEndpoint`: served only by replicas in the caller's location. `gvcEndpoint`: fail over to the workload's canonical endpoint (the nearest healthy location) when no local replica can serve them.
+     */
+    routing: string;
+}
+
 export interface GetWorkloadOption {
     /**
      * Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
@@ -2057,7 +2230,7 @@ export interface GetWorkloadRequestRetryPolicy {
 
 export interface GetWorkloadRolloutOption {
     /**
-     * The number of replicas that can be created above the desired amount of replicas during an update.
+     * The number of replicas that can be created above the desired amount of replicas during an update. Not supported for `vm` workloads.
      */
     maxSurgeReplicas: string;
     /**
@@ -2069,7 +2242,11 @@ export interface GetWorkloadRolloutOption {
      */
     minReadySeconds: number;
     /**
-     * The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+     * When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified.
+     */
+    rolloutOnReferenceChange: boolean;
+    /**
+     * The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`. Cannot be set for `vm` workloads.
      */
     scalingPolicy: string;
     /**
@@ -3581,25 +3758,49 @@ export interface Mk8sAddOnsMetrics {
      */
     apiServer?: boolean;
     /**
+     * Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+     */
+    apiServerDrop?: string;
+    /**
      * Enable CNI-level container stats.
      */
     cadvisor?: boolean;
+    /**
+     * Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+     */
+    cadvisorDrop?: string;
     /**
      * Enable scraping of core-dns service.
      */
     coreDns?: boolean;
     /**
+     * Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+     */
+    coreDnsDrop?: string;
+    /**
      * Enable kube-state metrics.
      */
     kubeState?: boolean;
+    /**
+     * Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+     */
+    kubeStateDrop?: string;
     /**
      * Enable scraping kubelet stats.
      */
     kubelet?: boolean;
     /**
+     * Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+     */
+    kubeletDrop?: string;
+    /**
      * Enable collecting node-level stats (disk, network, filesystem, etc).
      */
     nodeExporter?: boolean;
+    /**
+     * Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+     */
+    nodeExporterDrop?: string;
     scrapeAnnotated?: outputs.Mk8sAddOnsMetricsScrapeAnnotated;
 }
 
@@ -3731,6 +3932,10 @@ export interface Mk8sAwsProviderNodePool {
      * Labels to attach to nodes of a node pool.
      */
     labels?: {[key: string]: string};
+    /**
+     * Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+     */
+    maxPods?: number;
     maxSize: number;
     minSize: number;
     name: string;
@@ -3842,6 +4047,10 @@ export interface Mk8sAzureProviderNodePool {
      * Labels to attach to nodes of a node pool.
      */
     labels?: {[key: string]: string};
+    /**
+     * Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+     */
+    maxPods?: number;
     maxSize: number;
     minSize: number;
     name: string;
@@ -3943,6 +4152,10 @@ export interface Mk8sDigitalOceanProviderNodePool {
      * Labels to attach to nodes of a node pool.
      */
     labels?: {[key: string]: string};
+    /**
+     * Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+     */
+    maxPods?: number;
     maxSize: number;
     minSize: number;
     name: string;
@@ -3991,6 +4204,10 @@ export interface Mk8sEphemeralProviderNodePool {
      * Labels to attach to nodes of a node pool.
      */
     labels?: {[key: string]: string};
+    /**
+     * Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+     */
+    maxPods?: number;
     /**
      * Allocated memory.
      */
@@ -4100,6 +4317,10 @@ export interface Mk8sGcpProviderNodePool {
      * GCE machine type for nodes in this pool.
      */
     machineType: string;
+    /**
+     * Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+     */
+    maxPods?: number;
     maxSize: number;
     minSize: number;
     name: string;
@@ -4171,6 +4392,10 @@ export interface Mk8sGenericProviderNodePool {
      * Labels to attach to nodes of a node pool.
      */
     labels?: {[key: string]: string};
+    /**
+     * Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+     */
+    maxPods?: number;
     name: string;
     /**
      * Taint for the nodes of a pool.
@@ -4242,6 +4467,10 @@ export interface Mk8sHetznerProviderDedicatedServerNodePool {
      * Labels to attach to nodes of a node pool.
      */
     labels?: {[key: string]: string};
+    /**
+     * Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+     */
+    maxPods?: number;
     name: string;
     /**
      * Taint for the nodes of a pool.
@@ -4275,6 +4504,10 @@ export interface Mk8sHetznerProviderNodePool {
      * Labels to attach to nodes of a node pool.
      */
     labels?: {[key: string]: string};
+    /**
+     * Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+     */
+    maxPods?: number;
     maxSize: number;
     minSize: number;
     name: string;
@@ -4331,6 +4564,10 @@ export interface Mk8sLambdalabsProviderNodePool {
      * Labels to attach to nodes of a node pool.
      */
     labels?: {[key: string]: string};
+    /**
+     * Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+     */
+    maxPods?: number;
     maxSize: number;
     minSize: number;
     name: string;
@@ -4426,6 +4663,10 @@ export interface Mk8sLinodeProviderNodePool {
      * Labels to attach to nodes of a node pool.
      */
     labels?: {[key: string]: string};
+    /**
+     * Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+     */
+    maxPods?: number;
     maxSize: number;
     minSize: number;
     name: string;
@@ -4476,6 +4717,10 @@ export interface Mk8sOblivusProviderNodePool {
      * Labels to attach to nodes of a node pool.
      */
     labels?: {[key: string]: string};
+    /**
+     * Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+     */
+    maxPods?: number;
     maxSize: number;
     minSize: number;
     name: string;
@@ -4547,6 +4792,10 @@ export interface Mk8sPaperspaceProviderNodePool {
      */
     labels?: {[key: string]: string};
     machineType: string;
+    /**
+     * Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+     */
+    maxPods?: number;
     maxSize: number;
     minSize: number;
     name: string;
@@ -4761,6 +5010,10 @@ export interface Mk8sTritonProviderNodePool {
      * Labels to attach to nodes of a node pool.
      */
     labels?: {[key: string]: string};
+    /**
+     * Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+     */
+    maxPods?: number;
     maxSize: number;
     minSize: number;
     name: string;
@@ -5460,6 +5713,10 @@ export interface WorkloadContainer {
      * Name-Value list of environment variables.
      */
     env?: {[key: string]: string};
+    /**
+     * Inject all key/value pairs of the referenced dictionary secrets as environment variables. An explicit `env` variable overrides an `envFrom` key of the same name; later entries override earlier ones. Keys that are not valid environment variable names are skipped.
+     */
+    envFroms?: outputs.WorkloadContainerEnvFrom[];
     gpuCustom?: outputs.WorkloadContainerGpuCustom;
     /**
      * GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
@@ -5523,6 +5780,20 @@ export interface WorkloadContainer {
      * Override the working directory. Must be an absolute path.
      */
     workingDirectory?: string;
+}
+
+export interface WorkloadContainerEnvFrom {
+    /**
+     * References a dictionary secret whose key/value pairs are injected as environment variables.
+     */
+    secretRef: outputs.WorkloadContainerEnvFromSecretRef;
+}
+
+export interface WorkloadContainerEnvFromSecretRef {
+    /**
+     * Name of a dictionary secret whose keys are injected as environment variables.
+     */
+    name: string;
 }
 
 export interface WorkloadContainerGpuCustom {
@@ -5687,6 +5958,17 @@ export interface WorkloadContainerVolume {
     uri: string;
 }
 
+export interface WorkloadDisruptionBudget {
+    /**
+     * Maximum number or percentage of replicas that can be unavailable during voluntary disruptions such as node drains. A whole number or whole percentage (e.g., `2`, `20%`), at least `1` or above `0%`, and at most `100%`.
+     */
+    maxUnavailable?: string;
+    /**
+     * Minimum number or percentage of replicas that must stay available during voluntary disruptions such as node drains. A whole number or whole percentage (e.g., `2`, `20%`), below `100%`.
+     */
+    minAvailable?: string;
+}
+
 export interface WorkloadFirewallSpec {
     /**
      * The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
@@ -5731,22 +6013,22 @@ export interface WorkloadFirewallSpecExternal {
 
 export interface WorkloadFirewallSpecExternalHttp {
     /**
-     * A list of header filters for HTTP workloads.
+     * A list of header filters for HTTP workloads. Each header key may appear only once, compared case-insensitively.
      */
     inboundHeaderFilters?: outputs.WorkloadFirewallSpecExternalHttpInboundHeaderFilter[];
 }
 
 export interface WorkloadFirewallSpecExternalHttpInboundHeaderFilter {
     /**
-     * A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
+     * A list of regular expressions to match for allowed header values. When included, http requests must have AT LEAST ONE of these headers to be sent to the workload.
      */
     allowedValues?: string[];
     /**
-     * A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
+     * A list of regular expressions to match for blocked header values. When included, http requests with ANY of these headers will be filtered and will not reach the workload.
      */
     blockedValues?: string[];
     /**
-     * The header to match for.
+     * The header to match for: an HTTP header name (RFC 9110 token) or one of the pseudo-headers `:authority`, `:method`, `:path` and `:scheme`. Header names are case-insensitive.
      */
     key: string;
 }
@@ -6133,6 +6415,20 @@ export interface WorkloadLocalOptionMultiZone {
     enabled: boolean;
 }
 
+export interface WorkloadNetworking {
+    /**
+     * Routing of internal (`cpln.local`) requests.
+     */
+    internal: outputs.WorkloadNetworkingInternal;
+}
+
+export interface WorkloadNetworkingInternal {
+    /**
+     * How requests to `<workload>.<gvc>.cpln.local` from the same GVC are routed. `locationEndpoint`: served only by replicas in the caller's location. `gvcEndpoint`: fail over to the workload's canonical endpoint (the nearest healthy location) when no local replica can serve them; cross-location traffic is billed as egress. Valid values: `locationEndpoint`, `gvcEndpoint`. Set to `gvcEndpoint` by the server when a workload is created without it; removing it from the configuration keeps the current value.
+     */
+    routing: string;
+}
+
 export interface WorkloadOptions {
     /**
      * Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
@@ -6403,7 +6699,7 @@ export interface WorkloadRequestRetryPolicy {
 
 export interface WorkloadRolloutOption {
     /**
-     * The number of replicas that can be created above the desired amount of replicas during an update.
+     * The number of replicas that can be created above the desired amount of replicas during an update. Not supported for `vm` workloads.
      */
     maxSurgeReplicas?: string;
     /**
@@ -6415,7 +6711,11 @@ export interface WorkloadRolloutOption {
      */
     minReadySeconds: number;
     /**
-     * The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+     * When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified. Not supported for `vm` workloads.
+     */
+    rolloutOnReferenceChange?: boolean;
+    /**
+     * The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`. Cannot be set for `vm` workloads.
      */
     scalingPolicy: string;
     /**

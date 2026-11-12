@@ -14,7 +14,7 @@ namespace Pulumiverse.Cpln.Inputs
     public sealed class WorkloadRolloutOptionGetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// The number of replicas that can be created above the desired amount of replicas during an update.
+        /// The number of replicas that can be created above the desired amount of replicas during an update. Not supported for `Vm` workloads.
         /// </summary>
         [Input("maxSurgeReplicas")]
         public Input<string>? MaxSurgeReplicas { get; set; }
@@ -32,7 +32,13 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<int>? MinReadySeconds { get; set; }
 
         /// <summary>
-        /// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+        /// When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified. Not supported for `Vm` workloads.
+        /// </summary>
+        [Input("rolloutOnReferenceChange")]
+        public Input<bool>? RolloutOnReferenceChange { get; set; }
+
+        /// <summary>
+        /// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`. Cannot be set for `Vm` workloads.
         /// </summary>
         [Input("scalingPolicy")]
         public Input<string>? ScalingPolicy { get; set; }

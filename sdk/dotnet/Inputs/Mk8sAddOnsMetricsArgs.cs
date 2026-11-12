@@ -20,10 +20,22 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<bool>? ApiServer { get; set; }
 
         /// <summary>
+        /// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+        /// </summary>
+        [Input("apiServerDrop")]
+        public Input<string>? ApiServerDrop { get; set; }
+
+        /// <summary>
         /// Enable CNI-level container stats.
         /// </summary>
         [Input("cadvisor")]
         public Input<bool>? Cadvisor { get; set; }
+
+        /// <summary>
+        /// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+        /// </summary>
+        [Input("cadvisorDrop")]
+        public Input<string>? CadvisorDrop { get; set; }
 
         /// <summary>
         /// Enable scraping of core-dns service.
@@ -32,10 +44,22 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<bool>? CoreDns { get; set; }
 
         /// <summary>
+        /// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+        /// </summary>
+        [Input("coreDnsDrop")]
+        public Input<string>? CoreDnsDrop { get; set; }
+
+        /// <summary>
         /// Enable kube-state metrics.
         /// </summary>
         [Input("kubeState")]
         public Input<bool>? KubeState { get; set; }
+
+        /// <summary>
+        /// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+        /// </summary>
+        [Input("kubeStateDrop")]
+        public Input<string>? KubeStateDrop { get; set; }
 
         /// <summary>
         /// Enable scraping kubelet stats.
@@ -44,10 +68,22 @@ namespace Pulumiverse.Cpln.Inputs
         public Input<bool>? Kubelet { get; set; }
 
         /// <summary>
+        /// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+        /// </summary>
+        [Input("kubeletDrop")]
+        public Input<string>? KubeletDrop { get; set; }
+
+        /// <summary>
         /// Enable collecting node-level stats (disk, network, filesystem, etc).
         /// </summary>
         [Input("nodeExporter")]
         public Input<bool>? NodeExporter { get; set; }
+
+        /// <summary>
+        /// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+        /// </summary>
+        [Input("nodeExporterDrop")]
+        public Input<string>? NodeExporterDrop { get; set; }
 
         [Input("scrapeAnnotated")]
         public Input<Inputs.Mk8sAddOnsMetricsScrapeAnnotatedArgs>? ScrapeAnnotated { get; set; }

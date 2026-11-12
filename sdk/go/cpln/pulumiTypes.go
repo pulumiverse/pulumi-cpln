@@ -128,6 +128,1611 @@ func (o CatalogTemplateResourceArrayOutput) Index(i pulumi.IntInput) CatalogTemp
 	}).(CatalogTemplateResourceOutput)
 }
 
+type CertificateGeneratorAcme struct {
+	// How ACME challenges are solved. Exactly one of `http01` or `dns01` must be set. Changing the challenge type recreates the certificate generator.
+	Challenge CertificateGeneratorAcmeChallenge `pulumi:"challenge"`
+	// Contact email registered with the ACME account.
+	Email *string `pulumi:"email"`
+	// Binds the ACME account to an existing account at the CA. Required by most commercial CAs.
+	ExternalAccountBinding *CertificateGeneratorAcmeExternalAccountBinding `pulumi:"externalAccountBinding"`
+	// ACME directory URL of the CA, e.g. `https://acme-v02.api.letsencrypt.org/directory`. Must use `https`. Changing it recreates the certificate generator.
+	Server string `pulumi:"server"`
+}
+
+// CertificateGeneratorAcmeInput is an input type that accepts CertificateGeneratorAcmeArgs and CertificateGeneratorAcmeOutput values.
+// You can construct a concrete instance of `CertificateGeneratorAcmeInput` via:
+//
+//	CertificateGeneratorAcmeArgs{...}
+type CertificateGeneratorAcmeInput interface {
+	pulumi.Input
+
+	ToCertificateGeneratorAcmeOutput() CertificateGeneratorAcmeOutput
+	ToCertificateGeneratorAcmeOutputWithContext(context.Context) CertificateGeneratorAcmeOutput
+}
+
+type CertificateGeneratorAcmeArgs struct {
+	// How ACME challenges are solved. Exactly one of `http01` or `dns01` must be set. Changing the challenge type recreates the certificate generator.
+	Challenge CertificateGeneratorAcmeChallengeInput `pulumi:"challenge"`
+	// Contact email registered with the ACME account.
+	Email pulumi.StringPtrInput `pulumi:"email"`
+	// Binds the ACME account to an existing account at the CA. Required by most commercial CAs.
+	ExternalAccountBinding CertificateGeneratorAcmeExternalAccountBindingPtrInput `pulumi:"externalAccountBinding"`
+	// ACME directory URL of the CA, e.g. `https://acme-v02.api.letsencrypt.org/directory`. Must use `https`. Changing it recreates the certificate generator.
+	Server pulumi.StringInput `pulumi:"server"`
+}
+
+func (CertificateGeneratorAcmeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorAcme)(nil)).Elem()
+}
+
+func (i CertificateGeneratorAcmeArgs) ToCertificateGeneratorAcmeOutput() CertificateGeneratorAcmeOutput {
+	return i.ToCertificateGeneratorAcmeOutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorAcmeArgs) ToCertificateGeneratorAcmeOutputWithContext(ctx context.Context) CertificateGeneratorAcmeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeOutput)
+}
+
+func (i CertificateGeneratorAcmeArgs) ToCertificateGeneratorAcmePtrOutput() CertificateGeneratorAcmePtrOutput {
+	return i.ToCertificateGeneratorAcmePtrOutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorAcmeArgs) ToCertificateGeneratorAcmePtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeOutput).ToCertificateGeneratorAcmePtrOutputWithContext(ctx)
+}
+
+// CertificateGeneratorAcmePtrInput is an input type that accepts CertificateGeneratorAcmeArgs, CertificateGeneratorAcmePtr and CertificateGeneratorAcmePtrOutput values.
+// You can construct a concrete instance of `CertificateGeneratorAcmePtrInput` via:
+//
+//	        CertificateGeneratorAcmeArgs{...}
+//
+//	or:
+//
+//	        nil
+type CertificateGeneratorAcmePtrInput interface {
+	pulumi.Input
+
+	ToCertificateGeneratorAcmePtrOutput() CertificateGeneratorAcmePtrOutput
+	ToCertificateGeneratorAcmePtrOutputWithContext(context.Context) CertificateGeneratorAcmePtrOutput
+}
+
+type certificateGeneratorAcmePtrType CertificateGeneratorAcmeArgs
+
+func CertificateGeneratorAcmePtr(v *CertificateGeneratorAcmeArgs) CertificateGeneratorAcmePtrInput {
+	return (*certificateGeneratorAcmePtrType)(v)
+}
+
+func (*certificateGeneratorAcmePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CertificateGeneratorAcme)(nil)).Elem()
+}
+
+func (i *certificateGeneratorAcmePtrType) ToCertificateGeneratorAcmePtrOutput() CertificateGeneratorAcmePtrOutput {
+	return i.ToCertificateGeneratorAcmePtrOutputWithContext(context.Background())
+}
+
+func (i *certificateGeneratorAcmePtrType) ToCertificateGeneratorAcmePtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmePtrOutput)
+}
+
+type CertificateGeneratorAcmeOutput struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorAcmeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorAcme)(nil)).Elem()
+}
+
+func (o CertificateGeneratorAcmeOutput) ToCertificateGeneratorAcmeOutput() CertificateGeneratorAcmeOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeOutput) ToCertificateGeneratorAcmeOutputWithContext(ctx context.Context) CertificateGeneratorAcmeOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeOutput) ToCertificateGeneratorAcmePtrOutput() CertificateGeneratorAcmePtrOutput {
+	return o.ToCertificateGeneratorAcmePtrOutputWithContext(context.Background())
+}
+
+func (o CertificateGeneratorAcmeOutput) ToCertificateGeneratorAcmePtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CertificateGeneratorAcme) *CertificateGeneratorAcme {
+		return &v
+	}).(CertificateGeneratorAcmePtrOutput)
+}
+
+// How ACME challenges are solved. Exactly one of `http01` or `dns01` must be set. Changing the challenge type recreates the certificate generator.
+func (o CertificateGeneratorAcmeOutput) Challenge() CertificateGeneratorAcmeChallengeOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcme) CertificateGeneratorAcmeChallenge { return v.Challenge }).(CertificateGeneratorAcmeChallengeOutput)
+}
+
+// Contact email registered with the ACME account.
+func (o CertificateGeneratorAcmeOutput) Email() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcme) *string { return v.Email }).(pulumi.StringPtrOutput)
+}
+
+// Binds the ACME account to an existing account at the CA. Required by most commercial CAs.
+func (o CertificateGeneratorAcmeOutput) ExternalAccountBinding() CertificateGeneratorAcmeExternalAccountBindingPtrOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcme) *CertificateGeneratorAcmeExternalAccountBinding {
+		return v.ExternalAccountBinding
+	}).(CertificateGeneratorAcmeExternalAccountBindingPtrOutput)
+}
+
+// ACME directory URL of the CA, e.g. `https://acme-v02.api.letsencrypt.org/directory`. Must use `https`. Changing it recreates the certificate generator.
+func (o CertificateGeneratorAcmeOutput) Server() pulumi.StringOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcme) string { return v.Server }).(pulumi.StringOutput)
+}
+
+type CertificateGeneratorAcmePtrOutput struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorAcmePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CertificateGeneratorAcme)(nil)).Elem()
+}
+
+func (o CertificateGeneratorAcmePtrOutput) ToCertificateGeneratorAcmePtrOutput() CertificateGeneratorAcmePtrOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmePtrOutput) ToCertificateGeneratorAcmePtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmePtrOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmePtrOutput) Elem() CertificateGeneratorAcmeOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcme) CertificateGeneratorAcme {
+		if v != nil {
+			return *v
+		}
+		var ret CertificateGeneratorAcme
+		return ret
+	}).(CertificateGeneratorAcmeOutput)
+}
+
+// How ACME challenges are solved. Exactly one of `http01` or `dns01` must be set. Changing the challenge type recreates the certificate generator.
+func (o CertificateGeneratorAcmePtrOutput) Challenge() CertificateGeneratorAcmeChallengePtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcme) *CertificateGeneratorAcmeChallenge {
+		if v == nil {
+			return nil
+		}
+		return &v.Challenge
+	}).(CertificateGeneratorAcmeChallengePtrOutput)
+}
+
+// Contact email registered with the ACME account.
+func (o CertificateGeneratorAcmePtrOutput) Email() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcme) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Email
+	}).(pulumi.StringPtrOutput)
+}
+
+// Binds the ACME account to an existing account at the CA. Required by most commercial CAs.
+func (o CertificateGeneratorAcmePtrOutput) ExternalAccountBinding() CertificateGeneratorAcmeExternalAccountBindingPtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcme) *CertificateGeneratorAcmeExternalAccountBinding {
+		if v == nil {
+			return nil
+		}
+		return v.ExternalAccountBinding
+	}).(CertificateGeneratorAcmeExternalAccountBindingPtrOutput)
+}
+
+// ACME directory URL of the CA, e.g. `https://acme-v02.api.letsencrypt.org/directory`. Must use `https`. Changing it recreates the certificate generator.
+func (o CertificateGeneratorAcmePtrOutput) Server() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcme) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Server
+	}).(pulumi.StringPtrOutput)
+}
+
+type CertificateGeneratorAcmeChallenge struct {
+	// Solve ACME challenges with TXT records, either delegated to Control Plane (`cpln`) or written into DNS zones the org controls. Required for wildcard certificates.
+	Dns01 *CertificateGeneratorAcmeChallengeDns01 `pulumi:"dns01"`
+	// Solve ACME challenges over HTTP on the domain itself. Only domain-name certificates can be issued; wildcards require `dns01`.
+	Http01 *CertificateGeneratorAcmeChallengeHttp01 `pulumi:"http01"`
+}
+
+// CertificateGeneratorAcmeChallengeInput is an input type that accepts CertificateGeneratorAcmeChallengeArgs and CertificateGeneratorAcmeChallengeOutput values.
+// You can construct a concrete instance of `CertificateGeneratorAcmeChallengeInput` via:
+//
+//	CertificateGeneratorAcmeChallengeArgs{...}
+type CertificateGeneratorAcmeChallengeInput interface {
+	pulumi.Input
+
+	ToCertificateGeneratorAcmeChallengeOutput() CertificateGeneratorAcmeChallengeOutput
+	ToCertificateGeneratorAcmeChallengeOutputWithContext(context.Context) CertificateGeneratorAcmeChallengeOutput
+}
+
+type CertificateGeneratorAcmeChallengeArgs struct {
+	// Solve ACME challenges with TXT records, either delegated to Control Plane (`cpln`) or written into DNS zones the org controls. Required for wildcard certificates.
+	Dns01 CertificateGeneratorAcmeChallengeDns01PtrInput `pulumi:"dns01"`
+	// Solve ACME challenges over HTTP on the domain itself. Only domain-name certificates can be issued; wildcards require `dns01`.
+	Http01 CertificateGeneratorAcmeChallengeHttp01PtrInput `pulumi:"http01"`
+}
+
+func (CertificateGeneratorAcmeChallengeArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorAcmeChallenge)(nil)).Elem()
+}
+
+func (i CertificateGeneratorAcmeChallengeArgs) ToCertificateGeneratorAcmeChallengeOutput() CertificateGeneratorAcmeChallengeOutput {
+	return i.ToCertificateGeneratorAcmeChallengeOutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorAcmeChallengeArgs) ToCertificateGeneratorAcmeChallengeOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeOutput)
+}
+
+func (i CertificateGeneratorAcmeChallengeArgs) ToCertificateGeneratorAcmeChallengePtrOutput() CertificateGeneratorAcmeChallengePtrOutput {
+	return i.ToCertificateGeneratorAcmeChallengePtrOutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorAcmeChallengeArgs) ToCertificateGeneratorAcmeChallengePtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeOutput).ToCertificateGeneratorAcmeChallengePtrOutputWithContext(ctx)
+}
+
+// CertificateGeneratorAcmeChallengePtrInput is an input type that accepts CertificateGeneratorAcmeChallengeArgs, CertificateGeneratorAcmeChallengePtr and CertificateGeneratorAcmeChallengePtrOutput values.
+// You can construct a concrete instance of `CertificateGeneratorAcmeChallengePtrInput` via:
+//
+//	        CertificateGeneratorAcmeChallengeArgs{...}
+//
+//	or:
+//
+//	        nil
+type CertificateGeneratorAcmeChallengePtrInput interface {
+	pulumi.Input
+
+	ToCertificateGeneratorAcmeChallengePtrOutput() CertificateGeneratorAcmeChallengePtrOutput
+	ToCertificateGeneratorAcmeChallengePtrOutputWithContext(context.Context) CertificateGeneratorAcmeChallengePtrOutput
+}
+
+type certificateGeneratorAcmeChallengePtrType CertificateGeneratorAcmeChallengeArgs
+
+func CertificateGeneratorAcmeChallengePtr(v *CertificateGeneratorAcmeChallengeArgs) CertificateGeneratorAcmeChallengePtrInput {
+	return (*certificateGeneratorAcmeChallengePtrType)(v)
+}
+
+func (*certificateGeneratorAcmeChallengePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CertificateGeneratorAcmeChallenge)(nil)).Elem()
+}
+
+func (i *certificateGeneratorAcmeChallengePtrType) ToCertificateGeneratorAcmeChallengePtrOutput() CertificateGeneratorAcmeChallengePtrOutput {
+	return i.ToCertificateGeneratorAcmeChallengePtrOutputWithContext(context.Background())
+}
+
+func (i *certificateGeneratorAcmeChallengePtrType) ToCertificateGeneratorAcmeChallengePtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengePtrOutput)
+}
+
+type CertificateGeneratorAcmeChallengeOutput struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorAcmeChallengeOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorAcmeChallenge)(nil)).Elem()
+}
+
+func (o CertificateGeneratorAcmeChallengeOutput) ToCertificateGeneratorAcmeChallengeOutput() CertificateGeneratorAcmeChallengeOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeOutput) ToCertificateGeneratorAcmeChallengeOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeOutput) ToCertificateGeneratorAcmeChallengePtrOutput() CertificateGeneratorAcmeChallengePtrOutput {
+	return o.ToCertificateGeneratorAcmeChallengePtrOutputWithContext(context.Background())
+}
+
+func (o CertificateGeneratorAcmeChallengeOutput) ToCertificateGeneratorAcmeChallengePtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CertificateGeneratorAcmeChallenge) *CertificateGeneratorAcmeChallenge {
+		return &v
+	}).(CertificateGeneratorAcmeChallengePtrOutput)
+}
+
+// Solve ACME challenges with TXT records, either delegated to Control Plane (`cpln`) or written into DNS zones the org controls. Required for wildcard certificates.
+func (o CertificateGeneratorAcmeChallengeOutput) Dns01() CertificateGeneratorAcmeChallengeDns01PtrOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcmeChallenge) *CertificateGeneratorAcmeChallengeDns01 { return v.Dns01 }).(CertificateGeneratorAcmeChallengeDns01PtrOutput)
+}
+
+// Solve ACME challenges over HTTP on the domain itself. Only domain-name certificates can be issued; wildcards require `dns01`.
+func (o CertificateGeneratorAcmeChallengeOutput) Http01() CertificateGeneratorAcmeChallengeHttp01PtrOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcmeChallenge) *CertificateGeneratorAcmeChallengeHttp01 { return v.Http01 }).(CertificateGeneratorAcmeChallengeHttp01PtrOutput)
+}
+
+type CertificateGeneratorAcmeChallengePtrOutput struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorAcmeChallengePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CertificateGeneratorAcmeChallenge)(nil)).Elem()
+}
+
+func (o CertificateGeneratorAcmeChallengePtrOutput) ToCertificateGeneratorAcmeChallengePtrOutput() CertificateGeneratorAcmeChallengePtrOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengePtrOutput) ToCertificateGeneratorAcmeChallengePtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengePtrOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengePtrOutput) Elem() CertificateGeneratorAcmeChallengeOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallenge) CertificateGeneratorAcmeChallenge {
+		if v != nil {
+			return *v
+		}
+		var ret CertificateGeneratorAcmeChallenge
+		return ret
+	}).(CertificateGeneratorAcmeChallengeOutput)
+}
+
+// Solve ACME challenges with TXT records, either delegated to Control Plane (`cpln`) or written into DNS zones the org controls. Required for wildcard certificates.
+func (o CertificateGeneratorAcmeChallengePtrOutput) Dns01() CertificateGeneratorAcmeChallengeDns01PtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallenge) *CertificateGeneratorAcmeChallengeDns01 {
+		if v == nil {
+			return nil
+		}
+		return v.Dns01
+	}).(CertificateGeneratorAcmeChallengeDns01PtrOutput)
+}
+
+// Solve ACME challenges over HTTP on the domain itself. Only domain-name certificates can be issued; wildcards require `dns01`.
+func (o CertificateGeneratorAcmeChallengePtrOutput) Http01() CertificateGeneratorAcmeChallengeHttp01PtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallenge) *CertificateGeneratorAcmeChallengeHttp01 {
+		if v == nil {
+			return nil
+		}
+		return v.Http01
+	}).(CertificateGeneratorAcmeChallengeHttp01PtrOutput)
+}
+
+type CertificateGeneratorAcmeChallengeDns01 struct {
+	// Azure DNS settings. Required when `provider` is `azureDns`.
+	AzureDns *CertificateGeneratorAcmeChallengeDns01AzureDns `pulumi:"azureDns"`
+	// Google Cloud DNS settings. Required when `provider` is `cloudDns`.
+	CloudDns *CertificateGeneratorAcmeChallengeDns01CloudDns `pulumi:"cloudDns"`
+	// Cloudflare settings. Required when `provider` is `cloudflare`.
+	Cloudflare *CertificateGeneratorAcmeChallengeDns01Cloudflare `pulumi:"cloudflare"`
+	// DNS provider that hosts the zones of the domains using this generator. `cpln`: domains CNAME `_acme-challenge` to Control Plane, no credentials needed. Valid values: `cpln`, `route53`, `cloudDns`, `azureDns`, `cloudflare`. Default: `cpln`.
+	Provider *string `pulumi:"provider"`
+	// Route53 settings. Required when `provider` is `route53`.
+	Route53 *CertificateGeneratorAcmeChallengeDns01Route53 `pulumi:"route53"`
+}
+
+// CertificateGeneratorAcmeChallengeDns01Input is an input type that accepts CertificateGeneratorAcmeChallengeDns01Args and CertificateGeneratorAcmeChallengeDns01Output values.
+// You can construct a concrete instance of `CertificateGeneratorAcmeChallengeDns01Input` via:
+//
+//	CertificateGeneratorAcmeChallengeDns01Args{...}
+type CertificateGeneratorAcmeChallengeDns01Input interface {
+	pulumi.Input
+
+	ToCertificateGeneratorAcmeChallengeDns01Output() CertificateGeneratorAcmeChallengeDns01Output
+	ToCertificateGeneratorAcmeChallengeDns01OutputWithContext(context.Context) CertificateGeneratorAcmeChallengeDns01Output
+}
+
+type CertificateGeneratorAcmeChallengeDns01Args struct {
+	// Azure DNS settings. Required when `provider` is `azureDns`.
+	AzureDns CertificateGeneratorAcmeChallengeDns01AzureDnsPtrInput `pulumi:"azureDns"`
+	// Google Cloud DNS settings. Required when `provider` is `cloudDns`.
+	CloudDns CertificateGeneratorAcmeChallengeDns01CloudDnsPtrInput `pulumi:"cloudDns"`
+	// Cloudflare settings. Required when `provider` is `cloudflare`.
+	Cloudflare CertificateGeneratorAcmeChallengeDns01CloudflarePtrInput `pulumi:"cloudflare"`
+	// DNS provider that hosts the zones of the domains using this generator. `cpln`: domains CNAME `_acme-challenge` to Control Plane, no credentials needed. Valid values: `cpln`, `route53`, `cloudDns`, `azureDns`, `cloudflare`. Default: `cpln`.
+	Provider pulumi.StringPtrInput `pulumi:"provider"`
+	// Route53 settings. Required when `provider` is `route53`.
+	Route53 CertificateGeneratorAcmeChallengeDns01Route53PtrInput `pulumi:"route53"`
+}
+
+func (CertificateGeneratorAcmeChallengeDns01Args) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01)(nil)).Elem()
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01Args) ToCertificateGeneratorAcmeChallengeDns01Output() CertificateGeneratorAcmeChallengeDns01Output {
+	return i.ToCertificateGeneratorAcmeChallengeDns01OutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01Args) ToCertificateGeneratorAcmeChallengeDns01OutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01Output {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeDns01Output)
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01Args) ToCertificateGeneratorAcmeChallengeDns01PtrOutput() CertificateGeneratorAcmeChallengeDns01PtrOutput {
+	return i.ToCertificateGeneratorAcmeChallengeDns01PtrOutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01Args) ToCertificateGeneratorAcmeChallengeDns01PtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01PtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeDns01Output).ToCertificateGeneratorAcmeChallengeDns01PtrOutputWithContext(ctx)
+}
+
+// CertificateGeneratorAcmeChallengeDns01PtrInput is an input type that accepts CertificateGeneratorAcmeChallengeDns01Args, CertificateGeneratorAcmeChallengeDns01Ptr and CertificateGeneratorAcmeChallengeDns01PtrOutput values.
+// You can construct a concrete instance of `CertificateGeneratorAcmeChallengeDns01PtrInput` via:
+//
+//	        CertificateGeneratorAcmeChallengeDns01Args{...}
+//
+//	or:
+//
+//	        nil
+type CertificateGeneratorAcmeChallengeDns01PtrInput interface {
+	pulumi.Input
+
+	ToCertificateGeneratorAcmeChallengeDns01PtrOutput() CertificateGeneratorAcmeChallengeDns01PtrOutput
+	ToCertificateGeneratorAcmeChallengeDns01PtrOutputWithContext(context.Context) CertificateGeneratorAcmeChallengeDns01PtrOutput
+}
+
+type certificateGeneratorAcmeChallengeDns01PtrType CertificateGeneratorAcmeChallengeDns01Args
+
+func CertificateGeneratorAcmeChallengeDns01Ptr(v *CertificateGeneratorAcmeChallengeDns01Args) CertificateGeneratorAcmeChallengeDns01PtrInput {
+	return (*certificateGeneratorAcmeChallengeDns01PtrType)(v)
+}
+
+func (*certificateGeneratorAcmeChallengeDns01PtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CertificateGeneratorAcmeChallengeDns01)(nil)).Elem()
+}
+
+func (i *certificateGeneratorAcmeChallengeDns01PtrType) ToCertificateGeneratorAcmeChallengeDns01PtrOutput() CertificateGeneratorAcmeChallengeDns01PtrOutput {
+	return i.ToCertificateGeneratorAcmeChallengeDns01PtrOutputWithContext(context.Background())
+}
+
+func (i *certificateGeneratorAcmeChallengeDns01PtrType) ToCertificateGeneratorAcmeChallengeDns01PtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01PtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeDns01PtrOutput)
+}
+
+type CertificateGeneratorAcmeChallengeDns01Output struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorAcmeChallengeDns01Output) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01)(nil)).Elem()
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01Output) ToCertificateGeneratorAcmeChallengeDns01Output() CertificateGeneratorAcmeChallengeDns01Output {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01Output) ToCertificateGeneratorAcmeChallengeDns01OutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01Output {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01Output) ToCertificateGeneratorAcmeChallengeDns01PtrOutput() CertificateGeneratorAcmeChallengeDns01PtrOutput {
+	return o.ToCertificateGeneratorAcmeChallengeDns01PtrOutputWithContext(context.Background())
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01Output) ToCertificateGeneratorAcmeChallengeDns01PtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01PtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CertificateGeneratorAcmeChallengeDns01) *CertificateGeneratorAcmeChallengeDns01 {
+		return &v
+	}).(CertificateGeneratorAcmeChallengeDns01PtrOutput)
+}
+
+// Azure DNS settings. Required when `provider` is `azureDns`.
+func (o CertificateGeneratorAcmeChallengeDns01Output) AzureDns() CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcmeChallengeDns01) *CertificateGeneratorAcmeChallengeDns01AzureDns {
+		return v.AzureDns
+	}).(CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput)
+}
+
+// Google Cloud DNS settings. Required when `provider` is `cloudDns`.
+func (o CertificateGeneratorAcmeChallengeDns01Output) CloudDns() CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcmeChallengeDns01) *CertificateGeneratorAcmeChallengeDns01CloudDns {
+		return v.CloudDns
+	}).(CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput)
+}
+
+// Cloudflare settings. Required when `provider` is `cloudflare`.
+func (o CertificateGeneratorAcmeChallengeDns01Output) Cloudflare() CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcmeChallengeDns01) *CertificateGeneratorAcmeChallengeDns01Cloudflare {
+		return v.Cloudflare
+	}).(CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput)
+}
+
+// DNS provider that hosts the zones of the domains using this generator. `cpln`: domains CNAME `_acme-challenge` to Control Plane, no credentials needed. Valid values: `cpln`, `route53`, `cloudDns`, `azureDns`, `cloudflare`. Default: `cpln`.
+func (o CertificateGeneratorAcmeChallengeDns01Output) Provider() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcmeChallengeDns01) *string { return v.Provider }).(pulumi.StringPtrOutput)
+}
+
+// Route53 settings. Required when `provider` is `route53`.
+func (o CertificateGeneratorAcmeChallengeDns01Output) Route53() CertificateGeneratorAcmeChallengeDns01Route53PtrOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcmeChallengeDns01) *CertificateGeneratorAcmeChallengeDns01Route53 {
+		return v.Route53
+	}).(CertificateGeneratorAcmeChallengeDns01Route53PtrOutput)
+}
+
+type CertificateGeneratorAcmeChallengeDns01PtrOutput struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorAcmeChallengeDns01PtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CertificateGeneratorAcmeChallengeDns01)(nil)).Elem()
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01PtrOutput) ToCertificateGeneratorAcmeChallengeDns01PtrOutput() CertificateGeneratorAcmeChallengeDns01PtrOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01PtrOutput) ToCertificateGeneratorAcmeChallengeDns01PtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01PtrOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01PtrOutput) Elem() CertificateGeneratorAcmeChallengeDns01Output {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01) CertificateGeneratorAcmeChallengeDns01 {
+		if v != nil {
+			return *v
+		}
+		var ret CertificateGeneratorAcmeChallengeDns01
+		return ret
+	}).(CertificateGeneratorAcmeChallengeDns01Output)
+}
+
+// Azure DNS settings. Required when `provider` is `azureDns`.
+func (o CertificateGeneratorAcmeChallengeDns01PtrOutput) AzureDns() CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01) *CertificateGeneratorAcmeChallengeDns01AzureDns {
+		if v == nil {
+			return nil
+		}
+		return v.AzureDns
+	}).(CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput)
+}
+
+// Google Cloud DNS settings. Required when `provider` is `cloudDns`.
+func (o CertificateGeneratorAcmeChallengeDns01PtrOutput) CloudDns() CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01) *CertificateGeneratorAcmeChallengeDns01CloudDns {
+		if v == nil {
+			return nil
+		}
+		return v.CloudDns
+	}).(CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput)
+}
+
+// Cloudflare settings. Required when `provider` is `cloudflare`.
+func (o CertificateGeneratorAcmeChallengeDns01PtrOutput) Cloudflare() CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01) *CertificateGeneratorAcmeChallengeDns01Cloudflare {
+		if v == nil {
+			return nil
+		}
+		return v.Cloudflare
+	}).(CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput)
+}
+
+// DNS provider that hosts the zones of the domains using this generator. `cpln`: domains CNAME `_acme-challenge` to Control Plane, no credentials needed. Valid values: `cpln`, `route53`, `cloudDns`, `azureDns`, `cloudflare`. Default: `cpln`.
+func (o CertificateGeneratorAcmeChallengeDns01PtrOutput) Provider() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Provider
+	}).(pulumi.StringPtrOutput)
+}
+
+// Route53 settings. Required when `provider` is `route53`.
+func (o CertificateGeneratorAcmeChallengeDns01PtrOutput) Route53() CertificateGeneratorAcmeChallengeDns01Route53PtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01) *CertificateGeneratorAcmeChallengeDns01Route53 {
+		if v == nil {
+			return nil
+		}
+		return v.Route53
+	}).(CertificateGeneratorAcmeChallengeDns01Route53PtrOutput)
+}
+
+type CertificateGeneratorAcmeChallengeDns01AzureDns struct {
+	// Restrict record updates to this DNS zone; discovered from the domain when omitted.
+	HostedZoneName *string `pulumi:"hostedZoneName"`
+	// Resource group that contains the DNS zone.
+	ResourceGroupName string `pulumi:"resourceGroupName"`
+	// Link to a secret of type `azure-sdk`. Its service principal must be a DNS Zone Contributor on the zone.
+	SecretLink string `pulumi:"secretLink"`
+}
+
+// CertificateGeneratorAcmeChallengeDns01AzureDnsInput is an input type that accepts CertificateGeneratorAcmeChallengeDns01AzureDnsArgs and CertificateGeneratorAcmeChallengeDns01AzureDnsOutput values.
+// You can construct a concrete instance of `CertificateGeneratorAcmeChallengeDns01AzureDnsInput` via:
+//
+//	CertificateGeneratorAcmeChallengeDns01AzureDnsArgs{...}
+type CertificateGeneratorAcmeChallengeDns01AzureDnsInput interface {
+	pulumi.Input
+
+	ToCertificateGeneratorAcmeChallengeDns01AzureDnsOutput() CertificateGeneratorAcmeChallengeDns01AzureDnsOutput
+	ToCertificateGeneratorAcmeChallengeDns01AzureDnsOutputWithContext(context.Context) CertificateGeneratorAcmeChallengeDns01AzureDnsOutput
+}
+
+type CertificateGeneratorAcmeChallengeDns01AzureDnsArgs struct {
+	// Restrict record updates to this DNS zone; discovered from the domain when omitted.
+	HostedZoneName pulumi.StringPtrInput `pulumi:"hostedZoneName"`
+	// Resource group that contains the DNS zone.
+	ResourceGroupName pulumi.StringInput `pulumi:"resourceGroupName"`
+	// Link to a secret of type `azure-sdk`. Its service principal must be a DNS Zone Contributor on the zone.
+	SecretLink pulumi.StringInput `pulumi:"secretLink"`
+}
+
+func (CertificateGeneratorAcmeChallengeDns01AzureDnsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01AzureDns)(nil)).Elem()
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01AzureDnsArgs) ToCertificateGeneratorAcmeChallengeDns01AzureDnsOutput() CertificateGeneratorAcmeChallengeDns01AzureDnsOutput {
+	return i.ToCertificateGeneratorAcmeChallengeDns01AzureDnsOutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01AzureDnsArgs) ToCertificateGeneratorAcmeChallengeDns01AzureDnsOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01AzureDnsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeDns01AzureDnsOutput)
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01AzureDnsArgs) ToCertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput() CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput {
+	return i.ToCertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01AzureDnsArgs) ToCertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeDns01AzureDnsOutput).ToCertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutputWithContext(ctx)
+}
+
+// CertificateGeneratorAcmeChallengeDns01AzureDnsPtrInput is an input type that accepts CertificateGeneratorAcmeChallengeDns01AzureDnsArgs, CertificateGeneratorAcmeChallengeDns01AzureDnsPtr and CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput values.
+// You can construct a concrete instance of `CertificateGeneratorAcmeChallengeDns01AzureDnsPtrInput` via:
+//
+//	        CertificateGeneratorAcmeChallengeDns01AzureDnsArgs{...}
+//
+//	or:
+//
+//	        nil
+type CertificateGeneratorAcmeChallengeDns01AzureDnsPtrInput interface {
+	pulumi.Input
+
+	ToCertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput() CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput
+	ToCertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutputWithContext(context.Context) CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput
+}
+
+type certificateGeneratorAcmeChallengeDns01AzureDnsPtrType CertificateGeneratorAcmeChallengeDns01AzureDnsArgs
+
+func CertificateGeneratorAcmeChallengeDns01AzureDnsPtr(v *CertificateGeneratorAcmeChallengeDns01AzureDnsArgs) CertificateGeneratorAcmeChallengeDns01AzureDnsPtrInput {
+	return (*certificateGeneratorAcmeChallengeDns01AzureDnsPtrType)(v)
+}
+
+func (*certificateGeneratorAcmeChallengeDns01AzureDnsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CertificateGeneratorAcmeChallengeDns01AzureDns)(nil)).Elem()
+}
+
+func (i *certificateGeneratorAcmeChallengeDns01AzureDnsPtrType) ToCertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput() CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput {
+	return i.ToCertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutputWithContext(context.Background())
+}
+
+func (i *certificateGeneratorAcmeChallengeDns01AzureDnsPtrType) ToCertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput)
+}
+
+type CertificateGeneratorAcmeChallengeDns01AzureDnsOutput struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorAcmeChallengeDns01AzureDnsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01AzureDns)(nil)).Elem()
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01AzureDnsOutput) ToCertificateGeneratorAcmeChallengeDns01AzureDnsOutput() CertificateGeneratorAcmeChallengeDns01AzureDnsOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01AzureDnsOutput) ToCertificateGeneratorAcmeChallengeDns01AzureDnsOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01AzureDnsOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01AzureDnsOutput) ToCertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput() CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput {
+	return o.ToCertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutputWithContext(context.Background())
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01AzureDnsOutput) ToCertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CertificateGeneratorAcmeChallengeDns01AzureDns) *CertificateGeneratorAcmeChallengeDns01AzureDns {
+		return &v
+	}).(CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput)
+}
+
+// Restrict record updates to this DNS zone; discovered from the domain when omitted.
+func (o CertificateGeneratorAcmeChallengeDns01AzureDnsOutput) HostedZoneName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcmeChallengeDns01AzureDns) *string { return v.HostedZoneName }).(pulumi.StringPtrOutput)
+}
+
+// Resource group that contains the DNS zone.
+func (o CertificateGeneratorAcmeChallengeDns01AzureDnsOutput) ResourceGroupName() pulumi.StringOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcmeChallengeDns01AzureDns) string { return v.ResourceGroupName }).(pulumi.StringOutput)
+}
+
+// Link to a secret of type `azure-sdk`. Its service principal must be a DNS Zone Contributor on the zone.
+func (o CertificateGeneratorAcmeChallengeDns01AzureDnsOutput) SecretLink() pulumi.StringOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcmeChallengeDns01AzureDns) string { return v.SecretLink }).(pulumi.StringOutput)
+}
+
+type CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CertificateGeneratorAcmeChallengeDns01AzureDns)(nil)).Elem()
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput) ToCertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput() CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput) ToCertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput) Elem() CertificateGeneratorAcmeChallengeDns01AzureDnsOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01AzureDns) CertificateGeneratorAcmeChallengeDns01AzureDns {
+		if v != nil {
+			return *v
+		}
+		var ret CertificateGeneratorAcmeChallengeDns01AzureDns
+		return ret
+	}).(CertificateGeneratorAcmeChallengeDns01AzureDnsOutput)
+}
+
+// Restrict record updates to this DNS zone; discovered from the domain when omitted.
+func (o CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput) HostedZoneName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01AzureDns) *string {
+		if v == nil {
+			return nil
+		}
+		return v.HostedZoneName
+	}).(pulumi.StringPtrOutput)
+}
+
+// Resource group that contains the DNS zone.
+func (o CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput) ResourceGroupName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01AzureDns) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.ResourceGroupName
+	}).(pulumi.StringPtrOutput)
+}
+
+// Link to a secret of type `azure-sdk`. Its service principal must be a DNS Zone Contributor on the zone.
+func (o CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput) SecretLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01AzureDns) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.SecretLink
+	}).(pulumi.StringPtrOutput)
+}
+
+type CertificateGeneratorAcmeChallengeDns01CloudDns struct {
+	// GCP project that owns the Cloud DNS zone.
+	Project string `pulumi:"project"`
+	// Link to a secret of type `gcp` holding a service account key with the DNS Administrator role.
+	SecretLink string `pulumi:"secretLink"`
+}
+
+// CertificateGeneratorAcmeChallengeDns01CloudDnsInput is an input type that accepts CertificateGeneratorAcmeChallengeDns01CloudDnsArgs and CertificateGeneratorAcmeChallengeDns01CloudDnsOutput values.
+// You can construct a concrete instance of `CertificateGeneratorAcmeChallengeDns01CloudDnsInput` via:
+//
+//	CertificateGeneratorAcmeChallengeDns01CloudDnsArgs{...}
+type CertificateGeneratorAcmeChallengeDns01CloudDnsInput interface {
+	pulumi.Input
+
+	ToCertificateGeneratorAcmeChallengeDns01CloudDnsOutput() CertificateGeneratorAcmeChallengeDns01CloudDnsOutput
+	ToCertificateGeneratorAcmeChallengeDns01CloudDnsOutputWithContext(context.Context) CertificateGeneratorAcmeChallengeDns01CloudDnsOutput
+}
+
+type CertificateGeneratorAcmeChallengeDns01CloudDnsArgs struct {
+	// GCP project that owns the Cloud DNS zone.
+	Project pulumi.StringInput `pulumi:"project"`
+	// Link to a secret of type `gcp` holding a service account key with the DNS Administrator role.
+	SecretLink pulumi.StringInput `pulumi:"secretLink"`
+}
+
+func (CertificateGeneratorAcmeChallengeDns01CloudDnsArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01CloudDns)(nil)).Elem()
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01CloudDnsArgs) ToCertificateGeneratorAcmeChallengeDns01CloudDnsOutput() CertificateGeneratorAcmeChallengeDns01CloudDnsOutput {
+	return i.ToCertificateGeneratorAcmeChallengeDns01CloudDnsOutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01CloudDnsArgs) ToCertificateGeneratorAcmeChallengeDns01CloudDnsOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01CloudDnsOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeDns01CloudDnsOutput)
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01CloudDnsArgs) ToCertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput() CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput {
+	return i.ToCertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01CloudDnsArgs) ToCertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeDns01CloudDnsOutput).ToCertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutputWithContext(ctx)
+}
+
+// CertificateGeneratorAcmeChallengeDns01CloudDnsPtrInput is an input type that accepts CertificateGeneratorAcmeChallengeDns01CloudDnsArgs, CertificateGeneratorAcmeChallengeDns01CloudDnsPtr and CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput values.
+// You can construct a concrete instance of `CertificateGeneratorAcmeChallengeDns01CloudDnsPtrInput` via:
+//
+//	        CertificateGeneratorAcmeChallengeDns01CloudDnsArgs{...}
+//
+//	or:
+//
+//	        nil
+type CertificateGeneratorAcmeChallengeDns01CloudDnsPtrInput interface {
+	pulumi.Input
+
+	ToCertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput() CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput
+	ToCertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutputWithContext(context.Context) CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput
+}
+
+type certificateGeneratorAcmeChallengeDns01CloudDnsPtrType CertificateGeneratorAcmeChallengeDns01CloudDnsArgs
+
+func CertificateGeneratorAcmeChallengeDns01CloudDnsPtr(v *CertificateGeneratorAcmeChallengeDns01CloudDnsArgs) CertificateGeneratorAcmeChallengeDns01CloudDnsPtrInput {
+	return (*certificateGeneratorAcmeChallengeDns01CloudDnsPtrType)(v)
+}
+
+func (*certificateGeneratorAcmeChallengeDns01CloudDnsPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CertificateGeneratorAcmeChallengeDns01CloudDns)(nil)).Elem()
+}
+
+func (i *certificateGeneratorAcmeChallengeDns01CloudDnsPtrType) ToCertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput() CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput {
+	return i.ToCertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutputWithContext(context.Background())
+}
+
+func (i *certificateGeneratorAcmeChallengeDns01CloudDnsPtrType) ToCertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput)
+}
+
+type CertificateGeneratorAcmeChallengeDns01CloudDnsOutput struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorAcmeChallengeDns01CloudDnsOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01CloudDns)(nil)).Elem()
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01CloudDnsOutput) ToCertificateGeneratorAcmeChallengeDns01CloudDnsOutput() CertificateGeneratorAcmeChallengeDns01CloudDnsOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01CloudDnsOutput) ToCertificateGeneratorAcmeChallengeDns01CloudDnsOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01CloudDnsOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01CloudDnsOutput) ToCertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput() CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput {
+	return o.ToCertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutputWithContext(context.Background())
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01CloudDnsOutput) ToCertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CertificateGeneratorAcmeChallengeDns01CloudDns) *CertificateGeneratorAcmeChallengeDns01CloudDns {
+		return &v
+	}).(CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput)
+}
+
+// GCP project that owns the Cloud DNS zone.
+func (o CertificateGeneratorAcmeChallengeDns01CloudDnsOutput) Project() pulumi.StringOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcmeChallengeDns01CloudDns) string { return v.Project }).(pulumi.StringOutput)
+}
+
+// Link to a secret of type `gcp` holding a service account key with the DNS Administrator role.
+func (o CertificateGeneratorAcmeChallengeDns01CloudDnsOutput) SecretLink() pulumi.StringOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcmeChallengeDns01CloudDns) string { return v.SecretLink }).(pulumi.StringOutput)
+}
+
+type CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CertificateGeneratorAcmeChallengeDns01CloudDns)(nil)).Elem()
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput) ToCertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput() CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput) ToCertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput) Elem() CertificateGeneratorAcmeChallengeDns01CloudDnsOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01CloudDns) CertificateGeneratorAcmeChallengeDns01CloudDns {
+		if v != nil {
+			return *v
+		}
+		var ret CertificateGeneratorAcmeChallengeDns01CloudDns
+		return ret
+	}).(CertificateGeneratorAcmeChallengeDns01CloudDnsOutput)
+}
+
+// GCP project that owns the Cloud DNS zone.
+func (o CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput) Project() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01CloudDns) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Project
+	}).(pulumi.StringPtrOutput)
+}
+
+// Link to a secret of type `gcp` holding a service account key with the DNS Administrator role.
+func (o CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput) SecretLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01CloudDns) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.SecretLink
+	}).(pulumi.StringPtrOutput)
+}
+
+type CertificateGeneratorAcmeChallengeDns01Cloudflare struct {
+	// Link to a secret of type `opaque` whose payload is a Cloudflare API token with Zone:DNS:Edit permission.
+	SecretLink string `pulumi:"secretLink"`
+}
+
+// CertificateGeneratorAcmeChallengeDns01CloudflareInput is an input type that accepts CertificateGeneratorAcmeChallengeDns01CloudflareArgs and CertificateGeneratorAcmeChallengeDns01CloudflareOutput values.
+// You can construct a concrete instance of `CertificateGeneratorAcmeChallengeDns01CloudflareInput` via:
+//
+//	CertificateGeneratorAcmeChallengeDns01CloudflareArgs{...}
+type CertificateGeneratorAcmeChallengeDns01CloudflareInput interface {
+	pulumi.Input
+
+	ToCertificateGeneratorAcmeChallengeDns01CloudflareOutput() CertificateGeneratorAcmeChallengeDns01CloudflareOutput
+	ToCertificateGeneratorAcmeChallengeDns01CloudflareOutputWithContext(context.Context) CertificateGeneratorAcmeChallengeDns01CloudflareOutput
+}
+
+type CertificateGeneratorAcmeChallengeDns01CloudflareArgs struct {
+	// Link to a secret of type `opaque` whose payload is a Cloudflare API token with Zone:DNS:Edit permission.
+	SecretLink pulumi.StringInput `pulumi:"secretLink"`
+}
+
+func (CertificateGeneratorAcmeChallengeDns01CloudflareArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01Cloudflare)(nil)).Elem()
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01CloudflareArgs) ToCertificateGeneratorAcmeChallengeDns01CloudflareOutput() CertificateGeneratorAcmeChallengeDns01CloudflareOutput {
+	return i.ToCertificateGeneratorAcmeChallengeDns01CloudflareOutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01CloudflareArgs) ToCertificateGeneratorAcmeChallengeDns01CloudflareOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01CloudflareOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeDns01CloudflareOutput)
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01CloudflareArgs) ToCertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput() CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput {
+	return i.ToCertificateGeneratorAcmeChallengeDns01CloudflarePtrOutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01CloudflareArgs) ToCertificateGeneratorAcmeChallengeDns01CloudflarePtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeDns01CloudflareOutput).ToCertificateGeneratorAcmeChallengeDns01CloudflarePtrOutputWithContext(ctx)
+}
+
+// CertificateGeneratorAcmeChallengeDns01CloudflarePtrInput is an input type that accepts CertificateGeneratorAcmeChallengeDns01CloudflareArgs, CertificateGeneratorAcmeChallengeDns01CloudflarePtr and CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput values.
+// You can construct a concrete instance of `CertificateGeneratorAcmeChallengeDns01CloudflarePtrInput` via:
+//
+//	        CertificateGeneratorAcmeChallengeDns01CloudflareArgs{...}
+//
+//	or:
+//
+//	        nil
+type CertificateGeneratorAcmeChallengeDns01CloudflarePtrInput interface {
+	pulumi.Input
+
+	ToCertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput() CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput
+	ToCertificateGeneratorAcmeChallengeDns01CloudflarePtrOutputWithContext(context.Context) CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput
+}
+
+type certificateGeneratorAcmeChallengeDns01CloudflarePtrType CertificateGeneratorAcmeChallengeDns01CloudflareArgs
+
+func CertificateGeneratorAcmeChallengeDns01CloudflarePtr(v *CertificateGeneratorAcmeChallengeDns01CloudflareArgs) CertificateGeneratorAcmeChallengeDns01CloudflarePtrInput {
+	return (*certificateGeneratorAcmeChallengeDns01CloudflarePtrType)(v)
+}
+
+func (*certificateGeneratorAcmeChallengeDns01CloudflarePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CertificateGeneratorAcmeChallengeDns01Cloudflare)(nil)).Elem()
+}
+
+func (i *certificateGeneratorAcmeChallengeDns01CloudflarePtrType) ToCertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput() CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput {
+	return i.ToCertificateGeneratorAcmeChallengeDns01CloudflarePtrOutputWithContext(context.Background())
+}
+
+func (i *certificateGeneratorAcmeChallengeDns01CloudflarePtrType) ToCertificateGeneratorAcmeChallengeDns01CloudflarePtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput)
+}
+
+type CertificateGeneratorAcmeChallengeDns01CloudflareOutput struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorAcmeChallengeDns01CloudflareOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01Cloudflare)(nil)).Elem()
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01CloudflareOutput) ToCertificateGeneratorAcmeChallengeDns01CloudflareOutput() CertificateGeneratorAcmeChallengeDns01CloudflareOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01CloudflareOutput) ToCertificateGeneratorAcmeChallengeDns01CloudflareOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01CloudflareOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01CloudflareOutput) ToCertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput() CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput {
+	return o.ToCertificateGeneratorAcmeChallengeDns01CloudflarePtrOutputWithContext(context.Background())
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01CloudflareOutput) ToCertificateGeneratorAcmeChallengeDns01CloudflarePtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CertificateGeneratorAcmeChallengeDns01Cloudflare) *CertificateGeneratorAcmeChallengeDns01Cloudflare {
+		return &v
+	}).(CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput)
+}
+
+// Link to a secret of type `opaque` whose payload is a Cloudflare API token with Zone:DNS:Edit permission.
+func (o CertificateGeneratorAcmeChallengeDns01CloudflareOutput) SecretLink() pulumi.StringOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcmeChallengeDns01Cloudflare) string { return v.SecretLink }).(pulumi.StringOutput)
+}
+
+type CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CertificateGeneratorAcmeChallengeDns01Cloudflare)(nil)).Elem()
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput) ToCertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput() CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput) ToCertificateGeneratorAcmeChallengeDns01CloudflarePtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput) Elem() CertificateGeneratorAcmeChallengeDns01CloudflareOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01Cloudflare) CertificateGeneratorAcmeChallengeDns01Cloudflare {
+		if v != nil {
+			return *v
+		}
+		var ret CertificateGeneratorAcmeChallengeDns01Cloudflare
+		return ret
+	}).(CertificateGeneratorAcmeChallengeDns01CloudflareOutput)
+}
+
+// Link to a secret of type `opaque` whose payload is a Cloudflare API token with Zone:DNS:Edit permission.
+func (o CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput) SecretLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01Cloudflare) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.SecretLink
+	}).(pulumi.StringPtrOutput)
+}
+
+type CertificateGeneratorAcmeChallengeDns01Route53 struct {
+	// Restrict record updates to this hosted zone; discovered from the domain when omitted.
+	HostedZoneId *string `pulumi:"hostedZoneId"`
+	// AWS region of the Route53 API to use, e.g. `us-east-1`.
+	Region string `pulumi:"region"`
+	// Link to a secret of type `aws`. The access key must be allowed to change TXT records in the hosted zone.
+	SecretLink string `pulumi:"secretLink"`
+}
+
+// CertificateGeneratorAcmeChallengeDns01Route53Input is an input type that accepts CertificateGeneratorAcmeChallengeDns01Route53Args and CertificateGeneratorAcmeChallengeDns01Route53Output values.
+// You can construct a concrete instance of `CertificateGeneratorAcmeChallengeDns01Route53Input` via:
+//
+//	CertificateGeneratorAcmeChallengeDns01Route53Args{...}
+type CertificateGeneratorAcmeChallengeDns01Route53Input interface {
+	pulumi.Input
+
+	ToCertificateGeneratorAcmeChallengeDns01Route53Output() CertificateGeneratorAcmeChallengeDns01Route53Output
+	ToCertificateGeneratorAcmeChallengeDns01Route53OutputWithContext(context.Context) CertificateGeneratorAcmeChallengeDns01Route53Output
+}
+
+type CertificateGeneratorAcmeChallengeDns01Route53Args struct {
+	// Restrict record updates to this hosted zone; discovered from the domain when omitted.
+	HostedZoneId pulumi.StringPtrInput `pulumi:"hostedZoneId"`
+	// AWS region of the Route53 API to use, e.g. `us-east-1`.
+	Region pulumi.StringInput `pulumi:"region"`
+	// Link to a secret of type `aws`. The access key must be allowed to change TXT records in the hosted zone.
+	SecretLink pulumi.StringInput `pulumi:"secretLink"`
+}
+
+func (CertificateGeneratorAcmeChallengeDns01Route53Args) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01Route53)(nil)).Elem()
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01Route53Args) ToCertificateGeneratorAcmeChallengeDns01Route53Output() CertificateGeneratorAcmeChallengeDns01Route53Output {
+	return i.ToCertificateGeneratorAcmeChallengeDns01Route53OutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01Route53Args) ToCertificateGeneratorAcmeChallengeDns01Route53OutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01Route53Output {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeDns01Route53Output)
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01Route53Args) ToCertificateGeneratorAcmeChallengeDns01Route53PtrOutput() CertificateGeneratorAcmeChallengeDns01Route53PtrOutput {
+	return i.ToCertificateGeneratorAcmeChallengeDns01Route53PtrOutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorAcmeChallengeDns01Route53Args) ToCertificateGeneratorAcmeChallengeDns01Route53PtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01Route53PtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeDns01Route53Output).ToCertificateGeneratorAcmeChallengeDns01Route53PtrOutputWithContext(ctx)
+}
+
+// CertificateGeneratorAcmeChallengeDns01Route53PtrInput is an input type that accepts CertificateGeneratorAcmeChallengeDns01Route53Args, CertificateGeneratorAcmeChallengeDns01Route53Ptr and CertificateGeneratorAcmeChallengeDns01Route53PtrOutput values.
+// You can construct a concrete instance of `CertificateGeneratorAcmeChallengeDns01Route53PtrInput` via:
+//
+//	        CertificateGeneratorAcmeChallengeDns01Route53Args{...}
+//
+//	or:
+//
+//	        nil
+type CertificateGeneratorAcmeChallengeDns01Route53PtrInput interface {
+	pulumi.Input
+
+	ToCertificateGeneratorAcmeChallengeDns01Route53PtrOutput() CertificateGeneratorAcmeChallengeDns01Route53PtrOutput
+	ToCertificateGeneratorAcmeChallengeDns01Route53PtrOutputWithContext(context.Context) CertificateGeneratorAcmeChallengeDns01Route53PtrOutput
+}
+
+type certificateGeneratorAcmeChallengeDns01Route53PtrType CertificateGeneratorAcmeChallengeDns01Route53Args
+
+func CertificateGeneratorAcmeChallengeDns01Route53Ptr(v *CertificateGeneratorAcmeChallengeDns01Route53Args) CertificateGeneratorAcmeChallengeDns01Route53PtrInput {
+	return (*certificateGeneratorAcmeChallengeDns01Route53PtrType)(v)
+}
+
+func (*certificateGeneratorAcmeChallengeDns01Route53PtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CertificateGeneratorAcmeChallengeDns01Route53)(nil)).Elem()
+}
+
+func (i *certificateGeneratorAcmeChallengeDns01Route53PtrType) ToCertificateGeneratorAcmeChallengeDns01Route53PtrOutput() CertificateGeneratorAcmeChallengeDns01Route53PtrOutput {
+	return i.ToCertificateGeneratorAcmeChallengeDns01Route53PtrOutputWithContext(context.Background())
+}
+
+func (i *certificateGeneratorAcmeChallengeDns01Route53PtrType) ToCertificateGeneratorAcmeChallengeDns01Route53PtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01Route53PtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeDns01Route53PtrOutput)
+}
+
+type CertificateGeneratorAcmeChallengeDns01Route53Output struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorAcmeChallengeDns01Route53Output) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01Route53)(nil)).Elem()
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01Route53Output) ToCertificateGeneratorAcmeChallengeDns01Route53Output() CertificateGeneratorAcmeChallengeDns01Route53Output {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01Route53Output) ToCertificateGeneratorAcmeChallengeDns01Route53OutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01Route53Output {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01Route53Output) ToCertificateGeneratorAcmeChallengeDns01Route53PtrOutput() CertificateGeneratorAcmeChallengeDns01Route53PtrOutput {
+	return o.ToCertificateGeneratorAcmeChallengeDns01Route53PtrOutputWithContext(context.Background())
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01Route53Output) ToCertificateGeneratorAcmeChallengeDns01Route53PtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01Route53PtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CertificateGeneratorAcmeChallengeDns01Route53) *CertificateGeneratorAcmeChallengeDns01Route53 {
+		return &v
+	}).(CertificateGeneratorAcmeChallengeDns01Route53PtrOutput)
+}
+
+// Restrict record updates to this hosted zone; discovered from the domain when omitted.
+func (o CertificateGeneratorAcmeChallengeDns01Route53Output) HostedZoneId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcmeChallengeDns01Route53) *string { return v.HostedZoneId }).(pulumi.StringPtrOutput)
+}
+
+// AWS region of the Route53 API to use, e.g. `us-east-1`.
+func (o CertificateGeneratorAcmeChallengeDns01Route53Output) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcmeChallengeDns01Route53) string { return v.Region }).(pulumi.StringOutput)
+}
+
+// Link to a secret of type `aws`. The access key must be allowed to change TXT records in the hosted zone.
+func (o CertificateGeneratorAcmeChallengeDns01Route53Output) SecretLink() pulumi.StringOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcmeChallengeDns01Route53) string { return v.SecretLink }).(pulumi.StringOutput)
+}
+
+type CertificateGeneratorAcmeChallengeDns01Route53PtrOutput struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorAcmeChallengeDns01Route53PtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CertificateGeneratorAcmeChallengeDns01Route53)(nil)).Elem()
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01Route53PtrOutput) ToCertificateGeneratorAcmeChallengeDns01Route53PtrOutput() CertificateGeneratorAcmeChallengeDns01Route53PtrOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01Route53PtrOutput) ToCertificateGeneratorAcmeChallengeDns01Route53PtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeDns01Route53PtrOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeDns01Route53PtrOutput) Elem() CertificateGeneratorAcmeChallengeDns01Route53Output {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01Route53) CertificateGeneratorAcmeChallengeDns01Route53 {
+		if v != nil {
+			return *v
+		}
+		var ret CertificateGeneratorAcmeChallengeDns01Route53
+		return ret
+	}).(CertificateGeneratorAcmeChallengeDns01Route53Output)
+}
+
+// Restrict record updates to this hosted zone; discovered from the domain when omitted.
+func (o CertificateGeneratorAcmeChallengeDns01Route53PtrOutput) HostedZoneId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01Route53) *string {
+		if v == nil {
+			return nil
+		}
+		return v.HostedZoneId
+	}).(pulumi.StringPtrOutput)
+}
+
+// AWS region of the Route53 API to use, e.g. `us-east-1`.
+func (o CertificateGeneratorAcmeChallengeDns01Route53PtrOutput) Region() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01Route53) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Region
+	}).(pulumi.StringPtrOutput)
+}
+
+// Link to a secret of type `aws`. The access key must be allowed to change TXT records in the hosted zone.
+func (o CertificateGeneratorAcmeChallengeDns01Route53PtrOutput) SecretLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeDns01Route53) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.SecretLink
+	}).(pulumi.StringPtrOutput)
+}
+
+type CertificateGeneratorAcmeChallengeHttp01 struct {
+}
+
+// CertificateGeneratorAcmeChallengeHttp01Input is an input type that accepts CertificateGeneratorAcmeChallengeHttp01Args and CertificateGeneratorAcmeChallengeHttp01Output values.
+// You can construct a concrete instance of `CertificateGeneratorAcmeChallengeHttp01Input` via:
+//
+//	CertificateGeneratorAcmeChallengeHttp01Args{...}
+type CertificateGeneratorAcmeChallengeHttp01Input interface {
+	pulumi.Input
+
+	ToCertificateGeneratorAcmeChallengeHttp01Output() CertificateGeneratorAcmeChallengeHttp01Output
+	ToCertificateGeneratorAcmeChallengeHttp01OutputWithContext(context.Context) CertificateGeneratorAcmeChallengeHttp01Output
+}
+
+type CertificateGeneratorAcmeChallengeHttp01Args struct {
+}
+
+func (CertificateGeneratorAcmeChallengeHttp01Args) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorAcmeChallengeHttp01)(nil)).Elem()
+}
+
+func (i CertificateGeneratorAcmeChallengeHttp01Args) ToCertificateGeneratorAcmeChallengeHttp01Output() CertificateGeneratorAcmeChallengeHttp01Output {
+	return i.ToCertificateGeneratorAcmeChallengeHttp01OutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorAcmeChallengeHttp01Args) ToCertificateGeneratorAcmeChallengeHttp01OutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeHttp01Output {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeHttp01Output)
+}
+
+func (i CertificateGeneratorAcmeChallengeHttp01Args) ToCertificateGeneratorAcmeChallengeHttp01PtrOutput() CertificateGeneratorAcmeChallengeHttp01PtrOutput {
+	return i.ToCertificateGeneratorAcmeChallengeHttp01PtrOutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorAcmeChallengeHttp01Args) ToCertificateGeneratorAcmeChallengeHttp01PtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeHttp01PtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeHttp01Output).ToCertificateGeneratorAcmeChallengeHttp01PtrOutputWithContext(ctx)
+}
+
+// CertificateGeneratorAcmeChallengeHttp01PtrInput is an input type that accepts CertificateGeneratorAcmeChallengeHttp01Args, CertificateGeneratorAcmeChallengeHttp01Ptr and CertificateGeneratorAcmeChallengeHttp01PtrOutput values.
+// You can construct a concrete instance of `CertificateGeneratorAcmeChallengeHttp01PtrInput` via:
+//
+//	        CertificateGeneratorAcmeChallengeHttp01Args{...}
+//
+//	or:
+//
+//	        nil
+type CertificateGeneratorAcmeChallengeHttp01PtrInput interface {
+	pulumi.Input
+
+	ToCertificateGeneratorAcmeChallengeHttp01PtrOutput() CertificateGeneratorAcmeChallengeHttp01PtrOutput
+	ToCertificateGeneratorAcmeChallengeHttp01PtrOutputWithContext(context.Context) CertificateGeneratorAcmeChallengeHttp01PtrOutput
+}
+
+type certificateGeneratorAcmeChallengeHttp01PtrType CertificateGeneratorAcmeChallengeHttp01Args
+
+func CertificateGeneratorAcmeChallengeHttp01Ptr(v *CertificateGeneratorAcmeChallengeHttp01Args) CertificateGeneratorAcmeChallengeHttp01PtrInput {
+	return (*certificateGeneratorAcmeChallengeHttp01PtrType)(v)
+}
+
+func (*certificateGeneratorAcmeChallengeHttp01PtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CertificateGeneratorAcmeChallengeHttp01)(nil)).Elem()
+}
+
+func (i *certificateGeneratorAcmeChallengeHttp01PtrType) ToCertificateGeneratorAcmeChallengeHttp01PtrOutput() CertificateGeneratorAcmeChallengeHttp01PtrOutput {
+	return i.ToCertificateGeneratorAcmeChallengeHttp01PtrOutputWithContext(context.Background())
+}
+
+func (i *certificateGeneratorAcmeChallengeHttp01PtrType) ToCertificateGeneratorAcmeChallengeHttp01PtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeHttp01PtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeChallengeHttp01PtrOutput)
+}
+
+type CertificateGeneratorAcmeChallengeHttp01Output struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorAcmeChallengeHttp01Output) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorAcmeChallengeHttp01)(nil)).Elem()
+}
+
+func (o CertificateGeneratorAcmeChallengeHttp01Output) ToCertificateGeneratorAcmeChallengeHttp01Output() CertificateGeneratorAcmeChallengeHttp01Output {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeHttp01Output) ToCertificateGeneratorAcmeChallengeHttp01OutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeHttp01Output {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeHttp01Output) ToCertificateGeneratorAcmeChallengeHttp01PtrOutput() CertificateGeneratorAcmeChallengeHttp01PtrOutput {
+	return o.ToCertificateGeneratorAcmeChallengeHttp01PtrOutputWithContext(context.Background())
+}
+
+func (o CertificateGeneratorAcmeChallengeHttp01Output) ToCertificateGeneratorAcmeChallengeHttp01PtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeHttp01PtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CertificateGeneratorAcmeChallengeHttp01) *CertificateGeneratorAcmeChallengeHttp01 {
+		return &v
+	}).(CertificateGeneratorAcmeChallengeHttp01PtrOutput)
+}
+
+type CertificateGeneratorAcmeChallengeHttp01PtrOutput struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorAcmeChallengeHttp01PtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CertificateGeneratorAcmeChallengeHttp01)(nil)).Elem()
+}
+
+func (o CertificateGeneratorAcmeChallengeHttp01PtrOutput) ToCertificateGeneratorAcmeChallengeHttp01PtrOutput() CertificateGeneratorAcmeChallengeHttp01PtrOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeHttp01PtrOutput) ToCertificateGeneratorAcmeChallengeHttp01PtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeChallengeHttp01PtrOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeChallengeHttp01PtrOutput) Elem() CertificateGeneratorAcmeChallengeHttp01Output {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeChallengeHttp01) CertificateGeneratorAcmeChallengeHttp01 {
+		if v != nil {
+			return *v
+		}
+		var ret CertificateGeneratorAcmeChallengeHttp01
+		return ret
+	}).(CertificateGeneratorAcmeChallengeHttp01Output)
+}
+
+type CertificateGeneratorAcmeExternalAccountBinding struct {
+	// Key identifier issued by the CA.
+	KeyId string `pulumi:"keyId"`
+	// Link to a secret of type `opaque` whose payload is the base64url encoded HMAC key exactly as issued by the CA (encoding `plain`).
+	SecretLink string `pulumi:"secretLink"`
+}
+
+// CertificateGeneratorAcmeExternalAccountBindingInput is an input type that accepts CertificateGeneratorAcmeExternalAccountBindingArgs and CertificateGeneratorAcmeExternalAccountBindingOutput values.
+// You can construct a concrete instance of `CertificateGeneratorAcmeExternalAccountBindingInput` via:
+//
+//	CertificateGeneratorAcmeExternalAccountBindingArgs{...}
+type CertificateGeneratorAcmeExternalAccountBindingInput interface {
+	pulumi.Input
+
+	ToCertificateGeneratorAcmeExternalAccountBindingOutput() CertificateGeneratorAcmeExternalAccountBindingOutput
+	ToCertificateGeneratorAcmeExternalAccountBindingOutputWithContext(context.Context) CertificateGeneratorAcmeExternalAccountBindingOutput
+}
+
+type CertificateGeneratorAcmeExternalAccountBindingArgs struct {
+	// Key identifier issued by the CA.
+	KeyId pulumi.StringInput `pulumi:"keyId"`
+	// Link to a secret of type `opaque` whose payload is the base64url encoded HMAC key exactly as issued by the CA (encoding `plain`).
+	SecretLink pulumi.StringInput `pulumi:"secretLink"`
+}
+
+func (CertificateGeneratorAcmeExternalAccountBindingArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorAcmeExternalAccountBinding)(nil)).Elem()
+}
+
+func (i CertificateGeneratorAcmeExternalAccountBindingArgs) ToCertificateGeneratorAcmeExternalAccountBindingOutput() CertificateGeneratorAcmeExternalAccountBindingOutput {
+	return i.ToCertificateGeneratorAcmeExternalAccountBindingOutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorAcmeExternalAccountBindingArgs) ToCertificateGeneratorAcmeExternalAccountBindingOutputWithContext(ctx context.Context) CertificateGeneratorAcmeExternalAccountBindingOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeExternalAccountBindingOutput)
+}
+
+func (i CertificateGeneratorAcmeExternalAccountBindingArgs) ToCertificateGeneratorAcmeExternalAccountBindingPtrOutput() CertificateGeneratorAcmeExternalAccountBindingPtrOutput {
+	return i.ToCertificateGeneratorAcmeExternalAccountBindingPtrOutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorAcmeExternalAccountBindingArgs) ToCertificateGeneratorAcmeExternalAccountBindingPtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeExternalAccountBindingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeExternalAccountBindingOutput).ToCertificateGeneratorAcmeExternalAccountBindingPtrOutputWithContext(ctx)
+}
+
+// CertificateGeneratorAcmeExternalAccountBindingPtrInput is an input type that accepts CertificateGeneratorAcmeExternalAccountBindingArgs, CertificateGeneratorAcmeExternalAccountBindingPtr and CertificateGeneratorAcmeExternalAccountBindingPtrOutput values.
+// You can construct a concrete instance of `CertificateGeneratorAcmeExternalAccountBindingPtrInput` via:
+//
+//	        CertificateGeneratorAcmeExternalAccountBindingArgs{...}
+//
+//	or:
+//
+//	        nil
+type CertificateGeneratorAcmeExternalAccountBindingPtrInput interface {
+	pulumi.Input
+
+	ToCertificateGeneratorAcmeExternalAccountBindingPtrOutput() CertificateGeneratorAcmeExternalAccountBindingPtrOutput
+	ToCertificateGeneratorAcmeExternalAccountBindingPtrOutputWithContext(context.Context) CertificateGeneratorAcmeExternalAccountBindingPtrOutput
+}
+
+type certificateGeneratorAcmeExternalAccountBindingPtrType CertificateGeneratorAcmeExternalAccountBindingArgs
+
+func CertificateGeneratorAcmeExternalAccountBindingPtr(v *CertificateGeneratorAcmeExternalAccountBindingArgs) CertificateGeneratorAcmeExternalAccountBindingPtrInput {
+	return (*certificateGeneratorAcmeExternalAccountBindingPtrType)(v)
+}
+
+func (*certificateGeneratorAcmeExternalAccountBindingPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CertificateGeneratorAcmeExternalAccountBinding)(nil)).Elem()
+}
+
+func (i *certificateGeneratorAcmeExternalAccountBindingPtrType) ToCertificateGeneratorAcmeExternalAccountBindingPtrOutput() CertificateGeneratorAcmeExternalAccountBindingPtrOutput {
+	return i.ToCertificateGeneratorAcmeExternalAccountBindingPtrOutputWithContext(context.Background())
+}
+
+func (i *certificateGeneratorAcmeExternalAccountBindingPtrType) ToCertificateGeneratorAcmeExternalAccountBindingPtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeExternalAccountBindingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorAcmeExternalAccountBindingPtrOutput)
+}
+
+type CertificateGeneratorAcmeExternalAccountBindingOutput struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorAcmeExternalAccountBindingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorAcmeExternalAccountBinding)(nil)).Elem()
+}
+
+func (o CertificateGeneratorAcmeExternalAccountBindingOutput) ToCertificateGeneratorAcmeExternalAccountBindingOutput() CertificateGeneratorAcmeExternalAccountBindingOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeExternalAccountBindingOutput) ToCertificateGeneratorAcmeExternalAccountBindingOutputWithContext(ctx context.Context) CertificateGeneratorAcmeExternalAccountBindingOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeExternalAccountBindingOutput) ToCertificateGeneratorAcmeExternalAccountBindingPtrOutput() CertificateGeneratorAcmeExternalAccountBindingPtrOutput {
+	return o.ToCertificateGeneratorAcmeExternalAccountBindingPtrOutputWithContext(context.Background())
+}
+
+func (o CertificateGeneratorAcmeExternalAccountBindingOutput) ToCertificateGeneratorAcmeExternalAccountBindingPtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeExternalAccountBindingPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CertificateGeneratorAcmeExternalAccountBinding) *CertificateGeneratorAcmeExternalAccountBinding {
+		return &v
+	}).(CertificateGeneratorAcmeExternalAccountBindingPtrOutput)
+}
+
+// Key identifier issued by the CA.
+func (o CertificateGeneratorAcmeExternalAccountBindingOutput) KeyId() pulumi.StringOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcmeExternalAccountBinding) string { return v.KeyId }).(pulumi.StringOutput)
+}
+
+// Link to a secret of type `opaque` whose payload is the base64url encoded HMAC key exactly as issued by the CA (encoding `plain`).
+func (o CertificateGeneratorAcmeExternalAccountBindingOutput) SecretLink() pulumi.StringOutput {
+	return o.ApplyT(func(v CertificateGeneratorAcmeExternalAccountBinding) string { return v.SecretLink }).(pulumi.StringOutput)
+}
+
+type CertificateGeneratorAcmeExternalAccountBindingPtrOutput struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorAcmeExternalAccountBindingPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CertificateGeneratorAcmeExternalAccountBinding)(nil)).Elem()
+}
+
+func (o CertificateGeneratorAcmeExternalAccountBindingPtrOutput) ToCertificateGeneratorAcmeExternalAccountBindingPtrOutput() CertificateGeneratorAcmeExternalAccountBindingPtrOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeExternalAccountBindingPtrOutput) ToCertificateGeneratorAcmeExternalAccountBindingPtrOutputWithContext(ctx context.Context) CertificateGeneratorAcmeExternalAccountBindingPtrOutput {
+	return o
+}
+
+func (o CertificateGeneratorAcmeExternalAccountBindingPtrOutput) Elem() CertificateGeneratorAcmeExternalAccountBindingOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeExternalAccountBinding) CertificateGeneratorAcmeExternalAccountBinding {
+		if v != nil {
+			return *v
+		}
+		var ret CertificateGeneratorAcmeExternalAccountBinding
+		return ret
+	}).(CertificateGeneratorAcmeExternalAccountBindingOutput)
+}
+
+// Key identifier issued by the CA.
+func (o CertificateGeneratorAcmeExternalAccountBindingPtrOutput) KeyId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeExternalAccountBinding) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.KeyId
+	}).(pulumi.StringPtrOutput)
+}
+
+// Link to a secret of type `opaque` whose payload is the base64url encoded HMAC key exactly as issued by the CA (encoding `plain`).
+func (o CertificateGeneratorAcmeExternalAccountBindingPtrOutput) SecretLink() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CertificateGeneratorAcmeExternalAccountBinding) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.SecretLink
+	}).(pulumi.StringPtrOutput)
+}
+
+type CertificateGeneratorStatus struct {
+	// Timestamp of the last status update.
+	LastUpdated *string `pulumi:"lastUpdated"`
+	// Reason the generator is not ready.
+	Message *string `pulumi:"message"`
+	// True once the generator is registered with the CA and can issue certificates.
+	Ready *bool `pulumi:"ready"`
+}
+
+// CertificateGeneratorStatusInput is an input type that accepts CertificateGeneratorStatusArgs and CertificateGeneratorStatusOutput values.
+// You can construct a concrete instance of `CertificateGeneratorStatusInput` via:
+//
+//	CertificateGeneratorStatusArgs{...}
+type CertificateGeneratorStatusInput interface {
+	pulumi.Input
+
+	ToCertificateGeneratorStatusOutput() CertificateGeneratorStatusOutput
+	ToCertificateGeneratorStatusOutputWithContext(context.Context) CertificateGeneratorStatusOutput
+}
+
+type CertificateGeneratorStatusArgs struct {
+	// Timestamp of the last status update.
+	LastUpdated pulumi.StringPtrInput `pulumi:"lastUpdated"`
+	// Reason the generator is not ready.
+	Message pulumi.StringPtrInput `pulumi:"message"`
+	// True once the generator is registered with the CA and can issue certificates.
+	Ready pulumi.BoolPtrInput `pulumi:"ready"`
+}
+
+func (CertificateGeneratorStatusArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorStatus)(nil)).Elem()
+}
+
+func (i CertificateGeneratorStatusArgs) ToCertificateGeneratorStatusOutput() CertificateGeneratorStatusOutput {
+	return i.ToCertificateGeneratorStatusOutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorStatusArgs) ToCertificateGeneratorStatusOutputWithContext(ctx context.Context) CertificateGeneratorStatusOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorStatusOutput)
+}
+
+// CertificateGeneratorStatusArrayInput is an input type that accepts CertificateGeneratorStatusArray and CertificateGeneratorStatusArrayOutput values.
+// You can construct a concrete instance of `CertificateGeneratorStatusArrayInput` via:
+//
+//	CertificateGeneratorStatusArray{ CertificateGeneratorStatusArgs{...} }
+type CertificateGeneratorStatusArrayInput interface {
+	pulumi.Input
+
+	ToCertificateGeneratorStatusArrayOutput() CertificateGeneratorStatusArrayOutput
+	ToCertificateGeneratorStatusArrayOutputWithContext(context.Context) CertificateGeneratorStatusArrayOutput
+}
+
+type CertificateGeneratorStatusArray []CertificateGeneratorStatusInput
+
+func (CertificateGeneratorStatusArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]CertificateGeneratorStatus)(nil)).Elem()
+}
+
+func (i CertificateGeneratorStatusArray) ToCertificateGeneratorStatusArrayOutput() CertificateGeneratorStatusArrayOutput {
+	return i.ToCertificateGeneratorStatusArrayOutputWithContext(context.Background())
+}
+
+func (i CertificateGeneratorStatusArray) ToCertificateGeneratorStatusArrayOutputWithContext(ctx context.Context) CertificateGeneratorStatusArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CertificateGeneratorStatusArrayOutput)
+}
+
+type CertificateGeneratorStatusOutput struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorStatusOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CertificateGeneratorStatus)(nil)).Elem()
+}
+
+func (o CertificateGeneratorStatusOutput) ToCertificateGeneratorStatusOutput() CertificateGeneratorStatusOutput {
+	return o
+}
+
+func (o CertificateGeneratorStatusOutput) ToCertificateGeneratorStatusOutputWithContext(ctx context.Context) CertificateGeneratorStatusOutput {
+	return o
+}
+
+// Timestamp of the last status update.
+func (o CertificateGeneratorStatusOutput) LastUpdated() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CertificateGeneratorStatus) *string { return v.LastUpdated }).(pulumi.StringPtrOutput)
+}
+
+// Reason the generator is not ready.
+func (o CertificateGeneratorStatusOutput) Message() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CertificateGeneratorStatus) *string { return v.Message }).(pulumi.StringPtrOutput)
+}
+
+// True once the generator is registered with the CA and can issue certificates.
+func (o CertificateGeneratorStatusOutput) Ready() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v CertificateGeneratorStatus) *bool { return v.Ready }).(pulumi.BoolPtrOutput)
+}
+
+type CertificateGeneratorStatusArrayOutput struct{ *pulumi.OutputState }
+
+func (CertificateGeneratorStatusArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]CertificateGeneratorStatus)(nil)).Elem()
+}
+
+func (o CertificateGeneratorStatusArrayOutput) ToCertificateGeneratorStatusArrayOutput() CertificateGeneratorStatusArrayOutput {
+	return o
+}
+
+func (o CertificateGeneratorStatusArrayOutput) ToCertificateGeneratorStatusArrayOutputWithContext(ctx context.Context) CertificateGeneratorStatusArrayOutput {
+	return o
+}
+
+func (o CertificateGeneratorStatusArrayOutput) Index(i pulumi.IntInput) CertificateGeneratorStatusOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) CertificateGeneratorStatus {
+		return vs[0].([]CertificateGeneratorStatus)[vs[1].(int)]
+	}).(CertificateGeneratorStatusOutput)
+}
+
 type CloudAccountAws struct {
 	// Amazon Resource Name (ARN) Role.
 	RoleArn *string `pulumi:"roleArn"`
@@ -16002,17 +17607,29 @@ func (o Mk8sAddOnsLogsPtrOutput) Kubelet() pulumi.BoolPtrOutput {
 type Mk8sAddOnsMetrics struct {
 	// Enable scraping apiserver stats.
 	ApiServer *bool `pulumi:"apiServer"`
+	// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+	ApiServerDrop *string `pulumi:"apiServerDrop"`
 	// Enable CNI-level container stats.
 	Cadvisor *bool `pulumi:"cadvisor"`
+	// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+	CadvisorDrop *string `pulumi:"cadvisorDrop"`
 	// Enable scraping of core-dns service.
 	CoreDns *bool `pulumi:"coreDns"`
+	// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+	CoreDnsDrop *string `pulumi:"coreDnsDrop"`
 	// Enable kube-state metrics.
 	KubeState *bool `pulumi:"kubeState"`
+	// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+	KubeStateDrop *string `pulumi:"kubeStateDrop"`
 	// Enable scraping kubelet stats.
 	Kubelet *bool `pulumi:"kubelet"`
+	// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+	KubeletDrop *string `pulumi:"kubeletDrop"`
 	// Enable collecting node-level stats (disk, network, filesystem, etc).
-	NodeExporter    *bool                             `pulumi:"nodeExporter"`
-	ScrapeAnnotated *Mk8sAddOnsMetricsScrapeAnnotated `pulumi:"scrapeAnnotated"`
+	NodeExporter *bool `pulumi:"nodeExporter"`
+	// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+	NodeExporterDrop *string                           `pulumi:"nodeExporterDrop"`
+	ScrapeAnnotated  *Mk8sAddOnsMetricsScrapeAnnotated `pulumi:"scrapeAnnotated"`
 }
 
 // Mk8sAddOnsMetricsInput is an input type that accepts Mk8sAddOnsMetricsArgs and Mk8sAddOnsMetricsOutput values.
@@ -16029,17 +17646,29 @@ type Mk8sAddOnsMetricsInput interface {
 type Mk8sAddOnsMetricsArgs struct {
 	// Enable scraping apiserver stats.
 	ApiServer pulumi.BoolPtrInput `pulumi:"apiServer"`
+	// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+	ApiServerDrop pulumi.StringPtrInput `pulumi:"apiServerDrop"`
 	// Enable CNI-level container stats.
 	Cadvisor pulumi.BoolPtrInput `pulumi:"cadvisor"`
+	// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+	CadvisorDrop pulumi.StringPtrInput `pulumi:"cadvisorDrop"`
 	// Enable scraping of core-dns service.
 	CoreDns pulumi.BoolPtrInput `pulumi:"coreDns"`
+	// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+	CoreDnsDrop pulumi.StringPtrInput `pulumi:"coreDnsDrop"`
 	// Enable kube-state metrics.
 	KubeState pulumi.BoolPtrInput `pulumi:"kubeState"`
+	// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+	KubeStateDrop pulumi.StringPtrInput `pulumi:"kubeStateDrop"`
 	// Enable scraping kubelet stats.
 	Kubelet pulumi.BoolPtrInput `pulumi:"kubelet"`
+	// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+	KubeletDrop pulumi.StringPtrInput `pulumi:"kubeletDrop"`
 	// Enable collecting node-level stats (disk, network, filesystem, etc).
-	NodeExporter    pulumi.BoolPtrInput                      `pulumi:"nodeExporter"`
-	ScrapeAnnotated Mk8sAddOnsMetricsScrapeAnnotatedPtrInput `pulumi:"scrapeAnnotated"`
+	NodeExporter pulumi.BoolPtrInput `pulumi:"nodeExporter"`
+	// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+	NodeExporterDrop pulumi.StringPtrInput                    `pulumi:"nodeExporterDrop"`
+	ScrapeAnnotated  Mk8sAddOnsMetricsScrapeAnnotatedPtrInput `pulumi:"scrapeAnnotated"`
 }
 
 func (Mk8sAddOnsMetricsArgs) ElementType() reflect.Type {
@@ -16124,9 +17753,19 @@ func (o Mk8sAddOnsMetricsOutput) ApiServer() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsMetrics) *bool { return v.ApiServer }).(pulumi.BoolPtrOutput)
 }
 
+// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+func (o Mk8sAddOnsMetricsOutput) ApiServerDrop() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsMetrics) *string { return v.ApiServerDrop }).(pulumi.StringPtrOutput)
+}
+
 // Enable CNI-level container stats.
 func (o Mk8sAddOnsMetricsOutput) Cadvisor() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsMetrics) *bool { return v.Cadvisor }).(pulumi.BoolPtrOutput)
+}
+
+// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+func (o Mk8sAddOnsMetricsOutput) CadvisorDrop() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsMetrics) *string { return v.CadvisorDrop }).(pulumi.StringPtrOutput)
 }
 
 // Enable scraping of core-dns service.
@@ -16134,9 +17773,19 @@ func (o Mk8sAddOnsMetricsOutput) CoreDns() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsMetrics) *bool { return v.CoreDns }).(pulumi.BoolPtrOutput)
 }
 
+// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+func (o Mk8sAddOnsMetricsOutput) CoreDnsDrop() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsMetrics) *string { return v.CoreDnsDrop }).(pulumi.StringPtrOutput)
+}
+
 // Enable kube-state metrics.
 func (o Mk8sAddOnsMetricsOutput) KubeState() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsMetrics) *bool { return v.KubeState }).(pulumi.BoolPtrOutput)
+}
+
+// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+func (o Mk8sAddOnsMetricsOutput) KubeStateDrop() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsMetrics) *string { return v.KubeStateDrop }).(pulumi.StringPtrOutput)
 }
 
 // Enable scraping kubelet stats.
@@ -16144,9 +17793,19 @@ func (o Mk8sAddOnsMetricsOutput) Kubelet() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsMetrics) *bool { return v.Kubelet }).(pulumi.BoolPtrOutput)
 }
 
+// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+func (o Mk8sAddOnsMetricsOutput) KubeletDrop() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsMetrics) *string { return v.KubeletDrop }).(pulumi.StringPtrOutput)
+}
+
 // Enable collecting node-level stats (disk, network, filesystem, etc).
 func (o Mk8sAddOnsMetricsOutput) NodeExporter() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v Mk8sAddOnsMetrics) *bool { return v.NodeExporter }).(pulumi.BoolPtrOutput)
+}
+
+// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+func (o Mk8sAddOnsMetricsOutput) NodeExporterDrop() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Mk8sAddOnsMetrics) *string { return v.NodeExporterDrop }).(pulumi.StringPtrOutput)
 }
 
 func (o Mk8sAddOnsMetricsOutput) ScrapeAnnotated() Mk8sAddOnsMetricsScrapeAnnotatedPtrOutput {
@@ -16187,6 +17846,16 @@ func (o Mk8sAddOnsMetricsPtrOutput) ApiServer() pulumi.BoolPtrOutput {
 	}).(pulumi.BoolPtrOutput)
 }
 
+// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+func (o Mk8sAddOnsMetricsPtrOutput) ApiServerDrop() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsMetrics) *string {
+		if v == nil {
+			return nil
+		}
+		return v.ApiServerDrop
+	}).(pulumi.StringPtrOutput)
+}
+
 // Enable CNI-level container stats.
 func (o Mk8sAddOnsMetricsPtrOutput) Cadvisor() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsMetrics) *bool {
@@ -16195,6 +17864,16 @@ func (o Mk8sAddOnsMetricsPtrOutput) Cadvisor() pulumi.BoolPtrOutput {
 		}
 		return v.Cadvisor
 	}).(pulumi.BoolPtrOutput)
+}
+
+// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+func (o Mk8sAddOnsMetricsPtrOutput) CadvisorDrop() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsMetrics) *string {
+		if v == nil {
+			return nil
+		}
+		return v.CadvisorDrop
+	}).(pulumi.StringPtrOutput)
 }
 
 // Enable scraping of core-dns service.
@@ -16207,6 +17886,16 @@ func (o Mk8sAddOnsMetricsPtrOutput) CoreDns() pulumi.BoolPtrOutput {
 	}).(pulumi.BoolPtrOutput)
 }
 
+// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+func (o Mk8sAddOnsMetricsPtrOutput) CoreDnsDrop() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsMetrics) *string {
+		if v == nil {
+			return nil
+		}
+		return v.CoreDnsDrop
+	}).(pulumi.StringPtrOutput)
+}
+
 // Enable kube-state metrics.
 func (o Mk8sAddOnsMetricsPtrOutput) KubeState() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsMetrics) *bool {
@@ -16215,6 +17904,16 @@ func (o Mk8sAddOnsMetricsPtrOutput) KubeState() pulumi.BoolPtrOutput {
 		}
 		return v.KubeState
 	}).(pulumi.BoolPtrOutput)
+}
+
+// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+func (o Mk8sAddOnsMetricsPtrOutput) KubeStateDrop() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsMetrics) *string {
+		if v == nil {
+			return nil
+		}
+		return v.KubeStateDrop
+	}).(pulumi.StringPtrOutput)
 }
 
 // Enable scraping kubelet stats.
@@ -16227,6 +17926,16 @@ func (o Mk8sAddOnsMetricsPtrOutput) Kubelet() pulumi.BoolPtrOutput {
 	}).(pulumi.BoolPtrOutput)
 }
 
+// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+func (o Mk8sAddOnsMetricsPtrOutput) KubeletDrop() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsMetrics) *string {
+		if v == nil {
+			return nil
+		}
+		return v.KubeletDrop
+	}).(pulumi.StringPtrOutput)
+}
+
 // Enable collecting node-level stats (disk, network, filesystem, etc).
 func (o Mk8sAddOnsMetricsPtrOutput) NodeExporter() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Mk8sAddOnsMetrics) *bool {
@@ -16235,6 +17944,16 @@ func (o Mk8sAddOnsMetricsPtrOutput) NodeExporter() pulumi.BoolPtrOutput {
 		}
 		return v.NodeExporter
 	}).(pulumi.BoolPtrOutput)
+}
+
+// Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+func (o Mk8sAddOnsMetricsPtrOutput) NodeExporterDrop() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Mk8sAddOnsMetrics) *string {
+		if v == nil {
+			return nil
+		}
+		return v.NodeExporterDrop
+	}).(pulumi.StringPtrOutput)
 }
 
 func (o Mk8sAddOnsMetricsPtrOutput) ScrapeAnnotated() Mk8sAddOnsMetricsScrapeAnnotatedPtrOutput {
@@ -17800,12 +19519,14 @@ type Mk8sAwsProviderNodePool struct {
 	ExtraSecurityGroupIds []string `pulumi:"extraSecurityGroupIds"`
 	InstanceTypes         []string `pulumi:"instanceTypes"`
 	// Labels to attach to nodes of a node pool.
-	Labels                              map[string]string `pulumi:"labels"`
-	MaxSize                             *int              `pulumi:"maxSize"`
-	MinSize                             *int              `pulumi:"minSize"`
-	Name                                string            `pulumi:"name"`
-	OnDemandBaseCapacity                *int              `pulumi:"onDemandBaseCapacity"`
-	OnDemandPercentageAboveBaseCapacity *int              `pulumi:"onDemandPercentageAboveBaseCapacity"`
+	Labels map[string]string `pulumi:"labels"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods                             *int   `pulumi:"maxPods"`
+	MaxSize                             *int   `pulumi:"maxSize"`
+	MinSize                             *int   `pulumi:"minSize"`
+	Name                                string `pulumi:"name"`
+	OnDemandBaseCapacity                *int   `pulumi:"onDemandBaseCapacity"`
+	OnDemandPercentageAboveBaseCapacity *int   `pulumi:"onDemandPercentageAboveBaseCapacity"`
 	// Default image for all nodes.
 	OverrideImage          *Mk8sAwsProviderNodePoolOverrideImage `pulumi:"overrideImage"`
 	SpotAllocationStrategy *string                               `pulumi:"spotAllocationStrategy"`
@@ -17834,12 +19555,14 @@ type Mk8sAwsProviderNodePoolArgs struct {
 	ExtraSecurityGroupIds pulumi.StringArrayInput `pulumi:"extraSecurityGroupIds"`
 	InstanceTypes         pulumi.StringArrayInput `pulumi:"instanceTypes"`
 	// Labels to attach to nodes of a node pool.
-	Labels                              pulumi.StringMapInput `pulumi:"labels"`
-	MaxSize                             pulumi.IntPtrInput    `pulumi:"maxSize"`
-	MinSize                             pulumi.IntPtrInput    `pulumi:"minSize"`
-	Name                                pulumi.StringInput    `pulumi:"name"`
-	OnDemandBaseCapacity                pulumi.IntPtrInput    `pulumi:"onDemandBaseCapacity"`
-	OnDemandPercentageAboveBaseCapacity pulumi.IntPtrInput    `pulumi:"onDemandPercentageAboveBaseCapacity"`
+	Labels pulumi.StringMapInput `pulumi:"labels"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods                             pulumi.IntPtrInput `pulumi:"maxPods"`
+	MaxSize                             pulumi.IntPtrInput `pulumi:"maxSize"`
+	MinSize                             pulumi.IntPtrInput `pulumi:"minSize"`
+	Name                                pulumi.StringInput `pulumi:"name"`
+	OnDemandBaseCapacity                pulumi.IntPtrInput `pulumi:"onDemandBaseCapacity"`
+	OnDemandPercentageAboveBaseCapacity pulumi.IntPtrInput `pulumi:"onDemandPercentageAboveBaseCapacity"`
 	// Default image for all nodes.
 	OverrideImage          Mk8sAwsProviderNodePoolOverrideImagePtrInput `pulumi:"overrideImage"`
 	SpotAllocationStrategy pulumi.StringPtrInput                        `pulumi:"spotAllocationStrategy"`
@@ -17921,6 +19644,11 @@ func (o Mk8sAwsProviderNodePoolOutput) InstanceTypes() pulumi.StringArrayOutput 
 // Labels to attach to nodes of a node pool.
 func (o Mk8sAwsProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sAwsProviderNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+func (o Mk8sAwsProviderNodePoolOutput) MaxPods() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sAwsProviderNodePool) *int { return v.MaxPods }).(pulumi.IntPtrOutput)
 }
 
 func (o Mk8sAwsProviderNodePoolOutput) MaxSize() pulumi.IntPtrOutput {
@@ -19380,7 +21108,9 @@ func (o Mk8sAzureProviderNetworkingPtrOutput) ServiceNetwork() pulumi.StringPtrO
 type Mk8sAzureProviderNodePool struct {
 	BootDiskSize int `pulumi:"bootDiskSize"`
 	// Labels to attach to nodes of a node pool.
-	Labels        map[string]string                       `pulumi:"labels"`
+	Labels map[string]string `pulumi:"labels"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods       *int                                    `pulumi:"maxPods"`
 	MaxSize       *int                                    `pulumi:"maxSize"`
 	MinSize       *int                                    `pulumi:"minSize"`
 	Name          string                                  `pulumi:"name"`
@@ -19406,7 +21136,9 @@ type Mk8sAzureProviderNodePoolInput interface {
 type Mk8sAzureProviderNodePoolArgs struct {
 	BootDiskSize pulumi.IntInput `pulumi:"bootDiskSize"`
 	// Labels to attach to nodes of a node pool.
-	Labels        pulumi.StringMapInput                          `pulumi:"labels"`
+	Labels pulumi.StringMapInput `pulumi:"labels"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods       pulumi.IntPtrInput                             `pulumi:"maxPods"`
 	MaxSize       pulumi.IntPtrInput                             `pulumi:"maxSize"`
 	MinSize       pulumi.IntPtrInput                             `pulumi:"minSize"`
 	Name          pulumi.StringInput                             `pulumi:"name"`
@@ -19476,6 +21208,11 @@ func (o Mk8sAzureProviderNodePoolOutput) BootDiskSize() pulumi.IntOutput {
 // Labels to attach to nodes of a node pool.
 func (o Mk8sAzureProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sAzureProviderNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+func (o Mk8sAzureProviderNodePoolOutput) MaxPods() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sAzureProviderNodePool) *int { return v.MaxPods }).(pulumi.IntPtrOutput)
 }
 
 func (o Mk8sAzureProviderNodePoolOutput) MaxSize() pulumi.IntPtrOutput {
@@ -20655,11 +22392,13 @@ func (o Mk8sDigitalOceanProviderNetworkingPtrOutput) ServiceNetwork() pulumi.Str
 type Mk8sDigitalOceanProviderNodePool struct {
 	DropletSize string `pulumi:"dropletSize"`
 	// Labels to attach to nodes of a node pool.
-	Labels        map[string]string `pulumi:"labels"`
-	MaxSize       *int              `pulumi:"maxSize"`
-	MinSize       *int              `pulumi:"minSize"`
-	Name          string            `pulumi:"name"`
-	OverrideImage *string           `pulumi:"overrideImage"`
+	Labels map[string]string `pulumi:"labels"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods       *int    `pulumi:"maxPods"`
+	MaxSize       *int    `pulumi:"maxSize"`
+	MinSize       *int    `pulumi:"minSize"`
+	Name          string  `pulumi:"name"`
+	OverrideImage *string `pulumi:"overrideImage"`
 	// Taint for the nodes of a pool.
 	Taints []Mk8sDigitalOceanProviderNodePoolTaint `pulumi:"taints"`
 }
@@ -20678,7 +22417,9 @@ type Mk8sDigitalOceanProviderNodePoolInput interface {
 type Mk8sDigitalOceanProviderNodePoolArgs struct {
 	DropletSize pulumi.StringInput `pulumi:"dropletSize"`
 	// Labels to attach to nodes of a node pool.
-	Labels        pulumi.StringMapInput `pulumi:"labels"`
+	Labels pulumi.StringMapInput `pulumi:"labels"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods       pulumi.IntPtrInput    `pulumi:"maxPods"`
 	MaxSize       pulumi.IntPtrInput    `pulumi:"maxSize"`
 	MinSize       pulumi.IntPtrInput    `pulumi:"minSize"`
 	Name          pulumi.StringInput    `pulumi:"name"`
@@ -20745,6 +22486,11 @@ func (o Mk8sDigitalOceanProviderNodePoolOutput) DropletSize() pulumi.StringOutpu
 // Labels to attach to nodes of a node pool.
 func (o Mk8sDigitalOceanProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sDigitalOceanProviderNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+func (o Mk8sDigitalOceanProviderNodePoolOutput) MaxPods() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sDigitalOceanProviderNodePool) *int { return v.MaxPods }).(pulumi.IntPtrOutput)
 }
 
 func (o Mk8sDigitalOceanProviderNodePoolOutput) MaxSize() pulumi.IntPtrOutput {
@@ -21061,6 +22807,8 @@ type Mk8sEphemeralProviderNodePool struct {
 	Flavor *string `pulumi:"flavor"`
 	// Labels to attach to nodes of a node pool.
 	Labels map[string]string `pulumi:"labels"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods *int `pulumi:"maxPods"`
 	// Allocated memory.
 	Memory string `pulumi:"memory"`
 	Name   string `pulumi:"name"`
@@ -21090,6 +22838,8 @@ type Mk8sEphemeralProviderNodePoolArgs struct {
 	Flavor pulumi.StringPtrInput `pulumi:"flavor"`
 	// Labels to attach to nodes of a node pool.
 	Labels pulumi.StringMapInput `pulumi:"labels"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods pulumi.IntPtrInput `pulumi:"maxPods"`
 	// Allocated memory.
 	Memory pulumi.StringInput `pulumi:"memory"`
 	Name   pulumi.StringInput `pulumi:"name"`
@@ -21171,6 +22921,11 @@ func (o Mk8sEphemeralProviderNodePoolOutput) Flavor() pulumi.StringPtrOutput {
 // Labels to attach to nodes of a node pool.
 func (o Mk8sEphemeralProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sEphemeralProviderNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+func (o Mk8sEphemeralProviderNodePoolOutput) MaxPods() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sEphemeralProviderNodePool) *int { return v.MaxPods }).(pulumi.IntPtrOutput)
 }
 
 // Allocated memory.
@@ -22415,7 +24170,9 @@ type Mk8sGcpProviderNodePool struct {
 	Labels               map[string]string `pulumi:"labels"`
 	LocalPersistentDisks *int              `pulumi:"localPersistentDisks"`
 	// GCE machine type for nodes in this pool.
-	MachineType   string                                `pulumi:"machineType"`
+	MachineType string `pulumi:"machineType"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods       *int                                  `pulumi:"maxPods"`
 	MaxSize       *int                                  `pulumi:"maxSize"`
 	MinSize       *int                                  `pulumi:"minSize"`
 	Name          string                                `pulumi:"name"`
@@ -22448,7 +24205,9 @@ type Mk8sGcpProviderNodePoolArgs struct {
 	Labels               pulumi.StringMapInput `pulumi:"labels"`
 	LocalPersistentDisks pulumi.IntPtrInput    `pulumi:"localPersistentDisks"`
 	// GCE machine type for nodes in this pool.
-	MachineType   pulumi.StringInput                           `pulumi:"machineType"`
+	MachineType pulumi.StringInput `pulumi:"machineType"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods       pulumi.IntPtrInput                           `pulumi:"maxPods"`
 	MaxSize       pulumi.IntPtrInput                           `pulumi:"maxSize"`
 	MinSize       pulumi.IntPtrInput                           `pulumi:"minSize"`
 	Name          pulumi.StringInput                           `pulumi:"name"`
@@ -22534,6 +24293,11 @@ func (o Mk8sGcpProviderNodePoolOutput) LocalPersistentDisks() pulumi.IntPtrOutpu
 // GCE machine type for nodes in this pool.
 func (o Mk8sGcpProviderNodePoolOutput) MachineType() pulumi.StringOutput {
 	return o.ApplyT(func(v Mk8sGcpProviderNodePool) string { return v.MachineType }).(pulumi.StringOutput)
+}
+
+// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+func (o Mk8sGcpProviderNodePoolOutput) MaxPods() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sGcpProviderNodePool) *int { return v.MaxPods }).(pulumi.IntPtrOutput)
 }
 
 func (o Mk8sGcpProviderNodePoolOutput) MaxSize() pulumi.IntPtrOutput {
@@ -23363,7 +25127,9 @@ func (o Mk8sGenericProviderNetworkingPtrOutput) ServiceNetwork() pulumi.StringPt
 type Mk8sGenericProviderNodePool struct {
 	// Labels to attach to nodes of a node pool.
 	Labels map[string]string `pulumi:"labels"`
-	Name   string            `pulumi:"name"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods *int   `pulumi:"maxPods"`
+	Name    string `pulumi:"name"`
 	// Taint for the nodes of a pool.
 	Taints []Mk8sGenericProviderNodePoolTaint `pulumi:"taints"`
 }
@@ -23382,7 +25148,9 @@ type Mk8sGenericProviderNodePoolInput interface {
 type Mk8sGenericProviderNodePoolArgs struct {
 	// Labels to attach to nodes of a node pool.
 	Labels pulumi.StringMapInput `pulumi:"labels"`
-	Name   pulumi.StringInput    `pulumi:"name"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods pulumi.IntPtrInput `pulumi:"maxPods"`
+	Name    pulumi.StringInput `pulumi:"name"`
 	// Taint for the nodes of a pool.
 	Taints Mk8sGenericProviderNodePoolTaintArrayInput `pulumi:"taints"`
 }
@@ -23441,6 +25209,11 @@ func (o Mk8sGenericProviderNodePoolOutput) ToMk8sGenericProviderNodePoolOutputWi
 // Labels to attach to nodes of a node pool.
 func (o Mk8sGenericProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sGenericProviderNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+func (o Mk8sGenericProviderNodePoolOutput) MaxPods() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sGenericProviderNodePool) *int { return v.MaxPods }).(pulumi.IntPtrOutput)
 }
 
 func (o Mk8sGenericProviderNodePoolOutput) Name() pulumi.StringOutput {
@@ -24114,7 +25887,9 @@ func (o Mk8sHetznerProviderAutoscalerPtrOutput) UtilizationThreshold() pulumi.Fl
 type Mk8sHetznerProviderDedicatedServerNodePool struct {
 	// Labels to attach to nodes of a node pool.
 	Labels map[string]string `pulumi:"labels"`
-	Name   string            `pulumi:"name"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods *int   `pulumi:"maxPods"`
+	Name    string `pulumi:"name"`
 	// Taint for the nodes of a pool.
 	Taints []Mk8sHetznerProviderDedicatedServerNodePoolTaint `pulumi:"taints"`
 }
@@ -24133,7 +25908,9 @@ type Mk8sHetznerProviderDedicatedServerNodePoolInput interface {
 type Mk8sHetznerProviderDedicatedServerNodePoolArgs struct {
 	// Labels to attach to nodes of a node pool.
 	Labels pulumi.StringMapInput `pulumi:"labels"`
-	Name   pulumi.StringInput    `pulumi:"name"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods pulumi.IntPtrInput `pulumi:"maxPods"`
+	Name    pulumi.StringInput `pulumi:"name"`
 	// Taint for the nodes of a pool.
 	Taints Mk8sHetznerProviderDedicatedServerNodePoolTaintArrayInput `pulumi:"taints"`
 }
@@ -24192,6 +25969,11 @@ func (o Mk8sHetznerProviderDedicatedServerNodePoolOutput) ToMk8sHetznerProviderD
 // Labels to attach to nodes of a node pool.
 func (o Mk8sHetznerProviderDedicatedServerNodePoolOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sHetznerProviderDedicatedServerNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+func (o Mk8sHetznerProviderDedicatedServerNodePoolOutput) MaxPods() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sHetznerProviderDedicatedServerNodePool) *int { return v.MaxPods }).(pulumi.IntPtrOutput)
 }
 
 func (o Mk8sHetznerProviderDedicatedServerNodePoolOutput) Name() pulumi.StringOutput {
@@ -24508,12 +26290,14 @@ func (o Mk8sHetznerProviderNetworkingPtrOutput) ServiceNetwork() pulumi.StringPt
 
 type Mk8sHetznerProviderNodePool struct {
 	// Labels to attach to nodes of a node pool.
-	Labels        map[string]string `pulumi:"labels"`
-	MaxSize       *int              `pulumi:"maxSize"`
-	MinSize       *int              `pulumi:"minSize"`
-	Name          string            `pulumi:"name"`
-	OverrideImage *string           `pulumi:"overrideImage"`
-	ServerType    string            `pulumi:"serverType"`
+	Labels map[string]string `pulumi:"labels"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods       *int    `pulumi:"maxPods"`
+	MaxSize       *int    `pulumi:"maxSize"`
+	MinSize       *int    `pulumi:"minSize"`
+	Name          string  `pulumi:"name"`
+	OverrideImage *string `pulumi:"overrideImage"`
+	ServerType    string  `pulumi:"serverType"`
 	// Taint for the nodes of a pool.
 	Taints []Mk8sHetznerProviderNodePoolTaint `pulumi:"taints"`
 }
@@ -24531,7 +26315,9 @@ type Mk8sHetznerProviderNodePoolInput interface {
 
 type Mk8sHetznerProviderNodePoolArgs struct {
 	// Labels to attach to nodes of a node pool.
-	Labels        pulumi.StringMapInput `pulumi:"labels"`
+	Labels pulumi.StringMapInput `pulumi:"labels"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods       pulumi.IntPtrInput    `pulumi:"maxPods"`
 	MaxSize       pulumi.IntPtrInput    `pulumi:"maxSize"`
 	MinSize       pulumi.IntPtrInput    `pulumi:"minSize"`
 	Name          pulumi.StringInput    `pulumi:"name"`
@@ -24595,6 +26381,11 @@ func (o Mk8sHetznerProviderNodePoolOutput) ToMk8sHetznerProviderNodePoolOutputWi
 // Labels to attach to nodes of a node pool.
 func (o Mk8sHetznerProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sHetznerProviderNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+func (o Mk8sHetznerProviderNodePoolOutput) MaxPods() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sHetznerProviderNodePool) *int { return v.MaxPods }).(pulumi.IntPtrOutput)
 }
 
 func (o Mk8sHetznerProviderNodePoolOutput) MaxSize() pulumi.IntPtrOutput {
@@ -25187,10 +26978,12 @@ func (o Mk8sLambdalabsProviderAutoscalerPtrOutput) UtilizationThreshold() pulumi
 type Mk8sLambdalabsProviderNodePool struct {
 	InstanceType string `pulumi:"instanceType"`
 	// Labels to attach to nodes of a node pool.
-	Labels  map[string]string `pulumi:"labels"`
-	MaxSize *int              `pulumi:"maxSize"`
-	MinSize *int              `pulumi:"minSize"`
-	Name    string            `pulumi:"name"`
+	Labels map[string]string `pulumi:"labels"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods *int   `pulumi:"maxPods"`
+	MaxSize *int   `pulumi:"maxSize"`
+	MinSize *int   `pulumi:"minSize"`
+	Name    string `pulumi:"name"`
 	// Taint for the nodes of a pool.
 	Taints []Mk8sLambdalabsProviderNodePoolTaint `pulumi:"taints"`
 }
@@ -25209,10 +27002,12 @@ type Mk8sLambdalabsProviderNodePoolInput interface {
 type Mk8sLambdalabsProviderNodePoolArgs struct {
 	InstanceType pulumi.StringInput `pulumi:"instanceType"`
 	// Labels to attach to nodes of a node pool.
-	Labels  pulumi.StringMapInput `pulumi:"labels"`
-	MaxSize pulumi.IntPtrInput    `pulumi:"maxSize"`
-	MinSize pulumi.IntPtrInput    `pulumi:"minSize"`
-	Name    pulumi.StringInput    `pulumi:"name"`
+	Labels pulumi.StringMapInput `pulumi:"labels"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods pulumi.IntPtrInput `pulumi:"maxPods"`
+	MaxSize pulumi.IntPtrInput `pulumi:"maxSize"`
+	MinSize pulumi.IntPtrInput `pulumi:"minSize"`
+	Name    pulumi.StringInput `pulumi:"name"`
 	// Taint for the nodes of a pool.
 	Taints Mk8sLambdalabsProviderNodePoolTaintArrayInput `pulumi:"taints"`
 }
@@ -25275,6 +27070,11 @@ func (o Mk8sLambdalabsProviderNodePoolOutput) InstanceType() pulumi.StringOutput
 // Labels to attach to nodes of a node pool.
 func (o Mk8sLambdalabsProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sLambdalabsProviderNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+func (o Mk8sLambdalabsProviderNodePoolOutput) MaxPods() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sLambdalabsProviderNodePool) *int { return v.MaxPods }).(pulumi.IntPtrOutput)
 }
 
 func (o Mk8sLambdalabsProviderNodePoolOutput) MaxSize() pulumi.IntPtrOutput {
@@ -26306,13 +28106,15 @@ func (o Mk8sLinodeProviderNetworkingPtrOutput) ServiceNetwork() pulumi.StringPtr
 
 type Mk8sLinodeProviderNodePool struct {
 	// Labels to attach to nodes of a node pool.
-	Labels        map[string]string `pulumi:"labels"`
-	MaxSize       *int              `pulumi:"maxSize"`
-	MinSize       *int              `pulumi:"minSize"`
-	Name          string            `pulumi:"name"`
-	OverrideImage *string           `pulumi:"overrideImage"`
-	ServerType    string            `pulumi:"serverType"`
-	SubnetId      string            `pulumi:"subnetId"`
+	Labels map[string]string `pulumi:"labels"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods       *int    `pulumi:"maxPods"`
+	MaxSize       *int    `pulumi:"maxSize"`
+	MinSize       *int    `pulumi:"minSize"`
+	Name          string  `pulumi:"name"`
+	OverrideImage *string `pulumi:"overrideImage"`
+	ServerType    string  `pulumi:"serverType"`
+	SubnetId      string  `pulumi:"subnetId"`
 	// Taint for the nodes of a pool.
 	Taints []Mk8sLinodeProviderNodePoolTaint `pulumi:"taints"`
 }
@@ -26330,7 +28132,9 @@ type Mk8sLinodeProviderNodePoolInput interface {
 
 type Mk8sLinodeProviderNodePoolArgs struct {
 	// Labels to attach to nodes of a node pool.
-	Labels        pulumi.StringMapInput `pulumi:"labels"`
+	Labels pulumi.StringMapInput `pulumi:"labels"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods       pulumi.IntPtrInput    `pulumi:"maxPods"`
 	MaxSize       pulumi.IntPtrInput    `pulumi:"maxSize"`
 	MinSize       pulumi.IntPtrInput    `pulumi:"minSize"`
 	Name          pulumi.StringInput    `pulumi:"name"`
@@ -26395,6 +28199,11 @@ func (o Mk8sLinodeProviderNodePoolOutput) ToMk8sLinodeProviderNodePoolOutputWith
 // Labels to attach to nodes of a node pool.
 func (o Mk8sLinodeProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sLinodeProviderNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+func (o Mk8sLinodeProviderNodePoolOutput) MaxPods() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sLinodeProviderNodePool) *int { return v.MaxPods }).(pulumi.IntPtrOutput)
 }
 
 func (o Mk8sLinodeProviderNodePoolOutput) MaxSize() pulumi.IntPtrOutput {
@@ -26968,10 +28777,12 @@ func (o Mk8sOblivusProviderAutoscalerPtrOutput) UtilizationThreshold() pulumi.Fl
 type Mk8sOblivusProviderNodePool struct {
 	Flavor string `pulumi:"flavor"`
 	// Labels to attach to nodes of a node pool.
-	Labels  map[string]string `pulumi:"labels"`
-	MaxSize *int              `pulumi:"maxSize"`
-	MinSize *int              `pulumi:"minSize"`
-	Name    string            `pulumi:"name"`
+	Labels map[string]string `pulumi:"labels"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods *int   `pulumi:"maxPods"`
+	MaxSize *int   `pulumi:"maxSize"`
+	MinSize *int   `pulumi:"minSize"`
+	Name    string `pulumi:"name"`
 	// Taint for the nodes of a pool.
 	Taints []Mk8sOblivusProviderNodePoolTaint `pulumi:"taints"`
 }
@@ -26990,10 +28801,12 @@ type Mk8sOblivusProviderNodePoolInput interface {
 type Mk8sOblivusProviderNodePoolArgs struct {
 	Flavor pulumi.StringInput `pulumi:"flavor"`
 	// Labels to attach to nodes of a node pool.
-	Labels  pulumi.StringMapInput `pulumi:"labels"`
-	MaxSize pulumi.IntPtrInput    `pulumi:"maxSize"`
-	MinSize pulumi.IntPtrInput    `pulumi:"minSize"`
-	Name    pulumi.StringInput    `pulumi:"name"`
+	Labels pulumi.StringMapInput `pulumi:"labels"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods pulumi.IntPtrInput `pulumi:"maxPods"`
+	MaxSize pulumi.IntPtrInput `pulumi:"maxSize"`
+	MinSize pulumi.IntPtrInput `pulumi:"minSize"`
+	Name    pulumi.StringInput `pulumi:"name"`
 	// Taint for the nodes of a pool.
 	Taints Mk8sOblivusProviderNodePoolTaintArrayInput `pulumi:"taints"`
 }
@@ -27056,6 +28869,11 @@ func (o Mk8sOblivusProviderNodePoolOutput) Flavor() pulumi.StringOutput {
 // Labels to attach to nodes of a node pool.
 func (o Mk8sOblivusProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sOblivusProviderNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+func (o Mk8sOblivusProviderNodePoolOutput) MaxPods() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sOblivusProviderNodePool) *int { return v.MaxPods }).(pulumi.IntPtrOutput)
 }
 
 func (o Mk8sOblivusProviderNodePoolOutput) MaxSize() pulumi.IntPtrOutput {
@@ -27871,12 +29689,14 @@ func (o Mk8sPaperspaceProviderAutoscalerPtrOutput) UtilizationThreshold() pulumi
 type Mk8sPaperspaceProviderNodePool struct {
 	BootDiskSize *int `pulumi:"bootDiskSize"`
 	// Labels to attach to nodes of a node pool.
-	Labels       map[string]string `pulumi:"labels"`
-	MachineType  string            `pulumi:"machineType"`
-	MaxSize      *int              `pulumi:"maxSize"`
-	MinSize      *int              `pulumi:"minSize"`
-	Name         string            `pulumi:"name"`
-	PublicIpType string            `pulumi:"publicIpType"`
+	Labels      map[string]string `pulumi:"labels"`
+	MachineType string            `pulumi:"machineType"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods      *int   `pulumi:"maxPods"`
+	MaxSize      *int   `pulumi:"maxSize"`
+	MinSize      *int   `pulumi:"minSize"`
+	Name         string `pulumi:"name"`
+	PublicIpType string `pulumi:"publicIpType"`
 	// Taint for the nodes of a pool.
 	Taints []Mk8sPaperspaceProviderNodePoolTaint `pulumi:"taints"`
 }
@@ -27895,12 +29715,14 @@ type Mk8sPaperspaceProviderNodePoolInput interface {
 type Mk8sPaperspaceProviderNodePoolArgs struct {
 	BootDiskSize pulumi.IntPtrInput `pulumi:"bootDiskSize"`
 	// Labels to attach to nodes of a node pool.
-	Labels       pulumi.StringMapInput `pulumi:"labels"`
-	MachineType  pulumi.StringInput    `pulumi:"machineType"`
-	MaxSize      pulumi.IntPtrInput    `pulumi:"maxSize"`
-	MinSize      pulumi.IntPtrInput    `pulumi:"minSize"`
-	Name         pulumi.StringInput    `pulumi:"name"`
-	PublicIpType pulumi.StringInput    `pulumi:"publicIpType"`
+	Labels      pulumi.StringMapInput `pulumi:"labels"`
+	MachineType pulumi.StringInput    `pulumi:"machineType"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods      pulumi.IntPtrInput `pulumi:"maxPods"`
+	MaxSize      pulumi.IntPtrInput `pulumi:"maxSize"`
+	MinSize      pulumi.IntPtrInput `pulumi:"minSize"`
+	Name         pulumi.StringInput `pulumi:"name"`
+	PublicIpType pulumi.StringInput `pulumi:"publicIpType"`
 	// Taint for the nodes of a pool.
 	Taints Mk8sPaperspaceProviderNodePoolTaintArrayInput `pulumi:"taints"`
 }
@@ -27967,6 +29789,11 @@ func (o Mk8sPaperspaceProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
 
 func (o Mk8sPaperspaceProviderNodePoolOutput) MachineType() pulumi.StringOutput {
 	return o.ApplyT(func(v Mk8sPaperspaceProviderNodePool) string { return v.MachineType }).(pulumi.StringOutput)
+}
+
+// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+func (o Mk8sPaperspaceProviderNodePoolOutput) MaxPods() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sPaperspaceProviderNodePool) *int { return v.MaxPods }).(pulumi.IntPtrOutput)
 }
 
 func (o Mk8sPaperspaceProviderNodePoolOutput) MaxSize() pulumi.IntPtrOutput {
@@ -31140,12 +32967,14 @@ func (o Mk8sTritonProviderNetworkingPtrOutput) ServiceNetwork() pulumi.StringPtr
 
 type Mk8sTritonProviderNodePool struct {
 	// Labels to attach to nodes of a node pool.
-	Labels          map[string]string `pulumi:"labels"`
-	MaxSize         *int              `pulumi:"maxSize"`
-	MinSize         *int              `pulumi:"minSize"`
-	Name            string            `pulumi:"name"`
-	OverrideImageId *string           `pulumi:"overrideImageId"`
-	PackageId       string            `pulumi:"packageId"`
+	Labels map[string]string `pulumi:"labels"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods         *int    `pulumi:"maxPods"`
+	MaxSize         *int    `pulumi:"maxSize"`
+	MinSize         *int    `pulumi:"minSize"`
+	Name            string  `pulumi:"name"`
+	OverrideImageId *string `pulumi:"overrideImageId"`
+	PackageId       string  `pulumi:"packageId"`
 	// More private networks to join.
 	PrivateNetworkIds []string `pulumi:"privateNetworkIds"`
 	// If set, machine will also get a public IP.
@@ -31169,7 +32998,9 @@ type Mk8sTritonProviderNodePoolInput interface {
 
 type Mk8sTritonProviderNodePoolArgs struct {
 	// Labels to attach to nodes of a node pool.
-	Labels          pulumi.StringMapInput `pulumi:"labels"`
+	Labels pulumi.StringMapInput `pulumi:"labels"`
+	// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+	MaxPods         pulumi.IntPtrInput    `pulumi:"maxPods"`
 	MaxSize         pulumi.IntPtrInput    `pulumi:"maxSize"`
 	MinSize         pulumi.IntPtrInput    `pulumi:"minSize"`
 	Name            pulumi.StringInput    `pulumi:"name"`
@@ -31239,6 +33070,11 @@ func (o Mk8sTritonProviderNodePoolOutput) ToMk8sTritonProviderNodePoolOutputWith
 // Labels to attach to nodes of a node pool.
 func (o Mk8sTritonProviderNodePoolOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v Mk8sTritonProviderNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+func (o Mk8sTritonProviderNodePoolOutput) MaxPods() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v Mk8sTritonProviderNodePool) *int { return v.MaxPods }).(pulumi.IntPtrOutput)
 }
 
 func (o Mk8sTritonProviderNodePoolOutput) MaxSize() pulumi.IntPtrOutput {
@@ -38062,7 +39898,9 @@ type WorkloadContainer struct {
 	// Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
 	Cpu *string `pulumi:"cpu"`
 	// Name-Value list of environment variables.
-	Env       map[string]string           `pulumi:"env"`
+	Env map[string]string `pulumi:"env"`
+	// Inject all key/value pairs of the referenced dictionary secrets as environment variables. An explicit `env` variable overrides an `envFrom` key of the same name; later entries override earlier ones. Keys that are not valid environment variable names are skipped.
+	EnvFroms  []WorkloadContainerEnvFrom  `pulumi:"envFroms"`
 	GpuCustom *WorkloadContainerGpuCustom `pulumi:"gpuCustom"`
 	// GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
 	GpuNvidia *WorkloadContainerGpuNvidia `pulumi:"gpuNvidia"`
@@ -38117,7 +39955,9 @@ type WorkloadContainerArgs struct {
 	// Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
 	Cpu pulumi.StringPtrInput `pulumi:"cpu"`
 	// Name-Value list of environment variables.
-	Env       pulumi.StringMapInput              `pulumi:"env"`
+	Env pulumi.StringMapInput `pulumi:"env"`
+	// Inject all key/value pairs of the referenced dictionary secrets as environment variables. An explicit `env` variable overrides an `envFrom` key of the same name; later entries override earlier ones. Keys that are not valid environment variable names are skipped.
+	EnvFroms  WorkloadContainerEnvFromArrayInput `pulumi:"envFroms"`
 	GpuCustom WorkloadContainerGpuCustomPtrInput `pulumi:"gpuCustom"`
 	// GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
 	GpuNvidia WorkloadContainerGpuNvidiaPtrInput `pulumi:"gpuNvidia"`
@@ -38224,6 +40064,11 @@ func (o WorkloadContainerOutput) Env() pulumi.StringMapOutput {
 	return o.ApplyT(func(v WorkloadContainer) map[string]string { return v.Env }).(pulumi.StringMapOutput)
 }
 
+// Inject all key/value pairs of the referenced dictionary secrets as environment variables. An explicit `env` variable overrides an `envFrom` key of the same name; later entries override earlier ones. Keys that are not valid environment variable names are skipped.
+func (o WorkloadContainerOutput) EnvFroms() WorkloadContainerEnvFromArrayOutput {
+	return o.ApplyT(func(v WorkloadContainer) []WorkloadContainerEnvFrom { return v.EnvFroms }).(WorkloadContainerEnvFromArrayOutput)
+}
+
 func (o WorkloadContainerOutput) GpuCustom() WorkloadContainerGpuCustomPtrOutput {
 	return o.ApplyT(func(v WorkloadContainer) *WorkloadContainerGpuCustom { return v.GpuCustom }).(WorkloadContainerGpuCustomPtrOutput)
 }
@@ -38323,6 +40168,155 @@ func (o WorkloadContainerArrayOutput) Index(i pulumi.IntInput) WorkloadContainer
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadContainer {
 		return vs[0].([]WorkloadContainer)[vs[1].(int)]
 	}).(WorkloadContainerOutput)
+}
+
+type WorkloadContainerEnvFrom struct {
+	// References a dictionary secret whose key/value pairs are injected as environment variables.
+	SecretRef WorkloadContainerEnvFromSecretRef `pulumi:"secretRef"`
+}
+
+// WorkloadContainerEnvFromInput is an input type that accepts WorkloadContainerEnvFromArgs and WorkloadContainerEnvFromOutput values.
+// You can construct a concrete instance of `WorkloadContainerEnvFromInput` via:
+//
+//	WorkloadContainerEnvFromArgs{...}
+type WorkloadContainerEnvFromInput interface {
+	pulumi.Input
+
+	ToWorkloadContainerEnvFromOutput() WorkloadContainerEnvFromOutput
+	ToWorkloadContainerEnvFromOutputWithContext(context.Context) WorkloadContainerEnvFromOutput
+}
+
+type WorkloadContainerEnvFromArgs struct {
+	// References a dictionary secret whose key/value pairs are injected as environment variables.
+	SecretRef WorkloadContainerEnvFromSecretRefInput `pulumi:"secretRef"`
+}
+
+func (WorkloadContainerEnvFromArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadContainerEnvFrom)(nil)).Elem()
+}
+
+func (i WorkloadContainerEnvFromArgs) ToWorkloadContainerEnvFromOutput() WorkloadContainerEnvFromOutput {
+	return i.ToWorkloadContainerEnvFromOutputWithContext(context.Background())
+}
+
+func (i WorkloadContainerEnvFromArgs) ToWorkloadContainerEnvFromOutputWithContext(ctx context.Context) WorkloadContainerEnvFromOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadContainerEnvFromOutput)
+}
+
+// WorkloadContainerEnvFromArrayInput is an input type that accepts WorkloadContainerEnvFromArray and WorkloadContainerEnvFromArrayOutput values.
+// You can construct a concrete instance of `WorkloadContainerEnvFromArrayInput` via:
+//
+//	WorkloadContainerEnvFromArray{ WorkloadContainerEnvFromArgs{...} }
+type WorkloadContainerEnvFromArrayInput interface {
+	pulumi.Input
+
+	ToWorkloadContainerEnvFromArrayOutput() WorkloadContainerEnvFromArrayOutput
+	ToWorkloadContainerEnvFromArrayOutputWithContext(context.Context) WorkloadContainerEnvFromArrayOutput
+}
+
+type WorkloadContainerEnvFromArray []WorkloadContainerEnvFromInput
+
+func (WorkloadContainerEnvFromArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadContainerEnvFrom)(nil)).Elem()
+}
+
+func (i WorkloadContainerEnvFromArray) ToWorkloadContainerEnvFromArrayOutput() WorkloadContainerEnvFromArrayOutput {
+	return i.ToWorkloadContainerEnvFromArrayOutputWithContext(context.Background())
+}
+
+func (i WorkloadContainerEnvFromArray) ToWorkloadContainerEnvFromArrayOutputWithContext(ctx context.Context) WorkloadContainerEnvFromArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadContainerEnvFromArrayOutput)
+}
+
+type WorkloadContainerEnvFromOutput struct{ *pulumi.OutputState }
+
+func (WorkloadContainerEnvFromOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadContainerEnvFrom)(nil)).Elem()
+}
+
+func (o WorkloadContainerEnvFromOutput) ToWorkloadContainerEnvFromOutput() WorkloadContainerEnvFromOutput {
+	return o
+}
+
+func (o WorkloadContainerEnvFromOutput) ToWorkloadContainerEnvFromOutputWithContext(ctx context.Context) WorkloadContainerEnvFromOutput {
+	return o
+}
+
+// References a dictionary secret whose key/value pairs are injected as environment variables.
+func (o WorkloadContainerEnvFromOutput) SecretRef() WorkloadContainerEnvFromSecretRefOutput {
+	return o.ApplyT(func(v WorkloadContainerEnvFrom) WorkloadContainerEnvFromSecretRef { return v.SecretRef }).(WorkloadContainerEnvFromSecretRefOutput)
+}
+
+type WorkloadContainerEnvFromArrayOutput struct{ *pulumi.OutputState }
+
+func (WorkloadContainerEnvFromArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]WorkloadContainerEnvFrom)(nil)).Elem()
+}
+
+func (o WorkloadContainerEnvFromArrayOutput) ToWorkloadContainerEnvFromArrayOutput() WorkloadContainerEnvFromArrayOutput {
+	return o
+}
+
+func (o WorkloadContainerEnvFromArrayOutput) ToWorkloadContainerEnvFromArrayOutputWithContext(ctx context.Context) WorkloadContainerEnvFromArrayOutput {
+	return o
+}
+
+func (o WorkloadContainerEnvFromArrayOutput) Index(i pulumi.IntInput) WorkloadContainerEnvFromOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) WorkloadContainerEnvFrom {
+		return vs[0].([]WorkloadContainerEnvFrom)[vs[1].(int)]
+	}).(WorkloadContainerEnvFromOutput)
+}
+
+type WorkloadContainerEnvFromSecretRef struct {
+	// Name of a dictionary secret whose keys are injected as environment variables.
+	Name string `pulumi:"name"`
+}
+
+// WorkloadContainerEnvFromSecretRefInput is an input type that accepts WorkloadContainerEnvFromSecretRefArgs and WorkloadContainerEnvFromSecretRefOutput values.
+// You can construct a concrete instance of `WorkloadContainerEnvFromSecretRefInput` via:
+//
+//	WorkloadContainerEnvFromSecretRefArgs{...}
+type WorkloadContainerEnvFromSecretRefInput interface {
+	pulumi.Input
+
+	ToWorkloadContainerEnvFromSecretRefOutput() WorkloadContainerEnvFromSecretRefOutput
+	ToWorkloadContainerEnvFromSecretRefOutputWithContext(context.Context) WorkloadContainerEnvFromSecretRefOutput
+}
+
+type WorkloadContainerEnvFromSecretRefArgs struct {
+	// Name of a dictionary secret whose keys are injected as environment variables.
+	Name pulumi.StringInput `pulumi:"name"`
+}
+
+func (WorkloadContainerEnvFromSecretRefArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadContainerEnvFromSecretRef)(nil)).Elem()
+}
+
+func (i WorkloadContainerEnvFromSecretRefArgs) ToWorkloadContainerEnvFromSecretRefOutput() WorkloadContainerEnvFromSecretRefOutput {
+	return i.ToWorkloadContainerEnvFromSecretRefOutputWithContext(context.Background())
+}
+
+func (i WorkloadContainerEnvFromSecretRefArgs) ToWorkloadContainerEnvFromSecretRefOutputWithContext(ctx context.Context) WorkloadContainerEnvFromSecretRefOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadContainerEnvFromSecretRefOutput)
+}
+
+type WorkloadContainerEnvFromSecretRefOutput struct{ *pulumi.OutputState }
+
+func (WorkloadContainerEnvFromSecretRefOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadContainerEnvFromSecretRef)(nil)).Elem()
+}
+
+func (o WorkloadContainerEnvFromSecretRefOutput) ToWorkloadContainerEnvFromSecretRefOutput() WorkloadContainerEnvFromSecretRefOutput {
+	return o
+}
+
+func (o WorkloadContainerEnvFromSecretRefOutput) ToWorkloadContainerEnvFromSecretRefOutputWithContext(ctx context.Context) WorkloadContainerEnvFromSecretRefOutput {
+	return o
+}
+
+// Name of a dictionary secret whose keys are injected as environment variables.
+func (o WorkloadContainerEnvFromSecretRefOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v WorkloadContainerEnvFromSecretRef) string { return v.Name }).(pulumi.StringOutput)
 }
 
 type WorkloadContainerGpuCustom struct {
@@ -41419,6 +43413,162 @@ func (o WorkloadContainerVolumeArrayOutput) Index(i pulumi.IntInput) WorkloadCon
 	}).(WorkloadContainerVolumeOutput)
 }
 
+type WorkloadDisruptionBudget struct {
+	// Maximum number or percentage of replicas that can be unavailable during voluntary disruptions such as node drains. A whole number or whole percentage (e.g., `2`, `20%`), at least `1` or above `0%`, and at most `100%`.
+	MaxUnavailable *string `pulumi:"maxUnavailable"`
+	// Minimum number or percentage of replicas that must stay available during voluntary disruptions such as node drains. A whole number or whole percentage (e.g., `2`, `20%`), below `100%`.
+	MinAvailable *string `pulumi:"minAvailable"`
+}
+
+// WorkloadDisruptionBudgetInput is an input type that accepts WorkloadDisruptionBudgetArgs and WorkloadDisruptionBudgetOutput values.
+// You can construct a concrete instance of `WorkloadDisruptionBudgetInput` via:
+//
+//	WorkloadDisruptionBudgetArgs{...}
+type WorkloadDisruptionBudgetInput interface {
+	pulumi.Input
+
+	ToWorkloadDisruptionBudgetOutput() WorkloadDisruptionBudgetOutput
+	ToWorkloadDisruptionBudgetOutputWithContext(context.Context) WorkloadDisruptionBudgetOutput
+}
+
+type WorkloadDisruptionBudgetArgs struct {
+	// Maximum number or percentage of replicas that can be unavailable during voluntary disruptions such as node drains. A whole number or whole percentage (e.g., `2`, `20%`), at least `1` or above `0%`, and at most `100%`.
+	MaxUnavailable pulumi.StringPtrInput `pulumi:"maxUnavailable"`
+	// Minimum number or percentage of replicas that must stay available during voluntary disruptions such as node drains. A whole number or whole percentage (e.g., `2`, `20%`), below `100%`.
+	MinAvailable pulumi.StringPtrInput `pulumi:"minAvailable"`
+}
+
+func (WorkloadDisruptionBudgetArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadDisruptionBudget)(nil)).Elem()
+}
+
+func (i WorkloadDisruptionBudgetArgs) ToWorkloadDisruptionBudgetOutput() WorkloadDisruptionBudgetOutput {
+	return i.ToWorkloadDisruptionBudgetOutputWithContext(context.Background())
+}
+
+func (i WorkloadDisruptionBudgetArgs) ToWorkloadDisruptionBudgetOutputWithContext(ctx context.Context) WorkloadDisruptionBudgetOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadDisruptionBudgetOutput)
+}
+
+func (i WorkloadDisruptionBudgetArgs) ToWorkloadDisruptionBudgetPtrOutput() WorkloadDisruptionBudgetPtrOutput {
+	return i.ToWorkloadDisruptionBudgetPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadDisruptionBudgetArgs) ToWorkloadDisruptionBudgetPtrOutputWithContext(ctx context.Context) WorkloadDisruptionBudgetPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadDisruptionBudgetOutput).ToWorkloadDisruptionBudgetPtrOutputWithContext(ctx)
+}
+
+// WorkloadDisruptionBudgetPtrInput is an input type that accepts WorkloadDisruptionBudgetArgs, WorkloadDisruptionBudgetPtr and WorkloadDisruptionBudgetPtrOutput values.
+// You can construct a concrete instance of `WorkloadDisruptionBudgetPtrInput` via:
+//
+//	        WorkloadDisruptionBudgetArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadDisruptionBudgetPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadDisruptionBudgetPtrOutput() WorkloadDisruptionBudgetPtrOutput
+	ToWorkloadDisruptionBudgetPtrOutputWithContext(context.Context) WorkloadDisruptionBudgetPtrOutput
+}
+
+type workloadDisruptionBudgetPtrType WorkloadDisruptionBudgetArgs
+
+func WorkloadDisruptionBudgetPtr(v *WorkloadDisruptionBudgetArgs) WorkloadDisruptionBudgetPtrInput {
+	return (*workloadDisruptionBudgetPtrType)(v)
+}
+
+func (*workloadDisruptionBudgetPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadDisruptionBudget)(nil)).Elem()
+}
+
+func (i *workloadDisruptionBudgetPtrType) ToWorkloadDisruptionBudgetPtrOutput() WorkloadDisruptionBudgetPtrOutput {
+	return i.ToWorkloadDisruptionBudgetPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadDisruptionBudgetPtrType) ToWorkloadDisruptionBudgetPtrOutputWithContext(ctx context.Context) WorkloadDisruptionBudgetPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadDisruptionBudgetPtrOutput)
+}
+
+type WorkloadDisruptionBudgetOutput struct{ *pulumi.OutputState }
+
+func (WorkloadDisruptionBudgetOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadDisruptionBudget)(nil)).Elem()
+}
+
+func (o WorkloadDisruptionBudgetOutput) ToWorkloadDisruptionBudgetOutput() WorkloadDisruptionBudgetOutput {
+	return o
+}
+
+func (o WorkloadDisruptionBudgetOutput) ToWorkloadDisruptionBudgetOutputWithContext(ctx context.Context) WorkloadDisruptionBudgetOutput {
+	return o
+}
+
+func (o WorkloadDisruptionBudgetOutput) ToWorkloadDisruptionBudgetPtrOutput() WorkloadDisruptionBudgetPtrOutput {
+	return o.ToWorkloadDisruptionBudgetPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadDisruptionBudgetOutput) ToWorkloadDisruptionBudgetPtrOutputWithContext(ctx context.Context) WorkloadDisruptionBudgetPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadDisruptionBudget) *WorkloadDisruptionBudget {
+		return &v
+	}).(WorkloadDisruptionBudgetPtrOutput)
+}
+
+// Maximum number or percentage of replicas that can be unavailable during voluntary disruptions such as node drains. A whole number or whole percentage (e.g., `2`, `20%`), at least `1` or above `0%`, and at most `100%`.
+func (o WorkloadDisruptionBudgetOutput) MaxUnavailable() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadDisruptionBudget) *string { return v.MaxUnavailable }).(pulumi.StringPtrOutput)
+}
+
+// Minimum number or percentage of replicas that must stay available during voluntary disruptions such as node drains. A whole number or whole percentage (e.g., `2`, `20%`), below `100%`.
+func (o WorkloadDisruptionBudgetOutput) MinAvailable() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadDisruptionBudget) *string { return v.MinAvailable }).(pulumi.StringPtrOutput)
+}
+
+type WorkloadDisruptionBudgetPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadDisruptionBudgetPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadDisruptionBudget)(nil)).Elem()
+}
+
+func (o WorkloadDisruptionBudgetPtrOutput) ToWorkloadDisruptionBudgetPtrOutput() WorkloadDisruptionBudgetPtrOutput {
+	return o
+}
+
+func (o WorkloadDisruptionBudgetPtrOutput) ToWorkloadDisruptionBudgetPtrOutputWithContext(ctx context.Context) WorkloadDisruptionBudgetPtrOutput {
+	return o
+}
+
+func (o WorkloadDisruptionBudgetPtrOutput) Elem() WorkloadDisruptionBudgetOutput {
+	return o.ApplyT(func(v *WorkloadDisruptionBudget) WorkloadDisruptionBudget {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadDisruptionBudget
+		return ret
+	}).(WorkloadDisruptionBudgetOutput)
+}
+
+// Maximum number or percentage of replicas that can be unavailable during voluntary disruptions such as node drains. A whole number or whole percentage (e.g., `2`, `20%`), at least `1` or above `0%`, and at most `100%`.
+func (o WorkloadDisruptionBudgetPtrOutput) MaxUnavailable() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadDisruptionBudget) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MaxUnavailable
+	}).(pulumi.StringPtrOutput)
+}
+
+// Minimum number or percentage of replicas that must stay available during voluntary disruptions such as node drains. A whole number or whole percentage (e.g., `2`, `20%`), below `100%`.
+func (o WorkloadDisruptionBudgetPtrOutput) MinAvailable() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadDisruptionBudget) *string {
+		if v == nil {
+			return nil
+		}
+		return v.MinAvailable
+	}).(pulumi.StringPtrOutput)
+}
+
 type WorkloadFirewallSpec struct {
 	// The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
 	External *WorkloadFirewallSpecExternal `pulumi:"external"`
@@ -41829,7 +43979,7 @@ func (o WorkloadFirewallSpecExternalPtrOutput) OutboundBlockedCidrs() pulumi.Str
 }
 
 type WorkloadFirewallSpecExternalHttp struct {
-	// A list of header filters for HTTP workloads.
+	// A list of header filters for HTTP workloads. Each header key may appear only once, compared case-insensitively.
 	InboundHeaderFilters []WorkloadFirewallSpecExternalHttpInboundHeaderFilter `pulumi:"inboundHeaderFilters"`
 }
 
@@ -41845,7 +43995,7 @@ type WorkloadFirewallSpecExternalHttpInput interface {
 }
 
 type WorkloadFirewallSpecExternalHttpArgs struct {
-	// A list of header filters for HTTP workloads.
+	// A list of header filters for HTTP workloads. Each header key may appear only once, compared case-insensitively.
 	InboundHeaderFilters WorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayInput `pulumi:"inboundHeaderFilters"`
 }
 
@@ -41926,7 +44076,7 @@ func (o WorkloadFirewallSpecExternalHttpOutput) ToWorkloadFirewallSpecExternalHt
 	}).(WorkloadFirewallSpecExternalHttpPtrOutput)
 }
 
-// A list of header filters for HTTP workloads.
+// A list of header filters for HTTP workloads. Each header key may appear only once, compared case-insensitively.
 func (o WorkloadFirewallSpecExternalHttpOutput) InboundHeaderFilters() WorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput {
 	return o.ApplyT(func(v WorkloadFirewallSpecExternalHttp) []WorkloadFirewallSpecExternalHttpInboundHeaderFilter {
 		return v.InboundHeaderFilters
@@ -41957,7 +44107,7 @@ func (o WorkloadFirewallSpecExternalHttpPtrOutput) Elem() WorkloadFirewallSpecEx
 	}).(WorkloadFirewallSpecExternalHttpOutput)
 }
 
-// A list of header filters for HTTP workloads.
+// A list of header filters for HTTP workloads. Each header key may appear only once, compared case-insensitively.
 func (o WorkloadFirewallSpecExternalHttpPtrOutput) InboundHeaderFilters() WorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput {
 	return o.ApplyT(func(v *WorkloadFirewallSpecExternalHttp) []WorkloadFirewallSpecExternalHttpInboundHeaderFilter {
 		if v == nil {
@@ -41968,11 +44118,11 @@ func (o WorkloadFirewallSpecExternalHttpPtrOutput) InboundHeaderFilters() Worklo
 }
 
 type WorkloadFirewallSpecExternalHttpInboundHeaderFilter struct {
-	// A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
+	// A list of regular expressions to match for allowed header values. When included, http requests must have AT LEAST ONE of these headers to be sent to the workload.
 	AllowedValues []string `pulumi:"allowedValues"`
-	// A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
+	// A list of regular expressions to match for blocked header values. When included, http requests with ANY of these headers will be filtered and will not reach the workload.
 	BlockedValues []string `pulumi:"blockedValues"`
-	// The header to match for.
+	// The header to match for: an HTTP header name (RFC 9110 token) or one of the pseudo-headers `:authority`, `:method`, `:path` and `:scheme`. Header names are case-insensitive.
 	Key string `pulumi:"key"`
 }
 
@@ -41988,11 +44138,11 @@ type WorkloadFirewallSpecExternalHttpInboundHeaderFilterInput interface {
 }
 
 type WorkloadFirewallSpecExternalHttpInboundHeaderFilterArgs struct {
-	// A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
+	// A list of regular expressions to match for allowed header values. When included, http requests must have AT LEAST ONE of these headers to be sent to the workload.
 	AllowedValues pulumi.StringArrayInput `pulumi:"allowedValues"`
-	// A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
+	// A list of regular expressions to match for blocked header values. When included, http requests with ANY of these headers will be filtered and will not reach the workload.
 	BlockedValues pulumi.StringArrayInput `pulumi:"blockedValues"`
-	// The header to match for.
+	// The header to match for: an HTTP header name (RFC 9110 token) or one of the pseudo-headers `:authority`, `:method`, `:path` and `:scheme`. Header names are case-insensitive.
 	Key pulumi.StringInput `pulumi:"key"`
 }
 
@@ -42047,17 +44197,17 @@ func (o WorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput) ToWorkloadFir
 	return o
 }
 
-// A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
+// A list of regular expressions to match for allowed header values. When included, http requests must have AT LEAST ONE of these headers to be sent to the workload.
 func (o WorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput) AllowedValues() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v WorkloadFirewallSpecExternalHttpInboundHeaderFilter) []string { return v.AllowedValues }).(pulumi.StringArrayOutput)
 }
 
-// A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
+// A list of regular expressions to match for blocked header values. When included, http requests with ANY of these headers will be filtered and will not reach the workload.
 func (o WorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput) BlockedValues() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v WorkloadFirewallSpecExternalHttpInboundHeaderFilter) []string { return v.BlockedValues }).(pulumi.StringArrayOutput)
 }
 
-// The header to match for.
+// The header to match for: an HTTP header name (RFC 9110 token) or one of the pseudo-headers `:authority`, `:method`, `:path` and `:scheme`. Header names are case-insensitive.
 func (o WorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput) Key() pulumi.StringOutput {
 	return o.ApplyT(func(v WorkloadFirewallSpecExternalHttpInboundHeaderFilter) string { return v.Key }).(pulumi.StringOutput)
 }
@@ -45921,6 +48071,280 @@ func (o WorkloadLocalOptionMultiZonePtrOutput) Enabled() pulumi.BoolPtrOutput {
 	}).(pulumi.BoolPtrOutput)
 }
 
+type WorkloadNetworking struct {
+	// Routing of internal (`cpln.local`) requests.
+	Internal *WorkloadNetworkingInternal `pulumi:"internal"`
+}
+
+// WorkloadNetworkingInput is an input type that accepts WorkloadNetworkingArgs and WorkloadNetworkingOutput values.
+// You can construct a concrete instance of `WorkloadNetworkingInput` via:
+//
+//	WorkloadNetworkingArgs{...}
+type WorkloadNetworkingInput interface {
+	pulumi.Input
+
+	ToWorkloadNetworkingOutput() WorkloadNetworkingOutput
+	ToWorkloadNetworkingOutputWithContext(context.Context) WorkloadNetworkingOutput
+}
+
+type WorkloadNetworkingArgs struct {
+	// Routing of internal (`cpln.local`) requests.
+	Internal WorkloadNetworkingInternalPtrInput `pulumi:"internal"`
+}
+
+func (WorkloadNetworkingArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadNetworking)(nil)).Elem()
+}
+
+func (i WorkloadNetworkingArgs) ToWorkloadNetworkingOutput() WorkloadNetworkingOutput {
+	return i.ToWorkloadNetworkingOutputWithContext(context.Background())
+}
+
+func (i WorkloadNetworkingArgs) ToWorkloadNetworkingOutputWithContext(ctx context.Context) WorkloadNetworkingOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadNetworkingOutput)
+}
+
+func (i WorkloadNetworkingArgs) ToWorkloadNetworkingPtrOutput() WorkloadNetworkingPtrOutput {
+	return i.ToWorkloadNetworkingPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadNetworkingArgs) ToWorkloadNetworkingPtrOutputWithContext(ctx context.Context) WorkloadNetworkingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadNetworkingOutput).ToWorkloadNetworkingPtrOutputWithContext(ctx)
+}
+
+// WorkloadNetworkingPtrInput is an input type that accepts WorkloadNetworkingArgs, WorkloadNetworkingPtr and WorkloadNetworkingPtrOutput values.
+// You can construct a concrete instance of `WorkloadNetworkingPtrInput` via:
+//
+//	        WorkloadNetworkingArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadNetworkingPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadNetworkingPtrOutput() WorkloadNetworkingPtrOutput
+	ToWorkloadNetworkingPtrOutputWithContext(context.Context) WorkloadNetworkingPtrOutput
+}
+
+type workloadNetworkingPtrType WorkloadNetworkingArgs
+
+func WorkloadNetworkingPtr(v *WorkloadNetworkingArgs) WorkloadNetworkingPtrInput {
+	return (*workloadNetworkingPtrType)(v)
+}
+
+func (*workloadNetworkingPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadNetworking)(nil)).Elem()
+}
+
+func (i *workloadNetworkingPtrType) ToWorkloadNetworkingPtrOutput() WorkloadNetworkingPtrOutput {
+	return i.ToWorkloadNetworkingPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadNetworkingPtrType) ToWorkloadNetworkingPtrOutputWithContext(ctx context.Context) WorkloadNetworkingPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadNetworkingPtrOutput)
+}
+
+type WorkloadNetworkingOutput struct{ *pulumi.OutputState }
+
+func (WorkloadNetworkingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadNetworking)(nil)).Elem()
+}
+
+func (o WorkloadNetworkingOutput) ToWorkloadNetworkingOutput() WorkloadNetworkingOutput {
+	return o
+}
+
+func (o WorkloadNetworkingOutput) ToWorkloadNetworkingOutputWithContext(ctx context.Context) WorkloadNetworkingOutput {
+	return o
+}
+
+func (o WorkloadNetworkingOutput) ToWorkloadNetworkingPtrOutput() WorkloadNetworkingPtrOutput {
+	return o.ToWorkloadNetworkingPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadNetworkingOutput) ToWorkloadNetworkingPtrOutputWithContext(ctx context.Context) WorkloadNetworkingPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadNetworking) *WorkloadNetworking {
+		return &v
+	}).(WorkloadNetworkingPtrOutput)
+}
+
+// Routing of internal (`cpln.local`) requests.
+func (o WorkloadNetworkingOutput) Internal() WorkloadNetworkingInternalPtrOutput {
+	return o.ApplyT(func(v WorkloadNetworking) *WorkloadNetworkingInternal { return v.Internal }).(WorkloadNetworkingInternalPtrOutput)
+}
+
+type WorkloadNetworkingPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadNetworkingPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadNetworking)(nil)).Elem()
+}
+
+func (o WorkloadNetworkingPtrOutput) ToWorkloadNetworkingPtrOutput() WorkloadNetworkingPtrOutput {
+	return o
+}
+
+func (o WorkloadNetworkingPtrOutput) ToWorkloadNetworkingPtrOutputWithContext(ctx context.Context) WorkloadNetworkingPtrOutput {
+	return o
+}
+
+func (o WorkloadNetworkingPtrOutput) Elem() WorkloadNetworkingOutput {
+	return o.ApplyT(func(v *WorkloadNetworking) WorkloadNetworking {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadNetworking
+		return ret
+	}).(WorkloadNetworkingOutput)
+}
+
+// Routing of internal (`cpln.local`) requests.
+func (o WorkloadNetworkingPtrOutput) Internal() WorkloadNetworkingInternalPtrOutput {
+	return o.ApplyT(func(v *WorkloadNetworking) *WorkloadNetworkingInternal {
+		if v == nil {
+			return nil
+		}
+		return v.Internal
+	}).(WorkloadNetworkingInternalPtrOutput)
+}
+
+type WorkloadNetworkingInternal struct {
+	// How requests to `<workload>.<gvc>.cpln.local` from the same GVC are routed. `locationEndpoint`: served only by replicas in the caller's location. `gvcEndpoint`: fail over to the workload's canonical endpoint (the nearest healthy location) when no local replica can serve them; cross-location traffic is billed as egress. Valid values: `locationEndpoint`, `gvcEndpoint`. Set to `gvcEndpoint` by the server when a workload is created without it; removing it from the configuration keeps the current value.
+	Routing *string `pulumi:"routing"`
+}
+
+// WorkloadNetworkingInternalInput is an input type that accepts WorkloadNetworkingInternalArgs and WorkloadNetworkingInternalOutput values.
+// You can construct a concrete instance of `WorkloadNetworkingInternalInput` via:
+//
+//	WorkloadNetworkingInternalArgs{...}
+type WorkloadNetworkingInternalInput interface {
+	pulumi.Input
+
+	ToWorkloadNetworkingInternalOutput() WorkloadNetworkingInternalOutput
+	ToWorkloadNetworkingInternalOutputWithContext(context.Context) WorkloadNetworkingInternalOutput
+}
+
+type WorkloadNetworkingInternalArgs struct {
+	// How requests to `<workload>.<gvc>.cpln.local` from the same GVC are routed. `locationEndpoint`: served only by replicas in the caller's location. `gvcEndpoint`: fail over to the workload's canonical endpoint (the nearest healthy location) when no local replica can serve them; cross-location traffic is billed as egress. Valid values: `locationEndpoint`, `gvcEndpoint`. Set to `gvcEndpoint` by the server when a workload is created without it; removing it from the configuration keeps the current value.
+	Routing pulumi.StringPtrInput `pulumi:"routing"`
+}
+
+func (WorkloadNetworkingInternalArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadNetworkingInternal)(nil)).Elem()
+}
+
+func (i WorkloadNetworkingInternalArgs) ToWorkloadNetworkingInternalOutput() WorkloadNetworkingInternalOutput {
+	return i.ToWorkloadNetworkingInternalOutputWithContext(context.Background())
+}
+
+func (i WorkloadNetworkingInternalArgs) ToWorkloadNetworkingInternalOutputWithContext(ctx context.Context) WorkloadNetworkingInternalOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadNetworkingInternalOutput)
+}
+
+func (i WorkloadNetworkingInternalArgs) ToWorkloadNetworkingInternalPtrOutput() WorkloadNetworkingInternalPtrOutput {
+	return i.ToWorkloadNetworkingInternalPtrOutputWithContext(context.Background())
+}
+
+func (i WorkloadNetworkingInternalArgs) ToWorkloadNetworkingInternalPtrOutputWithContext(ctx context.Context) WorkloadNetworkingInternalPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadNetworkingInternalOutput).ToWorkloadNetworkingInternalPtrOutputWithContext(ctx)
+}
+
+// WorkloadNetworkingInternalPtrInput is an input type that accepts WorkloadNetworkingInternalArgs, WorkloadNetworkingInternalPtr and WorkloadNetworkingInternalPtrOutput values.
+// You can construct a concrete instance of `WorkloadNetworkingInternalPtrInput` via:
+//
+//	        WorkloadNetworkingInternalArgs{...}
+//
+//	or:
+//
+//	        nil
+type WorkloadNetworkingInternalPtrInput interface {
+	pulumi.Input
+
+	ToWorkloadNetworkingInternalPtrOutput() WorkloadNetworkingInternalPtrOutput
+	ToWorkloadNetworkingInternalPtrOutputWithContext(context.Context) WorkloadNetworkingInternalPtrOutput
+}
+
+type workloadNetworkingInternalPtrType WorkloadNetworkingInternalArgs
+
+func WorkloadNetworkingInternalPtr(v *WorkloadNetworkingInternalArgs) WorkloadNetworkingInternalPtrInput {
+	return (*workloadNetworkingInternalPtrType)(v)
+}
+
+func (*workloadNetworkingInternalPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadNetworkingInternal)(nil)).Elem()
+}
+
+func (i *workloadNetworkingInternalPtrType) ToWorkloadNetworkingInternalPtrOutput() WorkloadNetworkingInternalPtrOutput {
+	return i.ToWorkloadNetworkingInternalPtrOutputWithContext(context.Background())
+}
+
+func (i *workloadNetworkingInternalPtrType) ToWorkloadNetworkingInternalPtrOutputWithContext(ctx context.Context) WorkloadNetworkingInternalPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(WorkloadNetworkingInternalPtrOutput)
+}
+
+type WorkloadNetworkingInternalOutput struct{ *pulumi.OutputState }
+
+func (WorkloadNetworkingInternalOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*WorkloadNetworkingInternal)(nil)).Elem()
+}
+
+func (o WorkloadNetworkingInternalOutput) ToWorkloadNetworkingInternalOutput() WorkloadNetworkingInternalOutput {
+	return o
+}
+
+func (o WorkloadNetworkingInternalOutput) ToWorkloadNetworkingInternalOutputWithContext(ctx context.Context) WorkloadNetworkingInternalOutput {
+	return o
+}
+
+func (o WorkloadNetworkingInternalOutput) ToWorkloadNetworkingInternalPtrOutput() WorkloadNetworkingInternalPtrOutput {
+	return o.ToWorkloadNetworkingInternalPtrOutputWithContext(context.Background())
+}
+
+func (o WorkloadNetworkingInternalOutput) ToWorkloadNetworkingInternalPtrOutputWithContext(ctx context.Context) WorkloadNetworkingInternalPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v WorkloadNetworkingInternal) *WorkloadNetworkingInternal {
+		return &v
+	}).(WorkloadNetworkingInternalPtrOutput)
+}
+
+// How requests to `<workload>.<gvc>.cpln.local` from the same GVC are routed. `locationEndpoint`: served only by replicas in the caller's location. `gvcEndpoint`: fail over to the workload's canonical endpoint (the nearest healthy location) when no local replica can serve them; cross-location traffic is billed as egress. Valid values: `locationEndpoint`, `gvcEndpoint`. Set to `gvcEndpoint` by the server when a workload is created without it; removing it from the configuration keeps the current value.
+func (o WorkloadNetworkingInternalOutput) Routing() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v WorkloadNetworkingInternal) *string { return v.Routing }).(pulumi.StringPtrOutput)
+}
+
+type WorkloadNetworkingInternalPtrOutput struct{ *pulumi.OutputState }
+
+func (WorkloadNetworkingInternalPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**WorkloadNetworkingInternal)(nil)).Elem()
+}
+
+func (o WorkloadNetworkingInternalPtrOutput) ToWorkloadNetworkingInternalPtrOutput() WorkloadNetworkingInternalPtrOutput {
+	return o
+}
+
+func (o WorkloadNetworkingInternalPtrOutput) ToWorkloadNetworkingInternalPtrOutputWithContext(ctx context.Context) WorkloadNetworkingInternalPtrOutput {
+	return o
+}
+
+func (o WorkloadNetworkingInternalPtrOutput) Elem() WorkloadNetworkingInternalOutput {
+	return o.ApplyT(func(v *WorkloadNetworkingInternal) WorkloadNetworkingInternal {
+		if v != nil {
+			return *v
+		}
+		var ret WorkloadNetworkingInternal
+		return ret
+	}).(WorkloadNetworkingInternalOutput)
+}
+
+// How requests to `<workload>.<gvc>.cpln.local` from the same GVC are routed. `locationEndpoint`: served only by replicas in the caller's location. `gvcEndpoint`: fail over to the workload's canonical endpoint (the nearest healthy location) when no local replica can serve them; cross-location traffic is billed as egress. Valid values: `locationEndpoint`, `gvcEndpoint`. Set to `gvcEndpoint` by the server when a workload is created without it; removing it from the configuration keeps the current value.
+func (o WorkloadNetworkingInternalPtrOutput) Routing() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *WorkloadNetworkingInternal) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Routing
+	}).(pulumi.StringPtrOutput)
+}
+
 type WorkloadOptions struct {
 	// Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
 	Autoscaling *WorkloadOptionsAutoscaling `pulumi:"autoscaling"`
@@ -48786,13 +51210,15 @@ func (o WorkloadRequestRetryPolicyPtrOutput) RetryOns() pulumi.StringArrayOutput
 }
 
 type WorkloadRolloutOption struct {
-	// The number of replicas that can be created above the desired amount of replicas during an update.
+	// The number of replicas that can be created above the desired amount of replicas during an update. Not supported for `vm` workloads.
 	MaxSurgeReplicas *string `pulumi:"maxSurgeReplicas"`
 	// The number of replicas that can be unavailable during the update process.
 	MaxUnavailableReplicas *string `pulumi:"maxUnavailableReplicas"`
 	// The minimum number of seconds a container must run without crashing to be considered available.
 	MinReadySeconds *int `pulumi:"minReadySeconds"`
-	// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+	// When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified. Not supported for `vm` workloads.
+	RolloutOnReferenceChange *bool `pulumi:"rolloutOnReferenceChange"`
+	// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`. Cannot be set for `vm` workloads.
 	ScalingPolicy *string `pulumi:"scalingPolicy"`
 	// The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run. Valid values: `0` - `3600`. Default: `90`. Note: the API caps this at `900` unless the workload is tagged with `cpln/relaxGracePeriodMax`.
 	TerminationGracePeriodSeconds *int `pulumi:"terminationGracePeriodSeconds"`
@@ -48810,13 +51236,15 @@ type WorkloadRolloutOptionInput interface {
 }
 
 type WorkloadRolloutOptionArgs struct {
-	// The number of replicas that can be created above the desired amount of replicas during an update.
+	// The number of replicas that can be created above the desired amount of replicas during an update. Not supported for `vm` workloads.
 	MaxSurgeReplicas pulumi.StringPtrInput `pulumi:"maxSurgeReplicas"`
 	// The number of replicas that can be unavailable during the update process.
 	MaxUnavailableReplicas pulumi.StringPtrInput `pulumi:"maxUnavailableReplicas"`
 	// The minimum number of seconds a container must run without crashing to be considered available.
 	MinReadySeconds pulumi.IntPtrInput `pulumi:"minReadySeconds"`
-	// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+	// When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified. Not supported for `vm` workloads.
+	RolloutOnReferenceChange pulumi.BoolPtrInput `pulumi:"rolloutOnReferenceChange"`
+	// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`. Cannot be set for `vm` workloads.
 	ScalingPolicy pulumi.StringPtrInput `pulumi:"scalingPolicy"`
 	// The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run. Valid values: `0` - `3600`. Default: `90`. Note: the API caps this at `900` unless the workload is tagged with `cpln/relaxGracePeriodMax`.
 	TerminationGracePeriodSeconds pulumi.IntPtrInput `pulumi:"terminationGracePeriodSeconds"`
@@ -48873,7 +51301,7 @@ func (o WorkloadRolloutOptionOutput) ToWorkloadRolloutOptionOutputWithContext(ct
 	return o
 }
 
-// The number of replicas that can be created above the desired amount of replicas during an update.
+// The number of replicas that can be created above the desired amount of replicas during an update. Not supported for `vm` workloads.
 func (o WorkloadRolloutOptionOutput) MaxSurgeReplicas() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v WorkloadRolloutOption) *string { return v.MaxSurgeReplicas }).(pulumi.StringPtrOutput)
 }
@@ -48888,7 +51316,12 @@ func (o WorkloadRolloutOptionOutput) MinReadySeconds() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v WorkloadRolloutOption) *int { return v.MinReadySeconds }).(pulumi.IntPtrOutput)
 }
 
-// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+// When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified. Not supported for `vm` workloads.
+func (o WorkloadRolloutOptionOutput) RolloutOnReferenceChange() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v WorkloadRolloutOption) *bool { return v.RolloutOnReferenceChange }).(pulumi.BoolPtrOutput)
+}
+
+// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`. Cannot be set for `vm` workloads.
 func (o WorkloadRolloutOptionOutput) ScalingPolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v WorkloadRolloutOption) *string { return v.ScalingPolicy }).(pulumi.StringPtrOutput)
 }
@@ -57912,7 +60345,9 @@ type GetWorkloadContainer struct {
 	// Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
 	Cpu string `pulumi:"cpu"`
 	// Name-Value list of environment variables.
-	Env        map[string]string               `pulumi:"env"`
+	Env map[string]string `pulumi:"env"`
+	// Dictionary secrets whose key/value pairs are injected as environment variables. An explicit `env` variable overrides an `envFrom` key of the same name; later entries override earlier ones.
+	EnvFroms   []GetWorkloadContainerEnvFrom   `pulumi:"envFroms"`
 	GpuCustoms []GetWorkloadContainerGpuCustom `pulumi:"gpuCustoms"`
 	// GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
 	GpuNvidias []GetWorkloadContainerGpuNvidia `pulumi:"gpuNvidias"`
@@ -57967,7 +60402,9 @@ type GetWorkloadContainerArgs struct {
 	// Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
 	Cpu pulumi.StringInput `pulumi:"cpu"`
 	// Name-Value list of environment variables.
-	Env        pulumi.StringMapInput                   `pulumi:"env"`
+	Env pulumi.StringMapInput `pulumi:"env"`
+	// Dictionary secrets whose key/value pairs are injected as environment variables. An explicit `env` variable overrides an `envFrom` key of the same name; later entries override earlier ones.
+	EnvFroms   GetWorkloadContainerEnvFromArrayInput   `pulumi:"envFroms"`
 	GpuCustoms GetWorkloadContainerGpuCustomArrayInput `pulumi:"gpuCustoms"`
 	// GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
 	GpuNvidias GetWorkloadContainerGpuNvidiaArrayInput `pulumi:"gpuNvidias"`
@@ -58074,6 +60511,11 @@ func (o GetWorkloadContainerOutput) Env() pulumi.StringMapOutput {
 	return o.ApplyT(func(v GetWorkloadContainer) map[string]string { return v.Env }).(pulumi.StringMapOutput)
 }
 
+// Dictionary secrets whose key/value pairs are injected as environment variables. An explicit `env` variable overrides an `envFrom` key of the same name; later entries override earlier ones.
+func (o GetWorkloadContainerOutput) EnvFroms() GetWorkloadContainerEnvFromArrayOutput {
+	return o.ApplyT(func(v GetWorkloadContainer) []GetWorkloadContainerEnvFrom { return v.EnvFroms }).(GetWorkloadContainerEnvFromArrayOutput)
+}
+
 func (o GetWorkloadContainerOutput) GpuCustoms() GetWorkloadContainerGpuCustomArrayOutput {
 	return o.ApplyT(func(v GetWorkloadContainer) []GetWorkloadContainerGpuCustom { return v.GpuCustoms }).(GetWorkloadContainerGpuCustomArrayOutput)
 }
@@ -58173,6 +60615,155 @@ func (o GetWorkloadContainerArrayOutput) Index(i pulumi.IntInput) GetWorkloadCon
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainer {
 		return vs[0].([]GetWorkloadContainer)[vs[1].(int)]
 	}).(GetWorkloadContainerOutput)
+}
+
+type GetWorkloadContainerEnvFrom struct {
+	// References a dictionary secret whose key/value pairs are injected as environment variables.
+	SecretRef GetWorkloadContainerEnvFromSecretRef `pulumi:"secretRef"`
+}
+
+// GetWorkloadContainerEnvFromInput is an input type that accepts GetWorkloadContainerEnvFromArgs and GetWorkloadContainerEnvFromOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerEnvFromInput` via:
+//
+//	GetWorkloadContainerEnvFromArgs{...}
+type GetWorkloadContainerEnvFromInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerEnvFromOutput() GetWorkloadContainerEnvFromOutput
+	ToGetWorkloadContainerEnvFromOutputWithContext(context.Context) GetWorkloadContainerEnvFromOutput
+}
+
+type GetWorkloadContainerEnvFromArgs struct {
+	// References a dictionary secret whose key/value pairs are injected as environment variables.
+	SecretRef GetWorkloadContainerEnvFromSecretRefInput `pulumi:"secretRef"`
+}
+
+func (GetWorkloadContainerEnvFromArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerEnvFrom)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerEnvFromArgs) ToGetWorkloadContainerEnvFromOutput() GetWorkloadContainerEnvFromOutput {
+	return i.ToGetWorkloadContainerEnvFromOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerEnvFromArgs) ToGetWorkloadContainerEnvFromOutputWithContext(ctx context.Context) GetWorkloadContainerEnvFromOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerEnvFromOutput)
+}
+
+// GetWorkloadContainerEnvFromArrayInput is an input type that accepts GetWorkloadContainerEnvFromArray and GetWorkloadContainerEnvFromArrayOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerEnvFromArrayInput` via:
+//
+//	GetWorkloadContainerEnvFromArray{ GetWorkloadContainerEnvFromArgs{...} }
+type GetWorkloadContainerEnvFromArrayInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerEnvFromArrayOutput() GetWorkloadContainerEnvFromArrayOutput
+	ToGetWorkloadContainerEnvFromArrayOutputWithContext(context.Context) GetWorkloadContainerEnvFromArrayOutput
+}
+
+type GetWorkloadContainerEnvFromArray []GetWorkloadContainerEnvFromInput
+
+func (GetWorkloadContainerEnvFromArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerEnvFrom)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerEnvFromArray) ToGetWorkloadContainerEnvFromArrayOutput() GetWorkloadContainerEnvFromArrayOutput {
+	return i.ToGetWorkloadContainerEnvFromArrayOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerEnvFromArray) ToGetWorkloadContainerEnvFromArrayOutputWithContext(ctx context.Context) GetWorkloadContainerEnvFromArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerEnvFromArrayOutput)
+}
+
+type GetWorkloadContainerEnvFromOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerEnvFromOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerEnvFrom)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerEnvFromOutput) ToGetWorkloadContainerEnvFromOutput() GetWorkloadContainerEnvFromOutput {
+	return o
+}
+
+func (o GetWorkloadContainerEnvFromOutput) ToGetWorkloadContainerEnvFromOutputWithContext(ctx context.Context) GetWorkloadContainerEnvFromOutput {
+	return o
+}
+
+// References a dictionary secret whose key/value pairs are injected as environment variables.
+func (o GetWorkloadContainerEnvFromOutput) SecretRef() GetWorkloadContainerEnvFromSecretRefOutput {
+	return o.ApplyT(func(v GetWorkloadContainerEnvFrom) GetWorkloadContainerEnvFromSecretRef { return v.SecretRef }).(GetWorkloadContainerEnvFromSecretRefOutput)
+}
+
+type GetWorkloadContainerEnvFromArrayOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerEnvFromArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetWorkloadContainerEnvFrom)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerEnvFromArrayOutput) ToGetWorkloadContainerEnvFromArrayOutput() GetWorkloadContainerEnvFromArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerEnvFromArrayOutput) ToGetWorkloadContainerEnvFromArrayOutputWithContext(ctx context.Context) GetWorkloadContainerEnvFromArrayOutput {
+	return o
+}
+
+func (o GetWorkloadContainerEnvFromArrayOutput) Index(i pulumi.IntInput) GetWorkloadContainerEnvFromOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetWorkloadContainerEnvFrom {
+		return vs[0].([]GetWorkloadContainerEnvFrom)[vs[1].(int)]
+	}).(GetWorkloadContainerEnvFromOutput)
+}
+
+type GetWorkloadContainerEnvFromSecretRef struct {
+	// Name of a dictionary secret whose keys are injected as environment variables.
+	Name string `pulumi:"name"`
+}
+
+// GetWorkloadContainerEnvFromSecretRefInput is an input type that accepts GetWorkloadContainerEnvFromSecretRefArgs and GetWorkloadContainerEnvFromSecretRefOutput values.
+// You can construct a concrete instance of `GetWorkloadContainerEnvFromSecretRefInput` via:
+//
+//	GetWorkloadContainerEnvFromSecretRefArgs{...}
+type GetWorkloadContainerEnvFromSecretRefInput interface {
+	pulumi.Input
+
+	ToGetWorkloadContainerEnvFromSecretRefOutput() GetWorkloadContainerEnvFromSecretRefOutput
+	ToGetWorkloadContainerEnvFromSecretRefOutputWithContext(context.Context) GetWorkloadContainerEnvFromSecretRefOutput
+}
+
+type GetWorkloadContainerEnvFromSecretRefArgs struct {
+	// Name of a dictionary secret whose keys are injected as environment variables.
+	Name pulumi.StringInput `pulumi:"name"`
+}
+
+func (GetWorkloadContainerEnvFromSecretRefArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerEnvFromSecretRef)(nil)).Elem()
+}
+
+func (i GetWorkloadContainerEnvFromSecretRefArgs) ToGetWorkloadContainerEnvFromSecretRefOutput() GetWorkloadContainerEnvFromSecretRefOutput {
+	return i.ToGetWorkloadContainerEnvFromSecretRefOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadContainerEnvFromSecretRefArgs) ToGetWorkloadContainerEnvFromSecretRefOutputWithContext(ctx context.Context) GetWorkloadContainerEnvFromSecretRefOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadContainerEnvFromSecretRefOutput)
+}
+
+type GetWorkloadContainerEnvFromSecretRefOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadContainerEnvFromSecretRefOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadContainerEnvFromSecretRef)(nil)).Elem()
+}
+
+func (o GetWorkloadContainerEnvFromSecretRefOutput) ToGetWorkloadContainerEnvFromSecretRefOutput() GetWorkloadContainerEnvFromSecretRefOutput {
+	return o
+}
+
+func (o GetWorkloadContainerEnvFromSecretRefOutput) ToGetWorkloadContainerEnvFromSecretRefOutputWithContext(ctx context.Context) GetWorkloadContainerEnvFromSecretRefOutput {
+	return o
+}
+
+// Name of a dictionary secret whose keys are injected as environment variables.
+func (o GetWorkloadContainerEnvFromSecretRefOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadContainerEnvFromSecretRef) string { return v.Name }).(pulumi.StringOutput)
 }
 
 type GetWorkloadContainerGpuCustom struct {
@@ -60319,6 +62910,67 @@ func (o GetWorkloadContainerVolumeArrayOutput) Index(i pulumi.IntInput) GetWorkl
 	}).(GetWorkloadContainerVolumeOutput)
 }
 
+type GetWorkloadDisruptionBudget struct {
+	// Maximum number or percentage of replicas that can be unavailable during voluntary disruptions such as node drains.
+	MaxUnavailable string `pulumi:"maxUnavailable"`
+	// Minimum number or percentage of replicas that must stay available during voluntary disruptions such as node drains.
+	MinAvailable string `pulumi:"minAvailable"`
+}
+
+// GetWorkloadDisruptionBudgetInput is an input type that accepts GetWorkloadDisruptionBudgetArgs and GetWorkloadDisruptionBudgetOutput values.
+// You can construct a concrete instance of `GetWorkloadDisruptionBudgetInput` via:
+//
+//	GetWorkloadDisruptionBudgetArgs{...}
+type GetWorkloadDisruptionBudgetInput interface {
+	pulumi.Input
+
+	ToGetWorkloadDisruptionBudgetOutput() GetWorkloadDisruptionBudgetOutput
+	ToGetWorkloadDisruptionBudgetOutputWithContext(context.Context) GetWorkloadDisruptionBudgetOutput
+}
+
+type GetWorkloadDisruptionBudgetArgs struct {
+	// Maximum number or percentage of replicas that can be unavailable during voluntary disruptions such as node drains.
+	MaxUnavailable pulumi.StringInput `pulumi:"maxUnavailable"`
+	// Minimum number or percentage of replicas that must stay available during voluntary disruptions such as node drains.
+	MinAvailable pulumi.StringInput `pulumi:"minAvailable"`
+}
+
+func (GetWorkloadDisruptionBudgetArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadDisruptionBudget)(nil)).Elem()
+}
+
+func (i GetWorkloadDisruptionBudgetArgs) ToGetWorkloadDisruptionBudgetOutput() GetWorkloadDisruptionBudgetOutput {
+	return i.ToGetWorkloadDisruptionBudgetOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadDisruptionBudgetArgs) ToGetWorkloadDisruptionBudgetOutputWithContext(ctx context.Context) GetWorkloadDisruptionBudgetOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadDisruptionBudgetOutput)
+}
+
+type GetWorkloadDisruptionBudgetOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadDisruptionBudgetOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadDisruptionBudget)(nil)).Elem()
+}
+
+func (o GetWorkloadDisruptionBudgetOutput) ToGetWorkloadDisruptionBudgetOutput() GetWorkloadDisruptionBudgetOutput {
+	return o
+}
+
+func (o GetWorkloadDisruptionBudgetOutput) ToGetWorkloadDisruptionBudgetOutputWithContext(ctx context.Context) GetWorkloadDisruptionBudgetOutput {
+	return o
+}
+
+// Maximum number or percentage of replicas that can be unavailable during voluntary disruptions such as node drains.
+func (o GetWorkloadDisruptionBudgetOutput) MaxUnavailable() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadDisruptionBudget) string { return v.MaxUnavailable }).(pulumi.StringOutput)
+}
+
+// Minimum number or percentage of replicas that must stay available during voluntary disruptions such as node drains.
+func (o GetWorkloadDisruptionBudgetOutput) MinAvailable() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadDisruptionBudget) string { return v.MinAvailable }).(pulumi.StringOutput)
+}
+
 type GetWorkloadFirewallSpec struct {
 	// The external firewall is used to control inbound and outbound access to the workload for public-facing traffic.
 	Externals []GetWorkloadFirewallSpecExternal `pulumi:"externals"`
@@ -60579,7 +63231,7 @@ func (o GetWorkloadFirewallSpecExternalArrayOutput) Index(i pulumi.IntInput) Get
 }
 
 type GetWorkloadFirewallSpecExternalHttp struct {
-	// A list of header filters for HTTP workloads.
+	// A list of header filters for HTTP workloads. Each header key may appear only once, compared case-insensitively.
 	InboundHeaderFilters []GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter `pulumi:"inboundHeaderFilters"`
 }
 
@@ -60595,7 +63247,7 @@ type GetWorkloadFirewallSpecExternalHttpInput interface {
 }
 
 type GetWorkloadFirewallSpecExternalHttpArgs struct {
-	// A list of header filters for HTTP workloads.
+	// A list of header filters for HTTP workloads. Each header key may appear only once, compared case-insensitively.
 	InboundHeaderFilters GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayInput `pulumi:"inboundHeaderFilters"`
 }
 
@@ -60650,7 +63302,7 @@ func (o GetWorkloadFirewallSpecExternalHttpOutput) ToGetWorkloadFirewallSpecExte
 	return o
 }
 
-// A list of header filters for HTTP workloads.
+// A list of header filters for HTTP workloads. Each header key may appear only once, compared case-insensitively.
 func (o GetWorkloadFirewallSpecExternalHttpOutput) InboundHeaderFilters() GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArrayOutput {
 	return o.ApplyT(func(v GetWorkloadFirewallSpecExternalHttp) []GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter {
 		return v.InboundHeaderFilters
@@ -60678,11 +63330,11 @@ func (o GetWorkloadFirewallSpecExternalHttpArrayOutput) Index(i pulumi.IntInput)
 }
 
 type GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter struct {
-	// A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
+	// A list of regular expressions to match for allowed header values. When included, http requests must have AT LEAST ONE of these headers to be sent to the workload.
 	AllowedValues []string `pulumi:"allowedValues"`
-	// A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
+	// A list of regular expressions to match for blocked header values. When included, http requests with ANY of these headers will be filtered and will not reach the workload.
 	BlockedValues []string `pulumi:"blockedValues"`
-	// The header to match for.
+	// The header to match for: an HTTP header name (RFC 9110 token) or one of the pseudo-headers `:authority`, `:method`, `:path` and `:scheme`. Header names are case-insensitive.
 	Key string `pulumi:"key"`
 }
 
@@ -60698,11 +63350,11 @@ type GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterInput interface {
 }
 
 type GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArgs struct {
-	// A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
+	// A list of regular expressions to match for allowed header values. When included, http requests must have AT LEAST ONE of these headers to be sent to the workload.
 	AllowedValues pulumi.StringArrayInput `pulumi:"allowedValues"`
-	// A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
+	// A list of regular expressions to match for blocked header values. When included, http requests with ANY of these headers will be filtered and will not reach the workload.
 	BlockedValues pulumi.StringArrayInput `pulumi:"blockedValues"`
-	// The header to match for.
+	// The header to match for: an HTTP header name (RFC 9110 token) or one of the pseudo-headers `:authority`, `:method`, `:path` and `:scheme`. Header names are case-insensitive.
 	Key pulumi.StringInput `pulumi:"key"`
 }
 
@@ -60757,17 +63409,17 @@ func (o GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput) ToGetWorkl
 	return o
 }
 
-// A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
+// A list of regular expressions to match for allowed header values. When included, http requests must have AT LEAST ONE of these headers to be sent to the workload.
 func (o GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput) AllowedValues() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter) []string { return v.AllowedValues }).(pulumi.StringArrayOutput)
 }
 
-// A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
+// A list of regular expressions to match for blocked header values. When included, http requests with ANY of these headers will be filtered and will not reach the workload.
 func (o GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput) BlockedValues() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter) []string { return v.BlockedValues }).(pulumi.StringArrayOutput)
 }
 
-// The header to match for.
+// The header to match for: an HTTP header name (RFC 9110 token) or one of the pseudo-headers `:authority`, `:method`, `:path` and `:scheme`. Header names are case-insensitive.
 func (o GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterOutput) Key() pulumi.StringOutput {
 	return o.ApplyT(func(v GetWorkloadFirewallSpecExternalHttpInboundHeaderFilter) string { return v.Key }).(pulumi.StringOutput)
 }
@@ -63765,6 +66417,110 @@ func (o GetWorkloadLocalOptionMultiZoneArrayOutput) Index(i pulumi.IntInput) Get
 	}).(GetWorkloadLocalOptionMultiZoneOutput)
 }
 
+type GetWorkloadNetworking struct {
+	// Routing of internal (`cpln.local`) requests.
+	Internal GetWorkloadNetworkingInternal `pulumi:"internal"`
+}
+
+// GetWorkloadNetworkingInput is an input type that accepts GetWorkloadNetworkingArgs and GetWorkloadNetworkingOutput values.
+// You can construct a concrete instance of `GetWorkloadNetworkingInput` via:
+//
+//	GetWorkloadNetworkingArgs{...}
+type GetWorkloadNetworkingInput interface {
+	pulumi.Input
+
+	ToGetWorkloadNetworkingOutput() GetWorkloadNetworkingOutput
+	ToGetWorkloadNetworkingOutputWithContext(context.Context) GetWorkloadNetworkingOutput
+}
+
+type GetWorkloadNetworkingArgs struct {
+	// Routing of internal (`cpln.local`) requests.
+	Internal GetWorkloadNetworkingInternalInput `pulumi:"internal"`
+}
+
+func (GetWorkloadNetworkingArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadNetworking)(nil)).Elem()
+}
+
+func (i GetWorkloadNetworkingArgs) ToGetWorkloadNetworkingOutput() GetWorkloadNetworkingOutput {
+	return i.ToGetWorkloadNetworkingOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadNetworkingArgs) ToGetWorkloadNetworkingOutputWithContext(ctx context.Context) GetWorkloadNetworkingOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadNetworkingOutput)
+}
+
+type GetWorkloadNetworkingOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadNetworkingOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadNetworking)(nil)).Elem()
+}
+
+func (o GetWorkloadNetworkingOutput) ToGetWorkloadNetworkingOutput() GetWorkloadNetworkingOutput {
+	return o
+}
+
+func (o GetWorkloadNetworkingOutput) ToGetWorkloadNetworkingOutputWithContext(ctx context.Context) GetWorkloadNetworkingOutput {
+	return o
+}
+
+// Routing of internal (`cpln.local`) requests.
+func (o GetWorkloadNetworkingOutput) Internal() GetWorkloadNetworkingInternalOutput {
+	return o.ApplyT(func(v GetWorkloadNetworking) GetWorkloadNetworkingInternal { return v.Internal }).(GetWorkloadNetworkingInternalOutput)
+}
+
+type GetWorkloadNetworkingInternal struct {
+	// How requests to `<workload>.<gvc>.cpln.local` from the same GVC are routed. `locationEndpoint`: served only by replicas in the caller's location. `gvcEndpoint`: fail over to the workload's canonical endpoint (the nearest healthy location) when no local replica can serve them.
+	Routing string `pulumi:"routing"`
+}
+
+// GetWorkloadNetworkingInternalInput is an input type that accepts GetWorkloadNetworkingInternalArgs and GetWorkloadNetworkingInternalOutput values.
+// You can construct a concrete instance of `GetWorkloadNetworkingInternalInput` via:
+//
+//	GetWorkloadNetworkingInternalArgs{...}
+type GetWorkloadNetworkingInternalInput interface {
+	pulumi.Input
+
+	ToGetWorkloadNetworkingInternalOutput() GetWorkloadNetworkingInternalOutput
+	ToGetWorkloadNetworkingInternalOutputWithContext(context.Context) GetWorkloadNetworkingInternalOutput
+}
+
+type GetWorkloadNetworkingInternalArgs struct {
+	// How requests to `<workload>.<gvc>.cpln.local` from the same GVC are routed. `locationEndpoint`: served only by replicas in the caller's location. `gvcEndpoint`: fail over to the workload's canonical endpoint (the nearest healthy location) when no local replica can serve them.
+	Routing pulumi.StringInput `pulumi:"routing"`
+}
+
+func (GetWorkloadNetworkingInternalArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadNetworkingInternal)(nil)).Elem()
+}
+
+func (i GetWorkloadNetworkingInternalArgs) ToGetWorkloadNetworkingInternalOutput() GetWorkloadNetworkingInternalOutput {
+	return i.ToGetWorkloadNetworkingInternalOutputWithContext(context.Background())
+}
+
+func (i GetWorkloadNetworkingInternalArgs) ToGetWorkloadNetworkingInternalOutputWithContext(ctx context.Context) GetWorkloadNetworkingInternalOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetWorkloadNetworkingInternalOutput)
+}
+
+type GetWorkloadNetworkingInternalOutput struct{ *pulumi.OutputState }
+
+func (GetWorkloadNetworkingInternalOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetWorkloadNetworkingInternal)(nil)).Elem()
+}
+
+func (o GetWorkloadNetworkingInternalOutput) ToGetWorkloadNetworkingInternalOutput() GetWorkloadNetworkingInternalOutput {
+	return o
+}
+
+func (o GetWorkloadNetworkingInternalOutput) ToGetWorkloadNetworkingInternalOutputWithContext(ctx context.Context) GetWorkloadNetworkingInternalOutput {
+	return o
+}
+
+// How requests to `<workload>.<gvc>.cpln.local` from the same GVC are routed. `locationEndpoint`: served only by replicas in the caller's location. `gvcEndpoint`: fail over to the workload's canonical endpoint (the nearest healthy location) when no local replica can serve them.
+func (o GetWorkloadNetworkingInternalOutput) Routing() pulumi.StringOutput {
+	return o.ApplyT(func(v GetWorkloadNetworkingInternal) string { return v.Routing }).(pulumi.StringOutput)
+}
+
 type GetWorkloadOption struct {
 	// Auto-scaling adjusts horizontal scaling based on a set strategy, target value, and possibly a metric percentile.
 	Autoscalings []GetWorkloadOptionAutoscaling `pulumi:"autoscalings"`
@@ -65809,13 +68565,15 @@ func (o GetWorkloadRequestRetryPolicyArrayOutput) Index(i pulumi.IntInput) GetWo
 }
 
 type GetWorkloadRolloutOption struct {
-	// The number of replicas that can be created above the desired amount of replicas during an update.
+	// The number of replicas that can be created above the desired amount of replicas during an update. Not supported for `vm` workloads.
 	MaxSurgeReplicas string `pulumi:"maxSurgeReplicas"`
 	// The number of replicas that can be unavailable during the update process.
 	MaxUnavailableReplicas string `pulumi:"maxUnavailableReplicas"`
 	// The minimum number of seconds a container must run without crashing to be considered available.
 	MinReadySeconds int `pulumi:"minReadySeconds"`
-	// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+	// When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified.
+	RolloutOnReferenceChange bool `pulumi:"rolloutOnReferenceChange"`
+	// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`. Cannot be set for `vm` workloads.
 	ScalingPolicy string `pulumi:"scalingPolicy"`
 	// The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run.
 	TerminationGracePeriodSeconds int `pulumi:"terminationGracePeriodSeconds"`
@@ -65833,13 +68591,15 @@ type GetWorkloadRolloutOptionInput interface {
 }
 
 type GetWorkloadRolloutOptionArgs struct {
-	// The number of replicas that can be created above the desired amount of replicas during an update.
+	// The number of replicas that can be created above the desired amount of replicas during an update. Not supported for `vm` workloads.
 	MaxSurgeReplicas pulumi.StringInput `pulumi:"maxSurgeReplicas"`
 	// The number of replicas that can be unavailable during the update process.
 	MaxUnavailableReplicas pulumi.StringInput `pulumi:"maxUnavailableReplicas"`
 	// The minimum number of seconds a container must run without crashing to be considered available.
 	MinReadySeconds pulumi.IntInput `pulumi:"minReadySeconds"`
-	// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+	// When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified.
+	RolloutOnReferenceChange pulumi.BoolInput `pulumi:"rolloutOnReferenceChange"`
+	// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`. Cannot be set for `vm` workloads.
 	ScalingPolicy pulumi.StringInput `pulumi:"scalingPolicy"`
 	// The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run.
 	TerminationGracePeriodSeconds pulumi.IntInput `pulumi:"terminationGracePeriodSeconds"`
@@ -65896,7 +68656,7 @@ func (o GetWorkloadRolloutOptionOutput) ToGetWorkloadRolloutOptionOutputWithCont
 	return o
 }
 
-// The number of replicas that can be created above the desired amount of replicas during an update.
+// The number of replicas that can be created above the desired amount of replicas during an update. Not supported for `vm` workloads.
 func (o GetWorkloadRolloutOptionOutput) MaxSurgeReplicas() pulumi.StringOutput {
 	return o.ApplyT(func(v GetWorkloadRolloutOption) string { return v.MaxSurgeReplicas }).(pulumi.StringOutput)
 }
@@ -65911,7 +68671,12 @@ func (o GetWorkloadRolloutOptionOutput) MinReadySeconds() pulumi.IntOutput {
 	return o.ApplyT(func(v GetWorkloadRolloutOption) int { return v.MinReadySeconds }).(pulumi.IntOutput)
 }
 
-// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+// When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified.
+func (o GetWorkloadRolloutOptionOutput) RolloutOnReferenceChange() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetWorkloadRolloutOption) bool { return v.RolloutOnReferenceChange }).(pulumi.BoolOutput)
+}
+
+// The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`. Cannot be set for `vm` workloads.
 func (o GetWorkloadRolloutOptionOutput) ScalingPolicy() pulumi.StringOutput {
 	return o.ApplyT(func(v GetWorkloadRolloutOption) string { return v.ScalingPolicy }).(pulumi.StringOutput)
 }
@@ -67950,6 +70715,26 @@ func (o GetWorkloadVmNetworkArrayOutput) Index(i pulumi.IntInput) GetWorkloadVmN
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CatalogTemplateResourceInput)(nil)).Elem(), CatalogTemplateResourceArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CatalogTemplateResourceArrayInput)(nil)).Elem(), CatalogTemplateResourceArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorAcmeInput)(nil)).Elem(), CertificateGeneratorAcmeArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorAcmePtrInput)(nil)).Elem(), CertificateGeneratorAcmeArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorAcmeChallengeInput)(nil)).Elem(), CertificateGeneratorAcmeChallengeArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorAcmeChallengePtrInput)(nil)).Elem(), CertificateGeneratorAcmeChallengeArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01Input)(nil)).Elem(), CertificateGeneratorAcmeChallengeDns01Args{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01PtrInput)(nil)).Elem(), CertificateGeneratorAcmeChallengeDns01Args{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01AzureDnsInput)(nil)).Elem(), CertificateGeneratorAcmeChallengeDns01AzureDnsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01AzureDnsPtrInput)(nil)).Elem(), CertificateGeneratorAcmeChallengeDns01AzureDnsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01CloudDnsInput)(nil)).Elem(), CertificateGeneratorAcmeChallengeDns01CloudDnsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01CloudDnsPtrInput)(nil)).Elem(), CertificateGeneratorAcmeChallengeDns01CloudDnsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01CloudflareInput)(nil)).Elem(), CertificateGeneratorAcmeChallengeDns01CloudflareArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01CloudflarePtrInput)(nil)).Elem(), CertificateGeneratorAcmeChallengeDns01CloudflareArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01Route53Input)(nil)).Elem(), CertificateGeneratorAcmeChallengeDns01Route53Args{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorAcmeChallengeDns01Route53PtrInput)(nil)).Elem(), CertificateGeneratorAcmeChallengeDns01Route53Args{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorAcmeChallengeHttp01Input)(nil)).Elem(), CertificateGeneratorAcmeChallengeHttp01Args{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorAcmeChallengeHttp01PtrInput)(nil)).Elem(), CertificateGeneratorAcmeChallengeHttp01Args{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorAcmeExternalAccountBindingInput)(nil)).Elem(), CertificateGeneratorAcmeExternalAccountBindingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorAcmeExternalAccountBindingPtrInput)(nil)).Elem(), CertificateGeneratorAcmeExternalAccountBindingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorStatusInput)(nil)).Elem(), CertificateGeneratorStatusArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CertificateGeneratorStatusArrayInput)(nil)).Elem(), CertificateGeneratorStatusArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CloudAccountAwsInput)(nil)).Elem(), CloudAccountAwsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CloudAccountAwsPtrInput)(nil)).Elem(), CloudAccountAwsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CloudAccountAzureInput)(nil)).Elem(), CloudAccountAzureArgs{})
@@ -68428,6 +71213,9 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSetStatusArrayInput)(nil)).Elem(), VolumeSetStatusArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadContainerInput)(nil)).Elem(), WorkloadContainerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadContainerArrayInput)(nil)).Elem(), WorkloadContainerArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadContainerEnvFromInput)(nil)).Elem(), WorkloadContainerEnvFromArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadContainerEnvFromArrayInput)(nil)).Elem(), WorkloadContainerEnvFromArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadContainerEnvFromSecretRefInput)(nil)).Elem(), WorkloadContainerEnvFromSecretRefArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadContainerGpuCustomInput)(nil)).Elem(), WorkloadContainerGpuCustomArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadContainerGpuCustomPtrInput)(nil)).Elem(), WorkloadContainerGpuCustomArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadContainerGpuNvidiaInput)(nil)).Elem(), WorkloadContainerGpuNvidiaArgs{})
@@ -68468,6 +71256,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadContainerReadinessProbeTcpSocketPtrInput)(nil)).Elem(), WorkloadContainerReadinessProbeTcpSocketArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadContainerVolumeInput)(nil)).Elem(), WorkloadContainerVolumeArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadContainerVolumeArrayInput)(nil)).Elem(), WorkloadContainerVolumeArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadDisruptionBudgetInput)(nil)).Elem(), WorkloadDisruptionBudgetArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadDisruptionBudgetPtrInput)(nil)).Elem(), WorkloadDisruptionBudgetArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadFirewallSpecInput)(nil)).Elem(), WorkloadFirewallSpecArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadFirewallSpecPtrInput)(nil)).Elem(), WorkloadFirewallSpecArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadFirewallSpecExternalInput)(nil)).Elem(), WorkloadFirewallSpecExternalArgs{})
@@ -68524,6 +71314,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionAutoscalingMultiArrayInput)(nil)).Elem(), WorkloadLocalOptionAutoscalingMultiArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionMultiZoneInput)(nil)).Elem(), WorkloadLocalOptionMultiZoneArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadLocalOptionMultiZonePtrInput)(nil)).Elem(), WorkloadLocalOptionMultiZoneArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadNetworkingInput)(nil)).Elem(), WorkloadNetworkingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadNetworkingPtrInput)(nil)).Elem(), WorkloadNetworkingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadNetworkingInternalInput)(nil)).Elem(), WorkloadNetworkingInternalArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadNetworkingInternalPtrInput)(nil)).Elem(), WorkloadNetworkingInternalArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsInput)(nil)).Elem(), WorkloadOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsPtrInput)(nil)).Elem(), WorkloadOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*WorkloadOptionsAutoscalingInput)(nil)).Elem(), WorkloadOptionsAutoscalingArgs{})
@@ -68686,6 +71480,9 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetSecretUserpassArrayInput)(nil)).Elem(), GetSecretUserpassArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerInput)(nil)).Elem(), GetWorkloadContainerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerArrayInput)(nil)).Elem(), GetWorkloadContainerArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerEnvFromInput)(nil)).Elem(), GetWorkloadContainerEnvFromArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerEnvFromArrayInput)(nil)).Elem(), GetWorkloadContainerEnvFromArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerEnvFromSecretRefInput)(nil)).Elem(), GetWorkloadContainerEnvFromSecretRefArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerGpuCustomInput)(nil)).Elem(), GetWorkloadContainerGpuCustomArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerGpuCustomArrayInput)(nil)).Elem(), GetWorkloadContainerGpuCustomArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerGpuNvidiaInput)(nil)).Elem(), GetWorkloadContainerGpuNvidiaArgs{})
@@ -68726,6 +71523,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerReadinessProbeTcpSocketArrayInput)(nil)).Elem(), GetWorkloadContainerReadinessProbeTcpSocketArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerVolumeInput)(nil)).Elem(), GetWorkloadContainerVolumeArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadContainerVolumeArrayInput)(nil)).Elem(), GetWorkloadContainerVolumeArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadDisruptionBudgetInput)(nil)).Elem(), GetWorkloadDisruptionBudgetArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecInput)(nil)).Elem(), GetWorkloadFirewallSpecArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecArrayInput)(nil)).Elem(), GetWorkloadFirewallSpecArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadFirewallSpecExternalInput)(nil)).Elem(), GetWorkloadFirewallSpecExternalArgs{})
@@ -68783,6 +71581,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionAutoscalingMultiArrayInput)(nil)).Elem(), GetWorkloadLocalOptionAutoscalingMultiArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionMultiZoneInput)(nil)).Elem(), GetWorkloadLocalOptionMultiZoneArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadLocalOptionMultiZoneArrayInput)(nil)).Elem(), GetWorkloadLocalOptionMultiZoneArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadNetworkingInput)(nil)).Elem(), GetWorkloadNetworkingArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadNetworkingInternalInput)(nil)).Elem(), GetWorkloadNetworkingInternalArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionInput)(nil)).Elem(), GetWorkloadOptionArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionArrayInput)(nil)).Elem(), GetWorkloadOptionArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadOptionAutoscalingInput)(nil)).Elem(), GetWorkloadOptionAutoscalingArgs{})
@@ -68852,6 +71652,26 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetWorkloadVmNetworkArrayInput)(nil)).Elem(), GetWorkloadVmNetworkArray{})
 	pulumi.RegisterOutputType(CatalogTemplateResourceOutput{})
 	pulumi.RegisterOutputType(CatalogTemplateResourceArrayOutput{})
+	pulumi.RegisterOutputType(CertificateGeneratorAcmeOutput{})
+	pulumi.RegisterOutputType(CertificateGeneratorAcmePtrOutput{})
+	pulumi.RegisterOutputType(CertificateGeneratorAcmeChallengeOutput{})
+	pulumi.RegisterOutputType(CertificateGeneratorAcmeChallengePtrOutput{})
+	pulumi.RegisterOutputType(CertificateGeneratorAcmeChallengeDns01Output{})
+	pulumi.RegisterOutputType(CertificateGeneratorAcmeChallengeDns01PtrOutput{})
+	pulumi.RegisterOutputType(CertificateGeneratorAcmeChallengeDns01AzureDnsOutput{})
+	pulumi.RegisterOutputType(CertificateGeneratorAcmeChallengeDns01AzureDnsPtrOutput{})
+	pulumi.RegisterOutputType(CertificateGeneratorAcmeChallengeDns01CloudDnsOutput{})
+	pulumi.RegisterOutputType(CertificateGeneratorAcmeChallengeDns01CloudDnsPtrOutput{})
+	pulumi.RegisterOutputType(CertificateGeneratorAcmeChallengeDns01CloudflareOutput{})
+	pulumi.RegisterOutputType(CertificateGeneratorAcmeChallengeDns01CloudflarePtrOutput{})
+	pulumi.RegisterOutputType(CertificateGeneratorAcmeChallengeDns01Route53Output{})
+	pulumi.RegisterOutputType(CertificateGeneratorAcmeChallengeDns01Route53PtrOutput{})
+	pulumi.RegisterOutputType(CertificateGeneratorAcmeChallengeHttp01Output{})
+	pulumi.RegisterOutputType(CertificateGeneratorAcmeChallengeHttp01PtrOutput{})
+	pulumi.RegisterOutputType(CertificateGeneratorAcmeExternalAccountBindingOutput{})
+	pulumi.RegisterOutputType(CertificateGeneratorAcmeExternalAccountBindingPtrOutput{})
+	pulumi.RegisterOutputType(CertificateGeneratorStatusOutput{})
+	pulumi.RegisterOutputType(CertificateGeneratorStatusArrayOutput{})
 	pulumi.RegisterOutputType(CloudAccountAwsOutput{})
 	pulumi.RegisterOutputType(CloudAccountAwsPtrOutput{})
 	pulumi.RegisterOutputType(CloudAccountAzureOutput{})
@@ -69330,6 +72150,9 @@ func init() {
 	pulumi.RegisterOutputType(VolumeSetStatusArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadContainerOutput{})
 	pulumi.RegisterOutputType(WorkloadContainerArrayOutput{})
+	pulumi.RegisterOutputType(WorkloadContainerEnvFromOutput{})
+	pulumi.RegisterOutputType(WorkloadContainerEnvFromArrayOutput{})
+	pulumi.RegisterOutputType(WorkloadContainerEnvFromSecretRefOutput{})
 	pulumi.RegisterOutputType(WorkloadContainerGpuCustomOutput{})
 	pulumi.RegisterOutputType(WorkloadContainerGpuCustomPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadContainerGpuNvidiaOutput{})
@@ -69370,6 +72193,8 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadContainerReadinessProbeTcpSocketPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadContainerVolumeOutput{})
 	pulumi.RegisterOutputType(WorkloadContainerVolumeArrayOutput{})
+	pulumi.RegisterOutputType(WorkloadDisruptionBudgetOutput{})
+	pulumi.RegisterOutputType(WorkloadDisruptionBudgetPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadFirewallSpecOutput{})
 	pulumi.RegisterOutputType(WorkloadFirewallSpecPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadFirewallSpecExternalOutput{})
@@ -69426,6 +72251,10 @@ func init() {
 	pulumi.RegisterOutputType(WorkloadLocalOptionAutoscalingMultiArrayOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionMultiZoneOutput{})
 	pulumi.RegisterOutputType(WorkloadLocalOptionMultiZonePtrOutput{})
+	pulumi.RegisterOutputType(WorkloadNetworkingOutput{})
+	pulumi.RegisterOutputType(WorkloadNetworkingPtrOutput{})
+	pulumi.RegisterOutputType(WorkloadNetworkingInternalOutput{})
+	pulumi.RegisterOutputType(WorkloadNetworkingInternalPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsPtrOutput{})
 	pulumi.RegisterOutputType(WorkloadOptionsAutoscalingOutput{})
@@ -69588,6 +72417,9 @@ func init() {
 	pulumi.RegisterOutputType(GetSecretUserpassArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadContainerOutput{})
 	pulumi.RegisterOutputType(GetWorkloadContainerArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerEnvFromOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerEnvFromArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadContainerEnvFromSecretRefOutput{})
 	pulumi.RegisterOutputType(GetWorkloadContainerGpuCustomOutput{})
 	pulumi.RegisterOutputType(GetWorkloadContainerGpuCustomArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadContainerGpuNvidiaOutput{})
@@ -69628,6 +72460,7 @@ func init() {
 	pulumi.RegisterOutputType(GetWorkloadContainerReadinessProbeTcpSocketArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadContainerVolumeOutput{})
 	pulumi.RegisterOutputType(GetWorkloadContainerVolumeArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadDisruptionBudgetOutput{})
 	pulumi.RegisterOutputType(GetWorkloadFirewallSpecOutput{})
 	pulumi.RegisterOutputType(GetWorkloadFirewallSpecArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadFirewallSpecExternalOutput{})
@@ -69685,6 +72518,8 @@ func init() {
 	pulumi.RegisterOutputType(GetWorkloadLocalOptionAutoscalingMultiArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLocalOptionMultiZoneOutput{})
 	pulumi.RegisterOutputType(GetWorkloadLocalOptionMultiZoneArrayOutput{})
+	pulumi.RegisterOutputType(GetWorkloadNetworkingOutput{})
+	pulumi.RegisterOutputType(GetWorkloadNetworkingInternalOutput{})
 	pulumi.RegisterOutputType(GetWorkloadOptionOutput{})
 	pulumi.RegisterOutputType(GetWorkloadOptionArrayOutput{})
 	pulumi.RegisterOutputType(GetWorkloadOptionAutoscalingOutput{})

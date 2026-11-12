@@ -18,6 +18,10 @@ namespace Pulumiverse.Cpln.Outputs
         /// Labels to attach to nodes of a node pool.
         /// </summary>
         public readonly ImmutableDictionary<string, string>? Labels;
+        /// <summary>
+        /// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+        /// </summary>
+        public readonly int? MaxPods;
         public readonly string Name;
         /// <summary>
         /// Taint for the nodes of a pool.
@@ -28,11 +32,14 @@ namespace Pulumiverse.Cpln.Outputs
         private Mk8sGenericProviderNodePool(
             ImmutableDictionary<string, string>? labels,
 
+            int? maxPods,
+
             string name,
 
             ImmutableArray<Outputs.Mk8sGenericProviderNodePoolTaint> taints)
         {
             Labels = labels;
+            MaxPods = maxPods;
             Name = name;
             Taints = taints;
         }

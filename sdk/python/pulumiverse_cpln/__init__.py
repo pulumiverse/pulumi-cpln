@@ -9,6 +9,7 @@ import typing
 from .agent import *
 from .audit_context import *
 from .catalog_template import *
+from .certificate_generator import *
 from .cloud_account import *
 from .custom_location import *
 from .domain import *
@@ -76,6 +77,14 @@ _utilities.register(
   "fqn": "pulumiverse_cpln",
   "classes": {
    "cpln:index/catalogTemplate:CatalogTemplate": "CatalogTemplate"
+  }
+ },
+ {
+  "pkg": "cpln",
+  "mod": "index/certificateGenerator",
+  "fqn": "pulumiverse_cpln",
+  "classes": {
+   "cpln:index/certificateGenerator:CertificateGenerator": "CertificateGenerator"
   }
  },
  {

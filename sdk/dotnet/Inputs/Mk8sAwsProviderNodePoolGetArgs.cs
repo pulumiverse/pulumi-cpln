@@ -57,6 +57,12 @@ namespace Pulumiverse.Cpln.Inputs
             set => _labels = value;
         }
 
+        /// <summary>
+        /// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+        /// </summary>
+        [Input("maxPods")]
+        public Input<int>? MaxPods { get; set; }
+
         [Input("maxSize")]
         public Input<int>? MaxSize { get; set; }
 
