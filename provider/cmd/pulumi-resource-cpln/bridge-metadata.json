@@ -15,6 +15,14 @@
                     }
                 }
             },
+            "cpln_certificate_generator": {
+                "current": "cpln:index/certificateGenerator:CertificateGenerator",
+                "fields": {
+                    "status": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
             "cpln_cloud_account": {
                 "current": "cpln:index/cloudAccount:CloudAccount",
                 "fields": {
@@ -1307,6 +1315,9 @@
                                 "args": {
                                     "maxItemsOne": false
                                 },
+                                "env_from": {
+                                    "maxItemsOne": false
+                                },
                                 "gpu_custom": {
                                     "maxItemsOne": true
                                 },
@@ -2045,6 +2056,9 @@
                         "elem": {
                             "fields": {
                                 "args": {
+                                    "maxItemsOne": false
+                                },
+                                "env_from": {
                                     "maxItemsOne": false
                                 },
                                 "gpu_custom": {
