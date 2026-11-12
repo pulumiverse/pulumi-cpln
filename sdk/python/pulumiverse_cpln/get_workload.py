@@ -28,7 +28,7 @@ class GetWorkloadResult:
     """
     A collection of values returned by getWorkload.
     """
-    def __init__(__self__, containers=None, cpln_id=None, description=None, extras=None, firewall_specs=None, gvc=None, health=None, id=None, identity_link=None, jobs=None, load_balancers=None, local_options=None, name=None, options=None, request_retry_policies=None, rollout_options=None, security_options=None, self_link=None, sidecars=None, statuses=None, support_dynamic_tags=None, tags=None, type=None, vm=None):
+    def __init__(__self__, containers=None, cpln_id=None, description=None, disruption_budget=None, extras=None, firewall_specs=None, gvc=None, health=None, id=None, identity_link=None, jobs=None, load_balancers=None, local_options=None, name=None, networking=None, options=None, request_retry_policies=None, rollout_options=None, security_options=None, self_link=None, sidecars=None, statuses=None, support_dynamic_tags=None, tags=None, type=None, vm=None):
         if containers and not isinstance(containers, list):
             raise TypeError("Expected argument 'containers' to be a list")
         pulumi.set(__self__, "containers", containers)
@@ -38,6 +38,9 @@ class GetWorkloadResult:
         if description and not isinstance(description, str):
             raise TypeError("Expected argument 'description' to be a str")
         pulumi.set(__self__, "description", description)
+        if disruption_budget and not isinstance(disruption_budget, dict):
+            raise TypeError("Expected argument 'disruption_budget' to be a dict")
+        pulumi.set(__self__, "disruption_budget", disruption_budget)
         if extras and not isinstance(extras, str):
             raise TypeError("Expected argument 'extras' to be a str")
         pulumi.set(__self__, "extras", extras)
@@ -68,6 +71,9 @@ class GetWorkloadResult:
         if name and not isinstance(name, str):
             raise TypeError("Expected argument 'name' to be a str")
         pulumi.set(__self__, "name", name)
+        if networking and not isinstance(networking, dict):
+            raise TypeError("Expected argument 'networking' to be a dict")
+        pulumi.set(__self__, "networking", networking)
         if options and not isinstance(options, list):
             raise TypeError("Expected argument 'options' to be a list")
         pulumi.set(__self__, "options", options)
@@ -118,6 +124,11 @@ class GetWorkloadResult:
         return pulumi.get(self, "description")
 
     @_builtins.property
+    @pulumi.getter(name="disruptionBudget")
+    def disruption_budget(self) -> 'outputs.GetWorkloadDisruptionBudgetResult':
+        return pulumi.get(self, "disruption_budget")
+
+    @_builtins.property
     @pulumi.getter
     def extras(self) -> _builtins.str:
         return pulumi.get(self, "extras")
@@ -166,6 +177,11 @@ class GetWorkloadResult:
     @pulumi.getter
     def name(self) -> _builtins.str:
         return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter
+    def networking(self) -> 'outputs.GetWorkloadNetworkingResult':
+        return pulumi.get(self, "networking")
 
     @_builtins.property
     @pulumi.getter
@@ -232,6 +248,7 @@ class AwaitableGetWorkloadResult(GetWorkloadResult):
             containers=self.containers,
             cpln_id=self.cpln_id,
             description=self.description,
+            disruption_budget=self.disruption_budget,
             extras=self.extras,
             firewall_specs=self.firewall_specs,
             gvc=self.gvc,
@@ -242,6 +259,7 @@ class AwaitableGetWorkloadResult(GetWorkloadResult):
             load_balancers=self.load_balancers,
             local_options=self.local_options,
             name=self.name,
+            networking=self.networking,
             options=self.options,
             request_retry_policies=self.request_retry_policies,
             rollout_options=self.rollout_options,
@@ -299,8 +317,10 @@ def get_workload(containers: Optional[Sequence[Union['GetWorkloadContainerArgs',
     - **job** (Block List, Max: 1) (see below).
     - **sidecar** (Block List, Max: 1) (see below).
     - **rollout_options** (Block List, Max: 1) (see below).
+    - **disruption_budget** (Attributes) Limits how many replicas voluntary disruptions can evict at once (see below).
     - **security_options** (Block List, Max: 1) (see below).
     - **load_balancer** (Block List, Max: 1) (see below).
+    - **networking** (Attributes) Internal service-to-service networking configuration (see below).
     - **request_retry_policy** (Block List, Max: 1) (see below).
     - **vm** (Attributes) VM-only configuration. Present when `type` is `vm` (see below).
     - **health** (Attributes) Health summary of the workload (see below).
@@ -323,6 +343,7 @@ def get_workload(containers: Optional[Sequence[Union['GetWorkloadContainerArgs',
     - **min_cpu** (String) Minimum CPU when Capacity AI is enabled.
     - **min_memory** (String) Minimum memory when Capacity AI is enabled.
     - **env** (Map of String) Environment variables exposed to the container.
+    - **env_from** (Attributes List) Dictionary secrets whose key/value pairs are injected as environment variables. An explicit `env` variable overrides an `env_from` key of the same name; later entries override earlier ones (see below).
     - **inherit_env** (Boolean) Indicates whether GVC environment variables are inherited. A variable in `env` overrides the same key from the GVC.
     - **command** (String) Override for the container entry point.
     - **args** (List of String) Command-line arguments passed to the container in order.
@@ -422,6 +443,22 @@ def get_workload(containers: Optional[Sequence[Union['GetWorkloadContainerArgs',
     - **port** (Number) Port for the HTTP GET. Min: `80`. Max: `65535`.
     - **http_headers** (Map of String) Headers included in the probe request.
     - **scheme** (String) HTTP scheme. Either `HTTP` or `HTTPS`. Default: `HTTP`.
+
+    <a id="nestedblock--container--env_from"></a>
+
+    ### `container.env_from`
+
+    Read-Only:
+
+    - **secret_ref** (Attributes) References a dictionary secret whose key/value pairs are injected as environment variables (see below).
+
+    <a id="nestedblock--container--env_from--secret_ref"></a>
+
+    ### `container.env_from.secret_ref`
+
+    Read-Only:
+
+    - **name** (String) Name of a dictionary secret whose keys are injected as environment variables.
 
     <a id="nestedblock--container--gpu_nvidia"></a>
 
@@ -534,13 +571,13 @@ def get_workload(containers: Optional[Sequence[Union['GetWorkloadContainerArgs',
 
     ### `firewall_spec.external.http.inbound_header_filter`
 
-    Configures header-based allow/deny logic.
+    Configures header-based allow/deny logic. Each header key appears only once, compared case-insensitively.
 
     Read-Only:
 
-    - **key** (String) Header name to inspect.
-    - **allowed_values** (List of String) Regular expressions describing allowed header values. Requests that fail to match any allowed value are filtered.
-    - **blocked_values** (List of String) Regular expressions describing blocked header values. Requests that match any blocked value are filtered.
+    - **key** (String) Header name to inspect: an HTTP header name or one of the pseudo-headers `:authority`, `:method`, `:path` and `:scheme`. Header names are case-insensitive.
+    - **allowed_values** (List of String) Regular expressions describing allowed header values. When included, requests must have at least one matching header to reach the workload.
+    - **blocked_values** (List of String) Regular expressions describing blocked header values. When included, requests with any matching header are filtered.
 
     <a id="nestedblock--firewall_spec--internal"></a>
 
@@ -757,11 +794,21 @@ def get_workload(containers: Optional[Sequence[Union['GetWorkloadContainerArgs',
 
     - **min_ready_seconds** (Number) Minimum seconds a container must run without crashing to be considered available.
     - **max_unavailable_replicas** (String) Maximum replicas that can be unavailable during an update.
-    - **max_surge_replicas** (String) Maximum replicas above the desired count during an update.
-    - **scaling_policy** (String) Update strategy. Either `OrderedReady` or `Parallel`. Default: `OrderedReady`.
+    - **max_surge_replicas** (String) Maximum replicas above the desired count during an update. Not supported for `vm` workloads.
+    - **scaling_policy** (String) Update strategy. Either `OrderedReady` or `Parallel`. Default: `OrderedReady`. Cannot be set for `vm` workloads.
     - **termination_grace_period_seconds** (Number) Seconds allowed for graceful termination, including `preStop` hooks.
+    - **rollout_on_reference_change** (Boolean) When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified.
 
     > **Note** `max_surge_replicas` and `max_unavailable_replicas` accept absolute numbers (for example, `2`) or percentages (for example, `50%`), and they cannot both be zero.
+
+    <a id="nestedblock--disruption_budget"></a>
+
+    ### `disruption_budget`
+
+    Read-Only:
+
+    - **min_available** (String) Minimum number or percentage of replicas that must stay available during voluntary disruptions such as node drains.
+    - **max_unavailable** (String) Maximum number or percentage of replicas that can be unavailable during voluntary disruptions such as node drains.
 
     <a id="nestedblock--security_options"></a>
 
@@ -824,6 +871,22 @@ def get_workload(containers: Optional[Sequence[Union['GetWorkloadContainerArgs',
     - **city** (String) City header value.
     - **country** (String) Country header value.
     - **region** (String) Region header value.
+
+    <a id="nestedblock--networking"></a>
+
+    ### `networking`
+
+    Read-Only:
+
+    - **internal** (Attributes) Routing of internal (`cpln.local`) requests (see below).
+
+    <a id="nestedblock--networking--internal"></a>
+
+    ### `networking.internal`
+
+    Read-Only:
+
+    - **routing** (String) How requests to `<workload>.<gvc>.cpln.local` from the same GVC are routed. `locationEndpoint`: served only by replicas in the caller's location. `gvcEndpoint`: fail over to the workload's canonical endpoint (the nearest healthy location) when no local replica can serve them.
 
     <a id="nestedblock--request_retry_policy"></a>
 
@@ -1094,6 +1157,7 @@ def get_workload(containers: Optional[Sequence[Union['GetWorkloadContainerArgs',
         containers=pulumi.get(__ret__, 'containers'),
         cpln_id=pulumi.get(__ret__, 'cpln_id'),
         description=pulumi.get(__ret__, 'description'),
+        disruption_budget=pulumi.get(__ret__, 'disruption_budget'),
         extras=pulumi.get(__ret__, 'extras'),
         firewall_specs=pulumi.get(__ret__, 'firewall_specs'),
         gvc=pulumi.get(__ret__, 'gvc'),
@@ -1104,6 +1168,7 @@ def get_workload(containers: Optional[Sequence[Union['GetWorkloadContainerArgs',
         load_balancers=pulumi.get(__ret__, 'load_balancers'),
         local_options=pulumi.get(__ret__, 'local_options'),
         name=pulumi.get(__ret__, 'name'),
+        networking=pulumi.get(__ret__, 'networking'),
         options=pulumi.get(__ret__, 'options'),
         request_retry_policies=pulumi.get(__ret__, 'request_retry_policies'),
         rollout_options=pulumi.get(__ret__, 'rollout_options'),
@@ -1159,8 +1224,10 @@ def get_workload_output(containers: Optional[pulumi.Input[Optional[Sequence[Unio
     - **job** (Block List, Max: 1) (see below).
     - **sidecar** (Block List, Max: 1) (see below).
     - **rollout_options** (Block List, Max: 1) (see below).
+    - **disruption_budget** (Attributes) Limits how many replicas voluntary disruptions can evict at once (see below).
     - **security_options** (Block List, Max: 1) (see below).
     - **load_balancer** (Block List, Max: 1) (see below).
+    - **networking** (Attributes) Internal service-to-service networking configuration (see below).
     - **request_retry_policy** (Block List, Max: 1) (see below).
     - **vm** (Attributes) VM-only configuration. Present when `type` is `vm` (see below).
     - **health** (Attributes) Health summary of the workload (see below).
@@ -1183,6 +1250,7 @@ def get_workload_output(containers: Optional[pulumi.Input[Optional[Sequence[Unio
     - **min_cpu** (String) Minimum CPU when Capacity AI is enabled.
     - **min_memory** (String) Minimum memory when Capacity AI is enabled.
     - **env** (Map of String) Environment variables exposed to the container.
+    - **env_from** (Attributes List) Dictionary secrets whose key/value pairs are injected as environment variables. An explicit `env` variable overrides an `env_from` key of the same name; later entries override earlier ones (see below).
     - **inherit_env** (Boolean) Indicates whether GVC environment variables are inherited. A variable in `env` overrides the same key from the GVC.
     - **command** (String) Override for the container entry point.
     - **args** (List of String) Command-line arguments passed to the container in order.
@@ -1282,6 +1350,22 @@ def get_workload_output(containers: Optional[pulumi.Input[Optional[Sequence[Unio
     - **port** (Number) Port for the HTTP GET. Min: `80`. Max: `65535`.
     - **http_headers** (Map of String) Headers included in the probe request.
     - **scheme** (String) HTTP scheme. Either `HTTP` or `HTTPS`. Default: `HTTP`.
+
+    <a id="nestedblock--container--env_from"></a>
+
+    ### `container.env_from`
+
+    Read-Only:
+
+    - **secret_ref** (Attributes) References a dictionary secret whose key/value pairs are injected as environment variables (see below).
+
+    <a id="nestedblock--container--env_from--secret_ref"></a>
+
+    ### `container.env_from.secret_ref`
+
+    Read-Only:
+
+    - **name** (String) Name of a dictionary secret whose keys are injected as environment variables.
 
     <a id="nestedblock--container--gpu_nvidia"></a>
 
@@ -1394,13 +1478,13 @@ def get_workload_output(containers: Optional[pulumi.Input[Optional[Sequence[Unio
 
     ### `firewall_spec.external.http.inbound_header_filter`
 
-    Configures header-based allow/deny logic.
+    Configures header-based allow/deny logic. Each header key appears only once, compared case-insensitively.
 
     Read-Only:
 
-    - **key** (String) Header name to inspect.
-    - **allowed_values** (List of String) Regular expressions describing allowed header values. Requests that fail to match any allowed value are filtered.
-    - **blocked_values** (List of String) Regular expressions describing blocked header values. Requests that match any blocked value are filtered.
+    - **key** (String) Header name to inspect: an HTTP header name or one of the pseudo-headers `:authority`, `:method`, `:path` and `:scheme`. Header names are case-insensitive.
+    - **allowed_values** (List of String) Regular expressions describing allowed header values. When included, requests must have at least one matching header to reach the workload.
+    - **blocked_values** (List of String) Regular expressions describing blocked header values. When included, requests with any matching header are filtered.
 
     <a id="nestedblock--firewall_spec--internal"></a>
 
@@ -1617,11 +1701,21 @@ def get_workload_output(containers: Optional[pulumi.Input[Optional[Sequence[Unio
 
     - **min_ready_seconds** (Number) Minimum seconds a container must run without crashing to be considered available.
     - **max_unavailable_replicas** (String) Maximum replicas that can be unavailable during an update.
-    - **max_surge_replicas** (String) Maximum replicas above the desired count during an update.
-    - **scaling_policy** (String) Update strategy. Either `OrderedReady` or `Parallel`. Default: `OrderedReady`.
+    - **max_surge_replicas** (String) Maximum replicas above the desired count during an update. Not supported for `vm` workloads.
+    - **scaling_policy** (String) Update strategy. Either `OrderedReady` or `Parallel`. Default: `OrderedReady`. Cannot be set for `vm` workloads.
     - **termination_grace_period_seconds** (Number) Seconds allowed for graceful termination, including `preStop` hooks.
+    - **rollout_on_reference_change** (Boolean) When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified.
 
     > **Note** `max_surge_replicas` and `max_unavailable_replicas` accept absolute numbers (for example, `2`) or percentages (for example, `50%`), and they cannot both be zero.
+
+    <a id="nestedblock--disruption_budget"></a>
+
+    ### `disruption_budget`
+
+    Read-Only:
+
+    - **min_available** (String) Minimum number or percentage of replicas that must stay available during voluntary disruptions such as node drains.
+    - **max_unavailable** (String) Maximum number or percentage of replicas that can be unavailable during voluntary disruptions such as node drains.
 
     <a id="nestedblock--security_options"></a>
 
@@ -1684,6 +1778,22 @@ def get_workload_output(containers: Optional[pulumi.Input[Optional[Sequence[Unio
     - **city** (String) City header value.
     - **country** (String) Country header value.
     - **region** (String) Region header value.
+
+    <a id="nestedblock--networking"></a>
+
+    ### `networking`
+
+    Read-Only:
+
+    - **internal** (Attributes) Routing of internal (`cpln.local`) requests (see below).
+
+    <a id="nestedblock--networking--internal"></a>
+
+    ### `networking.internal`
+
+    Read-Only:
+
+    - **routing** (String) How requests to `<workload>.<gvc>.cpln.local` from the same GVC are routed. `locationEndpoint`: served only by replicas in the caller's location. `gvcEndpoint`: fail over to the workload's canonical endpoint (the nearest healthy location) when no local replica can serve them.
 
     <a id="nestedblock--request_retry_policy"></a>
 
@@ -1953,6 +2063,7 @@ def get_workload_output(containers: Optional[pulumi.Input[Optional[Sequence[Unio
         containers=pulumi.get(__response__, 'containers'),
         cpln_id=pulumi.get(__response__, 'cpln_id'),
         description=pulumi.get(__response__, 'description'),
+        disruption_budget=pulumi.get(__response__, 'disruption_budget'),
         extras=pulumi.get(__response__, 'extras'),
         firewall_specs=pulumi.get(__response__, 'firewall_specs'),
         gvc=pulumi.get(__response__, 'gvc'),
@@ -1963,6 +2074,7 @@ def get_workload_output(containers: Optional[pulumi.Input[Optional[Sequence[Unio
         load_balancers=pulumi.get(__response__, 'load_balancers'),
         local_options=pulumi.get(__response__, 'local_options'),
         name=pulumi.get(__response__, 'name'),
+        networking=pulumi.get(__response__, 'networking'),
         options=pulumi.get(__response__, 'options'),
         request_retry_policies=pulumi.get(__response__, 'request_retry_policies'),
         rollout_options=pulumi.get(__response__, 'rollout_options'),

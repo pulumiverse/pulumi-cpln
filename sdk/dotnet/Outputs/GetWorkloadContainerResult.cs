@@ -30,6 +30,10 @@ namespace Pulumiverse.Cpln.Outputs
         /// Name-Value list of environment variables.
         /// </summary>
         public readonly ImmutableDictionary<string, string> Env;
+        /// <summary>
+        /// Dictionary secrets whose key/value pairs are injected as environment variables. An explicit `Env` variable overrides an `EnvFrom` key of the same name; later entries override earlier ones.
+        /// </summary>
+        public readonly ImmutableArray<Outputs.GetWorkloadContainerEnvFromResult> EnvFroms;
         public readonly ImmutableArray<Outputs.GetWorkloadContainerGpuCustomResult> GpuCustoms;
         /// <summary>
         /// GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
@@ -102,6 +106,8 @@ namespace Pulumiverse.Cpln.Outputs
 
             ImmutableDictionary<string, string> env,
 
+            ImmutableArray<Outputs.GetWorkloadContainerEnvFromResult> envFroms,
+
             ImmutableArray<Outputs.GetWorkloadContainerGpuCustomResult> gpuCustoms,
 
             ImmutableArray<Outputs.GetWorkloadContainerGpuNvidiaResult> gpuNvidias,
@@ -138,6 +144,7 @@ namespace Pulumiverse.Cpln.Outputs
             Command = command;
             Cpu = cpu;
             Env = env;
+            EnvFroms = envFroms;
             GpuCustoms = gpuCustoms;
             GpuNvidias = gpuNvidias;
             Image = image;

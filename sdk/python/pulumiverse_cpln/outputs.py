@@ -17,6 +17,16 @@ from . import outputs
 
 __all__ = [
     'CatalogTemplateResource',
+    'CertificateGeneratorAcme',
+    'CertificateGeneratorAcmeChallenge',
+    'CertificateGeneratorAcmeChallengeDns01',
+    'CertificateGeneratorAcmeChallengeDns01AzureDns',
+    'CertificateGeneratorAcmeChallengeDns01CloudDns',
+    'CertificateGeneratorAcmeChallengeDns01Cloudflare',
+    'CertificateGeneratorAcmeChallengeDns01Route53',
+    'CertificateGeneratorAcmeChallengeHttp01',
+    'CertificateGeneratorAcmeExternalAccountBinding',
+    'CertificateGeneratorStatus',
     'CloudAccountAws',
     'CloudAccountAzure',
     'CloudAccountGcp',
@@ -256,6 +266,8 @@ __all__ = [
     'VolumeSetSnapshots',
     'VolumeSetStatus',
     'WorkloadContainer',
+    'WorkloadContainerEnvFrom',
+    'WorkloadContainerEnvFromSecretRef',
     'WorkloadContainerGpuCustom',
     'WorkloadContainerGpuNvidia',
     'WorkloadContainerLifecycle',
@@ -276,6 +288,7 @@ __all__ = [
     'WorkloadContainerReadinessProbeHttpGet',
     'WorkloadContainerReadinessProbeTcpSocket',
     'WorkloadContainerVolume',
+    'WorkloadDisruptionBudget',
     'WorkloadFirewallSpec',
     'WorkloadFirewallSpecExternal',
     'WorkloadFirewallSpecExternalHttp',
@@ -304,6 +317,8 @@ __all__ = [
     'WorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRef',
     'WorkloadLocalOptionAutoscalingMulti',
     'WorkloadLocalOptionMultiZone',
+    'WorkloadNetworking',
+    'WorkloadNetworkingInternal',
     'WorkloadOptions',
     'WorkloadOptionsAutoscaling',
     'WorkloadOptionsAutoscalingKeda',
@@ -385,6 +400,8 @@ __all__ = [
     'GetSecretTlResult',
     'GetSecretUserpassResult',
     'GetWorkloadContainerResult',
+    'GetWorkloadContainerEnvFromResult',
+    'GetWorkloadContainerEnvFromSecretRefResult',
     'GetWorkloadContainerGpuCustomResult',
     'GetWorkloadContainerGpuNvidiaResult',
     'GetWorkloadContainerLifecycleResult',
@@ -405,6 +422,7 @@ __all__ = [
     'GetWorkloadContainerReadinessProbeHttpGetResult',
     'GetWorkloadContainerReadinessProbeTcpSocketResult',
     'GetWorkloadContainerVolumeResult',
+    'GetWorkloadDisruptionBudgetResult',
     'GetWorkloadFirewallSpecResult',
     'GetWorkloadFirewallSpecExternalResult',
     'GetWorkloadFirewallSpecExternalHttpResult',
@@ -434,6 +452,8 @@ __all__ = [
     'GetWorkloadLocalOptionAutoscalingKedaTriggerAuthenticationRefResult',
     'GetWorkloadLocalOptionAutoscalingMultiResult',
     'GetWorkloadLocalOptionMultiZoneResult',
+    'GetWorkloadNetworkingResult',
+    'GetWorkloadNetworkingInternalResult',
     'GetWorkloadOptionResult',
     'GetWorkloadOptionAutoscalingResult',
     'GetWorkloadOptionAutoscalingKedaResult',
@@ -516,6 +536,510 @@ class CatalogTemplateResource(dict):
         The name of the resource.
         """
         return pulumi.get(self, "name")
+
+
+@pulumi.output_type
+class CertificateGeneratorAcme(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "externalAccountBinding":
+            suggest = "external_account_binding"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in CertificateGeneratorAcme. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        CertificateGeneratorAcme.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        CertificateGeneratorAcme.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 challenge: 'outputs.CertificateGeneratorAcmeChallenge',
+                 server: _builtins.str,
+                 email: Optional[_builtins.str] = None,
+                 external_account_binding: Optional['outputs.CertificateGeneratorAcmeExternalAccountBinding'] = None):
+        """
+        :param 'CertificateGeneratorAcmeChallengeArgs' challenge: How ACME challenges are solved. Exactly one of `http01` or `dns01` must be set. Changing the challenge type recreates the certificate generator.
+        :param _builtins.str server: ACME directory URL of the CA, e.g. `https://acme-v02.api.letsencrypt.org/directory`. Must use `https`. Changing it recreates the certificate generator.
+        :param _builtins.str email: Contact email registered with the ACME account.
+        :param 'CertificateGeneratorAcmeExternalAccountBindingArgs' external_account_binding: Binds the ACME account to an existing account at the CA. Required by most commercial CAs.
+        """
+        pulumi.set(__self__, "challenge", challenge)
+        pulumi.set(__self__, "server", server)
+        if email is not None:
+            pulumi.set(__self__, "email", email)
+        if external_account_binding is not None:
+            pulumi.set(__self__, "external_account_binding", external_account_binding)
+
+    @_builtins.property
+    @pulumi.getter
+    def challenge(self) -> 'outputs.CertificateGeneratorAcmeChallenge':
+        """
+        How ACME challenges are solved. Exactly one of `http01` or `dns01` must be set. Changing the challenge type recreates the certificate generator.
+        """
+        return pulumi.get(self, "challenge")
+
+    @_builtins.property
+    @pulumi.getter
+    def server(self) -> _builtins.str:
+        """
+        ACME directory URL of the CA, e.g. `https://acme-v02.api.letsencrypt.org/directory`. Must use `https`. Changing it recreates the certificate generator.
+        """
+        return pulumi.get(self, "server")
+
+    @_builtins.property
+    @pulumi.getter
+    def email(self) -> Optional[_builtins.str]:
+        """
+        Contact email registered with the ACME account.
+        """
+        return pulumi.get(self, "email")
+
+    @_builtins.property
+    @pulumi.getter(name="externalAccountBinding")
+    def external_account_binding(self) -> Optional['outputs.CertificateGeneratorAcmeExternalAccountBinding']:
+        """
+        Binds the ACME account to an existing account at the CA. Required by most commercial CAs.
+        """
+        return pulumi.get(self, "external_account_binding")
+
+
+@pulumi.output_type
+class CertificateGeneratorAcmeChallenge(dict):
+    def __init__(__self__, *,
+                 dns01: Optional['outputs.CertificateGeneratorAcmeChallengeDns01'] = None,
+                 http01: Optional['outputs.CertificateGeneratorAcmeChallengeHttp01'] = None):
+        """
+        :param 'CertificateGeneratorAcmeChallengeDns01Args' dns01: Solve ACME challenges with TXT records, either delegated to Control Plane (`cpln`) or written into DNS zones the org controls. Required for wildcard certificates.
+        :param 'CertificateGeneratorAcmeChallengeHttp01Args' http01: Solve ACME challenges over HTTP on the domain itself. Only domain-name certificates can be issued; wildcards require `dns01`.
+        """
+        if dns01 is not None:
+            pulumi.set(__self__, "dns01", dns01)
+        if http01 is not None:
+            pulumi.set(__self__, "http01", http01)
+
+    @_builtins.property
+    @pulumi.getter
+    def dns01(self) -> Optional['outputs.CertificateGeneratorAcmeChallengeDns01']:
+        """
+        Solve ACME challenges with TXT records, either delegated to Control Plane (`cpln`) or written into DNS zones the org controls. Required for wildcard certificates.
+        """
+        return pulumi.get(self, "dns01")
+
+    @_builtins.property
+    @pulumi.getter
+    def http01(self) -> Optional['outputs.CertificateGeneratorAcmeChallengeHttp01']:
+        """
+        Solve ACME challenges over HTTP on the domain itself. Only domain-name certificates can be issued; wildcards require `dns01`.
+        """
+        return pulumi.get(self, "http01")
+
+
+@pulumi.output_type
+class CertificateGeneratorAcmeChallengeDns01(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "azureDns":
+            suggest = "azure_dns"
+        elif key == "cloudDns":
+            suggest = "cloud_dns"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in CertificateGeneratorAcmeChallengeDns01. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        CertificateGeneratorAcmeChallengeDns01.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        CertificateGeneratorAcmeChallengeDns01.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 azure_dns: Optional['outputs.CertificateGeneratorAcmeChallengeDns01AzureDns'] = None,
+                 cloud_dns: Optional['outputs.CertificateGeneratorAcmeChallengeDns01CloudDns'] = None,
+                 cloudflare: Optional['outputs.CertificateGeneratorAcmeChallengeDns01Cloudflare'] = None,
+                 provider: Optional[_builtins.str] = None,
+                 route53: Optional['outputs.CertificateGeneratorAcmeChallengeDns01Route53'] = None):
+        """
+        :param 'CertificateGeneratorAcmeChallengeDns01AzureDnsArgs' azure_dns: Azure DNS settings. Required when `provider` is `azureDns`.
+        :param 'CertificateGeneratorAcmeChallengeDns01CloudDnsArgs' cloud_dns: Google Cloud DNS settings. Required when `provider` is `cloudDns`.
+        :param 'CertificateGeneratorAcmeChallengeDns01CloudflareArgs' cloudflare: Cloudflare settings. Required when `provider` is `cloudflare`.
+        :param _builtins.str provider: DNS provider that hosts the zones of the domains using this generator. `cpln`: domains CNAME `_acme-challenge` to Control Plane, no credentials needed. Valid values: `cpln`, `route53`, `cloudDns`, `azureDns`, `cloudflare`. Default: `cpln`.
+        :param 'CertificateGeneratorAcmeChallengeDns01Route53Args' route53: Route53 settings. Required when `provider` is `route53`.
+        """
+        if azure_dns is not None:
+            pulumi.set(__self__, "azure_dns", azure_dns)
+        if cloud_dns is not None:
+            pulumi.set(__self__, "cloud_dns", cloud_dns)
+        if cloudflare is not None:
+            pulumi.set(__self__, "cloudflare", cloudflare)
+        if provider is not None:
+            pulumi.set(__self__, "provider", provider)
+        if route53 is not None:
+            pulumi.set(__self__, "route53", route53)
+
+    @_builtins.property
+    @pulumi.getter(name="azureDns")
+    def azure_dns(self) -> Optional['outputs.CertificateGeneratorAcmeChallengeDns01AzureDns']:
+        """
+        Azure DNS settings. Required when `provider` is `azureDns`.
+        """
+        return pulumi.get(self, "azure_dns")
+
+    @_builtins.property
+    @pulumi.getter(name="cloudDns")
+    def cloud_dns(self) -> Optional['outputs.CertificateGeneratorAcmeChallengeDns01CloudDns']:
+        """
+        Google Cloud DNS settings. Required when `provider` is `cloudDns`.
+        """
+        return pulumi.get(self, "cloud_dns")
+
+    @_builtins.property
+    @pulumi.getter
+    def cloudflare(self) -> Optional['outputs.CertificateGeneratorAcmeChallengeDns01Cloudflare']:
+        """
+        Cloudflare settings. Required when `provider` is `cloudflare`.
+        """
+        return pulumi.get(self, "cloudflare")
+
+    @_builtins.property
+    @pulumi.getter
+    def provider(self) -> Optional[_builtins.str]:
+        """
+        DNS provider that hosts the zones of the domains using this generator. `cpln`: domains CNAME `_acme-challenge` to Control Plane, no credentials needed. Valid values: `cpln`, `route53`, `cloudDns`, `azureDns`, `cloudflare`. Default: `cpln`.
+        """
+        return pulumi.get(self, "provider")
+
+    @_builtins.property
+    @pulumi.getter
+    def route53(self) -> Optional['outputs.CertificateGeneratorAcmeChallengeDns01Route53']:
+        """
+        Route53 settings. Required when `provider` is `route53`.
+        """
+        return pulumi.get(self, "route53")
+
+
+@pulumi.output_type
+class CertificateGeneratorAcmeChallengeDns01AzureDns(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "resourceGroupName":
+            suggest = "resource_group_name"
+        elif key == "secretLink":
+            suggest = "secret_link"
+        elif key == "hostedZoneName":
+            suggest = "hosted_zone_name"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in CertificateGeneratorAcmeChallengeDns01AzureDns. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        CertificateGeneratorAcmeChallengeDns01AzureDns.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        CertificateGeneratorAcmeChallengeDns01AzureDns.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 resource_group_name: _builtins.str,
+                 secret_link: _builtins.str,
+                 hosted_zone_name: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str resource_group_name: Resource group that contains the DNS zone.
+        :param _builtins.str secret_link: Link to a secret of type `azure-sdk`. Its service principal must be a DNS Zone Contributor on the zone.
+        :param _builtins.str hosted_zone_name: Restrict record updates to this DNS zone; discovered from the domain when omitted.
+        """
+        pulumi.set(__self__, "resource_group_name", resource_group_name)
+        pulumi.set(__self__, "secret_link", secret_link)
+        if hosted_zone_name is not None:
+            pulumi.set(__self__, "hosted_zone_name", hosted_zone_name)
+
+    @_builtins.property
+    @pulumi.getter(name="resourceGroupName")
+    def resource_group_name(self) -> _builtins.str:
+        """
+        Resource group that contains the DNS zone.
+        """
+        return pulumi.get(self, "resource_group_name")
+
+    @_builtins.property
+    @pulumi.getter(name="secretLink")
+    def secret_link(self) -> _builtins.str:
+        """
+        Link to a secret of type `azure-sdk`. Its service principal must be a DNS Zone Contributor on the zone.
+        """
+        return pulumi.get(self, "secret_link")
+
+    @_builtins.property
+    @pulumi.getter(name="hostedZoneName")
+    def hosted_zone_name(self) -> Optional[_builtins.str]:
+        """
+        Restrict record updates to this DNS zone; discovered from the domain when omitted.
+        """
+        return pulumi.get(self, "hosted_zone_name")
+
+
+@pulumi.output_type
+class CertificateGeneratorAcmeChallengeDns01CloudDns(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "secretLink":
+            suggest = "secret_link"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in CertificateGeneratorAcmeChallengeDns01CloudDns. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        CertificateGeneratorAcmeChallengeDns01CloudDns.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        CertificateGeneratorAcmeChallengeDns01CloudDns.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 project: _builtins.str,
+                 secret_link: _builtins.str):
+        """
+        :param _builtins.str project: GCP project that owns the Cloud DNS zone.
+        :param _builtins.str secret_link: Link to a secret of type `gcp` holding a service account key with the DNS Administrator role.
+        """
+        pulumi.set(__self__, "project", project)
+        pulumi.set(__self__, "secret_link", secret_link)
+
+    @_builtins.property
+    @pulumi.getter
+    def project(self) -> _builtins.str:
+        """
+        GCP project that owns the Cloud DNS zone.
+        """
+        return pulumi.get(self, "project")
+
+    @_builtins.property
+    @pulumi.getter(name="secretLink")
+    def secret_link(self) -> _builtins.str:
+        """
+        Link to a secret of type `gcp` holding a service account key with the DNS Administrator role.
+        """
+        return pulumi.get(self, "secret_link")
+
+
+@pulumi.output_type
+class CertificateGeneratorAcmeChallengeDns01Cloudflare(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "secretLink":
+            suggest = "secret_link"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in CertificateGeneratorAcmeChallengeDns01Cloudflare. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        CertificateGeneratorAcmeChallengeDns01Cloudflare.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        CertificateGeneratorAcmeChallengeDns01Cloudflare.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 secret_link: _builtins.str):
+        """
+        :param _builtins.str secret_link: Link to a secret of type `opaque` whose payload is a Cloudflare API token with Zone:DNS:Edit permission.
+        """
+        pulumi.set(__self__, "secret_link", secret_link)
+
+    @_builtins.property
+    @pulumi.getter(name="secretLink")
+    def secret_link(self) -> _builtins.str:
+        """
+        Link to a secret of type `opaque` whose payload is a Cloudflare API token with Zone:DNS:Edit permission.
+        """
+        return pulumi.get(self, "secret_link")
+
+
+@pulumi.output_type
+class CertificateGeneratorAcmeChallengeDns01Route53(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "secretLink":
+            suggest = "secret_link"
+        elif key == "hostedZoneId":
+            suggest = "hosted_zone_id"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in CertificateGeneratorAcmeChallengeDns01Route53. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        CertificateGeneratorAcmeChallengeDns01Route53.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        CertificateGeneratorAcmeChallengeDns01Route53.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 region: _builtins.str,
+                 secret_link: _builtins.str,
+                 hosted_zone_id: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str region: AWS region of the Route53 API to use, e.g. `us-east-1`.
+        :param _builtins.str secret_link: Link to a secret of type `aws`. The access key must be allowed to change TXT records in the hosted zone.
+        :param _builtins.str hosted_zone_id: Restrict record updates to this hosted zone; discovered from the domain when omitted.
+        """
+        pulumi.set(__self__, "region", region)
+        pulumi.set(__self__, "secret_link", secret_link)
+        if hosted_zone_id is not None:
+            pulumi.set(__self__, "hosted_zone_id", hosted_zone_id)
+
+    @_builtins.property
+    @pulumi.getter
+    def region(self) -> _builtins.str:
+        """
+        AWS region of the Route53 API to use, e.g. `us-east-1`.
+        """
+        return pulumi.get(self, "region")
+
+    @_builtins.property
+    @pulumi.getter(name="secretLink")
+    def secret_link(self) -> _builtins.str:
+        """
+        Link to a secret of type `aws`. The access key must be allowed to change TXT records in the hosted zone.
+        """
+        return pulumi.get(self, "secret_link")
+
+    @_builtins.property
+    @pulumi.getter(name="hostedZoneId")
+    def hosted_zone_id(self) -> Optional[_builtins.str]:
+        """
+        Restrict record updates to this hosted zone; discovered from the domain when omitted.
+        """
+        return pulumi.get(self, "hosted_zone_id")
+
+
+@pulumi.output_type
+class CertificateGeneratorAcmeChallengeHttp01(dict):
+    def __init__(__self__):
+        pass
+
+
+@pulumi.output_type
+class CertificateGeneratorAcmeExternalAccountBinding(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "keyId":
+            suggest = "key_id"
+        elif key == "secretLink":
+            suggest = "secret_link"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in CertificateGeneratorAcmeExternalAccountBinding. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        CertificateGeneratorAcmeExternalAccountBinding.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        CertificateGeneratorAcmeExternalAccountBinding.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 key_id: _builtins.str,
+                 secret_link: _builtins.str):
+        """
+        :param _builtins.str key_id: Key identifier issued by the CA.
+        :param _builtins.str secret_link: Link to a secret of type `opaque` whose payload is the base64url encoded HMAC key exactly as issued by the CA (encoding `plain`).
+        """
+        pulumi.set(__self__, "key_id", key_id)
+        pulumi.set(__self__, "secret_link", secret_link)
+
+    @_builtins.property
+    @pulumi.getter(name="keyId")
+    def key_id(self) -> _builtins.str:
+        """
+        Key identifier issued by the CA.
+        """
+        return pulumi.get(self, "key_id")
+
+    @_builtins.property
+    @pulumi.getter(name="secretLink")
+    def secret_link(self) -> _builtins.str:
+        """
+        Link to a secret of type `opaque` whose payload is the base64url encoded HMAC key exactly as issued by the CA (encoding `plain`).
+        """
+        return pulumi.get(self, "secret_link")
+
+
+@pulumi.output_type
+class CertificateGeneratorStatus(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "lastUpdated":
+            suggest = "last_updated"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in CertificateGeneratorStatus. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        CertificateGeneratorStatus.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        CertificateGeneratorStatus.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 last_updated: Optional[_builtins.str] = None,
+                 message: Optional[_builtins.str] = None,
+                 ready: Optional[_builtins.bool] = None):
+        """
+        :param _builtins.str last_updated: Timestamp of the last status update.
+        :param _builtins.str message: Reason the generator is not ready.
+        :param _builtins.bool ready: True once the generator is registered with the CA and can issue certificates.
+        """
+        if last_updated is not None:
+            pulumi.set(__self__, "last_updated", last_updated)
+        if message is not None:
+            pulumi.set(__self__, "message", message)
+        if ready is not None:
+            pulumi.set(__self__, "ready", ready)
+
+    @_builtins.property
+    @pulumi.getter(name="lastUpdated")
+    def last_updated(self) -> Optional[_builtins.str]:
+        """
+        Timestamp of the last status update.
+        """
+        return pulumi.get(self, "last_updated")
+
+    @_builtins.property
+    @pulumi.getter
+    def message(self) -> Optional[_builtins.str]:
+        """
+        Reason the generator is not ready.
+        """
+        return pulumi.get(self, "message")
+
+    @_builtins.property
+    @pulumi.getter
+    def ready(self) -> Optional[_builtins.bool]:
+        """
+        True once the generator is registered with the CA and can issue certificates.
+        """
+        return pulumi.get(self, "ready")
 
 
 @pulumi.output_type
@@ -6459,12 +6983,24 @@ class Mk8sAddOnsMetrics(dict):
         suggest = None
         if key == "apiServer":
             suggest = "api_server"
+        elif key == "apiServerDrop":
+            suggest = "api_server_drop"
+        elif key == "cadvisorDrop":
+            suggest = "cadvisor_drop"
         elif key == "coreDns":
             suggest = "core_dns"
+        elif key == "coreDnsDrop":
+            suggest = "core_dns_drop"
         elif key == "kubeState":
             suggest = "kube_state"
+        elif key == "kubeStateDrop":
+            suggest = "kube_state_drop"
+        elif key == "kubeletDrop":
+            suggest = "kubelet_drop"
         elif key == "nodeExporter":
             suggest = "node_exporter"
+        elif key == "nodeExporterDrop":
+            suggest = "node_exporter_drop"
         elif key == "scrapeAnnotated":
             suggest = "scrape_annotated"
 
@@ -6481,32 +7017,56 @@ class Mk8sAddOnsMetrics(dict):
 
     def __init__(__self__, *,
                  api_server: Optional[_builtins.bool] = None,
+                 api_server_drop: Optional[_builtins.str] = None,
                  cadvisor: Optional[_builtins.bool] = None,
+                 cadvisor_drop: Optional[_builtins.str] = None,
                  core_dns: Optional[_builtins.bool] = None,
+                 core_dns_drop: Optional[_builtins.str] = None,
                  kube_state: Optional[_builtins.bool] = None,
+                 kube_state_drop: Optional[_builtins.str] = None,
                  kubelet: Optional[_builtins.bool] = None,
+                 kubelet_drop: Optional[_builtins.str] = None,
                  node_exporter: Optional[_builtins.bool] = None,
+                 node_exporter_drop: Optional[_builtins.str] = None,
                  scrape_annotated: Optional['outputs.Mk8sAddOnsMetricsScrapeAnnotated'] = None):
         """
         :param _builtins.bool api_server: Enable scraping apiserver stats.
+        :param _builtins.str api_server_drop: Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
         :param _builtins.bool cadvisor: Enable CNI-level container stats.
+        :param _builtins.str cadvisor_drop: Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
         :param _builtins.bool core_dns: Enable scraping of core-dns service.
+        :param _builtins.str core_dns_drop: Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
         :param _builtins.bool kube_state: Enable kube-state metrics.
+        :param _builtins.str kube_state_drop: Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
         :param _builtins.bool kubelet: Enable scraping kubelet stats.
+        :param _builtins.str kubelet_drop: Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
         :param _builtins.bool node_exporter: Enable collecting node-level stats (disk, network, filesystem, etc).
+        :param _builtins.str node_exporter_drop: Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
         """
         if api_server is not None:
             pulumi.set(__self__, "api_server", api_server)
+        if api_server_drop is not None:
+            pulumi.set(__self__, "api_server_drop", api_server_drop)
         if cadvisor is not None:
             pulumi.set(__self__, "cadvisor", cadvisor)
+        if cadvisor_drop is not None:
+            pulumi.set(__self__, "cadvisor_drop", cadvisor_drop)
         if core_dns is not None:
             pulumi.set(__self__, "core_dns", core_dns)
+        if core_dns_drop is not None:
+            pulumi.set(__self__, "core_dns_drop", core_dns_drop)
         if kube_state is not None:
             pulumi.set(__self__, "kube_state", kube_state)
+        if kube_state_drop is not None:
+            pulumi.set(__self__, "kube_state_drop", kube_state_drop)
         if kubelet is not None:
             pulumi.set(__self__, "kubelet", kubelet)
+        if kubelet_drop is not None:
+            pulumi.set(__self__, "kubelet_drop", kubelet_drop)
         if node_exporter is not None:
             pulumi.set(__self__, "node_exporter", node_exporter)
+        if node_exporter_drop is not None:
+            pulumi.set(__self__, "node_exporter_drop", node_exporter_drop)
         if scrape_annotated is not None:
             pulumi.set(__self__, "scrape_annotated", scrape_annotated)
 
@@ -6519,12 +7079,28 @@ class Mk8sAddOnsMetrics(dict):
         return pulumi.get(self, "api_server")
 
     @_builtins.property
+    @pulumi.getter(name="apiServerDrop")
+    def api_server_drop(self) -> Optional[_builtins.str]:
+        """
+        Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+        """
+        return pulumi.get(self, "api_server_drop")
+
+    @_builtins.property
     @pulumi.getter
     def cadvisor(self) -> Optional[_builtins.bool]:
         """
         Enable CNI-level container stats.
         """
         return pulumi.get(self, "cadvisor")
+
+    @_builtins.property
+    @pulumi.getter(name="cadvisorDrop")
+    def cadvisor_drop(self) -> Optional[_builtins.str]:
+        """
+        Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+        """
+        return pulumi.get(self, "cadvisor_drop")
 
     @_builtins.property
     @pulumi.getter(name="coreDns")
@@ -6535,12 +7111,28 @@ class Mk8sAddOnsMetrics(dict):
         return pulumi.get(self, "core_dns")
 
     @_builtins.property
+    @pulumi.getter(name="coreDnsDrop")
+    def core_dns_drop(self) -> Optional[_builtins.str]:
+        """
+        Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+        """
+        return pulumi.get(self, "core_dns_drop")
+
+    @_builtins.property
     @pulumi.getter(name="kubeState")
     def kube_state(self) -> Optional[_builtins.bool]:
         """
         Enable kube-state metrics.
         """
         return pulumi.get(self, "kube_state")
+
+    @_builtins.property
+    @pulumi.getter(name="kubeStateDrop")
+    def kube_state_drop(self) -> Optional[_builtins.str]:
+        """
+        Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+        """
+        return pulumi.get(self, "kube_state_drop")
 
     @_builtins.property
     @pulumi.getter
@@ -6551,12 +7143,28 @@ class Mk8sAddOnsMetrics(dict):
         return pulumi.get(self, "kubelet")
 
     @_builtins.property
+    @pulumi.getter(name="kubeletDrop")
+    def kubelet_drop(self) -> Optional[_builtins.str]:
+        """
+        Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+        """
+        return pulumi.get(self, "kubelet_drop")
+
+    @_builtins.property
     @pulumi.getter(name="nodeExporter")
     def node_exporter(self) -> Optional[_builtins.bool]:
         """
         Enable collecting node-level stats (disk, network, filesystem, etc).
         """
         return pulumi.get(self, "node_exporter")
+
+    @_builtins.property
+    @pulumi.getter(name="nodeExporterDrop")
+    def node_exporter_drop(self) -> Optional[_builtins.str]:
+        """
+        Drop scraped series whose metric name matches this RE2 regex. It must match the whole name, e.g. `foo_.*`.
+        """
+        return pulumi.get(self, "node_exporter_drop")
 
     @_builtins.property
     @pulumi.getter(name="scrapeAnnotated")
@@ -7111,6 +7719,8 @@ class Mk8sAwsProviderNodePool(dict):
             suggest = "cpu_options"
         elif key == "extraSecurityGroupIds":
             suggest = "extra_security_group_ids"
+        elif key == "maxPods":
+            suggest = "max_pods"
         elif key == "maxSize":
             suggest = "max_size"
         elif key == "minSize":
@@ -7143,6 +7753,7 @@ class Mk8sAwsProviderNodePool(dict):
                  cpu_options: Optional['outputs.Mk8sAwsProviderNodePoolCpuOptions'] = None,
                  extra_security_group_ids: Optional[Sequence[_builtins.str]] = None,
                  labels: Optional[Mapping[str, _builtins.str]] = None,
+                 max_pods: Optional[_builtins.int] = None,
                  max_size: Optional[_builtins.int] = None,
                  min_size: Optional[_builtins.int] = None,
                  on_demand_base_capacity: Optional[_builtins.int] = None,
@@ -7155,6 +7766,7 @@ class Mk8sAwsProviderNodePool(dict):
         :param 'Mk8sAwsProviderNodePoolCpuOptionsArgs' cpu_options: CPU options for the node pool instances.
         :param Sequence[_builtins.str] extra_security_group_ids: Security groups to deploy nodes to. Security groups control if the cluster is multi-zone or single-zon.
         :param Mapping[str, _builtins.str] labels: Labels to attach to nodes of a node pool.
+        :param _builtins.int max_pods: Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
         :param 'Mk8sAwsProviderNodePoolOverrideImageArgs' override_image: Default image for all nodes.
         :param Sequence['Mk8sAwsProviderNodePoolTaintArgs'] taints: Taint for the nodes of a pool.
         """
@@ -7169,6 +7781,8 @@ class Mk8sAwsProviderNodePool(dict):
             pulumi.set(__self__, "extra_security_group_ids", extra_security_group_ids)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if max_pods is not None:
+            pulumi.set(__self__, "max_pods", max_pods)
         if max_size is not None:
             pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
@@ -7230,6 +7844,14 @@ class Mk8sAwsProviderNodePool(dict):
         Labels to attach to nodes of a node pool.
         """
         return pulumi.get(self, "labels")
+
+    @_builtins.property
+    @pulumi.getter(name="maxPods")
+    def max_pods(self) -> Optional[_builtins.int]:
+        """
+        Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+        """
+        return pulumi.get(self, "max_pods")
 
     @_builtins.property
     @pulumi.getter(name="maxSize")
@@ -7700,6 +8322,8 @@ class Mk8sAzureProviderNodePool(dict):
             suggest = "boot_disk_size"
         elif key == "subnetId":
             suggest = "subnet_id"
+        elif key == "maxPods":
+            suggest = "max_pods"
         elif key == "maxSize":
             suggest = "max_size"
         elif key == "minSize":
@@ -7725,12 +8349,14 @@ class Mk8sAzureProviderNodePool(dict):
                  subnet_id: _builtins.str,
                  zones: Sequence[_builtins.int],
                  labels: Optional[Mapping[str, _builtins.str]] = None,
+                 max_pods: Optional[_builtins.int] = None,
                  max_size: Optional[_builtins.int] = None,
                  min_size: Optional[_builtins.int] = None,
                  override_image: Optional['outputs.Mk8sAzureProviderNodePoolOverrideImage'] = None,
                  taints: Optional[Sequence['outputs.Mk8sAzureProviderNodePoolTaint']] = None):
         """
         :param Mapping[str, _builtins.str] labels: Labels to attach to nodes of a node pool.
+        :param _builtins.int max_pods: Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
         :param Sequence['Mk8sAzureProviderNodePoolTaintArgs'] taints: Taint for the nodes of a pool.
         """
         pulumi.set(__self__, "boot_disk_size", boot_disk_size)
@@ -7740,6 +8366,8 @@ class Mk8sAzureProviderNodePool(dict):
         pulumi.set(__self__, "zones", zones)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if max_pods is not None:
+            pulumi.set(__self__, "max_pods", max_pods)
         if max_size is not None:
             pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
@@ -7781,6 +8409,14 @@ class Mk8sAzureProviderNodePool(dict):
         Labels to attach to nodes of a node pool.
         """
         return pulumi.get(self, "labels")
+
+    @_builtins.property
+    @pulumi.getter(name="maxPods")
+    def max_pods(self) -> Optional[_builtins.int]:
+        """
+        Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+        """
+        return pulumi.get(self, "max_pods")
 
     @_builtins.property
     @pulumi.getter(name="maxSize")
@@ -8183,6 +8819,8 @@ class Mk8sDigitalOceanProviderNodePool(dict):
         suggest = None
         if key == "dropletSize":
             suggest = "droplet_size"
+        elif key == "maxPods":
+            suggest = "max_pods"
         elif key == "maxSize":
             suggest = "max_size"
         elif key == "minSize":
@@ -8205,18 +8843,22 @@ class Mk8sDigitalOceanProviderNodePool(dict):
                  droplet_size: _builtins.str,
                  name: _builtins.str,
                  labels: Optional[Mapping[str, _builtins.str]] = None,
+                 max_pods: Optional[_builtins.int] = None,
                  max_size: Optional[_builtins.int] = None,
                  min_size: Optional[_builtins.int] = None,
                  override_image: Optional[_builtins.str] = None,
                  taints: Optional[Sequence['outputs.Mk8sDigitalOceanProviderNodePoolTaint']] = None):
         """
         :param Mapping[str, _builtins.str] labels: Labels to attach to nodes of a node pool.
+        :param _builtins.int max_pods: Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
         :param Sequence['Mk8sDigitalOceanProviderNodePoolTaintArgs'] taints: Taint for the nodes of a pool.
         """
         pulumi.set(__self__, "droplet_size", droplet_size)
         pulumi.set(__self__, "name", name)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if max_pods is not None:
+            pulumi.set(__self__, "max_pods", max_pods)
         if max_size is not None:
             pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
@@ -8243,6 +8885,14 @@ class Mk8sDigitalOceanProviderNodePool(dict):
         Labels to attach to nodes of a node pool.
         """
         return pulumi.get(self, "labels")
+
+    @_builtins.property
+    @pulumi.getter(name="maxPods")
+    def max_pods(self) -> Optional[_builtins.int]:
+        """
+        Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+        """
+        return pulumi.get(self, "max_pods")
 
     @_builtins.property
     @pulumi.getter(name="maxSize")
@@ -8346,6 +8996,23 @@ class Mk8sEphemeralProvider(dict):
 
 @pulumi.output_type
 class Mk8sEphemeralProviderNodePool(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "maxPods":
+            suggest = "max_pods"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sEphemeralProviderNodePool. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sEphemeralProviderNodePool.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sEphemeralProviderNodePool.__key_warning(key)
+        return super().get(key, default)
+
     def __init__(__self__, *,
                  arch: _builtins.str,
                  count: _builtins.int,
@@ -8354,6 +9021,7 @@ class Mk8sEphemeralProviderNodePool(dict):
                  name: _builtins.str,
                  flavor: Optional[_builtins.str] = None,
                  labels: Optional[Mapping[str, _builtins.str]] = None,
+                 max_pods: Optional[_builtins.int] = None,
                  taints: Optional[Sequence['outputs.Mk8sEphemeralProviderNodePoolTaint']] = None):
         """
         :param _builtins.str arch: CPU architecture of the nodes.
@@ -8362,6 +9030,7 @@ class Mk8sEphemeralProviderNodePool(dict):
         :param _builtins.str memory: Allocated memory.
         :param _builtins.str flavor: Linux distro to use for ephemeral nodes.
         :param Mapping[str, _builtins.str] labels: Labels to attach to nodes of a node pool.
+        :param _builtins.int max_pods: Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
         :param Sequence['Mk8sEphemeralProviderNodePoolTaintArgs'] taints: Taint for the nodes of a pool.
         """
         pulumi.set(__self__, "arch", arch)
@@ -8373,6 +9042,8 @@ class Mk8sEphemeralProviderNodePool(dict):
             pulumi.set(__self__, "flavor", flavor)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if max_pods is not None:
+            pulumi.set(__self__, "max_pods", max_pods)
         if taints is not None:
             pulumi.set(__self__, "taints", taints)
 
@@ -8428,6 +9099,14 @@ class Mk8sEphemeralProviderNodePool(dict):
         Labels to attach to nodes of a node pool.
         """
         return pulumi.get(self, "labels")
+
+    @_builtins.property
+    @pulumi.getter(name="maxPods")
+    def max_pods(self) -> Optional[_builtins.int]:
+        """
+        Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+        """
+        return pulumi.get(self, "max_pods")
 
     @_builtins.property
     @pulumi.getter
@@ -8843,6 +9522,8 @@ class Mk8sGcpProviderNodePool(dict):
             suggest = "assign_public_ip"
         elif key == "localPersistentDisks":
             suggest = "local_persistent_disks"
+        elif key == "maxPods":
+            suggest = "max_pods"
         elif key == "maxSize":
             suggest = "max_size"
         elif key == "minSize":
@@ -8870,6 +9551,7 @@ class Mk8sGcpProviderNodePool(dict):
                  assign_public_ip: Optional[_builtins.bool] = None,
                  labels: Optional[Mapping[str, _builtins.str]] = None,
                  local_persistent_disks: Optional[_builtins.int] = None,
+                 max_pods: Optional[_builtins.int] = None,
                  max_size: Optional[_builtins.int] = None,
                  min_size: Optional[_builtins.int] = None,
                  override_image: Optional['outputs.Mk8sGcpProviderNodePoolOverrideImage'] = None,
@@ -8881,6 +9563,7 @@ class Mk8sGcpProviderNodePool(dict):
         :param _builtins.str subnet: Subnet within the selected network.
         :param _builtins.str zone: Zone where the pool nodes run.
         :param Mapping[str, _builtins.str] labels: Labels to attach to nodes of a node pool.
+        :param _builtins.int max_pods: Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
         :param Sequence['Mk8sGcpProviderNodePoolTaintArgs'] taints: Taint for the nodes of a pool.
         """
         pulumi.set(__self__, "boot_disk_size", boot_disk_size)
@@ -8894,6 +9577,8 @@ class Mk8sGcpProviderNodePool(dict):
             pulumi.set(__self__, "labels", labels)
         if local_persistent_disks is not None:
             pulumi.set(__self__, "local_persistent_disks", local_persistent_disks)
+        if max_pods is not None:
+            pulumi.set(__self__, "max_pods", max_pods)
         if max_size is not None:
             pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
@@ -8959,6 +9644,14 @@ class Mk8sGcpProviderNodePool(dict):
     @pulumi.getter(name="localPersistentDisks")
     def local_persistent_disks(self) -> Optional[_builtins.int]:
         return pulumi.get(self, "local_persistent_disks")
+
+    @_builtins.property
+    @pulumi.getter(name="maxPods")
+    def max_pods(self) -> Optional[_builtins.int]:
+        """
+        Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+        """
+        return pulumi.get(self, "max_pods")
 
     @_builtins.property
     @pulumi.getter(name="maxSize")
@@ -9193,17 +9886,38 @@ class Mk8sGenericProviderNetworking(dict):
 
 @pulumi.output_type
 class Mk8sGenericProviderNodePool(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "maxPods":
+            suggest = "max_pods"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sGenericProviderNodePool. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sGenericProviderNodePool.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sGenericProviderNodePool.__key_warning(key)
+        return super().get(key, default)
+
     def __init__(__self__, *,
                  name: _builtins.str,
                  labels: Optional[Mapping[str, _builtins.str]] = None,
+                 max_pods: Optional[_builtins.int] = None,
                  taints: Optional[Sequence['outputs.Mk8sGenericProviderNodePoolTaint']] = None):
         """
         :param Mapping[str, _builtins.str] labels: Labels to attach to nodes of a node pool.
+        :param _builtins.int max_pods: Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
         :param Sequence['Mk8sGenericProviderNodePoolTaintArgs'] taints: Taint for the nodes of a pool.
         """
         pulumi.set(__self__, "name", name)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if max_pods is not None:
+            pulumi.set(__self__, "max_pods", max_pods)
         if taints is not None:
             pulumi.set(__self__, "taints", taints)
 
@@ -9219,6 +9933,14 @@ class Mk8sGenericProviderNodePool(dict):
         Labels to attach to nodes of a node pool.
         """
         return pulumi.get(self, "labels")
+
+    @_builtins.property
+    @pulumi.getter(name="maxPods")
+    def max_pods(self) -> Optional[_builtins.int]:
+        """
+        Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+        """
+        return pulumi.get(self, "max_pods")
 
     @_builtins.property
     @pulumi.getter
@@ -9499,17 +10221,38 @@ class Mk8sHetznerProviderAutoscaler(dict):
 
 @pulumi.output_type
 class Mk8sHetznerProviderDedicatedServerNodePool(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "maxPods":
+            suggest = "max_pods"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in Mk8sHetznerProviderDedicatedServerNodePool. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        Mk8sHetznerProviderDedicatedServerNodePool.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        Mk8sHetznerProviderDedicatedServerNodePool.__key_warning(key)
+        return super().get(key, default)
+
     def __init__(__self__, *,
                  name: _builtins.str,
                  labels: Optional[Mapping[str, _builtins.str]] = None,
+                 max_pods: Optional[_builtins.int] = None,
                  taints: Optional[Sequence['outputs.Mk8sHetznerProviderDedicatedServerNodePoolTaint']] = None):
         """
         :param Mapping[str, _builtins.str] labels: Labels to attach to nodes of a node pool.
+        :param _builtins.int max_pods: Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
         :param Sequence['Mk8sHetznerProviderDedicatedServerNodePoolTaintArgs'] taints: Taint for the nodes of a pool.
         """
         pulumi.set(__self__, "name", name)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if max_pods is not None:
+            pulumi.set(__self__, "max_pods", max_pods)
         if taints is not None:
             pulumi.set(__self__, "taints", taints)
 
@@ -9525,6 +10268,14 @@ class Mk8sHetznerProviderDedicatedServerNodePool(dict):
         Labels to attach to nodes of a node pool.
         """
         return pulumi.get(self, "labels")
+
+    @_builtins.property
+    @pulumi.getter(name="maxPods")
+    def max_pods(self) -> Optional[_builtins.int]:
+        """
+        Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+        """
+        return pulumi.get(self, "max_pods")
 
     @_builtins.property
     @pulumi.getter
@@ -9635,6 +10386,8 @@ class Mk8sHetznerProviderNodePool(dict):
         suggest = None
         if key == "serverType":
             suggest = "server_type"
+        elif key == "maxPods":
+            suggest = "max_pods"
         elif key == "maxSize":
             suggest = "max_size"
         elif key == "minSize":
@@ -9657,18 +10410,22 @@ class Mk8sHetznerProviderNodePool(dict):
                  name: _builtins.str,
                  server_type: _builtins.str,
                  labels: Optional[Mapping[str, _builtins.str]] = None,
+                 max_pods: Optional[_builtins.int] = None,
                  max_size: Optional[_builtins.int] = None,
                  min_size: Optional[_builtins.int] = None,
                  override_image: Optional[_builtins.str] = None,
                  taints: Optional[Sequence['outputs.Mk8sHetznerProviderNodePoolTaint']] = None):
         """
         :param Mapping[str, _builtins.str] labels: Labels to attach to nodes of a node pool.
+        :param _builtins.int max_pods: Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
         :param Sequence['Mk8sHetznerProviderNodePoolTaintArgs'] taints: Taint for the nodes of a pool.
         """
         pulumi.set(__self__, "name", name)
         pulumi.set(__self__, "server_type", server_type)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if max_pods is not None:
+            pulumi.set(__self__, "max_pods", max_pods)
         if max_size is not None:
             pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
@@ -9695,6 +10452,14 @@ class Mk8sHetznerProviderNodePool(dict):
         Labels to attach to nodes of a node pool.
         """
         return pulumi.get(self, "labels")
+
+    @_builtins.property
+    @pulumi.getter(name="maxPods")
+    def max_pods(self) -> Optional[_builtins.int]:
+        """
+        Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+        """
+        return pulumi.get(self, "max_pods")
 
     @_builtins.property
     @pulumi.getter(name="maxSize")
@@ -9929,6 +10694,8 @@ class Mk8sLambdalabsProviderNodePool(dict):
         suggest = None
         if key == "instanceType":
             suggest = "instance_type"
+        elif key == "maxPods":
+            suggest = "max_pods"
         elif key == "maxSize":
             suggest = "max_size"
         elif key == "minSize":
@@ -9949,17 +10716,21 @@ class Mk8sLambdalabsProviderNodePool(dict):
                  instance_type: _builtins.str,
                  name: _builtins.str,
                  labels: Optional[Mapping[str, _builtins.str]] = None,
+                 max_pods: Optional[_builtins.int] = None,
                  max_size: Optional[_builtins.int] = None,
                  min_size: Optional[_builtins.int] = None,
                  taints: Optional[Sequence['outputs.Mk8sLambdalabsProviderNodePoolTaint']] = None):
         """
         :param Mapping[str, _builtins.str] labels: Labels to attach to nodes of a node pool.
+        :param _builtins.int max_pods: Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
         :param Sequence['Mk8sLambdalabsProviderNodePoolTaintArgs'] taints: Taint for the nodes of a pool.
         """
         pulumi.set(__self__, "instance_type", instance_type)
         pulumi.set(__self__, "name", name)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if max_pods is not None:
+            pulumi.set(__self__, "max_pods", max_pods)
         if max_size is not None:
             pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
@@ -9984,6 +10755,14 @@ class Mk8sLambdalabsProviderNodePool(dict):
         Labels to attach to nodes of a node pool.
         """
         return pulumi.get(self, "labels")
+
+    @_builtins.property
+    @pulumi.getter(name="maxPods")
+    def max_pods(self) -> Optional[_builtins.int]:
+        """
+        Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+        """
+        return pulumi.get(self, "max_pods")
 
     @_builtins.property
     @pulumi.getter(name="maxSize")
@@ -10379,6 +11158,8 @@ class Mk8sLinodeProviderNodePool(dict):
             suggest = "server_type"
         elif key == "subnetId":
             suggest = "subnet_id"
+        elif key == "maxPods":
+            suggest = "max_pods"
         elif key == "maxSize":
             suggest = "max_size"
         elif key == "minSize":
@@ -10402,12 +11183,14 @@ class Mk8sLinodeProviderNodePool(dict):
                  server_type: _builtins.str,
                  subnet_id: _builtins.str,
                  labels: Optional[Mapping[str, _builtins.str]] = None,
+                 max_pods: Optional[_builtins.int] = None,
                  max_size: Optional[_builtins.int] = None,
                  min_size: Optional[_builtins.int] = None,
                  override_image: Optional[_builtins.str] = None,
                  taints: Optional[Sequence['outputs.Mk8sLinodeProviderNodePoolTaint']] = None):
         """
         :param Mapping[str, _builtins.str] labels: Labels to attach to nodes of a node pool.
+        :param _builtins.int max_pods: Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
         :param Sequence['Mk8sLinodeProviderNodePoolTaintArgs'] taints: Taint for the nodes of a pool.
         """
         pulumi.set(__self__, "name", name)
@@ -10415,6 +11198,8 @@ class Mk8sLinodeProviderNodePool(dict):
         pulumi.set(__self__, "subnet_id", subnet_id)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if max_pods is not None:
+            pulumi.set(__self__, "max_pods", max_pods)
         if max_size is not None:
             pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
@@ -10446,6 +11231,14 @@ class Mk8sLinodeProviderNodePool(dict):
         Labels to attach to nodes of a node pool.
         """
         return pulumi.get(self, "labels")
+
+    @_builtins.property
+    @pulumi.getter(name="maxPods")
+    def max_pods(self) -> Optional[_builtins.int]:
+        """
+        Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+        """
+        return pulumi.get(self, "max_pods")
 
     @_builtins.property
     @pulumi.getter(name="maxSize")
@@ -10661,7 +11454,9 @@ class Mk8sOblivusProviderNodePool(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "maxSize":
+        if key == "maxPods":
+            suggest = "max_pods"
+        elif key == "maxSize":
             suggest = "max_size"
         elif key == "minSize":
             suggest = "min_size"
@@ -10681,17 +11476,21 @@ class Mk8sOblivusProviderNodePool(dict):
                  flavor: _builtins.str,
                  name: _builtins.str,
                  labels: Optional[Mapping[str, _builtins.str]] = None,
+                 max_pods: Optional[_builtins.int] = None,
                  max_size: Optional[_builtins.int] = None,
                  min_size: Optional[_builtins.int] = None,
                  taints: Optional[Sequence['outputs.Mk8sOblivusProviderNodePoolTaint']] = None):
         """
         :param Mapping[str, _builtins.str] labels: Labels to attach to nodes of a node pool.
+        :param _builtins.int max_pods: Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
         :param Sequence['Mk8sOblivusProviderNodePoolTaintArgs'] taints: Taint for the nodes of a pool.
         """
         pulumi.set(__self__, "flavor", flavor)
         pulumi.set(__self__, "name", name)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if max_pods is not None:
+            pulumi.set(__self__, "max_pods", max_pods)
         if max_size is not None:
             pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
@@ -10716,6 +11515,14 @@ class Mk8sOblivusProviderNodePool(dict):
         Labels to attach to nodes of a node pool.
         """
         return pulumi.get(self, "labels")
+
+    @_builtins.property
+    @pulumi.getter(name="maxPods")
+    def max_pods(self) -> Optional[_builtins.int]:
+        """
+        Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+        """
+        return pulumi.get(self, "max_pods")
 
     @_builtins.property
     @pulumi.getter(name="maxSize")
@@ -11022,6 +11829,8 @@ class Mk8sPaperspaceProviderNodePool(dict):
             suggest = "public_ip_type"
         elif key == "bootDiskSize":
             suggest = "boot_disk_size"
+        elif key == "maxPods":
+            suggest = "max_pods"
         elif key == "maxSize":
             suggest = "max_size"
         elif key == "minSize":
@@ -11044,11 +11853,13 @@ class Mk8sPaperspaceProviderNodePool(dict):
                  public_ip_type: _builtins.str,
                  boot_disk_size: Optional[_builtins.int] = None,
                  labels: Optional[Mapping[str, _builtins.str]] = None,
+                 max_pods: Optional[_builtins.int] = None,
                  max_size: Optional[_builtins.int] = None,
                  min_size: Optional[_builtins.int] = None,
                  taints: Optional[Sequence['outputs.Mk8sPaperspaceProviderNodePoolTaint']] = None):
         """
         :param Mapping[str, _builtins.str] labels: Labels to attach to nodes of a node pool.
+        :param _builtins.int max_pods: Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
         :param Sequence['Mk8sPaperspaceProviderNodePoolTaintArgs'] taints: Taint for the nodes of a pool.
         """
         pulumi.set(__self__, "machine_type", machine_type)
@@ -11058,6 +11869,8 @@ class Mk8sPaperspaceProviderNodePool(dict):
             pulumi.set(__self__, "boot_disk_size", boot_disk_size)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if max_pods is not None:
+            pulumi.set(__self__, "max_pods", max_pods)
         if max_size is not None:
             pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
@@ -11092,6 +11905,14 @@ class Mk8sPaperspaceProviderNodePool(dict):
         Labels to attach to nodes of a node pool.
         """
         return pulumi.get(self, "labels")
+
+    @_builtins.property
+    @pulumi.getter(name="maxPods")
+    def max_pods(self) -> Optional[_builtins.int]:
+        """
+        Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+        """
+        return pulumi.get(self, "max_pods")
 
     @_builtins.property
     @pulumi.getter(name="maxSize")
@@ -12182,6 +13003,8 @@ class Mk8sTritonProviderNodePool(dict):
         suggest = None
         if key == "packageId":
             suggest = "package_id"
+        elif key == "maxPods":
+            suggest = "max_pods"
         elif key == "maxSize":
             suggest = "max_size"
         elif key == "minSize":
@@ -12210,6 +13033,7 @@ class Mk8sTritonProviderNodePool(dict):
                  name: _builtins.str,
                  package_id: _builtins.str,
                  labels: Optional[Mapping[str, _builtins.str]] = None,
+                 max_pods: Optional[_builtins.int] = None,
                  max_size: Optional[_builtins.int] = None,
                  min_size: Optional[_builtins.int] = None,
                  override_image_id: Optional[_builtins.str] = None,
@@ -12219,6 +13043,7 @@ class Mk8sTritonProviderNodePool(dict):
                  triton_tags: Optional[Mapping[str, _builtins.str]] = None):
         """
         :param Mapping[str, _builtins.str] labels: Labels to attach to nodes of a node pool.
+        :param _builtins.int max_pods: Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
         :param Sequence[_builtins.str] private_network_ids: More private networks to join.
         :param _builtins.str public_network_id: If set, machine will also get a public IP.
         :param Sequence['Mk8sTritonProviderNodePoolTaintArgs'] taints: Taint for the nodes of a pool.
@@ -12228,6 +13053,8 @@ class Mk8sTritonProviderNodePool(dict):
         pulumi.set(__self__, "package_id", package_id)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
+        if max_pods is not None:
+            pulumi.set(__self__, "max_pods", max_pods)
         if max_size is not None:
             pulumi.set(__self__, "max_size", max_size)
         if min_size is not None:
@@ -12260,6 +13087,14 @@ class Mk8sTritonProviderNodePool(dict):
         Labels to attach to nodes of a node pool.
         """
         return pulumi.get(self, "labels")
+
+    @_builtins.property
+    @pulumi.getter(name="maxPods")
+    def max_pods(self) -> Optional[_builtins.int]:
+        """
+        Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+        """
+        return pulumi.get(self, "max_pods")
 
     @_builtins.property
     @pulumi.getter(name="maxSize")
@@ -14654,7 +15489,9 @@ class WorkloadContainer(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "gpuCustom":
+        if key == "envFroms":
+            suggest = "env_froms"
+        elif key == "gpuCustom":
             suggest = "gpu_custom"
         elif key == "gpuNvidia":
             suggest = "gpu_nvidia"
@@ -14688,6 +15525,7 @@ class WorkloadContainer(dict):
                  command: Optional[_builtins.str] = None,
                  cpu: Optional[_builtins.str] = None,
                  env: Optional[Mapping[str, _builtins.str]] = None,
+                 env_froms: Optional[Sequence['outputs.WorkloadContainerEnvFrom']] = None,
                  gpu_custom: Optional['outputs.WorkloadContainerGpuCustom'] = None,
                  gpu_nvidia: Optional['outputs.WorkloadContainerGpuNvidia'] = None,
                  image: Optional[_builtins.str] = None,
@@ -14709,6 +15547,7 @@ class WorkloadContainer(dict):
         :param _builtins.str command: Override the entry point.
         :param _builtins.str cpu: Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
         :param Mapping[str, _builtins.str] env: Name-Value list of environment variables.
+        :param Sequence['WorkloadContainerEnvFromArgs'] env_froms: Inject all key/value pairs of the referenced dictionary secrets as environment variables. An explicit `env` variable overrides an `env_from` key of the same name; later entries override earlier ones. Keys that are not valid environment variable names are skipped.
         :param 'WorkloadContainerGpuNvidiaArgs' gpu_nvidia: GPUs manufactured by NVIDIA, which are specialized hardware accelerators used to offload and accelerate computationally intensive tasks within the workload.
         :param _builtins.str image: The full image and tag path. Required for all workload types except `vm`, which boots from `vm.boot_disk.source` instead.
         :param _builtins.bool inherit_env: Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
@@ -14733,6 +15572,8 @@ class WorkloadContainer(dict):
             pulumi.set(__self__, "cpu", cpu)
         if env is not None:
             pulumi.set(__self__, "env", env)
+        if env_froms is not None:
+            pulumi.set(__self__, "env_froms", env_froms)
         if gpu_custom is not None:
             pulumi.set(__self__, "gpu_custom", gpu_custom)
         if gpu_nvidia is not None:
@@ -14803,6 +15644,14 @@ class WorkloadContainer(dict):
         Name-Value list of environment variables.
         """
         return pulumi.get(self, "env")
+
+    @_builtins.property
+    @pulumi.getter(name="envFroms")
+    def env_froms(self) -> Optional[Sequence['outputs.WorkloadContainerEnvFrom']]:
+        """
+        Inject all key/value pairs of the referenced dictionary secrets as environment variables. An explicit `env` variable overrides an `env_from` key of the same name; later entries override earlier ones. Keys that are not valid environment variable names are skipped.
+        """
+        return pulumi.get(self, "env_froms")
 
     @_builtins.property
     @pulumi.getter(name="gpuCustom")
@@ -14921,6 +15770,59 @@ class WorkloadContainer(dict):
         Override the working directory. Must be an absolute path.
         """
         return pulumi.get(self, "working_directory")
+
+
+@pulumi.output_type
+class WorkloadContainerEnvFrom(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "secretRef":
+            suggest = "secret_ref"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadContainerEnvFrom. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadContainerEnvFrom.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadContainerEnvFrom.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 secret_ref: 'outputs.WorkloadContainerEnvFromSecretRef'):
+        """
+        :param 'WorkloadContainerEnvFromSecretRefArgs' secret_ref: References a dictionary secret whose key/value pairs are injected as environment variables.
+        """
+        pulumi.set(__self__, "secret_ref", secret_ref)
+
+    @_builtins.property
+    @pulumi.getter(name="secretRef")
+    def secret_ref(self) -> 'outputs.WorkloadContainerEnvFromSecretRef':
+        """
+        References a dictionary secret whose key/value pairs are injected as environment variables.
+        """
+        return pulumi.get(self, "secret_ref")
+
+
+@pulumi.output_type
+class WorkloadContainerEnvFromSecretRef(dict):
+    def __init__(__self__, *,
+                 name: _builtins.str):
+        """
+        :param _builtins.str name: Name of a dictionary secret whose keys are injected as environment variables.
+        """
+        pulumi.set(__self__, "name", name)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        Name of a dictionary secret whose keys are injected as environment variables.
+        """
+        return pulumi.get(self, "name")
 
 
 @pulumi.output_type
@@ -15724,6 +16626,56 @@ class WorkloadContainerVolume(dict):
 
 
 @pulumi.output_type
+class WorkloadDisruptionBudget(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "maxUnavailable":
+            suggest = "max_unavailable"
+        elif key == "minAvailable":
+            suggest = "min_available"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in WorkloadDisruptionBudget. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        WorkloadDisruptionBudget.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        WorkloadDisruptionBudget.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 max_unavailable: Optional[_builtins.str] = None,
+                 min_available: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str max_unavailable: Maximum number or percentage of replicas that can be unavailable during voluntary disruptions such as node drains. A whole number or whole percentage (e.g., `2`, `20%`), at least `1` or above `0%`, and at most `100%`.
+        :param _builtins.str min_available: Minimum number or percentage of replicas that must stay available during voluntary disruptions such as node drains. A whole number or whole percentage (e.g., `2`, `20%`), below `100%`.
+        """
+        if max_unavailable is not None:
+            pulumi.set(__self__, "max_unavailable", max_unavailable)
+        if min_available is not None:
+            pulumi.set(__self__, "min_available", min_available)
+
+    @_builtins.property
+    @pulumi.getter(name="maxUnavailable")
+    def max_unavailable(self) -> Optional[_builtins.str]:
+        """
+        Maximum number or percentage of replicas that can be unavailable during voluntary disruptions such as node drains. A whole number or whole percentage (e.g., `2`, `20%`), at least `1` or above `0%`, and at most `100%`.
+        """
+        return pulumi.get(self, "max_unavailable")
+
+    @_builtins.property
+    @pulumi.getter(name="minAvailable")
+    def min_available(self) -> Optional[_builtins.str]:
+        """
+        Minimum number or percentage of replicas that must stay available during voluntary disruptions such as node drains. A whole number or whole percentage (e.g., `2`, `20%`), below `100%`.
+        """
+        return pulumi.get(self, "min_available")
+
+
+@pulumi.output_type
 class WorkloadFirewallSpec(dict):
     def __init__(__self__, *,
                  external: Optional['outputs.WorkloadFirewallSpecExternal'] = None,
@@ -15894,7 +16846,7 @@ class WorkloadFirewallSpecExternalHttp(dict):
     def __init__(__self__, *,
                  inbound_header_filters: Optional[Sequence['outputs.WorkloadFirewallSpecExternalHttpInboundHeaderFilter']] = None):
         """
-        :param Sequence['WorkloadFirewallSpecExternalHttpInboundHeaderFilterArgs'] inbound_header_filters: A list of header filters for HTTP workloads.
+        :param Sequence['WorkloadFirewallSpecExternalHttpInboundHeaderFilterArgs'] inbound_header_filters: A list of header filters for HTTP workloads. Each header key may appear only once, compared case-insensitively.
         """
         if inbound_header_filters is not None:
             pulumi.set(__self__, "inbound_header_filters", inbound_header_filters)
@@ -15903,7 +16855,7 @@ class WorkloadFirewallSpecExternalHttp(dict):
     @pulumi.getter(name="inboundHeaderFilters")
     def inbound_header_filters(self) -> Optional[Sequence['outputs.WorkloadFirewallSpecExternalHttpInboundHeaderFilter']]:
         """
-        A list of header filters for HTTP workloads.
+        A list of header filters for HTTP workloads. Each header key may appear only once, compared case-insensitively.
         """
         return pulumi.get(self, "inbound_header_filters")
 
@@ -15934,9 +16886,9 @@ class WorkloadFirewallSpecExternalHttpInboundHeaderFilter(dict):
                  allowed_values: Optional[Sequence[_builtins.str]] = None,
                  blocked_values: Optional[Sequence[_builtins.str]] = None):
         """
-        :param _builtins.str key: The header to match for.
-        :param Sequence[_builtins.str] allowed_values: A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
-        :param Sequence[_builtins.str] blocked_values: A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
+        :param _builtins.str key: The header to match for: an HTTP header name (RFC 9110 token) or one of the pseudo-headers `:authority`, `:method`, `:path` and `:scheme`. Header names are case-insensitive.
+        :param Sequence[_builtins.str] allowed_values: A list of regular expressions to match for allowed header values. When included, http requests must have AT LEAST ONE of these headers to be sent to the workload.
+        :param Sequence[_builtins.str] blocked_values: A list of regular expressions to match for blocked header values. When included, http requests with ANY of these headers will be filtered and will not reach the workload.
         """
         pulumi.set(__self__, "key", key)
         if allowed_values is not None:
@@ -15948,7 +16900,7 @@ class WorkloadFirewallSpecExternalHttpInboundHeaderFilter(dict):
     @pulumi.getter
     def key(self) -> _builtins.str:
         """
-        The header to match for.
+        The header to match for: an HTTP header name (RFC 9110 token) or one of the pseudo-headers `:authority`, `:method`, `:path` and `:scheme`. Header names are case-insensitive.
         """
         return pulumi.get(self, "key")
 
@@ -15956,7 +16908,7 @@ class WorkloadFirewallSpecExternalHttpInboundHeaderFilter(dict):
     @pulumi.getter(name="allowedValues")
     def allowed_values(self) -> Optional[Sequence[_builtins.str]]:
         """
-        A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
+        A list of regular expressions to match for allowed header values. When included, http requests must have AT LEAST ONE of these headers to be sent to the workload.
         """
         return pulumi.get(self, "allowed_values")
 
@@ -15964,7 +16916,7 @@ class WorkloadFirewallSpecExternalHttpInboundHeaderFilter(dict):
     @pulumi.getter(name="blockedValues")
     def blocked_values(self) -> Optional[Sequence[_builtins.str]]:
         """
-        A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
+        A list of regular expressions to match for blocked header values. When included, http requests with ANY of these headers will be filtered and will not reach the workload.
         """
         return pulumi.get(self, "blocked_values")
 
@@ -17395,6 +18347,44 @@ class WorkloadLocalOptionMultiZone(dict):
 
 
 @pulumi.output_type
+class WorkloadNetworking(dict):
+    def __init__(__self__, *,
+                 internal: Optional['outputs.WorkloadNetworkingInternal'] = None):
+        """
+        :param 'WorkloadNetworkingInternalArgs' internal: Routing of internal (`cpln.local`) requests.
+        """
+        if internal is not None:
+            pulumi.set(__self__, "internal", internal)
+
+    @_builtins.property
+    @pulumi.getter
+    def internal(self) -> Optional['outputs.WorkloadNetworkingInternal']:
+        """
+        Routing of internal (`cpln.local`) requests.
+        """
+        return pulumi.get(self, "internal")
+
+
+@pulumi.output_type
+class WorkloadNetworkingInternal(dict):
+    def __init__(__self__, *,
+                 routing: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str routing: How requests to `<workload>.<gvc>.cpln.local` from the same GVC are routed. `locationEndpoint`: served only by replicas in the caller's location. `gvcEndpoint`: fail over to the workload's canonical endpoint (the nearest healthy location) when no local replica can serve them; cross-location traffic is billed as egress. Valid values: `locationEndpoint`, `gvcEndpoint`. Set to `gvcEndpoint` by the server when a workload is created without it; removing it from the configuration keeps the current value.
+        """
+        if routing is not None:
+            pulumi.set(__self__, "routing", routing)
+
+    @_builtins.property
+    @pulumi.getter
+    def routing(self) -> Optional[_builtins.str]:
+        """
+        How requests to `<workload>.<gvc>.cpln.local` from the same GVC are routed. `locationEndpoint`: served only by replicas in the caller's location. `gvcEndpoint`: fail over to the workload's canonical endpoint (the nearest healthy location) when no local replica can serve them; cross-location traffic is billed as egress. Valid values: `locationEndpoint`, `gvcEndpoint`. Set to `gvcEndpoint` by the server when a workload is created without it; removing it from the configuration keeps the current value.
+        """
+        return pulumi.get(self, "routing")
+
+
+@pulumi.output_type
 class WorkloadOptions(dict):
     @staticmethod
     def __key_warning(key: str):
@@ -18439,6 +19429,8 @@ class WorkloadRolloutOption(dict):
             suggest = "max_unavailable_replicas"
         elif key == "minReadySeconds":
             suggest = "min_ready_seconds"
+        elif key == "rolloutOnReferenceChange":
+            suggest = "rollout_on_reference_change"
         elif key == "scalingPolicy":
             suggest = "scaling_policy"
         elif key == "terminationGracePeriodSeconds":
@@ -18459,13 +19451,15 @@ class WorkloadRolloutOption(dict):
                  max_surge_replicas: Optional[_builtins.str] = None,
                  max_unavailable_replicas: Optional[_builtins.str] = None,
                  min_ready_seconds: Optional[_builtins.int] = None,
+                 rollout_on_reference_change: Optional[_builtins.bool] = None,
                  scaling_policy: Optional[_builtins.str] = None,
                  termination_grace_period_seconds: Optional[_builtins.int] = None):
         """
-        :param _builtins.str max_surge_replicas: The number of replicas that can be created above the desired amount of replicas during an update.
+        :param _builtins.str max_surge_replicas: The number of replicas that can be created above the desired amount of replicas during an update. Not supported for `vm` workloads.
         :param _builtins.str max_unavailable_replicas: The number of replicas that can be unavailable during the update process.
         :param _builtins.int min_ready_seconds: The minimum number of seconds a container must run without crashing to be considered available.
-        :param _builtins.str scaling_policy: The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+        :param _builtins.bool rollout_on_reference_change: When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified. Not supported for `vm` workloads.
+        :param _builtins.str scaling_policy: The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`. Cannot be set for `vm` workloads.
         :param _builtins.int termination_grace_period_seconds: The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run. Valid values: `0` - `3600`. Default: `90`. Note: the API caps this at `900` unless the workload is tagged with `cpln/relaxGracePeriodMax`.
         """
         if max_surge_replicas is not None:
@@ -18474,6 +19468,8 @@ class WorkloadRolloutOption(dict):
             pulumi.set(__self__, "max_unavailable_replicas", max_unavailable_replicas)
         if min_ready_seconds is not None:
             pulumi.set(__self__, "min_ready_seconds", min_ready_seconds)
+        if rollout_on_reference_change is not None:
+            pulumi.set(__self__, "rollout_on_reference_change", rollout_on_reference_change)
         if scaling_policy is not None:
             pulumi.set(__self__, "scaling_policy", scaling_policy)
         if termination_grace_period_seconds is not None:
@@ -18483,7 +19479,7 @@ class WorkloadRolloutOption(dict):
     @pulumi.getter(name="maxSurgeReplicas")
     def max_surge_replicas(self) -> Optional[_builtins.str]:
         """
-        The number of replicas that can be created above the desired amount of replicas during an update.
+        The number of replicas that can be created above the desired amount of replicas during an update. Not supported for `vm` workloads.
         """
         return pulumi.get(self, "max_surge_replicas")
 
@@ -18504,10 +19500,18 @@ class WorkloadRolloutOption(dict):
         return pulumi.get(self, "min_ready_seconds")
 
     @_builtins.property
+    @pulumi.getter(name="rolloutOnReferenceChange")
+    def rollout_on_reference_change(self) -> Optional[_builtins.bool]:
+        """
+        When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified. Not supported for `vm` workloads.
+        """
+        return pulumi.get(self, "rollout_on_reference_change")
+
+    @_builtins.property
     @pulumi.getter(name="scalingPolicy")
     def scaling_policy(self) -> Optional[_builtins.str]:
         """
-        The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+        The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`. Cannot be set for `vm` workloads.
         """
         return pulumi.get(self, "scaling_policy")
 
@@ -21544,6 +22548,7 @@ class GetWorkloadContainerResult(dict):
                  command: _builtins.str,
                  cpu: _builtins.str,
                  env: Mapping[str, _builtins.str],
+                 env_froms: Sequence['outputs.GetWorkloadContainerEnvFromResult'],
                  image: _builtins.str,
                  inherit_env: _builtins.bool,
                  memory: _builtins.str,
@@ -21565,6 +22570,7 @@ class GetWorkloadContainerResult(dict):
         :param _builtins.str command: Override the entry point.
         :param _builtins.str cpu: Reserved CPU of the workload when capacityAI is disabled. Maximum CPU when CapacityAI is enabled. Default: "50m".
         :param Mapping[str, _builtins.str] env: Name-Value list of environment variables.
+        :param Sequence['GetWorkloadContainerEnvFromArgs'] env_froms: Dictionary secrets whose key/value pairs are injected as environment variables. An explicit `env` variable overrides an `env_from` key of the same name; later entries override earlier ones.
         :param _builtins.str image: The full image and tag path.
         :param _builtins.bool inherit_env: Enables inheritance of GVC environment variables. A variable in spec.env will override a GVC variable with the same name.
         :param _builtins.str memory: Reserved memory of the workload when capacityAI is disabled. Maximum memory when CapacityAI is enabled. Default: "128Mi".
@@ -21585,6 +22591,7 @@ class GetWorkloadContainerResult(dict):
         pulumi.set(__self__, "command", command)
         pulumi.set(__self__, "cpu", cpu)
         pulumi.set(__self__, "env", env)
+        pulumi.set(__self__, "env_froms", env_froms)
         pulumi.set(__self__, "image", image)
         pulumi.set(__self__, "inherit_env", inherit_env)
         pulumi.set(__self__, "memory", memory)
@@ -21641,6 +22648,14 @@ class GetWorkloadContainerResult(dict):
         Name-Value list of environment variables.
         """
         return pulumi.get(self, "env")
+
+    @_builtins.property
+    @pulumi.getter(name="envFroms")
+    def env_froms(self) -> Sequence['outputs.GetWorkloadContainerEnvFromResult']:
+        """
+        Dictionary secrets whose key/value pairs are injected as environment variables. An explicit `env` variable overrides an `env_from` key of the same name; later entries override earlier ones.
+        """
+        return pulumi.get(self, "env_froms")
 
     @_builtins.property
     @pulumi.getter
@@ -21767,6 +22782,42 @@ class GetWorkloadContainerResult(dict):
         Mount Object Store (S3, GCS, AzureBlob) buckets as file system.
         """
         return pulumi.get(self, "volumes")
+
+
+@pulumi.output_type
+class GetWorkloadContainerEnvFromResult(dict):
+    def __init__(__self__, *,
+                 secret_ref: 'outputs.GetWorkloadContainerEnvFromSecretRefResult'):
+        """
+        :param 'GetWorkloadContainerEnvFromSecretRefArgs' secret_ref: References a dictionary secret whose key/value pairs are injected as environment variables.
+        """
+        pulumi.set(__self__, "secret_ref", secret_ref)
+
+    @_builtins.property
+    @pulumi.getter(name="secretRef")
+    def secret_ref(self) -> 'outputs.GetWorkloadContainerEnvFromSecretRefResult':
+        """
+        References a dictionary secret whose key/value pairs are injected as environment variables.
+        """
+        return pulumi.get(self, "secret_ref")
+
+
+@pulumi.output_type
+class GetWorkloadContainerEnvFromSecretRefResult(dict):
+    def __init__(__self__, *,
+                 name: _builtins.str):
+        """
+        :param _builtins.str name: Name of a dictionary secret whose keys are injected as environment variables.
+        """
+        pulumi.set(__self__, "name", name)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        Name of a dictionary secret whose keys are injected as environment variables.
+        """
+        return pulumi.get(self, "name")
 
 
 @pulumi.output_type
@@ -22338,6 +23389,35 @@ class GetWorkloadContainerVolumeResult(dict):
 
 
 @pulumi.output_type
+class GetWorkloadDisruptionBudgetResult(dict):
+    def __init__(__self__, *,
+                 max_unavailable: _builtins.str,
+                 min_available: _builtins.str):
+        """
+        :param _builtins.str max_unavailable: Maximum number or percentage of replicas that can be unavailable during voluntary disruptions such as node drains.
+        :param _builtins.str min_available: Minimum number or percentage of replicas that must stay available during voluntary disruptions such as node drains.
+        """
+        pulumi.set(__self__, "max_unavailable", max_unavailable)
+        pulumi.set(__self__, "min_available", min_available)
+
+    @_builtins.property
+    @pulumi.getter(name="maxUnavailable")
+    def max_unavailable(self) -> _builtins.str:
+        """
+        Maximum number or percentage of replicas that can be unavailable during voluntary disruptions such as node drains.
+        """
+        return pulumi.get(self, "max_unavailable")
+
+    @_builtins.property
+    @pulumi.getter(name="minAvailable")
+    def min_available(self) -> _builtins.str:
+        """
+        Minimum number or percentage of replicas that must stay available during voluntary disruptions such as node drains.
+        """
+        return pulumi.get(self, "min_available")
+
+
+@pulumi.output_type
 class GetWorkloadFirewallSpecResult(dict):
     def __init__(__self__, *,
                  externals: Optional[Sequence['outputs.GetWorkloadFirewallSpecExternalResult']] = None,
@@ -22459,7 +23539,7 @@ class GetWorkloadFirewallSpecExternalHttpResult(dict):
     def __init__(__self__, *,
                  inbound_header_filters: Optional[Sequence['outputs.GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterResult']] = None):
         """
-        :param Sequence['GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArgs'] inbound_header_filters: A list of header filters for HTTP workloads.
+        :param Sequence['GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterArgs'] inbound_header_filters: A list of header filters for HTTP workloads. Each header key may appear only once, compared case-insensitively.
         """
         if inbound_header_filters is not None:
             pulumi.set(__self__, "inbound_header_filters", inbound_header_filters)
@@ -22468,7 +23548,7 @@ class GetWorkloadFirewallSpecExternalHttpResult(dict):
     @pulumi.getter(name="inboundHeaderFilters")
     def inbound_header_filters(self) -> Optional[Sequence['outputs.GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterResult']]:
         """
-        A list of header filters for HTTP workloads.
+        A list of header filters for HTTP workloads. Each header key may appear only once, compared case-insensitively.
         """
         return pulumi.get(self, "inbound_header_filters")
 
@@ -22480,9 +23560,9 @@ class GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterResult(dict):
                  blocked_values: Sequence[_builtins.str],
                  key: _builtins.str):
         """
-        :param Sequence[_builtins.str] allowed_values: A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
-        :param Sequence[_builtins.str] blocked_values: A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
-        :param _builtins.str key: The header to match for.
+        :param Sequence[_builtins.str] allowed_values: A list of regular expressions to match for allowed header values. When included, http requests must have AT LEAST ONE of these headers to be sent to the workload.
+        :param Sequence[_builtins.str] blocked_values: A list of regular expressions to match for blocked header values. When included, http requests with ANY of these headers will be filtered and will not reach the workload.
+        :param _builtins.str key: The header to match for: an HTTP header name (RFC 9110 token) or one of the pseudo-headers `:authority`, `:method`, `:path` and `:scheme`. Header names are case-insensitive.
         """
         pulumi.set(__self__, "allowed_values", allowed_values)
         pulumi.set(__self__, "blocked_values", blocked_values)
@@ -22492,7 +23572,7 @@ class GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterResult(dict):
     @pulumi.getter(name="allowedValues")
     def allowed_values(self) -> Sequence[_builtins.str]:
         """
-        A list of regular expressions to match for allowed header values. Headers that do not match ANY of these values will be filtered and will not reach the workload.
+        A list of regular expressions to match for allowed header values. When included, http requests must have AT LEAST ONE of these headers to be sent to the workload.
         """
         return pulumi.get(self, "allowed_values")
 
@@ -22500,7 +23580,7 @@ class GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterResult(dict):
     @pulumi.getter(name="blockedValues")
     def blocked_values(self) -> Sequence[_builtins.str]:
         """
-        A list of regular expressions to match for blocked header values. Headers that match ANY of these values will be filtered and will not reach the workload.
+        A list of regular expressions to match for blocked header values. When included, http requests with ANY of these headers will be filtered and will not reach the workload.
         """
         return pulumi.get(self, "blocked_values")
 
@@ -22508,7 +23588,7 @@ class GetWorkloadFirewallSpecExternalHttpInboundHeaderFilterResult(dict):
     @pulumi.getter
     def key(self) -> _builtins.str:
         """
-        The header to match for.
+        The header to match for: an HTTP header name (RFC 9110 token) or one of the pseudo-headers `:authority`, `:method`, `:path` and `:scheme`. Header names are case-insensitive.
         """
         return pulumi.get(self, "key")
 
@@ -23650,6 +24730,42 @@ class GetWorkloadLocalOptionMultiZoneResult(dict):
 
 
 @pulumi.output_type
+class GetWorkloadNetworkingResult(dict):
+    def __init__(__self__, *,
+                 internal: 'outputs.GetWorkloadNetworkingInternalResult'):
+        """
+        :param 'GetWorkloadNetworkingInternalArgs' internal: Routing of internal (`cpln.local`) requests.
+        """
+        pulumi.set(__self__, "internal", internal)
+
+    @_builtins.property
+    @pulumi.getter
+    def internal(self) -> 'outputs.GetWorkloadNetworkingInternalResult':
+        """
+        Routing of internal (`cpln.local`) requests.
+        """
+        return pulumi.get(self, "internal")
+
+
+@pulumi.output_type
+class GetWorkloadNetworkingInternalResult(dict):
+    def __init__(__self__, *,
+                 routing: _builtins.str):
+        """
+        :param _builtins.str routing: How requests to `<workload>.<gvc>.cpln.local` from the same GVC are routed. `locationEndpoint`: served only by replicas in the caller's location. `gvcEndpoint`: fail over to the workload's canonical endpoint (the nearest healthy location) when no local replica can serve them.
+        """
+        pulumi.set(__self__, "routing", routing)
+
+    @_builtins.property
+    @pulumi.getter
+    def routing(self) -> _builtins.str:
+        """
+        How requests to `<workload>.<gvc>.cpln.local` from the same GVC are routed. `locationEndpoint`: served only by replicas in the caller's location. `gvcEndpoint`: fail over to the workload's canonical endpoint (the nearest healthy location) when no local replica can serve them.
+        """
+        return pulumi.get(self, "routing")
+
+
+@pulumi.output_type
 class GetWorkloadOptionResult(dict):
     def __init__(__self__, *,
                  capacity_ai: _builtins.bool,
@@ -24403,18 +25519,21 @@ class GetWorkloadRolloutOptionResult(dict):
                  max_surge_replicas: _builtins.str,
                  max_unavailable_replicas: _builtins.str,
                  min_ready_seconds: _builtins.int,
+                 rollout_on_reference_change: _builtins.bool,
                  scaling_policy: _builtins.str,
                  termination_grace_period_seconds: _builtins.int):
         """
-        :param _builtins.str max_surge_replicas: The number of replicas that can be created above the desired amount of replicas during an update.
+        :param _builtins.str max_surge_replicas: The number of replicas that can be created above the desired amount of replicas during an update. Not supported for `vm` workloads.
         :param _builtins.str max_unavailable_replicas: The number of replicas that can be unavailable during the update process.
         :param _builtins.int min_ready_seconds: The minimum number of seconds a container must run without crashing to be considered available.
-        :param _builtins.str scaling_policy: The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+        :param _builtins.bool rollout_on_reference_change: When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified.
+        :param _builtins.str scaling_policy: The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`. Cannot be set for `vm` workloads.
         :param _builtins.int termination_grace_period_seconds: The amount of time in seconds a workload has to gracefully terminate before forcefully terminating it. This includes the time it takes for the preStop hook to run.
         """
         pulumi.set(__self__, "max_surge_replicas", max_surge_replicas)
         pulumi.set(__self__, "max_unavailable_replicas", max_unavailable_replicas)
         pulumi.set(__self__, "min_ready_seconds", min_ready_seconds)
+        pulumi.set(__self__, "rollout_on_reference_change", rollout_on_reference_change)
         pulumi.set(__self__, "scaling_policy", scaling_policy)
         pulumi.set(__self__, "termination_grace_period_seconds", termination_grace_period_seconds)
 
@@ -24422,7 +25541,7 @@ class GetWorkloadRolloutOptionResult(dict):
     @pulumi.getter(name="maxSurgeReplicas")
     def max_surge_replicas(self) -> _builtins.str:
         """
-        The number of replicas that can be created above the desired amount of replicas during an update.
+        The number of replicas that can be created above the desired amount of replicas during an update. Not supported for `vm` workloads.
         """
         return pulumi.get(self, "max_surge_replicas")
 
@@ -24443,10 +25562,18 @@ class GetWorkloadRolloutOptionResult(dict):
         return pulumi.get(self, "min_ready_seconds")
 
     @_builtins.property
+    @pulumi.getter(name="rolloutOnReferenceChange")
+    def rollout_on_reference_change(self) -> _builtins.bool:
+        """
+        When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified.
+        """
+        return pulumi.get(self, "rollout_on_reference_change")
+
+    @_builtins.property
     @pulumi.getter(name="scalingPolicy")
     def scaling_policy(self) -> _builtins.str:
         """
-        The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`.
+        The strategies used to update applications and services deployed. Valid values: `OrderedReady` (Updates workloads in a rolling fashion, taking down old ones and bringing up new ones incrementally, ensuring that the service remains available during the update.), `Parallel` (Causes all pods affected by a scaling operation to be created or destroyed simultaneously. This does not affect update operations.). Default: `OrderedReady`. Cannot be set for `vm` workloads.
         """
         return pulumi.get(self, "scaling_policy")
 

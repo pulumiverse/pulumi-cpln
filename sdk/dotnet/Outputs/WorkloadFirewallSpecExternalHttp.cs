@@ -15,7 +15,7 @@ namespace Pulumiverse.Cpln.Outputs
     public sealed class WorkloadFirewallSpecExternalHttp
     {
         /// <summary>
-        /// A list of header filters for HTTP workloads.
+        /// A list of header filters for HTTP workloads. Each header key may appear only once, compared case-insensitively.
         /// </summary>
         public readonly ImmutableArray<Outputs.WorkloadFirewallSpecExternalHttpInboundHeaderFilter> InboundHeaderFilters;
 

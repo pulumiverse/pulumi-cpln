@@ -3,7 +3,7 @@ module github.com/controlplane-com/terraform-provider-cpln/shim
 go 1.25.0
 
 require (
-	github.com/controlplane-com/terraform-provider-cpln v1.2.34
+	github.com/controlplane-com/terraform-provider-cpln v1.2.35
 	github.com/hashicorp/terraform-plugin-framework v1.16.1
 )
 

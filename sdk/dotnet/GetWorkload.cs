@@ -42,8 +42,10 @@ namespace Pulumiverse.Cpln
         /// - **job** (Block List, Max: 1) (see below).
         /// - **sidecar** (Block List, Max: 1) (see below).
         /// - **rollout_options** (Block List, Max: 1) (see below).
+        /// - **disruption_budget** (Attributes) Limits how many replicas voluntary disruptions can evict at once (see below).
         /// - **security_options** (Block List, Max: 1) (see below).
         /// - **load_balancer** (Block List, Max: 1) (see below).
+        /// - **networking** (Attributes) Internal service-to-service networking configuration (see below).
         /// - **request_retry_policy** (Block List, Max: 1) (see below).
         /// - **vm** (Attributes) VM-only configuration. Present when `Type` is `Vm` (see below).
         /// - **health** (Attributes) Health summary of the workload (see below).
@@ -66,6 +68,7 @@ namespace Pulumiverse.Cpln
         /// - **min_cpu** (String) Minimum CPU when Capacity AI is enabled.
         /// - **min_memory** (String) Minimum memory when Capacity AI is enabled.
         /// - **env** (Map of String) Environment variables exposed to the container.
+        /// - **env_from** (Attributes List) Dictionary secrets whose key/value pairs are injected as environment variables. An explicit `Env` variable overrides an `EnvFrom` key of the same name; later entries override earlier ones (see below).
         /// - **inherit_env** (Boolean) Indicates whether GVC environment variables are inherited. A variable in `Env` overrides the same key from the GVC.
         /// - **command** (String) Override for the container entry point.
         /// - **args** (List of String) Command-line arguments passed to the container in order.
@@ -165,6 +168,22 @@ namespace Pulumiverse.Cpln
         /// - **port** (Number) Port for the HTTP GET. Min: `80`. Max: `65535`.
         /// - **http_headers** (Map of String) Headers included in the probe request.
         /// - **scheme** (String) HTTP scheme. Either `HTTP` or `HTTPS`. Default: `HTTP`.
+        /// 
+        /// &lt;a id="nestedblock--container--env_from"&gt;&lt;/a&gt;
+        /// 
+        /// ### `container.env_from`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **secret_ref** (Attributes) References a dictionary secret whose key/value pairs are injected as environment variables (see below).
+        /// 
+        /// &lt;a id="nestedblock--container--env_from--secret_ref"&gt;&lt;/a&gt;
+        /// 
+        /// ### `container.env_from.secret_ref`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **name** (String) Name of a dictionary secret whose keys are injected as environment variables.
         /// 
         /// &lt;a id="nestedblock--container--gpu_nvidia"&gt;&lt;/a&gt;
         /// 
@@ -277,13 +296,13 @@ namespace Pulumiverse.Cpln
         /// 
         /// ### `firewall_spec.external.http.inbound_header_filter`
         /// 
-        /// Configures header-based allow/deny logic.
+        /// Configures header-based allow/deny logic. Each header key appears only once, compared case-insensitively.
         /// 
         /// Read-Only:
         /// 
-        /// - **key** (String) Header name to inspect.
-        /// - **allowed_values** (List of String) Regular expressions describing allowed header values. Requests that fail to match any allowed value are filtered.
-        /// - **blocked_values** (List of String) Regular expressions describing blocked header values. Requests that match any blocked value are filtered.
+        /// - **key** (String) Header name to inspect: an HTTP header name or one of the pseudo-headers `:authority`, `:method`, `:path` and `:scheme`. Header names are case-insensitive.
+        /// - **allowed_values** (List of String) Regular expressions describing allowed header values. When included, requests must have at least one matching header to reach the workload.
+        /// - **blocked_values** (List of String) Regular expressions describing blocked header values. When included, requests with any matching header are filtered.
         /// 
         /// &lt;a id="nestedblock--firewall_spec--internal"&gt;&lt;/a&gt;
         /// 
@@ -500,11 +519,21 @@ namespace Pulumiverse.Cpln
         /// 
         /// - **min_ready_seconds** (Number) Minimum seconds a container must run without crashing to be considered available.
         /// - **max_unavailable_replicas** (String) Maximum replicas that can be unavailable during an update.
-        /// - **max_surge_replicas** (String) Maximum replicas above the desired count during an update.
-        /// - **scaling_policy** (String) Update strategy. Either `OrderedReady` or `Parallel`. Default: `OrderedReady`.
+        /// - **max_surge_replicas** (String) Maximum replicas above the desired count during an update. Not supported for `Vm` workloads.
+        /// - **scaling_policy** (String) Update strategy. Either `OrderedReady` or `Parallel`. Default: `OrderedReady`. Cannot be set for `Vm` workloads.
         /// - **termination_grace_period_seconds** (Number) Seconds allowed for graceful termination, including `preStop` hooks.
+        /// - **rollout_on_reference_change** (Boolean) When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified.
         /// 
         /// &gt; **Note** `MaxSurgeReplicas` and `MaxUnavailableReplicas` accept absolute numbers (for example, `2`) or percentages (for example, `50%`), and they cannot both be zero.
+        /// 
+        /// &lt;a id="nestedblock--disruption_budget"&gt;&lt;/a&gt;
+        /// 
+        /// ### `DisruptionBudget`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **min_available** (String) Minimum number or percentage of replicas that must stay available during voluntary disruptions such as node drains.
+        /// - **max_unavailable** (String) Maximum number or percentage of replicas that can be unavailable during voluntary disruptions such as node drains.
         /// 
         /// &lt;a id="nestedblock--security_options"&gt;&lt;/a&gt;
         /// 
@@ -567,6 +596,22 @@ namespace Pulumiverse.Cpln
         /// - **city** (String) City header value.
         /// - **country** (String) Country header value.
         /// - **region** (String) Region header value.
+        /// 
+        /// &lt;a id="nestedblock--networking"&gt;&lt;/a&gt;
+        /// 
+        /// ### `Networking`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **internal** (Attributes) Routing of internal (`cpln.local`) requests (see below).
+        /// 
+        /// &lt;a id="nestedblock--networking--internal"&gt;&lt;/a&gt;
+        /// 
+        /// ### `networking.internal`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **routing** (String) How requests to `&lt;workload&gt;.&lt;gvc&gt;.cpln.local` from the same GVC are routed. `locationEndpoint`: served only by replicas in the caller's location. `gvcEndpoint`: fail over to the workload's canonical endpoint (the nearest healthy location) when no local replica can serve them.
         /// 
         /// &lt;a id="nestedblock--request_retry_policy"&gt;&lt;/a&gt;
         /// 
@@ -861,8 +906,10 @@ namespace Pulumiverse.Cpln
         /// - **job** (Block List, Max: 1) (see below).
         /// - **sidecar** (Block List, Max: 1) (see below).
         /// - **rollout_options** (Block List, Max: 1) (see below).
+        /// - **disruption_budget** (Attributes) Limits how many replicas voluntary disruptions can evict at once (see below).
         /// - **security_options** (Block List, Max: 1) (see below).
         /// - **load_balancer** (Block List, Max: 1) (see below).
+        /// - **networking** (Attributes) Internal service-to-service networking configuration (see below).
         /// - **request_retry_policy** (Block List, Max: 1) (see below).
         /// - **vm** (Attributes) VM-only configuration. Present when `Type` is `Vm` (see below).
         /// - **health** (Attributes) Health summary of the workload (see below).
@@ -885,6 +932,7 @@ namespace Pulumiverse.Cpln
         /// - **min_cpu** (String) Minimum CPU when Capacity AI is enabled.
         /// - **min_memory** (String) Minimum memory when Capacity AI is enabled.
         /// - **env** (Map of String) Environment variables exposed to the container.
+        /// - **env_from** (Attributes List) Dictionary secrets whose key/value pairs are injected as environment variables. An explicit `Env` variable overrides an `EnvFrom` key of the same name; later entries override earlier ones (see below).
         /// - **inherit_env** (Boolean) Indicates whether GVC environment variables are inherited. A variable in `Env` overrides the same key from the GVC.
         /// - **command** (String) Override for the container entry point.
         /// - **args** (List of String) Command-line arguments passed to the container in order.
@@ -984,6 +1032,22 @@ namespace Pulumiverse.Cpln
         /// - **port** (Number) Port for the HTTP GET. Min: `80`. Max: `65535`.
         /// - **http_headers** (Map of String) Headers included in the probe request.
         /// - **scheme** (String) HTTP scheme. Either `HTTP` or `HTTPS`. Default: `HTTP`.
+        /// 
+        /// &lt;a id="nestedblock--container--env_from"&gt;&lt;/a&gt;
+        /// 
+        /// ### `container.env_from`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **secret_ref** (Attributes) References a dictionary secret whose key/value pairs are injected as environment variables (see below).
+        /// 
+        /// &lt;a id="nestedblock--container--env_from--secret_ref"&gt;&lt;/a&gt;
+        /// 
+        /// ### `container.env_from.secret_ref`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **name** (String) Name of a dictionary secret whose keys are injected as environment variables.
         /// 
         /// &lt;a id="nestedblock--container--gpu_nvidia"&gt;&lt;/a&gt;
         /// 
@@ -1096,13 +1160,13 @@ namespace Pulumiverse.Cpln
         /// 
         /// ### `firewall_spec.external.http.inbound_header_filter`
         /// 
-        /// Configures header-based allow/deny logic.
+        /// Configures header-based allow/deny logic. Each header key appears only once, compared case-insensitively.
         /// 
         /// Read-Only:
         /// 
-        /// - **key** (String) Header name to inspect.
-        /// - **allowed_values** (List of String) Regular expressions describing allowed header values. Requests that fail to match any allowed value are filtered.
-        /// - **blocked_values** (List of String) Regular expressions describing blocked header values. Requests that match any blocked value are filtered.
+        /// - **key** (String) Header name to inspect: an HTTP header name or one of the pseudo-headers `:authority`, `:method`, `:path` and `:scheme`. Header names are case-insensitive.
+        /// - **allowed_values** (List of String) Regular expressions describing allowed header values. When included, requests must have at least one matching header to reach the workload.
+        /// - **blocked_values** (List of String) Regular expressions describing blocked header values. When included, requests with any matching header are filtered.
         /// 
         /// &lt;a id="nestedblock--firewall_spec--internal"&gt;&lt;/a&gt;
         /// 
@@ -1319,11 +1383,21 @@ namespace Pulumiverse.Cpln
         /// 
         /// - **min_ready_seconds** (Number) Minimum seconds a container must run without crashing to be considered available.
         /// - **max_unavailable_replicas** (String) Maximum replicas that can be unavailable during an update.
-        /// - **max_surge_replicas** (String) Maximum replicas above the desired count during an update.
-        /// - **scaling_policy** (String) Update strategy. Either `OrderedReady` or `Parallel`. Default: `OrderedReady`.
+        /// - **max_surge_replicas** (String) Maximum replicas above the desired count during an update. Not supported for `Vm` workloads.
+        /// - **scaling_policy** (String) Update strategy. Either `OrderedReady` or `Parallel`. Default: `OrderedReady`. Cannot be set for `Vm` workloads.
         /// - **termination_grace_period_seconds** (Number) Seconds allowed for graceful termination, including `preStop` hooks.
+        /// - **rollout_on_reference_change** (Boolean) When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified.
         /// 
         /// &gt; **Note** `MaxSurgeReplicas` and `MaxUnavailableReplicas` accept absolute numbers (for example, `2`) or percentages (for example, `50%`), and they cannot both be zero.
+        /// 
+        /// &lt;a id="nestedblock--disruption_budget"&gt;&lt;/a&gt;
+        /// 
+        /// ### `DisruptionBudget`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **min_available** (String) Minimum number or percentage of replicas that must stay available during voluntary disruptions such as node drains.
+        /// - **max_unavailable** (String) Maximum number or percentage of replicas that can be unavailable during voluntary disruptions such as node drains.
         /// 
         /// &lt;a id="nestedblock--security_options"&gt;&lt;/a&gt;
         /// 
@@ -1386,6 +1460,22 @@ namespace Pulumiverse.Cpln
         /// - **city** (String) City header value.
         /// - **country** (String) Country header value.
         /// - **region** (String) Region header value.
+        /// 
+        /// &lt;a id="nestedblock--networking"&gt;&lt;/a&gt;
+        /// 
+        /// ### `Networking`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **internal** (Attributes) Routing of internal (`cpln.local`) requests (see below).
+        /// 
+        /// &lt;a id="nestedblock--networking--internal"&gt;&lt;/a&gt;
+        /// 
+        /// ### `networking.internal`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **routing** (String) How requests to `&lt;workload&gt;.&lt;gvc&gt;.cpln.local` from the same GVC are routed. `locationEndpoint`: served only by replicas in the caller's location. `gvcEndpoint`: fail over to the workload's canonical endpoint (the nearest healthy location) when no local replica can serve them.
         /// 
         /// &lt;a id="nestedblock--request_retry_policy"&gt;&lt;/a&gt;
         /// 
@@ -1680,8 +1770,10 @@ namespace Pulumiverse.Cpln
         /// - **job** (Block List, Max: 1) (see below).
         /// - **sidecar** (Block List, Max: 1) (see below).
         /// - **rollout_options** (Block List, Max: 1) (see below).
+        /// - **disruption_budget** (Attributes) Limits how many replicas voluntary disruptions can evict at once (see below).
         /// - **security_options** (Block List, Max: 1) (see below).
         /// - **load_balancer** (Block List, Max: 1) (see below).
+        /// - **networking** (Attributes) Internal service-to-service networking configuration (see below).
         /// - **request_retry_policy** (Block List, Max: 1) (see below).
         /// - **vm** (Attributes) VM-only configuration. Present when `Type` is `Vm` (see below).
         /// - **health** (Attributes) Health summary of the workload (see below).
@@ -1704,6 +1796,7 @@ namespace Pulumiverse.Cpln
         /// - **min_cpu** (String) Minimum CPU when Capacity AI is enabled.
         /// - **min_memory** (String) Minimum memory when Capacity AI is enabled.
         /// - **env** (Map of String) Environment variables exposed to the container.
+        /// - **env_from** (Attributes List) Dictionary secrets whose key/value pairs are injected as environment variables. An explicit `Env` variable overrides an `EnvFrom` key of the same name; later entries override earlier ones (see below).
         /// - **inherit_env** (Boolean) Indicates whether GVC environment variables are inherited. A variable in `Env` overrides the same key from the GVC.
         /// - **command** (String) Override for the container entry point.
         /// - **args** (List of String) Command-line arguments passed to the container in order.
@@ -1803,6 +1896,22 @@ namespace Pulumiverse.Cpln
         /// - **port** (Number) Port for the HTTP GET. Min: `80`. Max: `65535`.
         /// - **http_headers** (Map of String) Headers included in the probe request.
         /// - **scheme** (String) HTTP scheme. Either `HTTP` or `HTTPS`. Default: `HTTP`.
+        /// 
+        /// &lt;a id="nestedblock--container--env_from"&gt;&lt;/a&gt;
+        /// 
+        /// ### `container.env_from`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **secret_ref** (Attributes) References a dictionary secret whose key/value pairs are injected as environment variables (see below).
+        /// 
+        /// &lt;a id="nestedblock--container--env_from--secret_ref"&gt;&lt;/a&gt;
+        /// 
+        /// ### `container.env_from.secret_ref`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **name** (String) Name of a dictionary secret whose keys are injected as environment variables.
         /// 
         /// &lt;a id="nestedblock--container--gpu_nvidia"&gt;&lt;/a&gt;
         /// 
@@ -1915,13 +2024,13 @@ namespace Pulumiverse.Cpln
         /// 
         /// ### `firewall_spec.external.http.inbound_header_filter`
         /// 
-        /// Configures header-based allow/deny logic.
+        /// Configures header-based allow/deny logic. Each header key appears only once, compared case-insensitively.
         /// 
         /// Read-Only:
         /// 
-        /// - **key** (String) Header name to inspect.
-        /// - **allowed_values** (List of String) Regular expressions describing allowed header values. Requests that fail to match any allowed value are filtered.
-        /// - **blocked_values** (List of String) Regular expressions describing blocked header values. Requests that match any blocked value are filtered.
+        /// - **key** (String) Header name to inspect: an HTTP header name or one of the pseudo-headers `:authority`, `:method`, `:path` and `:scheme`. Header names are case-insensitive.
+        /// - **allowed_values** (List of String) Regular expressions describing allowed header values. When included, requests must have at least one matching header to reach the workload.
+        /// - **blocked_values** (List of String) Regular expressions describing blocked header values. When included, requests with any matching header are filtered.
         /// 
         /// &lt;a id="nestedblock--firewall_spec--internal"&gt;&lt;/a&gt;
         /// 
@@ -2138,11 +2247,21 @@ namespace Pulumiverse.Cpln
         /// 
         /// - **min_ready_seconds** (Number) Minimum seconds a container must run without crashing to be considered available.
         /// - **max_unavailable_replicas** (String) Maximum replicas that can be unavailable during an update.
-        /// - **max_surge_replicas** (String) Maximum replicas above the desired count during an update.
-        /// - **scaling_policy** (String) Update strategy. Either `OrderedReady` or `Parallel`. Default: `OrderedReady`.
+        /// - **max_surge_replicas** (String) Maximum replicas above the desired count during an update. Not supported for `Vm` workloads.
+        /// - **scaling_policy** (String) Update strategy. Either `OrderedReady` or `Parallel`. Default: `OrderedReady`. Cannot be set for `Vm` workloads.
         /// - **termination_grace_period_seconds** (Number) Seconds allowed for graceful termination, including `preStop` hooks.
+        /// - **rollout_on_reference_change** (Boolean) When true, replicas are rolled out whenever a secret or the identity referenced by the workload is modified.
         /// 
         /// &gt; **Note** `MaxSurgeReplicas` and `MaxUnavailableReplicas` accept absolute numbers (for example, `2`) or percentages (for example, `50%`), and they cannot both be zero.
+        /// 
+        /// &lt;a id="nestedblock--disruption_budget"&gt;&lt;/a&gt;
+        /// 
+        /// ### `DisruptionBudget`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **min_available** (String) Minimum number or percentage of replicas that must stay available during voluntary disruptions such as node drains.
+        /// - **max_unavailable** (String) Maximum number or percentage of replicas that can be unavailable during voluntary disruptions such as node drains.
         /// 
         /// &lt;a id="nestedblock--security_options"&gt;&lt;/a&gt;
         /// 
@@ -2205,6 +2324,22 @@ namespace Pulumiverse.Cpln
         /// - **city** (String) City header value.
         /// - **country** (String) Country header value.
         /// - **region** (String) Region header value.
+        /// 
+        /// &lt;a id="nestedblock--networking"&gt;&lt;/a&gt;
+        /// 
+        /// ### `Networking`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **internal** (Attributes) Routing of internal (`cpln.local`) requests (see below).
+        /// 
+        /// &lt;a id="nestedblock--networking--internal"&gt;&lt;/a&gt;
+        /// 
+        /// ### `networking.internal`
+        /// 
+        /// Read-Only:
+        /// 
+        /// - **routing** (String) How requests to `&lt;workload&gt;.&lt;gvc&gt;.cpln.local` from the same GVC are routed. `locationEndpoint`: served only by replicas in the caller's location. `gvcEndpoint`: fail over to the workload's canonical endpoint (the nearest healthy location) when no local replica can serve them.
         /// 
         /// &lt;a id="nestedblock--request_retry_policy"&gt;&lt;/a&gt;
         /// 
@@ -2682,6 +2817,7 @@ namespace Pulumiverse.Cpln
         public readonly ImmutableArray<Outputs.GetWorkloadContainerResult> Containers;
         public readonly string CplnId;
         public readonly string Description;
+        public readonly Outputs.GetWorkloadDisruptionBudgetResult DisruptionBudget;
         public readonly string Extras;
         public readonly ImmutableArray<Outputs.GetWorkloadFirewallSpecResult> FirewallSpecs;
         public readonly string Gvc;
@@ -2692,6 +2828,7 @@ namespace Pulumiverse.Cpln
         public readonly ImmutableArray<Outputs.GetWorkloadLoadBalancerResult> LoadBalancers;
         public readonly ImmutableArray<Outputs.GetWorkloadLocalOptionResult> LocalOptions;
         public readonly string Name;
+        public readonly Outputs.GetWorkloadNetworkingResult Networking;
         public readonly ImmutableArray<Outputs.GetWorkloadOptionResult> Options;
         public readonly ImmutableArray<Outputs.GetWorkloadRequestRetryPolicyResult> RequestRetryPolicies;
         public readonly ImmutableArray<Outputs.GetWorkloadRolloutOptionResult> RolloutOptions;
@@ -2712,6 +2849,8 @@ namespace Pulumiverse.Cpln
 
             string description,
 
+            Outputs.GetWorkloadDisruptionBudgetResult disruptionBudget,
+
             string extras,
 
             ImmutableArray<Outputs.GetWorkloadFirewallSpecResult> firewallSpecs,
@@ -2731,6 +2870,8 @@ namespace Pulumiverse.Cpln
             ImmutableArray<Outputs.GetWorkloadLocalOptionResult> localOptions,
 
             string name,
+
+            Outputs.GetWorkloadNetworkingResult networking,
 
             ImmutableArray<Outputs.GetWorkloadOptionResult> options,
 
@@ -2757,6 +2898,7 @@ namespace Pulumiverse.Cpln
             Containers = containers;
             CplnId = cplnId;
             Description = description;
+            DisruptionBudget = disruptionBudget;
             Extras = extras;
             FirewallSpecs = firewallSpecs;
             Gvc = gvc;
@@ -2767,6 +2909,7 @@ namespace Pulumiverse.Cpln
             LoadBalancers = loadBalancers;
             LocalOptions = localOptions;
             Name = name;
+            Networking = networking;
             Options = options;
             RequestRetryPolicies = requestRetryPolicies;
             RolloutOptions = rolloutOptions;

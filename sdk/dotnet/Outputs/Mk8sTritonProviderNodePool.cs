@@ -18,6 +18,10 @@ namespace Pulumiverse.Cpln.Outputs
         /// Labels to attach to nodes of a node pool.
         /// </summary>
         public readonly ImmutableDictionary<string, string>? Labels;
+        /// <summary>
+        /// Maximum number of pods per node. Defaults to a value derived from the node memory. Min: `16`. Max: `250`.
+        /// </summary>
+        public readonly int? MaxPods;
         public readonly int? MaxSize;
         public readonly int? MinSize;
         public readonly string Name;
@@ -44,6 +48,8 @@ namespace Pulumiverse.Cpln.Outputs
         private Mk8sTritonProviderNodePool(
             ImmutableDictionary<string, string>? labels,
 
+            int? maxPods,
+
             int? maxSize,
 
             int? minSize,
@@ -63,6 +69,7 @@ namespace Pulumiverse.Cpln.Outputs
             ImmutableDictionary<string, string>? tritonTags)
         {
             Labels = labels;
+            MaxPods = maxPods;
             MaxSize = maxSize;
             MinSize = minSize;
             Name = name;

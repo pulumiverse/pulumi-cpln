@@ -47,6 +47,10 @@ export class Workload extends pulumi.CustomResource {
      */
     declare public readonly description: pulumi.Output<string>;
     /**
+     * Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `minAvailable` or `maxUnavailable`. A `minAvailable` that would allow no evictions at the `minScale` of `options` or any `localOptions` is rejected. Not supported for `cron` or `vm` workloads. When omitted, workloads with `minScale` 4 or more allow 20% of replicas to be unavailable.
+     */
+    declare public readonly disruptionBudget: pulumi.Output<outputs.WorkloadDisruptionBudget | undefined>;
+    /**
      * Extra Kubernetes modifications. Only used for BYOK.
      */
     declare public readonly extras: pulumi.Output<string | undefined>;
@@ -75,6 +79,10 @@ export class Workload extends pulumi.CustomResource {
      * Name of the workload.
      */
     declare public readonly name: pulumi.Output<string>;
+    /**
+     * Internal service-to-service networking configuration.
+     */
+    declare public readonly networking: pulumi.Output<outputs.WorkloadNetworking>;
     /**
      * Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
      */
@@ -130,6 +138,7 @@ export class Workload extends pulumi.CustomResource {
             resourceInputs["containers"] = state?.containers;
             resourceInputs["cplnId"] = state?.cplnId;
             resourceInputs["description"] = state?.description;
+            resourceInputs["disruptionBudget"] = state?.disruptionBudget;
             resourceInputs["extras"] = state?.extras;
             resourceInputs["firewallSpec"] = state?.firewallSpec;
             resourceInputs["gvc"] = state?.gvc;
@@ -138,6 +147,7 @@ export class Workload extends pulumi.CustomResource {
             resourceInputs["loadBalancer"] = state?.loadBalancer;
             resourceInputs["localOptions"] = state?.localOptions;
             resourceInputs["name"] = state?.name;
+            resourceInputs["networking"] = state?.networking;
             resourceInputs["options"] = state?.options;
             resourceInputs["requestRetryPolicy"] = state?.requestRetryPolicy;
             resourceInputs["rolloutOptions"] = state?.rolloutOptions;
@@ -159,6 +169,7 @@ export class Workload extends pulumi.CustomResource {
             }
             resourceInputs["containers"] = args?.containers;
             resourceInputs["description"] = args?.description;
+            resourceInputs["disruptionBudget"] = args?.disruptionBudget;
             resourceInputs["extras"] = args?.extras;
             resourceInputs["firewallSpec"] = args?.firewallSpec;
             resourceInputs["gvc"] = args?.gvc;
@@ -167,6 +178,7 @@ export class Workload extends pulumi.CustomResource {
             resourceInputs["loadBalancer"] = args?.loadBalancer;
             resourceInputs["localOptions"] = args?.localOptions;
             resourceInputs["name"] = args?.name;
+            resourceInputs["networking"] = args?.networking;
             resourceInputs["options"] = args?.options;
             resourceInputs["requestRetryPolicy"] = args?.requestRetryPolicy;
             resourceInputs["rolloutOptions"] = args?.rolloutOptions;
@@ -202,6 +214,10 @@ export interface WorkloadState {
      */
     description?: pulumi.Input<string>;
     /**
+     * Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `minAvailable` or `maxUnavailable`. A `minAvailable` that would allow no evictions at the `minScale` of `options` or any `localOptions` is rejected. Not supported for `cron` or `vm` workloads. When omitted, workloads with `minScale` 4 or more allow 20% of replicas to be unavailable.
+     */
+    disruptionBudget?: pulumi.Input<inputs.WorkloadDisruptionBudget>;
+    /**
      * Extra Kubernetes modifications. Only used for BYOK.
      */
     extras?: pulumi.Input<string>;
@@ -230,6 +246,10 @@ export interface WorkloadState {
      * Name of the workload.
      */
     name?: pulumi.Input<string>;
+    /**
+     * Internal service-to-service networking configuration.
+     */
+    networking?: pulumi.Input<inputs.WorkloadNetworking>;
     /**
      * Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
      */
@@ -283,6 +303,10 @@ export interface WorkloadArgs {
      */
     description?: pulumi.Input<string>;
     /**
+     * Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `minAvailable` or `maxUnavailable`. A `minAvailable` that would allow no evictions at the `minScale` of `options` or any `localOptions` is rejected. Not supported for `cron` or `vm` workloads. When omitted, workloads with `minScale` 4 or more allow 20% of replicas to be unavailable.
+     */
+    disruptionBudget?: pulumi.Input<inputs.WorkloadDisruptionBudget>;
+    /**
      * Extra Kubernetes modifications. Only used for BYOK.
      */
     extras?: pulumi.Input<string>;
@@ -311,6 +335,10 @@ export interface WorkloadArgs {
      * Name of the workload.
      */
     name?: pulumi.Input<string>;
+    /**
+     * Internal service-to-service networking configuration.
+     */
+    networking?: pulumi.Input<inputs.WorkloadNetworking>;
     /**
      * Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
      */

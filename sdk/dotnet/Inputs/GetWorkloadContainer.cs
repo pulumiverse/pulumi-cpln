@@ -49,6 +49,18 @@ namespace Pulumiverse.Cpln.Inputs
             set => _env = value;
         }
 
+        [Input("envFroms", required: true)]
+        private List<Inputs.GetWorkloadContainerEnvFromArgs>? _envFroms;
+
+        /// <summary>
+        /// Dictionary secrets whose key/value pairs are injected as environment variables. An explicit `Env` variable overrides an `EnvFrom` key of the same name; later entries override earlier ones.
+        /// </summary>
+        public List<Inputs.GetWorkloadContainerEnvFromArgs> EnvFroms
+        {
+            get => _envFroms ?? (_envFroms = new List<Inputs.GetWorkloadContainerEnvFromArgs>());
+            set => _envFroms = value;
+        }
+
         [Input("gpuCustoms")]
         private List<Inputs.GetWorkloadContainerGpuCustomArgs>? _gpuCustoms;
         public List<Inputs.GetWorkloadContainerGpuCustomArgs> GpuCustoms

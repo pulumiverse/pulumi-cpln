@@ -21,6 +21,8 @@ type Workload struct {
 	CplnId pulumi.StringOutput `pulumi:"cplnId"`
 	// Description of the workload.
 	Description pulumi.StringOutput `pulumi:"description"`
+	// Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `minAvailable` or `maxUnavailable`. A `minAvailable` that would allow no evictions at the `minScale` of `options` or any `localOptions` is rejected. Not supported for `cron` or `vm` workloads. When omitted, workloads with `minScale` 4 or more allow 20% of replicas to be unavailable.
+	DisruptionBudget WorkloadDisruptionBudgetPtrOutput `pulumi:"disruptionBudget"`
 	// Extra Kubernetes modifications. Only used for BYOK.
 	Extras pulumi.StringPtrOutput `pulumi:"extras"`
 	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
@@ -36,6 +38,8 @@ type Workload struct {
 	LocalOptions WorkloadLocalOptionArrayOutput `pulumi:"localOptions"`
 	// Name of the workload.
 	Name pulumi.StringOutput `pulumi:"name"`
+	// Internal service-to-service networking configuration.
+	Networking WorkloadNetworkingOutput `pulumi:"networking"`
 	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
 	Options            WorkloadOptionsPtrOutput            `pulumi:"options"`
 	RequestRetryPolicy WorkloadRequestRetryPolicyPtrOutput `pulumi:"requestRetryPolicy"`
@@ -100,6 +104,8 @@ type workloadState struct {
 	CplnId *string `pulumi:"cplnId"`
 	// Description of the workload.
 	Description *string `pulumi:"description"`
+	// Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `minAvailable` or `maxUnavailable`. A `minAvailable` that would allow no evictions at the `minScale` of `options` or any `localOptions` is rejected. Not supported for `cron` or `vm` workloads. When omitted, workloads with `minScale` 4 or more allow 20% of replicas to be unavailable.
+	DisruptionBudget *WorkloadDisruptionBudget `pulumi:"disruptionBudget"`
 	// Extra Kubernetes modifications. Only used for BYOK.
 	Extras *string `pulumi:"extras"`
 	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
@@ -115,6 +121,8 @@ type workloadState struct {
 	LocalOptions []WorkloadLocalOption `pulumi:"localOptions"`
 	// Name of the workload.
 	Name *string `pulumi:"name"`
+	// Internal service-to-service networking configuration.
+	Networking *WorkloadNetworking `pulumi:"networking"`
 	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
 	Options            *WorkloadOptions            `pulumi:"options"`
 	RequestRetryPolicy *WorkloadRequestRetryPolicy `pulumi:"requestRetryPolicy"`
@@ -144,6 +152,8 @@ type WorkloadState struct {
 	CplnId pulumi.StringPtrInput
 	// Description of the workload.
 	Description pulumi.StringPtrInput
+	// Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `minAvailable` or `maxUnavailable`. A `minAvailable` that would allow no evictions at the `minScale` of `options` or any `localOptions` is rejected. Not supported for `cron` or `vm` workloads. When omitted, workloads with `minScale` 4 or more allow 20% of replicas to be unavailable.
+	DisruptionBudget WorkloadDisruptionBudgetPtrInput
 	// Extra Kubernetes modifications. Only used for BYOK.
 	Extras pulumi.StringPtrInput
 	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
@@ -159,6 +169,8 @@ type WorkloadState struct {
 	LocalOptions WorkloadLocalOptionArrayInput
 	// Name of the workload.
 	Name pulumi.StringPtrInput
+	// Internal service-to-service networking configuration.
+	Networking WorkloadNetworkingPtrInput
 	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
 	Options            WorkloadOptionsPtrInput
 	RequestRetryPolicy WorkloadRequestRetryPolicyPtrInput
@@ -190,6 +202,8 @@ type workloadArgs struct {
 	Containers []WorkloadContainer `pulumi:"containers"`
 	// Description of the workload.
 	Description *string `pulumi:"description"`
+	// Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `minAvailable` or `maxUnavailable`. A `minAvailable` that would allow no evictions at the `minScale` of `options` or any `localOptions` is rejected. Not supported for `cron` or `vm` workloads. When omitted, workloads with `minScale` 4 or more allow 20% of replicas to be unavailable.
+	DisruptionBudget *WorkloadDisruptionBudget `pulumi:"disruptionBudget"`
 	// Extra Kubernetes modifications. Only used for BYOK.
 	Extras *string `pulumi:"extras"`
 	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
@@ -205,6 +219,8 @@ type workloadArgs struct {
 	LocalOptions []WorkloadLocalOption `pulumi:"localOptions"`
 	// Name of the workload.
 	Name *string `pulumi:"name"`
+	// Internal service-to-service networking configuration.
+	Networking *WorkloadNetworking `pulumi:"networking"`
 	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
 	Options            *WorkloadOptions            `pulumi:"options"`
 	RequestRetryPolicy *WorkloadRequestRetryPolicy `pulumi:"requestRetryPolicy"`
@@ -229,6 +245,8 @@ type WorkloadArgs struct {
 	Containers WorkloadContainerArrayInput
 	// Description of the workload.
 	Description pulumi.StringPtrInput
+	// Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `minAvailable` or `maxUnavailable`. A `minAvailable` that would allow no evictions at the `minScale` of `options` or any `localOptions` is rejected. Not supported for `cron` or `vm` workloads. When omitted, workloads with `minScale` 4 or more allow 20% of replicas to be unavailable.
+	DisruptionBudget WorkloadDisruptionBudgetPtrInput
 	// Extra Kubernetes modifications. Only used for BYOK.
 	Extras pulumi.StringPtrInput
 	// Control of inbound and outbound access to the workload for external (public) and internal (service to service) traffic. Access is restricted by default.
@@ -244,6 +262,8 @@ type WorkloadArgs struct {
 	LocalOptions WorkloadLocalOptionArrayInput
 	// Name of the workload.
 	Name pulumi.StringPtrInput
+	// Internal service-to-service networking configuration.
+	Networking WorkloadNetworkingPtrInput
 	// Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
 	Options            WorkloadOptionsPtrInput
 	RequestRetryPolicy WorkloadRequestRetryPolicyPtrInput
@@ -364,6 +384,11 @@ func (o WorkloadOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringOutput { return v.Description }).(pulumi.StringOutput)
 }
 
+// Limits how many replicas voluntary disruptions (node drains, cluster autoscaler scale-down, node upgrades) can evict at once. Set either `minAvailable` or `maxUnavailable`. A `minAvailable` that would allow no evictions at the `minScale` of `options` or any `localOptions` is rejected. Not supported for `cron` or `vm` workloads. When omitted, workloads with `minScale` 4 or more allow 20% of replicas to be unavailable.
+func (o WorkloadOutput) DisruptionBudget() WorkloadDisruptionBudgetPtrOutput {
+	return o.ApplyT(func(v *Workload) WorkloadDisruptionBudgetPtrOutput { return v.DisruptionBudget }).(WorkloadDisruptionBudgetPtrOutput)
+}
+
 // Extra Kubernetes modifications. Only used for BYOK.
 func (o WorkloadOutput) Extras() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringPtrOutput { return v.Extras }).(pulumi.StringPtrOutput)
@@ -401,6 +426,11 @@ func (o WorkloadOutput) LocalOptions() WorkloadLocalOptionArrayOutput {
 // Name of the workload.
 func (o WorkloadOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Workload) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
+}
+
+// Internal service-to-service networking configuration.
+func (o WorkloadOutput) Networking() WorkloadNetworkingOutput {
+	return o.ApplyT(func(v *Workload) WorkloadNetworkingOutput { return v.Networking }).(WorkloadNetworkingOutput)
 }
 
 // Configurable settings or parameters that allow fine-tuning and customization of the behavior, performance, and characteristics of the workload.
